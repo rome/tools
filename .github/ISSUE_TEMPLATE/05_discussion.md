@@ -2,5 +2,5 @@
 name: '🗣️ Discussion'
 about: Start a discussion
 title: ''
-labels: ''
+labels: 'discussion'
 ---
