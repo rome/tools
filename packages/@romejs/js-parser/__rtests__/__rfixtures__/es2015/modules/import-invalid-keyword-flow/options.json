@@ -1,0 +1,4 @@
+{
+  "syntax": ["flow"],
+  "throws": "Unexpected keyword 'default'"
+}

@@ -1,0 +1,496 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'flow'
+    'jsx'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 93
+      line: 7
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    TypeAliasTypeAnnotation {
+      id: BindingIdentifier {
+        name: 'X'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+          start: Object {
+            column: 5
+            index: 5
+            line: 1
+          }
+        }
+      }
+      typeParameters: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 2
+          index: 92
+          line: 6
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      right: FlowObjectTypeAnnotation {
+        exact: false
+        inexact: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 1
+            index: 91
+            line: 6
+          }
+          start: Object {
+            column: 9
+            index: 9
+            line: 1
+          }
+        }
+        properties: Array [
+          FlowObjectTypeProperty {
+            kind: 'init'
+            key: Identifier {
+              name: 'foobar'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 8
+                  index: 19
+                  line: 2
+                }
+                start: Object {
+                  column: 2
+                  index: 13
+                  line: 2
+                }
+              }
+            }
+            value: FlowFunctionTypeAnnotation {
+              params: Array []
+              rest: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 19
+                  index: 30
+                  line: 2
+                }
+                start: Object {
+                  column: 2
+                  index: 13
+                  line: 2
+                }
+              }
+              returnType: VoidKeywordTypeAnnotation {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 19
+                    index: 30
+                    line: 2
+                  }
+                  start: Object {
+                    column: 15
+                    index: 26
+                    line: 2
+                  }
+                }
+              }
+              typeParameters: FlowTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 11
+                    index: 22
+                    line: 2
+                  }
+                  start: Object {
+                    column: 8
+                    index: 19
+                    line: 2
+                  }
+                }
+                params: Array [
+                  FlowTypeParameter {
+                    name: 'T'
+                    bound: undefined
+                    default: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 10
+                        index: 21
+                        line: 2
+                      }
+                      start: Object {
+                        column: 9
+                        index: 20
+                        line: 2
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+            optional: false
+            proto: false
+            static: false
+            variance: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 19
+                index: 30
+                line: 2
+              }
+              start: Object {
+                column: 2
+                index: 13
+                line: 2
+              }
+            }
+          }
+          FlowObjectTypeProperty {
+            kind: 'init'
+            key: Identifier {
+              name: 'delete'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 8
+                  index: 40
+                  line: 3
+                }
+                start: Object {
+                  column: 2
+                  index: 34
+                  line: 3
+                }
+              }
+            }
+            value: FlowFunctionTypeAnnotation {
+              params: Array []
+              rest: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 19
+                  index: 51
+                  line: 3
+                }
+                start: Object {
+                  column: 2
+                  index: 34
+                  line: 3
+                }
+              }
+              returnType: VoidKeywordTypeAnnotation {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 19
+                    index: 51
+                    line: 3
+                  }
+                  start: Object {
+                    column: 15
+                    index: 47
+                    line: 3
+                  }
+                }
+              }
+              typeParameters: FlowTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 11
+                    index: 43
+                    line: 3
+                  }
+                  start: Object {
+                    column: 8
+                    index: 40
+                    line: 3
+                  }
+                }
+                params: Array [
+                  FlowTypeParameter {
+                    name: 'T'
+                    bound: undefined
+                    default: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 10
+                        index: 42
+                        line: 3
+                      }
+                      start: Object {
+                        column: 9
+                        index: 41
+                        line: 3
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+            optional: false
+            proto: false
+            static: false
+            variance: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 19
+                index: 51
+                line: 3
+              }
+              start: Object {
+                column: 2
+                index: 34
+                line: 3
+              }
+            }
+          }
+          FlowObjectTypeProperty {
+            kind: 'init'
+            key: Identifier {
+              name: 'yield'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 7
+                  index: 60
+                  line: 4
+                }
+                start: Object {
+                  column: 2
+                  index: 55
+                  line: 4
+                }
+              }
+            }
+            value: FlowFunctionTypeAnnotation {
+              params: Array []
+              rest: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 18
+                  index: 71
+                  line: 4
+                }
+                start: Object {
+                  column: 2
+                  index: 55
+                  line: 4
+                }
+              }
+              returnType: VoidKeywordTypeAnnotation {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 18
+                    index: 71
+                    line: 4
+                  }
+                  start: Object {
+                    column: 14
+                    index: 67
+                    line: 4
+                  }
+                }
+              }
+              typeParameters: FlowTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 10
+                    index: 63
+                    line: 4
+                  }
+                  start: Object {
+                    column: 7
+                    index: 60
+                    line: 4
+                  }
+                }
+                params: Array [
+                  FlowTypeParameter {
+                    name: 'T'
+                    bound: undefined
+                    default: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 9
+                        index: 62
+                        line: 4
+                      }
+                      start: Object {
+                        column: 8
+                        index: 61
+                        line: 4
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+            optional: false
+            proto: false
+            static: false
+            variance: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 18
+                index: 71
+                line: 4
+              }
+              start: Object {
+                column: 2
+                index: 55
+                line: 4
+              }
+            }
+          }
+          FlowObjectTypeProperty {
+            kind: 'init'
+            key: Identifier {
+              name: 'do'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 4
+                  index: 77
+                  line: 5
+                }
+                start: Object {
+                  column: 2
+                  index: 75
+                  line: 5
+                }
+              }
+            }
+            value: FlowFunctionTypeAnnotation {
+              params: Array []
+              rest: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 15
+                  index: 88
+                  line: 5
+                }
+                start: Object {
+                  column: 2
+                  index: 75
+                  line: 5
+                }
+              }
+              returnType: VoidKeywordTypeAnnotation {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 15
+                    index: 88
+                    line: 5
+                  }
+                  start: Object {
+                    column: 11
+                    index: 84
+                    line: 5
+                  }
+                }
+              }
+              typeParameters: FlowTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 7
+                    index: 80
+                    line: 5
+                  }
+                  start: Object {
+                    column: 4
+                    index: 77
+                    line: 5
+                  }
+                }
+                params: Array [
+                  FlowTypeParameter {
+                    name: 'T'
+                    bound: undefined
+                    default: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 6
+                        index: 79
+                        line: 5
+                      }
+                      start: Object {
+                        column: 5
+                        index: 78
+                        line: 5
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+            optional: false
+            proto: false
+            static: false
+            variance: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 15
+                index: 88
+                line: 5
+              }
+              start: Object {
+                column: 2
+                index: 75
+                line: 5
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

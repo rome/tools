@@ -1,0 +1,188 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 20
+      line: 3
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentLine {
+      value: ' @flow'
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+  ]
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 10
+          index: 19
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 9
+          line: 2
+        }
+      }
+      expression: CallExpression {
+        arguments: Array []
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 9
+            index: 18
+            line: 2
+          }
+          start: Object {
+            column: 0
+            index: 9
+            line: 2
+          }
+        }
+        typeArguments: FlowTypeParameterInstantiation {
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 7
+              index: 16
+              line: 2
+            }
+            start: Object {
+              column: 4
+              index: 13
+              line: 2
+            }
+          }
+          params: Array [
+            FlowGenericTypeAnnotation {
+              id: Identifier {
+                name: 'T'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 6
+                    index: 15
+                    line: 2
+                  }
+                  start: Object {
+                    column: 5
+                    index: 14
+                    line: 2
+                  }
+                }
+              }
+              typeParameters: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 15
+                  line: 2
+                }
+                start: Object {
+                  column: 5
+                  index: 14
+                  line: 2
+                }
+              }
+            }
+          ]
+        }
+        callee: MemberExpression {
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 4
+              index: 13
+              line: 2
+            }
+            start: Object {
+              column: 0
+              index: 9
+              line: 2
+            }
+          }
+          object: ReferenceIdentifier {
+            name: 'o'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 1
+                index: 10
+                line: 2
+              }
+              start: Object {
+                column: 0
+                index: 9
+                line: 2
+              }
+            }
+          }
+          property: ComputedMemberProperty {
+            value: ReferenceIdentifier {
+              name: 'e'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 3
+                  index: 12
+                  line: 2
+                }
+                start: Object {
+                  column: 2
+                  index: 11
+                  line: 2
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 4
+                index: 13
+                line: 2
+              }
+              start: Object {
+                column: 1
+                index: 10
+                line: 2
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "type": "module",
+  "//": "Look ma, no deps",
+  "dependencies": {},
+  "//": "Only used for static type checking",
+  "devDependencies": {
+    "@types/node": "^12.0.8",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.5",
+    "typescript": "^3.7.0"
+  }
+}

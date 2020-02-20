@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "strict": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "noUnusedLocals": true,
+    "noFallthroughCasesInSwitch": true,
+    "typeRoots": ["./node_modules/@types"],
+    "lib": ["dom", "es2020"],
+    "baseUrl": ".",
+    "paths": {
+      "@romejs/*": ["packages/@romejs/*"],
+      "@romejs-web/*": ["packages/@romejs-web/*"]
+    }
+  },
+
+  "exclude": [
+    "node_modules",
+    "vendor",
+    "type-libs",
+    "scripts",
+    "__rfixtures__",
+    "packages/@romejs/js-parser/__rtests__/__rfixtures__"
+  ]
+}

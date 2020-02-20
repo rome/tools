@@ -1,0 +1,3 @@
+{
+  "throws": "Yield cannot be used as name inside a generator function"
+}

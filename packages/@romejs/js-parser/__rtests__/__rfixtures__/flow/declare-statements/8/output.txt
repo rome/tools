@@ -1,0 +1,82 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 18
+      index: 18
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    FlowDeclareClass {
+      id: BindingIdentifier {
+        name: 'A'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 15
+            index: 15
+            line: 1
+          }
+          start: Object {
+            column: 14
+            index: 14
+            line: 1
+          }
+        }
+      }
+      extends: Array []
+      implements: Array []
+      mixins: Array []
+      typeParameters: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 18
+          index: 18
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      body: FlowObjectTypeAnnotation {
+        exact: false
+        inexact: undefined
+        properties: Array []
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 18
+            index: 18
+            line: 1
+          }
+          start: Object {
+            column: 16
+            index: 16
+            line: 1
+          }
+        }
+      }
+    }
+  ]
+}

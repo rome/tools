@@ -1,0 +1,111 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 18
+      index: 18
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 18
+          index: 18
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: JSXElement {
+        name: JSXReferenceIdentifier {
+          name: 'div'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 4
+              index: 4
+              line: 1
+            }
+            start: Object {
+              column: 1
+              index: 1
+              line: 1
+            }
+          }
+        }
+        children: Array []
+        selfClosing: true
+        typeArguments: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 18
+            index: 18
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        attributes: Array [
+          JSXSpreadAttribute {
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 15
+                index: 15
+                line: 1
+              }
+              start: Object {
+                column: 5
+                index: 5
+                line: 1
+              }
+            }
+            argument: ReferenceIdentifier {
+              name: 'props'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 14
+                  index: 14
+                  line: 1
+                }
+                start: Object {
+                  column: 9
+                  index: 9
+                  line: 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 15
+      index: 15
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 15
+          index: 15
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: ArrowFunctionExpression {
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 15
+            index: 15
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        head: FunctionHead {
+          async: false
+          hasHoistedVars: false
+          params: Array []
+          predicate: undefined
+          rest: undefined
+          returnType: undefined
+          thisType: undefined
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 6
+              index: 6
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+        body: BlockStatement {
+          directives: Array []
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 15
+              index: 15
+              line: 1
+            }
+            start: Object {
+              column: 6
+              index: 6
+              line: 1
+            }
+          }
+          body: Array [
+            ExpressionStatement {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 13
+                  index: 13
+                  line: 1
+                }
+                start: Object {
+                  column: 8
+                  index: 8
+                  line: 1
+                }
+              }
+              expression: ReferenceIdentifier {
+                name: 'await'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 13
+                    index: 13
+                    line: 1
+                  }
+                  start: Object {
+                    column: 8
+                    index: 8
+                    line: 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

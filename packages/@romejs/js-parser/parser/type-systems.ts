@@ -1,0 +1,513 @@
+/**
+ * Portions Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import {JSParser} from '../parser';
+import {Position} from '@romejs/parser-core';
+import {
+  FlowClassImplements,
+  AnyPrimaryType,
+  TSExpressionWithTypeArguments,
+  TSInterfaceDeclaration,
+  FlowInterfaceDeclaration,
+  AnyFlowDeclare,
+  AnyFlowPredicate,
+  TypeAliasTypeAnnotation,
+  AnyTypeParameter,
+  AnyTypeArguments,
+  FlowOpaqueType,
+  AnyExpression,
+  AmbiguousFlowTypeCastExpression,
+  AnyLiteralTypeAnnotation,
+  AnyTargetAssignmentPattern,
+} from '@romejs/js-ast';
+import {types as tt} from '../tokenizer/types';
+import {
+  TSDeclareNode,
+  parseFlowTypeAnnotation,
+  parseTSTypeAnnotation,
+  parseFlowTypeParameterDeclaration,
+  parseTSTypeParameters,
+  parseFlowTypeParameterInstantiation,
+  parseTSTypeArguments,
+  parseFlowInterface,
+  parseFlowDeclare,
+  parseTSTypeAliasTypeAnnotation,
+  parseTSInterfaceDeclaration,
+  parseTSDeclare,
+  parseFlowClassImplemented,
+  parseTSHeritageClause,
+  parseFlowOpaqueType,
+  parseTSEnumDeclaration,
+  parseTSAmbientExternalModuleDeclaration,
+  parseTSModuleOrNamespaceDeclaration,
+  parseTSModuleBlock,
+  parseFlowTypeAndPredicateInitialiser,
+  parseTSTypeOrTypePredicateAnnotation,
+  parseTSAbstractClass,
+  parseFlowTypeParameterInstantiationCallOrNew,
+  toBindingIdentifier,
+  parseFlowTypeAliasTypeAnnotation,
+  toTargetAssignmentPattern,
+} from './index';
+import {PatternMeta} from '@romejs/js-ast';
+
+export function isTypeSystemEnabled(parser: JSParser): boolean {
+  return parser.isSyntaxEnabled('flow') || parser.isSyntaxEnabled('ts');
+}
+
+export function parseTypeLiteralAnnotation(
+  parser: JSParser,
+): AnyLiteralTypeAnnotation {
+  const start = parser.getPosition();
+
+  switch (parser.state.tokenType) {
+    case tt.string: {
+      const value = String(parser.state.tokenValue);
+      parser.next();
+      return {
+        loc: parser.finishLoc(start),
+        type: 'StringLiteralTypeAnnotation',
+        value,
+      };
+    }
+
+    case tt.num: {
+      const value = Number(parser.state.tokenValue);
+      parser.next();
+      return {
+        loc: parser.finishLoc(start),
+        type: 'NumericLiteralTypeAnnotation',
+        value,
+      };
+    }
+
+    case tt._true:
+    case tt._false: {
+      const value = parser.match(tt._true);
+      parser.next();
+      return {
+        loc: parser.finishLoc(start),
+        type: 'BooleanLiteralTypeAnnotation',
+        value,
+      };
+    }
+
+    case tt.plusMin: {
+      if (parser.state.tokenValue === '-') {
+        parser.next();
+
+        if (!parser.match(tt.num)) {
+          parser.addDiagnostic({
+            message: `Unexpected token, expected "number"`,
+          });
+          parser.next();
+          return {
+            loc: parser.finishLoc(start),
+            type: 'NumericLiteralTypeAnnotation',
+            value: 0,
+          };
+        }
+
+        const value = Number(parser.state.tokenValue);
+        parser.next();
+        return {
+          loc: parser.finishLoc(start),
+          type: 'NumericLiteralTypeAnnotation',
+          value: -value,
+        };
+      } else {
+        parser.addDiagnostic({
+          message:
+            'Numeric literal type annotations cannot stand with a +, omit it instead',
+        });
+        parser.next();
+        return parseTypeLiteralAnnotation(parser);
+      }
+    }
+
+    default:
+      throw new Error(
+        'Caller should have already validated the range of token types',
+      );
+  }
+}
+
+function parseFlowOrTS<F, TS>(
+  parser: JSParser,
+  label: string,
+  flow: (parser: JSParser) => F,
+  ts: (parser: JSParser) => TS,
+): F | TS {
+  if (parser.isSyntaxEnabled('flow')) {
+    return flow(parser);
+  } else if (parser.isSyntaxEnabled('ts')) {
+    return ts(parser);
+  } else {
+    const branches = parser.createBranch<F | TS>();
+
+    // Suppress disabled syntax errors
+    parser.syntax.add('flow');
+    branches.add(flow);
+    parser.syntax.delete('flow');
+
+    // If we parsed this as Flow syntax, then it's definitely valid Flow syntax, but could also be valid TS syntax since sometimes they intersect
+    let isFlowOrTS = branches.hasOptimalBranch();
+
+    // Suppress disabled syntax errors
+    parser.syntax.add('ts');
+    branches.add(ts);
+    parser.syntax.delete('ts');
+
+    // If we didn't pick the Flow branch but picked the TS one, then this could only ever be TS syntax
+    let isOnlyTS = !isFlowOrTS && branches.hasOptimalBranch();
+
+    const start = parser.getPosition();
+    const node = branches.pick();
+
+    if (isOnlyTS) {
+      addTSDiagnostic(parser, label, start);
+    } else {
+      addFlowOrTSDiagnostic(parser, label, start);
+    }
+
+    return node;
+  }
+}
+
+export function addFlowOrTSDiagnostic(
+  parser: JSParser,
+  label: string,
+  start: Position,
+) {
+  if (parser.isSyntaxEnabled('ts') || parser.isSyntaxEnabled('flow')) {
+    return;
+  }
+
+  parser.addDiagnostic({
+    start,
+    message: `A ${label} is only valid inside of a TypeScript or Flow file`,
+    advice: [
+      {
+        type: 'log',
+        category: 'info',
+        message:
+          'Did you mean <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
+      },
+      {
+        type: 'log',
+        category: 'info',
+        message:
+          'Did you mean <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
+      },
+    ],
+  });
+}
+
+export function addFlowDiagnostic(
+  parser: JSParser,
+  label: string,
+  start: Position,
+) {
+  if (parser.isSyntaxEnabled('flow')) {
+    return;
+  }
+
+  parser.addDiagnostic({
+    start,
+    message: `A ${label} is only valid inside of a Flow file`,
+    advice: [
+      {
+        type: 'log',
+        category: 'info',
+        message:
+          'To enable <emphasis>Flow</emphasis> support, add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
+      },
+    ],
+  });
+}
+
+export function addTSDiagnostic(
+  parser: JSParser,
+  label: string,
+  start: Position,
+) {
+  if (parser.isSyntaxEnabled('ts')) {
+    return;
+  }
+
+  parser.addDiagnostic({
+    start,
+    message: `A ${label} is only valid inside of a TypeScript file`,
+    advice: [
+      {
+        type: 'log',
+        category: 'info',
+        message:
+          'To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
+      },
+    ],
+  });
+}
+
+export function parseClassImplements(
+  parser: JSParser,
+): Array<FlowClassImplements | TSExpressionWithTypeArguments> {
+  return parseFlowOrTS(
+    parser,
+    'class implements',
+    parseFlowClassImplemented,
+    () => parseTSHeritageClause(parser, 'implements'),
+  );
+}
+
+export function parsePrimaryTypeAnnotation(parser: JSParser): AnyPrimaryType {
+  return parseFlowOrTS(parser, 'type annotation', parseFlowTypeAnnotation, () =>
+    parseTSTypeAnnotation(parser, true),
+  );
+}
+
+export function parseInterface(
+  parser: JSParser,
+  start: Position,
+): TSInterfaceDeclaration | FlowInterfaceDeclaration {
+  parser.addDiagnosticFilter({
+    message: 'interface is a reserved word',
+    start,
+  });
+
+  return parseFlowOrTS(
+    parser,
+    'interface',
+    () => parseFlowInterface(parser, start),
+    () => parseTSInterfaceDeclaration(parser, start),
+  );
+}
+
+export function parseDeclare(
+  parser: JSParser,
+  start: Position,
+): TSDeclareNode | AnyFlowDeclare {
+  return parseFlowOrTS(
+    parser,
+    'type declaration',
+    () => parseFlowDeclare(parser, start),
+    () => parseTSDeclare(parser, start),
+  );
+}
+
+export type TypeAnnotationAndPredicate = [
+  undefined | AnyPrimaryType,
+  undefined | AnyFlowPredicate,
+];
+
+export function parseTypeAnnotationAndPredicate(
+  parser: JSParser,
+): TypeAnnotationAndPredicate {
+  return parseFlowOrTS(
+    parser,
+    'type annotation and a predicate',
+    () => {
+      return parseFlowTypeAndPredicateInitialiser(parser);
+    },
+    () => {
+      return [
+        parseTSTypeOrTypePredicateAnnotation(parser, tt.colon),
+        undefined,
+      ];
+    },
+  );
+}
+
+export function parseTypeAlias(
+  parser: JSParser,
+  start: Position,
+): TypeAliasTypeAnnotation | TypeAliasTypeAnnotation {
+  return parseFlowOrTS(
+    parser,
+    'type alias',
+    () => parseFlowTypeAliasTypeAnnotation(parser, start),
+    () => parseTSTypeAliasTypeAnnotation(parser, start),
+  );
+}
+
+export function parseTypeParameters(
+  parser: JSParser,
+  allowDefault: boolean = false,
+): AnyTypeParameter {
+  return parseFlowOrTS(
+    parser,
+    'type parameters',
+    () => parseFlowTypeParameterDeclaration(parser, allowDefault),
+    parseTSTypeParameters,
+  );
+}
+
+export function maybeParseTypeParameters(
+  parser: JSParser,
+  allowDefault?: boolean,
+): undefined | AnyTypeParameter {
+  if (parser.isRelational('<')) {
+    return parseTypeParameters(parser, allowDefault);
+  }
+}
+
+export function parseTypeArguments(parser: JSParser): AnyTypeArguments {
+  return parseFlowOrTS(
+    parser,
+    'type arguments',
+    parseFlowTypeParameterInstantiation,
+    parseTSTypeArguments,
+  );
+}
+
+export function parseTypeCallArguments(parser: JSParser): AnyTypeArguments {
+  return parseFlowOrTS(
+    parser,
+    'type call arguments',
+    parseFlowTypeParameterInstantiationCallOrNew,
+    parseTSTypeArguments,
+  );
+}
+
+export function maybeParseTypeArguments(
+  parser: JSParser,
+): undefined | AnyTypeArguments {
+  if (parser.isRelational('<')) {
+    return parseTypeArguments(parser);
+  }
+}
+
+type TypeExpressionStatement =
+  | TSDeclareNode
+  | TypeAliasTypeAnnotation
+  | AnyFlowDeclare
+  | FlowOpaqueType
+  | TypeAliasTypeAnnotation
+  | TSInterfaceDeclaration
+  | FlowInterfaceDeclaration;
+
+export function parseTypeExpressionStatement(
+  parser: JSParser,
+  start: Position,
+  expr: AnyExpression,
+): undefined | TypeExpressionStatement {
+  // TODO TypeScript does not like parser.isLineTerminator()
+  if (expr.type !== 'ReferenceIdentifier') {
+    return undefined;
+  }
+
+  // In TS, line breaks aren't allowed between the keyword and the rest of the statement
+  // In Flow, they are allowed
+  if (parser.isSyntaxEnabled('ts') && parser.hasPrecedingLineBreak()) {
+    return undefined;
+  }
+
+  switch (expr.name) {
+    case 'declare':
+      if (
+        parser.match(tt._class) ||
+        parser.match(tt.name) ||
+        parser.match(tt._function) ||
+        parser.match(tt._const) ||
+        parser.match(tt._var) ||
+        parser.match(tt._export)
+      ) {
+        return parseDeclare(parser, start);
+      } else {
+        break;
+      }
+
+    case 'interface':
+      // TODO perform some lookahead to make sure we want to do this
+      return parseInterface(parser, start);
+
+    case 'type':
+      // TODO perform some lookahead to make sure we want to do this
+      return parseTypeAlias(parser, start);
+
+    case 'opaque':
+      // TODO perform some lookahead to make sure we want to do this
+      addFlowDiagnostic(parser, 'opaque type', start);
+      return parseFlowOpaqueType(parser, start, false);
+
+    case 'abstract':
+      if (parser.match(tt._class)) {
+        addTSDiagnostic(parser, 'abstract class', start);
+        return parseTSAbstractClass(parser, start);
+      } else {
+        break;
+      }
+
+    case 'enum': {
+      if (parser.match(tt.name)) {
+        addTSDiagnostic(parser, 'enum declaration', start);
+        return parseTSEnumDeclaration(parser, start, /* isConst */ false);
+      } else {
+        break;
+      }
+    }
+
+    case 'module':
+      if (parser.match(tt.string)) {
+        addTSDiagnostic(parser, 'ambient external module declaration', start);
+        return parseTSAmbientExternalModuleDeclaration(parser, start);
+      } else if (parser.match(tt.name) && !parser.isLineTerminator()) {
+        addTSDiagnostic(parser, 'module or namespace declaration', start);
+        return parseTSModuleOrNamespaceDeclaration(parser, start);
+      } else {
+        break;
+      }
+
+    case 'namespace':
+      if (!parser.match(tt.name)) {
+        return undefined;
+      }
+
+      addTSDiagnostic(parser, 'module or namespace declaration', start);
+      return parseTSModuleOrNamespaceDeclaration(parser, start);
+
+    // TODO abstract this into typescript.js
+    case 'global':
+      // `global { }` (with no `declare`) may appear inside an ambient module declaration.
+      // Would like to use parseTSAmbientExternalModuleDeclaration here, but already ran past 'global'.
+      if (parser.match(tt.braceL)) {
+        addTSDiagnostic(parser, 'module declaration', start);
+        const global = true;
+        const id = toBindingIdentifier(expr);
+        const body = parseTSModuleBlock(parser);
+        return {
+          loc: parser.finishLoc(start),
+          type: 'TSModuleDeclaration',
+          global,
+          id,
+          body,
+        };
+      }
+  }
+}
+
+export function ambiguousTypeCastToParameter(
+  parser: JSParser,
+  node: AmbiguousFlowTypeCastExpression,
+): AnyTargetAssignmentPattern {
+  const start = parser.getPosition();
+  const expr = toTargetAssignmentPattern(parser, node.expression, 'parameter');
+
+  const meta: PatternMeta = {
+    type: 'PatternMeta',
+    loc: parser.finishLoc(start),
+    optional: node.optional,
+    typeAnnotation: node.typeAnnotation,
+  };
+
+  return {
+    ...expr,
+    loc: parser.finishLoc(start),
+    // @ts-ignore
+    meta,
+  };
+}

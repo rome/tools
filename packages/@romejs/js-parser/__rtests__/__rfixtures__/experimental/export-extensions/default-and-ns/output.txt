@@ -1,0 +1,60 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 30
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExportNamedDeclaration {
+      declaration: undefined
+      exportKind: 'value'
+      specifiers: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 29
+          index: 29
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      source: StringLiteral {
+        value: 'test'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 28
+            index: 28
+            line: 1
+          }
+          start: Object {
+            column: 22
+            index: 22
+            line: 1
+          }
+        }
+      }
+    }
+  ]
+}

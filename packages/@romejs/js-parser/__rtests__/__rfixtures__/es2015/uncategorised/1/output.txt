@@ -1,0 +1,42 @@
+Program {
+  body: Array []
+  comments: Array []
+  diagnostics: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 18
+      index: 18
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  directives: Array [
+    Directive {
+      value: '\\u{714E}\\u{8336}'
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 18
+          index: 18
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+{
+  "throws": "Regular expression flags can't contain unicode escapes"
+}

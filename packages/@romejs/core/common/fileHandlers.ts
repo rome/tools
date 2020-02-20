@@ -1,0 +1,377 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import {ProjectConfig} from '@romejs/project';
+import {FileReference} from '@romejs/core';
+import {PrefetchedModuleSignatures} from '../common/bridges/WorkerBridge';
+import Worker, {ParseResult} from '../worker/Worker';
+import {PartialDiagnostics} from '@romejs/diagnostics';
+import * as compiler from '@romejs/js-compiler';
+import {check as typeCheck} from '@romejs/js-analysis';
+import {parseJSON, stringifyJSON, consumeJSONExtra} from '@romejs/codec-json';
+import {ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
+import {
+  createUnknownFilePath,
+  createAbsoluteFilePath,
+  UnknownFilePath,
+} from '@romejs/path';
+import {
+  AnalyzeDependencyResult,
+  UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
+} from './types/analyzeDependencies';
+import {readFileText} from '@romejs/fs';
+import {TransformProjectDefinition} from '@romejs/js-compiler';
+
+type ExtensionsMap = Map<string, ExtensionHandler>;
+
+export type GetFileHandlerResult = {
+  ext: string;
+  handler?: ExtensionHandler;
+};
+
+export function getFileHandlerExtensions(
+  projectConfig: ProjectConfig,
+): Array<string> {
+  return [...DEFAULT_HANDLERS.keys(), ...projectConfig.files.assetExtensions];
+}
+
+export function getFileHandler(
+  path: UnknownFilePath,
+  projectConfig: ProjectConfig,
+): GetFileHandlerResult {
+  const basename = path.getBasename();
+
+  const match = basename.match(/\.([a-zA-Z]+)$/);
+  if (match == null) {
+    return {ext: '', handler: undefined};
+  }
+
+  const ext: string = match[1];
+  let handler = DEFAULT_HANDLERS.get(ext);
+
+  // Allow setting custom assert extensions in the project config
+  if (
+    handler === undefined &&
+    projectConfig.files.assetExtensions.includes(ext)
+  ) {
+    handler = assetHandler;
+  }
+
+  return {ext, handler};
+}
+
+export function getFileHandlerAssert(
+  path: UnknownFilePath,
+  projectConfig: ProjectConfig,
+): Required<GetFileHandlerResult> {
+  const {handler, ext} = getFileHandler(path, projectConfig);
+
+  if (handler === undefined) {
+    throw new Error(`No file handler found for '${path.join()}'`);
+  } else {
+    return {handler, ext};
+  }
+}
+
+export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
+  prefetchedModuleSignatures: PrefetchedModuleSignatures;
+};
+
+export type ExtensionLintResult = {
+  formatted: string;
+  sourceText: string;
+  diagnostics: PartialDiagnostics;
+};
+
+export type ExtensionHandlerMethodInfo = {
+  file: FileReference;
+  project: TransformProjectDefinition;
+  worker: Worker;
+};
+
+export type ExtensionHandler = {
+  sourceType?: ConstSourceType;
+  syntax?: Array<ConstProgramSyntax>;
+
+  hasteMode?: 'ext' | 'noext';
+  isAsset?: boolean;
+  canHaveScale?: boolean;
+
+  lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
+  toJavaScript?: (
+    opts: ExtensionHandlerMethodInfo,
+  ) => Promise<{
+    generated: boolean;
+    sourceText: string;
+  }>;
+  analyzeDependencies?: (
+    opts: ExtensionHandlerMethodInfo,
+  ) => Promise<AnalyzeDependencyResult>;
+};
+
+const textHandler: ExtensionHandler = {
+  sourceType: 'module',
+
+  // Mock a single default export
+  // We could always just pass this through to analyzeDependencies and get the same result due to the toJavaScript call below,
+  // but the return value is predictable so we inline it
+  async analyzeDependencies() {
+    return {
+      ...UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
+      moduleType: 'es',
+      exports: [
+        {
+          type: 'local',
+          loc: undefined,
+          kind: 'value',
+          valueType: 'other',
+          name: 'default',
+        },
+      ],
+    };
+  },
+
+  async toJavaScript({file, worker}) {
+    const src = await readFileText(file.real);
+    const serial = JSON.stringify(src);
+    return {
+      sourceText: `export default ${serial};`,
+      generated: true,
+    };
+  },
+};
+
+export const ASSET_EXPORT_TEMPORARY_VALUE = 'VALUE_INJECTED_BY_BUNDLER';
+
+const assetHandler: ExtensionHandler = {
+  // analyzeDependencies shim
+  ...textHandler,
+
+  canHaveScale: true,
+  isAsset: true,
+
+  async toJavaScript({file, worker}) {
+    // This exists just so analyzeDependencies has something to look at
+    // When bundling we'll have custom logic in the compiler to handle assets and inject the correct string
+    return {
+      generated: true,
+      sourceText: `export default '${ASSET_EXPORT_TEMPORARY_VALUE}';`,
+    };
+  },
+};
+
+const jsonHandler: ExtensionHandler = {
+  // analyzeDependencies shim
+  ...textHandler,
+
+  hasteMode: 'noext',
+
+  async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {
+    const {file: ref, project} = info;
+    const {uid} = ref;
+
+    const real = createAbsoluteFilePath(ref.real);
+    const src = await readFileText(real);
+
+    const path = createUnknownFilePath(uid);
+
+    let formatted: string = src;
+
+    if (project.config.format.enabled) {
+      if (src.length > 50000) {
+        // Fast path for big JSON files
+        parseJSON({
+          path: path,
+          input: src,
+        });
+      } else {
+        const {consumer, comments, hasExtensions} = consumeJSONExtra({
+          input: src,
+          path: path,
+        });
+
+        if (hasExtensions) {
+          formatted = stringifyJSON({consumer, comments});
+        } else {
+          formatted = String(
+            JSON.stringify(consumer.asUnknown(), undefined, '  '),
+          );
+        }
+      }
+    }
+
+    return {
+      diagnostics: [],
+      sourceText: src,
+      formatted,
+    };
+  },
+
+  async toJavaScript({file}) {
+    const src = await readFileText(file.real);
+
+    // Parse the JSON to make sure it's valid
+    const obj = parseJSON({
+      path: createUnknownFilePath(file.uid),
+      input: src,
+    });
+
+    const rawJson = JSON.stringify(obj);
+    const json: string = rawJson === undefined ? 'undefined' : rawJson;
+
+    // TODO handle unicode newlines here
+    return {
+      sourceText: `export default ${json};`,
+      generated: true,
+    };
+  },
+};
+
+// Used when filtering files, inserted by buildJSHandler
+export const JS_EXTENSIONS: Array<string> = [];
+
+function buildJSHandler(
+  ext: string,
+  syntax: Array<ConstProgramSyntax>,
+  sourceType?: ConstSourceType,
+): ExtensionHandler {
+  JS_EXTENSIONS.push(ext);
+
+  return {
+    hasteMode: 'ext',
+    syntax,
+    sourceType,
+
+    async analyzeDependencies({file, worker}) {
+      const {ast, sourceText, project, generated} = await worker.parseJS(file);
+      worker.logger.info(`Analyzing:`, file.real);
+
+      return worker.api.interceptAndAddGeneratedToDiagnostics(
+        await compiler.analyzeDependencies({
+          ast,
+          sourceText,
+          project,
+          options: {},
+        }),
+        generated,
+      );
+    },
+
+    async toJavaScript({file}) {
+      return {
+        sourceText: await readFileText(file.real),
+        generated: false,
+      };
+    },
+
+    async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {
+      const {file: ref, project, prefetchedModuleSignatures, worker} = info;
+
+      const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
+        ref,
+      );
+
+      worker.logger.info(`Linting: `, ref.real);
+
+      // Run the compiler in lint-mode which is where all the rules are actually ran
+      const res = await compiler.lint({
+        options: {},
+        ast,
+        project,
+        sourceText,
+      });
+
+      // Extract lint diagnostics
+      let {diagnostics} = res;
+
+      // Only enable typechecking if enabled in .romeconfig
+      let typeCheckingEnabled = project.config.typeCheck.enabled === true;
+      if (project.config.typeCheck.libs.has(ref.real)) {
+        // don't typecheck lib files
+        typeCheckingEnabled = false;
+      }
+
+      // Run type checking if necessary
+      if (typeCheckingEnabled) {
+        const typeCheckProvider = await worker.getTypeCheckProvider(
+          ref.project,
+          prefetchedModuleSignatures,
+        );
+        const typeDiagnostics = await typeCheck({
+          ast,
+          provider: typeCheckProvider,
+          project,
+        });
+        diagnostics = [...diagnostics, ...typeDiagnostics];
+      }
+
+      return worker.api.interceptAndAddGeneratedToDiagnostics(
+        {
+          diagnostics,
+          sourceText,
+          formatted: res.src,
+        },
+        generated,
+      );
+    },
+  };
+}
+
+const DEFAULT_HANDLERS: ExtensionsMap = new Map();
+
+const DEFUALT_ASSET_EXTENSIONS = [
+  // Images
+  'png',
+  'jpg',
+  'jpeg',
+  'gif',
+
+  // Video
+  'webm',
+  'mp4',
+  'm4v',
+  'avi',
+  'mkv',
+
+  // Audio
+  'mp3',
+
+  // Fonts
+  'woff',
+  'woff2',
+  'eot',
+  'ttf',
+  'otf',
+];
+for (const ext of DEFUALT_ASSET_EXTENSIONS) {
+  DEFAULT_HANDLERS.set(ext, assetHandler);
+}
+
+DEFAULT_HANDLERS.set('html', textHandler);
+DEFAULT_HANDLERS.set('htm', textHandler);
+DEFAULT_HANDLERS.set('css', textHandler);
+DEFAULT_HANDLERS.set('txt', textHandler);
+DEFAULT_HANDLERS.set('md', textHandler);
+DEFAULT_HANDLERS.set('csv', textHandler);
+DEFAULT_HANDLERS.set('tsv', textHandler);
+
+DEFAULT_HANDLERS.set('js', buildJSHandler('js', ['jsx', 'flow'])); // TODO eventually remove the syntax shit
+DEFAULT_HANDLERS.set('jsx', buildJSHandler('jsx', ['jsx']));
+DEFAULT_HANDLERS.set('cjs', buildJSHandler('cjs', [], 'script'));
+DEFAULT_HANDLERS.set('mjs', buildJSHandler('mjs', [], 'module'));
+DEFAULT_HANDLERS.set('ts', buildJSHandler('ts', ['ts'], 'module'));
+DEFAULT_HANDLERS.set('tsx', buildJSHandler('tsx', ['ts', 'jsx'], 'module'));
+DEFAULT_HANDLERS.set('json', jsonHandler);
+DEFAULT_HANDLERS.set('rjson', jsonHandler);
+
+// These are extensions that be implicitly tried when a file is referenced
+// This is mostly for compatibility with Node.js projects. This list should not
+// be extended. Explicit extensions are required in the browser for as modules and
+// should be required everywhere.
+// TypeScript is unfortunately included here as it produces an error if you use an
+// import source with ".ts"
+export const IMPLICIT_JS_EXTENSIONS = ['js', 'json', 'ts', 'tsx'];

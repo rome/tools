@@ -1,0 +1,469 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 131
+      line: 8
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ClassDeclaration {
+      id: BindingIdentifier {
+        name: 'Query'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 11
+            index: 11
+            line: 1
+          }
+          start: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+        }
+      }
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 1
+          index: 130
+          line: 7
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      meta: ClassHead {
+        implements: undefined
+        superClass: undefined
+        superTypeParameters: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 1
+            index: 130
+            line: 7
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        body: Array [
+          ClassMethod {
+            kind: 'method'
+            key: StaticPropertyKey {
+              value: Identifier {
+                name: 'queryAll'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 19
+                    index: 33
+                    line: 2
+                  }
+                  start: Object {
+                    column: 11
+                    index: 25
+                    line: 2
+                  }
+                }
+              }
+              variance: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 19
+                  index: 33
+                  line: 2
+                }
+                start: Object {
+                  column: 11
+                  index: 25
+                  line: 2
+                }
+              }
+            }
+            typeParameters: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 5
+                index: 128
+                line: 6
+              }
+              start: Object {
+                column: 4
+                index: 18
+                line: 2
+              }
+            }
+            meta: ClassPropertyMeta {
+              abstract: false
+              accessibility: undefined
+              optional: false
+              readonly: false
+              static: false
+              typeAnnotation: undefined
+              start: Object {
+                column: 4
+                index: 18
+                line: 2
+              }
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 19
+                  index: 33
+                  line: 2
+                }
+                start: Object {
+                  column: 4
+                  index: 18
+                  line: 2
+                }
+              }
+            }
+            head: FunctionHead {
+              async: true
+              generator: true
+              hasHoistedVars: false
+              predicate: undefined
+              rest: undefined
+              returnType: undefined
+              thisType: undefined
+              typeParameters: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 25
+                  index: 39
+                  line: 2
+                }
+                start: Object {
+                  column: 25
+                  index: 39
+                  line: 2
+                }
+              }
+              params: Array [
+                BindingIdentifier {
+                  name: 'ids'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 23
+                      index: 37
+                      line: 2
+                    }
+                    start: Object {
+                      column: 20
+                      index: 34
+                      line: 2
+                    }
+                  }
+                  meta: PatternMeta {
+                    optional: undefined
+                    typeAnnotation: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 23
+                        index: 37
+                        line: 2
+                      }
+                      start: Object {
+                        column: 20
+                        index: 34
+                        line: 2
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+            body: BlockStatement {
+              directives: Array []
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 5
+                  index: 128
+                  line: 6
+                }
+                start: Object {
+                  column: 25
+                  index: 39
+                  line: 2
+                }
+              }
+              body: Array [
+                ForOfStatement {
+                  await: false
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 9
+                      index: 122
+                      line: 5
+                    }
+                    start: Object {
+                      column: 8
+                      index: 49
+                      line: 3
+                    }
+                  }
+                  right: ReferenceIdentifier {
+                    name: 'ids'
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 28
+                        index: 69
+                        line: 3
+                      }
+                      start: Object {
+                        column: 25
+                        index: 66
+                        line: 3
+                      }
+                    }
+                  }
+                  left: VariableDeclaration {
+                    kind: 'const'
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 21
+                        index: 62
+                        line: 3
+                      }
+                      start: Object {
+                        column: 13
+                        index: 54
+                        line: 3
+                      }
+                    }
+                    declarations: Array [
+                      VariableDeclarator {
+                        id: BindingIdentifier {
+                          name: 'id'
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 21
+                              index: 62
+                              line: 3
+                            }
+                            start: Object {
+                              column: 19
+                              index: 60
+                              line: 3
+                            }
+                          }
+                        }
+                        init: undefined
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 21
+                            index: 62
+                            line: 3
+                          }
+                          start: Object {
+                            column: 19
+                            index: 60
+                            line: 3
+                          }
+                        }
+                      }
+                    ]
+                  }
+                  body: BlockStatement {
+                    directives: Array []
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 9
+                        index: 122
+                        line: 5
+                      }
+                      start: Object {
+                        column: 30
+                        index: 71
+                        line: 3
+                      }
+                    }
+                    body: Array [
+                      ExpressionStatement {
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 39
+                            index: 112
+                            line: 4
+                          }
+                          start: Object {
+                            column: 12
+                            index: 85
+                            line: 4
+                          }
+                        }
+                        expression: YieldExpression {
+                          delegate: false
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 38
+                              index: 111
+                              line: 4
+                            }
+                            start: Object {
+                              column: 12
+                              index: 85
+                              line: 4
+                            }
+                          }
+                          argument: AwaitExpression {
+                            loc: Object {
+                              filename: '..'
+                              end: Object {
+                                column: 38
+                                index: 111
+                                line: 4
+                              }
+                              start: Object {
+                                column: 18
+                                index: 91
+                                line: 4
+                              }
+                            }
+                            argument: CallExpression {
+                              loc: Object {
+                                filename: '..'
+                                end: Object {
+                                  column: 38
+                                  index: 111
+                                  line: 4
+                                }
+                                start: Object {
+                                  column: 24
+                                  index: 97
+                                  line: 4
+                                }
+                              }
+                              arguments: Array [
+                                ReferenceIdentifier {
+                                  name: 'id'
+                                  loc: Object {
+                                    filename: '..'
+                                    end: Object {
+                                      column: 37
+                                      index: 110
+                                      line: 4
+                                    }
+                                    start: Object {
+                                      column: 35
+                                      index: 108
+                                      line: 4
+                                    }
+                                  }
+                                }
+                              ]
+                              callee: MemberExpression {
+                                loc: Object {
+                                  filename: '..'
+                                  end: Object {
+                                    column: 34
+                                    index: 107
+                                    line: 4
+                                  }
+                                  start: Object {
+                                    column: 24
+                                    index: 97
+                                    line: 4
+                                  }
+                                }
+                                object: ThisExpression {
+                                  loc: Object {
+                                    filename: '..'
+                                    end: Object {
+                                      column: 28
+                                      index: 101
+                                      line: 4
+                                    }
+                                    start: Object {
+                                      column: 24
+                                      index: 97
+                                      line: 4
+                                    }
+                                  }
+                                }
+                                property: StaticMemberProperty {
+                                  value: Identifier {
+                                    name: 'query'
+                                    loc: Object {
+                                      filename: '..'
+                                      end: Object {
+                                        column: 34
+                                        index: 107
+                                        line: 4
+                                      }
+                                      start: Object {
+                                        column: 29
+                                        index: 102
+                                        line: 4
+                                      }
+                                    }
+                                  }
+                                  loc: Object {
+                                    filename: '..'
+                                    end: Object {
+                                      column: 34
+                                      index: 107
+                                      line: 4
+                                    }
+                                    start: Object {
+                                      column: 29
+                                      index: 102
+                                      line: 4
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

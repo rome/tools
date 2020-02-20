@@ -1,0 +1,311 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 56
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 55
+          index: 55
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 55
+            index: 55
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'f'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 5
+                  index: 5
+                  line: 1
+                }
+                start: Object {
+                  column: 4
+                  index: 4
+                  line: 1
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 54
+                    index: 54
+                    line: 1
+                  }
+                  start: Object {
+                    column: 4
+                    index: 4
+                    line: 1
+                  }
+                }
+                typeAnnotation: TSFunctionType {
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 54
+                      index: 54
+                      line: 1
+                    }
+                    start: Object {
+                      column: 7
+                      index: 7
+                      line: 1
+                    }
+                  }
+                  typeAnnotation: VoidKeywordTypeAnnotation {
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 54
+                        index: 54
+                        line: 1
+                      }
+                      start: Object {
+                        column: 50
+                        index: 50
+                        line: 1
+                      }
+                    }
+                  }
+                  meta: TSSignatureDeclarationMeta {
+                    typeParameters: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 54
+                        index: 54
+                        line: 1
+                      }
+                      start: Object {
+                        column: 7
+                        index: 7
+                        line: 1
+                      }
+                    }
+                    rest: BindingIdentifier {
+                      name: 'c'
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 35
+                          index: 35
+                          line: 1
+                        }
+                        start: Object {
+                          column: 34
+                          index: 34
+                          line: 1
+                        }
+                      }
+                      meta: PatternMeta {
+                        optional: undefined
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 45
+                            index: 45
+                            line: 1
+                          }
+                          start: Object {
+                            column: 34
+                            index: 34
+                            line: 1
+                          }
+                        }
+                        typeAnnotation: TSArrayType {
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 45
+                              index: 45
+                              line: 1
+                            }
+                            start: Object {
+                              column: 37
+                              index: 37
+                              line: 1
+                            }
+                          }
+                          elementType: NumberKeywordTypeAnnotation {
+                            loc: Object {
+                              filename: '..'
+                              end: Object {
+                                column: 43
+                                index: 43
+                                line: 1
+                              }
+                              start: Object {
+                                column: 37
+                                index: 37
+                                line: 1
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    parameters: Array [
+                      BindingIdentifier {
+                        name: 'a'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 9
+                            index: 9
+                            line: 1
+                          }
+                          start: Object {
+                            column: 8
+                            index: 8
+                            line: 1
+                          }
+                        }
+                        meta: PatternMeta {
+                          optional: undefined
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 17
+                              index: 17
+                              line: 1
+                            }
+                            start: Object {
+                              column: 8
+                              index: 8
+                              line: 1
+                            }
+                          }
+                          typeAnnotation: NumberKeywordTypeAnnotation {
+                            loc: Object {
+                              filename: '..'
+                              end: Object {
+                                column: 17
+                                index: 17
+                                line: 1
+                              }
+                              start: Object {
+                                column: 11
+                                index: 11
+                                line: 1
+                              }
+                            }
+                          }
+                        }
+                      }
+                      BindingIdentifier {
+                        name: 'b'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 20
+                            index: 20
+                            line: 1
+                          }
+                          start: Object {
+                            column: 19
+                            index: 19
+                            line: 1
+                          }
+                        }
+                        meta: PatternMeta {
+                          optional: true
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 29
+                              index: 29
+                              line: 1
+                            }
+                            start: Object {
+                              column: 19
+                              index: 19
+                              line: 1
+                            }
+                          }
+                          typeAnnotation: NumberKeywordTypeAnnotation {
+                            loc: Object {
+                              filename: '..'
+                              end: Object {
+                                column: 29
+                                index: 29
+                                line: 1
+                              }
+                              start: Object {
+                                column: 23
+                                index: 23
+                                line: 1
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 54
+                index: 54
+                line: 1
+              }
+              start: Object {
+                column: 4
+                index: 4
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

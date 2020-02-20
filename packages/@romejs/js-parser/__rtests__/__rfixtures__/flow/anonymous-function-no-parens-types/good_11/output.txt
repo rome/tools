@@ -1,0 +1,172 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 37
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    TypeAliasTypeAnnotation {
+      id: BindingIdentifier {
+        name: 'A'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+          start: Object {
+            column: 5
+            index: 5
+            line: 1
+          }
+        }
+      }
+      typeParameters: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 36
+          index: 36
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      right: FlowFunctionTypeAnnotation {
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 35
+            index: 35
+            line: 1
+          }
+          start: Object {
+            column: 9
+            index: 9
+            line: 1
+          }
+        }
+        returnType: UnionTypeAnnotation {
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 35
+              index: 35
+              line: 1
+            }
+            start: Object {
+              column: 19
+              index: 19
+              line: 1
+            }
+          }
+          types: Array [
+            BooleanKeywordTypeAnnotation {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 26
+                  index: 26
+                  line: 1
+                }
+                start: Object {
+                  column: 19
+                  index: 19
+                  line: 1
+                }
+              }
+            }
+            NumberKeywordTypeAnnotation {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 35
+                  index: 35
+                  line: 1
+                }
+                start: Object {
+                  column: 29
+                  index: 29
+                  line: 1
+                }
+              }
+            }
+          ]
+        }
+        params: Array [
+          FlowFunctionTypeParam {
+            name: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 18
+                index: 18
+                line: 1
+              }
+              start: Object {
+                column: 9
+                index: 9
+                line: 1
+              }
+            }
+            meta: PatternMeta {
+              optional: false
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 18
+                  index: 18
+                  line: 1
+                }
+                start: Object {
+                  column: 9
+                  index: 9
+                  line: 1
+                }
+              }
+              typeAnnotation: StringKeywordTypeAnnotation {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 15
+                    index: 15
+                    line: 1
+                  }
+                  start: Object {
+                    column: 9
+                    index: 9
+                    line: 1
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

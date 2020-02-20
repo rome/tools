@@ -1,0 +1,4 @@
+{
+  "throws": "The only valid meta property for import is import.meta",
+  "sourceType": "module"
+}

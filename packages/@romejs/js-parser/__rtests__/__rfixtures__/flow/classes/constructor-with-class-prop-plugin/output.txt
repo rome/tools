@@ -1,0 +1,260 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 57
+      line: 6
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ClassDeclaration {
+      id: BindingIdentifier {
+        name: 'A'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 7
+            index: 7
+            line: 1
+          }
+          start: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+        }
+      }
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 1
+          index: 56
+          line: 5
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      meta: ClassHead {
+        implements: undefined
+        superClass: undefined
+        superTypeParameters: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 1
+            index: 56
+            line: 5
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        body: Array [
+          ClassMethod {
+            kind: 'constructor'
+            key: StaticPropertyKey {
+              value: Identifier {
+                name: 'constructor'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 13
+                    index: 23
+                    line: 2
+                  }
+                  start: Object {
+                    column: 2
+                    index: 12
+                    line: 2
+                  }
+                }
+              }
+              variance: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 13
+                  index: 23
+                  line: 2
+                }
+                start: Object {
+                  column: 2
+                  index: 12
+                  line: 2
+                }
+              }
+            }
+            typeParameters: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 3
+                index: 54
+                line: 4
+              }
+              start: Object {
+                column: 2
+                index: 12
+                line: 2
+              }
+            }
+            meta: ClassPropertyMeta {
+              abstract: false
+              accessibility: undefined
+              optional: false
+              readonly: false
+              static: false
+              typeAnnotation: undefined
+              start: Object {
+                column: 2
+                index: 12
+                line: 2
+              }
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 13
+                  index: 23
+                  line: 2
+                }
+                start: Object {
+                  column: 2
+                  index: 12
+                  line: 2
+                }
+              }
+            }
+            body: BlockStatement {
+              directives: Array []
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 3
+                  index: 54
+                  line: 4
+                }
+                start: Object {
+                  column: 24
+                  index: 34
+                  line: 2
+                }
+              }
+              body: Array [
+                ReturnStatement {
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 14
+                      index: 50
+                      line: 3
+                    }
+                    start: Object {
+                      column: 4
+                      index: 40
+                      line: 3
+                    }
+                  }
+                  argument: ObjectExpression {
+                    properties: Array []
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 13
+                        index: 49
+                        line: 3
+                      }
+                      start: Object {
+                        column: 11
+                        index: 47
+                        line: 3
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+            head: FunctionHead {
+              async: false
+              generator: false
+              hasHoistedVars: false
+              params: Array []
+              predicate: undefined
+              rest: undefined
+              thisType: undefined
+              typeParameters: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 24
+                  index: 34
+                  line: 2
+                }
+                start: Object {
+                  column: 15
+                  index: 25
+                  line: 2
+                }
+              }
+              returnType: FlowGenericTypeAnnotation {
+                id: Identifier {
+                  name: 'Object'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 23
+                      index: 33
+                      line: 2
+                    }
+                    start: Object {
+                      column: 17
+                      index: 27
+                      line: 2
+                    }
+                  }
+                }
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 23
+                    index: 33
+                    line: 2
+                  }
+                  start: Object {
+                    column: 17
+                    index: 27
+                    line: 2
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

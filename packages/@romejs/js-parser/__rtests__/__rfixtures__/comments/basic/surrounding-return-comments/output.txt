@@ -1,0 +1,148 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 62
+      line: 6
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentBlock {
+      value: ' before '
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 13
+          index: 13
+          line: 1
+        }
+        start: Object {
+          column: 13
+          index: 13
+          line: 1
+        }
+      }
+    }
+    CommentBlock {
+      value: ' after '
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 10
+          index: 42
+          line: 3
+        }
+        start: Object {
+          column: 10
+          index: 42
+          line: 3
+        }
+      }
+    }
+  ]
+  body: Array [
+    FunctionDeclaration {
+      id: BindingIdentifier {
+        name: 'a'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 10
+            index: 10
+            line: 1
+          }
+          start: Object {
+            column: 9
+            index: 9
+            line: 1
+          }
+        }
+      }
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 1
+          index: 61
+          line: 5
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      head: FunctionHead {
+        async: false
+        generator: false
+        hasHoistedVars: false
+        params: Array []
+        predicate: undefined
+        rest: undefined
+        returnType: undefined
+        thisType: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 13
+            index: 13
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+      }
+      body: BlockStatement {
+        directives: Array []
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 1
+            index: 61
+            line: 5
+          }
+          start: Object {
+            column: 13
+            index: 13
+            line: 1
+          }
+        }
+        body: Array [
+          ReturnStatement {
+            argument: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 11
+                index: 43
+                line: 3
+              }
+              start: Object {
+                column: 4
+                index: 36
+                line: 3
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

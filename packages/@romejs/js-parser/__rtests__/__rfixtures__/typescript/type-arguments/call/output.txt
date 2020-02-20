@@ -1,0 +1,250 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 19
+      line: 3
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 7
+          index: 7
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: CallExpression {
+        arguments: Array []
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        callee: ReferenceIdentifier {
+          name: 'f'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 1
+              index: 1
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+        typeArguments: TSTypeParameterInstantiation {
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 4
+              index: 4
+              line: 1
+            }
+            start: Object {
+              column: 1
+              index: 1
+              line: 1
+            }
+          }
+          params: Array [
+            TSTypeReference {
+              typeParameters: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 3
+                  index: 3
+                  line: 1
+                }
+                start: Object {
+                  column: 2
+                  index: 2
+                  line: 1
+                }
+              }
+              typeName: ReferenceIdentifier {
+                name: 'T'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 3
+                    index: 3
+                    line: 1
+                  }
+                  start: Object {
+                    column: 2
+                    index: 2
+                    line: 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 10
+          index: 18
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 8
+          line: 2
+        }
+      }
+      expression: CallExpression {
+        arguments: Array []
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 9
+            index: 17
+            line: 2
+          }
+          start: Object {
+            column: 0
+            index: 8
+            line: 2
+          }
+        }
+        callee: ReferenceIdentifier {
+          name: 'f'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 1
+              index: 9
+              line: 2
+            }
+            start: Object {
+              column: 0
+              index: 8
+              line: 2
+            }
+          }
+        }
+        typeArguments: TSTypeParameterInstantiation {
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 7
+              index: 15
+              line: 2
+            }
+            start: Object {
+              column: 1
+              index: 9
+              line: 2
+            }
+          }
+          params: Array [
+            TSTypeReference {
+              typeParameters: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 3
+                  index: 11
+                  line: 2
+                }
+                start: Object {
+                  column: 2
+                  index: 10
+                  line: 2
+                }
+              }
+              typeName: ReferenceIdentifier {
+                name: 'T'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 3
+                    index: 11
+                    line: 2
+                  }
+                  start: Object {
+                    column: 2
+                    index: 10
+                    line: 2
+                  }
+                }
+              }
+            }
+            TSTypeReference {
+              typeParameters: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 14
+                  line: 2
+                }
+                start: Object {
+                  column: 5
+                  index: 13
+                  line: 2
+                }
+              }
+              typeName: ReferenceIdentifier {
+                name: 'U'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 6
+                    index: 14
+                    line: 2
+                  }
+                  start: Object {
+                    column: 5
+                    index: 13
+                    line: 2
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

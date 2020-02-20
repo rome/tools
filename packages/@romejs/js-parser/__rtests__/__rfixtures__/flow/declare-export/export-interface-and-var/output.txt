@@ -1,0 +1,225 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 89
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    FlowDeclareModule {
+      id: StringLiteral {
+        value: 'foo'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 20
+            index: 20
+            line: 1
+          }
+          start: Object {
+            column: 15
+            index: 15
+            line: 1
+          }
+        }
+      }
+      kind: 'commonjs'
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 88
+          index: 88
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      body: BlockStatement {
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 88
+            index: 88
+            line: 1
+          }
+          start: Object {
+            column: 21
+            index: 21
+            line: 1
+          }
+        }
+        body: Array [
+          FlowDeclareExportNamed {
+            exportKind: 'type'
+            source: undefined
+            specifiers: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 54
+                index: 54
+                line: 1
+              }
+              start: Object {
+                column: 23
+                index: 23
+                line: 1
+              }
+            }
+            declaration: FlowInterfaceDeclaration {
+              id: BindingIdentifier {
+                name: 'bar'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 51
+                    index: 51
+                    line: 1
+                  }
+                  start: Object {
+                    column: 48
+                    index: 48
+                    line: 1
+                  }
+                }
+              }
+              extends: Array []
+              implements: Array []
+              mixins: Array []
+              typeParameters: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 54
+                  index: 54
+                  line: 1
+                }
+                start: Object {
+                  column: 38
+                  index: 38
+                  line: 1
+                }
+              }
+              body: FlowObjectTypeAnnotation {
+                exact: false
+                inexact: undefined
+                properties: Array []
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 54
+                    index: 54
+                    line: 1
+                  }
+                  start: Object {
+                    column: 52
+                    index: 52
+                    line: 1
+                  }
+                }
+              }
+            }
+          }
+          FlowDeclareExportNamed {
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 86
+                index: 86
+                line: 1
+              }
+              start: Object {
+                column: 55
+                index: 55
+                line: 1
+              }
+            }
+            declaration: FlowDeclareVariable {
+              id: BindingIdentifier {
+                name: 'baz'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 85
+                    index: 85
+                    line: 1
+                  }
+                  start: Object {
+                    column: 74
+                    index: 74
+                    line: 1
+                  }
+                }
+                meta: PatternMeta {
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 85
+                      index: 85
+                      line: 1
+                    }
+                    start: Object {
+                      column: 74
+                      index: 74
+                      line: 1
+                    }
+                  }
+                  typeAnnotation: NumberKeywordTypeAnnotation {
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 85
+                        index: 85
+                        line: 1
+                      }
+                      start: Object {
+                        column: 79
+                        index: 79
+                        line: 1
+                      }
+                    }
+                  }
+                }
+              }
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 86
+                  index: 86
+                  line: 1
+                }
+                start: Object {
+                  column: 70
+                  index: 70
+                  line: 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: true
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 37
+      index: 37
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 37
+          index: 37
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'var'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 37
+            index: 37
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'hi'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 6
+                  line: 1
+                }
+                start: Object {
+                  column: 4
+                  index: 4
+                  line: 1
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 36
+                index: 36
+                line: 1
+              }
+              start: Object {
+                column: 4
+                index: 4
+                line: 1
+              }
+            }
+            init: FunctionExpression {
+              id: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 36
+                  index: 36
+                  line: 1
+                }
+                start: Object {
+                  column: 9
+                  index: 9
+                  line: 1
+                }
+              }
+              head: FunctionHead {
+                async: false
+                generator: false
+                hasHoistedVars: false
+                params: Array []
+                predicate: undefined
+                returnType: undefined
+                thisType: undefined
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 25
+                    index: 25
+                    line: 1
+                  }
+                  start: Object {
+                    column: 9
+                    index: 9
+                    line: 1
+                  }
+                }
+                rest: BindingIdentifier {
+                  name: 'r'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 23
+                      index: 23
+                      line: 1
+                    }
+                    start: Object {
+                      column: 22
+                      index: 22
+                      line: 1
+                    }
+                  }
+                  meta: PatternMeta {
+                    optional: undefined
+                    typeAnnotation: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 23
+                        index: 23
+                        line: 1
+                      }
+                      start: Object {
+                        column: 22
+                        index: 22
+                        line: 1
+                      }
+                    }
+                  }
+                }
+              }
+              body: BlockStatement {
+                directives: Array []
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 36
+                    index: 36
+                    line: 1
+                  }
+                  start: Object {
+                    column: 25
+                    index: 25
+                    line: 1
+                  }
+                }
+                body: Array [
+                  ExpressionStatement {
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 34
+                        index: 34
+                        line: 1
+                      }
+                      start: Object {
+                        column: 27
+                        index: 27
+                        line: 1
+                      }
+                    }
+                    expression: CallExpression {
+                      arguments: Array []
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 34
+                          index: 34
+                          line: 1
+                        }
+                        start: Object {
+                          column: 27
+                          index: 27
+                          line: 1
+                        }
+                      }
+                      callee: ReferenceIdentifier {
+                        name: 'sayHi'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 32
+                            index: 32
+                            line: 1
+                          }
+                          start: Object {
+                            column: 27
+                            index: 27
+                            line: 1
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
