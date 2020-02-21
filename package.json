@@ -9,5 +9,5 @@
     "@types/react-dom": "^16.8.5",
     "typescript": "^3.7.0"
   },
-  "version": "0.0.0"
+  "version": "0.0.1"
 }
