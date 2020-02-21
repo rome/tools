@@ -1,8 +1,8 @@
-name: Typecheck
+name: CI
 on: [push, pull_request]
 
 jobs:
-  build:
+  typecheck:
     runs-on: ubuntu-latest
 
     steps:
@@ -12,3 +12,14 @@ jobs:
           node-version: '13.x'
       - name: Run TypeScript
         run: node ./node_modules/.bin/tsc --noEmit
+
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+      - name: Run a one-line script
+        run: echo Hello, world!
