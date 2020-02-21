@@ -7,5 +7,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
       - name: Run a one-line script
         run: echo Hello, world!
