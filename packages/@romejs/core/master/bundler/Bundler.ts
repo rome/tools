@@ -265,6 +265,9 @@ export default class Bundler {
       }
     }
 
+    // TODO `{type: "module"}` will always fail since we've produced CJS bundles
+    delete newManifest.type;
+
     return newManifest;
   }
 

@@ -2,8 +2,9 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  typecheck:
+  typescript:
     runs-on: ubuntu-latest
+    name: TypeScript Check
 
     steps:
       - uses: actions/checkout@v2
@@ -14,6 +15,7 @@ jobs:
         run: node ./node_modules/.bin/tsc --noEmit
 
   tests:
+    name: Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -23,3 +25,25 @@ jobs:
           node-version: '13.x'
       - name: Run a one-line script
         run: echo Hello, world!
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [typescript, tests]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+
+      - name: Build release
+        run: ./scripts/build-release dist
+
+      - name: Create tarball
+        run: tar -C dist -czvf dist.tar.gz .
+
+      - name: Upload tarball
+        uses: actions/upload-artifact@v1
+        with:
+          name: package.tgz
+          path: dist.tar.gz

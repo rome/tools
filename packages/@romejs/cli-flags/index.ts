@@ -8,7 +8,6 @@
 import {ParserInterface, ParserOptions} from './Parser';
 import {Reporter} from '@romejs/cli-reporter';
 import Parser from './Parser';
-@#$
 
 export {ParserInterface as FlagParser};
 

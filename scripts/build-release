@@ -9,15 +9,6 @@ set -e
 
 CURR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 ROME_ROOT="$CURR_DIR/.."
+PKG_ROOT="$ROME_ROOT/packages/rome"
 
-cd "$ROME_ROOT"
-
-TEMP_DIR=$(mktemp -d)
-
-"$ROME_ROOT/scripts/build-release" "$TEMP_DIR"
-rm -rf /tmp/rome-*
-
-VENDOR_ROME="$ROME_ROOT/scripts/vendor/rome.cjs"
-mv "$TEMP_DIR/index.js" "$VENDOR_ROME"
-mv "$TEMP_DIR/index.js.map" "$VENDOR_ROME.map"
-rm -rf "$TEMP_DIR"
+"$ROME_ROOT/scripts/dev-rome" bundle "$PKG_ROOT" $1

@@ -9,5 +9,12 @@
     "@types/react-dom": "^16.8.5",
     "typescript": "^3.7.0"
   },
-  "version": "0.0.2"
+  "version": "0.0.2",
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 2,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "jsxBracketSameLine": true
+  }
 }
