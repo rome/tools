@@ -25,7 +25,9 @@ export type InterfaceToObject<T> = T extends {}
 
 export type UnknownObject = Dict<unknown>;
 
-export function isPlainObject(obj: unknown): obj is UnknownObject {
+export function isPlainObject<T = UnknownObject>(
+  obj: unknown,
+): obj is UnknownObject & T {
   return typeof obj === 'object' && obj !== null && !Array.isArray(obj);
 }
 

@@ -24,6 +24,7 @@ import {
   arrayOfPatterns,
   mergeArrays,
   mergeAbsoluteFilePathSets,
+  getParentConfigDependencies,
 } from './utils';
 import {DEFAULT_PROJECT_CONFIG} from './types';
 import {consumeJSONExtra, ConsumeJSONResult} from '@romejs/codec-json';
@@ -31,10 +32,7 @@ import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
 import {coerce1, number0, add, inc} from '@romejs/ob1';
 import {existsSync, readFileTextSync, readdirSync, lstatSync} from '@romejs/fs';
 import crypto = require('crypto');
-import {
-  ROME_CONFIG_PACKAGE_JSON_FIELD,
-  ROME_CONFIG_FILENAME_EXTENSIONS,
-} from './constants';
+import {ROME_CONFIG_PACKAGE_JSON_FIELD} from './constants';
 import {parseSemverRange} from '@romejs/codec-semver';
 
 const WATCHMAN_CONFIG_FILENAME = '.watchmanconfig';
@@ -60,13 +58,13 @@ export function loadCompleteProjectConfig(
     },
   };
 
+  const name = consumer.get('name').asString(projectFolder.getBasename());
+
   const config: ProjectConfig = {
     ...DEFAULT_PROJECT_CONFIG,
-    name: consumer.get('name').asString(projectFolder.getBasename()),
-    isolated:
-      partial.isolated === undefined
-        ? DEFAULT_PROJECT_CONFIG.isolated
-        : partial.isolated,
+    name,
+    root:
+      partial.root === undefined ? DEFAULT_PROJECT_CONFIG.root : partial.root,
     ...mergePartialConfig(defaultConfig, partial),
   };
 
@@ -153,9 +151,15 @@ export function normalizeProjectConfig(
 } {
   let {consumer} = res;
 
+  let configSourceSubKey;
+  let name: undefined | string;
   const isInPackageJson = configPath.getBasename() === 'package.json';
   if (isInPackageJson) {
+    // Infer name from package.json
+    name = consumer.get('name').asStringOrVoid();
+
     consumer = consumer.get(ROME_CONFIG_PACKAGE_JSON_FIELD);
+    configSourceSubKey = ROME_CONFIG_PACKAGE_JSON_FIELD;
   }
 
   const hash = crypto
@@ -180,21 +184,18 @@ export function normalizeProjectConfig(
     targets: new Map(),
   };
 
-  let sourceType: ProjectConfigMeta['sourceType'] = 'vanilla';
-  if (isInPackageJson) {
-    sourceType = 'package';
-  } else if (configPath.getBasename() === ROME_CONFIG_FILENAME_EXTENSIONS) {
-    sourceType = 'extensions';
+  if (name !== undefined) {
+    config.name = name;
   }
 
   const meta: ProjectConfigMetaHard = {
-    sourceType,
-    folder: projectFolder,
+    projectFolder,
     configPath,
     consumer,
     consumersChain: [consumer],
     configHashes: [hash],
-    configDependencies: new AbsoluteFilePathSet([configPath]),
+    configSourceSubKey: configSourceSubKey,
+    configDependencies: getParentConfigDependencies(projectFolder),
   };
 
   // We never use `name` here but it's used in `loadCompleteProjectConfig`
@@ -214,8 +215,8 @@ export function normalizeProjectConfig(
     });
   }
 
-  if (consumer.has('isolated')) {
-    config.isolated = consumer.get('isolated').asBoolean();
+  if (consumer.has('root')) {
+    config.root = consumer.get('root').asBoolean();
   }
 
   const cache = consumer.get('cache');

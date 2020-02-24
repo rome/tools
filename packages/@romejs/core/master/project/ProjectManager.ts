@@ -18,6 +18,7 @@ import {
   ROME_CONFIG_WARN_FILENAMES,
   ROME_CONFIG_FILENAMES,
   ROME_CONFIG_PACKAGE_JSON_FIELD,
+  ROME_CONFIG_FOLDER,
 } from '@romejs/project';
 import {
   WorkerProjects,
@@ -32,6 +33,7 @@ import {
   UnknownFilePath,
   URLFilePath,
   AbsoluteFilePathMap,
+  UnknownFilePathMap,
 } from '@romejs/path';
 import {JSONFileReference, FileReference} from '../../common/types/files';
 import {
@@ -96,7 +98,7 @@ export default class ProjectManager {
     // We maintain these maps so we can reverse any uids, and protect against collisions
     this.uidToFilename = new Map();
     this.filenameToUid = new AbsoluteFilePathMap();
-    this.remoteToLocalPath = new Map();
+    this.remoteToLocalPath = new UnknownFilePathMap();
     this.localPathToRemote = new AbsoluteFilePathMap();
   }
 
@@ -112,7 +114,7 @@ export default class ProjectManager {
   uidToFilename: Map<string, AbsoluteFilePath>;
   filenameToUid: AbsoluteFilePathMap<string>;
 
-  remoteToLocalPath: Map<string, AbsoluteFilePath>;
+  remoteToLocalPath: UnknownFilePathMap<AbsoluteFilePath>;
   localPathToRemote: AbsoluteFilePathMap<URLFilePath>;
 
   projects: Map<number, ProjectDefinition>;
@@ -255,10 +257,8 @@ export default class ProjectManager {
     local: AbsoluteFilePath,
     url: URLFilePath,
   ): FileReference {
-    const uid = url.join();
-
-    if (!this.remoteToLocalPath.has(uid)) {
-      this.remoteToLocalPath.set(uid, local);
+    if (!this.remoteToLocalPath.has(url)) {
+      this.remoteToLocalPath.set(url, local);
       this.localPathToRemote.set(local, url);
     }
 
@@ -731,8 +731,8 @@ export default class ProjectManager {
 
     if (project) {
       // Continue searching for projects up the directory
-      // We don't do this for isolated projects since it would be a waste, but there's no implications other than some unnecessary work if we did
-      if (project.config.isolated === false && syncProject === undefined) {
+      // We don't do this for root projects since it would be a waste, but there's no implications other than some unnecessary work if we did
+      if (project.config.root === false && syncProject === undefined) {
         await this.findProject(project.folder.getParent());
       }
 
@@ -774,8 +774,8 @@ export default class ProjectManager {
     while (currProject !== undefined) {
       projects.push(currProject);
 
-      // Isolated projects shouldn't be considered to have any parents
-      if (currProject.config.isolated) {
+      // root projects shouldn't be considered to have any parents
+      if (currProject.config.root) {
         break;
       }
 
@@ -833,10 +833,22 @@ export default class ProjectManager {
     for (const dir of parentDirectories) {
       // Check for dedicated project configs
       for (const configFilename of ROME_CONFIG_FILENAMES) {
+        // Check in root
         const configPath = dir.append(configFilename);
         const hasProject = await this.master.memoryFs.existsHard(configPath);
         if (hasProject) {
           return this.queueAddProject(dir, configPath);
+        }
+
+        // Check a .config folder
+        const configPathNested = dir
+          .append(ROME_CONFIG_FOLDER)
+          .append(configFilename);
+        const hasProjectNested = await this.master.memoryFs.existsHard(
+          configPathNested,
+        );
+        if (hasProjectNested) {
+          return this.queueAddProject(dir, configPathNested);
         }
       }
 

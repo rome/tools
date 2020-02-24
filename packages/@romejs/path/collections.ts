@@ -18,6 +18,7 @@ class FilePathMap<FilePath extends UnknownFilePath, Value> {
   constructor(entries?: Array<[FilePath, Value]>) {
     this.joinedToValue = new Map();
     this.joinedToPath = new Map();
+    this.size = 0;
 
     if (entries !== undefined) {
       for (const [key, value] of entries) {
@@ -28,9 +29,10 @@ class FilePathMap<FilePath extends UnknownFilePath, Value> {
 
   joinedToValue: Map<string, Value>;
   joinedToPath: Map<string, FilePath>;
+  size: number;
 
-  get size(): number {
-    return this.joinedToValue.size;
+  _updateSize() {
+    this.size = this.joinedToValue.size;
   }
 
   *[Symbol.iterator](): Iterator<[FilePath, Value]> {
@@ -47,6 +49,7 @@ class FilePathMap<FilePath extends UnknownFilePath, Value> {
   clear() {
     this.joinedToValue.clear();
     this.joinedToPath.clear();
+    this._updateSize();
   }
 
   keys(): Iterable<FilePath> {
@@ -61,6 +64,7 @@ class FilePathMap<FilePath extends UnknownFilePath, Value> {
     const joined = path.join();
     this.joinedToValue.delete(joined);
     this.joinedToPath.delete(joined);
+    this._updateSize();
   }
 
   has(path: FilePath): boolean {
@@ -75,12 +79,14 @@ class FilePathMap<FilePath extends UnknownFilePath, Value> {
     const joined = path.join();
     this.joinedToValue.set(joined, value);
     this.joinedToPath.set(joined, path);
+    this._updateSize();
   }
 }
 
 class FilePathSet<FilePath extends UnknownFilePath> {
   constructor(entries?: Array<FilePath>) {
     this.map = new FilePathMap();
+    this.size = 0;
 
     if (entries !== undefined) {
       for (const path of entries) {
@@ -90,6 +96,11 @@ class FilePathSet<FilePath extends UnknownFilePath> {
   }
 
   map: FilePathMap<FilePath, void>;
+  size: number;
+
+  _updateSize() {
+    this.size = this.map.size;
+  }
 
   [Symbol.iterator](): Iterator<FilePath> {
     return this.map.keys()[Symbol.iterator]();
@@ -101,34 +112,49 @@ class FilePathSet<FilePath extends UnknownFilePath> {
 
   add(path: FilePath) {
     this.map.set(path);
+    this._updateSize();
   }
 
   delete(path: FilePath) {
     this.map.delete(path);
+    this._updateSize();
   }
 
   clear() {
     this.map.clear();
+    this._updateSize();
   }
 }
 
 export class AbsoluteFilePathMap<Value> extends FilePathMap<
   AbsoluteFilePath,
   Value
-> {}
+> {
+  type: 'absolute' = 'absolute';
+}
 
 export class RelativeFilePathMap<Value> extends FilePathMap<
   RelativeFilePath,
   Value
-> {}
+> {
+  type: 'relative' = 'relative';
+}
 
 export class UnknownFilePathMap<Value> extends FilePathMap<
   UnknownFilePath,
   Value
-> {}
+> {
+  type: 'unknown' = 'unknown';
+}
 
-export class AbsoluteFilePathSet extends FilePathSet<AbsoluteFilePath> {}
+export class AbsoluteFilePathSet extends FilePathSet<AbsoluteFilePath> {
+  type: 'absolute' = 'absolute';
+}
 
-export class RelativeFilePathSet extends FilePathSet<RelativeFilePath> {}
+export class RelativeFilePathSet extends FilePathSet<RelativeFilePath> {
+  type: 'relative' = 'relative';
+}
 
-export class UnknownFilePathSet extends FilePathSet<UnknownFilePath> {}
+export class UnknownFilePathSet extends FilePathSet<UnknownFilePath> {
+  type: 'unknown' = 'unknown';
+}

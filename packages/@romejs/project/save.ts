@@ -22,7 +22,7 @@ export async function modifyProjectConfig(
   },
 ) {
   const meta = assertHardMeta(softMeta);
-  const {configPath, sourceType} = meta;
+  const {configPath, configSourceSubKey: consumerSubKey} = meta;
 
   await callbacks.pre(meta);
 
@@ -34,10 +34,10 @@ export async function modifyProjectConfig(
   });
 
   const {consumer} = res;
-  if (sourceType === 'package') {
-    await callbacks.modify(consumer.get(ROME_CONFIG_PACKAGE_JSON_FIELD));
-  } else {
+  if (consumerSubKey === undefined) {
     await callbacks.modify(consumer);
+  } else {
+    await callbacks.modify(consumer.get(consumerSubKey));
   }
 
   // Stringify the config
@@ -57,7 +57,7 @@ export async function modifyProjectConfig(
     });
 
     // Validate the new config
-    normalizeProjectConfig(res, configPath, stringified, meta.folder);
+    normalizeProjectConfig(res, configPath, stringified, meta.projectFolder);
   } catch (err) {
     let diagnostics = getDiagnosticsFromError(err);
     if (diagnostics === undefined) {

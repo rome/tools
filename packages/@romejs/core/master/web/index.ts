@@ -34,7 +34,8 @@ export type WebMasterTime = {
 export type WebMasterClient = WebMasterTime & {
   id: number;
   flags: ClientFlags;
-  stdout: string;
+  stdoutAnsi: string;
+  stdoutHTML: string;
 };
 
 export type WebMasterRequest = WebMasterTime & {
@@ -77,25 +78,39 @@ export class WebServer {
         flags: client.flags,
         startTime: Date.now(),
         endTime: undefined,
-        stdout: '',
+        stdoutAnsi: '',
+        stdoutHTML: '',
       };
       this.clientHistory.set(client.id, data);
       this.refreshRequests();
 
-      const reporterStream: ReporterStream = {
+      const ansiReporterStream: ReporterStream = {
         type: 'all',
         format: 'ansi',
         columns: 100,
         write(chunk) {
-          data.stdout += chunk;
+          data.stdoutAnsi += chunk;
         },
       };
 
-      client.reporter.addStream(reporterStream);
-      master.connectedReporters.addStream(reporterStream);
+      const htmlReporterStream: ReporterStream = {
+        type: 'all',
+        format: 'html',
+        columns: 100,
+        write(chunk) {
+          data.stdoutAnsi += chunk;
+        },
+      };
+
+      client.reporter.addStream(ansiReporterStream);
+      master.connectedReporters.addStream(ansiReporterStream);
+
+      client.reporter.addStream(htmlReporterStream);
+      master.connectedReporters.addStream(htmlReporterStream);
 
       client.bridge.endEvent.subscribe(() => {
-        master.connectedReporters.removeStream(reporterStream);
+        master.connectedReporters.removeStream(ansiReporterStream);
+        master.connectedReporters.removeStream(htmlReporterStream);
 
         data.endTime = Date.now();
         this.refreshRequests();

@@ -8,11 +8,12 @@
 import {Consumer} from '@romejs/consume';
 import {PathPatterns} from '@romejs/path-match';
 import {parsePathPattern} from '@romejs/path-match';
-import {AbsoluteFilePathSet} from '@romejs/path';
+import {AbsoluteFilePathSet, AbsoluteFilePath} from '@romejs/path';
 import {ProjectConfigMeta, ProjectConfigMetaHard} from './types';
+import {ROME_CONFIG_FILENAMES, ROME_CONFIG_FOLDER} from './constants';
 
 export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
-  const {configPath, folder, consumer} = meta;
+  const {configPath, projectFolder: folder, consumer} = meta;
   if (
     configPath === undefined ||
     folder === undefined ||
@@ -25,7 +26,7 @@ export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
     ...meta,
     configPath,
     consumer,
-    folder,
+    projectFolder: folder,
   };
 }
 
@@ -76,4 +77,22 @@ export function mergeAbsoluteFilePathSets(
   }
 
   return new AbsoluteFilePathSet([...a, ...b]);
+}
+
+// Get an array of possible files in parent folders that will cause a project cache invalidation
+export function getParentConfigDependencies(
+  path: AbsoluteFilePath,
+): AbsoluteFilePathSet {
+  const deps: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+
+  for (const folder of path.getChain()) {
+    deps.add(folder.append('package.json'));
+
+    for (const configFilename of ROME_CONFIG_FILENAMES) {
+      deps.add(folder.append(configFilename));
+      deps.add(folder.append(ROME_CONFIG_FOLDER).append(configFilename));
+    }
+  }
+
+  return deps;
 }

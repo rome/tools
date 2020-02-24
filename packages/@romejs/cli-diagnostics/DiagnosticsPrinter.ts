@@ -39,9 +39,12 @@ import {
   AbsoluteFilePath,
   createAbsoluteFilePath,
   createUnknownFilePath,
+  UnknownFilePath,
+  UnknownFilePathMap,
+  UnknownFilePathSet,
 } from '@romejs/path';
 import {Number1, Number0} from '@romejs/ob1';
-import fs = require('fs');
+import {existsSync, readFileTextSync, lstatSync} from '@romejs/fs';
 
 type Banner = {
   // Array<number> should really be [number, number, number], but TypeScript widens the imported types
@@ -53,14 +56,14 @@ type Banner = {
 type PositionLike = {line: undefined | Number1; column: undefined | Number0};
 
 export function readDiagnosticsFileLocal(
-  filename: string,
+  path: AbsoluteFilePath,
 ): ReturnType<DiagnosticsFileReader> {
-  if (!fs.existsSync(filename)) {
+  if (!existsSync(path)) {
     return;
   }
 
-  const src = fs.readFileSync(filename, 'utf8');
-  const mtime = fs.lstatSync(filename).mtimeMs;
+  const src = readFileTextSync(path);
+  const mtime = lstatSync(path).mtimeMs;
   return {content: src, mtime};
 }
 
@@ -94,14 +97,14 @@ export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
 // Dependency that may not be included in the output diagnostic but whose changes may effect the validity of this one
 type ChangeFileDependency = {
   type: 'change';
-  filename: string;
+  path: UnknownFilePath;
   mtime: number;
 };
 
 // Dependency that will have a code frame in the output diagnostic
 type ReferenceFileDependency = {
   type: 'reference';
-  filename: string;
+  path: UnknownFilePath;
   mtime: undefined | number;
   sourceType: DiagnosticSourceType;
   language: DiagnosticLanguage;
@@ -109,9 +112,9 @@ type ReferenceFileDependency = {
 
 type FileDependency = ChangeFileDependency | ReferenceFileDependency;
 
-export type DiagnosticsPrinterFileSources = Map<string, Array<string>>;
+export type DiagnosticsPrinterFileSources = UnknownFilePathMap<Array<string>>;
 
-export type DiagnosticsPrinterFileMtimes = Map<string, number>;
+export type DiagnosticsPrinterFileMtimes = UnknownFilePathMap<number>;
 
 export default class DiagnosticsPrinter extends Error {
   constructor(opts: DiagnosticsPrinterOptions) {
@@ -134,8 +137,8 @@ export default class DiagnosticsPrinter extends Error {
     this.filteredCount = 0;
     this.truncatedCount = 0;
 
-    this.fileSources = new Map();
-    this.fileMtimes = new Map();
+    this.fileSources = new UnknownFilePathMap();
+    this.fileMtimes = new UnknownFilePathMap();
     this.beforeFooterPrint = [];
   }
 
@@ -239,13 +242,13 @@ export default class DiagnosticsPrinter extends Error {
     info: ChangeFileDependency | ReferenceFileDependency,
     stats: DiagnosticsFileReaderStats,
   ) {
-    this.fileMtimes.set(info.filename, stats.mtime);
+    this.fileMtimes.set(info.path, stats.mtime);
 
     if (info.type === 'reference') {
       this.fileSources.set(
-        info.filename,
+        info.path,
         toLines({
-          path: createUnknownFilePath(info.filename),
+          path: info.path,
           input: stats.content,
           sourceType: info.sourceType,
           language: info.language,
@@ -268,13 +271,19 @@ export default class DiagnosticsPrinter extends Error {
       mtime,
     } of diagnostics) {
       if (filename !== undefined) {
-        deps.push({type: 'reference', filename, mtime, language, sourceType});
+        deps.push({
+          type: 'reference',
+          path: createUnknownFilePath(filename),
+          mtime,
+          language,
+          sourceType,
+        });
       }
 
       for (const {filename, mtime} of dependencies) {
         deps.push({
           type: 'change',
-          filename,
+          path: createUnknownFilePath(filename),
           mtime,
         });
       }
@@ -287,7 +296,7 @@ export default class DiagnosticsPrinter extends Error {
         ) {
           deps.push({
             type: 'reference',
-            filename: item.filename,
+            path: createUnknownFilePath(item.filename),
             language: item.language,
             sourceType: item.sourceType,
             mtime: item.mtime,
@@ -296,20 +305,20 @@ export default class DiagnosticsPrinter extends Error {
       }
     }
 
-    const depsMap: Map<string, FileDependency> = new Map();
+    const depsMap: UnknownFilePathMap<FileDependency> = new UnknownFilePathMap();
 
     // Remove non-absolute filenames and normalize sourceType and language for conflicts
     for (const dep of deps) {
-      const path = createUnknownFilePath(dep.filename);
+      const path = dep.path;
       if (!path.isAbsolute()) {
         continue;
       }
 
-      const existing = depsMap.get(dep.filename);
+      const existing = depsMap.get(path);
 
       // reference dependency can override change since it has more metadata that needs conflict resolution
       if (existing === undefined || existing.type === 'change') {
-        depsMap.set(dep.filename, dep);
+        depsMap.set(dep.path, dep);
         continue;
       }
 
@@ -328,10 +337,15 @@ export default class DiagnosticsPrinter extends Error {
   }
 
   fetchFileSources(diagnostics: Diagnostics) {
-    for (const info of this.getDependenciesFromDiagnostics(diagnostics)) {
-      const stats = this.readFile(info.filename);
+    for (const dep of this.getDependenciesFromDiagnostics(diagnostics)) {
+      const {path} = dep;
+      if (!path.isAbsolute()) {
+        continue;
+      }
+
+      const stats = this.readFile(path.assertAbsolute());
       if (stats !== undefined) {
-        this.addFileSource(info, stats);
+        this.addFileSource(dep, stats);
       }
     }
   }
@@ -397,25 +411,27 @@ export default class DiagnosticsPrinter extends Error {
     }
 
     // Check if any files this diagnostic depends on have changed
-    let outdatedFiles: Array<string> = [];
+    let outdatedFiles: UnknownFilePathSet = new UnknownFilePathSet();
     for (const {
-      filename,
+      path,
       mtime: expectedMtime,
     } of this.getDependenciesFromDiagnostics([diag])) {
-      const mtime = this.fileMtimes.get(filename);
+      const mtime = this.fileMtimes.get(path);
       if (
         mtime !== undefined &&
         expectedMtime !== undefined &&
         mtime > expectedMtime
       ) {
-        outdatedFiles.push(filename);
+        outdatedFiles.add(path);
       }
     }
 
     const outdatedAdvice: PartialDiagnosticAdvice = [];
-    const isOutdated = outdatedFiles.length > 0;
+    const isOutdated = outdatedFiles.size > 0;
     if (isOutdated) {
-      if (outdatedFiles.length === 1 && outdatedFiles[0] === filename) {
+      const outdatedFilesArr = Array.from(outdatedFiles, path => path.join());
+
+      if (outdatedFilesArr.length === 1 && outdatedFilesArr[0] === filename) {
         outdatedAdvice.push({
           type: 'log',
           category: 'warn',
@@ -432,7 +448,9 @@ export default class DiagnosticsPrinter extends Error {
 
         outdatedAdvice.push({
           type: 'list',
-          list: outdatedFiles,
+          list: outdatedFilesArr.map(
+            filename => `<fileref target="${filename}" />`,
+          ),
         });
       }
     }

@@ -139,7 +139,7 @@ type ProjectConfigJSONObjectReducer<Object> = {
 // Base of a project config without any objects
 type ProjectConfigBase = {
   name: string;
-  isolated: boolean;
+  root: boolean;
   version: undefined | SemverRangeNode;
 };
 
@@ -156,36 +156,36 @@ type PartialProjectValue<Type> = Type extends Map<string, any>
   : Partial<Type>;
 
 export type ProjectConfigMeta = {
-  sourceType: 'vanilla' | 'extensions' | 'package';
-  folder: undefined | AbsoluteFilePath;
+  projectFolder: undefined | AbsoluteFilePath;
   configPath: undefined | AbsoluteFilePath;
   configHashes: Array<string>;
   configDependencies: AbsoluteFilePathSet;
   consumer: undefined | Consumer;
+  configSourceSubKey: undefined | string;
   consumersChain: Array<Consumer>;
 };
 
 export type ProjectConfigMetaHard = RequiredProps<
   ProjectConfigMeta,
-  'consumer' | 'folder' | 'configPath'
+  'consumer' | 'projectFolder' | 'configPath'
 >;
 
 // Final project config
 export type ProjectConfig = ProjectConfigBase & ProjectConfigObjects;
 
 export const DEFAULT_PROJECT_CONFIG_META: ProjectConfigMeta = {
-  sourceType: 'vanilla',
-  folder: undefined,
+  projectFolder: undefined,
   configPath: undefined,
   configHashes: [],
   configDependencies: new AbsoluteFilePathSet(),
   consumer: undefined,
+  configSourceSubKey: undefined,
   consumersChain: [],
 };
 
 export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
   name: 'unknown',
-  isolated: false,
+  root: false,
   version: undefined,
 
   cache: {},

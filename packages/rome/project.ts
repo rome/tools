@@ -17,6 +17,8 @@ import {
   ProjectConfig,
   ROME_CONFIG_FILENAMES,
   ROME_CONFIG_PACKAGE_JSON_FIELD,
+  ROME_CONFIG_FOLDER,
+  getParentConfigDependencies,
 } from '@romejs/project';
 import {exists, readFileText} from '@romejs/fs';
 import {consumeJSON} from '@romejs/codec-json';
@@ -49,14 +51,7 @@ function addProject(
 
   foundProjects.set(projectFolder, project);
 
-  watchEvict(
-    project,
-    new AbsoluteFilePathSet([
-      configPath,
-      ...meta.configDependencies,
-      ...getParentDependencies(projectFolder),
-    ]),
-  );
+  watchEvict(project, meta.configDependencies);
 }
 
 function watchEvict(project: FoundProject, deps: AbsoluteFilePathSet) {
@@ -84,21 +79,6 @@ function evictProject(evictProject: FoundProject) {
   }
 }
 
-// Get an array of possible files in parent folders that will cause a project cache invalidation
-function getParentDependencies(path: AbsoluteFilePath): AbsoluteFilePathSet {
-  const deps: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-
-  for (const folder of path.getChain()) {
-    deps.add(folder.append('package.json'));
-
-    for (const configFilename of ROME_CONFIG_FILENAMES) {
-      deps.add(folder.append(configFilename));
-    }
-  }
-
-  return deps;
-}
-
 export async function findProject(
   path: AbsoluteFilePath,
 ): Promise<FoundProject> {
@@ -114,7 +94,7 @@ export async function findProject(
       }
 
       // Invalidate cache entries when files that are deeper than the project we found could create a new project target
-      watchEvict(cached, getParentDependencies(segment.getParent()));
+      watchEvict(cached, getParentConfigDependencies(segment.getParent()));
 
       return cached;
     }

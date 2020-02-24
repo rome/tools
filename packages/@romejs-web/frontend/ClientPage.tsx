@@ -385,7 +385,10 @@ export default function ClientPage({
       <Inspect name="client flags" value={client.flags} />
 
       <SubHeading>Console</SubHeading>
-      <Terminal value={client.stdout} />
+      <Terminal value={client.stdoutAnsi} />
+
+      <SubHeading>HTML</SubHeading>
+      <Terminal value={client.stdoutHTML} />
 
       <SubHeading>Requests</SubHeading>
       {requests.map(request => {

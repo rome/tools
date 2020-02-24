@@ -7,13 +7,9 @@
 
 export const ROME_CONFIG_PACKAGE_JSON_FIELD = 'rome';
 
-export const ROME_CONFIG_FILENAME_VANILLA = 'rome.json';
-export const ROME_CONFIG_FILENAME_EXTENSIONS = 'rome.rjson';
+export const ROME_CONFIG_FOLDER = '.config';
 
-export const ROME_CONFIG_FILENAMES: Array<string> = [
-  ROME_CONFIG_FILENAME_VANILLA,
-  ROME_CONFIG_FILENAME_EXTENSIONS,
-];
+export const ROME_CONFIG_FILENAMES: Array<string> = ['rome.json', 'rome.rjson'];
 
 export const ROME_CONFIG_WARN_FILENAMES: Array<string> = [
   'romeconfig',

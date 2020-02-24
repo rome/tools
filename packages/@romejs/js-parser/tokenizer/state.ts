@@ -108,7 +108,7 @@ export type State = {
   // escape sequences must not be interpreted as keywords.
   escapePosition: undefined | Number0;
 
-  // TODO
+  //
   containsOctal: boolean;
   octalPosition: undefined | Number0;
 

@@ -310,7 +310,7 @@ export default class Parser<T> {
         value !== true &&
         value !== false
       ) {
-        // TODO this isn't necessarily the correct position...
+        // This isn't necessarily the correct position... Probably doesn't matter?
         this.args.push(value);
 
         //

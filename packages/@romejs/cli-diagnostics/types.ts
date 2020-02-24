@@ -20,7 +20,7 @@ export type DiagnosticsPrinterFlags = {
 };
 
 export type DiagnosticsFileReader = (
-  filename: string,
+  path: AbsoluteFilePath,
 ) => undefined | DiagnosticsFileReaderStats;
 
 export type DiagnosticsFileReaderStats = {content: string; mtime: number};

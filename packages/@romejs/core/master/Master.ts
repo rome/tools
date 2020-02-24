@@ -246,14 +246,14 @@ export default class Master {
   }
 
   readDiagnosticsPrinterFile(
-    filename: string,
+    path: AbsoluteFilePath,
   ): ReturnType<DiagnosticsFileReader> {
-    const remoteToLocal = this.projectManager.remoteToLocalPath.get(filename);
+    const remoteToLocal = this.projectManager.remoteToLocalPath.get(path);
 
     if (remoteToLocal === undefined) {
-      return readDiagnosticsFileLocal(filename);
+      return readDiagnosticsFileLocal(path);
     } else {
-      return readDiagnosticsFileLocal(remoteToLocal.join());
+      return readDiagnosticsFileLocal(remoteToLocal);
     }
   }
 

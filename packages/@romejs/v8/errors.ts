@@ -52,13 +52,18 @@ export function getErrorStructure(err: unknown): StructuredError {
   let name = 'Error';
   let message = 'Unknown message';
   let stack = undefined;
-  let frames = [];
-  let advice = [];
+  let frames: ErrorFrames = [];
+  let advice: PartialDiagnosticAdvice = [];
   let framesToPop = 0;
-
   let looksLikeValidError = false;
 
-  if (isPlainObject(err)) {
+  if (
+    isPlainObject<{
+      [ERROR_ADVICE_PROP]: unknown;
+      [ERROR_POP_FRAMES_PROP]: unknown;
+      [ERROR_FRAMES_PROP]: unknown;
+    }>(err)
+  ) {
     if (typeof err.name === 'string') {
       looksLikeValidError = true;
       name = err.name;
@@ -74,22 +79,19 @@ export function getErrorStructure(err: unknown): StructuredError {
       stack = err.stack;
     }
 
-    // @ts-ignore TODO validate
     if (Array.isArray(err[ERROR_FRAMES_PROP])) {
-      // @ts-ignore TODO validate
+      // @ts-ignore
       frames = err[ERROR_FRAMES_PROP];
     }
 
-    // @ts-ignore TODO validate
     if (Array.isArray(err[ERROR_ADVICE_PROP])) {
-      // @ts-ignore TODO validate
+      // @ts-ignore
       advice = err[ERROR_ADVICE_PROP];
     }
 
-    // @ts-ignore TODO validate
-    if (typeof err[ERROR_POP_FRAMES_PROP] === 'number') {
-      // @ts-ignore TODO validate
-      framesToPop = err[ERROR_POP_FRAMES_PROP];
+    const _framesToPop = err[ERROR_POP_FRAMES_PROP];
+    if (typeof _framesToPop === 'number') {
+      framesToPop = _framesToPop;
     }
   }
 
