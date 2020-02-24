@@ -46,7 +46,6 @@ import {
   isValidIdentifierName,
   inheritLoc,
 } from '@romejs/js-ast-utils';
-import {bindingInjector} from '../defaultHooks';
 
 function isCompatTag(tagName: undefined | string): boolean {
   return tagName !== undefined ? /^[a-z]|-/.test(tagName) : false;

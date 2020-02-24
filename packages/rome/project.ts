@@ -17,7 +17,6 @@ import {
   ProjectConfig,
   ROME_CONFIG_FILENAMES,
   ROME_CONFIG_PACKAGE_JSON_FIELD,
-  ROME_CONFIG_FOLDER,
   getParentConfigDependencies,
 } from '@romejs/project';
 import {exists, readFileText} from '@romejs/fs';

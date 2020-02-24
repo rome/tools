@@ -15,13 +15,12 @@ import Bundler from '../bundler/Bundler';
 import {WebSocketInterface, createKey} from '@romejs/codec-websocket';
 import {Reporter} from '@romejs/cli-reporter';
 import {createBridgeFromWebSocketInterface} from '@romejs/events';
-import {createUnknownFilePath, TEMP_PATH} from '@romejs/path';
+import {createUnknownFilePath} from '@romejs/path';
 import {WebServer} from './index';
 import {ProjectDefinition} from '@romejs/project';
 import {HmrClientMessage} from './hmr';
 import {consumeUrl, ConsumableUrl} from '@romejs/codec-url';
 import http = require('http');
-import {writeFile, readFileText} from '@romejs/fs';
 
 const waitForever = new Promise(() => {});
 

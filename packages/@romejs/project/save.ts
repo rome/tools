@@ -9,7 +9,6 @@ import {ProjectConfigMeta, ProjectConfigMetaHard} from './types';
 import {Consumer} from '@romejs/consume';
 import {readFileText} from '@romejs/fs';
 import {consumeJSONExtra, stringifyJSON} from '@romejs/codec-json';
-import {ROME_CONFIG_PACKAGE_JSON_FIELD} from '@romejs/project';
 import {normalizeProjectConfig} from './load';
 import {getDiagnosticsFromError, DiagnosticsError} from '@romejs/diagnostics';
 import {assertHardMeta} from './utils';

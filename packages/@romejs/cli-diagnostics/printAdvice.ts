@@ -126,6 +126,7 @@ function printFrame(
 ): boolean {
   const {reporter} = opts;
   const {start, end, filename, sourceText, marker} = item;
+  const path = createUnknownFilePath(filename);
 
   let cleanMarker: string = '';
   if (marker !== undefined) {
@@ -135,13 +136,13 @@ function printFrame(
   let lines: undefined | Array<string>;
   if (sourceText !== undefined) {
     lines = toLines({
-      path: createUnknownFilePath(filename),
+      path,
       input: sourceText,
       sourceType: item.sourceType,
       language: item.language,
     });
   } else if (filename !== undefined) {
-    lines = opts.fileSources.get(filename);
+    lines = opts.fileSources.get(path);
   }
   if (lines === undefined) {
     lines = [];
