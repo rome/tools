@@ -274,42 +274,12 @@ function buildChildren(
   return elems;
 }
 
-function shouldIgnoreFbt(path: Path, node: JSXElement): boolean {
-  const {name} = node;
-  if (name.type === 'JSXNamespacedName' && name.namespace.name === 'fbt') {
-    return true;
-  }
-
-  if (name.type === 'JSXReferenceIdentifier' && name.name === 'fbt') {
-    return true;
-  }
-
-  const fbtAncestor = path.findAncestry(path => {
-    const {node} = path;
-    return jsxElement.is(node) && shouldIgnoreFbt(path, node);
-  });
-  return fbtAncestor !== undefined;
-}
-
 export default {
   name: 'jsx',
   enter(path: Path): AnyNode {
-    const {node, context, parent, scope} = path;
+    const {node, context, parent} = path;
 
-    // fbt elements will be ignored. But we wont pick up their dependency on React, so hack it in
-    if (
-      jsxElement.is(node) &&
-      jsxNamespacedName.is(node.name) &&
-      !scope.hasBinding('React')
-    ) {
-      path.callHook(bindingInjector, {
-        name: 'React',
-        init: template.expression`require('React')`,
-      });
-    }
-
-    // TODO jsxNamespacedName.is(node.name) condition should only apply to fbt
-    if (jsxElement.is(node) && !shouldIgnoreFbt(path, node)) {
+    if (jsxElement.is(node)) {
       let type = convertJSXIdentifier(path.getChildPath('name'));
 
       if (jsxNamespacedName.is(node.name)) {

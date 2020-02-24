@@ -228,14 +228,6 @@ function transformClass(
       constructorMethod = bodyNode;
     }
 
-    // disallow setters/getters, we could trivially support them here with Object.defineProperty if necessary
-    if (bodyNode.kind === 'get' || bodyNode.kind === 'set') {
-      context.addNodeDiagnostic(bodyNode, {
-        category: 'compile/classes',
-        message: `${bodyNode.kind}ter methods aren't supported in ES6 classes at FB`,
-      });
-    }
-
     if (bodyNode.kind === 'method') {
       // create the function expression to represent this method
       const functionNode = functionExpression.create({

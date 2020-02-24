@@ -47,7 +47,7 @@ function equalKind(
   producer: AnalyzeExportLocal,
   consumerKind: ConstImportModuleKind,
 ): boolean {
-  // Allow importing functions and classes as `type` and `typeof` https://fb.workplace.com/groups/flow/2604770089571590/
+  // Allow importing functions and classes as `type` and `typeof`
   if (
     (producer.valueType === 'class' || producer.valueType === 'function') &&
     (consumerKind === 'type' || consumerKind === 'typeof')

@@ -25,8 +25,6 @@ import {writeFile, readFileText} from '@romejs/fs';
 
 const waitForever = new Promise(() => {});
 
-const CACHED = TEMP_PATH.append('fb4a-rome-test/index.js');
-
 export function stripBundleSuffix(pathname: string): string {
   return removePrefix(removeSuffix(pathname, '.bundle'), '/');
 }
@@ -324,17 +322,9 @@ export default class WebRequest {
   async handleBundleRequest() {
     const {res} = this;
 
-    let content: string;
-    if (false) {
-      content = await readFileText(CACHED);
-    } else {
-      const {bundler, path} = await this.server.getBundler(this.url);
-      const bundle = await bundler.bundle(path);
-      content = bundle.entry.js.content;
-
-      await writeFile(CACHED, content);
-      this.reporter.logAll(`Cached to <filelink target="${CACHED.join()}"/>`);
-    }
+    const {bundler, path} = await this.server.getBundler(this.url);
+    const bundle = await bundler.bundle(path);
+    const content = bundle.entry.js.content;
 
     res.writeHead(200, {'Content-Type': 'application/javascript'});
     res.end(content);
