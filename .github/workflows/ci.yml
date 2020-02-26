@@ -24,6 +24,7 @@ jobs:
         with:
           node-version: '13.x'
       - name: Run tests
+        shell: bash
         run: ./scripts/dev-rome test
 
   build:
@@ -37,6 +38,7 @@ jobs:
           node-version: '13.x'
 
       - name: Build release
+        shell: bash
         run: ./scripts/build-release dist
 
       - name: Create tarball
