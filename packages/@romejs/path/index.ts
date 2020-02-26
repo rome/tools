@@ -165,7 +165,6 @@ class BaseFilePath<Super extends UnknownFilePath> {
         filename: this.memoizedFilename,
       });
     } else {
-      console.log(this.segments);
       throw new Error(`Expected absolute file path but got: ${this.join()}`);
     }
   }
@@ -577,7 +576,11 @@ function parsePathSegments(segments: PathSegments): ParsedPath {
   let firstSeg = segments[0];
 
   // Detect URL
-  if (firstSeg[firstSeg.length - 1] === ':' && segments[1] === '') {
+  if (
+    !isWindowsDrive(firstSeg) &&
+    firstSeg[firstSeg.length - 1] === ':' &&
+    segments[1] === ''
+  ) {
     absoluteTarget = firstSeg.slice(0, -1);
 
     switch (absoluteTarget) {
