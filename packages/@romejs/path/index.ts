@@ -165,6 +165,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
         filename: this.memoizedFilename,
       });
     } else {
+      console.log(this.segments);
       throw new Error(`Expected absolute file path but got: ${this.join()}`);
     }
   }
