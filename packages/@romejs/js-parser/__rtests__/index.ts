@@ -11,7 +11,6 @@ import {createFixtureTests} from '@romejs/test';
 import prettyFormat from '@romejs/pretty-format';
 import {ConstProgramSyntax} from '@romejs/js-ast';
 import {writeFileSync} from '@romejs/fs';
-import {DiagnosticsError} from '@romejs/diagnostics';
 
 const promise = createFixtureTests((fixture, t) => {
   const {options, files} = fixture;
