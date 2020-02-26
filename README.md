@@ -24,13 +24,13 @@
 
 ## Codebase
 
+**Rome** is written completely in TypeScript with sparring usage of loose types.
+
 **Rome** is a monorepo with [internal packages](packages/@romejs) to deliniate code boundaries.
 
 **Rome** is [self-hosted](<https://en.wikipedia.org/wiki/Self-hosting_(compilers)>) and compiles itself with an old version.
 
 **Rome** supports processing [JSX](https://reactjs.org/docs/introducing-jsx.html) as well as [Flow](https://flow.org/) and [TypeScript](https://www.typescriptlang.org/) annotated code.
-
-**Rome** is written completely in TypeScript with sparring usage of loose types.
 
 See [CONTRIBUTING](.github/CONTRIBUTING.md) for more information.
 

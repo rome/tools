@@ -40074,7 +40074,7 @@
 
   const ___R$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG = {
     name: 'unknown',
-    isolated: false,
+    root: false,
     version: undefined,
 
     cache: {},
@@ -41429,7 +41429,7 @@
 
     const config = Object.assign({}, ___R$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG, {
       name: consumer.get('name').asString(projectFolder.getBasename()),
-      isolated: partial.isolated === undefined ? ___R$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG.isolated : partial.isolated}, ___R$$priv$romejs$project$load_ts$mergePartialConfig(defaultConfig, partial));
+      root: partial.root === undefined ? ___R$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG.root : partial.root}, ___R$$priv$romejs$project$load_ts$mergePartialConfig(defaultConfig, partial));
 
     for (const filename of ___R$$priv$romejs$project$load_ts$IGNORE_FILENAMES) {
       const possiblePath = config.vsc.root.append(filename);
@@ -41542,8 +41542,8 @@
       });
     }
 
-    if (consumer.has('isolated')) {
-      config.isolated = consumer.get('isolated').asBoolean();
+    if (consumer.has('root')) {
+      config.root = consumer.get('root').asBoolean();
     }
 
     const cache = consumer.get('cache');
@@ -56014,7 +56014,7 @@
       const project = syncProject || (await this.findProject(loc));
 
       if (project) {
-        if (project.config.isolated === false && syncProject === undefined) {
+        if (project.config.root === false && syncProject === undefined) {
           await this.findProject(project.folder.getParent());
         }
 
@@ -56049,7 +56049,7 @@
       while (currProject !== undefined) {
         projects.push(currProject);
 
-        if (currProject.config.isolated) {
+        if (currProject.config.root) {
           break;
         }
 

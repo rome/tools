@@ -18,4 +18,18 @@ No dependency installation step is required as we check in our [`node_modules`](
 
 ## Testing
 
+You can run the test suite with the following command:
+
+```
+$ scripts/dev-rome test
+```
+
+This will run all tests inside of any `__rtests__` directories.
+
 ## Type Checking
+
+Run TypeScript with code emitting disabled to perform a full typecheck outside the editor.
+
+```
+$ node_modules/.bin/tsc --noEmit
+```

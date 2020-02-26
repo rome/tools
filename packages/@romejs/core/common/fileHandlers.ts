@@ -126,6 +126,7 @@ const textHandler: ExtensionHandler = {
       exports: [
         {
           type: 'local',
+          // TODO we could fake this?
           loc: undefined,
           kind: 'value',
           valueType: 'other',

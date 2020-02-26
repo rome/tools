@@ -19,7 +19,7 @@
     "jsxBracketSameLine": true
   },
   "rome": {
-    "isolated": true,
+    "root": true,
     "bundler": {
       "mode": "modern"
     },
