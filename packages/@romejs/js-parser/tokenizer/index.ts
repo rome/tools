@@ -327,7 +327,7 @@ function pushComment(
     }
   }
 
-  // We should enable flow syntax when there's a comment with @\flow
+  // We should enable jsx syntax when there's a comment with @\
   if (opts.text.includes('@jsx')) {
     parser.syntax.add('jsx');
   }
