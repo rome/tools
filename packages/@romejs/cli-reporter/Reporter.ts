@@ -149,8 +149,8 @@ export default class Reporter {
     };
 
     const errStream: ReporterStream = {
-      type: 'error',
       ...outStream,
+      type: 'error',
       write(chunk) {
         if (stderr !== undefined) {
           stderr.write(chunk);
