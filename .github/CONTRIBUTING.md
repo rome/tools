@@ -16,6 +16,8 @@ $ scripts/dev-rome --help
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
 
+Refer to [Getting Started](../docs/getting-started.md) for more usage documentation.
+
 ## Testing
 
 You can run the test suite with the following command:
