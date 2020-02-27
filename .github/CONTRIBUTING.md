@@ -14,7 +14,7 @@ $ cd rome
 $ scripts/dev-rome --help
 ```
 
-No dependency installation step is required as we check in our [`node_modules`](node_modules) folder that contains only a copy of TypeScript and some definitions.
+No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
 
 ## Testing
 
