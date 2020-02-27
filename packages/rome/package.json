@@ -4,6 +4,9 @@
   "main": "index.ts",
   "version": "0.0.0",
   "license": "MIT",
+  "files": [
+    "LICENSE"
+  ],
   "bin": {
     "rome": "bin/rome.ts"
   }
