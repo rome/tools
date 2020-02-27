@@ -127,13 +127,6 @@ export default class Parser<T> {
     return flag !== undefined && flag[0] === '-';
   }
 
-  setConsumedFlag(name: string, value: string | boolean) {
-    if (this.flags.has(name)) {
-    }
-
-    this.flags.set(name, value);
-  }
-
   consumeRawArgs(rawArgs: Array<string>) {
     while (rawArgs.length > 0) {
       const arg: string = String(rawArgs.shift());
@@ -154,10 +147,10 @@ export default class Parser<T> {
 
         // If the next argument is a flag or we're at the end of the args then just set it to `true`
         if (rawArgs.length === 0 || this.looksLikeFlag(rawArgs[0])) {
-          this.setConsumedFlag(name, true);
+          this.flags.set(name, true);
         } else {
           // Otherwise, take that value
-          this.setConsumedFlag(name, String(rawArgs.shift()));
+          this.flags.set(name, String(rawArgs.shift()));
         }
 
         if (arg[0] === '-' && arg[1] !== '-') {
