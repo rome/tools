@@ -1,0 +1,5990 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 1_128
+      line: 40
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentLine {
+      value: ' Copied over from TypeScript\'s test case'
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+    CommentLine {
+      value: ' https://github.com/Microsoft/TypeScript/blob/master/tests/baselines/reference/constAssertions.js'
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+    CommentLine {
+      value: ' Error'
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 50
+          index: 810
+          line: 26
+        }
+        start: Object {
+          column: 50
+          index: 810
+          line: 26
+        }
+      }
+    }
+  ]
+  body: Array [
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 24
+          index: 167
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 143
+          line: 3
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 24
+            index: 167
+            line: 3
+          }
+          start: Object {
+            column: 0
+            index: 143
+            line: 3
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'v1'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 149
+                  line: 3
+                }
+                start: Object {
+                  column: 4
+                  index: 147
+                  line: 3
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 23
+                index: 166
+                line: 3
+              }
+              start: Object {
+                column: 4
+                index: 147
+                line: 3
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 23
+                  index: 166
+                  line: 3
+                }
+                start: Object {
+                  column: 9
+                  index: 152
+                  line: 3
+                }
+              }
+              expression: StringLiteral {
+                value: 'abc'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 14
+                    index: 157
+                    line: 3
+                  }
+                  start: Object {
+                    column: 9
+                    index: 152
+                    line: 3
+                  }
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 23
+                    index: 166
+                    line: 3
+                  }
+                  start: Object {
+                    column: 18
+                    index: 161
+                    line: 3
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 23
+                      index: 166
+                      line: 3
+                    }
+                    start: Object {
+                      column: 18
+                      index: 161
+                      line: 3
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 24
+          index: 192
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 168
+          line: 4
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 24
+            index: 192
+            line: 4
+          }
+          start: Object {
+            column: 0
+            index: 168
+            line: 4
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'v2'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 174
+                  line: 4
+                }
+                start: Object {
+                  column: 4
+                  index: 172
+                  line: 4
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 23
+                index: 191
+                line: 4
+              }
+              start: Object {
+                column: 4
+                index: 172
+                line: 4
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 23
+                  index: 191
+                  line: 4
+                }
+                start: Object {
+                  column: 9
+                  index: 177
+                  line: 4
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 23
+                    index: 191
+                    line: 4
+                  }
+                  start: Object {
+                    column: 18
+                    index: 186
+                    line: 4
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 23
+                      index: 191
+                      line: 4
+                    }
+                    start: Object {
+                      column: 18
+                      index: 186
+                      line: 4
+                    }
+                  }
+                }
+              }
+              expression: TemplateLiteral {
+                expressions: Array []
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 14
+                    index: 182
+                    line: 4
+                  }
+                  start: Object {
+                    column: 9
+                    index: 177
+                    line: 4
+                  }
+                }
+                quasis: Array [
+                  TemplateElement {
+                    cooked: 'abc'
+                    raw: 'abc'
+                    tail: true
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 13
+                        index: 181
+                        line: 4
+                      }
+                      start: Object {
+                        column: 10
+                        index: 178
+                        line: 4
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 21
+          index: 214
+          line: 5
+        }
+        start: Object {
+          column: 0
+          index: 193
+          line: 5
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 21
+            index: 214
+            line: 5
+          }
+          start: Object {
+            column: 0
+            index: 193
+            line: 5
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'v3'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 199
+                  line: 5
+                }
+                start: Object {
+                  column: 4
+                  index: 197
+                  line: 5
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 20
+                index: 213
+                line: 5
+              }
+              start: Object {
+                column: 4
+                index: 197
+                line: 5
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 20
+                  index: 213
+                  line: 5
+                }
+                start: Object {
+                  column: 9
+                  index: 202
+                  line: 5
+                }
+              }
+              expression: NumericLiteral {
+                value: 10
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 11
+                    index: 204
+                    line: 5
+                  }
+                  start: Object {
+                    column: 9
+                    index: 202
+                    line: 5
+                  }
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 20
+                    index: 213
+                    line: 5
+                  }
+                  start: Object {
+                    column: 15
+                    index: 208
+                    line: 5
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 20
+                      index: 213
+                      line: 5
+                    }
+                    start: Object {
+                      column: 15
+                      index: 208
+                      line: 5
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 22
+          index: 237
+          line: 6
+        }
+        start: Object {
+          column: 0
+          index: 215
+          line: 6
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 22
+            index: 237
+            line: 6
+          }
+          start: Object {
+            column: 0
+            index: 215
+            line: 6
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'v4'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 221
+                  line: 6
+                }
+                start: Object {
+                  column: 4
+                  index: 219
+                  line: 6
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 21
+                index: 236
+                line: 6
+              }
+              start: Object {
+                column: 4
+                index: 219
+                line: 6
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 21
+                  index: 236
+                  line: 6
+                }
+                start: Object {
+                  column: 9
+                  index: 224
+                  line: 6
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 21
+                    index: 236
+                    line: 6
+                  }
+                  start: Object {
+                    column: 16
+                    index: 231
+                    line: 6
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 21
+                      index: 236
+                      line: 6
+                    }
+                    start: Object {
+                      column: 16
+                      index: 231
+                      line: 6
+                    }
+                  }
+                }
+              }
+              expression: UnaryExpression {
+                operator: '-'
+                prefix: true
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 12
+                    index: 227
+                    line: 6
+                  }
+                  start: Object {
+                    column: 9
+                    index: 224
+                    line: 6
+                  }
+                }
+                argument: NumericLiteral {
+                  value: 10
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 12
+                      index: 227
+                      line: 6
+                    }
+                    start: Object {
+                      column: 10
+                      index: 225
+                      line: 6
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 22
+          index: 260
+          line: 7
+        }
+        start: Object {
+          column: 0
+          index: 238
+          line: 7
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 22
+            index: 260
+            line: 7
+          }
+          start: Object {
+            column: 0
+            index: 238
+            line: 7
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'v5'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 244
+                  line: 7
+                }
+                start: Object {
+                  column: 4
+                  index: 242
+                  line: 7
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 21
+                index: 259
+                line: 7
+              }
+              start: Object {
+                column: 4
+                index: 242
+                line: 7
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 21
+                  index: 259
+                  line: 7
+                }
+                start: Object {
+                  column: 9
+                  index: 247
+                  line: 7
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 21
+                    index: 259
+                    line: 7
+                  }
+                  start: Object {
+                    column: 16
+                    index: 254
+                    line: 7
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 21
+                      index: 259
+                      line: 7
+                    }
+                    start: Object {
+                      column: 16
+                      index: 254
+                      line: 7
+                    }
+                  }
+                }
+              }
+              expression: UnaryExpression {
+                operator: '+'
+                prefix: true
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 12
+                    index: 250
+                    line: 7
+                  }
+                  start: Object {
+                    column: 9
+                    index: 247
+                    line: 7
+                  }
+                }
+                argument: NumericLiteral {
+                  value: 10
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 12
+                      index: 250
+                      line: 7
+                    }
+                    start: Object {
+                      column: 10
+                      index: 248
+                      line: 7
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 21
+          index: 282
+          line: 8
+        }
+        start: Object {
+          column: 0
+          index: 261
+          line: 8
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 21
+            index: 282
+            line: 8
+          }
+          start: Object {
+            column: 0
+            index: 261
+            line: 8
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'v6'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 267
+                  line: 8
+                }
+                start: Object {
+                  column: 4
+                  index: 265
+                  line: 8
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 20
+                index: 281
+                line: 8
+              }
+              start: Object {
+                column: 4
+                index: 265
+                line: 8
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 20
+                  index: 281
+                  line: 8
+                }
+                start: Object {
+                  column: 9
+                  index: 270
+                  line: 8
+                }
+              }
+              expression: NumericLiteral {
+                value: 10
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 11
+                    index: 272
+                    line: 8
+                  }
+                  start: Object {
+                    column: 9
+                    index: 270
+                    line: 8
+                  }
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 20
+                    index: 281
+                    line: 8
+                  }
+                  start: Object {
+                    column: 15
+                    index: 276
+                    line: 8
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 20
+                      index: 281
+                      line: 8
+                    }
+                    start: Object {
+                      column: 15
+                      index: 276
+                      line: 8
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 22
+          index: 305
+          line: 9
+        }
+        start: Object {
+          column: 0
+          index: 283
+          line: 9
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 22
+            index: 305
+            line: 9
+          }
+          start: Object {
+            column: 0
+            index: 283
+            line: 9
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'v7'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 289
+                  line: 9
+                }
+                start: Object {
+                  column: 4
+                  index: 287
+                  line: 9
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 21
+                index: 304
+                line: 9
+              }
+              start: Object {
+                column: 4
+                index: 287
+                line: 9
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 21
+                  index: 304
+                  line: 9
+                }
+                start: Object {
+                  column: 9
+                  index: 292
+                  line: 9
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 21
+                    index: 304
+                    line: 9
+                  }
+                  start: Object {
+                    column: 16
+                    index: 299
+                    line: 9
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 21
+                      index: 304
+                      line: 9
+                    }
+                    start: Object {
+                      column: 16
+                      index: 299
+                      line: 9
+                    }
+                  }
+                }
+              }
+              expression: UnaryExpression {
+                operator: '-'
+                prefix: true
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 12
+                    index: 295
+                    line: 9
+                  }
+                  start: Object {
+                    column: 9
+                    index: 292
+                    line: 9
+                  }
+                }
+                argument: NumericLiteral {
+                  value: 10
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 12
+                      index: 295
+                      line: 9
+                    }
+                    start: Object {
+                      column: 10
+                      index: 293
+                      line: 9
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 23
+          index: 329
+          line: 10
+        }
+        start: Object {
+          column: 0
+          index: 306
+          line: 10
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 23
+            index: 329
+            line: 10
+          }
+          start: Object {
+            column: 0
+            index: 306
+            line: 10
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'v8'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 312
+                  line: 10
+                }
+                start: Object {
+                  column: 4
+                  index: 310
+                  line: 10
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 22
+                index: 328
+                line: 10
+              }
+              start: Object {
+                column: 4
+                index: 310
+                line: 10
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 22
+                  index: 328
+                  line: 10
+                }
+                start: Object {
+                  column: 9
+                  index: 315
+                  line: 10
+                }
+              }
+              expression: BooleanLiteral {
+                value: true
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 13
+                    index: 319
+                    line: 10
+                  }
+                  start: Object {
+                    column: 9
+                    index: 315
+                    line: 10
+                  }
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 22
+                    index: 328
+                    line: 10
+                  }
+                  start: Object {
+                    column: 17
+                    index: 323
+                    line: 10
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 22
+                      index: 328
+                      line: 10
+                    }
+                    start: Object {
+                      column: 17
+                      index: 323
+                      line: 10
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 24
+          index: 354
+          line: 11
+        }
+        start: Object {
+          column: 0
+          index: 330
+          line: 11
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 24
+            index: 354
+            line: 11
+          }
+          start: Object {
+            column: 0
+            index: 330
+            line: 11
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'v9'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 336
+                  line: 11
+                }
+                start: Object {
+                  column: 4
+                  index: 334
+                  line: 11
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 23
+                index: 353
+                line: 11
+              }
+              start: Object {
+                column: 4
+                index: 334
+                line: 11
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 23
+                  index: 353
+                  line: 11
+                }
+                start: Object {
+                  column: 9
+                  index: 339
+                  line: 11
+                }
+              }
+              expression: BooleanLiteral {
+                value: false
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 14
+                    index: 344
+                    line: 11
+                  }
+                  start: Object {
+                    column: 9
+                    index: 339
+                    line: 11
+                  }
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 23
+                    index: 353
+                    line: 11
+                  }
+                  start: Object {
+                    column: 18
+                    index: 348
+                    line: 11
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 23
+                      index: 353
+                      line: 11
+                    }
+                    start: Object {
+                      column: 18
+                      index: 348
+                      line: 11
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 21
+          index: 377
+          line: 13
+        }
+        start: Object {
+          column: 0
+          index: 356
+          line: 13
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 21
+            index: 377
+            line: 13
+          }
+          start: Object {
+            column: 0
+            index: 356
+            line: 13
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'a1'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 362
+                  line: 13
+                }
+                start: Object {
+                  column: 4
+                  index: 360
+                  line: 13
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 20
+                index: 376
+                line: 13
+              }
+              start: Object {
+                column: 4
+                index: 360
+                line: 13
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 20
+                  index: 376
+                  line: 13
+                }
+                start: Object {
+                  column: 9
+                  index: 365
+                  line: 13
+                }
+              }
+              expression: ArrayExpression {
+                elements: Array []
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 11
+                    index: 367
+                    line: 13
+                  }
+                  start: Object {
+                    column: 9
+                    index: 365
+                    line: 13
+                  }
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 20
+                    index: 376
+                    line: 13
+                  }
+                  start: Object {
+                    column: 15
+                    index: 371
+                    line: 13
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 20
+                      index: 376
+                      line: 13
+                    }
+                    start: Object {
+                      column: 15
+                      index: 371
+                      line: 13
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 28
+          index: 406
+          line: 14
+        }
+        start: Object {
+          column: 0
+          index: 378
+          line: 14
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 28
+            index: 406
+            line: 14
+          }
+          start: Object {
+            column: 0
+            index: 378
+            line: 14
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'a2'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 384
+                  line: 14
+                }
+                start: Object {
+                  column: 4
+                  index: 382
+                  line: 14
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 27
+                index: 405
+                line: 14
+              }
+              start: Object {
+                column: 4
+                index: 382
+                line: 14
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 27
+                  index: 405
+                  line: 14
+                }
+                start: Object {
+                  column: 9
+                  index: 387
+                  line: 14
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 27
+                    index: 405
+                    line: 14
+                  }
+                  start: Object {
+                    column: 22
+                    index: 400
+                    line: 14
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 27
+                      index: 405
+                      line: 14
+                    }
+                    start: Object {
+                      column: 22
+                      index: 400
+                      line: 14
+                    }
+                  }
+                }
+              }
+              expression: ArrayExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 18
+                    index: 396
+                    line: 14
+                  }
+                  start: Object {
+                    column: 9
+                    index: 387
+                    line: 14
+                  }
+                }
+                elements: Array [
+                  NumericLiteral {
+                    value: 1
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 11
+                        index: 389
+                        line: 14
+                      }
+                      start: Object {
+                        column: 10
+                        index: 388
+                        line: 14
+                      }
+                    }
+                  }
+                  NumericLiteral {
+                    value: 2
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 14
+                        index: 392
+                        line: 14
+                      }
+                      start: Object {
+                        column: 13
+                        index: 391
+                        line: 14
+                      }
+                    }
+                  }
+                  NumericLiteral {
+                    value: 3
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 17
+                        index: 395
+                        line: 14
+                      }
+                      start: Object {
+                        column: 16
+                        index: 394
+                        line: 14
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 38
+          index: 445
+          line: 15
+        }
+        start: Object {
+          column: 0
+          index: 407
+          line: 15
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 38
+            index: 445
+            line: 15
+          }
+          start: Object {
+            column: 0
+            index: 407
+            line: 15
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'a3'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 413
+                  line: 15
+                }
+                start: Object {
+                  column: 4
+                  index: 411
+                  line: 15
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 37
+                index: 444
+                line: 15
+              }
+              start: Object {
+                column: 4
+                index: 411
+                line: 15
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 37
+                  index: 444
+                  line: 15
+                }
+                start: Object {
+                  column: 9
+                  index: 416
+                  line: 15
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 37
+                    index: 444
+                    line: 15
+                  }
+                  start: Object {
+                    column: 32
+                    index: 439
+                    line: 15
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 37
+                      index: 444
+                      line: 15
+                    }
+                    start: Object {
+                      column: 32
+                      index: 439
+                      line: 15
+                    }
+                  }
+                }
+              }
+              expression: ArrayExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 28
+                    index: 435
+                    line: 15
+                  }
+                  start: Object {
+                    column: 9
+                    index: 416
+                    line: 15
+                  }
+                }
+                elements: Array [
+                  NumericLiteral {
+                    value: 10
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 12
+                        index: 419
+                        line: 15
+                      }
+                      start: Object {
+                        column: 10
+                        index: 417
+                        line: 15
+                      }
+                    }
+                  }
+                  StringLiteral {
+                    value: 'hello'
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 21
+                        index: 428
+                        line: 15
+                      }
+                      start: Object {
+                        column: 14
+                        index: 421
+                        line: 15
+                      }
+                    }
+                  }
+                  BooleanLiteral {
+                    value: true
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 27
+                        index: 434
+                        line: 15
+                      }
+                      start: Object {
+                        column: 23
+                        index: 430
+                        line: 15
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 33
+          index: 479
+          line: 16
+        }
+        start: Object {
+          column: 0
+          index: 446
+          line: 16
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 33
+            index: 479
+            line: 16
+          }
+          start: Object {
+            column: 0
+            index: 446
+            line: 16
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'a4'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 452
+                  line: 16
+                }
+                start: Object {
+                  column: 4
+                  index: 450
+                  line: 16
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 32
+                index: 478
+                line: 16
+              }
+              start: Object {
+                column: 4
+                index: 450
+                line: 16
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 32
+                  index: 478
+                  line: 16
+                }
+                start: Object {
+                  column: 9
+                  index: 455
+                  line: 16
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 32
+                    index: 478
+                    line: 16
+                  }
+                  start: Object {
+                    column: 27
+                    index: 473
+                    line: 16
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 32
+                      index: 478
+                      line: 16
+                    }
+                    start: Object {
+                      column: 27
+                      index: 473
+                      line: 16
+                    }
+                  }
+                }
+              }
+              expression: ArrayExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 23
+                    index: 469
+                    line: 16
+                  }
+                  start: Object {
+                    column: 9
+                    index: 455
+                    line: 16
+                  }
+                }
+                elements: Array [
+                  SpreadElement {
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 22
+                        index: 468
+                        line: 16
+                      }
+                      start: Object {
+                        column: 10
+                        index: 456
+                        line: 16
+                      }
+                    }
+                    argument: ArrayExpression {
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 22
+                          index: 468
+                          line: 16
+                        }
+                        start: Object {
+                          column: 13
+                          index: 459
+                          line: 16
+                        }
+                      }
+                      elements: Array [
+                        NumericLiteral {
+                          value: 1
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 15
+                              index: 461
+                              line: 16
+                            }
+                            start: Object {
+                              column: 14
+                              index: 460
+                              line: 16
+                            }
+                          }
+                        }
+                        NumericLiteral {
+                          value: 2
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 18
+                              index: 464
+                              line: 16
+                            }
+                            start: Object {
+                              column: 17
+                              index: 463
+                              line: 16
+                            }
+                          }
+                        }
+                        NumericLiteral {
+                          value: 3
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 21
+                              index: 467
+                              line: 16
+                            }
+                            start: Object {
+                              column: 20
+                              index: 466
+                              line: 16
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 19
+          index: 499
+          line: 17
+        }
+        start: Object {
+          column: 0
+          index: 480
+          line: 17
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 19
+            index: 499
+            line: 17
+          }
+          start: Object {
+            column: 0
+            index: 480
+            line: 17
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'a5'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 486
+                  line: 17
+                }
+                start: Object {
+                  column: 4
+                  index: 484
+                  line: 17
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 18
+                index: 498
+                line: 17
+              }
+              start: Object {
+                column: 4
+                index: 484
+                line: 17
+              }
+            }
+            init: ArrayExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 18
+                  index: 498
+                  line: 17
+                }
+                start: Object {
+                  column: 9
+                  index: 489
+                  line: 17
+                }
+              }
+              elements: Array [
+                NumericLiteral {
+                  value: 1
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 11
+                      index: 491
+                      line: 17
+                    }
+                    start: Object {
+                      column: 10
+                      index: 490
+                      line: 17
+                    }
+                  }
+                }
+                NumericLiteral {
+                  value: 2
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 14
+                      index: 494
+                      line: 17
+                    }
+                    start: Object {
+                      column: 13
+                      index: 493
+                      line: 17
+                    }
+                  }
+                }
+                NumericLiteral {
+                  value: 3
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 17
+                      index: 497
+                      line: 17
+                    }
+                    start: Object {
+                      column: 16
+                      index: 496
+                      line: 17
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 26
+          index: 526
+          line: 18
+        }
+        start: Object {
+          column: 0
+          index: 500
+          line: 18
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 26
+            index: 526
+            line: 18
+          }
+          start: Object {
+            column: 0
+            index: 500
+            line: 18
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'a6'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 506
+                  line: 18
+                }
+                start: Object {
+                  column: 4
+                  index: 504
+                  line: 18
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 25
+                index: 525
+                line: 18
+              }
+              start: Object {
+                column: 4
+                index: 504
+                line: 18
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 25
+                  index: 525
+                  line: 18
+                }
+                start: Object {
+                  column: 9
+                  index: 509
+                  line: 18
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 25
+                    index: 525
+                    line: 18
+                  }
+                  start: Object {
+                    column: 20
+                    index: 520
+                    line: 18
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 25
+                      index: 525
+                      line: 18
+                    }
+                    start: Object {
+                      column: 20
+                      index: 520
+                      line: 18
+                    }
+                  }
+                }
+              }
+              expression: ArrayExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 16
+                    index: 516
+                    line: 18
+                  }
+                  start: Object {
+                    column: 9
+                    index: 509
+                    line: 18
+                  }
+                }
+                elements: Array [
+                  SpreadElement {
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 15
+                        index: 515
+                        line: 18
+                      }
+                      start: Object {
+                        column: 10
+                        index: 510
+                        line: 18
+                      }
+                    }
+                    argument: ReferenceIdentifier {
+                      name: 'a5'
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 15
+                          index: 515
+                          line: 18
+                        }
+                        start: Object {
+                          column: 13
+                          index: 513
+                          line: 18
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 33
+          index: 560
+          line: 19
+        }
+        start: Object {
+          column: 0
+          index: 527
+          line: 19
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 33
+            index: 560
+            line: 19
+          }
+          start: Object {
+            column: 0
+            index: 527
+            line: 19
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'a8'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 533
+                  line: 19
+                }
+                start: Object {
+                  column: 4
+                  index: 531
+                  line: 19
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 32
+                index: 559
+                line: 19
+              }
+              start: Object {
+                column: 4
+                index: 531
+                line: 19
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 32
+                  index: 559
+                  line: 19
+                }
+                start: Object {
+                  column: 9
+                  index: 536
+                  line: 19
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 32
+                    index: 559
+                    line: 19
+                  }
+                  start: Object {
+                    column: 27
+                    index: 554
+                    line: 19
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 32
+                      index: 559
+                      line: 19
+                    }
+                    start: Object {
+                      column: 27
+                      index: 554
+                      line: 19
+                    }
+                  }
+                }
+              }
+              expression: ArrayExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 23
+                    index: 550
+                    line: 19
+                  }
+                  start: Object {
+                    column: 9
+                    index: 536
+                    line: 19
+                  }
+                }
+                elements: Array [
+                  StringLiteral {
+                    value: 'abc'
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 15
+                        index: 542
+                        line: 19
+                      }
+                      start: Object {
+                        column: 10
+                        index: 537
+                        line: 19
+                      }
+                    }
+                  }
+                  SpreadElement {
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 22
+                        index: 549
+                        line: 19
+                      }
+                      start: Object {
+                        column: 17
+                        index: 544
+                        line: 19
+                      }
+                    }
+                    argument: ReferenceIdentifier {
+                      name: 'a7'
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 22
+                          index: 549
+                          line: 19
+                        }
+                        start: Object {
+                          column: 20
+                          index: 547
+                          line: 19
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 35
+          index: 597
+          line: 21
+        }
+        start: Object {
+          column: 0
+          index: 562
+          line: 21
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 35
+            index: 597
+            line: 21
+          }
+          start: Object {
+            column: 0
+            index: 562
+            line: 21
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'o1'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 568
+                  line: 21
+                }
+                start: Object {
+                  column: 4
+                  index: 566
+                  line: 21
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 34
+                index: 596
+                line: 21
+              }
+              start: Object {
+                column: 4
+                index: 566
+                line: 21
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 34
+                  index: 596
+                  line: 21
+                }
+                start: Object {
+                  column: 9
+                  index: 571
+                  line: 21
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 34
+                    index: 596
+                    line: 21
+                  }
+                  start: Object {
+                    column: 29
+                    index: 591
+                    line: 21
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 34
+                      index: 596
+                      line: 21
+                    }
+                    start: Object {
+                      column: 29
+                      index: 591
+                      line: 21
+                    }
+                  }
+                }
+              }
+              expression: ObjectExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 25
+                    index: 587
+                    line: 21
+                  }
+                  start: Object {
+                    column: 9
+                    index: 571
+                    line: 21
+                  }
+                }
+                properties: Array [
+                  ObjectProperty {
+                    key: StaticPropertyKey {
+                      value: Identifier {
+                        name: 'x'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 12
+                            index: 574
+                            line: 21
+                          }
+                          start: Object {
+                            column: 11
+                            index: 573
+                            line: 21
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 12
+                          index: 574
+                          line: 21
+                        }
+                        start: Object {
+                          column: 11
+                          index: 573
+                          line: 21
+                        }
+                      }
+                    }
+                    value: NumericLiteral {
+                      value: 10
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 16
+                          index: 578
+                          line: 21
+                        }
+                        start: Object {
+                          column: 14
+                          index: 576
+                          line: 21
+                        }
+                      }
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 16
+                        index: 578
+                        line: 21
+                      }
+                      start: Object {
+                        column: 11
+                        index: 573
+                        line: 21
+                      }
+                    }
+                  }
+                  ObjectProperty {
+                    key: StaticPropertyKey {
+                      value: Identifier {
+                        name: 'y'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 19
+                            index: 581
+                            line: 21
+                          }
+                          start: Object {
+                            column: 18
+                            index: 580
+                            line: 21
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 19
+                          index: 581
+                          line: 21
+                        }
+                        start: Object {
+                          column: 18
+                          index: 580
+                          line: 21
+                        }
+                      }
+                    }
+                    value: NumericLiteral {
+                      value: 20
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 23
+                          index: 585
+                          line: 21
+                        }
+                        start: Object {
+                          column: 21
+                          index: 583
+                          line: 21
+                        }
+                      }
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 23
+                        index: 585
+                        line: 21
+                      }
+                      start: Object {
+                        column: 18
+                        index: 580
+                        line: 21
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 68
+          index: 666
+          line: 22
+        }
+        start: Object {
+          column: 0
+          index: 598
+          line: 22
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 68
+            index: 666
+            line: 22
+          }
+          start: Object {
+            column: 0
+            index: 598
+            line: 22
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'o2'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 604
+                  line: 22
+                }
+                start: Object {
+                  column: 4
+                  index: 602
+                  line: 22
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 67
+                index: 665
+                line: 22
+              }
+              start: Object {
+                column: 4
+                index: 602
+                line: 22
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 67
+                  index: 665
+                  line: 22
+                }
+                start: Object {
+                  column: 9
+                  index: 607
+                  line: 22
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 67
+                    index: 665
+                    line: 22
+                  }
+                  start: Object {
+                    column: 62
+                    index: 660
+                    line: 22
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 67
+                      index: 665
+                      line: 22
+                    }
+                    start: Object {
+                      column: 62
+                      index: 660
+                      line: 22
+                    }
+                  }
+                }
+              }
+              expression: ObjectExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 58
+                    index: 656
+                    line: 22
+                  }
+                  start: Object {
+                    column: 9
+                    index: 607
+                    line: 22
+                  }
+                }
+                properties: Array [
+                  ObjectProperty {
+                    key: StaticPropertyKey {
+                      value: Identifier {
+                        name: 'a'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 12
+                            index: 610
+                            line: 22
+                          }
+                          start: Object {
+                            column: 11
+                            index: 609
+                            line: 22
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 12
+                          index: 610
+                          line: 22
+                        }
+                        start: Object {
+                          column: 11
+                          index: 609
+                          line: 22
+                        }
+                      }
+                    }
+                    value: NumericLiteral {
+                      value: 1
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 15
+                          index: 613
+                          line: 22
+                        }
+                        start: Object {
+                          column: 14
+                          index: 612
+                          line: 22
+                        }
+                      }
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 15
+                        index: 613
+                        line: 22
+                      }
+                      start: Object {
+                        column: 11
+                        index: 609
+                        line: 22
+                      }
+                    }
+                  }
+                  ObjectProperty {
+                    key: StaticPropertyKey {
+                      value: StringLiteral {
+                        value: 'b'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 20
+                            index: 618
+                            line: 22
+                          }
+                          start: Object {
+                            column: 17
+                            index: 615
+                            line: 22
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 20
+                          index: 618
+                          line: 22
+                        }
+                        start: Object {
+                          column: 17
+                          index: 615
+                          line: 22
+                        }
+                      }
+                    }
+                    value: NumericLiteral {
+                      value: 2
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 23
+                          index: 621
+                          line: 22
+                        }
+                        start: Object {
+                          column: 22
+                          index: 620
+                          line: 22
+                        }
+                      }
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 23
+                        index: 621
+                        line: 22
+                      }
+                      start: Object {
+                        column: 17
+                        index: 615
+                        line: 22
+                      }
+                    }
+                  }
+                  ObjectProperty {
+                    key: ComputedPropertyKey {
+                      value: StringLiteral {
+                        value: 'c'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 29
+                            index: 627
+                            line: 22
+                          }
+                          start: Object {
+                            column: 26
+                            index: 624
+                            line: 22
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 30
+                          index: 628
+                          line: 22
+                        }
+                        start: Object {
+                          column: 25
+                          index: 623
+                          line: 22
+                        }
+                      }
+                    }
+                    value: NumericLiteral {
+                      value: 3
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 33
+                          index: 631
+                          line: 22
+                        }
+                        start: Object {
+                          column: 32
+                          index: 630
+                          line: 22
+                        }
+                      }
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 33
+                        index: 631
+                        line: 22
+                      }
+                      start: Object {
+                        column: 25
+                        index: 623
+                        line: 22
+                      }
+                    }
+                  }
+                  ObjectMethod {
+                    kind: 'method'
+                    key: StaticPropertyKey {
+                      value: Identifier {
+                        name: 'd'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 36
+                            index: 634
+                            line: 22
+                          }
+                          start: Object {
+                            column: 35
+                            index: 633
+                            line: 22
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 36
+                          index: 634
+                          line: 22
+                        }
+                        start: Object {
+                          column: 35
+                          index: 633
+                          line: 22
+                        }
+                      }
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 41
+                        index: 639
+                        line: 22
+                      }
+                      start: Object {
+                        column: 35
+                        index: 633
+                        line: 22
+                      }
+                    }
+                    body: BlockStatement {
+                      body: Array []
+                      directives: Array []
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 41
+                          index: 639
+                          line: 22
+                        }
+                        start: Object {
+                          column: 39
+                          index: 637
+                          line: 22
+                        }
+                      }
+                    }
+                    head: FunctionHead {
+                      async: false
+                      generator: false
+                      hasHoistedVars: false
+                      params: Array []
+                      predicate: undefined
+                      rest: undefined
+                      returnType: undefined
+                      thisType: undefined
+                      typeParameters: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 39
+                          index: 637
+                          line: 22
+                        }
+                        start: Object {
+                          column: 39
+                          index: 637
+                          line: 22
+                        }
+                      }
+                    }
+                  }
+                  ObjectProperty {
+                    key: ComputedPropertyKey {
+                      value: BinaryExpression {
+                        operator: '+'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 52
+                            index: 650
+                            line: 22
+                          }
+                          start: Object {
+                            column: 44
+                            index: 642
+                            line: 22
+                          }
+                        }
+                        left: StringLiteral {
+                          value: 'e'
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 47
+                              index: 645
+                              line: 22
+                            }
+                            start: Object {
+                              column: 44
+                              index: 642
+                              line: 22
+                            }
+                          }
+                        }
+                        right: StringLiteral {
+                          value: ''
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 52
+                              index: 650
+                              line: 22
+                            }
+                            start: Object {
+                              column: 50
+                              index: 648
+                              line: 22
+                            }
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 53
+                          index: 651
+                          line: 22
+                        }
+                        start: Object {
+                          column: 43
+                          index: 641
+                          line: 22
+                        }
+                      }
+                    }
+                    value: NumericLiteral {
+                      value: 4
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 56
+                          index: 654
+                          line: 22
+                        }
+                        start: Object {
+                          column: 55
+                          index: 653
+                          line: 22
+                        }
+                      }
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 56
+                        index: 654
+                        line: 22
+                      }
+                      start: Object {
+                        column: 43
+                        index: 641
+                        line: 22
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 35
+          index: 702
+          line: 23
+        }
+        start: Object {
+          column: 0
+          index: 667
+          line: 23
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 35
+            index: 702
+            line: 23
+          }
+          start: Object {
+            column: 0
+            index: 667
+            line: 23
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'o3'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 673
+                  line: 23
+                }
+                start: Object {
+                  column: 4
+                  index: 671
+                  line: 23
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 34
+                index: 701
+                line: 23
+              }
+              start: Object {
+                column: 4
+                index: 671
+                line: 23
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 34
+                  index: 701
+                  line: 23
+                }
+                start: Object {
+                  column: 9
+                  index: 676
+                  line: 23
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 34
+                    index: 701
+                    line: 23
+                  }
+                  start: Object {
+                    column: 29
+                    index: 696
+                    line: 23
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 34
+                      index: 701
+                      line: 23
+                    }
+                    start: Object {
+                      column: 29
+                      index: 696
+                      line: 23
+                    }
+                  }
+                }
+              }
+              expression: ObjectExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 25
+                    index: 692
+                    line: 23
+                  }
+                  start: Object {
+                    column: 9
+                    index: 676
+                    line: 23
+                  }
+                }
+                properties: Array [
+                  SpreadProperty {
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 16
+                        index: 683
+                        line: 23
+                      }
+                      start: Object {
+                        column: 11
+                        index: 678
+                        line: 23
+                      }
+                    }
+                    argument: ReferenceIdentifier {
+                      name: 'o1'
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 16
+                          index: 683
+                          line: 23
+                        }
+                        start: Object {
+                          column: 14
+                          index: 681
+                          line: 23
+                        }
+                      }
+                    }
+                  }
+                  SpreadProperty {
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 23
+                        index: 690
+                        line: 23
+                      }
+                      start: Object {
+                        column: 18
+                        index: 685
+                        line: 23
+                      }
+                    }
+                    argument: ReferenceIdentifier {
+                      name: 'o2'
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 23
+                          index: 690
+                          line: 23
+                        }
+                        start: Object {
+                          column: 21
+                          index: 688
+                          line: 23
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 28
+          index: 731
+          line: 24
+        }
+        start: Object {
+          column: 0
+          index: 703
+          line: 24
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 28
+            index: 731
+            line: 24
+          }
+          start: Object {
+            column: 0
+            index: 703
+            line: 24
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'o5'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 709
+                  line: 24
+                }
+                start: Object {
+                  column: 4
+                  index: 707
+                  line: 24
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 27
+                index: 730
+                line: 24
+              }
+              start: Object {
+                column: 4
+                index: 707
+                line: 24
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 27
+                  index: 730
+                  line: 24
+                }
+                start: Object {
+                  column: 9
+                  index: 712
+                  line: 24
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 27
+                    index: 730
+                    line: 24
+                  }
+                  start: Object {
+                    column: 22
+                    index: 725
+                    line: 24
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 27
+                      index: 730
+                      line: 24
+                    }
+                    start: Object {
+                      column: 22
+                      index: 725
+                      line: 24
+                    }
+                  }
+                }
+              }
+              expression: ObjectExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 18
+                    index: 721
+                    line: 24
+                  }
+                  start: Object {
+                    column: 9
+                    index: 712
+                    line: 24
+                  }
+                }
+                properties: Array [
+                  SpreadProperty {
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 16
+                        index: 719
+                        line: 24
+                      }
+                      start: Object {
+                        column: 11
+                        index: 714
+                        line: 24
+                      }
+                    }
+                    argument: ReferenceIdentifier {
+                      name: 'o4'
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 16
+                          index: 719
+                          line: 24
+                        }
+                        start: Object {
+                          column: 14
+                          index: 717
+                          line: 24
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 27
+          index: 759
+          line: 25
+        }
+        start: Object {
+          column: 0
+          index: 732
+          line: 25
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 27
+            index: 759
+            line: 25
+          }
+          start: Object {
+            column: 0
+            index: 732
+            line: 25
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'o7'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 738
+                  line: 25
+                }
+                start: Object {
+                  column: 4
+                  index: 736
+                  line: 25
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 26
+                index: 758
+                line: 25
+              }
+              start: Object {
+                column: 4
+                index: 736
+                line: 25
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 26
+                  index: 758
+                  line: 25
+                }
+                start: Object {
+                  column: 9
+                  index: 741
+                  line: 25
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 26
+                    index: 758
+                    line: 25
+                  }
+                  start: Object {
+                    column: 21
+                    index: 753
+                    line: 25
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 26
+                      index: 758
+                      line: 25
+                    }
+                    start: Object {
+                      column: 21
+                      index: 753
+                      line: 25
+                    }
+                  }
+                }
+              }
+              expression: ObjectExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 17
+                    index: 749
+                    line: 25
+                  }
+                  start: Object {
+                    column: 9
+                    index: 741
+                    line: 25
+                  }
+                }
+                properties: Array [
+                  SpreadProperty {
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 15
+                        index: 747
+                        line: 25
+                      }
+                      start: Object {
+                        column: 11
+                        index: 743
+                        line: 25
+                      }
+                    }
+                    argument: ReferenceIdentifier {
+                      name: 'd'
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 15
+                          index: 747
+                          line: 25
+                        }
+                        start: Object {
+                          column: 14
+                          index: 746
+                          line: 25
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 51
+          index: 811
+          line: 26
+        }
+        start: Object {
+          column: 0
+          index: 760
+          line: 26
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 51
+            index: 811
+            line: 26
+          }
+          start: Object {
+            column: 0
+            index: 760
+            line: 26
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'o9'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 766
+                  line: 26
+                }
+                start: Object {
+                  column: 4
+                  index: 764
+                  line: 26
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 50
+                index: 810
+                line: 26
+              }
+              start: Object {
+                column: 4
+                index: 764
+                line: 26
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 50
+                  index: 810
+                  line: 26
+                }
+                start: Object {
+                  column: 9
+                  index: 769
+                  line: 26
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 50
+                    index: 810
+                    line: 26
+                  }
+                  start: Object {
+                    column: 45
+                    index: 805
+                    line: 26
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 50
+                      index: 810
+                      line: 26
+                    }
+                    start: Object {
+                      column: 45
+                      index: 805
+                      line: 26
+                    }
+                  }
+                }
+              }
+              expression: ObjectExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 41
+                    index: 801
+                    line: 26
+                  }
+                  start: Object {
+                    column: 9
+                    index: 769
+                    line: 26
+                  }
+                }
+                properties: Array [
+                  ObjectProperty {
+                    key: StaticPropertyKey {
+                      value: Identifier {
+                        name: 'x'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 12
+                            index: 772
+                            line: 26
+                          }
+                          start: Object {
+                            column: 11
+                            index: 771
+                            line: 26
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 12
+                          index: 772
+                          line: 26
+                        }
+                        start: Object {
+                          column: 11
+                          index: 771
+                          line: 26
+                        }
+                      }
+                    }
+                    value: NumericLiteral {
+                      value: 10
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 16
+                          index: 776
+                          line: 26
+                        }
+                        start: Object {
+                          column: 14
+                          index: 774
+                          line: 26
+                        }
+                      }
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 16
+                        index: 776
+                        line: 26
+                      }
+                      start: Object {
+                        column: 11
+                        index: 771
+                        line: 26
+                      }
+                    }
+                  }
+                  ObjectMethod {
+                    kind: 'method'
+                    key: StaticPropertyKey {
+                      value: Identifier {
+                        name: 'foo'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 21
+                            index: 781
+                            line: 26
+                          }
+                          start: Object {
+                            column: 18
+                            index: 778
+                            line: 26
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 21
+                          index: 781
+                          line: 26
+                        }
+                        start: Object {
+                          column: 18
+                          index: 778
+                          line: 26
+                        }
+                      }
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 39
+                        index: 799
+                        line: 26
+                      }
+                      start: Object {
+                        column: 18
+                        index: 778
+                        line: 26
+                      }
+                    }
+                    head: FunctionHead {
+                      async: false
+                      generator: false
+                      hasHoistedVars: false
+                      params: Array []
+                      predicate: undefined
+                      rest: undefined
+                      returnType: undefined
+                      thisType: undefined
+                      typeParameters: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 24
+                          index: 784
+                          line: 26
+                        }
+                        start: Object {
+                          column: 24
+                          index: 784
+                          line: 26
+                        }
+                      }
+                    }
+                    body: BlockStatement {
+                      directives: Array []
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 39
+                          index: 799
+                          line: 26
+                        }
+                        start: Object {
+                          column: 24
+                          index: 784
+                          line: 26
+                        }
+                      }
+                      body: Array [
+                        ExpressionStatement {
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 37
+                              index: 797
+                              line: 26
+                            }
+                            start: Object {
+                              column: 26
+                              index: 786
+                              line: 26
+                            }
+                          }
+                          expression: AssignmentExpression {
+                            operator: '='
+                            loc: Object {
+                              filename: '..'
+                              end: Object {
+                                column: 37
+                                index: 797
+                                line: 26
+                              }
+                              start: Object {
+                                column: 26
+                                index: 786
+                                line: 26
+                              }
+                            }
+                            right: NumericLiteral {
+                              value: 20
+                              loc: Object {
+                                filename: '..'
+                                end: Object {
+                                  column: 37
+                                  index: 797
+                                  line: 26
+                                }
+                                start: Object {
+                                  column: 35
+                                  index: 795
+                                  line: 26
+                                }
+                              }
+                            }
+                            left: MemberExpression {
+                              loc: Object {
+                                filename: '..'
+                                end: Object {
+                                  column: 32
+                                  index: 792
+                                  line: 26
+                                }
+                                start: Object {
+                                  column: 26
+                                  index: 786
+                                  line: 26
+                                }
+                              }
+                              object: ThisExpression {
+                                loc: Object {
+                                  filename: '..'
+                                  end: Object {
+                                    column: 30
+                                    index: 790
+                                    line: 26
+                                  }
+                                  start: Object {
+                                    column: 26
+                                    index: 786
+                                    line: 26
+                                  }
+                                }
+                              }
+                              property: StaticMemberProperty {
+                                value: Identifier {
+                                  name: 'x'
+                                  loc: Object {
+                                    filename: '..'
+                                    end: Object {
+                                      column: 32
+                                      index: 792
+                                      line: 26
+                                    }
+                                    start: Object {
+                                      column: 31
+                                      index: 791
+                                      line: 26
+                                    }
+                                  }
+                                }
+                                loc: Object {
+                                  filename: '..'
+                                  end: Object {
+                                    column: 32
+                                    index: 792
+                                    line: 26
+                                  }
+                                  start: Object {
+                                    column: 31
+                                    index: 791
+                                    line: 26
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 23
+          index: 846
+          line: 28
+        }
+        start: Object {
+          column: 0
+          index: 823
+          line: 28
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 23
+            index: 846
+            line: 28
+          }
+          start: Object {
+            column: 0
+            index: 823
+            line: 28
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'p1'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 829
+                  line: 28
+                }
+                start: Object {
+                  column: 4
+                  index: 827
+                  line: 28
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 22
+                index: 845
+                line: 28
+              }
+              start: Object {
+                column: 4
+                index: 827
+                line: 28
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 22
+                  index: 845
+                  line: 28
+                }
+                start: Object {
+                  column: 9
+                  index: 832
+                  line: 28
+                }
+              }
+              expression: NumericLiteral {
+                value: 10
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 12
+                    index: 835
+                    line: 28
+                  }
+                  start: Object {
+                    column: 10
+                    index: 833
+                    line: 28
+                  }
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 22
+                    index: 845
+                    line: 28
+                  }
+                  start: Object {
+                    column: 17
+                    index: 840
+                    line: 28
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 22
+                      index: 845
+                      line: 28
+                    }
+                    start: Object {
+                      column: 17
+                      index: 840
+                      line: 28
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 26
+          index: 873
+          line: 29
+        }
+        start: Object {
+          column: 0
+          index: 847
+          line: 29
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 26
+            index: 873
+            line: 29
+          }
+          start: Object {
+            column: 0
+            index: 847
+            line: 29
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'p2'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 853
+                  line: 29
+                }
+                start: Object {
+                  column: 4
+                  index: 851
+                  line: 29
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 25
+                index: 872
+                line: 29
+              }
+              start: Object {
+                column: 4
+                index: 851
+                line: 29
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 25
+                  index: 872
+                  line: 29
+                }
+                start: Object {
+                  column: 9
+                  index: 856
+                  line: 29
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 25
+                    index: 872
+                    line: 29
+                  }
+                  start: Object {
+                    column: 20
+                    index: 867
+                    line: 29
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 25
+                      index: 872
+                      line: 29
+                    }
+                    start: Object {
+                      column: 20
+                      index: 867
+                      line: 29
+                    }
+                  }
+                }
+              }
+              expression: UnaryExpression {
+                operator: '-'
+                prefix: true
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 14
+                    index: 861
+                    line: 29
+                  }
+                  start: Object {
+                    column: 11
+                    index: 858
+                    line: 29
+                  }
+                }
+                argument: NumericLiteral {
+                  value: 10
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 14
+                      index: 861
+                      line: 29
+                    }
+                    start: Object {
+                      column: 12
+                      index: 859
+                      line: 29
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 27
+          index: 901
+          line: 30
+        }
+        start: Object {
+          column: 0
+          index: 874
+          line: 30
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 27
+            index: 901
+            line: 30
+          }
+          start: Object {
+            column: 0
+            index: 874
+            line: 30
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'p3'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 880
+                  line: 30
+                }
+                start: Object {
+                  column: 4
+                  index: 878
+                  line: 30
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 26
+                index: 900
+                line: 30
+              }
+              start: Object {
+                column: 4
+                index: 878
+                line: 30
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 26
+                  index: 900
+                  line: 30
+                }
+                start: Object {
+                  column: 9
+                  index: 883
+                  line: 30
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 26
+                    index: 900
+                    line: 30
+                  }
+                  start: Object {
+                    column: 21
+                    index: 895
+                    line: 30
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 26
+                      index: 900
+                      line: 30
+                    }
+                    start: Object {
+                      column: 21
+                      index: 895
+                      line: 30
+                    }
+                  }
+                }
+              }
+              expression: ArrayExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 16
+                    index: 890
+                    line: 30
+                  }
+                  start: Object {
+                    column: 10
+                    index: 884
+                    line: 30
+                  }
+                }
+                elements: Array [
+                  NumericLiteral {
+                    value: 10
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 14
+                        index: 888
+                        line: 30
+                      }
+                      start: Object {
+                        column: 12
+                        index: 886
+                        line: 30
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 29
+          index: 931
+          line: 31
+        }
+        start: Object {
+          column: 0
+          index: 902
+          line: 31
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 29
+            index: 931
+            line: 31
+          }
+          start: Object {
+            column: 0
+            index: 902
+            line: 31
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'p4'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 908
+                  line: 31
+                }
+                start: Object {
+                  column: 4
+                  index: 906
+                  line: 31
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 28
+                index: 930
+                line: 31
+              }
+              start: Object {
+                column: 4
+                index: 906
+                line: 31
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 28
+                  index: 930
+                  line: 31
+                }
+                start: Object {
+                  column: 9
+                  index: 911
+                  line: 31
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 28
+                    index: 930
+                    line: 31
+                  }
+                  start: Object {
+                    column: 23
+                    index: 925
+                    line: 31
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 28
+                      index: 930
+                      line: 31
+                    }
+                    start: Object {
+                      column: 23
+                      index: 925
+                      line: 31
+                    }
+                  }
+                }
+              }
+              expression: ArrayExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 19
+                    index: 921
+                    line: 31
+                  }
+                  start: Object {
+                    column: 9
+                    index: 911
+                    line: 31
+                  }
+                }
+                elements: Array [
+                  ArrayExpression {
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 18
+                        index: 920
+                        line: 31
+                      }
+                      start: Object {
+                        column: 10
+                        index: 912
+                        line: 31
+                      }
+                    }
+                    elements: Array [
+                      ArrayExpression {
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 17
+                            index: 919
+                            line: 31
+                          }
+                          start: Object {
+                            column: 11
+                            index: 913
+                            line: 31
+                          }
+                        }
+                        elements: Array [
+                          ArrayExpression {
+                            loc: Object {
+                              filename: '..'
+                              end: Object {
+                                column: 16
+                                index: 918
+                                line: 31
+                              }
+                              start: Object {
+                                column: 12
+                                index: 914
+                                line: 31
+                              }
+                            }
+                            elements: Array [
+                              NumericLiteral {
+                                value: 10
+                                loc: Object {
+                                  filename: '..'
+                                  end: Object {
+                                    column: 15
+                                    index: 917
+                                    line: 31
+                                  }
+                                  start: Object {
+                                    column: 13
+                                    index: 915
+                                    line: 31
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 62
+          index: 995
+          line: 33
+        }
+        start: Object {
+          column: 0
+          index: 933
+          line: 33
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 62
+            index: 995
+            line: 33
+          }
+          start: Object {
+            column: 0
+            index: 933
+            line: 33
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'x1'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 939
+                  line: 33
+                }
+                start: Object {
+                  column: 4
+                  index: 937
+                  line: 33
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 61
+                index: 994
+                line: 33
+              }
+              start: Object {
+                column: 4
+                index: 937
+                line: 33
+              }
+            }
+            init: TSAsExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 61
+                  index: 994
+                  line: 33
+                }
+                start: Object {
+                  column: 9
+                  index: 942
+                  line: 33
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 61
+                    index: 994
+                    line: 33
+                  }
+                  start: Object {
+                    column: 56
+                    index: 989
+                    line: 33
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 61
+                      index: 994
+                      line: 33
+                    }
+                    start: Object {
+                      column: 56
+                      index: 989
+                      line: 33
+                    }
+                  }
+                }
+              }
+              expression: ObjectExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 52
+                    index: 985
+                    line: 33
+                  }
+                  start: Object {
+                    column: 9
+                    index: 942
+                    line: 33
+                  }
+                }
+                properties: Array [
+                  ObjectProperty {
+                    key: StaticPropertyKey {
+                      value: Identifier {
+                        name: 'x'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 12
+                            index: 945
+                            line: 33
+                          }
+                          start: Object {
+                            column: 11
+                            index: 944
+                            line: 33
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 12
+                          index: 945
+                          line: 33
+                        }
+                        start: Object {
+                          column: 11
+                          index: 944
+                          line: 33
+                        }
+                      }
+                    }
+                    value: NumericLiteral {
+                      value: 10
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 16
+                          index: 949
+                          line: 33
+                        }
+                        start: Object {
+                          column: 14
+                          index: 947
+                          line: 33
+                        }
+                      }
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 16
+                        index: 949
+                        line: 33
+                      }
+                      start: Object {
+                        column: 11
+                        index: 944
+                        line: 33
+                      }
+                    }
+                  }
+                  ObjectProperty {
+                    key: StaticPropertyKey {
+                      value: Identifier {
+                        name: 'y'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 19
+                            index: 952
+                            line: 33
+                          }
+                          start: Object {
+                            column: 18
+                            index: 951
+                            line: 33
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 19
+                          index: 952
+                          line: 33
+                        }
+                        start: Object {
+                          column: 18
+                          index: 951
+                          line: 33
+                        }
+                      }
+                    }
+                    value: ArrayExpression {
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 29
+                          index: 962
+                          line: 33
+                        }
+                        start: Object {
+                          column: 21
+                          index: 954
+                          line: 33
+                        }
+                      }
+                      elements: Array [
+                        NumericLiteral {
+                          value: 20
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 24
+                              index: 957
+                              line: 33
+                            }
+                            start: Object {
+                              column: 22
+                              index: 955
+                              line: 33
+                            }
+                          }
+                        }
+                        NumericLiteral {
+                          value: 30
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 28
+                              index: 961
+                              line: 33
+                            }
+                            start: Object {
+                              column: 26
+                              index: 959
+                              line: 33
+                            }
+                          }
+                        }
+                      ]
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 29
+                        index: 962
+                        line: 33
+                      }
+                      start: Object {
+                        column: 18
+                        index: 951
+                        line: 33
+                      }
+                    }
+                  }
+                  ObjectProperty {
+                    key: StaticPropertyKey {
+                      value: Identifier {
+                        name: 'z'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 32
+                            index: 965
+                            line: 33
+                          }
+                          start: Object {
+                            column: 31
+                            index: 964
+                            line: 33
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 32
+                          index: 965
+                          line: 33
+                        }
+                        start: Object {
+                          column: 31
+                          index: 964
+                          line: 33
+                        }
+                      }
+                    }
+                    value: ObjectExpression {
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 50
+                          index: 983
+                          line: 33
+                        }
+                        start: Object {
+                          column: 34
+                          index: 967
+                          line: 33
+                        }
+                      }
+                      properties: Array [
+                        ObjectProperty {
+                          key: StaticPropertyKey {
+                            value: Identifier {
+                              name: 'a'
+                              loc: Object {
+                                filename: '..'
+                                end: Object {
+                                  column: 37
+                                  index: 970
+                                  line: 33
+                                }
+                                start: Object {
+                                  column: 36
+                                  index: 969
+                                  line: 33
+                                }
+                              }
+                            }
+                            variance: undefined
+                            loc: Object {
+                              filename: '..'
+                              end: Object {
+                                column: 37
+                                index: 970
+                                line: 33
+                              }
+                              start: Object {
+                                column: 36
+                                index: 969
+                                line: 33
+                              }
+                            }
+                          }
+                          value: ObjectExpression {
+                            loc: Object {
+                              filename: '..'
+                              end: Object {
+                                column: 48
+                                index: 981
+                                line: 33
+                              }
+                              start: Object {
+                                column: 39
+                                index: 972
+                                line: 33
+                              }
+                            }
+                            properties: Array [
+                              ObjectProperty {
+                                key: StaticPropertyKey {
+                                  value: Identifier {
+                                    name: 'b'
+                                    loc: Object {
+                                      filename: '..'
+                                      end: Object {
+                                        column: 42
+                                        index: 975
+                                        line: 33
+                                      }
+                                      start: Object {
+                                        column: 41
+                                        index: 974
+                                        line: 33
+                                      }
+                                    }
+                                  }
+                                  variance: undefined
+                                  loc: Object {
+                                    filename: '..'
+                                    end: Object {
+                                      column: 42
+                                      index: 975
+                                      line: 33
+                                    }
+                                    start: Object {
+                                      column: 41
+                                      index: 974
+                                      line: 33
+                                    }
+                                  }
+                                }
+                                value: NumericLiteral {
+                                  value: 42
+                                  loc: Object {
+                                    filename: '..'
+                                    end: Object {
+                                      column: 46
+                                      index: 979
+                                      line: 33
+                                    }
+                                    start: Object {
+                                      column: 44
+                                      index: 977
+                                      line: 33
+                                    }
+                                  }
+                                }
+                                loc: Object {
+                                  filename: '..'
+                                  end: Object {
+                                    column: 46
+                                    index: 979
+                                    line: 33
+                                  }
+                                  start: Object {
+                                    column: 41
+                                    index: 974
+                                    line: 33
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                          loc: Object {
+                            filename: '..'
+                            end: Object {
+                              column: 48
+                              index: 981
+                              line: 33
+                            }
+                            start: Object {
+                              column: 36
+                              index: 969
+                              line: 33
+                            }
+                          }
+                        }
+                      ]
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 50
+                        index: 983
+                        line: 33
+                      }
+                      start: Object {
+                        column: 31
+                        index: 964
+                        line: 33
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 20
+          index: 1_017
+          line: 35
+        }
+        start: Object {
+          column: 0
+          index: 997
+          line: 35
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 20
+            index: 1_017
+            line: 35
+          }
+          start: Object {
+            column: 0
+            index: 997
+            line: 35
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'q1'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 1_003
+                  line: 35
+                }
+                start: Object {
+                  column: 4
+                  index: 1_001
+                  line: 35
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 19
+                index: 1_016
+                line: 35
+              }
+              start: Object {
+                column: 4
+                index: 1_001
+                line: 35
+              }
+            }
+            init: TSTypeAssertion {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 19
+                  index: 1_016
+                  line: 35
+                }
+                start: Object {
+                  column: 9
+                  index: 1_006
+                  line: 35
+                }
+              }
+              expression: NumericLiteral {
+                value: 10
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 19
+                    index: 1_016
+                    line: 35
+                  }
+                  start: Object {
+                    column: 17
+                    index: 1_014
+                    line: 35
+                  }
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 15
+                    index: 1_012
+                    line: 35
+                  }
+                  start: Object {
+                    column: 10
+                    index: 1_007
+                    line: 35
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 15
+                      index: 1_012
+                      line: 35
+                    }
+                    start: Object {
+                      column: 10
+                      index: 1_007
+                      line: 35
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 23
+          index: 1_041
+          line: 36
+        }
+        start: Object {
+          column: 0
+          index: 1_018
+          line: 36
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 23
+            index: 1_041
+            line: 36
+          }
+          start: Object {
+            column: 0
+            index: 1_018
+            line: 36
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'q2'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 1_024
+                  line: 36
+                }
+                start: Object {
+                  column: 4
+                  index: 1_022
+                  line: 36
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 22
+                index: 1_040
+                line: 36
+              }
+              start: Object {
+                column: 4
+                index: 1_022
+                line: 36
+              }
+            }
+            init: TSTypeAssertion {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 22
+                  index: 1_040
+                  line: 36
+                }
+                start: Object {
+                  column: 9
+                  index: 1_027
+                  line: 36
+                }
+              }
+              expression: StringLiteral {
+                value: 'abc'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 22
+                    index: 1_040
+                    line: 36
+                  }
+                  start: Object {
+                    column: 17
+                    index: 1_035
+                    line: 36
+                  }
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 15
+                    index: 1_033
+                    line: 36
+                  }
+                  start: Object {
+                    column: 10
+                    index: 1_028
+                    line: 36
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 15
+                      index: 1_033
+                      line: 36
+                    }
+                    start: Object {
+                      column: 10
+                      index: 1_028
+                      line: 36
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 22
+          index: 1_064
+          line: 37
+        }
+        start: Object {
+          column: 0
+          index: 1_042
+          line: 37
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 22
+            index: 1_064
+            line: 37
+          }
+          start: Object {
+            column: 0
+            index: 1_042
+            line: 37
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'q3'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 1_048
+                  line: 37
+                }
+                start: Object {
+                  column: 4
+                  index: 1_046
+                  line: 37
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 21
+                index: 1_063
+                line: 37
+              }
+              start: Object {
+                column: 4
+                index: 1_046
+                line: 37
+              }
+            }
+            init: TSTypeAssertion {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 21
+                  index: 1_063
+                  line: 37
+                }
+                start: Object {
+                  column: 9
+                  index: 1_051
+                  line: 37
+                }
+              }
+              expression: BooleanLiteral {
+                value: true
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 21
+                    index: 1_063
+                    line: 37
+                  }
+                  start: Object {
+                    column: 17
+                    index: 1_059
+                    line: 37
+                  }
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 15
+                    index: 1_057
+                    line: 37
+                  }
+                  start: Object {
+                    column: 10
+                    index: 1_052
+                    line: 37
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 15
+                      index: 1_057
+                      line: 37
+                    }
+                    start: Object {
+                      column: 10
+                      index: 1_052
+                      line: 37
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 27
+          index: 1_092
+          line: 38
+        }
+        start: Object {
+          column: 0
+          index: 1_065
+          line: 38
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 27
+            index: 1_092
+            line: 38
+          }
+          start: Object {
+            column: 0
+            index: 1_065
+            line: 38
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'q4'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 1_071
+                  line: 38
+                }
+                start: Object {
+                  column: 4
+                  index: 1_069
+                  line: 38
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 26
+                index: 1_091
+                line: 38
+              }
+              start: Object {
+                column: 4
+                index: 1_069
+                line: 38
+              }
+            }
+            init: TSTypeAssertion {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 26
+                  index: 1_091
+                  line: 38
+                }
+                start: Object {
+                  column: 9
+                  index: 1_074
+                  line: 38
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 15
+                    index: 1_080
+                    line: 38
+                  }
+                  start: Object {
+                    column: 10
+                    index: 1_075
+                    line: 38
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 15
+                      index: 1_080
+                      line: 38
+                    }
+                    start: Object {
+                      column: 10
+                      index: 1_075
+                      line: 38
+                    }
+                  }
+                }
+              }
+              expression: ArrayExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 26
+                    index: 1_091
+                    line: 38
+                  }
+                  start: Object {
+                    column: 17
+                    index: 1_082
+                    line: 38
+                  }
+                }
+                elements: Array [
+                  NumericLiteral {
+                    value: 1
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 19
+                        index: 1_084
+                        line: 38
+                      }
+                      start: Object {
+                        column: 18
+                        index: 1_083
+                        line: 38
+                      }
+                    }
+                  }
+                  NumericLiteral {
+                    value: 2
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 22
+                        index: 1_087
+                        line: 38
+                      }
+                      start: Object {
+                        column: 21
+                        index: 1_086
+                        line: 38
+                      }
+                    }
+                  }
+                  NumericLiteral {
+                    value: 3
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 25
+                        index: 1_090
+                        line: 38
+                      }
+                      start: Object {
+                        column: 24
+                        index: 1_089
+                        line: 38
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 34
+          index: 1_127
+          line: 39
+        }
+        start: Object {
+          column: 0
+          index: 1_093
+          line: 39
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 34
+            index: 1_127
+            line: 39
+          }
+          start: Object {
+            column: 0
+            index: 1_093
+            line: 39
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'q5'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 6
+                  index: 1_099
+                  line: 39
+                }
+                start: Object {
+                  column: 4
+                  index: 1_097
+                  line: 39
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 33
+                index: 1_126
+                line: 39
+              }
+              start: Object {
+                column: 4
+                index: 1_097
+                line: 39
+              }
+            }
+            init: TSTypeAssertion {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 33
+                  index: 1_126
+                  line: 39
+                }
+                start: Object {
+                  column: 9
+                  index: 1_102
+                  line: 39
+                }
+              }
+              typeAnnotation: TSTypeReference {
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 15
+                    index: 1_108
+                    line: 39
+                  }
+                  start: Object {
+                    column: 10
+                    index: 1_103
+                    line: 39
+                  }
+                }
+                typeName: ReferenceIdentifier {
+                  name: 'const'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 15
+                      index: 1_108
+                      line: 39
+                    }
+                    start: Object {
+                      column: 10
+                      index: 1_103
+                      line: 39
+                    }
+                  }
+                }
+              }
+              expression: ObjectExpression {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 33
+                    index: 1_126
+                    line: 39
+                  }
+                  start: Object {
+                    column: 17
+                    index: 1_110
+                    line: 39
+                  }
+                }
+                properties: Array [
+                  ObjectProperty {
+                    key: StaticPropertyKey {
+                      value: Identifier {
+                        name: 'x'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 20
+                            index: 1_113
+                            line: 39
+                          }
+                          start: Object {
+                            column: 19
+                            index: 1_112
+                            line: 39
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 20
+                          index: 1_113
+                          line: 39
+                        }
+                        start: Object {
+                          column: 19
+                          index: 1_112
+                          line: 39
+                        }
+                      }
+                    }
+                    value: NumericLiteral {
+                      value: 10
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 24
+                          index: 1_117
+                          line: 39
+                        }
+                        start: Object {
+                          column: 22
+                          index: 1_115
+                          line: 39
+                        }
+                      }
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 24
+                        index: 1_117
+                        line: 39
+                      }
+                      start: Object {
+                        column: 19
+                        index: 1_112
+                        line: 39
+                      }
+                    }
+                  }
+                  ObjectProperty {
+                    key: StaticPropertyKey {
+                      value: Identifier {
+                        name: 'y'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 27
+                            index: 1_120
+                            line: 39
+                          }
+                          start: Object {
+                            column: 26
+                            index: 1_119
+                            line: 39
+                          }
+                        }
+                      }
+                      variance: undefined
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 27
+                          index: 1_120
+                          line: 39
+                        }
+                        start: Object {
+                          column: 26
+                          index: 1_119
+                          line: 39
+                        }
+                      }
+                    }
+                    value: NumericLiteral {
+                      value: 20
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 31
+                          index: 1_124
+                          line: 39
+                        }
+                        start: Object {
+                          column: 29
+                          index: 1_122
+                          line: 39
+                        }
+                      }
+                    }
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 31
+                        index: 1_124
+                        line: 39
+                      }
+                      start: Object {
+                        column: 26
+                        index: 1_119
+                        line: 39
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

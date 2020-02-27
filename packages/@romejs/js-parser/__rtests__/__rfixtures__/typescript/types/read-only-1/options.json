@@ -1,0 +1,5 @@
+{
+  "sourceType": "module",
+  "syntax": ["ts"],
+  "throws": "'readonly' type modifier is only permitted on array and tuple literal types."
+}

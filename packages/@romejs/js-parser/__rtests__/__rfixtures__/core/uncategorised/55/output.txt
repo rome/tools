@@ -1,0 +1,74 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 18
+      index: 18
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentLine {
+      value: ' line comment'
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+  ]
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 2
+          index: 2
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: NumericLiteral {
+        value: 42
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 2
+            index: 2
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+      }
+    }
+  ]
+}

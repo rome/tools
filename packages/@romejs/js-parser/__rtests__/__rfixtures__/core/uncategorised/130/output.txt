@@ -1,0 +1,103 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 14
+      index: 14
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 14
+          index: 14
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: MemberExpression {
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 14
+            index: 14
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        object: ReferenceIdentifier {
+          name: 'universe'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 8
+              index: 8
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+        property: StaticMemberProperty {
+          value: Identifier {
+            name: 'false'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 14
+                index: 14
+                line: 1
+              }
+              start: Object {
+                column: 9
+                index: 9
+                line: 1
+              }
+            }
+          }
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 14
+              index: 14
+              line: 1
+            }
+            start: Object {
+              column: 9
+              index: 9
+              line: 1
+            }
+          }
+        }
+      }
+    }
+  ]
+}

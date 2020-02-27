@@ -1,0 +1,74 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 88
+      line: 3
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentLine {
+      value: ' Exports an identifier, doesn\'t try parsing `abstract class`'
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+  ]
+  body: Array [
+    ExportDefaultDeclaration {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 24
+          index: 87
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 63
+          line: 2
+        }
+      }
+      declaration: ReferenceIdentifier {
+        name: 'abstract'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 23
+            index: 86
+            line: 2
+          }
+          start: Object {
+            column: 15
+            index: 78
+            line: 2
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,256 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 49
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 48
+          index: 48
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'const'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 48
+            index: 48
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'fn'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 8
+                  index: 8
+                  line: 1
+                }
+                start: Object {
+                  column: 6
+                  index: 6
+                  line: 1
+                }
+              }
+            }
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 47
+                index: 47
+                line: 1
+              }
+              start: Object {
+                column: 6
+                index: 6
+                line: 1
+              }
+            }
+            init: ArrowFunctionExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 47
+                  index: 47
+                  line: 1
+                }
+                start: Object {
+                  column: 11
+                  index: 11
+                  line: 1
+                }
+              }
+              body: BlockStatement {
+                body: Array []
+                directives: Array []
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 47
+                    index: 47
+                    line: 1
+                  }
+                  start: Object {
+                    column: 45
+                    index: 45
+                    line: 1
+                  }
+                }
+              }
+              head: FunctionHead {
+                async: true
+                hasHoistedVars: false
+                rest: undefined
+                thisType: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 45
+                    index: 45
+                    line: 1
+                  }
+                  start: Object {
+                    column: 11
+                    index: 11
+                    line: 1
+                  }
+                }
+                params: Array [
+                  BindingIdentifier {
+                    name: 'a'
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 44
+                        index: 44
+                        line: 1
+                      }
+                      start: Object {
+                        column: 45
+                        index: 45
+                        line: 1
+                      }
+                    }
+                    meta: PatternMeta {
+                      optional: true
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 44
+                          index: 44
+                          line: 1
+                        }
+                        start: Object {
+                          column: 45
+                          index: 45
+                          line: 1
+                        }
+                      }
+                      typeAnnotation: AnyKeywordTypeAnnotation {
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 25
+                            index: 25
+                            line: 1
+                          }
+                          start: Object {
+                            column: 22
+                            index: 22
+                            line: 1
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+                returnType: FlowGenericTypeAnnotation {
+                  id: Identifier {
+                    name: 'Promise'
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 35
+                        index: 35
+                        line: 1
+                      }
+                      start: Object {
+                        column: 28
+                        index: 28
+                        line: 1
+                      }
+                    }
+                  }
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 41
+                      index: 41
+                      line: 1
+                    }
+                    start: Object {
+                      column: 28
+                      index: 28
+                      line: 1
+                    }
+                  }
+                  typeParameters: FlowTypeParameterInstantiation {
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 41
+                        index: 41
+                        line: 1
+                      }
+                      start: Object {
+                        column: 35
+                        index: 35
+                        line: 1
+                      }
+                    }
+                    params: Array [
+                      VoidKeywordTypeAnnotation {
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 40
+                            index: 40
+                            line: 1
+                          }
+                          start: Object {
+                            column: 36
+                            index: 36
+                            line: 1
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

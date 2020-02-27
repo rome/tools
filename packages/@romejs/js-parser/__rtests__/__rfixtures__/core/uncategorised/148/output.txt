@@ -1,0 +1,74 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 6
+      index: 6
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 6
+          index: 6
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: UnaryExpression {
+        operator: 'void'
+        prefix: true
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        argument: ReferenceIdentifier {
+          name: 'x'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 6
+              index: 6
+              line: 1
+            }
+            start: Object {
+              column: 5
+              index: 5
+              line: 1
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 21
+      line: 3
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 10
+          index: 20
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: ArrowFunctionExpression {
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 10
+            index: 20
+            line: 2
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        body: BlockStatement {
+          body: Array []
+          directives: Array []
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 10
+              index: 20
+              line: 2
+            }
+            start: Object {
+              column: 7
+              index: 17
+              line: 2
+            }
+          }
+        }
+        head: FunctionHead {
+          async: true
+          hasHoistedVars: false
+          rest: undefined
+          thisType: undefined
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 7
+              index: 17
+              line: 2
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+          params: Array [
+            BindingIdentifier {
+              name: 'f'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 8
+                  index: 8
+                  line: 1
+                }
+                start: Object {
+                  column: 7
+                  index: 7
+                  line: 1
+                }
+              }
+            }
+          ]
+          returnType: TSTypeReference {
+            typeParameters: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 3
+                index: 13
+                line: 2
+              }
+              start: Object {
+                column: 2
+                index: 12
+                line: 2
+              }
+            }
+            typeName: ReferenceIdentifier {
+              name: 't'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 3
+                  index: 13
+                  line: 2
+                }
+                start: Object {
+                  column: 2
+                  index: 12
+                  line: 2
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "@romejs/consume",
+  "version": "0.0.51",
+  "type": "module",
+  "private": true,
+  "main": "index.ts"
+}

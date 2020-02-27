@@ -1,0 +1,132 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 43
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    FlowDeclareModuleExports {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 42
+          index: 42
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      typeAnnotation: FlowObjectTypeAnnotation {
+        exact: false
+        inexact: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 42
+            index: 42
+            line: 1
+          }
+          start: Object {
+            column: 24
+            index: 24
+            line: 1
+          }
+        }
+        properties: Array [
+          FlowObjectTypeProperty {
+            kind: 'init'
+            key: Identifier {
+              name: 'foo'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 29
+                  index: 29
+                  line: 1
+                }
+                start: Object {
+                  column: 26
+                  index: 26
+                  line: 1
+                }
+              }
+            }
+            value: FlowFunctionTypeAnnotation {
+              params: Array []
+              rest: undefined
+              typeParameters: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 39
+                  index: 39
+                  line: 1
+                }
+                start: Object {
+                  column: 26
+                  index: 26
+                  line: 1
+                }
+              }
+              returnType: NumberKeywordTypeAnnotation {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 39
+                    index: 39
+                    line: 1
+                  }
+                  start: Object {
+                    column: 33
+                    index: 33
+                    line: 1
+                  }
+                }
+              }
+            }
+            optional: false
+            proto: false
+            static: false
+            variance: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 39
+                index: 39
+                line: 1
+              }
+              start: Object {
+                column: 26
+                index: 26
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

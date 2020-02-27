@@ -1,0 +1,250 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 45
+      index: 45
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    FlowDeclareClass {
+      id: BindingIdentifier {
+        name: 'A'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 15
+            index: 15
+            line: 1
+          }
+          start: Object {
+            column: 14
+            index: 14
+            line: 1
+          }
+        }
+      }
+      implements: Array []
+      mixins: Array []
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 45
+          index: 45
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      typeParameters: FlowTypeParameterDeclaration {
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 18
+            index: 18
+            line: 1
+          }
+          start: Object {
+            column: 15
+            index: 15
+            line: 1
+          }
+        }
+        params: Array [
+          FlowTypeParameter {
+            name: 'T'
+            bound: undefined
+            default: undefined
+            variance: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 17
+                index: 17
+                line: 1
+              }
+              start: Object {
+                column: 16
+                index: 16
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+      body: FlowObjectTypeAnnotation {
+        exact: false
+        inexact: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 45
+            index: 45
+            line: 1
+          }
+          start: Object {
+            column: 32
+            index: 32
+            line: 1
+          }
+        }
+        properties: Array [
+          FlowObjectTypeProperty {
+            kind: 'init'
+            key: Identifier {
+              name: 'x'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 35
+                  index: 35
+                  line: 1
+                }
+                start: Object {
+                  column: 34
+                  index: 34
+                  line: 1
+                }
+              }
+            }
+            value: NumberKeywordTypeAnnotation {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 43
+                  index: 43
+                  line: 1
+                }
+                start: Object {
+                  column: 37
+                  index: 37
+                  line: 1
+                }
+              }
+            }
+            optional: false
+            proto: false
+            static: false
+            variance: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 43
+                index: 43
+                line: 1
+              }
+              start: Object {
+                column: 34
+                index: 34
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+      extends: Array [
+        FlowInterfaceExtends {
+          id: Identifier {
+            name: 'B'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 28
+                index: 28
+                line: 1
+              }
+              start: Object {
+                column: 27
+                index: 27
+                line: 1
+              }
+            }
+          }
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 31
+              index: 31
+              line: 1
+            }
+            start: Object {
+              column: 27
+              index: 27
+              line: 1
+            }
+          }
+          typeParameters: FlowTypeParameterInstantiation {
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 31
+                index: 31
+                line: 1
+              }
+              start: Object {
+                column: 28
+                index: 28
+                line: 1
+              }
+            }
+            params: Array [
+              FlowGenericTypeAnnotation {
+                id: Identifier {
+                  name: 'T'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 30
+                      index: 30
+                      line: 1
+                    }
+                    start: Object {
+                      column: 29
+                      index: 29
+                      line: 1
+                    }
+                  }
+                }
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 30
+                    index: 30
+                    line: 1
+                  }
+                  start: Object {
+                    column: 29
+                    index: 29
+                    line: 1
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+{
+  "throws": "Unexpected await for `for-in`"
+}

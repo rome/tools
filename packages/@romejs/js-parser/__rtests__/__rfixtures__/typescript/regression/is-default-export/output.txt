@@ -1,0 +1,209 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 63
+      line: 4
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExportNamedDeclaration {
+      exportKind: 'type'
+      source: undefined
+      specifiers: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 23
+          index: 23
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: TypeAliasTypeAnnotation {
+        id: BindingIdentifier {
+          name: 'T'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 13
+              index: 13
+              line: 1
+            }
+            start: Object {
+              column: 12
+              index: 12
+              line: 1
+            }
+          }
+        }
+        typeParameters: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 23
+            index: 23
+            line: 1
+          }
+          start: Object {
+            column: 7
+            index: 7
+            line: 1
+          }
+        }
+        right: NumberKeywordTypeAnnotation {
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 22
+              index: 22
+              line: 1
+            }
+            start: Object {
+              column: 16
+              index: 16
+              line: 1
+            }
+          }
+        }
+      }
+    }
+    ExportNamedDeclaration {
+      exportKind: 'value'
+      source: undefined
+      specifiers: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 16
+          index: 40
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 24
+          line: 2
+        }
+      }
+      declaration: TSEnumDeclaration {
+        id: BindingIdentifier {
+          name: 'E'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 13
+              index: 37
+              line: 2
+            }
+            start: Object {
+              column: 12
+              index: 36
+              line: 2
+            }
+          }
+        }
+        const: false
+        members: Array []
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 16
+            index: 40
+            line: 2
+          }
+          start: Object {
+            column: 7
+            index: 31
+            line: 2
+          }
+        }
+      }
+    }
+    ExportNamedDeclaration {
+      exportKind: 'type'
+      source: undefined
+      specifiers: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 21
+          index: 62
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 41
+          line: 3
+        }
+      }
+      declaration: TSInterfaceDeclaration {
+        id: BindingIdentifier {
+          name: 'I'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 18
+              index: 59
+              line: 3
+            }
+            start: Object {
+              column: 17
+              index: 58
+              line: 3
+            }
+          }
+        }
+        extends: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 21
+            index: 62
+            line: 3
+          }
+          start: Object {
+            column: 7
+            index: 48
+            line: 3
+          }
+        }
+        body: TSInterfaceBody {
+          body: Array []
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 21
+              index: 62
+              line: 3
+            }
+            start: Object {
+              column: 19
+              index: 60
+              line: 3
+            }
+          }
+        }
+      }
+    }
+  ]
+}

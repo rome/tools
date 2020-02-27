@@ -1,0 +1,5 @@
+{
+  "sourceType": "module",
+  "syntax": ["ts"],
+  "throws": "The rest element has to be the last element when destructuring"
+}

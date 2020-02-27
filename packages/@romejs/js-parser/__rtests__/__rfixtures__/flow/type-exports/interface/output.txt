@@ -1,0 +1,357 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 70
+      line: 3
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExportNamedDeclaration {
+      exportKind: 'type'
+      source: undefined
+      specifiers: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 34
+          index: 34
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: FlowInterfaceDeclaration {
+        id: BindingIdentifier {
+          name: 'foo'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 20
+              index: 20
+              line: 1
+            }
+            start: Object {
+              column: 17
+              index: 17
+              line: 1
+            }
+          }
+        }
+        extends: Array []
+        implements: Array []
+        mixins: Array []
+        typeParameters: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 34
+            index: 34
+            line: 1
+          }
+          start: Object {
+            column: 7
+            index: 7
+            line: 1
+          }
+        }
+        body: FlowObjectTypeAnnotation {
+          exact: false
+          inexact: undefined
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 34
+              index: 34
+              line: 1
+            }
+            start: Object {
+              column: 21
+              index: 21
+              line: 1
+            }
+          }
+          properties: Array [
+            FlowObjectTypeProperty {
+              kind: 'init'
+              key: Identifier {
+                name: 'p'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 24
+                    index: 24
+                    line: 1
+                  }
+                  start: Object {
+                    column: 23
+                    index: 23
+                    line: 1
+                  }
+                }
+              }
+              value: NumberKeywordTypeAnnotation {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 32
+                    index: 32
+                    line: 1
+                  }
+                  start: Object {
+                    column: 26
+                    index: 26
+                    line: 1
+                  }
+                }
+              }
+              optional: false
+              proto: false
+              static: false
+              variance: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 32
+                  index: 32
+                  line: 1
+                }
+                start: Object {
+                  column: 23
+                  index: 23
+                  line: 1
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+    EmptyStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 35
+          index: 35
+          line: 1
+        }
+        start: Object {
+          column: 34
+          index: 34
+          line: 1
+        }
+      }
+    }
+    ExportNamedDeclaration {
+      exportKind: 'type'
+      source: undefined
+      specifiers: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 32
+          index: 68
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 36
+          line: 2
+        }
+      }
+      declaration: FlowInterfaceDeclaration {
+        id: BindingIdentifier {
+          name: 'bar'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 20
+              index: 56
+              line: 2
+            }
+            start: Object {
+              column: 17
+              index: 53
+              line: 2
+            }
+          }
+        }
+        extends: Array []
+        implements: Array []
+        mixins: Array []
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 32
+            index: 68
+            line: 2
+          }
+          start: Object {
+            column: 7
+            index: 43
+            line: 2
+          }
+        }
+        typeParameters: FlowTypeParameterDeclaration {
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 23
+              index: 59
+              line: 2
+            }
+            start: Object {
+              column: 20
+              index: 56
+              line: 2
+            }
+          }
+          params: Array [
+            FlowTypeParameter {
+              name: 'T'
+              bound: undefined
+              default: undefined
+              variance: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 22
+                  index: 58
+                  line: 2
+                }
+                start: Object {
+                  column: 21
+                  index: 57
+                  line: 2
+                }
+              }
+            }
+          ]
+        }
+        body: FlowObjectTypeAnnotation {
+          exact: false
+          inexact: undefined
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 32
+              index: 68
+              line: 2
+            }
+            start: Object {
+              column: 24
+              index: 60
+              line: 2
+            }
+          }
+          properties: Array [
+            FlowObjectTypeProperty {
+              kind: 'init'
+              key: Identifier {
+                name: 'p'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 27
+                    index: 63
+                    line: 2
+                  }
+                  start: Object {
+                    column: 26
+                    index: 62
+                    line: 2
+                  }
+                }
+              }
+              value: FlowGenericTypeAnnotation {
+                id: Identifier {
+                  name: 'T'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 30
+                      index: 66
+                      line: 2
+                    }
+                    start: Object {
+                      column: 29
+                      index: 65
+                      line: 2
+                    }
+                  }
+                }
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 30
+                    index: 66
+                    line: 2
+                  }
+                  start: Object {
+                    column: 29
+                    index: 65
+                    line: 2
+                  }
+                }
+              }
+              optional: false
+              proto: false
+              static: false
+              variance: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 30
+                  index: 66
+                  line: 2
+                }
+                start: Object {
+                  column: 26
+                  index: 62
+                  line: 2
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+    EmptyStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 33
+          index: 69
+          line: 2
+        }
+        start: Object {
+          column: 32
+          index: 68
+          line: 2
+        }
+      }
+    }
+  ]
+}

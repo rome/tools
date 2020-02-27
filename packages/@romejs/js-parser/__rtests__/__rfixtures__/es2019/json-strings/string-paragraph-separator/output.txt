@@ -1,0 +1,74 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 107
+      line: 4
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentLine {
+      value: '      ^ That\'s a U+2029 PARAGRAPH SEPARATOR UTF-16 char (between \'before\' and \'after\')'
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 16
+          index: 16
+          line: 2
+        }
+        start: Object {
+          column: 16
+          index: 16
+          line: 2
+        }
+      }
+    }
+  ]
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 17
+          index: 17
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: StringLiteral {
+        value: 'before\u2029after'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 15
+            index: 15
+            line: 2
+          }
+          start: Object {
+            column: 1
+            index: 1
+            line: 1
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 18
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 17
+          index: 17
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: ArrowFunctionExpression {
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 17
+            index: 17
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        body: BlockStatement {
+          body: Array []
+          directives: Array []
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 17
+              index: 17
+              line: 1
+            }
+            start: Object {
+              column: 15
+              index: 15
+              line: 1
+            }
+          }
+        }
+        head: FunctionHead {
+          async: false
+          hasHoistedVars: false
+          predicate: undefined
+          rest: undefined
+          returnType: undefined
+          thisType: undefined
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 15
+              index: 15
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+          params: Array [
+            BindingAssignmentPattern {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 10
+                  index: 10
+                  line: 1
+                }
+                start: Object {
+                  column: 1
+                  index: 1
+                  line: 1
+                }
+              }
+              left: BindingIdentifier {
+                name: 'x'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 2
+                    index: 2
+                    line: 1
+                  }
+                  start: Object {
+                    column: 1
+                    index: 1
+                    line: 1
+                  }
+                }
+              }
+              right: ReferenceIdentifier {
+                name: 'yield'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 10
+                    index: 10
+                    line: 1
+                  }
+                  start: Object {
+                    column: 5
+                    index: 5
+                    line: 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

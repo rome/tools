@@ -1,0 +1,7 @@
+{
+  "name": "@romejs/codec-semver",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "main": "index.ts"
+}

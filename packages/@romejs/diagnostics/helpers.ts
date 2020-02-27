@@ -1,0 +1,109 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+import {PartialDiagnosticAdvice} from './types';
+import {orderBySimilarity} from '@romejs/string-utils';
+import diff from '@romejs/string-diff';
+import {Position} from '@romejs/parser-core';
+import {get1} from '@romejs/ob1';
+import {NEWLINE} from '@romejs/js-parser-utils';
+
+export function buildSuggestionAdvice(
+  value: string,
+  items: Array<string>,
+  minRating: number = 0.8,
+  formatItem?: (item: string) => string,
+): PartialDiagnosticAdvice {
+  const advice: PartialDiagnosticAdvice = [];
+
+  const ratings = orderBySimilarity(value, items, minRating);
+
+  const strings = ratings.map(item => {
+    const {target} = item;
+    if (formatItem === undefined) {
+      return target;
+    } else {
+      return formatItem(target);
+    }
+  });
+
+  const topRatingFormatted = strings.shift();
+  if (topRatingFormatted === undefined) {
+    return advice;
+  }
+
+  // Raw rating that hasn't been formatted
+  const topRatingRaw = ratings[0].target;
+
+  if (topRatingRaw === value) {
+    // TODO produce a better example
+  }
+
+  // If there's only 2 suggestions then just say "Did you mean A or B?" rather than printing the list
+  if (strings.length === 1) {
+    advice.push({
+      type: 'log',
+      category: 'info',
+      message: `Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
+    });
+  } else {
+    advice.push({
+      type: 'log',
+      category: 'info',
+      message: `Did you mean <emphasis>${topRatingFormatted}</emphasis>?`,
+    });
+
+    advice.push({
+      type: 'diff',
+      diff: diff(value, topRatingRaw),
+    });
+
+    if (strings.length > 0) {
+      advice.push({
+        type: 'log',
+        category: 'info',
+        message: 'Or one of these?',
+      });
+
+      advice.push({
+        type: 'list',
+        list: strings,
+        truncate: 20,
+      });
+    }
+  }
+
+  // TODO check if ANY of the suggestions match
+  if (
+    topRatingRaw !== value &&
+    topRatingRaw.toLowerCase() === value.toLowerCase()
+  ) {
+    advice.push({
+      type: 'log',
+      category: 'warn',
+      message: 'This operation is case sensitive',
+    });
+  }
+
+  return advice;
+}
+
+// Sometimes we'll have big blobs of JS in a diagnostic when we'll only show a snippet. This method pads it out then truncates the rest for efficient transmission. We will have crappy ANSI formatting in the console and elsewhere but for places where we need to truncate we probably don't care (generated code).
+export function truncateSourceText(
+  code: string,
+  start: Position,
+  end: Position,
+): string {
+  const lines = code.split(NEWLINE);
+
+  // Pad the starting and ending lines by 10
+  const fromLine = Math.max(get1(start.line) - 10, 0);
+  const toLine = Math.max(get1(end.line) + 10, lines.length);
+
+  const capturedLines = lines.slice(fromLine, toLine);
+  return '\n'.repeat(fromLine) + capturedLines.join('\n');
+}

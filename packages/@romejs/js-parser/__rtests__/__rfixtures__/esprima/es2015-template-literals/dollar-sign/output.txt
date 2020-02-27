@@ -1,0 +1,77 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 4
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 3
+          index: 3
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: TemplateLiteral {
+        expressions: Array []
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 3
+            index: 3
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        quasis: Array [
+          TemplateElement {
+            cooked: '$'
+            raw: '$'
+            tail: true
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 2
+                index: 2
+                line: 1
+              }
+              start: Object {
+                column: 1
+                index: 1
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

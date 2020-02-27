@@ -1,0 +1,203 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 15
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ClassDeclaration {
+      id: BindingIdentifier {
+        name: 'A'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 7
+            index: 7
+            line: 1
+          }
+          start: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+        }
+      }
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 14
+          index: 14
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      meta: ClassHead {
+        implements: undefined
+        superClass: undefined
+        superTypeParameters: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 14
+            index: 14
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        body: Array [
+          ClassProperty {
+            key: StaticPropertyKey {
+              value: Identifier {
+                name: 'p'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 11
+                    index: 11
+                    line: 1
+                  }
+                  start: Object {
+                    column: 10
+                    index: 10
+                    line: 1
+                  }
+                }
+              }
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 11
+                  index: 11
+                  line: 1
+                }
+                start: Object {
+                  column: 9
+                  index: 9
+                  line: 1
+                }
+              }
+              variance: FlowVariance {
+                kind: 'minus'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 10
+                    index: 10
+                    line: 1
+                  }
+                  start: Object {
+                    column: 9
+                    index: 9
+                    line: 1
+                  }
+                }
+              }
+            }
+            value: undefined
+            definite: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 13
+                index: 13
+                line: 1
+              }
+              start: Object {
+                column: 9
+                index: 9
+                line: 1
+              }
+            }
+            meta: ClassPropertyMeta {
+              abstract: false
+              accessibility: undefined
+              optional: false
+              readonly: false
+              static: false
+              typeAnnotation: undefined
+              start: Object {
+                column: 9
+                index: 9
+                line: 1
+              }
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 11
+                  index: 11
+                  line: 1
+                }
+                start: Object {
+                  column: 9
+                  index: 9
+                  line: 1
+                }
+              }
+            }
+            typeAnnotation: FlowGenericTypeAnnotation {
+              id: Identifier {
+                name: 'T'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 13
+                    index: 13
+                    line: 1
+                  }
+                  start: Object {
+                    column: 12
+                    index: 12
+                    line: 1
+                  }
+                }
+              }
+              typeParameters: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 13
+                  index: 13
+                  line: 1
+                }
+                start: Object {
+                  column: 12
+                  index: 12
+                  line: 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

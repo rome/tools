@@ -1,0 +1,784 @@
+Program {
+  comments: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 239
+      line: 9
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  diagnostics: Array [
+    Object {
+      advice: Array []
+      category: 'parse/js'
+      filename: '..'
+      message: 'Unexpected token, expected "("'
+      mtime: undefined
+      origins: Array [Object {category: 'js-parser'}]
+      end: Object {
+        column: 25
+        index: 57
+        line: 2
+      }
+      start: Object {
+        column: 24
+        index: 56
+        line: 2
+      }
+    }
+  ]
+  body: Array [
+    ExportNamedDeclaration {
+      exportKind: 'value'
+      source: undefined
+      specifiers: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 31
+          index: 31
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: VariableDeclarationStatement {
+        declare: true
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 31
+            index: 31
+            line: 1
+          }
+          start: Object {
+            column: 7
+            index: 7
+            line: 1
+          }
+        }
+        declaration: VariableDeclaration {
+          kind: 'const'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 31
+              index: 31
+              line: 1
+            }
+            start: Object {
+              column: 7
+              index: 7
+              line: 1
+            }
+          }
+          declarations: Array [
+            VariableDeclarator {
+              id: BindingIdentifier {
+                name: 'x'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 22
+                    index: 22
+                    line: 1
+                  }
+                  start: Object {
+                    column: 21
+                    index: 21
+                    line: 1
+                  }
+                }
+                meta: PatternMeta {
+                  definite: undefined
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 30
+                      index: 30
+                      line: 1
+                    }
+                    start: Object {
+                      column: 21
+                      index: 21
+                      line: 1
+                    }
+                  }
+                  typeAnnotation: NumberKeywordTypeAnnotation {
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 30
+                        index: 30
+                        line: 1
+                      }
+                      start: Object {
+                        column: 24
+                        index: 24
+                        line: 1
+                      }
+                    }
+                  }
+                }
+              }
+              init: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 30
+                  index: 30
+                  line: 1
+                }
+                start: Object {
+                  column: 21
+                  index: 21
+                  line: 1
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+    ExportNamedDeclaration {
+      exportKind: 'value'
+      source: undefined
+      specifiers: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 26
+          index: 238
+          line: 8
+        }
+        start: Object {
+          column: 0
+          index: 32
+          line: 2
+        }
+      }
+      declaration: FunctionDeclaration {
+        id: BindingIdentifier {
+          name: 'function'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 23
+              index: 55
+              line: 2
+            }
+            start: Object {
+              column: 15
+              index: 47
+              line: 2
+            }
+          }
+        }
+        declare: true
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 26
+            index: 238
+            line: 8
+          }
+          start: Object {
+            column: 7
+            index: 39
+            line: 2
+          }
+        }
+        head: FunctionHead {
+          async: false
+          generator: false
+          hasHoistedVars: false
+          predicate: undefined
+          rest: undefined
+          returnType: undefined
+          thisType: undefined
+          typeParameters: undefined
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 25
+              index: 57
+              line: 2
+            }
+            start: Object {
+              column: 7
+              index: 39
+              line: 2
+            }
+          }
+          params: Array [
+            BindingIdentifier {
+              name: 'f'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 25
+                  index: 57
+                  line: 2
+                }
+                start: Object {
+                  column: 24
+                  index: 56
+                  line: 2
+                }
+              }
+              meta: PatternMeta {
+                optional: undefined
+                typeAnnotation: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 25
+                    index: 57
+                    line: 2
+                  }
+                  start: Object {
+                    column: 24
+                    index: 56
+                    line: 2
+                  }
+                }
+              }
+            }
+          ]
+        }
+        body: BlockStatement {
+          directives: Array []
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 26
+              index: 238
+              line: 8
+            }
+            start: Object {
+              column: 25
+              index: 57
+              line: 2
+            }
+          }
+          body: Array [
+            ExpressionStatement {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 27
+                  index: 59
+                  line: 2
+                }
+                start: Object {
+                  column: 25
+                  index: 57
+                  line: 2
+                }
+              }
+              expression: ReferenceIdentifier {
+                name: 'INVALID_PLACHOLDER'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 26
+                    index: 58
+                    line: 2
+                  }
+                  start: Object {
+                    column: 26
+                    index: 58
+                    line: 2
+                  }
+                }
+              }
+            }
+            ExpressionStatement {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 28
+                  index: 60
+                  line: 2
+                }
+                start: Object {
+                  column: 27
+                  index: 59
+                  line: 2
+                }
+              }
+              expression: ReferenceIdentifier {
+                name: 'INVALID_PLACHOLDER'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 28
+                    index: 60
+                    line: 2
+                  }
+                  start: Object {
+                    column: 27
+                    index: 59
+                    line: 2
+                  }
+                }
+              }
+            }
+            ExpressionStatement {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 34
+                  index: 66
+                  line: 2
+                }
+                start: Object {
+                  column: 29
+                  index: 61
+                  line: 2
+                }
+              }
+              expression: UnaryExpression {
+                operator: 'void'
+                prefix: true
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 34
+                    index: 66
+                    line: 2
+                  }
+                  start: Object {
+                    column: 29
+                    index: 61
+                    line: 2
+                  }
+                }
+                argument: ReferenceIdentifier {
+                  name: 'INVALID_PLACHOLDER'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 34
+                      index: 66
+                      line: 2
+                    }
+                    start: Object {
+                      column: 33
+                      index: 65
+                      line: 2
+                    }
+                  }
+                }
+              }
+            }
+            ExportNamedDeclaration {
+              exportKind: 'value'
+              source: undefined
+              specifiers: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 25
+                  index: 92
+                  line: 3
+                }
+                start: Object {
+                  column: 0
+                  index: 67
+                  line: 3
+                }
+              }
+              declaration: ClassDeclaration {
+                id: BindingIdentifier {
+                  name: 'C'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 22
+                      index: 89
+                      line: 3
+                    }
+                    start: Object {
+                      column: 21
+                      index: 88
+                      line: 3
+                    }
+                  }
+                }
+                declare: true
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 25
+                    index: 92
+                    line: 3
+                  }
+                  start: Object {
+                    column: 7
+                    index: 74
+                    line: 3
+                  }
+                }
+                meta: ClassHead {
+                  body: Array []
+                  implements: undefined
+                  superClass: undefined
+                  superTypeParameters: undefined
+                  typeParameters: undefined
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 25
+                      index: 92
+                      line: 3
+                    }
+                    start: Object {
+                      column: 7
+                      index: 74
+                      line: 3
+                    }
+                  }
+                }
+              }
+            }
+            ExportNamedDeclaration {
+              exportKind: 'value'
+              source: undefined
+              specifiers: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 29
+                  index: 122
+                  line: 4
+                }
+                start: Object {
+                  column: 0
+                  index: 93
+                  line: 4
+                }
+              }
+              declaration: TSInterfaceDeclaration {
+                id: BindingIdentifier {
+                  name: 'I'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 26
+                      index: 119
+                      line: 4
+                    }
+                    start: Object {
+                      column: 25
+                      index: 118
+                      line: 4
+                    }
+                  }
+                }
+                declare: true
+                extends: undefined
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 29
+                    index: 122
+                    line: 4
+                  }
+                  start: Object {
+                    column: 7
+                    index: 100
+                    line: 4
+                  }
+                }
+                body: TSInterfaceBody {
+                  body: Array []
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 29
+                      index: 122
+                      line: 4
+                    }
+                    start: Object {
+                      column: 27
+                      index: 120
+                      line: 4
+                    }
+                  }
+                }
+              }
+            }
+            ExportNamedDeclaration {
+              exportKind: 'value'
+              source: undefined
+              specifiers: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 31
+                  index: 154
+                  line: 5
+                }
+                start: Object {
+                  column: 0
+                  index: 123
+                  line: 5
+                }
+              }
+              declaration: TypeAliasTypeAnnotation {
+                id: BindingIdentifier {
+                  name: 'T'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 21
+                      index: 144
+                      line: 5
+                    }
+                    start: Object {
+                      column: 20
+                      index: 143
+                      line: 5
+                    }
+                  }
+                }
+                declare: true
+                typeParameters: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 31
+                    index: 154
+                    line: 5
+                  }
+                  start: Object {
+                    column: 7
+                    index: 130
+                    line: 5
+                  }
+                }
+                right: NumberKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 30
+                      index: 153
+                      line: 5
+                    }
+                    start: Object {
+                      column: 24
+                      index: 147
+                      line: 5
+                    }
+                  }
+                }
+              }
+            }
+            ExportNamedDeclaration {
+              exportKind: 'value'
+              source: undefined
+              specifiers: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 26
+                  index: 181
+                  line: 6
+                }
+                start: Object {
+                  column: 0
+                  index: 155
+                  line: 6
+                }
+              }
+              declaration: TSModuleDeclaration {
+                id: BindingIdentifier {
+                  name: 'M'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 23
+                      index: 178
+                      line: 6
+                    }
+                    start: Object {
+                      column: 22
+                      index: 177
+                      line: 6
+                    }
+                  }
+                }
+                declare: true
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 26
+                    index: 181
+                    line: 6
+                  }
+                  start: Object {
+                    column: 7
+                    index: 162
+                    line: 6
+                  }
+                }
+                body: TSModuleBlock {
+                  body: Array []
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 26
+                      index: 181
+                      line: 6
+                    }
+                    start: Object {
+                      column: 24
+                      index: 179
+                      line: 6
+                    }
+                  }
+                }
+              }
+            }
+            ExportNamedDeclaration {
+              exportKind: 'value'
+              source: undefined
+              specifiers: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 29
+                  index: 211
+                  line: 7
+                }
+                start: Object {
+                  column: 0
+                  index: 182
+                  line: 7
+                }
+              }
+              declaration: TSModuleDeclaration {
+                id: BindingIdentifier {
+                  name: 'N'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 26
+                      index: 208
+                      line: 7
+                    }
+                    start: Object {
+                      column: 25
+                      index: 207
+                      line: 7
+                    }
+                  }
+                }
+                declare: true
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 29
+                    index: 211
+                    line: 7
+                  }
+                  start: Object {
+                    column: 7
+                    index: 189
+                    line: 7
+                  }
+                }
+                body: TSModuleBlock {
+                  body: Array []
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 29
+                      index: 211
+                      line: 7
+                    }
+                    start: Object {
+                      column: 27
+                      index: 209
+                      line: 7
+                    }
+                  }
+                }
+              }
+            }
+            ExportNamedDeclaration {
+              exportKind: 'value'
+              source: undefined
+              specifiers: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 26
+                  index: 238
+                  line: 8
+                }
+                start: Object {
+                  column: 0
+                  index: 212
+                  line: 8
+                }
+              }
+              declaration: TSEnumDeclaration {
+                id: BindingIdentifier {
+                  name: 'foo'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 23
+                      index: 235
+                      line: 8
+                    }
+                    start: Object {
+                      column: 20
+                      index: 232
+                      line: 8
+                    }
+                  }
+                }
+                const: false
+                declare: true
+                members: Array []
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 26
+                    index: 238
+                    line: 8
+                  }
+                  start: Object {
+                    column: 7
+                    index: 219
+                    line: 8
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

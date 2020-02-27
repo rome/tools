@@ -1,0 +1,160 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 22
+      line: 3
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentLine {
+      value: ' @flow'
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+  ]
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 12
+          index: 21
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 9
+          line: 2
+        }
+      }
+      expression: BinaryExpression {
+        operator: '>'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 11
+            index: 20
+            line: 2
+          }
+          start: Object {
+            column: 0
+            index: 9
+            line: 2
+          }
+        }
+        right: JSXElement {
+          name: JSXReferenceIdentifier {
+            name: 'U'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 6
+                index: 15
+                line: 2
+              }
+              start: Object {
+                column: 5
+                index: 14
+                line: 2
+              }
+            }
+          }
+          attributes: Array []
+          children: Array []
+          selfClosing: false
+          typeArguments: undefined
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 11
+              index: 20
+              line: 2
+            }
+            start: Object {
+              column: 4
+              index: 13
+              line: 2
+            }
+          }
+        }
+        left: BinaryExpression {
+          operator: '<'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 3
+              index: 12
+              line: 2
+            }
+            start: Object {
+              column: 0
+              index: 9
+              line: 2
+            }
+          }
+          left: ReferenceIdentifier {
+            name: 'f'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 1
+                index: 10
+                line: 2
+              }
+              start: Object {
+                column: 0
+                index: 9
+                line: 2
+              }
+            }
+          }
+          right: ReferenceIdentifier {
+            name: 'T'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 3
+                index: 12
+                line: 2
+              }
+              start: Object {
+                column: 2
+                index: 11
+                line: 2
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

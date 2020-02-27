@@ -1,0 +1,210 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'ts'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 128
+      line: 4
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentLine {
+      value: ' Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation.'
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+  ]
+  body: Array [
+    ClassDeclaration {
+      id: BindingIdentifier {
+        name: 'C'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 7
+            index: 106
+            line: 2
+          }
+          start: Object {
+            column: 6
+            index: 105
+            line: 2
+          }
+        }
+      }
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 23
+          index: 122
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 99
+          line: 2
+        }
+      }
+      meta: ClassHead {
+        body: Array []
+        implements: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 23
+            index: 122
+            line: 2
+          }
+          start: Object {
+            column: 0
+            index: 99
+            line: 2
+          }
+        }
+        superClass: ReferenceIdentifier {
+          name: 'D'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 17
+              index: 116
+              line: 2
+            }
+            start: Object {
+              column: 16
+              index: 115
+              line: 2
+            }
+          }
+        }
+        superTypeParameters: TSTypeParameterInstantiation {
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 20
+              index: 119
+              line: 2
+            }
+            start: Object {
+              column: 17
+              index: 116
+              line: 2
+            }
+          }
+          params: Array [
+            TSTypeReference {
+              typeParameters: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 19
+                  index: 118
+                  line: 2
+                }
+                start: Object {
+                  column: 18
+                  index: 117
+                  line: 2
+                }
+              }
+              typeName: ReferenceIdentifier {
+                name: 'T'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 19
+                    index: 118
+                    line: 2
+                  }
+                  start: Object {
+                    column: 18
+                    index: 117
+                    line: 2
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 4
+          index: 127
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 123
+          line: 3
+        }
+      }
+      expression: JSXElement {
+        name: JSXReferenceIdentifier {
+          name: 'C'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 2
+              index: 125
+              line: 3
+            }
+            start: Object {
+              column: 1
+              index: 124
+              line: 3
+            }
+          }
+        }
+        attributes: Array []
+        children: Array []
+        selfClosing: true
+        typeArguments: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 4
+            index: 127
+            line: 3
+          }
+          start: Object {
+            column: 0
+            index: 123
+            line: 3
+          }
+        }
+      }
+    }
+  ]
+}

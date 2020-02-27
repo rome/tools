@@ -1,0 +1,107 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 32
+      index: 32
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ImportDeclaration {
+      importKind: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 32
+          index: 32
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      source: StringLiteral {
+        value: 'crypto'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 32
+            index: 32
+            line: 1
+          }
+          start: Object {
+            column: 24
+            index: 24
+            line: 1
+          }
+        }
+      }
+      specifiers: Array [
+        ImportNamespaceSpecifier {
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 18
+              index: 18
+              line: 1
+            }
+            start: Object {
+              column: 7
+              index: 7
+              line: 1
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'crypto'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 18
+                  index: 18
+                  line: 1
+                }
+                start: Object {
+                  column: 12
+                  index: 12
+                  line: 1
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 18
+                index: 18
+                line: 1
+              }
+              start: Object {
+                column: 12
+                index: 12
+                line: 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 6
+      index: 10
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    BlockStatement {
+      directives: Array []
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 6
+          index: 10
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      body: Array [
+        BlockStatement {
+          body: Array []
+          directives: Array []
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 3
+              index: 3
+              line: 1
+            }
+            start: Object {
+              column: 1
+              index: 1
+              line: 1
+            }
+          }
+        }
+        ExpressionStatement {
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 5
+              index: 9
+              line: 2
+            }
+            start: Object {
+              column: 0
+              index: 4
+              line: 2
+            }
+          }
+          expression: RegExpLiteral {
+            global: false
+            insensitive: false
+            multiline: false
+            noDotNewline: false
+            pattern: 'foo'
+            sticky: false
+            unicode: false
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 5
+                index: 9
+                line: 2
+              }
+              start: Object {
+                column: 0
+                index: 4
+                line: 2
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

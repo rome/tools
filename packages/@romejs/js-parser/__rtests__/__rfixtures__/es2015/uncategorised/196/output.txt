@@ -1,0 +1,63 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 33
+      index: 33
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 33
+          index: 33
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: RegExpLiteral {
+        global: false
+        insensitive: false
+        multiline: false
+        noDotNewline: false
+        pattern: '[\\uD834\\uDF06-\\uD834\\uDF08a-z]'
+        sticky: false
+        unicode: true
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 33
+            index: 33
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+      }
+    }
+  ]
+}

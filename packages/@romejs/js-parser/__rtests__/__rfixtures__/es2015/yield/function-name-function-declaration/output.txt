@@ -1,0 +1,98 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 19
+      index: 19
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    FunctionDeclaration {
+      id: BindingIdentifier {
+        name: 'yield'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 14
+            index: 14
+            line: 1
+          }
+          start: Object {
+            column: 9
+            index: 9
+            line: 1
+          }
+        }
+      }
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 19
+          index: 19
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      body: BlockStatement {
+        body: Array []
+        directives: Array []
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 19
+            index: 19
+            line: 1
+          }
+          start: Object {
+            column: 17
+            index: 17
+            line: 1
+          }
+        }
+      }
+      head: FunctionHead {
+        async: false
+        generator: false
+        hasHoistedVars: false
+        params: Array []
+        predicate: undefined
+        rest: undefined
+        returnType: undefined
+        thisType: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 17
+            index: 17
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,276 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 38
+      index: 38
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ClassDeclaration {
+      id: BindingIdentifier {
+        name: 'A'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 7
+            index: 7
+            line: 1
+          }
+          start: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+        }
+      }
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 38
+          index: 38
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      meta: ClassHead {
+        implements: undefined
+        superClass: undefined
+        superTypeParameters: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 38
+            index: 38
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        body: Array [
+          ClassMethod {
+            kind: 'method'
+            key: StaticPropertyKey {
+              value: Identifier {
+                name: 'gen'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 21
+                    index: 21
+                    line: 1
+                  }
+                  start: Object {
+                    column: 18
+                    index: 18
+                    line: 1
+                  }
+                }
+              }
+              variance: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 21
+                  index: 21
+                  line: 1
+                }
+                start: Object {
+                  column: 18
+                  index: 18
+                  line: 1
+                }
+              }
+            }
+            typeParameters: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 37
+                index: 37
+                line: 1
+              }
+              start: Object {
+                column: 10
+                index: 10
+                line: 1
+              }
+            }
+            meta: ClassPropertyMeta {
+              abstract: false
+              accessibility: undefined
+              optional: false
+              readonly: false
+              static: true
+              typeAnnotation: undefined
+              start: Object {
+                column: 10
+                index: 10
+                line: 1
+              }
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 21
+                  index: 21
+                  line: 1
+                }
+                start: Object {
+                  column: 10
+                  index: 10
+                  line: 1
+                }
+              }
+            }
+            head: FunctionHead {
+              async: false
+              generator: true
+              hasHoistedVars: false
+              predicate: undefined
+              rest: undefined
+              returnType: undefined
+              thisType: undefined
+              typeParameters: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 25
+                  index: 25
+                  line: 1
+                }
+                start: Object {
+                  column: 25
+                  index: 25
+                  line: 1
+                }
+              }
+              params: Array [
+                BindingIdentifier {
+                  name: 'v'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 23
+                      index: 23
+                      line: 1
+                    }
+                    start: Object {
+                      column: 22
+                      index: 22
+                      line: 1
+                    }
+                  }
+                  meta: PatternMeta {
+                    optional: undefined
+                    typeAnnotation: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 23
+                        index: 23
+                        line: 1
+                      }
+                      start: Object {
+                        column: 22
+                        index: 22
+                        line: 1
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+            body: BlockStatement {
+              directives: Array []
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 37
+                  index: 37
+                  line: 1
+                }
+                start: Object {
+                  column: 25
+                  index: 25
+                  line: 1
+                }
+              }
+              body: Array [
+                ExpressionStatement {
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 35
+                      index: 35
+                      line: 1
+                    }
+                    start: Object {
+                      column: 27
+                      index: 27
+                      line: 1
+                    }
+                  }
+                  expression: YieldExpression {
+                    delegate: false
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 34
+                        index: 34
+                        line: 1
+                      }
+                      start: Object {
+                        column: 27
+                        index: 27
+                        line: 1
+                      }
+                    }
+                    argument: ReferenceIdentifier {
+                      name: 'v'
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 34
+                          index: 34
+                          line: 1
+                        }
+                        start: Object {
+                          column: 33
+                          index: 33
+                          line: 1
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

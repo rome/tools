@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Copyright (c) Facebook, Inc. and its affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+
+set -e
+
+CURR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+ROME_ROOT="$CURR_DIR/.."
+PKG_ROOT="$ROME_ROOT/packages/rome"
+
+"$ROME_ROOT/scripts/dev-rome" bundle "$PKG_ROOT" $1

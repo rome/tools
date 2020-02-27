@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Copyright (c) Facebook, Inc. and its affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+
+set -e
+
+CURR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+ROME_ROOT="$CURR_DIR/.."
+DEV_FOLDER="/tmp/rome-dev"
+export ROME_CACHE=0
+
+rm -rf "$DEV_FOLDER"
+mkdir "$DEV_FOLDER"
+
+"$ROME_ROOT/scripts/vendor-rome" bundle "$ROME_ROOT/packages/@romejs/cli/bin/rome.ts" "$DEV_FOLDER"
+
+"$CURR_DIR/node" "$DEV_FOLDER/index.js" $@

@@ -1,0 +1,215 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 24
+      index: 24
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    FunctionDeclaration {
+      id: BindingIdentifier {
+        name: 'f'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 10
+            index: 10
+            line: 1
+          }
+          start: Object {
+            column: 9
+            index: 9
+            line: 1
+          }
+        }
+      }
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 24
+          index: 24
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      body: BlockStatement {
+        body: Array []
+        directives: Array []
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 24
+            index: 24
+            line: 1
+          }
+          start: Object {
+            column: 22
+            index: 22
+            line: 1
+          }
+        }
+      }
+      head: FunctionHead {
+        async: false
+        generator: false
+        hasHoistedVars: false
+        predicate: undefined
+        rest: undefined
+        returnType: undefined
+        thisType: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 22
+            index: 22
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        params: Array [
+          BindingAssignmentPattern {
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 20
+                index: 20
+                line: 1
+              }
+              start: Object {
+                column: 11
+                index: 11
+                line: 1
+              }
+            }
+            right: ArrayExpression {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 20
+                  index: 20
+                  line: 1
+                }
+                start: Object {
+                  column: 17
+                  index: 17
+                  line: 1
+                }
+              }
+              elements: Array [
+                NumericLiteral {
+                  value: 1
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 19
+                      index: 19
+                      line: 1
+                    }
+                    start: Object {
+                      column: 18
+                      index: 18
+                      line: 1
+                    }
+                  }
+                }
+              ]
+            }
+            left: BindingArrayPattern {
+              rest: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 14
+                  index: 14
+                  line: 1
+                }
+                start: Object {
+                  column: 11
+                  index: 11
+                  line: 1
+                }
+              }
+              meta: PatternMeta {
+                optional: undefined
+                typeAnnotation: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 14
+                    index: 14
+                    line: 1
+                  }
+                  start: Object {
+                    column: 11
+                    index: 11
+                    line: 1
+                  }
+                }
+              }
+              elements: Array [
+                BindingIdentifier {
+                  name: 'x'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 13
+                      index: 13
+                      line: 1
+                    }
+                    start: Object {
+                      column: 12
+                      index: 12
+                      line: 1
+                    }
+                  }
+                  meta: PatternMeta {
+                    optional: undefined
+                    typeAnnotation: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 13
+                        index: 13
+                        line: 1
+                      }
+                      start: Object {
+                        column: 12
+                        index: 12
+                        line: 1
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

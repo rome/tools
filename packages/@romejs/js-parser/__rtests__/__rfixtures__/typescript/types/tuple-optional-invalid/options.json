@@ -1,0 +1,5 @@
+{
+  "sourceType": "module",
+  "syntax": ["ts"],
+  "throws": "A required element cannot follow an optional element."
+}

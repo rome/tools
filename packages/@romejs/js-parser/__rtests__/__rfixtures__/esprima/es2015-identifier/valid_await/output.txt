@@ -1,0 +1,122 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: true
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 20
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 10
+          index: 10
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'var'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 10
+            index: 10
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'await'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 9
+                  index: 9
+                  line: 1
+                }
+                start: Object {
+                  column: 4
+                  index: 4
+                  line: 1
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 9
+                index: 9
+                line: 1
+              }
+              start: Object {
+                column: 4
+                index: 4
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+    }
+    ExpressionStatement {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 19
+          index: 19
+          line: 1
+        }
+        start: Object {
+          column: 11
+          index: 11
+          line: 1
+        }
+      }
+      expression: ReferenceIdentifier {
+        name: 'await'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 17
+            index: 17
+            line: 1
+          }
+          start: Object {
+            column: 12
+            index: 12
+            line: 1
+          }
+        }
+      }
+    }
+  ]
+}

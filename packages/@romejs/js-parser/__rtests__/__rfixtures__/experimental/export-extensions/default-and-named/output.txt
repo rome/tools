@@ -1,0 +1,60 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 31
+      index: 31
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExportNamedDeclaration {
+      declaration: undefined
+      exportKind: 'value'
+      specifiers: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 31
+          index: 31
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      source: StringLiteral {
+        value: 'bar'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 30
+            index: 30
+            line: 1
+          }
+          start: Object {
+            column: 25
+            index: 25
+            line: 1
+          }
+        }
+      }
+    }
+  ]
+}

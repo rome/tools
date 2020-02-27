@@ -1,0 +1,4 @@
+{
+  "plugins": [],
+  "throws": "super is only allowed in object methods and classes"
+}

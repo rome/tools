@@ -1,0 +1,92 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array []
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 24
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExportDefaultDeclaration {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 23
+          index: 23
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: ClassDeclaration {
+        id: BindingIdentifier {
+          name: '*default*'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 23
+              index: 23
+              line: 1
+            }
+            start: Object {
+              column: 15
+              index: 15
+              line: 1
+            }
+          }
+        }
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 23
+            index: 23
+            line: 1
+          }
+          start: Object {
+            column: 15
+            index: 15
+            line: 1
+          }
+        }
+        meta: ClassHead {
+          body: Array []
+          implements: undefined
+          superClass: undefined
+          superTypeParameters: undefined
+          typeParameters: undefined
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 23
+              index: 23
+              line: 1
+            }
+            start: Object {
+              column: 15
+              index: 15
+              line: 1
+            }
+          }
+        }
+      }
+    }
+  ]
+}
