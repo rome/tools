@@ -24,7 +24,7 @@
 
 ## Codebase
 
-**Rome** is written completely in TypeScript with sparring usage of loose types.
+**Rome** is written completely in TypeScript with sparing usage of loose types.
 
 **Rome** is a monorepo with [internal packages](packages/@romejs) to delineate code boundaries.
 
