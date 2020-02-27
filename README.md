@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="babel" src="assets/logo_with_text.png" width="546">
+  <img alt="Rome, logo of an ancient Greek spartan helmet" src="assets/logo_with_text.png" width="546">
 </p>
 
 **Rome** is an experimental JavaScript toolchain. It includes a compiler, linter, formatter, bundler, testing framework and more. It aims to be a comprehensive tool for anything related to the processing of JavaScript source code.
