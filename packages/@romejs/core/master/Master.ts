@@ -457,10 +457,6 @@ export default class Master {
       useRemoteProgressBars: useRemoteReporter,
     });
 
-    bridge.reporterRemoteServerMessage.subscribe(msg => {
-      bridge.reporterRemoteServerMessage.send(msg);
-    });
-
     bridge.reporterRemoteClientMessage.subscribe(msg => {
       reporter.receivedRemoteServerMessage(msg);
     });
