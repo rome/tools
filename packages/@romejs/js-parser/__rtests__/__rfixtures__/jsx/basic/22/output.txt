@@ -1,0 +1,45 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: '..'
+  hasHoistedVars: false
+  mtime: 1_582_837_084_392.2607
+  sourceType: 'module'
+  comments: Array [CommentBlock {value: '* @jsx mdx '}]
+  syntax: Array ['jsx']
+  body: Array [
+    ImportDeclaration {
+      source: StringLiteral {value: '@mdx-js/preact'}
+      specifiers: Array [
+        ImportSpecifier {
+          imported: Identifier {name: 'mdx'}
+          local: ImportSpecifierLocal {name: BindingIdentifier {name: 'mdx'}}
+        }
+      ]
+    }
+    ExportDefaultDeclaration {
+      declaration: FunctionDeclaration {
+        id: BindingIdentifier {name: 'MDXContent'}
+        head: FunctionHead {
+          async: false
+          generator: false
+          hasHoistedVars: false
+          params: Array []
+        }
+        body: BlockStatement {
+          directives: Array []
+          body: Array [
+            ReturnStatement {
+              argument: JSXElement {
+                name: JSXReferenceIdentifier {name: 'h1'}
+                attributes: Array []
+                selfClosing: false
+                children: Array [JSXText {value: 'hi'}]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
