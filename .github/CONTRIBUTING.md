@@ -8,10 +8,10 @@ Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc
 
 Getting started with developing Rome is as easy as three commands. You will need Node v12 or above.
 
-```
+```bash
 $ git clone https://github.com/facebookexperimental/rome
 $ cd rome
-$ scripts/dev-rome --help
+ scripts/dev-rome --help
 ```
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
@@ -20,8 +20,8 @@ No dependency installation step is required as we check in our `node_modules` fo
 
 You can run the test suite with the following command:
 
-```
-$ scripts/dev-rome test
+```bash
+scripts/dev-rome test
 ```
 
 This will run all tests inside of any `__rtests__` directories.
@@ -30,6 +30,6 @@ This will run all tests inside of any `__rtests__` directories.
 
 Run TypeScript with code emitting disabled to perform a full typecheck outside the editor.
 
-```
-$ node_modules/.bin/tsc --noEmit
+```bash
+node_modules/.bin/tsc --noEmit
 ```
