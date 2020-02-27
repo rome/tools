@@ -327,7 +327,7 @@ function pushComment(
     }
   }
 
-  // We should enable jsx syntax when there's a comment with @\
+  // We should enable jsx syntax when there's a comment with @\jsx
   if (opts.text.includes('@jsx')) {
     parser.syntax.add('jsx');
   }
