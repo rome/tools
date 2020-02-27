@@ -327,6 +327,11 @@ function pushComment(
     }
   }
 
+  // We should enable flow syntax when there's a comment with @\flow
+  if (opts.text.includes('@jsx')) {
+    parser.syntax.add('jsx');
+  }
+
   if (parser.isLookahead === false) {
     parser.state.comments.push(comment);
     addComment(parser, comment);
