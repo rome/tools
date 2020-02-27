@@ -20,7 +20,7 @@ const promise = createFixtureTests((fixture, t) => {
     files.get('input.js') || files.get('input.mjs') || files.get('input.ts') || files.get('input.tsx');
   if (inputFile === undefined) {
     throw new Error(
-      `The fixture ${fixture.dir} did not have an input.(js|ts|tsx)`,
+      `The fixture ${fixture.dir} did not have an input.(mjs|js|ts|tsx)`,
     );
   }
 
