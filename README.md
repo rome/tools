@@ -38,6 +38,20 @@ See [CONTRIBUTING](.github/CONTRIBUTING.md) for more information.
 
 The current area of focus is **linting**. See the umbrella task [#20](https://github.com/facebookexperimental/rome/issues/20) for tracking.
 
+## Getting Started
+
+To setup Rome in a project, all you need is a `rome.json` file.
+
+```bash
+$ mkdir hello-world
+$ cd hello-world
+$ echo '{}' >rome.json
+```
+
+This file is used to configure Rome and indicates the boundaries of your project.
+
+See [Getting Started](docs/getting-started.md) for more usage instructions.
+
 ## Philosophy
 
 This list includes general ethos the project should abide by. This list is not comprehensive. Some of these are obvious but are stated for completeness.
@@ -61,5 +75,7 @@ This list includes general ethos the project should abide by. This list is not c
 - **Terminal output should be unambiguous.** When designing terminal output, don't purely rely on formatting cues such as color. Always use a combination of formatting, symbols, and spacing. If all ANSI codes are stripped, all the output should still be understood.
 
 ## Community
+
+Contribution and development instructions can be found in [CONTRIBUTING](.github/CONTRIBUTING.md).
 
 Additional project coordination and realtime discussion happens on our [Discord server](https://discord.gg/9WxHa5d). Remember that all activity on the Discord is still moderated and will be strictly enforced under the project's [Code of Conduct](.github/CODE_OF_CONDUCT.md).
