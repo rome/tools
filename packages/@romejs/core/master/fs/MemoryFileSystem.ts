@@ -91,8 +91,10 @@ async function createRegularWatcher(
         return;
       }
 
-      // All of this madness is because Node doesn't support recursive watching on Linux
-      if (process.platform !== 'linux' && folderPath.equal(projectFolderPath)) {
+      if (process.platform === 'linux') {
+        // Node on Linux doesn't support recursive directory watching so we need an fs.watch for every directory...
+      } else if (!folderPath.equal(projectFolderPath)) {
+        // If we're on any other platform then only watch the root project folder
         return;
       }
 
