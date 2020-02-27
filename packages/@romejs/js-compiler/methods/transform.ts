@@ -9,7 +9,7 @@ import {Program} from '@romejs/js-ast';
 import {PartialDiagnostics} from '@romejs/diagnostics';
 import {TransformRequest, TransformVisitors} from '../types';
 import {program} from '@romejs/js-ast';
-import {stageTransforms, stageOrder, hookVisitors} from '../plugins/index';
+import {stageTransforms, stageOrder, hookVisitors} from '../transforms/index';
 import {Cache} from '@romejs/js-compiler';
 import Context from '../lib/Context';
 
