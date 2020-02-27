@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
- (function(global) {
+(function(global) {
   'use strict';
   // romejs/ob1/index.ts
 
@@ -493,6 +493,7 @@
     constructor(entries) {
       this.joinedToValue = new Map();
       this.joinedToPath = new Map();
+      this.size = 0;
 
       if (entries !== undefined) {
         for (const [key, value] of entries) {
@@ -501,8 +502,8 @@
       }
     }
 
-    get size() {
-      return this.joinedToValue.size;
+    _updateSize() {
+      this.size = this.joinedToValue.size;
     }
 
     *[Symbol.iterator]() {
@@ -519,6 +520,7 @@
     clear() {
       this.joinedToValue.clear();
       this.joinedToPath.clear();
+      this._updateSize();
     }
 
     keys() {
@@ -533,6 +535,7 @@
       const joined = path.join();
       this.joinedToValue.delete(joined);
       this.joinedToPath.delete(joined);
+      this._updateSize();
     }
 
     has(path) {
@@ -547,18 +550,24 @@
       const joined = path.join();
       this.joinedToValue.set(joined, value);
       this.joinedToPath.set(joined, path);
+      this._updateSize();
     }
   }
 
   class ___R$$priv$romejs$path$collections_ts$FilePathSet {
     constructor(entries) {
       this.map = new ___R$$priv$romejs$path$collections_ts$FilePathMap();
+      this.size = 0;
 
       if (entries !== undefined) {
         for (const path of entries) {
           this.add(path);
         }
       }
+    }
+
+    _updateSize() {
+      this.size = this.map.size;
     }
 
     [Symbol.iterator]() {
@@ -571,28 +580,61 @@
 
     add(path) {
       this.map.set(path);
+      this._updateSize();
     }
 
     delete(path) {
       this.map.delete(path);
+      this._updateSize();
     }
 
     clear() {
       this.map.clear();
+      this._updateSize();
     }
   }
 
-  class ___R$romejs$path$collections_ts$AbsoluteFilePathMap extends ___R$$priv$romejs$path$collections_ts$FilePathMap {}
+  class ___R$romejs$path$collections_ts$AbsoluteFilePathMap extends ___R$$priv$romejs$path$collections_ts$FilePathMap {
+    constructor(...args) {
+      super(...args);
+      this.type = 'absolute';
+    }
+  }
 
-  class ___R$romejs$path$collections_ts$RelativeFilePathMap extends ___R$$priv$romejs$path$collections_ts$FilePathMap {}
+  class ___R$romejs$path$collections_ts$RelativeFilePathMap extends ___R$$priv$romejs$path$collections_ts$FilePathMap {
+    constructor(...args) {
+      super(...args);
+      this.type = 'relative';
+    }
+  }
 
-  class ___R$romejs$path$collections_ts$UnknownFilePathMap extends ___R$$priv$romejs$path$collections_ts$FilePathMap {}
+  class ___R$romejs$path$collections_ts$UnknownFilePathMap extends ___R$$priv$romejs$path$collections_ts$FilePathMap {
+    constructor(...args) {
+      super(...args);
+      this.type = 'unknown';
+    }
+  }
 
-  class ___R$romejs$path$collections_ts$AbsoluteFilePathSet extends ___R$$priv$romejs$path$collections_ts$FilePathSet {}
+  class ___R$romejs$path$collections_ts$AbsoluteFilePathSet extends ___R$$priv$romejs$path$collections_ts$FilePathSet {
+    constructor(...args) {
+      super(...args);
+      this.type = 'absolute';
+    }
+  }
 
-  class ___R$romejs$path$collections_ts$RelativeFilePathSet extends ___R$$priv$romejs$path$collections_ts$FilePathSet {}
+  class ___R$romejs$path$collections_ts$RelativeFilePathSet extends ___R$$priv$romejs$path$collections_ts$FilePathSet {
+    constructor(...args) {
+      super(...args);
+      this.type = 'relative';
+    }
+  }
 
-  class ___R$romejs$path$collections_ts$UnknownFilePathSet extends ___R$$priv$romejs$path$collections_ts$FilePathSet {}
+  class ___R$romejs$path$collections_ts$UnknownFilePathSet extends ___R$$priv$romejs$path$collections_ts$FilePathSet {
+    constructor(...args) {
+      super(...args);
+      this.type = 'unknown';
+    }
+  }
 
   // romejs/path/index.ts
 
@@ -1070,7 +1112,9 @@
     let absoluteTarget;
     let firstSeg = segments[0];
 
-    if (firstSeg[firstSeg.length - 1] === ':' && segments[1] === '') {
+    if (!___R$$priv$romejs$path$index_ts$isWindowsDrive(firstSeg) &&
+    firstSeg[firstSeg.length - 1] === ':' &&
+    segments[1] === '') {
       absoluteTarget = firstSeg.slice(0, -1);
 
       switch (absoluteTarget) {
@@ -4338,10 +4382,10 @@
     let frames = [];
     let advice = [];
     let framesToPop = 0;
-
     let looksLikeValidError = false;
 
-    if (___R$romejs$typescript$helpers$index_ts$isPlainObject(err)) {
+    if (___R$romejs$typescript$helpers$index_ts$isPlainObject(
+    err)) {
       if (typeof err.name === 'string') {
         looksLikeValidError = true;
         name = err.name;
@@ -4365,8 +4409,9 @@
         advice = err[___R$romejs$v8$errors_ts$ERROR_ADVICE_PROP];
       }
 
-      if (typeof err[___R$romejs$v8$errors_ts$ERROR_POP_FRAMES_PROP] === 'number') {
-        framesToPop = err[___R$romejs$v8$errors_ts$ERROR_POP_FRAMES_PROP];
+      const _framesToPop = err[___R$romejs$v8$errors_ts$ERROR_POP_FRAMES_PROP];
+      if (typeof _framesToPop === 'number') {
+        framesToPop = _framesToPop;
       }
     }
 
@@ -32091,37 +32136,12 @@
 
     return elems;
   }
-
-  function ___R$$priv$romejs$js$compiler$plugins$compile$jsx_ts$shouldIgnoreFbt(path, node) {
-    const {name: name} = node;
-    if (name.type === 'JSXNamespacedName' && name.namespace.name === 'fbt') {
-      return true;
-    }
-
-    if (name.type === 'JSXReferenceIdentifier' && name.name === 'fbt') {
-      return true;
-    }
-
-    const fbtAncestor = path.findAncestry(path => {
-      const {node: node} = path;
-      return ___R$romejs$js$ast$jsx$JSXElement_ts$jsxElement.is(node) && ___R$$priv$romejs$js$compiler$plugins$compile$jsx_ts$shouldIgnoreFbt(path, node);
-    });
-    return fbtAncestor !== undefined;
-  }
   const ___R$romejs$js$compiler$plugins$compile$jsx_ts$default = {
     name: 'jsx',
     enter(path) {
-      const {node: node, context: context, parent: parent, scope: scope} = path;
+      const {node: node, context: context, parent: parent} = path;
 
-      if (___R$romejs$js$ast$jsx$JSXElement_ts$jsxElement.is(node) &&
-      ___R$romejs$js$ast$jsx$JSXNamespacedName_ts$jsxNamespacedName.is(node.name) &&
-      !scope.hasBinding('React')) {
-        path.callHook(___R$romejs$js$compiler$plugins$defaultHooks$index_ts$bindingInjector, {
-          name: 'React',
-          init: ___R$romejs$js$ast$utils$template_ts$default.expression`require('React')`});
-      }
-
-      if (___R$romejs$js$ast$jsx$JSXElement_ts$jsxElement.is(node) && !___R$$priv$romejs$js$compiler$plugins$compile$jsx_ts$shouldIgnoreFbt(path, node)) {
+      if (___R$romejs$js$ast$jsx$JSXElement_ts$jsxElement.is(node)) {
         let type = ___R$$priv$romejs$js$compiler$plugins$compile$jsx_ts$convertJSXIdentifier(path.getChildPath('name'));
 
         if (___R$romejs$js$ast$jsx$JSXNamespacedName_ts$jsxNamespacedName.is(node.name)) {
@@ -37908,6 +37928,7 @@
         moduleType: 'es',
         exports: [{
           type: 'local',
+
           loc: undefined,
           kind: 'value',
           valueType: 'other',
@@ -40071,12 +40092,12 @@
     }};
 
   const ___R$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG_META = {
-    sourceType: 'vanilla',
-    folder: undefined,
+    projectFolder: undefined,
     configPath: undefined,
     configHashes: [],
     configDependencies: new ___R$romejs$path$collections_ts$AbsoluteFilePathSet(),
     consumer: undefined,
+    configSourceSubKey: undefined,
     consumersChain: []};
 
   const ___R$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG = {
@@ -40580,6 +40601,38 @@
     return matches > 0 && matches > notMatches;
   }
 
+  // romejs/project/constants.ts
+
+  const ___R$romejs$project$constants_ts = {
+    get ROME_CONFIG_PACKAGE_JSON_FIELD() {
+      return ___R$romejs$project$constants_ts$ROME_CONFIG_PACKAGE_JSON_FIELD;
+    },
+    get ROME_CONFIG_FOLDER() {
+      return ___R$romejs$project$constants_ts$ROME_CONFIG_FOLDER;
+    },
+    get ROME_CONFIG_FILENAMES() {
+      return ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAMES;
+    },
+    get ROME_CONFIG_WARN_FILENAMES() {
+      return ___R$romejs$project$constants_ts$ROME_CONFIG_WARN_FILENAMES;
+    }};
+  const ___R$romejs$project$constants_ts$ROME_CONFIG_PACKAGE_JSON_FIELD = 'rome';
+
+  const ___R$romejs$project$constants_ts$ROME_CONFIG_FOLDER = '.config';
+
+  const ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAMES = ['rome.json', 'rome.rjson'];
+
+  const ___R$romejs$project$constants_ts$ROME_CONFIG_WARN_FILENAMES = ['romeconfig', 'romerc', 'rome.son', 'rome.config.ts', 'rome.config.js', 'rome.config.json', 'rome.config.rjson', 'rome.config.son'];
+
+  for (const basename of ___R$romejs$project$constants_ts$ROME_CONFIG_WARN_FILENAMES) {
+    if (basename[0] !== '.') {
+      ___R$romejs$project$constants_ts$ROME_CONFIG_WARN_FILENAMES.push('.' + basename);
+    }
+  }
+  for (const filename of ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAMES.slice()) {
+    ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAMES.push('.' + filename);
+  }
+
   // romejs/project/utils.ts
 
   const ___R$romejs$project$utils_ts = {
@@ -40587,9 +40640,10 @@
     arrayOfStrings: ___R$romejs$project$utils_ts$arrayOfStrings,
     arrayOfPatterns: ___R$romejs$project$utils_ts$arrayOfPatterns,
     mergeArrays: ___R$romejs$project$utils_ts$mergeArrays,
-    mergeAbsoluteFilePathSets: ___R$romejs$project$utils_ts$mergeAbsoluteFilePathSets};
+    mergeAbsoluteFilePathSets: ___R$romejs$project$utils_ts$mergeAbsoluteFilePathSets,
+    getParentConfigDependencies: ___R$romejs$project$utils_ts$getParentConfigDependencies};
   function ___R$romejs$project$utils_ts$assertHardMeta(meta) {
-    const {configPath: configPath, folder: folder, consumer: consumer} = meta;
+    const {configPath: configPath, projectFolder: folder, consumer: consumer} = meta;
     if (configPath === undefined ||
     folder === undefined ||
     consumer === undefined) {
@@ -40599,7 +40653,7 @@
     return Object.assign({}, meta, {
       configPath: configPath,
       consumer: consumer,
-      folder: folder});
+      projectFolder: folder});
   }
 
   function ___R$romejs$project$utils_ts$arrayOfStrings(consumer) {
@@ -40643,40 +40697,19 @@
     return new ___R$romejs$path$collections_ts$AbsoluteFilePathSet([...a, ...b]);
   }
 
-  // romejs/project/constants.ts
+  function ___R$romejs$project$utils_ts$getParentConfigDependencies(path) {
+    const deps = new ___R$romejs$path$collections_ts$AbsoluteFilePathSet();
 
-  const ___R$romejs$project$constants_ts = {
-    get ROME_CONFIG_PACKAGE_JSON_FIELD() {
-      return ___R$romejs$project$constants_ts$ROME_CONFIG_PACKAGE_JSON_FIELD;
-    },
-    get ROME_CONFIG_FILENAME_VANILLA() {
-      return ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAME_VANILLA;
-    },
-    get ROME_CONFIG_FILENAME_EXTENSIONS() {
-      return ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAME_EXTENSIONS;
-    },
-    get ROME_CONFIG_FILENAMES() {
-      return ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAMES;
-    },
-    get ROME_CONFIG_WARN_FILENAMES() {
-      return ___R$romejs$project$constants_ts$ROME_CONFIG_WARN_FILENAMES;
-    }};
-  const ___R$romejs$project$constants_ts$ROME_CONFIG_PACKAGE_JSON_FIELD = 'rome';
+    for (const folder of path.getChain()) {
+      deps.add(folder.append('package.json'));
 
-  const ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAME_VANILLA = 'rome.json';
-  const ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAME_EXTENSIONS = 'rome.rjson';
-
-  const ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAMES = [___R$romejs$project$constants_ts$ROME_CONFIG_FILENAME_VANILLA, ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAME_EXTENSIONS];
-
-  const ___R$romejs$project$constants_ts$ROME_CONFIG_WARN_FILENAMES = ['romeconfig', 'romerc', 'rome.son', 'rome.config.ts', 'rome.config.js', 'rome.config.json', 'rome.config.rjson', 'rome.config.son'];
-
-  for (const basename of ___R$romejs$project$constants_ts$ROME_CONFIG_WARN_FILENAMES) {
-    if (basename[0] !== '.') {
-      ___R$romejs$project$constants_ts$ROME_CONFIG_WARN_FILENAMES.push('.' + basename);
+      for (const configFilename of ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAMES) {
+        deps.add(folder.append(configFilename));
+        deps.add(folder.append(___R$romejs$project$constants_ts$ROME_CONFIG_FOLDER).append(configFilename));
+      }
     }
-  }
-  for (const filename of ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAMES.slice()) {
-    ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAMES.push('.' + filename);
+
+    return deps;
   }
 
   // romejs/codec-semver/parse.ts
@@ -41434,8 +41467,10 @@
       vsc: Object.assign({
         root: projectFolder}, ___R$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG.vsc)});
 
+    const name = consumer.get('name').asString(projectFolder.getBasename());
+
     const config = Object.assign({}, ___R$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG, {
-      name: consumer.get('name').asString(projectFolder.getBasename()),
+      name: name,
       root: partial.root === undefined ? ___R$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG.root : partial.root}, ___R$$priv$romejs$project$load_ts$mergePartialConfig(defaultConfig, partial));
 
     for (const filename of ___R$$priv$romejs$project$load_ts$IGNORE_FILENAMES) {
@@ -41497,9 +41532,14 @@
   function ___R$romejs$project$load_ts$normalizeProjectConfig(res, configPath, configFile, projectFolder) {
     let {consumer: consumer} = res;
 
+    let configSourceSubKey;
+    let name;
     const isInPackageJson = configPath.getBasename() === 'package.json';
     if (isInPackageJson) {
+      name = consumer.get('name').asStringOrVoid();
+
       consumer = consumer.get(___R$romejs$project$constants_ts$ROME_CONFIG_PACKAGE_JSON_FIELD);
+      configSourceSubKey = ___R$romejs$project$constants_ts$ROME_CONFIG_PACKAGE_JSON_FIELD;
     }
 
     const hash = ___R$$priv$romejs$project$load_ts$crypto.createHash('sha256').update(configFile).digest('hex');
@@ -41520,21 +41560,18 @@
       dependencies: {},
       targets: new Map()};
 
-    let sourceType = 'vanilla';
-    if (isInPackageJson) {
-      sourceType = 'package';
-    } else if (configPath.getBasename() === ___R$romejs$project$constants_ts$ROME_CONFIG_FILENAME_EXTENSIONS) {
-      sourceType = 'extensions';
+    if (name !== undefined) {
+      config.name = name;
     }
 
     const meta = {
-      sourceType: sourceType,
-      folder: projectFolder,
+      projectFolder: projectFolder,
       configPath: configPath,
       consumer: consumer,
       consumersChain: [consumer],
       configHashes: [hash],
-      configDependencies: new ___R$romejs$path$collections_ts$AbsoluteFilePathSet([configPath])};
+      configSourceSubKey: configSourceSubKey,
+      configDependencies: ___R$romejs$project$utils_ts$getParentConfigDependencies(projectFolder)};
 
     consumer.markUsedProperty('name');
 
@@ -41806,7 +41843,7 @@
     modifyProjectConfig: ___R$romejs$project$save_ts$modifyProjectConfig};
   async function ___R$romejs$project$save_ts$modifyProjectConfig(softMeta, callbacks) {
     const meta = ___R$romejs$project$utils_ts$assertHardMeta(softMeta);
-    const {configPath: configPath, sourceType: sourceType} = meta;
+    const {configPath: configPath, configSourceSubKey: consumerSubKey} = meta;
 
     await callbacks.pre(meta);
 
@@ -41816,10 +41853,10 @@
       input: configFile});
 
     const {consumer: consumer} = res;
-    if (sourceType === 'package') {
-      await callbacks.modify(consumer.get(___R$romejs$project$constants_ts$ROME_CONFIG_PACKAGE_JSON_FIELD));
-    } else {
+    if (consumerSubKey === undefined) {
       await callbacks.modify(consumer);
+    } else {
+      await callbacks.modify(consumer.get(consumerSubKey));
     }
 
     let stringified;
@@ -41834,7 +41871,7 @@
         path: configPath,
         input: stringified});
 
-      ___R$romejs$project$load_ts$normalizeProjectConfig(res, configPath, stringified, meta.folder);
+      ___R$romejs$project$load_ts$normalizeProjectConfig(res, configPath, stringified, meta.projectFolder);
     } catch (err) {
       let diagnostics = ___R$romejs$diagnostics$errors_ts$getDiagnosticsFromError(err);
       if (diagnostics === undefined) {
@@ -46312,8 +46349,8 @@
         },
         teardown() {}};
 
-      const errStream = Object.assign({
-        type: 'error'}, outStream, {
+      const errStream = Object.assign({}, outStream, {
+        type: 'error',
         write(chunk) {
           if (stderr !== undefined) {
             stderr.write(chunk);
@@ -47688,6 +47725,7 @@
   function ___R$$priv$romejs$cli$diagnostics$printAdvice_ts$printFrame(item, opts) {
     const {reporter: reporter} = opts;
     const {start: start, end: end, filename: filename, sourceText: sourceText, marker: marker} = item;
+    const path = ___R$romejs$path$index_ts$createUnknownFilePath(filename);
 
     let cleanMarker = '';
     if (marker !== undefined) {
@@ -47697,12 +47735,12 @@
     let lines;
     if (sourceText !== undefined) {
       lines = ___R$romejs$cli$diagnostics$utils_ts$toLines({
-        path: ___R$romejs$path$index_ts$createUnknownFilePath(filename),
+        path: path,
         input: sourceText,
         sourceType: item.sourceType,
         language: item.language});
     } else if (filename !== undefined) {
-      lines = opts.fileSources.get(filename);
+      lines = opts.fileSources.get(path);
     }
     if (lines === undefined) {
       lines = [];
@@ -47879,15 +47917,14 @@
 
   // romejs/cli-diagnostics/DiagnosticsPrinter.ts
 
-  const ___R$$priv$romejs$cli$diagnostics$DiagnosticsPrinter_ts$fs = require('fs');
 
-  function ___R$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDiagnosticsFileLocal(filename) {
-    if (!___R$$priv$romejs$cli$diagnostics$DiagnosticsPrinter_ts$fs.existsSync(filename)) {
+  function ___R$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDiagnosticsFileLocal(path) {
+    if (!___R$romejs$fs$index_ts$existsSync(path)) {
       return;
     }
 
-    const src = ___R$$priv$romejs$cli$diagnostics$DiagnosticsPrinter_ts$fs.readFileSync(filename, 'utf8');
-    const mtime = ___R$$priv$romejs$cli$diagnostics$DiagnosticsPrinter_ts$fs.lstatSync(filename).mtimeMs;
+    const src = ___R$romejs$fs$index_ts$readFileTextSync(path);
+    const mtime = ___R$romejs$fs$index_ts$lstatSync(path).mtimeMs;
     return {content: src, mtime: mtime};
   }
 
@@ -47931,8 +47968,8 @@
       this.filteredCount = 0;
       this.truncatedCount = 0;
 
-      this.fileSources = new Map();
-      this.fileMtimes = new Map();
+      this.fileSources = new ___R$romejs$path$collections_ts$UnknownFilePathMap();
+      this.fileMtimes = new ___R$romejs$path$collections_ts$UnknownFilePathMap();
       this.beforeFooterPrint = [];
     }
 
@@ -48009,13 +48046,13 @@
     }
 
     addFileSource(info, stats) {
-      this.fileMtimes.set(info.filename, stats.mtime);
+      this.fileMtimes.set(info.path, stats.mtime);
 
       if (info.type === 'reference') {
         this.fileSources.set(
-        info.filename,
+        info.path,
         ___R$romejs$cli$diagnostics$utils_ts$toLines({
-          path: ___R$romejs$path$index_ts$createUnknownFilePath(info.filename),
+          path: info.path,
           input: stats.content,
           sourceType: info.sourceType,
           language: info.language}));
@@ -48033,13 +48070,18 @@
         sourceType: sourceType,
         mtime: mtime} of diagnostics) {
         if (filename !== undefined) {
-          deps.push({type: 'reference', filename: filename, mtime: mtime, language: language, sourceType: sourceType});
+          deps.push({
+            type: 'reference',
+            path: ___R$romejs$path$index_ts$createUnknownFilePath(filename),
+            mtime: mtime,
+            language: language,
+            sourceType: sourceType});
         }
 
         for (const {filename: filename, mtime: mtime} of dependencies) {
           deps.push({
             type: 'change',
-            filename: filename,
+            path: ___R$romejs$path$index_ts$createUnknownFilePath(filename),
             mtime: mtime});
         }
 
@@ -48049,7 +48091,7 @@
           item.sourceText === undefined) {
             deps.push({
               type: 'reference',
-              filename: item.filename,
+              path: ___R$romejs$path$index_ts$createUnknownFilePath(item.filename),
               language: item.language,
               sourceType: item.sourceType,
               mtime: item.mtime});
@@ -48057,18 +48099,18 @@
         }
       }
 
-      const depsMap = new Map();
+      const depsMap = new ___R$romejs$path$collections_ts$UnknownFilePathMap();
 
       for (const dep of deps) {
-        const path = ___R$romejs$path$index_ts$createUnknownFilePath(dep.filename);
+        const path = dep.path;
         if (!path.isAbsolute()) {
           continue;
         }
 
-        const existing = depsMap.get(dep.filename);
+        const existing = depsMap.get(path);
 
         if (existing === undefined || existing.type === 'change') {
-          depsMap.set(dep.filename, dep);
+          depsMap.set(dep.path, dep);
           continue;
         }
 
@@ -48087,10 +48129,15 @@
     }
 
     fetchFileSources(diagnostics) {
-      for (const info of this.getDependenciesFromDiagnostics(diagnostics)) {
-        const stats = this.readFile(info.filename);
+      for (const dep of this.getDependenciesFromDiagnostics(diagnostics)) {
+        const {path: path} = dep;
+        if (!path.isAbsolute()) {
+          continue;
+        }
+
+        const stats = this.readFile(path.assertAbsolute());
         if (stats !== undefined) {
-          this.addFileSource(info, stats);
+          this.addFileSource(dep, stats);
         }
       }
     }
@@ -48147,22 +48194,24 @@
         }
       }
 
-      let outdatedFiles = [];
+      let outdatedFiles = new ___R$romejs$path$collections_ts$UnknownFilePathSet();
       for (const {
-        filename: filename,
+        path: path,
         mtime: expectedMtime} of this.getDependenciesFromDiagnostics([diag])) {
-        const mtime = this.fileMtimes.get(filename);
+        const mtime = this.fileMtimes.get(path);
         if (mtime !== undefined &&
         expectedMtime !== undefined &&
         mtime > expectedMtime) {
-          outdatedFiles.push(filename);
+          outdatedFiles.add(path);
         }
       }
 
       const outdatedAdvice = [];
-      const isOutdated = outdatedFiles.length > 0;
+      const isOutdated = outdatedFiles.size > 0;
       if (isOutdated) {
-        if (outdatedFiles.length === 1 && outdatedFiles[0] === filename) {
+        const outdatedFilesArr = Array.from(outdatedFiles, path => path.join());
+
+        if (outdatedFilesArr.length === 1 && outdatedFilesArr[0] === filename) {
           outdatedAdvice.push({
             type: 'log',
             category: 'warn',
@@ -48175,7 +48224,8 @@
 
           outdatedAdvice.push({
             type: 'list',
-            list: outdatedFiles});
+            list: outdatedFilesArr.map(
+            filename => '<fileref target="' + filename + '" />')});
         }
       }
 
@@ -53726,7 +53776,7 @@
           return;
         }
 
-        if (process.platform !== 'linux' && folderPath.equal(projectFolderPath)) {
+        if (process.platform === 'linux') {} else if (!folderPath.equal(projectFolderPath)) {
           return;
         }
 
@@ -54804,7 +54854,7 @@
     }
 
     declareArgument(decl) {
-      const key = decl.command === undefined || this.helpMode ? decl.name : decl.command + '.' + decl.name;
+      const key = decl.command === undefined ? decl.name : decl.command + '.' + decl.name;
 
       if (this.declaredFlags.has(key)) {
         throw new Error('Already declared argument ' + key);
@@ -54947,9 +54997,9 @@
 
       for (const {arg: arg, description: description} of optionOutput) {
         lines.push('  <brightBlack>' + ___R$romejs$string$ansi$pad_ts$rightPad(
-        arg,
+        ___R$romejs$string$markup$escape_ts$escapeMarkup(arg),
         argColumnLength,
-        ' ') + '</brightBlack>  ' + description);
+        ' ') + '</brightBlack>  ' + ___R$romejs$string$markup$escape_ts$escapeMarkup(description));
       }
 
       return lines;
@@ -54995,14 +55045,14 @@
       }
 
       for (const [nameCol, descCol, optLines] of cmdOutput) {
-        reporter.logAllNoMarkup('  <brightBlack>' + ___R$romejs$string$ansi$pad_ts$rightPad(
+        reporter.logAll('  <brightBlack>' + ___R$romejs$string$ansi$pad_ts$rightPad(
         nameCol,
         nameColumnLength,
         ' ') + '</brightBlack>  ' + descCol);
 
         reporter.indent();
         for (const line of optLines) {
-          reporter.logAllNoMarkup(line);
+          reporter.logAll(line);
         }
         reporter.dedent();
       }
@@ -55040,7 +55090,7 @@
         }
       }
       for (const line of this.buildOptionsHelp(lonerArgKeys)) {
-        reporter.logAllNoMarkup(line);
+        reporter.logAll(line);
       }
 
       const commandNames = new Set(this.commands.keys());
@@ -55543,7 +55593,7 @@
 
       this.uidToFilename = new Map();
       this.filenameToUid = new ___R$romejs$path$collections_ts$AbsoluteFilePathMap();
-      this.remoteToLocalPath = new Map();
+      this.remoteToLocalPath = new ___R$romejs$path$collections_ts$UnknownFilePathMap();
       this.localPathToRemote = new ___R$romejs$path$collections_ts$AbsoluteFilePathMap();
     }
 
@@ -55655,10 +55705,8 @@
     }
 
     getURLFileReference(local, url) {
-      const uid = url.join();
-
-      if (!this.remoteToLocalPath.has(uid)) {
-        this.remoteToLocalPath.set(uid, local);
+      if (!this.remoteToLocalPath.has(url)) {
+        this.remoteToLocalPath.set(url, local);
         this.localPathToRemote.set(local, url);
       }
 
@@ -56111,6 +56159,13 @@
           const hasProject = await this.master.memoryFs.existsHard(configPath);
           if (hasProject) {
             return this.queueAddProject(dir, configPath);
+          }
+
+          const configPathNested = dir.append(___R$romejs$project$constants_ts$ROME_CONFIG_FOLDER).append(configFilename);
+          const hasProjectNested = await this.master.memoryFs.existsHard(
+          configPathNested);
+          if (hasProjectNested) {
+            return this.queueAddProject(dir, configPathNested);
           }
         }
 
@@ -59429,8 +59484,6 @@
   const ___R$$priv$romejs$core$master$web$WebRequest_ts$http = require('http');
   const ___R$$priv$romejs$core$master$web$WebRequest_ts$waitForever = new Promise(() => {});
 
-  const ___R$$priv$romejs$core$master$web$WebRequest_ts$CACHED = ___R$romejs$path$index_ts$TEMP_PATH.append('fb4a-rome-test/index.js');
-
   function ___R$romejs$core$master$web$WebRequest_ts$stripBundleSuffix(pathname) {
     return ___R$romejs$string$utils$removePrefix_ts$removePrefix(___R$romejs$string$utils$removeSuffix_ts$removeSuffix(pathname, '.bundle'), '/');
   }
@@ -59665,17 +59718,9 @@
     async handleBundleRequest() {
       const {res: res} = this;
 
-      let content;
-      if (false) {
-        content = await ___R$romejs$fs$index_ts$readFileText(___R$$priv$romejs$core$master$web$WebRequest_ts$CACHED);
-      } else {
-        const {bundler: bundler, path: path} = await this.server.getBundler(this.url);
-        const bundle = await bundler.bundle(path);
-        content = bundle.entry.js.content;
-
-        await ___R$romejs$fs$index_ts$writeFile(___R$$priv$romejs$core$master$web$WebRequest_ts$CACHED, content);
-        this.reporter.logAll('Cached to <filelink target="' + ___R$$priv$romejs$core$master$web$WebRequest_ts$CACHED.join() + '"/>');
-      }
+      const {bundler: bundler, path: path} = await this.server.getBundler(this.url);
+      const bundle = await bundler.bundle(path);
+      const content = bundle.entry.js.content;
 
       res.writeHead(200, {'Content-Type': 'application/javascript'});
       res.end(content);
@@ -59719,23 +59764,36 @@
           flags: client.flags,
           startTime: Date.now(),
           endTime: undefined,
-          stdout: ''};
+          stdoutAnsi: '',
+          stdoutHTML: ''};
         this.clientHistory.set(client.id, data);
         this.refreshRequests();
 
-        const reporterStream = {
+        const ansiReporterStream = {
           type: 'all',
           format: 'ansi',
           columns: 100,
           write(chunk) {
-            data.stdout += chunk;
+            data.stdoutAnsi += chunk;
           }};
 
-        client.reporter.addStream(reporterStream);
-        master.connectedReporters.addStream(reporterStream);
+        const htmlReporterStream = {
+          type: 'all',
+          format: 'html',
+          columns: 100,
+          write(chunk) {
+            data.stdoutAnsi += chunk;
+          }};
+
+        client.reporter.addStream(ansiReporterStream);
+        master.connectedReporters.addStream(ansiReporterStream);
+
+        client.reporter.addStream(htmlReporterStream);
+        master.connectedReporters.addStream(htmlReporterStream);
 
         client.bridge.endEvent.subscribe(() => {
-          master.connectedReporters.removeStream(reporterStream);
+          master.connectedReporters.removeStream(ansiReporterStream);
+          master.connectedReporters.removeStream(htmlReporterStream);
 
           data.endTime = Date.now();
           this.refreshRequests();
@@ -61333,13 +61391,13 @@
       await printer.print();
     }
 
-    readDiagnosticsPrinterFile(filename) {
-      const remoteToLocal = this.projectManager.remoteToLocalPath.get(filename);
+    readDiagnosticsPrinterFile(path) {
+      const remoteToLocal = this.projectManager.remoteToLocalPath.get(path);
 
       if (remoteToLocal === undefined) {
-        return ___R$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDiagnosticsFileLocal(filename);
+        return ___R$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDiagnosticsFileLocal(path);
       } else {
-        return ___R$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDiagnosticsFileLocal(remoteToLocal.join());
+        return ___R$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDiagnosticsFileLocal(remoteToLocal);
       }
     }
 
