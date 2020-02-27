@@ -58,7 +58,7 @@ This list includes general ethos the project should abide by. This list is not c
 - **Use inclusive terminology.** Use gender-neutral pronouns. No ableist slurs. No usage of terms that could be considered insensitive.
 - **Build for generic clients.** Don't assume that output will only be consumed by a terminal and using ANSI codes. Use abstractions that could be generalized for viewing in an IDE, browser, or other environments.
 - **Use strong types.** Don't use loose types such as `any`. Where possible, refine and validate input. Aim for sound types.
-- **Terminal output should be unambiguous.** When designing terminal output, don't purely rely on formatting cues such as color. Always use a combination of formatting, symbols, and spacing. If all ANSI codes are striped, all the output should still be understood.
+- **Terminal output should be unambiguous.** When designing terminal output, don't purely rely on formatting cues such as color. Always use a combination of formatting, symbols, and spacing. If all ANSI codes are stripped, all the output should still be understood.
 
 ## Community
 
