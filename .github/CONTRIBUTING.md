@@ -9,7 +9,7 @@ Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc
 Getting started with developing Rome is as easy as three commands. You will need Node v12 or above.
 
 ```
-$ git clone https://github.com/romejs/rome
+$ git clone https://github.com/facebookexperimental/rome
 $ cd rome
 $ scripts/dev-rome --help
 ```
