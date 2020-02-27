@@ -20,6 +20,7 @@ import {toKebabCase, toCamelCase} from '@romejs/string-utils';
 import {DiagnosticsError} from '@romejs/diagnostics';
 import {createUnknownFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
+import {escapeMarkup} from '@romejs/string-markup';
 
 type CommandOptions<T extends Dict<unknown>> = {
   name: string;
@@ -250,9 +251,7 @@ export default class Parser<T> {
   declareArgument(decl: ArgDeclaration) {
     // Commands may have colliding flags, this is only a problem in help mode, so make it unique
     const key =
-      decl.command === undefined || this.helpMode
-        ? decl.name
-        : `${decl.command}.${decl.name}`;
+      decl.command === undefined ? decl.name : `${decl.command}.${decl.name}`;
 
     // Ensure it hasn't been declared more than once
     if (this.declaredFlags.has(key)) {
@@ -429,10 +428,10 @@ export default class Parser<T> {
     for (const {arg, description} of optionOutput) {
       lines.push(
         `  <brightBlack>${rightPad(
-          arg,
+          escapeMarkup(arg),
           argColumnLength,
           ' ',
-        )}</brightBlack>  ${description}`,
+        )}</brightBlack>  ${escapeMarkup(description)}`,
       );
     }
 
@@ -485,7 +484,7 @@ export default class Parser<T> {
     }
 
     for (const [nameCol, descCol, optLines] of cmdOutput) {
-      reporter.logAllNoMarkup(
+      reporter.logAll(
         `  <brightBlack>${rightPad(
           nameCol,
           nameColumnLength,
@@ -495,7 +494,7 @@ export default class Parser<T> {
 
       reporter.indent();
       for (const line of optLines) {
-        reporter.logAllNoMarkup(line);
+        reporter.logAll(line);
       }
       reporter.dedent();
     }
@@ -538,7 +537,7 @@ export default class Parser<T> {
       }
     }
     for (const line of this.buildOptionsHelp(lonerArgKeys)) {
-      reporter.logAllNoMarkup(line);
+      reporter.logAll(line);
     }
 
     // Sort commands into their appropriate categories for output
