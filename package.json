@@ -24,6 +24,7 @@
       "mode": "modern"
     },
     "lint": {
+      "enabled": true,
       "ignore": [
         "build",
         "coverage",
