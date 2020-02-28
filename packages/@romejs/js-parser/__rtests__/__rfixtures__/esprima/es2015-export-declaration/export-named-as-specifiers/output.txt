@@ -40,7 +40,7 @@ Program {
         }
       }
       specifiers: Array [
-        ExportSpecifier {
+        ExportLocalSpecifier {
           loc: Object {
             filename: '..'
             end: Object {
@@ -87,7 +87,7 @@ Program {
             }
           }
         }
-        ExportSpecifier {
+        ExportLocalSpecifier {
           loc: Object {
             filename: '..'
             end: Object {

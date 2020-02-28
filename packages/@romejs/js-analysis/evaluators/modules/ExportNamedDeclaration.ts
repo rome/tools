@@ -67,7 +67,7 @@ export default function ExportNamedDeclaration(
   const {specifiers} = node;
   if (specifiers !== undefined) {
     for (const specifier of specifiers) {
-      if (specifier.type === 'ExportSpecifier') {
+      if (specifier.type === 'ExportLocalSpecifier') {
         let type;
         if (source === undefined) {
           type = scope.evaluate(specifier.local);

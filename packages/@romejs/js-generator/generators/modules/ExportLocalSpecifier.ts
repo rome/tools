@@ -6,10 +6,17 @@
  */
 
 import Generator from '../../Generator';
-import {ExportSpecifier, exportSpecifier, AnyNode} from '@romejs/js-ast';
+import {
+  ExportLocalSpecifier,
+  exportLocalSpecifier,
+  AnyNode,
+} from '@romejs/js-ast';
 
-export default function ExportSpecifier(generator: Generator, node: AnyNode) {
-  node = exportSpecifier.assert(node);
+export default function ExportLocalSpecifier(
+  generator: Generator,
+  node: AnyNode,
+) {
+  node = exportLocalSpecifier.assert(node);
 
   generator.print(node.local, node);
   if (node.exported && node.local.name !== node.exported.name) {

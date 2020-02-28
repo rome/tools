@@ -79,7 +79,7 @@ export default {
       if (specifiers !== undefined) {
         for (const specifier of specifiers) {
           switch (specifier.type) {
-            case 'ExportSpecifier': {
+            case 'ExportLocalSpecifier': {
               const kind: ConstExportModuleKind = maybeTypeBinding(
                 getExportKind(specifier.exportKind || node.exportKind),
                 scope,
@@ -133,7 +133,7 @@ export default {
         if (specifiers !== undefined) {
           for (const specifier of specifiers) {
             switch (specifier.type) {
-              case 'ExportSpecifier': {
+              case 'ExportLocalSpecifier': {
                 const kind = getImportKind(
                   specifier.exportKind || node.exportKind,
                 );

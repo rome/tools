@@ -17,7 +17,7 @@ import {
   TSExportAssignment,
   TSImportEqualsDeclaration,
   ConstExportModuleKind,
-  ExportSpecifier,
+  ExportLocalSpecifier,
   AnyExportSpecifier,
   StringLiteral,
   ImportDeclaration,
@@ -83,7 +83,7 @@ export function parseExport(
   let exportKind: ConstExportModuleKind = 'value';
   let source;
   let declaration: undefined | AnyStatement;
-  let specifiers: undefined | Array<ExportSpecifier>;
+  let specifiers: undefined | Array<ExportLocalSpecifier>;
 
   // export * from '...'';
   if (shouldParseExportStar(parser)) {
@@ -246,7 +246,7 @@ function parseExportDeclaration(
 ): {
   exportKind: ConstExportModuleKind;
   declaration?: AnyStatement;
-  specifiers?: Array<ExportSpecifier>;
+  specifiers?: Array<ExportLocalSpecifier>;
   source?: StringLiteral;
 } {
   if (parser.isContextual('type')) {
@@ -331,7 +331,9 @@ function isExportDefaultSpecifier(parser: JSParser): boolean {
   return false;
 }
 
-function parseExportSpecifiersMaybe(parser: JSParser): Array<ExportSpecifier> {
+function parseExportSpecifiersMaybe(
+  parser: JSParser,
+): Array<ExportLocalSpecifier> {
   if (parser.eat(tt.comma)) {
     return parseExportSpecifiers(parser);
   } else {
@@ -471,7 +473,7 @@ function shouldParseExportDeclaration(parser: JSParser): boolean {
 
 function checkExport(
   parser: JSParser,
-  specifiers: undefined | Array<ExportSpecifier>,
+  specifiers: undefined | Array<ExportLocalSpecifier>,
   declaration: undefined | AnyNode,
   checkNames: boolean = false,
   isDefault: boolean = false,
@@ -495,7 +497,7 @@ function checkExport(
     for (const specifier of specifiers) {
       checkDuplicateExports(parser, specifier, specifier.exported.name);
 
-      if (specifier.type === 'ExportSpecifier') {
+      if (specifier.type === 'ExportLocalSpecifier') {
         const {local} = specifier;
         if (!isFrom && local !== undefined) {
           // check for keywords used as local names
@@ -577,8 +579,8 @@ function checkDuplicateExports(
 
 // Parses a comma-separated list of module exports.
 
-function parseExportSpecifiers(parser: JSParser): Array<ExportSpecifier> {
-  const specifiers: Array<ExportSpecifier> = [];
+function parseExportSpecifiers(parser: JSParser): Array<ExportLocalSpecifier> {
+  const specifiers: Array<ExportLocalSpecifier> = [];
   let first = true;
 
   // export { x, y as z } [from '...']';
@@ -610,7 +612,7 @@ function parseExportSpecifiers(parser: JSParser): Array<ExportSpecifier> {
       : toIdentifier(parser.cloneNode(local));
     specifiers.push({
       loc: parser.finishLoc(start),
-      type: 'ExportSpecifier',
+      type: 'ExportLocalSpecifier',
       local,
       exported,
       // TODO exportKind?

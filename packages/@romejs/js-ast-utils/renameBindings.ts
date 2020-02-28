@@ -9,7 +9,7 @@ import {Path, Binding} from '@romejs/js-compiler';
 import inheritLoc from './inheritLoc';
 import {
   AnyNode,
-  exportSpecifier,
+  exportLocalSpecifier,
   exportNamedDeclaration,
   identifier,
   referenceIdentifier,
@@ -105,7 +105,7 @@ export default function renameBindings(
               node.declaration,
               exportNamedDeclaration.create({
                 specifiers: [
-                  exportSpecifier.create({
+                  exportLocalSpecifier.create({
                     loc: node.declaration.id.loc,
                     local: referenceIdentifier.quick(newName),
                     exported: identifier.quick(oldName),
@@ -143,7 +143,7 @@ export default function renameBindings(
                     replaced.add(node);
                   }
 
-                  return exportSpecifier.create({
+                  return exportLocalSpecifier.create({
                     loc: node.loc,
                     local: referenceIdentifier.quick(local),
                     exported: identifier.quick(node.name),

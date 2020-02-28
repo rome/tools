@@ -6,9 +6,13 @@
  */
 
 import {Scope} from '../../scopes';
-import {ExportSpecifier, exportSpecifier, AnyNode} from '@romejs/js-ast';
+import {
+  ExportLocalSpecifier,
+  exportLocalSpecifier,
+  AnyNode,
+} from '@romejs/js-ast';
 
-export default function ExportSpecifier(node: AnyNode, scope: Scope) {
-  node = exportSpecifier.assert(node);
+export default function ExportLocalSpecifier(node: AnyNode, scope: Scope) {
+  node = exportLocalSpecifier.assert(node);
   throw new Error('unimplemented');
 }

@@ -109,7 +109,7 @@ export type AnyAuxiliary =
   | n.ImportSpecifier
   | n.ImportDefaultSpecifier
   | n.ImportNamespaceSpecifier
-  | n.ExportSpecifier
+  | n.ExportLocalSpecifier
   | n.ExportNamespaceSpecifier
   | n.Directive
   | n.InterpreterDirective
@@ -402,9 +402,9 @@ export type AnyNode =
   | n.ExportAllDeclaration
   | n.ExportDefaultDeclaration
   | n.ExportDefaultSpecifier
+  | n.ExportLocalSpecifier
   | n.ExportNamedDeclaration
   | n.ExportNamespaceSpecifier
-  | n.ExportSpecifier
   | n.ExpressionStatement
   | n.FlowArrayTypeAnnotation
   | n.FlowClassImplements

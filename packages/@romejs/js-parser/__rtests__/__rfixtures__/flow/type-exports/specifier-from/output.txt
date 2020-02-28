@@ -58,7 +58,7 @@ Program {
         }
       }
       specifiers: Array [
-        ExportSpecifier {
+        ExportLocalSpecifier {
           loc: Object {
             filename: '..'
             end: Object {

@@ -14,7 +14,7 @@ import {
 import {ImportBinding} from '@romejs/js-compiler';
 import {
   exportNamedDeclaration,
-  exportSpecifier,
+  exportLocalSpecifier,
   stringLiteral,
 } from '@romejs/js-ast';
 
@@ -35,7 +35,7 @@ export default {
       const specifiers = [];
 
       for (const specifier of node.specifiers) {
-        if (specifier.type === 'ExportSpecifier') {
+        if (specifier.type === 'ExportLocalSpecifier') {
           const binding = path.scope.getBinding(specifier.local.name);
           if (
             binding !== undefined &&
@@ -45,7 +45,7 @@ export default {
             nodes.push(
               exportNamedDeclaration.create({
                 specifiers: [
-                  exportSpecifier.create({
+                  exportLocalSpecifier.create({
                     local: referenceIdentifier.quick(binding.meta.imported),
                     exported: specifier.exported,
                     loc: specifier.loc,

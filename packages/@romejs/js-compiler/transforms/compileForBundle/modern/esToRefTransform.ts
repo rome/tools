@@ -104,7 +104,7 @@ export default {
           // export {foo};
           if (child.specifiers !== undefined) {
             for (const specifier of child.specifiers) {
-              if (specifier.type !== 'ExportSpecifier') {
+              if (specifier.type !== 'ExportLocalSpecifier') {
                 continue;
               }
 
@@ -165,7 +165,7 @@ export default {
 
             if (specifiers !== undefined) {
               for (const specifier of specifiers) {
-                if (specifier.type === 'ExportSpecifier') {
+                if (specifier.type === 'ExportLocalSpecifier') {
                   // The local binding has already been rewritten by renameBindings if it existed
                   let local = specifier.local.name;
 
@@ -309,7 +309,7 @@ export default {
         const nodes: Array<AnyNode> = [];
 
         for (const specifier of specifiers) {
-          if (specifier.type === 'ExportSpecifier') {
+          if (specifier.type === 'ExportLocalSpecifier') {
             const binding = path.scope.getBinding(specifier.local.name);
 
             // TODO we only really need this declaration for global bindings, `analyze()` could detect the exported import and resolvedImports would just work

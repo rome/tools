@@ -10,7 +10,7 @@ import {
   VariableDeclarationStatement,
   FunctionDeclaration,
   ClassDeclaration,
-  ExportSpecifier,
+  ExportLocalSpecifier,
   StringLiteral,
   ConstExportModuleKind,
   ExportNamespaceSpecifier,
@@ -26,7 +26,7 @@ import {
 import {createBuilder} from '../utils';
 
 export type AnyExportSpecifier =
-  | ExportSpecifier
+  | ExportLocalSpecifier
   | ExportNamespaceSpecifier
   | ExportDefaultSpecifier;
 
