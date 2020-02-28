@@ -5,7 +5,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-OUT=$(tsc --noEmit)
+OUT=$(./node_modules/.bin/tsc --noEmit)
 MATCH_LINES=$(echo "$OUT" | grep -E ".(tsx|ts)\(")
 ERRORED_FILES=$(echo "$MATCH_LINES" | cut -f1 -d"(" | uniq)
 if [ "$ERRORED_FILES" = "" ]; then

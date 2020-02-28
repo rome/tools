@@ -8,10 +8,10 @@
     "@types/node": "^12.0.8",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.5",
-    "typescript": "^3.7.0"
+    "typescript": "^3.7.0",
+    "prettier": "^1.19.1"
   },
   "prettier": {
-    "version": "1.19.1",
     "trailingComma": "all",
     "tabWidth": 2,
     "singleQuote": true,
