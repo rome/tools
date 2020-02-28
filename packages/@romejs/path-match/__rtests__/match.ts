@@ -112,19 +112,19 @@ test('matchPathPatterns', t => {
     matchPathPatterns(createAbsoluteFilePath('/scripts/foo.js'), [
       _parsePathPattern('scripts'),
       _parsePathPattern('styles'),
-    ]),
+    ]) === 'EXPLICIT_MATCH',
   );
 
   t.false(
     matchPathPatterns(createAbsoluteFilePath('/scripts/foo.js'), [
       _parsePathPattern('scripts'),
       _parsePathPattern('!scripts/*.js'),
-    ]),
+    ]) === 'EXPLICIT_MATCH',
   );
 
   t.true(
     matchPathPatterns(createAbsoluteFilePath('/scripts/foo.js'), [
       _parsePathPattern('scripts'),
-    ]),
+    ]) === 'EXPLICIT_MATCH',
   );
 });

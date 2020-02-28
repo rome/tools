@@ -37,23 +37,26 @@ function getGreater(pattern: PathPattern, num: number): number {
   }
 }
 
+type MatchPatternResult = 'NO_MATCH' | 'IMPLICIT_MATCH' | 'EXPLICIT_MATCH';
+
 export function matchPathPatterns(
   path: AbsoluteFilePath,
   patterns: PathPatterns,
   cwd?: AbsoluteFilePath,
-): boolean {
+): MatchPatternResult {
   // Bail out if there are no patterns
   if (patterns.length === 0) {
-    return false;
+    return 'NO_MATCH';
   }
 
   let matches = 0;
   let notMatches = 0;
 
+  let hasNegate = false;
+
   const pathSegments = path.getSegments();
   const cwdSegs = cwd === undefined ? undefined : cwd.getSegments();
 
-  // Run all negate patterns first
   for (const pattern of patterns) {
     // No point in matching an empty pattern, could just contain a comment
     if (pattern.segments.length === 0) {
@@ -61,6 +64,7 @@ export function matchPathPatterns(
     }
 
     if (pattern.negate) {
+      hasNegate = true;
       if (match(pathSegments, {...pattern, negate: false}, cwdSegs)) {
         notMatches = getGreater(pattern, notMatches);
       }
@@ -71,5 +75,20 @@ export function matchPathPatterns(
     }
   }
 
-  return matches > 0 && matches > notMatches;
+  // If we have a negate pattern, then we need to match more segments than it in order to qualify as a match
+  if (hasNegate) {
+    if (notMatches > matches) {
+      return 'NO_MATCH';
+    } else if (matches > notMatches) {
+      return 'EXPLICIT_MATCH';
+    } else {
+      return 'IMPLICIT_MATCH';
+    }
+  }
+
+  if (matches > 0) {
+    return 'EXPLICIT_MATCH';
+  }
+
+  return 'NO_MATCH';
 }

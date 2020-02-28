@@ -46,7 +46,11 @@ import WorkerBridge, {
 import {ModuleSignature} from '@romejs/js-analysis';
 import {PartialDiagnostics} from '@romejs/diagnostics';
 import {DiagnosticsError} from '@romejs/diagnostics';
-import {AbsoluteFilePath, createAbsoluteFilePath} from '@romejs/path';
+import {
+  AbsoluteFilePath,
+  createAbsoluteFilePath,
+  AbsoluteFilePathSet,
+} from '@romejs/path';
 import crypto = require('crypto');
 import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
 import {Dict} from '@romejs/typescript-helpers';
@@ -247,7 +251,7 @@ export default class MasterRequest {
   async getFilesFromArgs(
     getIgnoreForProject: (project: ProjectDefinition) => PathPatterns,
     extensions?: Array<string>,
-  ): Promise<Array<AbsoluteFilePath>> {
+  ): Promise<AbsoluteFilePathSet> {
     const {master} = this;
     const {flags} = this.client;
 
@@ -264,8 +268,8 @@ export default class MasterRequest {
     }
 
     // Build up files
-    let files: Array<AbsoluteFilePath> = [];
-    for (let arg of resolvedArgs) {
+    const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+    for (const arg of resolvedArgs) {
       const project = await master.projectManager.assertProject(arg);
       const projectIgnore: PathPatterns = getIgnoreForProject(project);
 
@@ -273,9 +277,11 @@ export default class MasterRequest {
         ignore: projectIgnore,
         extensions,
       });
-      files = files.concat(matches);
+      for (const path of matches) {
+        paths.add(path);
+      }
     }
-    return files;
+    return paths;
   }
 
   normalizeCompileResult(res: WorkerCompileResult): WorkerCompileResult {
