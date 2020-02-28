@@ -49,14 +49,14 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
 
   let formattedCode = src;
   if (project.config.format.enabled) {
-    const generated = generate(
+    const generator = generate(
       newAst,
       {
         typeAnnotations: true,
       },
       src,
     );
-    formattedCode = generated.getCode() + '\n';
+    formattedCode = generator.getCode() + '\n';
   }
 
   const result: LintResult = {

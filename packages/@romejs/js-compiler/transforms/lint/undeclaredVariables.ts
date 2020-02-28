@@ -52,8 +52,6 @@ export default {
       const isDefined =
         binding !== undefined ||
         scope.getRootScope().isGlobal(name) ||
-        // FIXME: This is such a bad way to determine global variables, we should store an array of variables
-        name in global ||
         BROWSER_VARIABLES.includes(name) ||
         NODE_VARIABLES.includes(name);
 
