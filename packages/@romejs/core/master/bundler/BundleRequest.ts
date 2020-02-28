@@ -79,7 +79,11 @@ export default class BundleRequest {
     analyzeProgress.setTitle('Analyzing');
     this.diagnostics.setThrowAfter(100);
     try {
-      await graph.seed([this.resolvedEntry], this.diagnostics, analyzeProgress);
+      await graph.seed({
+        paths: [this.resolvedEntry],
+        diagnosticsProcessor: this.diagnostics,
+        analyzeProgress,
+      });
     } finally {
       analyzeProgress.end();
     }
@@ -87,23 +91,23 @@ export default class BundleRequest {
     return this.bundler.graph.getNode(this.resolvedEntry).getDependencyOrder();
   }
 
-  async stepCompile(files: Array<AbsoluteFilePath>) {
+  async stepCompile(paths: Array<AbsoluteFilePath>) {
     const {reporter, master} = this.bundler;
     this.diagnostics.setThrowAfter(undefined);
 
     const compilingSpinner = reporter.progress({
       name: `bundler:compile:${this.resolvedEntryUid}`,
     });
-    compilingSpinner.setTotal(files.length);
+    compilingSpinner.setTotal(paths.length);
     compilingSpinner.setTitle('Compiling');
 
-    const groupedFiles = await master.fileAllocator.groupFilesByWorker(files);
+    const groupedPaths = await master.fileAllocator.groupPathsByWorker(paths);
     await Promise.all(
-      groupedFiles.map(async files => {
-        for (const filename of files) {
-          const progressText = `<filelink target="${filename.join()}" />`;
+      groupedPaths.map(async paths => {
+        for (const path of paths) {
+          const progressText = `<filelink target="${path.join()}" />`;
           compilingSpinner.pushText(progressText);
-          await this.compileJS(filename);
+          await this.compileJS(path);
           compilingSpinner.tick();
           compilingSpinner.popText(progressText);
         }

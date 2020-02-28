@@ -466,14 +466,14 @@ export class ParserCore<Tokens extends TokensShape, State> {
   // Read from the input starting at the specified index, until the callback returns false
   readInputFrom(
     index: Number0,
-    callback: (char: string, index: Number0, input: string) => boolean,
+    callback?: (char: string, index: Number0, input: string) => boolean,
   ): string {
     const {input} = this;
     let value = '';
 
     while (
       get0(index) < input.length &&
-      callback(input[get0(index)], index, input)
+      (callback === undefined || callback(input[get0(index)], index, input))
     ) {
       value += input[get0(index)];
       index = inc(index);

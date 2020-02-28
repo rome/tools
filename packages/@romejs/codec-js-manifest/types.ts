@@ -120,7 +120,7 @@ export type JSONManifest = {
 };
 
 export type ManifestDefinition = {
-  filename: AbsoluteFilePath;
+  path: AbsoluteFilePath;
   folder: AbsoluteFilePath;
   id: number;
   consumer: Consumer;

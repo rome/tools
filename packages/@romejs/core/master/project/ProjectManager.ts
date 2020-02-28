@@ -216,17 +216,23 @@ export default class ProjectManager {
     const parts: Array<string> = [];
     parts.push(project.config.name);
 
-    // If we have a package then use it as the root and push it's name
     let root = project.folder;
-    const pkg = this.master.memoryFs.getOwnedManifest(path);
-    if (pkg !== undefined && pkg.manifest.name !== undefined) {
-      parts.push(pkg.manifest.name);
-      root = pkg.folder;
 
-      // If the project name is "@romejs" and the package name is "@romejs/foo" then we'll have "@romejs/foo/foo"
-      // which is pretty gross. So here we fix that up.
-      if (cleanName(parts[1]).startsWith(cleanName(parts[0]))) {
-        parts.shift();
+    // Push on parent package names
+    let targetPackagePath = path;
+    while (true) {
+      const pkg = this.master.memoryFs.getOwnedManifest(targetPackagePath);
+      if (pkg === undefined) {
+        break;
+      } else {
+        if (pkg.manifest.name !== undefined) {
+          parts.push(pkg.manifest.name);
+
+          if (targetPackagePath === path) {
+            root = pkg.folder;
+          }
+        }
+        targetPackagePath = pkg.folder.getParent();
       }
     }
 
@@ -556,13 +562,13 @@ export default class ProjectManager {
 
         diagnostics.addDiagnostic({
           category: 'projectManager',
-          filename: def.filename.join(),
+          filename: def.path.join(),
           message: `Duplicate package name <emphasis>${name}</emphasis>`,
           advice: [
             {
               type: 'log',
               category: 'info',
-              message: `Defined already by <filelink target="${existingPackage.filename}" />`,
+              message: `Defined already by <filelink target="${existingPackage.path}" />`,
             },
           ],
         });
@@ -572,7 +578,7 @@ export default class ProjectManager {
 
     // Set as a package
     for (const project of projects) {
-      this.addDependencyToProjectId(def.filename, project.id);
+      this.addDependencyToProjectId(def.path, project.id);
       project.manifests.set(def.id, def);
 
       if (isProjectPackage && name !== undefined) {
@@ -582,7 +588,7 @@ export default class ProjectManager {
   }
 
   isHasteIgnored(path: AbsoluteFilePath, config: ProjectConfig): boolean {
-    return matchPathPatterns(path, config.haste.ignore);
+    return matchPathPatterns(path, config.haste.ignore) !== 'NO_MATCH';
   }
 
   isHasteDeclared(path: AbsoluteFilePath, project: ProjectDefinition): boolean {

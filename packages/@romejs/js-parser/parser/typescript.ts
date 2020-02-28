@@ -1058,6 +1058,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
   parser.addDiagnostic({
     message: 'Unknown TS non array type start',
   });
+  parser.next();
 
   return {
     type: 'TSTypeReference',

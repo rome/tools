@@ -137,7 +137,12 @@ export default class Bundler {
     });
     analyzeProgress.setTitle('Analyzing');
     processor.setThrowAfter(100);
-    await this.graph.seed(entries, processor, analyzeProgress);
+    await this.graph.seed({
+      paths: entries,
+      diagnosticsProcessor: processor,
+      analyzeProgress,
+      validate: false,
+    });
     processor.maybeThrowDiagnosticsError();
 
     // Now actually bundle them

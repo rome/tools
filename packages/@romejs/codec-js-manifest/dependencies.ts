@@ -9,8 +9,9 @@ import {Consumer} from '@romejs/consume';
 import {SemverRangeNode, stringifySemver} from '@romejs/codec-semver';
 import {parseSemverRange} from '@romejs/codec-semver';
 import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
-import {createUnknownFilePath} from '@romejs/path';
+import {createUnknownFilePath, UnknownFilePath} from '@romejs/path';
 import {normalizeName} from './name';
+import {add} from '@romejs/ob1';
 
 export type DependencyPattern =
   | HostedGitPattern
@@ -18,7 +19,9 @@ export type DependencyPattern =
   | SemverPattern
   | GitPattern
   | FilePattern
-  | TagPattern;
+  | TagPattern
+  | NpmPattern
+  | LinkPattern;
 
 export type ManifestDependencies = Map<string, DependencyPattern>;
 
@@ -50,6 +53,17 @@ export function stringifyDependencyPattern(pattern: DependencyPattern): string {
       } else {
         return `${pattern.url}#${pattern.hash}`;
       }
+
+    case 'npm': {
+      let str = `${NPM_PREFIX}${pattern.name}`;
+      if (pattern.range !== undefined) {
+        str += `@${stringifySemver(pattern.range)}`;
+      }
+      return str;
+    }
+
+    case 'link':
+      return `${LINK_PREFIX}${pattern.path.join()}`;
   }
 }
 
@@ -57,7 +71,7 @@ function explodeHashUrl(pattern: string, consumer: Consumer): UrlWithHash {
   const parts = pattern.split('#');
 
   if (parts.length > 2) {
-    throw consumer.unexpected('Too many hashes');
+    consumer.unexpected('Too many hashes');
   }
 
   return {
@@ -114,17 +128,19 @@ function parseHostedGit(
 
   const parts = pattern.split('/');
   if (parts.length > 2) {
-    throw consumer.unexpected('Expected only 2 parts');
+    consumer.unexpected('Expected only 2 parts');
   }
 
-  const user = parts[0];
+  let user = parts[0];
   if (user === undefined) {
-    throw consumer.unexpected('We are missing a user!');
+    consumer.unexpected('We are missing a user!');
+    user = 'unknown';
   }
 
-  const repo = parts[1];
+  let repo = parts[1];
   if (repo === undefined) {
-    throw consumer.unexpected('We are missing a repo!');
+    consumer.unexpected('We are missing a repo!');
+    repo = 'unknown';
   }
 
   const incomplete: IncompleteHostedGitPattern = {
@@ -256,6 +272,75 @@ function parseTag(pattern: string): TagPattern {
   };
 }
 
+//# LINK
+
+const LINK_PREFIX = 'link:';
+
+type LinkPattern = {
+  type: 'link';
+  path: UnknownFilePath;
+};
+
+function parseLink(pattern: string): LinkPattern {
+  return {
+    type: 'link',
+    path: createUnknownFilePath(pattern.slice(LINK_PREFIX.length)),
+  };
+}
+
+//# NPM
+
+const NPM_PREFIX = 'npm:';
+
+type NpmPattern = {
+  type: 'npm';
+  name: string;
+  range: undefined | SemverRangeNode;
+};
+
+function parseNpm(pattern: string, consumer: Consumer): NpmPattern {
+  // Prune prefix
+  let offset = NPM_PREFIX.length;
+  pattern = pattern.slice(NPM_PREFIX.length);
+
+  // Split and verify count
+  const [name, rangeRaw, ...parts] = pattern.split('@');
+  if (parts.length > 0) {
+    consumer.unexpected('Too many @ signs');
+  }
+
+  // Increase offset passed name
+  offset += name.length;
+  offset++;
+
+  let range: undefined | SemverRangeNode;
+  if (rangeRaw !== undefined) {
+    range = tryParseWithOptionalOffsetPosition(
+      {
+        loose: false,
+        path: consumer.path,
+        input: rangeRaw,
+      },
+      {
+        getOffsetPosition: () => {
+          const pos = consumer.getLocation('inner-value').start;
+          return {
+            ...pos,
+            column: add(pos.column, offset),
+          };
+        },
+        parse: opts => parseSemverRange(opts),
+      },
+    );
+  }
+
+  return {
+    type: 'npm',
+    name,
+    range,
+  };
+}
+
 //#
 
 export function parseGitDependencyPattern(
@@ -294,6 +379,14 @@ export function parseDependencyPattern(
 
   if (pattern.startsWith('http://') || pattern.startsWith('https://')) {
     return parseHttpTarball(pattern, consumer);
+  }
+
+  if (pattern.startsWith(NPM_PREFIX)) {
+    return parseNpm(pattern, consumer);
+  }
+
+  if (pattern.startsWith(LINK_PREFIX)) {
+    return parseLink(pattern);
   }
 
   if (

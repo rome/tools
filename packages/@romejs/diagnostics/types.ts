@@ -16,6 +16,7 @@ export type DiagnosticFilter = {
   message?: string;
   filename?: string;
   start?: Position;
+  test?: (diagnostic: PartialDiagnostic) => boolean;
 };
 
 export type DiagnosticPointer = SourceLocation & {

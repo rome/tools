@@ -358,6 +358,7 @@ const createJSParser = createParser(
 
         this.state.diagnostics.push({
           filename: this.filename,
+          sourceType: this.sourceType,
           mtime: this.mtime,
           message: diag.message,
           advice: diag.advice,

@@ -30,6 +30,7 @@ export type WorkerCompileResult = CompileResult & {
 };
 
 export type WorkerPartialManifest = {
+  path: string;
   type: Manifest['type'];
 };
 

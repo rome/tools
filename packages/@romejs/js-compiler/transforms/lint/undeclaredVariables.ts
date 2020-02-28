@@ -36,6 +36,8 @@ const BROWSER_VARIABLES = [
   'performance',
 ];
 
+const JEST_VARIABLES = ['expect', 'it', 'jest', 'beforeEach', 'describe'];
+
 export default {
   name: 'undeclaredVariables',
   enter(path: Path): AnyNode {
@@ -52,6 +54,7 @@ export default {
       const isDefined =
         binding !== undefined ||
         scope.getRootScope().isGlobal(name) ||
+        JEST_VARIABLES.includes(name) ||
         BROWSER_VARIABLES.includes(name) ||
         NODE_VARIABLES.includes(name);
 

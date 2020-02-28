@@ -628,6 +628,38 @@ export default class Reporter {
     this.optionalSpacer();
   }
 
+  async steps(
+    callbacks: Array<{
+      message: string;
+      callback: () => Promise<void>;
+      clear?: boolean;
+    }>,
+  ) {
+    const total = callbacks.length;
+    let current = 1;
+    for (const {clear, message, callback} of callbacks) {
+      this.step(current, total, message);
+
+      if (clear) {
+        this.hasClearScreen = true;
+      }
+
+      await callback();
+      current++;
+
+      // If a step doesn't produce any output, or just progress bars that are cleared, we can safely remove the previous `step` message line
+      if (clear && this.hasClearScreen) {
+        for (const stream of this.getStreams(false)) {
+          if (stream.format === 'ansi') {
+            stream.write(escapes.cursorTo(0));
+            stream.write(escapes.cursorUp());
+            stream.write(escapes.eraseLine);
+          }
+        }
+      }
+    }
+  }
+
   step(current: number, total: number, msg: string) {
     if (msg.endsWith('?')) {
       msg = `${removeSuffix(msg, '?')}...?`;

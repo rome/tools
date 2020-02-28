@@ -44,6 +44,9 @@ export default class Bridge {
     this.hasHandshook = false;
     this.handshakeEvent = new Event({name: 'Bridge.handshake'});
     this.endEvent = new Event({name: 'Bridge.end', serial: true});
+    this.updatedListenersEvent = new Event({
+      name: 'Bridge.updatedListenersEvent',
+    });
 
     // A Set of event names that are being listened to on the other end
     // We track this to avoid sending over subscriptions that aren't needed
@@ -81,8 +84,10 @@ export default class Bridge {
   type: BridgeType;
 
   messageIdCounter: number;
-  listeners: Set<string>;
   events: Map<string, BridgeEvent<any, any>>;
+
+  listeners: Set<string>;
+  updatedListenersEvent: Event<Set<string>, void>;
 
   opts: BridgeOptions;
   errorTransports: Map<string, ErrorJSON>;
@@ -193,6 +198,7 @@ export default class Bridge {
 
   receivedSubscriptions(names: Array<string>) {
     this.listeners = new Set(names);
+    this.updatedListenersEvent.send(this.listeners);
   }
 
   init() {

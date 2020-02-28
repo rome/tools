@@ -104,6 +104,11 @@ function normalizeStringMap(
   }
 
   for (const [name, value] of consumer.asMap()) {
+    // In loose mode let's be really generous
+    if (loose && typeof value.asUnknown() !== 'string') {
+      continue;
+    }
+
     map.set(name, value.asString());
   }
 
@@ -195,6 +200,7 @@ function normalizeLicense(
   // Parse as a SPDX expression
   return tryParseWithOptionalOffsetPosition(
     {
+      loose,
       path: consumer.path,
       input: licenseId,
     },
@@ -312,6 +318,11 @@ function normalizePeople(
   // Some packages have a single maintainer object instead of an array
   if (loose && consumer.isObject()) {
     return [normalizePerson(consumer, loose)];
+  }
+
+  // If it's not an array then just leave it. Some people put a URL here.
+  if (loose && !Array.isArray(consumer.asUnknown())) {
+    return [];
   }
 
   const people: Array<ManifestPerson> = [];

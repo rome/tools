@@ -463,6 +463,7 @@ export function assertModuleNodeAllowed(parser: JSParser, node: AnyNode): void {
       message: `<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module`,
       advice: [
         // TODO this advice is pointless if you have syntax extensions enabled
+        // TODO point to the actual package.json for this file
         {
           type: 'log',
           category: 'info',
@@ -472,8 +473,7 @@ export function assertModuleNodeAllowed(parser: JSParser, node: AnyNode): void {
         {
           type: 'log',
           category: 'info',
-          message:
-            'Add <emphasis>"type": "module"</emphasis> to your <emphasis>package.json</emphasis>',
+          message: `Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="${parser.options.manifestPath}" />`,
         },
       ],
     });

@@ -125,6 +125,19 @@ export function parseTypeLiteralAnnotation(
             'Numeric literal type annotations cannot stand with a +, omit it instead',
         });
         parser.next();
+
+        if (!parser.match(tt.num)) {
+          parser.addDiagnostic({
+            message: `Unexpected token, expected "number"`,
+          });
+          parser.next();
+          return {
+            loc: parser.finishLoc(start),
+            type: 'NumericLiteralTypeAnnotation',
+            value: 0,
+          };
+        }
+
         return parseTypeLiteralAnnotation(parser);
       }
     }
