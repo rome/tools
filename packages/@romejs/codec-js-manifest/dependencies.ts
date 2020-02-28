@@ -53,7 +53,7 @@ export function stringifyDependencyPattern(pattern: DependencyPattern): string {
       }
     case 'npm':
       if (pattern.version === undefined) {
-        return pattern.name;
+        return `npm:${pattern.name}`;
       } else {
         return `npm:${pattern.name}@${pattern.version}`;
       }
