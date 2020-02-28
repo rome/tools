@@ -35,22 +35,22 @@ test('compareTwoStrings', t => {
 });
 
 test('orderBySimilarity', t => {
-    t.is(orderBySimilarity('french', ['quebec', '123', 'france', 'french']), [
+    t.looksLike(orderBySimilarity('french', ['quebec', '123', 'france', 'french']), [
         { target: 'french', rating: 1 },
         { target: 'france', rating: 0.4 },
         { target: 'quebec', rating: 0 },
         { target: '123', rating: 0 }
     ])
 
-    t.is(orderBySimilarity('iphone', ['ipod', 'iphone 5s', 'iphone x']), [
+    t.looksLike(orderBySimilarity('iphone', ['ipod', 'iphone 5s', 'iphone x']), [
         { target: 'iphone x', rating: 0.9090909090909091 },
         { target: 'iphone 5s', rating: 0.8333333333333334 },
         { target: 'ipod', rating: 0.25 }
     ])
 
-    t.is(orderBySimilarity('french', ['quebec', '123', 'france', 'french'], 0.5), [{ target: 'french', rating: 1 }])
+    t.looksLike(orderBySimilarity('french', ['quebec', '123', 'france', 'french'], 0.5), [{ target: 'french', rating: 1 }])
 
-    t.is(orderBySimilarity('iphone', ['ipod', 'iphone 5s', 'iphone x'], 0.5), [
+    t.looksLike(orderBySimilarity('iphone', ['ipod', 'iphone 5s', 'iphone x'], 0.5), [
         { target: 'iphone x', rating: 0.9090909090909091 },
         { target: 'iphone 5s', rating: 0.8333333333333334 }
     ])
