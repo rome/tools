@@ -24,8 +24,11 @@ export function addFunctionBindings(
   // Add type parameters
   scope.evaluate(head.typeParameters);
 
+  const params =
+    head.rest === undefined ? head.params : [...head.params, head.rest];
+
   // Add parameters
-  for (const param of head.params) {
+  for (const param of params) {
     for (const id of getBindingIdentifiers(param)) {
       // TODO maybe add a `param` binding type?
       scope.addBinding(
