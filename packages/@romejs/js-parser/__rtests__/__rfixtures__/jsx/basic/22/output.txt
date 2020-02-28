@@ -266,7 +266,7 @@ Program {
                 }
               }
               argument: JSXElement {
-                name: JSXReferenceIdentifier {
+                name: JSXIdentifier {
                   name: 'h1'
                   loc: Object {
                     filename: '..'
