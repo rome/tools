@@ -12,7 +12,7 @@ test('humanizeFileSize', t => {
     const testCases = [
         { input: 1, expected: '1B' },
         { input: 10, expected: '10B' },
-        { input: 10, expected: '100B' },
+        { input: 100, expected: '100B' },
 
         { input: 1000, expected: '1kB' },
         { input: 10000, expected: '10kB' },
@@ -20,7 +20,7 @@ test('humanizeFileSize', t => {
 
         { input: 1000000, expected: '1MB' },
         { input: 10000000, expected: '10MB' },
-        { input: 10000000, expected: '100MB' },
+        { input: 100000000, expected: '100MB' },
 
         { input: 1000000000, expected: '1GB' },
         { input: 10000000000, expected: '10GB' },
