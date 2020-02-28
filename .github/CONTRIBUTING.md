@@ -9,9 +9,9 @@ Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc
 Getting started with developing Rome is as easy as three commands. You will need Node v12 or above.
 
 ```bash
-$ git clone https://github.com/facebookexperimental/rome
-$ cd rome
- scripts/dev-rome --help
+git clone https://github.com/facebookexperimental/rome
+cd rome
+scripts/dev-rome --help
 ```
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
