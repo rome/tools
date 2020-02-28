@@ -310,10 +310,6 @@ export function normalizeProjectConfig(
       config.tests.enabled = testing.get('enabled').asBoolean();
     }
 
-    if (testing.has('folderName')) {
-      config.tests.folderName = testing.get('folderName').asString();
-    }
-
     if (testing.has('ignore')) {
       config.tests.ignore = arrayOfPatterns(testing.get('ignore'));
     }

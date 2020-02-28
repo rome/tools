@@ -70,8 +70,6 @@ export type ProjectConfigObjects = {
 
   tests: {
     enabled: boolean;
-    folderName: string;
-    mocksFolderName: string;
     ignore: PathPatterns;
   };
 
@@ -232,8 +230,6 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
 
   tests: {
     enabled: false,
-    folderName: '__rtests__',
-    mocksFolderName: '__rmocks__',
     ignore: [],
   },
 
