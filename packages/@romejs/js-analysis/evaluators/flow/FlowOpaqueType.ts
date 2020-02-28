@@ -10,5 +10,6 @@ import {FlowOpaqueType, flowOpaqueType, AnyNode} from '@romejs/js-ast';
 
 export default function FlowOpaqueType(node: AnyNode, scope: Scope) {
   node = flowOpaqueType.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

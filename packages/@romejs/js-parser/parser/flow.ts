@@ -2000,7 +2000,6 @@ export function parseAsyncArrowWithFlowTypeParameters(
 export function parseFlowObjectTypeInternalSlot(
   parser: JSParser,
   start: Position,
-  isStatic: boolean,
 ): FlowObjectTypeInternalSlot {
   // Note: both bracketL have already been consumed
   const id = parseFlowObjectPropertyKey(parser);

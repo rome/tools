@@ -14,5 +14,6 @@ import {
 
 export default function FlowTupleTypeAnnotation(node: AnyNode, scope: Scope) {
   node = flowTupleTypeAnnotation.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

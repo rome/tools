@@ -16,7 +16,7 @@ import {
 } from '@romejs/js-ast';
 import getBindingIdentifiers from './getBindingIdentifiers';
 import isVariableIdentifier from './isVariableIdentifier';
-import assertSingleOrMultipleNodes from './assertSingleOrMultipleNode';
+import assertSingleOrMultipleNodes from './assertSingleOrMultipleNodes';
 import {AnyVariableIdentifier} from '@romejs/js-ast/unions';
 
 // This methods allows either passing in Bindings that could be present within deep scopes,

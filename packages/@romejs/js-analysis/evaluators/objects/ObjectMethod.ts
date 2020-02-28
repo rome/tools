@@ -10,5 +10,6 @@ import {ObjectMethod, objectMethod, AnyNode} from '@romejs/js-ast';
 
 export default function ObjectMethod(node: AnyNode, scope: Scope) {
   node = objectMethod.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

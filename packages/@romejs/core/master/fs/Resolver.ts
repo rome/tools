@@ -29,7 +29,7 @@ function request(
 ): Promise<
   ResolverQueryResponseFetchError | {type: 'DOWNLOADED'; content: string}
 > {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     const req = https.get(url, res => {
       if (res.statusCode !== 200) {
         console.log('non-200 return');

@@ -322,7 +322,6 @@ function parseJSXOpeningElementAt(
 // Parses JSX closing tag starting after "</".
 function parseJSXClosingElementAt(
   parser: JSParser,
-  start: Position,
 ): undefined | JSXElement['name'] {
   if (parser.match(tt.jsxTagEnd)) {
     if (!parser.eat(tt.jsxTagEnd)) {
@@ -428,7 +427,7 @@ function parseJSXElementAt(
           const start = parser.getPosition();
           parser.next();
           if (parser.eat(tt.slash)) {
-            closingName = parseJSXClosingElementAt(parser, start);
+            closingName = parseJSXClosingElementAt(parser);
             closingNameLoc = {
               filename: parser.filename,
               start,

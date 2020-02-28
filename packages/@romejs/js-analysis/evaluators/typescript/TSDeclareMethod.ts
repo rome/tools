@@ -10,5 +10,6 @@ import {TSDeclareMethod, tsDeclareMethod, AnyNode} from '@romejs/js-ast';
 
 export default function TSDeclareMethod(node: AnyNode, scope: Scope) {
   node = tsDeclareMethod.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

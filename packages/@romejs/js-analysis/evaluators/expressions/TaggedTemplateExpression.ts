@@ -14,5 +14,6 @@ import {
 
 export default function TaggedTemplateExpression(node: AnyNode, scope: Scope) {
   node = taggedTemplateExpression.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

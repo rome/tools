@@ -17,5 +17,6 @@ export default function TemplateLiteralTypeAnnotation(
   scope: Scope,
 ) {
   node = templateLiteralTypeAnnotation.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

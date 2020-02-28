@@ -10,5 +10,6 @@ import {ImportSpecifier, importSpecifier, AnyNode} from '@romejs/js-ast';
 
 export default function ImportSpecifier(node: AnyNode, scope: Scope) {
   node = importSpecifier.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

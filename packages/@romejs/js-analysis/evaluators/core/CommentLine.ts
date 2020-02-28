@@ -10,5 +10,6 @@ import {CommentLine, commentLine, AnyNode} from '@romejs/js-ast';
 
 export default function CommentLine(node: AnyNode, scope: Scope) {
   node = commentLine.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

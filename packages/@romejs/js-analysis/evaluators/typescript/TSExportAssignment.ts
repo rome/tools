@@ -10,5 +10,6 @@ import {TSExportAssignment, tsExportAssignment, AnyNode} from '@romejs/js-ast';
 
 export default function TSExportAssignment(node: AnyNode, scope: Scope) {
   node = tsExportAssignment.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

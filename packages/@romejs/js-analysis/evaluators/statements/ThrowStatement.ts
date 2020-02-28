@@ -10,5 +10,6 @@ import {ThrowStatement, throwStatement, AnyNode} from '@romejs/js-ast';
 
 export default function ThrowStatement(node: AnyNode, scope: Scope) {
   node = throwStatement.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

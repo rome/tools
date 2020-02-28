@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import messages from '@romejs/messages';
+import {createMessageFactory} from '@romejs/messages';
 
-export default messages({
+export default createMessageFactory({
   SINGLE_QUOTE_USAGE: 'You can only use double quoted strings',
   TRAILING_COMMA_VALUE: 'Trailing comma is only allowed after a value',
   UNCLOSED_STRING: 'Unclosed string',

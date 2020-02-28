@@ -10,5 +10,6 @@ import {ClassPropertyMeta, classPropertyMeta, AnyNode} from '@romejs/js-ast';
 
 export default function ClassPropertyMeta(node: AnyNode, scope: Scope) {
   node = classPropertyMeta.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

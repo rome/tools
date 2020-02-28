@@ -43,7 +43,6 @@ import {
   ConstTSModifier,
   TSImportType,
   AnyTSEntityName,
-  TSQualifiedName,
   TSTypeReference,
   TSThisType,
   TSTypePredicate,
@@ -328,9 +327,7 @@ function parseTSEntityName(
   parser: JSParser,
   allowReservedWords: boolean,
 ): AnyTSEntityName {
-  let entity: TSQualifiedName | AnyTSEntityName = parseReferenceIdentifier(
-    parser,
-  );
+  let entity: AnyTSEntityName = parseReferenceIdentifier(parser);
   while (parser.eat(tt.dot)) {
     const start: Position = parser.getLoc(entity).start;
     const right = parseIdentifier(parser, allowReservedWords);
@@ -1376,13 +1373,16 @@ export function parseTSTypeAnnotation(
     parser.expect(tt.colon);
   }
 
-  const typeAnnotation = parseTSType(parser);
+  const typeAnnotation = parseTSType(parser, start);
   parser.popScope('TYPE');
   return typeAnnotation;
 }
 
 /** Be sure to be in a type context before calling parser. using `tsInType`. */
-function parseTSType(parser: JSParser): AnyTSPrimary {
+function parseTSType(
+  parser: JSParser,
+  start: Position = parser.getPosition(),
+): AnyTSPrimary {
   parser.pushScope('TYPE', true);
 
   const type = parseTSNonConditionalType(parser);
@@ -1391,7 +1391,6 @@ function parseTSType(parser: JSParser): AnyTSPrimary {
     return type;
   }
 
-  const start = parser.getLoc(type).start;
   const checkType = type;
 
   const extendsType = parseTSNonConditionalType(parser);
@@ -1720,6 +1719,7 @@ export function parseTSImportEqualsDeclaration(
     type: 'TSImportEqualsDeclaration',
     id,
     moduleReference,
+    isExport,
   };
 }
 

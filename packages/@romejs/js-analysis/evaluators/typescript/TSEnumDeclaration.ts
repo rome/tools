@@ -10,5 +10,6 @@ import {TSEnumDeclaration, tsEnumDeclaration, AnyNode} from '@romejs/js-ast';
 
 export default function TSEnumDeclaration(node: AnyNode, scope: Scope) {
   node = tsEnumDeclaration.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

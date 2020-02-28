@@ -80,6 +80,7 @@ export default class Worker {
     if (opts.globalErrorHandlers) {
       setupGlobalErrorHandlers(err => {
         // TODO
+        err;
       });
     }
   }

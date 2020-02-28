@@ -6,7 +6,6 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {Consumer} from '@romejs/consume';
 import {createMasterCommand} from '../../commands';
 import Bundler from '../bundler/Bundler';
 import {commandCategories} from '../../commands';
@@ -18,7 +17,6 @@ export default createMasterCommand({
 
   async default(
     req: MasterRequest,
-    flagConsumer: Consumer,
   ): Promise<{
     content: string;
     map: string;

@@ -17,7 +17,7 @@ import {MasterBridge, SOCKET_PATH, CLI_SOCKET_PATH} from '@romejs/core';
 import fork from '../common/utils/fork';
 import {createBridgeFromLocal, createBridgeFromSocket} from '@romejs/events';
 import {ReporterDerivedStreams} from '@romejs/cli-reporter';
-import format from '@romejs/pretty-format';
+import prettyFormat from '@romejs/pretty-format';
 import {VERSION} from '../common/constants';
 import {TarWriter} from '@romejs/codec-tar';
 import {Trace, Profiler, Profile, TraceEvent} from '@romejs/v8';
@@ -312,7 +312,7 @@ export default class Client {
 
       function indent(val: unknown): string {
         const str =
-          typeof val === 'string' ? val : format(val, {compact: true});
+          typeof val === 'string' ? val : prettyFormat(val, {compact: true});
         const lines = str.trim().split('\n');
         const indented = lines.join('\n  ');
         return '\n  ' + indented;
@@ -335,7 +335,7 @@ export default class Client {
         if (status.type === 'SUCCESS') {
           writer.append(
             {name: 'status.txt'},
-            format(status.data, {compact: true}) + '\n',
+            prettyFormat(status.data, {compact: true}) + '\n',
           );
         }
       }

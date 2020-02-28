@@ -10,5 +10,6 @@ import {TSQualifiedName, tsQualifiedName, AnyNode} from '@romejs/js-ast';
 
 export default function TSQualifiedName(node: AnyNode, scope: Scope) {
   node = tsQualifiedName.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

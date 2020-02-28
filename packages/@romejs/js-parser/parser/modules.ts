@@ -819,8 +819,6 @@ function parseImportSpecifiers(
 
   // import defaultObj, { x, y as z } from '...'';
   if (shouldParseDefaultImport(parser, importKind)) {
-    const start = parser.getPosition();
-
     const meta = parseImportSpecifierLocal(
       parser,
       importKind,
@@ -839,7 +837,6 @@ function parseImportSpecifiers(
   }
 
   if (parser.match(tt.star)) {
-    const start = parser.getPosition();
     parser.next();
     parser.expectContextual('as');
 

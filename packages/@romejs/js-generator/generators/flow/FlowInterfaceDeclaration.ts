@@ -15,7 +15,6 @@ import {
 export default function FlowInterfaceDeclaration(
   generator: Generator,
   node: AnyNode,
-  parent: AnyNode,
 ) {
   node =
     node.type === 'FlowDeclareInterface'

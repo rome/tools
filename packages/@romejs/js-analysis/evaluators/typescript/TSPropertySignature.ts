@@ -14,5 +14,6 @@ import {
 
 export default function TSPropertySignature(node: AnyNode, scope: Scope) {
   node = tsPropertySignature.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

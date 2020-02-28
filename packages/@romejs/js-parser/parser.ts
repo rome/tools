@@ -94,7 +94,7 @@ const createJSParser = createParser(
   (ParserCore, ParserWithRequiredPath) =>
     class JSParser extends ParserWithRequiredPath<any, State> {
       constructor(options: JSParserOptions) {
-        const state = createInitialState(options);
+        const state = createInitialState();
 
         const parserOpts: ParserOptionsWithRequiredPath = {
           path: options.path,

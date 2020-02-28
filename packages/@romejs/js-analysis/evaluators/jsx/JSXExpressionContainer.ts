@@ -14,5 +14,6 @@ import {
 
 export default function JSXExpressionContainer(node: AnyNode, scope: Scope) {
   node = jsxExpressionContainer.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

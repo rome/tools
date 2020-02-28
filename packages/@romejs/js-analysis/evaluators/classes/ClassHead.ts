@@ -10,5 +10,6 @@ import {ClassHead, classHead, AnyNode} from '@romejs/js-ast';
 
 export default function ClassHead(node: AnyNode, scope: Scope) {
   node = classHead.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

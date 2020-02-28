@@ -19,6 +19,7 @@ type Flags = {
 
 function removeLoc<T extends {loc?: SourceLocation}>(obj: T): Omit<T, 'loc'> {
   const {loc, ...locless} = obj;
+  loc;
   return locless;
 }
 

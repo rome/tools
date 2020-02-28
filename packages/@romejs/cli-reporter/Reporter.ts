@@ -19,7 +19,7 @@ import {stripAnsi, splitAnsiLines} from '@romejs/string-ansi';
 import Progress, {ProgressOptions} from './Progress';
 import {interpolate} from './util';
 import {formatAnsi, rightPad, escapes, hasAnsiColor} from '@romejs/string-ansi';
-import format from '@romejs/pretty-format';
+import prettyFormat from '@romejs/pretty-format';
 import stream = require('stream');
 import {CWD_PATH} from '@romejs/path';
 import {Event} from '@romejs/events';
@@ -514,7 +514,7 @@ export default class Reporter {
       let formatted = value;
 
       if (typeof formatted !== 'number' && typeof formatted !== 'string') {
-        formatted = format(formatted, {color: stream.format === 'ansi'});
+        formatted = prettyFormat(formatted, {color: stream.format === 'ansi'});
       }
 
       this.logOneNoMarkup(stream, String(formatted));

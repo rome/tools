@@ -10,5 +10,6 @@ import {PatternMeta, patternMeta, AnyNode} from '@romejs/js-ast';
 
 export default function PatternMeta(node: AnyNode, scope: Scope) {
   node = patternMeta.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

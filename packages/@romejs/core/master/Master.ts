@@ -16,7 +16,6 @@ import {
   INTERNAL_ERROR_LOG_ADVICE,
   DiagnosticOrigin,
 } from '@romejs/diagnostics';
-import {Stats} from './fs/MemoryFileSystem';
 import {MasterCommand} from '../commands';
 import {
   DiagnosticsPrinter,
@@ -160,8 +159,8 @@ export default class Master {
       return this.handleFileDelete(path);
     });
 
-    this.memoryFs.changedFileEvent.subscribe(({path, oldStats, newStats}) => {
-      return this.handleFileChange(path, oldStats, newStats);
+    this.memoryFs.changedFileEvent.subscribe(({path}) => {
+      return this.handleFileChange(path);
     });
 
     this.warnedCacheClients = new WeakSet();
@@ -515,11 +514,7 @@ export default class Master {
     this.fileChangeEvent.send(path);
   }
 
-  async handleFileChange(
-    path: AbsoluteFilePath,
-    oldStats: undefined | Stats,
-    newStats: Stats,
-  ) {
+  async handleFileChange(path: AbsoluteFilePath) {
     this.logger.info(`[Master] File change:`, path.join());
     this.fileChangeEvent.send(path);
   }
@@ -711,7 +706,7 @@ export default class Master {
         context: {
           category: 'cli-flags',
 
-          getOriginalValue: (keys: ConsumePath) => {
+          getOriginalValue: () => {
             return undefined;
           },
 

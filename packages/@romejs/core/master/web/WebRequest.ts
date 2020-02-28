@@ -111,6 +111,7 @@ export default class WebRequest {
   async dispatchWithBody(body: string): Promise<void> {
     const {res} = this;
     const pathname = this.url.path.asString();
+    body;
 
     switch (pathname) {
       case '/favicon.ico':
@@ -178,6 +179,8 @@ export default class WebRequest {
     pathname: string,
     project: ProjectDefinition,
   ): Promise<boolean> {
+    project;
+
     const possibleStaticPath = await this.server.pathnameToAbsolutePath(
       pathname,
     );

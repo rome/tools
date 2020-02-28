@@ -14,5 +14,6 @@ import {
 
 export default function FlowClassImplements(node: AnyNode, scope: Scope) {
   node = flowClassImplements.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

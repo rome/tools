@@ -10,5 +10,6 @@ import {MetaProperty, metaProperty, AnyNode} from '@romejs/js-ast';
 
 export default function MetaProperty(node: AnyNode, scope: Scope) {
   node = metaProperty.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

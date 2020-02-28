@@ -10,5 +10,6 @@ import {TSTypeReference, tsTypeReference, AnyNode} from '@romejs/js-ast';
 
 export default function TSTypeReference(node: AnyNode, scope: Scope) {
   node = tsTypeReference.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

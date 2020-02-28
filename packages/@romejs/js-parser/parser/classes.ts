@@ -659,22 +659,24 @@ function parseClassMethod(
 
   const typeParameters = maybeParseTypeParameters(parser);
 
-  const method = {
-    ...parseMethod(parser, {
-      kind,
-      isClass: true,
-      isGenerator,
-      isAsync,
-      isConstructor,
-    }),
+  const {head, body} = parseMethod(parser, {
+    kind,
+    isClass: true,
+    isGenerator,
+    isAsync,
+    isConstructor,
+  });
+
+  const method: Omit<ClassMethod, 'type' | 'body'> = {
+    head: {
+      ...head,
+      typeParameters,
+    },
     loc: parser.finishLoc(start),
     kind,
     key,
     meta,
-    typeParameters,
   };
-
-  const {body} = method;
 
   if (body === undefined) {
     return {
@@ -693,7 +695,6 @@ function parseClassMethod(
 
     return {
       ...method,
-      key,
       body,
       type: 'ClassMethod',
     };

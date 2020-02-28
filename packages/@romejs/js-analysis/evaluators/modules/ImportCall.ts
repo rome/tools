@@ -10,5 +10,6 @@ import {ImportCall, importCall, AnyNode} from '@romejs/js-ast';
 
 export default function ImportCall(node: AnyNode, scope: Scope) {
   node = importCall.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

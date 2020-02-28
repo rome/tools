@@ -103,7 +103,7 @@ export default class BundleRequest {
         for (const filename of files) {
           const progressText = `<filelink target="${filename.join()}" />`;
           compilingSpinner.pushText(progressText);
-          await this.compileJS(filename, false);
+          await this.compileJS(filename);
           compilingSpinner.tick();
           compilingSpinner.popText(progressText);
         }
@@ -112,10 +112,7 @@ export default class BundleRequest {
     compilingSpinner.end();
   }
 
-  async compileJS(
-    path: AbsoluteFilePath,
-    hmr: boolean,
-  ): Promise<WorkerCompileResult> {
+  async compileJS(path: AbsoluteFilePath): Promise<WorkerCompileResult> {
     const {graph} = this.bundler;
 
     const source = path.join();

@@ -10,5 +10,6 @@ import {TSImportType, tsImportType, AnyNode} from '@romejs/js-ast';
 
 export default function TSImportType(node: AnyNode, scope: Scope) {
   node = tsImportType.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

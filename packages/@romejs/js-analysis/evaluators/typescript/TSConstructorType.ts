@@ -10,5 +10,6 @@ import {TSConstructorType, tsConstructorType, AnyNode} from '@romejs/js-ast';
 
 export default function TSConstructorType(node: AnyNode, scope: Scope) {
   node = tsConstructorType.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

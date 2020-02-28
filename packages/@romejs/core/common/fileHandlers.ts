@@ -136,7 +136,7 @@ const textHandler: ExtensionHandler = {
     };
   },
 
-  async toJavaScript({file, worker}) {
+  async toJavaScript({file}) {
     const src = await readFileText(file.real);
     const serial = JSON.stringify(src);
     return {
@@ -155,7 +155,7 @@ const assetHandler: ExtensionHandler = {
   canHaveScale: true,
   isAsset: true,
 
-  async toJavaScript({file, worker}) {
+  async toJavaScript() {
     // This exists just so analyzeDependencies has something to look at
     // When bundling we'll have custom logic in the compiler to handle assets and inject the correct string
     return {

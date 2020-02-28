@@ -139,8 +139,7 @@ export function toAssignmentPattern(
           continue;
         }
 
-        const isLast = index === node.properties.length - 1;
-        props.push(toAssignmentObjectProperty(parser, prop, isLast));
+        props.push(toAssignmentObjectProperty(parser, prop));
       }
       return {
         type: 'AssignmentObjectPattern',
@@ -360,7 +359,6 @@ export function toBindingPattern(
 export function toAssignmentObjectProperty(
   parser: JSParser,
   prop: AnyNode,
-  isLast: boolean,
 ): AssignmentObjectPatternProperty {
   switch (prop.type) {
     case 'ObjectMethod': {

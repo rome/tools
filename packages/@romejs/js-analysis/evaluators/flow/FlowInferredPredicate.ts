@@ -14,5 +14,6 @@ import {
 
 export default function FlowInferredPredicate(node: AnyNode, scope: Scope) {
   node = flowInferredPredicate.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

@@ -10,5 +10,6 @@ import {DoExpression, doExpression, AnyNode} from '@romejs/js-ast';
 
 export default function DoExpression(node: AnyNode, scope: Scope) {
   node = doExpression.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

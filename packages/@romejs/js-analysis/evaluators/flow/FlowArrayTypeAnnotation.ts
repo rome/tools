@@ -14,5 +14,6 @@ import {
 
 export default function FlowArrayTypeAnnotation(node: AnyNode, scope: Scope) {
   node = flowArrayTypeAnnotation.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

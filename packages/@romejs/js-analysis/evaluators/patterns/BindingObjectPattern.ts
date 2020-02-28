@@ -14,5 +14,6 @@ import {
 
 export default function BindingObjectPattern(node: AnyNode, scope: Scope) {
   node = bindingObjectPattern.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

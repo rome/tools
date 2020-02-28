@@ -45,7 +45,7 @@ export default class Profiler {
       return Promise.reject(new Error('No current profiler session'));
     } else {
       return new Promise((resolve, reject) => {
-        session.post(method, params, (err, params) => {
+        session.post(method, params, err => {
           if (err === null) {
             resolve();
           } else {

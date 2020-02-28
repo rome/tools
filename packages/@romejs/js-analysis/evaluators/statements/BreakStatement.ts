@@ -10,5 +10,6 @@ import {BreakStatement, breakStatement, AnyNode} from '@romejs/js-ast';
 
 export default function BreakStatement(node: AnyNode, scope: Scope) {
   node = breakStatement.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

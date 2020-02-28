@@ -10,5 +10,6 @@ import {TryStatement, tryStatement, AnyNode} from '@romejs/js-ast';
 
 export default function TryStatement(node: AnyNode, scope: Scope) {
   node = tryStatement.assert(node);
+  scope;
   throw new Error('unimplemented');
 }
