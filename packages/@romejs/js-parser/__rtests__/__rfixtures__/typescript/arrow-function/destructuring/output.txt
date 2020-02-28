@@ -184,7 +184,7 @@ Program {
         }
       }
       expression: ReferenceIdentifier {
-        name: 'INVALID_PLACHOLDER'
+        name: 'INVALID_PLACEHOLDER'
         loc: Object {
           filename: '..'
           end: Object {
@@ -215,7 +215,7 @@ Program {
         }
       }
       expression: ReferenceIdentifier {
-        name: 'INVALID_PLACHOLDER'
+        name: 'INVALID_PLACEHOLDER'
         loc: Object {
           filename: '..'
           end: Object {
@@ -246,7 +246,7 @@ Program {
         }
       }
       expression: ReferenceIdentifier {
-        name: 'INVALID_PLACHOLDER'
+        name: 'INVALID_PLACEHOLDER'
         loc: Object {
           filename: '..'
           end: Object {

@@ -570,7 +570,7 @@ Program {
           }
         }
         alternate: ReferenceIdentifier {
-          name: 'INVALID_PLACHOLDER'
+          name: 'INVALID_PLACEHOLDER'
           loc: Object {
             filename: '..'
             end: Object {
@@ -1059,7 +1059,7 @@ Program {
           }
         }
         alternate: ReferenceIdentifier {
-          name: 'INVALID_PLACHOLDER'
+          name: 'INVALID_PLACEHOLDER'
           loc: Object {
             filename: '..'
             end: Object {
@@ -1765,7 +1765,7 @@ Program {
           }
         }
         alternate: ReferenceIdentifier {
-          name: 'INVALID_PLACHOLDER'
+          name: 'INVALID_PLACEHOLDER'
           loc: Object {
             filename: '..'
             end: Object {
@@ -2728,7 +2728,7 @@ Program {
           }
         }
         alternate: ReferenceIdentifier {
-          name: 'INVALID_PLACHOLDER'
+          name: 'INVALID_PLACEHOLDER'
           loc: Object {
             filename: '..'
             end: Object {
@@ -3012,7 +3012,7 @@ Program {
           }
         }
         alternate: ReferenceIdentifier {
-          name: 'INVALID_PLACHOLDER'
+          name: 'INVALID_PLACEHOLDER'
           loc: Object {
             filename: '..'
             end: Object {
@@ -3296,7 +3296,7 @@ Program {
           }
         }
         alternate: ReferenceIdentifier {
-          name: 'INVALID_PLACHOLDER'
+          name: 'INVALID_PLACEHOLDER'
           loc: Object {
             filename: '..'
             end: Object {
@@ -3378,7 +3378,7 @@ Program {
             }
             params: Array [
               BindingIdentifier {
-                name: 'INVALID_PLACHOLDER'
+                name: 'INVALID_PLACEHOLDER'
                 loc: Object {
                   filename: '..'
                   end: Object {
@@ -3459,7 +3459,7 @@ Program {
           }
         }
         alternate: ReferenceIdentifier {
-          name: 'INVALID_PLACHOLDER'
+          name: 'INVALID_PLACEHOLDER'
           loc: Object {
             filename: '..'
             end: Object {
@@ -3587,7 +3587,7 @@ Program {
               }
               params: Array [
                 BindingIdentifier {
-                  name: 'INVALID_PLACHOLDER'
+                  name: 'INVALID_PLACEHOLDER'
                   loc: Object {
                     filename: '..'
                     end: Object {
@@ -3669,7 +3669,7 @@ Program {
           }
         }
         alternate: ReferenceIdentifier {
-          name: 'INVALID_PLACHOLDER'
+          name: 'INVALID_PLACEHOLDER'
           loc: Object {
             filename: '..'
             end: Object {
@@ -3835,7 +3835,7 @@ Program {
               }
               params: Array [
                 BindingIdentifier {
-                  name: 'INVALID_PLACHOLDER'
+                  name: 'INVALID_PLACEHOLDER'
                   loc: Object {
                     filename: '..'
                     end: Object {
@@ -4176,7 +4176,7 @@ Program {
             }
           }
           alternate: ReferenceIdentifier {
-            name: 'INVALID_PLACHOLDER'
+            name: 'INVALID_PLACEHOLDER'
             loc: Object {
               filename: '..'
               end: Object {
@@ -4242,7 +4242,7 @@ Program {
               }
               params: Array [
                 BindingIdentifier {
-                  name: 'INVALID_PLACHOLDER'
+                  name: 'INVALID_PLACEHOLDER'
                   loc: Object {
                     filename: '..'
                     end: Object {
@@ -4342,7 +4342,7 @@ Program {
                 }
                 params: Array [
                   BindingIdentifier {
-                    name: 'INVALID_PLACHOLDER'
+                    name: 'INVALID_PLACEHOLDER'
                     loc: Object {
                       filename: '..'
                       end: Object {
@@ -4425,7 +4425,7 @@ Program {
           }
         }
         alternate: ReferenceIdentifier {
-          name: 'INVALID_PLACHOLDER'
+          name: 'INVALID_PLACEHOLDER'
           loc: Object {
             filename: '..'
             end: Object {
@@ -4749,7 +4749,7 @@ Program {
           }
         }
         alternate: ReferenceIdentifier {
-          name: 'INVALID_PLACHOLDER'
+          name: 'INVALID_PLACEHOLDER'
           loc: Object {
             filename: '..'
             end: Object {
@@ -4830,7 +4830,7 @@ Program {
             }
             params: Array [
               BindingIdentifier {
-                name: 'INVALID_PLACHOLDER'
+                name: 'INVALID_PLACEHOLDER'
                 loc: Object {
                   filename: '..'
                   end: Object {
@@ -4911,7 +4911,7 @@ Program {
           }
         }
         alternate: ReferenceIdentifier {
-          name: 'INVALID_PLACHOLDER'
+          name: 'INVALID_PLACEHOLDER'
           loc: Object {
             filename: '..'
             end: Object {
@@ -5045,7 +5045,7 @@ Program {
               }
               params: Array [
                 BindingIdentifier {
-                  name: 'INVALID_PLACHOLDER'
+                  name: 'INVALID_PLACEHOLDER'
                   loc: Object {
                     filename: '..'
                     end: Object {
@@ -5173,7 +5173,7 @@ Program {
                 }
               }
               alternate: ReferenceIdentifier {
-                name: 'INVALID_PLACHOLDER'
+                name: 'INVALID_PLACEHOLDER'
                 loc: Object {
                   filename: '..'
                   end: Object {
@@ -5322,7 +5322,7 @@ Program {
                     }
                     params: Array [
                       BindingIdentifier {
-                        name: 'INVALID_PLACHOLDER'
+                        name: 'INVALID_PLACEHOLDER'
                         loc: Object {
                           filename: '..'
                           end: Object {

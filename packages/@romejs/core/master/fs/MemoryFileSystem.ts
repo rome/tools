@@ -30,6 +30,10 @@ import {
   getFileHandler,
   getFileHandlerExtensions,
 } from '../../common/fileHandlers';
+import {
+  TEST_FOLDER_NAME,
+  MOCKS_FOLDER_NAME,
+} from '@romejs/core/common/constants';
 
 const DEFAULT_DENYLIST = ['.hg', '.git'];
 
@@ -716,8 +720,8 @@ export default class MemoryFileSystem {
     const project = this.master.projectManager.findProjectExisting(path);
     if (project !== undefined) {
       if (
-        parts.includes(project.config.tests.folderName) ||
-        parts.includes(project.config.tests.mocksFolderName)
+        parts.includes(TEST_FOLDER_NAME) ||
+        parts.includes(MOCKS_FOLDER_NAME)
       ) {
         return false;
       }

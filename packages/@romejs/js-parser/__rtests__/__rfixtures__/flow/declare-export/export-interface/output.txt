@@ -73,7 +73,6 @@ Program {
         body: Array [
           FlowDeclareExportNamed {
             exportKind: 'type'
-            source: undefined
             specifiers: undefined
             loc: Object {
               filename: '..'

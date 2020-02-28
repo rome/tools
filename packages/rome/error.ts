@@ -33,7 +33,7 @@ export function throwDiagnostics(diagnostics: PartialDiagnostics) {
     printDiagnosticsToString(diagnostics, {}, 'none'),
   );
   err.getHTML = () => printDiagnosticsToString(diagnostics, {}, 'none');
-  err.getHTML = () => printDiagnosticsToString(diagnostics, {}, 'ansi');
+  err.getAnsi = () => printDiagnosticsToString(diagnostics, {}, 'ansi');
   throw err;
 }
 

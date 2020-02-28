@@ -22,10 +22,9 @@ Program {
     }
   }
   body: Array [
-    ExportNamedDeclaration {
+    ExportLocalDeclaration {
       declaration: undefined
       exportKind: 'value'
-      source: undefined
       specifiers: Array []
       loc: Object {
         filename: '..'

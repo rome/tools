@@ -289,12 +289,6 @@ export function normalizeProjectConfig(
     if (lint.has('globals')) {
       config.lint.globals = arrayOfStrings(lint.get('globals'));
     }
-
-    if (lint.has('legacyEslintInterop')) {
-      config.lint.legacyEslintInterop = lint
-        .get('legacyBabelInterop')
-        .asBoolean();
-    }
   }
 
   const format = consumer.get('format');
@@ -308,10 +302,6 @@ export function normalizeProjectConfig(
   if (testing.exists()) {
     if (testing.has('enabled')) {
       config.tests.enabled = testing.get('enabled').asBoolean();
-    }
-
-    if (testing.has('folderName')) {
-      config.tests.folderName = testing.get('folderName').asString();
     }
 
     if (testing.has('ignore')) {
@@ -359,11 +349,6 @@ export function normalizeProjectConfig(
 
   const compiler = consumer.get('compiler');
   if (compiler.exists()) {
-    if (compiler.has('legacyBabelInterop')) {
-      config.compiler.legacyBabelInterop = compiler
-        .get('legacyBabelInterop')
-        .asBoolean();
-    }
   }
 
   const targets = consumer.get('targets');

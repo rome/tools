@@ -133,6 +133,9 @@ export function stripMarkupTags(
       case 'duration':
         return formatApprox(attributes, humanizeTime(Number(value), true));
 
+      case 'filesize':
+        return humanizeFileSize(Number(value));
+
       default:
         return value;
     }

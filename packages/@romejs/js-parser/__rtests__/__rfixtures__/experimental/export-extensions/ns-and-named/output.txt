@@ -22,7 +22,7 @@ Program {
     }
   }
   body: Array [
-    ExportNamedDeclaration {
+    ExportExternalDeclaration {
       exportKind: undefined
       loc: Object {
         filename: '..'
@@ -85,7 +85,7 @@ Program {
             }
           }
         }
-        ExportSpecifier {
+        ExportExternalSpecifier {
           loc: Object {
             filename: '..'
             end: Object {
@@ -115,7 +115,7 @@ Program {
               }
             }
           }
-          local: ReferenceIdentifier {
+          local: Identifier {
             name: 'bar'
             loc: Object {
               filename: '..'

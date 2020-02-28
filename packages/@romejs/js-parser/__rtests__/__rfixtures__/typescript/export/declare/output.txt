@@ -41,9 +41,8 @@ Program {
     }
   ]
   body: Array [
-    ExportNamedDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -156,9 +155,8 @@ Program {
         }
       }
     }
-    ExportNamedDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -293,7 +291,7 @@ Program {
                 }
               }
               expression: ReferenceIdentifier {
-                name: 'INVALID_PLACHOLDER'
+                name: 'INVALID_PLACEHOLDER'
                 loc: Object {
                   filename: '..'
                   end: Object {
@@ -324,7 +322,7 @@ Program {
                 }
               }
               expression: ReferenceIdentifier {
-                name: 'INVALID_PLACHOLDER'
+                name: 'INVALID_PLACEHOLDER'
                 loc: Object {
                   filename: '..'
                   end: Object {
@@ -371,7 +369,7 @@ Program {
                   }
                 }
                 argument: ReferenceIdentifier {
-                  name: 'INVALID_PLACHOLDER'
+                  name: 'INVALID_PLACEHOLDER'
                   loc: Object {
                     filename: '..'
                     end: Object {
@@ -388,9 +386,8 @@ Program {
                 }
               }
             }
-            ExportNamedDeclaration {
+            ExportLocalDeclaration {
               exportKind: 'value'
-              source: undefined
               specifiers: undefined
               loc: Object {
                 filename: '..'
@@ -458,9 +455,8 @@ Program {
                 }
               }
             }
-            ExportNamedDeclaration {
+            ExportLocalDeclaration {
               exportKind: 'value'
-              source: undefined
               specifiers: undefined
               loc: Object {
                 filename: '..'
@@ -526,9 +522,8 @@ Program {
                 }
               }
             }
-            ExportNamedDeclaration {
+            ExportLocalDeclaration {
               exportKind: 'value'
-              source: undefined
               specifiers: undefined
               loc: Object {
                 filename: '..'
@@ -592,9 +587,8 @@ Program {
                 }
               }
             }
-            ExportNamedDeclaration {
+            ExportLocalDeclaration {
               exportKind: 'value'
-              source: undefined
               specifiers: undefined
               loc: Object {
                 filename: '..'
@@ -658,9 +652,8 @@ Program {
                 }
               }
             }
-            ExportNamedDeclaration {
+            ExportLocalDeclaration {
               exportKind: 'value'
-              source: undefined
               specifiers: undefined
               loc: Object {
                 filename: '..'
@@ -724,9 +717,8 @@ Program {
                 }
               }
             }
-            ExportNamedDeclaration {
+            ExportLocalDeclaration {
               exportKind: 'value'
-              source: undefined
               specifiers: undefined
               loc: Object {
                 filename: '..'

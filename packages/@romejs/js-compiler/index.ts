@@ -28,7 +28,7 @@ export * from './scope/bindings';
 
 // utils
 export * from './constants';
-export {getPrefixedNamespace as getPrefixedBundleNamespace} from './plugins/compileForBundle/_utils';
+export {getPrefixedNamespace as getPrefixedBundleNamespace} from './transforms/compileForBundle/_utils';
 export {default as createHook} from './api/createHook';
 
 // types

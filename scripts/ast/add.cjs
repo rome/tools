@@ -93,4 +93,4 @@ export default function ${nodeType}(node: AnyNode) {
  `;
 write(analysisDefFile, analysisContent);
 
-require('./update-ast-types.js');
+require('./update.cjs');

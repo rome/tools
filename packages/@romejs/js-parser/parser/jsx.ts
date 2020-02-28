@@ -28,6 +28,12 @@ import {
   parseStringLiteral,
 } from './index';
 import {PartialDiagnosticAdvice} from '@romejs/diagnostics';
+import {isValidIdentifierName} from '@romejs/js-ast-utils';
+
+// Indicates whether we should create a JSXIdentifier or a JSXReferenceIdentifier
+function isHTMLTagName(tagName: string): boolean {
+  return /^[a-z]|-/.test(tagName) && isValidIdentifierName(tagName);
+}
 
 // Transforms JSX element name to string.
 function getQualifiedJSXName(node: JSXElement['name'] | JSXIdentifier): string {
@@ -102,7 +108,10 @@ function parseJSXElementName(parser: JSParser): JSXElement['name'] {
   const namespacedName = parseJSXNamespacedName(parser);
 
   let node: JSXElement['name'];
-  if (namespacedName.type === 'JSXIdentifier') {
+  if (
+    namespacedName.type === 'JSXIdentifier' &&
+    !isHTMLTagName(namespacedName.name)
+  ) {
     node = {
       ...namespacedName,
       type: 'JSXReferenceIdentifier',

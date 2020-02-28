@@ -449,7 +449,7 @@ export function assertModuleNodeAllowed(parser: JSParser, node: AnyNode): void {
   if (
     (node.type === 'ImportDeclaration' &&
       (node.importKind === 'type' || node.importKind === 'typeof')) ||
-    (node.type === 'ExportNamedDeclaration' && node.exportKind === 'type') ||
+    (node.type === 'ExportLocalDeclaration' && node.exportKind === 'type') ||
     (node.type === 'ExportAllDeclaration' && node.exportKind === 'type')
   ) {
     // Allow Flow type imports and exports in all conditions because

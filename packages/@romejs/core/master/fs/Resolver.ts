@@ -22,6 +22,7 @@ import {DiagnosticPointer, PartialDiagnosticAdvice} from '@romejs/diagnostics';
 import {IMPLICIT_JS_EXTENSIONS} from '../../common/fileHandlers';
 import {writeFile} from '@romejs/fs';
 import https = require('https');
+import {MOCKS_FOLDER_NAME} from '@romejs/core/common/constants';
 
 function request(
   url: string,
@@ -624,7 +625,7 @@ export default class Resolver {
     const moduleName = query.source.assertRelative();
 
     for (const dir of parentDirectories) {
-      const mocksDir = dir.append(project.config.tests.mocksFolderName);
+      const mocksDir = dir.append(MOCKS_FOLDER_NAME);
 
       // No use resolving against a directory that doesn't exist
       if (!this.master.memoryFs.exists(mocksDir)) {

@@ -109,7 +109,7 @@ export type AnyAuxiliary =
   | n.ImportSpecifier
   | n.ImportDefaultSpecifier
   | n.ImportNamespaceSpecifier
-  | n.ExportSpecifier
+  | n.ExportLocalSpecifier
   | n.ExportNamespaceSpecifier
   | n.Directive
   | n.InterpreterDirective
@@ -124,7 +124,8 @@ export type AnyAuxiliary =
   | n.ClassPropertyMeta
   | n.ComputedMemberProperty
   | n.ComputedPropertyKey
-  | n.ExportDefaultSpecifier
+  | n.AnyExportExternalSpecifier
+  | n.ExportLocalSpecifier
   | n.FunctionHead
   | n.PatternMeta
   | n.PrivateName
@@ -254,8 +255,9 @@ export type AnyDeclaration =
   | n.ClassDeclaration
   | n.FunctionDeclaration
   | n.ImportDeclaration
-  | n.ExportNamedDeclaration
+  | n.ExportLocalDeclaration
   | n.ExportDefaultDeclaration
+  | n.ExportExternalDeclaration
   | n.ExportAllDeclaration
   | n.TypeAliasTypeAnnotation
   | n.FlowDeclareVariable
@@ -402,9 +404,11 @@ export type AnyNode =
   | n.ExportAllDeclaration
   | n.ExportDefaultDeclaration
   | n.ExportDefaultSpecifier
-  | n.ExportNamedDeclaration
+  | n.ExportExternalDeclaration
+  | n.ExportExternalSpecifier
+  | n.ExportLocalDeclaration
+  | n.ExportLocalSpecifier
   | n.ExportNamespaceSpecifier
-  | n.ExportSpecifier
   | n.ExpressionStatement
   | n.FlowArrayTypeAnnotation
   | n.FlowClassImplements

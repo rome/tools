@@ -1,8 +1,8 @@
 # Contributing
 
-We can use help in a bunch of areas and any help is appreciated. Our [GitHub issues](https://github.com/romejs/rome/issues) serve as a place for any discussion, whether it's bug reports, questions, project direction etc. As the project grows this policy may change.
+We can use help in a bunch of areas and any help is appreciated. Our [GitHub issues](https://github.com/facebookexperimental/rome/issues) serve as a place for any discussion, whether it's bug reports, questions, project direction etc. As the project grows this policy may change.
 
-Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc discussion. All activity on the Discord is still moderated and will be strictly enforced under the project's [Code of Conduct](.github/CODE_OF_CONDUCT.md).
+Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc discussion. All activity on the Discord is still moderated and will be strictly enforced under the project's [Code of Conduct](./CODE_OF_CONDUCT.md).
 
 ## Getting Started
 
@@ -15,6 +15,8 @@ scripts/dev-rome --help
 ```
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
+
+Refer to [Getting Started](../docs/getting-started.md) for more usage documentation.
 
 ## Testing
 

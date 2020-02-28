@@ -8,7 +8,7 @@
 import {Program} from '@romejs/js-ast';
 import {PartialDiagnostics} from '@romejs/diagnostics';
 import {TransformRequest} from '../types';
-import {lintTransforms} from '../plugins/lint/index';
+import {lintTransforms} from '../transforms/lint/index';
 import {program} from '@romejs/js-ast';
 import {Cache, Context} from '@romejs/js-compiler';
 import generate from '@romejs/js-generator';
@@ -49,14 +49,14 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
 
   let formattedCode = src;
   if (project.config.format.enabled) {
-    const generated = generate(
+    const generator = generate(
       newAst,
       {
         typeAnnotations: true,
       },
       src,
     );
-    formattedCode = generated.getCode() + '\n';
+    formattedCode = generator.getCode() + '\n';
   }
 
   const result: LintResult = {
