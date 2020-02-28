@@ -1,40 +1,321 @@
 Program {
-  diagnostics: Array []
   directives: Array []
   filename: '..'
   hasHoistedVars: false
-  mtime: 1_582_837_084_392.2607
-  sourceType: 'module'
-  comments: Array [CommentBlock {value: '* @jsx mdx '}]
-  syntax: Array ['jsx']
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: '..'
+    end: Object {
+      column: 0
+      index: 116
+      line: 7
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentBlock {
+      value: '* @jsx mdx '
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+  ]
+  diagnostics: Array [
+    Object {
+      category: 'parse/js'
+      filename: '..'
+      message: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module'
+      mtime: undefined
+      origins: Array [Object {category: 'js-parser'}]
+      end: Object {
+        column: 35
+        index: 51
+        line: 2
+      }
+      start: Object {
+        column: 0
+        index: 16
+        line: 2
+      }
+      advice: Array [
+        log {
+          category: 'info'
+          message: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
+        }
+        log {
+          category: 'info'
+          message: 'Add <emphasis>"type": "module"</emphasis> to your <emphasis>package.json</emphasis>'
+        }
+      ]
+    }
+  ]
   body: Array [
     ImportDeclaration {
-      source: StringLiteral {value: '@mdx-js/preact'}
+      importKind: undefined
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 35
+          index: 51
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 16
+          line: 2
+        }
+      }
+      source: StringLiteral {
+        value: '@mdx-js/preact'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 34
+            index: 50
+            line: 2
+          }
+          start: Object {
+            column: 18
+            index: 34
+            line: 2
+          }
+        }
+      }
       specifiers: Array [
         ImportSpecifier {
-          imported: Identifier {name: 'mdx'}
-          local: ImportSpecifierLocal {name: BindingIdentifier {name: 'mdx'}}
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 11
+              index: 27
+              line: 2
+            }
+            start: Object {
+              column: 8
+              index: 24
+              line: 2
+            }
+          }
+          imported: Identifier {
+            name: 'mdx'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 11
+                index: 27
+                line: 2
+              }
+              start: Object {
+                column: 8
+                index: 24
+                line: 2
+              }
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'mdx'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 11
+                  index: 27
+                  line: 2
+                }
+                start: Object {
+                  column: 8
+                  index: 24
+                  line: 2
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 11
+                index: 27
+                line: 2
+              }
+              start: Object {
+                column: 8
+                index: 24
+                line: 2
+              }
+            }
+          }
         }
       ]
     }
     ExportDefaultDeclaration {
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 1
+          index: 115
+          line: 6
+        }
+        start: Object {
+          column: 0
+          index: 53
+          line: 4
+        }
+      }
       declaration: FunctionDeclaration {
-        id: BindingIdentifier {name: 'MDXContent'}
+        id: BindingIdentifier {
+          name: 'MDXContent'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 34
+              index: 87
+              line: 4
+            }
+            start: Object {
+              column: 24
+              index: 77
+              line: 4
+            }
+          }
+        }
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 1
+            index: 115
+            line: 6
+          }
+          start: Object {
+            column: 15
+            index: 68
+            line: 4
+          }
+        }
         head: FunctionHead {
           async: false
           generator: false
           hasHoistedVars: false
           params: Array []
+          predicate: undefined
+          rest: undefined
+          returnType: undefined
+          thisType: undefined
+          typeParameters: undefined
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 37
+              index: 90
+              line: 4
+            }
+            start: Object {
+              column: 15
+              index: 68
+              line: 4
+            }
+          }
         }
         body: BlockStatement {
           directives: Array []
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 1
+              index: 115
+              line: 6
+            }
+            start: Object {
+              column: 37
+              index: 90
+              line: 4
+            }
+          }
           body: Array [
             ReturnStatement {
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 21
+                  index: 113
+                  line: 5
+                }
+                start: Object {
+                  column: 2
+                  index: 94
+                  line: 5
+                }
+              }
               argument: JSXElement {
-                name: JSXReferenceIdentifier {name: 'h1'}
+                name: JSXReferenceIdentifier {
+                  name: 'h1'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 12
+                      index: 104
+                      line: 5
+                    }
+                    start: Object {
+                      column: 10
+                      index: 102
+                      line: 5
+                    }
+                  }
+                }
                 attributes: Array []
                 selfClosing: false
-                children: Array [JSXText {value: 'hi'}]
+                typeArguments: undefined
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 20
+                    index: 112
+                    line: 5
+                  }
+                  start: Object {
+                    column: 9
+                    index: 101
+                    line: 5
+                  }
+                }
+                children: Array [
+                  JSXText {
+                    value: 'hi'
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 15
+                        index: 107
+                        line: 5
+                      }
+                      start: Object {
+                        column: 13
+                        index: 105
+                        line: 5
+                      }
+                    }
+                  }
+                ]
               }
             }
           ]
