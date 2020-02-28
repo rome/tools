@@ -216,7 +216,7 @@ const createJSParser = createParser(
       ): Identifier {
         return {
           type: 'Identifier',
-          name: 'INVALID_PLACHOLDER',
+          name: 'INVALID_PLACEHOLDER',
           loc: this.finishLocAt(start, end),
         };
       }
@@ -228,7 +228,7 @@ const createJSParser = createParser(
       ): StringLiteral {
         return {
           type: 'StringLiteral',
-          value: 'INVALID_PLACHOLDER',
+          value: 'INVALID_PLACEHOLDER',
           loc: this.finishLocAt(start, end),
         };
       }

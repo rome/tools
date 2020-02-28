@@ -28,7 +28,7 @@ function getMap<Key, Value>(
  * Forked from the project https://github.com/aceakash/string-similarity by Akash K, licensed under ISC
  */
 
-function compareTwoStrings(aStr: string, bStr: string): number {
+export function compareTwoStrings(aStr: string, bStr: string): number {
   const a = aStr.replace(/\s+/g, '');
   const b = bStr.replace(/\s+/g, '');
 

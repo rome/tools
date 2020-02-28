@@ -87,7 +87,7 @@ Program {
           }
         }
         left: ReferenceIdentifier {
-          name: 'INVALID_PLACHOLDER'
+          name: 'INVALID_PLACEHOLDER'
           loc: Object {
             filename: '..'
             end: Object {
