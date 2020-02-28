@@ -45,12 +45,30 @@ import {createDirectory, readFileText} from '@romejs/fs';
 import {Consumer} from '@romejs/consume';
 import {consumeJSON} from '@romejs/codec-json';
 
-function cleanName(name: string): string {
-  if (name[0] === '@') {
-    return name.slice(1);
-  } else {
-    return name;
+function cleanUidParts(parts: Array<string>): string {
+  let uid = '';
+
+  let lastPart = '';
+  for (const part of parts) {
+    if (uid !== '') {
+      uid += '/';
+    }
+
+    // Prune off any prefix shared with the last part
+    let sharedPrefix = '';
+    for (let i = 0; i < part.length && lastPart[i] === part[i]; i++) {
+      sharedPrefix += part[i];
+    }
+
+    uid += part.slice(sharedPrefix.length);
+
+    lastPart = part;
   }
+
+  console.log(uid);
+  console.log();
+
+  return uid;
 }
 
 // If a UID has a relative path that's just index.js, index.ts etc then omit it
@@ -214,7 +232,6 @@ export default class ProjectManager {
 
     // Format of uids will be <PROJECT_NAME>/<PACKAGE_NAME>/<RELATIVE>
     const parts: Array<string> = [];
-    parts.push(project.config.name);
 
     let root = project.folder;
 
@@ -222,11 +239,12 @@ export default class ProjectManager {
     let targetPackagePath = path;
     while (true) {
       const pkg = this.master.memoryFs.getOwnedManifest(targetPackagePath);
-      if (pkg === undefined) {
+      if (pkg === undefined || pkg.folder.equal(project.folder)) {
         break;
       } else {
-        if (pkg.manifest.name !== undefined) {
-          parts.push(pkg.manifest.name);
+        const name = pkg.manifest.name;
+        if (name !== undefined) {
+          parts.unshift(name);
 
           if (targetPackagePath === path) {
             root = pkg.folder;
@@ -236,12 +254,16 @@ export default class ProjectManager {
       }
     }
 
+    parts.unshift(project.config.name);
+
     const relative = cleanRelativeUidPath(root.relative(path));
     if (relative !== undefined) {
       parts.push(relative);
     }
 
-    const uid = cleanName(parts.join('/'));
+    console.log(parts);
+
+    const uid = cleanUidParts(parts);
     this.setUid(path, uid);
     return uid;
   }
