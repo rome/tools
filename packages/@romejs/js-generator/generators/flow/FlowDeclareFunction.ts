@@ -19,7 +19,7 @@ export default function FlowDeclareFunction(
 ) {
   node = flowDeclareFunction.assert(node);
 
-  if (parent.type !== ' ExportLocalDeclaration') {
+  if (parent.type !== 'ExportLocalDeclaration') {
     generator.word('declare');
     generator.space();
   }

@@ -53,7 +53,7 @@ evaluators.set('VariableDeclarationStatement', VariableDeclarationStatement);
 evaluators.set('VariableDeclaration', VariableDeclaration);
 evaluators.set('TypeAliasTypeAnnotation', TypeAliasTypeAnnotation);
 evaluators.set('ExportDefaultDeclaration', ExportDefaultDeclaration);
-evaluators.set(' ExportLocalDeclaration', ExportLocalDeclaration);
+evaluators.set('ExportLocalDeclaration', ExportLocalDeclaration);
 evaluators.set('ImportDeclaration', ImportDeclaration);
 evaluators.set('FlowTypeParameterDeclaration', FlowTypeParameterDeclaration);
 evaluators.set('FlowDeclareExportNamed', FlowDeclareExportNamed);

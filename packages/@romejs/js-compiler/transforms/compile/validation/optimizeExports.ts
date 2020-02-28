@@ -29,7 +29,7 @@ export default {
 
     // turn `import {a} from 'b'; export {a}`; to `export {a} from 'b';`';
     if (
-      node.type === ' ExportLocalDeclaration' &&
+      node.type === 'ExportLocalDeclaration' &&
       node.exportKind === 'value' &&
       node.declaration === undefined &&
       node.specifiers !== undefined

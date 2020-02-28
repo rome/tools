@@ -39,7 +39,7 @@ export function _ExportDeclaration(generator: Generator, node: AnyNode) {
       generator.semicolon();
     }
   } else {
-    if (node.type !== ' ExportLocalDeclaration') {
+    if (node.type !== 'ExportLocalDeclaration') {
       throw new Error('Expected  ExportLocalDeclaration');
     }
 

@@ -243,7 +243,7 @@ parens.set('ArrowFunctionExpression', function ArrowFunctionExpression(
   parent: AnyNode,
 ): boolean {
   return (
-    parent.type === ' ExportLocalDeclaration' ||
+    parent.type === 'ExportLocalDeclaration' ||
     ConditionalExpression(node, parent)
   );
 });

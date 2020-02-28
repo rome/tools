@@ -56,7 +56,7 @@ export default {
     // export const foo
     // export function foo() {}
     // export {};
-    if (node.type === ' ExportLocalDeclaration') {
+    if (node.type === 'ExportLocalDeclaration') {
       const valueType = getAnalyzeExportValueType(scope, node.declaration);
       for (const id of getBindingIdentifiers(node)) {
         const kind = maybeTypeBinding(
@@ -216,7 +216,7 @@ export default {
     if (
       node.type === 'ExportAllDeclaration' ||
       node.type === 'ExportDefaultDeclaration' ||
-      node.type === ' ExportLocalDeclaration'
+      node.type === 'ExportLocalDeclaration'
     ) {
       context.record(new ESExportRecord(getExportKind(node.exportKind), node));
     }

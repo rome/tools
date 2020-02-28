@@ -120,7 +120,7 @@ function checkNotUnderscore(parser: JSParser, id: Identifier) {
 function isEsModuleType(bodyElement: AnyNode): boolean {
   return (
     bodyElement.type === 'ExportAllDeclaration' ||
-    (bodyElement.type === ' ExportLocalDeclaration' &&
+    (bodyElement.type === 'ExportLocalDeclaration' &&
       (!bodyElement.declaration ||
         (bodyElement.declaration.type !== 'TypeAliasTypeAnnotation' &&
           bodyElement.declaration.type !== 'FlowInterfaceDeclaration')))
@@ -587,7 +587,7 @@ function parseExportLocalDeclaration(
 
       if (node !== undefined) {
         if (
-          node.type === ' ExportLocalDeclaration' ||
+          node.type === 'ExportLocalDeclaration' ||
           node.type === 'ExportExternalDeclaration'
         ) {
           return {

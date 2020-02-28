@@ -89,7 +89,7 @@ export default function renameBindings(
 
         // Retain the correct exported name for `export function` and `export class`
         if (
-          node.type === ' ExportLocalDeclaration' &&
+          node.type === 'ExportLocalDeclaration' &&
           node.declaration !== undefined &&
           (node.declaration.type === 'FunctionDeclaration' ||
             node.declaration.type === 'ClassDeclaration')
@@ -118,7 +118,7 @@ export default function renameBindings(
 
         // Retain the correct exported names for `export const`
         if (
-          node.type === ' ExportLocalDeclaration' &&
+          node.type === 'ExportLocalDeclaration' &&
           node.declaration !== undefined
         ) {
           const bindings = getBindingIdentifiers(node.declaration);

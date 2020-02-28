@@ -206,7 +206,7 @@ export function parseExport(
 
   const node: ExportLocalDeclaration = {
     loc: parser.finishLoc(start),
-    type: ' ExportLocalDeclaration',
+    type: 'ExportLocalDeclaration',
     exportKind,
     specifiers,
     declaration,

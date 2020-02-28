@@ -20,7 +20,7 @@ function shouldHoistExecute(node: undefined | AnyNode): boolean {
   }
 
   if (
-    node.type === ' ExportLocalDeclaration' ||
+    node.type === 'ExportLocalDeclaration' ||
     node.type === 'ExportDefaultDeclaration'
   ) {
     return shouldHoistExecute(node.declaration);

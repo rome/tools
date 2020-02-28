@@ -80,7 +80,7 @@ export default {
       }
 
       if (
-        bodyNode.type === ' ExportLocalDeclaration' ||
+        bodyNode.type === 'ExportLocalDeclaration' ||
         bodyNode.type === 'ExportExternalDeclaration'
       ) {
         // Ignore typed exports
@@ -96,7 +96,7 @@ export default {
           source = bodyNode.source;
         }
 
-        if (bodyNode.type === ' ExportLocalDeclaration') {
+        if (bodyNode.type === 'ExportLocalDeclaration') {
           declaration = bodyNode.declaration;
         }
 

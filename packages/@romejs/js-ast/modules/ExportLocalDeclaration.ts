@@ -23,7 +23,7 @@ import {
 import {createBuilder} from '../utils';
 
 export type ExportLocalDeclaration = JSNodeBase & {
-  type: ' ExportLocalDeclaration';
+  type: 'ExportLocalDeclaration';
   declaration?:
     | undefined
     | VariableDeclarationStatement
@@ -43,7 +43,7 @@ export type ExportLocalDeclaration = JSNodeBase & {
 };
 
 export const exportLocalDeclaration = createBuilder<ExportLocalDeclaration>(
-  ' ExportLocalDeclaration',
+  'ExportLocalDeclaration',
   {
     bindingKeys: {
       declaration: true,
