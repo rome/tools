@@ -22,8 +22,8 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type ExportNamedDeclaration = JSNodeBase & {
-  type: 'ExportNamedDeclaration';
+export type ExportLocalDeclaration = JSNodeBase & {
+  type: ' ExportLocalDeclaration';
   declaration?:
     | undefined
     | VariableDeclarationStatement
@@ -42,8 +42,8 @@ export type ExportNamedDeclaration = JSNodeBase & {
   declare?: boolean;
 };
 
-export const exportNamedDeclaration = createBuilder<ExportNamedDeclaration>(
-  'ExportNamedDeclaration',
+export const exportLocalDeclaration = createBuilder<ExportLocalDeclaration>(
+  ' ExportLocalDeclaration',
   {
     bindingKeys: {
       declaration: true,

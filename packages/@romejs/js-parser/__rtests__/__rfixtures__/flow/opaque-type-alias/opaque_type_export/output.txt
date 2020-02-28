@@ -25,7 +25,7 @@ Program {
     }
   }
   body: Array [
-    ExportNamedDeclaration {
+     ExportLocalDeclaration {
       exportKind: 'type'
       source: undefined
       specifiers: undefined

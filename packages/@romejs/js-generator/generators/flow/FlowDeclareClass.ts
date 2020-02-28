@@ -15,7 +15,7 @@ export default function FlowDeclareClass(
 ) {
   node = flowDeclareClass.assert(node);
 
-  if (parent.type !== 'ExportNamedDeclaration') {
+  if (parent.type !== ' ExportLocalDeclaration') {
     generator.word('declare');
     generator.space();
   }

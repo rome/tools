@@ -17,7 +17,7 @@ export default function hasPotentialSideEffects(
   }
 
   switch (node.type) {
-    case 'ExportNamedDeclaration':
+    case ' ExportLocalDeclaration':
       if (node.declaration === undefined) {
         return false;
       } else {

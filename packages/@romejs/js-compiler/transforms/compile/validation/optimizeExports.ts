@@ -8,12 +8,12 @@
 import {Path} from '@romejs/js-compiler';
 import {
   AnyNode,
-  ExportNamedDeclaration,
+  ExportLocalDeclaration,
   ExportExternalDeclaration,
 } from '@romejs/js-ast';
 import {ImportBinding} from '@romejs/js-compiler';
 import {
-  exportNamedDeclaration,
+  exportLocalDeclaration,
   exportExternalDeclaration,
   exportExternalSpecifier,
   identifier,
@@ -24,18 +24,18 @@ export default {
   name: 'optimizeExports',
   enter(
     path: Path,
-  ): AnyNode | Array<ExportExternalDeclaration | ExportNamedDeclaration> {
+  ): AnyNode | Array<ExportExternalDeclaration | ExportLocalDeclaration> {
     const {node} = path;
 
     // turn `import {a} from 'b'; export {a}`; to `export {a} from 'b';`';
     if (
-      node.type === 'ExportNamedDeclaration' &&
+      node.type === ' ExportLocalDeclaration' &&
       node.exportKind === 'value' &&
       node.declaration === undefined &&
       node.specifiers !== undefined
     ) {
       const nodes: Array<
-        ExportExternalDeclaration | ExportNamedDeclaration
+        ExportExternalDeclaration | ExportLocalDeclaration
       > = [];
       const specifiers = [];
 
@@ -73,7 +73,7 @@ export default {
       }
 
       if (specifiers.length !== 0) {
-        nodes.push(exportNamedDeclaration.create({specifiers}));
+        nodes.push(exportLocalDeclaration.create({specifiers}));
       }
 
       return nodes;

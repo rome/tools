@@ -22,7 +22,7 @@ Program {
     }
   }
   body: Array [
-    ExportNamedDeclaration {
+     ExportLocalDeclaration {
       exportKind: 'type'
       source: undefined
       specifiers: undefined
@@ -87,7 +87,7 @@ Program {
         }
       }
     }
-    ExportNamedDeclaration {
+     ExportLocalDeclaration {
       exportKind: 'value'
       source: undefined
       specifiers: undefined
@@ -138,7 +138,7 @@ Program {
         }
       }
     }
-    ExportNamedDeclaration {
+     ExportLocalDeclaration {
       exportKind: 'type'
       source: undefined
       specifiers: undefined

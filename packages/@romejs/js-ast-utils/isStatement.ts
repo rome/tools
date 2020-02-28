@@ -37,7 +37,7 @@ export default function isStatement(
     case 'ClassDeclaration':
     case 'ExportAllDeclaration':
     case 'ExportDefaultDeclaration':
-    case 'ExportNamedDeclaration':
+    case ' ExportLocalDeclaration':
     case 'ForOfStatement':
     case 'ImportDeclaration':
     case 'FlowDeclareClass':

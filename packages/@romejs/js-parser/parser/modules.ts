@@ -11,7 +11,7 @@ import {types as tt} from '../tokenizer/types';
 import {
   AnyStatement,
   ExportAllDeclaration,
-  ExportNamedDeclaration,
+  ExportLocalDeclaration,
   ExportDefaultDeclaration,
   TSNamespaceExportDeclaration,
   TSExportAssignment,
@@ -66,7 +66,7 @@ import {
 export type ParseExportResult =
   | AnyStatement
   | ExportAllDeclaration
-  | ExportNamedDeclaration
+  | ExportLocalDeclaration
   | ExportExternalDeclaration
   | ExportDefaultDeclaration
   | TSNamespaceExportDeclaration
@@ -204,9 +204,9 @@ export function parseExport(
     }
   }
 
-  const node: ExportNamedDeclaration = {
+  const node: ExportLocalDeclaration = {
     loc: parser.finishLoc(start),
-    type: 'ExportNamedDeclaration',
+    type: ' ExportLocalDeclaration',
     exportKind,
     specifiers,
     declaration,
@@ -454,7 +454,7 @@ function shouldParseExportStar(parser: JSParser): boolean {
 function parseExportStar(
   parser: JSParser,
   start: Position,
-): ExportAllDeclaration | ExportNamedDeclaration | ExportExternalDeclaration {
+): ExportAllDeclaration | ExportLocalDeclaration | ExportExternalDeclaration {
   let exportKind: undefined | ConstExportModuleKind;
   if (parser.eatContextual('type')) {
     exportKind = 'type';

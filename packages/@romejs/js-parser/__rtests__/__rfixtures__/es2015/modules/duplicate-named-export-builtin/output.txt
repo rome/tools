@@ -102,7 +102,7 @@ Program {
         ]
       }
     }
-    ExportNamedDeclaration {
+     ExportLocalDeclaration {
       declaration: undefined
       exportKind: 'value'
       source: undefined

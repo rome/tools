@@ -12,7 +12,7 @@ import {
   program,
   stringLiteral,
   ClassExpression,
-  ExportNamedDeclaration,
+  ExportLocalDeclaration,
   ExportExternalDeclaration,
 } from '@romejs/js-ast';
 import {template, getBindingIdentifiers} from '@romejs/js-ast-utils';
@@ -80,7 +80,7 @@ export default {
       }
 
       if (
-        bodyNode.type === 'ExportNamedDeclaration' ||
+        bodyNode.type === ' ExportLocalDeclaration' ||
         bodyNode.type === 'ExportExternalDeclaration'
       ) {
         // Ignore typed exports
@@ -88,7 +88,7 @@ export default {
           continue;
         }
 
-        let declaration: undefined | ExportNamedDeclaration['declaration'];
+        let declaration: undefined | ExportLocalDeclaration['declaration'];
         let source: undefined | ExportExternalDeclaration['source'];
         const {specifiers} = bodyNode;
 
@@ -96,7 +96,7 @@ export default {
           source = bodyNode.source;
         }
 
-        if (bodyNode.type === 'ExportNamedDeclaration') {
+        if (bodyNode.type === ' ExportLocalDeclaration') {
           declaration = bodyNode.declaration;
         }
 

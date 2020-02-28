@@ -12,13 +12,13 @@ import {
   StringLiteral,
   ConstExportModuleKind,
   AnyFlowDeclare,
-  ExportNamedDeclaration,
+  ExportLocalDeclaration,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type FlowDeclareExportNamed = JSNodeBase & {
   type: 'FlowDeclareExportNamed';
-  declaration?: AnyFlowDeclare | ExportNamedDeclaration['declaration'];
+  declaration?: AnyFlowDeclare | ExportLocalDeclaration['declaration'];
   specifiers?: Array<ExportLocalSpecifier | AnyExportExternalSpecifier>;
   source?: StringLiteral;
   exportKind?: ConstExportModuleKind;

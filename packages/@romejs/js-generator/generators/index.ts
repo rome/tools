@@ -165,11 +165,11 @@ generators.set('ExportExternalDeclaration', ExportExternalDeclaration);
 import ExportExternalSpecifier from './modules/ExportExternalSpecifier';
 generators.set('ExportExternalSpecifier', ExportExternalSpecifier);
 
+import ExportLocalDeclaration from './modules/ExportLocalDeclaration';
+generators.set('ExportLocalDeclaration', ExportLocalDeclaration);
+
 import ExportLocalSpecifier from './modules/ExportLocalSpecifier';
 generators.set('ExportLocalSpecifier', ExportLocalSpecifier);
-
-import ExportNamedDeclaration from './modules/ExportNamedDeclaration';
-generators.set('ExportNamedDeclaration', ExportNamedDeclaration);
 
 import ExportNamespaceSpecifier from './modules/ExportNamespaceSpecifier';
 generators.set('ExportNamespaceSpecifier', ExportNamespaceSpecifier);

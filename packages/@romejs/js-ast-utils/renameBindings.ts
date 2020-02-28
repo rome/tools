@@ -10,7 +10,7 @@ import inheritLoc from './inheritLoc';
 import {
   AnyNode,
   exportLocalSpecifier,
-  exportNamedDeclaration,
+  exportLocalDeclaration,
   identifier,
   referenceIdentifier,
 } from '@romejs/js-ast';
@@ -89,7 +89,7 @@ export default function renameBindings(
 
         // Retain the correct exported name for `export function` and `export class`
         if (
-          node.type === 'ExportNamedDeclaration' &&
+          node.type === ' ExportLocalDeclaration' &&
           node.declaration !== undefined &&
           (node.declaration.type === 'FunctionDeclaration' ||
             node.declaration.type === 'ClassDeclaration')
@@ -103,7 +103,7 @@ export default function renameBindings(
 
             return [
               node.declaration,
-              exportNamedDeclaration.create({
+              exportLocalDeclaration.create({
                 specifiers: [
                   exportLocalSpecifier.create({
                     loc: node.declaration.id.loc,
@@ -118,7 +118,7 @@ export default function renameBindings(
 
         // Retain the correct exported names for `export const`
         if (
-          node.type === 'ExportNamedDeclaration' &&
+          node.type === ' ExportLocalDeclaration' &&
           node.declaration !== undefined
         ) {
           const bindings = getBindingIdentifiers(node.declaration);
@@ -133,7 +133,7 @@ export default function renameBindings(
           if (includesAny) {
             return [
               node.declaration,
-              exportNamedDeclaration.create({
+              exportLocalDeclaration.create({
                 specifiers: bindings.map(node => {
                   let local: string = node.name;
 

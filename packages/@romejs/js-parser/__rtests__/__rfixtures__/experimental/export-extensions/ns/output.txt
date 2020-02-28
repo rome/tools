@@ -22,7 +22,7 @@ Program {
     }
   }
   body: Array [
-    ExportNamedDeclaration {
+     ExportLocalDeclaration {
       exportKind: undefined
       loc: Object {
         filename: '..'

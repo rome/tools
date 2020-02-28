@@ -243,7 +243,7 @@ parens.set('ArrowFunctionExpression', function ArrowFunctionExpression(
   parent: AnyNode,
 ): boolean {
   return (
-    parent.type === 'ExportNamedDeclaration' ||
+    parent.type === ' ExportLocalDeclaration' ||
     ConditionalExpression(node, parent)
   );
 });
@@ -340,9 +340,10 @@ function isFirstInStatement(
       parent.type === 'TaggedTemplateExpression' ||
       (considerDefaultExports &&
         parent.type === 'ExportDefaultDeclaration' &&
-          parent.declaration === node) ||
+        parent.declaration === node) ||
       (considerArrow &&
-        parent.type === 'ArrowFunctionExpression' && parent.body === node)
+        parent.type === 'ArrowFunctionExpression' &&
+        parent.body === node)
     ) {
       return true;
     }

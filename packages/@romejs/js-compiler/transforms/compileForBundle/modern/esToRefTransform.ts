@@ -92,7 +92,7 @@ export default {
           }
         }
 
-        if (child.type === 'ExportNamedDeclaration') {
+        if (child.type === ' ExportLocalDeclaration') {
           // export const foo = '';
           // export function foo() {}
           for (const {name} of getBindingIdentifiers(child)) {
@@ -149,13 +149,13 @@ export default {
           }
 
           if (
-            child.type === 'ExportNamedDeclaration' ||
+            child.type === ' ExportLocalDeclaration' ||
             child.type === 'ExportExternalDeclaration'
           ) {
             const {specifiers} = child;
 
             if (
-              child.type === 'ExportNamedDeclaration' &&
+              child.type === ' ExportLocalDeclaration' &&
               child.declaration !== undefined
             ) {
               throw new Error(
@@ -298,7 +298,7 @@ export default {
       return REDUCE_REMOVE;
     }
 
-    if (node.type === 'ExportNamedDeclaration') {
+    if (node.type === ' ExportLocalDeclaration') {
       const {declaration, specifiers} = node;
 
       if (specifiers === undefined) {

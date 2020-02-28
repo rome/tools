@@ -7,16 +7,16 @@
 
 import Generator from '../../Generator';
 import {
-  ExportNamedDeclaration,
-  exportNamedDeclaration,
+  ExportLocalDeclaration,
+  exportLocalDeclaration,
   AnyNode,
 } from '@romejs/js-ast';
 import {isStatement} from '@romejs/js-ast-utils';
-export default function ExportNamedDeclaration(
+export default function ExportLocalDeclaration(
   generator: Generator,
   node: AnyNode,
 ) {
-  node = exportNamedDeclaration.assert(node);
+  node = exportLocalDeclaration.assert(node);
 
   if (node.exportKind === 'type' && !generator.options.typeAnnotations) {
     return;
@@ -30,7 +30,7 @@ export function _ExportDeclaration(generator: Generator, node: AnyNode) {
   node =
     node.type === 'ExportDefaultDeclaration'
       ? node
-      : exportNamedDeclaration.assert(node);
+      : exportLocalDeclaration.assert(node);
 
   if (node.declaration) {
     const declar = node.declaration;
@@ -39,8 +39,8 @@ export function _ExportDeclaration(generator: Generator, node: AnyNode) {
       generator.semicolon();
     }
   } else {
-    if (node.type !== 'ExportNamedDeclaration') {
-      throw new Error('Expected ExportNamedDeclaration');
+    if (node.type !== ' ExportLocalDeclaration') {
+      throw new Error('Expected  ExportLocalDeclaration');
     }
 
     if (node.exportKind === 'type') {

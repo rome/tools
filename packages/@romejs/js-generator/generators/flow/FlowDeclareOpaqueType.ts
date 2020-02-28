@@ -20,7 +20,7 @@ export default function FlowDeclareOpaqueType(
 ) {
   node = flowDeclareOpaqueType.assert(node);
 
-  if (parent.type !== 'ExportNamedDeclaration') {
+  if (parent.type !== ' ExportLocalDeclaration') {
     generator.word('declare');
     generator.space();
   }

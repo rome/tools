@@ -8,19 +8,19 @@
 import {Scope} from '../../scopes';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 import {
-  ExportNamedDeclaration,
-  exportNamedDeclaration,
+  ExportLocalDeclaration,
+  exportLocalDeclaration,
   AnyNode,
 } from '@romejs/js-ast';
 import ImportT from '../../types/ImportT';
 import Hub from '../../Hub';
 
-export default function ExportNamedDeclaration(
+export default function ExportLocalDeclaration(
   node: AnyNode,
   scope: Scope,
   {evaluator}: Hub,
 ) {
-  node = exportNamedDeclaration.assert(node);
+  node = exportLocalDeclaration.assert(node);
 
   // export const foo = 'bar';
   // export default function foo() {}
