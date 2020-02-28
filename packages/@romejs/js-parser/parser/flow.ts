@@ -161,11 +161,10 @@ export function parseFlowTypeParameterInstantiationCallOrNew(
 
   parser.popScope('TYPE');
 
-  return {
+  return parser.finishNode(start, {
     type: 'FlowTypeParameterInstantiation',
-    loc: parser.finishLoc(start),
     params,
-  };
+  });
 }
 
 function parseFlowTypeOrImplicitInstantiation(
@@ -219,16 +218,14 @@ function parseFlowPredicate(
     );
     const value = parseExpression(parser, 'flow declared predicate');
     parser.expectClosing(openContext);
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'FlowDeclaredPredicate',
       value,
-    };
+    });
   } else {
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'FlowInferredPredicate',
-    };
+    });
   }
 }
 
@@ -263,11 +260,10 @@ function parseFlowDeclareClass(
   start: Position,
 ): FlowDeclareClass {
   parser.next();
-  return {
+  return parser.finishNode(start, {
     ...parseFlowInterfaceish(parser, true),
-    loc: parser.finishLoc(start),
     type: 'FlowDeclareClass',
-  };
+  });
 }
 
 function parseFlowDeclareFunction(
@@ -303,29 +299,25 @@ function parseFlowDeclareFunction(
     });
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowDeclareFunction',
-    id: {
+    id: parser.finishNode(start, {
       type: 'BindingIdentifier',
       name: id.name,
-      loc: parser.finishLoc(start),
 
-      meta: {
+      meta: parser.finishNode(start, {
         type: 'PatternMeta',
-        loc: parser.finishLoc(start),
-        typeAnnotation: {
-          loc: parser.finishLoc(start),
+        typeAnnotation: parser.finishNode(start, {
           type: 'FlowFunctionTypeAnnotation',
           params,
           rest,
           returnType,
           typeParameters,
-        },
-      },
-    },
+        }),
+      }),
+    }),
     predicate,
-  };
+  });
 }
 
 export function parseFlowDeclare(
@@ -382,13 +374,12 @@ export function parseFlowDeclare(
   });
 
   // Fake node
-  return {
+  return parser.finishNode(start, {
     type: 'FlowDeclareVariable',
-    loc: parser.finishLoc(start),
     id: toBindingIdentifier(
       parser.createUnknownIdentifier('flow declaration', start),
     ),
-  };
+  });
 }
 
 function parseFlowDeclareVariable(
@@ -401,11 +392,10 @@ function parseFlowDeclareVariable(
     /*allowPrimitiveOverride*/ true,
   );
   parser.semicolon();
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowDeclareVariable',
     id,
-  };
+  });
 }
 
 function parseFlowDeclareModule(
@@ -465,11 +455,10 @@ function parseFlowDeclareModule(
 
   parser.expectClosing(openContext);
 
-  const bodyNode: BlockStatement = {
-    loc: parser.finishLoc(bodyStart),
+  const bodyNode: BlockStatement = parser.finishNode(bodyStart, {
     type: 'BlockStatement',
     body,
-  };
+  });
 
   let kind: undefined | 'commonjs' | 'es';
   let hasModuleExport = false;
@@ -505,13 +494,12 @@ function parseFlowDeclareModule(
     }
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowDeclareModule',
     id,
     kind: kind === undefined ? 'commonjs' : kind,
     body: bodyNode,
-  };
+  });
 }
 
 function parseExportLocalDeclaration(
@@ -533,11 +521,10 @@ function parseExportLocalDeclaration(
       parser.semicolon();
     }
 
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'FlowDeclareExportDefault',
       declaration,
-    };
+    });
   } else {
     if (
       parser.match(tt._const) ||
@@ -564,11 +551,10 @@ function parseExportLocalDeclaration(
     ) {
       const declaration = parseFlowDeclare(parser, parser.getPosition());
 
-      return {
-        loc: parser.finishLoc(start),
+      return parser.finishNode(start, {
         type: 'FlowDeclareExportNamed',
         declaration,
-      };
+      });
     }
 
     if (
@@ -610,8 +596,7 @@ function parseExportLocalDeclaration(
   });
 
   // Fake node
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowDeclareExportDefault',
     declaration: {
       ...parser.createUnknownStringLiteral(
@@ -620,7 +605,7 @@ function parseExportLocalDeclaration(
       ),
       type: 'StringLiteralTypeAnnotation',
     },
-  };
+  });
 }
 
 function parseFlowDeclareModuleExports(
@@ -633,11 +618,10 @@ function parseFlowDeclareModuleExports(
   const typeAnnotation = parseFlowTypeAnnotation(parser);
   parser.semicolon();
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowDeclareModuleExports',
     typeAnnotation,
-  };
+  });
 }
 
 function parseFlowDeclareTypeAlias(
@@ -656,11 +640,11 @@ function parseFlowDeclareOpaqueType(
   start: Position,
 ): FlowDeclareOpaqueType {
   parser.next();
-  return {
-    ...parseFlowOpaqueType(parser, start, true),
-    loc: parser.finishLoc(start),
+  const opaque = parseFlowOpaqueType(parser, start, true);
+  return parser.finishNode(start, {
+    ...opaque,
     type: 'FlowDeclareOpaqueType',
-  };
+  });
 }
 
 function parseFlowDeclareInterface(
@@ -668,11 +652,10 @@ function parseFlowDeclareInterface(
   start: Position,
 ): FlowDeclareInterface {
   parser.next();
-  return {
+  return parser.finishNode(start, {
     ...parseFlowInterfaceish(parser),
-    loc: parser.finishLoc(start),
     type: 'FlowDeclareInterface',
-  };
+  });
 }
 
 // Interfaces
@@ -754,12 +737,11 @@ function parseFlowInterfaceType(parser: JSParser): FlowInterfaceTypeAnnotation {
     allowInexact: false,
   });
 
-  return {
+  return parser.finishNode(start, {
     type: 'FlowInterfaceTypeAnnotation',
-    loc: parser.finishLoc(start),
     extends: _extends,
     body,
-  };
+  });
 }
 
 function parseFlowInterfaceExtends(parser: JSParser): FlowInterfaceExtends {
@@ -771,12 +753,11 @@ function parseFlowInterfaceExtends(parser: JSParser): FlowInterfaceExtends {
     typeParameters = parseFlowTypeParameterInstantiation(parser);
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowInterfaceExtends',
     id,
     typeParameters,
-  };
+  });
 }
 
 export function parseFlowInterface(
@@ -836,13 +817,12 @@ export function parseFlowTypeAliasTypeAnnotation(
   const right = parseFlowTypeInitialiser(parser, tt.eq);
   parser.semicolon();
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TypeAliasTypeAnnotation',
     id,
     typeParameters,
     right,
-  };
+  });
 }
 
 export function parseFlowOpaqueType(
@@ -873,14 +853,13 @@ export function parseFlowOpaqueType(
   }
   parser.semicolon();
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowOpaqueType',
     id,
     typeParameters,
     supertype,
     impltype,
-  };
+  });
 }
 
 function parseFlowTypeParameter(
@@ -914,14 +893,13 @@ function parseFlowTypeParameter(
     });
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowTypeParameter',
     default: def,
     name,
     variance,
     bound,
-  };
+  });
 }
 
 export function parseFlowTypeParameterDeclaration(
@@ -957,11 +935,10 @@ export function parseFlowTypeParameterDeclaration(
 
   parser.popScope('TYPE');
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowTypeParameterDeclaration',
     params,
-  };
+  });
 }
 
 export function parseFlowTypeParameterInstantiation(
@@ -991,11 +968,10 @@ export function parseFlowTypeParameterInstantiation(
 
   parser.popScope('TYPE');
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowTypeParameterInstantiation',
     params,
-  };
+  });
 }
 
 function parseFlowObjectPropertyKey(
@@ -1030,15 +1006,14 @@ function parseFlowObjectTypeIndexer(
   parser.expect(tt.bracketR);
   const value = parseFlowTypeInitialiser(parser);
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowObjectTypeIndexer',
     static: isStatic,
     key,
     id,
     value,
     variance,
-  };
+  });
 }
 
 function parseFlowObjectTypeMethodish(
@@ -1060,14 +1035,13 @@ function parseFlowObjectTypeMethodish(
   parser.expectClosing(openContext);
   const returnType = parseFlowTypeInitialiser(parser);
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowFunctionTypeAnnotation',
     params,
     rest,
     typeParameters,
     returnType,
-  };
+  });
 }
 
 function parseFlowObjectTypeCallProperty(
@@ -1077,12 +1051,11 @@ function parseFlowObjectTypeCallProperty(
 ): FlowObjectTypeCallProperty {
   const valueNode = parser.getPosition();
   const value = parseFlowObjectTypeMethodish(parser, valueNode);
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowObjectTypeCallProperty',
     static: isStatic,
     value,
-  };
+  });
 }
 
 function parseFlowObjectType(
@@ -1234,13 +1207,12 @@ function parseFlowObjectType(
   parser.expectClosing(openContext);
   parser.popScope('TYPE');
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowObjectTypeAnnotation',
     properties,
     exact,
     inexact,
-  };
+  });
 }
 
 function parseFlowObjectTypeProperty(
@@ -1314,11 +1286,10 @@ function parseFlowObjectTypeProperty(
     }
 
     const argument = parseFlowType(parser);
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'FlowObjectTypeSpreadProperty',
       argument,
-    };
+    });
   } else {
     const proto = protoStart !== undefined;
     const key = parseFlowObjectPropertyKey(parser);
@@ -1353,8 +1324,7 @@ function parseFlowObjectTypeProperty(
       value = parseFlowTypeInitialiser(parser);
     }
 
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'FlowObjectTypeProperty',
       key,
       static: isStatic,
@@ -1363,7 +1333,7 @@ function parseFlowObjectTypeProperty(
       variance,
       optional,
       proto,
-    };
+    });
   }
 }
 
@@ -1388,12 +1358,11 @@ function parseFlowQualifiedTypeIdentifier(
 
   while (parser.eat(tt.dot)) {
     const id = parseIdentifier(parser);
-    node = {
-      loc: parser.finishLoc(start),
+    node = parser.finishNode(start, {
       type: 'FlowQualifiedTypeIdentifier',
       id,
       qualification: node,
-    };
+    });
   }
 
   return node;
@@ -1411,23 +1380,21 @@ function parseFlowGenericType(
     typeParameters = parseFlowTypeParameterInstantiation(parser);
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowGenericTypeAnnotation',
     id,
     typeParameters,
-  };
+  });
 }
 
 function parseFlowTypeofType(parser: JSParser): FlowTypeofTypeAnnotation {
   const start = parser.getPosition();
   parser.expect(tt._typeof);
   const argument = parseFlowPrimaryType(parser);
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowTypeofTypeAnnotation',
     argument,
-  };
+  });
 }
 
 function parseFlowTupleType(parser: JSParser): FlowTupleTypeAnnotation {
@@ -1450,11 +1417,10 @@ function parseFlowTupleType(parser: JSParser): FlowTupleTypeAnnotation {
     }
   }
   parser.expectClosing(openContext);
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowTupleTypeAnnotation',
     types,
-  };
+  });
 }
 
 function parseFlowFunctionTypeParam(parser: JSParser): FlowFunctionTypeParam {
@@ -1472,17 +1438,15 @@ function parseFlowFunctionTypeParam(parser: JSParser): FlowFunctionTypeParam {
   } else {
     typeAnnotation = parseFlowType(parser);
   }
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'FlowFunctionTypeParam',
     name,
-    meta: {
+    meta: parser.finishNode(start, {
       type: 'PatternMeta',
-      loc: parser.finishLoc(start),
       optional,
       typeAnnotation,
-    },
-  };
+    }),
+  });
 }
 
 function reinterpretTypeAsFlowFunctionTypeParam(
@@ -1537,47 +1501,40 @@ function flowIdentToTypeAnnotation(
 ): AnyFlowKeywordTypeAnnotation | FlowGenericTypeAnnotation {
   switch (id.name) {
     case 'any':
-      return {
-        loc: parser.finishLoc(start),
+      return parser.finishNode(start, {
         type: 'AnyKeywordTypeAnnotation',
-      };
+      });
 
     case 'bool':
     case 'boolean':
-      return {
-        loc: parser.finishLoc(start),
+      return parser.finishNode(start, {
         type: 'BooleanKeywordTypeAnnotation',
-      };
+      });
 
     case 'mixed':
-      return {
-        loc: parser.finishLoc(start),
+      return parser.finishNode(start, {
         type: 'MixedKeywordTypeAnnotation',
-      };
+      });
 
     case 'empty':
-      return {
-        loc: parser.finishLoc(start),
+      return parser.finishNode(start, {
         type: 'EmptyKeywordTypeAnnotation',
-      };
+      });
 
     case 'number':
-      return {
-        loc: parser.finishLoc(start),
+      return parser.finishNode(start, {
         type: 'NumberKeywordTypeAnnotation',
-      };
+      });
 
     case 'string':
-      return {
-        loc: parser.finishLoc(start),
+      return parser.finishNode(start, {
         type: 'StringKeywordTypeAnnotation',
-      };
+      });
 
     case 'bigint':
-      return {
-        loc: parser.finishLoc(start),
+      return parser.finishNode(start, {
         type: 'BigIntKeywordTypeAnnotation',
-      };
+      });
 
     default:
       checkNotUnderscore(parser, id);
@@ -1638,14 +1595,13 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
 
         const returnType = parseFlowType(parser);
 
-        return {
-          loc: parser.finishLoc(start),
+        return parser.finishNode(start, {
           type: 'FlowFunctionTypeAnnotation',
           typeParameters,
           params,
           rest,
           returnType,
-        };
+        });
       }
       break;
 
@@ -1703,14 +1659,13 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
 
       const returnType = parseFlowType(parser);
 
-      return {
-        loc: parser.finishLoc(start),
+      return parser.finishNode(start, {
         type: 'FlowFunctionTypeAnnotation',
         typeParameters: undefined,
         params,
         rest,
         returnType,
-      };
+      });
     }
 
     case tt.num:
@@ -1722,31 +1677,19 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
 
     case tt._void:
       parser.next();
-      return {
-        type: 'VoidKeywordTypeAnnotation',
-        loc: parser.finishLoc(start),
-      };
+      return parser.finishNode(start, {type: 'VoidKeywordTypeAnnotation'});
 
     case tt._null:
       parser.next();
-      return {
-        type: 'NullKeywordTypeAnnotation',
-        loc: parser.finishLoc(start),
-      };
+      return parser.finishNode(start, {type: 'NullKeywordTypeAnnotation'});
 
     case tt._this:
       parser.next();
-      return {
-        type: 'FlowThisTypeAnnotation',
-        loc: parser.finishLoc(start),
-      };
+      return parser.finishNode(start, {type: 'FlowThisTypeAnnotation'});
 
     case tt.star:
       parser.next();
-      return {
-        type: 'FlowExistsTypeAnnotation',
-        loc: parser.finishLoc(start),
-      };
+      return parser.finishNode(start, {type: 'FlowExistsTypeAnnotation'});
 
     default:
       if (parser.state.tokenType.keyword === 'typeof') {
@@ -1764,10 +1707,7 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
   });
 
   // Fake node
-  return {
-    type: 'MixedKeywordTypeAnnotation',
-    loc: parser.finishLoc(start),
-  };
+  return parser.finishNode(start, {type: 'MixedKeywordTypeAnnotation'});
 }
 
 function parseFlowPostfixType(parser: JSParser): AnyFlowPrimary {
@@ -1777,11 +1717,10 @@ function parseFlowPostfixType(parser: JSParser): AnyFlowPrimary {
     const elementType = type;
     parser.expect(tt.bracketL);
     parser.expect(tt.bracketR);
-    type = {
-      loc: parser.finishLoc(startPos),
+    type = parser.finishNode(startPos, {
       type: 'FlowArrayTypeAnnotation',
       elementType,
-    };
+    });
   }
   return type;
 }
@@ -1789,11 +1728,10 @@ function parseFlowPostfixType(parser: JSParser): AnyFlowPrimary {
 function parseFlowPrefixType(parser: JSParser): AnyFlowPrimary {
   const start = parser.getPosition();
   if (parser.eat(tt.question)) {
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'FlowNullableTypeAnnotation',
       typeAnnotation: parseFlowPrefixType(parser),
-    };
+    });
   } else {
     return parseFlowPostfixType(parser);
   }
@@ -1806,12 +1744,11 @@ function parseFlowAnonFunctionWithoutParens(parser: JSParser): AnyFlowPrimary {
     const start = parser.getLoc(param).start;
     const params = [reinterpretTypeAsFlowFunctionTypeParam(parser, param)];
     const returnType = parseFlowType(parser);
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'FlowFunctionTypeAnnotation',
       params,
       returnType,
-    };
+    });
   }
 
   return param;
@@ -1830,11 +1767,10 @@ function parseFlowIntersectionType(parser: JSParser): AnyFlowPrimary {
   if (types.length === 1) {
     return type;
   } else {
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'IntersectionTypeAnnotation',
       types,
-    };
+    });
   }
 }
 
@@ -1864,11 +1800,10 @@ function parseFlowUnionType(parser: JSParser): AnyFlowPrimary {
   if (types.length === 1) {
     return type;
   } else {
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'UnionTypeAnnotation',
       types,
-    };
+    });
   }
 }
 
@@ -1906,15 +1841,10 @@ function parseFlowTypeAnnotatableIdentifier(
   if (typeAnnotation === undefined) {
     return ident;
   } else {
-    return {
+    return parser.finishNode(start, {
       ...ident,
-      loc: parser.finishLoc(start),
-      meta: {
-        type: 'PatternMeta',
-        loc: parser.finishLoc(start),
-        typeAnnotation,
-      },
-    };
+      meta: parser.finishNode(start, {type: 'PatternMeta', typeAnnotation}),
+    });
   }
 }
 
@@ -1932,12 +1862,13 @@ export function parseFlowClassImplemented(
       typeParameters = parseFlowTypeParameterInstantiation(parser);
     }
 
-    implemented.push({
-      loc: parser.finishLoc(start),
-      type: 'FlowClassImplements',
-      id: toReferenceIdentifier(id),
-      typeParameters,
-    });
+    implemented.push(
+      parser.finishNode(start, {
+        type: 'FlowClassImplements',
+        id: toReferenceIdentifier(id),
+        typeParameters,
+      }),
+    );
   } while (parser.eat(tt.comma));
 
   return implemented;
@@ -1954,11 +1885,10 @@ export function parseFlowVariance(parser: JSParser): undefined | FlowVariance {
       kind = 'minus';
     }
     parser.next();
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'FlowVariance',
       kind,
-    };
+    });
   }
 }
 
@@ -2000,6 +1930,7 @@ export function parseAsyncArrowWithFlowTypeParameters(
 export function parseFlowObjectTypeInternalSlot(
   parser: JSParser,
   start: Position,
+  isStatic: boolean,
 ): FlowObjectTypeInternalSlot {
   // Note: both bracketL have already been consumed
   const id = parseFlowObjectPropertyKey(parser);
@@ -2015,11 +1946,11 @@ export function parseFlowObjectTypeInternalSlot(
     value = parseFlowTypeInitialiser(parser);
   }
 
-  return {
+  return parser.finishNode(start, {
     type: 'FlowObjectTypeInternalSlot',
     optional,
     value,
     id,
-    loc: parser.finishLoc(start),
-  };
+    static: isStatic,
+  });
 }

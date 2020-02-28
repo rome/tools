@@ -35,6 +35,7 @@ import {parseTopLevel} from './parser/index';
 import {createInitialState} from './tokenizer/state';
 import {sub, Number0, number0} from '@romejs/ob1';
 import {Dict} from '@romejs/typescript-helpers';
+import {attachComments} from './parser/comments';
 
 const TOKEN_MISTAKES: Dict<string> = {
   ';': ':',
@@ -207,6 +208,24 @@ const createJSParser = createParser(
         if (branch.hasBranch()) {
           return branch.pickOptional();
         }
+      }
+
+      finishNode<T extends AnyNode>(start: Position, node: T): T {
+        return this.finishNodeAt(start, this.getEndPosition(), node);
+      }
+
+      finishNodeAt<T extends AnyNode>(
+        start: Position,
+        end: Position,
+        node: T,
+      ): T {
+        // Maybe mutating `node` is better...?
+        const newNode: T = {
+          ...node,
+          loc: this.finishLocAt(start, end),
+        };
+        attachComments(this, newNode);
+        return newNode;
       }
 
       createUnknownIdentifier(

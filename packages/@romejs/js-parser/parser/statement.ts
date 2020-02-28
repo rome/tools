@@ -164,11 +164,10 @@ export function expressionStatementToDirective(
 
   const end = parser.getLoc(stmt).end;
 
-  return {
-    loc: parser.finishLocAt(start, end),
+  return parser.finishNodeAt(start, end, {
     type: 'Directive',
     value: val,
-  };
+  });
 }
 
 export function isLetStart(parser: JSParser, context?: string): boolean {
@@ -521,17 +520,15 @@ export function parseBreakContinueStatement(
   }
 
   if (isBreak) {
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'BreakStatement',
       label,
-    };
+    });
   } else {
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'ContinueStatement',
       label,
-    };
+    });
   }
 }
 
@@ -541,7 +538,7 @@ export function parseDebuggerStatement(
 ): DebuggerStatement {
   parser.next();
   parser.semicolon();
-  return {loc: parser.finishLoc(start), type: 'DebuggerStatement'};
+  return parser.finishNode(start, {type: 'DebuggerStatement'});
 }
 
 export function parseDoStatement(
@@ -555,12 +552,11 @@ export function parseDoStatement(
   parser.expect(tt._while);
   const test = parseParenExpression(parser, 'do test');
   parser.eat(tt.semi);
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'DoWhileStatement',
     body,
     test,
-  };
+  });
 }
 
 // Disambiguating between a `for` and a `for`/`in` or `for`/`of`
@@ -603,12 +599,11 @@ export function parseForStatement(
 
     const declarations = parseVar(parser, initStart, kind, true);
 
-    const init: VariableDeclaration = {
-      loc: parser.finishLoc(initStart),
+    const init: VariableDeclaration = parser.finishNode(initStart, {
       type: 'VariableDeclaration',
       kind,
       declarations,
-    };
+    });
 
     if (
       (parser.match(tt._in) || parser.isContextual('of')) &&
@@ -673,13 +668,12 @@ export function parseIfStatement(
   const alternate = parser.eat(tt._else)
     ? parseStatement(parser, 'if')
     : undefined;
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'IfStatement',
     test,
     consequent,
     alternate,
-  };
+  });
 }
 
 export function parseReturnStatement(
@@ -707,11 +701,10 @@ export function parseReturnStatement(
     parser.semicolon();
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'ReturnStatement',
     argument,
-  };
+  });
 }
 
 export function parseSwitchStatement(
@@ -743,12 +736,13 @@ export function parseSwitchStatement(
         return undefined;
       }
 
-      cases.push({
-        loc: parser.finishLoc(cur.start),
-        type: 'SwitchCase',
-        test: cur.test,
-        consequent: cur.consequent,
-      });
+      cases.push(
+        parser.finishNode(cur.start, {
+          type: 'SwitchCase',
+          test: cur.test,
+          consequent: cur.consequent,
+        }),
+      );
 
       cur = undefined;
     }
@@ -806,12 +800,11 @@ export function parseSwitchStatement(
   parser.expectClosing(openContext);
   parser.state.labels.pop();
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'SwitchStatement',
     discriminant,
     cases,
-  };
+  });
 }
 
 export function parseThrowStatement(
@@ -835,11 +828,10 @@ export function parseThrowStatement(
 
   const argument = parseExpression(parser, 'throw argument');
   parser.semicolon();
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'ThrowStatement',
     argument,
-  };
+  });
 }
 
 export function parseTryStatement(
@@ -869,12 +861,11 @@ export function parseTryStatement(
     }
 
     const body = parseBlock(parser);
-    handler = {
-      loc: parser.finishLoc(clauseStart),
+    handler = parser.finishNode(clauseStart, {
       type: 'CatchClause',
       body,
       param,
-    };
+    });
   }
 
   const finalizer = parser.eat(tt._finally) ? parseBlock(parser) : undefined;
@@ -886,13 +877,12 @@ export function parseTryStatement(
     });
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TryStatement',
     block,
     finalizer,
     handler,
-  };
+  });
 }
 
 export function parseVarStatement(
@@ -903,16 +893,14 @@ export function parseVarStatement(
   parser.next();
   const declarations = parseVar(parser, start, kind, false);
   parser.semicolon();
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'VariableDeclarationStatement',
-    declaration: {
+    declaration: parser.finishNode(start, {
       type: 'VariableDeclaration',
-      loc: parser.finishLoc(start),
       kind,
       declarations,
-    },
-  };
+    }),
+  });
 }
 
 export function parseWhileStatement(
@@ -934,21 +922,19 @@ export function parseWithStatement(
   parser.next();
   const object = parseParenExpression(parser, 'with object');
   const body = parseStatement(parser, 'with');
-  const loc = parser.finishLoc(start);
 
   if (parser.inScope('STRICT')) {
     parser.addDiagnostic({
-      loc,
+      loc: parser.finishLoc(start),
       message: "'with' in strict mode",
     });
   }
 
-  return {
+  return parser.finishNode(start, {
     type: 'WithStatement',
-    loc,
     object,
     body,
-  };
+  });
 }
 
 export function parseEmptyStatement(
@@ -956,7 +942,7 @@ export function parseEmptyStatement(
   start: Position,
 ): EmptyStatement {
   parser.next();
-  return {loc: parser.finishLoc(start), type: 'EmptyStatement'};
+  return parser.finishNode(start, {type: 'EmptyStatement'});
 }
 
 export function parseLabeledStatement(
@@ -1024,15 +1010,14 @@ export function parseLabeledStatement(
   }
 
   parser.state.labels.pop();
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'LabeledStatement',
     label: {
       ...expr,
       type: 'Identifier',
     },
     body,
-  };
+  });
 }
 
 export function parseExpressionStatement(
@@ -1046,11 +1031,10 @@ export function parseExpressionStatement(
   }
 
   parser.semicolon();
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'ExpressionStatement',
     expression: expr,
-  };
+  });
 }
 
 export function parseBlock(
@@ -1065,12 +1049,11 @@ export function parseBlock(
     false,
     openContext,
   );
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'BlockStatement',
     directives,
     body,
-  };
+  });
 }
 
 export function isValidDirective(
@@ -1185,14 +1168,13 @@ export function parseFor(
   const body = parseStatement(parser, 'for');
   parser.state.labels.pop();
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'ForStatement',
     init,
     test,
     update,
     body,
-  };
+  });
 }
 
 export function parseForIn(
@@ -1239,23 +1221,21 @@ export function parseForIn(
   parser.state.labels.pop();
 
   if (isForIn) {
-    const node: ForInStatement = {
-      loc: parser.finishLoc(start),
+    const node: ForInStatement = parser.finishNode(start, {
       type: 'ForInStatement',
       left,
       right,
       body,
-    };
+    });
     return node;
   } else {
-    const node: ForOfStatement = {
-      loc: parser.finishLoc(start),
+    const node: ForOfStatement = parser.finishNode(start, {
       type: 'ForOfStatement',
       await: isAwait,
       left,
       right,
       body,
-    };
+    });
     return node;
   }
 }
@@ -1307,12 +1287,13 @@ export function parseVar(
       }
     }
 
-    declarations.push({
-      loc: parser.finishLoc(start),
-      type: 'VariableDeclarator',
-      id,
-      init,
-    });
+    declarations.push(
+      parser.finishNode(start, {
+        type: 'VariableDeclarator',
+        id,
+        init,
+      }),
+    );
 
     if (!parser.eat(tt.comma)) {
       break;
@@ -1346,24 +1327,18 @@ export function parseVarHead(
   if (parser.match(tt.colon)) {
     const typeAnnotation = parsePrimaryTypeAnnotation(parser);
 
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       ...id,
-      meta: {
+      meta: parser.finishNode(start, {
         type: 'PatternMeta',
-        loc: parser.finishLoc(start),
         typeAnnotation,
         definite,
-      },
-    };
+      }),
+    });
   } else if (definite) {
     return {
       ...id,
-      meta: {
-        type: 'PatternMeta',
-        loc: parser.finishLoc(start),
-        definite,
-      },
+      meta: parser.finishNode(start, {type: 'PatternMeta', definite}),
     };
   } else {
     return id;

@@ -73,11 +73,10 @@ function parseJSXIdentifier(parser: JSParser): JSXIdentifier {
     name = '';
   }
   parser.next();
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'JSXIdentifier',
     name,
-  };
+  });
 }
 
 // Parse namespaced identifier.
@@ -92,12 +91,11 @@ function parseJSXNamespacedName(
   }
 
   const name = parseJSXIdentifier(parser);
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'JSXNamespacedName',
     name,
     namespace,
-  };
+  });
 }
 
 // Parses element name in any form - namespaced, member
@@ -122,12 +120,11 @@ function parseJSXElementName(parser: JSParser): JSXElement['name'] {
 
   while (parser.eat(tt.dot)) {
     const property = parseJSXIdentifier(parser);
-    node = {
-      loc: parser.finishLoc(start),
+    node = parser.finishNode(start, {
       type: 'JSXMemberExpression',
       object: node,
       property,
-    };
+    });
   }
 
   return node;
@@ -161,11 +158,10 @@ function parseJSXAttributeValue(
         message:
           'JSX value should be either an expression or a quoted JSX text',
       });
-      return {
+      return parser.finishNode(parser.getPosition(), {
         type: 'StringLiteral',
-        loc: parser.finishLoc(parser.getPosition()),
         value: '?',
-      };
+      });
     }
   }
 }
@@ -174,10 +170,9 @@ function parseJSXAttributeValue(
 // and so it should start at the end of last read token (left brace) and finish
 // at the beginning of the next one (right brace).
 function parseJSXEmptyExpression(parser: JSParser): JSXEmptyExpression {
-  return {
-    loc: parser.finishLoc(parser.state.lastEndPos),
+  return parser.finishNode(parser.state.lastEndPos, {
     type: 'JSXEmptyExpression',
-  };
+  });
 }
 
 // Parse JSX spread child
@@ -192,11 +187,10 @@ function parseJSXSpreadChild(parser: JSParser): JSXSpreadChild {
   const expression = parseExpression(parser, 'jsx spread child expression');
   parser.expectClosing(openContext);
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'JSXSpreadChild',
     expression,
-  };
+  });
 }
 
 // Parses JSX expression enclosed into curly brackets.
@@ -214,11 +208,10 @@ function parseJSXExpressionContainer(parser: JSParser): JSXExpressionContainer {
     expression = parseExpression(parser, 'jsx inner expression container');
   }
   parser.expectClosing(openContext);
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'JSXExpressionContainer',
     expression,
-  };
+  });
 }
 
 // Parses following JSX attribute name-value pair.
@@ -236,21 +229,19 @@ function parseJSXAttribute(
     parser.expect(tt.ellipsis);
     const argument = parseMaybeAssign(parser, 'jsx attribute spread');
     parser.expectClosing(openContext);
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'JSXSpreadAttribute',
       argument,
-    };
+    });
   }
 
   const name = parseJSXNamespacedName(parser);
   const value = parser.eat(tt.eq) ? parseJSXAttributeValue(parser) : undefined;
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'JSXAttribute',
     name,
     value,
-  };
+  });
 }
 
 type OpeningElementDef = {
@@ -518,21 +509,19 @@ function parseJSXElementAt(
 
   const openingName = openingDef.name;
   if (openingName === undefined) {
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'JSXFragment',
       children,
-    };
+    });
   } else {
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'JSXElement',
       name: openingName,
       typeArguments: openingDef.typeArguments,
       attributes: openingDef.attributes,
       selfClosing: openingDef.selfClosing,
       children,
-    };
+    });
   }
 }
 
@@ -552,11 +541,10 @@ export function parseJSXText(parser: JSParser): JSXText {
   const start = parser.getPosition();
   const value = String(parser.state.tokenValue);
   parser.next();
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'JSXText',
     value,
-  };
+  });
 }
 
 // Parses entire JSX element from 'current position.
