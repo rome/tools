@@ -145,10 +145,9 @@ Program {
         }
       }
     }
-    ExportNamedDeclaration {
+    ExportLocalDeclaration {
       declaration: undefined
       exportKind: 'value'
-      source: undefined
       loc: Object {
         filename: '..'
         end: Object {
@@ -163,7 +162,7 @@ Program {
         }
       }
       specifiers: Array [
-        ExportSpecifier {
+        ExportLocalSpecifier {
           loc: Object {
             filename: '..'
             end: Object {
@@ -210,7 +209,7 @@ Program {
             }
           }
         }
-        ExportSpecifier {
+        ExportLocalSpecifier {
           loc: Object {
             filename: '..'
             end: Object {

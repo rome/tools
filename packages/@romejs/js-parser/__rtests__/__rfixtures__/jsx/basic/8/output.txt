@@ -40,7 +40,7 @@ Program {
         }
       }
       expression: JSXElement {
-        name: JSXReferenceIdentifier {
+        name: JSXIdentifier {
           name: 'a'
           loc: Object {
             filename: '..'
@@ -135,7 +135,7 @@ Program {
                   }
                 }
                 alternate: JSXElement {
-                  name: JSXReferenceIdentifier {
+                  name: JSXIdentifier {
                     name: 'd'
                     loc: Object {
                       filename: '..'
@@ -170,7 +170,7 @@ Program {
                   }
                 }
                 consequent: JSXElement {
-                  name: JSXReferenceIdentifier {
+                  name: JSXIdentifier {
                     name: 'c'
                     loc: Object {
                       filename: '..'

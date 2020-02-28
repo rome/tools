@@ -574,8 +574,7 @@ export default class Reporter {
 
   heading(text: string) {
     this.optionalSpacer();
-    const tty = formatAnsi.inverse(formatAnsi.bold(` ${text} `));
-    this.logAll(tty, {
+    this.logAll(`<inverse><emphasis>${text}</emphasis></inverse>`, {
       nonTTY: `## ${text}`,
     });
     this.spacer();
@@ -586,7 +585,7 @@ export default class Reporter {
     if (this.programVersion !== undefined) {
       msg += ` v${this.programVersion}`;
     }
-    this.logAll(formatAnsi.bold(msg), {
+    this.logAll(`<emphasis>${msg}</emphasis>`, {
       nonTTY: `# ${msg}`,
     });
   }
@@ -636,9 +635,7 @@ export default class Reporter {
       msg += '...';
     }
 
-    this.logAll(`${formatAnsi.dim(`[${current}/${total}]`)} ${msg}`, {
-      nonTTY: `[${current}/${total}] ${msg}`,
-    });
+    this.logAll(`<dim>[${current}/${total}]</dim> ${msg}`);
   }
 
   optionalSpacer() {
@@ -873,9 +870,7 @@ export default class Reporter {
       for (const [index, item] of tuples) {
         callback(item, str => {
           const num: string = rightPad(humanizeNumber(index + 1) + '.', numLen);
-          this.logAll(`${indent}${formatAnsi.dim(num)} ${str}`, {
-            nonTTY: `${indent}${num} ${str}`,
-          });
+          this.logAll(`${indent}<dim>${num}</dim> ${str}`);
         });
       }
     } else {
@@ -884,9 +879,7 @@ export default class Reporter {
 
       for (const [, item] of tuples) {
         callback(item, str => {
-          this.logAll(`${indent}${formatAnsi.dim('-')} ${str}`, {
-            nonTTY: `${indent}- ${str}`,
-          });
+          this.logAll(`${indent}<dim>-</dim> ${str}`);
         });
       }
     }

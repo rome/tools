@@ -11,14 +11,15 @@ import {types as tt} from '../tokenizer/types';
 import {
   AnyStatement,
   ExportAllDeclaration,
-  ExportNamedDeclaration,
+  ExportLocalDeclaration,
   ExportDefaultDeclaration,
   TSNamespaceExportDeclaration,
   TSExportAssignment,
   TSImportEqualsDeclaration,
   ConstExportModuleKind,
-  ExportSpecifier,
-  AnyExportSpecifier,
+  ExportLocalSpecifier,
+  AnyExportExternalSpecifier,
+  ExportExternalDeclaration,
   StringLiteral,
   ImportDeclaration,
   AnyNode,
@@ -65,7 +66,8 @@ import {
 export type ParseExportResult =
   | AnyStatement
   | ExportAllDeclaration
-  | ExportNamedDeclaration
+  | ExportLocalDeclaration
+  | ExportExternalDeclaration
   | ExportDefaultDeclaration
   | TSNamespaceExportDeclaration
   | TSExportAssignment
@@ -81,18 +83,16 @@ export function parseExport(
   }
 
   let exportKind: ConstExportModuleKind = 'value';
-  let source;
   let declaration: undefined | AnyStatement;
-  let specifiers: undefined | Array<ExportSpecifier>;
+  let specifiers: undefined | Array<ExportLocalSpecifier>;
 
   // export * from '...'';
   if (shouldParseExportStar(parser)) {
     return parseExportStar(parser, start);
   } else if (isExportDefaultSpecifier(parser)) {
-    let specifiers: Array<AnyExportSpecifier> = [];
-
     const defStart = parser.getPosition();
     const defExported = parseIdentifier(parser, true);
+    let specifiers: Array<AnyExportExternalSpecifier> = [];
 
     specifiers.push({
       loc: parser.finishLoc(defStart),
@@ -115,10 +115,16 @@ export function parseExport(
         exported,
       });
     } else {
-      specifiers = [...specifiers, ...parseExportSpecifiersMaybe(parser)];
+      specifiers = [
+        ...specifiers,
+        ...convertLocalToExternalSpecifiers(
+          parseExportLocalSpecifiersMaybe(parser),
+        ),
+      ];
     }
 
-    source = parseExportFrom(parser, true);
+    const source = parseExportFromExpect(parser);
+    return createExportExternalDeclaration(parser, start, specifiers, source);
   } else if (parser.eat(tt._default)) {
     // export default ...
     const declaration = parseExportDefaultExpression(parser);
@@ -131,9 +137,26 @@ export function parseExport(
     };
     return node;
   } else if (shouldParseExportDeclaration(parser)) {
+    let source;
     ({declaration, source, specifiers, exportKind} = parseExportDeclaration(
       parser,
     ));
+
+    if (source !== undefined) {
+      if (declaration !== undefined) {
+        throw new Error(
+          "When there's a source we don't also expect a declaration",
+        );
+      }
+
+      return createExportExternalDeclaration(
+        parser,
+        start,
+        specifiers,
+        source,
+        exportKind,
+      );
+    }
   } else if (
     parser.isContextual('async') &&
     !isAsyncFunctionDeclarationStart(parser)
@@ -148,22 +171,17 @@ export function parseExport(
     });
     declaration = undefined;
     specifiers = [];
-    source = undefined;
   } else {
     // export { x, y as z } [from '...']';
-    declaration = undefined;
     specifiers = parseExportSpecifiers(parser);
-    source = parseExportFrom(parser, false);
+
+    const source = parseExportFrom(parser, false);
+    if (source !== undefined) {
+      return createExportExternalDeclaration(parser, start, specifiers, source);
+    }
   }
 
-  checkExport(
-    parser,
-    specifiers,
-    declaration,
-    true,
-    false,
-    source !== undefined,
-  );
+  checkExport(parser, specifiers, declaration, true, false);
 
   if (declaration !== undefined) {
     if (
@@ -186,15 +204,54 @@ export function parseExport(
     }
   }
 
-  const node: ExportNamedDeclaration = {
+  const node: ExportLocalDeclaration = {
     loc: parser.finishLoc(start),
-    type: 'ExportNamedDeclaration',
+    type: 'ExportLocalDeclaration',
     exportKind,
     specifiers,
-    source,
     declaration,
   };
   return node;
+}
+
+function createExportExternalDeclaration(
+  parser: JSParser,
+  start: Position,
+  rawSpecifiers:
+    | undefined
+    | Array<ExportLocalSpecifier | AnyExportExternalSpecifier>,
+  source: StringLiteral,
+  exportKind?: ConstExportModuleKind,
+): ExportExternalDeclaration {
+  const specifiers =
+    rawSpecifiers === undefined
+      ? undefined
+      : convertLocalToExternalSpecifiers(rawSpecifiers);
+  checkExport(parser, specifiers, undefined, true, false);
+
+  return {
+    type: 'ExportExternalDeclaration',
+    exportKind,
+    source,
+    specifiers,
+    loc: parser.finishLoc(start),
+  };
+}
+
+function convertLocalToExternalSpecifiers(
+  specifiers: Array<AnyExportExternalSpecifier | ExportLocalSpecifier>,
+): Array<AnyExportExternalSpecifier> {
+  return specifiers.map(specifier => {
+    if (specifier.type === 'ExportLocalSpecifier') {
+      return {
+        ...specifier,
+        type: 'ExportExternalSpecifier',
+        local: toIdentifier(specifier.local),
+      };
+    } else {
+      return specifier;
+    }
+  });
 }
 
 function parseExportDefaultExpression(
@@ -246,7 +303,7 @@ function parseExportDeclaration(
 ): {
   exportKind: ConstExportModuleKind;
   declaration?: AnyStatement;
-  specifiers?: Array<ExportSpecifier>;
+  specifiers?: Array<ExportLocalSpecifier>;
   source?: StringLiteral;
 } {
   if (parser.isContextual('type')) {
@@ -331,12 +388,19 @@ function isExportDefaultSpecifier(parser: JSParser): boolean {
   return false;
 }
 
-function parseExportSpecifiersMaybe(parser: JSParser): Array<ExportSpecifier> {
+function parseExportLocalSpecifiersMaybe(
+  parser: JSParser,
+): Array<ExportLocalSpecifier> {
   if (parser.eat(tt.comma)) {
     return parseExportSpecifiers(parser);
   } else {
     return [];
   }
+}
+
+function parseExportFromExpect(parser: JSParser): StringLiteral {
+  // @ts-ignore: `expect` parameter will always return a StringLiteral
+  return parseExportFrom(parser, true);
 }
 
 function parseExportFrom(
@@ -390,7 +454,7 @@ function shouldParseExportStar(parser: JSParser): boolean {
 function parseExportStar(
   parser: JSParser,
   start: Position,
-): ExportAllDeclaration | ExportNamedDeclaration {
+): ExportAllDeclaration | ExportLocalDeclaration | ExportExternalDeclaration {
   let exportKind: undefined | ConstExportModuleKind;
   if (parser.eatContextual('type')) {
     exportKind = 'type';
@@ -402,7 +466,7 @@ function parseExportStar(
     const {source, specifiers} = parseExportNamespace(parser, exportKind);
     return {
       loc: parser.finishLoc(start),
-      type: 'ExportNamedDeclaration',
+      type: 'ExportExternalDeclaration',
       exportKind,
       specifiers,
       source,
@@ -425,8 +489,8 @@ function parseExportNamespace(
   parser: JSParser,
   exportKind: undefined | ConstExportModuleKind,
 ): {
-  source: undefined | StringLiteral;
-  specifiers: Array<AnyExportSpecifier>;
+  source: StringLiteral;
+  specifiers: Array<AnyExportExternalSpecifier>;
 } {
   if (exportKind === 'type') {
     parser.addDiagnostic({
@@ -438,7 +502,7 @@ function parseExportNamespace(
   parser.next();
   const exported = parseIdentifier(parser, true);
 
-  let specifiers: Array<AnyExportSpecifier> = [];
+  let specifiers: Array<AnyExportExternalSpecifier> = [];
 
   specifiers.push({
     loc: parser.finishLoc(specifierStart),
@@ -446,10 +510,14 @@ function parseExportNamespace(
     exported,
   });
 
-  specifiers = [...specifiers, ...parseExportSpecifiersMaybe(parser)];
+  specifiers = [
+    ...specifiers,
+    ...convertLocalToExternalSpecifiers(
+      parseExportLocalSpecifiersMaybe(parser),
+    ),
+  ];
 
-  const source = parseExportFrom(parser, true);
-
+  const source = parseExportFromExpect(parser);
   return {source, specifiers};
 }
 
@@ -471,11 +539,12 @@ function shouldParseExportDeclaration(parser: JSParser): boolean {
 
 function checkExport(
   parser: JSParser,
-  specifiers: undefined | Array<ExportSpecifier>,
+  specifiers:
+    | undefined
+    | Array<ExportLocalSpecifier | AnyExportExternalSpecifier>,
   declaration: undefined | AnyNode,
   checkNames: boolean = false,
   isDefault: boolean = false,
-  isFrom: boolean = false,
 ): void {
   if (checkNames === false) {
     return undefined;
@@ -495,9 +564,9 @@ function checkExport(
     for (const specifier of specifiers) {
       checkDuplicateExports(parser, specifier, specifier.exported.name);
 
-      if (specifier.type === 'ExportSpecifier') {
+      if (specifier.type === 'ExportLocalSpecifier') {
         const {local} = specifier;
-        if (!isFrom && local !== undefined) {
+        if (local !== undefined) {
           // check for keywords used as local names
           checkReservedWord(
             parser,
@@ -577,8 +646,8 @@ function checkDuplicateExports(
 
 // Parses a comma-separated list of module exports.
 
-function parseExportSpecifiers(parser: JSParser): Array<ExportSpecifier> {
-  const specifiers: Array<ExportSpecifier> = [];
+function parseExportSpecifiers(parser: JSParser): Array<ExportLocalSpecifier> {
+  const specifiers: Array<ExportLocalSpecifier> = [];
   let first = true;
 
   // export { x, y as z } [from '...']';
@@ -610,7 +679,7 @@ function parseExportSpecifiers(parser: JSParser): Array<ExportSpecifier> {
       : toIdentifier(parser.cloneNode(local));
     specifiers.push({
       loc: parser.finishLoc(start),
-      type: 'ExportSpecifier',
+      type: 'ExportLocalSpecifier',
       local,
       exported,
       // TODO exportKind?

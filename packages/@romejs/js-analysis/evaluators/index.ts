@@ -171,14 +171,20 @@ evaluators.set('ExportDefaultDeclaration', ExportDefaultDeclaration);
 import ExportDefaultSpecifier from './modules/ExportDefaultSpecifier';
 evaluators.set('ExportDefaultSpecifier', ExportDefaultSpecifier);
 
-import ExportNamedDeclaration from './modules/ExportNamedDeclaration';
-evaluators.set('ExportNamedDeclaration', ExportNamedDeclaration);
+import ExportExternalDeclaration from './modules/ExportExternalDeclaration';
+evaluators.set('ExportExternalDeclaration', ExportExternalDeclaration);
+
+import ExportExternalSpecifier from './modules/ExportExternalSpecifier';
+evaluators.set('ExportExternalSpecifier', ExportExternalSpecifier);
+
+import ExportLocalDeclaration from './modules/ExportLocalDeclaration';
+evaluators.set('ExportLocalDeclaration', ExportLocalDeclaration);
+
+import ExportLocalSpecifier from './modules/ExportLocalSpecifier';
+evaluators.set('ExportLocalSpecifier', ExportLocalSpecifier);
 
 import ExportNamespaceSpecifier from './modules/ExportNamespaceSpecifier';
 evaluators.set('ExportNamespaceSpecifier', ExportNamespaceSpecifier);
-
-import ExportSpecifier from './modules/ExportSpecifier';
-evaluators.set('ExportSpecifier', ExportSpecifier);
 
 import ExpressionStatement from './statements/ExpressionStatement';
 evaluators.set('ExpressionStatement', ExpressionStatement);

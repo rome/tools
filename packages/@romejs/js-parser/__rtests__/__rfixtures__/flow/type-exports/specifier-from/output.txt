@@ -25,8 +25,7 @@ Program {
     }
   }
   body: Array [
-    ExportNamedDeclaration {
-      declaration: undefined
+    ExportExternalDeclaration {
       exportKind: 'type'
       loc: Object {
         filename: '..'
@@ -58,7 +57,7 @@ Program {
         }
       }
       specifiers: Array [
-        ExportSpecifier {
+        ExportExternalSpecifier {
           loc: Object {
             filename: '..'
             end: Object {
@@ -88,7 +87,7 @@ Program {
               }
             }
           }
-          local: ReferenceIdentifier {
+          local: Identifier {
             name: 'foo'
             loc: Object {
               filename: '..'

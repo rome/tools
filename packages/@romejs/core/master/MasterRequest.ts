@@ -246,6 +246,7 @@ export default class MasterRequest {
 
   async getFilesFromArgs(
     getIgnoreForProject: (project: ProjectDefinition) => PathPatterns,
+    extensions?: Array<string>,
   ): Promise<Array<AbsoluteFilePath>> {
     const {master} = this;
     const {flags} = this.client;
@@ -268,7 +269,10 @@ export default class MasterRequest {
       const project = await master.projectManager.assertProject(arg);
       const projectIgnore: PathPatterns = getIgnoreForProject(project);
 
-      const matches = master.memoryFs.glob(arg, {ignore: projectIgnore});
+      const matches = master.memoryFs.glob(arg, {
+        ignore: projectIgnore,
+        extensions,
+      });
       files = files.concat(matches);
     }
     return files;

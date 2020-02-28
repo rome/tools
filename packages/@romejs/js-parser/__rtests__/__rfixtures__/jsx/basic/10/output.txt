@@ -57,7 +57,7 @@ Program {
         }
       }
       expression: JSXElement {
-        name: JSXReferenceIdentifier {
+        name: JSXIdentifier {
           name: 'a'
           loc: Object {
             filename: '..'

@@ -11,7 +11,7 @@ import {
   exportDefaultDeclaration,
   AnyNode,
 } from '@romejs/js-ast';
-import {_ExportDeclaration} from './ExportNamedDeclaration';
+import {_ExportDeclaration} from './ExportLocalDeclaration';
 export default function ExportDefaultDeclaration(
   generator: Generator,
   node: AnyNode,

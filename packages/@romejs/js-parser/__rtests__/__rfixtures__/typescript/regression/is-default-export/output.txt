@@ -22,9 +22,8 @@ Program {
     }
   }
   body: Array [
-    ExportNamedDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'type'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -87,9 +86,8 @@ Program {
         }
       }
     }
-    ExportNamedDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -138,9 +136,8 @@ Program {
         }
       }
     }
-    ExportNamedDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'type'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'

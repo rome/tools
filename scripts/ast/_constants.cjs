@@ -9,7 +9,7 @@ const path = require('path');
 const fs = require('fs');
 
 const root = path.join(__dirname, '..', '..');
-const packages = path.join(root, 'packages', 'romejs');
+const packages = path.join(root, 'packages', '@romejs');
 const generatorsFolder = path.join(packages, 'js-generator', 'generators');
 const analysisFolder = path.join(packages, 'js-analysis', 'evaluators');
 const astFolder = path.join(packages, 'js-ast');

@@ -72,8 +72,7 @@ Program {
         }
         body: Array [
           FlowDeclareExportNamed {
-            declaration: undefined
-            exportKind: 'value'
+            exportKind: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -104,7 +103,7 @@ Program {
               }
             }
             specifiers: Array [
-              ExportSpecifier {
+              ExportExternalSpecifier {
                 loc: Object {
                   filename: '..'
                   end: Object {
@@ -134,7 +133,7 @@ Program {
                     }
                   }
                 }
-                local: ReferenceIdentifier {
+                local: Identifier {
                   name: 'a'
                   loc: Object {
                     filename: '..'
