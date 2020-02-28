@@ -39,9 +39,7 @@ export type ProjectConfigObjects = {
 
   resolver: {};
 
-  compiler: {
-    legacyBabelInterop: boolean;
-  };
+  compiler: {};
 
   bundler: {
     mode: BundlerMode;
@@ -54,7 +52,6 @@ export type ProjectConfigObjects = {
 
   lint: {
     enabled: boolean;
-    legacyEslintInterop: boolean;
     globals: Array<string>;
     ignore: PathPatterns;
   };
@@ -70,8 +67,6 @@ export type ProjectConfigObjects = {
 
   tests: {
     enabled: boolean;
-    folderName: string;
-    mocksFolderName: string;
     ignore: PathPatterns;
   };
 
@@ -198,9 +193,7 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
     mode: 'modern',
   },
 
-  compiler: {
-    legacyBabelInterop: false,
-  },
+  compiler: {},
 
   resolver: {},
 
@@ -225,15 +218,12 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
 
   lint: {
     enabled: false,
-    legacyEslintInterop: false,
     ignore: [],
     globals: [],
   },
 
   tests: {
     enabled: false,
-    folderName: '__rtests__',
-    mocksFolderName: '__rmocks__',
     ignore: [],
   },
 

@@ -15,13 +15,14 @@ import {commandCategories} from '../../commands';
 import Bundler from '../bundler/Bundler';
 import {AbsoluteFilePath} from '@romejs/path';
 import {JS_EXTENSIONS} from '../../common/fileHandlers';
+import {TEST_FOLDER_NAME} from '@romejs/core/common/constants';
 
-function isTestFile(path: AbsoluteFilePath, testFolder: string): boolean {
+function isTestFile(path: AbsoluteFilePath): boolean {
   const parts = path.getSegments();
 
   for (const part of parts) {
     // Don't include files/directories that are prefixed with an underscore
-    if (part[0] === '_' && part !== testFolder) {
+    if (part[0] === '_' && part !== TEST_FOLDER_NAME) {
       return false;
     }
 
@@ -33,7 +34,7 @@ function isTestFile(path: AbsoluteFilePath, testFolder: string): boolean {
 
   // Make sure we're actually a test file
   for (const part of parts) {
-    if (part === testFolder) {
+    if (part === TEST_FOLDER_NAME) {
       return true;
     }
   }
@@ -78,9 +79,7 @@ export default createMasterCommand({
       const matches = master.memoryFs.glob(loc, {extensions: JS_EXTENSIONS});
 
       for (const path of matches) {
-        const project = master.projectManager.assertProjectExisting(path);
-
-        if (isTestFile(path, project.config.tests.folderName)) {
+        if (isTestFile(path)) {
           files.push(path);
         }
       }
