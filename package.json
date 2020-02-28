@@ -1,4 +1,5 @@
 {
+  "name": "rome-root",
   "license": "MIT",
   "version": "0.0.2",
   "//": "Look! No deps!",
@@ -32,11 +33,11 @@
         "node_modules",
         "core/static",
         "resources",
-        "__generated__",
-        "__fixtures__",
+        "__rfixtures__",
         "vendor",
         "type-libs",
-        "lib/modules.js"
+        "lib/modules.js",
+        "prelude.ts"
       ]
     }
   }
