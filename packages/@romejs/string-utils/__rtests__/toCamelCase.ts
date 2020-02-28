@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { toCamelCase } from '../toCamelCase';
+import {toCamelCase} from '../toCamelCase';
 import test from '@romejs/test';
 
 test('toCamelCase', t => {
-    const testCases = [
-        { input: 'rometest', expected: 'rometest' },
-        { input: 'rome test', expected: 'romeTest' },
-        { input: 'RoMe TeSt', expected: 'romeTest' },
-        { input: 'ROME TEST', expected: 'romeTest' }
-    ]
+  const testCases = [
+    {input: 'rometest', expected: 'rometest'},
+    {input: 'rome test', expected: 'romeTest'},
+    {input: 'RoMe TeSt', expected: 'romeTest'},
+    {input: 'ROME TEST', expected: 'romeTest'},
+  ];
 
-    testCases.forEach(td => {
-        t.is(toCamelCase(td.input), td.expected)
-    });
+  testCases.forEach(td => {
+    t.is(toCamelCase(td.input), td.expected);
+  });
 });

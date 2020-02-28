@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { humanizeTime } from '../humanizeTime';
+import {humanizeTime} from '../humanizeTime';
 import test from '@romejs/test';
 
 test('humanizeTime', t => {

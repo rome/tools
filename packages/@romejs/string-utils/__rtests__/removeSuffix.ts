@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { removeSuffix } from '../removeSuffix';
+import {removeSuffix} from '../removeSuffix';
 import test from '@romejs/test';
 
 test('removeSuffix', t => {
-    const testCases = [
-        { firstInput: 'romeTest', secondInput: 'Test', expected: 'rome' },
-        { firstInput: 'romeTest', secondInput: 'rome', expected: 'romeTest' },
-        { firstInput: 'romeTest', secondInput: '123', expected: 'romeTest' }
-    ]
+  const testCases = [
+    {firstInput: 'romeTest', secondInput: 'Test', expected: 'rome'},
+    {firstInput: 'romeTest', secondInput: 'rome', expected: 'romeTest'},
+    {firstInput: 'romeTest', secondInput: '123', expected: 'romeTest'},
+  ];
 
-    testCases.forEach(td => {
-        t.is(removeSuffix(td.firstInput, td.secondInput), td.expected)
-    });
+  testCases.forEach(td => {
+    t.is(removeSuffix(td.firstInput, td.secondInput), td.expected);
+  });
 });

@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { removePrefix } from '../removePrefix';
+import {removePrefix} from '../removePrefix';
 import test from '@romejs/test';
 
 test('removePrefix', t => {
-    const testCases = [
-        { firstInput: 'romeTest', secondInput: 'rome', expected: 'Test' },
-        { firstInput: 'Testrome', secondInput: 'rome', expected: 'Testrome' },
-        { firstInput: 'romeTest', secondInput: '123', expected: 'romeTest' }
-    ]
+  const testCases = [
+    {firstInput: 'romeTest', secondInput: 'rome', expected: 'Test'},
+    {firstInput: 'Testrome', secondInput: 'rome', expected: 'Testrome'},
+    {firstInput: 'romeTest', secondInput: '123', expected: 'romeTest'},
+  ];
 
-    testCases.forEach(td => {
-        t.is(removePrefix(td.firstInput, td.secondInput), td.expected)
-    });
+  testCases.forEach(td => {
+    t.is(removePrefix(td.firstInput, td.secondInput), td.expected);
+  });
 });
