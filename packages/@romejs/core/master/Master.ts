@@ -791,6 +791,14 @@ export default class Master {
           message: err.message,
           stack: err.stack,
         };
+      } else if (diagnostics.length === 0) {
+        // Maybe DIAGNOSTICS and an empty array still makes sense instead of SUCCESS?
+        return {
+          type: 'SUCCESS',
+          hasData: false,
+          data: undefined,
+          markers,
+        };
       } else {
         return {
           type: 'DIAGNOSTICS',
