@@ -247,10 +247,12 @@ export function normalizeProjectConfig(
 
   const cache = consumer.get('cache');
   if (categoryExists(cache)) {
+    // TODO
   }
 
   const resolver = consumer.get('resolver');
   if (categoryExists(resolver)) {
+    // TODO
   }
 
   const bundler = consumer.get('bundler');
@@ -375,6 +377,7 @@ export function normalizeProjectConfig(
 
   const compiler = consumer.get('compiler');
   if (categoryExists(compiler)) {
+    // TODO
   }
 
   const targets = consumer.get('targets');

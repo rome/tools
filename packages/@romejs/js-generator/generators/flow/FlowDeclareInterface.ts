@@ -16,11 +16,10 @@ import FlowInterfaceDeclaration from './FlowInterfaceDeclaration';
 export default function FlowDeclareInterface(
   generator: Generator,
   node: AnyNode,
-  parent: AnyNode,
 ) {
   node = flowDeclareInterface.assert(node);
 
   generator.word('declare');
   generator.space();
-  FlowInterfaceDeclaration(generator, node, parent);
+  FlowInterfaceDeclaration(generator, node);
 }

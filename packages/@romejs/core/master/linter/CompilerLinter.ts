@@ -34,7 +34,7 @@ export default class CompilerLinter {
 
     let i = 0;
     await Promise.all(
-      pathsByWorker.map(async (paths, workerNum) => {
+      pathsByWorker.map(async paths => {
         for (const path of paths) {
           i++;
           spinner.setCurrent(i);

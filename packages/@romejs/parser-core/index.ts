@@ -491,6 +491,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
   getLoc(node: undefined | NodeBase): SourceLocation {
     if (node === undefined || node.loc === undefined) {
+      console.log(node);
       throw new Error('Tried to fetch node loc start but none found');
     } else {
       return node.loc;

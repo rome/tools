@@ -106,14 +106,11 @@ export default class Bundler {
     return new BundleRequest(this, mode, resolvedEntry);
   }
 
-  async compile(
-    path: AbsoluteFilePath,
-    hmr: boolean = false,
-  ): Promise<WorkerCompileResult> {
+  async compile(path: AbsoluteFilePath): Promise<WorkerCompileResult> {
     const bundleRequest = this.createBundleRequest(path);
     await bundleRequest.stepAnalyze();
     bundleRequest.diagnostics.maybeThrowDiagnosticsError();
-    return await bundleRequest.compileJS(path, hmr);
+    return await bundleRequest.compileJS(path);
   }
 
   // This will take multiple entry points and do some magic to make them more efficient to build in parallel

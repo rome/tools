@@ -65,9 +65,6 @@ function cleanUidParts(parts: Array<string>): string {
     lastPart = part;
   }
 
-  console.log(uid);
-  console.log();
-
   return uid;
 }
 
@@ -260,8 +257,6 @@ export default class ProjectManager {
     if (relative !== undefined) {
       parts.push(relative);
     }
-
-    console.log(parts);
 
     const uid = cleanUidParts(parts);
     this.setUid(path, uid);
