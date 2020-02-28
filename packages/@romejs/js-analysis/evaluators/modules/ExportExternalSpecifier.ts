@@ -5,10 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {ExportSpecifier, exportSpecifier, AnyNode} from '@romejs/js-ast';
+import {
+  AnyNode,
+  ExportExternalSpecifier,
+  exportExternalSpecifier,
+} from '@romejs/js-ast';
 
-export default function ExportSpecifier(node: AnyNode, scope: Scope) {
-  node = exportSpecifier.assert(node);
+export default function ExportExternalSpecifier(node: AnyNode) {
+  node = exportExternalSpecifier.assert(node);
   throw new Error('unimplemented');
 }

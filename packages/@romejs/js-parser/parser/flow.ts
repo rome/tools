@@ -120,7 +120,7 @@ function checkNotUnderscore(parser: JSParser, id: Identifier) {
 function isEsModuleType(bodyElement: AnyNode): boolean {
   return (
     bodyElement.type === 'ExportAllDeclaration' ||
-    (bodyElement.type === 'ExportNamedDeclaration' &&
+    (bodyElement.type === 'ExportLocalDeclaration' &&
       (!bodyElement.declaration ||
         (bodyElement.declaration.type !== 'TypeAliasTypeAnnotation' &&
           bodyElement.declaration.type !== 'FlowInterfaceDeclaration')))
@@ -374,7 +374,7 @@ export function parseFlowDeclare(
   }
 
   if (parser.match(tt._export)) {
-    return parseExportNamedDeclaration(parser, start, insideModule);
+    return parseExportLocalDeclaration(parser, start, insideModule);
   }
 
   parser.addDiagnostic({
@@ -514,7 +514,7 @@ function parseFlowDeclareModule(
   };
 }
 
-function parseExportNamedDeclaration(
+function parseExportLocalDeclaration(
   parser: JSParser,
   start: Position,
   insideModule: undefined | boolean,
@@ -586,7 +586,10 @@ function parseExportNamedDeclaration(
       const node = parseExport(parser, start);
 
       if (node !== undefined) {
-        if (node.type === 'ExportNamedDeclaration') {
+        if (
+          node.type === 'ExportLocalDeclaration' ||
+          node.type === 'ExportExternalDeclaration'
+        ) {
           return {
             ...node,
             type: 'FlowDeclareExportNamed',

@@ -11,6 +11,7 @@ import {PartialDiagnostics} from '@romejs/diagnostics';
 import {humanizeNumber} from '@romejs/string-utils';
 import {parsePathPattern} from '@romejs/path-match';
 import {ProjectDefinition} from '@romejs/project';
+import {LINTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
 
 export default class CompilerLinter {
   constructor(req: MasterRequest, printer: DiagnosticsPrinter) {
@@ -29,8 +30,9 @@ export default class CompilerLinter {
       parsePathPattern({input: '__generated__'}),
     ];
 
-    const files = await request.getFilesFromArgs(project =>
-      project.config.lint.ignore.concat(globalIgnore),
+    const files = await request.getFilesFromArgs(
+      project => project.config.lint.ignore.concat(globalIgnore),
+      LINTABLE_EXTENSIONS,
     );
 
     const filesByWorker = await master.fileAllocator.groupFilesByWorker(files);

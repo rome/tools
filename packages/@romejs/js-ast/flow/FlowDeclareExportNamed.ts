@@ -7,18 +7,19 @@
 
 import {
   JSNodeBase,
-  AnyExportSpecifier,
+  AnyExportExternalSpecifier,
+  ExportLocalSpecifier,
   StringLiteral,
   ConstExportModuleKind,
   AnyFlowDeclare,
-  ExportNamedDeclaration,
+  ExportLocalDeclaration,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type FlowDeclareExportNamed = JSNodeBase & {
   type: 'FlowDeclareExportNamed';
-  declaration?: AnyFlowDeclare | ExportNamedDeclaration['declaration'];
-  specifiers?: Array<AnyExportSpecifier>;
+  declaration?: AnyFlowDeclare | ExportLocalDeclaration['declaration'];
+  specifiers?: Array<ExportLocalSpecifier | AnyExportExternalSpecifier>;
   source?: StringLiteral;
   exportKind?: ConstExportModuleKind;
   declare?: boolean;

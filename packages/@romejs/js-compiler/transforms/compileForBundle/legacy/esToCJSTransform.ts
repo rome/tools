@@ -12,6 +12,8 @@ import {
   program,
   stringLiteral,
   ClassExpression,
+  ExportLocalDeclaration,
+  ExportExternalDeclaration,
 } from '@romejs/js-ast';
 import {template, getBindingIdentifiers} from '@romejs/js-ast-utils';
 import {getOptions, getModuleId} from '../_utils';
@@ -77,13 +79,26 @@ export default {
         continue;
       }
 
-      if (bodyNode.type === 'ExportNamedDeclaration') {
+      if (
+        bodyNode.type === 'ExportLocalDeclaration' ||
+        bodyNode.type === 'ExportExternalDeclaration'
+      ) {
         // Ignore typed exports
         if (bodyNode.exportKind === 'type') {
           continue;
         }
 
-        const {declaration, specifiers, source} = bodyNode;
+        let declaration: undefined | ExportLocalDeclaration['declaration'];
+        let source: undefined | ExportExternalDeclaration['source'];
+        const {specifiers} = bodyNode;
+
+        if (bodyNode.type === 'ExportExternalDeclaration') {
+          source = bodyNode.source;
+        }
+
+        if (bodyNode.type === 'ExportLocalDeclaration') {
+          declaration = bodyNode.declaration;
+        }
 
         if (declaration !== undefined) {
           // Hoist function declarations
@@ -134,7 +149,10 @@ export default {
             }
 
             // TODO skip type exports
-            if (specifier.type === 'ExportSpecifier') {
+            if (
+              specifier.type === 'ExportLocalSpecifier' ||
+              specifier.type === 'ExportExternalSpecifier'
+            ) {
               if (source === undefined) {
                 const binding = path.scope.getBinding(specifier.local.name);
 

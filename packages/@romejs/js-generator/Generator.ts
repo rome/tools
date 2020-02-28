@@ -189,14 +189,18 @@ export default class Generator {
   }
 
   newline(): void {
-    // never allow more than two lines
+    if (this.buf.isEmpty()) {
+      return;
+    }
+
+    // Never allow more than two lines
     if (this.endsWith('\n\n')) {
-      return undefined;
+      return;
     }
 
     //
     if (this.endsWith('{\n') || this.endsWith(':\n')) {
-      return undefined;
+      return;
     }
 
     this.append('\n', true /* queue */);

@@ -8,34 +8,39 @@
 import {Path} from '@romejs/js-compiler';
 import {
   AnyNode,
-  referenceIdentifier,
-  ExportNamedDeclaration,
+  ExportLocalDeclaration,
+  ExportExternalDeclaration,
 } from '@romejs/js-ast';
 import {ImportBinding} from '@romejs/js-compiler';
 import {
-  exportNamedDeclaration,
-  exportSpecifier,
+  exportLocalDeclaration,
+  exportExternalDeclaration,
+  exportExternalSpecifier,
+  identifier,
   stringLiteral,
 } from '@romejs/js-ast';
 
 export default {
   name: 'optimizeExports',
-  enter(path: Path): AnyNode | Array<ExportNamedDeclaration> {
+  enter(
+    path: Path,
+  ): AnyNode | Array<ExportExternalDeclaration | ExportLocalDeclaration> {
     const {node} = path;
 
     // turn `import {a} from 'b'; export {a}`; to `export {a} from 'b';`';
     if (
-      node.type === 'ExportNamedDeclaration' &&
+      node.type === 'ExportLocalDeclaration' &&
       node.exportKind === 'value' &&
-      node.source === undefined &&
       node.declaration === undefined &&
       node.specifiers !== undefined
     ) {
-      const nodes: Array<ExportNamedDeclaration> = [];
+      const nodes: Array<
+        ExportExternalDeclaration | ExportLocalDeclaration
+      > = [];
       const specifiers = [];
 
       for (const specifier of node.specifiers) {
-        if (specifier.type === 'ExportSpecifier') {
+        if (specifier.type === 'ExportLocalSpecifier') {
           const binding = path.scope.getBinding(specifier.local.name);
           if (
             binding !== undefined &&
@@ -43,10 +48,10 @@ export default {
             binding.meta.type === 'name'
           ) {
             nodes.push(
-              exportNamedDeclaration.create({
+              exportExternalDeclaration.create({
                 specifiers: [
-                  exportSpecifier.create({
-                    local: referenceIdentifier.quick(binding.meta.imported),
+                  exportExternalSpecifier.create({
+                    local: identifier.quick(binding.meta.imported),
                     exported: specifier.exported,
                     loc: specifier.loc,
                   }),
@@ -68,7 +73,7 @@ export default {
       }
 
       if (specifiers.length !== 0) {
-        nodes.push(exportNamedDeclaration.create({specifiers}));
+        nodes.push(exportLocalDeclaration.create({specifiers}));
       }
 
       return nodes;

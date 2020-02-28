@@ -255,6 +255,30 @@ export default class Buffer {
     }
   }
 
+  isEmpty(): boolean {
+    // Fast paths
+    if (this.buf.length === 0 && this._queue.length === 0) {
+      return true;
+    }
+    if (this.buf[0] !== '') {
+      return false;
+    }
+
+    for (const part of this.buf) {
+      if (part !== '') {
+        return false;
+      }
+    }
+
+    for (const [part] of this._queue) {
+      if (part !== '') {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   endsWith(suffix: string): boolean {
     // Fast path to avoid iterating over this._queue.
     if (suffix.length === 1) {

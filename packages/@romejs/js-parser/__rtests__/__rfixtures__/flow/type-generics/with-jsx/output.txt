@@ -165,7 +165,7 @@ Program {
               }
             }
             init: JSXElement {
-              name: JSXReferenceIdentifier {
+              name: JSXIdentifier {
                 name: 'img'
                 loc: Object {
                   filename: '..'

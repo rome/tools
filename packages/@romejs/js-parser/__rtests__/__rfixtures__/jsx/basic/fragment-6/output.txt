@@ -55,7 +55,7 @@ Program {
         }
         children: Array [
           JSXElement {
-            name: JSXReferenceIdentifier {
+            name: JSXIdentifier {
               name: 'div'
               loc: Object {
                 filename: '..'

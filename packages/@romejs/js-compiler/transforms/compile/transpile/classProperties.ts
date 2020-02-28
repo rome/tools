@@ -226,7 +226,7 @@ export default {
 
     // correctly replace an export class with the class node then append the declarations
     if (
-      (node.type === 'ExportNamedDeclaration' ||
+      (node.type === 'ExportLocalDeclaration' ||
         node.type === 'ExportDefaultDeclaration') &&
       node.declaration !== undefined &&
       node.declaration.type === 'ClassDeclaration' &&

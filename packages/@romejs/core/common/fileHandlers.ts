@@ -232,6 +232,25 @@ const jsonHandler: ExtensionHandler = {
   },
 };
 
+// These are extensions that be implicitly tried when a file is referenced
+// This is mostly for compatibility with Node.js projects. This list should not
+// be extended. Explicit extensions are required in the browser for as modules and
+// should be required everywhere.
+// TypeScript is unfortunately included here as it produces an error if you use an
+// import source with ".ts"
+export const IMPLICIT_JS_EXTENSIONS = ['js', 'json', 'ts', 'tsx'];
+
+// Extensions that have a `lint` handler
+export const LINTABLE_EXTENSIONS: Array<string> = [];
+
+function setHandler(ext: string, handler: ExtensionHandler) {
+  if (handler.lint !== undefined) {
+    LINTABLE_EXTENSIONS.push(ext);
+  }
+
+  DEFAULT_HANDLERS.set(ext, handler);
+}
+
 // Used when filtering files, inserted by buildJSHandler
 export const JS_EXTENSIONS: Array<string> = [];
 
@@ -349,30 +368,22 @@ const DEFUALT_ASSET_EXTENSIONS = [
   'otf',
 ];
 for (const ext of DEFUALT_ASSET_EXTENSIONS) {
-  DEFAULT_HANDLERS.set(ext, assetHandler);
+  setHandler(ext, assetHandler);
 }
 
-DEFAULT_HANDLERS.set('html', textHandler);
-DEFAULT_HANDLERS.set('htm', textHandler);
-DEFAULT_HANDLERS.set('css', textHandler);
-DEFAULT_HANDLERS.set('txt', textHandler);
-DEFAULT_HANDLERS.set('md', textHandler);
-DEFAULT_HANDLERS.set('csv', textHandler);
-DEFAULT_HANDLERS.set('tsv', textHandler);
+setHandler('html', textHandler);
+setHandler('htm', textHandler);
+setHandler('css', textHandler);
+setHandler('txt', textHandler);
+setHandler('md', textHandler);
+setHandler('csv', textHandler);
+setHandler('tsv', textHandler);
 
-DEFAULT_HANDLERS.set('js', buildJSHandler('js', ['jsx', 'flow'])); // TODO eventually remove the syntax shit
-DEFAULT_HANDLERS.set('jsx', buildJSHandler('jsx', ['jsx']));
-DEFAULT_HANDLERS.set('cjs', buildJSHandler('cjs', [], 'script'));
-DEFAULT_HANDLERS.set('mjs', buildJSHandler('mjs', [], 'module'));
-DEFAULT_HANDLERS.set('ts', buildJSHandler('ts', ['ts'], 'module'));
-DEFAULT_HANDLERS.set('tsx', buildJSHandler('tsx', ['ts', 'jsx'], 'module'));
-DEFAULT_HANDLERS.set('json', jsonHandler);
-DEFAULT_HANDLERS.set('rjson', jsonHandler);
-
-// These are extensions that be implicitly tried when a file is referenced
-// This is mostly for compatibility with Node.js projects. This list should not
-// be extended. Explicit extensions are required in the browser for as modules and
-// should be required everywhere.
-// TypeScript is unfortunately included here as it produces an error if you use an
-// import source with ".ts"
-export const IMPLICIT_JS_EXTENSIONS = ['js', 'json', 'ts', 'tsx'];
+setHandler('js', buildJSHandler('js', ['jsx', 'flow'])); // TODO eventually remove the syntax shit
+setHandler('jsx', buildJSHandler('jsx', ['jsx']));
+setHandler('cjs', buildJSHandler('cjs', [], 'script'));
+setHandler('mjs', buildJSHandler('mjs', [], 'module'));
+setHandler('ts', buildJSHandler('ts', ['ts'], 'module'));
+setHandler('tsx', buildJSHandler('tsx', ['ts', 'jsx'], 'module'));
+setHandler('json', jsonHandler);
+setHandler('rjson', jsonHandler);

@@ -24,4 +24,4 @@ fs.unlinkSync(path.join(generatorsFolder, filename + '.ts'));
 fs.unlinkSync(path.join(analysisFolder, filename + '.ts'));
 fs.unlinkSync(path.join(astFolder, filename + '.ts'));
 
-require('./update-ast-types.cjs');
+require('./update.cjs');

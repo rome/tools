@@ -71,7 +71,7 @@ Program {
           }
         }
         left: JSXElement {
-          name: JSXReferenceIdentifier {
+          name: JSXIdentifier {
             name: 'div'
             loc: Object {
               filename: '..'

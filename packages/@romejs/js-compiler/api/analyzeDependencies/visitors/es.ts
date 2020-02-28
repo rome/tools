@@ -56,7 +56,7 @@ export default {
     // export const foo
     // export function foo() {}
     // export {};
-    if (node.type === 'ExportNamedDeclaration' && node.source === undefined) {
+    if (node.type === 'ExportLocalDeclaration') {
       const valueType = getAnalyzeExportValueType(scope, node.declaration);
       for (const id of getBindingIdentifiers(node)) {
         const kind = maybeTypeBinding(
@@ -78,32 +78,21 @@ export default {
       const {specifiers} = node;
       if (specifiers !== undefined) {
         for (const specifier of specifiers) {
-          switch (specifier.type) {
-            case 'ExportSpecifier': {
-              const kind: ConstExportModuleKind = maybeTypeBinding(
-                getExportKind(specifier.exportKind || node.exportKind),
-                scope,
-                specifier.local,
-              );
+          const kind: ConstExportModuleKind = maybeTypeBinding(
+            getExportKind(specifier.exportKind || node.exportKind),
+            scope,
+            specifier.local,
+          );
 
-              context.record(
-                new ExportRecord({
-                  type: 'local',
-                  loc: getDeclarationLoc(scope, specifier.local),
-                  valueType: getAnalyzeExportValueType(scope, specifier.local),
-                  kind,
-                  name: specifier.exported.name,
-                }),
-              );
-              break;
-            }
-
-            case 'ExportNamespaceSpecifier':
-              throw new Error('unimplemented');
-
-            case 'ExportDefaultSpecifier':
-              throw new Error('unimplemented');
-          }
+          context.record(
+            new ExportRecord({
+              type: 'local',
+              loc: getDeclarationLoc(scope, specifier.local),
+              valueType: getAnalyzeExportValueType(scope, specifier.local),
+              kind,
+              name: specifier.exported.name,
+            }),
+          );
         }
       }
     }
@@ -123,47 +112,45 @@ export default {
 
     // External binding exports:
     // export {} from '';
-    if (node.type === 'ExportNamedDeclaration') {
+    if (node.type === 'ExportExternalDeclaration') {
       const {source} = node;
-      if (source !== undefined) {
-        const specifiersKinds: Array<ConstImportModuleKind> = [];
-        const exportedNames: Array<AnalyzeDependencyName> = [];
+      const specifiersKinds: Array<ConstImportModuleKind> = [];
+      const exportedNames: Array<AnalyzeDependencyName> = [];
 
-        const {specifiers} = node;
-        if (specifiers !== undefined) {
-          for (const specifier of specifiers) {
-            switch (specifier.type) {
-              case 'ExportSpecifier': {
-                const kind = getImportKind(
-                  specifier.exportKind || node.exportKind,
-                );
-                specifiersKinds.push(kind);
+      const {specifiers} = node;
+      if (specifiers !== undefined) {
+        for (const specifier of specifiers) {
+          switch (specifier.type) {
+            case 'ExportExternalSpecifier': {
+              const kind = getImportKind(
+                specifier.exportKind || node.exportKind,
+              );
+              specifiersKinds.push(kind);
 
-                exportedNames.push({
-                  name: specifier.local.name,
+              exportedNames.push({
+                name: specifier.local.name,
+                kind,
+                loc: specifier.loc,
+              });
+
+              context.record(
+                new ExportRecord({
+                  type: 'external',
                   kind,
                   loc: specifier.loc,
-                });
-
-                context.record(
-                  new ExportRecord({
-                    type: 'external',
-                    kind,
-                    loc: specifier.loc,
-                    imported: specifier.local.name,
-                    exported: specifier.exported.name,
-                    source: source.value,
-                  }),
-                );
-                break;
-              }
-
-              case 'ExportNamespaceSpecifier':
-                throw new Error('unimplemented');
-
-              case 'ExportDefaultSpecifier':
-                throw new Error('unimplemented');
+                  imported: specifier.local.name,
+                  exported: specifier.exported.name,
+                  source: source.value,
+                }),
+              );
+              break;
             }
+
+            case 'ExportNamespaceSpecifier':
+              throw new Error('unimplemented');
+
+            case 'ExportDefaultSpecifier':
+              throw new Error('unimplemented');
           }
         }
 
@@ -229,7 +216,7 @@ export default {
     if (
       node.type === 'ExportAllDeclaration' ||
       node.type === 'ExportDefaultDeclaration' ||
-      node.type === 'ExportNamedDeclaration'
+      node.type === 'ExportLocalDeclaration'
     ) {
       context.record(new ESExportRecord(getExportKind(node.exportKind), node));
     }

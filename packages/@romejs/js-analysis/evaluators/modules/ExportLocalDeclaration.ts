@@ -8,19 +8,19 @@
 import {Scope} from '../../scopes';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 import {
-  ExportNamedDeclaration,
-  exportNamedDeclaration,
+  ExportLocalDeclaration,
+  exportLocalDeclaration,
   AnyNode,
 } from '@romejs/js-ast';
 import ImportT from '../../types/ImportT';
 import Hub from '../../Hub';
 
-export default function ExportNamedDeclaration(
+export default function ExportLocalDeclaration(
   node: AnyNode,
   scope: Scope,
   {evaluator}: Hub,
 ) {
-  node = exportNamedDeclaration.assert(node);
+  node = exportLocalDeclaration.assert(node);
 
   // export const foo = 'bar';
   // export default function foo() {}
@@ -63,11 +63,14 @@ export default function ExportNamedDeclaration(
 
   // export {foo, bar};
   // export {foo, bar} from './foo';
-  const source = node.source === undefined ? undefined : node.source.value;
+  const source = undefined; // TODO node.source === undefined ? undefined : node.source.value;
   const {specifiers} = node;
   if (specifiers !== undefined) {
     for (const specifier of specifiers) {
-      if (specifier.type === 'ExportSpecifier') {
+      if (
+        specifier.type === 'ExportLocalSpecifier' ||
+        specifier.type === 'ExportExternalSpecifier'
+      ) {
         let type;
         if (source === undefined) {
           type = scope.evaluate(specifier.local);

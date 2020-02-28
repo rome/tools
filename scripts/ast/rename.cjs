@@ -44,4 +44,4 @@ rename(
   path.join(astFolder, toType + '.ts'),
 );
 
-require('./update-ast-types.cjs');
+require('./update.cjs');

@@ -31,6 +31,8 @@ jobs:
           node-version: '13.x'
       - name: Check Prettier formatting
         run: ./scripts/prettier-check
+      - name: Run Rome lint
+        run: ./scripts/dev-rome lint
 
   tests:
     name: Tests

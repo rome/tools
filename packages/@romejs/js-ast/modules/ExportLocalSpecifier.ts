@@ -13,15 +13,15 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type ExportSpecifier = JSNodeBase & {
-  type: 'ExportSpecifier';
+export type ExportLocalSpecifier = JSNodeBase & {
+  type: 'ExportLocalSpecifier';
   exported: Identifier;
   local: ReferenceIdentifier;
   exportKind?: ConstExportModuleKind;
 };
 
-export const exportSpecifier = createBuilder<ExportSpecifier>(
-  'ExportSpecifier',
+export const exportLocalSpecifier = createBuilder<ExportLocalSpecifier>(
+  'ExportLocalSpecifier',
   {
     bindingKeys: {},
     visitorKeys: {

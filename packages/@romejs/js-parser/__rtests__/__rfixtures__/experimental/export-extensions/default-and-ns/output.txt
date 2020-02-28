@@ -22,10 +22,8 @@ Program {
     }
   }
   body: Array [
-    ExportNamedDeclaration {
-      declaration: undefined
-      exportKind: 'value'
-      specifiers: undefined
+    ExportExternalDeclaration {
+      exportKind: undefined
       loc: Object {
         filename: '..'
         end: Object {
@@ -55,6 +53,70 @@ Program {
           }
         }
       }
+      specifiers: Array [
+        ExportDefaultSpecifier {
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 8
+              index: 8
+              line: 1
+            }
+            start: Object {
+              column: 7
+              index: 7
+              line: 1
+            }
+          }
+          exported: Identifier {
+            name: 'B'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 8
+                index: 8
+                line: 1
+              }
+              start: Object {
+                column: 7
+                index: 7
+                line: 1
+              }
+            }
+          }
+        }
+        ExportNamespaceSpecifier {
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 16
+              index: 16
+              line: 1
+            }
+            start: Object {
+              column: 10
+              index: 10
+              line: 1
+            }
+          }
+          exported: Identifier {
+            name: 'A'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 16
+                index: 16
+                line: 1
+              }
+              start: Object {
+                column: 15
+                index: 15
+                line: 1
+              }
+            }
+          }
+        }
+      ]
     }
   ]
 }

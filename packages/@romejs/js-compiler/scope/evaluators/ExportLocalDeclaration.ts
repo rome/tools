@@ -6,12 +6,12 @@
  */
 
 import Scope from '../Scope';
-import {ExportNamedDeclaration, AnyNode} from '@romejs/js-ast';
+import {ExportLocalDeclaration, AnyNode} from '@romejs/js-ast';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 
 export default {
   creator: false,
-  build(node: ExportNamedDeclaration, parent: AnyNode, scope: Scope) {
+  build(node: ExportLocalDeclaration, parent: AnyNode, scope: Scope) {
     const newScope = scope.evaluate(node.declaration, node);
     for (const id of getBindingIdentifiers(node)) {
       newScope.getBindingAssert(id.name).setExported(true);

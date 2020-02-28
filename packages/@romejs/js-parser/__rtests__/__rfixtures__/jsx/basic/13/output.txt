@@ -91,7 +91,7 @@ Program {
               }
             }
             value: JSXElement {
-              name: JSXReferenceIdentifier {
+              name: JSXIdentifier {
                 name: 'a'
                 loc: Object {
                   filename: '..'
@@ -157,7 +157,7 @@ Program {
               }
             }
             value: JSXElement {
-              name: JSXReferenceIdentifier {
+              name: JSXIdentifier {
                 name: 'b'
                 loc: Object {
                   filename: '..'
