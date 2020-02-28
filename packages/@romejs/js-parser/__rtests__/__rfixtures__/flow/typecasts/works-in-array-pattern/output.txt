@@ -127,7 +127,7 @@ Program {
               }
               elements: Array [
                 BindingIdentifier {
-                  name: 'INVALID_PLACHOLDER'
+                  name: 'INVALID_PLACEHOLDER'
                   loc: Object {
                     filename: '..'
                     end: Object {
@@ -263,7 +263,7 @@ Program {
                   }
                   elements: Array [
                     BindingIdentifier {
-                      name: 'INVALID_PLACHOLDER'
+                      name: 'INVALID_PLACEHOLDER'
                       loc: Object {
                         filename: '..'
                         end: Object {
@@ -399,7 +399,7 @@ Program {
                 }
                 elements: Array [
                   BindingIdentifier {
-                    name: 'INVALID_PLACHOLDER'
+                    name: 'INVALID_PLACEHOLDER'
                     loc: Object {
                       filename: '..'
                       end: Object {
@@ -553,7 +553,7 @@ Program {
                     }
                     elements: Array [
                       BindingIdentifier {
-                        name: 'INVALID_PLACHOLDER'
+                        name: 'INVALID_PLACEHOLDER'
                         loc: Object {
                           filename: '..'
                           end: Object {
@@ -672,7 +672,7 @@ Program {
               }
               elements: Array [
                 BindingIdentifier {
-                  name: 'INVALID_PLACHOLDER'
+                  name: 'INVALID_PLACEHOLDER'
                   loc: Object {
                     filename: '..'
                     end: Object {
@@ -807,7 +807,7 @@ Program {
                   }
                   elements: Array [
                     BindingIdentifier {
-                      name: 'INVALID_PLACHOLDER'
+                      name: 'INVALID_PLACEHOLDER'
                       loc: Object {
                         filename: '..'
                         end: Object {
@@ -942,7 +942,7 @@ Program {
                 }
                 elements: Array [
                   BindingIdentifier {
-                    name: 'INVALID_PLACHOLDER'
+                    name: 'INVALID_PLACEHOLDER'
                     loc: Object {
                       filename: '..'
                       end: Object {
@@ -1095,7 +1095,7 @@ Program {
                     }
                     elements: Array [
                       BindingIdentifier {
-                        name: 'INVALID_PLACHOLDER'
+                        name: 'INVALID_PLACEHOLDER'
                         loc: Object {
                           filename: '..'
                           end: Object {
