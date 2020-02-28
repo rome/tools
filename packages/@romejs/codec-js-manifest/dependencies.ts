@@ -18,7 +18,8 @@ export type DependencyPattern =
   | SemverPattern
   | GitPattern
   | FilePattern
-  | TagPattern;
+  | TagPattern
+  | NpmPattern;
 
 export type ManifestDependencies = Map<string, DependencyPattern>;
 
@@ -49,6 +50,12 @@ export function stringifyDependencyPattern(pattern: DependencyPattern): string {
         return pattern.url;
       } else {
         return `${pattern.url}#${pattern.hash}`;
+      }
+    case 'npm':
+      if (pattern.version === undefined) {
+        return `npm:${pattern.name}`;
+      } else {
+        return `npm:${pattern.name}@${pattern.version}`;
       }
   }
 }
@@ -281,6 +288,28 @@ export function parseGitDependencyPattern(
   }
 }
 
+//# NPM
+
+type NpmPattern = {
+  type: 'npm';
+  name: string;
+  version?: string;
+};
+
+export function parseNpmDependencyPattern(pattern: string): NpmPattern {
+  let name: string = pattern.slice(
+    pattern.indexOf('@'),
+    pattern.lastIndexOf('@'),
+  );
+  let version: string = pattern.slice(pattern.lastIndexOf('@') + 1);
+
+  return {
+    type: 'npm',
+    name: name,
+    version: version,
+  };
+}
+
 export function parseDependencyPattern(
   consumer: Consumer,
   loose: boolean,
@@ -306,6 +335,10 @@ export function parseDependencyPattern(
 
   if (pattern.match(TAG_REGEX)) {
     return parseTag(pattern);
+  }
+
+  if (pattern.startsWith('npm:')) {
+    return parseNpmDependencyPattern(pattern);
   }
 
   return parseSemver(pattern, consumer, loose);
