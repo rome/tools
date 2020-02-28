@@ -291,19 +291,22 @@ export function parseGitDependencyPattern(
 //# NPM
 
 type NpmPattern = {
-  type: 'npm'; 
-  name: string; 
-  version?: string
+  type: 'npm';
+  name: string;
+  version?: string;
 };
 
-export function parseNpmDependencyPattern(pattern: string) : NpmPattern {
-  let name : string = pattern.slice(pattern.indexOf('@'), pattern.lastIndexOf('@'));
-  let version : string = pattern.slice(pattern.lastIndexOf("@") + 1);
+export function parseNpmDependencyPattern(pattern: string): NpmPattern {
+  let name: string = pattern.slice(
+    pattern.indexOf('@'),
+    pattern.lastIndexOf('@'),
+  );
+  let version: string = pattern.slice(pattern.lastIndexOf('@') + 1);
 
   return {
     type: 'npm',
     name: name,
-    version: version
+    version: version,
   };
 }
 
@@ -334,7 +337,7 @@ export function parseDependencyPattern(
     return parseTag(pattern);
   }
 
-  if(pattern.startsWith('npm:')) {
+  if (pattern.startsWith('npm:')) {
     return parseNpmDependencyPattern(pattern);
   }
 
