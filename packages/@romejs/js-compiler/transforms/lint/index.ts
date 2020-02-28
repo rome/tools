@@ -5,8 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-//import defaultExportSameBasename from './defaultExportSameBasename';
+import defaultExportSameBasename from './defaultExportSameBasename';
 import undeclaredVariables from './undeclaredVariables';
-//import unusedVariables from './unusedVariables';
+import unusedVariables from './unusedVariables';
 
-export const lintTransforms = [undeclaredVariables]; // [defaultExportSameBasename, unusedVariables, undeclaredVariables];
+export const lintTransforms = [
+  undeclaredVariables,
+  defaultExportSameBasename,
+  unusedVariables,
+];

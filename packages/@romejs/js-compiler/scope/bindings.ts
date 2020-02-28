@@ -14,19 +14,22 @@ type BindingOpts = {
   scope: Scope;
   node: AnyNode;
   name: string;
+  kind?: string;
 };
 
 export class Binding {
-  constructor(opts: BindingOpts) {
+  constructor(opts: BindingOpts, defaultKind: string = 'variable') {
     this.isExported = false;
     this.scope = opts.scope;
     this.name = opts.name;
     this.node = opts.node;
+    this.kind = opts.kind === undefined ? defaultKind : opts.kind;
     this.id = id++;
   }
 
   id: number;
   name: string;
+  kind: string;
   scope: Scope;
   node: AnyNode;
   isExported: boolean;
@@ -50,8 +53,12 @@ export type ImportBindingMeta =
     };
 
 export class ConstBinding extends Binding {
-  constructor(opts: BindingOpts, value: undefined | AnyNode) {
-    super(opts);
+  constructor(
+    opts: BindingOpts,
+    value: undefined | AnyNode,
+    defaultKind?: string,
+  ) {
+    super(opts, defaultKind);
     this.value = value;
   }
 
@@ -64,16 +71,24 @@ export class VarBinding extends Binding {}
 
 export class ImportBinding extends Binding {
   constructor(opts: BindingOpts, meta: ImportBindingMeta) {
-    super(opts);
+    super(opts, 'import');
     this.meta = meta;
   }
 
   meta: ImportBindingMeta;
 }
 
-export class ArgumentsBinding extends Binding {}
+export class ArgumentsBinding extends Binding {
+  constructor(opts: BindingOpts) {
+    super(opts, 'arguments');
+  }
+}
 
-export class FunctionBinding extends Binding {}
+export class FunctionBinding extends Binding {
+  constructor(opts: BindingOpts) {
+    super(opts, 'function');
+  }
+}
 
 export type TypeBindingKind =
   | 'function'
@@ -88,11 +103,15 @@ export class TypeBinding extends ConstBinding {
     valueNode: undefined | AnyNode,
     kind: TypeBindingKind,
   ) {
-    super(opts, valueNode);
-    this.kind = kind;
+    super(opts, valueNode, 'type');
+    this.typeKind = kind;
   }
 
-  kind: TypeBindingKind;
+  typeKind: TypeBindingKind;
 }
 
-export class ClassBinding extends Binding {}
+export class ClassBinding extends Binding {
+  constructor(opts: BindingOpts) {
+    super(opts, 'class');
+  }
+}

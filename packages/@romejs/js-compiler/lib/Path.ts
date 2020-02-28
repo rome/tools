@@ -96,9 +96,10 @@ export default class Path {
     descriptor: HookDescriptor<any, CallArg, CallReturn>,
     arg: CallArg,
     optionalRet?: CallReturn,
+    requiredDepth?: number,
   ): CallReturn {
-    const ref = this.findHook(descriptor);
-    if (ref === undefined) {
+    const hook = this.findHook(descriptor, requiredDepth);
+    if (hook === undefined) {
       if (optionalRet === undefined) {
         throw new Error('No hook found');
       } else {
@@ -109,9 +110,15 @@ export default class Path {
       throw new Error("Hook doesn't have a call method");
     }
 
-    const {state, value} = descriptor.call(this, ref.state, arg);
+    const {depth, ref} = hook;
+    const {state, value, bubble} = descriptor.call(this, ref.state, arg);
     ref.state = state;
-    return value;
+
+    if (bubble === true) {
+      return this.callHook(descriptor, arg, value, depth + 1);
+    } else {
+      return value;
+    }
   }
 
   provideHook<State>(
@@ -129,11 +136,19 @@ export default class Path {
     return this.node;
   }
 
-  findHook(descriptor: AnyHookDescriptor): undefined | HookInstance {
+  findHook(
+    descriptor: AnyHookDescriptor,
+    requiredDepth: number = 0,
+  ): undefined | {ref: HookInstance; depth: number} {
+    let depth = 0;
     for (const {hooks} of this.ancestryPaths) {
       for (const hook of hooks) {
         if (hook.descriptor === descriptor) {
-          return hook;
+          if (depth === requiredDepth) {
+            return {ref: hook, depth};
+          } else {
+            depth++;
+          }
         }
       }
     }
