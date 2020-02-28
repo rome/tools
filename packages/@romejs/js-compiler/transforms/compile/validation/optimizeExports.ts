@@ -8,30 +8,35 @@
 import {Path} from '@romejs/js-compiler';
 import {
   AnyNode,
-  referenceIdentifier,
   ExportNamedDeclaration,
+  ExportExternalDeclaration,
 } from '@romejs/js-ast';
 import {ImportBinding} from '@romejs/js-compiler';
 import {
   exportNamedDeclaration,
-  exportLocalSpecifier,
+  exportExternalDeclaration,
+  exportExternalSpecifier,
+  identifier,
   stringLiteral,
 } from '@romejs/js-ast';
 
 export default {
   name: 'optimizeExports',
-  enter(path: Path): AnyNode | Array<ExportNamedDeclaration> {
+  enter(
+    path: Path,
+  ): AnyNode | Array<ExportExternalDeclaration | ExportNamedDeclaration> {
     const {node} = path;
 
     // turn `import {a} from 'b'; export {a}`; to `export {a} from 'b';`';
     if (
       node.type === 'ExportNamedDeclaration' &&
       node.exportKind === 'value' &&
-      node.source === undefined &&
       node.declaration === undefined &&
       node.specifiers !== undefined
     ) {
-      const nodes: Array<ExportNamedDeclaration> = [];
+      const nodes: Array<
+        ExportExternalDeclaration | ExportNamedDeclaration
+      > = [];
       const specifiers = [];
 
       for (const specifier of node.specifiers) {
@@ -43,10 +48,10 @@ export default {
             binding.meta.type === 'name'
           ) {
             nodes.push(
-              exportNamedDeclaration.create({
+              exportExternalDeclaration.create({
                 specifiers: [
-                  exportLocalSpecifier.create({
-                    local: referenceIdentifier.quick(binding.meta.imported),
+                  exportExternalSpecifier.create({
+                    local: identifier.quick(binding.meta.imported),
                     exported: specifier.exported,
                     loc: specifier.loc,
                   }),

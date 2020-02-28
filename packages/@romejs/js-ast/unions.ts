@@ -124,7 +124,8 @@ export type AnyAuxiliary =
   | n.ClassPropertyMeta
   | n.ComputedMemberProperty
   | n.ComputedPropertyKey
-  | n.AnyExportSpecifier
+  | n.AnyExportExternalSpecifier
+  | n.ExportLocalSpecifier
   | n.FunctionHead
   | n.PatternMeta
   | n.PrivateName
@@ -256,6 +257,7 @@ export type AnyDeclaration =
   | n.ImportDeclaration
   | n.ExportNamedDeclaration
   | n.ExportDefaultDeclaration
+  | n.ExportExternalDeclaration
   | n.ExportAllDeclaration
   | n.TypeAliasTypeAnnotation
   | n.FlowDeclareVariable
@@ -402,6 +404,7 @@ export type AnyNode =
   | n.ExportAllDeclaration
   | n.ExportDefaultDeclaration
   | n.ExportDefaultSpecifier
+  | n.ExportExternalDeclaration
   | n.ExportExternalSpecifier
   | n.ExportLocalSpecifier
   | n.ExportNamedDeclaration

@@ -63,7 +63,7 @@ export default function ExportNamedDeclaration(
 
   // export {foo, bar};
   // export {foo, bar} from './foo';
-  const source = node.source === undefined ? undefined : node.source.value;
+  const source = undefined; // TODO node.source === undefined ? undefined : node.source.value;
   const {specifiers} = node;
   if (specifiers !== undefined) {
     for (const specifier of specifiers) {

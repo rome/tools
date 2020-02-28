@@ -165,6 +165,9 @@ evaluators.set('ExportDefaultDeclaration', ExportDefaultDeclaration);
 import ExportDefaultSpecifier from './modules/ExportDefaultSpecifier';
 evaluators.set('ExportDefaultSpecifier', ExportDefaultSpecifier);
 
+import ExportExternalDeclaration from './modules/ExportExternalDeclaration';
+evaluators.set('ExportExternalDeclaration', ExportExternalDeclaration);
+
 import ExportExternalSpecifier from './modules/ExportExternalSpecifier';
 evaluators.set('ExportExternalSpecifier', ExportExternalSpecifier);
 

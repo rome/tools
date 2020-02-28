@@ -52,42 +52,11 @@ export function _ExportDeclaration(generator: Generator, node: AnyNode) {
       throw new Error('Expected specifiers since there was no declaration');
     }
 
-    const specifiers = node.specifiers.slice(0);
-
-    // print "special" specifiers first
-    let hasSpecial = false;
-    while (true) {
-      const first = specifiers[0];
-      if (
-        first !== undefined &&
-        (first.type === 'ExportDefaultSpecifier' ||
-          first.type === 'ExportNamespaceSpecifier')
-      ) {
-        hasSpecial = true;
-        generator.print(specifiers.shift(), node);
-        if (specifiers.length) {
-          generator.token(',');
-          generator.space();
-        }
-      } else {
-        break;
-      }
+    generator.token('{');
+    if (node.specifiers.length > 0) {
+      generator.printCommaList(node.specifiers, node);
     }
-
-    if (specifiers.length || (!specifiers.length && !hasSpecial)) {
-      generator.token('{');
-      if (specifiers.length) {
-        generator.printCommaList(specifiers, node);
-      }
-      generator.token('}');
-    }
-
-    if (node.source) {
-      generator.space();
-      generator.word('from');
-      generator.space();
-      generator.print(node.source, node);
-    }
+    generator.token('}');
 
     generator.semicolon();
   }

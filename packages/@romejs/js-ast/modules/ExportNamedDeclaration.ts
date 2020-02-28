@@ -11,10 +11,7 @@ import {
   FunctionDeclaration,
   ClassDeclaration,
   ExportLocalSpecifier,
-  StringLiteral,
   ConstExportModuleKind,
-  ExportNamespaceSpecifier,
-  ExportDefaultSpecifier,
   TSModuleDeclaration,
   TSEnumDeclaration,
   FlowInterfaceDeclaration,
@@ -22,15 +19,8 @@ import {
   TSInterfaceDeclaration,
   TSDeclareFunction,
   FlowOpaqueType,
-  ExportExternalSpecifier,
 } from '../index';
 import {createBuilder} from '../utils';
-
-export type AnyExportSpecifier =
-  | ExportLocalSpecifier
-  | ExportNamespaceSpecifier
-  | ExportDefaultSpecifier
-  | ExportExternalSpecifier;
 
 export type ExportNamedDeclaration = JSNodeBase & {
   type: 'ExportNamedDeclaration';
@@ -47,8 +37,7 @@ export type ExportNamedDeclaration = JSNodeBase & {
     | TSDeclareFunction
     | FlowOpaqueType
     | TypeAliasTypeAnnotation;
-  specifiers?: Array<AnyExportSpecifier>;
-  source?: StringLiteral;
+  specifiers?: Array<ExportLocalSpecifier>;
   exportKind?: ConstExportModuleKind;
   declare?: boolean;
 };
@@ -62,7 +51,6 @@ export const exportNamedDeclaration = createBuilder<ExportNamedDeclaration>(
     visitorKeys: {
       declaration: true,
       specifiers: true,
-      source: true,
     },
   },
 );

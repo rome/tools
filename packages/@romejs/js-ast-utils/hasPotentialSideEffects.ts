@@ -18,15 +18,14 @@ export default function hasPotentialSideEffects(
 
   switch (node.type) {
     case 'ExportNamedDeclaration':
-      if (node.source === undefined) {
-        if (node.declaration === undefined) {
-          return true;
-        } else {
-          return hasPotentialSideEffects(node.declaration, scope);
-        }
+      if (node.declaration === undefined) {
+        return false;
       } else {
-        return true;
+        return hasPotentialSideEffects(node.declaration, scope);
       }
+
+    case 'ExportExternalDeclaration':
+      return true;
 
     case 'FunctionExpression':
     case 'FunctionDeclaration':

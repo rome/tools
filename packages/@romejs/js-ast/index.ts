@@ -63,6 +63,7 @@ export * from './statements/EmptyStatement';
 export * from './modules/ExportAllDeclaration';
 export * from './modules/ExportDefaultDeclaration';
 export * from './modules/ExportDefaultSpecifier';
+export * from './modules/ExportExternalDeclaration';
 export * from './modules/ExportExternalSpecifier';
 export * from './modules/ExportLocalSpecifier';
 export * from './modules/ExportNamedDeclaration';

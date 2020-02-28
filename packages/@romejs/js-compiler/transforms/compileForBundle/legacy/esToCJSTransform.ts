@@ -12,6 +12,8 @@ import {
   program,
   stringLiteral,
   ClassExpression,
+  ExportNamedDeclaration,
+  ExportExternalDeclaration,
 } from '@romejs/js-ast';
 import {template, getBindingIdentifiers} from '@romejs/js-ast-utils';
 import {getOptions, getModuleId} from '../_utils';
@@ -77,13 +79,26 @@ export default {
         continue;
       }
 
-      if (bodyNode.type === 'ExportNamedDeclaration') {
+      if (
+        bodyNode.type === 'ExportNamedDeclaration' ||
+        bodyNode.type === 'ExportExternalDeclaration'
+      ) {
         // Ignore typed exports
         if (bodyNode.exportKind === 'type') {
           continue;
         }
 
-        const {declaration, specifiers, source} = bodyNode;
+        let declaration: undefined | ExportNamedDeclaration['declaration'];
+        let source: undefined | ExportExternalDeclaration['source'];
+        const {specifiers} = bodyNode;
+
+        if (bodyNode.type === 'ExportExternalDeclaration') {
+          source = bodyNode.source;
+        }
+
+        if (bodyNode.type === 'ExportNamedDeclaration') {
+          declaration = bodyNode.declaration;
+        }
 
         if (declaration !== undefined) {
           // Hoist function declarations

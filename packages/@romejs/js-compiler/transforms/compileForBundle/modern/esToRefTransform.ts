@@ -12,6 +12,7 @@ import {
   bindingIdentifier,
   staticPropertyKey,
   variableDeclarationStatement,
+  ExportExternalDeclaration,
 } from '@romejs/js-ast';
 import {Path, REDUCE_REMOVE} from '@romejs/js-compiler';
 import {ObjectProperties} from '@romejs/js-ast';
@@ -91,10 +92,7 @@ export default {
           }
         }
 
-        if (
-          child.type === 'ExportNamedDeclaration' &&
-          child.source === undefined
-        ) {
+        if (child.type === 'ExportNamedDeclaration') {
           // export const foo = '';
           // export function foo() {}
           for (const {name} of getBindingIdentifiers(child)) {
@@ -104,10 +102,6 @@ export default {
           // export {foo};
           if (child.specifiers !== undefined) {
             for (const specifier of child.specifiers) {
-              if (specifier.type !== 'ExportLocalSpecifier') {
-                continue;
-              }
-
               const local = specifier.local.name;
               if (scope.getBindingAssert(local) instanceof ImportBinding) {
                 continue;
@@ -154,13 +148,24 @@ export default {
             );
           }
 
-          if (child.type === 'ExportNamedDeclaration') {
-            const {declaration, specifiers} = child;
+          if (
+            child.type === 'ExportNamedDeclaration' ||
+            child.type === 'ExportExternalDeclaration'
+          ) {
+            const {specifiers} = child;
 
-            if (declaration !== undefined) {
+            if (
+              child.type === 'ExportNamedDeclaration' &&
+              child.declaration !== undefined
+            ) {
               throw new Error(
                 'No export declarations should be here as they have been removed by renameBindings',
               );
+            }
+
+            let source: undefined | ExportExternalDeclaration['source'];
+            if (child.type === 'ExportExternalDeclaration') {
+              source = child.source;
             }
 
             if (specifiers !== undefined) {
@@ -170,8 +175,8 @@ export default {
                   let local = specifier.local.name;
 
                   // If this is an external export then use the correct name
-                  if (child.source !== undefined) {
-                    const moduleId = getModuleId(child.source.value, opts);
+                  if (source !== undefined) {
+                    const moduleId = getModuleId(source.value, opts);
                     if (moduleId === undefined) {
                       continue;
                     }
@@ -288,12 +293,12 @@ export default {
       }
     }
 
-    if (node.type === 'ExportNamedDeclaration') {
-      if (node.source !== undefined) {
-        // Remove named exports with a source as they will be resolved correctly and never point here
-        return REDUCE_REMOVE;
-      }
+    if (node.type === 'ExportExternalDeclaration') {
+      // Remove external exports with a source as they will be resolved correctly and never point here
+      return REDUCE_REMOVE;
+    }
 
+    if (node.type === 'ExportNamedDeclaration') {
       const {declaration, specifiers} = node;
 
       if (specifiers === undefined) {

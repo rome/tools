@@ -586,7 +586,10 @@ function parseExportNamedDeclaration(
       const node = parseExport(parser, start);
 
       if (node !== undefined) {
-        if (node.type === 'ExportNamedDeclaration') {
+        if (
+          node.type === 'ExportNamedDeclaration' ||
+          node.type === 'ExportExternalDeclaration'
+        ) {
           return {
             ...node,
             type: 'FlowDeclareExportNamed',
