@@ -442,17 +442,6 @@ export default class ProjectManager {
     }
   }
 
-  warnProjectInteropOption(
-    projectFolder: AbsoluteFilePath,
-    optionPath: string,
-    externalName: string,
-    ourComponentName: string,
-  ) {
-    this.master.connectedReporters.warn(
-      `Project <filelink emphasis target="${projectFolder.join()}" /> uses the <emphasis>${optionPath}</emphasis> option. This adds ${externalName} integration to the Rome ${ourComponentName}. This is intended to be migratory, and not a long-term solution. Please port your configuration.`,
-    );
-  }
-
   findProjectConfigConsumer(
     def: ProjectDefinition,
     test: (consumer: Consumer) => undefined | Consumer,
@@ -494,25 +483,6 @@ export default class ProjectManager {
     meta: ProjectConfigMeta;
     config: ProjectConfig;
   }): Promise<ProjectDefinition> {
-    // Warn on interop options - no this log will not be removed, nor will there be an option to disable it
-    // They are gross hacks that should not be used long-term
-    if (config.compiler.legacyBabelInterop) {
-      this.warnProjectInteropOption(
-        projectFolder,
-        'compiler.legacyBabelInterop',
-        'Babel',
-        'compiler',
-      );
-    }
-    if (config.lint.legacyEslintInterop) {
-      this.warnProjectInteropOption(
-        projectFolder,
-        'lint.legacyEslintInterop',
-        'ESLint',
-        'linter',
-      );
-    }
-
     // Make sure there's no project with the same `name` as us
     for (const project of this.projects.values()) {
       if (project.config.name === config.name) {

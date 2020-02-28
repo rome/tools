@@ -39,9 +39,7 @@ export type ProjectConfigObjects = {
 
   resolver: {};
 
-  compiler: {
-    legacyBabelInterop: boolean;
-  };
+  compiler: {};
 
   bundler: {
     mode: BundlerMode;
@@ -54,7 +52,6 @@ export type ProjectConfigObjects = {
 
   lint: {
     enabled: boolean;
-    legacyEslintInterop: boolean;
     globals: Array<string>;
     ignore: PathPatterns;
   };
@@ -196,9 +193,7 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
     mode: 'modern',
   },
 
-  compiler: {
-    legacyBabelInterop: false,
-  },
+  compiler: {},
 
   resolver: {},
 
@@ -223,7 +218,6 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
 
   lint: {
     enabled: false,
-    legacyEslintInterop: false,
     ignore: [],
     globals: [],
   },

@@ -289,12 +289,6 @@ export function normalizeProjectConfig(
     if (lint.has('globals')) {
       config.lint.globals = arrayOfStrings(lint.get('globals'));
     }
-
-    if (lint.has('legacyEslintInterop')) {
-      config.lint.legacyEslintInterop = lint
-        .get('legacyBabelInterop')
-        .asBoolean();
-    }
   }
 
   const format = consumer.get('format');
@@ -355,11 +349,6 @@ export function normalizeProjectConfig(
 
   const compiler = consumer.get('compiler');
   if (compiler.exists()) {
-    if (compiler.has('legacyBabelInterop')) {
-      config.compiler.legacyBabelInterop = compiler
-        .get('legacyBabelInterop')
-        .asBoolean();
-    }
   }
 
   const targets = consumer.get('targets');
