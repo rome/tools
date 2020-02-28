@@ -25,9 +25,8 @@ Program {
     }
   }
   body: Array [
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'type'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'

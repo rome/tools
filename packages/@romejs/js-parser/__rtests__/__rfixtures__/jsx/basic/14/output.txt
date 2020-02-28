@@ -54,7 +54,7 @@ Program {
               line: 1
             }
           }
-          object: JSXReferenceIdentifier {
+          object: JSXIdentifier {
             name: 'a'
             loc: Object {
               filename: '..'

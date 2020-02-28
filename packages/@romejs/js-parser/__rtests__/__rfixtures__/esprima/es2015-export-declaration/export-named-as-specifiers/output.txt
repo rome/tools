@@ -22,10 +22,9 @@ Program {
     }
   }
   body: Array [
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       declaration: undefined
       exportKind: 'value'
-      source: undefined
       loc: Object {
         filename: '..'
         end: Object {

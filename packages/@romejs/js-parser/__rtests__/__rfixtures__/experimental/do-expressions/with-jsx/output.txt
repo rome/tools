@@ -107,7 +107,7 @@ Program {
               }
             }
             argument: JSXElement {
-              name: JSXReferenceIdentifier {
+              name: JSXIdentifier {
                 name: 'nav'
                 loc: Object {
                   filename: '..'

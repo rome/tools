@@ -90,10 +90,9 @@ Program {
         ]
       }
     }
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       declaration: undefined
       exportKind: 'type'
-      source: undefined
       loc: Object {
         filename: '..'
         end: Object {

@@ -70,7 +70,7 @@ Program {
           }
         }
         alternate: JSXElement {
-          name: JSXReferenceIdentifier {
+          name: JSXIdentifier {
             name: 'div'
             loc: Object {
               filename: '..'
@@ -105,7 +105,7 @@ Program {
           }
         }
         consequent: JSXElement {
-          name: JSXReferenceIdentifier {
+          name: JSXIdentifier {
             name: 'div'
             loc: Object {
               filename: '..'

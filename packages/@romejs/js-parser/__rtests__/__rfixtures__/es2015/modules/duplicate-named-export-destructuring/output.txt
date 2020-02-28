@@ -22,9 +22,8 @@ Program {
     }
   }
   body: Array [
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -185,9 +184,8 @@ Program {
         }
       }
     }
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -348,9 +346,8 @@ Program {
         }
       }
     }
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -576,9 +573,8 @@ Program {
         }
       }
     }
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -869,9 +865,8 @@ Program {
         }
       }
     }
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -1225,9 +1220,8 @@ Program {
         }
       }
     }
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -1358,9 +1352,8 @@ Program {
         }
       }
     }
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -1526,9 +1519,8 @@ Program {
         }
       }
     }
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -1892,9 +1884,8 @@ Program {
         }
       }
     }
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -2348,9 +2339,8 @@ Program {
         }
       }
     }
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -2869,9 +2859,8 @@ Program {
         }
       }
     }
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'
@@ -3032,9 +3021,8 @@ Program {
         }
       }
     }
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'

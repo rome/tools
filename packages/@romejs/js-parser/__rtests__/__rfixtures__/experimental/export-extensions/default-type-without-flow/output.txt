@@ -22,10 +22,8 @@ Program {
     }
   }
   body: Array [
-     ExportLocalDeclaration {
-      declaration: undefined
-      exportKind: 'value'
-      specifiers: undefined
+    ExportExternalDeclaration {
+      exportKind: undefined
       loc: Object {
         filename: '..'
         end: Object {
@@ -55,6 +53,39 @@ Program {
           }
         }
       }
+      specifiers: Array [
+        ExportDefaultSpecifier {
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 11
+              index: 11
+              line: 1
+            }
+            start: Object {
+              column: 7
+              index: 7
+              line: 1
+            }
+          }
+          exported: Identifier {
+            name: 'type'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 11
+                index: 11
+                line: 1
+              }
+              start: Object {
+                column: 7
+                index: 7
+                line: 1
+              }
+            }
+          }
+        }
+      ]
     }
   ]
 }

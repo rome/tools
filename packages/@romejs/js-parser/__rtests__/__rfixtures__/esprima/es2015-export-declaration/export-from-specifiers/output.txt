@@ -22,9 +22,8 @@ Program {
     }
   }
   body: Array [
-     ExportLocalDeclaration {
-      declaration: undefined
-      exportKind: 'value'
+    ExportExternalDeclaration {
+      exportKind: undefined
       loc: Object {
         filename: '..'
         end: Object {
@@ -55,7 +54,7 @@ Program {
         }
       }
       specifiers: Array [
-        ExportLocalSpecifier {
+        ExportExternalSpecifier {
           loc: Object {
             filename: '..'
             end: Object {
@@ -85,7 +84,7 @@ Program {
               }
             }
           }
-          local: ReferenceIdentifier {
+          local: Identifier {
             name: 'foo'
             loc: Object {
               filename: '..'
@@ -102,7 +101,7 @@ Program {
             }
           }
         }
-        ExportLocalSpecifier {
+        ExportExternalSpecifier {
           loc: Object {
             filename: '..'
             end: Object {
@@ -132,7 +131,7 @@ Program {
               }
             }
           }
-          local: ReferenceIdentifier {
+          local: Identifier {
             name: 'bar'
             loc: Object {
               filename: '..'

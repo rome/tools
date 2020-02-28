@@ -160,9 +160,8 @@ Program {
         }
       }
     }
-     ExportLocalDeclaration {
+    ExportLocalDeclaration {
       exportKind: 'value'
-      source: undefined
       specifiers: undefined
       loc: Object {
         filename: '..'

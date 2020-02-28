@@ -100,7 +100,7 @@ Program {
                 }
               }
               body: JSXElement {
-                name: JSXReferenceIdentifier {
+                name: JSXIdentifier {
                   name: 'x'
                   loc: Object {
                     filename: '..'
