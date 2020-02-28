@@ -22,13 +22,15 @@ import {
   TSInterfaceDeclaration,
   TSDeclareFunction,
   FlowOpaqueType,
+  ExportExternalSpecifier,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type AnyExportSpecifier =
   | ExportLocalSpecifier
   | ExportNamespaceSpecifier
-  | ExportDefaultSpecifier;
+  | ExportDefaultSpecifier
+  | ExportExternalSpecifier;
 
 export type ExportNamedDeclaration = JSNodeBase & {
   type: 'ExportNamedDeclaration';

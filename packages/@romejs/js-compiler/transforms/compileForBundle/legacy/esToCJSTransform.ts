@@ -134,7 +134,10 @@ export default {
             }
 
             // TODO skip type exports
-            if (specifier.type === 'ExportLocalSpecifier') {
+            if (
+              specifier.type === 'ExportLocalSpecifier' ||
+              specifier.type === 'ExportExternalSpecifier'
+            ) {
               if (source === undefined) {
                 const binding = path.scope.getBinding(specifier.local.name);
 

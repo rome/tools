@@ -124,7 +124,7 @@ export type AnyAuxiliary =
   | n.ClassPropertyMeta
   | n.ComputedMemberProperty
   | n.ComputedPropertyKey
-  | n.ExportDefaultSpecifier
+  | n.AnyExportSpecifier
   | n.FunctionHead
   | n.PatternMeta
   | n.PrivateName
@@ -402,6 +402,7 @@ export type AnyNode =
   | n.ExportAllDeclaration
   | n.ExportDefaultDeclaration
   | n.ExportDefaultSpecifier
+  | n.ExportExternalSpecifier
   | n.ExportLocalSpecifier
   | n.ExportNamedDeclaration
   | n.ExportNamespaceSpecifier

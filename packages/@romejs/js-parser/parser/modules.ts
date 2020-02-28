@@ -29,6 +29,7 @@ import {
   ImportDefaultSpecifier,
   ImportNamespaceSpecifier,
   ImportSpecifierLocal,
+  ExportExternalSpecifier,
 } from '@romejs/js-ast';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 import {
@@ -83,7 +84,9 @@ export function parseExport(
   let exportKind: ConstExportModuleKind = 'value';
   let source;
   let declaration: undefined | AnyStatement;
-  let specifiers: undefined | Array<ExportLocalSpecifier>;
+  let specifiers:
+    | undefined
+    | Array<ExportLocalSpecifier | ExportExternalSpecifier>;
 
   // export * from '...'';
   if (shouldParseExportStar(parser)) {
@@ -186,6 +189,10 @@ export function parseExport(
     }
   }
 
+  if (source !== undefined && specifiers !== undefined) {
+    specifiers = convertLocalToExternalSpecifiers(specifiers);
+  }
+
   const node: ExportNamedDeclaration = {
     loc: parser.finishLoc(start),
     type: 'ExportNamedDeclaration',
@@ -195,6 +202,22 @@ export function parseExport(
     declaration,
   };
   return node;
+}
+
+function convertLocalToExternalSpecifiers(
+  specifiers: Array<ExportExternalSpecifier | ExportLocalSpecifier>,
+): Array<ExportExternalSpecifier> {
+  return specifiers.map(specifier => {
+    if (specifier.type === 'ExportLocalSpecifier') {
+      return {
+        ...specifier,
+        type: 'ExportExternalSpecifier',
+        local: toIdentifier(specifier.local),
+      };
+    } else {
+      return specifier;
+    }
+  });
 }
 
 function parseExportDefaultExpression(
@@ -473,7 +496,7 @@ function shouldParseExportDeclaration(parser: JSParser): boolean {
 
 function checkExport(
   parser: JSParser,
-  specifiers: undefined | Array<ExportLocalSpecifier>,
+  specifiers: undefined | Array<ExportLocalSpecifier | ExportExternalSpecifier>,
   declaration: undefined | AnyNode,
   checkNames: boolean = false,
   isDefault: boolean = false,

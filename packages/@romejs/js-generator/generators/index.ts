@@ -159,6 +159,9 @@ generators.set('ExportDefaultDeclaration', ExportDefaultDeclaration);
 import ExportDefaultSpecifier from './modules/ExportDefaultSpecifier';
 generators.set('ExportDefaultSpecifier', ExportDefaultSpecifier);
 
+import ExportExternalSpecifier from './modules/ExportExternalSpecifier';
+generators.set('ExportExternalSpecifier', ExportExternalSpecifier);
+
 import ExportLocalSpecifier from './modules/ExportLocalSpecifier';
 generators.set('ExportLocalSpecifier', ExportLocalSpecifier);
 
