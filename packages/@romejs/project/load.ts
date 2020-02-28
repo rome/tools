@@ -38,6 +38,30 @@ import {parseSemverRange} from '@romejs/codec-semver';
 const WATCHMAN_CONFIG_FILENAME = '.watchmanconfig';
 const IGNORE_FILENAMES = ['.gitignore', '.hgignore'];
 
+function categoryExists(consumer: Consumer): boolean {
+  if (!consumer.exists()) {
+    return false;
+  }
+
+  const value = consumer.asUnknown();
+  if (typeof value === 'boolean') {
+    consumer.unexpected(`Expected an object here but got a boolean`, {
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          message: `You likely wanted \`{"enabled": ${String(
+            value,
+          )}}\` instead`,
+        },
+      ],
+    });
+    return false;
+  }
+
+  return true;
+}
+
 export function loadCompleteProjectConfig(
   projectFolder: AbsoluteFilePath,
   configPath: AbsoluteFilePath,
@@ -58,7 +82,9 @@ export function loadCompleteProjectConfig(
     },
   };
 
-  const name = consumer.get('name').asString(projectFolder.getBasename());
+  const name = consumer
+    .get('name')
+    .asString(`project-${projectFolder.getBasename()}`);
 
   const config: ProjectConfig = {
     ...DEFAULT_PROJECT_CONFIG,
@@ -220,15 +246,15 @@ export function normalizeProjectConfig(
   }
 
   const cache = consumer.get('cache');
-  if (cache.exists()) {
+  if (categoryExists(cache)) {
   }
 
   const resolver = consumer.get('resolver');
-  if (resolver.exists()) {
+  if (categoryExists(resolver)) {
   }
 
   const bundler = consumer.get('bundler');
-  if (bundler.exists()) {
+  if (categoryExists(bundler)) {
     if (bundler.has('mode')) {
       config.bundler.mode = bundler
         .get('mode')
@@ -237,7 +263,7 @@ export function normalizeProjectConfig(
   }
 
   const haste = consumer.get('haste');
-  if (haste.exists()) {
+  if (categoryExists(haste)) {
     if (haste.has('enabled')) {
       config.haste.enabled = haste.get('enabled').asBoolean();
     }
@@ -248,7 +274,7 @@ export function normalizeProjectConfig(
   }
 
   const typeChecking = consumer.get('typeChecking');
-  if (typeChecking.exists()) {
+  if (categoryExists(typeChecking)) {
     if (typeChecking.has('enabled')) {
       config.typeCheck.enabled = typeChecking.get('enabled').asBoolean();
     }
@@ -268,7 +294,7 @@ export function normalizeProjectConfig(
   }
 
   const dependencies = consumer.get('dependencies');
-  if (dependencies.exists()) {
+  if (categoryExists(dependencies)) {
     if (dependencies.has('enabled')) {
       config.dependencies.enabled = dependencies
         .get('dependencies')
@@ -277,7 +303,7 @@ export function normalizeProjectConfig(
   }
 
   const lint = consumer.get('lint');
-  if (lint.exists()) {
+  if (categoryExists(lint)) {
     if (lint.has('enabled')) {
       config.lint.enabled = lint.get('enabled').asBoolean();
     }
@@ -292,14 +318,14 @@ export function normalizeProjectConfig(
   }
 
   const format = consumer.get('format');
-  if (format.exists()) {
+  if (categoryExists(format)) {
     if (format.has('enabled')) {
       config.format.enabled = format.get('enabled').asBoolean();
     }
   }
 
   const testing = consumer.get('testing');
-  if (testing.exists()) {
+  if (categoryExists(testing)) {
     if (testing.has('enabled')) {
       config.tests.enabled = testing.get('enabled').asBoolean();
     }
@@ -310,14 +336,14 @@ export function normalizeProjectConfig(
   }
 
   const develop = consumer.get('develop');
-  if (develop.exists()) {
+  if (categoryExists(develop)) {
     if (develop.has('serveStatic')) {
       config.develop.serveStatic = develop.get('serveStatic').asBoolean();
     }
   }
 
   const files = consumer.get('files');
-  if (files.exists()) {
+  if (categoryExists(files)) {
     if (files.has('watchman')) {
       config.files.watchman = files.get('watchman').asBoolean();
     }
@@ -341,18 +367,18 @@ export function normalizeProjectConfig(
   }
 
   const vsc = consumer.get('vsc');
-  if (vsc.exists()) {
+  if (categoryExists(vsc)) {
     if (vsc.has('root')) {
       config.vsc.root = projectFolder.resolve(vsc.get('root').asString());
     }
   }
 
   const compiler = consumer.get('compiler');
-  if (compiler.exists()) {
+  if (categoryExists(compiler)) {
   }
 
   const targets = consumer.get('targets');
-  if (targets.exists()) {
+  if (categoryExists(targets)) {
     for (const [name, object] of targets.asMap()) {
       const target: ProjectConfigTarget = {
         constraints: object
