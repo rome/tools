@@ -17,12 +17,17 @@ import {
   JSXSpreadAttribute,
   JSXAttribute,
   AnyTypeArguments,
+  JSXIdentifier,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type JSXElement = JSNodeBase & {
   type: 'JSXElement';
-  name: JSXReferenceIdentifier | JSXNamespacedName | JSXMemberExpression;
+  name:
+    | JSXReferenceIdentifier
+    | JSXIdentifier
+    | JSXNamespacedName
+    | JSXMemberExpression;
   typeArguments?: AnyTypeArguments;
   attributes: Array<JSXSpreadAttribute | JSXAttribute>;
   selfClosing: boolean;

@@ -15,7 +15,11 @@ import {createBuilder} from '../utils';
 
 export type JSXMemberExpression = JSNodeBase & {
   type: 'JSXMemberExpression';
-  object: JSXMemberExpression | JSXReferenceIdentifier | JSXNamespacedName;
+  object:
+    | JSXMemberExpression
+    | JSXIdentifier
+    | JSXReferenceIdentifier
+    | JSXNamespacedName;
   property: JSXIdentifier;
 };
 

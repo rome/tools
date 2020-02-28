@@ -47,10 +47,6 @@ import {
   inheritLoc,
 } from '@romejs/js-ast-utils';
 
-function isCompatTag(tagName: undefined | string): boolean {
-  return tagName !== undefined ? /^[a-z]|-/.test(tagName) : false;
-}
-
 function convertJSXIdentifier(
   path: Path,
 ): MemberExpression | ThisExpression | StringLiteral | ReferenceIdentifier {
@@ -59,16 +55,16 @@ function convertJSXIdentifier(
   if (node.type === 'JSXReferenceIdentifier') {
     if (node.name === 'this') {
       return thisExpression.create({});
-    } else if (isValidIdentifierName(node.name)) {
+    } else {
       return referenceIdentifier.create(
         {
           name: node.name,
         },
         node,
       );
-    } else {
-      return stringLiteral.quick(node.name);
     }
+  } else if (node.type === 'JSXIdentifier') {
+    return stringLiteral.quick(node.name);
   } else if (node.type === 'JSXMemberExpression') {
     let prop = convertJSXIdentifier(path.getChildPath('property'));
 
@@ -287,10 +283,6 @@ export default {
           category: 'compile/jsx',
           message: 'JSX is not XML',
         });
-      }
-
-      if (type.type === 'ReferenceIdentifier' && isCompatTag(type.name)) {
-        type = stringLiteral.quick(type.name);
       }
 
       let attribs: AnyExpression;
