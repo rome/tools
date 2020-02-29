@@ -327,6 +327,11 @@ function pushComment(
     }
   }
 
+  // We should enable jsx syntax when there's a comment with @\jsx
+  if (opts.text.includes('@jsx')) {
+    parser.syntax.add('jsx');
+  }
+
   if (parser.isLookahead === false) {
     parser.state.comments.push(comment);
     addComment(parser, comment);
