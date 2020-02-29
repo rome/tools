@@ -28,12 +28,19 @@ import {readFile} from '@romejs/fs';
 import crypto = require('crypto');
 import {Dict} from '@romejs/typescript-helpers';
 
+export type BundleOptions = {
+  prefix?: string;
+  interpreter?: string;
+};
+
 export default class BundleRequest {
   constructor(
     bundler: Bundler,
     mode: BundlerMode,
     resolvedEntry: AbsoluteFilePath,
+    options: BundleOptions,
   ) {
+    this.interpreter = options.interpreter;
     this.bundler = bundler;
     this.cached = true;
     this.mode = mode;
@@ -59,6 +66,7 @@ export default class BundleRequest {
     this.inMemorySourceMap = [];
   }
 
+  interpreter: undefined | string;
   cached: boolean;
   bundler: Bundler;
   resolvedEntry: AbsoluteFilePath;
@@ -223,6 +231,11 @@ export default class BundleRequest {
           },
         });
       }
+    }
+
+    const {interpreter} = this;
+    if (interpreter !== undefined) {
+      push(`#!${interpreter}\n`);
     }
 
     // add on bootstrap

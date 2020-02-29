@@ -10,7 +10,7 @@ import {SourceMap} from '@romejs/codec-source-map';
 import {AbsoluteFilePath} from '@romejs/path';
 import {ResolverOptions} from '../../master/fs/Resolver';
 import {Mappings} from '@romejs/codec-source-map';
-import {Number1, Number0} from '@romejs/ob1';
+import {Number1} from '@romejs/ob1';
 
 export type BundlerConfig = {
   inlineSourceMap: boolean;
@@ -69,16 +69,4 @@ export type BundleResult = {
   files: BundlerFiles;
   bundles: Array<BundleResultBundle>;
   entry: BundleResultBundle;
-};
-
-export type BundlerUnsymbolicatedLocation = {
-  lineNumber: undefined | Number1;
-  column: undefined | Number0;
-};
-
-export type BundlerSymbolicatedStackFrame = {
-  file: string;
-  lineNumber: Number1;
-  column: Number0;
-  methodName?: string; // TODO: required
 };

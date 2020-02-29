@@ -55,6 +55,7 @@ import {
 import crypto = require('crypto');
 import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
 import {Dict, RequiredProps} from '@romejs/typescript-helpers';
+import {number1, number0, coerce0} from '@romejs/ob1';
 
 type MasterRequestOptions = {
   client: MasterClient;
@@ -115,7 +116,11 @@ export default class MasterRequest {
   }
 
   async assertClientCwdProject(): Promise<ProjectDefinition> {
-    return this.master.projectManager.assertProject(this.client.flags.cwd);
+    const pointer = this.getDiagnosticPointerForClientCwd();
+    return this.master.projectManager.assertProject(
+      this.client.flags.cwd,
+      pointer,
+    );
   }
 
   createDiagnosticsPrinter(origin: DiagnosticOrigin): DiagnosticsPrinter {
@@ -204,6 +209,24 @@ export default class MasterRequest {
     ]);
   }
 
+  getDiagnosticPointerForClientCwd(): DiagnosticPointer {
+    const cwd = this.client.flags.cwd.join();
+    return {
+      sourceText: cwd,
+      start: {
+        index: number0,
+        line: number1,
+        column: number0,
+      },
+      end: {
+        index: coerce0(cwd.length),
+        line: number1,
+        column: coerce0(cwd.length),
+      },
+      filename: 'cwd',
+    };
+  }
+
   getDiagnosticPointerFromFlags(target: SerializeCLITarget): DiagnosticPointer {
     const {query} = this;
     return serializeCLIFlags(
@@ -259,23 +282,34 @@ export default class MasterRequest {
 
     // Build up args, defaulting to the current project dir if none passed
     const rawArgs = [...this.query.args];
-    const resolvedArgs: Array<AbsoluteFilePath> = [];
+    const resolvedArgs: Array<{
+      path: AbsoluteFilePath;
+      pointer: DiagnosticPointer;
+    }> = [];
     if (rawArgs.length === 0) {
+      const pointer = this.getDiagnosticPointerForClientCwd();
       const project = await this.assertClientCwdProject();
-      resolvedArgs.push(project.folder);
+      resolvedArgs.push({
+        path: project.folder,
+        pointer,
+      });
     } else {
-      for (const arg of rawArgs) {
-        resolvedArgs.push(flags.cwd.resolve(arg));
+      for (let i = 0; i < rawArgs.length; i++) {
+        const arg = rawArgs[i];
+        resolvedArgs.push({
+          path: flags.cwd.resolve(arg),
+          pointer: this.getDiagnosticPointerFromFlags({type: 'arg', key: i}),
+        });
       }
     }
 
     // Build up files
     const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-    for (const arg of resolvedArgs) {
-      const project = await master.projectManager.assertProject(arg);
+    for (const {path, pointer} of resolvedArgs) {
+      const project = await master.projectManager.assertProject(path, pointer);
       const projectIgnore: PathPatterns = getIgnoreForProject(project);
 
-      const matches = master.memoryFs.glob(arg, {
+      const matches = master.memoryFs.glob(path, {
         ignore: projectIgnore,
         extensions,
       });
