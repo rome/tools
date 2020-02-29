@@ -1,4 +1,8 @@
-# Getting Started
+---
+id: getting-started
+title: Getting Started
+sidebar_label: Getting Started
+---
 
 Rome requires a project configuration in order to operate. This can take three possible forms.
 

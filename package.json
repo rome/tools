@@ -37,7 +37,8 @@
         "vendor",
         "type-libs",
         "lib/modules.js",
-        "prelude.ts"
+        "prelude.ts",
+        "website"
       ]
     }
   }
