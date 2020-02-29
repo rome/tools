@@ -80,7 +80,7 @@ export default class CompilerLinter {
                 printer.addDiagnostic({
                   category: '',
                   message:
-                    "Files excluded from linting as it's not enabled for this project. Run `rome config enable lint` to enable it.",
+                    "Files excluded from linting as it's not enabled for this project. Run `rome config enable-category lint` to enable it.",
                   ...consumer.getDiagnosticPointer(),
                 });
               } else {
