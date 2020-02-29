@@ -15,6 +15,14 @@ import {createAbsoluteFilePath} from '@romejs/path';
 
 export const localCommands: Map<string, LocalCommand> = new Map();
 
+localCommands.set('init', {
+  category: commandCategories.PROJECT_MANAGEMENT,
+  description: 'create a project config',
+  async callback(req: ClientRequest) {
+    return true;
+  },
+});
+
 localCommands.set('start', {
   category: commandCategories.PROCESS_MANAGEMENT,
   description: 'start daemon (if none running)',

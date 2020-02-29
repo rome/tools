@@ -20,9 +20,9 @@ export type DiagnosticFilter = {
 };
 
 export type DiagnosticPointer = SourceLocation & {
-  sourceText: undefined | string;
-  mtime: undefined | number;
-  language: DiagnosticLanguage;
+  sourceText?: string;
+  mtime?: number;
+  language?: DiagnosticLanguage;
 };
 
 export type DiagnosticOrigin = {

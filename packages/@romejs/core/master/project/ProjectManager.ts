@@ -25,7 +25,11 @@ import {
   WorkerPartialManifests,
 } from '../../common/bridges/WorkerBridge';
 import {WorkerContainer} from '../WorkerManager';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
+import {
+  DiagnosticsProcessor,
+  DiagnosticPointer,
+  DiagnosticsError,
+} from '@romejs/diagnostics';
 import {matchPathPatterns} from '@romejs/path-match';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
 import {
@@ -717,10 +721,13 @@ export default class ProjectManager {
     await Promise.all(promises);
   }
 
-  async assertProject(loc: AbsoluteFilePath): Promise<ProjectDefinition> {
+  async assertProject(
+    path: AbsoluteFilePath,
+    pointer?: DiagnosticPointer,
+  ): Promise<ProjectDefinition> {
     // We won't recurse up and check a parent project if we've already visited it
-    const syncProject = this.findProjectExisting(loc);
-    const project = syncProject || (await this.findProject(loc));
+    const syncProject = this.findProjectExisting(path);
+    const project = syncProject || (await this.findProject(path));
 
     if (project) {
       // Continue searching for projects up the directory
@@ -730,11 +737,31 @@ export default class ProjectManager {
       }
 
       return project;
-    } else {
+    }
+
+    if (pointer === undefined) {
       throw new Error(
-        `Couldn't find a ${ROME_CONFIG_FILENAMES.join(' or ')} for ${loc}`,
+        `Couldn't find a project. Checked ${ROME_CONFIG_FILENAMES.join(
+          ' or ',
+        )} for ${path.join()}`,
       );
     }
+
+    throw new DiagnosticsError(`No project found for ${path.join()}`, [
+      {
+        ...pointer,
+        category: 'project',
+        message: `Couldn't find a project`,
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message:
+              'Run <command>rome init</command> in this folder to initialize a project',
+          },
+        ],
+      },
+    ]);
   }
 
   // Convenience method to get the project config and pass it to the file handler class

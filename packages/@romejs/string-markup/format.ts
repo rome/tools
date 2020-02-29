@@ -136,6 +136,9 @@ export function stripMarkupTags(
       case 'filesize':
         return humanizeFileSize(Number(value));
 
+      case 'command':
+        return `\`${value}\``;
+
       default:
         return value;
     }
@@ -290,6 +293,9 @@ export function markupToAnsi(
 
       case 'bgBrightWhite':
         return formatAnsi.bgBrightWhite(value);
+
+      case 'command':
+        return formatAnsi.inverse(value);
     }
   });
 }
