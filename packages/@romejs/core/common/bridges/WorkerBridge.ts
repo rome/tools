@@ -90,6 +90,11 @@ export type PrefetchedModuleSignatures = {
       };
 };
 
+export type WorkerFormatResult = {
+  formatted: string;
+  diagnostics: PartialDiagnostics;
+};
+
 export default class WorkerBridge extends Bridge {
   log = this.createEvent<string, void>({
     name: 'log',
@@ -125,6 +130,14 @@ export default class WorkerBridge extends Bridge {
 
   evict = this.createEvent<{filename: string}, void>({
     name: 'evict',
+    direction: 'server->client',
+  });
+
+  format = this.createEvent<
+    {file: JSONFileReference},
+    undefined | WorkerFormatResult
+  >({
+    name: 'format',
     direction: 'server->client',
   });
 

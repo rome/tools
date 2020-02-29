@@ -76,7 +76,7 @@ function request(
 
 const NODE_MODULES = 'node_modules';
 
-export type ResolverRemoteQuery = ResolverOptions & {
+export type ResolverRemoteQuery = Omit<ResolverOptions, 'origin'> & {
   origin: URLFilePath | AbsoluteFilePath;
   source: UnknownFilePath;
   // Allows a resolution to stop at a folder or package boundary
@@ -171,6 +171,7 @@ function appendTypeQueryResponse(
 }
 
 export type ResolverOptions = {
+  origin?: AbsoluteFilePath;
   mocks?: boolean;
   platform?: Platform;
   scale?: number;

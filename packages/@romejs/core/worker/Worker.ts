@@ -160,6 +160,10 @@ export default class Worker {
       );
     });
 
+    bridge.format.subscribe(payload => {
+      return this.api.format(convertTransportFileReference(payload.file));
+    });
+
     bridge.analyzeDependencies.subscribe(payload => {
       return this.api.analyzeDependencies(
         convertTransportFileReference(payload.file),

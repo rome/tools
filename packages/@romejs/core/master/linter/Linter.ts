@@ -38,6 +38,16 @@ export default class Linter {
 
   request: MasterRequest;
 
+  static async getFilesFromArgs(
+    request: MasterRequest,
+    extenstions: Array<string>,
+  ): Promise<AbsoluteFilePathSet> {
+    return request.getFilesFromArgs(
+      project => concatLintIgnore(project.config.lint.ignore),
+      extenstions,
+    );
+  }
+
   async lint() {
     const {request} = this;
     const {reporter} = request;
@@ -47,8 +57,8 @@ export default class Linter {
       message: 'Dispatched',
     });
 
-    const paths: AbsoluteFilePathSet = await request.getFilesFromArgs(
-      project => concatLintIgnore(project.config.lint.ignore),
+    const paths: AbsoluteFilePathSet = await Linter.getFilesFromArgs(
+      request,
       LINTABLE_EXTENSIONS,
     );
 

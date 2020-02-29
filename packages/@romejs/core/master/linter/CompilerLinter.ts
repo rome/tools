@@ -32,12 +32,9 @@ export default class CompilerLinter {
 
     const lintDisabledProjects: Set<ProjectDefinition> = new Set();
 
-    let i = 0;
     await Promise.all(
       pathsByWorker.map(async paths => {
         for (const path of paths) {
-          i++;
-          spinner.setCurrent(i);
           spinner.setText(`<filelink target="${path.join()}" />`);
 
           // Complain about the project config if it has lint disabled

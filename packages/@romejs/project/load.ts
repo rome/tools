@@ -394,6 +394,13 @@ export function normalizeProjectConfig(
     }
   }
 
+  // Complain about common misspellings
+  if (consumer.has('linter')) {
+    consumer
+      .get('linter')
+      .unexpected(`Did you mean <emphasis>lint</emphasis>?`);
+  }
+
   // Need to get this before enforceUsedProperties so it will be flagged
   const _extends = consumer.get('extends');
 

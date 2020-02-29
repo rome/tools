@@ -42,6 +42,7 @@ import WorkerBridge, {
   WorkerCompileResult,
   WorkerParseOptions,
   WorkerCompilerOptions,
+  WorkerFormatResult,
 } from '../common/bridges/WorkerBridge';
 import {ModuleSignature} from '@romejs/js-analysis';
 import {PartialDiagnostics} from '@romejs/diagnostics';
@@ -53,7 +54,7 @@ import {
 } from '@romejs/path';
 import crypto = require('crypto');
 import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
-import {Dict} from '@romejs/typescript-helpers';
+import {Dict, RequiredProps} from '@romejs/typescript-helpers';
 
 type MasterRequestOptions = {
   client: MasterClient;
@@ -226,9 +227,10 @@ export default class MasterRequest {
     );
   }
 
-  getResolverOptionsFromFlags(): ResolverOptions {
+  getResolverOptionsFromFlags(): RequiredProps<ResolverOptions, 'origin'> {
     const {requestFlags} = this.query;
     return {
+      origin: this.client.flags.cwd,
       platform: requestFlags.resolverPlatform,
       scale: requestFlags.resolverScale,
       mocks: requestFlags.resolverMocks,
@@ -397,8 +399,16 @@ export default class MasterRequest {
     return res;
   }
 
+  async requestWorkerFormat(
+    path: AbsoluteFilePath,
+  ): Promise<undefined | WorkerFormatResult> {
+    return await this.wrapRequestDiagnostic('format', path, (bridge, file) =>
+      bridge.format.call({file}),
+    );
+  }
+
   async requestWorkerCompile(
-    filename: AbsoluteFilePath,
+    path: AbsoluteFilePath,
     stage: TransformStageName,
     options?: WorkerCompilerOptions,
   ): Promise<WorkerCompileResult> {
@@ -415,7 +425,7 @@ export default class MasterRequest {
     const cacheKey = `${stage}:${optionsHash}`;
 
     // Check cache for this stage and options
-    const cacheEntry = await cache.get(filename);
+    const cacheEntry = await cache.get(path);
     const cached = cacheEntry.compile[cacheKey];
     if (cached !== undefined) {
       // TODO check cacheDependencies
@@ -424,7 +434,7 @@ export default class MasterRequest {
 
     const compileRes = await this.wrapRequestDiagnostic(
       'compile',
-      filename,
+      path,
       (bridge, file) => {
         // We allow options to be passed in as undefined so we can compute an easy cache key
         if (options === undefined) {
@@ -441,7 +451,7 @@ export default class MasterRequest {
     });
 
     // There's a race condition here between the file being opened and then rewritten
-    await cache.update(filename, cacheEntry => ({
+    await cache.update(path, cacheEntry => ({
       compile: {
         ...cacheEntry.compile,
         [cacheKey]: {
