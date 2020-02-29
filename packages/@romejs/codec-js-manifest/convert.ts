@@ -10,6 +10,7 @@ import {ManifestDependencies, stringifyDependencyPattern} from './dependencies';
 import {Manifest, JSONManifest} from './types';
 import {stringifySemver} from '@romejs/codec-semver';
 import {Dict} from '@romejs/typescript-helpers';
+import {stringifyPathPattern} from '@romejs/path-match';
 
 export function convertManifestToJSON(manifest: Manifest): JSONManifest {
   return {
@@ -43,7 +44,9 @@ export function convertManifestToJSON(manifest: Manifest): JSONManifest {
         ? undefined
         : stringifySPDXLicense(manifest.license),
 
-    files: maybeArray(manifest.files),
+    files: maybeArray(
+      manifest.files.map(pattern => stringifyPathPattern(pattern)),
+    ),
     keywords: maybeArray(manifest.keywords),
     cpu: maybeArray(manifest.cpu),
     os: maybeArray(manifest.os),

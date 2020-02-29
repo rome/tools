@@ -326,8 +326,8 @@ export default class DependencyGraph {
           async () => {
             const resolved = await master.resolver.resolveAssert(
               {
-                origin,
                 ...this.resolverOpts,
+                origin,
                 source: createUnknownFilePath(source),
               },
               dep.loc === undefined

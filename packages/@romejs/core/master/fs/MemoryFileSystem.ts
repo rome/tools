@@ -869,11 +869,13 @@ export default class MemoryFileSystem {
     opts: {
       extensions?: Array<string>;
       ignore?: PathPatterns;
+      only?: PathPatterns;
     } = {},
   ): AbsoluteFilePathSet {
-    const {extensions, ignore} = opts;
+    const {extensions, ignore, only} = opts;
 
     const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+
     const ignoreParsed: PathPatterns = ignore === undefined ? [] : ignore;
 
     let crawl: Array<AbsoluteFilePath> = [cwd];
@@ -884,15 +886,23 @@ export default class MemoryFileSystem {
         throw new Error('crawl.length already validated');
       }
 
-      const matched = matchPathPatterns(path, ignoreParsed, cwd);
+      const ignoreMatched = matchPathPatterns(path, ignoreParsed, cwd);
 
       // Don't even recurse into explicit matches
-      if (matched === 'EXPLICIT_MATCH') {
+      if (ignoreMatched === 'EXPLICIT_MATCH') {
         continue;
       }
 
       // Add if a matching file
-      if (this.files.has(path) && matched === 'NO_MATCH') {
+      if (this.files.has(path) && ignoreMatched === 'NO_MATCH') {
+        // Check if any only filter if present
+        if (
+          only !== undefined &&
+          matchPathPatterns(path, only, cwd) === 'NO_MATCH'
+        ) {
+          continue;
+        }
+
         // Remove the prefixed dot
         const ext = path.getExtensions().slice(1);
         if (extensions === undefined || extensions.includes(ext)) {

@@ -26,6 +26,7 @@ import {
 } from '@romejs/codec-js-manifest';
 import {WorkerCompileResult} from '../../common/bridges/WorkerBridge';
 import {Dict} from '@romejs/typescript-helpers';
+import {readFile} from '@romejs/fs';
 
 export type BundlerEntryResoluton = {
   manifestDef: undefined | ManifestDefinition;
@@ -183,6 +184,14 @@ export default class Bundler {
         manifestDef,
         entryBundle,
         createBundle,
+        (relative, buffer) => {
+          if (!files.has(relative)) {
+            files.set(relative, {
+              kind: 'file',
+              content: buffer,
+            });
+          }
+        },
       );
 
       // Add a package.json with updated values
@@ -206,6 +215,7 @@ export default class Bundler {
       resolvedSegment: AbsoluteFilePath,
       options: BundleOptions,
     ) => Promise<BundleResultBundle>,
+    addFile: (relative: string, buffer: Buffer | string) => void,
   ): Promise<JSONManifest> {
     const manifest = manifestDef.manifest;
 
@@ -228,10 +238,17 @@ export default class Bundler {
 
     // TODO Compile a index.d.ts
 
-    // TODO copy manifest.files
+    // Copy manifest.files
     if (manifest.files !== undefined) {
-      // TODO `manifest.files` should be turned into matching patterns
-      // TODO add all files that match the globs glob
+      const paths = await this.master.memoryFs.glob(manifestDef.folder, {
+        only: manifest.files,
+      });
+
+      for (const path of paths) {
+        const relative = manifestDef.folder.relative(path).join();
+        const buffer = await readFile(path);
+        addFile(relative, buffer);
+      }
     }
 
     // Compile manifest.bin files
@@ -251,9 +268,9 @@ export default class Bundler {
 
         const absolute = await this.master.resolver.resolveAssert(
           {
+            ...this.config.resolver,
             origin: manifestDef.folder,
             source: createUnknownFilePath(relative).toExplicitRelative(),
-            ...this.config.resolver,
           },
           {
             pointer,

@@ -15,6 +15,8 @@ export type PathPattern = PatternNode;
 
 export {parsePattern as parsePathPattern};
 
+export {stringifyPathPattern} from './stringify';
+
 export function matchPath(
   path: AbsoluteFilePath,
   patternNode: PatternNode,

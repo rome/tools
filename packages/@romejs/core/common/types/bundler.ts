@@ -9,8 +9,6 @@ import {PartialDiagnostics} from '@romejs/diagnostics';
 import {SourceMap} from '@romejs/codec-source-map';
 import {AbsoluteFilePath} from '@romejs/path';
 import {ResolverOptions} from '../../master/fs/Resolver';
-import {Mappings} from '@romejs/codec-source-map';
-import {Number1} from '@romejs/ob1';
 
 export type BundlerConfig = {
   inlineSourceMap: boolean;
@@ -22,19 +20,11 @@ export type BundlerMode = 'modern' | 'legacy';
 
 export const BUNDLER_MODES: Array<BundlerMode> = ['modern', 'legacy'];
 
-export type BundlerInMemorySourceMap = Array<{
-  map: Mappings;
-  firstLine: Number1;
-  path: string;
-  // TODO: functionMap
-}>;
-
 export type BundleRequestResult = {
   cached: boolean;
   diagnostics: PartialDiagnostics;
   content: string;
   map: SourceMap;
-  inMemorySourceMap: BundlerInMemorySourceMap;
   assets: Map<string, Buffer>;
 };
 
@@ -48,7 +38,7 @@ export type BundleBuddyGraphNode = {
 export type BundlerFiles = Map<
   string,
   {
-    kind: 'asset' | 'entry' | 'sourcemap' | 'stats' | 'manifest';
+    kind: 'asset' | 'entry' | 'sourcemap' | 'stats' | 'manifest' | 'file';
     content: string | Buffer;
   }
 >;

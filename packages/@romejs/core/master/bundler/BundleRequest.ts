@@ -8,11 +8,7 @@
 import Bundler from './Bundler';
 import DependencyNode from '../dependencies/DependencyNode';
 import {Mappings} from '@romejs/codec-source-map';
-import {
-  BundleRequestResult,
-  BundlerMode,
-  BundlerInMemorySourceMap,
-} from '../../common/types/bundler';
+import {BundleRequestResult, BundlerMode} from '../../common/types/bundler';
 import {
   WorkerBundleCompileOptions,
   WorkerCompileResult,
@@ -23,7 +19,7 @@ import {getPrefixedBundleNamespace} from '@romejs/js-compiler';
 import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import {SourceMapGenerator} from '@romejs/codec-source-map';
 import {AbsoluteFilePath} from '@romejs/path';
-import {coerce1, add} from '@romejs/ob1';
+import {add} from '@romejs/ob1';
 import {readFile} from '@romejs/fs';
 import crypto = require('crypto');
 import {Dict} from '@romejs/typescript-helpers';
@@ -62,8 +58,6 @@ export default class BundleRequest {
     this.sourceMap = new SourceMapGenerator({
       file: 'TODO-something',
     });
-
-    this.inMemorySourceMap = [];
   }
 
   interpreter: undefined | string;
@@ -75,7 +69,6 @@ export default class BundleRequest {
   assets: Map<string, Buffer>;
   compiles: Map<string, CompileResult>;
   sourceMap: SourceMapGenerator;
-  inMemorySourceMap: BundlerInMemorySourceMap;
   mode: BundlerMode;
 
   async stepAnalyze(): Promise<DependencyOrder> {
@@ -189,7 +182,7 @@ export default class BundleRequest {
     const {files} = order;
     const {inlineSourceMap} = this.bundler.config;
     const {graph} = this.bundler;
-    const {resolvedEntry, mode, sourceMap, inMemorySourceMap} = this;
+    const {resolvedEntry, mode, sourceMap} = this;
 
     let content: string = '';
     let lineOffset: number = 0;
@@ -209,18 +202,7 @@ export default class BundleRequest {
       sourceContent: string,
       mappings: Mappings,
     ) {
-      // TODO: For both in-memory and serialized source maps, `filename` should
-      // be the full project-relative path, but it looks like we use a truncated
-      // basename (module ID?) instead.
-      inMemorySourceMap.push({
-        path: filename,
-        firstLine: coerce1(lineOffset + 1),
-        map: mappings,
-      });
       return;
-      // TODO: Generate and cache the serialized, JSON-encoded source map on
-      // demand (e.g. in response to a `.map` HTTP request) from
-      // inMemorySourceMap.
       sourceMap.setSourceContent(filename, sourceContent);
       for (const mapping of mappings) {
         sourceMap.addMapping({
@@ -344,7 +326,6 @@ export default class BundleRequest {
       diagnostics: this.diagnostics.getPartialDiagnostics(),
       content,
       map: sourceMap.toJSON(),
-      inMemorySourceMap,
       cached: this.cached,
       assets: this.assets,
     };
@@ -357,7 +338,6 @@ export default class BundleRequest {
   abort(): BundleRequestResult {
     return {
       map: this.sourceMap.toJSON(),
-      inMemorySourceMap: [],
       content: '',
       diagnostics: this.diagnostics.getPartialDiagnostics(),
       cached: false,
