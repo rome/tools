@@ -30,7 +30,7 @@ localCommands.set('start', {
   },
 });
 
-localCommands.set('web', {
+localCommands.set('develop', {
   category: commandCategories.PROCESS_MANAGEMENT,
   description: '',
   async callback(req: ClientRequest) {
