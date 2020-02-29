@@ -6,10 +6,12 @@
 # LICENSE file in the root directory of this source tree.
 
 NODE_VERSION=$(node --version)
+NODE_VERSION=${NODE_VERSION%%.*}
 
-if [[ $NODE_VERSION == "v12."* ]] || [[ $NODE_VERSION == "v13."* ]]; then
+if [[ ${NODE_VERSION:1} -ge 12 ]]; then
   node --no-warnings --max_old_space_size=4096 $@
 else
   echo "Expected a Node version later than v12 but got $NODE_VERSION"
   exit 1
 fi
+
