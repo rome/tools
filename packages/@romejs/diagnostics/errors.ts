@@ -8,6 +8,8 @@
 import {PartialDiagnostics} from '@romejs/diagnostics';
 import {escapeMarkup} from '@romejs/string-markup';
 import {stripAnsi} from '@romejs/string-ansi';
+import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
+import {PartialDiagnostic} from './types';
 
 export class DiagnosticsError extends Error {
   constructor(message: string, diagnostics: PartialDiagnostics) {
@@ -16,11 +18,11 @@ export class DiagnosticsError extends Error {
     }
 
     message += '\n';
-    /*message += stripAnsi(
+    message += stripAnsi(
       printDiagnosticsToString(diagnostics, {
         origins: [],
       }),
-    );*/
+    );
     message += stripAnsi(
       diagnostics.map(diag => `- ${diag.message}`).join('\n'),
     );
@@ -28,18 +30,15 @@ export class DiagnosticsError extends Error {
     super(escapeMarkup(message));
     this.diagnostics = diagnostics;
     this.name = 'DiagnosticsError';
-
-    // If we don't have a filename then this error wont target anywhere, so add a derived error diagnostic
-    // to make it easier to track
-    //if (diagnostic.filename === undefined) {
-    //  diagnostic = mergeDiagnostics(
-    //    deriveDiagnosticFromError({category: 'DiagnosticError', error: this}),
-    //    diagnostic,
-    //  );
-    //}
   }
 
   diagnostics: PartialDiagnostics;
+}
+
+export function createSingleDiagnosticError(
+  diag: PartialDiagnostic,
+): DiagnosticsError {
+  return new DiagnosticsError(diag.message, [diag]);
 }
 
 export function getDiagnosticsFromError(

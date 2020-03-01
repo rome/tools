@@ -28,7 +28,7 @@ import {WorkerContainer} from '../WorkerManager';
 import {
   DiagnosticsProcessor,
   DiagnosticPointer,
-  DiagnosticsError,
+  createSingleDiagnosticError,
 } from '@romejs/diagnostics';
 import {matchPathPatterns} from '@romejs/path-match';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
@@ -747,21 +747,19 @@ export default class ProjectManager {
       );
     }
 
-    throw new DiagnosticsError(`No project found for ${path.join()}`, [
-      {
-        ...pointer,
-        category: 'project',
-        message: `Couldn't find a project`,
-        advice: [
-          {
-            type: 'log',
-            category: 'info',
-            message:
-              'Run <command>rome init</command> in this folder to initialize a project',
-          },
-        ],
-      },
-    ]);
+    throw createSingleDiagnosticError({
+      ...pointer,
+      category: 'project',
+      message: `Couldn't find a project`,
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          message:
+            'Run <command>rome init</command> in this folder to initialize a project',
+        },
+      ],
+    });
   }
 
   // Convenience method to get the project config and pass it to the file handler class

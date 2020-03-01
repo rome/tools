@@ -12,6 +12,7 @@ import {
   DiagnosticsError,
   getDiagnosticsFromError,
   INTERNAL_ERROR_LOG_ADVICE,
+  createSingleDiagnosticError,
 } from '@romejs/diagnostics';
 import {TestCallback, TestOptions} from '@romejs/test';
 import {
@@ -97,14 +98,12 @@ export default class TestWorkerRunner {
     if (res.syntaxError !== undefined) {
       const message = `A bundle was generated that contained a syntax error: ${res.syntaxError.message}`;
 
-      throw new DiagnosticsError(message, [
-        {
-          ...res.syntaxError,
-          message,
-          filename: this.file.uid,
-          advice: [INTERNAL_ERROR_LOG_ADVICE],
-        },
-      ]);
+      throw createSingleDiagnosticError({
+        ...res.syntaxError,
+        message,
+        filename: this.file.uid,
+        advice: [INTERNAL_ERROR_LOG_ADVICE],
+      });
     }
   }
 

@@ -20,6 +20,7 @@ import {
   PartialDiagnosticAdvice,
   DiagnosticsError,
   getDiagnosticsFromError,
+  createSingleDiagnosticError,
 } from '@romejs/diagnostics';
 import {
   Number1,
@@ -402,18 +403,16 @@ export class ParserCore<Tokens extends TokensShape, State> {
       errMessage = `${this.path}: ${errMessage} Input: ${this.input}`;
     }
 
-    throw new DiagnosticsError(errMessage, [
-      {
-        message,
-        advice: opts.advice,
-        category: this.parserName,
-        sourceText: this.path === undefined ? this.input : undefined,
-        mtime: this.mtime,
-        start,
-        end,
-        filename: this.filename,
-      },
-    ]);
+    throw createSingleDiagnosticError({
+      message,
+      advice: opts.advice,
+      category: this.parserName,
+      sourceText: this.path === undefined ? this.input : undefined,
+      mtime: this.mtime,
+      start,
+      end,
+      filename: this.filename,
+    });
   }
 
   //# Token utility methods

@@ -15,9 +15,9 @@ import Resolver, {
   ResolverRemoteQuery,
 } from './Resolver';
 import {
-  DiagnosticsError,
   PartialDiagnosticAdvice,
   buildSuggestionAdvice,
+  createSingleDiagnosticError,
 } from '@romejs/diagnostics';
 import {orderBySimilarity} from '@romejs/string-utils';
 import {createUnknownFilePath, AbsoluteFilePath} from '@romejs/path';
@@ -233,20 +233,12 @@ export default function resolverSuggest(
 
   message += ` <emphasis>${source}</emphasis> from <filelink emphasis target="${pointer.filename}" />`;
 
-  throw new DiagnosticsError(errMsg, [
-    {
-      // TODO very confused by the usage of pointer and then querySource.pointer
-      category: 'resolver',
-      filename: pointer.filename,
-      start: pointer.start,
-      end: pointer.end,
-      sourceText: querySource.pointer.sourceText,
-      language: querySource.pointer.language,
-      mtime: querySource.pointer.mtime,
-      message,
-      advice,
-    },
-  ]);
+  throw createSingleDiagnosticError({
+    ...pointer,
+    category: 'resolver',
+    message,
+    advice,
+  });
 }
 
 type Suggestions = Map<string, string>;

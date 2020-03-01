@@ -15,6 +15,7 @@ import {
   getDiagnosticsFromError,
   DiagnosticOrigin,
   PartialDiagnosticAdvice,
+  createSingleDiagnosticError,
 } from '@romejs/diagnostics';
 import {DiagnosticsPrinterFlags} from '@romejs/cli-diagnostics';
 import {ProjectDefinition} from '@romejs/project';
@@ -198,15 +199,13 @@ export default class MasterRequest {
     advice?: PartialDiagnosticAdvice,
   ) {
     const pointer = this.getDiagnosticPointerFromFlags(target);
-    throw new DiagnosticsError(message, [
-      {
-        message,
-        filename: 'argv',
-        category: 'error',
-        ...pointer,
-        advice,
-      },
-    ]);
+    throw createSingleDiagnosticError({
+      message,
+      filename: 'argv',
+      category: 'flags',
+      ...pointer,
+      advice,
+    });
   }
 
   getDiagnosticPointerForClientCwd(): DiagnosticPointer {
@@ -313,6 +312,15 @@ export default class MasterRequest {
         ignore: projectIgnore,
         extensions,
       });
+
+      if (matches.size === 0) {
+        throw createSingleDiagnosticError({
+          ...pointer,
+          category: 'flags',
+          message: 'No files found',
+        });
+      }
+
       for (const path of matches) {
         paths.add(path);
       }

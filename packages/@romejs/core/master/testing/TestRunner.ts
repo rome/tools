@@ -309,7 +309,7 @@ export default class TestRunner {
     const callFrames = params
       .get('callFrames')
       .asArray()
-      .slice(0, 10);
+      .slice(0, 20);
     for (const callFrame of callFrames) {
       const loc = callFrame.get('location');
 
@@ -318,6 +318,8 @@ export default class TestRunner {
         coerce0to1(loc.get('lineNumber').asZeroIndexedNumber()),
         loc.get('columnNumber').asZeroIndexedNumber(),
       );
+
+      console.log(callFrame.asUnknown());
 
       const name = callFrame
         .get('scopeChain')

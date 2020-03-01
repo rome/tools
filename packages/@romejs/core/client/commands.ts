@@ -10,7 +10,10 @@ import ClientRequest from './ClientRequest';
 import {LocalCommand} from '../commands';
 import {commandCategories} from '../commands';
 import executeMain from '../common/utils/executeMain';
-import {DiagnosticsError} from '@romejs/diagnostics';
+import {
+  DiagnosticsError,
+  createSingleDiagnosticError,
+} from '@romejs/diagnostics';
 import {createAbsoluteFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
 import {writeFile} from '@romejs/fs';
@@ -198,7 +201,7 @@ localCommands.set('run', {
             sourceMap: data.get('map').asAny(),
           });
           if (syntaxError !== undefined) {
-            throw new DiagnosticsError(syntaxError.message, [syntaxError]);
+            throw createSingleDiagnosticError(syntaxError);
           }
           await new Promise(() => {});
           break;
