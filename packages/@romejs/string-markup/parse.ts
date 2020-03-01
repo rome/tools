@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {unescapeString} from '@romejs/string-escape';
 import {
   ParserOptions,
   createParser,
@@ -161,10 +160,9 @@ const createStringMarkupParser = createParser(
               });
             }
 
-            const unescaped = unescapeString(value);
             return {
               state,
-              token: this.finishValueToken('String', unescaped, end),
+              token: this.finishValueToken('String', value, end),
             };
           }
 
