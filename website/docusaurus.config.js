@@ -10,7 +10,7 @@
 module.exports = {
   title: 'Rome',
   tagline: 'An experimental JavaScript toolchain.',
-  url: '',
+  url: 'https://romejs.dev/',
   baseUrl: '/',
   favicon: 'img/rome-logo.ico',
   organizationName: 'facebookexperimental',
