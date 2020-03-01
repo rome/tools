@@ -319,13 +319,11 @@ export default class TestRunner {
         loc.get('columnNumber').asZeroIndexedNumber(),
       );
 
-      console.log(callFrame.asUnknown());
-
       const name = callFrame
         .get('scopeChain')
         .asArray()[0]
         .get('name')
-        .asString()
+        .asString('')
         .split('$')
         .pop();
 
