@@ -1,22 +1,31 @@
-#!/bin/bash
+#!/usr/bin/env node
 
-# Copyright (c) Facebook, Inc. and its affiliates.
-#
-# This source code is licensed under the MIT license found in the
-# LICENSE file in the root directory of this source tree.
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
-set -e
+const {root, argv} = require('./_constants.cjs');
+const {unlink, execNode} = require('./_utils.cjs');
+const path = require('path');
+const fs = require('fs');
 
-CURR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-ROME_ROOT="$CURR_DIR/.."
-DEV_FOLDER="/tmp/rome-dev"
-export ROME_CACHE=0
+const DEV_FOLDER = '/tmp/rome-dev';
 
-rm -rf "$DEV_FOLDER"
-mkdir "$DEV_FOLDER"
+process.env.ROME_CACHE = '0';
 
-echo "Building trunk"
-"$ROME_ROOT/scripts/vendor-rome" bundle "$ROME_ROOT/packages/@romejs/cli/bin/rome.ts" "$DEV_FOLDER"
+unlink(DEV_FOLDER);
+fs.mkdirSync(DEV_FOLDER);
 
-echo "Executing trunk"
-"$CURR_DIR/node" "$DEV_FOLDER/index.js" $@
+console.log('Building trunk');
+execNode([
+  path.join(__dirname, 'vendor/rome.cjs'),
+  'bundle',
+  path.join(root, 'packages/@romejs/cli/bin/rome.ts'),
+  DEV_FOLDER,
+]);
+
+console.log('Executing trunk');
+execNode([path.join(DEV_FOLDER, 'index.js'), ...argv]);
