@@ -316,10 +316,6 @@ function printLog(
         reporter.info(message);
         break;
 
-      case 'question':
-        reporter.question(message);
-        break;
-
       case 'error':
         reporter.error(message);
         break;

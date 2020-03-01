@@ -32,12 +32,7 @@ export type DiagnosticOrigin = {
 
 //# FULL
 
-export type DiagnosticLogCategory =
-  | 'none'
-  | 'question'
-  | 'info'
-  | 'warn'
-  | 'error';
+export type DiagnosticLogCategory = 'none' | 'info' | 'warn' | 'error';
 
 export type DiagnosticLanguage = 'json' | 'js' | 'url' | 'shell' | 'unknown';
 

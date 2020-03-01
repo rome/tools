@@ -295,7 +295,7 @@ export function markupToAnsi(
         return formatAnsi.bgBrightWhite(value);
 
       case 'command':
-        return formatAnsi.inverse(value);
+        return '`' + formatAnsi.italic(value) + '`';
     }
   });
 }

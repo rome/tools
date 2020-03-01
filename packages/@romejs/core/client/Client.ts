@@ -44,6 +44,7 @@ type ClientOptions = {
   globalErrorHandlers?: boolean;
   stdout?: stream.Writable;
   stderr?: stream.Writable;
+  stdin?: stream.Readable;
   flags: Partial<Omit<ClientFlags, 'clientName'>> & {
     clientName: string;
   };
@@ -85,9 +86,8 @@ export default class Client {
       name: 'Client.bridgeAttached',
     });
 
-    this.stdout = opts.stdout;
-
     this.reporter = new Reporter({
+      stdin: opts.stdin,
       silent:
         this.flags.silent === true ||
         opts.stdout === undefined ||
@@ -113,7 +113,6 @@ export default class Client {
   flags: ClientFlags;
   reporter: Reporter;
   derivedReporterStreams: ReporterDerivedStreams;
-  stdout: undefined | stream.Writable;
   bridgeStatus: undefined | BridgeStatus;
   bridgeAttachedEvent: Event<void, void>;
 

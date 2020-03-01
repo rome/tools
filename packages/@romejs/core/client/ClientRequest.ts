@@ -57,22 +57,17 @@ export default class ClientRequest {
   }
 
   async initFromLocal(
-    localCommand: LocalCommand,
+    localCommand: LocalCommand<any>,
   ): Promise<MasterQueryResponse> {
-    const {query, client} = this;
-    if (client.flags.silent !== true) {
-      this.client.reporter.banner(query.command);
+    const {query} = this;
+
+    let flags;
+    if (localCommand.defineFlags !== undefined) {
+      flags = localCommand.defineFlags(consumeUnknown(query.commandFlags));
     }
 
-    const success = await localCommand.callback(
-      this,
-      consumeUnknown(query.commandFlags),
-    );
+    const success = await localCommand.callback(this, flags);
     if (success) {
-      if (client.flags.silent !== true) {
-        client.reporter.footer();
-      }
-
       return {
         type: 'SUCCESS',
         data: undefined,

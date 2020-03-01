@@ -14,7 +14,6 @@ import {JSONPropertyValue} from '@romejs/codec-json';
 export type MasterCommand<T> = {
   category: string;
   description: string;
-  hasHeader?: boolean;
   overrideClientFlags?: Partial<ClientFlags>;
   overrideRequestFlags?: Partial<ClientRequestFlags>;
   defineFlags?: (c: Consumer) => T;
@@ -24,10 +23,11 @@ export type MasterCommand<T> = {
   ) => undefined | Promise<JSONPropertyValue>;
 };
 
-export type LocalCommand = {
+export type LocalCommand<T> = {
   category: string;
   description: string;
-  callback: (api: ClientRequest, commandFlags: Consumer) => Promise<boolean>;
+  callback: (api: ClientRequest, commandFlags: T) => Promise<boolean>;
+  defineFlags?: (c: Consumer) => T;
 };
 
 export function createMasterCommand<T>(

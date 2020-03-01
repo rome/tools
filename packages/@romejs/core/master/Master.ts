@@ -754,11 +754,6 @@ export default class Master {
         | undefined
         | MasterCommand<Dict<unknown>> = masterCommands.get(query.commandName);
       if (commandOpts) {
-        // Output header if command specified
-        if (commandOpts.hasHeader === true) {
-          reporter.banner(query.commandName);
-        }
-
         // Warn about disabled disk caching
         if (
           process.env.ROME_CACHE === '0' &&
