@@ -26,14 +26,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 16
-          index: 16
-          line: 2
+          column: 88
+          index: 106
+          line: 3
         }
         start: Object {
-          column: 16
-          index: 16
-          line: 2
+          column: 0
+          index: 18
+          line: 3
         }
       }
     }
@@ -69,6 +69,24 @@ Program {
           }
         }
       }
+      trailingComments: Array [
+        CommentLine {
+          value: '      ^ That\'s a U+2029 PARAGRAPH SEPARATOR UTF-16 char (between \'before\' and \'after\')'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 88
+              index: 106
+              line: 3
+            }
+            start: Object {
+              column: 0
+              index: 18
+              line: 3
+            }
+          }
+        }
+      ]
     }
   ]
 }

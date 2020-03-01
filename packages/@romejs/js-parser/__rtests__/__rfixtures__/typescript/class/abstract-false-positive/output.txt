@@ -26,8 +26,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 62
+          index: 62
           line: 1
         }
         start: Object {
@@ -53,6 +53,24 @@ Program {
           line: 2
         }
       }
+      leadingComments: Array [
+        CommentLine {
+          value: ' Exports an identifier, doesn\'t try parsing `abstract class`'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 62
+              index: 62
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
       declaration: ReferenceIdentifier {
         name: 'abstract'
         loc: Object {
@@ -68,6 +86,24 @@ Program {
             line: 2
           }
         }
+        leadingComments: Array [
+          CommentLine {
+            value: ' Exports an identifier, doesn\'t try parsing `abstract class`'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 62
+                index: 62
+                line: 1
+              }
+              start: Object {
+                column: 0
+                index: 0
+                line: 1
+              }
+            }
+          }
+        ]
       }
     }
   ]

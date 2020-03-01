@@ -27,6 +27,7 @@ Program {
       filename: '..'
       message: 'Unexpected token, expected ","'
       mtime: undefined
+      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
       end: Object {
         column: 6

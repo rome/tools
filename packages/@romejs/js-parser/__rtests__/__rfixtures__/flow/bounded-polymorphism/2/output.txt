@@ -130,8 +130,8 @@ Program {
                 loc: Object {
                   filename: '..'
                   end: Object {
-                    column: 17
-                    index: 17
+                    column: 23
+                    index: 23
                     line: 1
                   }
                   start: Object {

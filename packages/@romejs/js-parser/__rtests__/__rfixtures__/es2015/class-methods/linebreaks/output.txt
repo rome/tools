@@ -105,7 +105,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -221,7 +220,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -371,7 +369,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -487,7 +484,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -603,7 +599,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -719,7 +714,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -835,7 +829,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -985,7 +978,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -1101,7 +1093,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -1217,7 +1208,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {

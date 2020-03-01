@@ -29,8 +29,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 9
+          index: 9
           line: 1
         }
         start: Object {
@@ -45,14 +45,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 15
-          index: 57
-          line: 4
+          column: 11
+          index: 70
+          line: 5
         }
         start: Object {
-          column: 15
-          index: 57
-          line: 4
+          column: 0
+          index: 59
+          line: 5
         }
       }
     }
@@ -61,14 +61,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 17
-          index: 156
-          line: 10
+          column: 27
+          index: 185
+          line: 11
         }
         start: Object {
-          column: 17
-          index: 156
-          line: 10
+          column: 0
+          index: 158
+          line: 11
         }
       }
     }
@@ -120,6 +120,24 @@ Program {
           }
         }
       }
+      leadingComments: Array [
+        CommentLine {
+          value: ' bounds'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 9
+              index: 9
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
     }
     TypeAliasTypeAnnotation {
       id: BindingIdentifier {
@@ -214,6 +232,24 @@ Program {
           }
         }
       }
+      trailingComments: Array [
+        CommentLine {
+          value: ' builtins'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 11
+              index: 70
+              line: 5
+            }
+            start: Object {
+              column: 0
+              index: 59
+              line: 5
+            }
+          }
+        }
+      ]
     }
     TypeAliasTypeAnnotation {
       id: BindingIdentifier {
@@ -261,6 +297,24 @@ Program {
           }
         }
       }
+      leadingComments: Array [
+        CommentLine {
+          value: ' builtins'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 11
+              index: 70
+              line: 5
+            }
+            start: Object {
+              column: 0
+              index: 59
+              line: 5
+            }
+          }
+        }
+      ]
     }
     TypeAliasTypeAnnotation {
       id: BindingIdentifier {
@@ -449,6 +503,24 @@ Program {
           }
         }
       }
+      trailingComments: Array [
+        CommentLine {
+          value: ' literal type annotations'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 27
+              index: 185
+              line: 11
+            }
+            start: Object {
+              column: 0
+              index: 158
+              line: 11
+            }
+          }
+        }
+      ]
     }
     TypeAliasTypeAnnotation {
       id: BindingIdentifier {
@@ -496,6 +568,24 @@ Program {
           }
         }
       }
+      leadingComments: Array [
+        CommentLine {
+          value: ' literal type annotations'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 27
+              index: 185
+              line: 11
+            }
+            start: Object {
+              column: 0
+              index: 158
+              line: 11
+            }
+          }
+        }
+      ]
     }
     TypeAliasTypeAnnotation {
       id: BindingIdentifier {

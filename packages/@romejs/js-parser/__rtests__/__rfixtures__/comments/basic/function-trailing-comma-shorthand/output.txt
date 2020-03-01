@@ -26,13 +26,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 11
-          index: 11
+          column: 26
+          index: 26
           line: 1
         }
         start: Object {
-          column: 11
-          index: 11
+          column: 13
+          index: 13
           line: 1
         }
       }
@@ -114,6 +114,24 @@ Program {
                 line: 1
               }
             }
+            trailingComments: Array [
+              CommentBlock {
+                value: ' comment '
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 26
+                    index: 26
+                    line: 1
+                  }
+                  start: Object {
+                    column: 13
+                    index: 13
+                    line: 1
+                  }
+                }
+              }
+            ]
             properties: Array [
               ObjectProperty {
                 key: StaticPropertyKey {

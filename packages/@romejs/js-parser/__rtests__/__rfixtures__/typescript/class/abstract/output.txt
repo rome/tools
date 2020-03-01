@@ -26,14 +26,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 26
-          index: 76
-          line: 3
+          column: 54
+          index: 132
+          line: 4
         }
         start: Object {
-          column: 26
-          index: 76
-          line: 3
+          column: 0
+          index: 78
+          line: 4
         }
       }
     }
@@ -42,14 +42,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 35
-          index: 202
-          line: 6
+          column: 50
+          index: 254
+          line: 7
         }
         start: Object {
-          column: 35
-          index: 202
-          line: 6
+          column: 0
+          index: 204
+          line: 7
         }
       }
     }
@@ -176,6 +176,24 @@ Program {
           line: 3
         }
       }
+      trailingComments: Array [
+        CommentLine {
+          value: ' `export abstract class {}` is not valid TypeScript.'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 54
+              index: 132
+              line: 4
+            }
+            start: Object {
+              column: 0
+              index: 78
+              line: 4
+            }
+          }
+        }
+      ]
       declaration: ClassDeclaration {
         id: BindingIdentifier {
           name: 'C3'
@@ -212,6 +230,7 @@ Program {
           implements: undefined
           superClass: undefined
           superTypeParameters: undefined
+          trailingComments: undefined
           typeParameters: undefined
           loc: Object {
             filename: '..'
@@ -243,6 +262,24 @@ Program {
           line: 5
         }
       }
+      leadingComments: Array [
+        CommentLine {
+          value: ' `export abstract class {}` is not valid TypeScript.'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 54
+              index: 132
+              line: 4
+            }
+            start: Object {
+              column: 0
+              index: 78
+              line: 4
+            }
+          }
+        }
+      ]
       declaration: ClassDeclaration {
         id: BindingIdentifier {
           name: '*default*'
@@ -277,6 +314,7 @@ Program {
         meta: ClassHead {
           body: Array []
           implements: undefined
+          leadingComments: undefined
           superClass: undefined
           superTypeParameters: undefined
           typeParameters: undefined
@@ -310,6 +348,24 @@ Program {
           line: 6
         }
       }
+      trailingComments: Array [
+        CommentLine {
+          value: ' `abstract class` is not valid as an expression.'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 50
+              index: 254
+              line: 7
+            }
+            start: Object {
+              column: 0
+              index: 204
+              line: 7
+            }
+          }
+        }
+      ]
       declaration: ClassDeclaration {
         id: BindingIdentifier {
           name: 'C4'
@@ -346,6 +402,7 @@ Program {
           implements: undefined
           superClass: undefined
           superTypeParameters: undefined
+          trailingComments: undefined
           typeParameters: undefined
           loc: Object {
             filename: '..'

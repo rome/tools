@@ -26,8 +26,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 59
+          index: 59
           line: 1
         }
         start: Object {
@@ -53,8 +53,27 @@ Program {
           line: 2
         }
       }
+      leadingComments: Array [
+        CommentLine {
+          value: ' This comment should have a filename prop attached to loc'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 59
+              index: 59
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
       declaration: VariableDeclaration {
         kind: 'var'
+        leadingComments: undefined
         loc: Object {
           filename: '..'
           end: Object {
@@ -85,7 +104,26 @@ Program {
                   line: 2
                 }
               }
+              leadingComments: Array [
+                CommentLine {
+                  value: ' This comment should have a filename prop attached to loc'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 59
+                      index: 59
+                      line: 1
+                    }
+                    start: Object {
+                      column: 0
+                      index: 0
+                      line: 1
+                    }
+                  }
+                }
+              ]
             }
+            leadingComments: undefined
             loc: Object {
               filename: '..'
               end: Object {

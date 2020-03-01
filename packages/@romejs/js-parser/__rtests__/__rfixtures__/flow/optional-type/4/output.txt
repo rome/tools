@@ -30,6 +30,7 @@ Program {
       filename: '..'
       message: 'Unknown start to an conditional consequent'
       mtime: undefined
+      sourceType: 'module'
       origins: Array [Object {category: 'js-parser'}]
       end: Object {
         column: 16

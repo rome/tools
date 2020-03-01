@@ -26,13 +26,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 7
-          index: 7
+          column: 22
+          index: 22
           line: 1
         }
         start: Object {
-          column: 7
-          index: 7
+          column: 9
+          index: 9
           line: 1
         }
       }
@@ -115,6 +115,24 @@ Program {
                 line: 1
               }
             }
+            trailingComments: Array [
+              CommentBlock {
+                value: ' comment '
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 22
+                    index: 22
+                    line: 1
+                  }
+                  start: Object {
+                    column: 9
+                    index: 9
+                    line: 1
+                  }
+                }
+              }
+            ]
           }
         ]
       }

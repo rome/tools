@@ -29,9 +29,9 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
-          line: 1
+          column: 3
+          index: 16
+          line: 3
         }
         start: Object {
           column: 0
@@ -73,6 +73,24 @@ Program {
           line: 5
         }
       }
+      leadingComments: Array [
+        CommentBlock {
+          value: '*\n * @flow\n '
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 3
+              index: 16
+              line: 3
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
       right: UnionTypeAnnotation {
         loc: Object {
           filename: '..'
@@ -175,8 +193,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 5
-                  index: 68
+                  column: 21
+                  index: 84
                   line: 11
                 }
                 start: Object {

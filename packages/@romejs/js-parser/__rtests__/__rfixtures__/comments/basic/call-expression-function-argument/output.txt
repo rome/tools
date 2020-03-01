@@ -26,14 +26,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 11
-          index: 29
-          line: 2
+          column: 8
+          index: 39
+          line: 3
         }
         start: Object {
-          column: 11
-          index: 29
-          line: 2
+          column: 2
+          index: 33
+          line: 3
         }
       }
     }
@@ -42,14 +42,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 40
-          line: 4
+          column: 6
+          index: 48
+          line: 5
         }
         start: Object {
           column: 0
-          index: 40
-          line: 4
+          index: 42
+          line: 5
         }
       }
     }
@@ -139,6 +139,40 @@ Program {
                 }
               }
             }
+            trailingComments: Array [
+              CommentLine {
+                value: ' one'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 8
+                    index: 39
+                    line: 3
+                  }
+                  start: Object {
+                    column: 2
+                    index: 33
+                    line: 3
+                  }
+                }
+              }
+              CommentLine {
+                value: ' two'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 6
+                    index: 48
+                    line: 5
+                  }
+                  start: Object {
+                    column: 0
+                    index: 42
+                    line: 5
+                  }
+                }
+              }
+            ]
             body: BlockStatement {
               directives: Array []
               loc: Object {
@@ -154,6 +188,24 @@ Program {
                   line: 1
                 }
               }
+              trailingComments: Array [
+                CommentLine {
+                  value: ' two'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 6
+                      index: 48
+                      line: 5
+                    }
+                    start: Object {
+                      column: 0
+                      index: 42
+                      line: 5
+                    }
+                  }
+                }
+              ]
               body: Array [
                 VariableDeclarationStatement {
                   loc: Object {
@@ -169,8 +221,27 @@ Program {
                       line: 2
                     }
                   }
+                  trailingComments: Array [
+                    CommentLine {
+                      value: ' one'
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 8
+                          index: 39
+                          line: 3
+                        }
+                        start: Object {
+                          column: 2
+                          index: 33
+                          line: 3
+                        }
+                      }
+                    }
+                  ]
                   declaration: VariableDeclaration {
                     kind: 'var'
+                    trailingComments: undefined
                     loc: Object {
                       filename: '..'
                       end: Object {

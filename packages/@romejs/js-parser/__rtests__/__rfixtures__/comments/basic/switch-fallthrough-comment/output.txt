@@ -26,14 +26,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 12
-          index: 12
-          line: 1
+          column: 10
+          index: 24
+          line: 2
         }
         start: Object {
-          column: 12
-          index: 12
-          line: 1
+          column: 4
+          index: 18
+          line: 2
         }
       }
     }
@@ -42,14 +42,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 10
-          index: 35
-          line: 3
+          column: 24
+          index: 61
+          line: 4
         }
         start: Object {
-          column: 10
-          index: 35
-          line: 3
+          column: 8
+          index: 45
+          line: 4
         }
       }
     }
@@ -88,6 +88,7 @@ Program {
       cases: Array [
         SwitchCase {
           consequent: Array []
+          leadingComments: undefined
           loc: Object {
             filename: '..'
             end: Object {
@@ -101,6 +102,24 @@ Program {
               line: 3
             }
           }
+          trailingComments: Array [
+            CommentLine {
+              value: ' falls through'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 24
+                  index: 61
+                  line: 4
+                }
+                start: Object {
+                  column: 8
+                  index: 45
+                  line: 4
+                }
+              }
+            }
+          ]
           test: NumericLiteral {
             value: 1
             loc: Object {
@@ -116,6 +135,24 @@ Program {
                 line: 3
               }
             }
+            leadingComments: Array [
+              CommentLine {
+                value: ' foo'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 10
+                    index: 24
+                    line: 2
+                  }
+                  start: Object {
+                    column: 4
+                    index: 18
+                    line: 2
+                  }
+                }
+              }
+            ]
           }
         }
         SwitchCase {
@@ -147,6 +184,24 @@ Program {
                 line: 5
               }
             }
+            leadingComments: Array [
+              CommentLine {
+                value: ' falls through'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 24
+                    index: 61
+                    line: 4
+                  }
+                  start: Object {
+                    column: 8
+                    index: 45
+                    line: 4
+                  }
+                }
+              }
+            ]
           }
           consequent: Array [
             ExpressionStatement {

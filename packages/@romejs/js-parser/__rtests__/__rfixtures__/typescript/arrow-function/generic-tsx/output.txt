@@ -29,8 +29,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 60
+          index: 60
           line: 1
         }
         start: Object {
@@ -56,6 +56,24 @@ Program {
           line: 2
         }
       }
+      leadingComments: Array [
+        CommentLine {
+          value: ' Same as `generic`. Verify that JSX doesn\'t change things.'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 60
+              index: 60
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
       expression: ArrowFunctionExpression {
         loc: Object {
           filename: '..'
@@ -87,6 +105,7 @@ Program {
           }
         }
         typeParameters: TSTypeParameterDeclaration {
+          leadingComments: undefined
           loc: Object {
             filename: '..'
             end: Object {
@@ -105,6 +124,7 @@ Program {
               name: 'T'
               constraint: undefined
               default: undefined
+              leadingComments: undefined
               loc: Object {
                 filename: '..'
                 end: Object {

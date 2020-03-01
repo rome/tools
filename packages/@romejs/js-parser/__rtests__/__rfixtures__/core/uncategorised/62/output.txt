@@ -26,8 +26,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 4
+          index: 4
           line: 1
         }
         start: Object {
@@ -55,6 +55,7 @@ Program {
       }
       expression: NumericLiteral {
         value: 42
+        leadingComments: undefined
         loc: Object {
           filename: '..'
           end: Object {
@@ -69,6 +70,24 @@ Program {
           }
         }
       }
+      leadingComments: Array [
+        CommentBlock {
+          value: ''
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 4
+              index: 4
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
     }
   ]
 }

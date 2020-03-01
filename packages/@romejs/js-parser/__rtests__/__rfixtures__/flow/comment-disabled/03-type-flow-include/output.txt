@@ -30,9 +30,9 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
-          line: 1
+          column: 2
+          index: 79
+          line: 7
         }
         start: Object {
           column: 0

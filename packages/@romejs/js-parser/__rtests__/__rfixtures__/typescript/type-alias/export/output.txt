@@ -26,14 +26,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 22
-          index: 22
-          line: 1
+          column: 38
+          index: 62
+          line: 2
         }
         start: Object {
-          column: 22
-          index: 22
-          line: 1
+          column: 0
+          index: 24
+          line: 2
         }
       }
     }
@@ -55,6 +55,24 @@ Program {
           line: 1
         }
       }
+      trailingComments: Array [
+        CommentLine {
+          value: ' `export default type` is not valid.'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 38
+              index: 62
+              line: 2
+            }
+            start: Object {
+              column: 0
+              index: 24
+              line: 2
+            }
+          }
+        }
+      ]
       declaration: TypeAliasTypeAnnotation {
         id: BindingIdentifier {
           name: 'T'
@@ -72,6 +90,7 @@ Program {
             }
           }
         }
+        trailingComments: undefined
         typeParameters: undefined
         loc: Object {
           filename: '..'

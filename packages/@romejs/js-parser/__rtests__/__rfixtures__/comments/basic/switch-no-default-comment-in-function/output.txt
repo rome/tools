@@ -26,14 +26,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 17
-          index: 103
-          line: 6
+          column: 20
+          index: 125
+          line: 7
         }
         start: Object {
-          column: 17
-          index: 103
-          line: 6
+          column: 8
+          index: 113
+          line: 7
         }
       }
     }
@@ -253,9 +253,29 @@ Program {
                     }
                   }
                 }
+                trailingComments: Array [
+                  CommentLine {
+                    value: 'no default'
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 20
+                        index: 125
+                        line: 7
+                      }
+                      start: Object {
+                        column: 8
+                        index: 113
+                        line: 7
+                      }
+                    }
+                  }
+                ]
                 consequent: Array [
                   BreakStatement {
                     label: undefined
+                    leadingComments: undefined
+                    trailingComments: undefined
                     loc: Object {
                       filename: '..'
                       end: Object {

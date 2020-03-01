@@ -26,14 +26,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 80
-          index: 218
-          line: 6
+          column: 25
+          index: 245
+          line: 7
         }
         start: Object {
-          column: 80
-          index: 218
-          line: 6
+          column: 12
+          index: 232
+          line: 7
         }
       }
     }
@@ -430,8 +430,27 @@ Program {
                               }
                             }
                           }
+                          trailingComments: Array [
+                            CommentLine {
+                              value: ' no default'
+                              loc: Object {
+                                filename: '..'
+                                end: Object {
+                                  column: 25
+                                  index: 245
+                                  line: 7
+                                }
+                                start: Object {
+                                  column: 12
+                                  index: 232
+                                  line: 7
+                                }
+                              }
+                            }
+                          ]
                           consequent: Array [
                             ReturnStatement {
+                              trailingComments: undefined
                               loc: Object {
                                 filename: '..'
                                 end: Object {

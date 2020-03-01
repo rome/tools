@@ -24,13 +24,13 @@ Program {
     loc: Object {
       filename: '..'
       end: Object {
-        column: 0
-        index: 0
+        column: 25
+        index: 25
         line: 1
       }
       start: Object {
-        column: 0
-        index: 0
+        column: 1
+        index: 1
         line: 1
       }
     }
@@ -41,13 +41,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 25
+          index: 25
           line: 1
         }
         start: Object {
-          column: 0
-          index: 0
+          column: 1
+          index: 1
           line: 1
         }
       }
@@ -85,6 +85,24 @@ Program {
           }
         }
       }
+      leadingComments: Array [
+        CommentLine {
+          value: 'usr/bin/env babel-node'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 25
+              index: 25
+              line: 1
+            }
+            start: Object {
+              column: 1
+              index: 1
+              line: 1
+            }
+          }
+        }
+      ]
       specifiers: Array [
         ImportSpecifier {
           loc: Object {
@@ -102,6 +120,7 @@ Program {
           }
           imported: Identifier {
             name: 'spawn'
+            leadingComments: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -119,6 +138,9 @@ Program {
           local: ImportSpecifierLocal {
             name: BindingIdentifier {
               name: 'spawn'
+              innerComments: undefined
+              leadingComments: undefined
+              trailingComments: undefined
               loc: Object {
                 filename: '..'
                 end: Object {

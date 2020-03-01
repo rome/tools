@@ -58,8 +58,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 5
-                  index: 5
+                  column: 10
+                  index: 10
                   line: 1
                 }
                 start: Object {
@@ -154,8 +154,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 6
-                  index: 18
+                  column: 15
+                  index: 27
                   line: 2
                 }
                 start: Object {
@@ -250,8 +250,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 5
-                  index: 34
+                  column: 14
+                  index: 43
                   line: 3
                 }
                 start: Object {
@@ -346,8 +346,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 6
-                  index: 51
+                  column: 13
+                  index: 58
                   line: 4
                 }
                 start: Object {
@@ -442,8 +442,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 7
-                  index: 67
+                  column: 13
+                  index: 73
                   line: 5
                 }
                 start: Object {
@@ -538,8 +538,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 7
-                  index: 82
+                  column: 15
+                  index: 90
                   line: 6
                 }
                 start: Object {
@@ -634,8 +634,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 5
-                  index: 97
+                  column: 13
+                  index: 105
                   line: 7
                 }
                 start: Object {
@@ -730,8 +730,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 6
-                  index: 113
+                  column: 14
+                  index: 121
                   line: 8
                 }
                 start: Object {
@@ -826,8 +826,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 6
-                  index: 129
+                  column: 14
+                  index: 137
                   line: 9
                 }
                 start: Object {
@@ -922,8 +922,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 5
-                  index: 144
+                  column: 16
+                  index: 155
                   line: 10
                 }
                 start: Object {
@@ -1018,8 +1018,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 5
-                  index: 162
+                  column: 11
+                  index: 168
                   line: 11
                 }
                 start: Object {
@@ -1114,8 +1114,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 5
-                  index: 175
+                  column: 13
+                  index: 183
                   line: 12
                 }
                 start: Object {

@@ -26,14 +26,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 22
-          index: 22
-          line: 1
+          column: 96
+          index: 120
+          line: 2
         }
         start: Object {
-          column: 22
-          index: 22
-          line: 1
+          column: 0
+          index: 24
+          line: 2
         }
       }
     }
@@ -53,8 +53,27 @@ Program {
           line: 1
         }
       }
+      trailingComments: Array [
+        CommentLine {
+          value: ' Type literals have the same body syntax as interfaces, so see `interface` directory for that.'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 96
+              index: 120
+              line: 2
+            }
+            start: Object {
+              column: 0
+              index: 24
+              line: 2
+            }
+          }
+        }
+      ]
       declaration: VariableDeclaration {
         kind: 'let'
+        trailingComments: undefined
         loc: Object {
           filename: '..'
           end: Object {
@@ -75,8 +94,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 7
-                  index: 7
+                  column: 22
+                  index: 22
                   line: 1
                 }
                 start: Object {

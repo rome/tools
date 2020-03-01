@@ -123,6 +123,7 @@ Program {
               }
             }
             optional: true
+            static: false
             loc: Object {
               filename: '..'
               end: Object {

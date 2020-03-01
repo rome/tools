@@ -29,8 +29,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 7
+          index: 7
           line: 1
         }
         start: Object {
@@ -56,8 +56,27 @@ Program {
           line: 2
         }
       }
+      leadingComments: Array [
+        CommentLine {
+          value: '@flow'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 7
+              index: 7
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
       expression: CallExpression {
         arguments: Array []
+        leadingComments: undefined
         loc: Object {
           filename: '..'
           end: Object {
@@ -86,6 +105,24 @@ Program {
               line: 2
             }
           }
+          leadingComments: Array [
+            CommentLine {
+              value: '@flow'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 7
+                  index: 7
+                  line: 1
+                }
+                start: Object {
+                  column: 0
+                  index: 0
+                  line: 1
+                }
+              }
+            }
+          ]
         }
         typeArguments: FlowTypeParameterInstantiation {
           loc: Object {

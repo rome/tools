@@ -26,8 +26,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 1
-          index: 13
+          column: 12
+          index: 24
           line: 2
         }
         start: Object {
@@ -53,6 +53,24 @@ Program {
           line: 1
         }
       }
+      trailingComments: Array [
+        CommentLine {
+          value: ' nothing'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 12
+              index: 24
+              line: 2
+            }
+            start: Object {
+              column: 1
+              index: 13
+              line: 2
+            }
+          }
+        }
+      ]
       expression: AssignmentExpression {
         operator: '='
         loc: Object {

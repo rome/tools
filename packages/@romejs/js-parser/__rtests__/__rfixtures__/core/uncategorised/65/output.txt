@@ -26,13 +26,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 25
-          index: 25
+          column: 40
+          index: 40
           line: 1
         }
         start: Object {
-          column: 25
-          index: 25
+          column: 27
+          index: 27
           line: 1
         }
       }
@@ -115,8 +115,27 @@ Program {
                   line: 1
                 }
               }
+              leadingComments: Array [
+                CommentBlock {
+                  value: ' perfect '
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 40
+                      index: 40
+                      line: 1
+                    }
+                    start: Object {
+                      column: 27
+                      index: 27
+                      line: 1
+                    }
+                  }
+                }
+              ]
               expression: CallExpression {
                 arguments: Array []
+                leadingComments: undefined
                 loc: Object {
                   filename: '..'
                   end: Object {
@@ -145,6 +164,24 @@ Program {
                       line: 1
                     }
                   }
+                  leadingComments: Array [
+                    CommentBlock {
+                      value: ' perfect '
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 40
+                          index: 40
+                          line: 1
+                        }
+                        start: Object {
+                          column: 27
+                          index: 27
+                          line: 1
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }

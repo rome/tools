@@ -29,14 +29,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
-          line: 1
+          column: 11
+          index: 13
+          line: 2
         }
         start: Object {
           column: 0
-          index: 0
-          line: 1
+          index: 2
+          line: 2
         }
       }
     }
@@ -45,14 +45,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
-          line: 1
+          column: 14
+          index: 28
+          line: 3
         }
         start: Object {
           column: 0
-          index: 0
-          line: 1
+          index: 14
+          line: 3
         }
       }
     }
@@ -102,6 +102,40 @@ Program {
                 line: 4
               }
             }
+            leadingComments: Array [
+              CommentLine {
+                value: ' comment1'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 11
+                    index: 13
+                    line: 2
+                  }
+                  start: Object {
+                    column: 0
+                    index: 2
+                    line: 2
+                  }
+                }
+              }
+              CommentBlock {
+                value: ' comment2 '
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 14
+                    index: 28
+                    line: 3
+                  }
+                  start: Object {
+                    column: 0
+                    index: 14
+                    line: 3
+                  }
+                }
+              }
+            ]
           }
           JSXElement {
             name: JSXIdentifier {

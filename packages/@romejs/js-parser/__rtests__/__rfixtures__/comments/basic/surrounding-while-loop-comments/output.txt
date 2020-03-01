@@ -26,13 +26,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 13
-          index: 13
+          column: 29
+          index: 29
           line: 1
         }
         start: Object {
-          column: 13
-          index: 13
+          column: 15
+          index: 15
           line: 1
         }
       }
@@ -42,13 +42,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 45
-          index: 45
+          column: 56
+          index: 56
           line: 1
         }
         start: Object {
-          column: 45
-          index: 45
+          column: 47
+          index: 47
           line: 1
         }
       }
@@ -154,10 +154,29 @@ Program {
                   line: 1
                 }
               }
+              leadingComments: Array [
+                CommentBlock {
+                  value: ' infinite '
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 29
+                      index: 29
+                      line: 1
+                    }
+                    start: Object {
+                      column: 15
+                      index: 15
+                      line: 1
+                    }
+                  }
+                }
+              ]
             }
             body: BlockStatement {
               body: Array []
               directives: Array []
+              leadingComments: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
@@ -171,6 +190,24 @@ Program {
                   line: 1
                 }
               }
+              trailingComments: Array [
+                CommentBlock {
+                  value: ' bar '
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 56
+                      index: 56
+                      line: 1
+                    }
+                    start: Object {
+                      column: 47
+                      index: 47
+                      line: 1
+                    }
+                  }
+                }
+              ]
             }
           }
           VariableDeclarationStatement {
@@ -187,8 +224,27 @@ Program {
                 line: 1
               }
             }
+            leadingComments: Array [
+              CommentBlock {
+                value: ' bar '
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 56
+                    index: 56
+                    line: 1
+                  }
+                  start: Object {
+                    column: 47
+                    index: 47
+                    line: 1
+                  }
+                }
+              }
+            ]
             declaration: VariableDeclaration {
               kind: 'var'
+              leadingComments: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
@@ -219,8 +275,27 @@ Program {
                         line: 1
                       }
                     }
+                    leadingComments: Array [
+                      CommentBlock {
+                        value: ' bar '
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 56
+                            index: 56
+                            line: 1
+                          }
+                          start: Object {
+                            column: 47
+                            index: 47
+                            line: 1
+                          }
+                        }
+                      }
+                    ]
                   }
                   init: undefined
+                  leadingComments: undefined
                   loc: Object {
                     filename: '..'
                     end: Object {

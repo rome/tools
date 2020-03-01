@@ -61,9 +61,9 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 5
-                  index: 5
-                  line: 1
+                  column: 4
+                  index: 16
+                  line: 3
                 }
                 start: Object {
                   column: 4

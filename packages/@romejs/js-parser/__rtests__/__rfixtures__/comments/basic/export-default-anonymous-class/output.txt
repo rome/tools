@@ -26,9 +26,9 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
-          line: 1
+          column: 3
+          index: 35
+          line: 3
         }
         start: Object {
           column: 0
@@ -42,14 +42,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 21
-          index: 57
-          line: 4
+          column: 7
+          index: 98
+          line: 7
         }
         start: Object {
-          column: 21
-          index: 57
-          line: 4
+          column: 4
+          index: 63
+          line: 5
         }
       }
     }
@@ -69,6 +69,24 @@ Program {
           line: 4
         }
       }
+      leadingComments: Array [
+        CommentBlock {
+          value: '*\n * this is anonymous class.\n '
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 3
+              index: 35
+              line: 3
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
       declaration: ClassDeclaration {
         id: BindingIdentifier {
           name: '*default*'
@@ -101,6 +119,7 @@ Program {
         }
         meta: ClassHead {
           implements: undefined
+          leadingComments: undefined
           superClass: undefined
           superTypeParameters: undefined
           typeParameters: undefined
@@ -123,6 +142,7 @@ Program {
               key: StaticPropertyKey {
                 value: Identifier {
                   name: 'method1'
+                  leadingComments: undefined
                   loc: Object {
                     filename: '..'
                     end: Object {
@@ -137,6 +157,7 @@ Program {
                     }
                   }
                 }
+                leadingComments: undefined
                 variance: undefined
                 loc: Object {
                   filename: '..'
@@ -152,7 +173,6 @@ Program {
                   }
                 }
               }
-              typeParameters: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
@@ -232,6 +252,24 @@ Program {
                     line: 8
                   }
                 }
+                leadingComments: Array [
+                  CommentBlock {
+                    value: '*\n     * this is method1.\n     '
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 7
+                        index: 98
+                        line: 7
+                      }
+                      start: Object {
+                        column: 4
+                        index: 63
+                        line: 5
+                      }
+                    }
+                  }
+                ]
               }
             }
           ]

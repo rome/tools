@@ -29,8 +29,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 98
+          index: 98
           line: 1
         }
         start: Object {
@@ -58,6 +58,24 @@ Program {
             line: 2
           }
         }
+        leadingComments: Array [
+          CommentLine {
+            value: ' Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation.'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 98
+                index: 98
+                line: 1
+              }
+              start: Object {
+                column: 0
+                index: 0
+                line: 1
+              }
+            }
+          }
+        ]
       }
       loc: Object {
         filename: '..'
@@ -105,6 +123,24 @@ Program {
             }
           }
         }
+        leadingComments: Array [
+          CommentLine {
+            value: ' Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation.'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 98
+                index: 98
+                line: 1
+              }
+              start: Object {
+                column: 0
+                index: 0
+                line: 1
+              }
+            }
+          }
+        ]
         superTypeParameters: TSTypeParameterInstantiation {
           loc: Object {
             filename: '..'

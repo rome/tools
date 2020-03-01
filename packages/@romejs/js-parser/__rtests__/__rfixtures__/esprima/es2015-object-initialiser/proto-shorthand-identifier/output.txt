@@ -27,6 +27,7 @@ Program {
       filename: '..'
       message: 'Redefinition of __proto__ property'
       mtime: undefined
+      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
       end: Object {
         column: 23

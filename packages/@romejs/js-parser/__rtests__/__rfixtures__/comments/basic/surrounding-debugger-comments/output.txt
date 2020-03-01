@@ -26,14 +26,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 13
-          index: 13
-          line: 1
+          column: 16
+          index: 31
+          line: 2
         }
         start: Object {
-          column: 13
-          index: 13
-          line: 1
+          column: 4
+          index: 19
+          line: 2
         }
       }
     }
@@ -42,14 +42,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 12
-          index: 44
-          line: 3
+          column: 15
+          index: 61
+          line: 4
         }
         start: Object {
-          column: 12
-          index: 44
-          line: 3
+          column: 4
+          index: 50
+          line: 4
         }
       }
     }
@@ -139,6 +139,42 @@ Program {
                 line: 3
               }
             }
+            leadingComments: Array [
+              CommentBlock {
+                value: ' before '
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 16
+                    index: 31
+                    line: 2
+                  }
+                  start: Object {
+                    column: 4
+                    index: 19
+                    line: 2
+                  }
+                }
+              }
+            ]
+            trailingComments: Array [
+              CommentBlock {
+                value: ' after '
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 15
+                    index: 61
+                    line: 4
+                  }
+                  start: Object {
+                    column: 4
+                    index: 50
+                    line: 4
+                  }
+                }
+              }
+            ]
           }
         ]
       }

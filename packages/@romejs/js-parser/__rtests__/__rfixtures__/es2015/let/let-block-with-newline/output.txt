@@ -26,13 +26,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 7
-          index: 20
+          column: 17
+          index: 30
           line: 2
         }
         start: Object {
-          column: 7
-          index: 20
+          column: 11
+          index: 24
           line: 2
         }
       }
@@ -116,7 +116,26 @@ Program {
                 }
               }
             }
+            trailingComments: Array [
+              CommentLine {
+                value: ' ASI'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 17
+                    index: 30
+                    line: 2
+                  }
+                  start: Object {
+                    column: 11
+                    index: 24
+                    line: 2
+                  }
+                }
+              }
+            ]
             body: ExpressionStatement {
+              trailingComments: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
@@ -132,6 +151,7 @@ Program {
               }
               expression: ReferenceIdentifier {
                 name: 'let'
+                leadingComments: undefined
                 loc: Object {
                   filename: '..'
                   end: Object {
@@ -145,6 +165,24 @@ Program {
                     line: 2
                   }
                 }
+                trailingComments: Array [
+                  CommentLine {
+                    value: ' ASI'
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 17
+                        index: 30
+                        line: 2
+                      }
+                      start: Object {
+                        column: 11
+                        index: 24
+                        line: 2
+                      }
+                    }
+                  }
+                ]
               }
             }
           }
@@ -164,6 +202,24 @@ Program {
                 line: 3
               }
             }
+            leadingComments: Array [
+              CommentLine {
+                value: ' ASI'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 17
+                    index: 30
+                    line: 2
+                  }
+                  start: Object {
+                    column: 11
+                    index: 24
+                    line: 2
+                  }
+                }
+              }
+            ]
           }
         ]
       }

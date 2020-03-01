@@ -26,8 +26,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 9
+          index: 9
           line: 1
         }
         start: Object {
@@ -42,13 +42,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 3
-          index: 13
+          column: 13
+          index: 23
           line: 2
         }
         start: Object {
-          column: 3
-          index: 13
+          column: 4
+          index: 14
           line: 2
         }
       }
@@ -70,22 +70,6 @@ Program {
           line: 2
         }
       }
-      test: ReferenceIdentifier {
-        name: 'a'
-        loc: Object {
-          filename: '..'
-          end: Object {
-            column: 16
-            index: 26
-            line: 2
-          }
-          start: Object {
-            column: 15
-            index: 25
-            line: 2
-          }
-        }
-      }
       consequent: BlockStatement {
         body: Array []
         directives: Array []
@@ -102,6 +86,58 @@ Program {
             line: 2
           }
         }
+      }
+      leadingComments: Array [
+        CommentBlock {
+          value: ' foo '
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 9
+              index: 9
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
+      test: ReferenceIdentifier {
+        name: 'a'
+        loc: Object {
+          filename: '..'
+          end: Object {
+            column: 16
+            index: 26
+            line: 2
+          }
+          start: Object {
+            column: 15
+            index: 25
+            line: 2
+          }
+        }
+        leadingComments: Array [
+          CommentBlock {
+            value: ' bar '
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 13
+                index: 23
+                line: 2
+              }
+              start: Object {
+                column: 4
+                index: 14
+                line: 2
+              }
+            }
+          }
+        ]
       }
     }
   ]

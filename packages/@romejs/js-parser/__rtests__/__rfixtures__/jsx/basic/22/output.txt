@@ -28,8 +28,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 15
+          index: 15
           line: 1
         }
         start: Object {
@@ -46,6 +46,7 @@ Program {
       filename: '..'
       message: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module'
       mtime: undefined
+      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
       end: Object {
         column: 35
@@ -64,7 +65,7 @@ Program {
         }
         log {
           category: 'info'
-          message: 'Add <emphasis>"type": "module"</emphasis> to your <emphasis>package.json</emphasis>'
+          message: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
         }
       ]
     }
@@ -101,6 +102,24 @@ Program {
           }
         }
       }
+      leadingComments: Array [
+        CommentBlock {
+          value: '* @jsx mdx '
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 15
+              index: 15
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
       specifiers: Array [
         ImportSpecifier {
           loc: Object {
@@ -118,6 +137,7 @@ Program {
           }
           imported: Identifier {
             name: 'mdx'
+            leadingComments: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -135,6 +155,9 @@ Program {
           local: ImportSpecifierLocal {
             name: BindingIdentifier {
               name: 'mdx'
+              innerComments: undefined
+              leadingComments: undefined
+              trailingComments: undefined
               loc: Object {
                 filename: '..'
                 end: Object {

@@ -26,8 +26,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 39
+          index: 39
           line: 1
         }
         start: Object {
@@ -88,6 +88,24 @@ Program {
             line: 2
           }
         }
+        leadingComments: Array [
+          CommentLine {
+            value: ' Copy of modifiers-methods with \'get\''
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 39
+                index: 39
+                line: 1
+              }
+              start: Object {
+                column: 0
+                index: 0
+                line: 1
+              }
+            }
+          }
+        ]
         body: Array [
           TSDeclareMethod {
             kind: 'get'
@@ -124,7 +142,6 @@ Program {
               }
             }
             body: undefined
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -223,7 +240,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -372,7 +388,6 @@ Program {
               }
             }
             body: undefined
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -471,7 +486,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -619,7 +633,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -767,7 +780,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -915,7 +927,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {

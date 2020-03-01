@@ -26,13 +26,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 8
-          index: 20
+          column: 22
+          index: 34
           line: 2
         }
         start: Object {
-          column: 8
-          index: 20
+          column: 10
+          index: 22
           line: 2
         }
       }
@@ -42,13 +42,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 8
-          index: 43
+          column: 22
+          index: 57
           line: 3
         }
         start: Object {
-          column: 8
-          index: 43
+          column: 10
+          index: 45
           line: 3
         }
       }
@@ -58,13 +58,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 8
-          index: 66
+          column: 22
+          index: 80
           line: 4
         }
         start: Object {
-          column: 8
-          index: 66
+          column: 10
+          index: 68
           line: 4
         }
       }
@@ -213,6 +213,7 @@ Program {
                   key: StaticPropertyKey {
                     value: Identifier {
                       name: 'b'
+                      leadingComments: undefined
                       loc: Object {
                         filename: '..'
                         end: Object {
@@ -227,6 +228,7 @@ Program {
                         }
                       }
                     }
+                    leadingComments: undefined
                     variance: undefined
                     loc: Object {
                       filename: '..'
@@ -271,11 +273,30 @@ Program {
                       line: 3
                     }
                   }
+                  leadingComments: Array [
+                    CommentLine {
+                      value: ' comment 1'
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 22
+                          index: 34
+                          line: 2
+                        }
+                        start: Object {
+                          column: 10
+                          index: 22
+                          line: 2
+                        }
+                      }
+                    }
+                  ]
                 }
                 ObjectProperty {
                   key: StaticPropertyKey {
                     value: Identifier {
                       name: 'c'
+                      leadingComments: undefined
                       loc: Object {
                         filename: '..'
                         end: Object {
@@ -290,6 +311,7 @@ Program {
                         }
                       }
                     }
+                    leadingComments: undefined
                     variance: undefined
                     loc: Object {
                       filename: '..'
@@ -334,6 +356,42 @@ Program {
                       line: 4
                     }
                   }
+                  leadingComments: Array [
+                    CommentLine {
+                      value: ' comment 2'
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 22
+                          index: 57
+                          line: 3
+                        }
+                        start: Object {
+                          column: 10
+                          index: 45
+                          line: 3
+                        }
+                      }
+                    }
+                  ]
+                  trailingComments: Array [
+                    CommentLine {
+                      value: ' comment 3'
+                      loc: Object {
+                        filename: '..'
+                        end: Object {
+                          column: 22
+                          index: 80
+                          line: 4
+                        }
+                        start: Object {
+                          column: 10
+                          index: 68
+                          line: 4
+                        }
+                      }
+                    }
+                  ]
                 }
               ]
             }

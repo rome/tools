@@ -20,6 +20,40 @@ Program {
       line: 1
     }
   }
+  comments: Array [
+    CommentLine {
+      value: ' Hello, world!'
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 16
+          index: 16
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+    CommentLine {
+      value: '   Another hello'
+      loc: Object {
+        filename: '..'
+        end: Object {
+          column: 18
+          index: 36
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 18
+          line: 3
+        }
+      }
+    }
+  ]
   body: Array [
     ExpressionStatement {
       loc: Object {
@@ -37,6 +71,7 @@ Program {
       }
       expression: NumericLiteral {
         value: 42
+        leadingComments: undefined
         loc: Object {
           filename: '..'
           end: Object {
@@ -51,40 +86,40 @@ Program {
           }
         }
       }
-    }
-  ]
-  comments: Array [
-    CommentLine {
-      value: ' Hello, world!'
-      loc: Object {
-        filename: '..'
-        end: Object {
-          column: 0
-          index: 0
-          line: 1
+      leadingComments: Array [
+        CommentLine {
+          value: ' Hello, world!'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 16
+              index: 16
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
         }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
+        CommentLine {
+          value: '   Another hello'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 18
+              index: 36
+              line: 3
+            }
+            start: Object {
+              column: 0
+              index: 18
+              line: 3
+            }
+          }
         }
-      }
-    }
-    CommentLine {
-      value: '   Another hello'
-      loc: Object {
-        filename: '..'
-        end: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
+      ]
     }
   ]
 }

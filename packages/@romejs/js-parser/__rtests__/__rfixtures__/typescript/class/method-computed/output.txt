@@ -152,7 +152,6 @@ Program {
               }
             }
             body: undefined
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -312,7 +311,6 @@ Program {
               }
             }
             body: undefined
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {

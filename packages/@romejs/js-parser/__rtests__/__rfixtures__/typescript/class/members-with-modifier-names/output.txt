@@ -106,7 +106,6 @@ Program {
               }
             }
             body: undefined
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -219,7 +218,6 @@ Program {
               }
             }
             body: undefined
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -458,41 +456,6 @@ Program {
                 }
               }
             }
-            typeParameters: TSTypeParameterDeclaration {
-              loc: Object {
-                filename: '..'
-                end: Object {
-                  column: 12
-                  index: 87
-                  line: 5
-                }
-                start: Object {
-                  column: 9
-                  index: 84
-                  line: 5
-                }
-              }
-              params: Array [
-                TSTypeParameter {
-                  name: 'T'
-                  constraint: undefined
-                  default: undefined
-                  loc: Object {
-                    filename: '..'
-                    end: Object {
-                      column: 11
-                      index: 86
-                      line: 5
-                    }
-                    start: Object {
-                      column: 10
-                      index: 85
-                      line: 5
-                    }
-                  }
-                }
-              ]
-            }
             head: FunctionHead {
               async: false
               generator: false
@@ -501,7 +464,6 @@ Program {
               predicate: undefined
               rest: undefined
               thisType: undefined
-              typeParameters: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
@@ -529,6 +491,41 @@ Program {
                     line: 5
                   }
                 }
+              }
+              typeParameters: TSTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 12
+                    index: 87
+                    line: 5
+                  }
+                  start: Object {
+                    column: 9
+                    index: 84
+                    line: 5
+                  }
+                }
+                params: Array [
+                  TSTypeParameter {
+                    name: 'T'
+                    constraint: undefined
+                    default: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 11
+                        index: 86
+                        line: 5
+                      }
+                      start: Object {
+                        column: 10
+                        index: 85
+                        line: 5
+                      }
+                    }
+                  }
+                ]
               }
             }
           }

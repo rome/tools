@@ -26,13 +26,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 13
-          index: 13
+          column: 30
+          index: 30
           line: 1
         }
         start: Object {
-          column: 13
-          index: 13
+          column: 20
+          index: 20
           line: 1
         }
       }
@@ -110,6 +110,7 @@ Program {
           body: Array [
             ReturnStatement {
               argument: undefined
+              leadingComments: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
@@ -123,6 +124,24 @@ Program {
                   line: 1
                 }
               }
+              trailingComments: Array [
+                CommentLine {
+                  value: ' Comment'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 30
+                      index: 30
+                      line: 1
+                    }
+                    start: Object {
+                      column: 20
+                      index: 20
+                      line: 1
+                    }
+                  }
+                }
+              ]
             }
             ExpressionStatement {
               loc: Object {
@@ -138,6 +157,24 @@ Program {
                   line: 2
                 }
               }
+              leadingComments: Array [
+                CommentLine {
+                  value: ' Comment'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 30
+                      index: 30
+                      line: 1
+                    }
+                    start: Object {
+                      column: 20
+                      index: 20
+                      line: 1
+                    }
+                  }
+                }
+              ]
               expression: ReferenceIdentifier {
                 name: 'x'
                 loc: Object {
@@ -153,6 +190,24 @@ Program {
                     line: 2
                   }
                 }
+                leadingComments: Array [
+                  CommentLine {
+                    value: ' Comment'
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 30
+                        index: 30
+                        line: 1
+                      }
+                      start: Object {
+                        column: 20
+                        index: 20
+                        line: 1
+                      }
+                    }
+                  }
+                ]
               }
             }
           ]

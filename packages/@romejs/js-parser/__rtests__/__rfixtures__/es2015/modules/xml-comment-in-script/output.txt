@@ -26,8 +26,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 4
-          index: 4
+          column: 11
+          index: 11
           line: 1
         }
         start: Object {
@@ -53,8 +53,27 @@ Program {
           line: 1
         }
       }
+      trailingComments: Array [
+        CommentLine {
+          value: 'bar'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 11
+              index: 11
+              line: 1
+            }
+            start: Object {
+              column: 4
+              index: 4
+              line: 1
+            }
+          }
+        }
+      ]
       expression: ReferenceIdentifier {
         name: 'foo'
+        leadingComments: undefined
         loc: Object {
           filename: '..'
           end: Object {
@@ -68,6 +87,24 @@ Program {
             line: 1
           }
         }
+        trailingComments: Array [
+          CommentLine {
+            value: 'bar'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 11
+                index: 11
+                line: 1
+              }
+              start: Object {
+                column: 4
+                index: 4
+                line: 1
+              }
+            }
+          }
+        ]
       }
     }
   ]

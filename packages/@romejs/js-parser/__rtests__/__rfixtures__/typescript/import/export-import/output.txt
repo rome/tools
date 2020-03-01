@@ -39,6 +39,7 @@ Program {
           }
         }
       }
+      isExport: true
       loc: Object {
         filename: '..'
         end: Object {

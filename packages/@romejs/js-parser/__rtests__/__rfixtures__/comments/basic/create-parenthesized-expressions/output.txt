@@ -26,8 +26,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 6
+          index: 6
           line: 1
         }
         start: Object {
@@ -42,14 +42,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 3
-          index: 10
-          line: 2
+          column: 9
+          index: 22
+          line: 4
         }
         start: Object {
-          column: 3
-          index: 10
-          line: 2
+          column: 0
+          index: 13
+          line: 4
         }
       }
     }
@@ -58,14 +58,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 29
-          line: 7
+          column: 10
+          index: 41
+          line: 8
         }
         start: Object {
-          column: 0
-          index: 29
-          line: 7
+          column: 2
+          index: 33
+          line: 8
         }
       }
     }
@@ -74,13 +74,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 50
+          column: 11
+          index: 61
           line: 12
         }
         start: Object {
-          column: 0
-          index: 50
+          column: 1
+          index: 51
           line: 12
         }
       }
@@ -103,6 +103,7 @@ Program {
       }
       expression: NumericLiteral {
         value: 1
+        leadingComments: undefined
         loc: Object {
           filename: '..'
           end: Object {
@@ -117,6 +118,42 @@ Program {
           }
         }
       }
+      leadingComments: Array [
+        CommentLine {
+          value: ' One'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 6
+              index: 6
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
+      trailingComments: Array [
+        CommentBlock {
+          value: ' Two '
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 9
+              index: 22
+              line: 4
+            }
+            start: Object {
+              column: 0
+              index: 13
+              line: 4
+            }
+          }
+        }
+      ]
     }
     ExpressionStatement {
       loc: Object {
@@ -134,6 +171,7 @@ Program {
       }
       expression: NumericLiteral {
         value: 2
+        leadingComments: undefined
         loc: Object {
           filename: '..'
           end: Object {
@@ -148,6 +186,24 @@ Program {
           }
         }
       }
+      leadingComments: Array [
+        CommentBlock {
+          value: ' Two '
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 9
+              index: 22
+              line: 4
+            }
+            start: Object {
+              column: 0
+              index: 13
+              line: 4
+            }
+          }
+        }
+      ]
     }
     ExpressionStatement {
       loc: Object {
@@ -178,6 +234,24 @@ Program {
             line: 9
           }
         }
+        leadingComments: Array [
+          CommentLine {
+            value: ' Three'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 10
+                index: 41
+                line: 8
+              }
+              start: Object {
+                column: 2
+                index: 33
+                line: 8
+              }
+            }
+          }
+        ]
       }
     }
     ExpressionStatement {
@@ -209,6 +283,24 @@ Program {
             line: 12
           }
         }
+        leadingComments: Array [
+          CommentBlock {
+            value: ' Four '
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 11
+                index: 61
+                line: 12
+              }
+              start: Object {
+                column: 1
+                index: 51
+                line: 12
+              }
+            }
+          }
+        ]
       }
     }
   ]

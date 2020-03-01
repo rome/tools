@@ -30,8 +30,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 30
+          index: 30
           line: 1
         }
         start: Object {
@@ -46,14 +46,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
-          line: 1
+          column: 56
+          index: 87
+          line: 2
         }
         start: Object {
           column: 0
-          index: 0
-          line: 1
+          index: 31
+          line: 2
         }
       }
     }

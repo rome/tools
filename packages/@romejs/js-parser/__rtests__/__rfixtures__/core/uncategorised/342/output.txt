@@ -26,8 +26,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 4
-          index: 4
+          column: 11
+          index: 11
           line: 1
         }
         start: Object {
@@ -68,22 +68,6 @@ Program {
             line: 1
           }
         }
-        left: ReferenceIdentifier {
-          name: 'foo'
-          loc: Object {
-            filename: '..'
-            end: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
         right: ReferenceIdentifier {
           name: 'baz'
           loc: Object {
@@ -99,6 +83,59 @@ Program {
               line: 2
             }
           }
+          leadingComments: Array [
+            CommentLine {
+              value: 'bar'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 11
+                  index: 11
+                  line: 1
+                }
+                start: Object {
+                  column: 4
+                  index: 4
+                  line: 1
+                }
+              }
+            }
+          ]
+        }
+        left: ReferenceIdentifier {
+          name: 'foo'
+          leadingComments: undefined
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 3
+              index: 3
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+          trailingComments: Array [
+            CommentLine {
+              value: 'bar'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 11
+                  index: 11
+                  line: 1
+                }
+                start: Object {
+                  column: 4
+                  index: 4
+                  line: 1
+                }
+              }
+            }
+          ]
         }
       }
     }

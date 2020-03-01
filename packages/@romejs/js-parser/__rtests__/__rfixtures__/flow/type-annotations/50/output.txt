@@ -182,80 +182,6 @@ Program {
                 }
               }
             }
-            typeParameters: FlowTypeParameterDeclaration {
-              loc: Object {
-                filename: '..'
-                end: Object {
-                  column: 21
-                  index: 21
-                  line: 1
-                }
-                start: Object {
-                  column: 18
-                  index: 18
-                  line: 1
-                }
-              }
-              params: Array [
-                FlowTypeParameter {
-                  name: 'U'
-                  bound: undefined
-                  default: undefined
-                  variance: undefined
-                  loc: Object {
-                    filename: '..'
-                    end: Object {
-                      column: 20
-                      index: 20
-                      line: 1
-                    }
-                    start: Object {
-                      column: 19
-                      index: 19
-                      line: 1
-                    }
-                  }
-                }
-              ]
-            }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: '..'
-                end: Object {
-                  column: 31
-                  index: 31
-                  line: 1
-                }
-                start: Object {
-                  column: 23
-                  index: 23
-                  line: 1
-                }
-              }
-              returnType: NumberKeywordTypeAnnotation {
-                loc: Object {
-                  filename: '..'
-                  end: Object {
-                    column: 30
-                    index: 30
-                    line: 1
-                  }
-                  start: Object {
-                    column: 24
-                    index: 24
-                    line: 1
-                  }
-                }
-              }
-            }
             body: BlockStatement {
               directives: Array []
               loc: Object {
@@ -304,6 +230,79 @@ Program {
                   }
                 }
               ]
+            }
+            head: FunctionHead {
+              async: false
+              generator: false
+              hasHoistedVars: false
+              params: Array []
+              predicate: undefined
+              rest: undefined
+              thisType: undefined
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 31
+                  index: 31
+                  line: 1
+                }
+                start: Object {
+                  column: 23
+                  index: 23
+                  line: 1
+                }
+              }
+              returnType: NumberKeywordTypeAnnotation {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 30
+                    index: 30
+                    line: 1
+                  }
+                  start: Object {
+                    column: 24
+                    index: 24
+                    line: 1
+                  }
+                }
+              }
+              typeParameters: FlowTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 21
+                    index: 21
+                    line: 1
+                  }
+                  start: Object {
+                    column: 18
+                    index: 18
+                    line: 1
+                  }
+                }
+                params: Array [
+                  FlowTypeParameter {
+                    name: 'U'
+                    bound: undefined
+                    default: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 20
+                        index: 20
+                        line: 1
+                      }
+                      start: Object {
+                        column: 19
+                        index: 19
+                        line: 1
+                      }
+                    }
+                  }
+                ]
+              }
             }
           }
         ]

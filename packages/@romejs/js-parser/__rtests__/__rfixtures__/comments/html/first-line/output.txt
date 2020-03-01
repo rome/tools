@@ -27,8 +27,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 4
+          index: 4
           line: 1
         }
         start: Object {
@@ -43,8 +43,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 5
-          index: 5
+          column: 16
+          index: 16
           line: 1
         }
         start: Object {

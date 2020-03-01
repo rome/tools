@@ -26,14 +26,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 42
-          index: 58
-          line: 2
+          column: 20
+          index: 80
+          line: 3
         }
         start: Object {
-          column: 42
-          index: 58
-          line: 2
+          column: 4
+          index: 64
+          line: 3
         }
       }
     }
@@ -164,6 +164,7 @@ Program {
                   body: BlockStatement {
                     body: Array []
                     directives: Array []
+                    leadingComments: undefined
                     loc: Object {
                       filename: '..'
                       end: Object {
@@ -177,6 +178,24 @@ Program {
                         line: 2
                       }
                     }
+                    innerComments: Array [
+                      CommentLine {
+                        value: ' actually put.'
+                        loc: Object {
+                          filename: '..'
+                          end: Object {
+                            column: 20
+                            index: 80
+                            line: 3
+                          }
+                          start: Object {
+                            column: 4
+                            index: 64
+                            line: 3
+                          }
+                        }
+                      }
+                    ]
                   }
                   head: FunctionHead {
                     async: false

@@ -26,13 +26,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 15
-          index: 15
+          column: 31
+          index: 31
           line: 1
         }
         start: Object {
-          column: 15
-          index: 15
+          column: 21
+          index: 21
           line: 1
         }
       }
@@ -87,6 +87,7 @@ Program {
         body: Array [
           BreakStatement {
             label: undefined
+            leadingComments: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -100,6 +101,24 @@ Program {
                 line: 1
               }
             }
+            trailingComments: Array [
+              CommentLine {
+                value: ' Comment'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 31
+                    index: 31
+                    line: 1
+                  }
+                  start: Object {
+                    column: 21
+                    index: 21
+                    line: 1
+                  }
+                }
+              }
+            ]
           }
           ExpressionStatement {
             loc: Object {
@@ -115,6 +134,24 @@ Program {
                 line: 2
               }
             }
+            leadingComments: Array [
+              CommentLine {
+                value: ' Comment'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 31
+                    index: 31
+                    line: 1
+                  }
+                  start: Object {
+                    column: 21
+                    index: 21
+                    line: 1
+                  }
+                }
+              }
+            ]
             expression: ReferenceIdentifier {
               name: 'there'
               loc: Object {
@@ -130,6 +167,24 @@ Program {
                   line: 2
                 }
               }
+              leadingComments: Array [
+                CommentLine {
+                  value: ' Comment'
+                  loc: Object {
+                    filename: '..'
+                    end: Object {
+                      column: 31
+                      index: 31
+                      line: 1
+                    }
+                    start: Object {
+                      column: 21
+                      index: 21
+                      line: 1
+                    }
+                  }
+                }
+              ]
             }
           }
         ]

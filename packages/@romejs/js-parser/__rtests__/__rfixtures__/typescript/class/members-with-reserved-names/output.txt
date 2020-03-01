@@ -106,7 +106,6 @@ Program {
               }
             }
             body: undefined
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {

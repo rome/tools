@@ -26,6 +26,7 @@ Program {
       filename: '..'
       message: 'Argument name clash in strict mode'
       mtime: undefined
+      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
       end: Object {
         column: 19

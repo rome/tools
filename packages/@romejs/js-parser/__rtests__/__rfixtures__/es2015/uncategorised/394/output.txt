@@ -27,6 +27,7 @@ Program {
       filename: '..'
       message: 'Invalid parenthesized binding'
       mtime: undefined
+      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
       end: Object {
         column: 2

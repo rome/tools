@@ -29,14 +29,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 14
-          index: 14
-          line: 1
+          column: 33
+          index: 49
+          line: 2
         }
         start: Object {
-          column: 14
-          index: 14
-          line: 1
+          column: 2
+          index: 18
+          line: 2
         }
       }
     }
@@ -45,14 +45,14 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 14
-          index: 14
-          line: 1
+          column: 38
+          index: 88
+          line: 3
         }
         start: Object {
-          column: 14
-          index: 14
-          line: 1
+          column: 2
+          index: 52
+          line: 3
         }
       }
     }

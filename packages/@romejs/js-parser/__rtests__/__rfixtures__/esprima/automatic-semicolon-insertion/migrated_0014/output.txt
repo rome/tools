@@ -26,13 +26,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 8
-          index: 8
+          column: 23
+          index: 23
           line: 1
         }
         start: Object {
-          column: 8
-          index: 8
+          column: 13
+          index: 13
           line: 1
         }
       }
@@ -69,8 +69,27 @@ Program {
               line: 1
             }
           }
+          trailingComments: Array [
+            CommentLine {
+              value: ' Comment'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 23
+                  index: 23
+                  line: 1
+                }
+                start: Object {
+                  column: 13
+                  index: 13
+                  line: 1
+                }
+              }
+            }
+          ]
           argument: ReferenceIdentifier {
             name: 'error'
+            leadingComments: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -84,6 +103,24 @@ Program {
                 line: 1
               }
             }
+            trailingComments: Array [
+              CommentLine {
+                value: ' Comment'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 23
+                    index: 23
+                    line: 1
+                  }
+                  start: Object {
+                    column: 13
+                    index: 13
+                    line: 1
+                  }
+                }
+              }
+            ]
           }
         }
         ExpressionStatement {
@@ -100,6 +137,24 @@ Program {
               line: 2
             }
           }
+          leadingComments: Array [
+            CommentLine {
+              value: ' Comment'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 23
+                  index: 23
+                  line: 1
+                }
+                start: Object {
+                  column: 13
+                  index: 13
+                  line: 1
+                }
+              }
+            }
+          ]
           expression: ReferenceIdentifier {
             name: 'error'
             loc: Object {
@@ -115,6 +170,24 @@ Program {
                 line: 2
               }
             }
+            leadingComments: Array [
+              CommentLine {
+                value: ' Comment'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 23
+                    index: 23
+                    line: 1
+                  }
+                  start: Object {
+                    column: 13
+                    index: 13
+                    line: 1
+                  }
+                }
+              }
+            ]
           }
         }
       ]

@@ -26,13 +26,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 16
-          index: 24
+          column: 40
+          index: 48
           line: 2
         }
         start: Object {
-          column: 16
-          index: 24
+          column: 18
+          index: 26
           line: 2
         }
       }
@@ -42,13 +42,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 17
-          index: 66
+          column: 42
+          index: 91
           line: 3
         }
         start: Object {
-          column: 17
-          index: 66
+          column: 19
+          index: 68
           line: 3
         }
       }
@@ -147,6 +147,24 @@ Program {
           line: 2
         }
       }
+      trailingComments: Array [
+        CommentLine {
+          value: ' (x < y) as boolean;'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 40
+              index: 48
+              line: 2
+            }
+            start: Object {
+              column: 18
+              index: 26
+              line: 2
+            }
+          }
+        }
+      ]
       expression: TSAsExpression {
         loc: Object {
           filename: '..'
@@ -240,7 +258,44 @@ Program {
           line: 3
         }
       }
+      leadingComments: Array [
+        CommentLine {
+          value: ' (x < y) as boolean;'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 40
+              index: 48
+              line: 2
+            }
+            start: Object {
+              column: 18
+              index: 26
+              line: 2
+            }
+          }
+        }
+      ]
+      trailingComments: Array [
+        CommentLine {
+          value: ' x === (1 as number);'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 42
+              index: 91
+              line: 3
+            }
+            start: Object {
+              column: 19
+              index: 68
+              line: 3
+            }
+          }
+        }
+      ]
       expression: BinaryExpression {
+        leadingComments: undefined
         operator: '==='
         loc: Object {
           filename: '..'
@@ -270,6 +325,24 @@ Program {
               line: 3
             }
           }
+          leadingComments: Array [
+            CommentLine {
+              value: ' (x < y) as boolean;'
+              loc: Object {
+                filename: '..'
+                end: Object {
+                  column: 40
+                  index: 48
+                  line: 2
+                }
+                start: Object {
+                  column: 18
+                  index: 26
+                  line: 2
+                }
+              }
+            }
+          ]
         }
         right: TSAsExpression {
           loc: Object {
@@ -333,7 +406,26 @@ Program {
           line: 4
         }
       }
+      leadingComments: Array [
+        CommentLine {
+          value: ' x === (1 as number);'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 42
+              index: 91
+              line: 3
+            }
+            start: Object {
+              column: 19
+              index: 68
+              line: 3
+            }
+          }
+        }
+      ]
       expression: TSAsExpression {
+        leadingComments: undefined
         loc: Object {
           filename: '..'
           end: Object {
@@ -380,6 +472,7 @@ Program {
           }
         }
         expression: TSAsExpression {
+          leadingComments: undefined
           loc: Object {
             filename: '..'
             end: Object {
@@ -423,6 +516,24 @@ Program {
                 line: 4
               }
             }
+            leadingComments: Array [
+              CommentLine {
+                value: ' x === (1 as number);'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 42
+                    index: 91
+                    line: 3
+                  }
+                  start: Object {
+                    column: 19
+                    index: 68
+                    line: 3
+                  }
+                }
+              }
+            ]
           }
         }
       }

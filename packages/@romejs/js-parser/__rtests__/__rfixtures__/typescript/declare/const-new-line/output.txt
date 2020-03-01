@@ -89,8 +89,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 7
-                  index: 15
+                  column: 15
+                  index: 23
                   line: 2
                 }
                 start: Object {
@@ -152,8 +152,8 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 18
-                  index: 26
+                  column: 26
+                  index: 34
                   line: 2
                 }
                 start: Object {

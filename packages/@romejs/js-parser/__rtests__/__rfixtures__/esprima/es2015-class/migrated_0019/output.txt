@@ -27,6 +27,7 @@ Program {
       filename: '..'
       message: 'Duplicate constructor in the same class'
       mtime: undefined
+      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
       end: Object {
         column: 42
@@ -124,7 +125,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {
@@ -240,7 +240,6 @@ Program {
                 }
               }
             }
-            typeParameters: undefined
             loc: Object {
               filename: '..'
               end: Object {

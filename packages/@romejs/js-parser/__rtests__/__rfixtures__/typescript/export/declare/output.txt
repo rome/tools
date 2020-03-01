@@ -27,6 +27,7 @@ Program {
       filename: '..'
       message: 'Unexpected token, expected "("'
       mtime: undefined
+      sourceType: 'module'
       origins: Array [Object {category: 'js-parser'}]
       end: Object {
         column: 25
@@ -94,8 +95,8 @@ Program {
                 loc: Object {
                   filename: '..'
                   end: Object {
-                    column: 22
-                    index: 22
+                    column: 30
+                    index: 30
                     line: 1
                   }
                   start: Object {

@@ -30,6 +30,7 @@ Program {
       filename: '..'
       message: 'The type cast expression is expected to be wrapped with parentheses'
       mtime: undefined
+      sourceType: 'module'
       origins: Array [Object {category: 'js-parser'}]
       end: Object {
         column: 11

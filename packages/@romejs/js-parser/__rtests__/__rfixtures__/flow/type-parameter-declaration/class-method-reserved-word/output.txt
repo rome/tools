@@ -138,30 +138,6 @@ Program {
                 }
               }
             }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: '..'
-                end: Object {
-                  column: 14
-                  index: 24
-                  line: 2
-                }
-                start: Object {
-                  column: 14
-                  index: 24
-                  line: 2
-                }
-              }
-            }
             meta: ClassPropertyMeta {
               abstract: false
               accessibility: undefined
@@ -188,41 +164,64 @@ Program {
                 }
               }
             }
-            typeParameters: FlowTypeParameterDeclaration {
+            head: FunctionHead {
+              async: false
+              generator: false
+              hasHoistedVars: false
+              params: Array []
+              predicate: undefined
+              rest: undefined
+              returnType: undefined
+              thisType: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 11
-                  index: 21
+                  column: 14
+                  index: 24
                   line: 2
                 }
                 start: Object {
-                  column: 8
-                  index: 18
+                  column: 14
+                  index: 24
                   line: 2
                 }
               }
-              params: Array [
-                FlowTypeParameter {
-                  name: 'T'
-                  bound: undefined
-                  default: undefined
-                  variance: undefined
-                  loc: Object {
-                    filename: '..'
-                    end: Object {
-                      column: 10
-                      index: 20
-                      line: 2
-                    }
-                    start: Object {
-                      column: 9
-                      index: 19
-                      line: 2
-                    }
+              typeParameters: FlowTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 11
+                    index: 21
+                    line: 2
+                  }
+                  start: Object {
+                    column: 8
+                    index: 18
+                    line: 2
                   }
                 }
-              ]
+                params: Array [
+                  FlowTypeParameter {
+                    name: 'T'
+                    bound: undefined
+                    default: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 10
+                        index: 20
+                        line: 2
+                      }
+                      start: Object {
+                        column: 9
+                        index: 19
+                        line: 2
+                      }
+                    }
+                  }
+                ]
+              }
             }
           }
           ClassMethod {
@@ -289,30 +288,6 @@ Program {
                 }
               }
             }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: '..'
-                end: Object {
-                  column: 14
-                  index: 41
-                  line: 3
-                }
-                start: Object {
-                  column: 14
-                  index: 41
-                  line: 3
-                }
-              }
-            }
             meta: ClassPropertyMeta {
               abstract: false
               accessibility: undefined
@@ -339,41 +314,64 @@ Program {
                 }
               }
             }
-            typeParameters: FlowTypeParameterDeclaration {
+            head: FunctionHead {
+              async: false
+              generator: false
+              hasHoistedVars: false
+              params: Array []
+              predicate: undefined
+              rest: undefined
+              returnType: undefined
+              thisType: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 11
-                  index: 38
+                  column: 14
+                  index: 41
                   line: 3
                 }
                 start: Object {
-                  column: 8
-                  index: 35
+                  column: 14
+                  index: 41
                   line: 3
                 }
               }
-              params: Array [
-                FlowTypeParameter {
-                  name: 'T'
-                  bound: undefined
-                  default: undefined
-                  variance: undefined
-                  loc: Object {
-                    filename: '..'
-                    end: Object {
-                      column: 10
-                      index: 37
-                      line: 3
-                    }
-                    start: Object {
-                      column: 9
-                      index: 36
-                      line: 3
-                    }
+              typeParameters: FlowTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 11
+                    index: 38
+                    line: 3
+                  }
+                  start: Object {
+                    column: 8
+                    index: 35
+                    line: 3
                   }
                 }
-              ]
+                params: Array [
+                  FlowTypeParameter {
+                    name: 'T'
+                    bound: undefined
+                    default: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 10
+                        index: 37
+                        line: 3
+                      }
+                      start: Object {
+                        column: 9
+                        index: 36
+                        line: 3
+                      }
+                    }
+                  }
+                ]
+              }
             }
           }
           ClassMethod {
@@ -440,30 +438,6 @@ Program {
                 }
               }
             }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: '..'
-                end: Object {
-                  column: 13
-                  index: 57
-                  line: 4
-                }
-                start: Object {
-                  column: 13
-                  index: 57
-                  line: 4
-                }
-              }
-            }
             meta: ClassPropertyMeta {
               abstract: false
               accessibility: undefined
@@ -490,41 +464,64 @@ Program {
                 }
               }
             }
-            typeParameters: FlowTypeParameterDeclaration {
+            head: FunctionHead {
+              async: false
+              generator: false
+              hasHoistedVars: false
+              params: Array []
+              predicate: undefined
+              rest: undefined
+              returnType: undefined
+              thisType: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 10
-                  index: 54
+                  column: 13
+                  index: 57
                   line: 4
                 }
                 start: Object {
-                  column: 7
-                  index: 51
+                  column: 13
+                  index: 57
                   line: 4
                 }
               }
-              params: Array [
-                FlowTypeParameter {
-                  name: 'T'
-                  bound: undefined
-                  default: undefined
-                  variance: undefined
-                  loc: Object {
-                    filename: '..'
-                    end: Object {
-                      column: 9
-                      index: 53
-                      line: 4
-                    }
-                    start: Object {
-                      column: 8
-                      index: 52
-                      line: 4
-                    }
+              typeParameters: FlowTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 10
+                    index: 54
+                    line: 4
+                  }
+                  start: Object {
+                    column: 7
+                    index: 51
+                    line: 4
                   }
                 }
-              ]
+                params: Array [
+                  FlowTypeParameter {
+                    name: 'T'
+                    bound: undefined
+                    default: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 9
+                        index: 53
+                        line: 4
+                      }
+                      start: Object {
+                        column: 8
+                        index: 52
+                        line: 4
+                      }
+                    }
+                  }
+                ]
+              }
             }
           }
           ClassMethod {
@@ -591,30 +588,6 @@ Program {
                 }
               }
             }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: '..'
-                end: Object {
-                  column: 10
-                  index: 70
-                  line: 5
-                }
-                start: Object {
-                  column: 10
-                  index: 70
-                  line: 5
-                }
-              }
-            }
             meta: ClassPropertyMeta {
               abstract: false
               accessibility: undefined
@@ -641,41 +614,64 @@ Program {
                 }
               }
             }
-            typeParameters: FlowTypeParameterDeclaration {
+            head: FunctionHead {
+              async: false
+              generator: false
+              hasHoistedVars: false
+              params: Array []
+              predicate: undefined
+              rest: undefined
+              returnType: undefined
+              thisType: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 7
-                  index: 67
+                  column: 10
+                  index: 70
                   line: 5
                 }
                 start: Object {
-                  column: 4
-                  index: 64
+                  column: 10
+                  index: 70
                   line: 5
                 }
               }
-              params: Array [
-                FlowTypeParameter {
-                  name: 'T'
-                  bound: undefined
-                  default: undefined
-                  variance: undefined
-                  loc: Object {
-                    filename: '..'
-                    end: Object {
-                      column: 6
-                      index: 66
-                      line: 5
-                    }
-                    start: Object {
-                      column: 5
-                      index: 65
-                      line: 5
-                    }
+              typeParameters: FlowTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 7
+                    index: 67
+                    line: 5
+                  }
+                  start: Object {
+                    column: 4
+                    index: 64
+                    line: 5
                   }
                 }
-              ]
+                params: Array [
+                  FlowTypeParameter {
+                    name: 'T'
+                    bound: undefined
+                    default: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 6
+                        index: 66
+                        line: 5
+                      }
+                      start: Object {
+                        column: 5
+                        index: 65
+                        line: 5
+                      }
+                    }
+                  }
+                ]
+              }
             }
           }
           ClassMethod {
@@ -742,30 +738,6 @@ Program {
                 }
               }
             }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: '..'
-                end: Object {
-                  column: 21
-                  index: 94
-                  line: 6
-                }
-                start: Object {
-                  column: 21
-                  index: 94
-                  line: 6
-                }
-              }
-            }
             meta: ClassPropertyMeta {
               abstract: false
               accessibility: undefined
@@ -792,41 +764,64 @@ Program {
                 }
               }
             }
-            typeParameters: FlowTypeParameterDeclaration {
+            head: FunctionHead {
+              async: false
+              generator: false
+              hasHoistedVars: false
+              params: Array []
+              predicate: undefined
+              rest: undefined
+              returnType: undefined
+              thisType: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 18
-                  index: 91
+                  column: 21
+                  index: 94
                   line: 6
                 }
                 start: Object {
-                  column: 15
-                  index: 88
+                  column: 21
+                  index: 94
                   line: 6
                 }
               }
-              params: Array [
-                FlowTypeParameter {
-                  name: 'T'
-                  bound: undefined
-                  default: undefined
-                  variance: undefined
-                  loc: Object {
-                    filename: '..'
-                    end: Object {
-                      column: 17
-                      index: 90
-                      line: 6
-                    }
-                    start: Object {
-                      column: 16
-                      index: 89
-                      line: 6
-                    }
+              typeParameters: FlowTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 18
+                    index: 91
+                    line: 6
+                  }
+                  start: Object {
+                    column: 15
+                    index: 88
+                    line: 6
                   }
                 }
-              ]
+                params: Array [
+                  FlowTypeParameter {
+                    name: 'T'
+                    bound: undefined
+                    default: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 17
+                        index: 90
+                        line: 6
+                      }
+                      start: Object {
+                        column: 16
+                        index: 89
+                        line: 6
+                      }
+                    }
+                  }
+                ]
+              }
             }
           }
           ClassMethod {
@@ -893,30 +888,6 @@ Program {
                 }
               }
             }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: '..'
-                end: Object {
-                  column: 21
-                  index: 118
-                  line: 7
-                }
-                start: Object {
-                  column: 21
-                  index: 118
-                  line: 7
-                }
-              }
-            }
             meta: ClassPropertyMeta {
               abstract: false
               accessibility: undefined
@@ -943,41 +914,64 @@ Program {
                 }
               }
             }
-            typeParameters: FlowTypeParameterDeclaration {
+            head: FunctionHead {
+              async: false
+              generator: false
+              hasHoistedVars: false
+              params: Array []
+              predicate: undefined
+              rest: undefined
+              returnType: undefined
+              thisType: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 18
-                  index: 115
+                  column: 21
+                  index: 118
                   line: 7
                 }
                 start: Object {
-                  column: 15
-                  index: 112
+                  column: 21
+                  index: 118
                   line: 7
                 }
               }
-              params: Array [
-                FlowTypeParameter {
-                  name: 'T'
-                  bound: undefined
-                  default: undefined
-                  variance: undefined
-                  loc: Object {
-                    filename: '..'
-                    end: Object {
-                      column: 17
-                      index: 114
-                      line: 7
-                    }
-                    start: Object {
-                      column: 16
-                      index: 113
-                      line: 7
-                    }
+              typeParameters: FlowTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 18
+                    index: 115
+                    line: 7
+                  }
+                  start: Object {
+                    column: 15
+                    index: 112
+                    line: 7
                   }
                 }
-              ]
+                params: Array [
+                  FlowTypeParameter {
+                    name: 'T'
+                    bound: undefined
+                    default: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 17
+                        index: 114
+                        line: 7
+                      }
+                      start: Object {
+                        column: 16
+                        index: 113
+                        line: 7
+                      }
+                    }
+                  }
+                ]
+              }
             }
           }
           ClassMethod {
@@ -1044,30 +1038,6 @@ Program {
                 }
               }
             }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: '..'
-                end: Object {
-                  column: 20
-                  index: 141
-                  line: 8
-                }
-                start: Object {
-                  column: 20
-                  index: 141
-                  line: 8
-                }
-              }
-            }
             meta: ClassPropertyMeta {
               abstract: false
               accessibility: undefined
@@ -1094,41 +1064,64 @@ Program {
                 }
               }
             }
-            typeParameters: FlowTypeParameterDeclaration {
+            head: FunctionHead {
+              async: false
+              generator: false
+              hasHoistedVars: false
+              params: Array []
+              predicate: undefined
+              rest: undefined
+              returnType: undefined
+              thisType: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 17
-                  index: 138
+                  column: 20
+                  index: 141
                   line: 8
                 }
                 start: Object {
-                  column: 14
-                  index: 135
+                  column: 20
+                  index: 141
                   line: 8
                 }
               }
-              params: Array [
-                FlowTypeParameter {
-                  name: 'T'
-                  bound: undefined
-                  default: undefined
-                  variance: undefined
-                  loc: Object {
-                    filename: '..'
-                    end: Object {
-                      column: 16
-                      index: 137
-                      line: 8
-                    }
-                    start: Object {
-                      column: 15
-                      index: 136
-                      line: 8
-                    }
+              typeParameters: FlowTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 17
+                    index: 138
+                    line: 8
+                  }
+                  start: Object {
+                    column: 14
+                    index: 135
+                    line: 8
                   }
                 }
-              ]
+                params: Array [
+                  FlowTypeParameter {
+                    name: 'T'
+                    bound: undefined
+                    default: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 16
+                        index: 137
+                        line: 8
+                      }
+                      start: Object {
+                        column: 15
+                        index: 136
+                        line: 8
+                      }
+                    }
+                  }
+                ]
+              }
             }
           }
           ClassMethod {
@@ -1195,30 +1188,6 @@ Program {
                 }
               }
             }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: '..'
-                end: Object {
-                  column: 17
-                  index: 161
-                  line: 9
-                }
-                start: Object {
-                  column: 17
-                  index: 161
-                  line: 9
-                }
-              }
-            }
             meta: ClassPropertyMeta {
               abstract: false
               accessibility: undefined
@@ -1245,41 +1214,64 @@ Program {
                 }
               }
             }
-            typeParameters: FlowTypeParameterDeclaration {
+            head: FunctionHead {
+              async: false
+              generator: false
+              hasHoistedVars: false
+              params: Array []
+              predicate: undefined
+              rest: undefined
+              returnType: undefined
+              thisType: undefined
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 14
-                  index: 158
+                  column: 17
+                  index: 161
                   line: 9
                 }
                 start: Object {
-                  column: 11
-                  index: 155
+                  column: 17
+                  index: 161
                   line: 9
                 }
               }
-              params: Array [
-                FlowTypeParameter {
-                  name: 'T'
-                  bound: undefined
-                  default: undefined
-                  variance: undefined
-                  loc: Object {
-                    filename: '..'
-                    end: Object {
-                      column: 13
-                      index: 157
-                      line: 9
-                    }
-                    start: Object {
-                      column: 12
-                      index: 156
-                      line: 9
-                    }
+              typeParameters: FlowTypeParameterDeclaration {
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 14
+                    index: 158
+                    line: 9
+                  }
+                  start: Object {
+                    column: 11
+                    index: 155
+                    line: 9
                   }
                 }
-              ]
+                params: Array [
+                  FlowTypeParameter {
+                    name: 'T'
+                    bound: undefined
+                    default: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: '..'
+                      end: Object {
+                        column: 13
+                        index: 157
+                        line: 9
+                      }
+                      start: Object {
+                        column: 12
+                        index: 156
+                        line: 9
+                      }
+                    }
+                  }
+                ]
+              }
             }
           }
         ]

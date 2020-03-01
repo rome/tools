@@ -29,8 +29,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 0
-          index: 0
+          column: 8
+          index: 8
           line: 1
         }
         start: Object {
@@ -56,7 +56,26 @@ Program {
           line: 2
         }
       }
+      leadingComments: Array [
+        CommentLine {
+          value: ' @flow'
+          loc: Object {
+            filename: '..'
+            end: Object {
+              column: 8
+              index: 8
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
       expression: BinaryExpression {
+        leadingComments: undefined
         operator: '>'
         loc: Object {
           filename: '..'
@@ -107,6 +126,7 @@ Program {
           }
         }
         left: BinaryExpression {
+          leadingComments: undefined
           operator: '<'
           loc: Object {
             filename: '..'
@@ -119,22 +139,6 @@ Program {
               column: 0
               index: 9
               line: 2
-            }
-          }
-          left: ReferenceIdentifier {
-            name: 'f'
-            loc: Object {
-              filename: '..'
-              end: Object {
-                column: 1
-                index: 10
-                line: 2
-              }
-              start: Object {
-                column: 0
-                index: 9
-                line: 2
-              }
             }
           }
           right: ReferenceIdentifier {
@@ -152,6 +156,40 @@ Program {
                 line: 2
               }
             }
+          }
+          left: ReferenceIdentifier {
+            name: 'f'
+            loc: Object {
+              filename: '..'
+              end: Object {
+                column: 1
+                index: 10
+                line: 2
+              }
+              start: Object {
+                column: 0
+                index: 9
+                line: 2
+              }
+            }
+            leadingComments: Array [
+              CommentLine {
+                value: ' @flow'
+                loc: Object {
+                  filename: '..'
+                  end: Object {
+                    column: 8
+                    index: 8
+                    line: 1
+                  }
+                  start: Object {
+                    column: 0
+                    index: 0
+                    line: 1
+                  }
+                }
+              }
+            ]
           }
         }
       }
