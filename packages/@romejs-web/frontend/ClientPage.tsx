@@ -181,7 +181,7 @@ function Markers({request}: {request: WebMasterRequest}) {
 
   const rows: Array<Array<MasterMarker>> = [];
 
-  for (const marker of markers.slice().sort((a, b) => a.end - a.start)) {
+  for (const marker of markers.slice().sort(a => a.end - a.start)) {
     let row: undefined | Array<MasterMarker>;
 
     // Find row without an overlapping marker

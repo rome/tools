@@ -10,5 +10,6 @@ import {TSTypePredicate, tsTypePredicate, AnyNode} from '@romejs/js-ast';
 
 export default function TSTypePredicate(node: AnyNode, scope: Scope) {
   node = tsTypePredicate.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

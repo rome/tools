@@ -10,5 +10,6 @@ import {TSConditionalType, tsConditionalType, AnyNode} from '@romejs/js-ast';
 
 export default function TSConditionalType(node: AnyNode, scope: Scope) {
   node = tsConditionalType.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

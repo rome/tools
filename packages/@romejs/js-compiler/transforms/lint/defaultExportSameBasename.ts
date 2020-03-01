@@ -12,10 +12,10 @@ import {
   FunctionDeclaration,
 } from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
-
-const DEFAULT_BASENAME_MESSAGE =
-  'When exporting a default value with an id, the filename should be the same. eg. `export ' +
-  'default class Foo {}` should be named `Foo.js`';
+import {toCamelCase} from '@romejs/string-utils';
+import {UnknownFilePath} from '@romejs/path';
+import {renameBindings} from '@romejs/js-ast-utils';
+import {TransformExitResult} from '@romejs/js-compiler/types';
 
 function isValidDeclaration(
   node: AnyNode,
@@ -25,40 +25,76 @@ function isValidDeclaration(
   );
 }
 
+function filenameToId(path: UnknownFilePath, capitalize: boolean): string {
+  let basename = path.getExtensionlessBasename();
+
+  if (basename === 'index') {
+    // If the filename is `index` then use the parent directory name
+    basename = path.getParent().getExtensionlessBasename();
+  }
+
+  return toCamelCase(basename, capitalize);
+}
+
 export default {
   name: 'defaultExportSameBasename',
-  enter(path: Path): AnyNode {
-    const {context, node: program} = path;
+  enter(path: Path): TransformExitResult {
+    const {context, node} = path;
 
-    if (program.type === 'Program') {
-      // Find the default export
+    if (node.type === 'Program') {
       let defaultExport: undefined | ExportDefaultDeclaration;
-      for (const node of program.body) {
-        if (node.type === 'ExportDefaultDeclaration') {
-          defaultExport = node;
+      for (const bodyNode of node.body) {
+        if (bodyNode.type === 'ExportDefaultDeclaration') {
+          defaultExport = bodyNode;
           break;
         }
       }
 
-      // Validate the export
       if (
         defaultExport !== undefined &&
         isValidDeclaration(defaultExport.declaration)
       ) {
+        const {declaration} = defaultExport;
+
         // Get the export default id
-        const id = defaultExport.declaration.id;
+        const id = declaration.id;
         if (id !== undefined && context.path !== undefined) {
-          const basename = context.path.getExtensionlessBasename();
-          if (basename !== id.name && basename !== 'index') {
-            context.addNodeDiagnostic(program, {
+          const type =
+            declaration.type === 'FunctionDeclaration' ? 'function' : 'class';
+          const basename = filenameToId(context.path, type === 'class');
+
+          if (basename !== id.name) {
+            const correctFilename = id.name + context.path.getExtensions();
+
+            let adviceMessage = '';
+
+            if (id.name === '*default*') {
+              adviceMessage += 'The';
+            } else {
+              adviceMessage += `Filename should be <emphasis>${correctFilename}</emphasis> or the`;
+            }
+
+            adviceMessage += ` ${type} name should be <emphasis>${basename}</emphasis>`;
+
+            context.addNodeDiagnostic(id, {
+              fixable: true,
               category: 'lint/defaultExportSameBasename',
-              message: DEFAULT_BASENAME_MESSAGE,
+              message: `Filename and the name of a default ${type} should match`,
+              advice: [
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: adviceMessage,
+                },
+              ],
             });
+
+            return renameBindings(path, new Map([[id.name, basename]]));
           }
         }
       }
     }
 
-    return program;
+    return node;
   },
 };

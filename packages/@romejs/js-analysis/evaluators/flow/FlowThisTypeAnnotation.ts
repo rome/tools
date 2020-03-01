@@ -14,5 +14,6 @@ import {
 
 export default function FlowThisTypeAnnotation(node: AnyNode, scope: Scope) {
   node = flowThisTypeAnnotation.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

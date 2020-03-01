@@ -14,5 +14,6 @@ import {
 
 export default function InterpreterDirective(node: AnyNode, scope: Scope) {
   node = interpreterDirective.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

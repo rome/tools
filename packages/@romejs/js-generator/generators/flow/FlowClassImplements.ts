@@ -16,9 +16,7 @@ import FlowInterfaceExtends from './FlowInterfaceExtends';
 export default function FlowClassImplements(
   generator: Generator,
   node: AnyNode,
-  parent: AnyNode,
 ) {
   node = flowClassImplements.assert(node);
-
   FlowInterfaceExtends(generator, node);
 }

@@ -10,5 +10,6 @@ import {TSTupleType, tsTupleType, AnyNode} from '@romejs/js-ast';
 
 export default function TSTupleType(node: AnyNode, scope: Scope) {
   node = tsTupleType.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

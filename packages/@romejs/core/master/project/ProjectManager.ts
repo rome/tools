@@ -25,7 +25,11 @@ import {
   WorkerPartialManifests,
 } from '../../common/bridges/WorkerBridge';
 import {WorkerContainer} from '../WorkerManager';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
+import {
+  DiagnosticsProcessor,
+  DiagnosticPointer,
+  DiagnosticsError,
+} from '@romejs/diagnostics';
 import {matchPathPatterns} from '@romejs/path-match';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
 import {
@@ -45,12 +49,27 @@ import {createDirectory, readFileText} from '@romejs/fs';
 import {Consumer} from '@romejs/consume';
 import {consumeJSON} from '@romejs/codec-json';
 
-function cleanName(name: string): string {
-  if (name[0] === '@') {
-    return name.slice(1);
-  } else {
-    return name;
+function cleanUidParts(parts: Array<string>): string {
+  let uid = '';
+
+  let lastPart = '';
+  for (const part of parts) {
+    if (uid !== '') {
+      uid += '/';
+    }
+
+    // Prune off any prefix shared with the last part
+    let sharedPrefix = '';
+    for (let i = 0; i < part.length && lastPart[i] === part[i]; i++) {
+      sharedPrefix += part[i];
+    }
+
+    uid += part.slice(sharedPrefix.length);
+
+    lastPart = part;
   }
+
+  return uid;
 }
 
 // If a UID has a relative path that's just index.js, index.ts etc then omit it
@@ -214,28 +233,36 @@ export default class ProjectManager {
 
     // Format of uids will be <PROJECT_NAME>/<PACKAGE_NAME>/<RELATIVE>
     const parts: Array<string> = [];
-    parts.push(project.config.name);
 
-    // If we have a package then use it as the root and push it's name
     let root = project.folder;
-    const pkg = this.master.memoryFs.getOwnedManifest(path);
-    if (pkg !== undefined && pkg.manifest.name !== undefined) {
-      parts.push(pkg.manifest.name);
-      root = pkg.folder;
 
-      // If the project name is "@romejs" and the package name is "@romejs/foo" then we'll have "@romejs/foo/foo"
-      // which is pretty gross. So here we fix that up.
-      if (cleanName(parts[1]).startsWith(cleanName(parts[0]))) {
-        parts.shift();
+    // Push on parent package names
+    let targetPackagePath = path;
+    while (true) {
+      const pkg = this.master.memoryFs.getOwnedManifest(targetPackagePath);
+      if (pkg === undefined || pkg.folder.equal(project.folder)) {
+        break;
+      } else {
+        const name = pkg.manifest.name;
+        if (name !== undefined) {
+          parts.unshift(name);
+
+          if (targetPackagePath === path) {
+            root = pkg.folder;
+          }
+        }
+        targetPackagePath = pkg.folder.getParent();
       }
     }
+
+    parts.unshift(project.config.name);
 
     const relative = cleanRelativeUidPath(root.relative(path));
     if (relative !== undefined) {
       parts.push(relative);
     }
 
-    const uid = cleanName(parts.join('/'));
+    const uid = cleanUidParts(parts);
     this.setUid(path, uid);
     return uid;
   }
@@ -556,13 +583,13 @@ export default class ProjectManager {
 
         diagnostics.addDiagnostic({
           category: 'projectManager',
-          filename: def.filename.join(),
+          filename: def.path.join(),
           message: `Duplicate package name <emphasis>${name}</emphasis>`,
           advice: [
             {
               type: 'log',
               category: 'info',
-              message: `Defined already by <filelink target="${existingPackage.filename}" />`,
+              message: `Defined already by <filelink target="${existingPackage.path}" />`,
             },
           ],
         });
@@ -572,7 +599,7 @@ export default class ProjectManager {
 
     // Set as a package
     for (const project of projects) {
-      this.addDependencyToProjectId(def.filename, project.id);
+      this.addDependencyToProjectId(def.path, project.id);
       project.manifests.set(def.id, def);
 
       if (isProjectPackage && name !== undefined) {
@@ -582,7 +609,7 @@ export default class ProjectManager {
   }
 
   isHasteIgnored(path: AbsoluteFilePath, config: ProjectConfig): boolean {
-    return matchPathPatterns(path, config.haste.ignore);
+    return matchPathPatterns(path, config.haste.ignore) !== 'NO_MATCH';
   }
 
   isHasteDeclared(path: AbsoluteFilePath, project: ProjectDefinition): boolean {
@@ -694,10 +721,13 @@ export default class ProjectManager {
     await Promise.all(promises);
   }
 
-  async assertProject(loc: AbsoluteFilePath): Promise<ProjectDefinition> {
+  async assertProject(
+    path: AbsoluteFilePath,
+    pointer?: DiagnosticPointer,
+  ): Promise<ProjectDefinition> {
     // We won't recurse up and check a parent project if we've already visited it
-    const syncProject = this.findProjectExisting(loc);
-    const project = syncProject || (await this.findProject(loc));
+    const syncProject = this.findProjectExisting(path);
+    const project = syncProject || (await this.findProject(path));
 
     if (project) {
       // Continue searching for projects up the directory
@@ -707,11 +737,31 @@ export default class ProjectManager {
       }
 
       return project;
-    } else {
+    }
+
+    if (pointer === undefined) {
       throw new Error(
-        `Couldn't find a ${ROME_CONFIG_FILENAMES.join(' or ')} for ${loc}`,
+        `Couldn't find a project. Checked ${ROME_CONFIG_FILENAMES.join(
+          ' or ',
+        )} for ${path.join()}`,
       );
     }
+
+    throw new DiagnosticsError(`No project found for ${path.join()}`, [
+      {
+        ...pointer,
+        category: 'project',
+        message: `Couldn't find a project`,
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message:
+              'Run <command>rome init</command> in this folder to initialize a project',
+          },
+        ],
+      },
+    ]);
   }
 
   // Convenience method to get the project config and pass it to the file handler class

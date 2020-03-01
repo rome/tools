@@ -50,7 +50,6 @@ export default createMasterCommand({
     const target = args[0];
     const resolved = await master.resolver.resolveEntry({
       ...req.getResolverOptionsFromFlags(),
-      origin: flags.cwd,
       source: createRelativeFilePath(target),
     });
     if (resolved.type === 'FOUND') {

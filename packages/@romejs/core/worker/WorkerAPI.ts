@@ -17,6 +17,7 @@ import {
   PrefetchedModuleSignatures,
   WorkerParseOptions,
   WorkerCompilerOptions,
+  WorkerFormatResult,
 } from '../common/bridges/WorkerBridge';
 import Logger from '../common/utils/Logger';
 import {removeLoc} from '@romejs/js-ast-utils';
@@ -163,6 +164,38 @@ export default class WorkerAPI {
     }
   }
 
+  async format(ref: FileReference): Promise<undefined | WorkerFormatResult> {
+    const res = await this._format(ref);
+    if (res === undefined) {
+      return undefined;
+    } else {
+      return {formatted: res.formatted, diagnostics: res.diagnostics};
+    }
+  }
+
+  async _format(ref: FileReference): Promise<undefined | ExtensionLintResult> {
+    const project = this.worker.getProject(ref.project);
+    this.logger.info(`Formatting:`, ref.real);
+
+    if (!project.config.format.enabled) {
+      return;
+    }
+
+    const {handler} = getFileHandlerAssert(ref.real, project.config);
+    const {format} = handler;
+    if (format === undefined) {
+      return;
+    }
+
+    const res = await format({
+      file: ref,
+      project,
+      worker: this.worker,
+    });
+
+    return res;
+  }
+
   async lint(
     ref: FileReference,
     prefetchedModuleSignatures: PrefetchedModuleSignatures,
@@ -175,7 +208,7 @@ export default class WorkerAPI {
     const {handler} = getFileHandlerAssert(ref.real, project.config);
 
     const {lint} = handler;
-    if (lint === undefined) {
+    if (lint === undefined && handler.format === undefined) {
       return [];
     }
 
@@ -185,18 +218,28 @@ export default class WorkerAPI {
         category: 'lint',
         message: 'Caught by WorkerAPI.lint',
       },
-      () =>
-        lint({
-          file: ref,
-          project,
-          prefetchedModuleSignatures,
-          worker: this.worker,
-        }),
+      () => {
+        if (lint === undefined) {
+          return this._format(ref);
+        } else {
+          return lint({
+            file: ref,
+            project,
+            prefetchedModuleSignatures,
+            worker: this.worker,
+          });
+        }
+      },
     );
 
     // These are fatal diagnostics
     if (res.diagnostics !== undefined) {
       return res.diagnostics;
+    }
+
+    // `format` could have return undefined
+    if (res.value === undefined) {
+      return [];
     }
 
     // These are normal diagnostics returned from the linter
@@ -229,7 +272,7 @@ export default class WorkerAPI {
       {
         category: 'lint/pendingFixes',
         filename: ref.uid,
-        message: 'Pending lint fixes',
+        message: 'Pending fixes',
         advice: [
           {
             type: 'diff',

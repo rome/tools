@@ -14,5 +14,6 @@ import {
 
 export default function JSXReferenceIdentifier(node: AnyNode, scope: Scope) {
   node = jsxReferenceIdentifier.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

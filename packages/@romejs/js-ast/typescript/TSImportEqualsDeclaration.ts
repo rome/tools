@@ -12,6 +12,7 @@ export type TSImportEqualsDeclaration = JSNodeBase & {
   type: 'TSImportEqualsDeclaration';
   id: BindingIdentifier;
   moduleReference: AnyTSModuleReference;
+  isExport?: boolean;
 };
 
 export const tsImportEqualsDeclaration = createBuilder<

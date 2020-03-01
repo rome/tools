@@ -10,5 +10,6 @@ import {PrivateName, privateName, AnyNode} from '@romejs/js-ast';
 
 export default function PrivateName(node: AnyNode, scope: Scope) {
   node = privateName.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

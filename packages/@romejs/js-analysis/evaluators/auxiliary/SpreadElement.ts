@@ -10,5 +10,6 @@ import {SpreadElement, spreadElement, AnyNode} from '@romejs/js-ast';
 
 export default function SpreadElement(node: AnyNode, scope: Scope) {
   node = spreadElement.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

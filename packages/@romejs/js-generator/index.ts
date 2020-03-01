@@ -34,7 +34,7 @@ class GeneratorPublic {
   }
 }
 
-export default function(
+export function generateJS(
   ast: AnyNode,
   opts: GeneratorOptions,
   code: string = '',

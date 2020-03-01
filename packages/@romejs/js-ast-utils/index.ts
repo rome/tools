@@ -7,7 +7,7 @@
 
 export {default as assertMultipleNodes} from './assertMultipleNodes';
 export {default as assertSingleNode} from './assertSingleNode';
-export {default as assertSingleOrMultipleNode} from './assertSingleOrMultipleNode';
+export {default as assertSingleOrMultipleNode} from './assertSingleOrMultipleNodes';
 export {default as doesNodeMatchPattern} from './doesNodeMatchPattern';
 export {default as getBindingIdentifiers} from './getBindingIdentifiers';
 export {default as getNodeReferenceParts} from './getNodeReferenceParts';

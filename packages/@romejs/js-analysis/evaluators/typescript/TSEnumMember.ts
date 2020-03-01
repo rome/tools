@@ -10,5 +10,6 @@ import {TSEnumMember, tsEnumMember, AnyNode} from '@romejs/js-ast';
 
 export default function TSEnumMember(node: AnyNode, scope: Scope) {
   node = tsEnumMember.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

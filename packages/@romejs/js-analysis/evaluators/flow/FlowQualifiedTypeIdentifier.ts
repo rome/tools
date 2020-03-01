@@ -17,5 +17,6 @@ export default function FlowQualifiedTypeIdentifier(
   scope: Scope,
 ) {
   node = flowQualifiedTypeIdentifier.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

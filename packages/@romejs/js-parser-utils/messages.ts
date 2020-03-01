@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import messages from '@romejs/messages';
+import {createMessageFactory} from '@romejs/messages';
 
-export default messages({
+export default createMessageFactory({
   DUPLICATE_REGEX_FLAG: 'Duplicate regular expression flag',
   INVALID_REGEX_FLAG: 'Invalid regular expression flag',
 });

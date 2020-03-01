@@ -21,6 +21,7 @@ import resolve from './resolve';
 import analyzeDependencies from './analyzeDependencies';
 import parse from './parse';
 import bundle from './bundle';
+import format from './format';
 
 // Code Quality
 import lint from './lint';
@@ -51,4 +52,5 @@ masterCommands.set('run', run);
 masterCommands.set('publish', publish);
 masterCommands.set('ci', ci);
 masterCommands.set('develop', develop);
+masterCommands.set('format', format);
 masterCommands.set('_noop', noop);

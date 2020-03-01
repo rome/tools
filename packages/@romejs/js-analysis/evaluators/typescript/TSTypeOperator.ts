@@ -10,5 +10,6 @@ import {TSTypeOperator, tsTypeOperator, AnyNode} from '@romejs/js-ast';
 
 export default function TSTypeOperator(node: AnyNode, scope: Scope) {
   node = tsTypeOperator.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

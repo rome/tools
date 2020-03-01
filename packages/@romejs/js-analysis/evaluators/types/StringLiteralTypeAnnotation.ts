@@ -17,5 +17,6 @@ export default function StringLiteralTypeAnnotation(
   scope: Scope,
 ) {
   node = stringLiteralTypeAnnotation.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

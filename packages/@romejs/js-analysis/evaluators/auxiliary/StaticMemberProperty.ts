@@ -14,5 +14,6 @@ import {
 
 export default function StaticMemberProperty(node: AnyNode, scope: Scope) {
   node = staticMemberProperty.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

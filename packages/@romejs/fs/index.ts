@@ -147,7 +147,7 @@ export function lstatSync(path: AbsoluteFilePath): fs.Stats {
 // exists
 
 export function exists(path: AbsoluteFilePath): Promise<boolean> {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     fs.exists(path.join(), exists => {
       resolve(exists);
     });

@@ -14,5 +14,6 @@ import {
 
 export default function ImportNamespaceSpecifier(node: AnyNode, scope: Scope) {
   node = importNamespaceSpecifier.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

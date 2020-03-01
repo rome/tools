@@ -10,5 +10,6 @@ import {FlowInterface, flowInterface, AnyNode} from '@romejs/js-ast';
 
 export default function FlowInterface(node: AnyNode, scope: Scope) {
   node = flowInterface.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

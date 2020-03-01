@@ -17,5 +17,6 @@ export default function FlowObjectTypeSpreadProperty(
   scope: Scope,
 ) {
   node = flowObjectTypeSpreadProperty.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

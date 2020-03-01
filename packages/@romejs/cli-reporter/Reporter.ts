@@ -19,10 +19,11 @@ import {stripAnsi, splitAnsiLines} from '@romejs/string-ansi';
 import Progress, {ProgressOptions} from './Progress';
 import {interpolate} from './util';
 import {formatAnsi, rightPad, escapes, hasAnsiColor} from '@romejs/string-ansi';
-import format from '@romejs/pretty-format';
+import prettyFormat from '@romejs/pretty-format';
 import stream = require('stream');
 import {CWD_PATH} from '@romejs/path';
 import {Event} from '@romejs/events';
+import readline = require('readline');
 
 type ListOptions = {
   reverse?: boolean;
@@ -36,6 +37,8 @@ type WrapperFactory = <T extends (...args: Array<any>) => any>(
 
 export type ReporterOptions = {
   streams?: Array<ReporterStream>;
+  stdin?: NodeJS.ReadStream;
+
   programName?: string;
   hasClearScreen?: boolean;
   programVersion?: string;
@@ -52,12 +55,35 @@ export type LogOptions = {
   nonTTY?: string;
   noPrefix?: boolean;
   stderr?: boolean;
+  newline?: boolean;
 };
 
 export type LogCategoryOptions = LogOptions & {
   prefix: string;
   format: (str: string) => string;
   suffix?: string;
+};
+
+type QuestionValidateResult<T> = [false, string] | [true, T];
+
+type QuestionOptions = {
+  hint?: string;
+  default?: string;
+  yes?: boolean;
+  normalize?: (value: string) => string;
+};
+
+type SelectOptions = {
+  [key: string]: {
+    label: string;
+  };
+};
+
+type SelectArguments<Options> = {
+  options: Options;
+  defaults?: Array<keyof Options>;
+  radio?: boolean;
+  yes?: boolean;
 };
 
 let remoteProgressIdCounter = 0;
@@ -90,6 +116,7 @@ export default class Reporter {
       opts.markupOptions === undefined ? {} : opts.markupOptions;
     this.hasSpacer = false;
     this.shouldRedirectOutToErr = false;
+    this.stdin = opts.stdin;
 
     this.wrapperFactory = opts.wrapperFactory;
 
@@ -219,6 +246,7 @@ export default class Reporter {
   streams: Set<ReporterStream>;
   sendRemoteServerMessage: Event<RemoteReporterServerMessage, void>;
   sendRemoteClientMessage: Event<RemoteReporterClientMessage, void>;
+  stdin: undefined | NodeJS.ReadStream;
 
   remoteClientProgressBars: Map<string, Progress>;
   remoteServerProgressBars: Map<
@@ -349,6 +377,312 @@ export default class Reporter {
     this.streams.delete(stream);
     this.outStreams.delete(stream);
     this.errStreams.delete(stream);
+  }
+
+  //# Stdin
+
+  getStdin(): NodeJS.ReadStream {
+    const {stdin} = this;
+    if (stdin === undefined) {
+      throw new Error('This operation expected a stdin but we have none');
+    }
+    return stdin;
+  }
+
+  async question(
+    message: string,
+    {hint, default: def = '', yes = false}: QuestionOptions = {},
+  ): Promise<string> {
+    if (yes) {
+      return def;
+    }
+
+    const stdin = this.getStdin();
+
+    const origPrompt = `<brightBlack emphasis>?</brightBlack> <emphasis>${message}</emphasis>`;
+    let prompt = origPrompt;
+    if (hint !== undefined) {
+      prompt += ` <dim>${hint}</dim>`;
+    }
+    if (def !== '') {
+      prompt += ` (${def})`;
+    }
+    prompt += ': ';
+    this.logAll(prompt, {
+      newline: false,
+    });
+
+    const rl = readline.createInterface({
+      input: stdin,
+      output: new stream.Writable({
+        write: (chunk, encoding, callback) => {
+          this.writeAll(chunk);
+          callback();
+        },
+      }),
+      terminal: false,
+    });
+
+    return new Promise(resolve => {
+      rl.on('line', line => {
+        rl.close();
+
+        const normalized = line === '' ? def : line;
+
+        // Replace initial prompt
+        this.writeAll(escapes.cursorUp());
+        this.writeAll(escapes.eraseLine);
+
+        let prompt = origPrompt;
+        prompt += ': ';
+        if (normalized === '') {
+          prompt += '<dim>empty</dim>';
+        } else {
+          prompt += normalized;
+        }
+        this.logAll(prompt);
+
+        resolve(normalized);
+      });
+    });
+  }
+
+  async questionValidate<T>(
+    message: string,
+    validate: (value: string) => QuestionValidateResult<T>,
+    options: Omit<QuestionOptions, 'normalize'> = {},
+  ): Promise<T> {
+    while (true) {
+      let res: undefined | QuestionValidateResult<T>;
+
+      await this.question(`${message}`, {
+        ...options,
+        normalize: (value: string): string => {
+          res = validate(value);
+
+          if (res[0] === true && typeof res[1] === 'string') {
+            return res[1];
+          } else {
+            return value;
+          }
+        },
+      });
+
+      if (res === undefined) {
+        throw new Error('normalize should have been called');
+      }
+
+      if (res[0] === false) {
+        this.error(res[1]);
+        continue;
+      } else {
+        return res[1];
+      }
+    }
+  }
+
+  async radioConfirm(message: string): Promise<boolean> {
+    const answer = await this.radio(message, {
+      options: {
+        yes: {
+          label: 'Yes',
+        },
+        no: {
+          label: 'No',
+        },
+      },
+    });
+    return answer === 'yes';
+  }
+
+  async radio<Options extends SelectOptions>(
+    message: string,
+    arg: SelectArguments<Options>,
+  ): Promise<keyof Options> {
+    const set = await this.select(message, {...arg, radio: true});
+
+    // Should always have at least one elemet
+    return Array.from(set)[0];
+  }
+
+  async select<Options extends SelectOptions>(
+    message: string,
+    {
+      options,
+      defaults = [],
+      radio = false,
+      yes = false,
+    }: SelectArguments<Options>,
+  ): Promise<Set<keyof Options>> {
+    const optionNames: Array<keyof Options> = Object.keys(options);
+    const optionCount = optionNames.length;
+    if (optionCount === 0) {
+      return new Set();
+    }
+
+    if (yes) {
+      return new Set(defaults);
+    }
+
+    let prompt = `<brightBlack>❯</brightBlack> <emphasis>${message}</emphasis>`;
+    this.logAll(prompt);
+
+    const selectedOptions: Set<keyof Options> = new Set(defaults);
+    let activeOption = 0;
+
+    // Set first option if this is a radio
+    if (radio && !defaults.length) {
+      selectedOptions.add(optionNames[0]);
+    }
+
+    const boundActive = () => {
+      activeOption = Math.min(activeOption, optionCount - 1);
+      activeOption = Math.max(activeOption, 0);
+
+      if (radio) {
+        selectedOptions.clear();
+        selectedOptions.add(optionNames[activeOption]);
+      }
+    };
+
+    // If we aren't a radio then set the active option to the bottom of any that are enabled
+    if (!radio) {
+      while (selectedOptions.has(optionNames[activeOption])) {
+        activeOption++;
+      }
+    }
+
+    const render = () => {
+      for (let i = 0; i < optionNames.length; i++) {
+        const key = optionNames[i];
+        const {label} = options[key];
+        const formattedLabel =
+          optionNames.indexOf(key) === activeOption
+            ? `<underline>${label}</underline>`
+            : label;
+
+        let symbol = '';
+        if (radio) {
+          symbol = selectedOptions.has(key) ? '◉' : '◯';
+        } else {
+          symbol = selectedOptions.has(key) ? '☑' : '☐';
+        }
+
+        this.logAll(`  ${symbol} ${formattedLabel}`, {
+          // Don't put a newline on the last option
+          newline: i !== optionNames.length - 1,
+        });
+      }
+    };
+
+    const cleanup = () => {
+      for (let i = 0; i < optionCount; i++) {
+        this.writeAll(escapes.eraseLine);
+
+        // Don't move above the top line
+        if (i !== optionCount - 1) {
+          this.writeAll(escapes.cursorUp());
+        }
+      }
+      this.writeAll(escapes.cursorTo(0));
+    };
+
+    let onkeypress = undefined;
+
+    const stdin = this.getStdin();
+
+    render();
+
+    readline.emitKeypressEvents(stdin);
+
+    if (stdin.isTTY && stdin.setRawMode !== undefined) {
+      stdin.setRawMode(true);
+    }
+
+    stdin.resume();
+
+    await new Promise(resolve => {
+      const finish = () => {
+        cleanup();
+
+        // Remove initial log message
+        this.writeAll(escapes.cursorUp());
+        this.writeAll(escapes.eraseLine);
+
+        prompt += ': ';
+        if (selectedOptions.size > 0) {
+          prompt += Array.from(selectedOptions, key => options[key].label).join(
+            ', ',
+          );
+        } else {
+          prompt += '<dim>none</dim>';
+        }
+        this.logAll(prompt);
+
+        resolve();
+      };
+
+      onkeypress = (
+        chunk: Buffer,
+        key: {
+          name: string;
+          ctrl: boolean;
+        },
+      ) => {
+        switch (key.name) {
+          case 'up':
+            activeOption--;
+            break;
+
+          case 'down':
+            activeOption++;
+            break;
+
+          case 'space':
+            if (!radio) {
+              const optionName = optionNames[activeOption];
+              if (selectedOptions.has(optionName)) {
+                selectedOptions.delete(optionName);
+              } else {
+                selectedOptions.add(optionName);
+              }
+            }
+            break;
+
+          case 'c':
+            if (key.ctrl) {
+              process.exit(1);
+            }
+            return;
+
+          case 'escape':
+          case 'return':
+            finish();
+            return;
+
+          default:
+            return;
+        }
+
+        boundActive();
+        cleanup();
+        render();
+      };
+
+      stdin.addListener('keypress', onkeypress);
+    });
+
+    if (onkeypress !== undefined) {
+      stdin.removeListener('keypress', onkeypress);
+    }
+
+    if (stdin.isTTY && stdin.setRawMode !== undefined) {
+      stdin.setRawMode(false);
+    }
+
+    stdin.pause();
+
+    return selectedOptions;
   }
 
   //# Control
@@ -514,7 +848,7 @@ export default class Reporter {
       let formatted = value;
 
       if (typeof formatted !== 'number' && typeof formatted !== 'string') {
-        formatted = format(formatted, {color: stream.format === 'ansi'});
+        formatted = prettyFormat(formatted, {color: stream.format === 'ansi'});
       }
 
       this.logOneNoMarkup(stream, String(formatted));
@@ -575,27 +909,9 @@ export default class Reporter {
   heading(text: string) {
     this.optionalSpacer();
     this.logAll(`<inverse><emphasis>${text}</emphasis></inverse>`, {
-      nonTTY: `## ${text}`,
+      nonTTY: `# ${text}`,
     });
     this.spacer();
-  }
-
-  banner(command: string) {
-    let msg = `${this.programName} ${command}`;
-    if (this.programVersion !== undefined) {
-      msg += ` v${this.programVersion}`;
-    }
-    this.logAll(`<emphasis>${msg}</emphasis>`, {
-      nonTTY: `# ${msg}`,
-    });
-  }
-
-  footer() {
-    const totalTime = (this.getTotalTime() / 1000).toFixed(2);
-    const msg = `Done in ${totalTime}s.`;
-    for (const stream of this.getStreams(false)) {
-      this.logOneNoMarkup(stream, this.prependEmoji(stream, msg, '✨'));
-    }
   }
 
   section(title: string, callback: () => void) {
@@ -626,6 +942,38 @@ export default class Reporter {
     }
 
     this.optionalSpacer();
+  }
+
+  async steps(
+    callbacks: Array<{
+      message: string;
+      callback: () => Promise<void>;
+      clear?: boolean;
+    }>,
+  ) {
+    const total = callbacks.length;
+    let current = 1;
+    for (const {clear, message, callback} of callbacks) {
+      this.step(current, total, message);
+
+      if (clear) {
+        this.hasClearScreen = true;
+      }
+
+      await callback();
+      current++;
+
+      // If a step doesn't produce any output, or just progress bars that are cleared, we can safely remove the previous `step` message line
+      if (clear && this.hasClearScreen) {
+        for (const stream of this.getStreams(false)) {
+          if (stream.format === 'ansi') {
+            stream.write(escapes.cursorTo(0));
+            stream.write(escapes.cursorUp());
+            stream.write(escapes.eraseLine);
+          }
+        }
+      }
+    }
   }
 
   step(current: number, total: number, msg: string) {
@@ -698,8 +1046,11 @@ export default class Reporter {
       return;
     }
 
-    const msg = this.normalizeMessage(stream, tty, opts);
-    this.writeSpecific(stream, msg + '\n', opts);
+    let msg = this.normalizeMessage(stream, tty, opts);
+    if (opts.newline !== false) {
+      msg += '\n';
+    }
+    this.writeSpecific(stream, msg, opts);
   }
 
   logAllWithCategory(
@@ -773,13 +1124,6 @@ export default class Reporter {
 
   errorObj(err: Error) {
     this.error(err.stack || err.message || err.name || 'Unknown Error');
-  }
-
-  question(msg: string, ...args: Array<unknown>) {
-    this.logAllWithCategory(msg, args, {
-      prefix: '❓ ',
-      format: formatAnsi.magenta,
-    });
   }
 
   info(msg: string, ...args: Array<unknown>) {

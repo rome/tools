@@ -14,5 +14,6 @@ import {
 
 export default function ExportLocalSpecifier(node: AnyNode, scope: Scope) {
   node = exportLocalSpecifier.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

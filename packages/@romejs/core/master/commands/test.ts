@@ -51,7 +51,6 @@ type Flags = {
 export default createMasterCommand({
   category: commandCategories.CODE_QUALITY,
   description: 'run tests',
-  hasHeader: true,
 
   defineFlags(c: Consumer): Flags {
     return {

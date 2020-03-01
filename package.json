@@ -38,7 +38,8 @@
         "type-libs",
         "lib/modules.js",
         "prelude.ts",
-        "website"
+        "website",
+        "@romejs-web"
       ]
     }
   }

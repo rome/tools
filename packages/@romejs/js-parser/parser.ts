@@ -35,6 +35,7 @@ import {parseTopLevel} from './parser/index';
 import {createInitialState} from './tokenizer/state';
 import {sub, Number0, number0} from '@romejs/ob1';
 import {Dict} from '@romejs/typescript-helpers';
+import {attachComments} from './parser/comments';
 
 const TOKEN_MISTAKES: Dict<string> = {
   ';': ':',
@@ -94,7 +95,7 @@ const createJSParser = createParser(
   (ParserCore, ParserWithRequiredPath) =>
     class JSParser extends ParserWithRequiredPath<any, State> {
       constructor(options: JSParserOptions) {
-        const state = createInitialState(options);
+        const state = createInitialState();
 
         const parserOpts: ParserOptionsWithRequiredPath = {
           path: options.path,
@@ -209,6 +210,24 @@ const createJSParser = createParser(
         }
       }
 
+      finishNode<T extends AnyNode>(start: Position, node: T): T {
+        return this.finishNodeAt(start, this.getEndPosition(), node);
+      }
+
+      finishNodeAt<T extends AnyNode>(
+        start: Position,
+        end: Position,
+        node: T,
+      ): T {
+        // Maybe mutating `node` is better...?
+        const newNode: T = {
+          ...node,
+          loc: this.finishLocAt(start, end),
+        };
+        attachComments(this, newNode);
+        return newNode;
+      }
+
       createUnknownIdentifier(
         reason: string,
         start: Position = this.getPosition(),
@@ -216,7 +235,7 @@ const createJSParser = createParser(
       ): Identifier {
         return {
           type: 'Identifier',
-          name: 'INVALID_PLACHOLDER',
+          name: 'INVALID_PLACEHOLDER',
           loc: this.finishLocAt(start, end),
         };
       }
@@ -228,7 +247,7 @@ const createJSParser = createParser(
       ): StringLiteral {
         return {
           type: 'StringLiteral',
-          value: 'INVALID_PLACHOLDER',
+          value: 'INVALID_PLACEHOLDER',
           loc: this.finishLocAt(start, end),
         };
       }
@@ -358,6 +377,7 @@ const createJSParser = createParser(
 
         this.state.diagnostics.push({
           filename: this.filename,
+          sourceType: this.sourceType,
           mtime: this.mtime,
           message: diag.message,
           advice: diag.advice,

@@ -14,5 +14,6 @@ import {
 
 export default function FlowDeclareExportNamed(node: AnyNode, scope: Scope) {
   node = flowDeclareExportNamed.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

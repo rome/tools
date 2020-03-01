@@ -63,12 +63,19 @@ function isWordChar(char: string) {
   return isAlpha(char) || isDigit(char) || char === '-' || char === '.';
 }
 
+type SPDXLicenseParserOptions = ParserOptions & {
+  loose?: boolean;
+};
+
 const createSPDXLicenseParser = createParser(
   ParserCore =>
     class SPDXLicenseParser extends ParserCore<Tokens, void> {
-      constructor(opts: ParserOptions) {
+      constructor(opts: SPDXLicenseParserOptions) {
         super(opts, 'spdx-license');
+        this.loose = opts.loose === true;
       }
+
+      loose: boolean;
 
       // For some reason Flow will throw an error without the type casts...
       tokenize(index: Number0, input: string) {
@@ -91,7 +98,7 @@ const createSPDXLicenseParser = createParser(
           return this.lookaheadToken(inc(index));
         }
 
-        if (isAlpha(char)) {
+        if (isWordChar(char)) {
           const value = this.readInputFrom(index, isWordChar);
           const end = add(index, value.length);
 
@@ -105,17 +112,45 @@ const createSPDXLicenseParser = createParser(
             return this.finishValueToken('Word', value, end);
           }
         }
-
-        // Unknown character
-        return undefined;
       }
 
       parseLicense(token: Tokens['Word']): LicenseNode {
         const startPos = this.getPosition();
+        this.nextToken();
 
         // Validate id
         const id = token.value;
-        const licenseInfo = getSPDXLicense(id);
+        let licenseInfo = getSPDXLicense(id);
+        const nextToken = this.getToken();
+
+        // Sometimes licenses will be specified as "Apache 2.0" but what they actually meant was "Apache-2.0"
+        // In loose mode, just make it equivalent, otherwise, complain
+        if (licenseInfo === undefined && nextToken.type === 'Word') {
+          const possibleCorrectLicense = `${id}-${nextToken.value}`;
+          const possibleLicenseInfo = getSPDXLicense(possibleCorrectLicense);
+
+          if (possibleLicenseInfo !== undefined) {
+            if (this.loose) {
+              // Just allow it...
+              licenseInfo = possibleLicenseInfo;
+              this.nextToken();
+            } else {
+              throw this.unexpected({
+                message: `Missing dash between SPDX license name and version`,
+                start: this.getPositionFromIndex(token.start),
+                end: this.getPositionFromIndex(nextToken.end),
+                advice: [
+                  {
+                    type: 'log',
+                    category: 'info',
+                    message: `Did you mean <emphasis>${possibleCorrectLicense}</emphasis>?`,
+                  },
+                ],
+              });
+            }
+          }
+        }
+
         if (licenseInfo === undefined) {
           throw this.unexpected({
             message: `Unknown SPDX license <emphasis>${id}</emphasis>`,
@@ -124,8 +159,6 @@ const createSPDXLicenseParser = createParser(
             advice: buildSuggestionAdvice(id, licenseNames),
           });
         }
-
-        this.nextToken();
 
         // Is this a plus? (wtf is this)
         const plus = this.eatToken('Plus') !== undefined;
@@ -225,6 +258,6 @@ const createSPDXLicenseParser = createParser(
     },
 );
 
-export default function parse(opts: ParserOptions): ExpressionNode {
+export default function parse(opts: SPDXLicenseParserOptions): ExpressionNode {
   return createSPDXLicenseParser(opts).parse();
 }

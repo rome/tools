@@ -14,5 +14,6 @@ import {
 
 export default function ExportDefaultSpecifier(node: AnyNode, scope: Scope) {
   node = exportDefaultSpecifier.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

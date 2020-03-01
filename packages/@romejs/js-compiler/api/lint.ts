@@ -11,7 +11,7 @@ import {TransformRequest} from '../types';
 import {lintTransforms} from '../transforms/lint/index';
 import {program} from '@romejs/js-ast';
 import {Cache, Context} from '@romejs/js-compiler';
-import generate from '@romejs/js-generator';
+import {generateJS} from '@romejs/js-generator';
 
 export type LintResult = {
   diagnostics: PartialDiagnostics;
@@ -49,7 +49,7 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
 
   let formattedCode = src;
   if (project.config.format.enabled) {
-    const generator = generate(
+    const generator = generateJS(
       newAst,
       {
         typeAnnotations: true,

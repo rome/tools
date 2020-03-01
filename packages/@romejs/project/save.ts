@@ -7,7 +7,7 @@
 
 import {ProjectConfigMeta, ProjectConfigMetaHard} from './types';
 import {Consumer} from '@romejs/consume';
-import {readFileText} from '@romejs/fs';
+import {readFileText, writeFile} from '@romejs/fs';
 import {consumeJSONExtra, stringifyJSON} from '@romejs/codec-json';
 import {normalizeProjectConfig} from './load';
 import {getDiagnosticsFromError, DiagnosticsError} from '@romejs/diagnostics';
@@ -80,5 +80,5 @@ export async function modifyProjectConfig(
   }
 
   // Write it out
-  //await writeFile(configPath, stringified);
+  await writeFile(configPath, stringified);
 }

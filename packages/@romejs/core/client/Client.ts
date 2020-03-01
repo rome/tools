@@ -17,7 +17,7 @@ import {MasterBridge, SOCKET_PATH, CLI_SOCKET_PATH} from '@romejs/core';
 import fork from '../common/utils/fork';
 import {createBridgeFromLocal, createBridgeFromSocket} from '@romejs/events';
 import {ReporterDerivedStreams} from '@romejs/cli-reporter';
-import format from '@romejs/pretty-format';
+import prettyFormat from '@romejs/pretty-format';
 import {VERSION} from '../common/constants';
 import {TarWriter} from '@romejs/codec-tar';
 import {Trace, Profiler, Profile, TraceEvent} from '@romejs/v8';
@@ -44,6 +44,7 @@ type ClientOptions = {
   globalErrorHandlers?: boolean;
   stdout?: stream.Writable;
   stderr?: stream.Writable;
+  stdin?: NodeJS.ReadStream;
   flags: Partial<Omit<ClientFlags, 'clientName'>> & {
     clientName: string;
   };
@@ -85,9 +86,8 @@ export default class Client {
       name: 'Client.bridgeAttached',
     });
 
-    this.stdout = opts.stdout;
-
     this.reporter = new Reporter({
+      stdin: opts.stdin,
       silent:
         this.flags.silent === true ||
         opts.stdout === undefined ||
@@ -113,7 +113,6 @@ export default class Client {
   flags: ClientFlags;
   reporter: Reporter;
   derivedReporterStreams: ReporterDerivedStreams;
-  stdout: undefined | stream.Writable;
   bridgeStatus: undefined | BridgeStatus;
   bridgeAttachedEvent: Event<void, void>;
 
@@ -312,7 +311,7 @@ export default class Client {
 
       function indent(val: unknown): string {
         const str =
-          typeof val === 'string' ? val : format(val, {compact: true});
+          typeof val === 'string' ? val : prettyFormat(val, {compact: true});
         const lines = str.trim().split('\n');
         const indented = lines.join('\n  ');
         return '\n  ' + indented;
@@ -335,7 +334,7 @@ export default class Client {
         if (status.type === 'SUCCESS') {
           writer.append(
             {name: 'status.txt'},
-            format(status.data, {compact: true}) + '\n',
+            prettyFormat(status.data, {compact: true}) + '\n',
           );
         }
       }

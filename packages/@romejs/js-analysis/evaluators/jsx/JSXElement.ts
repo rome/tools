@@ -10,5 +10,6 @@ import {JSXElement, jsxElement, AnyNode} from '@romejs/js-ast';
 
 export default function JSXElement(node: AnyNode, scope: Scope) {
   node = jsxElement.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

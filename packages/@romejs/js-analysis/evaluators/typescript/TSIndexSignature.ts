@@ -10,5 +10,6 @@ import {TSIndexSignature, tsIndexSignature, AnyNode} from '@romejs/js-ast';
 
 export default function TSIndexSignature(node: AnyNode, scope: Scope) {
   node = tsIndexSignature.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

@@ -6,26 +6,20 @@
  */
 
 import {ReporterOptions} from '@romejs/cli-reporter';
-import {AnyEvent} from '@romejs/events';
 import {Reporter} from '@romejs/cli-reporter';
 import {ReporterStream} from '@romejs/cli-reporter';
 
 export default class Logger extends Reporter {
-  constructor(name: string, event: AnyEvent, opts: ReporterOptions) {
+  constructor(name: string, isEnabled: () => boolean, opts: ReporterOptions) {
     super({
       verbose: true,
       ...opts,
     });
     this._loggerName = name;
-    this.event = event;
+    this.isEnabled = isEnabled;
   }
 
   _loggerName: string;
-  event: AnyEvent;
-
-  isEnabled() {
-    return this.event.hasSubscribers();
-  }
 
   getMessagePrefix(stream: ReporterStream) {
     if (stream.format === 'none') {

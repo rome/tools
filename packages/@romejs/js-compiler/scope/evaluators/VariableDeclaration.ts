@@ -46,7 +46,8 @@ export default {
         ) {
           if (!scope.hasHoistedVars) {
             throw new Error(
-              'This scope does not allow `var`iables. This is probably because `var`iables were injected into a scope that did not contain `var` in the original source.',
+              'This scope does not allow `var`iables. This is probably because `var`iables were injected into a scope that did not contain `var` in the original source.' +
+                scope.kind,
             );
           }
 

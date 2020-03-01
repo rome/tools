@@ -9,7 +9,7 @@ import {Mappings} from '@romejs/codec-source-map';
 import {PartialDiagnostics} from '@romejs/diagnostics';
 import {CompileRequest} from '../types';
 import {Cache} from '@romejs/js-compiler';
-import generate from '@romejs/js-generator';
+import {generateJS} from '@romejs/js-generator';
 import transform from '../methods/transform';
 import lint from './lint';
 
@@ -48,7 +48,7 @@ export default async function compile(
   const {ast: transformedAst, diagnostics, cacheDependencies} = await transform(
     req,
   );
-  const generator = generate(
+  const generator = generateJS(
     transformedAst,
     {
       typeAnnotations: false,

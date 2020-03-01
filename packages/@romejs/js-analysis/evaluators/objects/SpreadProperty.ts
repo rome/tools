@@ -10,5 +10,6 @@ import {SpreadProperty, spreadProperty, AnyNode} from '@romejs/js-ast';
 
 export default function SpreadProperty(node: AnyNode, scope: Scope) {
   node = spreadProperty.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

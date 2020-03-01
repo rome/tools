@@ -128,15 +128,14 @@ export function parseClass(
   parser.popScope('STRICT');
   parser.popScope('METHOD');
 
-  const meta: ClassHead = {
+  const meta: ClassHead = parser.finishNode(start, {
     type: 'ClassHead',
-    loc: parser.finishLocAt(start, parser.getEndPosition()),
     body,
     typeParameters,
     superClass,
     superTypeParameters,
     implements: implemented,
-  };
+  });
 
   return {
     loc: parser.finishLoc(start),
@@ -248,16 +247,15 @@ function parseClassMember(
       loc: keyId.loc,
     };
 
-    const meta: ClassPropertyMeta = {
+    const meta: ClassPropertyMeta = parser.finishNode(start, {
       type: 'ClassPropertyMeta',
-      loc: parser.finishLocAt(start, parser.getEndPosition()),
       static: false,
       typeAnnotation: undefined,
       accessibility,
       optional: false,
       abstract: false,
       readonly: false,
-    };
+    });
 
     if (isClassMethod(parser)) {
       // A method named 'static'
@@ -608,13 +606,12 @@ function parseClassPropertyMeta(
 
   return {
     key,
-    meta: {
+    meta: parser.finishNode(opts.start, {
       type: 'ClassPropertyMeta',
-      loc: parser.finishLocAt(opts.start, parser.getEndPosition()),
       typeAnnotation,
       optional,
       ...opts,
-    },
+    }),
   };
 }
 
@@ -659,22 +656,24 @@ function parseClassMethod(
 
   const typeParameters = maybeParseTypeParameters(parser);
 
-  const method = {
-    ...parseMethod(parser, {
-      kind,
-      isClass: true,
-      isGenerator,
-      isAsync,
-      isConstructor,
-    }),
+  const {head, body} = parseMethod(parser, {
+    kind,
+    isClass: true,
+    isGenerator,
+    isAsync,
+    isConstructor,
+  });
+
+  const method: Omit<ClassMethod, 'type' | 'body'> = {
+    head: {
+      ...head,
+      typeParameters,
+    },
     loc: parser.finishLoc(start),
     kind,
     key,
     meta,
-    typeParameters,
   };
-
-  const {body} = method;
 
   if (body === undefined) {
     return {
@@ -693,7 +692,6 @@ function parseClassMethod(
 
     return {
       ...method,
-      key,
       body,
       type: 'ClassMethod',
     };
@@ -735,10 +733,9 @@ function parseClassPrivateMethod(
     throw new Error('Expected body');
   }
 
-  return {
+  return parser.finishNode(start, {
     ...method,
     body,
-    loc: parser.finishLoc(start),
     meta,
     key,
     kind,
@@ -748,7 +745,7 @@ function parseClassPrivateMethod(
       ...method.head,
       typeParameters,
     },
-  };
+  });
 }
 
 function parseClassPrivateProperty(
@@ -770,14 +767,13 @@ function parseClassPrivateProperty(
   parser.semicolon();
   parser.popScope('CLASS_PROPERTY');
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     meta,
     key,
     type: 'ClassPrivateProperty',
     value,
     typeAnnotation,
-  };
+  });
 }
 
 function parseClassProperty(
@@ -820,15 +816,14 @@ function parseClassProperty(
     );
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     meta,
     key,
     type: 'ClassProperty',
     definite,
     typeAnnotation,
     value,
-  };
+  });
 }
 
 function parseClassId(

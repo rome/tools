@@ -14,5 +14,6 @@ import {
 
 export default function AssignmentObjectPattern(node: AnyNode, scope: Scope) {
   node = assignmentObjectPattern.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

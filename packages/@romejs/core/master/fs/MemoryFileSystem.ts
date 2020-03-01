@@ -22,7 +22,11 @@ import {humanizeNumber} from '@romejs/string-utils';
 import {matchPathPatterns} from '@romejs/path-match';
 import {WatchmanSubscriptionValue} from '@romejs/codec-watchman';
 import {WorkerPartialManifest} from '../../common/bridges/WorkerBridge';
-import {AbsoluteFilePath, AbsoluteFilePathMap} from '@romejs/path';
+import {
+  AbsoluteFilePath,
+  AbsoluteFilePathMap,
+  AbsoluteFilePathSet,
+} from '@romejs/path';
 import {lstat, readFileText, exists, readdir, watch} from '@romejs/fs';
 import crypto = require('crypto');
 import fs = require('fs');
@@ -463,6 +467,7 @@ export default class MemoryFileSystem {
 
   getPartialManifest(def: ManifestDefinition): WorkerPartialManifest {
     return {
+      path: def.path.join(),
       type: def.manifest.type,
     };
   }
@@ -822,7 +827,7 @@ export default class MemoryFileSystem {
     const manifestId = this.manifestCounter++;
     const def: ManifestDefinition = {
       id: manifestId,
-      filename: path,
+      path: path,
       folder,
       consumer,
       manifest,
@@ -864,11 +869,13 @@ export default class MemoryFileSystem {
     opts: {
       extensions?: Array<string>;
       ignore?: PathPatterns;
+      only?: PathPatterns;
     } = {},
-  ): Array<AbsoluteFilePath> {
-    const {extensions, ignore} = opts;
+  ): AbsoluteFilePathSet {
+    const {extensions, ignore, only} = opts;
 
-    const files: Array<AbsoluteFilePath> = [];
+    const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+
     const ignoreParsed: PathPatterns = ignore === undefined ? [] : ignore;
 
     let crawl: Array<AbsoluteFilePath> = [cwd];
@@ -879,22 +886,33 @@ export default class MemoryFileSystem {
         throw new Error('crawl.length already validated');
       }
 
-      // Check if we should ignore this path
-      if (matchPathPatterns(path, ignoreParsed, cwd)) {
+      const ignoreMatched = matchPathPatterns(path, ignoreParsed, cwd);
+
+      // Don't even recurse into explicit matches
+      if (ignoreMatched === 'EXPLICIT_MATCH') {
         continue;
       }
 
       // Add if a matching file
-      if (this.files.has(path)) {
+      if (this.files.has(path) && ignoreMatched === 'NO_MATCH') {
+        // Check if any only filter if present
+        if (
+          only !== undefined &&
+          matchPathPatterns(path, only, cwd) === 'NO_MATCH'
+        ) {
+          continue;
+        }
+
         // Remove the prefixed dot
         const ext = path.getExtensions().slice(1);
         if (extensions === undefined || extensions.includes(ext)) {
-          files.push(path);
+          paths.add(path);
         }
         continue;
       }
 
       // Crawl if we're a folder
+      // NOTE: We still continue crawling on implicit matches
       const listing = this.directoryListings.get(path);
       if (listing !== undefined) {
         crawl = crawl.concat(Array.from(listing.values()));
@@ -904,7 +922,7 @@ export default class MemoryFileSystem {
       // TODO maybe throw? not a file or folder, doesn't exist!
     }
 
-    return files;
+    return paths;
   }
 
   getAllFilesInFolder(folder: AbsoluteFilePath): Array<AbsoluteFilePath> {

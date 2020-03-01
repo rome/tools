@@ -34,13 +34,11 @@ export default createMasterCommand({
   async default(req: MasterRequest, commandFlags: Flags): Promise<void> {
     const {master, reporter} = req;
     const {args} = req.query;
-    const {flags} = req.client;
     req.expectArgumentLength(1);
 
     const filename = await master.resolver.resolveEntryAssertPath(
       {
         ...req.getResolverOptionsFromFlags(),
-        origin: flags.cwd,
         source: createUnknownFilePath(args[0]),
       },
       {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},

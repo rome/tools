@@ -359,7 +359,7 @@ export default class DiagnosticsPrinter extends Error {
 
   addDiagnostics(partials: PartialDiagnostics, origin?: DiagnosticOrigin) {
     if (partials.length === 0) {
-      return undefined;
+      return;
     }
 
     this.processor.addDiagnostics(partials, origin);
@@ -536,6 +536,10 @@ export default class DiagnosticsPrinter extends Error {
   footer() {
     const {reporter, problemCount} = this;
 
+    if (problemCount > 0) {
+      reporter.hr();
+    }
+
     for (const handler of this.beforeFooterPrint) {
       handler(reporter);
     }
@@ -583,8 +587,6 @@ export default class DiagnosticsPrinter extends Error {
 
   footerError() {
     const {reporter, filteredCount} = this;
-
-    reporter.hr();
 
     if (this.flags.fieri) {
       this.showBanner(errorBanner);

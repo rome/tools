@@ -14,5 +14,6 @@ import {
 
 export default function ReferenceIdentifier(node: AnyNode, scope: Scope) {
   node = referenceIdentifier.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

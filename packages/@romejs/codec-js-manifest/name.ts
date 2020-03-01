@@ -119,11 +119,11 @@ export function normalizeName(opts: NormalizeNameOptions): string {
     offset = add(offset, org.length);
 
     if (packageName === undefined) {
-      /*unexpected({
+      unexpected({
         at: 'prefix',
         message: `contains an org but no package name`,
         start: offset,
-      });*/
+      });
 
       name = `@${sanitizedOrg}/unknown`;
     } else {

@@ -13,6 +13,9 @@ import {ConstSourceType} from '@romejs/js-ast';
 import {tokenizeJSON} from '@romejs/codec-json';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 
+// 100KB
+const FILE_SIZE_MAX = 100000;
+
 export type AnsiHighlightOptions = {
   path: UnknownFilePath;
   input: string;
@@ -21,6 +24,10 @@ export type AnsiHighlightOptions = {
 };
 
 export default function ansiHighlightCode(opts: AnsiHighlightOptions): string {
+  if (opts.input.length > FILE_SIZE_MAX) {
+    return opts.input;
+  }
+
   if (opts.language === 'js') {
     // js-parser does not accept an "unknown" sourceType
     return ansiHighlightJS(

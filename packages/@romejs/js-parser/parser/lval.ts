@@ -139,8 +139,7 @@ export function toAssignmentPattern(
           continue;
         }
 
-        const isLast = index === node.properties.length - 1;
-        props.push(toAssignmentObjectProperty(parser, prop, isLast));
+        props.push(toAssignmentObjectProperty(parser, prop));
       }
       return {
         type: 'AssignmentObjectPattern',
@@ -360,7 +359,6 @@ export function toBindingPattern(
 export function toAssignmentObjectProperty(
   parser: JSParser,
   prop: AnyNode,
-  isLast: boolean,
 ): AssignmentObjectPatternProperty {
   switch (prop.type) {
     case 'ObjectMethod': {
@@ -745,11 +743,10 @@ export function parseSpread(
     parser.state.commaAfterSpreadAt = parser.state.index;
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'SpreadElement',
     argument,
-  };
+  });
 }
 
 // Parses lvalue (assignable) atom.
@@ -775,12 +772,11 @@ function parseArrayPattern(parser: JSParser): BindingArrayPattern {
     'array pattern',
   );
   const {list: elements, rest} = parseBindingList(parser, openContext, true);
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'BindingArrayPattern',
     elements,
     rest,
-  };
+  });
 }
 
 export function parseBindingList(
@@ -887,16 +883,14 @@ export function parseBindingListItem(
       });
     }
 
-    return {
+    return parser.finishNode(start, {
       ...elt,
-      loc: parser.finishLoc(start),
-      meta: {
+      meta: parser.finishNode(start, {
         type: 'PatternMeta',
-        loc: parser.finishLoc(start),
         accessibility,
         readonly,
-      },
-    };
+      }),
+    });
   }
 
   return elt;
@@ -928,12 +922,11 @@ export function parseBindingListItemTypes(
 
   return {
     ...param,
-    meta: {
+    meta: parser.finishNode(start, {
       type: 'PatternMeta',
-      loc: parser.finishLoc(start),
       optional,
       typeAnnotation,
-    },
+    }),
   };
 }
 
@@ -951,12 +944,11 @@ export function parseMaybeDefault(
       parser,
       'assignment pattern right',
     );
-    const assign: BindingAssignmentPattern = {
-      loc: parser.finishLoc(start),
+    const assign: BindingAssignmentPattern = parser.finishNode(start, {
       type: 'BindingAssignmentPattern',
       left,
       right,
-    };
+    });
     target = assign;
   } else {
     target = left;

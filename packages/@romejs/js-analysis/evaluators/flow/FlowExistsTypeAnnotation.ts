@@ -14,5 +14,6 @@ import {
 
 export default function FlowExistsTypeAnnotation(node: AnyNode, scope: Scope) {
   node = flowExistsTypeAnnotation.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

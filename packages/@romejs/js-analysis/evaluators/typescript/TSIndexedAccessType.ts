@@ -14,5 +14,6 @@ import {
 
 export default function TSIndexedAccessType(node: AnyNode, scope: Scope) {
   node = tsIndexedAccessType.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

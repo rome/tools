@@ -9,6 +9,7 @@ import {AnyNode} from '@romejs/js-ast';
 import {Path, Scope, createHook} from '@romejs/js-compiler';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 import {Dict} from '@romejs/typescript-helpers';
+import {ArgumentsBinding} from '@romejs/js-compiler/scope/bindings';
 
 type State = {
   usedBindings: Dict<boolean>;
@@ -20,18 +21,12 @@ const initialState: State = {
   scope: undefined,
 };
 
-const provider = createHook<State, Path, AnyNode>({
+const provider = createHook<State, undefined, AnyNode>({
   name: 'unusedVariablesProvider',
 
   initialState,
 
-  call(
-    path: Path,
-    state: State,
-  ): {
-    value: AnyNode;
-    state: State;
-  } {
+  call(path: Path, state: State) {
     const {node} = path;
     if (
       node.type !== 'ReferenceIdentifier' &&
@@ -44,12 +39,16 @@ const provider = createHook<State, Path, AnyNode>({
 
     // Check if this binding belongs to the scope we're tracking
     if (binding === undefined || binding.scope !== state.scope) {
-      return {value: node, state};
+      return {
+        bubble: true,
+        value: node,
+        state,
+      };
     }
 
     // Mark this binding as used
     return {
-      value: path.callHook(provider, path, node),
+      value: node,
       state: {
         ...state,
         usedBindings: {
@@ -68,7 +67,7 @@ const provider = createHook<State, Path, AnyNode>({
       if (used === false && binding !== undefined) {
         path.context.addNodeDiagnostic(binding.node, {
           category: 'lint/unusedVariables',
-          message: `Unused variable <emphasis>${name}</emphasis>`,
+          message: `Unused ${binding.kind} <emphasis>${name}</emphasis>`,
         });
       }
     }
@@ -87,9 +86,15 @@ export default {
 
       // Get all the non-exported bindings in this file and mark them as unused
       for (const [name, binding] of scope.getOwnBindings()) {
-        if (binding.isExported === false) {
-          usedBindings[name] = false;
+        if (binding instanceof ArgumentsBinding) {
+          continue;
         }
+
+        if (binding.isExported) {
+          continue;
+        }
+
+        usedBindings[name] = false;
       }
 
       // For functions, consider all parameters except the last to be used
@@ -133,9 +138,9 @@ export default {
 
     if (
       node.type === 'JSXReferenceIdentifier' ||
-      node.type === 'JSXIdentifier'
+      node.type === 'ReferenceIdentifier'
     ) {
-      return path.callHook(provider, path);
+      return path.callHook(provider, undefined);
     }
 
     return node;

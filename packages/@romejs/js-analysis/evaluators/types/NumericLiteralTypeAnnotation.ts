@@ -17,5 +17,6 @@ export default function NumericLiteralTypeAnnotation(
   scope: Scope,
 ) {
   node = numericLiteralTypeAnnotation.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

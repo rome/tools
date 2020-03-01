@@ -10,5 +10,6 @@ import {ForOfStatement, forOfStatement, AnyNode} from '@romejs/js-ast';
 
 export default function ForOfStatement(node: AnyNode, scope: Scope) {
   node = forOfStatement.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

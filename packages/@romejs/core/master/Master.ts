@@ -16,7 +16,6 @@ import {
   INTERNAL_ERROR_LOG_ADVICE,
   DiagnosticOrigin,
 } from '@romejs/diagnostics';
-import {Stats} from './fs/MemoryFileSystem';
 import {MasterCommand} from '../commands';
 import {
   DiagnosticsPrinter,
@@ -131,22 +130,33 @@ export default class Master {
       serial: true,
     });
 
-    this.logger = new Logger('master', this.logEvent, {
-      streams: [
-        {
-          type: 'all',
-          format: 'none',
-          columns: 0,
-          write: chunk => {
-            this.emitMasterLog(chunk);
+    this.logger = new Logger(
+      'master',
+      () => {
+        return (
+          this.logEvent.hasSubscribers() ||
+          this.connectedClientsListeningForLogs.size > 0
+        );
+      },
+      {
+        streams: [
+          {
+            type: 'all',
+            format: 'none',
+            columns: 0,
+            write: chunk => {
+              this.emitMasterLog(chunk);
+            },
           },
-        },
-      ],
-    });
+        ],
+      },
+    );
 
     this.connectedReporters = new Reporter({
       wrapperFactory: this.wrapFatal.bind(this),
     });
+
+    this.connectedClientsListeningForLogs = new Set();
     this.connectedClients = new Set();
 
     this.memoryFs = new MemoryFileSystem(this);
@@ -160,8 +170,8 @@ export default class Master {
       return this.handleFileDelete(path);
     });
 
-    this.memoryFs.changedFileEvent.subscribe(({path, oldStats, newStats}) => {
-      return this.handleFileChange(path, oldStats, newStats);
+    this.memoryFs.changedFileEvent.subscribe(({path}) => {
+      return this.handleFileChange(path);
     });
 
     this.warnedCacheClients = new WeakSet();
@@ -197,14 +207,16 @@ export default class Master {
   workerManager: WorkerManager;
   fileAllocator: FileAllocator;
   cache: Cache;
-  connectedClients: Set<MasterClient>;
   connectedReporters: Reporter;
   logger: Logger;
+
+  connectedClients: Set<MasterClient>;
+  connectedClientsListeningForLogs: Set<MasterClient>;
 
   emitMasterLog(chunk: string) {
     this.logEvent.send(chunk);
 
-    for (const {bridge} of this.connectedClients) {
+    for (const {bridge} of this.connectedClientsListeningForLogs) {
       bridge.log.send({chunk, origin: 'master'});
     }
   }
@@ -457,6 +469,10 @@ export default class Master {
       useRemoteProgressBars: useRemoteReporter,
     });
 
+    reporter.sendRemoteClientMessage.subscribe(msg => {
+      bridge.reporterRemoteServerMessage.send(msg);
+    });
+
     bridge.reporterRemoteClientMessage.subscribe(msg => {
       reporter.receivedRemoteServerMessage(msg);
     });
@@ -501,8 +517,17 @@ export default class Master {
       });
     });
 
+    bridge.updatedListenersEvent.subscribe(listeners => {
+      if (listeners.has('log')) {
+        this.connectedClientsListeningForLogs.add(client);
+      } else {
+        this.connectedClientsListeningForLogs.delete(client);
+      }
+    });
+
     bridge.endEvent.subscribe(() => {
       this.connectedClients.delete(client);
+      this.connectedClientsListeningForLogs.delete(client);
       this.connectedReporters.removeStream(errStream);
       this.connectedReporters.removeStream(outStream);
     });
@@ -515,11 +540,7 @@ export default class Master {
     this.fileChangeEvent.send(path);
   }
 
-  async handleFileChange(
-    path: AbsoluteFilePath,
-    oldStats: undefined | Stats,
-    newStats: Stats,
-  ) {
+  async handleFileChange(path: AbsoluteFilePath) {
     this.logger.info(`[Master] File change:`, path.join());
     this.fileChangeEvent.send(path);
   }
@@ -711,7 +732,7 @@ export default class Master {
         context: {
           category: 'cli-flags',
 
-          getOriginalValue: (keys: ConsumePath) => {
+          getOriginalValue: () => {
             return undefined;
           },
 
@@ -733,11 +754,6 @@ export default class Master {
         | undefined
         | MasterCommand<Dict<unknown>> = masterCommands.get(query.commandName);
       if (commandOpts) {
-        // Output header if command specified
-        if (commandOpts.hasHeader === true) {
-          reporter.banner(query.commandName);
-        }
-
         // Warn about disabled disk caching
         if (
           process.env.ROME_CACHE === '0' &&

@@ -94,11 +94,11 @@ export function deriveRootAdviceFromDiagnostic(
   }
 
   if (diag.fixable === true) {
-    header += ` <inverse> FIXABLE </inverse>`;
+    header += ` <inverse>FIXABLE</inverse>`;
   }
 
   if (opts.outdated === true) {
-    header += ` <inverse> OUTDATED </inverse>`;
+    header += ` <inverse>OUTDATED</inverse>`;
   }
 
   if (opts.includeHeaderInAdvice === true) {

@@ -124,4 +124,7 @@ export const compile = wrapForErrors(async function(opts: {
   };
 });
 
-export function lint(filename: string, input: string) {}
+export function lint(filename: string, input: string) {
+  filename;
+  input;
+}
