@@ -672,7 +672,7 @@ export default class ProjectManager {
             {
               type: 'log',
               category: 'info',
-              message: `Defined already by <filelink target="${existing}" />`,
+              message: `Defined already by <filelink emphasis target="${existing}" />`,
             },
           ],
         });
