@@ -14,5 +14,6 @@ import {
 
 export default function OptionalCallExpression(node: AnyNode, scope: Scope) {
   node = optionalCallExpression.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

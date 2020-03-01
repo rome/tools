@@ -55,7 +55,7 @@ function maybeEscapeMarkup(str: string, opts: FormatOptions): string {
 
 export const CUSTOM_PRETTY_FORMAT = Symbol();
 
-export default function format(
+export default function prettyFormat(
   obj: unknown,
   rawOpts: FormatPartialOptions = {},
 ): string {
@@ -194,14 +194,16 @@ function getExtraObjectProps(
   if (obj instanceof Map) {
     for (const [key, val] of obj) {
       const formattedKey =
-        typeof key === 'string' ? formatKey(key, opts) : format(key, opts);
-      props.push(`${formattedKey} => ${format(val, opts)}`);
+        typeof key === 'string'
+          ? formatKey(key, opts)
+          : prettyFormat(key, opts);
+      props.push(`${formattedKey} => ${prettyFormat(val, opts)}`);
     }
   } else if (isIterable(obj)) {
     let i = 0;
     for (const val of obj) {
       ignoreKeys[String(i++)] = val;
-      props.push(`${format(val, opts)}`);
+      props.push(`${prettyFormat(val, opts)}`);
     }
   }
 
@@ -315,7 +317,7 @@ function formatObject(
       continue;
     }
 
-    const prop = `${formatKey(key, opts)}: ${format(val, nextOpts)}`;
+    const prop = `${formatKey(key, opts)}: ${prettyFormat(val, nextOpts)}`;
     if (object) {
       objProps.push(prop);
     } else {
@@ -331,7 +333,7 @@ function formatObject(
   // Get symbol props
   for (const sym of Object.getOwnPropertySymbols(obj)) {
     const val: unknown = Reflect.get(obj, sym);
-    props.push(`${format(sym, opts)}: ${format(val, nextOpts)}`);
+    props.push(`${prettyFormat(sym, opts)}: ${prettyFormat(val, nextOpts)}`);
   }
 
   //

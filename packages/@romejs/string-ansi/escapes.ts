@@ -11,6 +11,10 @@ export const escapes = {
   clearScreen: '\u001Bc',
   eraseLine: `${ESC}2K`,
 
+  cursorUp(count: number = 1): string {
+    return `${ESC}${count}A`;
+  },
+
   cursorTo(x: number, y?: number): string {
     if (y === undefined) {
       return `${ESC}${x + 1}G`;

@@ -16,12 +16,13 @@ export type DiagnosticFilter = {
   message?: string;
   filename?: string;
   start?: Position;
+  test?: (diagnostic: PartialDiagnostic) => boolean;
 };
 
 export type DiagnosticPointer = SourceLocation & {
-  sourceText: undefined | string;
-  mtime: undefined | number;
-  language: DiagnosticLanguage;
+  sourceText?: string;
+  mtime?: number;
+  language?: DiagnosticLanguage;
 };
 
 export type DiagnosticOrigin = {
@@ -31,12 +32,7 @@ export type DiagnosticOrigin = {
 
 //# FULL
 
-export type DiagnosticLogCategory =
-  | 'none'
-  | 'question'
-  | 'info'
-  | 'warn'
-  | 'error';
+export type DiagnosticLogCategory = 'none' | 'info' | 'warn' | 'error';
 
 export type DiagnosticLanguage = 'json' | 'js' | 'url' | 'shell' | 'unknown';
 

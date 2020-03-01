@@ -69,6 +69,7 @@ tags.set('bgCyan', []);
 tags.set('bgBrightCyan', []);
 tags.set('bgWhite', []);
 tags.set('bgBrightWhite', []);
+tags.set('command', []);
 
 //
 

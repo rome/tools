@@ -25,6 +25,7 @@ import {
 } from './types/analyzeDependencies';
 import {readFileText} from '@romejs/fs';
 import {TransformProjectDefinition} from '@romejs/js-compiler';
+import {generateJS} from '@romejs/js-generator';
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
 
@@ -82,9 +83,9 @@ export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
 };
 
 export type ExtensionLintResult = {
-  formatted: string;
   sourceText: string;
   diagnostics: PartialDiagnostics;
+  formatted: string;
 };
 
 export type ExtensionHandlerMethodInfo = {
@@ -102,6 +103,7 @@ export type ExtensionHandler = {
   canHaveScale?: boolean;
 
   lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
+  format?: (info: ExtensionHandlerMethodInfo) => Promise<ExtensionLintResult>;
   toJavaScript?: (
     opts: ExtensionHandlerMethodInfo,
   ) => Promise<{
@@ -136,7 +138,7 @@ const textHandler: ExtensionHandler = {
     };
   },
 
-  async toJavaScript({file, worker}) {
+  async toJavaScript({file}) {
     const src = await readFileText(file.real);
     const serial = JSON.stringify(src);
     return {
@@ -155,7 +157,7 @@ const assetHandler: ExtensionHandler = {
   canHaveScale: true,
   isAsset: true,
 
-  async toJavaScript({file, worker}) {
+  async toJavaScript() {
     // This exists just so analyzeDependencies has something to look at
     // When bundling we'll have custom logic in the compiler to handle assets and inject the correct string
     return {
@@ -171,27 +173,26 @@ const jsonHandler: ExtensionHandler = {
 
   hasteMode: 'noext',
 
-  async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {
+  async format(info: ExtensionHandlerMethodInfo): Promise<ExtensionLintResult> {
     const {file: ref, project} = info;
     const {uid} = ref;
 
     const real = createAbsoluteFilePath(ref.real);
-    const src = await readFileText(real);
-
+    const sourceText = await readFileText(real);
     const path = createUnknownFilePath(uid);
 
-    let formatted: string = src;
+    let formatted: string = sourceText;
 
     if (project.config.format.enabled) {
-      if (src.length > 50000) {
+      if (sourceText.length > 50000) {
         // Fast path for big JSON files
         parseJSON({
           path: path,
-          input: src,
+          input: sourceText,
         });
       } else {
         const {consumer, comments, hasExtensions} = consumeJSONExtra({
-          input: src,
+          input: sourceText,
           path: path,
         });
 
@@ -206,8 +207,8 @@ const jsonHandler: ExtensionHandler = {
     }
 
     return {
+      sourceText,
       diagnostics: [],
-      sourceText: src,
       formatted,
     };
   },
@@ -243,9 +244,16 @@ export const IMPLICIT_JS_EXTENSIONS = ['js', 'json', 'ts', 'tsx'];
 // Extensions that have a `lint` handler
 export const LINTABLE_EXTENSIONS: Array<string> = [];
 
+// Extensions that have a `format` handler
+export const FORMATTABLE_EXTENSIONS: Array<string> = [];
+
 function setHandler(ext: string, handler: ExtensionHandler) {
   if (handler.lint !== undefined) {
     LINTABLE_EXTENSIONS.push(ext);
+  }
+
+  if (handler.format !== undefined) {
+    FORMATTABLE_EXTENSIONS.push(ext);
   }
 
   DEFAULT_HANDLERS.set(ext, handler);
@@ -286,6 +294,29 @@ function buildJSHandler(
         sourceText: await readFileText(file.real),
         generated: false,
       };
+    },
+
+    async format(
+      info: ExtensionHandlerMethodInfo,
+    ): Promise<ExtensionLintResult> {
+      const {file: ref, worker} = info;
+
+      const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
+        ref,
+      );
+
+      const res = generateJS(ast, {
+        typeAnnotations: true,
+      });
+
+      return worker.api.interceptAndAddGeneratedToDiagnostics(
+        {
+          formatted: res.getCode(),
+          sourceText,
+          diagnostics: ast.diagnostics,
+        },
+        generated,
+      );
     },
 
     async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {

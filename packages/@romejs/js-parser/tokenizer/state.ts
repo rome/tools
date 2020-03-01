@@ -6,7 +6,6 @@
  */
 
 import {PartialDiagnostics, DiagnosticFilter} from '@romejs/diagnostics';
-import {JSParserOptions} from '../options';
 import {OpeningContext, ScopeType} from '../parser';
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {types as ct, TokContext} from './context';
@@ -135,7 +134,7 @@ const EMPTY_POS: Position = {
   index: number0,
 };
 
-export function createInitialState(options: JSParserOptions): State {
+export function createInitialState(): State {
   return {
     scopes: {},
     diagnostics: [],

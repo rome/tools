@@ -118,6 +118,10 @@ export default class DiagnosticsProcessor {
         }
       }
 
+      if (filter.test !== undefined && !filter.test(diag)) {
+        continue;
+      }
+
       return true;
     }
 

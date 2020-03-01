@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React = require('react');
-
 export default function Spinner() {
+  // @ts-ignore
   return <span />;
 }

@@ -10,5 +10,6 @@ import {SequenceExpression, sequenceExpression, AnyNode} from '@romejs/js-ast';
 
 export default function SequenceExpression(node: AnyNode, scope: Scope) {
   node = sequenceExpression.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

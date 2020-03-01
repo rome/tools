@@ -10,5 +10,6 @@ import {Directive, directive, AnyNode} from '@romejs/js-ast';
 
 export default function Directive(node: AnyNode, scope: Scope) {
   node = directive.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

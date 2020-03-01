@@ -14,5 +14,6 @@ import {
 
 export default function TSParenthesizedType(node: AnyNode, scope: Scope) {
   node = tsParenthesizedType.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

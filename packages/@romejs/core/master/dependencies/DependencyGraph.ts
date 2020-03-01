@@ -107,9 +107,9 @@ export default class DependencyGraph {
           return;
         }
 
-        const processor = new DiagnosticsProcessor({origins: []});
-        await this.seed([path], processor);
-        processor.maybeThrowDiagnosticsError();
+        const diagnosticsProcessor = new DiagnosticsProcessor({origins: []});
+        await this.seed({paths: [path], diagnosticsProcessor});
+        diagnosticsProcessor.maybeThrowDiagnosticsError();
 
         if (callback !== undefined) {
           callback({path});
@@ -175,11 +175,17 @@ export default class DependencyGraph {
     return mod;
   }
 
-  async seed(
-    filenames: Array<AbsoluteFilePath>,
-    diagnosticsProcessor: DiagnosticsProcessor,
-    analyzeProgress?: ReporterProgress,
-  ): Promise<void> {
+  async seed({
+    paths,
+    diagnosticsProcessor,
+    analyzeProgress,
+    validate = false,
+  }: {
+    paths: Array<AbsoluteFilePath>;
+    diagnosticsProcessor: DiagnosticsProcessor;
+    analyzeProgress?: ReporterProgress;
+    validate?: boolean;
+  }): Promise<void> {
     const workerQueue: DependencyGraphWorkerQueue = new WorkerQueue(
       this.master,
     );
@@ -200,7 +206,7 @@ export default class DependencyGraph {
 
     // Add initial queue items
     const roots: Array<DependencyNode> = await Promise.all(
-      filenames.map(path =>
+      paths.map(path =>
         this.resolve(
           path,
           {
@@ -221,17 +227,27 @@ export default class DependencyGraph {
       return;
     }
 
-    for (const root of roots) {
-      // Detect cycles
-      // We probably don't want this if we want to use it in the linter/type checker
-      const order = root.getDependencyOrder();
-      diagnosticsProcessor.addDiagnostics(order.diagnostics);
-
-      // Resolve all imports
-      for (const file of order.files) {
-        const resolvedImports = this.getNode(file).resolveImports();
-        diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics);
+    if (validate) {
+      for (const root of roots) {
+        this.validateTransitive(root, diagnosticsProcessor);
       }
+    }
+  }
+
+  validate(node: DependencyNode, diagnosticsProcessor: DiagnosticsProcessor) {
+    const resolvedImports = node.resolveImports();
+    diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics);
+  }
+
+  validateTransitive(
+    node: DependencyNode,
+    diagnosticsProcessor: DiagnosticsProcessor,
+  ) {
+    const order = node.getDependencyOrder();
+    diagnosticsProcessor.addDiagnostics(order.diagnostics);
+
+    for (const path of order.files) {
+      this.validate(this.getNode(path), diagnosticsProcessor);
     }
   }
 
@@ -310,8 +326,8 @@ export default class DependencyGraph {
           async () => {
             const resolved = await master.resolver.resolveAssert(
               {
-                origin,
                 ...this.resolverOpts,
+                origin,
                 source: createUnknownFilePath(source),
               },
               dep.loc === undefined

@@ -73,7 +73,6 @@ export function normalizePosition(position: unknown): undefined | Position {
 function normalizeLogCategory(value: unknown): DiagnosticLogCategory {
   if (
     value === 'none' ||
-    value === 'question' ||
     value === 'info' ||
     value === 'warn' ||
     value === 'error'

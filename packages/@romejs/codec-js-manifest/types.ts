@@ -12,6 +12,7 @@ import {Consumer} from '@romejs/consume';
 import {AbsoluteFilePath} from '@romejs/path';
 import {JSONObject, JSONPropertyValue} from '@romejs/codec-json';
 import {Dict} from '@romejs/typescript-helpers';
+import {PathPatterns} from '@romejs/path-match';
 
 export type StringObject = Dict<string>;
 export type MString = undefined | string;
@@ -61,7 +62,7 @@ export type Manifest = {
   contributors: undefined | Array<ManifestPerson>;
   maintainers: undefined | Array<ManifestPerson>;
 
-  files: Array<string>;
+  files: PathPatterns;
   keywords: Array<string>;
   cpu: Array<string>;
   os: Array<string>;
@@ -120,7 +121,7 @@ export type JSONManifest = {
 };
 
 export type ManifestDefinition = {
-  filename: AbsoluteFilePath;
+  path: AbsoluteFilePath;
   folder: AbsoluteFilePath;
   id: number;
   consumer: Consumer;

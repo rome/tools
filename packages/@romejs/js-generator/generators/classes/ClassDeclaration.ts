@@ -8,11 +8,7 @@
 import Generator from '../../Generator';
 import {ClassDeclaration, classDeclaration, AnyNode} from '@romejs/js-ast';
 
-export default function ClassDeclaration(
-  generator: Generator,
-  node: AnyNode,
-  parent: AnyNode,
-) {
+export default function ClassDeclaration(generator: Generator, node: AnyNode) {
   node = node.type === 'ClassExpression' ? node : classDeclaration.assert(node);
 
   generator.word('class');

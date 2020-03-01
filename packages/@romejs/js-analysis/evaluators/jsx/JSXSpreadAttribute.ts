@@ -10,5 +10,6 @@ import {JSXSpreadAttribute, jsxSpreadAttribute, AnyNode} from '@romejs/js-ast';
 
 export default function JSXSpreadAttribute(node: AnyNode, scope: Scope) {
   node = jsxSpreadAttribute.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

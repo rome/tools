@@ -10,5 +10,6 @@ import {FlowNumericLiteral, flowNumericLiteral, AnyNode} from '@romejs/js-ast';
 
 export default function FlowNumericLiteral(node: AnyNode, scope: Scope) {
   node = flowNumericLiteral.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

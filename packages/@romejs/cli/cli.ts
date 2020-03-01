@@ -154,7 +154,12 @@ export default async function cli() {
         name: cmd,
         category: local.category,
         description: local.description,
-        callback() {
+        defineFlags: local.defineFlags,
+        callback(_commandFlags) {
+          if (local.defineFlags !== undefined) {
+            commandFlags = _commandFlags;
+          }
+
           args = p.getArgs();
           command = cmd;
         },
@@ -196,7 +201,7 @@ export default async function cli() {
     category: commandCategories.INTERNAL,
     description: '',
 
-    callback(_commandFlags) {
+    callback() {
       overrideCLIFlags = {
         rage: true,
       };
@@ -211,7 +216,7 @@ export default async function cli() {
     category: commandCategories.INTERNAL,
     description: '',
 
-    callback(_commandFlags) {
+    callback() {
       overrideCLIFlags = {
         logs: true,
       };
@@ -238,6 +243,7 @@ export default async function cli() {
   const client = new Client({
     globalErrorHandlers: true,
     flags: clientFlags,
+    stdin: process.stdin,
     stdout: process.stdout,
     stderr: process.stderr,
   });

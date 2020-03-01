@@ -97,11 +97,11 @@ export function getAnalyzeExportValueType(
     }
 
     if (binding instanceof TypeBinding) {
-      const {kind} = binding;
-      switch (kind) {
+      const {typeKind} = binding;
+      switch (typeKind) {
         case 'function':
         case 'class':
-          return kind;
+          return typeKind;
       }
     }
   }

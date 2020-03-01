@@ -10,5 +10,6 @@ import {AwaitExpression, awaitExpression, AnyNode} from '@romejs/js-ast';
 
 export default function AwaitExpression(node: AnyNode, scope: Scope) {
   node = awaitExpression.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

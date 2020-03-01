@@ -10,5 +10,6 @@ import {CommentBlock, commentBlock, AnyNode} from '@romejs/js-ast';
 
 export default function CommentBlock(node: AnyNode, scope: Scope) {
   node = commentBlock.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

@@ -24,6 +24,7 @@ import {normalizeName} from './name';
 import {PartialDiagnostics} from '@romejs/diagnostics';
 import {AbsoluteFilePath} from '@romejs/path';
 import {toCamelCase} from '@romejs/string-utils';
+import {PathPatterns, parsePathPattern} from '@romejs/path-match';
 
 export * from './types';
 export * from './convert';
@@ -58,19 +59,26 @@ function normalizeString(consumer: Consumer, key: string): MString {
   }
 }
 
+function normalizePathPatterns(
+  consumer: Consumer,
+  loose: boolean,
+): PathPatterns {
+  return normalizeStringArray(consumer, loose).map(str =>
+    parsePathPattern({input: str}),
+  );
+}
+
 function normalizeStringArray(
   consumer: Consumer,
-  key: string,
   loose: boolean,
 ): Array<string> {
-  const prop = consumer.get(key);
-  if (prop.exists()) {
+  if (consumer.exists()) {
     // When we are loose and expect an array but got a string, consider it to be a single element
     if (loose) {
-      const val = prop.asUnknown();
+      const val = consumer.asUnknown();
 
       if (typeof val === 'string') {
-        return [prop.asString()];
+        return [consumer.asString()];
       }
 
       // npm for some reason sometimes populates bundleDependencies as false? Despite it being a misspelling?
@@ -79,7 +87,7 @@ function normalizeStringArray(
       }
     }
 
-    return prop.asArray().map(item => item.asString());
+    return consumer.asArray().map(item => item.asString());
   } else {
     return [];
   }
@@ -104,6 +112,11 @@ function normalizeStringMap(
   }
 
   for (const [name, value] of consumer.asMap()) {
+    // In loose mode let's be really generous
+    if (loose && typeof value.asUnknown() !== 'string') {
+      continue;
+    }
+
     map.set(name, value.asString());
   }
 
@@ -195,6 +208,7 @@ function normalizeLicense(
   // Parse as a SPDX expression
   return tryParseWithOptionalOffsetPosition(
     {
+      loose,
       path: consumer.path,
       input: licenseId,
     },
@@ -312,6 +326,11 @@ function normalizePeople(
   // Some packages have a single maintainer object instead of an array
   if (loose && consumer.isObject()) {
     return [normalizePerson(consumer, loose)];
+  }
+
+  // If it's not an array then just leave it. Some people put a URL here.
+  if (loose && !Array.isArray(consumer.asUnknown())) {
+    return [];
   }
 
   const people: Array<ManifestPerson> = [];
@@ -527,10 +546,10 @@ export async function normalizeManifest(
       bugs: normalizeBugs(consumer.get('bugs'), loose),
       engines: normalizeStringMap(consumer, 'engines', loose),
 
-      files: normalizeStringArray(consumer, 'files', loose),
-      keywords: normalizeStringArray(consumer, 'keywords', loose),
-      cpu: normalizeStringArray(consumer, 'cpu', loose),
-      os: normalizeStringArray(consumer, 'os', loose),
+      files: normalizePathPatterns(consumer.get('files'), loose),
+      keywords: normalizeStringArray(consumer.get('keywords'), loose),
+      cpu: normalizeStringArray(consumer.get('cpu'), loose),
+      os: normalizeStringArray(consumer.get('os'), loose),
 
       // Entry fields
       browser: undefined, // normalizeString(consumer, 'browser'),
@@ -556,10 +575,10 @@ export async function normalizeManifest(
         loose,
       ),
       bundledDependencies: [
-        ...normalizeStringArray(consumer, 'bundledDependencies', loose),
+        ...normalizeStringArray(consumer.get('bundledDependencies'), loose),
 
         // Common misspelling. We error on the existence of this for strict manifests already.
-        ...normalizeStringArray(consumer, 'bundleDependencies', loose),
+        ...normalizeStringArray(consumer.get('bundleDependencies'), loose),
       ],
 
       // People fields

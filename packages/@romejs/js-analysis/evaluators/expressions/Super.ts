@@ -10,5 +10,6 @@ import {Super, _super, AnyNode} from '@romejs/js-ast';
 
 export default function Super(node: AnyNode, scope: Scope) {
   node = _super.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

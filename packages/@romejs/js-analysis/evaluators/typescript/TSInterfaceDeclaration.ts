@@ -14,5 +14,6 @@ import {
 
 export default function TSInterfaceDeclaration(node: AnyNode, scope: Scope) {
   node = tsInterfaceDeclaration.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

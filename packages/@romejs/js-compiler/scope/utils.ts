@@ -36,6 +36,7 @@ export function addFunctionBindings(
           node: id,
           name: id.name,
           scope,
+          kind: 'parameter',
         }),
       );
     }

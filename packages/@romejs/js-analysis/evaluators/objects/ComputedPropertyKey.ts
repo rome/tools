@@ -14,5 +14,6 @@ import {
 
 export default function ComputedPropertyKey(node: AnyNode, scope: Scope) {
   node = computedPropertyKey.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

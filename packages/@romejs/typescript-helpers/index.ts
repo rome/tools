@@ -13,6 +13,10 @@ export type Dict<T> = {
   [key: string]: T;
 };
 
+export type DeepPartial<Obj> = {
+  [K in keyof Obj]?: Obj[K] extends {} ? DeepPartial<Obj[K]> : Obj[Key];
+};
+
 export type RequiredProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> &
   {
     [Key in Keys]-?: NonNullable<Obj[Key]>;

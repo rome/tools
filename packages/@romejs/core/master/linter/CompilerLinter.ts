@@ -8,10 +8,8 @@
 import {MasterRequest} from '@romejs/core';
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import {PartialDiagnostics} from '@romejs/diagnostics';
-import {humanizeNumber} from '@romejs/string-utils';
-import {parsePathPattern} from '@romejs/path-match';
 import {ProjectDefinition} from '@romejs/project';
-import {LINTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
+import {AbsoluteFilePathSet} from '@romejs/path';
 
 export default class CompilerLinter {
   constructor(req: MasterRequest, printer: DiagnosticsPrinter) {
@@ -22,42 +20,22 @@ export default class CompilerLinter {
   request: MasterRequest;
   printer: DiagnosticsPrinter;
 
-  async lint() {
+  async lint(paths: AbsoluteFilePathSet) {
     const {request, printer} = this;
     const {master, reporter} = request;
-    const globalIgnore = [
-      parsePathPattern({input: 'node_modules'}),
-      parsePathPattern({input: '__generated__'}),
-    ];
 
-    const files = await request.getFilesFromArgs(
-      project => project.config.lint.ignore.concat(globalIgnore),
-      LINTABLE_EXTENSIONS,
-    );
+    const pathsByWorker = await master.fileAllocator.groupPathsByWorker(paths);
 
-    const filesByWorker = await master.fileAllocator.groupFilesByWorker(files);
-
-    const spinners = filesByWorker.map(files => {
-      const spinner = reporter.progress();
-      spinner.setTotal(files.length);
-      return spinner;
-    });
+    const spinner = reporter.progress();
+    spinner.setTitle('Linting');
+    spinner.setTotal(paths.size);
 
     const lintDisabledProjects: Set<ProjectDefinition> = new Set();
 
-    const startTime = Date.now();
-    let totalProcessedBytes = 0;
-
     await Promise.all(
-      filesByWorker.map(async (files, workerNum) => {
-        const spinner = spinners[workerNum];
-
-        let i = 0;
-        for (const path of files) {
-          i++;
-          spinner.setCurrent(i);
-          spinner.setText(path.join());
-          totalProcessedBytes += master.memoryFs.getFileStatsAssert(path).size;
+      pathsByWorker.map(async paths => {
+        for (const path of paths) {
+          spinner.setText(`<filelink target="${path.join()}" />`);
 
           // Complain about the project config if it has lint disabled
           const project = master.projectManager.findProjectExisting(path);
@@ -80,7 +58,7 @@ export default class CompilerLinter {
                 printer.addDiagnostic({
                   category: '',
                   message:
-                    "Files excluded from linting as it's not enabled for this project. Run `rome config enable lint` to enable it.",
+                    "Files excluded from linting as it's not enabled for this project. Run `rome config enable-category lint` to enable it.",
                   ...consumer.getDiagnosticPointer(),
                 });
               } else {
@@ -110,26 +88,6 @@ export default class CompilerLinter {
       }),
     );
 
-    for (const spinner of spinners) {
-      spinner.end();
-    }
-
-    const elapsed = Date.now() - startTime;
-
-    printer.onBeforeFooterPrint(reporter => {
-      const kbps = Math.round(totalProcessedBytes / elapsed);
-      reporter.verbose(`Processing speed ${humanizeNumber(kbps)}kbps`);
-
-      const fileCount = files.length;
-      if (fileCount === 0) {
-        reporter.warn('No files linted');
-      } else if (fileCount === 1) {
-        reporter.info(`<emphasis>1</emphasis> file linted`);
-      } else {
-        reporter.info(
-          `<emphasis>${humanizeNumber(fileCount)}</emphasis> files linted`,
-        );
-      }
-    });
+    spinner.end();
   }
 }

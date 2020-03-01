@@ -12,8 +12,9 @@ export default function fork(
   processType: string,
   opts?: child.ForkOptions,
 ): child.ChildProcess {
-  return child.fork(BIN.join(), CHILD_ARGS, {
+  return child.fork(BIN.join(), [], {
     stdio: 'inherit',
+    execArgv: CHILD_ARGS,
     ...opts,
     env: {
       ...process.env,

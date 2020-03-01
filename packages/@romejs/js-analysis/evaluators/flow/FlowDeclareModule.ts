@@ -10,5 +10,6 @@ import {FlowDeclareModule, flowDeclareModule, AnyNode} from '@romejs/js-ast';
 
 export default function FlowDeclareModule(node: AnyNode, scope: Scope) {
   node = flowDeclareModule.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

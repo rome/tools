@@ -10,5 +10,6 @@ import {TSTypeQuery, tsTypeQuery, AnyNode} from '@romejs/js-ast';
 
 export default function TSTypeQuery(node: AnyNode, scope: Scope) {
   node = tsTypeQuery.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

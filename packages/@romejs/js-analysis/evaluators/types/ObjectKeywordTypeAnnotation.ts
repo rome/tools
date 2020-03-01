@@ -17,5 +17,6 @@ export default function ObjectKeywordTypeAnnotation(
   scope: Scope,
 ) {
   node = objectKeywordTypeAnnotation.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

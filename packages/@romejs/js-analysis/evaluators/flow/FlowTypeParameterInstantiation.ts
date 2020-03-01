@@ -17,5 +17,6 @@ export default function FlowTypeParameterInstantiation(
   scope: Scope,
 ) {
   node = flowTypeParameterInstantiation.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

@@ -10,5 +10,6 @@ import {LabeledStatement, labeledStatement, AnyNode} from '@romejs/js-ast';
 
 export default function LabeledStatement(node: AnyNode, scope: Scope) {
   node = labeledStatement.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

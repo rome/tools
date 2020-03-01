@@ -10,5 +10,6 @@ import {JSXText, jsxText, AnyNode} from '@romejs/js-ast';
 
 export default function JSXText(node: AnyNode, scope: Scope) {
   node = jsxText.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

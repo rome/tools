@@ -290,38 +290,8 @@ export class WebServer {
       bundlerConfig,
     );
 
-    bundler.graph.watch(async ({path}) => {
-      // Fast refresh?
-      this.sendToAllDeviceWebsockets({
-        type: 'update-start',
-        body: {
-          isInitialUpdate: false,
-        },
-      });
-
-      const {code} = await bundler.compile(path, true);
-
-      this.sendToAllDeviceWebsockets({
-        type: 'update',
-        body: {
-          isInitialUpdate: false,
-          revisionId: '',
-          added: [],
-          modified: [
-            {
-              // module id is not used at all
-              module: [0, code],
-              sourceMappingURL: '',
-              sourceURL: '',
-            },
-          ],
-          deleted: [],
-        },
-      });
-
-      this.sendToAllDeviceWebsockets({
-        type: 'update-done',
-      });
+    bundler.graph.watch(async () => {
+      // TODO HMR
     });
 
     this.bundlerCache.set(cacheKey, bundler);

@@ -5,15 +5,88 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {consumeUnknown} from '@romejs/consume';
+import {consumeUnknown, Consumer} from '@romejs/consume';
 import ClientRequest from './ClientRequest';
 import {LocalCommand} from '../commands';
 import {commandCategories} from '../commands';
 import executeMain from '../common/utils/executeMain';
 import {DiagnosticsError} from '@romejs/diagnostics';
 import {createAbsoluteFilePath} from '@romejs/path';
+import {Dict} from '@romejs/typescript-helpers';
+import {writeFile} from '@romejs/fs';
+import {VERSION} from '../common/constants';
 
-export const localCommands: Map<string, LocalCommand> = new Map();
+export const localCommands: Map<string, LocalCommand<any>> = new Map();
+
+type InitFlags = {
+  defaults: boolean;
+};
+
+localCommands.set('init', {
+  category: commandCategories.PROJECT_MANAGEMENT,
+  description: 'create a project config',
+
+  defineFlags(consumer: Consumer): InitFlags {
+    return {
+      defaults: consumer.get('defaults').asBoolean(false),
+    };
+  },
+
+  async callback(req: ClientRequest, flags: InitFlags) {
+    const {reporter} = req.client;
+
+    const config: Dict<unknown> = {};
+
+    reporter.heading('Welcome to Rome!');
+    reporter.info(
+      'Press <emphasis>space</emphasis> to select an option and <emphasis>enter</emphasis> to confirm',
+    );
+
+    if (flags.defaults === false) {
+      const useDefaults = await reporter.radioConfirm(
+        'Use recommended settings?',
+      );
+      if (useDefaults) {
+        flags = {defaults: true};
+      }
+    }
+
+    const name = await reporter.question('Project name', {yes: flags.defaults});
+    if (name !== '') {
+      config.name = name;
+    }
+
+    config.version = `^${VERSION}`;
+
+    const enabledComponents = await reporter.select('Features enabled', {
+      yes: flags.defaults,
+      options: {
+        lint: {
+          label: 'Lint',
+        },
+        format: {
+          label: 'Format',
+        },
+      },
+      defaults: ['lint'],
+    });
+    if (enabledComponents.has('lint')) {
+      config.lint = {enabled: true};
+    }
+    if (enabledComponents.has('format')) {
+      config.format = {enabled: true};
+    }
+
+    const configPath = req.client.flags.cwd.append('rome.json');
+    await writeFile(configPath, JSON.stringify(config, null, '  ') + '\n');
+
+    reporter.success(
+      `Created config <filelink emphasis target="${configPath.join()}" />`,
+    );
+
+    return true;
+  },
+});
 
 localCommands.set('start', {
   category: commandCategories.PROCESS_MANAGEMENT,
@@ -30,7 +103,7 @@ localCommands.set('start', {
   },
 });
 
-localCommands.set('web', {
+localCommands.set('develop', {
   category: commandCategories.PROCESS_MANAGEMENT,
   description: '',
   async callback(req: ClientRequest) {

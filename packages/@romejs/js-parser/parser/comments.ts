@@ -41,7 +41,7 @@ export function addComment(parser: JSParser, comment: AnyComment): void {
   parser.state.leadingComments.push(comment);
 }
 
-export function processComment(parser: JSParser, node: AnyNode): void {
+export function attachComments(parser: JSParser, node: AnyNode): void {
   if (node.type === 'Program' && node.body.length > 0) {
     return undefined;
   }
@@ -75,6 +75,7 @@ export function processComment(parser: JSParser, node: AnyNode): void {
       const lastInStack = last(stack);
       if (
         lastInStack.trailingComments &&
+        lastInStack.trailingComments.length > 0 &&
         parser.getLoc(lastInStack.trailingComments[0]).start.index >=
           parser.getLoc(node).end.index
       ) {
@@ -240,16 +241,25 @@ export function processComment(parser: JSParser, node: AnyNode): void {
 
   parser.state.commentPreviousNode = node;
 
-  if (trailingComments) {
-    if (
-      trailingComments.length > 0 &&
-      parser.getLoc(trailingComments[0]).start.index >=
-        parser.getLoc(node).start.index &&
-      parser.getLoc(last(trailingComments)).end.index <=
-        parser.getLoc(node).end.index
-    ) {
-      node.innerComments = trailingComments;
-    } else {
+  if (trailingComments !== undefined && trailingComments.length > 0) {
+    const nodeLoc = parser.getLoc(node);
+
+    const innerComments = trailingComments.filter(comment => {
+      const commentLoc = parser.getLoc(comment);
+      return (
+        commentLoc.start.index >= nodeLoc.start.index &&
+        commentLoc.end.index <= nodeLoc.end.index
+      );
+    });
+
+    if (innerComments.length > 0) {
+      node.innerComments = innerComments;
+      trailingComments = trailingComments.filter(
+        comment => !innerComments.includes(comment),
+      );
+    }
+
+    if (trailingComments.length > 0) {
       node.trailingComments = trailingComments;
     }
   }

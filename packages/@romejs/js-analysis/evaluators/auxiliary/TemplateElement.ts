@@ -10,5 +10,6 @@ import {TemplateElement, templateElement, AnyNode} from '@romejs/js-ast';
 
 export default function TemplateElement(node: AnyNode, scope: Scope) {
   node = templateElement.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

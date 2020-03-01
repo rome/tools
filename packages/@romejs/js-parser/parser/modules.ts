@@ -94,11 +94,12 @@ export function parseExport(
     const defExported = parseIdentifier(parser, true);
     let specifiers: Array<AnyExportExternalSpecifier> = [];
 
-    specifiers.push({
-      loc: parser.finishLoc(defStart),
-      type: 'ExportDefaultSpecifier',
-      exported: defExported,
-    });
+    specifiers.push(
+      parser.finishNode(defStart, {
+        type: 'ExportDefaultSpecifier',
+        exported: defExported,
+      }),
+    );
 
     if (
       parser.match(tt.comma) &&
@@ -109,11 +110,12 @@ export function parseExport(
       parser.expect(tt.star);
       parser.expectContextual('as');
       const exported = parseIdentifier(parser);
-      specifiers.push({
-        loc: parser.finishLoc(specifierStart),
-        type: 'ExportNamespaceSpecifier',
-        exported,
-      });
+      specifiers.push(
+        parser.finishNode(specifierStart, {
+          type: 'ExportNamespaceSpecifier',
+          exported,
+        }),
+      );
     } else {
       specifiers = [
         ...specifiers,
@@ -130,11 +132,10 @@ export function parseExport(
     const declaration = parseExportDefaultExpression(parser);
     checkExport(parser, specifiers, declaration, true, true);
 
-    const node: ExportDefaultDeclaration = {
-      loc: parser.finishLoc(start),
+    const node: ExportDefaultDeclaration = parser.finishNode(start, {
       type: 'ExportDefaultDeclaration',
       declaration,
-    };
+    });
     return node;
   } else if (shouldParseExportDeclaration(parser)) {
     let source;
@@ -204,13 +205,12 @@ export function parseExport(
     }
   }
 
-  const node: ExportLocalDeclaration = {
-    loc: parser.finishLoc(start),
+  const node: ExportLocalDeclaration = parser.finishNode(start, {
     type: 'ExportLocalDeclaration',
     exportKind,
     specifiers,
     declaration,
-  };
+  });
   return node;
 }
 
@@ -229,13 +229,12 @@ function createExportExternalDeclaration(
       : convertLocalToExternalSpecifiers(rawSpecifiers);
   checkExport(parser, specifiers, undefined, true, false);
 
-  return {
+  return parser.finishNode(start, {
     type: 'ExportExternalDeclaration',
     exportKind,
     source,
     specifiers,
-    loc: parser.finishLoc(start),
-  };
+  });
 }
 
 function convertLocalToExternalSpecifiers(
@@ -464,24 +463,22 @@ function parseExportStar(
 
   if (parser.isContextual('as')) {
     const {source, specifiers} = parseExportNamespace(parser, exportKind);
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'ExportExternalDeclaration',
       exportKind,
       specifiers,
       source,
-    };
+    });
   } else {
     const source = parseExportFrom(parser, true);
     if (source === undefined) {
       throw new Error('Passed `true` above which expects there to be a string');
     }
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'ExportAllDeclaration',
       exportKind,
       source,
-    };
+    });
   }
 }
 
@@ -504,11 +501,12 @@ function parseExportNamespace(
 
   let specifiers: Array<AnyExportExternalSpecifier> = [];
 
-  specifiers.push({
-    loc: parser.finishLoc(specifierStart),
-    type: 'ExportNamespaceSpecifier',
-    exported,
-  });
+  specifiers.push(
+    parser.finishNode(specifierStart, {
+      type: 'ExportNamespaceSpecifier',
+      exported,
+    }),
+  );
 
   specifiers = [
     ...specifiers,
@@ -677,13 +675,14 @@ function parseExportSpecifiers(parser: JSParser): Array<ExportLocalSpecifier> {
     const exported = parser.eatContextual('as')
       ? parseIdentifier(parser, true)
       : toIdentifier(parser.cloneNode(local));
-    specifiers.push({
-      loc: parser.finishLoc(start),
-      type: 'ExportLocalSpecifier',
-      local,
-      exported,
-      // TODO exportKind?
-    });
+    specifiers.push(
+      parser.finishNode(start, {
+        type: 'ExportLocalSpecifier',
+        local,
+        exported,
+        // TODO exportKind?
+      }),
+    );
   }
 
   return specifiers;
@@ -717,22 +716,20 @@ export function parseImport(
         message: 'import missing a source',
       });
 
-      source = {
+      source = parser.finishNode(start, {
         type: 'StringLiteral',
         value: '',
-        loc: parser.finishLoc(start),
-      };
+      });
     }
   }
 
   parser.semicolon();
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'ImportDeclaration',
     specifiers,
     source,
     importKind,
-  };
+  });
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -760,12 +757,11 @@ function parseImportSpecifierLocal(
 
   checkLVal(parser, local, true, undefined, contextDescription);
 
-  return {
+  return parser.finishNode(start, {
     type: 'ImportSpecifierLocal',
-    loc: parser.finishLoc(start),
     name: local,
     importKind,
-  };
+  });
 }
 
 // Parses a comma-separated list of module imports.
@@ -819,19 +815,18 @@ function parseImportSpecifiers(
 
   // import defaultObj, { x, y as z } from '...'';
   if (shouldParseDefaultImport(parser, importKind)) {
-    const start = parser.getPosition();
-
     const meta = parseImportSpecifierLocal(
       parser,
       importKind,
       'default import specifier',
     );
 
-    specifiers.push({
-      loc: parser.finishLoc(start),
-      type: 'ImportDefaultSpecifier',
-      local: meta,
-    });
+    specifiers.push(
+      parser.finishNode(start, {
+        type: 'ImportDefaultSpecifier',
+        local: meta,
+      }),
+    );
 
     if (!parser.eat(tt.comma)) {
       return {specifiers, importKind};
@@ -839,7 +834,6 @@ function parseImportSpecifiers(
   }
 
   if (parser.match(tt.star)) {
-    const start = parser.getPosition();
     parser.next();
     parser.expectContextual('as');
 
@@ -849,11 +843,12 @@ function parseImportSpecifiers(
       'import namespace specifier',
     );
 
-    specifiers.push({
-      loc: parser.finishLoc(start),
-      type: 'ImportNamespaceSpecifier',
-      local: meta,
-    });
+    specifiers.push(
+      parser.finishNode(start, {
+        type: 'ImportNamespaceSpecifier',
+        local: meta,
+      }),
+    );
 
     return {specifiers, importKind};
   }

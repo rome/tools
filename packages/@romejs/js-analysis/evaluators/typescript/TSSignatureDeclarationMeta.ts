@@ -17,5 +17,6 @@ export default function TSSignatureDeclarationMeta(
   scope: Scope,
 ) {
   node = tsSignatureDeclarationMeta.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

@@ -16,6 +16,7 @@ export type HookDescriptor<State, CallArg, CallReturn> = {
     state: State,
     arg: CallArg,
   ) => {
+    bubble?: boolean;
     value: CallReturn;
     state: State;
   };

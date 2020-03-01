@@ -10,5 +10,6 @@ import {DoWhileStatement, doWhileStatement, AnyNode} from '@romejs/js-ast';
 
 export default function DoWhileStatement(node: AnyNode, scope: Scope) {
   node = doWhileStatement.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

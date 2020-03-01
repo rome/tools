@@ -10,5 +10,6 @@ import {EmptyStatement, emptyStatement, AnyNode} from '@romejs/js-ast';
 
 export default function EmptyStatement(node: AnyNode, scope: Scope) {
   node = emptyStatement.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

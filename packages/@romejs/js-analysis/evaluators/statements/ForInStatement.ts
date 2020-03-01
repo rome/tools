@@ -10,5 +10,6 @@ import {ForInStatement, forInStatement, AnyNode} from '@romejs/js-ast';
 
 export default function ForInStatement(node: AnyNode, scope: Scope) {
   node = forInStatement.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

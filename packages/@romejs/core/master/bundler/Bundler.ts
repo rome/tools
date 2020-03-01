@@ -11,26 +11,22 @@ import {
   BundlerConfig,
   BundleResult,
   BundlerFiles,
-  BundleRequestResult,
   BundlerMode,
-  BundlerInMemorySourceMap,
-  BundlerUnsymbolicatedLocation,
-  BundlerSymbolicatedStackFrame,
   BundleResultBundle,
 } from '../../common/types/bundler';
 import {MasterRequest} from '@romejs/core';
 import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import DependencyGraph from '../dependencies/DependencyGraph';
-import BundleRequest from './BundleRequest';
+import BundleRequest, {BundleOptions} from './BundleRequest';
 import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
 import {
   ManifestDefinition,
   convertManifestToJSON,
   JSONManifest,
 } from '@romejs/codec-js-manifest';
-import {Number1, Number0, sub, add, get1, get0} from '@romejs/ob1';
 import {WorkerCompileResult} from '../../common/bridges/WorkerBridge';
 import {Dict} from '@romejs/typescript-helpers';
+import {readFile} from '@romejs/fs';
 
 export type BundlerEntryResoluton = {
   manifestDef: undefined | ManifestDefinition;
@@ -96,24 +92,24 @@ export default class Bundler {
     return {manifestDef, resolvedEntry};
   }
 
-  createBundleRequest(resolvedEntry: AbsoluteFilePath): BundleRequest {
+  createBundleRequest(
+    resolvedEntry: AbsoluteFilePath,
+    options: BundleOptions,
+  ): BundleRequest {
     const project = this.master.projectManager.assertProjectExisting(
       resolvedEntry,
     );
     const mode: BundlerMode = project.config.bundler.mode;
 
     this.entries.push(resolvedEntry);
-    return new BundleRequest(this, mode, resolvedEntry);
+    return new BundleRequest(this, mode, resolvedEntry, options);
   }
 
-  async compile(
-    path: AbsoluteFilePath,
-    hmr: boolean = false,
-  ): Promise<WorkerCompileResult> {
-    const bundleRequest = this.createBundleRequest(path);
+  async compile(path: AbsoluteFilePath): Promise<WorkerCompileResult> {
+    const bundleRequest = this.createBundleRequest(path, {});
     await bundleRequest.stepAnalyze();
     bundleRequest.diagnostics.maybeThrowDiagnosticsError();
-    return await bundleRequest.compileJS(path, hmr);
+    return await bundleRequest.compileJS(path);
   }
 
   // This will take multiple entry points and do some magic to make them more efficient to build in parallel
@@ -137,7 +133,12 @@ export default class Bundler {
     });
     analyzeProgress.setTitle('Analyzing');
     processor.setThrowAfter(100);
-    await this.graph.seed(entries, processor, analyzeProgress);
+    await this.graph.seed({
+      paths: entries,
+      diagnosticsProcessor: processor,
+      analyzeProgress,
+      validate: false,
+    });
     processor.maybeThrowDiagnosticsError();
 
     // Now actually bundle them
@@ -157,9 +158,9 @@ export default class Bundler {
 
     const createBundle = async (
       resolvedSegment: AbsoluteFilePath,
-      prefix?: string,
+      options: BundleOptions,
     ): Promise<BundleResultBundle> => {
-      const bundle = await this.bundle(resolvedSegment, prefix);
+      const bundle = await this.bundle(resolvedSegment, options);
       for (const [path, content] of bundle.files) {
         files.set(path, content);
       }
@@ -167,7 +168,7 @@ export default class Bundler {
       return bundle.entry;
     };
 
-    const entryBundle = await createBundle(resolvedEntry);
+    const entryBundle = await createBundle(resolvedEntry, {});
 
     //
     const bundleBuddyStats = this.graph.getBundleBuddyStats(this.entries);
@@ -183,6 +184,14 @@ export default class Bundler {
         manifestDef,
         entryBundle,
         createBundle,
+        (relative, buffer) => {
+          if (!files.has(relative)) {
+            files.set(relative, {
+              kind: 'file',
+              content: buffer,
+            });
+          }
+        },
       );
 
       // Add a package.json with updated values
@@ -204,8 +213,9 @@ export default class Bundler {
     entryBundle: BundleResultBundle,
     createBundle: (
       resolvedSegment: AbsoluteFilePath,
-      prefix?: string,
+      options: BundleOptions,
     ) => Promise<BundleResultBundle>,
+    addFile: (relative: string, buffer: Buffer | string) => void,
   ): Promise<JSONManifest> {
     const manifest = manifestDef.manifest;
 
@@ -228,10 +238,17 @@ export default class Bundler {
 
     // TODO Compile a index.d.ts
 
-    // TODO copy manifest.files
+    // Copy manifest.files
     if (manifest.files !== undefined) {
-      // TODO `manifest.files` should be turned into matching patterns
-      // TODO add all files that match the globs glob
+      const paths = await this.master.memoryFs.glob(manifestDef.folder, {
+        only: manifest.files,
+      });
+
+      for (const path of paths) {
+        const relative = manifestDef.folder.relative(path).join();
+        const buffer = await readFile(path);
+        addFile(relative, buffer);
+      }
     }
 
     // Compile manifest.bin files
@@ -251,16 +268,19 @@ export default class Bundler {
 
         const absolute = await this.master.resolver.resolveAssert(
           {
+            ...this.config.resolver,
             origin: manifestDef.folder,
             source: createUnknownFilePath(relative).toExplicitRelative(),
-            ...this.config.resolver,
           },
           {
             pointer,
           },
         );
 
-        const res = await createBundle(absolute.path, `bin/${binName}`);
+        const res = await createBundle(absolute.path, {
+          prefix: `bin/${binName}`,
+          interpreter: '/usr/bin/env node',
+        });
         newBin[binName] = res.js.path;
       }
     }
@@ -273,7 +293,7 @@ export default class Bundler {
 
   async bundle(
     resolvedEntry: AbsoluteFilePath,
-    rawPrefix?: string,
+    options: BundleOptions = {},
   ): Promise<BundleResult> {
     const {reporter} = this;
 
@@ -281,7 +301,7 @@ export default class Bundler {
       `Bundling <filelink emphasis target="${resolvedEntry.join()}" />`,
     );
 
-    const req = this.createBundleRequest(resolvedEntry);
+    const req = this.createBundleRequest(resolvedEntry, options);
     const res = await req.bundle();
 
     const processor = new DiagnosticsProcessor({origins: []});
@@ -294,7 +314,7 @@ export default class Bundler {
 
     const serialMap = JSON.stringify(res.map);
 
-    const prefix = rawPrefix === undefined ? '' : `${rawPrefix}/`;
+    const prefix = options.prefix === undefined ? '' : `${options.prefix}/`;
     const jsPath = `${prefix}index.js`;
     const mapPath = `${jsPath}.map`;
 
@@ -331,127 +351,5 @@ export default class Bundler {
       bundles: [bundle],
       files,
     };
-  }
-
-  async symbolicate(
-    resolvedEntry: AbsoluteFilePath,
-    frame: BundlerUnsymbolicatedLocation,
-  ): Promise<void | BundlerSymbolicatedStackFrame> {
-    if (frame.lineNumber === undefined) {
-      return undefined;
-    }
-
-    const {reporter} = this;
-
-    reporter.info(
-      `Bundling <filelink emphasis target="${resolvedEntry.join()}" /> for symbolication`,
-    );
-
-    const req = this.createBundleRequest(resolvedEntry);
-    const res: BundleRequestResult = await req.bundle();
-
-    // TODO: Maybe it should be an invariant that symbolication only happens
-    // when bundles are fully cached.
-    // FURTHER TODO: The client should send a graph revision/hash so we can
-    // detect requests from stale bundles (and either support it or not - but
-    // definitely not respond with the wrong stack like we would now).
-    if (res.cached) {
-      reporter.warn('In-memory source map was built completely from cache');
-    }
-
-    const map = res.inMemorySourceMap;
-
-    const moduleIndex = greatestLowerBound(
-      map,
-      get1(frame.lineNumber),
-      (target: number, candidate: BundlerInMemorySourceMap[0]) =>
-        target - get1(candidate.firstLine),
-    );
-    if (moduleIndex == null) {
-      return undefined;
-    }
-    const module = map[moduleIndex];
-
-    const pos = findOriginalPos(frame, module);
-    if (!pos) {
-      return undefined;
-    }
-
-    return {
-      file: module.path,
-      lineNumber: pos.line,
-      column: pos.column,
-      // TODO: Also populate methodName (from function map).
-    };
-  }
-}
-
-type Position = {line: Number1; column: Number0};
-
-function findOriginalPos(
-  frame: BundlerUnsymbolicatedLocation,
-  module: BundlerInMemorySourceMap[0],
-): Position | undefined {
-  if (
-    module.map === undefined ||
-    frame.lineNumber === undefined ||
-    frame.column === undefined
-  ) {
-    return undefined;
-  }
-
-  const generatedPosInModule: {line: Number1; column: Number0} = {
-    line: add(sub(frame.lineNumber, module.firstLine), 1),
-    column: frame.column,
-  };
-  const mappingIndex = greatestLowerBound(
-    module.map,
-    generatedPosInModule,
-    (target, candidate) => {
-      if (target.line === candidate.generated.line) {
-        return get0(sub(target.column, candidate.generated.column));
-      } else {
-        return get1(sub(target.line, candidate.generated.line));
-      }
-    },
-  );
-  if (mappingIndex === undefined) {
-    return undefined;
-  }
-
-  const mapping = module.map[mappingIndex];
-  if (!mapping.original) {
-    return undefined;
-  }
-
-  return {
-    line: mapping.original.line,
-    column: mapping.original.column,
-  };
-}
-
-// TODO: find a home for this function
-function greatestLowerBound<T, U>(
-  elements: ReadonlyArray<T>,
-  target: U,
-  comparator: (target: U, candidate: T) => number,
-): number | undefined {
-  let first = 0;
-  let it = 0;
-  let count = elements.length;
-  let step;
-  while (count > 0) {
-    it = first;
-    step = Math.floor(count / 2);
-    it = it + step;
-    if (comparator(target, elements[it]) >= 0) {
-      first = ++it;
-      count = count - (step + 1);
-    } else {
-      count = step;
-    }
-  }
-  if (first > 0) {
-    return first - 1;
   }
 }

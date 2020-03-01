@@ -17,5 +17,6 @@ export default function BooleanLiteralTypeAnnotation(
   scope: Scope,
 ) {
   node = booleanLiteralTypeAnnotation.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

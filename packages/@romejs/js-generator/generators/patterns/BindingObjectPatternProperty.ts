@@ -8,7 +8,7 @@
 import Generator from '../../Generator';
 import {bindingObjectPatternProperty, AnyNode} from '@romejs/js-ast';
 
-export default function ObjectPatternProperty(
+export default function BindingObjectPatternProperty(
   generator: Generator,
   node: AnyNode,
 ) {

@@ -61,7 +61,7 @@ export default class Worker {
     this.astCache = new UnknownFilePathMap();
     this.moduleSignatureCache = new UnknownFilePathMap();
 
-    this.logger = new Logger('worker', opts.bridge.log, {
+    this.logger = new Logger('worker', () => opts.bridge.log.hasSubscribers(), {
       streams: [
         {
           type: 'all',
@@ -80,6 +80,7 @@ export default class Worker {
     if (opts.globalErrorHandlers) {
       setupGlobalErrorHandlers(err => {
         // TODO
+        err;
       });
     }
   }
@@ -157,6 +158,10 @@ export default class Worker {
         payload.prefetchedModuleSignatures,
         payload.fix,
       );
+    });
+
+    bridge.format.subscribe(payload => {
+      return this.api.format(convertTransportFileReference(payload.file));
     });
 
     bridge.analyzeDependencies.subscribe(payload => {
@@ -317,7 +322,6 @@ export default class Worker {
     }
 
     const cacheEnabled = opts.cache !== false;
-
     if (cacheEnabled) {
       // Update the lastAccessed of the ast cache and return it, it will be evicted on
       // any file change
@@ -341,9 +345,15 @@ export default class Worker {
       project,
     });
 
+    let manifestPath: undefined | string;
+    if (ref.manifest !== undefined) {
+      manifestPath = this.getPartialManifest(ref.manifest).path;
+    }
+
     const ast = parseJS({
       input: sourceText,
       mtime: stat.mtimeMs,
+      manifestPath,
       path: createUnknownFilePath(uid),
       sourceType,
       syntax,

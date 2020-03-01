@@ -13,6 +13,7 @@ type UserOptionsBase = {
   sourceType?: ConstSourceType;
   tokens?: boolean;
   allowReturnOutsideFunction?: boolean;
+  manifestPath?: undefined | string;
 };
 
 export type JSParserUserOptions = ParserOptionsWithRequiredPath &
@@ -33,6 +34,7 @@ const DEFAULT_USER_OPTIONS: Required<UserOptionsBase> = {
   tokens: false,
 
   syntax: [],
+  manifestPath: 'package.json',
 };
 
 // Interpret and default an options object

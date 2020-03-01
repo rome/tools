@@ -17,5 +17,6 @@ export default function BigIntKeywordTypeAnnotation(
   scope: Scope,
 ) {
   node = bigIntKeywordTypeAnnotation.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

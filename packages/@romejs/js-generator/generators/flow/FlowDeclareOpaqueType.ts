@@ -24,5 +24,5 @@ export default function FlowDeclareOpaqueType(
     generator.word('declare');
     generator.space();
   }
-  FlowOpaqueType(generator, node, parent);
+  FlowOpaqueType(generator, node);
 }

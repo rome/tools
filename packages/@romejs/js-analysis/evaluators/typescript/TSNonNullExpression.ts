@@ -14,5 +14,6 @@ import {
 
 export default function TSNonNullExpression(node: AnyNode, scope: Scope) {
   node = tsNonNullExpression.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

@@ -68,32 +68,29 @@ export function parseTypeLiteralAnnotation(
     case tt.string: {
       const value = String(parser.state.tokenValue);
       parser.next();
-      return {
-        loc: parser.finishLoc(start),
+      return parser.finishNode(start, {
         type: 'StringLiteralTypeAnnotation',
         value,
-      };
+      });
     }
 
     case tt.num: {
       const value = Number(parser.state.tokenValue);
       parser.next();
-      return {
-        loc: parser.finishLoc(start),
+      return parser.finishNode(start, {
         type: 'NumericLiteralTypeAnnotation',
         value,
-      };
+      });
     }
 
     case tt._true:
     case tt._false: {
       const value = parser.match(tt._true);
       parser.next();
-      return {
-        loc: parser.finishLoc(start),
+      return parser.finishNode(start, {
         type: 'BooleanLiteralTypeAnnotation',
         value,
-      };
+      });
     }
 
     case tt.plusMin: {
@@ -105,26 +102,36 @@ export function parseTypeLiteralAnnotation(
             message: `Unexpected token, expected "number"`,
           });
           parser.next();
-          return {
-            loc: parser.finishLoc(start),
+          return parser.finishNode(start, {
             type: 'NumericLiteralTypeAnnotation',
             value: 0,
-          };
+          });
         }
 
         const value = Number(parser.state.tokenValue);
         parser.next();
-        return {
-          loc: parser.finishLoc(start),
+        return parser.finishNode(start, {
           type: 'NumericLiteralTypeAnnotation',
           value: -value,
-        };
+        });
       } else {
         parser.addDiagnostic({
           message:
             'Numeric literal type annotations cannot stand with a +, omit it instead',
         });
         parser.next();
+
+        if (!parser.match(tt.num)) {
+          parser.addDiagnostic({
+            message: `Unexpected token, expected "number"`,
+          });
+          parser.next();
+          return parser.finishNode(start, {
+            type: 'NumericLiteralTypeAnnotation',
+            value: 0,
+          });
+        }
+
         return parseTypeLiteralAnnotation(parser);
       }
     }
@@ -479,13 +486,12 @@ export function parseTypeExpressionStatement(
         const global = true;
         const id = toBindingIdentifier(expr);
         const body = parseTSModuleBlock(parser);
-        return {
-          loc: parser.finishLoc(start),
+        return parser.finishNode(start, {
           type: 'TSModuleDeclaration',
           global,
           id,
           body,
-        };
+        });
       }
   }
 }
@@ -497,17 +503,15 @@ export function ambiguousTypeCastToParameter(
   const start = parser.getPosition();
   const expr = toTargetAssignmentPattern(parser, node.expression, 'parameter');
 
-  const meta: PatternMeta = {
+  const meta: PatternMeta = parser.finishNode(start, {
     type: 'PatternMeta',
-    loc: parser.finishLoc(start),
     optional: node.optional,
     typeAnnotation: node.typeAnnotation,
-  };
+  });
 
-  return {
+  return parser.finishNode(start, {
     ...expr,
-    loc: parser.finishLoc(start),
     // @ts-ignore
     meta,
-  };
+  });
 }

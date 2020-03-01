@@ -14,5 +14,6 @@ import {
 
 export default function ComputedMemberProperty(node: AnyNode, scope: Scope) {
   node = computedMemberProperty.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

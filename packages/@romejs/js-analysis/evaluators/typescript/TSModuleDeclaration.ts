@@ -14,5 +14,6 @@ import {
 
 export default function TSModuleDeclaration(node: AnyNode, scope: Scope) {
   node = tsModuleDeclaration.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

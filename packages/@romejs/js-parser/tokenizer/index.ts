@@ -348,7 +348,7 @@ function pushComment(
 }
 
 function skipBlockComment(parser: JSParser): void {
-  const startPos = parser.getPosition();
+  const startPos = parser.getPositionFromState();
   const startIndex = parser.state.index;
   parser.state.index = add(parser.state.index, 2);
 
@@ -381,7 +381,7 @@ function skipBlockComment(parser: JSParser): void {
     block: true,
     text: parser.getRawInput(add(startIndex, 2), endIndex),
     startPos,
-    endPos: parser.getPosition(),
+    endPos: parser.getPositionFromState(),
   });
 }
 
@@ -390,7 +390,7 @@ export function skipLineComment(
   startSkip: number,
 ): AnyComment {
   const startIndex = parser.state.index;
-  const startPos = parser.getPosition();
+  const startPos = parser.getPositionFromState();
   parser.state.index = add(parser.state.index, startSkip);
   let ch = parser.input.charCodeAt(getIndex(parser));
   if (parser.state.index < parser.length) {
@@ -409,7 +409,7 @@ export function skipLineComment(
     block: false,
     text: parser.getRawInput(add(startIndex, startSkip), parser.state.index),
     startPos,
-    endPos: parser.getPosition(),
+    endPos: parser.getPositionFromState(),
   });
 }
 

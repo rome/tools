@@ -10,5 +10,6 @@ import {JSXAttribute, jsxAttribute, AnyNode} from '@romejs/js-ast';
 
 export default function JSXAttribute(node: AnyNode, scope: Scope) {
   node = jsxAttribute.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

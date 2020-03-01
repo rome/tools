@@ -14,7 +14,6 @@ import {TestRunnerOptions} from '../master/testing/types';
 import {getErrorStackAdvice} from '@romejs/diagnostics';
 import {Event} from '@romejs/events';
 import diff from '@romejs/string-diff';
-import format from '@romejs/pretty-format';
 import {createErrorFromStructure} from '@romejs/v8';
 import prettyFormat from '@romejs/pretty-format';
 import {Class} from '@romejs/typescript-helpers';
@@ -119,8 +118,8 @@ export default class TestAPI {
       expectedFormat = expected;
       receivedFormat = received;
     } else {
-      expectedFormat = format(expected);
-      receivedFormat = format(received);
+      expectedFormat = prettyFormat(expected);
+      receivedFormat = prettyFormat(received);
     }
 
     const expectedFormatCode = maybeTruncate(
@@ -299,7 +298,7 @@ export default class TestAPI {
           },
           {
             type: 'code',
-            code: format(value),
+            code: prettyFormat(value),
           },
         ],
         1,
@@ -319,7 +318,7 @@ export default class TestAPI {
           },
           {
             type: 'code',
-            code: format(value),
+            code: prettyFormat(value),
           },
         ],
         1,
@@ -339,7 +338,7 @@ export default class TestAPI {
           },
           {
             type: 'code',
-            code: format(value),
+            code: prettyFormat(value),
           },
         ],
         1,
@@ -359,7 +358,7 @@ export default class TestAPI {
           },
           {
             type: 'code',
-            code: format(value),
+            code: prettyFormat(value),
           },
         ],
         1,
@@ -497,7 +496,7 @@ export default class TestAPI {
   ) {
     const key = this.snapshotManager.toSnapshotKey(this.testName, name);
 
-    const formatted = format(expected);
+    const formatted = prettyFormat(expected);
 
     // Get the current snapshot
     const existingSnapshot = this.snapshotManager.get(key);

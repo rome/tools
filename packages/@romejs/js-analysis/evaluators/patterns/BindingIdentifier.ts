@@ -10,5 +10,6 @@ import {BindingIdentifier, bindingIdentifier, AnyNode} from '@romejs/js-ast';
 
 export default function BindingIdentifier(node: AnyNode, scope: Scope) {
   node = bindingIdentifier.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

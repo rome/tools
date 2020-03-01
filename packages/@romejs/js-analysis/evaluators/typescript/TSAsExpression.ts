@@ -10,5 +10,6 @@ import {TSAsExpression, tsAsExpression, AnyNode} from '@romejs/js-ast';
 
 export default function TSAsExpression(node: AnyNode, scope: Scope) {
   node = tsAsExpression.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

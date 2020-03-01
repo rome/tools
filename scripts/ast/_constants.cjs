@@ -6,7 +6,6 @@
  */
 
 const path = require('path');
-const fs = require('fs');
 
 const root = path.join(__dirname, '..', '..');
 const packages = path.join(root, 'packages', '@romejs');

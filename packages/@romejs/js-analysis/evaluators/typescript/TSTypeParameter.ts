@@ -10,5 +10,6 @@ import {TSTypeParameter, tsTypeParameter, AnyNode} from '@romejs/js-ast';
 
 export default function TSTypeParameter(node: AnyNode, scope: Scope) {
   node = tsTypeParameter.assert(node);
+  scope;
   throw new Error('unimplemented');
 }

@@ -43,7 +43,6 @@ import {
   ConstTSModifier,
   TSImportType,
   AnyTSEntityName,
-  TSQualifiedName,
   TSTypeReference,
   TSThisType,
   TSTypePredicate,
@@ -315,31 +314,27 @@ function parseTSImportType(parser: JSParser): TSImportType {
     typeParameters = parseTSTypeArguments(parser);
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSImportType',
     argument,
     qualifier,
     typeParameters,
-  };
+  });
 }
 
 function parseTSEntityName(
   parser: JSParser,
   allowReservedWords: boolean,
 ): AnyTSEntityName {
-  let entity: TSQualifiedName | AnyTSEntityName = parseReferenceIdentifier(
-    parser,
-  );
+  let entity: AnyTSEntityName = parseReferenceIdentifier(parser);
   while (parser.eat(tt.dot)) {
     const start: Position = parser.getLoc(entity).start;
     const right = parseIdentifier(parser, allowReservedWords);
-    entity = {
-      loc: parser.finishLoc(start),
+    entity = parser.finishNode(start, {
       type: 'TSQualifiedName',
       left: entity,
       right,
-    };
+    });
   }
   return entity;
 }
@@ -351,12 +346,11 @@ function parseTSTypeReference(parser: JSParser): TSTypeReference {
   if (!parser.hasPrecedingLineBreak() && parser.isRelational('<')) {
     typeParameters = parseTSTypeArguments(parser);
   }
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSTypeReference',
     typeName,
     typeParameters,
-  };
+  });
 }
 
 function parseTSThisTypePredicate(
@@ -368,21 +362,19 @@ function parseTSThisTypePredicate(
   const parameterName = lhs;
   const typeAnnotation = parseTSTypeAnnotation(parser, /* eatColon */ false);
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSTypePredicate',
     parameterName,
     typeAnnotation,
-  };
+  });
 }
 
 function parseTSThisTypeNode(parser: JSParser): TSThisType {
   const start = parser.getPosition();
   parser.next();
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSThisType',
-  };
+  });
 }
 
 function parseTSTypeQuery(parser: JSParser): TSTypeQuery {
@@ -394,11 +386,10 @@ function parseTSTypeQuery(parser: JSParser): TSTypeQuery {
   } else {
     exprName = parseTSEntityName(parser, /* allowReservedWords */ true);
   }
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSTypeQuery',
     exprName,
-  };
+  });
 }
 
 function parseTSTypeParameter(parser: JSParser): TSTypeParameter {
@@ -406,13 +397,12 @@ function parseTSTypeParameter(parser: JSParser): TSTypeParameter {
   const name = parseIdentifierName(parser);
   const constraint = tsEatThenParseType(parser, tt._extends);
   const _default = tsEatThenParseType(parser, tt.eq);
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSTypeParameter',
     name,
     constraint,
     default: _default,
-  };
+  });
 }
 
 function tryParseTSTypeParameters(
@@ -438,11 +428,10 @@ export function parseTSTypeParameters(
     /* skipFirstToken */ true,
   );
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSTypeParameterDeclaration',
     params,
-  };
+  });
 }
 
 export function tryTSNextParseConstantContext(
@@ -517,13 +506,12 @@ function parseTSSignatureDeclarationMeta(
 
   return {
     typeAnnotation,
-    meta: {
+    meta: parser.finishNode(start, {
       type: 'TSSignatureDeclarationMeta',
-      loc: parser.finishLoc(start),
       typeParameters,
       parameters,
       rest,
-    },
+    }),
   };
 }
 
@@ -575,12 +563,11 @@ function parseTSConstructSignatureDeclaration(
     tt.colon,
   );
   parser.semicolon();
-  return {
+  return parser.finishNode(start, {
     type: 'TSConstructSignatureDeclaration',
-    loc: parser.finishLoc(start),
     meta,
     typeAnnotation,
-  };
+  });
 }
 
 function parseTSCallSignatureDeclaration(
@@ -592,12 +579,11 @@ function parseTSCallSignatureDeclaration(
     tt.colon,
   );
   parser.semicolon();
-  return {
+  return parser.finishNode(start, {
     type: 'TSCallSignatureDeclaration',
-    loc: parser.finishLoc(start),
     meta,
     typeAnnotation,
-  };
+  });
 }
 
 function tsIsUnambiguouslyIndexSignature(parser: JSParser) {
@@ -621,11 +607,11 @@ export function tryTSParseIndexSignature(
   parser.expect(tt.bracketL);
 
   const idStart = parser.getPosition();
-  const id = {
-    ...parseBindingIdentifier(parser),
+  const _id = parseBindingIdentifier(parser);
+  const id = parser.finishNode(idStart, {
+    ..._id,
     typeAnnotation: parseTSTypeAnnotation(parser),
-    loc: parser.finishLoc(idStart),
-  };
+  });
 
   parser.expect(tt.bracketR);
   const parameters = [id];
@@ -633,13 +619,12 @@ export function tryTSParseIndexSignature(
   const typeAnnotation = tryTSParseTypeAnnotation(parser);
 
   parser.semicolon();
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSIndexSignature',
     typeAnnotation,
     parameters,
     rest: undefined,
-  };
+  });
 }
 
 function parseTSPropertyOrMethodSignature(
@@ -656,25 +641,23 @@ function parseTSPropertyOrMethodSignature(
       tt.colon,
     );
     parseTSTypeMemberSemicolon(parser);
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'TSMethodSignature',
       optional,
       meta,
       key,
       typeAnnotation,
-    };
+    });
   } else {
     const typeAnnotation = tryTSParseTypeAnnotation(parser);
     parseTSTypeMemberSemicolon(parser);
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'TSPropertySignature',
       optional,
       readonly,
       typeAnnotation,
       key,
-    };
+    });
   }
 }
 
@@ -712,11 +695,10 @@ function tsIsStartOfConstructSignature(parser: JSParser) {
 function parseTSTypeLiteral(parser: JSParser): TSTypeLiteral {
   const start = parser.getPosition();
   const members = parseTSObjectTypeMembers(parser);
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSTypeLiteral',
     members,
-  };
+  });
 }
 
 function parseTSObjectTypeMembers(parser: JSParser): Array<AnyTSTypeElement> {
@@ -760,12 +742,11 @@ function parseTSMappedTypeParameter(parser: JSParser): TSTypeParameter {
   const start = parser.getPosition();
   const name = parseIdentifierName(parser);
   const constraint = tsExpectThenParseType(parser, tt._in);
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSTypeParameter',
     name,
     constraint,
-  };
+  });
 }
 
 function toPlusMin(val: unknown): '+' | '-' {
@@ -816,14 +797,13 @@ function parseTSMappedType(parser: JSParser): TSMappedType {
   parser.semicolon();
   parser.expectClosing(openContext);
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSMappedType',
     typeParameter,
     typeAnnotation,
     optional,
     readonly,
-  };
+  });
 }
 
 function parseTSTupleType(parser: JSParser): TSTupleType {
@@ -864,12 +844,11 @@ function parseTSTupleType(parser: JSParser): TSTupleType {
     }
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSTupleType',
     elementTypes,
     rest,
-  };
+  });
 }
 
 function parseTSTupleElementType(
@@ -898,11 +877,10 @@ function parseTSTupleElementType(
     const start = parser.getLoc(typeAnnotation).start;
     return {
       isRest: false,
-      type: {
-        loc: parser.finishLoc(start),
+      type: parser.finishNode(start, {
         type: 'TSOptionalType',
         typeAnnotation,
-      },
+      }),
     };
   }
 
@@ -921,11 +899,10 @@ function parseTSParenthesizedType(parser: JSParser): TSParenthesizedType {
   );
   const typeAnnotation = parseTSType(parser);
   parser.expectClosing(openContext);
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSParenthesizedType',
     typeAnnotation,
-  };
+  });
 }
 
 function parseTSFunctionType(parser: JSParser): TSFunctionType {
@@ -941,12 +918,11 @@ function parseTSFunctionType(parser: JSParser): TSFunctionType {
     );
   }
 
-  return {
+  return parser.finishNode(start, {
     type: 'TSFunctionType',
-    loc: parser.finishLoc(start),
     meta,
     typeAnnotation,
-  };
+  });
 }
 
 function parseTSConstructorType(parser: JSParser): TSConstructorType {
@@ -964,12 +940,11 @@ function parseTSConstructorType(parser: JSParser): TSConstructorType {
     );
   }
 
-  return {
+  return parser.finishNode(start, {
     type: 'TSConstructorType',
-    loc: parser.finishLoc(start),
     meta,
     typeAnnotation,
-  };
+  });
 }
 
 function parseTSTemplateLiteralType(
@@ -1011,10 +986,9 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
       if (type !== undefined && parser.lookaheadState().tokenType !== tt.dot) {
         const start = parser.getPosition();
         parser.next();
-        return {
+        return parser.finishNode(start, {
           type,
-          loc: parser.finishLoc(start),
-        } as AnyTSPrimary;
+        } as AnyTSPrimary);
       }
       return parseTSTypeReference(parser);
     }
@@ -1061,14 +1035,14 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
   parser.addDiagnostic({
     message: 'Unknown TS non array type start',
   });
+  parser.next();
 
-  return {
+  return parser.finishNode(parser.getPosition(), {
     type: 'TSTypeReference',
-    loc: parser.finishLoc(parser.getPosition()),
     typeName: toReferenceIdentifier(
       parser.createUnknownIdentifier('ts non array type start'),
     ),
-  };
+  });
 }
 
 function parseTSArrayTypeOrHigher(parser: JSParser): AnyTSPrimary {
@@ -1079,22 +1053,20 @@ function parseTSArrayTypeOrHigher(parser: JSParser): AnyTSPrimary {
       const start = parser.getLoc(type).start;
       const elementType = type;
       parser.expect(tt.bracketR);
-      type = {
-        loc: parser.finishLoc(start),
+      type = parser.finishNode(start, {
         type: 'TSArrayType',
         elementType,
-      };
+      });
     } else {
       const start = parser.getLoc(type).start;
       const objectType = type;
       const indexType = parseTSType(parser);
       parser.expect(tt.bracketR);
-      type = {
-        loc: parser.finishLoc(start),
+      type = parser.finishNode(start, {
         type: 'TSIndexedAccessType',
         objectType,
         indexType,
-      };
+      });
     }
   }
   return type;
@@ -1109,12 +1081,11 @@ function parseTSTypeOperator(
 
   const typeAnnotation = parseTSTypeOperatorOrHigher(parser);
 
-  const node: TSTypeOperator = {
-    loc: parser.finishLoc(start),
+  const node: TSTypeOperator = parser.finishNode(start, {
     type: 'TSTypeOperator',
     typeAnnotation,
     operator,
-  };
+  });
 
   if (operator === 'readonly') {
     tsCheckTypeAnnotationForReadOnly(parser, typeAnnotation);
@@ -1147,17 +1118,16 @@ function parseTSInferType(parser: JSParser): TSInferType {
   parser.expectContextual('infer');
 
   const start = parser.getPosition();
-  const typeParameter: TSTypeParameter = {
+  const name = parseIdentifierName(parser);
+  const typeParameter: TSTypeParameter = parser.finishNode(start, {
     type: 'TSTypeParameter',
-    name: parseIdentifierName(parser),
-    loc: parser.finishLoc(start),
-  };
+    name,
+  });
 
-  return {
-    loc: parser.finishLoc(inferStart),
+  return parser.finishNode(inferStart, {
     type: 'TSInferType',
     typeParameter,
-  };
+  });
 }
 
 const TS_TYPE_OPERATORS: Array<TSTypeOperator['operator']> = [
@@ -1202,17 +1172,15 @@ function parseTSUnionOrIntersectionType(
 
     const start = parser.getLoc(type).start;
     if (kind === 'UnionTypeAnnotation') {
-      type = {
-        loc: parser.finishLoc(start),
+      type = parser.finishNode(start, {
         type: 'UnionTypeAnnotation',
         types,
-      };
+      });
     } else if (kind === 'IntersectionTypeAnnotation') {
-      type = {
-        loc: parser.finishLoc(start),
+      type = parser.finishNode(start, {
         type: 'IntersectionTypeAnnotation',
         types,
-      };
+      });
     }
   }
 
@@ -1341,12 +1309,11 @@ export function parseTSTypeOrTypePredicateAnnotation(
   const typePredicateStart = parser.getLoc(typePredicateVariable).start;
   parser.popScope('TYPE');
 
-  return {
-    loc: parser.finishLoc(typePredicateStart),
+  return parser.finishNode(typePredicateStart, {
     type: 'TSTypePredicate',
     parameterName: typePredicateVariable,
     typeAnnotation: type,
-  };
+  });
 }
 
 function tryTSParseTypeAnnotation(parser: JSParser): undefined | AnyTSPrimary {
@@ -1376,13 +1343,16 @@ export function parseTSTypeAnnotation(
     parser.expect(tt.colon);
   }
 
-  const typeAnnotation = parseTSType(parser);
+  const typeAnnotation = parseTSType(parser, start);
   parser.popScope('TYPE');
   return typeAnnotation;
 }
 
 /** Be sure to be in a type context before calling parser. using `tsInType`. */
-function parseTSType(parser: JSParser): AnyTSPrimary {
+function parseTSType(
+  parser: JSParser,
+  start: Position = parser.getPosition(),
+): AnyTSPrimary {
   parser.pushScope('TYPE', true);
 
   const type = parseTSNonConditionalType(parser);
@@ -1391,7 +1361,6 @@ function parseTSType(parser: JSParser): AnyTSPrimary {
     return type;
   }
 
-  const start = parser.getLoc(type).start;
   const checkType = type;
 
   const extendsType = parseTSNonConditionalType(parser);
@@ -1403,14 +1372,13 @@ function parseTSType(parser: JSParser): AnyTSPrimary {
   const falseType = parseTSType(parser);
   parser.popScope('TYPE');
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSConditionalType',
     checkType,
     extendsType,
     trueType,
     falseType,
-  };
+  });
 }
 
 function parseTSNonConditionalType(parser: JSParser): AnyTSPrimary {
@@ -1437,12 +1405,11 @@ export function parseTSTypeAssertion(parser: JSParser): TSTypeAssertion {
     tsCheckLiteralForConstantContext(parser, expression);
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSTypeAssertion',
     expression,
     typeAnnotation,
-  };
+  });
 }
 
 export function parseTSHeritageClause(
@@ -1480,12 +1447,11 @@ function parseTSExpressionWithTypeArguments(
     typeParameters = parseTSTypeArguments(parser);
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSExpressionWithTypeArguments',
     expression,
     typeParameters,
-  };
+  });
 }
 
 export function parseTSInterfaceDeclaration(
@@ -1503,21 +1469,19 @@ export function parseTSInterfaceDeclaration(
 
   const bodyStart = parser.getPosition();
   const bodyItems = parseTSObjectTypeMembers(parser);
-  const body: TSInterfaceBody = {
-    loc: parser.finishLoc(bodyStart),
+  const body: TSInterfaceBody = parser.finishNode(bodyStart, {
     type: 'TSInterfaceBody',
     body: bodyItems,
-  };
+  });
 
   parser.popScope('TYPE');
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSInterfaceDeclaration',
     id,
     body,
     typeParameters,
     extends: _extends,
-  };
+  });
 }
 
 export function parseTSTypeAliasTypeAnnotation(
@@ -1528,13 +1492,12 @@ export function parseTSTypeAliasTypeAnnotation(
   const typeParameters = tryParseTSTypeParameters(parser);
   const typeAnnotation = tsExpectThenParseType(parser, tt.eq);
   parser.semicolon();
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TypeAliasTypeAnnotation',
     id,
     typeParameters,
     right: typeAnnotation,
-  };
+  });
 }
 
 function tsInNoContext<T>(parser: JSParser, cb: ParserCallback<T>): T {
@@ -1587,12 +1550,11 @@ function parseTSEnumMember(parser: JSParser): TSEnumMember {
     );
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSEnumMember',
     initializer,
     id,
-  };
+  });
 }
 
 export function parseTSEnumDeclaration(
@@ -1620,13 +1582,12 @@ export function parseTSEnumDeclaration(
   );
   parser.expectClosing(openContext);
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSEnumDeclaration',
     members,
     id,
     const: isConst,
-  };
+  });
 }
 
 export function parseTSModuleBlock(parser: JSParser): TSModuleBlock {
@@ -1645,11 +1606,10 @@ export function parseTSModuleBlock(parser: JSParser): TSModuleBlock {
     /* topLevel */ true,
     openContext,
   );
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSModuleBlock',
     body,
-  };
+  });
 }
 
 export function parseTSModuleOrNamespaceDeclaration(
@@ -1665,12 +1625,11 @@ export function parseTSModuleOrNamespaceDeclaration(
     body = parseTSModuleBlock(parser);
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSModuleDeclaration',
     id,
     body,
-  };
+  });
 }
 
 export function parseTSAmbientExternalModuleDeclaration(
@@ -1695,13 +1654,12 @@ export function parseTSAmbientExternalModuleDeclaration(
     parser.semicolon();
   }
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSModuleDeclaration',
     id,
     global,
     body,
-  };
+  });
 }
 
 export function parseTSImportEqualsDeclaration(
@@ -1715,12 +1673,12 @@ export function parseTSImportEqualsDeclaration(
   const moduleReference = parseTSModuleReference(parser);
   parser.semicolon();
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSImportEqualsDeclaration',
     id,
     moduleReference,
-  };
+    isExport,
+  });
 }
 
 function tsIsExternalModuleReference(parser: JSParser): boolean {
@@ -1759,20 +1717,18 @@ function parseTSExternalModuleReference(
     parseExpressionAtom(parser, 'ts external module reference expression');
 
     // Create a fake string literal
-    expression = {
-      loc: parser.finishLoc(start),
+    expression = parser.finishNode(start, {
       type: 'StringLiteral',
       value: '',
-    };
+    });
   }
 
   parser.expectClosing(openContext);
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSExternalModuleReference',
     expression,
-  };
+  });
 }
 
 // Utilities
@@ -1963,11 +1919,10 @@ export function parseTSTypeArguments(
   parser.popScope('TYPE');
   parser.expectRelational('>');
 
-  return {
-    loc: parser.finishLoc(start),
+  return parser.finishNode(start, {
     type: 'TSTypeParameterInstantiation',
     params,
-  };
+  });
 }
 
 export function isTSDeclarationStart(parser: JSParser): boolean {
@@ -2022,11 +1977,10 @@ export function parseTSExport(
     // `export = x;`
     const expression = parseExpression(parser, 'ts export assignment');
     parser.semicolon();
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'TSExportAssignment',
       expression,
-    };
+    });
   }
 
   if (parser.eatContextual('as')) {
@@ -2035,10 +1989,9 @@ export function parseTSExport(
     parser.expectContextual('namespace');
     const id = parseIdentifier(parser);
     parser.semicolon();
-    return {
-      loc: parser.finishLoc(start),
+    return parser.finishNode(start, {
       type: 'TSNamespaceExportDeclaration',
       id,
-    };
+    });
   }
 }
