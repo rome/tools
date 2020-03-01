@@ -122,15 +122,6 @@ export default function buildMessageCodeFrame(
     });
   }
 
-  // If there's no lines to target then return the normal marker
-  if (
-    formattedLines.length === 0 ||
-    end.line === number1Neg1 ||
-    start.line === number1Neg1
-  ) {
-    return CODE_FRAME_INDENT + markerMessage;
-  }
-
   // If we have too many lines in our selection, then collapse them to an ellipsis
   const pruned = formattedLines.length > MAX_CODE_FRAME_LINES + 2;
   if (pruned) {
@@ -147,6 +138,15 @@ export default function buildMessageCodeFrame(
     } else {
       break;
     }
+  }
+
+  // If there's no lines to target then return the normal marker
+  if (
+    formattedLines.length === 0 ||
+    end.line === number1Neg1 ||
+    start.line === number1Neg1
+  ) {
+    return CODE_FRAME_INDENT + markerMessage;
   }
 
   // Don't output a gutter if there's only a single line
