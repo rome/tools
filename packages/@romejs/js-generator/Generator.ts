@@ -438,7 +438,7 @@ export default class Generator {
           opts.iterator(node, i);
         }
 
-        const isLastNode = i === nodes.length - 1;
+        const isLastNode = i === interleavedNodes.length - 1;
         if (opts.separator && !isLastNode) {
           opts.separator(this);
         }
