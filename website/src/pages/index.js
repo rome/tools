@@ -21,8 +21,7 @@ const features = [
     imageUrl: '',
     description: (
       <>
-        Rome includes a compiler, linter, formatter, bundler, testing framework
-        and more.
+        Rome is the best
       </>
     ),
   },
@@ -31,8 +30,7 @@ const features = [
     imageUrl: '',
     description: (
       <>
-        Rome supports processing JSX as well as Flow and TypeScript annotated
-        code.
+        It wasn't built in a day
       </>
     ),
   },
