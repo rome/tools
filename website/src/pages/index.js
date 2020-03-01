@@ -20,7 +20,7 @@ function Home() {
   const {siteConfig = {}} = context;
   return (
     <Layout
-      title={`${siteConfig.tagline} | ${siteConfig.title}`}
+      title={siteConfig.tagline}
       description={siteConfig.tagline}>
       <header
         className={classnames(
