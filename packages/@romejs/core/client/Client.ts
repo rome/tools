@@ -44,7 +44,7 @@ type ClientOptions = {
   globalErrorHandlers?: boolean;
   stdout?: stream.Writable;
   stderr?: stream.Writable;
-  stdin?: stream.Readable;
+  stdin?: NodeJS.ReadStream;
   flags: Partial<Omit<ClientFlags, 'clientName'>> & {
     clientName: string;
   };
