@@ -1,0 +1,1 @@
+(value: unknown): asserts value => {};

@@ -12,7 +12,7 @@ Program {
     filename: '..'
     end: Object {
       column: 0
-      index: 72
+      index: 67
       line: 3
     }
     start: Object {
@@ -42,8 +42,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 35
-          index: 35
+          column: 32
+          index: 32
           line: 1
         }
         start: Object {
@@ -58,13 +58,13 @@ Program {
         loc: Object {
           filename: '..'
           end: Object {
-            column: 35
-            index: 35
+            column: 32
+            index: 32
             line: 1
           }
           start: Object {
-            column: 33
-            index: 33
+            column: 30
+            index: 30
             line: 1
           }
         }
@@ -80,8 +80,8 @@ Program {
         loc: Object {
           filename: '..'
           end: Object {
-            column: 33
-            index: 33
+            column: 30
+            index: 30
             line: 1
           }
           start: Object {
@@ -91,33 +91,19 @@ Program {
           }
         }
         returnType: TSTypePredicate {
-          asserts: false
+          asserts: true
+          typeAnnotation: undefined
           loc: Object {
             filename: '..'
             end: Object {
-              column: 32
-              index: 32
+              column: 29
+              index: 29
               line: 1
             }
             start: Object {
-              column: 20
-              index: 20
+              column: 18
+              index: 18
               line: 1
-            }
-          }
-          typeAnnotation: BooleanKeywordTypeAnnotation {
-            loc: Object {
-              filename: '..'
-              end: Object {
-                column: 32
-                index: 32
-                line: 1
-              }
-              start: Object {
-                column: 25
-                index: 25
-                line: 1
-              }
             }
           }
           parameterName: Identifier {
@@ -125,13 +111,13 @@ Program {
             loc: Object {
               filename: '..'
               end: Object {
-                column: 21
-                index: 21
+                column: 29
+                index: 29
                 line: 1
               }
               start: Object {
-                column: 20
-                index: 20
+                column: 28
+                index: 28
                 line: 1
               }
             }
@@ -192,13 +178,13 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 35
-          index: 71
+          column: 33
+          index: 66
           line: 2
         }
         start: Object {
           column: 0
-          index: 36
+          index: 33
           line: 2
         }
       }
@@ -207,13 +193,13 @@ Program {
         loc: Object {
           filename: '..'
           end: Object {
-            column: 34
-            index: 70
+            column: 31
+            index: 64
             line: 2
           }
           start: Object {
             column: 1
-            index: 37
+            index: 34
             line: 2
           }
         }
@@ -223,13 +209,13 @@ Program {
           loc: Object {
             filename: '..'
             end: Object {
-              column: 34
-              index: 70
+              column: 31
+              index: 64
               line: 2
             }
             start: Object {
-              column: 32
-              index: 68
+              column: 29
+              index: 62
               line: 2
             }
           }
@@ -245,44 +231,30 @@ Program {
           loc: Object {
             filename: '..'
             end: Object {
-              column: 32
-              index: 68
+              column: 29
+              index: 62
               line: 2
             }
             start: Object {
               column: 1
-              index: 37
+              index: 34
               line: 2
             }
           }
           returnType: TSTypePredicate {
-            asserts: false
+            asserts: true
+            typeAnnotation: undefined
             loc: Object {
               filename: '..'
               end: Object {
-                column: 31
-                index: 67
+                column: 28
+                index: 61
                 line: 2
               }
               start: Object {
-                column: 19
-                index: 55
+                column: 17
+                index: 50
                 line: 2
-              }
-            }
-            typeAnnotation: BooleanKeywordTypeAnnotation {
-              loc: Object {
-                filename: '..'
-                end: Object {
-                  column: 31
-                  index: 67
-                  line: 2
-                }
-                start: Object {
-                  column: 24
-                  index: 60
-                  line: 2
-                }
               }
             }
             parameterName: Identifier {
@@ -290,13 +262,13 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 20
-                  index: 56
+                  column: 28
+                  index: 61
                   line: 2
                 }
                 start: Object {
-                  column: 19
-                  index: 55
+                  column: 27
+                  index: 60
                   line: 2
                 }
               }
@@ -309,12 +281,12 @@ Program {
                 filename: '..'
                 end: Object {
                   column: 11
-                  index: 47
+                  index: 44
                   line: 2
                 }
                 start: Object {
                   column: 10
-                  index: 46
+                  index: 43
                   line: 2
                 }
               }
@@ -324,12 +296,12 @@ Program {
                   filename: '..'
                   end: Object {
                     column: 16
-                    index: 52
+                    index: 49
                     line: 2
                   }
                   start: Object {
                     column: 10
-                    index: 46
+                    index: 43
                     line: 2
                   }
                 }
@@ -338,12 +310,12 @@ Program {
                     filename: '..'
                     end: Object {
                       column: 16
-                      index: 52
+                      index: 49
                       line: 2
                     }
                     start: Object {
                       column: 13
-                      index: 49
+                      index: 46
                       line: 2
                     }
                   }

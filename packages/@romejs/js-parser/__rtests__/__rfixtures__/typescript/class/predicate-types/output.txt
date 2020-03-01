@@ -184,6 +184,7 @@ Program {
                 }
               }
               returnType: TSTypePredicate {
+                asserts: false
                 loc: Object {
                   filename: '..'
                   end: Object {
@@ -315,6 +316,7 @@ Program {
                   }
                 }
                 returnType: TSTypePredicate {
+                  asserts: false
                   loc: Object {
                     filename: '..'
                     end: Object {
