@@ -9,11 +9,6 @@ import Generator from '../../Generator';
 import {NumericLiteral, numericLiteral, AnyNode} from '@romejs/js-ast';
 
 export default function NumericLiteral(generator: Generator, node: AnyNode) {
-  node =
-    node.type === 'NumericLiteralTypeAnnotation'
-      ? node
-      : numericLiteral.assert(node);
-
-  const value = String(node.value);
-  generator.number(value);
+  node = numericLiteral.assert(node);
+  generator.number(String(node.value));
 }

@@ -17,6 +17,11 @@ export default function TSNamespaceExportDeclaration(
   node: AnyNode,
 ) {
   node = tsNamespaceExportDeclaration.assert(node);
-
-  throw new Error('unimplemented');
+  generator.word('export');
+  generator.space();
+  generator.word('as');
+  generator.space();
+  generator.word('namespace');
+  generator.space();
+  generator.print(node.id, node);
 }

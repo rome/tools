@@ -13,6 +13,10 @@ export default function TSExportAssignment(
   node: AnyNode,
 ) {
   node = tsExportAssignment.assert(node);
-
-  throw new Error('unimplemented');
+  generator.word('export');
+  generator.space();
+  generator.token('=');
+  generator.space();
+  generator.print(node.expression, node);
+  generator.token(';');
 }

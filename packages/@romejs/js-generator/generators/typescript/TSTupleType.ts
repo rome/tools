@@ -10,6 +10,7 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSTupleType(generator: Generator, node: AnyNode) {
   node = tsTupleType.assert(node);
-  tsTupleType.assert(node);
-  throw new Error('unimplemented');
+  generator.token('[');
+  generator.printCommaList(node.elementTypes, node);
+  generator.token(']');
 }

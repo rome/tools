@@ -17,6 +17,7 @@ export default function TSExternalModuleReference(
   node: AnyNode,
 ) {
   node = tsExternalModuleReference.assert(node);
-
-  throw new Error('unimplemented');
+  generator.token('require(');
+  generator.print(node.expression, node);
+  generator.token(')');
 }

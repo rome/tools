@@ -11,5 +11,14 @@ import {Generator} from '@romejs/js-generator';
 export default function TSIndexSignature(generator: Generator, node: AnyNode) {
   node = tsIndexSignature.assert(node);
 
-  throw new Error('unimplemented');
+  if (node.readonly) {
+    generator.word('readonly');
+    generator.space();
+  }
+
+  generator.token('[');
+  generator._parameters(node.parameters, node);
+  generator.token(']');
+  generator.print(node.typeAnnotation, node);
+  generator.token(';');
 }

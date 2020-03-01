@@ -5,18 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  ObjectKeywordTypeAnnotation,
-  objectKeywordTypeAnnotation,
-  AnyNode,
-} from '@romejs/js-ast';
+import {ObjectKeywordTypeAnnotation} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
 
-export default function ObjectKeywordTypeAnnotation(
-  generator: Generator,
-  node: AnyNode,
-) {
-  node = objectKeywordTypeAnnotation.assert(node);
-
-  throw new Error('unimplemented');
+export default function ObjectKeywordTypeAnnotation(generator: Generator) {
+  generator.word('object');
 }

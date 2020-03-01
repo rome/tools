@@ -12,6 +12,9 @@ import {
   AnyNode,
   throwStatement,
   objectMethod,
+  TSSignatureDeclarationMeta,
+  AnyBindingPattern,
+  AnyTSTypeElement,
 } from '@romejs/js-ast';
 
 export function buildForXStatementGenerator(op: 'of' | 'in'): GeneratorMethod {
@@ -115,4 +118,47 @@ export function printMethod(generator: Generator, node: AnyNode) {
   generator.print(node.head, node);
   generator.space();
   generator.print(node.body, node);
+}
+
+export function tokenIfPlusMinus(generator: Generator, token: string | true) {
+  if (token !== true) {
+    generator.token(token);
+  }
+}
+
+export function printBindingPatternParams(
+  generator: Generator,
+  node: AnyNode,
+  params: Array<AnyBindingPattern>,
+) {
+  generator.printCommaList(params, node, {
+    iterator: node => {
+      if (generator.options.typeAnnotations && node.meta !== undefined) {
+        if (node.meta.optional) {
+          generator.token('?');
+        }
+        generator.printTypeColon(node.meta.typeAnnotation, node);
+      }
+    },
+  });
+}
+
+export function printTSBraced(
+  generator: Generator,
+  members: Array<AnyNode>,
+  node: AnyNode,
+) {
+  generator.token('{');
+  if (members.length) {
+    generator.indent();
+    generator.newline();
+    for (const member of members) {
+      generator.print(member, node);
+      generator.newline();
+    }
+    generator.dedent();
+    generator.rightBrace();
+  } else {
+    generator.token('}');
+  }
 }

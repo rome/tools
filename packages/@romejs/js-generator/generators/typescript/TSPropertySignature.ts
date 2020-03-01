@@ -18,5 +18,16 @@ export default function TSPropertySignature(
 ) {
   node = tsPropertySignature.assert(node);
 
-  throw new Error('unimplemented');
+  if (node.readonly) {
+    generator.word('readonly');
+    generator.space();
+  }
+
+  generator.print(node.key, node);
+
+  if (node.optional) {
+    generator.token('?');
+  }
+
+  generator.print(node.typeAnnotation, node);
 }
