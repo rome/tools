@@ -1,0 +1,3 @@
+{
+  "should not parse string escapes": "Array [\n  Tag {\n    name: 'filelink'\n    attributes: Map [\n      Array [\n        'target'\n        'C:\\\\Users\\\\sebmck\\\\file.ts'\n      ]\n    ]\n    children: Array []\n  }\n]"
+}
