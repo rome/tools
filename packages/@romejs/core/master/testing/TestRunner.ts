@@ -195,11 +195,17 @@ export default class TestRunner {
       const str = chunk.toString();
 
       if (str.startsWith('Debugger listening on ws://')) {
-        return undefined;
+        return;
+      }
+
+      if (
+        str.startsWith('For help, see: https://nodejs.org/en/docs/inspector')
+      ) {
+        return;
       }
 
       if (str.startsWith('Debugger attached')) {
-        return undefined;
+        return;
       }
 
       process.stderr.write(chunk);
