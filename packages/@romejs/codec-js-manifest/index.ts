@@ -298,9 +298,11 @@ function normalizePerson(consumer: Consumer, loose: boolean): ManifestPerson {
 
     let github = consumer.get('github').asStringOrVoid();
 
-    // yargs uses githubUsername... I do not like it.
     if (loose && github === undefined) {
-      github = consumer.get('githubUsername').asStringOrVoid();
+      // Some rando packages use this
+      github =
+        consumer.get('githubUsername').asStringOrVoid() ||
+        consumer.get('github-username').asStringOrVoid();
     }
 
     const person: ManifestPerson = {
@@ -310,7 +312,9 @@ function normalizePerson(consumer: Consumer, loose: boolean): ManifestPerson {
       github,
       url,
     };
-    consumer.enforceUsedProperties();
+    if (!loose) {
+      consumer.enforceUsedProperties();
+    }
     return person;
   }
 }
@@ -330,7 +334,7 @@ function normalizePeople(
 
   // If it's not an array then just leave it. Some people put a URL here.
   if (loose && !Array.isArray(consumer.asUnknown())) {
-    return [];
+    return;
   }
 
   const people: Array<ManifestPerson> = [];
@@ -400,7 +404,9 @@ function normalizeRepo(
       url,
       directory: consumer.get('directory').asStringOrVoid(),
     };
-    consumer.enforceUsedProperties();
+    if (!loose) {
+      consumer.enforceUsedProperties();
+    }
     return repo;
   }
 }
@@ -433,7 +439,9 @@ function normalizeBugs(
       email,
       url: consumer.get('url').asStringOrVoid(),
     };
-    consumer.enforceUsedProperties();
+    if (!loose) {
+      consumer.enforceUsedProperties();
+    }
     return bugs;
   }
 }
