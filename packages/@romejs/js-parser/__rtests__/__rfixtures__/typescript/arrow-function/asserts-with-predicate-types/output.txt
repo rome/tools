@@ -12,7 +12,7 @@ Program {
     filename: '..'
     end: Object {
       column: 0
-      index: 31
+      index: 49
       line: 2
     }
     start: Object {
@@ -26,8 +26,8 @@ Program {
       loc: Object {
         filename: '..'
         end: Object {
-          column: 30
-          index: 30
+          column: 48
+          index: 48
           line: 1
         }
         start: Object {
@@ -40,8 +40,8 @@ Program {
         loc: Object {
           filename: '..'
           end: Object {
-            column: 29
-            index: 29
+            column: 47
+            index: 47
             line: 1
           }
           start: Object {
@@ -50,18 +50,19 @@ Program {
             line: 1
           }
         }
-        body: BooleanLiteral {
-          value: true
+        body: BlockStatement {
+          body: Array []
+          directives: Array []
           loc: Object {
             filename: '..'
             end: Object {
-              column: 29
-              index: 29
+              column: 47
+              index: 47
               line: 1
             }
             start: Object {
-              column: 25
-              index: 25
+              column: 45
+              index: 45
               line: 1
             }
           }
@@ -75,8 +76,8 @@ Program {
           loc: Object {
             filename: '..'
             end: Object {
-              column: 25
-              index: 25
+              column: 45
+              index: 45
               line: 1
             }
             start: Object {
@@ -86,17 +87,17 @@ Program {
             }
           }
           returnType: TSTypePredicate {
-            asserts: false
+            asserts: true
             loc: Object {
               filename: '..'
               end: Object {
-                column: 21
-                index: 21
+                column: 41
+                index: 41
                 line: 1
               }
               start: Object {
-                column: 10
-                index: 10
+                column: 26
+                index: 26
                 line: 1
               }
             }
@@ -104,29 +105,29 @@ Program {
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 21
-                  index: 21
+                  column: 41
+                  index: 41
                   line: 1
                 }
                 start: Object {
-                  column: 15
-                  index: 15
+                  column: 35
+                  index: 35
                   line: 1
                 }
               }
             }
             parameterName: Identifier {
-              name: 'x'
+              name: 'value'
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 11
-                  index: 11
+                  column: 31
+                  index: 31
                   line: 1
                 }
                 start: Object {
-                  column: 10
-                  index: 10
+                  column: 26
+                  index: 26
                   line: 1
                 }
               }
@@ -134,17 +135,17 @@ Program {
           }
           params: Array [
             BindingIdentifier {
-              name: 'x'
+              name: 'value'
               loc: Object {
                 filename: '..'
                 end: Object {
-                  column: 24
-                  index: 24
+                  column: 44
+                  index: 44
                   line: 1
                 }
                 start: Object {
-                  column: 25
-                  index: 25
+                  column: 45
+                  index: 45
                   line: 1
                 }
               }
@@ -153,27 +154,27 @@ Program {
                 loc: Object {
                   filename: '..'
                   end: Object {
-                    column: 24
-                    index: 24
+                    column: 44
+                    index: 44
                     line: 1
                   }
                   start: Object {
-                    column: 25
-                    index: 25
+                    column: 45
+                    index: 45
                     line: 1
                   }
                 }
-                typeAnnotation: AnyKeywordTypeAnnotation {
+                typeAnnotation: UnknownKeywordTypeAnnotation {
                   loc: Object {
                     filename: '..'
                     end: Object {
-                      column: 7
-                      index: 7
+                      column: 15
+                      index: 15
                       line: 1
                     }
                     start: Object {
-                      column: 4
-                      index: 4
+                      column: 8
+                      index: 8
                       line: 1
                     }
                   }
