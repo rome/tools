@@ -24,8 +24,8 @@ import {
   UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
 } from './types/analyzeDependencies';
 import {readFileText} from '@romejs/fs';
-import {TransformProjectDefinition} from '@romejs/js-compiler';
 import {generateJS} from '@romejs/js-generator';
+import {TransformProjectDefinition} from '@romejs/js-compiler';
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
 

@@ -585,6 +585,7 @@ export default class ProjectManager {
           category: 'projectManager',
           filename: def.path.join(),
           message: `Duplicate package name <emphasis>${name}</emphasis>`,
+          ...def.consumer.get('name').getDiagnosticPointer('inner-value'),
           advice: [
             {
               type: 'log',

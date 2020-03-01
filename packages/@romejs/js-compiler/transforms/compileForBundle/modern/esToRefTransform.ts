@@ -170,7 +170,10 @@ export default {
 
             if (specifiers !== undefined) {
               for (const specifier of specifiers) {
-                if (specifier.type === 'ExportLocalSpecifier') {
+                if (
+                  specifier.type === 'ExportLocalSpecifier' ||
+                  specifier.type === 'ExportExternalSpecifier'
+                ) {
                   // The local binding has already been rewritten by renameBindings if it existed
                   let local = specifier.local.name;
 

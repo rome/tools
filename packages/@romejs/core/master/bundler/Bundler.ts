@@ -217,6 +217,7 @@ export default class Bundler {
     ) => Promise<BundleResultBundle>,
     addFile: (relative: string, buffer: Buffer | string) => void,
   ): Promise<JSONManifest> {
+    // TODO figure out some way to use bundleMultiple here
     const manifest = manifestDef.manifest;
 
     const newManifest: JSONManifest = {
