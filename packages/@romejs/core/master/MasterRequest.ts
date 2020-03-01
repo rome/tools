@@ -47,7 +47,6 @@ import WorkerBridge, {
 } from '../common/bridges/WorkerBridge';
 import {ModuleSignature} from '@romejs/js-analysis';
 import {PartialDiagnostics} from '@romejs/diagnostics';
-import {DiagnosticsError} from '@romejs/diagnostics';
 import {
   AbsoluteFilePath,
   createAbsoluteFilePath,

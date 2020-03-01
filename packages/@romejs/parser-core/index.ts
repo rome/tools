@@ -18,7 +18,6 @@ import {
 } from './types';
 import {
   PartialDiagnosticAdvice,
-  DiagnosticsError,
   getDiagnosticsFromError,
   createSingleDiagnosticError,
 } from '@romejs/diagnostics';

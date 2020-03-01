@@ -10,10 +10,7 @@ import ClientRequest from './ClientRequest';
 import {LocalCommand} from '../commands';
 import {commandCategories} from '../commands';
 import executeMain from '../common/utils/executeMain';
-import {
-  DiagnosticsError,
-  createSingleDiagnosticError,
-} from '@romejs/diagnostics';
+import {createSingleDiagnosticError} from '@romejs/diagnostics';
 import {createAbsoluteFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
 import {writeFile} from '@romejs/fs';

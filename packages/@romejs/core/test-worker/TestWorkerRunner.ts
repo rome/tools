@@ -9,7 +9,6 @@ import {UnknownObject} from '@romejs/typescript-helpers';
 import {
   PartialDiagnosticAdvice,
   PartialDiagnostic,
-  DiagnosticsError,
   getDiagnosticsFromError,
   INTERNAL_ERROR_LOG_ADVICE,
   createSingleDiagnosticError,
