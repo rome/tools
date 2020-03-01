@@ -1,6 +1,5 @@
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
-import {markup} from '@romejs/string-markup';
 
 export default {
   name: 'unsafeNegation',
@@ -14,7 +13,8 @@ export default {
     ) {
       path.context.addNodeDiagnostic(node, {
         category: 'lint/unsafeNegation',
-        message: markup`Unsafe usage of negation operator in left side of binary expression`,
+        message:
+          'Unsafe usage of negation operator in left side of binary expression',
       });
     }
     return node;
