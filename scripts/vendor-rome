@@ -6,4 +6,4 @@
 # LICENSE file in the root directory of this source tree.
 
 CURR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-"$CURR_DIR/node" "$CURR_DIR/vendor/rome.cjs" $@
+"$CURR_DIR/node" "$CURR_DIR/vendor/rome.cjs" "$@"

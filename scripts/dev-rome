@@ -19,4 +19,4 @@ echo "Building trunk"
 "$ROME_ROOT/scripts/vendor-rome" bundle "$ROME_ROOT/packages/@romejs/cli/bin/rome.ts" "$DEV_FOLDER"
 
 echo "Executing trunk"
-"$CURR_DIR/node" "$DEV_FOLDER/index.js" $@
+"$CURR_DIR/node" "$DEV_FOLDER/index.js" "$@"
