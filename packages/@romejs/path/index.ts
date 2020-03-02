@@ -36,6 +36,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
     this.absoluteType = parsed.absoluteType;
 
     // Memoized
+    this.memoizedUnique = undefined;
     this.memoizedParent = opts.parent;
     this.memoizedFilename = opts.filename;
     this.memoizedExtension = opts.ext;
@@ -44,6 +45,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
   segments: PathSegments;
 
+  memoizedUnique: undefined | Super;
   memoizedFilename: undefined | string;
   memoizedExtension: undefined | string;
   memoizedParent: undefined | Super;
@@ -104,7 +106,8 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
   getBasename(): string {
     const {segments} = this;
-    return segments[segments.length - 1];
+    const offset = this.isExplicitFolder() ? 2 : 1;
+    return segments[segments.length - offset];
   }
 
   getExtensionlessBasename(): string {
@@ -135,7 +138,12 @@ class BaseFilePath<Super extends UnknownFilePath> {
   }
 
   getParentSegments(): PathSegments {
-    return this.segments.slice(0, -1);
+    const segments = this.getSegments().slice(0, -1);
+    // Always make this an explicit folder
+    if (segments.length > 0 && segments[0] !== '') {
+      segments.push('');
+    }
+    return segments;
   }
 
   toExplicitRelative(): RelativeFilePath {
@@ -244,6 +252,11 @@ class BaseFilePath<Super extends UnknownFilePath> {
     return !this.isURL() && (firstSeg === '.' || firstSeg === '..');
   }
 
+  isExplicitFolder(): boolean {
+    const {segments} = this;
+    return segments[segments.length - 1] === '';
+  }
+
   getExtensions(): string {
     if (this.memoizedExtension === undefined) {
       const ext = getExtension(this.getBasename());
@@ -259,7 +272,41 @@ class BaseFilePath<Super extends UnknownFilePath> {
   }
 
   getSegments(): PathSegments {
+    if (this.isExplicitFolder()) {
+      return this.segments.slice(0, -1);
+    } else {
+      return this.segments;
+    }
+  }
+
+  getRawSegments(): PathSegments {
     return this.segments;
+  }
+
+  getUnique(): Super {
+    if (this.memoizedUnique !== undefined) {
+      return this.memoizedUnique;
+    }
+
+    let segments: undefined | PathSegments;
+
+    if (this.isExplicitFolder()) {
+      segments = this.getSegments();
+
+      if (this.isExplicitRelative()) {
+        segments = segments.slice(1);
+      }
+    } else if (this.isExplicitRelative()) {
+      segments = this.getRawSegments().slice(1);
+    }
+
+    if (segments === undefined) {
+      return this._assert();
+    } else {
+      const path = this._fork(parsePathSegments(segments), {});
+      this.memoizedUnique = path;
+      return path;
+    }
   }
 
   // Support some bad string coercion. Such as serialization in CLI flags.
@@ -667,8 +714,8 @@ function normalizeSegments(
       continue;
     }
 
-    // Ignore empty segments, important scenarios have already been handled above
-    if (seg === '') {
+    // Ignore empty segments unless it's last
+    if (seg === '' && i !== segments.length - 1) {
       continue;
     }
 
