@@ -270,15 +270,12 @@ for (const key in xhtmlEntityNameToChar) {
 
 export function escapeXHTMLEntities(
   value: string,
-  whitelist?: Array<string>,
+  only?: Array<string>,
 ): string {
   let escaped = '';
   for (const char of value) {
     const entity = xhtmlEntityCharToName[char];
-    if (
-      entity !== undefined &&
-      (whitelist === undefined || whitelist.includes(char))
-    ) {
+    if (entity !== undefined && (only === undefined || only.includes(char))) {
       escaped += `&${entity};`;
     } else {
       escaped += char;
