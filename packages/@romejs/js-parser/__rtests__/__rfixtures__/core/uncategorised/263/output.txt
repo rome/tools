@@ -1,14 +1,14 @@
 Program {
   comments: Array []
   diagnostics: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 36
       index: 36
@@ -24,7 +24,7 @@ Program {
     Directive {
       value: 'use\\x20strict'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 16
           index: 16
@@ -41,7 +41,7 @@ Program {
   body: Array [
     WithStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 36
           index: 36
@@ -56,7 +56,7 @@ Program {
       object: ReferenceIdentifier {
         name: 'x'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 24
             index: 24
@@ -71,7 +71,7 @@ Program {
       }
       body: ExpressionStatement {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 36
             index: 36
@@ -86,7 +86,7 @@ Program {
         expression: AssignmentExpression {
           operator: '='
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 35
               index: 35
@@ -101,7 +101,7 @@ Program {
           left: AssignmentIdentifier {
             name: 'foo'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 29
                 index: 29
@@ -117,7 +117,7 @@ Program {
           right: ReferenceIdentifier {
             name: 'bar'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 35
                 index: 35

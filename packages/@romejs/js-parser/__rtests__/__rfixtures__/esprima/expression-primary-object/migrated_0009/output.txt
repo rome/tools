@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 38
       index: 38
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 38
           index: 38
@@ -39,7 +39,7 @@ Program {
       expression: AssignmentExpression {
         operator: '='
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 38
             index: 38
@@ -54,7 +54,7 @@ Program {
         left: AssignmentIdentifier {
           name: 'x'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 1
               index: 1
@@ -69,7 +69,7 @@ Program {
         }
         right: ObjectExpression {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 38
               index: 38
@@ -88,7 +88,7 @@ Program {
                 value: Identifier {
                   name: 'width'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 15
                       index: 15
@@ -103,7 +103,7 @@ Program {
                 }
                 variance: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 15
                     index: 15
@@ -117,7 +117,7 @@ Program {
                 }
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 36
                   index: 36
@@ -140,7 +140,7 @@ Program {
                 thisType: undefined
                 typeParameters: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 18
                     index: 18
@@ -156,7 +156,7 @@ Program {
               body: BlockStatement {
                 directives: Array []
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 36
                     index: 36
@@ -171,7 +171,7 @@ Program {
                 body: Array [
                   ReturnStatement {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 34
                         index: 34
@@ -186,7 +186,7 @@ Program {
                     argument: ReferenceIdentifier {
                       name: 'm_width'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 34
                           index: 34

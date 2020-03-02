@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 39
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'A'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 6
             index: 6
@@ -44,7 +44,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 38
           index: 38
@@ -60,7 +60,7 @@ Program {
         rest: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 38
             index: 38
@@ -74,7 +74,7 @@ Program {
         }
         returnType: NumberKeywordTypeAnnotation {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 38
               index: 38
@@ -91,7 +91,7 @@ Program {
           FlowFunctionTypeParam {
             name: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 27
                 index: 27
@@ -106,7 +106,7 @@ Program {
             meta: PatternMeta {
               optional: false
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 27
                   index: 27
@@ -120,7 +120,7 @@ Program {
               }
               typeAnnotation: FlowFunctionTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 27
                     index: 27
@@ -134,7 +134,7 @@ Program {
                 }
                 returnType: BooleanKeywordTypeAnnotation {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 27
                       index: 27
@@ -151,7 +151,7 @@ Program {
                   FlowFunctionTypeParam {
                     name: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 19
                         index: 19
@@ -166,7 +166,7 @@ Program {
                     meta: PatternMeta {
                       optional: false
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 19
                           index: 19
@@ -180,7 +180,7 @@ Program {
                       }
                       typeAnnotation: StringKeywordTypeAnnotation {
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 16
                             index: 16

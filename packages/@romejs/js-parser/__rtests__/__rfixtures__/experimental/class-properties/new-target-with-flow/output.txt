@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array ['flow']
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 258
@@ -26,7 +26,7 @@ Program {
       id: BindingIdentifier {
         name: 'X'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 7
@@ -40,7 +40,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 1
           index: 257
@@ -58,7 +58,7 @@ Program {
         superTypeParameters: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 1
             index: 257
@@ -76,7 +76,7 @@ Program {
               value: Identifier {
                 name: 'a'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 10
                     index: 20
@@ -91,7 +91,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 20
@@ -106,7 +106,7 @@ Program {
             }
             value: MetaProperty {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 23
                   index: 33
@@ -121,7 +121,7 @@ Program {
               meta: Identifier {
                 name: 'new'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 16
                     index: 26
@@ -137,7 +137,7 @@ Program {
               property: Identifier {
                 name: 'target'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 23
                     index: 33
@@ -154,7 +154,7 @@ Program {
             definite: undefined
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 24
                 index: 34
@@ -179,7 +179,7 @@ Program {
                 line: 2
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 20
@@ -198,7 +198,7 @@ Program {
               value: Identifier {
                 name: 'b'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 10
                     index: 45
@@ -213,7 +213,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 45
@@ -229,7 +229,7 @@ Program {
             value: AssignmentExpression {
               operator: '='
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 39
                   index: 74
@@ -244,7 +244,7 @@ Program {
               left: AssignmentIdentifier {
                 name: 'foo'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 17
                     index: 52
@@ -260,7 +260,7 @@ Program {
               right: BinaryExpression {
                 operator: '+'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 39
                     index: 74
@@ -275,7 +275,7 @@ Program {
                 left: NumericLiteral {
                   value: 1
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 21
                       index: 56
@@ -290,7 +290,7 @@ Program {
                 }
                 right: CallExpression {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 39
                       index: 74
@@ -305,7 +305,7 @@ Program {
                   callee: ReferenceIdentifier {
                     name: 'bar'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 27
                         index: 62
@@ -321,7 +321,7 @@ Program {
                   arguments: Array [
                     MetaProperty {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 38
                           index: 73
@@ -336,7 +336,7 @@ Program {
                       meta: Identifier {
                         name: 'new'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 31
                             index: 66
@@ -352,7 +352,7 @@ Program {
                       property: Identifier {
                         name: 'target'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 38
                             index: 73
@@ -373,7 +373,7 @@ Program {
             definite: undefined
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 41
                 index: 76
@@ -398,7 +398,7 @@ Program {
                 line: 3
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 45
@@ -417,7 +417,7 @@ Program {
               value: Identifier {
                 name: 'c'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 10
                     index: 87
@@ -432,7 +432,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 87
@@ -447,7 +447,7 @@ Program {
             }
             value: ArrowFunctionExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 29
                   index: 106
@@ -468,7 +468,7 @@ Program {
                 returnType: undefined
                 thisType: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 19
                     index: 96
@@ -483,7 +483,7 @@ Program {
               }
               body: MetaProperty {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 29
                     index: 106
@@ -498,7 +498,7 @@ Program {
                 meta: Identifier {
                   name: 'new'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 22
                       index: 99
@@ -514,7 +514,7 @@ Program {
                 property: Identifier {
                   name: 'target'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 29
                       index: 106
@@ -532,7 +532,7 @@ Program {
             definite: undefined
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 30
                 index: 107
@@ -557,7 +557,7 @@ Program {
                 line: 4
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 87
@@ -576,7 +576,7 @@ Program {
               value: Identifier {
                 name: 'd'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 10
                     index: 118
@@ -591,7 +591,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 118
@@ -606,7 +606,7 @@ Program {
             }
             value: ArrowFunctionExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 37
                   index: 145
@@ -622,7 +622,7 @@ Program {
                 body: Array []
                 directives: Array []
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 37
                     index: 145
@@ -643,7 +643,7 @@ Program {
                 returnType: undefined
                 thisType: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 35
                     index: 143
@@ -658,7 +658,7 @@ Program {
                 params: Array [
                   BindingAssignmentPattern {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 30
                         index: 138
@@ -673,7 +673,7 @@ Program {
                     left: BindingIdentifier {
                       name: 'foo'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 17
                           index: 125
@@ -688,7 +688,7 @@ Program {
                     }
                     right: MetaProperty {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 30
                           index: 138
@@ -703,7 +703,7 @@ Program {
                       meta: Identifier {
                         name: 'new'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 23
                             index: 131
@@ -719,7 +719,7 @@ Program {
                       property: Identifier {
                         name: 'target'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 30
                             index: 138
@@ -740,7 +740,7 @@ Program {
             definite: undefined
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 38
                 index: 146
@@ -765,7 +765,7 @@ Program {
                 line: 5
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 118
@@ -784,7 +784,7 @@ Program {
               value: Identifier {
                 name: 'e'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 3
                     index: 150
@@ -799,7 +799,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 3
                   index: 150
@@ -814,7 +814,7 @@ Program {
             }
             value: MetaProperty {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 16
                   index: 163
@@ -829,7 +829,7 @@ Program {
               meta: Identifier {
                 name: 'new'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 9
                     index: 156
@@ -845,7 +845,7 @@ Program {
               property: Identifier {
                 name: 'target'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 16
                     index: 163
@@ -862,7 +862,7 @@ Program {
             definite: undefined
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 17
                 index: 164
@@ -887,7 +887,7 @@ Program {
                 line: 6
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 3
                   index: 150
@@ -906,7 +906,7 @@ Program {
               value: Identifier {
                 name: 'f'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 3
                     index: 168
@@ -921,7 +921,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 3
                   index: 168
@@ -937,7 +937,7 @@ Program {
             value: AssignmentExpression {
               operator: '='
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 32
                   index: 197
@@ -952,7 +952,7 @@ Program {
               left: AssignmentIdentifier {
                 name: 'foo'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 10
                     index: 175
@@ -968,7 +968,7 @@ Program {
               right: BinaryExpression {
                 operator: '+'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 32
                     index: 197
@@ -983,7 +983,7 @@ Program {
                 left: NumericLiteral {
                   value: 1
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 14
                       index: 179
@@ -998,7 +998,7 @@ Program {
                 }
                 right: CallExpression {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 32
                       index: 197
@@ -1013,7 +1013,7 @@ Program {
                   callee: ReferenceIdentifier {
                     name: 'bar'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 20
                         index: 185
@@ -1029,7 +1029,7 @@ Program {
                   arguments: Array [
                     MetaProperty {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 31
                           index: 196
@@ -1044,7 +1044,7 @@ Program {
                       meta: Identifier {
                         name: 'new'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 24
                             index: 189
@@ -1060,7 +1060,7 @@ Program {
                       property: Identifier {
                         name: 'target'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 31
                             index: 196
@@ -1081,7 +1081,7 @@ Program {
             definite: undefined
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 34
                 index: 199
@@ -1106,7 +1106,7 @@ Program {
                 line: 7
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 3
                   index: 168
@@ -1125,7 +1125,7 @@ Program {
               value: Identifier {
                 name: 'g'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 3
                     index: 203
@@ -1140,7 +1140,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 3
                   index: 203
@@ -1155,7 +1155,7 @@ Program {
             }
             value: ArrowFunctionExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 222
@@ -1176,7 +1176,7 @@ Program {
                 returnType: undefined
                 thisType: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 12
                     index: 212
@@ -1191,7 +1191,7 @@ Program {
               }
               body: MetaProperty {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 22
                     index: 222
@@ -1206,7 +1206,7 @@ Program {
                 meta: Identifier {
                   name: 'new'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 15
                       index: 215
@@ -1222,7 +1222,7 @@ Program {
                 property: Identifier {
                   name: 'target'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 22
                       index: 222
@@ -1240,7 +1240,7 @@ Program {
             definite: undefined
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 23
                 index: 223
@@ -1265,7 +1265,7 @@ Program {
                 line: 8
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 3
                   index: 203
@@ -1284,7 +1284,7 @@ Program {
               value: Identifier {
                 name: 'h'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 3
                     index: 227
@@ -1299,7 +1299,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 3
                   index: 227
@@ -1314,7 +1314,7 @@ Program {
             }
             value: ArrowFunctionExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 30
                   index: 254
@@ -1330,7 +1330,7 @@ Program {
                 body: Array []
                 directives: Array []
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 30
                     index: 254
@@ -1351,7 +1351,7 @@ Program {
                 returnType: undefined
                 thisType: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 28
                     index: 252
@@ -1366,7 +1366,7 @@ Program {
                 params: Array [
                   BindingAssignmentPattern {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 23
                         index: 247
@@ -1381,7 +1381,7 @@ Program {
                     left: BindingIdentifier {
                       name: 'foo'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 10
                           index: 234
@@ -1396,7 +1396,7 @@ Program {
                     }
                     right: MetaProperty {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 23
                           index: 247
@@ -1411,7 +1411,7 @@ Program {
                       meta: Identifier {
                         name: 'new'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 16
                             index: 240
@@ -1427,7 +1427,7 @@ Program {
                       property: Identifier {
                         name: 'target'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 23
                             index: 247
@@ -1448,7 +1448,7 @@ Program {
             definite: undefined
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 31
                 index: 255
@@ -1473,7 +1473,7 @@ Program {
                 line: 9
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 3
                   index: 227

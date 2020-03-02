@@ -59,7 +59,7 @@ export function watch(
         recursive?: boolean;
       }
     | undefined,
-  listener?: (event: string, filename: string) => void,
+  listener?: (event: string, filename: null | string) => void,
 ) {
   return fs.watch(path.join(), options, listener);
 }

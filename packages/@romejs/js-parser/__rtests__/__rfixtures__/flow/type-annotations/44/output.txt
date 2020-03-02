@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: true
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 31
       index: 31
@@ -27,7 +27,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 31
           index: 31
@@ -42,7 +42,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'var'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 31
             index: 31
@@ -59,7 +59,7 @@ Program {
             id: BindingIdentifier {
               name: 'a'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 19
                   index: 19
@@ -74,7 +74,7 @@ Program {
               meta: PatternMeta {
                 definite: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 19
                     index: 19
@@ -90,7 +90,7 @@ Program {
                   id: Identifier {
                     name: 'Array'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 11
                         index: 11
@@ -104,7 +104,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 19
                       index: 19
@@ -118,7 +118,7 @@ Program {
                   }
                   typeParameters: FlowTypeParameterInstantiation {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 19
                         index: 19
@@ -133,7 +133,7 @@ Program {
                     params: Array [
                       NumberKeywordTypeAnnotation {
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 18
                             index: 18
@@ -152,7 +152,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 31
                 index: 31
@@ -166,7 +166,7 @@ Program {
             }
             init: ArrayExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 31
                   index: 31
@@ -182,7 +182,7 @@ Program {
                 NumericLiteral {
                   value: 1
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 24
                       index: 24
@@ -198,7 +198,7 @@ Program {
                 NumericLiteral {
                   value: 2
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 27
                       index: 27
@@ -214,7 +214,7 @@ Program {
                 NumericLiteral {
                   value: 3
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 30
                       index: 30

@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 54
@@ -26,7 +26,7 @@ Program {
       id: BindingIdentifier {
         name: 'I'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 11
             index: 11
@@ -42,7 +42,7 @@ Program {
       extends: undefined
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 1
           index: 53
@@ -56,7 +56,7 @@ Program {
       }
       body: TSInterfaceBody {
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 1
             index: 53
@@ -74,7 +74,7 @@ Program {
               value: Identifier {
                 name: 'x'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 5
                     index: 19
@@ -89,7 +89,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 5
                   index: 19
@@ -106,7 +106,7 @@ Program {
             readonly: false
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 6
                 index: 20
@@ -124,7 +124,7 @@ Program {
               value: Identifier {
                 name: 'y'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 5
                     index: 26
@@ -139,7 +139,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 5
                   index: 26
@@ -155,7 +155,7 @@ Program {
             optional: false
             readonly: false
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 14
                 index: 35
@@ -169,7 +169,7 @@ Program {
             }
             typeAnnotation: NumberKeywordTypeAnnotation {
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 13
                   index: 34
@@ -188,7 +188,7 @@ Program {
               value: Identifier {
                 name: 'z'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 5
                     index: 41
@@ -203,7 +203,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 5
                   index: 41
@@ -219,7 +219,7 @@ Program {
             optional: true
             readonly: false
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 15
                 index: 51
@@ -233,7 +233,7 @@ Program {
             }
             typeAnnotation: NumberKeywordTypeAnnotation {
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 14
                   index: 50

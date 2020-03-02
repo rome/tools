@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 33
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'T'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 6
             index: 6
@@ -44,7 +44,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 32
           index: 32
@@ -59,7 +59,7 @@ Program {
       right: FlowInterfaceTypeAnnotation {
         extends: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 32
             index: 32
@@ -75,7 +75,7 @@ Program {
           exact: false
           inexact: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 32
               index: 32
@@ -93,7 +93,7 @@ Program {
               key: Identifier {
                 name: 'p'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 22
                     index: 22
@@ -108,7 +108,7 @@ Program {
               }
               value: StringKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 30
                     index: 30
@@ -126,7 +126,7 @@ Program {
               static: false
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 30
                   index: 30

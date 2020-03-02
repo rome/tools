@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 321
@@ -28,7 +28,7 @@ Program {
     ImportDeclaration {
       importKind: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 25
           index: 25
@@ -43,7 +43,7 @@ Program {
       source: StringLiteral {
         value: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 24
             index: 24
@@ -59,7 +59,7 @@ Program {
       specifiers: Array [
         ImportSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 12
               index: 12
@@ -74,7 +74,7 @@ Program {
           imported: Identifier {
             name: 'type'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 12
                 index: 12
@@ -91,7 +91,7 @@ Program {
             name: BindingIdentifier {
               name: 'type'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 12
                   index: 12
@@ -106,7 +106,7 @@ Program {
             }
             importKind: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 12
                 index: 12
@@ -125,7 +125,7 @@ Program {
     ImportDeclaration {
       importKind: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 27
           index: 53
@@ -140,7 +140,7 @@ Program {
       source: StringLiteral {
         value: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 26
             index: 52
@@ -156,7 +156,7 @@ Program {
       specifiers: Array [
         ImportSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 14
               index: 40
@@ -171,7 +171,7 @@ Program {
           imported: Identifier {
             name: 't'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 14
                 index: 40
@@ -188,7 +188,7 @@ Program {
             name: BindingIdentifier {
               name: 't'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 14
                   index: 40
@@ -203,7 +203,7 @@ Program {
             }
             importKind: 'type'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 14
                 index: 40
@@ -222,7 +222,7 @@ Program {
     ImportDeclaration {
       importKind: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 28
           index: 82
@@ -237,7 +237,7 @@ Program {
       source: StringLiteral {
         value: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 27
             index: 81
@@ -253,7 +253,7 @@ Program {
       specifiers: Array [
         ImportSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 15
               index: 69
@@ -268,7 +268,7 @@ Program {
           imported: Identifier {
             name: 'as'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 15
                 index: 69
@@ -285,7 +285,7 @@ Program {
             name: BindingIdentifier {
               name: 'as'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 15
                   index: 69
@@ -300,7 +300,7 @@ Program {
             }
             importKind: 'type'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 15
                 index: 69
@@ -319,7 +319,7 @@ Program {
     ImportDeclaration {
       importKind: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 35
           index: 118
@@ -334,7 +334,7 @@ Program {
       source: StringLiteral {
         value: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 34
             index: 117
@@ -350,7 +350,7 @@ Program {
       specifiers: Array [
         ImportSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 22
               index: 105
@@ -365,7 +365,7 @@ Program {
           imported: Identifier {
             name: 'as'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 15
                 index: 98
@@ -382,7 +382,7 @@ Program {
             name: BindingIdentifier {
               name: 'foo'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 105
@@ -397,7 +397,7 @@ Program {
             }
             importKind: 'type'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 22
                 index: 105
@@ -416,7 +416,7 @@ Program {
     ImportDeclaration {
       importKind: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 32
           index: 151
@@ -431,7 +431,7 @@ Program {
       source: StringLiteral {
         value: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 31
             index: 150
@@ -447,7 +447,7 @@ Program {
       specifiers: Array [
         ImportSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 19
               index: 138
@@ -462,7 +462,7 @@ Program {
           imported: Identifier {
             name: 't'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 14
                 index: 133
@@ -479,7 +479,7 @@ Program {
             name: BindingIdentifier {
               name: 'u'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 19
                   index: 138
@@ -494,7 +494,7 @@ Program {
             }
             importKind: 'type'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 19
                 index: 138
@@ -513,7 +513,7 @@ Program {
     ImportDeclaration {
       importKind: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 32
           index: 184
@@ -528,7 +528,7 @@ Program {
       source: StringLiteral {
         value: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 31
             index: 183
@@ -544,7 +544,7 @@ Program {
       specifiers: Array [
         ImportSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 19
               index: 171
@@ -559,7 +559,7 @@ Program {
           imported: Identifier {
             name: 'switch'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 19
                 index: 171
@@ -576,7 +576,7 @@ Program {
             name: BindingIdentifier {
               name: 'switch'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 19
                   index: 171
@@ -591,7 +591,7 @@ Program {
             }
             importKind: 'type'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 19
                 index: 171
@@ -610,7 +610,7 @@ Program {
     ImportDeclaration {
       importKind: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 30
           index: 216
@@ -625,7 +625,7 @@ Program {
       source: StringLiteral {
         value: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 29
             index: 215
@@ -641,7 +641,7 @@ Program {
       specifiers: Array [
         ImportSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 17
               index: 203
@@ -656,7 +656,7 @@ Program {
           imported: Identifier {
             name: 't2'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 17
                 index: 203
@@ -673,7 +673,7 @@ Program {
             name: BindingIdentifier {
               name: 't2'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 17
                   index: 203
@@ -688,7 +688,7 @@ Program {
             }
             importKind: 'typeof'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 17
                 index: 203
@@ -707,7 +707,7 @@ Program {
     ImportDeclaration {
       importKind: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 31
           index: 248
@@ -722,7 +722,7 @@ Program {
       source: StringLiteral {
         value: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 30
             index: 247
@@ -738,7 +738,7 @@ Program {
       specifiers: Array [
         ImportSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 18
               index: 235
@@ -753,7 +753,7 @@ Program {
           imported: Identifier {
             name: 'as2'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 18
                 index: 235
@@ -770,7 +770,7 @@ Program {
             name: BindingIdentifier {
               name: 'as2'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 18
                   index: 235
@@ -785,7 +785,7 @@ Program {
             }
             importKind: 'typeof'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 18
                 index: 235
@@ -804,7 +804,7 @@ Program {
     ImportDeclaration {
       importKind: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 35
           index: 284
@@ -819,7 +819,7 @@ Program {
       source: StringLiteral {
         value: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 34
             index: 283
@@ -835,7 +835,7 @@ Program {
       specifiers: Array [
         ImportSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 22
               index: 271
@@ -850,7 +850,7 @@ Program {
           imported: Identifier {
             name: 't'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 16
                 index: 265
@@ -867,7 +867,7 @@ Program {
             name: BindingIdentifier {
               name: 'u2'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 271
@@ -882,7 +882,7 @@ Program {
             }
             importKind: 'typeof'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 22
                 index: 271
@@ -901,7 +901,7 @@ Program {
     ImportDeclaration {
       importKind: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 35
           index: 320
@@ -916,7 +916,7 @@ Program {
       source: StringLiteral {
         value: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 34
             index: 319
@@ -932,7 +932,7 @@ Program {
       specifiers: Array [
         ImportSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 22
               index: 307
@@ -947,7 +947,7 @@ Program {
           imported: Identifier {
             name: 'switch2'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 22
                 index: 307
@@ -964,7 +964,7 @@ Program {
             name: BindingIdentifier {
               name: 'switch2'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 307
@@ -979,7 +979,7 @@ Program {
             }
             importKind: 'typeof'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 22
                 index: 307

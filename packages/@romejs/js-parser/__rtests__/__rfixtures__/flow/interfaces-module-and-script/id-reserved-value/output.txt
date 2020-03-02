@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 20
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'switch'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 16
             index: 16
@@ -47,7 +47,7 @@ Program {
       mixins: Array []
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 19
           index: 19
@@ -64,7 +64,7 @@ Program {
         inexact: undefined
         properties: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 19
             index: 19

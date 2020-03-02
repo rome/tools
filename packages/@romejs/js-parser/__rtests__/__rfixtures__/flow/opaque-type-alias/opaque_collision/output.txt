@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 67
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'opaque'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 18
             index: 18
@@ -45,7 +45,7 @@ Program {
       supertype: undefined
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 28
           index: 28
@@ -59,7 +59,7 @@ Program {
       }
       impltype: NumberKeywordTypeAnnotation {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 27
             index: 27
@@ -77,7 +77,7 @@ Program {
       id: BindingIdentifier {
         name: 'not_transparent'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 27
             index: 56
@@ -93,7 +93,7 @@ Program {
       supertype: undefined
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 37
           index: 66
@@ -109,7 +109,7 @@ Program {
         id: Identifier {
           name: 'opaque'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 36
               index: 65
@@ -124,7 +124,7 @@ Program {
         }
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 36
             index: 65

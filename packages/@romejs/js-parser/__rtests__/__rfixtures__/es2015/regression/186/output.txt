@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 24
@@ -24,7 +24,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 23
           index: 23
@@ -39,7 +39,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'const'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 23
             index: 23
@@ -56,7 +56,7 @@ Program {
             id: BindingIdentifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 7
                   index: 7
@@ -70,7 +70,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 22
                 index: 22
@@ -84,7 +84,7 @@ Program {
             }
             init: ObjectExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 22
@@ -102,7 +102,7 @@ Program {
                     value: Identifier {
                       name: 'async'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 16
                           index: 16
@@ -116,7 +116,7 @@ Program {
                       }
                     }
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 16
                         index: 16
@@ -132,7 +132,7 @@ Program {
                   value: ReferenceIdentifier {
                     name: 'async'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 16
                         index: 16
@@ -146,7 +146,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 16
                       index: 16
@@ -164,7 +164,7 @@ Program {
                     value: Identifier {
                       name: 'bar'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 21
                           index: 21
@@ -179,7 +179,7 @@ Program {
                     }
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 21
                         index: 21
@@ -195,7 +195,7 @@ Program {
                   value: ReferenceIdentifier {
                     name: 'bar'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 21
                         index: 21
@@ -209,7 +209,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 21
                       index: 21

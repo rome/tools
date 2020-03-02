@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 22
@@ -25,7 +25,7 @@ Program {
     TryStatement {
       finalizer: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 21
           index: 21
@@ -41,7 +41,7 @@ Program {
         body: Array []
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 7
@@ -56,7 +56,7 @@ Program {
       }
       handler: CatchClause {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 21
             index: 21
@@ -71,7 +71,7 @@ Program {
         param: BindingIdentifier {
           name: 'e'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 16
               index: 16
@@ -88,7 +88,7 @@ Program {
           body: Array []
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 21
               index: 21

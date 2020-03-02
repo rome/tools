@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 12
       index: 12
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 12
           index: 12
@@ -38,7 +38,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 12
             index: 12
@@ -56,7 +56,7 @@ Program {
           rest: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 5
               index: 5
@@ -72,7 +72,7 @@ Program {
             BindingIdentifier {
               name: 'e'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 1
                   index: 1
@@ -90,7 +90,7 @@ Program {
         body: BlockStatement {
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 12
               index: 12
@@ -105,7 +105,7 @@ Program {
           body: Array [
             ExpressionStatement {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 10
@@ -120,7 +120,7 @@ Program {
               expression: NumericLiteral {
                 value: 42
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 9
                     index: 9

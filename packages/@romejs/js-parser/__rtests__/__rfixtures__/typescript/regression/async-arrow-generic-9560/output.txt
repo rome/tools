@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 1
       index: 80
@@ -26,7 +26,7 @@ Program {
       id: BindingIdentifier {
         name: 'Cl'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 8
             index: 8
@@ -40,7 +40,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 1
           index: 80
@@ -58,7 +58,7 @@ Program {
         superTypeParameters: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 1
             index: 80
@@ -76,7 +76,7 @@ Program {
               value: Identifier {
                 name: 'a'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 3
                     index: 14
@@ -91,7 +91,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 3
                   index: 14
@@ -106,7 +106,7 @@ Program {
             }
             value: ArrowFunctionExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 3
                   index: 49
@@ -127,7 +127,7 @@ Program {
                 returnType: undefined
                 thisType: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 20
                     index: 31
@@ -141,7 +141,7 @@ Program {
                 }
                 typeParameters: TSTypeParameterDeclaration {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 14
                       index: 25
@@ -159,7 +159,7 @@ Program {
                       constraint: undefined
                       default: undefined
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.ts'
                         end: Object {
                           column: 13
                           index: 24
@@ -178,7 +178,7 @@ Program {
               body: BlockStatement {
                 directives: Array []
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 3
                     index: 49
@@ -193,7 +193,7 @@ Program {
                 body: Array [
                   ExpressionStatement {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.ts'
                       end: Object {
                         column: 12
                         index: 45
@@ -207,7 +207,7 @@ Program {
                     }
                     expression: AwaitExpression {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.ts'
                         end: Object {
                           column: 11
                           index: 44
@@ -222,7 +222,7 @@ Program {
                       argument: NumericLiteral {
                         value: 0
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.ts'
                           end: Object {
                             column: 11
                             index: 44
@@ -243,7 +243,7 @@ Program {
             definite: undefined
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 4
                 index: 50
@@ -268,7 +268,7 @@ Program {
                 line: 2
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 3
                   index: 14
@@ -287,7 +287,7 @@ Program {
               value: Identifier {
                 name: 'b'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 3
                     index: 55
@@ -302,7 +302,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 3
                   index: 55
@@ -317,7 +317,7 @@ Program {
             }
             value: ArrowFunctionExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 3
                   index: 77
@@ -333,7 +333,7 @@ Program {
                 body: Array []
                 directives: Array []
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 3
                     index: 77
@@ -355,7 +355,7 @@ Program {
                 returnType: undefined
                 thisType: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 20
                     index: 72
@@ -369,7 +369,7 @@ Program {
                 }
                 typeParameters: TSTypeParameterDeclaration {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 14
                       index: 66
@@ -387,7 +387,7 @@ Program {
                       constraint: undefined
                       default: undefined
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.ts'
                         end: Object {
                           column: 13
                           index: 65
@@ -407,7 +407,7 @@ Program {
             definite: undefined
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 4
                 index: 78
@@ -432,7 +432,7 @@ Program {
                 line: 6
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 3
                   index: 55

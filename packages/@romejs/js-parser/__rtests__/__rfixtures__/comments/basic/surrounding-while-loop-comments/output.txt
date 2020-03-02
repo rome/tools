@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 69
@@ -24,7 +24,7 @@ Program {
     CommentBlock {
       value: ' infinite '
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 29
           index: 29
@@ -40,7 +40,7 @@ Program {
     CommentBlock {
       value: ' bar '
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 56
           index: 56
@@ -59,7 +59,7 @@ Program {
       id: BindingIdentifier {
         name: 'f'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 10
             index: 10
@@ -73,7 +73,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 68
           index: 68
@@ -96,7 +96,7 @@ Program {
         thisType: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 13
             index: 13
@@ -112,7 +112,7 @@ Program {
       body: BlockStatement {
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 68
             index: 68
@@ -127,7 +127,7 @@ Program {
         body: Array [
           WhileStatement {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 46
                 index: 46
@@ -142,7 +142,7 @@ Program {
             test: BooleanLiteral {
               value: true
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 41
                   index: 41
@@ -158,7 +158,7 @@ Program {
                 CommentBlock {
                   value: ' infinite '
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 29
                       index: 29
@@ -178,7 +178,7 @@ Program {
               directives: Array []
               leadingComments: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 46
                   index: 46
@@ -194,7 +194,7 @@ Program {
                 CommentBlock {
                   value: ' bar '
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 56
                       index: 56
@@ -212,7 +212,7 @@ Program {
           }
           VariableDeclarationStatement {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 66
                 index: 66
@@ -228,7 +228,7 @@ Program {
               CommentBlock {
                 value: ' bar '
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 56
                     index: 56
@@ -246,7 +246,7 @@ Program {
               kind: 'var'
               leadingComments: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 66
                   index: 66
@@ -263,7 +263,7 @@ Program {
                   id: BindingIdentifier {
                     name: 'each'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 65
                         index: 65
@@ -279,7 +279,7 @@ Program {
                       CommentBlock {
                         value: ' bar '
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 56
                             index: 56
@@ -297,7 +297,7 @@ Program {
                   init: undefined
                   leadingComments: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 65
                       index: 65

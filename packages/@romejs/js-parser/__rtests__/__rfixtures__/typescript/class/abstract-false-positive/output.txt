@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 88
@@ -24,7 +24,7 @@ Program {
     CommentLine {
       value: ' Exports an identifier, doesn\'t try parsing `abstract class`'
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 62
           index: 62
@@ -41,7 +41,7 @@ Program {
   body: Array [
     ExportDefaultDeclaration {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 24
           index: 87
@@ -57,7 +57,7 @@ Program {
         CommentLine {
           value: ' Exports an identifier, doesn\'t try parsing `abstract class`'
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 62
               index: 62
@@ -74,7 +74,7 @@ Program {
       declaration: ReferenceIdentifier {
         name: 'abstract'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 23
             index: 86
@@ -90,7 +90,7 @@ Program {
           CommentLine {
             value: ' Exports an identifier, doesn\'t try parsing `abstract class`'
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 62
                 index: 62

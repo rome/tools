@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: true
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 31
       index: 31
@@ -27,7 +27,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 31
           index: 31
@@ -42,7 +42,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'var'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 31
             index: 31
@@ -59,7 +59,7 @@ Program {
             id: BindingIdentifier {
               name: 'a'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 31
                   index: 31
@@ -74,7 +74,7 @@ Program {
               meta: PatternMeta {
                 definite: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 31
                     index: 31
@@ -88,7 +88,7 @@ Program {
                 }
                 typeAnnotation: IntersectionTypeAnnotation {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 31
                       index: 31
@@ -103,7 +103,7 @@ Program {
                   types: Array [
                     NumberKeywordTypeAnnotation {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 13
                           index: 13
@@ -118,7 +118,7 @@ Program {
                     }
                     UnionTypeAnnotation {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 30
                           index: 30
@@ -133,7 +133,7 @@ Program {
                       types: Array [
                         StringKeywordTypeAnnotation {
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 23
                               index: 23
@@ -148,7 +148,7 @@ Program {
                         }
                         BooleanKeywordTypeAnnotation {
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 30
                               index: 30
@@ -169,7 +169,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 31
                 index: 31

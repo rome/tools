@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 34
       index: 34
@@ -27,7 +27,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 34
           index: 34
@@ -41,7 +41,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 33
             index: 33
@@ -56,7 +56,7 @@ Program {
         body: ReferenceIdentifier {
           name: 'rest'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 33
               index: 33
@@ -77,7 +77,7 @@ Program {
           returnType: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 29
               index: 29
@@ -92,7 +92,7 @@ Program {
           rest: BindingIdentifier {
             name: 'rest'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 28
                 index: 28
@@ -107,7 +107,7 @@ Program {
             meta: PatternMeta {
               optional: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 28
                   index: 28
@@ -123,7 +123,7 @@ Program {
                 id: Identifier {
                   name: 'Array'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 16
                       index: 16
@@ -137,7 +137,7 @@ Program {
                   }
                 }
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 24
                     index: 24
@@ -151,7 +151,7 @@ Program {
                 }
                 typeParameters: FlowTypeParameterInstantiation {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 24
                       index: 24
@@ -166,7 +166,7 @@ Program {
                   params: Array [
                     NumberKeywordTypeAnnotation {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 23
                           index: 23

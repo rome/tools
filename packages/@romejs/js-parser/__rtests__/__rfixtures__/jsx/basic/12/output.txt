@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 41
       index: 41
@@ -27,7 +27,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 41
           index: 41
@@ -43,7 +43,7 @@ Program {
         name: JSXIdentifier {
           name: 'div'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 4
               index: 4
@@ -60,7 +60,7 @@ Program {
         selfClosing: false
         typeArguments: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 41
             index: 41
@@ -77,7 +77,7 @@ Program {
             name: JSXIdentifier {
               name: 'br'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 8
                   index: 8
@@ -95,7 +95,7 @@ Program {
             selfClosing: true
             typeArguments: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 11
                 index: 11
@@ -111,7 +111,7 @@ Program {
           JSXText {
             value: '7x invalid-js-identifier'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 35
                 index: 35

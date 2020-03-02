@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'jsx'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 207
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'X'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 15
             index: 15
@@ -47,7 +47,7 @@ Program {
       mixins: Array []
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 1
           index: 205
@@ -63,7 +63,7 @@ Program {
         exact: false
         inexact: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 1
             index: 205
@@ -81,7 +81,7 @@ Program {
             key: Identifier {
               name: 'foobar'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 8
                   index: 26
@@ -98,7 +98,7 @@ Program {
               params: Array []
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 19
                   index: 37
@@ -112,7 +112,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 19
                     index: 37
@@ -127,7 +127,7 @@ Program {
               }
               typeParameters: FlowTypeParameterDeclaration {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 11
                     index: 29
@@ -146,7 +146,7 @@ Program {
                     default: undefined
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 10
                         index: 28
@@ -167,7 +167,7 @@ Program {
             static: false
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 19
                 index: 37
@@ -185,7 +185,7 @@ Program {
             key: Identifier {
               name: 'delete'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 8
                   index: 47
@@ -202,7 +202,7 @@ Program {
               params: Array []
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 19
                   index: 58
@@ -216,7 +216,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 19
                     index: 58
@@ -231,7 +231,7 @@ Program {
               }
               typeParameters: FlowTypeParameterDeclaration {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 11
                     index: 50
@@ -250,7 +250,7 @@ Program {
                     default: undefined
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 10
                         index: 49
@@ -271,7 +271,7 @@ Program {
             static: false
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 19
                 index: 58
@@ -289,7 +289,7 @@ Program {
             key: Identifier {
               name: 'yield'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 7
                   index: 67
@@ -306,7 +306,7 @@ Program {
               params: Array []
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 18
                   index: 78
@@ -320,7 +320,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 18
                     index: 78
@@ -335,7 +335,7 @@ Program {
               }
               typeParameters: FlowTypeParameterDeclaration {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 10
                     index: 70
@@ -354,7 +354,7 @@ Program {
                     default: undefined
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 9
                         index: 69
@@ -375,7 +375,7 @@ Program {
             static: false
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 18
                 index: 78
@@ -393,7 +393,7 @@ Program {
             key: Identifier {
               name: 'do'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 4
                   index: 84
@@ -410,7 +410,7 @@ Program {
               params: Array []
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 15
                   index: 95
@@ -424,7 +424,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 15
                     index: 95
@@ -439,7 +439,7 @@ Program {
               }
               typeParameters: FlowTypeParameterDeclaration {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 7
                     index: 87
@@ -458,7 +458,7 @@ Program {
                     default: undefined
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 6
                         index: 86
@@ -479,7 +479,7 @@ Program {
             static: false
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 15
                 index: 95
@@ -497,7 +497,7 @@ Program {
             key: Identifier {
               name: 'foobar'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 15
                   index: 112
@@ -514,7 +514,7 @@ Program {
               params: Array []
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 26
                   index: 123
@@ -528,7 +528,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 26
                     index: 123
@@ -543,7 +543,7 @@ Program {
               }
               typeParameters: FlowTypeParameterDeclaration {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 18
                     index: 115
@@ -562,7 +562,7 @@ Program {
                     default: undefined
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 17
                         index: 114
@@ -583,7 +583,7 @@ Program {
             static: true
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 26
                 index: 123
@@ -601,7 +601,7 @@ Program {
             key: Identifier {
               name: 'delete'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 15
                   index: 140
@@ -618,7 +618,7 @@ Program {
               params: Array []
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 26
                   index: 151
@@ -632,7 +632,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 26
                     index: 151
@@ -647,7 +647,7 @@ Program {
               }
               typeParameters: FlowTypeParameterDeclaration {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 18
                     index: 143
@@ -666,7 +666,7 @@ Program {
                     default: undefined
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 17
                         index: 142
@@ -687,7 +687,7 @@ Program {
             static: true
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 26
                 index: 151
@@ -705,7 +705,7 @@ Program {
             key: Identifier {
               name: 'yield'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 14
                   index: 167
@@ -722,7 +722,7 @@ Program {
               params: Array []
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 25
                   index: 178
@@ -736,7 +736,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 25
                     index: 178
@@ -751,7 +751,7 @@ Program {
               }
               typeParameters: FlowTypeParameterDeclaration {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 17
                     index: 170
@@ -770,7 +770,7 @@ Program {
                     default: undefined
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 16
                         index: 169
@@ -791,7 +791,7 @@ Program {
             static: true
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 25
                 index: 178
@@ -809,7 +809,7 @@ Program {
             key: Identifier {
               name: 'do'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 11
                   index: 191
@@ -826,7 +826,7 @@ Program {
               params: Array []
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 202
@@ -840,7 +840,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 22
                     index: 202
@@ -855,7 +855,7 @@ Program {
               }
               typeParameters: FlowTypeParameterDeclaration {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 14
                     index: 194
@@ -874,7 +874,7 @@ Program {
                     default: undefined
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 13
                         index: 193
@@ -895,7 +895,7 @@ Program {
             static: true
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 22
                 index: 202
@@ -913,7 +913,7 @@ Program {
     }
     EmptyStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 2
           index: 206

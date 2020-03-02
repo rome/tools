@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 46
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 45
           index: 45
@@ -38,7 +38,7 @@ Program {
       }
       expression: CallExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 45
             index: 45
@@ -54,7 +54,7 @@ Program {
           NumericLiteral {
             value: 2_014
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 44
                 index: 44
@@ -70,7 +70,7 @@ Program {
         ]
         callee: MemberExpression {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 39
               index: 39
@@ -86,7 +86,7 @@ Program {
             value: Identifier {
               name: 'prepareForElection'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 39
                   index: 39
@@ -100,7 +100,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 39
                 index: 39
@@ -115,7 +115,7 @@ Program {
           }
           object: MemberExpression {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 20
                 index: 20
@@ -131,7 +131,7 @@ Program {
               value: Identifier {
                 name: 'Indonesia'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 20
                     index: 20
@@ -145,7 +145,7 @@ Program {
                 }
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 20
                   index: 20
@@ -160,7 +160,7 @@ Program {
             }
             object: MemberExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 10
@@ -175,7 +175,7 @@ Program {
               object: ReferenceIdentifier {
                 name: 'earth'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 5
                     index: 5
@@ -192,7 +192,7 @@ Program {
                 value: Identifier {
                   name: 'asia'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 10
                       index: 10
@@ -206,7 +206,7 @@ Program {
                   }
                 }
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 10
                     index: 10

@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 55
@@ -27,7 +27,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 54
           index: 54
@@ -42,7 +42,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'let'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 54
             index: 54
@@ -59,7 +59,7 @@ Program {
             id: BindingIdentifier {
               name: 'child'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 23
                   index: 23
@@ -74,7 +74,7 @@ Program {
               meta: PatternMeta {
                 definite: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 23
                     index: 23
@@ -90,7 +90,7 @@ Program {
                   id: Identifier {
                     name: 'Element'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 18
                         index: 18
@@ -104,7 +104,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 23
                       index: 23
@@ -118,7 +118,7 @@ Program {
                   }
                   typeParameters: FlowTypeParameterInstantiation {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 23
                         index: 23
@@ -133,7 +133,7 @@ Program {
                     params: Array [
                       AnyKeywordTypeAnnotation {
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 22
                             index: 22
@@ -152,7 +152,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 53
                 index: 53
@@ -168,7 +168,7 @@ Program {
               name: JSXIdentifier {
                 name: 'img'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 30
                     index: 30
@@ -185,7 +185,7 @@ Program {
               selfClosing: true
               typeArguments: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 53
                   index: 53
@@ -202,7 +202,7 @@ Program {
                   name: JSXIdentifier {
                     name: 'src'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 34
                         index: 34
@@ -217,7 +217,7 @@ Program {
                   }
                   value: JSXExpressionContainer {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 40
                         index: 40
@@ -232,7 +232,7 @@ Program {
                     expression: ReferenceIdentifier {
                       name: 'url'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 39
                           index: 39
@@ -247,7 +247,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 40
                       index: 40
@@ -264,7 +264,7 @@ Program {
                   name: JSXIdentifier {
                     name: 'key'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 44
                         index: 44
@@ -280,7 +280,7 @@ Program {
                   value: StringLiteral {
                     value: 'img'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 50
                         index: 50
@@ -294,7 +294,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 50
                       index: 50

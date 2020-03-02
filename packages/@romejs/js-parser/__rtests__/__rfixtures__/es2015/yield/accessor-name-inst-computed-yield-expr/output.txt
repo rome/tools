@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: true
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 156
@@ -24,7 +24,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 22
           index: 22
@@ -39,7 +39,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'var'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 22
             index: 22
@@ -56,7 +56,7 @@ Program {
             id: BindingIdentifier {
               name: 'yieldSet'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 12
                   index: 12
@@ -71,7 +71,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 12
                 index: 12
@@ -88,7 +88,7 @@ Program {
             id: BindingIdentifier {
               name: 'C'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 15
                   index: 15
@@ -103,7 +103,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 15
                 index: 15
@@ -120,7 +120,7 @@ Program {
             id: BindingIdentifier {
               name: 'iter'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 21
                   index: 21
@@ -135,7 +135,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 21
                 index: 21
@@ -155,7 +155,7 @@ Program {
       id: BindingIdentifier {
         name: 'g'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 11
             index: 34
@@ -169,7 +169,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 1
           index: 155
@@ -192,7 +192,7 @@ Program {
         thisType: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 14
             index: 37
@@ -208,7 +208,7 @@ Program {
       body: BlockStatement {
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 1
             index: 155
@@ -225,7 +225,7 @@ Program {
             id: BindingIdentifier {
               name: 'C_'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 49
@@ -239,7 +239,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 3
                 index: 142
@@ -257,7 +257,7 @@ Program {
               superTypeParameters: undefined
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 3
                   index: 142
@@ -277,7 +277,7 @@ Program {
                       argument: undefined
                       delegate: false
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 14
                           index: 66
@@ -292,7 +292,7 @@ Program {
                     }
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 15
                         index: 67
@@ -306,7 +306,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 41
                       index: 93
@@ -329,7 +329,7 @@ Program {
                     thisType: undefined
                     typeParameters: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 18
                         index: 70
@@ -355,7 +355,7 @@ Program {
                       line: 4
                     }
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 15
                         index: 67
@@ -371,7 +371,7 @@ Program {
                   body: BlockStatement {
                     directives: Array []
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 41
                         index: 93
@@ -386,7 +386,7 @@ Program {
                     body: Array [
                       ReturnStatement {
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 39
                             index: 91
@@ -401,7 +401,7 @@ Program {
                         argument: StringLiteral {
                           value: 'get yield'
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 38
                               index: 90
@@ -425,7 +425,7 @@ Program {
                       argument: undefined
                       delegate: false
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 14
                           index: 108
@@ -440,7 +440,7 @@ Program {
                     }
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 15
                         index: 109
@@ -454,7 +454,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 44
                       index: 138
@@ -479,7 +479,7 @@ Program {
                       line: 5
                     }
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 15
                         index: 109
@@ -502,7 +502,7 @@ Program {
                     thisType: undefined
                     typeParameters: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 23
                         index: 117
@@ -518,7 +518,7 @@ Program {
                       BindingIdentifier {
                         name: 'param'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 21
                             index: 115
@@ -534,7 +534,7 @@ Program {
                           optional: undefined
                           typeAnnotation: undefined
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 21
                               index: 115
@@ -553,7 +553,7 @@ Program {
                   body: BlockStatement {
                     directives: Array []
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 44
                         index: 138
@@ -568,7 +568,7 @@ Program {
                     body: Array [
                       ExpressionStatement {
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 42
                             index: 136
@@ -583,7 +583,7 @@ Program {
                         expression: AssignmentExpression {
                           operator: '='
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 41
                               index: 135
@@ -598,7 +598,7 @@ Program {
                           left: AssignmentIdentifier {
                             name: 'yieldSet'
                             loc: Object {
-                              filename: '..'
+                              filename: 'input.js'
                               end: Object {
                                 column: 33
                                 index: 127
@@ -614,7 +614,7 @@ Program {
                           right: ReferenceIdentifier {
                             name: 'param'
                             loc: Object {
-                              filename: '..'
+                              filename: 'input.js'
                               end: Object {
                                 column: 41
                                 index: 135
@@ -637,7 +637,7 @@ Program {
           }
           ExpressionStatement {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 9
                 index: 153
@@ -652,7 +652,7 @@ Program {
             expression: AssignmentExpression {
               operator: '='
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 8
                   index: 152
@@ -667,7 +667,7 @@ Program {
               left: AssignmentIdentifier {
                 name: 'C'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 3
                     index: 147
@@ -683,7 +683,7 @@ Program {
               right: ReferenceIdentifier {
                 name: 'C_'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 8
                     index: 152
