@@ -15,12 +15,16 @@ const os = require('os');
 
 const DEV_FOLDER = path.join(os.tmpdir(), 'rome-dev');
 
+function inverse(str) {
+  return `\u001b[7m ${str} \u001b[27m`;
+}
+
 process.env.ROME_CACHE = '0';
 
 unlink(DEV_FOLDER);
 fs.mkdirSync(DEV_FOLDER);
 
-console.log('Building trunk');
+console.log(inverse('Building trunk'));
 execNode([
   path.join(__dirname, 'vendor/rome.cjs'),
   'bundle',
@@ -28,5 +32,5 @@ execNode([
   DEV_FOLDER,
 ]);
 
-console.log('Executing trunk');
+console.log(inverse('Executing trunk'));
 execNode([path.join(DEV_FOLDER, 'index.js'), ...argv]);
