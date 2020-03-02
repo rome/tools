@@ -18,17 +18,20 @@ const OPERATORS_TO_CHECK = new Set([
   '!==',
 ]);
 
-const isNegZero = (node: AnyNode) =>
-  node?.type === 'UnaryExpression' &&
-  node.operator === '-' &&
-  node.argument?.type === 'NumericLiteral' &&
-  node.argument.value === 0;
+function isNegZero(node: AnyNode): boolean {
+  return (
+    node.type === 'UnaryExpression' &&
+    node.operator === '-' &&
+    node.argument?.type === 'NumericLiteral' &&
+    node.argument.value === 0
+  );
+}
 
 export default {
   name: 'noCompareNegZero',
   enter(path: Path) {
     const {node} = path;
-    
+
     if (
       node.type === 'BinaryExpression' &&
       OPERATORS_TO_CHECK.has(node.operator) &&
