@@ -7,16 +7,7 @@
 import {AnyNode} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 
-const OPERATORS_TO_CHECK = new Set([
-  '>',
-  '>=',
-  '<',
-  '<=',
-  '==',
-  '===',
-  '!=',
-  '!==',
-]);
+const OPERATORS_TO_CHECK = ['>', '>=', '<', '<=', '==', '===', '!=', '!=='];
 
 function isNegZero(node: AnyNode): boolean {
   return (
@@ -34,7 +25,7 @@ export default {
 
     if (
       node.type === 'BinaryExpression' &&
-      OPERATORS_TO_CHECK.has(node.operator) &&
+      OPERATORS_TO_CHECK.includes(node.operator) &&
       (isNegZero(node.left) || isNegZero(node.right))
     ) {
       path.context.addNodeDiagnostic(node, {
