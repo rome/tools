@@ -51,7 +51,9 @@ export default async function executeMain(
     setImmediate,
     setInterval,
     setTimeout,
-    require: internalModule.createRequireFromPath(filename),
+    require:
+      internalModule.createRequire(filename) ||
+      internalModule.createRequireFromPath(filename),
     console,
     __dirname: path.getParent().join(),
     __filename: filename,
