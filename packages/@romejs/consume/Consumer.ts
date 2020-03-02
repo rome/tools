@@ -47,7 +47,6 @@ import {
   RelativeFilePath,
   URLFilePath,
   createUnknownFilePath,
-  createRelativeFilePath,
   AbsoluteFilePath,
   createURLFilePath,
   createAbsoluteFilePath,

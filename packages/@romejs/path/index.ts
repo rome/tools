@@ -272,7 +272,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
   }
 
   getSegments(): PathSegments {
-    if (this.isExplicitFolder()) {
+    if (this.isExplicitFolder() && this.segments.length !== 1) {
       return this.segments.slice(0, -1);
     } else {
       return this.segments;
