@@ -28,6 +28,7 @@ export default {
   name: 'noCompareNegZero',
   enter(path: Path) {
     const {node} = path;
+    
     if (
       node.type === 'BinaryExpression' &&
       OPERATORS_TO_CHECK.has(node.operator) &&
