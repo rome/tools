@@ -72,7 +72,7 @@ for (let i = 0; i < relativeTests.length; i++) {
         },
         out: {
           filename: relative.join(),
-          segments: relative.getSegments(),
+          segments: relative.getRawSegments(),
         },
       },
     });
@@ -83,12 +83,13 @@ for (let i = 0; i < relativeTests.length; i++) {
 
 const segmentTests: Array<[string, Array<string>]> = [
   ['./../images/test.png', ['..', 'images', 'test.png']],
+  ['foo/', ['foo', '']],
 ];
 
 for (let i = 0; i < segmentTests.length; i++) {
   const [loc, expectedSegments] = segmentTests[i];
 
   test(`segments: ${i}: ${loc}`, t => {
-    t.looksLike(createUnknownFilePath(loc).getSegments(), expectedSegments);
+    t.looksLike(createUnknownFilePath(loc).getRawSegments(), expectedSegments);
   });
 }

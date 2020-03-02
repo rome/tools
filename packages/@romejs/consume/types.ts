@@ -70,12 +70,13 @@ export type ConsumerOnDefinition = (
 export type ConsumerHandleUnexpected = (diagnostic: PartialDiagnostic) => void;
 
 export type ConsumerOptions = {
-  handleUnexpectedDiagnostic: undefined | ConsumerHandleUnexpected;
-  onDefinition: undefined | ConsumerOnDefinition;
-  propertyMetadata: undefined | ConsumePropertyMetadata;
-  filePath: undefined | UnknownFilePath;
+  handleUnexpectedDiagnostic?: ConsumerHandleUnexpected;
+  onDefinition?: ConsumerOnDefinition;
+  propertyMetadata?: ConsumePropertyMetadata;
+  filePath?: UnknownFilePath;
   objectPath: ConsumePath;
   context: ConsumeContext;
   value: unknown;
-  parent: undefined | Consumer;
+  parent?: Consumer;
+  forceDiagnosticTarget?: ConsumeSourceLocationRequestTarget;
 };

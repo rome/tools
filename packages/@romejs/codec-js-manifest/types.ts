@@ -9,7 +9,11 @@ import {ManifestDependencies} from './dependencies';
 import {SPDXExpressionNode} from '@romejs/codec-spdx-license';
 import {SemverVersionNode} from '@romejs/codec-semver';
 import {Consumer} from '@romejs/consume';
-import {AbsoluteFilePath} from '@romejs/path';
+import {
+  AbsoluteFilePath,
+  RelativeFilePath,
+  RelativeFilePathMap,
+} from '@romejs/path';
 import {JSONObject, JSONPropertyValue} from '@romejs/codec-json';
 import {Dict} from '@romejs/typescript-helpers';
 import {PathPatterns} from '@romejs/path-match';
@@ -41,6 +45,16 @@ export type ManifestBugs = {
   email: MString;
 };
 
+export type ManifestExports = RelativeFilePathMap<ManifestExportConditions>;
+
+export type ManifestExportConditions = Map<
+  string,
+  {
+    consumer: Consumer;
+    relative: RelativeFilePath;
+  }
+>;
+
 export type Manifest = {
   name: MString;
   description: MString;
@@ -53,10 +67,8 @@ export type Manifest = {
   repository: undefined | ManifestRepository;
   bugs: undefined | ManifestBugs;
 
-  browser: MString;
   main: MString;
-  'rome:main': MString;
-  'jsnext:main': MString;
+  exports: boolean | ManifestExports;
 
   author: undefined | ManifestPerson;
   contributors: undefined | Array<ManifestPerson>;
@@ -93,10 +105,8 @@ export type JSONManifest = {
   repository: Manifest['repository'];
   bugs: Manifest['bugs'];
 
-  browser: Manifest['browser'];
   main: Manifest['main'];
-  'rome:main': Manifest['rome:main'];
-  'jsnext:main': Manifest['jsnext:main'];
+  exports: undefined | false | JSONManifestExports;
 
   author: Manifest['author'];
   contributors: Manifest['contributors'];
@@ -119,6 +129,8 @@ export type JSONManifest = {
 
   [key: string]: JSONPropertyValue;
 };
+
+export type JSONManifestExports = Dict<Dict<string> | string>;
 
 export type ManifestDefinition = {
   path: AbsoluteFilePath;
