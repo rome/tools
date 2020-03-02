@@ -79,6 +79,40 @@ test('undeclared variable', async t => {
   ]);
 });
 
+test('unsafe negation', async t => {
+  const res = await testLint(
+    `!1 in [1,2]`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.snapshot(res);
+});
+
+test('no async promise executor', async t => {
+  const validTestCases = [
+    'new Promise(() => {})',
+    'new Promise(() => {}, async function unrelated() {})',
+    'class Foo {} new Foo(async () => {})',
+  ];
+  const invalidTestCases = [
+    'new Promise(async function foo() {})',
+    'new Promise(async () => {})',
+    'new Promise(((((async () => {})))))',
+  ];
+  for (const validTestCase of validTestCases) {
+    const {diagnostics} = await testLint(
+      validTestCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    );
+    t.is(diagnostics.length, 0);
+  }
+  for (const invalidTestCase of invalidTestCases) {
+    t.snapshot(
+      await testLint(invalidTestCase, LINT_ENABLED_FORMAT_DISABLED_CONFIG),
+    );
+  }
+});
+
 test('format disabled in project config should not regenerate the file', async t => {
   // Intentionally weird formatting
   const sourceText = 'foobar ( "yes" );';
@@ -94,7 +128,7 @@ test('format enabled in project config should result in regenerated file', async
   t.is(res.src, "foobar('yes');\n");
 });
 
-test.only('disallows comparing negative zero', async t => {
+test('disallows comparing negative zero', async t => {
   const sourceTextA = '(1 >= -0)';
 
   const sourceTextB = '(1 >= 0)';
@@ -124,4 +158,26 @@ test.only('disallows comparing negative zero', async t => {
 
   const res2 = await testLint(sourceTextB, LINT_AND_FORMAT_ENABLED_CONFIG);
   t.looksLike(res2.diagnostics, []);
+});
+
+test('no label var', async t => {
+  const badLabel = await testLint(
+    `
+  const x = "test";
+  x: const y = "test";
+  `,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.truthy(badLabel.diagnostics.find(d => d.category === 'lint/noLabelVar'));
+
+  const okLabel = await testLint(
+    `
+  const x = "test";
+  z: const y = "test";
+  `,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.falsy(okLabel.diagnostics.find(d => d.category === 'lint/noLabelVar'));
 });
