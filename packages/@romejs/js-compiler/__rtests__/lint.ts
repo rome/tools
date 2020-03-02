@@ -128,6 +128,38 @@ test('format enabled in project config should result in regenerated file', async
   t.is(res.src, "foobar('yes');\n");
 });
 
+test('disallows comparing negative zero', async t => {
+  const sourceTextA = '(1 >= -0)';
+
+  const sourceTextB = '(1 >= 0)';
+
+  const res1 = await testLint(sourceTextA, LINT_AND_FORMAT_ENABLED_CONFIG);
+  t.looksLike(res1.diagnostics, [
+    {
+      category: 'lint/noCompareNegZero',
+      filename: 'unknown',
+      language: 'js',
+      message: "Do not use the '>=' operator to compare against -0.",
+      mtime: undefined,
+      sourceType: 'module',
+      origins: [{category: 'lint'}],
+      end: {
+        column: 8,
+        index: 8,
+        line: 1,
+      },
+      start: {
+        column: 1,
+        index: 1,
+        line: 1,
+      },
+    },
+  ]);
+
+  const res2 = await testLint(sourceTextB, LINT_AND_FORMAT_ENABLED_CONFIG);
+  t.looksLike(res2.diagnostics, []);
+});
+
 test('no label var', async t => {
   const badLabel = await testLint(
     `
