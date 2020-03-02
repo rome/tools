@@ -361,6 +361,10 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
     const items: Array<FilePathOrString> = Array.isArray(raw) ? raw : [raw];
 
+    if (items.length === 0) {
+      return this._assert();
+    }
+
     let segments: PathSegments = this.getSegments();
 
     for (const item of items) {
