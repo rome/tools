@@ -9,6 +9,7 @@ import defaultExportSameBasename from './defaultExportSameBasename';
 import undeclaredVariables from './undeclaredVariables';
 import unusedVariables from './unusedVariables';
 import emptyBlocks from './emptyBlocks';
+import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noLabelVar from './noLabelVar';
 
 export const lintTransforms = [
@@ -16,5 +17,6 @@ export const lintTransforms = [
   defaultExportSameBasename,
   unusedVariables,
   emptyBlocks,
+  noAsyncPromiseExecutor,
   noLabelVar,
 ];

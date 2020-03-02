@@ -79,6 +79,31 @@ test('undeclared variable', async t => {
   ]);
 });
 
+test('no async promise executor', async t => {
+  const validTestCases = [
+    'new Promise(() => {})',
+    'new Promise(() => {}, async function unrelated() {})',
+    'class Foo {} new Foo(async () => {})',
+  ];
+  const invalidTestCases = [
+    'new Promise(async function foo() {})',
+    'new Promise(async () => {})',
+    'new Promise(((((async () => {})))))',
+  ];
+  for (const validTestCase of validTestCases) {
+    const {diagnostics} = await testLint(
+      validTestCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    );
+    t.is(diagnostics.length, 0);
+  }
+  for (const invalidTestCase of invalidTestCases) {
+    t.snapshot(
+      await testLint(invalidTestCase, LINT_ENABLED_FORMAT_DISABLED_CONFIG),
+    );
+  }
+});
+
 test('format disabled in project config should not regenerate the file', async t => {
   // Intentionally weird formatting
   const sourceText = 'foobar ( "yes" );';
