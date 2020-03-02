@@ -433,9 +433,15 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
   for (const [relative, value] of consumer.asMap()) {
     // If it's not a relative path then it's a platform for the root
     if (relative[0] !== '.') {
+      if (exports.size > 0) {
+        value.unexpected(
+          'Cannot mix a root conditional export with relative paths',
+        );
+      }
+
       dotConditions.set(relative, {
         consumer: value,
-        relative: createRelativeFilePath(value.asString()),
+        relative: value.asExplicitRelativeFilePath(),
       });
       continue;
     }
@@ -451,13 +457,13 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
     if (typeof value.asUnknown() === 'string') {
       conditions.set('default', {
         consumer: value,
-        relative: createRelativeFilePath(value.asString()),
+        relative: value.asExplicitRelativeFilePath(),
       });
     } else {
       for (const [type, relativeAlias] of value.asMap()) {
         conditions.set(type, {
           consumer: relativeAlias,
-          relative: createRelativeFilePath(relativeAlias.asString()),
+          relative: relativeAlias.asExplicitRelativeFilePath(),
         });
       }
     }
@@ -466,7 +472,7 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
       exports.set(createRelativeFilePath('.'), dotConditions);
     }
 
-    exports.set(createRelativeFilePath(relative), conditions);
+    exports.set(value.getKey().asExplicitRelativeFilePath(), conditions);
   }
 
   return exports;
