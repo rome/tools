@@ -10,6 +10,7 @@ import undeclaredVariables from './undeclaredVariables';
 import unusedVariables from './unusedVariables';
 import emptyBlocks from './emptyBlocks';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
+import noLabelVar from './noLabelVar';
 
 export const lintTransforms = [
   undeclaredVariables,
@@ -17,4 +18,5 @@ export const lintTransforms = [
   unusedVariables,
   emptyBlocks,
   noAsyncPromiseExecutor,
+  noLabelVar,
 ];
