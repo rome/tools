@@ -219,3 +219,19 @@ test('no duplicate keys', async t => {
     },
   ]);
 });
+
+test('no duplicated args allowed', async t => {
+  const duplicatedArgs = await testLint(
+    `
+  function hello(a, a) {
+    console.log("Hello);
+  }
+  hello();
+  `,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.truthy(
+    duplicatedArgs.diagnostics.find(d => d.category === 'lint/noDupeArgs'),
+  );
+});
