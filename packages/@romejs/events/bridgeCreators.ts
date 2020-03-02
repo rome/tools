@@ -208,7 +208,7 @@ export function createBridgeFromChildProcess<B extends Bridge>(
   });
 
   proc.on('message', msg => {
-    bridge.handleMessage(msg);
+    bridge.handleMessage(msg as BridgeMessage);
   });
 
   // Catch process dying and reject any requests in flight
