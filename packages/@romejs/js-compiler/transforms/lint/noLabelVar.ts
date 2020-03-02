@@ -13,14 +13,11 @@ export default {
   enter(path: Path): AnyNode {
     const {node, scope} = path;
 
-    if (
-      node.type === 'LabeledStatement'
-    ) {
+    if (node.type === 'LabeledStatement') {
       const name = node.label.name;
       const binding = scope.getBinding(name);
       const isDefined =
-        binding !== undefined ||
-        scope.getRootScope().isGlobal(name);
+        binding !== undefined || scope.getRootScope().isGlobal(name);
 
       if (isDefined) {
         path.context.addNodeDiagnostic(node, {
