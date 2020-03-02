@@ -12,6 +12,7 @@ import sparseArray from './sparseArray';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
+import noDebugger from './noDebugger';
 import noDuplicateKeys from './noDuplicateKeys';
 import noDupeArgs from './noDupeArgs';
 import noLabelVar from './noLabelVar';
@@ -41,4 +42,5 @@ export const lintTransforms = [
   noDeleteVars,
   noTemplateCurlyInString,
   noImportAssign,
+  noDebugger,
 ];
