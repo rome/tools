@@ -79,6 +79,15 @@ test('undeclared variable', async t => {
   ]);
 });
 
+test('unsafe negation', async t => {
+  const res = await testLint(
+    `!1 in [1,2]`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.snapshot(res);
+});
+
 test('format disabled in project config should not regenerate the file', async t => {
   // Intentionally weird formatting
   const sourceText = 'foobar ( "yes" );';
