@@ -272,7 +272,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
   }
 
   getSegments(): PathSegments {
-    if (this.isExplicitFolder() && this.segments.length !== 1) {
+    if (this.isExplicitFolder() && !this.isRoot()) {
       return this.segments.slice(0, -1);
     } else {
       return this.segments;
@@ -290,14 +290,16 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
     let segments: undefined | PathSegments;
 
-    if (this.isExplicitFolder()) {
-      segments = this.getSegments();
+    if (!this.isRoot()) {
+      if (this.isExplicitFolder()) {
+        segments = this.getSegments();
 
-      if (this.isExplicitRelative()) {
-        segments = segments.slice(1);
+        if (this.isExplicitRelative()) {
+          segments = segments.slice(1);
+        }
+      } else if (this.isExplicitRelative()) {
+        segments = this.getRawSegments().slice(1);
       }
-    } else if (this.isExplicitRelative()) {
-      segments = this.getRawSegments().slice(1);
     }
 
     if (segments === undefined) {
