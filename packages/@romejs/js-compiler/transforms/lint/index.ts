@@ -9,10 +9,12 @@ import defaultExportSameBasename from './defaultExportSameBasename';
 import undeclaredVariables from './undeclaredVariables';
 import unusedVariables from './unusedVariables';
 import emptyBlocks from './emptyBlocks';
+import noDuplicateKeys from './noDuplicateKeys';
 
 export const lintTransforms = [
   undeclaredVariables,
   defaultExportSameBasename,
   unusedVariables,
   emptyBlocks,
+  noDuplicateKeys,
 ];
