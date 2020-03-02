@@ -93,3 +93,19 @@ test('format enabled in project config should result in regenerated file', async
   );
   t.is(res.src, "foobar('yes');\n");
 });
+
+test('no label var', async t => {
+  const badLabel = await testLint( `
+  const x = "test";
+  x: const y = "test";
+  `, LINT_ENABLED_FORMAT_DISABLED_CONFIG);
+
+  t.truthy(badLabel.diagnostics.find(d => d.category === 'lint/noLabelVar'));
+
+  const okLabel = await testLint( `
+  const x = "test";
+  z: const y = "test";
+  `, LINT_ENABLED_FORMAT_DISABLED_CONFIG);
+
+  t.falsy(okLabel.diagnostics.find(d => d.category === 'lint/noLabelVar'));
+});
