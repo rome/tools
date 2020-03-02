@@ -15,98 +15,151 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
 
-const features = [
-  {
-    title: <>Powerful</>,
-    imageUrl: '',
-    description: (
-      <>
-        Rome includes a compiler, linter, formatter, bundler, testing framework
-        and more.
-      </>
-    ),
-  },
-  {
-    title: <>Processing</>,
-    imageUrl: '',
-    description: (
-      <>
-        Rome supports processing JSX as well as Flow and TypeScript annotated
-        code.
-      </>
-    ),
-  },
-  {
-    title: <>Type Safe</>,
-    imageUrl: '',
-    description: (
-      <>
-        Rome is written completely in TypeScript with sparing usage of loose
-        types.
-      </>
-    ),
-  },
-];
-
-function Feature({imageUrl, title, description}) {
-  const imgUrl = useBaseUrl(imageUrl);
-  return (
-    <div className={classnames('col col--4', styles.feature)}>
-      {imgUrl && (
-        <div className="text--center">
-          <img className={styles.featureImage} src={imgUrl} alt={title} />
-        </div>
-      )}
-      <h3>{title}</h3>
-      <p>{description}</p>
-    </div>
-  );
-}
-
 function Home() {
   const context = useDocusaurusContext();
   const {siteConfig = {}} = context;
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
-      <header className={classnames('hero hero--primary', styles.heroBanner)}>
+      title={siteConfig.tagline}
+      description={siteConfig.tagline}>
+      <header
+        className={classnames(
+          'hero',
+          styles.heroBanner,
+          styles.heroBannerBackground,
+        )}>
         <div className="container">
-          <h1 className={classnames('hero__title', styles.title)}>
-            {siteConfig.title}
-          </h1>
-          <p className={classnames('hero__subtitle', styles.subTitle)}>
-            {siteConfig.tagline}
-          </p>
+          <div className="margin-bottom--lg">
+            <h1
+              className={classnames(
+                styles.heroBannerTitle,
+                'margin-bottom--lg',
+              )}>
+              Rome is an experimental <br />
+              JavaScript toolchain
+            </h1>
+            <p className={styles.heroBannerSubtitle}>
+              A compiler, linter, formatter, bundler, testing framework and more
+            </p>
+          </div>
           <div className={styles.buttons}>
             <Link
               className={classnames(
-                'button button--outline button--secondary button--lg',
+                'button button--primary button--lg',
                 styles.getStarted,
               )}
               to={useBaseUrl('docs/introduction/getting-started')}>
-              Get Started
+              Get Started&nbsp;&nbsp;→
             </Link>
+          </div>
+          <div className="margin-top--lg">
+            <iframe
+              src="https://ghbtns.com/github-btn.html?user=facebookexperimental&amp;repo=rome&amp;type=star&amp;count=true&amp;size=large"
+              frameBorder={0}
+              scrolling={0}
+              width={160}
+              height={30}
+              title="GitHub Stars"
+            />
           </div>
         </div>
       </header>
       <main>
-        {features && features.length && (
-          <section className={styles.features}>
-            <div className="container">
-              <div className="row">
-                {features.map(({title, imageUrl, description}) => (
-                  <Feature
-                    key={title}
-                    title={title}
-                    imageUrl={imageUrl}
-                    description={description}
-                  />
+        <div
+          className={classnames(
+            'margin-bottom--lg',
+            'padding-vert--lg',
+            styles.calloutPrimary,
+          )}>
+          <div className="container">
+            <div className="row">
+              <div className="col col--8 col--offset-2">
+                <div className="margin-vert--md text--center">
+                  <p className={styles.calloutTagline}>
+                    Rome is experimental and in active development. It is open
+                    for contributors and those interested in experimental tools.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="container">
+            <div className="row">
+              <div className="col col--10 col--offset-1">
+                {[
+                  {
+                    title: <>Everything in One</>,
+                    imageUrl: useBaseUrl('img/undraw_mind_map_cwng.svg'),
+                    imageAlt: 'Abstract Syntax Tree',
+                    description: (
+                      <>
+                        Rome includes a compiler, linter, formatter, bundler,
+                        testing framework and more. It aims to be a
+                        comprehensive tool for anything related to the
+                        processing of JavaScript source code.
+                      </>
+                    ),
+                  },
+                  {
+                    title: <>No Third Party Dependencies</>,
+                    imageUrl: useBaseUrl(
+                      'img/undraw_under_construction_46pa.svg',
+                    ),
+                    imageAlt: 'House under construction',
+                    description: (
+                      <>
+                        Rome is not a collection of existing tools. All
+                        components are custom and use no third-party
+                        dependencies.
+                      </>
+                    ),
+                  },
+                  {
+                    title: <>Replaces Existing JavaScript Tools</>,
+                    imageUrl: useBaseUrl('img/undraw_abstract_x68e.svg'),
+                    imageAlt: 'Girl holding a building block',
+                    description: (
+                      <>
+                        Rome aims to be a replacement for many existing
+                        JavaScript tools. We will, however, offer integrations
+                        for components in other tools. For example, using the
+                        Rome compiler as a plugin for another bundler.
+                      </>
+                    ),
+                  },
+                ].map(({title, imageAlt, imageUrl, description}, index) => (
+                  <div
+                    class={classnames('row', styles.featureRow, {
+                      [styles.featureReverse]: index % 2 === 0,
+                    })}
+                    key={index}>
+                    <div class="col">
+                      <img
+                        alt={imageAlt}
+                        className={styles.featureImage}
+                        src={imageUrl}
+                      />
+                    </div>
+                    <div class={classnames('col', styles.featureTextCol)}>
+                      <div
+                        className={classnames(
+                          'padding-vert--lg',
+                          styles.featureTextContainer,
+                        )}>
+                        <h3 className={styles.featureTitle}>{title}</h3>
+                        <p className={styles.featureDescription}>
+                          {description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
-          </section>
-        )}
+          </div>
+        </div>
       </main>
     </Layout>
   );
