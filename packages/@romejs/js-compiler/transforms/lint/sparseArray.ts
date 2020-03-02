@@ -12,6 +12,7 @@ export default {
   name: 'sparseArray',
   enter(path: Path): AnyNode {
     const { node } = path;
+
     if (node.type === 'ArrayExpression' &&
       node.elements.includes(undefined)) {
         path.context.addNodeDiagnostic(node, {
@@ -19,6 +20,7 @@ export default {
           message: 'Your array contains an empty slot'
         })
     }
+
     return node;
   }
 }
