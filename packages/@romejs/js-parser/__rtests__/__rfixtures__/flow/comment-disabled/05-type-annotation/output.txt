@@ -1,7 +1,7 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -11,7 +11,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 55
@@ -27,7 +27,7 @@ Program {
     CommentBlock {
       value: ': string '
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 35
           index: 35
@@ -43,7 +43,7 @@ Program {
     CommentBlock {
       value: ': number '
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 50
           index: 50
@@ -62,7 +62,7 @@ Program {
       id: BindingIdentifier {
         name: 'method'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 15
             index: 15
@@ -76,7 +76,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 1
           index: 54
@@ -92,7 +92,7 @@ Program {
         body: Array []
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 1
             index: 54
@@ -108,7 +108,7 @@ Program {
           CommentBlock {
             value: ': string '
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 35
                 index: 35
@@ -124,7 +124,7 @@ Program {
           CommentBlock {
             value: ': number '
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 50
                 index: 50
@@ -149,7 +149,7 @@ Program {
         thisType: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 51
             index: 51
@@ -166,7 +166,7 @@ Program {
             name: 'param'
             leadingComments: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 21
                 index: 21
@@ -182,7 +182,7 @@ Program {
               CommentBlock {
                 value: ': string '
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 35
                     index: 35
@@ -200,7 +200,7 @@ Program {
               optional: undefined
               typeAnnotation: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 21
                   index: 21
@@ -216,7 +216,7 @@ Program {
                 CommentBlock {
                   value: ': string '
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 35
                       index: 35

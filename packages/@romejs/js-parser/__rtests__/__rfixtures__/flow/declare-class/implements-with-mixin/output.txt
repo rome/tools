@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 41
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'A'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 15
             index: 15
@@ -45,7 +45,7 @@ Program {
       extends: Array []
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 40
           index: 40
@@ -62,7 +62,7 @@ Program {
         inexact: undefined
         properties: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 40
             index: 40
@@ -80,7 +80,7 @@ Program {
           id: Identifier {
             name: 'C'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 37
                 index: 37
@@ -95,7 +95,7 @@ Program {
           }
           typeParameters: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 37
               index: 37
@@ -114,7 +114,7 @@ Program {
           id: Identifier {
             name: 'B'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 24
                 index: 24
@@ -129,7 +129,7 @@ Program {
           }
           typeParameters: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 24
               index: 24

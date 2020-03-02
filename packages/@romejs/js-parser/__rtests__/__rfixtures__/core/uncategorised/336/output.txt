@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 5
       index: 11
@@ -25,7 +25,7 @@ Program {
     BlockStatement {
       directives: Array []
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 5
           index: 5
@@ -40,7 +40,7 @@ Program {
       body: Array [
         ExpressionStatement {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 4
               index: 4
@@ -54,7 +54,7 @@ Program {
           }
           expression: ArrayExpression {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 4
                 index: 4
@@ -70,7 +70,7 @@ Program {
               NumericLiteral {
                 value: 1
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 3
                     index: 3
@@ -90,7 +90,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 5
           index: 11
@@ -111,7 +111,7 @@ Program {
         sticky: false
         unicode: false
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 5
             index: 11

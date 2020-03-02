@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 33
@@ -28,7 +28,7 @@ Program {
     FlowDeclareExportNamed {
       exportKind: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 32
           index: 32
@@ -43,7 +43,7 @@ Program {
       source: StringLiteral {
         value: ''
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 32
             index: 32
@@ -59,7 +59,7 @@ Program {
       specifiers: Array [
         ExportNamespaceSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 24
               index: 24
@@ -74,7 +74,7 @@ Program {
           exported: Identifier {
             name: 'test'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 24
                 index: 24

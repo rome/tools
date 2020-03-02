@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: true
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 44
@@ -26,7 +26,7 @@ Program {
       declaration: undefined
       exportKind: 'value'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 29
           index: 29
@@ -41,7 +41,7 @@ Program {
       specifiers: Array [
         ExportLocalSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 22
               index: 22
@@ -56,7 +56,7 @@ Program {
           exported: Identifier {
             name: 'default'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 22
                 index: 22
@@ -72,7 +72,7 @@ Program {
           local: ReferenceIdentifier {
             name: 'foo'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 11
                 index: 11
@@ -88,7 +88,7 @@ Program {
         }
         ExportLocalSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 27
               index: 27
@@ -103,7 +103,7 @@ Program {
           exported: Identifier {
             name: 'bar'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 27
                 index: 27
@@ -119,7 +119,7 @@ Program {
           local: ReferenceIdentifier {
             name: 'bar'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 27
                 index: 27
@@ -137,7 +137,7 @@ Program {
     }
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 13
           index: 43
@@ -152,7 +152,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'var'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 13
             index: 43
@@ -169,7 +169,7 @@ Program {
             id: BindingIdentifier {
               name: 'foo'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 7
                   index: 37
@@ -184,7 +184,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 7
                 index: 37
@@ -201,7 +201,7 @@ Program {
             id: BindingIdentifier {
               name: 'bar'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 12
                   index: 42
@@ -216,7 +216,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 12
                 index: 42

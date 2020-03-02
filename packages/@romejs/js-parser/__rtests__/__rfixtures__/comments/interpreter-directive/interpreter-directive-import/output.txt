@@ -1,13 +1,13 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   mtime: undefined
   sourceType: 'module'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 57
@@ -22,7 +22,7 @@ Program {
   interpreter: InterpreterDirective {
     value: 'usr/bin/env babel-node'
     loc: Object {
-      filename: '..'
+      filename: 'input.js'
       end: Object {
         column: 25
         index: 25
@@ -39,7 +39,7 @@ Program {
     CommentLine {
       value: 'usr/bin/env babel-node'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 25
           index: 25
@@ -57,7 +57,7 @@ Program {
     ImportDeclaration {
       importKind: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 29
           index: 56
@@ -72,7 +72,7 @@ Program {
       source: StringLiteral {
         value: 'foobar'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 28
             index: 55
@@ -89,7 +89,7 @@ Program {
         CommentLine {
           value: 'usr/bin/env babel-node'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 25
               index: 25
@@ -106,7 +106,7 @@ Program {
       specifiers: Array [
         ImportSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 13
               index: 40
@@ -122,7 +122,7 @@ Program {
             name: 'spawn'
             leadingComments: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 13
                 index: 40
@@ -142,7 +142,7 @@ Program {
               leadingComments: undefined
               trailingComments: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 13
                   index: 40
@@ -157,7 +157,7 @@ Program {
             }
             importKind: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 13
                 index: 40

@@ -1,7 +1,7 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -11,7 +11,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 266
@@ -27,7 +27,7 @@ Program {
     CommentLine {
       value: ' bounds'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 9
           index: 9
@@ -43,7 +43,7 @@ Program {
     CommentLine {
       value: ' builtins'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 11
           index: 70
@@ -59,7 +59,7 @@ Program {
     CommentLine {
       value: ' literal type annotations'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 27
           index: 185
@@ -78,7 +78,7 @@ Program {
       id: BindingIdentifier {
         name: 'T1'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 17
@@ -93,7 +93,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 14
           index: 24
@@ -107,7 +107,7 @@ Program {
       }
       right: AnyKeywordTypeAnnotation {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 13
             index: 23
@@ -124,7 +124,7 @@ Program {
         CommentLine {
           value: ' bounds'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 9
               index: 9
@@ -143,7 +143,7 @@ Program {
       id: BindingIdentifier {
         name: 'T2'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 32
@@ -158,7 +158,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 16
           index: 41
@@ -172,7 +172,7 @@ Program {
       }
       right: MixedKeywordTypeAnnotation {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 15
             index: 40
@@ -190,7 +190,7 @@ Program {
       id: BindingIdentifier {
         name: 'T3'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 49
@@ -205,7 +205,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 16
           index: 58
@@ -219,7 +219,7 @@ Program {
       }
       right: EmptyKeywordTypeAnnotation {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 15
             index: 57
@@ -236,7 +236,7 @@ Program {
         CommentLine {
           value: ' builtins'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 11
               index: 70
@@ -255,7 +255,7 @@ Program {
       id: BindingIdentifier {
         name: 'T4'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 78
@@ -270,7 +270,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 15
           index: 86
@@ -284,7 +284,7 @@ Program {
       }
       right: VoidKeywordTypeAnnotation {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 14
             index: 85
@@ -301,7 +301,7 @@ Program {
         CommentLine {
           value: ' builtins'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 11
               index: 70
@@ -320,7 +320,7 @@ Program {
       id: BindingIdentifier {
         name: 'T5'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 94
@@ -335,7 +335,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 17
           index: 104
@@ -349,7 +349,7 @@ Program {
       }
       right: NumberKeywordTypeAnnotation {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 16
             index: 103
@@ -367,7 +367,7 @@ Program {
       id: BindingIdentifier {
         name: 'T6'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 112
@@ -382,7 +382,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 17
           index: 122
@@ -396,7 +396,7 @@ Program {
       }
       right: StringKeywordTypeAnnotation {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 16
             index: 121
@@ -414,7 +414,7 @@ Program {
       id: BindingIdentifier {
         name: 'T7'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 130
@@ -429,7 +429,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 15
           index: 138
@@ -443,7 +443,7 @@ Program {
       }
       right: BooleanKeywordTypeAnnotation {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 14
             index: 137
@@ -461,7 +461,7 @@ Program {
       id: BindingIdentifier {
         name: 'T8'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 146
@@ -476,7 +476,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 18
           index: 157
@@ -490,7 +490,7 @@ Program {
       }
       right: BooleanKeywordTypeAnnotation {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 17
             index: 156
@@ -507,7 +507,7 @@ Program {
         CommentLine {
           value: ' literal type annotations'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 27
               index: 185
@@ -526,7 +526,7 @@ Program {
       id: BindingIdentifier {
         name: 'T9'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 193
@@ -541,7 +541,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 15
           index: 201
@@ -555,7 +555,7 @@ Program {
       }
       right: NullKeywordTypeAnnotation {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 14
             index: 200
@@ -572,7 +572,7 @@ Program {
         CommentLine {
           value: ' literal type annotations'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 27
               index: 185
@@ -591,7 +591,7 @@ Program {
       id: BindingIdentifier {
         name: 'T10'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 8
             index: 210
@@ -606,7 +606,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 14
           index: 216
@@ -621,7 +621,7 @@ Program {
       right: StringLiteralTypeAnnotation {
         value: ''
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 13
             index: 215
@@ -639,7 +639,7 @@ Program {
       id: BindingIdentifier {
         name: 'T11'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 8
             index: 225
@@ -654,7 +654,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 13
           index: 230
@@ -669,7 +669,7 @@ Program {
       right: NumericLiteralTypeAnnotation {
         value: 0
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 12
             index: 229
@@ -687,7 +687,7 @@ Program {
       id: BindingIdentifier {
         name: 'T12'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 8
             index: 239
@@ -702,7 +702,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 16
           index: 247
@@ -717,7 +717,7 @@ Program {
       right: BooleanLiteralTypeAnnotation {
         value: true
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 15
             index: 246
@@ -735,7 +735,7 @@ Program {
       id: BindingIdentifier {
         name: 'T13'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 8
             index: 256
@@ -750,7 +750,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 17
           index: 265
@@ -765,7 +765,7 @@ Program {
       right: BooleanLiteralTypeAnnotation {
         value: false
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 16
             index: 264

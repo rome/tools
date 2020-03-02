@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 37
@@ -26,7 +26,7 @@ Program {
       id: BindingIdentifier {
         name: 'emptyWithObject'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 24
             index: 24
@@ -40,7 +40,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 36
           index: 36
@@ -56,7 +56,7 @@ Program {
         body: Array []
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 36
             index: 36
@@ -79,7 +79,7 @@ Program {
         thisType: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 34
             index: 34
@@ -94,7 +94,7 @@ Program {
         rest: BindingArrayPattern {
           rest: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 32
               index: 32
@@ -110,7 +110,7 @@ Program {
             optional: undefined
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 32
                 index: 32
@@ -128,7 +128,7 @@ Program {
               properties: Array []
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 31
                   index: 31
@@ -144,7 +144,7 @@ Program {
                 optional: undefined
                 typeAnnotation: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 31
                     index: 31

@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: true
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 41
       index: 41
@@ -27,7 +27,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 41
           index: 41
@@ -42,7 +42,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'var'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 41
             index: 41
@@ -59,7 +59,7 @@ Program {
             id: BindingIdentifier {
               name: 'a'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 24
                   index: 24
@@ -74,7 +74,7 @@ Program {
               meta: PatternMeta {
                 definite: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 24
                     index: 24
@@ -88,7 +88,7 @@ Program {
                 }
                 typeAnnotation: FlowTupleTypeAnnotation {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 24
                       index: 24
@@ -103,7 +103,7 @@ Program {
                   types: Array [
                     NumberKeywordTypeAnnotation {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 15
                           index: 15
@@ -118,7 +118,7 @@ Program {
                     }
                     StringKeywordTypeAnnotation {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 23
                           index: 23
@@ -136,7 +136,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 40
                 index: 40
@@ -150,7 +150,7 @@ Program {
             }
             init: ArrayExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 40
                   index: 40
@@ -166,7 +166,7 @@ Program {
                 NumericLiteral {
                   value: 123
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 31
                       index: 31
@@ -182,7 +182,7 @@ Program {
                 StringLiteral {
                   value: 'duck'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 39
                       index: 39

@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 12
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 11
           index: 11
@@ -38,7 +38,7 @@ Program {
       }
       expression: TSTypeAssertion {
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 10
             index: 10
@@ -52,7 +52,7 @@ Program {
         }
         typeAnnotation: NumberKeywordTypeAnnotation {
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 7
               index: 7
@@ -68,7 +68,7 @@ Program {
         expression: NumericLiteral {
           value: 1
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 10
               index: 10

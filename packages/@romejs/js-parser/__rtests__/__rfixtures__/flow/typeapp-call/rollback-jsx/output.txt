@@ -1,7 +1,7 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -11,7 +11,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 22
@@ -27,7 +27,7 @@ Program {
     CommentLine {
       value: ' @flow'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 8
           index: 8
@@ -44,7 +44,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 12
           index: 21
@@ -60,7 +60,7 @@ Program {
         CommentLine {
           value: ' @flow'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 8
               index: 8
@@ -78,7 +78,7 @@ Program {
         leadingComments: undefined
         operator: '>'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 11
             index: 20
@@ -94,7 +94,7 @@ Program {
           name: JSXReferenceIdentifier {
             name: 'U'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 6
                 index: 15
@@ -112,7 +112,7 @@ Program {
           selfClosing: false
           typeArguments: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 11
               index: 20
@@ -129,7 +129,7 @@ Program {
           leadingComments: undefined
           operator: '<'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 3
               index: 12
@@ -144,7 +144,7 @@ Program {
           right: ReferenceIdentifier {
             name: 'T'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 3
                 index: 12
@@ -160,7 +160,7 @@ Program {
           left: ReferenceIdentifier {
             name: 'f'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 1
                 index: 10
@@ -176,7 +176,7 @@ Program {
               CommentLine {
                 value: ' @flow'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 8
                     index: 8

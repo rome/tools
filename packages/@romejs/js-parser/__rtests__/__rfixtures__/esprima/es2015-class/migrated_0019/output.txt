@@ -1,14 +1,14 @@
 Program {
   comments: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 48
@@ -24,7 +24,7 @@ Program {
     Object {
       advice: undefined
       category: 'parse/js'
-      filename: '..'
+      filename: 'input.js'
       message: 'Duplicate constructor in the same class'
       mtime: undefined
       sourceType: 'script'
@@ -46,7 +46,7 @@ Program {
       id: BindingIdentifier {
         name: 'A'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 7
@@ -60,7 +60,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 47
           index: 47
@@ -78,7 +78,7 @@ Program {
         superTypeParameters: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 47
             index: 47
@@ -97,7 +97,7 @@ Program {
               value: StringLiteral {
                 value: 'constructor'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 22
                     index: 22
@@ -112,7 +112,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 22
@@ -126,7 +126,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 26
                 index: 26
@@ -142,7 +142,7 @@ Program {
               body: Array []
               directives: Array []
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 26
                   index: 26
@@ -166,7 +166,7 @@ Program {
               thisType: undefined
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 24
                   index: 24
@@ -192,7 +192,7 @@ Program {
                 line: 1
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 22
@@ -212,7 +212,7 @@ Program {
               value: StringLiteral {
                 value: 'constructor'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 41
                     index: 41
@@ -227,7 +227,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 42
                   index: 42
@@ -241,7 +241,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 46
                 index: 46
@@ -257,7 +257,7 @@ Program {
               body: Array []
               directives: Array []
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 46
                   index: 46
@@ -281,7 +281,7 @@ Program {
               thisType: undefined
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 44
                   index: 44
@@ -307,7 +307,7 @@ Program {
                 line: 1
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 42
                   index: 42

@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 44
       index: 44
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 12
             index: 12
@@ -43,7 +43,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 44
           index: 44
@@ -59,7 +59,7 @@ Program {
         body: Array []
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 44
             index: 44
@@ -82,7 +82,7 @@ Program {
         thisType: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 42
             index: 42
@@ -98,7 +98,7 @@ Program {
           BindingIdentifier {
             name: 'numVal'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 19
                 index: 19
@@ -113,7 +113,7 @@ Program {
             meta: PatternMeta {
               optional: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 24
                   index: 24
@@ -127,7 +127,7 @@ Program {
               }
               typeAnnotation: AnyKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 24
                     index: 24
@@ -145,7 +145,7 @@ Program {
           BindingIdentifier {
             name: 'otherVal'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 34
                 index: 34
@@ -160,7 +160,7 @@ Program {
             meta: PatternMeta {
               optional: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 41
                   index: 41
@@ -174,7 +174,7 @@ Program {
               }
               typeAnnotation: MixedKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 41
                     index: 41

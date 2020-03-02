@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 122
@@ -24,7 +24,7 @@ Program {
     CommentBlock {
       value: '*\n * this is anonymous class.\n '
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 3
           index: 35
@@ -40,7 +40,7 @@ Program {
     CommentBlock {
       value: '*\n     * this is method1.\n     '
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 7
           index: 98
@@ -57,7 +57,7 @@ Program {
   body: Array [
     ExportDefaultDeclaration {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 1
           index: 121
@@ -73,7 +73,7 @@ Program {
         CommentBlock {
           value: '*\n * this is anonymous class.\n '
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 3
               index: 35
@@ -91,7 +91,7 @@ Program {
         id: BindingIdentifier {
           name: '*default*'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 1
               index: 121
@@ -105,7 +105,7 @@ Program {
           }
         }
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 1
             index: 121
@@ -124,7 +124,7 @@ Program {
           superTypeParameters: undefined
           typeParameters: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 1
               index: 121
@@ -144,7 +144,7 @@ Program {
                   name: 'method1'
                   leadingComments: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 11
                       index: 110
@@ -160,7 +160,7 @@ Program {
                 leadingComments: undefined
                 variance: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 11
                     index: 110
@@ -174,7 +174,7 @@ Program {
                 }
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 5
                   index: 119
@@ -190,7 +190,7 @@ Program {
                 body: Array []
                 directives: Array []
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 5
                     index: 119
@@ -214,7 +214,7 @@ Program {
                 thisType: undefined
                 typeParameters: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 13
                     index: 112
@@ -240,7 +240,7 @@ Program {
                   line: 8
                 }
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 11
                     index: 110
@@ -256,7 +256,7 @@ Program {
                   CommentBlock {
                     value: '*\n     * this is method1.\n     '
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 7
                         index: 98

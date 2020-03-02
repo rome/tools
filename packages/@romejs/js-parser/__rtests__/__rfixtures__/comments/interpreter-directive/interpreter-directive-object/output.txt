@@ -1,13 +1,13 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: true
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 46
@@ -22,7 +22,7 @@ Program {
   interpreter: InterpreterDirective {
     value: 'usr/bin/env babel-node'
     loc: Object {
-      filename: '..'
+      filename: 'input.js'
       end: Object {
         column: 25
         index: 25
@@ -39,7 +39,7 @@ Program {
     CommentLine {
       value: 'usr/bin/env babel-node'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 25
           index: 25
@@ -56,7 +56,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 18
           index: 45
@@ -72,7 +72,7 @@ Program {
         CommentLine {
           value: 'usr/bin/env babel-node'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 25
               index: 25
@@ -90,7 +90,7 @@ Program {
         kind: 'var'
         leadingComments: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 18
             index: 45
@@ -108,7 +108,7 @@ Program {
               leadingComments: undefined
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 13
                   index: 40
@@ -127,7 +127,7 @@ Program {
                       name: 'spawn'
                       leadingComments: undefined
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 11
                           index: 38
@@ -143,7 +143,7 @@ Program {
                     leadingComments: undefined
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 11
                         index: 38
@@ -160,7 +160,7 @@ Program {
                     name: 'spawn'
                     leadingComments: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 11
                         index: 38
@@ -175,7 +175,7 @@ Program {
                   }
                   leadingComments: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 11
                       index: 38
@@ -192,7 +192,7 @@ Program {
             }
             leadingComments: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 17
                 index: 44
@@ -207,7 +207,7 @@ Program {
             init: ReferenceIdentifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 17
                   index: 44

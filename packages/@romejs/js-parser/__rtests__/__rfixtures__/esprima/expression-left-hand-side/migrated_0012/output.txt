@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 36
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 35
           index: 35
@@ -38,7 +38,7 @@ Program {
       }
       expression: MemberExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 35
             index: 35
@@ -54,7 +54,7 @@ Program {
           value: Identifier {
             name: 'Earth'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 35
                 index: 35
@@ -68,7 +68,7 @@ Program {
             }
           }
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 35
               index: 35
@@ -83,7 +83,7 @@ Program {
         }
         object: MemberExpression {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 29
               index: 29
@@ -99,7 +99,7 @@ Program {
             value: Identifier {
               name: 'solarsystem'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 29
                   index: 29
@@ -113,7 +113,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 29
                 index: 29
@@ -128,7 +128,7 @@ Program {
           }
           object: MemberExpression {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 17
                 index: 17
@@ -143,7 +143,7 @@ Program {
             object: ReferenceIdentifier {
               name: 'universe'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 8
                   index: 8
@@ -160,7 +160,7 @@ Program {
               value: Identifier {
                 name: 'milkyway'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 17
                     index: 17
@@ -174,7 +174,7 @@ Program {
                 }
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 17
                   index: 17

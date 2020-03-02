@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 30
       index: 30
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 12
             index: 12
@@ -43,7 +43,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 30
           index: 30
@@ -59,7 +59,7 @@ Program {
         body: Array []
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 30
             index: 30
@@ -82,7 +82,7 @@ Program {
         thisType: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 28
             index: 28
@@ -98,7 +98,7 @@ Program {
           BindingIdentifier {
             name: 'numVal'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 19
                 index: 19
@@ -113,7 +113,7 @@ Program {
             meta: PatternMeta {
               optional: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 27
                   index: 27
@@ -127,7 +127,7 @@ Program {
               }
               typeAnnotation: NumberKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 27
                     index: 27

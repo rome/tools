@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 28
       index: 28
@@ -29,7 +29,7 @@ Program {
       id: StringLiteral {
         value: './a/b.js'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 25
             index: 25
@@ -44,7 +44,7 @@ Program {
       }
       kind: 'commonjs'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 28
           index: 28
@@ -59,7 +59,7 @@ Program {
       body: BlockStatement {
         body: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 28
             index: 28

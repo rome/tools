@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 67
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 13
             index: 13
@@ -43,7 +43,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 1
           index: 66
@@ -66,7 +66,7 @@ Program {
         thisType: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 16
             index: 16
@@ -82,7 +82,7 @@ Program {
       body: BlockStatement {
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 1
             index: 66
@@ -97,7 +97,7 @@ Program {
         body: Array [
           VariableDeclarationStatement {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 27
                 index: 45
@@ -112,7 +112,7 @@ Program {
             declaration: VariableDeclaration {
               kind: 'const'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 27
                   index: 45
@@ -129,7 +129,7 @@ Program {
                   id: BindingIdentifier {
                     name: 'x'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 9
                         index: 27
@@ -143,7 +143,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 26
                       index: 44
@@ -157,7 +157,7 @@ Program {
                   }
                   init: FlowTypeCastExpression {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 25
                         index: 43
@@ -171,7 +171,7 @@ Program {
                     }
                     typeAnnotation: AnyKeywordTypeAnnotation {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 25
                           index: 43
@@ -187,7 +187,7 @@ Program {
                     expression: YieldExpression {
                       delegate: false
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 20
                           index: 38
@@ -202,7 +202,7 @@ Program {
                       argument: NumericLiteral {
                         value: 5
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 20
                             index: 38
@@ -223,7 +223,7 @@ Program {
           }
           ExpressionStatement {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 18
                 index: 64
@@ -237,7 +237,7 @@ Program {
             }
             expression: ConditionalExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 17
                   index: 63
@@ -252,7 +252,7 @@ Program {
               alternate: ReferenceIdentifier {
                 name: 'x'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 17
                     index: 63
@@ -268,7 +268,7 @@ Program {
               test: ReferenceIdentifier {
                 name: 'x'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 3
                     index: 49
@@ -284,7 +284,7 @@ Program {
               consequent: YieldExpression {
                 delegate: false
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 13
                     index: 59
@@ -299,7 +299,7 @@ Program {
                 argument: NumericLiteral {
                   value: 1
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 13
                       index: 59

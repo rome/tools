@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 9
       index: 9
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 9
           index: 9
@@ -39,7 +39,7 @@ Program {
       expression: BinaryExpression {
         operator: '+'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 9
             index: 9
@@ -54,7 +54,7 @@ Program {
         right: ReferenceIdentifier {
           name: 'z'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 9
               index: 9
@@ -70,7 +70,7 @@ Program {
         left: BinaryExpression {
           operator: '+'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 5
               index: 5
@@ -85,7 +85,7 @@ Program {
           left: ReferenceIdentifier {
             name: 'x'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 1
                 index: 1
@@ -101,7 +101,7 @@ Program {
           right: ReferenceIdentifier {
             name: 'y'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 5
                 index: 5

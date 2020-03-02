@@ -1,14 +1,14 @@
 Program {
   comments: Array []
   diagnostics: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 16
       index: 30
@@ -24,7 +24,7 @@ Program {
     Directive {
       value: 'use strict'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 13
           index: 13
@@ -41,7 +41,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 16
           index: 30
@@ -56,7 +56,7 @@ Program {
       expression: CallExpression {
         arguments: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 15
             index: 29
@@ -70,7 +70,7 @@ Program {
         }
         callee: MemberExpression {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 13
               index: 27
@@ -85,7 +85,7 @@ Program {
           object: ReferenceIdentifier {
             name: 'object'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 6
                 index: 20
@@ -102,7 +102,7 @@ Program {
             value: Identifier {
               name: 'static'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 13
                   index: 27
@@ -116,7 +116,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 13
                 index: 27

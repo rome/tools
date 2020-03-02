@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 27
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ForInStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 26
           index: 26
@@ -39,7 +39,7 @@ Program {
       left: AssignmentIdentifier {
         name: 'x'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 5
             index: 5
@@ -55,7 +55,7 @@ Program {
       right: ReferenceIdentifier {
         name: 'list'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 13
             index: 13
@@ -70,7 +70,7 @@ Program {
       }
       body: ExpressionStatement {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 26
             index: 26
@@ -84,7 +84,7 @@ Program {
         }
         expression: CallExpression {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 25
               index: 25
@@ -99,7 +99,7 @@ Program {
           callee: ReferenceIdentifier {
             name: 'process'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 22
                 index: 22
@@ -116,7 +116,7 @@ Program {
             ReferenceIdentifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 24
                   index: 24
