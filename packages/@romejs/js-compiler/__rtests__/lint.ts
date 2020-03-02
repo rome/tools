@@ -10,6 +10,7 @@ import lint from '../api/lint';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import {DEFAULT_PROJECT_CONFIG, ProjectConfig} from '@romejs/project';
+import {ConstSourceType} from '@romejs/js-ast';
 
 const LINT_ENABLED_FORMAT_DISABLED_CONFIG: ProjectConfig = {
   ...DEFAULT_PROJECT_CONFIG,
@@ -31,12 +32,16 @@ const LINT_AND_FORMAT_ENABLED_CONFIG: ProjectConfig = {
   },
 };
 
-async function testLint(input: string, config: ProjectConfig) {
+async function testLint(
+  input: string,
+  config: ProjectConfig,
+  sourceType: ConstSourceType = 'module',
+) {
   return await lint({
     options: {},
     ast: parseJS({
       input,
-      sourceType: 'module',
+      sourceType,
       path: createUnknownFilePath('unknown'),
     }),
     sourceText: input,
@@ -250,4 +255,29 @@ test('disallow var', async t => {
       },
     },
   ]);
+});
+
+test.only('no delete vars', async t => {
+  const res = await testLint(
+    `
+    const foo = "test";
+    delete foo;
+    `,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    'script',
+  );
+
+  console.log(res.diagnostics);
+
+  t.looksLike(res.diagnostics[1], {
+    category: 'lint/noDeleteVars',
+    message: 'Variables should not be deleted.',
+    mtime: undefined,
+    filename: 'unknown',
+    start: {index: 29, line: 3, column: 4},
+    end: {index: 39, line: 3, column: 14},
+    language: 'js',
+    sourceType: 'module',
+    origins: [{category: 'lint'}],
+  });
 });
