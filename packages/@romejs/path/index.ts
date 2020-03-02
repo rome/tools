@@ -31,6 +31,10 @@ export type PathSegments = Array<string>;
 
 class BaseFilePath<Super extends UnknownFilePath> {
   constructor(parsed: ParsedPath, opts: FilePathOptions<Super>) {
+    if (parsed.segments.length === 0) {
+      throw new Error('Cannot construct a FilePath with zero segments');
+    }
+
     this.segments = parsed.segments;
     this.absoluteTarget = parsed.absoluteTarget;
     this.absoluteType = parsed.absoluteType;
@@ -138,6 +142,11 @@ class BaseFilePath<Super extends UnknownFilePath> {
   }
 
   getParentSegments(): PathSegments {
+    // Should we throw an error?
+    if (this.isRoot()) {
+      return this.segments;
+    }
+
     const segments = this.getSegments().slice(0, -1);
     // Always make this an explicit folder
     if (segments.length > 0 && segments[0] !== '') {
@@ -191,6 +200,11 @@ class BaseFilePath<Super extends UnknownFilePath> {
   isRoot(): boolean {
     if (this.segments.length === 1) {
       return true;
+    }
+
+    if (this.segments.length === 2) {
+      // Explicit folder reference
+      return this.segments[1] === '';
     }
 
     if (this.segments.length === 3) {
@@ -272,7 +286,8 @@ class BaseFilePath<Super extends UnknownFilePath> {
   }
 
   getSegments(): PathSegments {
-    if (this.isExplicitFolder() && !this.isRoot()) {
+    const isRoot = !this.isRoot();
+    if (this.isExplicitFolder() && isRoot) {
       return this.segments.slice(0, -1);
     } else {
       return this.segments;
@@ -716,8 +731,8 @@ function normalizeSegments(
       continue;
     }
 
-    // Ignore empty segments unless it's last
-    if (seg === '' && i !== segments.length - 1) {
+    // Ignore empty segments
+    if (seg === '') {
       continue;
     }
 
@@ -734,7 +749,18 @@ function normalizeSegments(
     pathSegments.push(seg);
   }
 
-  return [...absoluteSegments, ...pathSegments];
+  const finalSegments = [...absoluteSegments, ...pathSegments];
+
+  // Retain explicit folder
+  if (
+    segments[segments.length - 1] === '' &&
+    finalSegments[finalSegments.length - 1] !== '' &&
+    pathSegments.length !== 0
+  ) {
+    finalSegments.push('');
+  }
+
+  return finalSegments;
 }
 
 function createUnknownFilePathFromSegments(
