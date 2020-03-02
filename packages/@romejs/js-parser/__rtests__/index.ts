@@ -68,7 +68,7 @@ const promise = createFixtureTests((fixture, t) => {
     },
   });
 
-  const inputContent = inputFile.content.toString();
+  const inputContent = inputFile.content.toString().replace(/\r/g, '');
   t.addToAdvice({
     type: 'log',
     category: 'info',
