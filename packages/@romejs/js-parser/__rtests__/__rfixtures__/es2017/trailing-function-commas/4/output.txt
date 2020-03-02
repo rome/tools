@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 14
       index: 14
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 14
           index: 14
@@ -38,7 +38,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 13
             index: 13
@@ -53,7 +53,7 @@ Program {
         body: NumericLiteral {
           value: 1
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 13
               index: 13
@@ -74,7 +74,7 @@ Program {
           returnType: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 12
               index: 12
@@ -90,7 +90,7 @@ Program {
             BindingIdentifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 2
                   index: 2
@@ -106,7 +106,7 @@ Program {
             BindingIdentifier {
               name: 'y'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 5
                   index: 5

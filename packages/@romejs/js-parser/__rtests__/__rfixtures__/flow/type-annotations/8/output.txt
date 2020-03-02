@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 38
       index: 38
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 12
             index: 12
@@ -43,7 +43,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 38
           index: 38
@@ -59,7 +59,7 @@ Program {
         body: Array []
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 38
             index: 38
@@ -82,7 +82,7 @@ Program {
         thisType: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 36
             index: 36
@@ -98,7 +98,7 @@ Program {
           BindingIdentifier {
             name: 'callback'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 21
                 index: 21
@@ -113,7 +113,7 @@ Program {
             meta: PatternMeta {
               optional: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 35
                   index: 35
@@ -130,7 +130,7 @@ Program {
                 rest: undefined
                 typeParameters: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 35
                     index: 35
@@ -144,7 +144,7 @@ Program {
                 }
                 returnType: NumberKeywordTypeAnnotation {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 35
                       index: 35

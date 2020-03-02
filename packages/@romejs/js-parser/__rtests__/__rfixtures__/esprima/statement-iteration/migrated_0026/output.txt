@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 17
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ForInStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 16
           index: 16
@@ -38,7 +38,7 @@ Program {
       }
       body: EmptyStatement {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 16
             index: 16
@@ -54,7 +54,7 @@ Program {
       right: ReferenceIdentifier {
         name: 'a'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 14
             index: 14
@@ -69,7 +69,7 @@ Program {
       }
       left: MemberExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 9
             index: 9
@@ -84,7 +84,7 @@ Program {
         object: ReferenceIdentifier {
           name: 'a'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 6
               index: 6
@@ -101,7 +101,7 @@ Program {
           value: Identifier {
             name: 'in'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 9
                 index: 9
@@ -115,7 +115,7 @@ Program {
             }
           }
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 9
               index: 9

@@ -110,6 +110,11 @@ async function createRegularWatcher(
         folderPath,
         {recursive: true, persistent: false},
         (eventType, filename) => {
+          if (filename === null) {
+            // TODO not sure how we want to handle this?
+            return;
+          }
+
           const path = folderPath.resolve(filename);
 
           memoryFs

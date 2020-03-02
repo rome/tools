@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 23
@@ -24,7 +24,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 22
           index: 22
@@ -39,7 +39,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'let'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 22
             index: 22
@@ -56,7 +56,7 @@ Program {
             id: BindingIdentifier {
               name: 'f'
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 21
                   index: 21
@@ -71,7 +71,7 @@ Program {
               meta: PatternMeta {
                 definite: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 21
                     index: 21
@@ -85,7 +85,7 @@ Program {
                 }
                 typeAnnotation: TSFunctionType {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 21
                       index: 21
@@ -100,7 +100,7 @@ Program {
                   typeAnnotation: TSTypeReference {
                     typeParameters: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.ts'
                       end: Object {
                         column: 21
                         index: 21
@@ -115,7 +115,7 @@ Program {
                     typeName: ReferenceIdentifier {
                       name: 'T'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.ts'
                         end: Object {
                           column: 21
                           index: 21
@@ -132,7 +132,7 @@ Program {
                   meta: TSSignatureDeclarationMeta {
                     rest: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.ts'
                       end: Object {
                         column: 21
                         index: 21
@@ -146,7 +146,7 @@ Program {
                     }
                     typeParameters: TSTypeParameterDeclaration {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.ts'
                         end: Object {
                           column: 10
                           index: 10
@@ -164,7 +164,7 @@ Program {
                           constraint: undefined
                           default: undefined
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.ts'
                             end: Object {
                               column: 9
                               index: 9
@@ -183,7 +183,7 @@ Program {
                       BindingIdentifier {
                         name: 'a'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.ts'
                           end: Object {
                             column: 12
                             index: 12
@@ -198,7 +198,7 @@ Program {
                         meta: PatternMeta {
                           optional: undefined
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.ts'
                             end: Object {
                               column: 15
                               index: 15
@@ -213,7 +213,7 @@ Program {
                           typeAnnotation: TSTypeReference {
                             typeParameters: undefined
                             loc: Object {
-                              filename: '..'
+                              filename: 'input.ts'
                               end: Object {
                                 column: 15
                                 index: 15
@@ -228,7 +228,7 @@ Program {
                             typeName: ReferenceIdentifier {
                               name: 'T'
                               loc: Object {
-                                filename: '..'
+                                filename: 'input.ts'
                                 end: Object {
                                   column: 15
                                   index: 15
@@ -251,7 +251,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 21
                 index: 21

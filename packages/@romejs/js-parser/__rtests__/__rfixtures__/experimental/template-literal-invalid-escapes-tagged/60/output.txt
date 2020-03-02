@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 32
       index: 32
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 32
           index: 32
@@ -39,7 +39,7 @@ Program {
       expression: TaggedTemplateExpression {
         typeArguments: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 32
             index: 32
@@ -54,7 +54,7 @@ Program {
         tag: ReferenceIdentifier {
           name: 'sampleTag'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 9
               index: 9
@@ -69,7 +69,7 @@ Program {
         }
         quasi: TemplateLiteral {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 32
               index: 32
@@ -85,7 +85,7 @@ Program {
             NumericLiteral {
               value: 0
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 17
                   index: 17
@@ -101,7 +101,7 @@ Program {
             NumericLiteral {
               value: 1
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 25
                   index: 25
@@ -121,7 +121,7 @@ Program {
               raw: 'left'
               tail: false
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 14
                   index: 14
@@ -139,7 +139,7 @@ Program {
               raw: '\\u{0'
               tail: false
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 22
@@ -157,7 +157,7 @@ Program {
               raw: 'right'
               tail: true
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 31
                   index: 31

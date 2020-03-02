@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: true
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 14
@@ -24,7 +24,7 @@ Program {
   body: Array [
     LabeledStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 13
           index: 13
@@ -39,7 +39,7 @@ Program {
       label: Identifier {
         name: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 3
             index: 3
@@ -54,7 +54,7 @@ Program {
       }
       body: VariableDeclarationStatement {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 13
             index: 13
@@ -69,7 +69,7 @@ Program {
         declaration: VariableDeclaration {
           kind: 'var'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 13
               index: 13
@@ -86,7 +86,7 @@ Program {
               id: BindingIdentifier {
                 name: 'bar'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 12
                     index: 12
@@ -101,7 +101,7 @@ Program {
               }
               init: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 12
                   index: 12

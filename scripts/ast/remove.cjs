@@ -18,7 +18,7 @@ const {
   generatorsFolder,
   analysisFolder,
   astFolder,
-} = require('./_constants.cjs');
+} = require('../_constants.cjs');
 
 fs.unlinkSync(path.join(generatorsFolder, filename + '.ts'));
 fs.unlinkSync(path.join(analysisFolder, filename + '.ts'));

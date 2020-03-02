@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 30
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'Test'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 24
             index: 24
@@ -45,7 +45,7 @@ Program {
       impltype: undefined
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 29
           index: 29
@@ -61,7 +61,7 @@ Program {
         id: Identifier {
           name: 'Foo'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 29
               index: 29
@@ -76,7 +76,7 @@ Program {
         }
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 29
             index: 29

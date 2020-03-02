@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 28
       index: 28
@@ -27,7 +27,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 28
           index: 28
@@ -42,7 +42,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'const'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 28
             index: 28
@@ -59,7 +59,7 @@ Program {
             id: BindingIdentifier {
               name: 'fail'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 10
@@ -73,7 +73,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 27
                 index: 27
@@ -87,7 +87,7 @@ Program {
             }
             init: ArrowFunctionExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 27
                   index: 27
@@ -103,7 +103,7 @@ Program {
                 name: JSXIdentifier {
                   name: 'x'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 24
                       index: 24
@@ -121,7 +121,7 @@ Program {
                 selfClosing: true
                 typeArguments: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 27
                     index: 27
@@ -142,7 +142,7 @@ Program {
                 rest: undefined
                 thisType: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 22
                     index: 22
@@ -158,7 +158,7 @@ Program {
                   id: Identifier {
                     name: 'X'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 18
                         index: 18
@@ -173,7 +173,7 @@ Program {
                   }
                   typeParameters: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 18
                       index: 18

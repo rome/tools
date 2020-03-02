@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 51
@@ -26,7 +26,7 @@ Program {
       id: StringLiteral {
         value: 'm'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 18
             index: 18
@@ -42,7 +42,7 @@ Program {
       declare: true
       global: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 1
           index: 50
@@ -56,7 +56,7 @@ Program {
       }
       body: TSModuleBlock {
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 1
             index: 50
@@ -72,7 +72,7 @@ Program {
           ImportDeclaration {
             importKind: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 27
                 index: 48
@@ -87,7 +87,7 @@ Program {
             source: StringLiteral {
               value: 'a'
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 26
                   index: 47
@@ -103,7 +103,7 @@ Program {
             specifiers: Array [
               ImportNamespaceSpecifier {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 17
                     index: 38
@@ -119,7 +119,7 @@ Program {
                   name: BindingIdentifier {
                     name: 'a'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.ts'
                       end: Object {
                         column: 17
                         index: 38
@@ -134,7 +134,7 @@ Program {
                   }
                   importKind: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 17
                       index: 38

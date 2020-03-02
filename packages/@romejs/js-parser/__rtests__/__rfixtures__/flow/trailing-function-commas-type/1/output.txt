@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 44
@@ -27,7 +27,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 43
           index: 43
@@ -41,7 +41,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 42
             index: 42
@@ -56,7 +56,7 @@ Program {
         body: NumericLiteral {
           value: 3
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 40
               index: 40
@@ -76,7 +76,7 @@ Program {
           rest: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 37
               index: 37
@@ -92,7 +92,7 @@ Program {
             id: Identifier {
               name: 'ReturnType'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 33
                   index: 33
@@ -107,7 +107,7 @@ Program {
             }
             typeParameters: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 33
                 index: 33
@@ -124,7 +124,7 @@ Program {
             BindingIdentifier {
               name: 'props'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 36
                   index: 36
@@ -139,7 +139,7 @@ Program {
               meta: PatternMeta {
                 optional: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 36
                     index: 36
@@ -155,7 +155,7 @@ Program {
                   id: Identifier {
                     name: 'SomeType'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 17
                         index: 17
@@ -170,7 +170,7 @@ Program {
                   }
                   typeParameters: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 17
                       index: 17

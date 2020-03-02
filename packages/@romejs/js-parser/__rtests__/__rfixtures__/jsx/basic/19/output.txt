@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 53
       index: 53
@@ -27,7 +27,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 53
           index: 53
@@ -43,7 +43,7 @@ Program {
         name: JSXIdentifier {
           name: 'div'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 4
               index: 4
@@ -60,7 +60,7 @@ Program {
         selfClosing: false
         typeArguments: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 53
             index: 53
@@ -77,7 +77,7 @@ Program {
             name: JSXIdentifier {
               name: 'pre'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 8
                   index: 8
@@ -93,7 +93,7 @@ Program {
             value: StringLiteral {
               value: 'leading'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 18
                   index: 18
@@ -107,7 +107,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 18
                 index: 18
@@ -124,7 +124,7 @@ Program {
             name: JSXIdentifier {
               name: 'pre2'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 23
                   index: 23
@@ -140,7 +140,7 @@ Program {
             value: StringLiteral {
               value: 'attribute'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 35
                   index: 35
@@ -154,7 +154,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 35
                 index: 35
@@ -169,7 +169,7 @@ Program {
           }
           JSXSpreadAttribute {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 46
                 index: 46
@@ -184,7 +184,7 @@ Program {
             argument: ReferenceIdentifier {
               name: 'props'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 45
                   index: 45

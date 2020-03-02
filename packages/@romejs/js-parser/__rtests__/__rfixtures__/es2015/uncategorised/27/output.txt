@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 47
       index: 47
@@ -24,7 +24,7 @@ Program {
   body: Array [
     SwitchStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 47
           index: 47
@@ -39,7 +39,7 @@ Program {
       discriminant: ReferenceIdentifier {
         name: 'answer'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 14
             index: 14
@@ -55,7 +55,7 @@ Program {
       cases: Array [
         SwitchCase {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 45
               index: 45
@@ -70,7 +70,7 @@ Program {
           test: NumericLiteral {
             value: 42
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 25
                 index: 25
@@ -86,7 +86,7 @@ Program {
           consequent: Array [
             VariableDeclarationStatement {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 38
                   index: 38
@@ -101,7 +101,7 @@ Program {
               declaration: VariableDeclaration {
                 kind: 'let'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 38
                     index: 38
@@ -118,7 +118,7 @@ Program {
                     id: BindingIdentifier {
                       name: 't'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 32
                           index: 32
@@ -132,7 +132,7 @@ Program {
                       }
                     }
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 37
                         index: 37
@@ -147,7 +147,7 @@ Program {
                     init: NumericLiteral {
                       value: 42
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 37
                           index: 37
@@ -167,7 +167,7 @@ Program {
             BreakStatement {
               label: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 45
                   index: 45

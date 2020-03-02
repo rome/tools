@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 50
       index: 50
@@ -27,7 +27,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 50
           index: 50
@@ -41,7 +41,7 @@ Program {
       }
       expression: FlowTypeCastExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 49
             index: 49
@@ -57,7 +57,7 @@ Program {
           exact: false
           inexact: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 49
               index: 49
@@ -75,7 +75,7 @@ Program {
               key: Identifier {
                 name: 'xxx'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 27
                     index: 27
@@ -90,7 +90,7 @@ Program {
               }
               value: NumberKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 35
                     index: 35
@@ -108,7 +108,7 @@ Program {
               static: false
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 35
                   index: 35
@@ -126,7 +126,7 @@ Program {
               key: Identifier {
                 name: 'yyy'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 40
                     index: 40
@@ -141,7 +141,7 @@ Program {
               }
               value: StringKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 48
                     index: 48
@@ -159,7 +159,7 @@ Program {
               static: false
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 48
                   index: 48
@@ -176,7 +176,7 @@ Program {
         }
         expression: ObjectExpression {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 21
               index: 21
@@ -194,7 +194,7 @@ Program {
                 value: Identifier {
                   name: 'xxx'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 5
                       index: 5
@@ -209,7 +209,7 @@ Program {
                 }
                 variance: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 5
                     index: 5
@@ -225,7 +225,7 @@ Program {
               value: NumericLiteral {
                 value: 0
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 8
                     index: 8
@@ -239,7 +239,7 @@ Program {
                 }
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 8
                   index: 8
@@ -257,7 +257,7 @@ Program {
                 value: Identifier {
                   name: 'yyy'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 13
                       index: 13
@@ -272,7 +272,7 @@ Program {
                 }
                 variance: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 13
                     index: 13
@@ -288,7 +288,7 @@ Program {
               value: StringLiteral {
                 value: 'hey'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 20
                     index: 20
@@ -302,7 +302,7 @@ Program {
                 }
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 20
                   index: 20

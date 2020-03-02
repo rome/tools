@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 87
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'my_filter'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 86
             index: 86
@@ -43,7 +43,7 @@ Program {
         }
         meta: PatternMeta {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 86
               index: 86
@@ -58,7 +58,7 @@ Program {
           typeAnnotation: FlowFunctionTypeAnnotation {
             rest: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 86
                 index: 86
@@ -72,7 +72,7 @@ Program {
             }
             typeParameters: FlowTypeParameterDeclaration {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 42
                   index: 42
@@ -91,7 +91,7 @@ Program {
                   default: undefined
                   variance: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 28
                       index: 28
@@ -109,7 +109,7 @@ Program {
                   default: undefined
                   variance: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 41
                       index: 41
@@ -125,7 +125,7 @@ Program {
                     id: Identifier {
                       name: '$Pred'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 38
                           index: 38
@@ -139,7 +139,7 @@ Program {
                       }
                     }
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 41
                         index: 41
@@ -153,7 +153,7 @@ Program {
                     }
                     typeParameters: FlowTypeParameterInstantiation {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 41
                           index: 41
@@ -169,7 +169,7 @@ Program {
                         NumericLiteralTypeAnnotation {
                           value: 1
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 40
                               index: 40
@@ -192,7 +192,7 @@ Program {
               id: Identifier {
                 name: 'Array'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 69
                     index: 69
@@ -206,7 +206,7 @@ Program {
                 }
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 85
                   index: 85
@@ -220,7 +220,7 @@ Program {
               }
               typeParameters: FlowTypeParameterInstantiation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 85
                     index: 85
@@ -237,7 +237,7 @@ Program {
                     id: Identifier {
                       name: '$Refine'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 77
                           index: 77
@@ -251,7 +251,7 @@ Program {
                       }
                     }
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 84
                         index: 84
@@ -265,7 +265,7 @@ Program {
                     }
                     typeParameters: FlowTypeParameterInstantiation {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 84
                           index: 84
@@ -282,7 +282,7 @@ Program {
                           id: Identifier {
                             name: 'T'
                             loc: Object {
-                              filename: '..'
+                              filename: 'input.js'
                               end: Object {
                                 column: 79
                                 index: 79
@@ -297,7 +297,7 @@ Program {
                           }
                           typeParameters: undefined
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 79
                               index: 79
@@ -314,7 +314,7 @@ Program {
                           id: Identifier {
                             name: 'P'
                             loc: Object {
-                              filename: '..'
+                              filename: 'input.js'
                               end: Object {
                                 column: 81
                                 index: 81
@@ -329,7 +329,7 @@ Program {
                           }
                           typeParameters: undefined
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 81
                               index: 81
@@ -345,7 +345,7 @@ Program {
                         NumericLiteralTypeAnnotation {
                           value: 1
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 83
                               index: 83
@@ -369,7 +369,7 @@ Program {
                 name: Identifier {
                   name: 'v'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 44
                       index: 44
@@ -383,7 +383,7 @@ Program {
                   }
                 }
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 54
                     index: 54
@@ -398,7 +398,7 @@ Program {
                 meta: PatternMeta {
                   optional: false
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 54
                       index: 54
@@ -414,7 +414,7 @@ Program {
                     id: Identifier {
                       name: 'Array'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 51
                           index: 51
@@ -428,7 +428,7 @@ Program {
                       }
                     }
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 54
                         index: 54
@@ -442,7 +442,7 @@ Program {
                     }
                     typeParameters: FlowTypeParameterInstantiation {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 54
                           index: 54
@@ -459,7 +459,7 @@ Program {
                           id: Identifier {
                             name: 'T'
                             loc: Object {
-                              filename: '..'
+                              filename: 'input.js'
                               end: Object {
                                 column: 53
                                 index: 53
@@ -474,7 +474,7 @@ Program {
                           }
                           typeParameters: undefined
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 53
                               index: 53
@@ -496,7 +496,7 @@ Program {
                 name: Identifier {
                   name: 'cb'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 58
                       index: 58
@@ -510,7 +510,7 @@ Program {
                   }
                 }
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 61
                     index: 61
@@ -525,7 +525,7 @@ Program {
                 meta: PatternMeta {
                   optional: false
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 61
                       index: 61
@@ -541,7 +541,7 @@ Program {
                     id: Identifier {
                       name: 'P'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 61
                           index: 61
@@ -556,7 +556,7 @@ Program {
                     }
                     typeParameters: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 61
                         index: 61
@@ -577,7 +577,7 @@ Program {
       }
       predicate: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 86
           index: 86

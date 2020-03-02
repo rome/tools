@@ -16,6 +16,9 @@ export function showInvisibles(str: string): string {
       case ' ':
         ret += '·'; // Middle Dot, \u00B7
         break;
+      case '\r':
+        ret += '␍\r';
+        break;
       case '\n':
         ret += '⏎\n'; // Return Symbol, \u23ce
         break;

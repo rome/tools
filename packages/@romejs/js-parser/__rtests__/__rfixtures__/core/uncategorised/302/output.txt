@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: true
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 20
       index: 20
@@ -24,7 +24,7 @@ Program {
     CommentBlock {
       value: ' comment '
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 19
           index: 19
@@ -41,7 +41,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 20
           index: 20
@@ -56,7 +56,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'var'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 20
             index: 20
@@ -74,7 +74,7 @@ Program {
               name: 'x'
               leadingComments: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 5
                   index: 5
@@ -90,7 +90,7 @@ Program {
                 CommentBlock {
                   value: ' comment '
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 19
                       index: 19
@@ -107,7 +107,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 5
                 index: 5
@@ -123,7 +123,7 @@ Program {
               CommentBlock {
                 value: ' comment '
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 19
                     index: 19

@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 117
@@ -24,7 +24,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 22
           index: 22
@@ -39,7 +39,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'const'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 22
             index: 22
@@ -56,7 +56,7 @@ Program {
             id: BindingIdentifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 7
                   index: 7
@@ -70,7 +70,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 21
                 index: 21
@@ -84,7 +84,7 @@ Program {
             }
             init: MetaProperty {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 21
                   index: 21
@@ -99,7 +99,7 @@ Program {
               meta: Identifier {
                 name: 'import'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 16
                     index: 16
@@ -115,7 +115,7 @@ Program {
               property: Identifier {
                 name: 'meta'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 21
                     index: 21
@@ -135,7 +135,7 @@ Program {
     }
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 28
           index: 51
@@ -150,7 +150,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'const'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 28
             index: 51
@@ -167,7 +167,7 @@ Program {
             id: BindingIdentifier {
               name: 'url'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 9
                   index: 32
@@ -181,7 +181,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 27
                 index: 50
@@ -195,7 +195,7 @@ Program {
             }
             init: MemberExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 27
                   index: 50
@@ -211,7 +211,7 @@ Program {
                 value: Identifier {
                   name: 'url'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 27
                       index: 50
@@ -225,7 +225,7 @@ Program {
                   }
                 }
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 27
                     index: 50
@@ -240,7 +240,7 @@ Program {
               }
               object: MetaProperty {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 23
                     index: 46
@@ -255,7 +255,7 @@ Program {
                 meta: Identifier {
                   name: 'import'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 18
                       index: 41
@@ -271,7 +271,7 @@ Program {
                 property: Identifier {
                   name: 'meta'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 23
                       index: 46
@@ -292,7 +292,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 12
           index: 64
@@ -306,7 +306,7 @@ Program {
       }
       expression: MetaProperty {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 11
             index: 63
@@ -321,7 +321,7 @@ Program {
         meta: Identifier {
           name: 'import'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 6
               index: 58
@@ -337,7 +337,7 @@ Program {
         property: Identifier {
           name: 'meta'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 11
               index: 63
@@ -354,7 +354,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 16
           index: 81
@@ -368,7 +368,7 @@ Program {
       }
       expression: MemberExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 15
             index: 80
@@ -384,7 +384,7 @@ Program {
           value: Identifier {
             name: 'url'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 15
                 index: 80
@@ -398,7 +398,7 @@ Program {
             }
           }
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 15
               index: 80
@@ -413,7 +413,7 @@ Program {
         }
         object: MetaProperty {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 11
               index: 76
@@ -428,7 +428,7 @@ Program {
           meta: Identifier {
             name: 'import'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 6
                 index: 71
@@ -444,7 +444,7 @@ Program {
           property: Identifier {
             name: 'meta'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 11
                 index: 76
@@ -462,7 +462,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 34
           index: 116
@@ -477,7 +477,7 @@ Program {
       expression: AssignmentExpression {
         operator: '='
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 33
             index: 115
@@ -492,7 +492,7 @@ Program {
         right: BooleanLiteral {
           value: true
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 33
               index: 115
@@ -507,7 +507,7 @@ Program {
         }
         left: MemberExpression {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 26
               index: 108
@@ -523,7 +523,7 @@ Program {
             value: Identifier {
               name: 'couldBeMutable'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 26
                   index: 108
@@ -537,7 +537,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 26
                 index: 108
@@ -552,7 +552,7 @@ Program {
           }
           object: MetaProperty {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 11
                 index: 93
@@ -567,7 +567,7 @@ Program {
             meta: Identifier {
               name: 'import'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 6
                   index: 88
@@ -583,7 +583,7 @@ Program {
             property: Identifier {
               name: 'meta'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 11
                   index: 93

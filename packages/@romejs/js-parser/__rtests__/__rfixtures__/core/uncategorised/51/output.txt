@@ -1,18 +1,18 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
-      column: 6
-      index: 10
-      line: 2
+      column: 0
+      index: 12
+      line: 3
     }
     start: Object {
       column: 0
@@ -22,9 +22,9 @@ Program {
   }
   comments: Array [
     CommentBlock {
-      value: 'a\rb'
+      value: 'a\nb'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 3
           index: 7
@@ -41,10 +41,10 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
-          column: 6
-          index: 10
+          column: 7
+          index: 11
           line: 2
         }
         start: Object {
@@ -57,7 +57,7 @@ Program {
         value: 42
         leadingComments: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 6
             index: 10
@@ -72,9 +72,9 @@ Program {
       }
       leadingComments: Array [
         CommentBlock {
-          value: 'a\rb'
+          value: 'a\nb'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 3
               index: 7

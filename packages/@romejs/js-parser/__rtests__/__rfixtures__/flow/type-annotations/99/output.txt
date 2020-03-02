@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 22
@@ -27,7 +27,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 21
           index: 21
@@ -41,7 +41,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 21
             index: 21
@@ -55,7 +55,7 @@ Program {
         }
         body: NullLiteral {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 21
               index: 21
@@ -75,7 +75,7 @@ Program {
           rest: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 17
               index: 17
@@ -91,7 +91,7 @@ Program {
             id: Identifier {
               name: 'z'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 13
                   index: 13
@@ -106,7 +106,7 @@ Program {
             }
             typeParameters: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 13
                 index: 13
@@ -123,7 +123,7 @@ Program {
             BindingIdentifier {
               name: 'foo'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 4
                   index: 4
@@ -139,7 +139,7 @@ Program {
             BindingIdentifier {
               name: 'bar'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 9
                   index: 9

@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 36
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 7
           index: 7
@@ -39,7 +39,7 @@ Program {
       expression: ReferenceIdentifier {
         name: 'declare'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 7
             index: 7
@@ -55,7 +55,7 @@ Program {
     }
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 27
           index: 35
@@ -70,7 +70,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'const'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 27
             index: 35
@@ -87,7 +87,7 @@ Program {
             id: BindingIdentifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 15
                   index: 23
@@ -102,7 +102,7 @@ Program {
               meta: PatternMeta {
                 definite: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 15
                     index: 23
@@ -116,7 +116,7 @@ Program {
                 }
                 typeAnnotation: NumberKeywordTypeAnnotation {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 15
                       index: 23
@@ -133,7 +133,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 15
                 index: 23
@@ -150,7 +150,7 @@ Program {
             id: BindingIdentifier {
               name: 'y'
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 26
                   index: 34
@@ -165,7 +165,7 @@ Program {
               meta: PatternMeta {
                 definite: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 26
                     index: 34
@@ -179,7 +179,7 @@ Program {
                 }
                 typeAnnotation: StringKeywordTypeAnnotation {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 26
                       index: 34
@@ -196,7 +196,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 26
                 index: 34

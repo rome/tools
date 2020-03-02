@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 35
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 34
           index: 34
@@ -38,7 +38,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 34
             index: 34
@@ -54,7 +54,7 @@ Program {
           body: Array []
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 34
               index: 34
@@ -73,7 +73,7 @@ Program {
           params: Array []
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 32
               index: 32
@@ -87,7 +87,7 @@ Program {
           }
           returnType: AnyKeywordTypeAnnotation {
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 28
                 index: 28
@@ -103,7 +103,7 @@ Program {
           rest: BindingIdentifier {
             name: 'args'
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 31
                 index: 31
@@ -118,7 +118,7 @@ Program {
             meta: PatternMeta {
               optional: true
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 31
                   index: 31
@@ -132,7 +132,7 @@ Program {
               }
               typeAnnotation: TSArrayType {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 21
                     index: 21
@@ -146,7 +146,7 @@ Program {
                 }
                 elementType: AnyKeywordTypeAnnotation {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 19
                       index: 19

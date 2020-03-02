@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 4
       index: 40
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 4
           index: 40
@@ -39,7 +39,7 @@ Program {
       expression: CallExpression {
         arguments: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 3
             index: 39
@@ -54,7 +54,7 @@ Program {
         callee: FunctionExpression {
           id: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 1
               index: 37
@@ -77,7 +77,7 @@ Program {
             thisType: undefined
             typeParameters: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 13
                 index: 13
@@ -93,7 +93,7 @@ Program {
           body: BlockStatement {
             body: Array []
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 1
                 index: 37
@@ -109,7 +109,7 @@ Program {
               Directive {
                 value: 'use strict'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 14
                     index: 29
@@ -125,7 +125,7 @@ Program {
               Directive {
                 value: '\0'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 5
                     index: 35

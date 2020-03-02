@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 5
       index: 9
@@ -25,7 +25,7 @@ Program {
     BlockStatement {
       directives: Array []
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 5
           index: 9
@@ -40,7 +40,7 @@ Program {
       body: Array [
         ExpressionStatement {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 3
               index: 3
@@ -55,7 +55,7 @@ Program {
           expression: ReferenceIdentifier {
             name: 'x'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 3
                 index: 3
@@ -71,7 +71,7 @@ Program {
         }
         ExpressionStatement {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 3
               index: 7
@@ -87,7 +87,7 @@ Program {
             operator: '++'
             prefix: true
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 3
                 index: 7
@@ -102,7 +102,7 @@ Program {
             argument: ReferenceIdentifier {
               name: 'y'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 3
                   index: 7

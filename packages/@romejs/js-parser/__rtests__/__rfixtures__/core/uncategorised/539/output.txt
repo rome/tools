@@ -1,14 +1,14 @@
 Program {
   comments: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 31
       index: 31
@@ -24,7 +24,7 @@ Program {
     Object {
       advice: undefined
       category: 'parse/js'
-      filename: '..'
+      filename: 'input.js'
       message: 'Illegal \'use strict\' directive in function with non-simple parameter list'
       mtime: undefined
       sourceType: 'script'
@@ -46,7 +46,7 @@ Program {
       id: BindingIdentifier {
         name: 'f'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 10
             index: 10
@@ -60,7 +60,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 31
           index: 31
@@ -75,7 +75,7 @@ Program {
       body: BlockStatement {
         body: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 31
             index: 31
@@ -91,7 +91,7 @@ Program {
           Directive {
             value: 'use strict'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 29
                 index: 29
@@ -116,7 +116,7 @@ Program {
         thisType: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 14
             index: 14
@@ -132,7 +132,7 @@ Program {
           BindingIdentifier {
             name: 'f'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 12
                 index: 12
@@ -148,7 +148,7 @@ Program {
               optional: undefined
               typeAnnotation: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 12
                   index: 12

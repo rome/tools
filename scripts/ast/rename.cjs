@@ -29,7 +29,7 @@ const {
   generatorsFolder,
   analysisFolder,
   astFolder,
-} = require('./_constants.cjs');
+} = require('../_constants.cjs');
 
 rename(
   path.join(generatorsFolder, fromType + '.ts'),

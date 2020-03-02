@@ -1,14 +1,14 @@
 Program {
   comments: Array []
   diagnostics: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: true
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 48
       index: 48
@@ -24,7 +24,7 @@ Program {
     Directive {
       value: 'use strict'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 13
           index: 13
@@ -41,7 +41,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 48
           index: 48
@@ -56,7 +56,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'var'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 48
             index: 48
@@ -73,7 +73,7 @@ Program {
             id: BindingIdentifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 19
                   index: 19
@@ -87,7 +87,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 48
                 index: 48
@@ -101,7 +101,7 @@ Program {
             }
             init: ObjectExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 48
                   index: 48
@@ -120,7 +120,7 @@ Program {
                     value: Identifier {
                       name: 'i'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 29
                           index: 29
@@ -135,7 +135,7 @@ Program {
                     }
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 29
                         index: 29
@@ -149,7 +149,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 34
                       index: 34
@@ -165,7 +165,7 @@ Program {
                     body: Array []
                     directives: Array []
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 34
                         index: 34
@@ -189,7 +189,7 @@ Program {
                     thisType: undefined
                     typeParameters: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 32
                         index: 32
@@ -209,7 +209,7 @@ Program {
                     value: Identifier {
                       name: 'i'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 41
                           index: 41
@@ -224,7 +224,7 @@ Program {
                     }
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 41
                         index: 41
@@ -238,7 +238,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 46
                       index: 46
@@ -254,7 +254,7 @@ Program {
                     body: Array []
                     directives: Array []
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 46
                         index: 46
@@ -278,7 +278,7 @@ Program {
                     thisType: undefined
                     typeParameters: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 44
                         index: 44

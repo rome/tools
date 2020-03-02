@@ -1,14 +1,14 @@
 Program {
   comments: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 25
       index: 25
@@ -23,7 +23,7 @@ Program {
   diagnostics: Array [
     Object {
       category: 'parse/js'
-      filename: '..'
+      filename: 'input.js'
       message: 'Argument name clash in strict mode'
       mtime: undefined
       sourceType: 'script'
@@ -44,7 +44,7 @@ Program {
           message: 'Collides with this existing definition'
         }
         frame {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 16
             index: 16
@@ -62,7 +62,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 25
           index: 25
@@ -78,7 +78,7 @@ Program {
         id: BindingIdentifier {
           name: 'test'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 14
               index: 14
@@ -92,7 +92,7 @@ Program {
           }
         }
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 24
             index: 24
@@ -108,7 +108,7 @@ Program {
           body: Array []
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 24
               index: 24
@@ -131,7 +131,7 @@ Program {
           thisType: undefined
           typeParameters: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 21
               index: 21
@@ -147,7 +147,7 @@ Program {
             BindingIdentifier {
               name: 't'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 16
                   index: 16
@@ -163,7 +163,7 @@ Program {
                 optional: undefined
                 typeAnnotation: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 16
                     index: 16
@@ -180,7 +180,7 @@ Program {
             BindingIdentifier {
               name: 't'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 19
                   index: 19
@@ -196,7 +196,7 @@ Program {
                 optional: undefined
                 typeAnnotation: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 19
                     index: 19

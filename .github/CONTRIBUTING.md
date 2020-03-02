@@ -16,7 +16,7 @@ scripts/dev-rome --help
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
 
-Refer to [Getting Started](../website/docs/introduction/getting-started.md) for more usage documentation.
+Refer to [Getting Started](https://romejs.dev/docs/introduction/getting-started/) for more usage documentation.
 
 ## Testing
 
@@ -35,3 +35,19 @@ Run TypeScript with code emitting disabled to perform a full typecheck outside t
 ```bash
 node_modules/.bin/tsc --noEmit
 ```
+
+## Developing on Windows
+
+You may run into errors when trying to run the Rome commands on Windows
+
+```
+PS C:\code\rome> scripts/dev-rome --help
+ResourceUnavailable: Program 'dev-rome' failed to run: No application is associated with the specified file for this operation.At line:1 char:1
++ scripts/dev-rome --help
++ ~~~~~~~~~~~~~~~~~~~~~~~.
+```
+
+This is because the command uses shebangs to automatically invoke itself as a Node script. You can fix this in a couple of ways:
+
+- Use a terminal that supports shebangs on Windows such a Git Bash
+- Prefix any commands with `node` eg. `node scripts/dev-rome`

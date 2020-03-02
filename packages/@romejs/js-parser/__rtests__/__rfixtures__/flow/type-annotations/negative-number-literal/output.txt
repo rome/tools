@@ -1,7 +1,7 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: true
   interpreter: undefined
   mtime: undefined
@@ -11,7 +11,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 111
@@ -27,7 +27,7 @@ Program {
     CommentBlock {
       value: '*\n * @flow\n '
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 3
           index: 16
@@ -46,7 +46,7 @@ Program {
       id: BindingIdentifier {
         name: 'DirectionVector'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 20
             index: 38
@@ -61,7 +61,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 6
           index: 60
@@ -77,7 +77,7 @@ Program {
         CommentBlock {
           value: '*\n * @flow\n '
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 3
               index: 16
@@ -93,7 +93,7 @@ Program {
       ]
       right: UnionTypeAnnotation {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 5
             index: 59
@@ -109,7 +109,7 @@ Program {
           NumericLiteralTypeAnnotation {
             value: -1
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 6
                 index: 47
@@ -125,7 +125,7 @@ Program {
           NumericLiteralTypeAnnotation {
             value: 0
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 5
                 index: 53
@@ -141,7 +141,7 @@ Program {
           NumericLiteralTypeAnnotation {
             value: 1
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 5
                 index: 59
@@ -159,7 +159,7 @@ Program {
     }
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 27
           index: 90
@@ -174,7 +174,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'var'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 27
             index: 90
@@ -191,7 +191,7 @@ Program {
             id: BindingIdentifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 21
                   index: 84
@@ -206,7 +206,7 @@ Program {
               meta: PatternMeta {
                 definite: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 21
                     index: 84
@@ -222,7 +222,7 @@ Program {
                   id: Identifier {
                     name: 'DirectionVector'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 21
                         index: 84
@@ -237,7 +237,7 @@ Program {
                   }
                   typeParameters: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 21
                       index: 84
@@ -253,7 +253,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 26
                 index: 89
@@ -269,7 +269,7 @@ Program {
               operator: '-'
               prefix: true
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 26
                   index: 89
@@ -284,7 +284,7 @@ Program {
               argument: NumericLiteral {
                 value: 1
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 26
                     index: 89
@@ -304,7 +304,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 19
           index: 110
@@ -318,7 +318,7 @@ Program {
       }
       expression: CallExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 18
             index: 109
@@ -334,7 +334,7 @@ Program {
           StringLiteral {
             value: 'foo'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 17
                 index: 108
@@ -350,7 +350,7 @@ Program {
         ]
         callee: MemberExpression {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 11
               index: 102
@@ -365,7 +365,7 @@ Program {
           object: ReferenceIdentifier {
             name: 'console'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 7
                 index: 98
@@ -382,7 +382,7 @@ Program {
             value: Identifier {
               name: 'log'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 11
                   index: 102
@@ -396,7 +396,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 11
                 index: 102
