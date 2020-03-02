@@ -12,7 +12,7 @@ import {markup} from '@romejs/string-markup';
 
 function extractPropertyKey(
   node: ObjectProperty | ObjectMethod | SpreadProperty,
-) {
+): string | undefined {
   if (
     (node.type === 'ObjectMethod' || node.type === 'ObjectProperty') &&
     node.key.type === 'StaticPropertyKey'
@@ -27,10 +27,10 @@ function extractPropertyKey(
       return value.name;
     }
 
-    return value.value;
+    return String(value.value);
   }
 
-  return null;
+  return undefined;
 }
 
 export default {
@@ -44,7 +44,7 @@ export default {
       for (const prop of node.properties) {
         const key = extractPropertyKey(prop);
 
-        if (key !== null) {
+        if (key !== undefined) {
           if (previousKeys.has(key)) {
             path.context.addNodeDiagnostic(prop, {
               category: 'lint/noDuplicateKeys',
