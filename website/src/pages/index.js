@@ -19,9 +19,7 @@ function Home() {
   const context = useDocusaurusContext();
   const {siteConfig = {}} = context;
   return (
-    <Layout
-      title={siteConfig.tagline}
-      description={siteConfig.tagline}>
+    <Layout title={siteConfig.tagline} description={siteConfig.tagline}>
       <header
         className={classnames(
           'hero',
@@ -48,7 +46,7 @@ function Home() {
                 'button button--primary button--lg',
                 styles.getStarted,
               )}
-              to={useBaseUrl('docs/introduction/getting-started')}>
+              to={useBaseUrl('docs/introduction/getting-started/')}>
               Get Started&nbsp;&nbsp;→
             </Link>
           </div>
