@@ -22,7 +22,7 @@ function isNegZero(node: AnyNode): boolean {
   return (
     node.type === 'UnaryExpression' &&
     node.operator === '-' &&
-    node.argument?.type === 'NumericLiteral' &&
+    node.argument.type === 'NumericLiteral' &&
     node.argument.value === 0
   );
 }
