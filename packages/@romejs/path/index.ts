@@ -81,7 +81,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
       ? this.getExtensionlessBasename()
       : this.getBasename();
     const newExt = clearExt ? ext : this.memoizedExtension + ext;
-    const segments = this.getParentSegments().concat(newBasename + ext);
+    const segments = this.getParentSegments(false).concat(newBasename + ext);
 
     return this._fork(
       {
@@ -96,7 +96,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
   }
 
   changeBasename(newBasename: string): Super {
-    const segments = this.getParentSegments().concat(newBasename);
+    const segments = this.getParentSegments(false).concat(newBasename);
     return this._fork(
       {
         ...this.getParsed(),
@@ -141,7 +141,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
     return parent;
   }
 
-  getParentSegments(): PathSegments {
+  getParentSegments(explicit: boolean = true): PathSegments {
     // Should we throw an error?
     if (this.isRoot()) {
       return this.segments;
@@ -149,7 +149,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
     const segments = this.getSegments().slice(0, -1);
     // Always make this an explicit folder
-    if (segments.length > 0 && segments[0] !== '') {
+    if (explicit && segments.length > 0 && segments[0] !== '') {
       segments.push('');
     }
     return segments;
@@ -286,12 +286,19 @@ class BaseFilePath<Super extends UnknownFilePath> {
   }
 
   getSegments(): PathSegments {
-    const isRoot = !this.isRoot();
-    if (this.isExplicitFolder() && isRoot) {
-      return this.segments.slice(0, -1);
-    } else {
-      return this.segments;
+    let {segments} = this;
+
+    if (!this.isRoot()) {
+      if (this.isExplicitFolder()) {
+        segments = segments.slice(0, -1);
+      }
+
+      if (segments[0] === '.') {
+        segments = segments.slice(1);
+      }
     }
+
+    return segments;
   }
 
   getRawSegments(): PathSegments {
@@ -719,7 +726,7 @@ function normalizeSegments(
   offset: number,
   absoluteSegments: Array<string>,
 ): Array<string> {
-  const pathSegments: PathSegments = [];
+  const relativeSegments: PathSegments = [];
   for (let i = offset; i < segments.length; i++) {
     let seg = segments[i];
 
@@ -739,23 +746,23 @@ function normalizeSegments(
     // Remove the previous segment, as long as it's not also ..
     if (
       seg === '..' &&
-      pathSegments.length > 0 &&
-      pathSegments[pathSegments.length - 1] !== '..'
+      relativeSegments.length > 0 &&
+      relativeSegments[relativeSegments.length - 1] !== '..'
     ) {
-      pathSegments.pop();
+      relativeSegments.pop();
       continue;
     }
 
-    pathSegments.push(seg);
+    relativeSegments.push(seg);
   }
 
-  const finalSegments = [...absoluteSegments, ...pathSegments];
+  const finalSegments = [...absoluteSegments, ...relativeSegments];
 
   // Retain explicit folder
   if (
     segments[segments.length - 1] === '' &&
     finalSegments[finalSegments.length - 1] !== '' &&
-    pathSegments.length !== 0
+    relativeSegments.length !== 0
   ) {
     finalSegments.push('');
   }
