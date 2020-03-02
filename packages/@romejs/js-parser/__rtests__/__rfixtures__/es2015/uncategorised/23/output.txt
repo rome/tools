@@ -11,9 +11,9 @@ Program {
   loc: Object {
     filename: 'input.js'
     end: Object {
-      column: 1
-      index: 5
-      line: 4
+      column: 0
+      index: 7
+      line: 5
     }
     start: Object {
       column: 0
@@ -26,8 +26,8 @@ Program {
       loc: Object {
         filename: 'input.js'
         end: Object {
-          column: 1
-          index: 5
+          column: 2
+          index: 6
           line: 4
         }
         start: Object {
