@@ -2,14 +2,14 @@ Program {
   body: Array []
   comments: Array []
   diagnostics: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 8
       index: 8
@@ -25,7 +25,7 @@ Program {
     Directive {
       value: '\\u0061'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 8
           index: 8

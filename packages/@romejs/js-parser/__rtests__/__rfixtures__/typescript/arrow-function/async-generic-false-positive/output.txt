@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 28
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 10
           index: 10
@@ -39,7 +39,7 @@ Program {
       expression: BinaryExpression {
         operator: '<'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 9
             index: 9
@@ -54,7 +54,7 @@ Program {
         left: ReferenceIdentifier {
           name: 'async'
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 5
               index: 5
@@ -70,7 +70,7 @@ Program {
         right: NumericLiteral {
           value: 1
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 9
               index: 9
@@ -87,7 +87,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 16
           index: 27
@@ -102,7 +102,7 @@ Program {
       expression: BinaryExpression {
         operator: '=='
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 15
             index: 26
@@ -117,7 +117,7 @@ Program {
         right: NumericLiteral {
           value: 0
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 15
               index: 26
@@ -133,7 +133,7 @@ Program {
         left: CallExpression {
           arguments: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 10
               index: 21
@@ -148,7 +148,7 @@ Program {
           callee: ReferenceIdentifier {
             name: 'async'
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 5
                 index: 16
@@ -163,7 +163,7 @@ Program {
           }
           typeArguments: TSTypeParameterInstantiation {
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 8
                 index: 19
@@ -179,7 +179,7 @@ Program {
               TSTypeReference {
                 typeParameters: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 7
                     index: 18
@@ -194,7 +194,7 @@ Program {
                 typeName: ReferenceIdentifier {
                   name: 'T'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 7
                       index: 18

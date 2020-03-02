@@ -1,7 +1,7 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -11,7 +11,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 32
@@ -27,7 +27,7 @@ Program {
     CommentLine {
       value: '@flow'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 7
           index: 7
@@ -44,7 +44,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 23
           index: 31
@@ -60,7 +60,7 @@ Program {
         CommentLine {
           value: '@flow'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 7
               index: 7
@@ -78,7 +78,7 @@ Program {
         arguments: Array []
         leadingComments: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 22
             index: 30
@@ -92,7 +92,7 @@ Program {
         }
         typeArguments: FlowTypeParameterInstantiation {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 20
               index: 28
@@ -109,7 +109,7 @@ Program {
               id: Identifier {
                 name: '_'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 19
                     index: 27
@@ -124,7 +124,7 @@ Program {
               }
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 19
                   index: 27
@@ -143,7 +143,7 @@ Program {
           arguments: Array []
           leadingComments: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 17
               index: 25
@@ -158,7 +158,7 @@ Program {
           callee: MemberExpression {
             leadingComments: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 15
                 index: 23
@@ -174,7 +174,7 @@ Program {
               value: Identifier {
                 name: 'method'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 15
                     index: 23
@@ -188,7 +188,7 @@ Program {
                 }
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 15
                   index: 23
@@ -204,7 +204,7 @@ Program {
             object: ReferenceIdentifier {
               name: 'instance'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 8
                   index: 16
@@ -220,7 +220,7 @@ Program {
                 CommentLine {
                   value: '@flow'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 7
                       index: 7

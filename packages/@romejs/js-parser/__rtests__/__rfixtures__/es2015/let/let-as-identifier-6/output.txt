@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 18
@@ -24,7 +24,7 @@ Program {
   body: Array [
     WhileStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 13
           index: 13
@@ -39,7 +39,7 @@ Program {
       test: NumericLiteral {
         value: 0
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 8
             index: 8
@@ -54,7 +54,7 @@ Program {
       }
       body: ExpressionStatement {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 13
             index: 13
@@ -69,7 +69,7 @@ Program {
         expression: ReferenceIdentifier {
           name: 'let'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 13
               index: 13
@@ -86,7 +86,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 3
           index: 17
@@ -101,7 +101,7 @@ Program {
       expression: ReferenceIdentifier {
         name: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 3
             index: 17

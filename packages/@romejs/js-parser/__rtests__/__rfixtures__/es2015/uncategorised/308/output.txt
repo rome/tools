@@ -1,14 +1,14 @@
 Program {
   comments: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 14
       index: 14
@@ -24,7 +24,7 @@ Program {
     Object {
       advice: Array []
       category: 'parse/js'
-      filename: '..'
+      filename: 'input.js'
       message: 'Unexpected token, expected ","'
       mtime: undefined
       sourceType: 'script'
@@ -44,7 +44,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 7
           index: 7
@@ -59,7 +59,7 @@ Program {
       expression: AssignmentExpression {
         operator: '='
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 7
@@ -74,7 +74,7 @@ Program {
         right: NumericLiteral {
           value: 0
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 7
               index: 7
@@ -90,7 +90,7 @@ Program {
         left: AssignmentObjectPattern {
           rest: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 3
               index: 3
@@ -108,7 +108,7 @@ Program {
                 value: Identifier {
                   name: 'x'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 3
                       index: 3
@@ -123,7 +123,7 @@ Program {
                 }
                 variance: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 3
                     index: 3
@@ -139,7 +139,7 @@ Program {
               value: AssignmentIdentifier {
                 name: 'x'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 3
                     index: 3
@@ -153,7 +153,7 @@ Program {
                 }
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 3
                   index: 3
@@ -172,7 +172,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 8
           index: 8
@@ -187,7 +187,7 @@ Program {
       expression: ReferenceIdentifier {
         name: 'INVALID_PLACEHOLDER'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 8
             index: 8
@@ -203,7 +203,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 9
           index: 9
@@ -218,7 +218,7 @@ Program {
       expression: ReferenceIdentifier {
         name: 'INVALID_PLACEHOLDER'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 9
             index: 9
@@ -234,7 +234,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 12
           index: 12
@@ -249,7 +249,7 @@ Program {
       expression: ReferenceIdentifier {
         name: 'INVALID_PLACEHOLDER'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 12
             index: 12
@@ -265,7 +265,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 14
           index: 14
@@ -280,7 +280,7 @@ Program {
       expression: ReferenceIdentifier {
         name: 'x'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 14
             index: 14

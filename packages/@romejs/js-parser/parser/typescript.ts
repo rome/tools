@@ -364,6 +364,7 @@ function parseTSThisTypePredicate(
 
   return parser.finishNode(start, {
     type: 'TSTypePredicate',
+    asserts: false,
     parameterName,
     typeAnnotation,
   });
@@ -1291,27 +1292,42 @@ export function parseTSTypeOrTypePredicateAnnotation(
   parser: JSParser,
   returnToken: TokenType,
 ): AnyTSPrimary {
-  const start = parser.getPosition();
+  let start = parser.getPosition();
   parser.pushScope('TYPE', true);
   parser.expect(returnToken);
 
+  let hasAsserts = parser.eatContextual('asserts');
+  let parameterName: Identifier;
   let typePredicateVariable;
   if (tsIsIdentifier(parser)) {
     typePredicateVariable = tryTSParse(parser, parseTSTypePredicatePrefix);
   }
   if (typePredicateVariable === undefined) {
-    parser.popScope('TYPE');
-    return parseTSTypeAnnotation(parser, /* eatColon */ false, start);
+    if (hasAsserts) {
+      parameterName = parseIdentifier(parser);
+      if (parameterName === undefined) {
+        throw Error('Should have an identifier after asserts');
+      }
+    } else {
+      parser.popScope('TYPE');
+      return parseTSTypeAnnotation(parser, /* eatColon */ false, start);
+    }
+  } else {
+    parameterName = typePredicateVariable;
   }
 
-  const type = parseTSTypeAnnotation(parser, /* eatColon */ false);
+  let type;
+  if (typePredicateVariable) {
+    type = parseTSTypeAnnotation(parser, /* eatColon */ false);
+    start = parser.getLoc(typePredicateVariable).start;
+  }
 
-  const typePredicateStart = parser.getLoc(typePredicateVariable).start;
   parser.popScope('TYPE');
 
-  return parser.finishNode(typePredicateStart, {
+  return parser.finishNode(start, {
     type: 'TSTypePredicate',
-    parameterName: typePredicateVariable,
+    asserts: hasAsserts,
+    parameterName,
     typeAnnotation: type,
   });
 }

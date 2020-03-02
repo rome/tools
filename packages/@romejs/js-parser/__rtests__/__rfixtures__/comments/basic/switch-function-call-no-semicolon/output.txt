@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 82
@@ -24,7 +24,7 @@ Program {
     CommentLine {
       value: ' comment'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 14
           index: 57
@@ -41,7 +41,7 @@ Program {
   body: Array [
     SwitchStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 1
           index: 81
@@ -56,7 +56,7 @@ Program {
       discriminant: ReferenceIdentifier {
         name: 'x'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 8
             index: 8
@@ -72,7 +72,7 @@ Program {
       cases: Array [
         SwitchCase {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 20
               index: 42
@@ -87,7 +87,7 @@ Program {
           test: NumericLiteral {
             value: 1
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 8
                 index: 20
@@ -104,7 +104,7 @@ Program {
             CommentLine {
               value: ' comment'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 14
                   index: 57
@@ -122,7 +122,7 @@ Program {
             ExpressionStatement {
               trailingComments: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 20
                   index: 42
@@ -137,7 +137,7 @@ Program {
               expression: CallExpression {
                 trailingComments: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 20
                     index: 42
@@ -153,7 +153,7 @@ Program {
                   StringLiteral {
                     value: '1'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 19
                         index: 41
@@ -169,7 +169,7 @@ Program {
                 ]
                 callee: MemberExpression {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 15
                       index: 37
@@ -184,7 +184,7 @@ Program {
                   object: ReferenceIdentifier {
                     name: 'console'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 11
                         index: 33
@@ -201,7 +201,7 @@ Program {
                     value: Identifier {
                       name: 'log'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 15
                           index: 37
@@ -215,7 +215,7 @@ Program {
                       }
                     }
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 15
                         index: 37
@@ -236,7 +236,7 @@ Program {
         SwitchCase {
           test: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 10
               index: 79
@@ -252,7 +252,7 @@ Program {
             CommentLine {
               value: ' comment'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 14
                   index: 57
@@ -271,7 +271,7 @@ Program {
               label: undefined
               leadingComments: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 79

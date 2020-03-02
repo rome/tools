@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 43
       index: 43
@@ -27,7 +27,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 43
           index: 43
@@ -41,7 +41,7 @@ Program {
       }
       expression: FlowTypeCastExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 42
             index: 42
@@ -57,7 +57,7 @@ Program {
           rest: undefined
           typeParameters: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 42
               index: 42
@@ -71,7 +71,7 @@ Program {
           }
           returnType: NumberKeywordTypeAnnotation {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 42
                 index: 42
@@ -89,7 +89,7 @@ Program {
               name: Identifier {
                 name: 'xxx'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 23
                     index: 23
@@ -103,7 +103,7 @@ Program {
                 }
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 31
                   index: 31
@@ -118,7 +118,7 @@ Program {
               meta: PatternMeta {
                 optional: false
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 31
                     index: 31
@@ -132,7 +132,7 @@ Program {
                 }
                 typeAnnotation: NumberKeywordTypeAnnotation {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 31
                       index: 31
@@ -151,7 +151,7 @@ Program {
         }
         expression: ArrowFunctionExpression {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 17
               index: 17
@@ -171,7 +171,7 @@ Program {
             returnType: undefined
             thisType: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 10
                 index: 10
@@ -187,7 +187,7 @@ Program {
               BindingIdentifier {
                 name: 'xxx'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 5
                     index: 5
@@ -205,7 +205,7 @@ Program {
           body: BinaryExpression {
             operator: '+'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 17
                 index: 17
@@ -220,7 +220,7 @@ Program {
             left: ReferenceIdentifier {
               name: 'xxx'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 13
                   index: 13
@@ -236,7 +236,7 @@ Program {
             right: NumericLiteral {
               value: 1
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 17
                   index: 17

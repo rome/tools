@@ -12,8 +12,8 @@ test('toCamelCase', t => {
   const testCases = [
     {input: 'rometest', expected: 'rometest'},
     {input: 'rome test', expected: 'romeTest'},
-    {input: 'RoMe TeSt', expected: 'romeTest'},
-    {input: 'ROME TEST', expected: 'romeTest'},
+    {input: 'RoMe TeSt', expected: 'RoMeTeSt'},
+    {input: 'ROME TEST', expected: 'ROMETEST'},
   ];
 
   testCases.forEach(td => {

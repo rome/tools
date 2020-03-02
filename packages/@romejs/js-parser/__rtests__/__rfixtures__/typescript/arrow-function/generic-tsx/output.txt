@@ -1,7 +1,7 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -11,7 +11,7 @@ Program {
     'ts'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 80
@@ -27,7 +27,7 @@ Program {
     CommentLine {
       value: ' Same as `generic`. Verify that JSX doesn\'t change things.'
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 60
           index: 60
@@ -44,7 +44,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 18
           index: 79
@@ -60,7 +60,7 @@ Program {
         CommentLine {
           value: ' Same as `generic`. Verify that JSX doesn\'t change things.'
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 60
               index: 60
@@ -76,7 +76,7 @@ Program {
       ]
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 17
             index: 78
@@ -91,7 +91,7 @@ Program {
         body: ReferenceIdentifier {
           name: 'a'
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 17
               index: 78
@@ -107,7 +107,7 @@ Program {
         typeParameters: TSTypeParameterDeclaration {
           leadingComments: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 3
               index: 64
@@ -126,7 +126,7 @@ Program {
               default: undefined
               leadingComments: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 2
                   index: 63
@@ -148,7 +148,7 @@ Program {
           rest: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 16
               index: 77
@@ -163,7 +163,7 @@ Program {
           returnType: TSTypeReference {
             typeParameters: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 12
                 index: 73
@@ -178,7 +178,7 @@ Program {
             typeName: ReferenceIdentifier {
               name: 'T'
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 12
                   index: 73
@@ -196,7 +196,7 @@ Program {
             BindingIdentifier {
               name: 'a'
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 15
                   index: 76
@@ -211,7 +211,7 @@ Program {
               meta: PatternMeta {
                 optional: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 15
                     index: 76
@@ -226,7 +226,7 @@ Program {
                 typeAnnotation: TSTypeReference {
                   typeParameters: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 8
                       index: 69
@@ -241,7 +241,7 @@ Program {
                   typeName: ReferenceIdentifier {
                     name: 'T'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.ts'
                       end: Object {
                         column: 8
                         index: 69

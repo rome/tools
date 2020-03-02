@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 12
       index: 24
@@ -24,7 +24,7 @@ Program {
     CommentLine {
       value: ' nothing'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 12
           index: 24
@@ -41,7 +41,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 11
           index: 11
@@ -57,7 +57,7 @@ Program {
         CommentLine {
           value: ' nothing'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 12
               index: 24
@@ -74,7 +74,7 @@ Program {
       expression: AssignmentExpression {
         operator: '='
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 10
             index: 10
@@ -89,7 +89,7 @@ Program {
         left: AssignmentIdentifier {
           name: 'x'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 1
               index: 1
@@ -105,7 +105,7 @@ Program {
         right: BinaryExpression {
           operator: '>'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 10
               index: 10
@@ -120,7 +120,7 @@ Program {
           right: NumericLiteral {
             value: 10
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 10
                 index: 10
@@ -137,7 +137,7 @@ Program {
             operator: '--'
             prefix: false
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 7
                 index: 7
@@ -152,7 +152,7 @@ Program {
             argument: ReferenceIdentifier {
               name: 'y'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 5
                   index: 5

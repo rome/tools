@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 20
@@ -26,7 +26,7 @@ Program {
       id: StringLiteral {
         value: 'm'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 18
             index: 18
@@ -43,7 +43,7 @@ Program {
       declare: true
       global: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 19
           index: 19

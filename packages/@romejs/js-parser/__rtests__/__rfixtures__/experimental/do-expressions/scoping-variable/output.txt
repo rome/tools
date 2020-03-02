@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 2
       index: 48
@@ -24,7 +24,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 2
           index: 48
@@ -39,7 +39,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'let'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 2
             index: 48
@@ -56,7 +56,7 @@ Program {
             id: BindingIdentifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 5
                   index: 5
@@ -70,7 +70,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 1
                 index: 47
@@ -84,7 +84,7 @@ Program {
             }
             init: DoExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 1
                   index: 47
@@ -99,7 +99,7 @@ Program {
               body: BlockStatement {
                 directives: Array []
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 1
                     index: 47
@@ -114,7 +114,7 @@ Program {
                 body: Array [
                   VariableDeclarationStatement {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 16
                         index: 29
@@ -129,7 +129,7 @@ Program {
                     declaration: VariableDeclaration {
                       kind: 'let'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 16
                           index: 29
@@ -146,7 +146,7 @@ Program {
                           id: BindingIdentifier {
                             name: 'tmp'
                             loc: Object {
-                              filename: '..'
+                              filename: 'input.js'
                               end: Object {
                                 column: 9
                                 index: 22
@@ -160,7 +160,7 @@ Program {
                             }
                           }
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 15
                               index: 28
@@ -175,7 +175,7 @@ Program {
                           init: CallExpression {
                             arguments: Array []
                             loc: Object {
-                              filename: '..'
+                              filename: 'input.js'
                               end: Object {
                                 column: 15
                                 index: 28
@@ -190,7 +190,7 @@ Program {
                             callee: ReferenceIdentifier {
                               name: 'f'
                               loc: Object {
-                                filename: '..'
+                                filename: 'input.js'
                                 end: Object {
                                   column: 13
                                   index: 26
@@ -210,7 +210,7 @@ Program {
                   }
                   ExpressionStatement {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 15
                         index: 45
@@ -225,7 +225,7 @@ Program {
                     expression: BinaryExpression {
                       operator: '+'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 15
                           index: 45
@@ -240,7 +240,7 @@ Program {
                       right: NumericLiteral {
                         value: 1
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 15
                             index: 45
@@ -256,7 +256,7 @@ Program {
                       left: BinaryExpression {
                         operator: '*'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 11
                             index: 41
@@ -271,7 +271,7 @@ Program {
                         left: ReferenceIdentifier {
                           name: 'tmp'
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 5
                               index: 35
@@ -287,7 +287,7 @@ Program {
                         right: ReferenceIdentifier {
                           name: 'tmp'
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 11
                               index: 41

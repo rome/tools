@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 70
       index: 70
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 70
           index: 70
@@ -38,7 +38,7 @@ Program {
       }
       expression: TemplateLiteral {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 70
             index: 70
@@ -56,7 +56,7 @@ Program {
             raw: 'outer'
             tail: false
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 6
                 index: 6
@@ -74,7 +74,7 @@ Program {
             raw: 'bar'
             tail: false
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 24
                 index: 24
@@ -92,7 +92,7 @@ Program {
             raw: 'end'
             tail: true
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 69
                 index: 69
@@ -109,7 +109,7 @@ Program {
         expressions: Array [
           ObjectExpression {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 20
                 index: 20
@@ -127,7 +127,7 @@ Program {
                   value: Identifier {
                     name: 'x'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 10
                         index: 10
@@ -142,7 +142,7 @@ Program {
                   }
                   variance: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 10
                       index: 10
@@ -157,7 +157,7 @@ Program {
                 }
                 value: ObjectExpression {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 19
                       index: 19
@@ -175,7 +175,7 @@ Program {
                         value: Identifier {
                           name: 'y'
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 14
                               index: 14
@@ -190,7 +190,7 @@ Program {
                         }
                         variance: undefined
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 14
                             index: 14
@@ -206,7 +206,7 @@ Program {
                       value: NumericLiteral {
                         value: 10
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 18
                             index: 18
@@ -220,7 +220,7 @@ Program {
                         }
                       }
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 18
                           index: 18
@@ -236,7 +236,7 @@ Program {
                   ]
                 }
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 19
                     index: 19
@@ -253,7 +253,7 @@ Program {
           }
           TemplateLiteral {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 65
                 index: 65
@@ -271,7 +271,7 @@ Program {
                 raw: 'nested'
                 tail: false
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 33
                     index: 33
@@ -289,7 +289,7 @@ Program {
                 raw: 'endnest'
                 tail: true
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 64
                     index: 64
@@ -307,7 +307,7 @@ Program {
               FunctionExpression {
                 id: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 56
                     index: 56
@@ -330,7 +330,7 @@ Program {
                   thisType: undefined
                   typeParameters: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 45
                       index: 45
@@ -346,7 +346,7 @@ Program {
                 body: BlockStatement {
                   directives: Array []
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 56
                       index: 56
@@ -361,7 +361,7 @@ Program {
                   body: Array [
                     ReturnStatement {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 55
                           index: 55
@@ -376,7 +376,7 @@ Program {
                       argument: NumericLiteral {
                         value: 1
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 54
                             index: 54

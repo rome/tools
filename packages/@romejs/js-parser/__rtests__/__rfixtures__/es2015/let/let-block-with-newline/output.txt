@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 40
@@ -24,7 +24,7 @@ Program {
     CommentLine {
       value: ' ASI'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 17
           index: 30
@@ -42,7 +42,7 @@ Program {
     IfStatement {
       alternate: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 1
           index: 39
@@ -57,7 +57,7 @@ Program {
       test: BooleanLiteral {
         value: false
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 9
             index: 9
@@ -73,7 +73,7 @@ Program {
       consequent: BlockStatement {
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 1
             index: 39
@@ -88,7 +88,7 @@ Program {
         body: Array [
           LabeledStatement {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 10
                 index: 23
@@ -103,7 +103,7 @@ Program {
             label: Identifier {
               name: 'L'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 5
                   index: 18
@@ -120,7 +120,7 @@ Program {
               CommentLine {
                 value: ' ASI'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 17
                     index: 30
@@ -137,7 +137,7 @@ Program {
             body: ExpressionStatement {
               trailingComments: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 10
                   index: 23
@@ -153,7 +153,7 @@ Program {
                 name: 'let'
                 leadingComments: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 10
                     index: 23
@@ -169,7 +169,7 @@ Program {
                   CommentLine {
                     value: ' ASI'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 17
                         index: 30
@@ -190,7 +190,7 @@ Program {
             body: Array []
             directives: Array []
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 6
                 index: 37
@@ -206,7 +206,7 @@ Program {
               CommentLine {
                 value: ' ASI'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 17
                     index: 30

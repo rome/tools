@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 8
       index: 32
@@ -24,7 +24,7 @@ Program {
     CommentLine {
       value: ' Comment'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 23
           index: 23
@@ -42,7 +42,7 @@ Program {
     BlockStatement {
       directives: Array []
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 8
           index: 32
@@ -57,7 +57,7 @@ Program {
       body: Array [
         ThrowStatement {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 13
               index: 13
@@ -73,7 +73,7 @@ Program {
             CommentLine {
               value: ' Comment'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 23
                   index: 23
@@ -91,7 +91,7 @@ Program {
             name: 'error'
             leadingComments: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 13
                 index: 13
@@ -107,7 +107,7 @@ Program {
               CommentLine {
                 value: ' Comment'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 23
                     index: 23
@@ -125,7 +125,7 @@ Program {
         }
         ExpressionStatement {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 6
               index: 30
@@ -141,7 +141,7 @@ Program {
             CommentLine {
               value: ' Comment'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 23
                   index: 23
@@ -158,7 +158,7 @@ Program {
           expression: ReferenceIdentifier {
             name: 'error'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 5
                 index: 29
@@ -174,7 +174,7 @@ Program {
               CommentLine {
                 value: ' Comment'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 23
                     index: 23

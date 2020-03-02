@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 61
       index: 61
@@ -24,7 +24,7 @@ Program {
   body: Array [
     LabeledStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 61
           index: 61
@@ -39,7 +39,7 @@ Program {
       label: Identifier {
         name: 'target1'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 7
@@ -54,7 +54,7 @@ Program {
       }
       body: LabeledStatement {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 61
             index: 61
@@ -69,7 +69,7 @@ Program {
         label: Identifier {
           name: 'target2'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 16
               index: 16
@@ -84,7 +84,7 @@ Program {
         }
         body: LabeledStatement {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 61
               index: 61
@@ -99,7 +99,7 @@ Program {
           label: Identifier {
             name: 'target3'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 25
                 index: 25
@@ -114,7 +114,7 @@ Program {
           }
           body: WhileStatement {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 61
                 index: 61
@@ -129,7 +129,7 @@ Program {
             test: BooleanLiteral {
               value: true
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 38
                   index: 38
@@ -145,7 +145,7 @@ Program {
             body: BlockStatement {
               directives: Array []
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 61
                   index: 61
@@ -160,7 +160,7 @@ Program {
               body: Array [
                 ContinueStatement {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 59
                       index: 59
@@ -175,7 +175,7 @@ Program {
                   label: Identifier {
                     name: 'target1'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 58
                         index: 58
