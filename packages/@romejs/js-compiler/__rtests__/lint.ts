@@ -263,19 +263,18 @@ test('disallow multiple spaces in regular expression literals', async t => {
       message: 'Should use expression {length} instead of multiple spaces',
       mtime: undefined,
       filename: 'unknown',
-      start: { index: 11, line: 1, column: 11 },
-      end: { index: 21, line: 1, column: 21 },
+      start: {index: 11, line: 1, column: 11},
+      end: {index: 21, line: 1, column: 21},
       language: 'js',
       sourceType: 'module',
-      origins: [{category: 'lint'}]
-    }
-  ])
+      origins: [{category: 'lint'}],
+    },
+  ]);
 
   const res2 = await testLint(
     `new RegExp("foo {2}bar")`,
     LINT_ENABLED_FORMAT_DISABLED_CONFIG,
   );
 
-  t.looksLike(res2.diagnostics, [])
+  t.looksLike(res2.diagnostics, []);
 });
-

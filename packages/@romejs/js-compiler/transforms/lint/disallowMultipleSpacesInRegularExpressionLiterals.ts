@@ -12,7 +12,7 @@ export default {
   name: 'disallowMultipleSpacesInRegularExpressionLiterals',
   enter(path: Path): AnyNode {
     const {context, node} = path;
-    
+
     const multipleSpacesPattern = /( {2,})(?: [+*{?]|[^+*{?]|$)/gu;
 
     if (
@@ -26,7 +26,7 @@ export default {
       context.addNodeDiagnostic(node.arguments[0], {
         category: 'lint/disallowMultipleSpacesInRegularExpressionLiterals',
         message: 'Disallow multiple spaces in regular expression literals',
-      }); 
+      });
     }
 
     return node;
