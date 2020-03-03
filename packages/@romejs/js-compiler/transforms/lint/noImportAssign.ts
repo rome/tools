@@ -27,15 +27,16 @@ export default {
     const {node, scope} = path;
 
     if (
-      ((node.type === 'AssignmentIdentifier' && isAssignment(path)) ||
-        (node.type === 'ReferenceIdentifier' &&
-          path.parentPath.node.type === 'UpdateExpression')) &&
-      scope.getBindingAssert(node.name).kind === 'import'
+      (node.type === 'AssignmentIdentifier' && isAssignment(path)) ||
+      (node.type === 'ReferenceIdentifier' &&
+        path.parentPath.node.type === 'UpdateExpression')
     ) {
-      path.context.addNodeDiagnostic(node, {
-        category: 'lint/noImportAssign',
-        message: markup`<emphasis>${node.name}</emphasis> is read-only`,
-      });
+      let binding = scope.getBinding(node.name);
+      if (binding !== undefined && binding.kind === 'import')
+        path.context.addNodeDiagnostic(node, {
+          category: 'lint/noImportAssign',
+          message: markup`<emphasis>${node.name}</emphasis> is read-only`,
+        });
     }
 
     return node;
