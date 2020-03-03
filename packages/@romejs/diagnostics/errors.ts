@@ -9,13 +9,13 @@ import {PartialDiagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
 import {escapeMarkup} from '@romejs/string-markup';
 import {stripAnsi} from '@romejs/string-ansi';
 import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
-import {PartialDiagnostic, DiagnosticFilterJSON} from './types';
+import {PartialDiagnostic, DiagnosticFilters} from './types';
 
 export class DiagnosticsError extends Error {
   constructor(
     message: string,
     diagnostics: PartialDiagnostics,
-    filters: Array<DiagnosticFilterJSON> = [],
+    filters: DiagnosticFilters = [],
   ) {
     if (diagnostics.length === 0) {
       throw new Error('No diagnostics');
@@ -38,12 +38,12 @@ export class DiagnosticsError extends Error {
   }
 
   diagnostics: PartialDiagnostics;
-  filters: Array<DiagnosticFilterJSON>;
+  filters: DiagnosticFilters;
 }
 
 export function createSingleDiagnosticError(
   diag: PartialDiagnostic,
-  filters?: Array<DiagnosticFilterJSON>,
+  filters?: DiagnosticFilters,
 ): DiagnosticsError {
   return new DiagnosticsError(diag.message, [diag], filters);
 }

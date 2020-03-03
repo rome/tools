@@ -6,7 +6,7 @@
  */
 
 import {Program} from '@romejs/js-ast';
-import {PartialDiagnostics, DiagnosticFilterJSON} from '@romejs/diagnostics';
+import {PartialDiagnostics, DiagnosticFilters} from '@romejs/diagnostics';
 import {TransformRequest} from '../types';
 import {lintTransforms} from '../transforms/lint/index';
 import {program} from '@romejs/js-ast';
@@ -16,7 +16,7 @@ import {extractSuppressionsFromProgram} from '../suppressions';
 
 export type LintResult = {
   diagnostics: PartialDiagnostics;
-  filters: Array<DiagnosticFilterJSON>;
+  filters: DiagnosticFilters;
   src: string;
   ast: Program;
 };

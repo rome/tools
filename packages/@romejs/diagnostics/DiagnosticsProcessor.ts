@@ -9,7 +9,7 @@ import {
   Diagnostics,
   PartialDiagnostics,
   PartialDiagnostic,
-  DiagnosticFilter,
+  DiagnosticFilterWithTest,
   DiagnosticOrigin,
 } from './types';
 import {MarkupFormatOptions} from '@romejs/string-markup';
@@ -30,7 +30,7 @@ type UniqueRule = Array<UniquePart>;
 type UniqueRules = Array<UniqueRule>;
 
 export type CollectorOptions = {
-  filters?: Array<DiagnosticFilter>;
+  filters?: Array<DiagnosticFilterWithTest>;
   unique?: UniqueRules;
   max?: number;
   onDiagnostics?: (diags: PartialDiagnostics) => void;
@@ -67,7 +67,7 @@ export default class DiagnosticsProcessor {
   unique: UniqueRules;
   includedKeys: Set<string>;
   diagnostics: PartialDiagnostics;
-  filters: Array<DiagnosticFilter>;
+  filters: Array<DiagnosticFilterWithTest>;
   options: CollectorOptions;
   throwAfter: undefined | number;
 
@@ -88,11 +88,11 @@ export default class DiagnosticsProcessor {
     return this.diagnostics.length > 0;
   }
 
-  addFilters(filters: Array<DiagnosticFilter>) {
+  addFilters(filters: Array<DiagnosticFilterWithTest>) {
     this.filters = this.filters.concat(filters);
   }
 
-  addFilter(filter: DiagnosticFilter) {
+  addFilter(filter: DiagnosticFilterWithTest) {
     this.filters.push(filter);
   }
 

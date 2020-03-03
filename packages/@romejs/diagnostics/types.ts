@@ -11,7 +11,7 @@ import {ConstSourceType} from '@romejs/js-ast';
 import {Number0, Number1} from '@romejs/ob1';
 import {JSONPropertyValue} from '@romejs/codec-json';
 
-export type DiagnosticFilterJSON = {
+export type DiagnosticFilter = {
   category?: string;
   message?: string;
   filename?: string;
@@ -19,7 +19,9 @@ export type DiagnosticFilterJSON = {
   line?: Number1;
 };
 
-export type DiagnosticFilter = DiagnosticFilterJSON & {
+export type DiagnosticFilters = Array<DiagnosticFilter>;
+
+export type DiagnosticFilterWithTest = DiagnosticFilter & {
   test?: (diagnostic: PartialDiagnostic) => boolean;
 };
 

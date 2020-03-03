@@ -6,21 +6,21 @@
  */
 
 import {Program, AnyComment} from '@romejs/js-ast';
-import {DiagnosticFilterJSON} from '@romejs/diagnostics';
+import {DiagnosticFilters} from '@romejs/diagnostics';
 import {add} from '@romejs/ob1';
 
 const SUPPRESSION_START = 'rome-suppress';
 
 function extractFiltersFromComment(
   comment: AnyComment,
-): undefined | Array<DiagnosticFilterJSON> {
+): undefined | DiagnosticFilters {
   const {loc} = comment;
   if (loc === undefined) {
     return undefined;
   }
 
   const targetLine = add(loc.end.line, 1);
-  const filters: Array<DiagnosticFilterJSON> = [];
+  const filters: DiagnosticFilters = [];
 
   const lines = comment.value.split('\n');
   const cleanLines = lines.map(line => {
@@ -61,8 +61,8 @@ function extractFiltersFromComment(
 
 export function extractSuppressionsFromComments(
   comments: Array<AnyComment>,
-): Array<DiagnosticFilterJSON> {
-  let filters: Array<DiagnosticFilterJSON> = [];
+): DiagnosticFilters {
+  let filters: DiagnosticFilters = [];
 
   for (const comment of comments) {
     const commentFilters = extractFiltersFromComment(comment);
@@ -76,6 +76,6 @@ export function extractSuppressionsFromComments(
 
 export function extractSuppressionsFromProgram(
   ast: Program,
-): Array<DiagnosticFilterJSON> {
+): DiagnosticFilters {
   return extractSuppressionsFromComments(ast.comments);
 }

@@ -6,7 +6,7 @@
  */
 
 import {Program} from '@romejs/js-ast';
-import {PartialDiagnostics, DiagnosticFilterJSON} from '@romejs/diagnostics';
+import {PartialDiagnostics, DiagnosticFilters} from '@romejs/diagnostics';
 import {TransformRequest, TransformVisitors} from '../types';
 import {program} from '@romejs/js-ast';
 import {stageTransforms, stageOrder, hookVisitors} from '../transforms/index';
@@ -16,7 +16,7 @@ import {extractSuppressionsFromProgram} from '../suppressions';
 
 type TransformResult = {
   ast: Program;
-  filters: Array<DiagnosticFilterJSON>;
+  filters: DiagnosticFilters;
   diagnostics: PartialDiagnostics;
   cacheDependencies: Array<string>;
 };
