@@ -257,7 +257,7 @@ test('disallow var', async t => {
   ]);
 });
 
-test.only('no delete vars', async t => {
+test('no delete vars', async t => {
   const res = await testLint(
     `
     const foo = "test";
@@ -267,17 +267,17 @@ test.only('no delete vars', async t => {
     'script',
   );
 
-  console.log(res.diagnostics);
-
-  t.looksLike(res.diagnostics[1], {
-    category: 'lint/noDeleteVars',
-    message: 'Variables should not be deleted.',
-    mtime: undefined,
-    filename: 'unknown',
-    start: {index: 29, line: 3, column: 4},
-    end: {index: 39, line: 3, column: 14},
-    language: 'js',
-    sourceType: 'module',
-    origins: [{category: 'lint'}],
-  });
+  t.looksLike(res.diagnostics, [
+    {
+      category: 'lint/noDeleteVars',
+      message: 'Variables should not be deleted.',
+      mtime: undefined,
+      filename: 'unknown',
+      start: {index: 29, line: 3, column: 4},
+      end: {index: 39, line: 3, column: 14},
+      language: 'js',
+      sourceType: 'script',
+      origins: [{category: 'lint'}],
+    },
+  ]);
 });
