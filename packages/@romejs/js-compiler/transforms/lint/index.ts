@@ -15,6 +15,7 @@ import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noLabelVar from './noLabelVar';
 import noDuplicateKeys from './noDuplicateKeys';
 import disallowVar from './disallowVar';
+import noUnsafeFinally from './noUnsafeFinally';
 import noDeleteVars from './noDeleteVars';
 
 export const lintTransforms = [
@@ -28,5 +29,6 @@ export const lintTransforms = [
   noLabelVar,
   noDuplicateKeys,
   disallowVar,
+  noUnsafeFinally,
   noDeleteVars,
 ];
