@@ -6,7 +6,7 @@
  */
 
 import test from '@romejs/test';
-import lint from '../api/lint';
+import lint, {LintResult} from '../api/lint';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import {DEFAULT_PROJECT_CONFIG, ProjectConfig} from '@romejs/project';
@@ -218,4 +218,45 @@ test('no duplicate keys', async t => {
       },
     },
   ]);
+});
+
+test('no shadow restrcited names', async t => {
+  const getNoShadowDiagnostics = (result: LintResult) =>
+    result.diagnostics.filter(
+      d => d.category === 'lint/noShadowRestrictedNames',
+    );
+
+  const valid = await testLint(
+    `
+    function SomeFn(param) {
+      let someVar;
+      !function SomeOtherFn(otherParam) {
+        try {
+        } catch (e) {}
+      };
+    }
+    `,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.is(getNoShadowDiagnostics(valid).length, 0);
+
+  const invalid = await testLint(
+    `
+    function NaN(undefined) {
+      let eval;
+      !function Array(window) {
+        try {
+        } catch (Object) {}
+      };
+    }
+    `,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  const noShadowDiagnostics = getNoShadowDiagnostics(invalid);
+
+  t.is(noShadowDiagnostics.length, 6);
+
+  t.snapshot(noShadowDiagnostics);
 });
