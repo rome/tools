@@ -367,6 +367,12 @@ export default class DiagnosticsPrinter extends Error {
 
   print() {
     const filteredDiagnostics = this.filterDiagnostics();
+    if (filteredDiagnostics.length === 0) {
+      this.reporter.error(
+        'No diagnostics provided. They have likely all been filtered.',
+      );
+    }
+
     this.fetchFileSources(filteredDiagnostics);
     this.displayDiagnostics(filteredDiagnostics);
   }

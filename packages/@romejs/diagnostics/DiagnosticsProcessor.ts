@@ -30,6 +30,7 @@ type UniqueRule = Array<UniquePart>;
 type UniqueRules = Array<UniqueRule>;
 
 export type CollectorOptions = {
+  filters?: Array<DiagnosticFilter>;
   unique?: UniqueRules;
   max?: number;
   onDiagnostics?: (diags: PartialDiagnostics) => void;
@@ -43,7 +44,7 @@ const DEFAULT_UNIQUE: UniqueRules = [
 export default class DiagnosticsProcessor {
   constructor(options: CollectorOptions) {
     this.diagnostics = [];
-    this.filters = [];
+    this.filters = options.filters === undefined ? [] : options.filters;
     this.options = options;
     this.includedKeys = new Set();
     this.unique =

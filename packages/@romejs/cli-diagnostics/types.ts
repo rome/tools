@@ -7,7 +7,7 @@
 
 import {Reporter} from '@romejs/cli-reporter';
 import {AbsoluteFilePath} from '@romejs/path';
-import {DiagnosticOrigin} from '@romejs/diagnostics';
+import {DiagnosticOrigin, DiagnosticFilterJSON} from '@romejs/diagnostics';
 
 export type DiagnosticsPrinterFlags = {
   grep: string;
@@ -31,4 +31,5 @@ export type DiagnosticsPrinterOptions = {
   cwd?: AbsoluteFilePath;
   flags?: DiagnosticsPrinterFlags;
   readFile?: DiagnosticsFileReader;
+  filters?: Array<DiagnosticFilterJSON>;
 };

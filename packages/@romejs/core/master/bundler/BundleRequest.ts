@@ -174,6 +174,10 @@ export default class BundleRequest {
       this.diagnostics.addDiagnostics(res.diagnostics);
     }
 
+    if (res.filters.length > 0) {
+      this.diagnostics.addFilters(res.filters);
+    }
+
     this.compiles.set(source, res);
     return res;
   }
