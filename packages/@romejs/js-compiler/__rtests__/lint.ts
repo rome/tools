@@ -220,6 +220,38 @@ test('no duplicate keys', async t => {
   ]);
 });
 
+test('disallow var', async t => {
+  const res = await testLint(
+    'var foobar;\nfoobar',
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+  t.snapshot(res);
+
+  // Redundant because of the snapshot above, but this is what we actually care about
+  t.looksLike(res.diagnostics, [
+    {
+      category: 'lint/disallowVar',
+      filename: 'unknown',
+      language: 'js',
+      message:
+        'Variable declarations using `var` are disallowed, use `let` or `const` instead.',
+      mtime: undefined,
+      sourceType: 'module',
+      origins: [{category: 'lint'}],
+      end: {
+        column: 11,
+        index: 11,
+        line: 1,
+      },
+      start: {
+        column: 0,
+        index: 0,
+        line: 1,
+      },
+    },
+  ]);
+});
+
 test('no shadow restrcited names', async t => {
   const getNoShadowDiagnostics = (result: LintResult) =>
     result.diagnostics.filter(
@@ -257,6 +289,4 @@ test('no shadow restrcited names', async t => {
   const noShadowDiagnostics = getNoShadowDiagnostics(invalid);
 
   t.is(noShadowDiagnostics.length, 6);
-
-  t.snapshot(noShadowDiagnostics);
 });
