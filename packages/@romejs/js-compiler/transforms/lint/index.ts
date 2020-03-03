@@ -18,6 +18,7 @@ import noDuplicateKeys from './noDuplicateKeys';
 import disallowVar from './disallowVar';
 import noUnsafeFinally from './noUnsafeFinally';
 import noDeleteVars from './noDeleteVars';
+import noTemplateCurlyInString from './noTemplateCurlyInString';
 
 export const lintTransforms = [
   undeclaredVariables,
@@ -33,4 +34,5 @@ export const lintTransforms = [
   disallowVar,
   noUnsafeFinally,
   noDeleteVars,
+  noTemplateCurlyInString,
 ];
