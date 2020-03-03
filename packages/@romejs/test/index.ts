@@ -25,9 +25,11 @@ export type GlobalTestOptions =
 type NamelessTestOptions = {
   timeout?: number;
   only?: boolean;
+  decorator?: TestApiDecorator;
 };
 
 export type TestCallback = (t: TestAPI) => void | undefined | Promise<void>;
+export type TestApiDecorator<T extends typeof TestAPI> = (t: typeof TestAPI) => T;
 
 export type TestOptions = NamelessTestOptions & {
   name: TestName;
@@ -118,30 +120,46 @@ type TestRegisterFunctionArgs =
 
 type TestRegisterFunction = (...args: TestRegisterFunctionArgs) => void;
 
-const test: {
+type Test = {
   (...args: TestRegisterFunctionArgs): void;
   skip: TestRegisterFunction;
   only: TestRegisterFunction;
-} = function(...args: TestRegisterFunctionArgs) {
-  const {options, callback} = splitArgs(args);
-  registerTest(new Error(), options, callback);
 };
 
-test.skip = function(...args: TestRegisterFunctionArgs) {
-  const {options} = splitArgs(args);
-  registerTest(new Error(), options, undefined);
-};
+export function makeCustomTest(apiDecorator?: TestApiDecorator): Test {
+  const test: Test = function(...args: TestRegisterFunctionArgs) {
+    const {options, callback} = splitArgs(args);
+    if (typeof apiDecorator === 'function') {
+      options.decorator = apiDecorator;
+    }
+    registerTest(new Error(), options, callback);
+  };
 
-test.only = function(...args: TestRegisterFunctionArgs) {
-  const {options, callback} = splitArgs(args);
-  registerTest(
-    new Error(),
-    {
-      ...options,
-      only: true,
-    },
-    callback,
-  );
-};
+  test.skip = function(...args: TestRegisterFunctionArgs) {
+    const {options} = splitArgs(args);
+    if (typeof apiDecorator === 'function') {
+      options.decorator = apiDecorator;
+    }
+    registerTest(new Error(), options, undefined);
+  };
+
+  test.only = function(...args: TestRegisterFunctionArgs) {
+    const {options, callback} = splitArgs(args);
+    if (typeof apiDecorator === 'function') {
+      options.decorator = apiDecorator;
+    }
+    registerTest(
+      new Error(),
+      {
+        ...options,
+        only: true,
+      },
+      callback,
+    );
+  };
+  return test;
+}
+
+const test: Test = makeCustomTest();
 
 export default test;

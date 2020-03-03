@@ -13,7 +13,7 @@ import {
   INTERNAL_ERROR_LOG_ADVICE,
   createSingleDiagnosticError,
 } from '@romejs/diagnostics';
-import {TestCallback, TestOptions} from '@romejs/test';
+import {TestCallback, TestOptions, TestApiDecorator} from '@romejs/test';
 import {
   default as TestWorkerBridge,
   TestWorkerBridgeRunOptions,
@@ -243,7 +243,7 @@ export default class TestWorkerRunner {
     }
   }
 
-  async runTest(testName: string, callback: TestCallback) {
+  async runTest(testName: string, callback: TestCallback, decorator: TestApiDecorator | undefined) {
     let onTimeout: OnTimeout = () => {
       throw new Error("Promise wasn't created. Should be impossible.");
     };
@@ -254,7 +254,12 @@ export default class TestWorkerRunner {
       };
     });
 
-    const api = new TestAPI(
+    let CustomTestApi = TestAPI;
+    if (typeof decorator === 'function') {
+      CustomTestApi = decorator(TestAPI);
+    }
+
+    const api = new CustomTestApi(
       testName,
       onTimeout,
       this.snapshotManager,
