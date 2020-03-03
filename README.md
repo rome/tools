@@ -50,7 +50,7 @@ $ echo '{}' >rome.json
 
 This file is used to configure Rome and indicates the boundaries of your project.
 
-See [Getting Started](docs/getting-started.md) for more usage instructions.
+See [Getting Started](https://romejs.dev/docs/introduction/getting-started/) for more usage instructions.
 
 ## Philosophy
 

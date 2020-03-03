@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 56
@@ -24,7 +24,7 @@ Program {
     CommentBlock {
       value: ' Multiline\nComment '
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 10
           index: 47
@@ -41,7 +41,7 @@ Program {
   body: Array [
     WhileStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 18
           index: 55
@@ -56,7 +56,7 @@ Program {
       test: BooleanLiteral {
         value: true
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 11
             index: 11
@@ -72,7 +72,7 @@ Program {
       body: BlockStatement {
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 18
             index: 55
@@ -89,7 +89,7 @@ Program {
             label: undefined
             leadingComments: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 23
                 index: 23
@@ -105,7 +105,7 @@ Program {
               CommentBlock {
                 value: ' Multiline\nComment '
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 10
                     index: 47
@@ -122,7 +122,7 @@ Program {
           }
           ExpressionStatement {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 16
                 index: 53
@@ -138,7 +138,7 @@ Program {
               CommentBlock {
                 value: ' Multiline\nComment '
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 10
                     index: 47
@@ -155,7 +155,7 @@ Program {
             expression: ReferenceIdentifier {
               name: 'there'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 15
                   index: 52
@@ -171,7 +171,7 @@ Program {
                 CommentBlock {
                   value: ' Multiline\nComment '
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 10
                       index: 47

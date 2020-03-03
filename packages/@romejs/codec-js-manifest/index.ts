@@ -18,11 +18,17 @@ import {
   Manifest,
   ManifestPerson,
   ManifestRepository,
+  ManifestExports,
+  ManifestExportConditions,
 } from './types';
 import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
 import {normalizeName} from './name';
 import {PartialDiagnostics} from '@romejs/diagnostics';
-import {AbsoluteFilePath} from '@romejs/path';
+import {
+  AbsoluteFilePath,
+  createRelativeFilePath,
+  RelativeFilePathMap,
+} from '@romejs/path';
 import {toCamelCase} from '@romejs/string-utils';
 import {PathPatterns, parsePathPattern} from '@romejs/path-match';
 
@@ -306,7 +312,7 @@ function normalizePerson(consumer: Consumer, loose: boolean): ManifestPerson {
     }
 
     const person: ManifestPerson = {
-      name: consumer.get('name').asString(),
+      name: consumer.get('name').asString(loose ? '' : undefined),
       email: consumer.get('email').asStringOrVoid(),
       twitter: consumer.get('twitter').asStringOrVoid(),
       github,
@@ -409,6 +415,67 @@ function normalizeRepo(
     }
     return repo;
   }
+}
+
+function normalizeExports(consumer: Consumer): boolean | ManifestExports {
+  if (typeof consumer.asUnknown() === 'boolean') {
+    return consumer.asBoolean();
+  }
+
+  if (!consumer.exists()) {
+    return true;
+  }
+
+  const exports: ManifestExports = new RelativeFilePathMap();
+
+  const dotConditions: ManifestExportConditions = new Map();
+
+  for (const [relative, value] of consumer.asMap()) {
+    // If it's not a relative path then it's a platform for the root
+    if (relative[0] !== '.') {
+      if (exports.size > 0) {
+        value.unexpected(
+          'Cannot mix a root conditional export with relative paths',
+        );
+      }
+
+      dotConditions.set(relative, {
+        consumer: value,
+        relative: value.asExplicitRelativeFilePath(),
+      });
+      continue;
+    }
+
+    if (dotConditions.size > 0) {
+      value.unexpected(
+        'Cannot mix a root conditional export with relative paths',
+      );
+    }
+
+    const conditions: ManifestExportConditions = new Map();
+
+    if (typeof value.asUnknown() === 'string') {
+      conditions.set('default', {
+        consumer: value,
+        relative: value.asExplicitRelativeFilePath(),
+      });
+    } else {
+      for (const [type, relativeAlias] of value.asMap()) {
+        conditions.set(type, {
+          consumer: relativeAlias,
+          relative: relativeAlias.asExplicitRelativeFilePath(),
+        });
+      }
+    }
+
+    if (dotConditions.size > 0) {
+      exports.set(createRelativeFilePath('.'), dotConditions);
+    }
+
+    exports.set(value.getKey().asExplicitRelativeFilePath(), conditions);
+  }
+
+  return exports;
 }
 
 function normalizeBugs(
@@ -559,11 +626,8 @@ export async function normalizeManifest(
       cpu: normalizeStringArray(consumer.get('cpu'), loose),
       os: normalizeStringArray(consumer.get('os'), loose),
 
-      // Entry fields
-      browser: undefined, // normalizeString(consumer, 'browser'),
       main: normalizeString(consumer, 'main'),
-      'rome:main': normalizeString(consumer, 'rome:main'),
-      'jsnext:main': normalizeString(consumer, 'jsnext:main'),
+      exports: normalizeExports(consumer.get('exports')),
 
       // Dependency fields
       dependencies: normalizeDependencies(consumer, 'dependencies', loose),

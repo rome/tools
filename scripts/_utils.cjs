@@ -5,10 +5,40 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+const child = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-exports.write = function write(loc, content) {
+exports.unlink = function(loc) {
+  if (!fs.existsSync(loc)) {
+    return;
+  }
+
+  const stats = fs.lstatSync(loc);
+  if (stats.isFile()) {
+    fs.unlinkSync(loc);
+  } else if (stats.isDirectory()) {
+    for (const filename of fs.readdirSync(loc)) {
+      exports.unlink(path.join(loc, filename));
+    }
+    fs.rmdirSync(loc);
+  }
+};
+
+exports.exec = function(cmd, args) {
+  const res = child.spawnSync(cmd, args, {
+    stdio: 'inherit',
+  });
+  if (res.status !== 0) {
+    process.exit(1);
+  }
+};
+
+exports.execNode = function(args) {
+  exports.exec(process.execPath, [...process.execArgv, ...args]);
+};
+
+exports.write = function(loc, content) {
   console.log('Wrote', loc);
   fs.mkdirSync(path.dirname(loc), {recursive: true});
   fs.writeFileSync(loc, content);

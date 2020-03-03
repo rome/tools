@@ -298,16 +298,63 @@ type NpmPattern = {
   range: undefined | SemverRangeNode;
 };
 
-function parseNpm(pattern: string, consumer: Consumer): NpmPattern {
+function parseNpm(
+  pattern: string,
+  consumer: Consumer,
+  loose: boolean,
+): NpmPattern {
   // Prune prefix
   let offset = NPM_PREFIX.length;
   pattern = pattern.slice(NPM_PREFIX.length);
 
+  if (pattern === '') {
+    consumer.unexpected('Missing rest of pattern');
+    return {
+      type: 'npm',
+      name: 'unknown',
+      range: undefined,
+    };
+  }
+
   // Split and verify count
-  const [name, rangeRaw, ...parts] = pattern.split('@');
+  const parts = pattern.split('@');
+  let nameRaw = '';
+  let rangeRaw: undefined | string;
+
+  // Org signifier
+  if (parts[0] === '') {
+    nameRaw += '@';
+    parts.shift();
+  }
+
+  // Name - We know there'll be at least two due to the empty string conditional
+  nameRaw = String(parts.shift());
+
+  // Range
+  rangeRaw = parts.shift();
+
   if (parts.length > 0) {
     consumer.unexpected('Too many @ signs');
   }
+
+  const name = normalizeName({
+    name: nameRaw,
+    loose,
+    unexpected({message, at, start, end, advice}) {
+      consumer.unexpected(message, {
+        advice,
+        at,
+        loc:
+          start === undefined
+            ? undefined
+            : consumer.getLocationRange(
+                add(start, offset),
+                end === undefined ? undefined : add(end, offset),
+                'inner-value',
+              ),
+      });
+    },
+  });
 
   // Increase offset passed name
   offset += name.length;
@@ -317,7 +364,7 @@ function parseNpm(pattern: string, consumer: Consumer): NpmPattern {
   if (rangeRaw !== undefined) {
     range = tryParseWithOptionalOffsetPosition(
       {
-        loose: false,
+        loose,
         path: consumer.path,
         input: rangeRaw,
       },
@@ -382,7 +429,7 @@ export function parseDependencyPattern(
   }
 
   if (pattern.startsWith(NPM_PREFIX)) {
-    return parseNpm(pattern, consumer);
+    return parseNpm(pattern, consumer, loose);
   }
 
   if (pattern.startsWith(LINK_PREFIX)) {

@@ -9,22 +9,22 @@
 
 module.exports = {
   title: 'Rome',
-  tagline: 'An experimental JavaScript toolchain.',
-  url: '',
+  tagline: 'An experimental JavaScript toolchain',
+  url: 'https://romejs.dev',
   baseUrl: '/',
-  favicon: 'img/rome-logo.ico',
+  favicon: 'img/favicon.ico',
   organizationName: 'facebookexperimental',
   projectName: 'rome',
   themeConfig: {
     navbar: {
-      title: '',
+      title: 'Rome',
       logo: {
-        alt: 'Rome ',
+        alt: 'Rome Logo',
         src: 'img/rome-logo.png',
       },
       links: [
         {
-          to: 'docs/introduction/getting-started',
+          to: 'docs/introduction/getting-started/',
           label: 'Docs',
           position: 'left',
         },
@@ -44,7 +44,7 @@ module.exports = {
           items: [
             {
               label: 'Getting Started',
-              to: 'docs/introduction/getting-started',
+              to: 'docs/introduction/getting-started/',
             },
           ],
         },

@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 35
@@ -26,7 +26,7 @@ Program {
       id: BindingIdentifier {
         name: 'I'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 11
             index: 11
@@ -42,7 +42,7 @@ Program {
       extends: undefined
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 1
           index: 34
@@ -56,7 +56,7 @@ Program {
       }
       body: TSInterfaceBody {
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 1
             index: 34
@@ -74,7 +74,7 @@ Program {
               value: Identifier {
                 name: 'catch'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 9
                     index: 23
@@ -89,7 +89,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 9
                   index: 23
@@ -104,7 +104,7 @@ Program {
             }
             optional: false
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 18
                 index: 32
@@ -118,7 +118,7 @@ Program {
             }
             typeAnnotation: VoidKeywordTypeAnnotation {
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 17
                   index: 31
@@ -136,7 +136,7 @@ Program {
               rest: undefined
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 17
                   index: 31

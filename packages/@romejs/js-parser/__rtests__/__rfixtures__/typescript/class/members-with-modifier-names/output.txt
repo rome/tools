@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 119
@@ -26,7 +26,7 @@ Program {
       id: BindingIdentifier {
         name: 'C'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 7
             index: 7
@@ -40,7 +40,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 1
           index: 118
@@ -58,7 +58,7 @@ Program {
         superTypeParameters: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 1
             index: 118
@@ -77,7 +77,7 @@ Program {
               value: Identifier {
                 name: 'public'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 10
                     index: 20
@@ -92,7 +92,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 10
                   index: 20
@@ -107,7 +107,7 @@ Program {
             }
             body: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 19
                 index: 29
@@ -132,7 +132,7 @@ Program {
                 line: 2
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 10
                   index: 20
@@ -155,7 +155,7 @@ Program {
               thisType: undefined
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 19
                   index: 29
@@ -169,7 +169,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 18
                     index: 28
@@ -190,7 +190,7 @@ Program {
               value: Identifier {
                 name: 'static'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 17
                     index: 47
@@ -204,7 +204,7 @@ Program {
                 }
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 17
                   index: 47
@@ -219,7 +219,7 @@ Program {
             }
             body: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 26
                 index: 56
@@ -239,7 +239,7 @@ Program {
               static: false
               typeAnnotation: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 17
                   index: 47
@@ -262,7 +262,7 @@ Program {
               thisType: undefined
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 26
                   index: 56
@@ -276,7 +276,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 25
                     index: 55
@@ -296,7 +296,7 @@ Program {
               value: Identifier {
                 name: 'readonly'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 12
                     index: 69
@@ -311,7 +311,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 12
                   index: 69
@@ -327,7 +327,7 @@ Program {
             value: NumericLiteral {
               value: 0
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 16
                   index: 73
@@ -343,7 +343,7 @@ Program {
             definite: undefined
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 17
                 index: 74
@@ -368,7 +368,7 @@ Program {
                 line: 4
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 12
                   index: 69
@@ -388,7 +388,7 @@ Program {
               value: Identifier {
                 name: 'async'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 9
                     index: 84
@@ -403,7 +403,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 9
                   index: 84
@@ -418,7 +418,7 @@ Program {
             }
             body: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 21
                 index: 96
@@ -443,7 +443,7 @@ Program {
                 line: 5
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 9
                   index: 84
@@ -465,7 +465,7 @@ Program {
               rest: undefined
               thisType: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 21
                   index: 96
@@ -479,7 +479,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 20
                     index: 95
@@ -494,7 +494,7 @@ Program {
               }
               typeParameters: TSTypeParameterDeclaration {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 12
                     index: 87
@@ -512,7 +512,7 @@ Program {
                     constraint: undefined
                     default: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.ts'
                       end: Object {
                         column: 11
                         index: 86
@@ -534,7 +534,7 @@ Program {
               value: Identifier {
                 name: 'abstract'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 12
                     index: 109
@@ -549,7 +549,7 @@ Program {
               }
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 12
                   index: 109
@@ -565,7 +565,7 @@ Program {
             value: undefined
             definite: true
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 19
                 index: 116
@@ -579,7 +579,7 @@ Program {
             }
             typeAnnotation: VoidKeywordTypeAnnotation {
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 18
                   index: 115
@@ -605,7 +605,7 @@ Program {
                 line: 6
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 12
                   index: 109

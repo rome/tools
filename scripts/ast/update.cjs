@@ -8,13 +8,13 @@
 const path = require('path');
 const fs = require('fs');
 
-const {write, getBuilderName} = require('./_utils.cjs');
+const {write, getBuilderName} = require('../_utils.cjs');
 
 const {
   generatorsFolder,
   analysisFolder,
   astFolder,
-} = require('./_constants.cjs');
+} = require('../_constants.cjs');
 
 let defs = [];
 

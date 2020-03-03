@@ -1,14 +1,14 @@
 Program {
   body: Array []
   diagnostics: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 99
@@ -24,7 +24,7 @@ Program {
     CommentLine {
       value: '     ^ That\'s a U+2028 LINE SEPARATOR UTF-16 char (between \'before\' and \'after\')'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 82
           index: 98
@@ -42,7 +42,7 @@ Program {
     Directive {
       value: 'before\u2028after'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 15
           index: 15
@@ -58,7 +58,7 @@ Program {
         CommentLine {
           value: '     ^ That\'s a U+2028 LINE SEPARATOR UTF-16 char (between \'before\' and \'after\')'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 82
               index: 98

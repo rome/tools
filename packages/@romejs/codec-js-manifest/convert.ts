@@ -7,7 +7,12 @@
 
 import {stringifySPDXLicense} from '@romejs/codec-spdx-license';
 import {ManifestDependencies, stringifyDependencyPattern} from './dependencies';
-import {Manifest, JSONManifest} from './types';
+import {
+  Manifest,
+  JSONManifest,
+  JSONManifestExports,
+  ManifestExports,
+} from './types';
 import {stringifySemver} from '@romejs/codec-semver';
 import {Dict} from '@romejs/typescript-helpers';
 import {stringifyPathPattern} from '@romejs/path-match';
@@ -26,10 +31,8 @@ export function convertManifestToJSON(manifest: Manifest): JSONManifest {
     repository: manifest.repository,
     bugs: manifest.bugs,
 
-    browser: manifest.browser,
     main: manifest.main,
-    'rome:main': manifest['rome:main'],
-    'jsnext:main': manifest['jsnext:main'],
+    exports: exportsToObject(manifest.exports),
 
     author: manifest.author,
     contributors: manifest.contributors,
@@ -64,6 +67,42 @@ export function convertManifestToJSON(manifest: Manifest): JSONManifest {
     bundleDependencies: undefined,
     bundledDependencies: maybeArray(manifest.bundledDependencies),
   };
+}
+
+function exportsToObject(
+  exports: boolean | ManifestExports,
+): undefined | false | JSONManifestExports {
+  if (exports === false) {
+    return false;
+  }
+
+  if (exports === true) {
+    return;
+  }
+
+  if (exports.size === 0) {
+    return {};
+  }
+
+  const obj: JSONManifestExports = {};
+
+  for (const [key, entries] of exports) {
+    if (entries.size === 1) {
+      const def = entries.get('default');
+      if (def !== undefined) {
+        obj[key.join()] = def.relative.join();
+        continue;
+      }
+    }
+
+    const entriesObj: Dict<string> = {};
+    for (const [type, alias] of entries) {
+      entriesObj[type] = alias.relative.join();
+    }
+    obj[key.join()] = entriesObj;
+  }
+
+  return obj;
 }
 
 function maybeArray<T>(items: Array<T>): undefined | Array<T> {

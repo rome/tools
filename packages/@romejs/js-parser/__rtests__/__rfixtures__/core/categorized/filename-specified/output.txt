@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: true
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 100
@@ -24,7 +24,7 @@ Program {
     CommentLine {
       value: ' This comment should have a filename prop attached to loc'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 59
           index: 59
@@ -41,7 +41,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 39
           index: 99
@@ -57,7 +57,7 @@ Program {
         CommentLine {
           value: ' This comment should have a filename prop attached to loc'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 59
               index: 59
@@ -75,7 +75,7 @@ Program {
         kind: 'var'
         leadingComments: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 39
             index: 99
@@ -92,7 +92,7 @@ Program {
             id: BindingIdentifier {
               name: 'node'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 8
                   index: 68
@@ -108,7 +108,7 @@ Program {
                 CommentLine {
                   value: ' This comment should have a filename prop attached to loc'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 59
                       index: 59
@@ -125,7 +125,7 @@ Program {
             }
             leadingComments: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 38
                 index: 98
@@ -140,7 +140,7 @@ Program {
             init: StringLiteral {
               value: 'shouldHaveFilenameLocProp'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 38
                   index: 98

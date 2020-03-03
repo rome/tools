@@ -428,42 +428,6 @@ const ___R$project$rome$$romejs$diagnostics$normalize_ts = {
     }
   }
 
-  // project-rome/@romejs/string-escape/messages.ts
-const ___R$project$rome$$romejs$string$escape$messages_ts = {
-    get NOT_ENOUGH_CODE_POINTS() {
-      return ___R$project$rome$$romejs$string$escape$messages_ts$NOT_ENOUGH_CODE_POINTS;
-    },
-    get INVALID_STRING_CHARACTER() {
-      return ___R$project$rome$$romejs$string$escape$messages_ts$INVALID_STRING_CHARACTER;
-    },
-    get INVALID_HEX_DIGIT_FOR_ESCAPE() {
-      return ___R$project$rome$$romejs$string$escape$messages_ts$INVALID_HEX_DIGIT_FOR_ESCAPE;
-    }};
-  const /**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-  ___R$project$rome$$romejs$string$escape$messages_ts$NOT_ENOUGH_CODE_POINTS = 'Not enough code point digits';
-  const ___R$project$rome$$romejs$string$escape$messages_ts$INVALID_STRING_CHARACTER = 'Invalid string character (U+0000 to U+001F)';
-  const ___R$project$rome$$romejs$string$escape$messages_ts$INVALID_HEX_DIGIT_FOR_ESCAPE = 'Invalid hex digit for unicode escape';
-
-  // project-rome/@romejs/string-escape/constants.ts
-const ___R$project$rome$$romejs$string$escape$constants_ts = {
-    get DOUBLE_QUOTE() {
-      return ___R$project$rome$$romejs$string$escape$constants_ts$DOUBLE_QUOTE;
-    },
-    get SINGLE_QUOTE() {
-      return ___R$project$rome$$romejs$string$escape$constants_ts$SINGLE_QUOTE;
-    },
-    get TICK_QUOTE() {
-      return ___R$project$rome$$romejs$string$escape$constants_ts$TICK_QUOTE;
-    }};
-  const ___R$project$rome$$romejs$string$escape$constants_ts$DOUBLE_QUOTE = '"';
-  const ___R$project$rome$$romejs$string$escape$constants_ts$SINGLE_QUOTE = '\'';
-  const ___R$project$rome$$romejs$string$escape$constants_ts$TICK_QUOTE = '`';
-
   // project-rome/@romejs/parser-core/types.ts
 const ___R$project$rome$$romejs$parser$core$types_ts = {
     get UNKNOWN_POSITION() {
@@ -1659,7 +1623,6 @@ function ___R$project$rome$$romejs$parser$core$index_ts$tryParseWithOptionalOffs
 
     getLoc(node) {
       if (node === undefined || node.loc === undefined) {
-        console.log(node);
         throw new Error('Tried to fetch node loc start but none found');
       } else {
         return node.loc;
@@ -1753,235 +1716,6 @@ function ___R$project$rome$$romejs$parser$core$index_ts$tryParseWithOptionalOffs
       return new klass(...args);
     };
   }
-
-  // project-rome/@romejs/string-escape/escapeString.ts
-// This regex represents printable ASCII characters, except the characters: '"\`
-  const ___R$$priv$project$rome$$romejs$string$escape$escapeString_ts$PRINTABLE_ASCII = /[ !#-&\(-\[\]-_a-~]/;
-
-  function ___R$$priv$project$rome$$romejs$string$escape$escapeString_ts$escapeChar(char, ignoreWhitespaceEscapes) {
-    switch (char) {
-      case '"':
-        return '\\"';
-
-      case '\'':
-        return '\\\'';
-
-      case '\b':
-        return '\\b';
-
-      case '\f':
-        return '\\f';
-
-      case '\\':
-        return '\\\\';}
-
-    if (ignoreWhitespaceEscapes) {
-      return undefined;
-    }
-
-    switch (char) {
-      case '\n':
-        return '\\n';
-
-      case '\r':
-        return '\\r';
-
-      case '\t':
-        return '\\t';}
-
-    return undefined;
-  }
-
-  function ___R$project$rome$$romejs$string$escape$escapeString_ts$default(str, opts = {}) {
-    let index = -1;
-    let result = '';
-
-    const quote = opts.quote === undefined ? ___R$project$rome$$romejs$string$escape$constants_ts$DOUBLE_QUOTE : opts.quote;
-    const isJSON = opts.json === undefined ? false : opts.json;
-    const ignoreEscapes = opts.ignoreWhitespaceEscapes === undefined ? false : true;
-
-    // Loop over each code unit in the string and escape it
-    while (++index < str.length) {
-      const char = str[index];
-
-      // Handle surrogate pairs in non-JSON mode
-      if (isJSON === false) {
-        const charCode = str.charCodeAt(index);
-        const isHighSurrogate = charCode >= 55296 && charCode <= 56319;
-        const hasNextCodePoint = str.length > index + 1;
-        const isSurrogatePairStart = isHighSurrogate && hasNextCodePoint;
-
-        if (isSurrogatePairStart) {
-          const nextCharCode = str.charCodeAt(index + 1);
-          const isLowSurrogate = nextCharCode >= 56320 && nextCharCode <= 57343;
-          if (isLowSurrogate) {
-            // https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
-            const codePoint = (charCode - 55296) * 1024 + nextCharCode - 56320 + 65536;
-            const hex = codePoint.toString(16);
-            result += '\\u{' + hex + '}';
-            index++;
-            continue;
-          }
-        }
-      }
-
-      //
-      if (___R$$priv$project$rome$$romejs$string$escape$escapeString_ts$PRINTABLE_ASCII.test(char)) {
-        // It’s a printable ASCII character that is not `"`, `'` or `\`,
-        // so don’t escape it.
-        result += char;
-        continue;
-      }
-
-      // Escape double quotes
-      if (char == ___R$project$rome$$romejs$string$escape$constants_ts$DOUBLE_QUOTE) {
-        result += quote == char ? '\\"' : char;
-        continue;
-      }
-
-      // Escape single quotes
-      if (char == ___R$project$rome$$romejs$string$escape$constants_ts$SINGLE_QUOTE) {
-        result += quote == char ? '\\\'' : char;
-        continue;
-      }
-
-      // Escape back tick
-      if (char == ___R$project$rome$$romejs$string$escape$constants_ts$TICK_QUOTE) {
-        result += quote == char ? '\\`' : char;
-        continue;
-      }
-
-      // Null escape
-      if (char == '\0' && !isJSON && !___R$project$rome$$romejs$parser$core$index_ts$isDigit(str[index + 1])) {
-        result += '\\0';
-        continue;
-      }
-
-      // Simple escapes
-      const replacement = ___R$$priv$project$rome$$romejs$string$escape$escapeString_ts$escapeChar(char, ignoreEscapes);
-      if (replacement !== undefined) {
-        result += replacement;
-        continue;
-      }
-
-      // Unicode escape
-      const hex = char.charCodeAt(0).toString(16);
-      const isLonghand = isJSON || hex.length > 2;
-      const modifier = isLonghand ? 'u' : 'x';
-      const code = ('0000' + hex).slice(isLonghand ? -4 : -2);
-      const escaped = '\\' + modifier + code;
-      result += escaped;
-      continue;
-    }
-
-    return quote + result + quote;
-  }
-
-  // project-rome/@romejs/string-escape/unescapeString.ts
-function ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$unescapeChar(modifier) {
-    switch (modifier) {
-      case 'b':
-        return '\b';
-
-      case 'f':
-        return '\f';
-
-      case 'n':
-        return '\n';
-
-      case 'r':
-        return '\r';
-
-      case 't':
-        return '\t';
-
-      case 'v':
-        return '\x0b';
-
-      default:
-        return modifier;}
-  }
-
-  const ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$UNEXPECTED_DEFAULT_THROWER = (message, index) => {
-    throw new TypeError(message + ' (' + String(index) + ')');
-  };
-
-  function ___R$project$rome$$romejs$string$escape$unescapeString_ts$default(input, unexpected = ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$UNEXPECTED_DEFAULT_THROWER) {
-    let buffer = '';
-
-    let index = 0;
-
-    while (index < input.length) {
-      const char = input[index];
-      const prevChar = input[index - 1];
-      const prevPrevChar = input[index - 2];
-      const isEscaped = prevChar === '\\' && prevPrevChar !== '\\';
-
-      // It's verbatim if it's an escaped backslash or not a backslash
-      if (isEscaped && char === '\\' || char !== '\\') {
-        // Validate that this is a valid character
-        const codePoint = char.codePointAt(0);
-        if (codePoint === undefined) {
-          throw new Error('Already validated that this index exists');
-        }
-        if (codePoint >= 0 && codePoint <= 31) {
-          throw unexpected(___R$project$rome$$romejs$string$escape$messages_ts$INVALID_STRING_CHARACTER, index);
-        }
-
-        // Add it verbatim
-        buffer += char;
-        index++;
-        continue;
-      }
-
-      const modifierIndex = index + 1;
-      const modifier = input[modifierIndex];
-
-      if (modifier === 'u') {
-        // Get the next 4 characters as the code point
-        const codeStartIndex = modifierIndex + 1;
-        const rawCode = input.slice(codeStartIndex, codeStartIndex + 4);
-
-        // Validate that we have at least 4 digits
-        if (rawCode.length < 4) {
-          // (index of the point start + total point digits)
-          const lastDigitIndex = codeStartIndex + rawCode.length - 1;
-          throw unexpected(___R$project$rome$$romejs$string$escape$messages_ts$NOT_ENOUGH_CODE_POINTS, lastDigitIndex);
-        }
-
-        // Validate that each character is a valid hex digit
-        for (let i = 0; i < rawCode.length; i++) {
-          const char = rawCode[i];
-          if (!___R$project$rome$$romejs$parser$core$index_ts$isHexDigit(char)) {
-            // Get the current source index for this character
-            // (code start index + digit index)
-            const pos = codeStartIndex + i;
-            throw unexpected(___R$project$rome$$romejs$string$escape$messages_ts$INVALID_HEX_DIGIT_FOR_ESCAPE, pos);
-          }
-        }
-
-        // Validate the code point
-        const code = parseInt(rawCode, 16);
-
-        // Get the character for this code point
-        buffer += String.fromCodePoint(code);
-
-        // Skip ahead six indexes (1 escape char +  1modifier + 4 hex digits)
-        index += 6;
-      } else {
-        // Unescape a basic modifier like \t
-        buffer += ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$unescapeChar(modifier);
-
-        // Skip ahead two indexes to also take along the modifier
-        index += 2;
-      }
-    }
-
-    return buffer;
-  }
-
-  // project-rome/@romejs/string-escape/index.ts
-const ___R$project$rome$$romejs$string$escape$index_ts$messages = ___R$project$rome$$romejs$string$escape$messages_ts
 
   // project-rome/@romejs/string-markup/parse.ts
 const ___R$project$rome$$romejs$string$markup$parse_ts = {
@@ -2103,10 +1837,9 @@ const ___R$project$rome$$romejs$string$markup$parse_ts = {
               start: this.getPositionFromIndex(end)});
           }
 
-          const unescaped = ___R$project$rome$$romejs$string$escape$unescapeString_ts$default(value);
           return {
             state: state,
-            token: this.finishValueToken('String', unescaped, end)};
+            token: this.finishValueToken('String', value, end)};
         }
 
         if (char === '>') {
@@ -4421,6 +4154,271 @@ function ___R$project$rome$$romejs$typescript$helpers$index_ts$isPlainObject(obj
     // @ts-ignore
     typeof obj[Symbol.iterator] === 'function';
   }
+
+  // project-rome/@romejs/string-escape/messages.ts
+const ___R$project$rome$$romejs$string$escape$messages_ts = {
+    get NOT_ENOUGH_CODE_POINTS() {
+      return ___R$project$rome$$romejs$string$escape$messages_ts$NOT_ENOUGH_CODE_POINTS;
+    },
+    get INVALID_STRING_CHARACTER() {
+      return ___R$project$rome$$romejs$string$escape$messages_ts$INVALID_STRING_CHARACTER;
+    },
+    get INVALID_HEX_DIGIT_FOR_ESCAPE() {
+      return ___R$project$rome$$romejs$string$escape$messages_ts$INVALID_HEX_DIGIT_FOR_ESCAPE;
+    }};
+  const /**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+  ___R$project$rome$$romejs$string$escape$messages_ts$NOT_ENOUGH_CODE_POINTS = 'Not enough code point digits';
+  const ___R$project$rome$$romejs$string$escape$messages_ts$INVALID_STRING_CHARACTER = 'Invalid string character (U+0000 to U+001F)';
+  const ___R$project$rome$$romejs$string$escape$messages_ts$INVALID_HEX_DIGIT_FOR_ESCAPE = 'Invalid hex digit for unicode escape';
+
+  // project-rome/@romejs/string-escape/constants.ts
+const ___R$project$rome$$romejs$string$escape$constants_ts = {
+    get DOUBLE_QUOTE() {
+      return ___R$project$rome$$romejs$string$escape$constants_ts$DOUBLE_QUOTE;
+    },
+    get SINGLE_QUOTE() {
+      return ___R$project$rome$$romejs$string$escape$constants_ts$SINGLE_QUOTE;
+    },
+    get TICK_QUOTE() {
+      return ___R$project$rome$$romejs$string$escape$constants_ts$TICK_QUOTE;
+    }};
+  const ___R$project$rome$$romejs$string$escape$constants_ts$DOUBLE_QUOTE = '"';
+  const ___R$project$rome$$romejs$string$escape$constants_ts$SINGLE_QUOTE = '\'';
+  const ___R$project$rome$$romejs$string$escape$constants_ts$TICK_QUOTE = '`';
+
+  // project-rome/@romejs/string-escape/escapeString.ts
+// This regex represents printable ASCII characters, except the characters: '"\`
+  const ___R$$priv$project$rome$$romejs$string$escape$escapeString_ts$PRINTABLE_ASCII = /[ !#-&\(-\[\]-_a-~]/;
+
+  function ___R$$priv$project$rome$$romejs$string$escape$escapeString_ts$escapeChar(char, ignoreWhitespaceEscapes) {
+    switch (char) {
+      case '"':
+        return '\\"';
+
+      case '\'':
+        return '\\\'';
+
+      case '\b':
+        return '\\b';
+
+      case '\f':
+        return '\\f';
+
+      case '\\':
+        return '\\\\';}
+
+    if (ignoreWhitespaceEscapes) {
+      return undefined;
+    }
+
+    switch (char) {
+      case '\n':
+        return '\\n';
+
+      case '\r':
+        return '\\r';
+
+      case '\t':
+        return '\\t';}
+
+    return undefined;
+  }
+
+  function ___R$project$rome$$romejs$string$escape$escapeString_ts$default(str, opts = {}) {
+    let index = -1;
+    let result = '';
+
+    const quote = opts.quote === undefined ? ___R$project$rome$$romejs$string$escape$constants_ts$DOUBLE_QUOTE : opts.quote;
+    const isJSON = opts.json === undefined ? false : opts.json;
+    const ignoreEscapes = opts.ignoreWhitespaceEscapes === undefined ? false : true;
+
+    // Loop over each code unit in the string and escape it
+    while (++index < str.length) {
+      const char = str[index];
+
+      // Handle surrogate pairs in non-JSON mode
+      if (isJSON === false) {
+        const charCode = str.charCodeAt(index);
+        const isHighSurrogate = charCode >= 55296 && charCode <= 56319;
+        const hasNextCodePoint = str.length > index + 1;
+        const isSurrogatePairStart = isHighSurrogate && hasNextCodePoint;
+
+        if (isSurrogatePairStart) {
+          const nextCharCode = str.charCodeAt(index + 1);
+          const isLowSurrogate = nextCharCode >= 56320 && nextCharCode <= 57343;
+          if (isLowSurrogate) {
+            // https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
+            const codePoint = (charCode - 55296) * 1024 + nextCharCode - 56320 + 65536;
+            const hex = codePoint.toString(16);
+            result += '\\u{' + hex + '}';
+            index++;
+            continue;
+          }
+        }
+      }
+
+      //
+      if (___R$$priv$project$rome$$romejs$string$escape$escapeString_ts$PRINTABLE_ASCII.test(char)) {
+        // It’s a printable ASCII character that is not `"`, `'` or `\`,
+        // so don’t escape it.
+        result += char;
+        continue;
+      }
+
+      // Escape double quotes
+      if (char == ___R$project$rome$$romejs$string$escape$constants_ts$DOUBLE_QUOTE) {
+        result += quote == char ? '\\"' : char;
+        continue;
+      }
+
+      // Escape single quotes
+      if (char == ___R$project$rome$$romejs$string$escape$constants_ts$SINGLE_QUOTE) {
+        result += quote == char ? '\\\'' : char;
+        continue;
+      }
+
+      // Escape back tick
+      if (char == ___R$project$rome$$romejs$string$escape$constants_ts$TICK_QUOTE) {
+        result += quote == char ? '\\`' : char;
+        continue;
+      }
+
+      // Null escape
+      if (char == '\0' && !isJSON && !___R$project$rome$$romejs$parser$core$index_ts$isDigit(str[index + 1])) {
+        result += '\\0';
+        continue;
+      }
+
+      // Simple escapes
+      const replacement = ___R$$priv$project$rome$$romejs$string$escape$escapeString_ts$escapeChar(char, ignoreEscapes);
+      if (replacement !== undefined) {
+        result += replacement;
+        continue;
+      }
+
+      // Unicode escape
+      const hex = char.charCodeAt(0).toString(16);
+      const isLonghand = isJSON || hex.length > 2;
+      const modifier = isLonghand ? 'u' : 'x';
+      const code = ('0000' + hex).slice(isLonghand ? -4 : -2);
+      const escaped = '\\' + modifier + code;
+      result += escaped;
+      continue;
+    }
+
+    return quote + result + quote;
+  }
+
+  // project-rome/@romejs/string-escape/unescapeString.ts
+function ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$unescapeChar(modifier) {
+    switch (modifier) {
+      case 'b':
+        return '\b';
+
+      case 'f':
+        return '\f';
+
+      case 'n':
+        return '\n';
+
+      case 'r':
+        return '\r';
+
+      case 't':
+        return '\t';
+
+      case 'v':
+        return '\x0b';
+
+      default:
+        return modifier;}
+  }
+
+  const ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$UNEXPECTED_DEFAULT_THROWER = (message, index) => {
+    throw new TypeError(message + ' (' + String(index) + ')');
+  };
+
+  function ___R$project$rome$$romejs$string$escape$unescapeString_ts$default(input, unexpected = ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$UNEXPECTED_DEFAULT_THROWER) {
+    let buffer = '';
+
+    let index = 0;
+
+    while (index < input.length) {
+      const char = input[index];
+      const prevChar = input[index - 1];
+      const prevPrevChar = input[index - 2];
+      const isEscaped = prevChar === '\\' && prevPrevChar !== '\\';
+
+      // It's verbatim if it's an escaped backslash or not a backslash
+      if (isEscaped && char === '\\' || char !== '\\') {
+        // Validate that this is a valid character
+        const codePoint = char.codePointAt(0);
+        if (codePoint === undefined) {
+          throw new Error('Already validated that this index exists');
+        }
+        if (codePoint >= 0 && codePoint <= 31) {
+          throw unexpected(___R$project$rome$$romejs$string$escape$messages_ts$INVALID_STRING_CHARACTER, index);
+        }
+
+        // Add it verbatim
+        buffer += char;
+        index++;
+        continue;
+      }
+
+      const modifierIndex = index + 1;
+      const modifier = input[modifierIndex];
+
+      if (modifier === 'u') {
+        // Get the next 4 characters as the code point
+        const codeStartIndex = modifierIndex + 1;
+        const rawCode = input.slice(codeStartIndex, codeStartIndex + 4);
+
+        // Validate that we have at least 4 digits
+        if (rawCode.length < 4) {
+          // (index of the point start + total point digits)
+          const lastDigitIndex = codeStartIndex + rawCode.length - 1;
+          throw unexpected(___R$project$rome$$romejs$string$escape$messages_ts$NOT_ENOUGH_CODE_POINTS, lastDigitIndex);
+        }
+
+        // Validate that each character is a valid hex digit
+        for (let i = 0; i < rawCode.length; i++) {
+          const char = rawCode[i];
+          if (!___R$project$rome$$romejs$parser$core$index_ts$isHexDigit(char)) {
+            // Get the current source index for this character
+            // (code start index + digit index)
+            const pos = codeStartIndex + i;
+            throw unexpected(___R$project$rome$$romejs$string$escape$messages_ts$INVALID_HEX_DIGIT_FOR_ESCAPE, pos);
+          }
+        }
+
+        // Validate the code point
+        const code = parseInt(rawCode, 16);
+
+        // Get the character for this code point
+        buffer += String.fromCodePoint(code);
+
+        // Skip ahead six indexes (1 escape char +  1modifier + 4 hex digits)
+        index += 6;
+      } else {
+        // Unescape a basic modifier like \t
+        buffer += ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$unescapeChar(modifier);
+
+        // Skip ahead two indexes to also take along the modifier
+        index += 2;
+      }
+    }
+
+    return buffer;
+  }
+
+  // project-rome/@romejs/string-escape/index.ts
+const ___R$project$rome$$romejs$string$escape$index_ts$messages = ___R$project$rome$$romejs$string$escape$messages_ts
 
   // project-rome/@romejs/pretty-format/index.ts
 const ___R$$priv$project$rome$$romejs$pretty$format$index_ts$DEFAULT_OPTIONS = {
@@ -24190,6 +24188,7 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
 
     return parser.finishNode(start, {
       type: 'TSTypePredicate',
+      asserts: false,
       parameterName: parameterName,
       typeAnnotation: typeAnnotation});
   }
@@ -24979,27 +24978,42 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
   }
 
   function ___R$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSTypeOrTypePredicateAnnotation(parser, returnToken) {
-    const start = parser.getPosition();
+    let start = parser.getPosition();
     parser.pushScope('TYPE', true);
     parser.expect(returnToken);
 
+    let hasAsserts = parser.eatContextual('asserts');
+    let parameterName;
     let typePredicateVariable;
     if (___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$tsIsIdentifier(parser)) {
       typePredicateVariable = ___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$tryTSParse(parser, ___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSTypePredicatePrefix);
     }
     if (typePredicateVariable === undefined) {
-      parser.popScope('TYPE');
-      return ___R$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSTypeAnnotation(parser, /* eatColon */false, start);
+      if (hasAsserts) {
+        parameterName = ___R$project$rome$$romejs$js$parser$parser$expression_ts$parseIdentifier(parser);
+        if (parameterName === undefined) {
+          throw Error('Should have an identifier after asserts');
+        }
+      } else {
+        parser.popScope('TYPE');
+        return ___R$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSTypeAnnotation(parser, /* eatColon */false, start);
+      }
+    } else {
+      parameterName = typePredicateVariable;
     }
 
-    const type = ___R$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSTypeAnnotation(parser, /* eatColon */false);
+    let type;
+    if (typePredicateVariable) {
+      type = ___R$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSTypeAnnotation(parser, /* eatColon */false);
+      start = parser.getLoc(typePredicateVariable).start;
+    }
 
-    const typePredicateStart = parser.getLoc(typePredicateVariable).start;
     parser.popScope('TYPE');
 
-    return parser.finishNode(typePredicateStart, {
+    return parser.finishNode(start, {
       type: 'TSTypePredicate',
-      parameterName: typePredicateVariable,
+      asserts: hasAsserts,
+      parameterName: parameterName,
       typeAnnotation: type});
   }
 
@@ -49056,13 +49070,6 @@ function ___R$project$rome$$romejs$cli$diagnostics$buildMessageCodeFrame_ts$defa
         lineIndex: i});
     }
 
-    // If there's no lines to target then return the normal marker
-    if (formattedLines.length === 0 ||
-    end.line === ___R$project$rome$$romejs$ob1$index_ts$number1Neg1 ||
-    start.line === ___R$project$rome$$romejs$ob1$index_ts$number1Neg1) {
-      return ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_INDENT + markerMessage;
-    }
-
     // If we have too many lines in our selection, then collapse them to an ellipsis
     const pruned = formattedLines.length > ___R$project$rome$$romejs$cli$diagnostics$constants_ts$MAX_CODE_FRAME_LINES + 2;
     if (pruned) {
@@ -49079,6 +49086,13 @@ function ___R$project$rome$$romejs$cli$diagnostics$buildMessageCodeFrame_ts$defa
       } else {
         break;
       }
+    }
+
+    // If there's no lines to target then return the normal marker
+    if (formattedLines.length === 0 ||
+    end.line === ___R$project$rome$$romejs$ob1$index_ts$number1Neg1 ||
+    start.line === ___R$project$rome$$romejs$ob1$index_ts$number1Neg1) {
+      return ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_INDENT + markerMessage;
     }
 
     // Don't output a gutter if there's only a single line
@@ -52607,7 +52621,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
             advice: [{
               type: 'log',
               category: 'info',
-              message: 'Defined already by <filelink target="' + existing + '" />'}]});
+              message: 'Defined already by <filelink emphasis target="' + existing + '" />'}]});
           continue;
         }
 
@@ -59627,6 +59641,11 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
         folderPath,
         {recursive: true, persistent: false},
         (eventType, filename) => {
+          if (filename === null) {
+            // TODO not sure how we want to handle this?
+            return;
+          }
+
           const path = folderPath.resolve(filename);
 
           memoryFs.stat(path).then(newStats => {
@@ -63772,11 +63791,15 @@ class ___R$project$rome$$romejs$core$master$testing$TestRunner_ts$default {
         const str = chunk.toString();
 
         if (str.startsWith('Debugger listening on ws://')) {
-          return undefined;
+          return;
+        }
+
+        if (str.startsWith('For help, see: https://nodejs.org/en/docs/inspector')) {
+          return;
         }
 
         if (str.startsWith('Debugger attached')) {
-          return undefined;
+          return;
         }
 
         process.stderr.write(chunk);
@@ -63873,9 +63896,7 @@ class ___R$project$rome$$romejs$core$master$testing$TestRunner_ts$default {
         ___R$project$rome$$romejs$ob1$index_ts$coerce0to1(loc.get('lineNumber').asZeroIndexedNumber()),
         loc.get('columnNumber').asZeroIndexedNumber());
 
-        console.log(callFrame.asUnknown());
-
-        const name = callFrame.get('scopeChain').asArray()[0].get('name').asString().split('$').pop();
+        const name = callFrame.get('scopeChain').asArray()[0].get('name').asString('').split('$').pop();
 
         frames.push({
           resolvedLocation: resolved.found,

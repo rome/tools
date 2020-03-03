@@ -195,11 +195,17 @@ export default class TestRunner {
       const str = chunk.toString();
 
       if (str.startsWith('Debugger listening on ws://')) {
-        return undefined;
+        return;
+      }
+
+      if (
+        str.startsWith('For help, see: https://nodejs.org/en/docs/inspector')
+      ) {
+        return;
       }
 
       if (str.startsWith('Debugger attached')) {
-        return undefined;
+        return;
       }
 
       process.stderr.write(chunk);
@@ -319,13 +325,11 @@ export default class TestRunner {
         loc.get('columnNumber').asZeroIndexedNumber(),
       );
 
-      console.log(callFrame.asUnknown());
-
       const name = callFrame
         .get('scopeChain')
         .asArray()[0]
         .get('name')
-        .asString()
+        .asString('')
         .split('$')
         .pop();
 

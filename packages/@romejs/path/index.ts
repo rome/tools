@@ -31,11 +31,16 @@ export type PathSegments = Array<string>;
 
 class BaseFilePath<Super extends UnknownFilePath> {
   constructor(parsed: ParsedPath, opts: FilePathOptions<Super>) {
+    if (parsed.segments.length === 0) {
+      throw new Error('Cannot construct a FilePath with zero segments');
+    }
+
     this.segments = parsed.segments;
     this.absoluteTarget = parsed.absoluteTarget;
     this.absoluteType = parsed.absoluteType;
 
     // Memoized
+    this.memoizedUnique = undefined;
     this.memoizedParent = opts.parent;
     this.memoizedFilename = opts.filename;
     this.memoizedExtension = opts.ext;
@@ -44,6 +49,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
   segments: PathSegments;
 
+  memoizedUnique: undefined | Super;
   memoizedFilename: undefined | string;
   memoizedExtension: undefined | string;
   memoizedParent: undefined | Super;
@@ -75,7 +81,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
       ? this.getExtensionlessBasename()
       : this.getBasename();
     const newExt = clearExt ? ext : this.memoizedExtension + ext;
-    const segments = this.getParentSegments().concat(newBasename + ext);
+    const segments = this.getParentSegments(false).concat(newBasename + ext);
 
     return this._fork(
       {
@@ -90,7 +96,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
   }
 
   changeBasename(newBasename: string): Super {
-    const segments = this.getParentSegments().concat(newBasename);
+    const segments = this.getParentSegments(false).concat(newBasename);
     return this._fork(
       {
         ...this.getParsed(),
@@ -104,7 +110,8 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
   getBasename(): string {
     const {segments} = this;
-    return segments[segments.length - 1];
+    const offset = this.isExplicitFolder() ? 2 : 1;
+    return segments[segments.length - offset];
   }
 
   getExtensionlessBasename(): string {
@@ -134,8 +141,18 @@ class BaseFilePath<Super extends UnknownFilePath> {
     return parent;
   }
 
-  getParentSegments(): PathSegments {
-    return this.segments.slice(0, -1);
+  getParentSegments(explicit: boolean = true): PathSegments {
+    // Should we throw an error?
+    if (this.isRoot()) {
+      return this.segments;
+    }
+
+    const segments = this.getSegments().slice(0, -1);
+    // Always make this an explicit folder
+    if (explicit && segments.length > 0 && segments[0] !== '') {
+      segments.push('');
+    }
+    return segments;
   }
 
   toExplicitRelative(): RelativeFilePath {
@@ -183,6 +200,11 @@ class BaseFilePath<Super extends UnknownFilePath> {
   isRoot(): boolean {
     if (this.segments.length === 1) {
       return true;
+    }
+
+    if (this.segments.length === 2) {
+      // Explicit folder reference
+      return this.segments[1] === '';
     }
 
     if (this.segments.length === 3) {
@@ -244,6 +266,11 @@ class BaseFilePath<Super extends UnknownFilePath> {
     return !this.isURL() && (firstSeg === '.' || firstSeg === '..');
   }
 
+  isExplicitFolder(): boolean {
+    const {segments} = this;
+    return segments[segments.length - 1] === '';
+  }
+
   getExtensions(): string {
     if (this.memoizedExtension === undefined) {
       const ext = getExtension(this.getBasename());
@@ -259,7 +286,51 @@ class BaseFilePath<Super extends UnknownFilePath> {
   }
 
   getSegments(): PathSegments {
+    let {segments} = this;
+
+    if (!this.isRoot()) {
+      if (this.isExplicitFolder()) {
+        segments = segments.slice(0, -1);
+      }
+
+      if (segments[0] === '.') {
+        segments = segments.slice(1);
+      }
+    }
+
+    return segments;
+  }
+
+  getRawSegments(): PathSegments {
     return this.segments;
+  }
+
+  getUnique(): Super {
+    if (this.memoizedUnique !== undefined) {
+      return this.memoizedUnique;
+    }
+
+    let segments: undefined | PathSegments;
+
+    if (!this.isRoot()) {
+      if (this.isExplicitFolder()) {
+        segments = this.getSegments();
+
+        if (this.isExplicitRelative()) {
+          segments = segments.slice(1);
+        }
+      } else if (this.isExplicitRelative()) {
+        segments = this.getRawSegments().slice(1);
+      }
+    }
+
+    if (segments === undefined) {
+      return this._assert();
+    } else {
+      const path = this._fork(parsePathSegments(segments), {});
+      this.memoizedUnique = path;
+      return path;
+    }
   }
 
   // Support some bad string coercion. Such as serialization in CLI flags.
@@ -360,6 +431,10 @@ class BaseFilePath<Super extends UnknownFilePath> {
     }
 
     const items: Array<FilePathOrString> = Array.isArray(raw) ? raw : [raw];
+
+    if (items.length === 0) {
+      return this._assert();
+    }
 
     let segments: PathSegments = this.getSegments();
 
@@ -651,7 +726,7 @@ function normalizeSegments(
   offset: number,
   absoluteSegments: Array<string>,
 ): Array<string> {
-  const pathSegments: PathSegments = [];
+  const relativeSegments: PathSegments = [];
   for (let i = offset; i < segments.length; i++) {
     let seg = segments[i];
 
@@ -663,7 +738,7 @@ function normalizeSegments(
       continue;
     }
 
-    // Ignore empty segments, important scenarios have already been handled above
+    // Ignore empty segments
     if (seg === '') {
       continue;
     }
@@ -671,17 +746,28 @@ function normalizeSegments(
     // Remove the previous segment, as long as it's not also ..
     if (
       seg === '..' &&
-      pathSegments.length > 0 &&
-      pathSegments[pathSegments.length - 1] !== '..'
+      relativeSegments.length > 0 &&
+      relativeSegments[relativeSegments.length - 1] !== '..'
     ) {
-      pathSegments.pop();
+      relativeSegments.pop();
       continue;
     }
 
-    pathSegments.push(seg);
+    relativeSegments.push(seg);
   }
 
-  return [...absoluteSegments, ...pathSegments];
+  const finalSegments = [...absoluteSegments, ...relativeSegments];
+
+  // Retain explicit folder
+  if (
+    segments[segments.length - 1] === '' &&
+    finalSegments[finalSegments.length - 1] !== '' &&
+    relativeSegments.length !== 0
+  ) {
+    finalSegments.push('');
+  }
+
+  return finalSegments;
 }
 
 function createUnknownFilePathFromSegments(

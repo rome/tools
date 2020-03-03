@@ -31,7 +31,7 @@ const promise = createFixtureTests((fixture, t) => {
   const outputFile = files.get('output.txt');
   let outputContent = undefined;
   if (outputFile !== undefined) {
-    outputContent = outputFile.content.toString();
+    outputContent = outputFile.content.toString().replace(/\r/g, '');
   }
 
   const sourceTypeProp = options.get('sourceType');
@@ -68,7 +68,7 @@ const promise = createFixtureTests((fixture, t) => {
     },
   });
 
-  const inputContent = inputFile.content.toString();
+  const inputContent = inputFile.content.toString().replace(/\r/g, '');
   t.addToAdvice({
     type: 'log',
     category: 'info',

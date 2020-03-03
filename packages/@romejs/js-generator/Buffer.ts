@@ -203,9 +203,13 @@ export default class Buffer {
   }
 
   flush(): void {
-    let item;
-    while ((item = this._queue.pop())) {
-      this._append(...item);
+    while (true) {
+      const item = this._queue.pop();
+      if (item === undefined) {
+        break;
+      } else {
+        this._append(...item);
+      }
     }
   }
 

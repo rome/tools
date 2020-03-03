@@ -10,8 +10,9 @@ import {createBuilder} from '../utils';
 
 export type TSTypePredicate = JSNodeBase & {
   type: 'TSTypePredicate';
+  asserts: boolean;
   parameterName: Identifier | TSThisType;
-  typeAnnotation: AnyPrimaryType;
+  typeAnnotation?: AnyPrimaryType;
 };
 
 export const tsTypePredicate = createBuilder<TSTypePredicate>(

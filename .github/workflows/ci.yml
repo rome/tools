@@ -36,8 +36,11 @@ jobs:
 
   tests:
     name: Tests
-    runs-on: ubuntu-latest
     needs: [lint]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -45,6 +48,7 @@ jobs:
         with:
           node-version: '13.x'
       - name: Run tests
+        shell: bash
         run: ./scripts/dev-rome test
 
   build:

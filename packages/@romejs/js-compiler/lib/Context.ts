@@ -6,7 +6,10 @@
  */
 
 import {AnyNode, Program, ConstSourceType} from '@romejs/js-ast';
-import {SourceLocation} from '@romejs/parser-core';
+import {
+  SourceLocation,
+  extractSourceLocationRangeFromNodes,
+} from '@romejs/parser-core';
 import {
   PathOptions,
   TransformExitResult,
@@ -151,6 +154,16 @@ export default class Context {
   ) {
     return this.addLocDiagnostic(
       node === undefined ? undefined : node.loc,
+      diag,
+    );
+  }
+
+  addNodesRangeDiagnostic(
+    nodes: Array<{loc?: SourceLocation}>,
+    diag: ContextPartialDiagnostic,
+  ) {
+    return this.addLocDiagnostic(
+      extractSourceLocationRangeFromNodes(nodes),
       diag,
     );
   }
