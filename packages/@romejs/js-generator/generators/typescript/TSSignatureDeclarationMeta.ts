@@ -11,6 +11,7 @@ import {
   tsSignatureDeclarationMeta,
   AnyNode,
 } from '@romejs/js-ast';
+import {printBindingPatternParams} from '../utils';
 
 export default function TSSignatureDeclarationMeta(
   generator: Generator,
@@ -18,6 +19,9 @@ export default function TSSignatureDeclarationMeta(
 ) {
   node = tsSignatureDeclarationMeta.assert(node);
 
-  tsSignatureDeclarationMeta.assert(node);
-  throw new Error('unimplemented');
+  generator.print(node.typeParameters, node);
+  generator.token('(');
+  printBindingPatternParams(generator, node, node.parameters);
+  generator.token(')');
+  generator.space();
 }

@@ -10,6 +10,7 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSInferType(generator: Generator, node: AnyNode) {
   node = tsInferType.assert(node);
-  tsInferType.assert(node);
-  throw new Error('unimplemented');
+  generator.token('infer');
+  generator.space();
+  generator.print(node.typeParameter);
 }

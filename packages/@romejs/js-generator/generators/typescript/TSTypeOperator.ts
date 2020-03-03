@@ -10,6 +10,7 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSTypeOperator(generator: Generator, node: AnyNode) {
   node = tsTypeOperator.assert(node);
-
-  throw new Error('unimplemented');
+  generator.token(node.operator);
+  generator.space();
+  generator.print(node.typeAnnotation, node);
 }

@@ -10,6 +10,6 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSOptionalType(generator: Generator, node: AnyNode) {
   node = tsOptionalType.assert(node);
-
-  throw new Error('unimplemented');
+  generator.print(node.typeAnnotation, node);
+  generator.token('?');
 }
