@@ -252,7 +252,7 @@ test('disallow var', async t => {
   ]);
 });
 
-test('no shadow restrcited names', async t => {
+test('no shadow restricted names', async t => {
   const getNoShadowDiagnostics = (result: LintResult) =>
     result.diagnostics.filter(
       d => d.category === 'lint/noShadowRestrictedNames',
