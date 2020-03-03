@@ -7,6 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {TransformExitResult} from '@romejs/js-compiler/types';
+import {builtin, es5, es2015, es2017} from '@romejs/js-compiler/scope/globals';
 import {
   VariableDeclaration,
   FunctionDeclaration,
@@ -44,6 +45,8 @@ function extractBindingIdentifiers(
   return [];
 }
 
+const restrictedNames = new Set([...builtin, ...es5, ...es2015, ...es2017]);
+
 export default {
   name: 'noShadowRestrictedNames',
   enter(path: Path): TransformExitResult {
@@ -58,7 +61,7 @@ export default {
       const bindings = extractBindingIdentifiers(node);
 
       for (const binding of bindings) {
-        if (context.getRootScope().isGlobal(binding.name)) {
+        if (restrictedNames.has(binding.name)) {
           context.addNodeDiagnostic(binding, {
             category: 'lint/noShadowRestrictedNames',
             message: markup`Shadowing of global property <emphasis>${binding.name}</emphasis>`,
