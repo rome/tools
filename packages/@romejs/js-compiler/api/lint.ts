@@ -18,20 +18,19 @@ export type LintResult = {
   diagnostics: PartialDiagnostics;
   filters: DiagnosticFilters;
   src: string;
-  ast: Program;
 };
 
 const lintCache: Cache<LintResult> = new Cache();
 
 export default async function lint(req: TransformRequest): Promise<LintResult> {
-  const {ast, sourceText: src, project} = req;
+  const {sourceText: src, project} = req;
+  let {ast} = req;
 
   if (!project.config.lint.enabled) {
     return {
       diagnostics: [],
       filters: extractSuppressionsFromProgram(ast),
       src,
-      ast,
     };
   }
 
@@ -41,17 +40,20 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
     return cached;
   }
 
-  const context = new Context({
-    ast,
-    project,
-    origin: {
-      category: 'lint',
-    },
-  });
-  const newAst = program.assert(context.reduce(ast, lintTransforms));
-
   let formattedCode = src;
   if (project.config.format.enabled) {
+    // Perform autofixes
+    const context = new Context({
+      ast,
+      project,
+      origin: {
+        category: 'lint',
+      },
+    });
+    const newAst = program.assert(
+      context.reduce(ast, lintTransforms, {frozen: false}),
+    );
+
     const generator = generateJS(
       newAst,
       {
@@ -62,9 +64,18 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
     formattedCode = generator.getCode() + '\n';
   }
 
+  // Run lints (could be with the autofixed AST)
+  const context = new Context({
+    ast,
+    project,
+    origin: {
+      category: 'lint',
+    },
+  });
+  program.assert(context.reduce(ast, lintTransforms, {frozen: true}));
+
   const result: LintResult = {
     filters: extractSuppressionsFromProgram(ast),
-    ast: newAst,
     diagnostics: [...ast.diagnostics, ...context.diagnostics],
     src: formattedCode,
   };
