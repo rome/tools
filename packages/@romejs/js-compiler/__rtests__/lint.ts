@@ -6,10 +6,11 @@
  */
 
 import test from '@romejs/test';
-import lint from '../api/lint';
+import lint, {LintResult} from '../api/lint';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import {DEFAULT_PROJECT_CONFIG, ProjectConfig} from '@romejs/project';
+import {TestAPI} from '@romejs/core';
 
 const LINT_ENABLED_FORMAT_DISABLED_CONFIG: ProjectConfig = {
   ...DEFAULT_PROJECT_CONFIG,
@@ -45,6 +46,27 @@ async function testLint(input: string, config: ProjectConfig) {
       config,
     },
   });
+}
+
+function isValidLint(t: TestAPI, received: LintResult, category: string) {
+  const filteredDiagnostics = received.diagnostics.filter(
+    diagnostic => diagnostic.category === category,
+  );
+  t.true(
+    filteredDiagnostics.length === 0,
+    `Expected lint "${category}" to be valid`,
+  );
+}
+
+function isInvalidLint(t: TestAPI, received: LintResult, category: string) {
+  const filteredDiagnostics = received.diagnostics.filter(
+    diagnostic => diagnostic.category === category,
+  );
+  t.true(
+    filteredDiagnostics.length > 0,
+    `Expected lint "${category}" to be valid`,
+  );
+  t.snapshot(filteredDiagnostics);
 }
 
 test('empty file', async t => {
@@ -92,7 +114,7 @@ test('no async promise executor', async t => {
   const validTestCases = [
     'new Promise(() => {})',
     'new Promise(() => {}, async function unrelated() {})',
-    'class Foo {} new Foo(async () => {})',
+    'new Foo(async () => {})',
   ];
   const invalidTestCases = [
     'new Promise(async function foo() {})',
@@ -100,15 +122,17 @@ test('no async promise executor', async t => {
     'new Promise(((((async () => {})))))',
   ];
   for (const validTestCase of validTestCases) {
-    const {diagnostics} = await testLint(
-      validTestCase,
-      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    isValidLint(
+      t,
+      await testLint(validTestCase, LINT_ENABLED_FORMAT_DISABLED_CONFIG),
+      'lint/noAsyncPromiseExecutor',
     );
-    t.is(diagnostics.length, 0);
   }
   for (const invalidTestCase of invalidTestCases) {
-    t.snapshot(
+    isInvalidLint(
+      t,
       await testLint(invalidTestCase, LINT_ENABLED_FORMAT_DISABLED_CONFIG),
+      'lint/noAsyncPromiseExecutor',
     );
   }
 });
