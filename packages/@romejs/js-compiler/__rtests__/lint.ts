@@ -277,7 +277,7 @@ test('no shadow restricted names', async t => {
     `
     function NaN(undefined) {
       let eval;
-      !function Array(window) {
+      !function Array(JSON) {
         try {
         } catch (Object) {}
       };
