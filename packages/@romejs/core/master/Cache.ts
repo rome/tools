@@ -8,12 +8,12 @@
 import {
   WorkerCompileResult,
   WorkerAnalyzeDependencyResult,
+  WorkerLintResult,
 } from '../common/bridges/WorkerBridge';
 import {ModuleSignature} from '@romejs/js-analysis';
 import Master from './Master';
 import {DEFAULT_PROJECT_CONFIG, ProjectDefinition} from '@romejs/project';
 import {VERSION} from '../common/constants';
-import {PartialDiagnostics} from '@romejs/diagnostics';
 import {AbsoluteFilePath, AbsoluteFilePathMap} from '@romejs/path';
 import {createDirectory, writeFile, readFileText, unlink} from '@romejs/fs';
 
@@ -25,7 +25,7 @@ type CacheEntry = {
   compile: {
     [key: string]: WorkerCompileResult;
   };
-  lint: undefined | PartialDiagnostics;
+  lint: undefined | WorkerLintResult;
   analyzeDependencies: undefined | WorkerAnalyzeDependencyResult;
   moduleSignature: undefined | ModuleSignature;
 };

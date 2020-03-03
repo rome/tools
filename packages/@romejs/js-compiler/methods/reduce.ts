@@ -195,6 +195,7 @@ export default function reduce(
             // Run transforms on this node
             const newChild = reduce(child, visitors, context, {
               noScopeCreation: pathOpts.noScopeCreation,
+              frozen: pathOpts.frozen,
               parentScope: path.scope,
               ancestryPaths: childAncestryPaths,
               listKey: correctedIndex,
@@ -202,7 +203,7 @@ export default function reduce(
             });
 
             // If this item has been changed then...
-            if (newChild !== child) {
+            if (newChild !== child && !pathOpts.frozen) {
               // Clone the children array
               children = children.slice();
 
@@ -262,12 +263,13 @@ export default function reduce(
             parentScope: path.scope,
             ancestryPaths: childAncestryPaths,
             noArrays: true,
+            frozen: pathOpts.frozen,
             nodeKey: key,
           },
         );
 
         // If this value has been changed then...
-        if (newVal !== oldVal) {
+        if (newVal !== oldVal && !pathOpts.frozen) {
           // When replacing a key value, we cannot replace it with an array
           if (Array.isArray(newVal)) {
             throw new Error(

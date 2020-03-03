@@ -10,6 +10,15 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSEnumMember(generator: Generator, node: AnyNode) {
   node = tsEnumMember.assert(node);
-  tsEnumMember.assert(node);
-  throw new Error('unimplemented');
+
+  generator.print(node.id, node);
+
+  if (node.initializer) {
+    generator.space();
+    generator.token('=');
+    generator.space();
+    generator.print(node.initializer, node);
+  }
+
+  generator.token(',');
 }

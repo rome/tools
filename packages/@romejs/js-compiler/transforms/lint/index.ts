@@ -6,27 +6,41 @@
  */
 
 import defaultExportSameBasename from './defaultExportSameBasename';
-import undeclaredVariables from './undeclaredVariables';
-import unusedVariables from './unusedVariables';
-import emptyBlocks from './emptyBlocks';
-import noCompareNegZero from './noCompareNegZero';
-import unsafeNegation from './unsafeNegation';
-import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
-import noLabelVar from './noLabelVar';
-import noDuplicateKeys from './noDuplicateKeys';
 import disallowVar from './disallowVar';
+import emptyBlocks from './emptyBlocks';
+import sparseArray from './sparseArray';
+import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
+import noCompareNegZero from './noCompareNegZero';
+import noCondAssign from './noCondAssign';
+import noDuplicateKeys from './noDuplicateKeys';
+import noDupeArgs from './noDupeArgs';
+import noLabelVar from './noLabelVar';
+import undeclaredVariables from './undeclaredVariables';
+import unsafeNegation from './unsafeNegation';
+import unusedVariables from './unusedVariables';
+import noUnsafeFinally from './noUnsafeFinally';
+import noDeleteVars from './noDeleteVars';
+import noTemplateCurlyInString from './noTemplateCurlyInString';
+import noImportAssign from './noImportAssign';
 import noShadowRestrictedNames from './noShadowRestrictedNames';
 
 export const lintTransforms = [
-  undeclaredVariables,
   defaultExportSameBasename,
-  unusedVariables,
+  disallowVar,
   emptyBlocks,
+  sparseArray,
   noCompareNegZero,
   unsafeNegation,
   noAsyncPromiseExecutor,
-  noLabelVar,
+  noCondAssign,
   noDuplicateKeys,
-  disallowVar,
+  noDupeArgs,
+  noLabelVar,
+  undeclaredVariables,
+  unusedVariables,
+  noUnsafeFinally,
+  noDeleteVars,
+  noTemplateCurlyInString,
+  noImportAssign,
   noShadowRestrictedNames,
 ];
