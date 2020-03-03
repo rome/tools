@@ -24,7 +24,7 @@ function extractBindingIdentifiers(
     | FunctionDeclaration
     | FunctionExpression
     | CatchClause,
-): BindingIdentifier[] {
+): Array<BindingIdentifier> {
   if (
     node.type === 'FunctionDeclaration' ||
     node.type === 'FunctionExpression'
