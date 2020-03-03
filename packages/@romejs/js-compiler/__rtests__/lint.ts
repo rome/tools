@@ -260,7 +260,7 @@ test('disallow multiple spaces in regular expression literals', async t => {
   t.looksLike(res1.diagnostics, [
     {
       category: 'lint/disallowMultipleSpacesInRegularExpressionLiterals',
-      message: 'Should use expression {length} instead of multiple spaces',
+      message: 'Disallow multiple spaces in regular expression literals',
       mtime: undefined,
       filename: 'unknown',
       start: {index: 11, line: 1, column: 11},
