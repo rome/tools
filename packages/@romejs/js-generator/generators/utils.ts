@@ -12,9 +12,7 @@ import {
   AnyNode,
   throwStatement,
   objectMethod,
-  TSSignatureDeclarationMeta,
   AnyBindingPattern,
-  AnyTSTypeElement,
 } from '@romejs/js-ast';
 
 export function buildForXStatementGenerator(op: 'of' | 'in'): GeneratorMethod {

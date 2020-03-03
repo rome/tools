@@ -9,6 +9,7 @@ import {
   TSModuleDeclaration,
   tsModuleDeclaration,
   AnyNode,
+  TSModuleBlock,
 } from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
 
@@ -36,8 +37,8 @@ export default function TSModuleDeclaration(
     return;
   }
 
-  let body = node.body;
-  while (body.type === 'TSModuleDeclaration') {
+  let body: undefined | TSModuleBlock | TSModuleDeclaration = node.body;
+  while (body !== undefined && body.type === 'TSModuleDeclaration') {
     generator.token('.');
     generator.print(body.id, body);
     body = body.body;
