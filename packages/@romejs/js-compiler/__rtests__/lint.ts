@@ -171,6 +171,44 @@ test('disallows comparing negative zero', async t => {
   t.looksLike(res2.diagnostics, []);
 });
 
+test('no cond assign', async t => {
+  const forLoop = await testLint(
+    `for (let i = 1; i = 10; i++) {
+      console.log('foo')
+    }`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.snapshot(forLoop);
+
+  const ifCondition = await testLint(
+    `if(foo = 'bar') {
+      console.log('foo')
+    }`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.snapshot(ifCondition);
+
+  const whileLoop = await testLint(
+    `while (foo = 'bar' {
+      console.log('foo')
+    }`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.snapshot(whileLoop);
+
+  const DoWhileLoop = await testLint(
+    `do {
+      console.log('foo)
+    } while (foo = 'bar')`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.snapshot(DoWhileLoop);
+});
+
 test('no label var', async t => {
   const badLabel = await testLint(
     `
