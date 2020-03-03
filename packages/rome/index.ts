@@ -119,7 +119,7 @@ export const compile = wrapForErrors(async function(opts: {
 
   return {
     cacheKey,
-    code: res.code,
+    code: res.compiledCode,
     sourceMap,
   };
 });

@@ -302,8 +302,8 @@ export default class BundleRequest {
 
       declareCJS(module);
 
-      addMappings(module.id, compileResult.src, compileResult.mappings);
-      push(compileResult.code);
+      addMappings(module.id, compileResult.sourceText, compileResult.mappings);
+      push(compileResult.compiledCode);
       push('');
     }
 
