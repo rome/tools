@@ -16,6 +16,7 @@ import noLabelVar from './noLabelVar';
 import noDuplicateKeys from './noDuplicateKeys';
 import disallowVar from './disallowVar';
 import noUnsafeFinally from './noUnsafeFinally';
+import noDeleteVars from './noDeleteVars';
 
 export const lintTransforms = [
   undeclaredVariables,
@@ -29,4 +30,5 @@ export const lintTransforms = [
   noDuplicateKeys,
   disallowVar,
   noUnsafeFinally,
+  noDeleteVars,
 ];
