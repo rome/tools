@@ -61,24 +61,25 @@ class FilePathMap<FilePath extends UnknownFilePath, Value> {
   }
 
   delete(path: FilePath) {
-    const joined = path.join();
+    const joined = path.getUnique().join();
     this.joinedToValue.delete(joined);
     this.joinedToPath.delete(joined);
     this._updateSize();
   }
 
   has(path: FilePath): boolean {
-    return this.joinedToValue.has(path.join());
+    return this.joinedToValue.has(path.getUnique().join());
   }
 
   get(path: FilePath): undefined | Value {
-    return this.joinedToValue.get(path.join());
+    return this.joinedToValue.get(path.getUnique().join());
   }
 
   set(path: FilePath, value: Value) {
-    const joined = path.join();
+    const uniq = path.getUnique() as FilePath;
+    const joined = uniq.join();
     this.joinedToValue.set(joined, value);
-    this.joinedToPath.set(joined, path);
+    this.joinedToPath.set(joined, uniq);
     this._updateSize();
   }
 }

@@ -9,10 +9,20 @@ import defaultExportSameBasename from './defaultExportSameBasename';
 import undeclaredVariables from './undeclaredVariables';
 import unusedVariables from './unusedVariables';
 import emptyBlocks from './emptyBlocks';
+import noCompareNegZero from './noCompareNegZero';
+import unsafeNegation from './unsafeNegation';
+import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
+import noLabelVar from './noLabelVar';
+import noDuplicateKeys from './noDuplicateKeys';
 
 export const lintTransforms = [
   undeclaredVariables,
   defaultExportSameBasename,
   unusedVariables,
   emptyBlocks,
+  noCompareNegZero,
+  unsafeNegation,
+  noAsyncPromiseExecutor,
+  noLabelVar,
+  noDuplicateKeys,
 ];
