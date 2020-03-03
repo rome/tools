@@ -509,24 +509,25 @@ const ___R$project$rome$$romejs$path$collections_ts = {
     }
 
     delete(path) {
-      const joined = path.join();
+      const joined = path.getUnique().join();
       this.joinedToValue.delete(joined);
       this.joinedToPath.delete(joined);
       this._updateSize();
     }
 
     has(path) {
-      return this.joinedToValue.has(path.join());
+      return this.joinedToValue.has(path.getUnique().join());
     }
 
     get(path) {
-      return this.joinedToValue.get(path.join());
+      return this.joinedToValue.get(path.getUnique().join());
     }
 
     set(path, value) {
-      const joined = path.join();
+      const uniq = path.getUnique();
+      const joined = uniq.join();
       this.joinedToValue.set(joined, value);
-      this.joinedToPath.set(joined, path);
+      this.joinedToPath.set(joined, uniq);
       this._updateSize();
     }
   }
@@ -632,11 +633,16 @@ const /**
 
   class ___R$$priv$project$rome$$romejs$path$index_ts$BaseFilePath {
     constructor(parsed, opts) {
+      if (parsed.segments.length === 0) {
+        throw new Error('Cannot construct a FilePath with zero segments');
+      }
+
       this.segments = parsed.segments;
       this.absoluteTarget = parsed.absoluteTarget;
       this.absoluteType = parsed.absoluteType;
 
       // Memoized
+      this.memoizedUnique = undefined;
       this.memoizedParent = opts.parent;
       this.memoizedFilename = opts.filename;
       this.memoizedExtension = opts.ext;
@@ -660,7 +666,7 @@ const /**
     addExtension(ext, clearExt = false) {
       const newBasename = clearExt ? this.getExtensionlessBasename() : this.getBasename();
       const newExt = clearExt ? ext : this.memoizedExtension + ext;
-      const segments = this.getParentSegments().concat(newBasename + ext);
+      const segments = this.getParentSegments(false).concat(newBasename + ext);
 
       return this._fork(Object.assign({}, this.getParsed(), {
         segments: segments}), {
@@ -669,7 +675,7 @@ const /**
     }
 
     changeBasename(newBasename) {
-      const segments = this.getParentSegments().concat(newBasename);
+      const segments = this.getParentSegments(false).concat(newBasename);
       return this._fork(Object.assign({}, this.getParsed(), {
         segments: segments}), {
         parent: this.memoizedParent});
@@ -677,7 +683,8 @@ const /**
 
     getBasename() {
       const {segments: segments} = this;
-      return segments[segments.length - 1];
+      const offset = this.isExplicitFolder() ? 2 : 1;
+      return segments[segments.length - offset];
     }
 
     getExtensionlessBasename() {
@@ -702,8 +709,18 @@ const /**
       return parent;
     }
 
-    getParentSegments() {
-      return this.segments.slice(0, -1);
+    getParentSegments(explicit = true) {
+      // Should we throw an error?
+      if (this.isRoot()) {
+        return this.segments;
+      }
+
+      const segments = this.getSegments().slice(0, -1);
+      // Always make this an explicit folder
+      if (explicit && segments.length > 0 && segments[0] !== '') {
+        segments.push('');
+      }
+      return segments;
     }
 
     toExplicitRelative() {
@@ -748,6 +765,11 @@ const /**
     isRoot() {
       if (this.segments.length === 1) {
         return true;
+      }
+
+      if (this.segments.length === 2) {
+        // Explicit folder reference
+        return this.segments[1] === '';
       }
 
       if (this.segments.length === 3) {
@@ -807,6 +829,11 @@ const /**
       return !this.isURL() && (firstSeg === '.' || firstSeg === '..');
     }
 
+    isExplicitFolder() {
+      const {segments: segments} = this;
+      return segments[segments.length - 1] === '';
+    }
+
     getExtensions() {
       if (this.memoizedExtension === undefined) {
         const ext = ___R$$priv$project$rome$$romejs$path$index_ts$getExtension(this.getBasename());
@@ -822,7 +849,51 @@ const /**
     }
 
     getSegments() {
+      let {segments: segments} = this;
+
+      if (!this.isRoot()) {
+        if (this.isExplicitFolder()) {
+          segments = segments.slice(0, -1);
+        }
+
+        if (segments[0] === '.') {
+          segments = segments.slice(1);
+        }
+      }
+
+      return segments;
+    }
+
+    getRawSegments() {
       return this.segments;
+    }
+
+    getUnique() {
+      if (this.memoizedUnique !== undefined) {
+        return this.memoizedUnique;
+      }
+
+      let segments;
+
+      if (!this.isRoot()) {
+        if (this.isExplicitFolder()) {
+          segments = this.getSegments();
+
+          if (this.isExplicitRelative()) {
+            segments = segments.slice(1);
+          }
+        } else if (this.isExplicitRelative()) {
+          segments = this.getRawSegments().slice(1);
+        }
+      }
+
+      if (segments === undefined) {
+        return this._assert();
+      } else {
+        const path = this._fork(___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(segments), {});
+        this.memoizedUnique = path;
+        return path;
+      }
     } // Support some bad string coercion. Such as serialization in CLI flags.
 
     toString() {
@@ -914,6 +985,10 @@ const /**
       }
 
       const items = Array.isArray(raw) ? raw : [raw];
+
+      if (items.length === 0) {
+        return this._assert();
+      }
 
       let segments = this.getSegments();
 
@@ -1177,7 +1252,7 @@ const /**
   }
 
   function ___R$$priv$project$rome$$romejs$path$index_ts$normalizeSegments(segments, offset, absoluteSegments) {
-    const pathSegments = [];
+    const relativeSegments = [];
     for (let i = offset; i < segments.length; i++) {
       let seg = segments[i];
 
@@ -1187,23 +1262,32 @@ const /**
         continue;
       }
 
-      // Ignore empty segments, important scenarios have already been handled above
+      // Ignore empty segments
       if (seg === '') {
         continue;
       }
 
       // Remove the previous segment, as long as it's not also ..
       if (seg === '..' &&
-      pathSegments.length > 0 &&
-      pathSegments[pathSegments.length - 1] !== '..') {
-        pathSegments.pop();
+      relativeSegments.length > 0 &&
+      relativeSegments[relativeSegments.length - 1] !== '..') {
+        relativeSegments.pop();
         continue;
       }
 
-      pathSegments.push(seg);
+      relativeSegments.push(seg);
     }
 
-    return [...absoluteSegments, ...pathSegments];
+    const finalSegments = [...absoluteSegments, ...relativeSegments];
+
+    // Retain explicit folder
+    if (segments[segments.length - 1] === '' &&
+    finalSegments[finalSegments.length - 1] !== '' &&
+    relativeSegments.length !== 0) {
+      finalSegments.push('');
+    }
+
+    return finalSegments;
   }
 
   function ___R$$priv$project$rome$$romejs$path$index_ts$createUnknownFilePathFromSegments(parsed) {
@@ -1715,6 +1799,47 @@ function ___R$project$rome$$romejs$parser$core$index_ts$tryParseWithOptionalOffs
 
       return new klass(...args);
     };
+  }
+
+  function // Utility methods for dealing with nodes
+  ___R$project$rome$$romejs$parser$core$index_ts$extractSourceLocationRangeFromNodes(nodes) {
+    if (nodes.length === 0) {
+      return undefined;
+    }
+
+    let filename = undefined;
+    let start = undefined;
+    let end = undefined;
+
+    for (const node of nodes) {
+      const {loc: loc} = node;
+      if (loc === undefined) {
+        continue;
+      }
+
+      if (start === undefined || loc.start.index < start.index) {
+        start = loc.start;
+      }
+
+      if (end === undefined || loc.end.index > end.index) {
+        end = loc.end;
+      }
+
+      if (filename === undefined) {
+        filename = loc.filename;
+      } else if (filename !== loc.filename) {
+        throw new Error('Mixed filenames in node, expected ' + filename + ' but got ' + loc.filename);
+      }
+    }
+
+    if (start === undefined || end === undefined) {
+      return undefined;
+    }
+
+    return {
+      filename: filename,
+      start: start,
+      end: end};
   }
 
   // project-rome/@romejs/string-markup/parse.ts
@@ -5210,29 +5335,29 @@ const ___R$project$rome$$romejs$codec$source$map$base64_ts = {
  * Decode a single base 64 character code digit to an integer. Returns -1 on
  * failure.
  */___R$project$rome$$romejs$codec$source$map$base64_ts$decode(charCode) {
-    var bigA = 65; // 'A'
-    var bigZ = 90; // 'Z'
+    const uppercaseA = 65; // 'A'
+    const uppercaseZ = 90; // 'Z'
 
-    var littleA = 97; // 'a'
-    var littleZ = 122; // 'z'
+    const lowercaseA = 97; // 'a'
+    const lowercaseZ = 122; // 'z'
 
-    var zero = 48; // '0'
-    var nine = 57; // '9'
+    const zero = 48; // '0'
+    const nine = 57; // '9'
 
-    var plus = 43; // '+'
-    var slash = 47; // '/'
+    const plus = 43; // '+'
+    const slash = 47; // '/'
 
-    var littleOffset = 26;
-    var numberOffset = 52;
+    const lowercaseOffset = 26;
+    const numberOffset = 52;
 
     // 0 - 25: ABCDEFGHIJKLMNOPQRSTUVWXYZ
-    if (bigA <= charCode && charCode <= bigZ) {
-      return charCode - bigA;
+    if (uppercaseA <= charCode && charCode <= uppercaseZ) {
+      return charCode - uppercaseA;
     }
 
     // 26 - 51: abcdefghijklmnopqrstuvwxyz
-    if (littleA <= charCode && charCode <= littleZ) {
-      return charCode - littleA + littleOffset;
+    if (lowercaseA <= charCode && charCode <= lowercaseZ) {
+      return charCode - lowercaseA + lowercaseOffset;
     }
 
     // 52 - 61: 0123456789
@@ -14510,6 +14635,12 @@ const ___R$$priv$project$rome$$romejs$js$compiler$methods$reduce_ts$BAIL_EXIT = 
       node === undefined ? undefined : node.loc,
       diag);
     }
+
+    addNodesRangeDiagnostic(nodes, diag) {
+      return this.addLocDiagnostic(
+      ___R$project$rome$$romejs$parser$core$index_ts$extractSourceLocationRangeFromNodes(nodes),
+      diag);
+    }
   }
 
   // project-rome/@romejs/js-compiler/lib/Path.ts
@@ -14818,6 +14949,227 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$defaultExpo
       return node;
     }};
 
+  // project-rome/@romejs/js-compiler/transforms/lint/disallowVar.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$disallowVar_ts$default = {
+    name: 'disallowVar',
+    enter(path) {
+      const {context: context, node: declaration} = path;
+
+      if (declaration.type === 'VariableDeclaration' &&
+      declaration.kind === 'var') {
+        context.addNodeDiagnostic(declaration, {
+          category: 'lint/disallowVar',
+          message: 'Variable declarations using `var` are disallowed, use `let` or `const` instead.'});
+      }
+
+      return declaration;
+    }};
+
+  // project-rome/@romejs/js-compiler/transforms/lint/emptyBlocks.ts
+function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$emptyBlocks_ts$isEmpty(node) {
+    if (node.innerComments !== undefined && node.innerComments.length > 0) {
+      return false;
+    }
+
+    if (node.type === 'EmptyStatement') {
+      return true;
+    }
+
+    if (node.type === 'BlockStatement' && node.body.length === 0) {
+      return true;
+    }
+
+    return false;
+  }
+  const ___R$project$rome$$romejs$js$compiler$transforms$lint$emptyBlocks_ts$default = {
+    name: 'emptyBlocks',
+    enter(path) {
+      const {node: node, context: context} = path;
+
+      if (node.type === 'IfStatement') {
+        if (___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$emptyBlocks_ts$isEmpty(node.consequent)) {
+          context.addNodeDiagnostic(node.consequent, {
+            category: 'lint/emptyBlocks',
+            message: 'Empty block'});
+        }
+      }
+
+      return node;
+    }};
+
+  // project-rome/@romejs/js-compiler/transforms/lint/sparseArray.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$sparseArray_ts$default = {
+    name: 'sparseArray',
+    enter(path) {
+      const {node: node} = path;
+
+      if (node.type === 'ArrayExpression' && node.elements.includes(undefined)) {
+        path.context.addNodeDiagnostic(node, {
+          category: 'lint/sparseArray',
+          message: 'Your array contains an empty slot'});
+        return ___R$project$rome$$romejs$js$ast$expressions$ArrayExpression_ts$arrayExpression.quick(
+        node.elements.map(elem => elem === undefined ? ___R$project$rome$$romejs$js$ast$expressions$ReferenceIdentifier_ts$referenceIdentifier.create({name: 'undefined'}) : elem));
+      }
+
+      return node;
+    }};
+
+  // project-rome/@romejs/js-compiler/transforms/lint/noAsyncPromiseExecutor.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$noAsyncPromiseExecutor_ts$default = {
+    name: 'noAsyncPromiseExecutor',
+    enter(path) {
+      const {node: node, context: context} = path;
+
+      if (node.type === 'NewExpression' &&
+      node.callee.type === 'ReferenceIdentifier' &&
+      node.callee.name === 'Promise' &&
+      node.arguments.length > 0 &&
+      (node.arguments[0].type === 'ArrowFunctionExpression' ||
+      node.arguments[0].type === 'FunctionExpression') &&
+      node.arguments[0].head.async) {
+        context.addNodeDiagnostic(node.arguments[0], {
+          category: 'lint/noAsyncPromiseExecutor',
+          message: 'Promise executor functions should not be async.'});
+      }
+
+      return node;
+    }};
+
+  // project-rome/@romejs/js-compiler/transforms/lint/noCompareNegZero.ts
+const ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noCompareNegZero_ts$OPERATORS_TO_CHECK = ['>', '>=', '<', '<=', '==', '===', '!=', '!=='];
+
+  function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noCompareNegZero_ts$isNegZero(node) {
+    return node.type === 'UnaryExpression' &&
+    node.operator === '-' &&
+    node.argument.type === 'NumericLiteral' &&
+    node.argument.value === 0;
+  }
+  const ___R$project$rome$$romejs$js$compiler$transforms$lint$noCompareNegZero_ts$default = {
+    name: 'noCompareNegZero',
+    enter(path) {
+      const {node: node} = path;
+
+      if (node.type === 'BinaryExpression' &&
+      ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noCompareNegZero_ts$OPERATORS_TO_CHECK.includes(node.operator) &&
+      (___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noCompareNegZero_ts$isNegZero(node.left) || ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noCompareNegZero_ts$isNegZero(node.right))) {
+        path.context.addNodeDiagnostic(node, {
+          category: 'lint/noCompareNegZero',
+          message: 'Do not use the \'' + node.operator + '\' operator to compare against -0.'});
+      }
+
+      return node;
+    }};
+
+  // project-rome/@romejs/js-compiler/transforms/lint/noCondAssign.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$noCondAssign_ts$default = {
+    name: 'noCondAssign',
+    enter(path) {
+      const {node: node} = path;
+
+      if ((node.type === 'IfStatement' ||
+      node.type === 'ForStatement' ||
+      node.type === 'WhileStatement' ||
+      node.type === 'DoWhileStatement') &&
+      node.test &&
+      node.test.type === 'AssignmentExpression') {
+        path.context.addNodeDiagnostic(node, {
+          category: 'lint/noCondAssign',
+          message: 'Cannot assign variable in loop condition'});
+      }
+      return node;
+    }};
+
+  // project-rome/@romejs/js-compiler/transforms/lint/noDuplicateKeys.ts
+function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noDuplicateKeys_ts$extractPropertyKey(node) {
+    if ((node.type === 'ObjectMethod' || node.type === 'ObjectProperty') &&
+    node.key.type === 'StaticPropertyKey') {
+      const {value: value} = node.key;
+
+      if (value.type === 'PrivateName') {
+        return value.id.name;
+      }
+
+      if (value.type === 'Identifier') {
+        return value.name;
+      }
+
+      return String(value.value);
+    }
+
+    return undefined;
+  }
+  const ___R$project$rome$$romejs$js$compiler$transforms$lint$noDuplicateKeys_ts$default = {
+    name: 'noDuplicateKeys',
+    enter(path) {
+      const {node: node} = path;
+
+      if (node.type === 'ObjectExpression') {
+        const previousKeys = new Set();
+
+        for (const prop of node.properties) {
+          const key = ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noDuplicateKeys_ts$extractPropertyKey(prop);
+
+          if (key !== undefined) {
+            if (previousKeys.has(key)) {
+              path.context.addNodeDiagnostic(prop, {
+                category: 'lint/noDuplicateKeys',
+                message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Duplicate key <emphasis>${key}</emphasis>`});
+            }
+
+            previousKeys.add(key);
+          }
+        }
+      }
+
+      return node;
+    }};
+
+  // project-rome/@romejs/js-compiler/transforms/lint/noDupeArgs.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$noDupeArgs_ts$default = {
+    name: 'noDupeArgs',
+    enter(path) {
+      const {node: node, context: context} = path;
+
+      if (node.type === 'FunctionHead') {
+        const uniqueIdentifiers = new Set();
+
+        for (const param of node.params) {
+          for (const {name: name} of ___R$project$rome$$romejs$js$ast$utils$getBindingIdentifiers_ts$default(param)) {
+            if (uniqueIdentifiers.has(name)) {
+              context.addNodeDiagnostic(param, {
+                category: 'lint/noDupeArgs',
+                message: 'Duplicate argument <emphasis>' + name + '</emphasis> in function definition'});
+            }
+
+            uniqueIdentifiers.add(name);
+          }
+        }
+      }
+
+      return node;
+    }};
+
+  // project-rome/@romejs/js-compiler/transforms/lint/noLabelVar.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$noLabelVar_ts$default = {
+    name: 'noLabelVar',
+    enter(path) {
+      const {node: node, scope: scope} = path;
+
+      if (node.type === 'LabeledStatement') {
+        const name = node.label.name;
+        const binding = scope.getBinding(name);
+        const isDefined = binding !== undefined || scope.getRootScope().isGlobal(name);
+
+        if (isDefined) {
+          path.context.addNodeDiagnostic(node, {
+            category: 'lint/noLabelVar',
+            message: 'Labels should not be variable names'});
+        }
+      }
+
+      return node;
+    }};
+
   // project-rome/@romejs/js-compiler/transforms/lint/undeclaredVariables.ts
 const ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$undeclaredVariables_ts$NODE_VARIABLES = ['require', '__dirname', '__filename', 'module', 'exports', 'babelHelpers'];
 
@@ -14848,6 +15200,22 @@ const ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$undeclaredVari
         }
       }
 
+      return node;
+    }};
+
+  // project-rome/@romejs/js-compiler/transforms/lint/unsafeNegation.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$unsafeNegation_ts$default = {
+    name: 'unsafeNegation',
+    enter(path) {
+      const {node: node} = path;
+      if (node.type === 'BinaryExpression' &&
+      (node.operator === 'in' || node.operator === 'instanceof') &&
+      node.left.type === 'UnaryExpression' &&
+      node.left.operator === '!') {
+        path.context.addNodeDiagnostic(node, {
+          category: 'lint/unsafeNegation',
+          message: 'Unsafe usage of negation operator in left side of binary expression'});
+      }
       return node;
     }};
 
@@ -15051,32 +15419,62 @@ const ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$unusedVariable
       return node;
     }};
 
-  // project-rome/@romejs/js-compiler/transforms/lint/emptyBlocks.ts
-function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$emptyBlocks_ts$isEmpty(node) {
-    if (node.innerComments !== undefined && node.innerComments.length > 0) {
-      return false;
-    }
-
-    if (node.type === 'EmptyStatement') {
-      return true;
-    }
-
-    if (node.type === 'BlockStatement' && node.body.length === 0) {
-      return true;
-    }
-
-    return false;
-  }
-  const ___R$project$rome$$romejs$js$compiler$transforms$lint$emptyBlocks_ts$default = {
-    name: 'emptyBlocks',
+  // project-rome/@romejs/js-compiler/transforms/lint/noUnsafeFinally.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$noUnsafeFinally_ts$default = {
+    name: 'noUnsafeFinally',
     enter(path) {
       const {node: node, context: context} = path;
 
-      if (node.type === 'IfStatement') {
-        if (___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$emptyBlocks_ts$isEmpty(node.consequent)) {
-          context.addNodeDiagnostic(node.consequent, {
-            category: 'lint/emptyBlocks',
-            message: 'Empty block'});
+      if (node.type === 'TryStatement') {
+        const {finalizer: finalizer} = node;
+
+        if (finalizer && finalizer.type === 'BlockStatement') {
+          for (const statement of finalizer.body) {
+            if (statement.type === 'ThrowStatement' ||
+            statement.type === 'ContinueStatement' ||
+            statement.type === 'BreakStatement' ||
+            statement.type === 'ReturnStatement') {
+              context.addNodeDiagnostic(statement, {
+                category: 'lint/noUnsafeFinally',
+                message: 'Unsafe usage of ' + statement.type + '.'});
+            }
+          }
+        }
+      }
+
+      return node;
+    }};
+
+  // project-rome/@romejs/js-compiler/transforms/lint/noDeleteVars.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$noDeleteVars_ts$default = {
+    name: 'noDeleteVars',
+    enter(path) {
+      const {node: node} = path;
+
+      if (node.type === 'UnaryExpression' &&
+      node.operator === 'delete' &&
+      node.argument.type === 'ReferenceIdentifier') {
+        path.context.addNodeDiagnostic(node, {
+          category: 'lint/noDeleteVars',
+          message: 'Variables should not be deleted.'});
+      }
+
+      return node;
+    }};
+
+  // project-rome/@romejs/js-compiler/transforms/lint/noTemplateCurlyInString.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$noTemplateCurlyInString_ts$default = {
+    name: 'noTemplateCurlyInString',
+    enter(path) {
+      const {node: node, context: context} = path;
+
+      if (node.type === 'StringLiteral') {
+        const regex = /\$\{[^}]+\}/u;
+
+        if (regex.test(node.value)) {
+          context.addNodeDiagnostic(node, {
+            category: 'lint/noTemplateCurlyInString',
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Unexpected template string expression.`});
         }
       }
 
@@ -15084,7 +15482,7 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$emptyBlocks
     }};
 
   // project-rome/@romejs/js-compiler/transforms/lint/index.ts
-const ___R$project$rome$$romejs$js$compiler$transforms$lint$index_ts$lintTransforms = [___R$project$rome$$romejs$js$compiler$transforms$lint$undeclaredVariables_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$defaultExportSameBasename_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$unusedVariables_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$emptyBlocks_ts$default];
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$index_ts$lintTransforms = [___R$project$rome$$romejs$js$compiler$transforms$lint$defaultExportSameBasename_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$disallowVar_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$emptyBlocks_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$sparseArray_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$noCompareNegZero_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$unsafeNegation_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$noAsyncPromiseExecutor_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$noCondAssign_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$noDuplicateKeys_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$noDupeArgs_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$noLabelVar_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$undeclaredVariables_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$unusedVariables_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$noUnsafeFinally_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$noDeleteVars_ts$default, ___R$project$rome$$romejs$js$compiler$transforms$lint$noTemplateCurlyInString_ts$default];
 
   // project-rome/@romejs/js-generator/generators/temp/AmbiguousFlowTypeCastExpression.ts
 function ___R$project$rome$$romejs$js$generator$generators$temp$AmbiguousFlowTypeCastExpression_ts$default(generator, node) {
@@ -16350,12 +16748,11 @@ const ___R$project$rome$$romejs$js$parser$xhtmlEntities_ts = {
     ___R$project$rome$$romejs$js$parser$xhtmlEntities_ts$xhtmlEntityCharToName[___R$project$rome$$romejs$js$parser$xhtmlEntities_ts$xhtmlEntityNameToChar[key]] = key;
   }
 
-  function ___R$project$rome$$romejs$js$parser$xhtmlEntities_ts$escapeXHTMLEntities(value, whitelist) {
+  function ___R$project$rome$$romejs$js$parser$xhtmlEntities_ts$escapeXHTMLEntities(value, only) {
     let escaped = '';
     for (const char of value) {
       const entity = ___R$project$rome$$romejs$js$parser$xhtmlEntities_ts$xhtmlEntityCharToName[char];
-      if (entity !== undefined &&
-      (whitelist === undefined || whitelist.includes(char))) {
+      if (entity !== undefined && (only === undefined || only.includes(char))) {
         escaped += '&' + entity + ';';
       } else {
         escaped += char;
@@ -32764,10 +33161,14 @@ const ___R$$priv$project$rome$$romejs$js$generator$Buffer_ts$SPACES_RE = /^[ \t]
     }
 
     flush() {
-      let item;
-      while (item = this._queue.pop()) {
-        var ___R$;
-        ___R$ = this, ___R$._append.apply(___R$, [...item]);
+      while (true) {
+        const item = this._queue.pop();
+        if (item === undefined) {
+          break;
+        } else {
+          var ___R$;
+          ___R$ = this, ___R$._append.apply(___R$, [...item]);
+        }
       }
     }
 
@@ -33440,6 +33841,68 @@ class ___R$$priv$project$rome$$romejs$js$generator$index_ts$GeneratorPublic {
     return new ___R$$priv$project$rome$$romejs$js$generator$index_ts$GeneratorPublic(ast, opts, code);
   }
 
+  // project-rome/@romejs/js-compiler/suppressions.ts
+const ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$SUPPRESSION_START = 'rome-suppress';
+
+  function ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$extractFiltersFromComment(comment) {
+    const {loc: loc} = comment;
+    if (loc === undefined) {
+      return undefined;
+    }
+
+    const targetLine = ___R$project$rome$$romejs$ob1$index_ts$add(loc.end.line, 1);
+    const filters = [];
+
+    const lines = comment.value.split('\n');
+    const cleanLines = lines.map(line => {
+      // Trim line and remove leading star
+      return line.trim().replace(/\*[\s]/, '');
+    });
+
+    for (const line of cleanLines) {
+      if (!line.startsWith(___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$SUPPRESSION_START)) {
+        continue;
+      }
+
+      const categories = line.slice(___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$SUPPRESSION_START.length).trim().split(' ');
+      const cleanCategories = categories.map(category => category.trim());
+
+      for (const category of cleanCategories) {
+        if (category === '') {
+          continue;
+        }
+
+        filters.push({
+          filename: loc.filename,
+          category: category,
+          line: targetLine});
+      }
+    }
+
+    if (filters.length === 0) {
+      return undefined;
+    } else {
+      return filters;
+    }
+  }
+
+  function ___R$project$rome$$romejs$js$compiler$suppressions_ts$extractSuppressionsFromComments(comments) {
+    let filters = [];
+
+    for (const comment of comments) {
+      const commentFilters = ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$extractFiltersFromComment(comment);
+      if (commentFilters !== undefined) {
+        filters = filters.concat(commentFilters);
+      }
+    }
+
+    return filters;
+  }
+
+  function ___R$project$rome$$romejs$js$compiler$suppressions_ts$extractSuppressionsFromProgram(ast) {
+    return ___R$project$rome$$romejs$js$compiler$suppressions_ts$extractSuppressionsFromComments(ast.comments);
+  }
+
   // project-rome/@romejs/js-compiler/api/lint.ts
 const ___R$$priv$project$rome$$romejs$js$compiler$api$lint_ts$lintCache = new ___R$project$rome$$romejs$js$compiler$lib$Cache_ts$default();
 
@@ -33449,6 +33912,7 @@ const ___R$$priv$project$rome$$romejs$js$compiler$api$lint_ts$lintCache = new __
     if (!project.config.lint.enabled) {
       return {
         diagnostics: [],
+        filters: ___R$project$rome$$romejs$js$compiler$suppressions_ts$extractSuppressionsFromProgram(ast),
         src: src,
         ast: ast};
     }
@@ -33477,6 +33941,7 @@ const ___R$$priv$project$rome$$romejs$js$compiler$api$lint_ts$lintCache = new __
     }
 
     const result = {
+      filters: ___R$project$rome$$romejs$js$compiler$suppressions_ts$extractSuppressionsFromProgram(ast),
       ast: newAst,
       diagnostics: [...ast.diagnostics, ...context.diagnostics],
       src: formattedCode};
@@ -34046,11 +34511,11 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$transpil
     }};
 
   // project-rome/@romejs/js-compiler/transforms/compile/validation/optimizeImports.ts
-// Eliminate this blacklist. This contains React for the following reason:
+// TODO: Remove this. This contains React for the following reason:
   //   A user may write: import * as React from 'react';
   //   We will remove the namespace and have only the used specifiers
   //   But the JSX plugin inserts `React.createElement`. Oh no.
-  const ___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$validation$optimizeImports_ts$BLACKLIST = ['React', 'react'];
+  const ___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$validation$optimizeImports_ts$IGNORED_NAMES = ['React', 'react'];
 
   function ___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$validation$optimizeImports_ts$getName(node) {
     if (node.type !== 'MemberExpression' && node.type !== 'JSXMemberExpression') {
@@ -34083,7 +34548,7 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$transpil
       const wildcardImportNodeToLocal = new Map();
       for (const child of node.body) {
         if (child.type === 'ImportDeclaration' &&
-        !___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$validation$optimizeImports_ts$BLACKLIST.includes(child.source.value) &&
+        !___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$validation$optimizeImports_ts$IGNORED_NAMES.includes(child.source.value) &&
         child.specifiers !== undefined) {
           for (const specifier of child.specifiers) {
             if (specifier.type === 'ImportNamespaceSpecifier') {
@@ -40274,11 +40739,23 @@ const ___R$$priv$project$rome$$romejs$fs$index_ts$fs = require('fs');
   function // unlink
 
   ___R$project$rome$$romejs$fs$index_ts$unlink(path) {
-    return ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyVoid(path, (filename, callback) => ___R$$priv$project$rome$$romejs$fs$index_ts$fs.unlink(filename, callback));
+    return ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyVoid(path, (filename, callback) => ___R$$priv$project$rome$$romejs$fs$index_ts$fs.unlink(filename, err => {
+      if (err != null && err.code !== 'ENOENT') {
+        callback(err);
+      } else {
+        callback(null);
+      }
+    }));
   }
 
   function ___R$project$rome$$romejs$fs$index_ts$unlinkSync(path) {
-    ___R$$priv$project$rome$$romejs$fs$index_ts$fs.unlinkSync(path.join());
+    try {
+      ___R$$priv$project$rome$$romejs$fs$index_ts$fs.unlinkSync(path.join());
+    } catch (err) {
+      if (err.code !== 'ENOENT') {
+        throw err;
+      }
+    }
   }
 
   function // createDirectory
@@ -40404,6 +40881,7 @@ function ___R$project$rome$$romejs$core$common$fileHandlers_ts$getFileHandlerExt
       return {
         sourceText: sourceText,
         diagnostics: [],
+        filters: [],
         formatted: formatted};
     },
 
@@ -40490,6 +40968,7 @@ function ___R$project$rome$$romejs$core$common$fileHandlers_ts$getFileHandlerExt
         {
           formatted: res.getCode(),
           sourceText: sourceText,
+          filters: ___R$project$rome$$romejs$js$compiler$index_ts.extractSuppressionsFromProgram(ast),
           diagnostics: ast.diagnostics},
         generated);
       },
@@ -40533,6 +41012,7 @@ function ___R$project$rome$$romejs$core$common$fileHandlers_ts$getFileHandlerExt
 
         return worker.api.interceptAndAddGeneratedToDiagnostics(
         {
+          filters: res.filters,
           diagnostics: diagnostics,
           sourceText: sourceText,
           formatted: res.src},
@@ -41522,6 +42002,7 @@ const ___R$$priv$project$rome$$romejs$js$compiler$methods$transform_ts$transform
     const compiledAst = ___R$project$rome$$romejs$js$ast$core$Program_ts$program.assert(context.reduce(ast, visitors));
 
     const res = {
+      filters: ___R$project$rome$$romejs$js$compiler$suppressions_ts$extractSuppressionsFromProgram(ast),
       diagnostics: [...prevStageDiagnostics, ...context.diagnostics],
       cacheDependencies: [...prevStageCacheDeps, ...context.getCacheDependencies()],
       ast: compiledAst};
@@ -41553,8 +42034,11 @@ const ___R$$priv$project$rome$$romejs$js$compiler$api$compile_ts$compileCache = 
     }
 
     const {filename: filename} = ast;
-    const {ast: transformedAst, diagnostics: diagnostics, cacheDependencies: cacheDependencies} = await ___R$project$rome$$romejs$js$compiler$methods$transform_ts$default(
-    req);
+    const {
+      ast: transformedAst,
+      diagnostics: diagnostics,
+      filters: filters,
+      cacheDependencies: cacheDependencies} = await ___R$project$rome$$romejs$js$compiler$methods$transform_ts$default(req);
     const generator = ___R$project$rome$$romejs$js$generator$index_ts$generateJS(
     transformedAst,
     {
@@ -41569,7 +42053,8 @@ const ___R$$priv$project$rome$$romejs$js$compiler$api$compile_ts$compileCache = 
       mappings: generator.getMappings(),
       src: src,
       diagnostics: [...lintDiagnostics, ...diagnostics],
-      cacheDependencies: cacheDependencies};
+      cacheDependencies: cacheDependencies,
+      filters: filters};
     ___R$$priv$project$rome$$romejs$js$compiler$api$compile_ts$compileCache.set(query, res);
 
     return res;
@@ -42437,6 +42922,9 @@ const ___R$project$rome$$romejs$js$compiler$index_ts = {
     },
     get createHook() {
       return ___R$project$rome$$romejs$js$compiler$api$createHook_ts$default;
+    },
+    get extractSuppressionsFromProgram() {
+      return ___R$project$rome$$romejs$js$compiler$suppressions_ts$extractSuppressionsFromProgram;
     },
     get LintResult() {
       return ___R$project$rome$$romejs$js$compiler$api$lint_ts$LintResult;
@@ -44785,6 +45273,7 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
       this.propertyMetadata = opts.propertyMetadata;
       this.usedNames = new Set();
       this.forkCache = new Map();
+      this.forceDiagnosticTarget = opts.forceDiagnosticTarget;
 
       // See shouldDispatchUnexpected for explanation
       this.hasHandledUnexpected = false;
@@ -44835,6 +45324,10 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
     }
 
     getDiagnosticPointer(target = 'all') {
+      const {forceDiagnosticTarget: forceDiagnosticTarget} = this;
+      if (forceDiagnosticTarget !== undefined) {
+        target = forceDiagnosticTarget;
+      }
       return this.context.getDiagnosticPointer(this.keyPath, target);
     }
 
@@ -44876,6 +45369,12 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
     }
 
     getKey() {
+      return this.clone({
+        forceDiagnosticTarget: 'key',
+        value: this.getParentKey()});
+    }
+
+    getParentKey() {
       return this.keyPath[this.keyPath.length - 1];
     }
 
@@ -45086,7 +45585,7 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
 
       // Mutate the parent
       const parentObj = parent.asUnknownObject();
-      const key = this.getKey();
+      const key = this.getParentKey();
       parentObj[String(key)] = value;
       parent.setValue(parentObj);
 
@@ -45443,6 +45942,52 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
 
       this.unexpected('Expected a bigint');
       return BigInt('0');
+    } // PATHS
+
+    asURLFilePath() {
+      const path = this.asUnknownFilePath();
+      if (path.isURL()) {
+        return path.assertURL();
+      } else {
+        this.unexpected('Expected a URL');
+        return ___R$project$rome$$romejs$path$index_ts$createURLFilePath('unknown://').append(path);
+      }
+    }
+
+    asUnknownFilePath() {
+      return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(this.asString());
+    }
+
+    asAbsoluteFilePath() {
+      const path = this.asUnknownFilePath();
+      if (path.isAbsolute()) {
+        return path.assertAbsolute();
+      } else {
+        this.unexpected('Expected an absolute file path');
+        return ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath('/').append(path);
+      }
+    }
+
+    asRelativeFilePath() {
+      const path = this.asUnknownFilePath();
+      if (path.isRelative()) {
+        return path.assertRelative();
+      } else {
+        this.unexpected('Expected a relative file path');
+        return path.toExplicitRelative();
+      }
+    }
+
+    asExplicitRelativeFilePath() {
+      const path = this.asRelativeFilePath();
+
+      if (path.isExplicitRelative()) {
+        return path;
+      } else {
+        this.unexpected(
+        'Expected an explicit relative file path. This is one that starts with <emphasis>./</emphasis> or <emphasis>../</emphasis>');
+        return path.toExplicitRelative();
+      }
     } // NUMBER
 
     asNumberOrVoid(def) {
@@ -48125,6 +48670,9 @@ function ___R$project$rome$$romejs$cli$diagnostics$utils_ts$showInvisibles(str) 
         case ' ':
           ret += '\xb7'; // Middle Dot, \u00B7
           break;
+        case '\r':
+          ret += '\u240d\r';
+          break;
         case '\n':
           ret += '\u23ce\n'; // Return Symbol, \u23ce
           break;
@@ -49480,6 +50028,7 @@ function ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDia
       opts.readFile === undefined ? ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDiagnosticsFileLocal : opts.readFile;
       this.cwd = cwd === undefined ? ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(process.cwd()) : cwd;
       this.processor = new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default({
+        filters: opts.filters,
         origins: opts.origins});
 
       this.displayedCount = 0;
@@ -49682,6 +50231,11 @@ function ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDia
 
     print() {
       const filteredDiagnostics = this.filterDiagnostics();
+      if (filteredDiagnostics.length === 0) {
+        this.reporter.error(
+        'No diagnostics provided. They have likely all been filtered.');
+      }
+
       this.fetchFileSources(filteredDiagnostics);
       this.displayDiagnostics(filteredDiagnostics);
     }
@@ -49949,7 +50503,7 @@ const ___R$project$rome$$romejs$diagnostics$errors_ts = {
     createSingleDiagnosticError: ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError,
     getDiagnosticsFromError: ___R$project$rome$$romejs$diagnostics$errors_ts$getDiagnosticsFromError};
   class ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError extends Error {
-    constructor(message, diagnostics) {
+    constructor(message, diagnostics, filters = []) {
       if (diagnostics.length === 0) {
         throw new Error('No diagnostics');
       }
@@ -49963,17 +50517,21 @@ const ___R$project$rome$$romejs$diagnostics$errors_ts = {
 
       super(___R$project$rome$$romejs$string$markup$escape_ts$escapeMarkup(message));
       this.diagnostics = diagnostics;
+      this.filters = filters;
       this.name = 'DiagnosticsError';
     }
   }
 
-  function ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError(diag) {
-    return new ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError(diag.message, [diag]);
+  function ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError(diag, filters) {
+    return new ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError(diag.message, [diag], filters);
   }
 
   function ___R$project$rome$$romejs$diagnostics$errors_ts$getDiagnosticsFromError(err) {
     if (err instanceof ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError) {
-      return err.diagnostics;
+      const processor = new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default({
+        filters: err.filters});
+      processor.addDiagnostics(err.diagnostics);
+      return processor.getPartialDiagnostics();
     }
 
     return undefined;
@@ -50327,7 +50885,7 @@ const ___R$$priv$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$DEFAUL
   class ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default {
     constructor(options) {
       this.diagnostics = [];
-      this.filters = [];
+      this.filters = options.filters === undefined ? [] : options.filters;
       this.options = options;
       this.includedKeys = new Set();
       this.unique =
@@ -50358,33 +50916,39 @@ const ___R$$priv$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$DEFAUL
       return this.diagnostics.length > 0;
     }
 
-    addFilter(diag) {
-      this.filters.push(diag);
+    addFilters(filters) {
+      this.filters = this.filters.concat(filters);
+    }
+
+    addFilter(filter) {
+      this.filters.push(filter);
     }
 
     doesMatchFilter(diag) {
       for (const filter of this.filters) {
-        // message
         if (filter.message !== undefined && filter.message !== diag.message) {
           continue;
         }
 
-        // filename
         if (filter.filename !== undefined && filter.filename !== diag.filename) {
           continue;
         }
 
-        // category
         if (filter.category !== undefined && filter.category !== diag.category) {
           continue;
         }
 
-        // start
         if (filter.start !== undefined && diag.start !== undefined) {
           if (filter.start.line !== diag.start.line ||
           filter.start.column !== diag.start.column) {
             continue;
           }
+        }
+
+        if (filter.line !== undefined &&
+        diag.start !== undefined &&
+        diag.start.line !== filter.line) {
+          continue;
         }
 
         if (filter.test !== undefined && !filter.test(diag)) {
@@ -50651,7 +51215,7 @@ const ___R$$priv$project$rome$$romejs$core$common$utils$executeMain_ts$internalM
       setImmediate: setImmediate,
       setInterval: setInterval,
       setTimeout: setTimeout,
-      require: ___R$$priv$project$rome$$romejs$core$common$utils$executeMain_ts$internalModule.createRequireFromPath(filename),
+      require: ___R$$priv$project$rome$$romejs$core$common$utils$executeMain_ts$internalModule.createRequire ? ___R$$priv$project$rome$$romejs$core$common$utils$executeMain_ts$internalModule.createRequire(filename) : ___R$$priv$project$rome$$romejs$core$common$utils$executeMain_ts$internalModule.createRequireFromPath(filename),
       console: console,
       __dirname: path.getParent().join(),
       __filename: filename});
@@ -53349,6 +53913,8 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(res
       }
     }
 
+    // TODO check if this would have been successful if not for exports access control
+
     const source = querySource.source === undefined ? query.source.join() : querySource.source;
     let message = '';
 
@@ -53555,13 +54121,70 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
     }
   }
 
-  function ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$getPreferredMainKey(manifest) {
-    if (manifest['jsnext:main'] !== undefined) {
-      return {key: 'jsnext:main', value: manifest['jsnext:main']};
+  function ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$attachExportAliasIfUnresolved(res, alias) {
+    if (res.type === 'FOUND') {
+      return res;
+    }
+
+    const pointer = alias.key.getDiagnosticPointer('value');
+
+    return Object.assign({}, res, {
+      source: pointer === undefined ? undefined : {
+        pointer: pointer,
+        source: alias.value.join()}});
+  }
+
+  function ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$getExportsAlias({
+    manifest: manifest,
+    relative: relative,
+    platform: platform}) {
+    if (typeof manifest.exports === 'boolean') {
+      return;
+    }
+
+    if (platform === undefined) {
+      return;
+    }
+
+    if (!relative.isRelative()) {
+      return;
+    }
+
+    const aliases = manifest.exports.get(relative.assertRelative());
+    if (aliases === undefined) {
+      return;
+    }
+
+    const alias = aliases.get(platform);
+    if (alias !== undefined) {
+      return {
+        key: alias.consumer,
+        value: alias.relative};
+    }
+
+    const def = aliases.get('default');
+    if (def !== undefined) {
+      return {
+        key: def.consumer,
+        value: def.relative};
+    }
+
+    // TODO check for folder aliases
+  }
+
+  function ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$getPreferredMainKey(consumer, manifest, platform) {
+    const alias = ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$getExportsAlias({
+      manifest: manifest,
+      relative: ___R$project$rome$$romejs$path$index_ts$createRelativeFilePath('.'),
+      platform: platform});
+    if (alias !== undefined) {
+      return alias;
     }
 
     if (manifest.main !== undefined) {
-      return {key: 'main', value: manifest.main};
+      return {
+        key: consumer.get('main'),
+        value: ___R$project$rome$$romejs$path$index_ts$createRelativeFilePath(manifest.main)};
     }
   }
 
@@ -53826,22 +54449,16 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
             return this.finishResolverQueryResponse(resolvedOrigin, types);
           }
 
-          const main = ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$getPreferredMainKey(manifestDef.manifest);
+          const main = ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$getPreferredMainKey(
+          manifestDef.consumer,
+          manifestDef.manifest,
+          query.platform);
           if (main !== undefined) {
             const resolved = this.resolvePath(Object.assign({}, query, {
               origin: resolvedOrigin,
-              source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(main.value)}), true, ['package']);
+              source: main.value}), true, ['package']);
 
-            if (resolved.type === 'FOUND') {
-              return resolved;
-            } else {
-              const pointer = manifestDef.consumer.get(main.key).getDiagnosticPointer('value');
-
-              return Object.assign({}, resolved, {
-                source: pointer === undefined ? undefined : {
-                  pointer: pointer,
-                  source: main.value}});
-            }
+            return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$attachExportAliasIfUnresolved(resolved, main);
           }
         }
 
@@ -53876,20 +54493,49 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
       for (const project of projects) {
         const pkg = project.packages.get(moduleName);
         if (pkg !== undefined) {
-          return pkg.folder;
+          return pkg;
         }
       }
     }
 
     resolvePackage(query, moduleName, moduleNameParts) {
-      const packageDir = this.resolvePackageFolder(query, moduleName);
+      const manifestDef = this.resolvePackageFolder(query, moduleName);
+      return this.resolveManifest(query, manifestDef, moduleNameParts);
+    }
 
-      if (packageDir === undefined) {
+    resolveManifest(query, manifestDef, moduleNameParts) {
+      if (manifestDef === undefined) {
         return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
-      } else {
-        return this.resolvePath(Object.assign({}, query, {
-          source: packageDir.append(moduleNameParts)}), true, ['package']);
       }
+
+      if (moduleNameParts.length > 0) {
+        // Submodules of this package are private
+        if (manifestDef.manifest.exports === false) {
+          return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
+        }
+
+        // Check if we're allowed to touch this submodule
+        if (manifestDef.manifest.exports !== true) {
+          const alias = ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$getExportsAlias({
+            manifest: manifestDef.manifest,
+            relative: ___R$project$rome$$romejs$path$index_ts$createFilePathFromSegments(moduleNameParts),
+            platform: query.platform});
+
+          if (alias === undefined) {
+            // No submodule found
+            return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$QUERY_RESPONSE_MISSING;
+          }
+
+          // Alias found!
+          const resolved = this.resolvePath(Object.assign({}, query, {
+            source: manifestDef.folder.append(alias.value)}), true, ['package']);
+          return ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$attachExportAliasIfUnresolved(resolved, alias);
+        }
+      }
+
+      // All exports are enabled or we are importing the root
+      return this.resolvePath(Object.assign({}, query, {
+        source: manifestDef.folder.append(moduleNameParts)}), true, ['package']);
     }
 
     resolveMock(query, project, parentDirectories) {
@@ -54002,12 +54648,11 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
 
       // Check all parent directories for node_modules
       for (const dir of parentDirectories) {
-        // Check for node_modules/*
-        const nodeModulesLoc = dir.append([___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$NODE_MODULES, source.assertRelative()]);
-        const nodeModulesResolved = this.resolvePath(Object.assign({}, query, {
-          source: nodeModulesLoc}), true, ['package']);
-        if (___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$shouldReturnQueryResponse(nodeModulesResolved)) {
-          return nodeModulesResolved;
+        const modulePath = dir.append(___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$NODE_MODULES).append(moduleName);
+        const manifestDef = this.master.memoryFs.getManifestDefinition(
+        modulePath);
+        if (manifestDef !== undefined) {
+          return this.resolveManifest(query, manifestDef, moduleNameParts);
         }
       }
 
@@ -58140,16 +58785,52 @@ function ___R$project$rome$$romejs$codec$js$manifest$dependencies_ts$stringifyDe
 
   const ___R$$priv$project$rome$$romejs$codec$js$manifest$dependencies_ts$NPM_PREFIX = 'npm:';
 
-  function ___R$$priv$project$rome$$romejs$codec$js$manifest$dependencies_ts$parseNpm(pattern, consumer) {
+  function ___R$$priv$project$rome$$romejs$codec$js$manifest$dependencies_ts$parseNpm(pattern, consumer, loose) {
     // Prune prefix
     let offset = ___R$$priv$project$rome$$romejs$codec$js$manifest$dependencies_ts$NPM_PREFIX.length;
     pattern = pattern.slice(___R$$priv$project$rome$$romejs$codec$js$manifest$dependencies_ts$NPM_PREFIX.length);
 
+    if (pattern === '') {
+      consumer.unexpected('Missing rest of pattern');
+      return {
+        type: 'npm',
+        name: 'unknown',
+        range: undefined};
+    }
+
     // Split and verify count
-    const [name, rangeRaw, ...parts] = pattern.split('@');
+    const parts = pattern.split('@');
+    let nameRaw = '';
+    let rangeRaw;
+
+    // Org signifier
+    if (parts[0] === '') {
+      nameRaw += '@';
+      parts.shift();
+    }
+
+    // Name - We know there'll be at least two due to the empty string conditional
+    nameRaw = String(parts.shift());
+
+    // Range
+    rangeRaw = parts.shift();
+
     if (parts.length > 0) {
       consumer.unexpected('Too many @ signs');
     }
+
+    const name = ___R$project$rome$$romejs$codec$js$manifest$name_ts$normalizeName({
+      name: nameRaw,
+      loose: loose,
+      unexpected({message: message, at: at, start: start, end: end, advice: advice}) {
+        consumer.unexpected(message, {
+          advice: advice,
+          at: at,
+          loc: start === undefined ? undefined : consumer.getLocationRange(
+          ___R$project$rome$$romejs$ob1$index_ts$add(start, offset),
+          end === undefined ? undefined : ___R$project$rome$$romejs$ob1$index_ts$add(end, offset),
+          'inner-value')});
+      }});
 
     // Increase offset passed name
     offset += name.length;
@@ -58159,7 +58840,7 @@ function ___R$project$rome$$romejs$codec$js$manifest$dependencies_ts$stringifyDe
     if (rangeRaw !== undefined) {
       range = ___R$project$rome$$romejs$parser$core$index_ts$tryParseWithOptionalOffsetPosition(
       {
-        loose: false,
+        loose: loose,
         path: consumer.path,
         input: rangeRaw},
       {
@@ -58211,7 +58892,7 @@ function ___R$project$rome$$romejs$codec$js$manifest$dependencies_ts$stringifyDe
     }
 
     if (pattern.startsWith(___R$$priv$project$rome$$romejs$codec$js$manifest$dependencies_ts$NPM_PREFIX)) {
-      return ___R$$priv$project$rome$$romejs$codec$js$manifest$dependencies_ts$parseNpm(pattern, consumer);
+      return ___R$$priv$project$rome$$romejs$codec$js$manifest$dependencies_ts$parseNpm(pattern, consumer, loose);
     }
 
     if (pattern.startsWith(___R$$priv$project$rome$$romejs$codec$js$manifest$dependencies_ts$LINK_PREFIX)) {
@@ -58280,10 +58961,8 @@ const ___R$project$rome$$romejs$codec$js$manifest$convert_ts = {
       repository: manifest.repository,
       bugs: manifest.bugs,
 
-      browser: manifest.browser,
       main: manifest.main,
-      'rome:main': manifest['rome:main'],
-      'jsnext:main': manifest['jsnext:main'],
+      exports: ___R$$priv$project$rome$$romejs$codec$js$manifest$convert_ts$exportsToObject(manifest.exports),
 
       author: manifest.author,
       contributors: manifest.contributors,
@@ -58310,6 +58989,40 @@ const ___R$project$rome$$romejs$codec$js$manifest$convert_ts = {
       // Common misspelling. If this existed then it was turned into bundledDependencies
       bundleDependencies: undefined,
       bundledDependencies: ___R$$priv$project$rome$$romejs$codec$js$manifest$convert_ts$maybeArray(manifest.bundledDependencies)});
+  }
+
+  function ___R$$priv$project$rome$$romejs$codec$js$manifest$convert_ts$exportsToObject(exports) {
+    if (exports === false) {
+      return false;
+    }
+
+    if (exports === true) {
+      return;
+    }
+
+    if (exports.size === 0) {
+      return {};
+    }
+
+    const obj = {};
+
+    for (const [key, entries] of exports) {
+      if (entries.size === 1) {
+        const def = entries.get('default');
+        if (def !== undefined) {
+          obj[key.join()] = def.relative.join();
+          continue;
+        }
+      }
+
+      const entriesObj = {};
+      for (const [type, alias] of entries) {
+        entriesObj[type] = alias.relative.join();
+      }
+      obj[key.join()] = entriesObj;
+    }
+
+    return obj;
   }
 
   function ___R$$priv$project$rome$$romejs$codec$js$manifest$convert_ts$maybeArray(items) {
@@ -58567,7 +59280,7 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
       }
 
       const person = {
-        name: consumer.get('name').asString(),
+        name: consumer.get('name').asString(loose ? '' : undefined),
         email: consumer.get('email').asStringOrVoid(),
         twitter: consumer.get('twitter').asStringOrVoid(),
         github: github,
@@ -58661,6 +59374,62 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
       }
       return repo;
     }
+  }
+
+  function ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$normalizeExports(consumer) {
+    if (typeof consumer.asUnknown() === 'boolean') {
+      return consumer.asBoolean();
+    }
+
+    if (!consumer.exists()) {
+      return true;
+    }
+
+    const exports = new ___R$project$rome$$romejs$path$collections_ts$RelativeFilePathMap();
+
+    const dotConditions = new Map();
+
+    for (const [relative, value] of consumer.asMap()) {
+      // If it's not a relative path then it's a platform for the root
+      if (relative[0] !== '.') {
+        if (exports.size > 0) {
+          value.unexpected(
+          'Cannot mix a root conditional export with relative paths');
+        }
+
+        dotConditions.set(relative, {
+          consumer: value,
+          relative: value.asExplicitRelativeFilePath()});
+        continue;
+      }
+
+      if (dotConditions.size > 0) {
+        value.unexpected(
+        'Cannot mix a root conditional export with relative paths');
+      }
+
+      const conditions = new Map();
+
+      if (typeof value.asUnknown() === 'string') {
+        conditions.set('default', {
+          consumer: value,
+          relative: value.asExplicitRelativeFilePath()});
+      } else {
+        for (const [type, relativeAlias] of value.asMap()) {
+          conditions.set(type, {
+            consumer: relativeAlias,
+            relative: relativeAlias.asExplicitRelativeFilePath()});
+        }
+      }
+
+      if (dotConditions.size > 0) {
+        exports.set(___R$project$rome$$romejs$path$index_ts$createRelativeFilePath('.'), dotConditions);
+      }
+
+      exports.set(value.getKey().asExplicitRelativeFilePath(), conditions);
+    }
+
+    return exports;
   }
 
   function ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$normalizeBugs(consumer, loose) {
@@ -58788,11 +59557,8 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
         cpu: ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$normalizeStringArray(consumer.get('cpu'), loose),
         os: ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$normalizeStringArray(consumer.get('os'), loose),
 
-        // Entry fields
-        browser: undefined, // normalizeString(consumer, 'browser'),
         main: ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$normalizeString(consumer, 'main'),
-        'rome:main': ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$normalizeString(consumer, 'rome:main'),
-        'jsnext:main': ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$normalizeString(consumer, 'jsnext:main'),
+        exports: ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$normalizeExports(consumer.get('exports')),
 
         // Dependency fields
         dependencies: ___R$project$rome$$romejs$codec$js$manifest$dependencies_ts$normalizeDependencies(consumer, 'dependencies', loose),
@@ -61603,6 +62369,10 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
         this.diagnostics.addDiagnostics(res.diagnostics);
       }
 
+      if (res.filters.length > 0) {
+        this.diagnostics.addFilters(res.filters);
+      }
+
       this.compiles.set(source, res);
       return res;
     }
@@ -62455,7 +63225,7 @@ const ___R$$priv$project$rome$$romejs$codec$websocket$index_ts$crypto = require(
           'Sec-WebSocket-Version': '13'}});
 
       req.on('response', res => {
-        if (res.statusCode >= 400) {
+        if (res.statusCode && res.statusCode >= 400) {
           process.stderr.write('Unexpected HTTP code: ' + res.statusCode + '\n');
           res.pipe(process.stderr);
         } else {
@@ -62465,7 +63235,6 @@ const ___R$$priv$project$rome$$romejs$codec$websocket$index_ts$crypto = require(
 
       req.on('upgrade', (res, socket, head) => {
         if (res.headers['sec-websocket-accept'] !== digest) {
-          res.end();
           socket.end();
           reject(
           new Error('Digest mismatch ' + digest + ' !== ' + res.headers['sec-websocket-accept']));
@@ -63131,10 +63900,10 @@ const ___R$project$rome$$romejs$core$master$commands$compile_ts$default = ___R$p
         res = await req.requestWorkerCompile(resolved.path, 'compile');
       }
 
-      const {code: code, diagnostics: diagnostics} = res;
+      const {code: code, diagnostics: diagnostics, filters: filters} = res;
 
       if (diagnostics.length > 0) {
-        throw new ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError('Compile diagnostics', diagnostics);
+        throw new ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError('Compile diagnostics', diagnostics, filters);
       }
 
       reporter.writeAll(code);
@@ -63365,10 +64134,11 @@ class ___R$project$rome$$romejs$core$master$linter$CompilerLinter_ts$default {
           }
 
           // TODO support `fix` flag
-          const fileDiagnostics = await this.request.requestWorkerLint(
+          const {diagnostics: diagnostics, filters: filters} = await this.request.requestWorkerLint(
           path,
           false);
-          printer.addDiagnostics(fileDiagnostics);
+          printer.addDiagnostics(diagnostics);
+          printer.processor.addFilters(filters);
 
           spinner.tick();
         }
@@ -65885,7 +66655,9 @@ class ___R$project$rome$$romejs$core$worker$WorkerAPI_ts$default {
 
       const {lint: lint} = handler;
       if (lint === undefined && handler.format === undefined) {
-        return [];
+        return {
+          diagnostics: [],
+          filters: []};
       }
 
       // Catch any diagnostics, in the case of syntax errors etc
@@ -65907,19 +66679,24 @@ class ___R$project$rome$$romejs$core$worker$WorkerAPI_ts$default {
 
       // These are fatal diagnostics
       if (res.diagnostics !== undefined) {
-        return res.diagnostics;
+        return {
+          filters: [],
+          diagnostics: res.diagnostics};
       }
 
       // `format` could have return undefined
       if (res.value === undefined) {
-        return [];
+        return {
+          diagnostics: [],
+          filters: []};
       }
 
       // These are normal diagnostics returned from the linter
       const {
         formatted: formatted,
         sourceText: raw,
-        diagnostics: diagnostics} = res.value;
+        diagnostics: diagnostics,
+        filters: filters} = res.value;
 
       // If the file has pending fixes
       const needsFix = formatted !== raw;
@@ -65935,17 +66712,21 @@ class ___R$project$rome$$romejs$core$worker$WorkerAPI_ts$default {
 
       // If there's no pending fix then no need for diagnostics
       if (!needsFix) {
-        return diagnostics;
+        return {
+          diagnostics: diagnostics,
+          filters: filters};
       }
 
       // Add pending autofix diagnostic
-      return [...diagnostics, {
-        category: 'lint/pendingFixes',
-        filename: ref.uid,
-        message: 'Pending fixes',
-        advice: [{
-          type: 'diff',
-          diff: ___R$project$rome$$romejs$string$diff$index_ts$default(raw, formatted)}]}];
+      return {
+        filters: filters,
+        diagnostics: [...diagnostics, {
+          category: 'lint/pendingFixes',
+          filename: ref.uid,
+          message: 'Pending fixes',
+          advice: [{
+            type: 'diff',
+            diff: ___R$project$rome$$romejs$string$diff$index_ts$default(raw, formatted)}]}]};
     }
   }
 
@@ -66269,7 +67050,11 @@ class ___R$project$rome$$romejs$core$worker$Worker_ts$default {
   }
 
   // project-rome/@romejs/core/test-worker/TestAPI.ts
-function ___R$$priv$project$rome$$romejs$core$test$worker$TestAPI_ts$formatExpectedError(expected) {
+function ___R$$priv$project$rome$$romejs$core$test$worker$TestAPI_ts$removeCRLF(str) {
+    return str.replace(/\r/g, '');
+  }
+
+  function ___R$$priv$project$rome$$romejs$core$test$worker$TestAPI_ts$formatExpectedError(expected) {
     if (typeof expected === 'string') {
       return JSON.stringify(expected);
     }
@@ -66375,8 +67160,32 @@ function ___R$$priv$project$rome$$romejs$core$test$worker$TestAPI_ts$formatExpec
             message: 'Try using t.' + visualMethod + ' if you wanted a visual match'});
         }
       } else {
-        // If there was no truncation then display the full code of both values
+        if (expectedFormat.trim() === receivedFormat.trim()) {
+          advice.push({
+            type: 'log',
+            category: 'info',
+            message: 'Only difference is leading and trailing whitespace'});
+        }
+
+        const expectedFormatNoCRLF = ___R$$priv$project$rome$$romejs$core$test$worker$TestAPI_ts$removeCRLF(expectedFormat);
+        const receivedFormatNoCRLF = ___R$$priv$project$rome$$romejs$core$test$worker$TestAPI_ts$removeCRLF(receivedFormat);
+        if (expectedFormat === receivedFormatNoCRLF) {
+          advice.push({
+            type: 'log',
+            category: 'info',
+            message: 'Identical except the received uses CRLF newlines, while the expected does not'});
+        }
+        if (receivedFormat === expectedFormatNoCRLF) {
+          advice.push({
+            type: 'log',
+            category: 'info',
+            message: 'Identical except the expected uses CRLF newlines, while the received does not'});
+        }
+
         if (!hasAllTruncated) {
+          // TODO detect newlines
+
+          // If there was no truncation then display the full code of both values
           advice.push({
             type: 'log',
             category: 'info',
