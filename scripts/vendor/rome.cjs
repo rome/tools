@@ -1623,7 +1623,6 @@ function ___R$project$rome$$romejs$parser$core$index_ts$tryParseWithOptionalOffs
 
     getLoc(node) {
       if (node === undefined || node.loc === undefined) {
-        console.log(node);
         throw new Error('Tried to fetch node loc start but none found');
       } else {
         return node.loc;
@@ -59642,6 +59641,11 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
         folderPath,
         {recursive: true, persistent: false},
         (eventType, filename) => {
+          if (filename === null) {
+            // TODO not sure how we want to handle this?
+            return;
+          }
+
           const path = folderPath.resolve(filename);
 
           memoryFs.stat(path).then(newStats => {
@@ -63787,11 +63791,15 @@ class ___R$project$rome$$romejs$core$master$testing$TestRunner_ts$default {
         const str = chunk.toString();
 
         if (str.startsWith('Debugger listening on ws://')) {
-          return undefined;
+          return;
+        }
+
+        if (str.startsWith('For help, see: https://nodejs.org/en/docs/inspector')) {
+          return;
         }
 
         if (str.startsWith('Debugger attached')) {
-          return undefined;
+          return;
         }
 
         process.stderr.write(chunk);
@@ -63888,9 +63896,7 @@ class ___R$project$rome$$romejs$core$master$testing$TestRunner_ts$default {
         ___R$project$rome$$romejs$ob1$index_ts$coerce0to1(loc.get('lineNumber').asZeroIndexedNumber()),
         loc.get('columnNumber').asZeroIndexedNumber());
 
-        console.log(callFrame.asUnknown());
-
-        const name = callFrame.get('scopeChain').asArray()[0].get('name').asString().split('$').pop();
+        const name = callFrame.get('scopeChain').asArray()[0].get('name').asString('').split('$').pop();
 
         frames.push({
           resolvedLocation: resolved.found,

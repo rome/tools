@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 38
       index: 38
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 38
           index: 38
@@ -38,7 +38,7 @@ Program {
       }
       expression: MemberExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 38
             index: 38
@@ -53,7 +53,7 @@ Program {
         object: ReferenceIdentifier {
           name: 'universe'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 8
               index: 8
@@ -69,7 +69,7 @@ Program {
         property: ComputedMemberProperty {
           value: SequenceExpression {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 37
                 index: 37
@@ -85,7 +85,7 @@ Program {
               ReferenceIdentifier {
                 name: 'galaxyName'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 19
                     index: 19
@@ -101,7 +101,7 @@ Program {
               ReferenceIdentifier {
                 name: 'otherUselessName'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 37
                     index: 37
@@ -117,7 +117,7 @@ Program {
             ]
           }
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 38
               index: 38

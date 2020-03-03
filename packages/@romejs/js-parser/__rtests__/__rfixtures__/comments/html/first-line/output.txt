@@ -2,14 +2,14 @@ Program {
   body: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 17
@@ -25,7 +25,7 @@ Program {
     CommentBlock {
       value: ''
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 4
           index: 4
@@ -41,7 +41,7 @@ Program {
     CommentLine {
       value: ' comment'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 16
           index: 16

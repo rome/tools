@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 33
@@ -26,7 +26,7 @@ Program {
       id: BindingIdentifier {
         name: 'N'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 11
             index: 11
@@ -40,7 +40,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 1
           index: 32
@@ -54,7 +54,7 @@ Program {
       }
       body: TSModuleBlock {
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 1
             index: 32
@@ -69,7 +69,7 @@ Program {
         body: Array [
           VariableDeclarationStatement {
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 16
                 index: 30
@@ -84,7 +84,7 @@ Program {
             declaration: VariableDeclaration {
               kind: 'const'
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 16
                   index: 30
@@ -101,7 +101,7 @@ Program {
                   id: BindingIdentifier {
                     name: 'x'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.ts'
                       end: Object {
                         column: 11
                         index: 25
@@ -115,7 +115,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 15
                       index: 29
@@ -130,7 +130,7 @@ Program {
                   init: NumericLiteral {
                     value: 0
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.ts'
                       end: Object {
                         column: 15
                         index: 29

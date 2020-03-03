@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 62
       index: 62
@@ -29,7 +29,7 @@ Program {
       id: StringLiteral {
         value: 'foo'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 20
             index: 20
@@ -44,7 +44,7 @@ Program {
       }
       kind: 'commonjs'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 62
           index: 62
@@ -58,7 +58,7 @@ Program {
       }
       body: BlockStatement {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 62
             index: 62
@@ -73,7 +73,7 @@ Program {
         body: Array [
           FlowDeclareExportDefault {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 60
                 index: 60
@@ -87,7 +87,7 @@ Program {
             }
             declaration: UnionTypeAnnotation {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 59
                   index: 59
@@ -102,7 +102,7 @@ Program {
               types: Array [
                 NumberKeywordTypeAnnotation {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 52
                       index: 52
@@ -117,7 +117,7 @@ Program {
                 }
                 StringKeywordTypeAnnotation {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 59
                       index: 59

@@ -215,6 +215,8 @@ export default function resolverSuggest(
     }
   }
 
+  // TODO check if this would have been successful if not for exports access control
+
   const source =
     querySource.source === undefined ? query.source.join() : querySource.source;
   let message = '';

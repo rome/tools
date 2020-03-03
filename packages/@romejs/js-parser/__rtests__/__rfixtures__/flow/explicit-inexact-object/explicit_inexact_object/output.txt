@@ -1,7 +1,7 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -11,7 +11,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 85
@@ -27,7 +27,7 @@ Program {
     CommentLine {
       value: '@flow'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 7
           index: 7
@@ -46,7 +46,7 @@ Program {
       id: BindingIdentifier {
         name: 'T'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 6
             index: 14
@@ -61,7 +61,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 15
           index: 23
@@ -77,7 +77,7 @@ Program {
         CommentLine {
           value: '@flow'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 7
               index: 7
@@ -96,7 +96,7 @@ Program {
         inexact: true
         properties: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 14
             index: 22
@@ -114,7 +114,7 @@ Program {
       id: BindingIdentifier {
         name: 'U'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 6
             index: 30
@@ -129,7 +129,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 26
           index: 50
@@ -145,7 +145,7 @@ Program {
         exact: false
         inexact: true
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 25
             index: 49
@@ -163,7 +163,7 @@ Program {
             key: Identifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 11
                   index: 35
@@ -178,7 +178,7 @@ Program {
             }
             value: NumberKeywordTypeAnnotation {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 19
                   index: 43
@@ -196,7 +196,7 @@ Program {
             static: false
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 19
                 index: 43
@@ -216,7 +216,7 @@ Program {
       id: BindingIdentifier {
         name: 'V'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 6
             index: 57
@@ -231,7 +231,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 33
           index: 84
@@ -247,7 +247,7 @@ Program {
         exact: false
         inexact: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 32
             index: 83
@@ -265,7 +265,7 @@ Program {
             key: Identifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 11
                   index: 62
@@ -280,7 +280,7 @@ Program {
             }
             value: NumberKeywordTypeAnnotation {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 19
                   index: 70
@@ -298,7 +298,7 @@ Program {
             static: false
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 19
                 index: 70
@@ -313,7 +313,7 @@ Program {
           }
           FlowObjectTypeSpreadProperty {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 25
                 index: 76
@@ -329,7 +329,7 @@ Program {
               id: Identifier {
                 name: 'V'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 25
                     index: 76
@@ -344,7 +344,7 @@ Program {
               }
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 25
                   index: 76
@@ -360,7 +360,7 @@ Program {
           }
           FlowObjectTypeSpreadProperty {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 31
                 index: 82
@@ -376,7 +376,7 @@ Program {
               id: Identifier {
                 name: 'U'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 31
                     index: 82
@@ -391,7 +391,7 @@ Program {
               }
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 31
                   index: 82

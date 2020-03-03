@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 23
@@ -25,7 +25,7 @@ Program {
     ImportDeclaration {
       importKind: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 22
           index: 22
@@ -40,7 +40,7 @@ Program {
       source: StringLiteral {
         value: 'jquery'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 22
             index: 22
@@ -56,7 +56,7 @@ Program {
       specifiers: Array [
         ImportDefaultSpecifier {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 8
               index: 8
@@ -72,7 +72,7 @@ Program {
             name: BindingIdentifier {
               name: '$'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 8
                   index: 8
@@ -87,7 +87,7 @@ Program {
             }
             importKind: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 8
                 index: 8

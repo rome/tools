@@ -1,7 +1,7 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -11,7 +11,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 168
@@ -27,7 +27,7 @@ Program {
     CommentLine {
       value: ' This looks A LOT like an async arrow function, but it isn\'t because'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 70
           index: 95
@@ -43,7 +43,7 @@ Program {
     CommentLine {
       value: ' T + U isn\'t a valid type parameter.'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 38
           index: 134
@@ -60,7 +60,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 23
           index: 23
@@ -76,7 +76,7 @@ Program {
         CommentLine {
           value: ' This looks A LOT like an async arrow function, but it isn\'t because'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 70
               index: 95
@@ -92,7 +92,7 @@ Program {
         CommentLine {
           value: ' T + U isn\'t a valid type parameter.'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 38
               index: 134
@@ -109,7 +109,7 @@ Program {
       expression: BinaryExpression {
         operator: '>'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 22
             index: 22
@@ -124,7 +124,7 @@ Program {
         left: BinaryExpression {
           operator: '<'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 8
               index: 8
@@ -139,7 +139,7 @@ Program {
           left: ReferenceIdentifier {
             name: 'async'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 5
                 index: 5
@@ -155,7 +155,7 @@ Program {
           right: ReferenceIdentifier {
             name: 'T'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 8
                 index: 8
@@ -171,7 +171,7 @@ Program {
         }
         right: FlowTypeCastExpression {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 21
               index: 21
@@ -186,7 +186,7 @@ Program {
           expression: ReferenceIdentifier {
             name: 'fn'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 12
                 index: 12
@@ -204,7 +204,7 @@ Program {
             rest: undefined
             typeParameters: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 21
                 index: 21
@@ -220,7 +220,7 @@ Program {
               id: Identifier {
                 name: 'T'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 21
                     index: 21
@@ -235,7 +235,7 @@ Program {
               }
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 21
                   index: 21
@@ -254,7 +254,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 32
           index: 167
@@ -270,7 +270,7 @@ Program {
         CommentLine {
           value: ' This looks A LOT like an async arrow function, but it isn\'t because'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 70
               index: 95
@@ -286,7 +286,7 @@ Program {
         CommentLine {
           value: ' T + U isn\'t a valid type parameter.'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 38
               index: 134
@@ -302,7 +302,7 @@ Program {
       ]
       expression: FlowTypeCastExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 30
             index: 165
@@ -316,7 +316,7 @@ Program {
         }
         typeAnnotation: FlowFunctionTypeAnnotation {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 30
               index: 165
@@ -332,7 +332,7 @@ Program {
             id: Identifier {
               name: 'fn'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 30
                   index: 165
@@ -347,7 +347,7 @@ Program {
             }
             typeParameters: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 30
                 index: 165
@@ -364,7 +364,7 @@ Program {
             FlowFunctionTypeParam {
               name: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 27
                   index: 162
@@ -379,7 +379,7 @@ Program {
               meta: PatternMeta {
                 optional: false
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 27
                     index: 162
@@ -395,7 +395,7 @@ Program {
                   id: Identifier {
                     name: 'T'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 24
                         index: 159
@@ -410,7 +410,7 @@ Program {
                   }
                   typeParameters: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 24
                       index: 159
@@ -431,7 +431,7 @@ Program {
           leadingComments: undefined
           operator: '>'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 21
               index: 156
@@ -445,7 +445,7 @@ Program {
           }
           right: FlowTypeCastExpression {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 20
                 index: 155
@@ -460,7 +460,7 @@ Program {
             expression: ReferenceIdentifier {
               name: 'fn'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 17
                   index: 152
@@ -477,7 +477,7 @@ Program {
               id: Identifier {
                 name: 'T'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 20
                     index: 155
@@ -492,7 +492,7 @@ Program {
               }
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 20
                   index: 155
@@ -510,7 +510,7 @@ Program {
             leadingComments: undefined
             operator: '<'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 13
                 index: 148
@@ -525,7 +525,7 @@ Program {
             right: BinaryExpression {
               operator: '+'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 13
                   index: 148
@@ -540,7 +540,7 @@ Program {
               left: ReferenceIdentifier {
                 name: 'T'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 9
                     index: 144
@@ -556,7 +556,7 @@ Program {
               right: ReferenceIdentifier {
                 name: 'U'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 13
                     index: 148
@@ -573,7 +573,7 @@ Program {
             left: ReferenceIdentifier {
               name: 'async'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 6
                   index: 141
@@ -589,7 +589,7 @@ Program {
                 CommentLine {
                   value: ' This looks A LOT like an async arrow function, but it isn\'t because'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 70
                       index: 95
@@ -605,7 +605,7 @@ Program {
                 CommentLine {
                   value: ' T + U isn\'t a valid type parameter.'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 38
                       index: 134

@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 50
@@ -26,7 +26,7 @@ Program {
       id: BindingIdentifier {
         name: 'multiElementWithRest'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 29
             index: 29
@@ -40,7 +40,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 49
           index: 49
@@ -56,7 +56,7 @@ Program {
         body: Array []
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 49
             index: 49
@@ -79,7 +79,7 @@ Program {
         thisType: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 47
             index: 47
@@ -93,7 +93,7 @@ Program {
         }
         rest: BindingArrayPattern {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 45
               index: 45
@@ -109,7 +109,7 @@ Program {
             optional: undefined
             typeAnnotation: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 45
                 index: 45
@@ -125,7 +125,7 @@ Program {
           rest: BindingIdentifier {
             name: 'c'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 44
                 index: 44
@@ -141,7 +141,7 @@ Program {
               optional: undefined
               typeAnnotation: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 44
                   index: 44
@@ -159,7 +159,7 @@ Program {
             BindingIdentifier {
               name: 'a'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 35
                   index: 35
@@ -175,7 +175,7 @@ Program {
                 optional: undefined
                 typeAnnotation: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 35
                     index: 35
@@ -192,7 +192,7 @@ Program {
             BindingIdentifier {
               name: 'b'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 38
                   index: 38
@@ -208,7 +208,7 @@ Program {
                 optional: undefined
                 typeAnnotation: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 38
                     index: 38

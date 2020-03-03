@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 5
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 1
           index: 1
@@ -39,7 +39,7 @@ Program {
       expression: ReferenceIdentifier {
         name: 'a'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 1
             index: 1
@@ -55,7 +55,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 2
           index: 4
@@ -71,7 +71,7 @@ Program {
         operator: '!'
         prefix: true
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 2
             index: 4
@@ -86,7 +86,7 @@ Program {
         argument: ReferenceIdentifier {
           name: 'b'
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 2
               index: 4

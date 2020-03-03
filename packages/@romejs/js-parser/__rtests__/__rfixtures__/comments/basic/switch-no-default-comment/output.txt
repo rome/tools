@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 59
@@ -24,7 +24,7 @@ Program {
     CommentLine {
       value: 'no default'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 16
           index: 56
@@ -41,7 +41,7 @@ Program {
   body: Array [
     SwitchStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 1
           index: 58
@@ -56,7 +56,7 @@ Program {
       discriminant: ReferenceIdentifier {
         name: 'a'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 9
             index: 9
@@ -72,7 +72,7 @@ Program {
       cases: Array [
         SwitchCase {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 14
               index: 39
@@ -87,7 +87,7 @@ Program {
           test: NumericLiteral {
             value: 1
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 10
                 index: 23
@@ -104,7 +104,7 @@ Program {
             CommentLine {
               value: 'no default'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 16
                   index: 56
@@ -124,7 +124,7 @@ Program {
               leadingComments: undefined
               trailingComments: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 14
                   index: 39

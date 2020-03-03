@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 27
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 26
           index: 26
@@ -38,7 +38,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 25
             index: 25
@@ -52,7 +52,7 @@ Program {
         }
         body: AwaitExpression {
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 25
               index: 25
@@ -66,7 +66,7 @@ Program {
           }
           argument: NullLiteral {
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 25
                 index: 25
@@ -89,7 +89,7 @@ Program {
           returnType: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 15
               index: 15
@@ -103,7 +103,7 @@ Program {
           }
           typeParameters: TSTypeParameterDeclaration {
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 9
                 index: 9
@@ -121,7 +121,7 @@ Program {
                 constraint: undefined
                 default: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 8
                     index: 8

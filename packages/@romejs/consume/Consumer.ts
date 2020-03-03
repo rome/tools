@@ -42,7 +42,15 @@ import {
 } from '@romejs/ob1';
 import {isValidIdentifierName} from '@romejs/js-ast-utils';
 import {escapeString} from '@romejs/string-escape';
-import {UnknownFilePath} from '@romejs/path';
+import {
+  UnknownFilePath,
+  RelativeFilePath,
+  URLFilePath,
+  createUnknownFilePath,
+  AbsoluteFilePath,
+  createURLFilePath,
+  createAbsoluteFilePath,
+} from '@romejs/path';
 
 type UnexpectedConsumerOptions = {
   loc?: SourceLocation;
@@ -99,6 +107,7 @@ export default class Consumer {
     this.propertyMetadata = opts.propertyMetadata;
     this.usedNames = new Set();
     this.forkCache = new Map();
+    this.forceDiagnosticTarget = opts.forceDiagnosticTarget;
 
     // See shouldDispatchUnexpected for explanation
     this.hasHandledUnexpected = false;
@@ -118,6 +127,7 @@ export default class Consumer {
   usedNames: Set<string>;
   forkCache: Map<string, Consumer>;
   hasHandledUnexpected: boolean;
+  forceDiagnosticTarget: undefined | ConsumeSourceLocationRequestTarget;
 
   async capture<T>(
     callback: (consumer: Consumer) => Promise<T> | T,
@@ -176,6 +186,10 @@ export default class Consumer {
   getDiagnosticPointer(
     target: ConsumeSourceLocationRequestTarget = 'all',
   ): undefined | DiagnosticPointer {
+    const {forceDiagnosticTarget} = this;
+    if (forceDiagnosticTarget !== undefined) {
+      target = forceDiagnosticTarget;
+    }
     return this.context.getDiagnosticPointer(this.keyPath, target);
   }
 
@@ -228,7 +242,14 @@ export default class Consumer {
     };
   }
 
-  getKey(): ConsumeKey {
+  getKey(): Consumer {
+    return this.clone({
+      forceDiagnosticTarget: 'key',
+      value: this.getParentKey(),
+    });
+  }
+
+  getParentKey(): ConsumeKey {
     return this.keyPath[this.keyPath.length - 1];
   }
 
@@ -464,7 +485,7 @@ export default class Consumer {
 
     // Mutate the parent
     const parentObj = parent.asUnknownObject();
-    const key = this.getKey();
+    const key = this.getParentKey();
     parentObj[String(key)] = value;
     parent.setValue(parentObj);
 
@@ -864,6 +885,55 @@ export default class Consumer {
 
     this.unexpected('Expected a bigint');
     return BigInt('0');
+  }
+
+  // PATHS
+
+  asURLFilePath(): URLFilePath {
+    const path = this.asUnknownFilePath();
+    if (path.isURL()) {
+      return path.assertURL();
+    } else {
+      this.unexpected('Expected a URL');
+      return createURLFilePath('unknown://').append(path);
+    }
+  }
+
+  asUnknownFilePath(): UnknownFilePath {
+    return createUnknownFilePath(this.asString());
+  }
+
+  asAbsoluteFilePath(): AbsoluteFilePath {
+    const path = this.asUnknownFilePath();
+    if (path.isAbsolute()) {
+      return path.assertAbsolute();
+    } else {
+      this.unexpected('Expected an absolute file path');
+      return createAbsoluteFilePath('/').append(path);
+    }
+  }
+
+  asRelativeFilePath(): RelativeFilePath {
+    const path = this.asUnknownFilePath();
+    if (path.isRelative()) {
+      return path.assertRelative();
+    } else {
+      this.unexpected('Expected a relative file path');
+      return path.toExplicitRelative();
+    }
+  }
+
+  asExplicitRelativeFilePath(): RelativeFilePath {
+    const path = this.asRelativeFilePath();
+
+    if (path.isExplicitRelative()) {
+      return path;
+    } else {
+      this.unexpected(
+        'Expected an explicit relative file path. This is one that starts with <emphasis>./</emphasis> or <emphasis>../</emphasis>',
+      );
+      return path.toExplicitRelative();
+    }
   }
 
   // NUMBER

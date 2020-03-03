@@ -10,6 +10,11 @@ import undeclaredVariables from './undeclaredVariables';
 import unusedVariables from './unusedVariables';
 import emptyBlocks from './emptyBlocks';
 import sparseArray from './sparseArray';
+import noCompareNegZero from './noCompareNegZero';
+import unsafeNegation from './unsafeNegation';
+import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
+import noLabelVar from './noLabelVar';
+import noDuplicateKeys from './noDuplicateKeys';
 
 export const lintTransforms = [
   undeclaredVariables,
@@ -17,4 +22,9 @@ export const lintTransforms = [
   unusedVariables,
   emptyBlocks,
   sparseArray,
+  noCompareNegZero,
+  unsafeNegation,
+  noAsyncPromiseExecutor,
+  noLabelVar,
+  noDuplicateKeys,
 ];

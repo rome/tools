@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 16
@@ -26,7 +26,7 @@ Program {
       id: BindingIdentifier {
         name: 'E'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 12
             index: 12
@@ -42,7 +42,7 @@ Program {
       const: true
       members: Array []
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 15
           index: 15

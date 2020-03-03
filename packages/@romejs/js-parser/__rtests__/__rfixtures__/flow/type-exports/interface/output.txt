@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 70
@@ -29,7 +29,7 @@ Program {
       exportKind: 'type'
       specifiers: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 34
           index: 34
@@ -45,7 +45,7 @@ Program {
         id: BindingIdentifier {
           name: 'foo'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 20
               index: 20
@@ -63,7 +63,7 @@ Program {
         mixins: Array []
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 34
             index: 34
@@ -79,7 +79,7 @@ Program {
           exact: false
           inexact: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 34
               index: 34
@@ -97,7 +97,7 @@ Program {
               key: Identifier {
                 name: 'p'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 24
                     index: 24
@@ -112,7 +112,7 @@ Program {
               }
               value: NumberKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 32
                     index: 32
@@ -130,7 +130,7 @@ Program {
               static: false
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 32
                   index: 32
@@ -149,7 +149,7 @@ Program {
     }
     EmptyStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 35
           index: 35
@@ -166,7 +166,7 @@ Program {
       exportKind: 'type'
       specifiers: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 32
           index: 68
@@ -182,7 +182,7 @@ Program {
         id: BindingIdentifier {
           name: 'bar'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 20
               index: 56
@@ -199,7 +199,7 @@ Program {
         implements: Array []
         mixins: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 32
             index: 68
@@ -213,7 +213,7 @@ Program {
         }
         typeParameters: FlowTypeParameterDeclaration {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 23
               index: 59
@@ -232,7 +232,7 @@ Program {
               default: undefined
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 58
@@ -251,7 +251,7 @@ Program {
           exact: false
           inexact: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 32
               index: 68
@@ -269,7 +269,7 @@ Program {
               key: Identifier {
                 name: 'p'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 27
                     index: 63
@@ -286,7 +286,7 @@ Program {
                 id: Identifier {
                   name: 'T'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 30
                       index: 66
@@ -301,7 +301,7 @@ Program {
                 }
                 typeParameters: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 30
                     index: 66
@@ -319,7 +319,7 @@ Program {
               static: false
               variance: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 30
                   index: 66
@@ -338,7 +338,7 @@ Program {
     }
     EmptyStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 33
           index: 69

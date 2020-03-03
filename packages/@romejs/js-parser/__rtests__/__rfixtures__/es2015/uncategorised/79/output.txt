@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 17
       index: 17
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExportDefaultDeclaration {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 17
           index: 17
@@ -39,7 +39,7 @@ Program {
       declaration: NumericLiteral {
         value: 42
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 17
             index: 17

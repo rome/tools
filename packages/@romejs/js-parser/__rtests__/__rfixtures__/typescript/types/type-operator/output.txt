@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 99
@@ -24,7 +24,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 15
           index: 15
@@ -39,7 +39,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'let'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 15
             index: 15
@@ -56,7 +56,7 @@ Program {
             id: BindingIdentifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 14
                   index: 14
@@ -71,7 +71,7 @@ Program {
               meta: PatternMeta {
                 definite: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 14
                     index: 14
@@ -86,7 +86,7 @@ Program {
                 typeAnnotation: TSTypeOperator {
                   operator: 'keyof'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 14
                       index: 14
@@ -101,7 +101,7 @@ Program {
                   typeAnnotation: TSTypeReference {
                     typeParameters: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.ts'
                       end: Object {
                         column: 14
                         index: 14
@@ -116,7 +116,7 @@ Program {
                     typeName: ReferenceIdentifier {
                       name: 'T'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.ts'
                         end: Object {
                           column: 14
                           index: 14
@@ -135,7 +135,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 14
                 index: 14
@@ -153,7 +153,7 @@ Program {
     }
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 21
           index: 37
@@ -168,7 +168,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'let'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 21
             index: 37
@@ -185,7 +185,7 @@ Program {
             id: BindingIdentifier {
               name: 'y'
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 20
                   index: 36
@@ -200,7 +200,7 @@ Program {
               meta: PatternMeta {
                 definite: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 20
                     index: 36
@@ -215,7 +215,7 @@ Program {
                 typeAnnotation: TSTypeOperator {
                   operator: 'unique'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 20
                       index: 36
@@ -229,7 +229,7 @@ Program {
                   }
                   typeAnnotation: SymbolKeywordTypeAnnotation {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.ts'
                       end: Object {
                         column: 20
                         index: 36
@@ -247,7 +247,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 20
                 index: 36
@@ -265,7 +265,7 @@ Program {
     }
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 25
           index: 63
@@ -280,7 +280,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'let'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 25
             index: 63
@@ -297,7 +297,7 @@ Program {
             id: BindingIdentifier {
               name: 'z'
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 24
                   index: 62
@@ -312,7 +312,7 @@ Program {
               meta: PatternMeta {
                 definite: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 24
                     index: 62
@@ -327,7 +327,7 @@ Program {
                 typeAnnotation: TSTypeOperator {
                   operator: 'readonly'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 24
                       index: 62
@@ -341,7 +341,7 @@ Program {
                   }
                   typeAnnotation: TSArrayType {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.ts'
                       end: Object {
                         column: 24
                         index: 62
@@ -355,7 +355,7 @@ Program {
                     }
                     elementType: NumberKeywordTypeAnnotation {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.ts'
                         end: Object {
                           column: 22
                           index: 60
@@ -374,7 +374,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 24
                 index: 62
@@ -392,7 +392,7 @@ Program {
     }
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 34
           index: 98
@@ -407,7 +407,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'let'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 34
             index: 98
@@ -424,7 +424,7 @@ Program {
             id: BindingIdentifier {
               name: 'z1'
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 33
                   index: 97
@@ -439,7 +439,7 @@ Program {
               meta: PatternMeta {
                 definite: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 33
                     index: 97
@@ -454,7 +454,7 @@ Program {
                 typeAnnotation: TSTypeOperator {
                   operator: 'readonly'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 33
                       index: 97
@@ -469,7 +469,7 @@ Program {
                   typeAnnotation: TSTupleType {
                     rest: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.ts'
                       end: Object {
                         column: 33
                         index: 97
@@ -484,7 +484,7 @@ Program {
                     elementTypes: Array [
                       NumberKeywordTypeAnnotation {
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.ts'
                           end: Object {
                             column: 24
                             index: 88
@@ -499,7 +499,7 @@ Program {
                       }
                       NumberKeywordTypeAnnotation {
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.ts'
                           end: Object {
                             column: 32
                             index: 96
@@ -519,7 +519,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.ts'
               end: Object {
                 column: 33
                 index: 97

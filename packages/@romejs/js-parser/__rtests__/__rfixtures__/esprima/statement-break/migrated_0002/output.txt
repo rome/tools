@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 35
@@ -24,7 +24,7 @@ Program {
   body: Array [
     LabeledStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 34
           index: 34
@@ -39,7 +39,7 @@ Program {
       label: Identifier {
         name: 'done'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 4
             index: 4
@@ -54,7 +54,7 @@ Program {
       }
       body: WhileStatement {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 34
             index: 34
@@ -69,7 +69,7 @@ Program {
         test: BooleanLiteral {
           value: true
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 17
               index: 17
@@ -85,7 +85,7 @@ Program {
         body: BlockStatement {
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 34
               index: 34
@@ -100,7 +100,7 @@ Program {
           body: Array [
             BreakStatement {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 32
                   index: 32
@@ -115,7 +115,7 @@ Program {
               label: Identifier {
                 name: 'done'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 31
                     index: 31

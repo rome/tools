@@ -2,7 +2,7 @@ Program {
   body: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 80
@@ -28,7 +28,7 @@ Program {
     CommentBlock {
       value: ' flow-include\ntype Foo = {\n  foo: number,\n  bar: boolean,\n  baz: string\n};\n'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 2
           index: 79

@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 25
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 9
           index: 9
@@ -38,7 +38,7 @@ Program {
       }
       expression: ConditionalExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 9
             index: 9
@@ -53,7 +53,7 @@ Program {
         alternate: NumericLiteral {
           value: 0
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 9
               index: 9
@@ -69,7 +69,7 @@ Program {
         consequent: NumericLiteral {
           value: 0.3
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 7
               index: 7
@@ -85,7 +85,7 @@ Program {
         test: BooleanLiteral {
           value: true
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 4
               index: 4
@@ -102,7 +102,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 13
           index: 24
@@ -116,7 +116,7 @@ Program {
       }
       expression: ConditionalExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 13
             index: 24
@@ -131,7 +131,7 @@ Program {
         alternate: NumericLiteral {
           value: 0
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 13
               index: 24
@@ -147,7 +147,7 @@ Program {
         consequent: NumericLiteral {
           value: 0.3
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 9
               index: 20
@@ -163,7 +163,7 @@ Program {
         test: BooleanLiteral {
           value: true
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 4
               index: 15

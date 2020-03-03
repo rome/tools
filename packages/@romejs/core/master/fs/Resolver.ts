@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Manifest} from '@romejs/codec-js-manifest';
+import {Manifest, ManifestDefinition} from '@romejs/codec-js-manifest';
 import Master from '../Master';
 import {Platform} from '../../common/types/platform';
 import {ProjectDefinition, DEFAULT_PROJECT_CONFIG} from '@romejs/project';
@@ -14,15 +14,18 @@ import {FileReference} from '../../common/types/files';
 import resolverSuggest from './resolverSuggest';
 import {
   AbsoluteFilePath,
-  createUnknownFilePath,
   UnknownFilePath,
   URLFilePath,
+  createRelativeFilePath,
+  RelativeFilePath,
+  createFilePathFromSegments,
 } from '@romejs/path';
 import {DiagnosticPointer, PartialDiagnosticAdvice} from '@romejs/diagnostics';
 import {IMPLICIT_JS_EXTENSIONS} from '../../common/fileHandlers';
 import {writeFile} from '@romejs/fs';
 import https = require('https');
 import {MOCKS_FOLDER_NAME} from '@romejs/core/common/constants';
+import {Consumer} from '@romejs/consume';
 
 function request(
   url: string,
@@ -177,15 +180,94 @@ export type ResolverOptions = {
   scale?: number;
 };
 
+type ExportAlias = {key: Consumer; value: RelativeFilePath};
+
+function attachExportAliasIfUnresolved(
+  res: ResolverQueryResponse,
+  alias: ExportAlias,
+) {
+  if (res.type === 'FOUND') {
+    return res;
+  }
+
+  const pointer = alias.key.getDiagnosticPointer('value');
+
+  return {
+    ...res,
+    source:
+      pointer === undefined
+        ? undefined
+        : {
+            pointer,
+            source: alias.value.join(),
+          },
+  };
+}
+
+function getExportsAlias({
+  manifest,
+  relative,
+  platform,
+}: {
+  manifest: Manifest;
+  relative: UnknownFilePath;
+  platform?: Platform;
+}): undefined | ExportAlias {
+  if (typeof manifest.exports === 'boolean') {
+    return;
+  }
+
+  if (platform === undefined) {
+    return;
+  }
+
+  if (!relative.isRelative()) {
+    return;
+  }
+
+  const aliases = manifest.exports.get(relative.assertRelative());
+  if (aliases === undefined) {
+    return;
+  }
+
+  const alias = aliases.get(platform);
+  if (alias !== undefined) {
+    return {
+      key: alias.consumer,
+      value: alias.relative,
+    };
+  }
+
+  const def = aliases.get('default');
+  if (def !== undefined) {
+    return {
+      key: def.consumer,
+      value: def.relative,
+    };
+  }
+
+  // TODO check for folder aliases
+}
+
 function getPreferredMainKey(
+  consumer: Consumer,
   manifest: Manifest,
-): undefined | {key: string; value: string} {
-  if (manifest['jsnext:main'] !== undefined) {
-    return {key: 'jsnext:main', value: manifest['jsnext:main']};
+  platform?: Platform,
+): undefined | ExportAlias {
+  const alias = getExportsAlias({
+    manifest: manifest,
+    relative: createRelativeFilePath('.'),
+    platform,
+  });
+  if (alias !== undefined) {
+    return alias;
   }
 
   if (manifest.main !== undefined) {
-    return {key: 'main', value: manifest.main};
+    return {
+      key: consumer.get('main'),
+      value: createRelativeFilePath(manifest.main),
+    };
   }
 }
 
@@ -513,36 +595,23 @@ export default class Resolver {
           return this.finishResolverQueryResponse(resolvedOrigin, types);
         }
 
-        const main = getPreferredMainKey(manifestDef.manifest);
+        const main = getPreferredMainKey(
+          manifestDef.consumer,
+          manifestDef.manifest,
+          query.platform,
+        );
         if (main !== undefined) {
           const resolved = this.resolvePath(
             {
               ...query,
               origin: resolvedOrigin,
-              source: createUnknownFilePath(main.value),
+              source: main.value,
             },
             true,
             ['package'],
           );
 
-          if (resolved.type === 'FOUND') {
-            return resolved;
-          } else {
-            const pointer = manifestDef.consumer
-              .get(main.key)
-              .getDiagnosticPointer('value');
-
-            return {
-              ...resolved,
-              source:
-                pointer === undefined
-                  ? undefined
-                  : {
-                      pointer,
-                      source: main.value,
-                    },
-            };
-          }
+          return attachExportAliasIfUnresolved(resolved, main);
         }
       }
 
@@ -571,7 +640,7 @@ export default class Resolver {
   resolvePackageFolder(
     query: ResolverLocalQuery,
     moduleName: string,
-  ): undefined | AbsoluteFilePath {
+  ): undefined | ManifestDefinition {
     // Find the project
     const project = this.master.projectManager.findProjectExisting(
       query.origin,
@@ -588,7 +657,7 @@ export default class Resolver {
     for (const project of projects) {
       const pkg = project.packages.get(moduleName);
       if (pkg !== undefined) {
-        return pkg.folder;
+        return pkg;
       }
     }
   }
@@ -598,20 +667,60 @@ export default class Resolver {
     moduleName: string,
     moduleNameParts: Array<string>,
   ): ResolverQueryResponse {
-    const packageDir = this.resolvePackageFolder(query, moduleName);
+    const manifestDef = this.resolvePackageFolder(query, moduleName);
+    return this.resolveManifest(query, manifestDef, moduleNameParts);
+  }
 
-    if (packageDir === undefined) {
+  resolveManifest(
+    query: ResolverLocalQuery,
+    manifestDef: undefined | ManifestDefinition,
+    moduleNameParts: Array<string>,
+  ): ResolverQueryResponse {
+    if (manifestDef === undefined) {
       return QUERY_RESPONSE_MISSING;
-    } else {
-      return this.resolvePath(
-        {
-          ...query,
-          source: packageDir.append(moduleNameParts),
-        },
-        true,
-        ['package'],
-      );
     }
+
+    if (moduleNameParts.length > 0) {
+      // Submodules of this package are private
+      if (manifestDef.manifest.exports === false) {
+        return QUERY_RESPONSE_MISSING;
+      }
+
+      // Check if we're allowed to touch this submodule
+      if (manifestDef.manifest.exports !== true) {
+        const alias = getExportsAlias({
+          manifest: manifestDef.manifest,
+          relative: createFilePathFromSegments(moduleNameParts),
+          platform: query.platform,
+        });
+
+        if (alias === undefined) {
+          // No submodule found
+          return QUERY_RESPONSE_MISSING;
+        }
+
+        // Alias found!
+        const resolved = this.resolvePath(
+          {
+            ...query,
+            source: manifestDef.folder.append(alias.value),
+          },
+          true,
+          ['package'],
+        );
+        return attachExportAliasIfUnresolved(resolved, alias);
+      }
+    }
+
+    // All exports are enabled or we are importing the root
+    return this.resolvePath(
+      {
+        ...query,
+        source: manifestDef.folder.append(moduleNameParts),
+      },
+      true,
+      ['package'],
+    );
   }
 
   resolveMock(
@@ -745,21 +854,12 @@ export default class Resolver {
 
     // Check all parent directories for node_modules
     for (const dir of parentDirectories) {
-      // Check for node_modules/*
-      const nodeModulesLoc = dir.append([
-        NODE_MODULES,
-        source.assertRelative(),
-      ]);
-      const nodeModulesResolved = this.resolvePath(
-        {
-          ...query,
-          source: nodeModulesLoc,
-        },
-        true,
-        ['package'],
+      const modulePath = dir.append(NODE_MODULES).append(moduleName);
+      const manifestDef = this.master.memoryFs.getManifestDefinition(
+        modulePath,
       );
-      if (shouldReturnQueryResponse(nodeModulesResolved)) {
-        return nodeModulesResolved;
+      if (manifestDef !== undefined) {
+        return this.resolveManifest(query, manifestDef, moduleNameParts);
       }
     }
 

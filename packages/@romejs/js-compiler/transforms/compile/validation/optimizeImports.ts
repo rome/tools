@@ -22,11 +22,11 @@ import {Binding} from '@romejs/js-compiler';
 import {isIdentifierish} from '@romejs/js-ast-utils';
 import {TransformExitResult} from '@romejs/js-compiler';
 
-// Eliminate this blacklist. This contains React for the following reason:
+// TODO: Remove this. This contains React for the following reason:
 //   A user may write: import * as React from 'react';
 //   We will remove the namespace and have only the used specifiers
 //   But the JSX plugin inserts `React.createElement`. Oh no.
-const BLACKLIST = ['React', 'react'];
+const IGNORED_NAMES = ['React', 'react'];
 
 function getName(node: AnyNode): undefined | string {
   if (node.type !== 'MemberExpression' && node.type !== 'JSXMemberExpression') {
@@ -69,7 +69,7 @@ export default {
     for (const child of node.body) {
       if (
         child.type === 'ImportDeclaration' &&
-        !BLACKLIST.includes(child.source.value) &&
+        !IGNORED_NAMES.includes(child.source.value) &&
         child.specifiers !== undefined
       ) {
         for (const specifier of child.specifiers) {
