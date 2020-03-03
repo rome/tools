@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 12
@@ -24,7 +24,7 @@ Program {
   body: Array [
     TSExportAssignment {
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 11
           index: 11
@@ -39,7 +39,7 @@ Program {
       expression: ReferenceIdentifier {
         name: 'f'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 10
             index: 10

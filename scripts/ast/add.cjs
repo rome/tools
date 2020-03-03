@@ -12,9 +12,9 @@ const {
   generatorsFolder,
   analysisFolder,
   astFolder,
-} = require('./_constants.cjs');
+} = require('../_constants.cjs');
 
-const {write, getBuilderName} = require('./_utils.cjs');
+const {write, getBuilderName} = require('../_utils.cjs');
 
 const nodeType = process.argv[2];
 const category = process.argv[3];

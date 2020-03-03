@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 32
@@ -26,7 +26,7 @@ Program {
       id: BindingIdentifier {
         name: 'a'
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 15
             index: 15
@@ -41,7 +41,7 @@ Program {
       }
       isExport: true
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 31
           index: 31
@@ -55,7 +55,7 @@ Program {
       }
       moduleReference: TSExternalModuleReference {
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 30
             index: 30
@@ -70,7 +70,7 @@ Program {
         expression: StringLiteral {
           value: 'a'
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 29
               index: 29

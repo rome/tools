@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 134
@@ -24,7 +24,7 @@ Program {
     CommentLine {
       value: 'no default'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 20
           index: 125
@@ -43,7 +43,7 @@ Program {
       id: BindingIdentifier {
         name: 'bar'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 12
             index: 12
@@ -57,7 +57,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 1
           index: 133
@@ -79,7 +79,7 @@ Program {
         thisType: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 16
             index: 16
@@ -95,7 +95,7 @@ Program {
           BindingIdentifier {
             name: 'a'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 14
                 index: 14
@@ -111,7 +111,7 @@ Program {
               optional: undefined
               typeAnnotation: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 14
                   index: 14
@@ -130,7 +130,7 @@ Program {
       body: BlockStatement {
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 1
             index: 133
@@ -145,7 +145,7 @@ Program {
         body: Array [
           SwitchStatement {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 5
                 index: 131
@@ -160,7 +160,7 @@ Program {
             discriminant: ReferenceIdentifier {
               name: 'a'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 13
                   index: 31
@@ -176,7 +176,7 @@ Program {
             cases: Array [
               SwitchCase {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 18
                     index: 69
@@ -191,7 +191,7 @@ Program {
                 test: NumericLiteral {
                   value: 2
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 14
                       index: 49
@@ -208,7 +208,7 @@ Program {
                   BreakStatement {
                     label: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 18
                         index: 69
@@ -225,7 +225,7 @@ Program {
               }
               SwitchCase {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 18
                     index: 104
@@ -240,7 +240,7 @@ Program {
                 test: NumericLiteral {
                   value: 1
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 14
                       index: 84
@@ -257,7 +257,7 @@ Program {
                   CommentLine {
                     value: 'no default'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 20
                         index: 125
@@ -277,7 +277,7 @@ Program {
                     leadingComments: undefined
                     trailingComments: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 18
                         index: 104

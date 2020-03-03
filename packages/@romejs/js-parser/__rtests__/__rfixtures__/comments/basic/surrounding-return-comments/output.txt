@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 62
@@ -24,7 +24,7 @@ Program {
     CommentBlock {
       value: ' before '
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 16
           index: 31
@@ -40,7 +40,7 @@ Program {
     CommentBlock {
       value: ' after '
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 15
           index: 59
@@ -59,7 +59,7 @@ Program {
       id: BindingIdentifier {
         name: 'a'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 10
             index: 10
@@ -73,7 +73,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 1
           index: 61
@@ -96,7 +96,7 @@ Program {
         thisType: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 13
             index: 13
@@ -112,7 +112,7 @@ Program {
       body: BlockStatement {
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 1
             index: 61
@@ -128,7 +128,7 @@ Program {
           ReturnStatement {
             argument: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 11
                 index: 43
@@ -144,7 +144,7 @@ Program {
               CommentBlock {
                 value: ' before '
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 16
                     index: 31
@@ -162,7 +162,7 @@ Program {
               CommentBlock {
                 value: ' after '
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 15
                     index: 59

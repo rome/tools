@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 48
@@ -29,7 +29,7 @@ Program {
       id: StringLiteral {
         value: 'M'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 18
             index: 18
@@ -44,7 +44,7 @@ Program {
       }
       kind: 'commonjs'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 47
           index: 47
@@ -58,7 +58,7 @@ Program {
       }
       body: BlockStatement {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 47
             index: 47
@@ -74,7 +74,7 @@ Program {
           ImportDeclaration {
             importKind: 'type'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 45
                 index: 45
@@ -89,7 +89,7 @@ Program {
             source: StringLiteral {
               value: 'TM'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 44
                   index: 44
@@ -105,7 +105,7 @@ Program {
             specifiers: Array [
               ImportDefaultSpecifier {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 34
                     index: 34
@@ -121,7 +121,7 @@ Program {
                   name: BindingIdentifier {
                     name: 'T'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 34
                         index: 34
@@ -136,7 +136,7 @@ Program {
                   }
                   importKind: 'type'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 34
                       index: 34

@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 324
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'T'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 6
             index: 6
@@ -44,7 +44,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 27
           index: 27
@@ -60,7 +60,7 @@ Program {
         exact: false
         inexact: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 26
             index: 26
@@ -78,7 +78,7 @@ Program {
             key: Identifier {
               name: 'a'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 12
                   index: 12
@@ -96,7 +96,7 @@ Program {
               rest: undefined
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 24
                   index: 24
@@ -110,7 +110,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 24
                     index: 24
@@ -129,7 +129,7 @@ Program {
             static: false
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 24
                 index: 24
@@ -149,7 +149,7 @@ Program {
       id: BindingIdentifier {
         name: 'T1'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 35
@@ -164,7 +164,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 31
           index: 59
@@ -180,7 +180,7 @@ Program {
         exact: false
         inexact: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 30
             index: 58
@@ -198,7 +198,7 @@ Program {
             key: Identifier {
               name: 'a'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 13
                   index: 41
@@ -215,7 +215,7 @@ Program {
               params: Array []
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 28
                   index: 56
@@ -229,7 +229,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 28
                     index: 56
@@ -244,7 +244,7 @@ Program {
               }
               typeParameters: FlowTypeParameterDeclaration {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 18
                     index: 46
@@ -263,7 +263,7 @@ Program {
                     default: undefined
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 17
                         index: 45
@@ -284,7 +284,7 @@ Program {
             static: false
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 28
                 index: 56
@@ -304,7 +304,7 @@ Program {
       id: BindingIdentifier {
         name: 'T2'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 67
@@ -319,7 +319,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 24
           index: 84
@@ -335,7 +335,7 @@ Program {
         exact: false
         inexact: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 23
             index: 83
@@ -353,7 +353,7 @@ Program {
             key: Identifier {
               name: 'a'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 13
                   index: 73
@@ -371,7 +371,7 @@ Program {
               rest: undefined
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 21
                   index: 81
@@ -385,7 +385,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 21
                     index: 81
@@ -404,7 +404,7 @@ Program {
             static: false
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 21
                 index: 81
@@ -424,7 +424,7 @@ Program {
       id: BindingIdentifier {
         name: 'T3'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 92
@@ -439,7 +439,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 27
           index: 112
@@ -455,7 +455,7 @@ Program {
         exact: false
         inexact: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 26
             index: 111
@@ -473,7 +473,7 @@ Program {
             key: Identifier {
               name: 'a'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 13
                   index: 98
@@ -490,7 +490,7 @@ Program {
               params: Array []
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 24
                   index: 109
@@ -504,7 +504,7 @@ Program {
               }
               returnType: VoidKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 24
                     index: 109
@@ -519,7 +519,7 @@ Program {
               }
               typeParameters: FlowTypeParameterDeclaration {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 16
                     index: 101
@@ -538,7 +538,7 @@ Program {
                     default: undefined
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 15
                         index: 100
@@ -559,7 +559,7 @@ Program {
             static: false
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 24
                 index: 109
@@ -579,7 +579,7 @@ Program {
       id: BindingIdentifier {
         name: 'T4'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 121
@@ -594,7 +594,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 25
           index: 139
@@ -610,7 +610,7 @@ Program {
         exact: false
         inexact: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 24
             index: 138
@@ -629,7 +629,7 @@ Program {
               rest: undefined
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 136
@@ -643,7 +643,7 @@ Program {
               }
               returnType: NumberKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 22
                     index: 136
@@ -659,7 +659,7 @@ Program {
             }
             static: false
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 22
                 index: 136
@@ -679,7 +679,7 @@ Program {
       id: BindingIdentifier {
         name: 'T5'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 7
             index: 147
@@ -694,7 +694,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 32
           index: 172
@@ -710,7 +710,7 @@ Program {
         exact: false
         inexact: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 32
             index: 172
@@ -727,7 +727,7 @@ Program {
             value: FlowFunctionTypeAnnotation {
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 29
                   index: 169
@@ -741,7 +741,7 @@ Program {
               }
               returnType: NumberKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 29
                     index: 169
@@ -756,7 +756,7 @@ Program {
               }
               typeParameters: FlowTypeParameterDeclaration {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 15
                     index: 155
@@ -775,7 +775,7 @@ Program {
                     default: undefined
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 14
                         index: 154
@@ -795,7 +795,7 @@ Program {
                   name: Identifier {
                     name: 'x'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 17
                         index: 157
@@ -809,7 +809,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 20
                       index: 160
@@ -824,7 +824,7 @@ Program {
                   meta: PatternMeta {
                     optional: false
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 20
                         index: 160
@@ -840,7 +840,7 @@ Program {
                       id: Identifier {
                         name: 'T'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 20
                             index: 160
@@ -855,7 +855,7 @@ Program {
                       }
                       typeParameters: undefined
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 20
                           index: 160
@@ -874,7 +874,7 @@ Program {
             }
             static: false
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 29
                 index: 169
@@ -894,7 +894,7 @@ Program {
       id: BindingIdentifier {
         name: 'T6'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 16
             index: 190
@@ -912,7 +912,7 @@ Program {
       mixins: Array []
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 35
           index: 209
@@ -928,7 +928,7 @@ Program {
         exact: false
         inexact: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 35
             index: 209
@@ -946,7 +946,7 @@ Program {
             key: Identifier {
               name: 'foo'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 196
@@ -964,7 +964,7 @@ Program {
               rest: undefined
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 32
                   index: 206
@@ -978,7 +978,7 @@ Program {
               }
               returnType: NumberKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 32
                     index: 206
@@ -997,7 +997,7 @@ Program {
             static: false
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 32
                 index: 206
@@ -1017,7 +1017,7 @@ Program {
       id: BindingIdentifier {
         name: 'T7'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 16
             index: 226
@@ -1035,7 +1035,7 @@ Program {
       mixins: Array []
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 42
           index: 252
@@ -1051,7 +1051,7 @@ Program {
         exact: false
         inexact: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 42
             index: 252
@@ -1069,7 +1069,7 @@ Program {
             key: Identifier {
               name: 'foo'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 29
                   index: 239
@@ -1087,7 +1087,7 @@ Program {
               rest: undefined
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 39
                   index: 249
@@ -1101,7 +1101,7 @@ Program {
               }
               returnType: NumberKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 39
                     index: 249
@@ -1120,7 +1120,7 @@ Program {
             static: true
             variance: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 39
                 index: 249
@@ -1140,7 +1140,7 @@ Program {
       id: BindingIdentifier {
         name: 'T8'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 16
             index: 269
@@ -1158,7 +1158,7 @@ Program {
       mixins: Array []
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 31
           index: 284
@@ -1174,7 +1174,7 @@ Program {
         exact: false
         inexact: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 31
             index: 284
@@ -1193,7 +1193,7 @@ Program {
               rest: undefined
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 29
                   index: 282
@@ -1207,7 +1207,7 @@ Program {
               }
               returnType: NumberKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 29
                     index: 282
@@ -1223,7 +1223,7 @@ Program {
             }
             static: false
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 29
                 index: 282
@@ -1243,7 +1243,7 @@ Program {
       id: BindingIdentifier {
         name: 'T9'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 16
             index: 301
@@ -1261,7 +1261,7 @@ Program {
       mixins: Array []
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 38
           index: 323
@@ -1277,7 +1277,7 @@ Program {
         exact: false
         inexact: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 38
             index: 323
@@ -1296,7 +1296,7 @@ Program {
               rest: undefined
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 36
                   index: 321
@@ -1310,7 +1310,7 @@ Program {
               }
               returnType: NumberKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 36
                     index: 321
@@ -1326,7 +1326,7 @@ Program {
             }
             static: true
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 36
                 index: 321

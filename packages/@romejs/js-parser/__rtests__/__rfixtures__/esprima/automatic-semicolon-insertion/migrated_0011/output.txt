@@ -1,14 +1,14 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 37
@@ -24,7 +24,7 @@ Program {
     CommentLine {
       value: ' Comment'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 30
           index: 30
@@ -41,7 +41,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 5
           index: 36
@@ -56,7 +56,7 @@ Program {
       expression: FunctionExpression {
         id: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 4
             index: 35
@@ -79,7 +79,7 @@ Program {
           thisType: undefined
           typeParameters: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 11
               index: 11
@@ -95,7 +95,7 @@ Program {
         body: BlockStatement {
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 4
               index: 35
@@ -112,7 +112,7 @@ Program {
               argument: undefined
               leadingComments: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 19
                   index: 19
@@ -128,7 +128,7 @@ Program {
                 CommentLine {
                   value: ' Comment'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 30
                       index: 30
@@ -145,7 +145,7 @@ Program {
             }
             ExpressionStatement {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 2
                   index: 33
@@ -161,7 +161,7 @@ Program {
                 CommentLine {
                   value: ' Comment'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 30
                       index: 30
@@ -178,7 +178,7 @@ Program {
               expression: ReferenceIdentifier {
                 name: 'x'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 1
                     index: 32
@@ -194,7 +194,7 @@ Program {
                   CommentLine {
                     value: ' Comment'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 30
                         index: 30

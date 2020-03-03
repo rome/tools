@@ -1,7 +1,7 @@
 Program {
   comments: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -11,7 +11,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 328
@@ -27,7 +27,7 @@ Program {
     Object {
       advice: undefined
       category: 'parse/js'
-      filename: '..'
+      filename: 'input.js'
       message: 'The type cast expression is expected to be wrapped with parentheses'
       mtime: undefined
       sourceType: 'module'
@@ -47,7 +47,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 20
           index: 20
@@ -61,7 +61,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 19
             index: 19
@@ -77,7 +77,7 @@ Program {
           body: Array []
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 19
               index: 19
@@ -98,7 +98,7 @@ Program {
           returnType: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 17
               index: 17
@@ -114,7 +114,7 @@ Program {
             BindingArrayPattern {
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 12
                   index: 12
@@ -130,7 +130,7 @@ Program {
                 BindingIdentifier {
                   name: 'INVALID_PLACEHOLDER'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 16
                       index: 16
@@ -151,7 +151,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 25
           index: 46
@@ -165,7 +165,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 24
             index: 45
@@ -181,7 +181,7 @@ Program {
           body: Array []
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 24
               index: 45
@@ -202,7 +202,7 @@ Program {
           returnType: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 22
               index: 43
@@ -218,7 +218,7 @@ Program {
             BindingArrayPattern {
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 17
                   index: 38
@@ -234,7 +234,7 @@ Program {
                 BindingIdentifier {
                   name: 'a'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 3
                       index: 24
@@ -250,7 +250,7 @@ Program {
                 BindingArrayPattern {
                   rest: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 16
                       index: 37
@@ -266,7 +266,7 @@ Program {
                     BindingIdentifier {
                       name: 'INVALID_PLACEHOLDER'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 21
                           index: 42
@@ -289,7 +289,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 25
           index: 72
@@ -303,7 +303,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 24
             index: 71
@@ -319,7 +319,7 @@ Program {
           body: Array []
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 24
               index: 71
@@ -340,7 +340,7 @@ Program {
           returnType: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 22
               index: 69
@@ -355,7 +355,7 @@ Program {
           params: Array [
             BindingAssignmentPattern {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 17
                   index: 64
@@ -370,7 +370,7 @@ Program {
               right: ArrayExpression {
                 elements: Array []
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 17
                     index: 64
@@ -386,7 +386,7 @@ Program {
               left: BindingArrayPattern {
                 rest: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 12
                     index: 59
@@ -402,7 +402,7 @@ Program {
                   BindingIdentifier {
                     name: 'INVALID_PLACEHOLDER'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 12
                         index: 59
@@ -424,7 +424,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 27
           index: 100
@@ -438,7 +438,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 26
             index: 99
@@ -454,7 +454,7 @@ Program {
           body: Array []
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 26
               index: 99
@@ -475,7 +475,7 @@ Program {
           returnType: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 24
               index: 97
@@ -491,7 +491,7 @@ Program {
             BindingObjectPattern {
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 19
                   index: 92
@@ -509,7 +509,7 @@ Program {
                     value: Identifier {
                       name: 'x'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 4
                           index: 77
@@ -524,7 +524,7 @@ Program {
                     }
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 4
                         index: 77
@@ -540,7 +540,7 @@ Program {
                   value: BindingArrayPattern {
                     rest: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 17
                         index: 90
@@ -556,7 +556,7 @@ Program {
                       BindingIdentifier {
                         name: 'INVALID_PLACEHOLDER'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 23
                             index: 96
@@ -572,7 +572,7 @@ Program {
                     ]
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 17
                       index: 90
@@ -593,7 +593,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 26
           index: 128
@@ -607,7 +607,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 25
             index: 127
@@ -623,7 +623,7 @@ Program {
           body: Array []
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 25
               index: 127
@@ -643,7 +643,7 @@ Program {
           returnType: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 23
               index: 125
@@ -659,7 +659,7 @@ Program {
             BindingArrayPattern {
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 18
                   index: 120
@@ -675,7 +675,7 @@ Program {
                 BindingIdentifier {
                   name: 'INVALID_PLACEHOLDER'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 22
                       index: 124
@@ -696,7 +696,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 31
           index: 160
@@ -710,7 +710,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 30
             index: 159
@@ -726,7 +726,7 @@ Program {
           body: Array []
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 30
               index: 159
@@ -746,7 +746,7 @@ Program {
           returnType: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 28
               index: 157
@@ -762,7 +762,7 @@ Program {
             BindingArrayPattern {
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 23
                   index: 152
@@ -778,7 +778,7 @@ Program {
                 BindingIdentifier {
                   name: 'a'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 9
                       index: 138
@@ -794,7 +794,7 @@ Program {
                 BindingArrayPattern {
                   rest: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 22
                       index: 151
@@ -810,7 +810,7 @@ Program {
                     BindingIdentifier {
                       name: 'INVALID_PLACEHOLDER'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 27
                           index: 156
@@ -833,7 +833,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 31
           index: 192
@@ -847,7 +847,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 30
             index: 191
@@ -863,7 +863,7 @@ Program {
           body: Array []
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 30
               index: 191
@@ -883,7 +883,7 @@ Program {
           returnType: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 28
               index: 189
@@ -898,7 +898,7 @@ Program {
           params: Array [
             BindingAssignmentPattern {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 23
                   index: 184
@@ -913,7 +913,7 @@ Program {
               right: ArrayExpression {
                 elements: Array []
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 23
                     index: 184
@@ -929,7 +929,7 @@ Program {
               left: BindingArrayPattern {
                 rest: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 18
                     index: 179
@@ -945,7 +945,7 @@ Program {
                   BindingIdentifier {
                     name: 'INVALID_PLACEHOLDER'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 18
                         index: 179
@@ -967,7 +967,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 33
           index: 226
@@ -981,7 +981,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 32
             index: 225
@@ -997,7 +997,7 @@ Program {
           body: Array []
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 32
               index: 225
@@ -1017,7 +1017,7 @@ Program {
           returnType: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 30
               index: 223
@@ -1033,7 +1033,7 @@ Program {
             BindingObjectPattern {
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 25
                   index: 218
@@ -1051,7 +1051,7 @@ Program {
                     value: Identifier {
                       name: 'x'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 10
                           index: 203
@@ -1066,7 +1066,7 @@ Program {
                     }
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 10
                         index: 203
@@ -1082,7 +1082,7 @@ Program {
                   value: BindingArrayPattern {
                     rest: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 23
                         index: 216
@@ -1098,7 +1098,7 @@ Program {
                       BindingIdentifier {
                         name: 'INVALID_PLACEHOLDER'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 29
                             index: 222
@@ -1114,7 +1114,7 @@ Program {
                     ]
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 23
                       index: 216
@@ -1135,7 +1135,7 @@ Program {
     }
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 21
           index: 249
@@ -1150,7 +1150,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'let'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 21
             index: 249
@@ -1167,7 +1167,7 @@ Program {
             id: BindingArrayPattern {
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 16
                   index: 244
@@ -1183,7 +1183,7 @@ Program {
                 BindingIdentifier {
                   name: 'a1'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 7
                       index: 235
@@ -1198,7 +1198,7 @@ Program {
                   meta: PatternMeta {
                     optional: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 15
                         index: 243
@@ -1212,7 +1212,7 @@ Program {
                     }
                     typeAnnotation: StringKeywordTypeAnnotation {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 15
                           index: 243
@@ -1230,7 +1230,7 @@ Program {
               ]
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 20
                 index: 248
@@ -1245,7 +1245,7 @@ Program {
             init: ReferenceIdentifier {
               name: 'c'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 20
                   index: 248
@@ -1264,7 +1264,7 @@ Program {
     }
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 26
           index: 276
@@ -1279,7 +1279,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'let'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 26
             index: 276
@@ -1296,7 +1296,7 @@ Program {
             id: BindingArrayPattern {
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 21
                   index: 271
@@ -1312,7 +1312,7 @@ Program {
                 BindingIdentifier {
                   name: 'a2'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 7
                       index: 257
@@ -1328,7 +1328,7 @@ Program {
                     optional: undefined
                     typeAnnotation: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 7
                         index: 257
@@ -1345,7 +1345,7 @@ Program {
                 BindingArrayPattern {
                   rest: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 20
                       index: 270
@@ -1361,7 +1361,7 @@ Program {
                     optional: undefined
                     typeAnnotation: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 20
                         index: 270
@@ -1378,7 +1378,7 @@ Program {
                     BindingIdentifier {
                       name: 'b'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 11
                           index: 261
@@ -1393,7 +1393,7 @@ Program {
                       meta: PatternMeta {
                         optional: undefined
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 19
                             index: 269
@@ -1407,7 +1407,7 @@ Program {
                         }
                         typeAnnotation: StringKeywordTypeAnnotation {
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 19
                               index: 269
@@ -1427,7 +1427,7 @@ Program {
               ]
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 25
                 index: 275
@@ -1442,7 +1442,7 @@ Program {
             init: ReferenceIdentifier {
               name: 'c'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 25
                   index: 275
@@ -1461,7 +1461,7 @@ Program {
     }
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 21
           index: 298
@@ -1476,7 +1476,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'let'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 21
             index: 298
@@ -1493,7 +1493,7 @@ Program {
             id: BindingArrayPattern {
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 16
                   index: 293
@@ -1509,7 +1509,7 @@ Program {
                 BindingIdentifier {
                   name: 'a3'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 7
                       index: 284
@@ -1524,7 +1524,7 @@ Program {
                   meta: PatternMeta {
                     optional: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 15
                         index: 292
@@ -1538,7 +1538,7 @@ Program {
                     }
                     typeAnnotation: StringKeywordTypeAnnotation {
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 15
                           index: 292
@@ -1556,7 +1556,7 @@ Program {
               ]
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 20
                 index: 297
@@ -1571,7 +1571,7 @@ Program {
             init: ReferenceIdentifier {
               name: 'c'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 20
                   index: 297
@@ -1590,7 +1590,7 @@ Program {
     }
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 28
           index: 327
@@ -1605,7 +1605,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'let'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 28
             index: 327
@@ -1622,7 +1622,7 @@ Program {
             id: BindingObjectPattern {
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 23
                   index: 322
@@ -1640,7 +1640,7 @@ Program {
                     value: Identifier {
                       name: 'x'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 7
                           index: 306
@@ -1655,7 +1655,7 @@ Program {
                     }
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 7
                         index: 306
@@ -1671,7 +1671,7 @@ Program {
                   value: BindingArrayPattern {
                     rest: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 21
                         index: 320
@@ -1687,7 +1687,7 @@ Program {
                       BindingIdentifier {
                         name: 'a4'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 12
                             index: 311
@@ -1702,7 +1702,7 @@ Program {
                         meta: PatternMeta {
                           optional: undefined
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 20
                               index: 319
@@ -1716,7 +1716,7 @@ Program {
                           }
                           typeAnnotation: StringKeywordTypeAnnotation {
                             loc: Object {
-                              filename: '..'
+                              filename: 'input.js'
                               end: Object {
                                 column: 20
                                 index: 319
@@ -1734,7 +1734,7 @@ Program {
                     ]
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 21
                       index: 320
@@ -1750,7 +1750,7 @@ Program {
               ]
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 27
                 index: 326
@@ -1765,7 +1765,7 @@ Program {
             init: ReferenceIdentifier {
               name: 'c'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 27
                   index: 326

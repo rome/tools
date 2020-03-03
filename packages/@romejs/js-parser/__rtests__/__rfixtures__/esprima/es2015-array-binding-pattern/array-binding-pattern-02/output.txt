@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 12
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 11
           index: 11
@@ -38,7 +38,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 10
             index: 10
@@ -53,7 +53,7 @@ Program {
         body: NumericLiteral {
           value: 0
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 10
               index: 10
@@ -74,7 +74,7 @@ Program {
           returnType: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 9
               index: 9
@@ -90,7 +90,7 @@ Program {
             BindingArrayPattern {
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 6
                   index: 6
@@ -106,7 +106,7 @@ Program {
                 BindingIdentifier {
                   name: 'a'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 3
                       index: 3
@@ -122,7 +122,7 @@ Program {
                 BindingIdentifier {
                   name: 'b'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 5
                       index: 5

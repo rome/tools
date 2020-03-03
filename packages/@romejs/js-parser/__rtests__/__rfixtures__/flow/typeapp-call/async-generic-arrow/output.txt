@@ -1,7 +1,7 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -11,7 +11,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 49
@@ -27,7 +27,7 @@ Program {
     CommentLine {
       value: ' @flow'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 8
           index: 8
@@ -44,7 +44,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 18
           index: 27
@@ -60,7 +60,7 @@ Program {
         CommentLine {
           value: ' @flow'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 8
               index: 8
@@ -76,7 +76,7 @@ Program {
       ]
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 17
             index: 26
@@ -92,7 +92,7 @@ Program {
           body: Array []
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 17
               index: 26
@@ -109,7 +109,7 @@ Program {
           CommentLine {
             value: ' @flow'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 8
                 index: 8
@@ -132,7 +132,7 @@ Program {
           returnType: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 15
               index: 24
@@ -146,7 +146,7 @@ Program {
           }
           typeParameters: FlowTypeParameterDeclaration {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 9
                 index: 18
@@ -165,7 +165,7 @@ Program {
                 default: undefined
                 variance: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 8
                     index: 17
@@ -185,7 +185,7 @@ Program {
     }
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 20
           index: 48
@@ -199,7 +199,7 @@ Program {
       }
       expression: ArrowFunctionExpression {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 20
             index: 48
@@ -215,7 +215,7 @@ Program {
           body: Array []
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 20
               index: 48
@@ -236,7 +236,7 @@ Program {
           rest: undefined
           thisType: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 18
               index: 46
@@ -252,7 +252,7 @@ Program {
             id: Identifier {
               name: 'T'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 14
                   index: 42
@@ -267,7 +267,7 @@ Program {
             }
             typeParameters: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 14
                 index: 42
@@ -282,7 +282,7 @@ Program {
           }
           typeParameters: FlowTypeParameterDeclaration {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 9
                 index: 37
@@ -301,7 +301,7 @@ Program {
                 default: undefined
                 variance: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 8
                     index: 36

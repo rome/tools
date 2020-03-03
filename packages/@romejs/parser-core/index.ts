@@ -489,7 +489,6 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
   getLoc(node: undefined | NodeBase): SourceLocation {
     if (node === undefined || node.loc === undefined) {
-      console.log(node);
       throw new Error('Tried to fetch node loc start but none found');
     } else {
       return node.loc;
@@ -607,5 +606,51 @@ export function createParser<T, Args extends Array<unknown>>(
     }
 
     return new klass(...args);
+  };
+}
+
+// Utility methods for dealing with nodes
+export function extractSourceLocationRangeFromNodes(
+  nodes: Array<{loc?: SourceLocation}>,
+): undefined | SourceLocation {
+  if (nodes.length === 0) {
+    return undefined;
+  }
+
+  let filename: undefined | string = undefined;
+  let start: undefined | Position = undefined;
+  let end: undefined | Position = undefined;
+
+  for (const node of nodes) {
+    const {loc} = node;
+    if (loc === undefined) {
+      continue;
+    }
+
+    if (start === undefined || loc.start.index < start.index) {
+      start = loc.start;
+    }
+
+    if (end === undefined || loc.end.index > end.index) {
+      end = loc.end;
+    }
+
+    if (filename === undefined) {
+      filename = loc.filename;
+    } else if (filename !== loc.filename) {
+      throw new Error(
+        `Mixed filenames in node, expected ${filename} but got ${loc.filename}`,
+      );
+    }
+  }
+
+  if (start === undefined || end === undefined) {
+    return undefined;
+  }
+
+  return {
+    filename,
+    start,
+    end,
   };
 }

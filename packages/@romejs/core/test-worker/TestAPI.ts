@@ -22,6 +22,10 @@ type AsyncFunc = () => undefined | Promise<void>;
 type SyncThrower = () => void;
 type ExpectedError = undefined | string | RegExp | Class<Error>;
 
+function removeCRLF(str: string): string {
+  return str.replace(/\r/g, '');
+}
+
 function formatExpectedError(expected: ExpectedError): string {
   if (typeof expected === 'string') {
     return JSON.stringify(expected);
@@ -160,8 +164,37 @@ export default class TestAPI {
         });
       }
     } else {
-      // If there was no truncation then display the full code of both values
+      if (expectedFormat.trim() === receivedFormat.trim()) {
+        advice.push({
+          type: 'log',
+          category: 'info',
+          message: 'Only difference is leading and trailing whitespace',
+        });
+      }
+
+      const expectedFormatNoCRLF = removeCRLF(expectedFormat);
+      const receivedFormatNoCRLF = removeCRLF(receivedFormat);
+      if (expectedFormat === receivedFormatNoCRLF) {
+        advice.push({
+          type: 'log',
+          category: 'info',
+          message:
+            'Identical except the received uses CRLF newlines, while the expected does not',
+        });
+      }
+      if (receivedFormat === expectedFormatNoCRLF) {
+        advice.push({
+          type: 'log',
+          category: 'info',
+          message:
+            'Identical except the expected uses CRLF newlines, while the received does not',
+        });
+      }
+
       if (!hasAllTruncated) {
+        // TODO detect newlines
+
+        // If there was no truncation then display the full code of both values
         advice.push({
           type: 'log',
           category: 'info',

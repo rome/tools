@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 29
       index: 29
@@ -24,7 +24,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 29
           index: 29
@@ -39,7 +39,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'const'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 29
             index: 29
@@ -56,7 +56,7 @@ Program {
             id: BindingIdentifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 7
                   index: 7
@@ -70,7 +70,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 12
                 index: 12
@@ -85,7 +85,7 @@ Program {
             init: NumericLiteral {
               value: 14
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 12
                   index: 12
@@ -103,7 +103,7 @@ Program {
             id: BindingIdentifier {
               name: 'y'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 15
                   index: 15
@@ -117,7 +117,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 19
                 index: 19
@@ -132,7 +132,7 @@ Program {
             init: NumericLiteral {
               value: 3
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 19
                   index: 19
@@ -150,7 +150,7 @@ Program {
             id: BindingIdentifier {
               name: 'z'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 22
@@ -164,7 +164,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 29
                 index: 29
@@ -179,7 +179,7 @@ Program {
             init: NumericLiteral {
               value: 1_977
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 29
                   index: 29

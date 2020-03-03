@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 40
       index: 40
@@ -27,7 +27,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 40
           index: 40
@@ -43,7 +43,7 @@ Program {
         name: JSXIdentifier {
           name: 'a'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 2
               index: 2
@@ -59,7 +59,7 @@ Program {
         selfClosing: false
         typeArguments: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 40
             index: 40
@@ -77,7 +77,7 @@ Program {
               name: JSXIdentifier {
                 name: 'foo'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 8
                     index: 8
@@ -91,7 +91,7 @@ Program {
                 }
               }
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 8
                   index: 8
@@ -106,7 +106,7 @@ Program {
               namespace: JSXIdentifier {
                 name: 'n'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 4
                     index: 4
@@ -123,7 +123,7 @@ Program {
             value: StringLiteral {
               value: 'bar'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 14
                   index: 14
@@ -137,7 +137,7 @@ Program {
               }
             }
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 14
                 index: 14
@@ -155,7 +155,7 @@ Program {
           JSXText {
             value: ' '
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 16
                 index: 16
@@ -170,7 +170,7 @@ Program {
           }
           JSXExpressionContainer {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 23
                 index: 23
@@ -185,7 +185,7 @@ Program {
             expression: ReferenceIdentifier {
               name: 'value'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 22
@@ -202,7 +202,7 @@ Program {
           JSXText {
             value: ' '
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 24
                 index: 24
@@ -219,7 +219,7 @@ Program {
             name: JSXIdentifier {
               name: 'b'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 26
                   index: 26
@@ -236,7 +236,7 @@ Program {
             selfClosing: false
             typeArguments: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 36
                 index: 36
@@ -253,7 +253,7 @@ Program {
                 name: JSXIdentifier {
                   name: 'c'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 29
                       index: 29
@@ -271,7 +271,7 @@ Program {
                 selfClosing: true
                 typeArguments: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 32
                     index: 32

@@ -115,7 +115,7 @@ async function _getFixtures(opts: {
   const fileContents: Map<string, FixtureFile> = new Map();
   for (const path of filenames) {
     fileContents.set(path.getBasename(), {
-      relative: path.relative(dir),
+      relative: dir.relative(path),
       absolute: path,
       content: await readFile(path),
     });

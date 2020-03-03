@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 1
       index: 45
@@ -26,7 +26,7 @@ Program {
       id: BindingIdentifier {
         name: 'fn'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 17
             index: 17
@@ -40,7 +40,7 @@ Program {
         }
       }
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 1
           index: 45
@@ -63,7 +63,7 @@ Program {
         thisType: undefined
         typeParameters: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 20
             index: 20
@@ -79,7 +79,7 @@ Program {
       body: BlockStatement {
         directives: Array []
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 1
             index: 45
@@ -94,7 +94,7 @@ Program {
         body: Array [
           ExpressionStatement {
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 21
                 index: 43
@@ -108,7 +108,7 @@ Program {
             }
             expression: CallExpression {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 20
                   index: 42
@@ -123,7 +123,7 @@ Program {
               callee: ReferenceIdentifier {
                 name: 'async'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 7
                     index: 29
@@ -140,7 +140,7 @@ Program {
                 AssignmentExpression {
                   operator: '='
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 19
                       index: 41
@@ -155,7 +155,7 @@ Program {
                   left: AssignmentIdentifier {
                     name: 'x'
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 9
                         index: 31
@@ -170,7 +170,7 @@ Program {
                   }
                   right: AwaitExpression {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 19
                         index: 41
@@ -185,7 +185,7 @@ Program {
                     argument: NumericLiteral {
                       value: 2
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 19
                           index: 41

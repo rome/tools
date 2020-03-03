@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: true
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 34
       index: 34
@@ -27,7 +27,7 @@ Program {
   body: Array [
     VariableDeclarationStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 34
           index: 34
@@ -42,7 +42,7 @@ Program {
       declaration: VariableDeclaration {
         kind: 'var'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 34
             index: 34
@@ -59,7 +59,7 @@ Program {
             id: BindingIdentifier {
               name: 'a'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 34
                   index: 34
@@ -74,7 +74,7 @@ Program {
               meta: PatternMeta {
                 definite: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 34
                     index: 34
@@ -90,7 +90,7 @@ Program {
                   exact: false
                   inexact: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 34
                       index: 34
@@ -108,7 +108,7 @@ Program {
                       key: Identifier {
                         name: 'subObj'
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 14
                             index: 14
@@ -123,7 +123,7 @@ Program {
                       }
                       value: FlowNullableTypeAnnotation {
                         loc: Object {
-                          filename: '..'
+                          filename: 'input.js'
                           end: Object {
                             column: 33
                             index: 33
@@ -139,7 +139,7 @@ Program {
                           exact: false
                           inexact: undefined
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 33
                               index: 33
@@ -157,7 +157,7 @@ Program {
                               key: Identifier {
                                 name: 'strVal'
                                 loc: Object {
-                                  filename: '..'
+                                  filename: 'input.js'
                                   end: Object {
                                     column: 24
                                     index: 24
@@ -172,7 +172,7 @@ Program {
                               }
                               value: StringKeywordTypeAnnotation {
                                 loc: Object {
-                                  filename: '..'
+                                  filename: 'input.js'
                                   end: Object {
                                     column: 32
                                     index: 32
@@ -190,7 +190,7 @@ Program {
                               static: false
                               variance: undefined
                               loc: Object {
-                                filename: '..'
+                                filename: 'input.js'
                                 end: Object {
                                   column: 32
                                   index: 32
@@ -211,7 +211,7 @@ Program {
                       static: false
                       variance: undefined
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 33
                           index: 33
@@ -230,7 +230,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 34
                 index: 34

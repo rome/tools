@@ -1,14 +1,14 @@
 Program {
   comments: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 23
       index: 23
@@ -24,7 +24,7 @@ Program {
     Object {
       advice: Array []
       category: 'parse/js'
-      filename: '..'
+      filename: 'input.js'
       message: 'Unexpected token, expected ","'
       mtime: undefined
       sourceType: 'script'
@@ -44,7 +44,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 23
           index: 23
@@ -59,7 +59,7 @@ Program {
       expression: AssignmentExpression {
         operator: '='
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 23
             index: 23
@@ -74,7 +74,7 @@ Program {
         right: ReferenceIdentifier {
           name: 'arr'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 23
               index: 23
@@ -90,7 +90,7 @@ Program {
         left: AssignmentArrayPattern {
           rest: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 17
               index: 17
@@ -106,7 +106,7 @@ Program {
             AssignmentIdentifier {
               name: 'a'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 2
                   index: 2
@@ -122,7 +122,7 @@ Program {
             AssignmentObjectPattern {
               rest: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 15
                   index: 15
@@ -140,7 +140,7 @@ Program {
                     value: Identifier {
                       name: 'b'
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 6
                           index: 6
@@ -155,7 +155,7 @@ Program {
                     }
                     variance: undefined
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 6
                         index: 6
@@ -170,7 +170,7 @@ Program {
                   }
                   value: AssignmentAssignmentPattern {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.js'
                       end: Object {
                         column: 14
                         index: 14
@@ -185,7 +185,7 @@ Program {
                     right: NumericLiteral {
                       value: 1
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 14
                           index: 14
@@ -201,7 +201,7 @@ Program {
                     left: AssignmentObjectPattern {
                       rest: undefined
                       loc: Object {
-                        filename: '..'
+                        filename: 'input.js'
                         end: Object {
                           column: 10
                           index: 10
@@ -219,7 +219,7 @@ Program {
                             value: Identifier {
                               name: 'c'
                               loc: Object {
-                                filename: '..'
+                                filename: 'input.js'
                                 end: Object {
                                   column: 10
                                   index: 10
@@ -234,7 +234,7 @@ Program {
                             }
                             variance: undefined
                             loc: Object {
-                              filename: '..'
+                              filename: 'input.js'
                               end: Object {
                                 column: 10
                                 index: 10
@@ -250,7 +250,7 @@ Program {
                           value: AssignmentIdentifier {
                             name: 'c'
                             loc: Object {
-                              filename: '..'
+                              filename: 'input.js'
                               end: Object {
                                 column: 10
                                 index: 10
@@ -264,7 +264,7 @@ Program {
                             }
                           }
                           loc: Object {
-                            filename: '..'
+                            filename: 'input.js'
                             end: Object {
                               column: 10
                               index: 10
@@ -281,7 +281,7 @@ Program {
                     }
                   }
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.js'
                     end: Object {
                       column: 14
                       index: 14
@@ -299,7 +299,7 @@ Program {
             AssignmentIdentifier {
               name: 'INVALID_PLACEHOLDER'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 16
                   index: 16

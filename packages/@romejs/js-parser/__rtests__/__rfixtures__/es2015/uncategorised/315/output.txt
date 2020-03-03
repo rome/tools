@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 33
       index: 33
@@ -25,7 +25,7 @@ Program {
     ForOfStatement {
       await: false
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 33
           index: 33
@@ -40,7 +40,7 @@ Program {
       right: ReferenceIdentifier {
         name: 'list'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 20
             index: 20
@@ -56,7 +56,7 @@ Program {
       left: VariableDeclaration {
         kind: 'const'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 12
             index: 12
@@ -73,7 +73,7 @@ Program {
             id: BindingIdentifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 12
                   index: 12
@@ -88,7 +88,7 @@ Program {
             }
             init: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 12
                 index: 12
@@ -105,7 +105,7 @@ Program {
       }
       body: ExpressionStatement {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 33
             index: 33
@@ -119,7 +119,7 @@ Program {
         }
         expression: CallExpression {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 32
               index: 32
@@ -134,7 +134,7 @@ Program {
           callee: ReferenceIdentifier {
             name: 'process'
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 29
                 index: 29
@@ -151,7 +151,7 @@ Program {
             ReferenceIdentifier {
               name: 'x'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 31
                   index: 31

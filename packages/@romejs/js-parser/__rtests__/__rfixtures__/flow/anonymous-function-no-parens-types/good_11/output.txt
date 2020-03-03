@@ -2,7 +2,7 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 37
@@ -29,7 +29,7 @@ Program {
       id: BindingIdentifier {
         name: 'A'
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 6
             index: 6
@@ -44,7 +44,7 @@ Program {
       }
       typeParameters: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 36
           index: 36
@@ -58,7 +58,7 @@ Program {
       }
       right: FlowFunctionTypeAnnotation {
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 35
             index: 35
@@ -72,7 +72,7 @@ Program {
         }
         returnType: UnionTypeAnnotation {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 35
               index: 35
@@ -87,7 +87,7 @@ Program {
           types: Array [
             BooleanKeywordTypeAnnotation {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 26
                   index: 26
@@ -102,7 +102,7 @@ Program {
             }
             NumberKeywordTypeAnnotation {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 35
                   index: 35
@@ -121,7 +121,7 @@ Program {
           FlowFunctionTypeParam {
             name: undefined
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 18
                 index: 18
@@ -136,7 +136,7 @@ Program {
             meta: PatternMeta {
               optional: false
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 18
                   index: 18
@@ -150,7 +150,7 @@ Program {
               }
               typeAnnotation: StringKeywordTypeAnnotation {
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 15
                     index: 15

@@ -1,14 +1,14 @@
 Program {
   comments: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.ts'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
   syntax: Array ['ts']
   loc: Object {
-    filename: '..'
+    filename: 'input.ts'
     end: Object {
       column: 0
       index: 239
@@ -24,7 +24,7 @@ Program {
     Object {
       advice: Array []
       category: 'parse/js'
-      filename: '..'
+      filename: 'input.ts'
       message: 'Unexpected token, expected "("'
       mtime: undefined
       sourceType: 'module'
@@ -46,7 +46,7 @@ Program {
       exportKind: 'value'
       specifiers: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 31
           index: 31
@@ -61,7 +61,7 @@ Program {
       declaration: VariableDeclarationStatement {
         declare: true
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 31
             index: 31
@@ -76,7 +76,7 @@ Program {
         declaration: VariableDeclaration {
           kind: 'const'
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 31
               index: 31
@@ -93,7 +93,7 @@ Program {
               id: BindingIdentifier {
                 name: 'x'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 30
                     index: 30
@@ -108,7 +108,7 @@ Program {
                 meta: PatternMeta {
                   definite: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 30
                       index: 30
@@ -122,7 +122,7 @@ Program {
                   }
                   typeAnnotation: NumberKeywordTypeAnnotation {
                     loc: Object {
-                      filename: '..'
+                      filename: 'input.ts'
                       end: Object {
                         column: 30
                         index: 30
@@ -139,7 +139,7 @@ Program {
               }
               init: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 30
                   index: 30
@@ -160,7 +160,7 @@ Program {
       exportKind: 'value'
       specifiers: undefined
       loc: Object {
-        filename: '..'
+        filename: 'input.ts'
         end: Object {
           column: 26
           index: 238
@@ -176,7 +176,7 @@ Program {
         id: BindingIdentifier {
           name: 'function'
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 23
               index: 55
@@ -191,7 +191,7 @@ Program {
         }
         declare: true
         loc: Object {
-          filename: '..'
+          filename: 'input.ts'
           end: Object {
             column: 26
             index: 238
@@ -213,7 +213,7 @@ Program {
           thisType: undefined
           typeParameters: undefined
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 25
               index: 57
@@ -229,7 +229,7 @@ Program {
             BindingIdentifier {
               name: 'f'
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 25
                   index: 57
@@ -245,7 +245,7 @@ Program {
                 optional: undefined
                 typeAnnotation: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 25
                     index: 57
@@ -264,7 +264,7 @@ Program {
         body: BlockStatement {
           directives: Array []
           loc: Object {
-            filename: '..'
+            filename: 'input.ts'
             end: Object {
               column: 26
               index: 238
@@ -279,7 +279,7 @@ Program {
           body: Array [
             ExpressionStatement {
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 27
                   index: 59
@@ -294,7 +294,7 @@ Program {
               expression: ReferenceIdentifier {
                 name: 'INVALID_PLACEHOLDER'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 26
                     index: 58
@@ -310,7 +310,7 @@ Program {
             }
             ExpressionStatement {
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 28
                   index: 60
@@ -325,7 +325,7 @@ Program {
               expression: ReferenceIdentifier {
                 name: 'INVALID_PLACEHOLDER'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 28
                     index: 60
@@ -341,7 +341,7 @@ Program {
             }
             ExpressionStatement {
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 34
                   index: 66
@@ -357,7 +357,7 @@ Program {
                 operator: 'void'
                 prefix: true
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 34
                     index: 66
@@ -372,7 +372,7 @@ Program {
                 argument: ReferenceIdentifier {
                   name: 'INVALID_PLACEHOLDER'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 34
                       index: 66
@@ -391,7 +391,7 @@ Program {
               exportKind: 'value'
               specifiers: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 25
                   index: 92
@@ -407,7 +407,7 @@ Program {
                 id: BindingIdentifier {
                   name: 'C'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 22
                       index: 89
@@ -422,7 +422,7 @@ Program {
                 }
                 declare: true
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 25
                     index: 92
@@ -441,7 +441,7 @@ Program {
                   superTypeParameters: undefined
                   typeParameters: undefined
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 25
                       index: 92
@@ -460,7 +460,7 @@ Program {
               exportKind: 'value'
               specifiers: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 29
                   index: 122
@@ -476,7 +476,7 @@ Program {
                 id: BindingIdentifier {
                   name: 'I'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 26
                       index: 119
@@ -493,7 +493,7 @@ Program {
                 extends: undefined
                 typeParameters: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 29
                     index: 122
@@ -508,7 +508,7 @@ Program {
                 body: TSInterfaceBody {
                   body: Array []
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 29
                       index: 122
@@ -527,7 +527,7 @@ Program {
               exportKind: 'value'
               specifiers: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 31
                   index: 154
@@ -543,7 +543,7 @@ Program {
                 id: BindingIdentifier {
                   name: 'T'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 21
                       index: 144
@@ -559,7 +559,7 @@ Program {
                 declare: true
                 typeParameters: undefined
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 31
                     index: 154
@@ -573,7 +573,7 @@ Program {
                 }
                 right: NumberKeywordTypeAnnotation {
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 30
                       index: 153
@@ -592,7 +592,7 @@ Program {
               exportKind: 'value'
               specifiers: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 26
                   index: 181
@@ -608,7 +608,7 @@ Program {
                 id: BindingIdentifier {
                   name: 'M'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 23
                       index: 178
@@ -623,7 +623,7 @@ Program {
                 }
                 declare: true
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 26
                     index: 181
@@ -638,7 +638,7 @@ Program {
                 body: TSModuleBlock {
                   body: Array []
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 26
                       index: 181
@@ -657,7 +657,7 @@ Program {
               exportKind: 'value'
               specifiers: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 29
                   index: 211
@@ -673,7 +673,7 @@ Program {
                 id: BindingIdentifier {
                   name: 'N'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 26
                       index: 208
@@ -688,7 +688,7 @@ Program {
                 }
                 declare: true
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 29
                     index: 211
@@ -703,7 +703,7 @@ Program {
                 body: TSModuleBlock {
                   body: Array []
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 29
                       index: 211
@@ -722,7 +722,7 @@ Program {
               exportKind: 'value'
               specifiers: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.ts'
                 end: Object {
                   column: 26
                   index: 238
@@ -738,7 +738,7 @@ Program {
                 id: BindingIdentifier {
                   name: 'foo'
                   loc: Object {
-                    filename: '..'
+                    filename: 'input.ts'
                     end: Object {
                       column: 23
                       index: 235
@@ -755,7 +755,7 @@ Program {
                 declare: true
                 members: Array []
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.ts'
                   end: Object {
                     column: 26
                     index: 238

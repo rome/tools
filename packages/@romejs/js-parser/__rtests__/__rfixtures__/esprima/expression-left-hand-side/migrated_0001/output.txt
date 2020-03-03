@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 13
@@ -24,7 +24,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 12
           index: 12
@@ -41,7 +41,7 @@ Program {
         optional: undefined
         typeArguments: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 12
             index: 12
@@ -56,7 +56,7 @@ Program {
         callee: ReferenceIdentifier {
           name: 'Button'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 10
               index: 10

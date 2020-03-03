@@ -2,14 +2,14 @@ Program {
   comments: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 31
@@ -25,7 +25,7 @@ Program {
     BlockStatement {
       directives: Array []
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 30
           index: 30
@@ -40,7 +40,7 @@ Program {
       body: Array [
         DoWhileStatement {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 22
               index: 22
@@ -55,7 +55,7 @@ Program {
           test: BooleanLiteral {
             value: false
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 21
                 index: 21
@@ -72,7 +72,7 @@ Program {
             body: Array []
             directives: Array []
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 8
                 index: 8
@@ -88,7 +88,7 @@ Program {
         }
         ExpressionStatement {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 28
               index: 28
@@ -103,7 +103,7 @@ Program {
           expression: BooleanLiteral {
             value: false
             loc: Object {
-              filename: '..'
+              filename: 'input.js'
               end: Object {
                 column: 28
                 index: 28

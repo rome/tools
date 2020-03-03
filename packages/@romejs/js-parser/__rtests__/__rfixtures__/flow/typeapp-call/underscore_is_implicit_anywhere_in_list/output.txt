@@ -1,7 +1,7 @@
 Program {
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -11,7 +11,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 59
@@ -27,7 +27,7 @@ Program {
     CommentLine {
       value: '@flow'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 7
           index: 7
@@ -44,7 +44,7 @@ Program {
   body: Array [
     ExpressionStatement {
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 50
           index: 58
@@ -60,7 +60,7 @@ Program {
         CommentLine {
           value: '@flow'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 7
               index: 7
@@ -78,7 +78,7 @@ Program {
         arguments: Array []
         leadingComments: undefined
         loc: Object {
-          filename: '..'
+          filename: 'input.js'
           end: Object {
             column: 49
             index: 57
@@ -93,7 +93,7 @@ Program {
         callee: ReferenceIdentifier {
           name: 'test'
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 4
               index: 12
@@ -109,7 +109,7 @@ Program {
             CommentLine {
               value: '@flow'
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 7
                   index: 7
@@ -126,7 +126,7 @@ Program {
         }
         typeArguments: FlowTypeParameterInstantiation {
           loc: Object {
-            filename: '..'
+            filename: 'input.js'
             end: Object {
               column: 47
               index: 55
@@ -141,7 +141,7 @@ Program {
           params: Array [
             NumberKeywordTypeAnnotation {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 11
                   index: 19
@@ -158,7 +158,7 @@ Program {
               id: Identifier {
                 name: '_'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 14
                     index: 22
@@ -173,7 +173,7 @@ Program {
               }
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 14
                   index: 22
@@ -188,7 +188,7 @@ Program {
             }
             StringKeywordTypeAnnotation {
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 22
                   index: 30
@@ -205,7 +205,7 @@ Program {
               id: Identifier {
                 name: '_'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 25
                     index: 33
@@ -220,7 +220,7 @@ Program {
               }
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 25
                   index: 33
@@ -237,7 +237,7 @@ Program {
               id: Identifier {
                 name: '_'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 28
                     index: 36
@@ -252,7 +252,7 @@ Program {
               }
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 28
                   index: 36
@@ -269,7 +269,7 @@ Program {
               id: Identifier {
                 name: '_'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 31
                     index: 39
@@ -284,7 +284,7 @@ Program {
               }
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 31
                   index: 39
@@ -301,7 +301,7 @@ Program {
               id: Identifier {
                 name: 'Foo'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 36
                     index: 44
@@ -316,7 +316,7 @@ Program {
               }
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 36
                   index: 44
@@ -333,7 +333,7 @@ Program {
               id: Identifier {
                 name: 'Bar'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 41
                     index: 49
@@ -348,7 +348,7 @@ Program {
               }
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 41
                   index: 49
@@ -365,7 +365,7 @@ Program {
               id: Identifier {
                 name: 'Baz'
                 loc: Object {
-                  filename: '..'
+                  filename: 'input.js'
                   end: Object {
                     column: 46
                     index: 54
@@ -380,7 +380,7 @@ Program {
               }
               typeParameters: undefined
               loc: Object {
-                filename: '..'
+                filename: 'input.js'
                 end: Object {
                   column: 46
                   index: 54

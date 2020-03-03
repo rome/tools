@@ -2,7 +2,7 @@ Program {
   body: Array []
   diagnostics: Array []
   directives: Array []
-  filename: '..'
+  filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
@@ -12,7 +12,7 @@ Program {
     'flow'
   ]
   loc: Object {
-    filename: '..'
+    filename: 'input.js'
     end: Object {
       column: 0
       index: 88
@@ -28,7 +28,7 @@ Program {
     CommentLine {
       value: ' TODO: declare export syntax'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 30
           index: 30
@@ -44,7 +44,7 @@ Program {
     CommentLine {
       value: ' declare export function foo(x: number, string): void;'
       loc: Object {
-        filename: '..'
+        filename: 'input.js'
         end: Object {
           column: 56
           index: 87
