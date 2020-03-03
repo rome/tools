@@ -87,28 +87,28 @@ export default class DiagnosticsProcessor {
     return this.diagnostics.length > 0;
   }
 
-  addFilter(diag: DiagnosticFilter) {
-    this.filters.push(diag);
+  addFilters(filters: Array<DiagnosticFilter>) {
+    this.filters = this.filters.concat(filters);
+  }
+
+  addFilter(filter: DiagnosticFilter) {
+    this.filters.push(filter);
   }
 
   doesMatchFilter(diag: PartialDiagnostic): boolean {
     for (const filter of this.filters) {
-      // message
       if (filter.message !== undefined && filter.message !== diag.message) {
         continue;
       }
 
-      // filename
       if (filter.filename !== undefined && filter.filename !== diag.filename) {
         continue;
       }
 
-      // category
       if (filter.category !== undefined && filter.category !== diag.category) {
         continue;
       }
 
-      // start
       if (filter.start !== undefined && diag.start !== undefined) {
         if (
           filter.start.line !== diag.start.line ||
@@ -116,6 +116,14 @@ export default class DiagnosticsProcessor {
         ) {
           continue;
         }
+      }
+
+      if (
+        filter.line !== undefined &&
+        diag.start !== undefined &&
+        diag.start.line !== filter.line
+      ) {
+        continue;
       }
 
       if (filter.test !== undefined && !filter.test(diag)) {

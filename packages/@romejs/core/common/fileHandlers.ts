@@ -9,7 +9,7 @@ import {ProjectConfig} from '@romejs/project';
 import {FileReference} from '@romejs/core';
 import {PrefetchedModuleSignatures} from '../common/bridges/WorkerBridge';
 import Worker, {ParseResult} from '../worker/Worker';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {PartialDiagnostics, DiagnosticFilterJSON} from '@romejs/diagnostics';
 import * as compiler from '@romejs/js-compiler';
 import {check as typeCheck} from '@romejs/js-analysis';
 import {parseJSON, stringifyJSON, consumeJSONExtra} from '@romejs/codec-json';
@@ -86,6 +86,7 @@ export type ExtensionLintResult = {
   sourceText: string;
   diagnostics: PartialDiagnostics;
   formatted: string;
+  filters: Array<DiagnosticFilterJSON>;
 };
 
 export type ExtensionHandlerMethodInfo = {
@@ -209,6 +210,7 @@ const jsonHandler: ExtensionHandler = {
     return {
       sourceText,
       diagnostics: [],
+      filters: [],
       formatted,
     };
   },
@@ -313,6 +315,7 @@ function buildJSHandler(
         {
           formatted: res.getCode(),
           sourceText,
+          filters: compiler.extractSuppressionsFromProgram(ast),
           diagnostics: ast.diagnostics,
         },
         generated,
@@ -362,6 +365,7 @@ function buildJSHandler(
 
       return worker.api.interceptAndAddGeneratedToDiagnostics(
         {
+          filters: res.filters,
           diagnostics,
           sourceText,
           formatted: res.src,

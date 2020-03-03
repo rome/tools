@@ -30,6 +30,7 @@ export * from './scope/bindings';
 export * from './constants';
 export {getPrefixedNamespace as getPrefixedBundleNamespace} from './transforms/compileForBundle/_utils';
 export {default as createHook} from './api/createHook';
+export {extractSuppressionsFromProgram} from './suppressions';
 
 // types
 export {LintResult} from './api/lint';

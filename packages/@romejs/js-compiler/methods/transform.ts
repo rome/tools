@@ -6,15 +6,17 @@
  */
 
 import {Program} from '@romejs/js-ast';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {PartialDiagnostics, DiagnosticFilterJSON} from '@romejs/diagnostics';
 import {TransformRequest, TransformVisitors} from '../types';
 import {program} from '@romejs/js-ast';
 import {stageTransforms, stageOrder, hookVisitors} from '../transforms/index';
 import {Cache} from '@romejs/js-compiler';
 import Context from '../lib/Context';
+import {extractSuppressionsFromProgram} from '../suppressions';
 
 type TransformResult = {
   ast: Program;
+  filters: Array<DiagnosticFilterJSON>;
   diagnostics: PartialDiagnostics;
   cacheDependencies: Array<string>;
 };
@@ -73,6 +75,7 @@ export default async function transform(
   const compiledAst = program.assert(context.reduce(ast, visitors));
 
   const res: TransformResult = {
+    filters: extractSuppressionsFromProgram(ast),
     diagnostics: [...prevStageDiagnostics, ...context.diagnostics],
     cacheDependencies: [
       ...prevStageCacheDeps,

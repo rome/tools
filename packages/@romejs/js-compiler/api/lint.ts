@@ -6,15 +6,17 @@
  */
 
 import {Program} from '@romejs/js-ast';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {PartialDiagnostics, DiagnosticFilterJSON} from '@romejs/diagnostics';
 import {TransformRequest} from '../types';
 import {lintTransforms} from '../transforms/lint/index';
 import {program} from '@romejs/js-ast';
 import {Cache, Context} from '@romejs/js-compiler';
 import {generateJS} from '@romejs/js-generator';
+import {extractSuppressionsFromProgram} from '../suppressions';
 
 export type LintResult = {
   diagnostics: PartialDiagnostics;
+  filters: Array<DiagnosticFilterJSON>;
   src: string;
   ast: Program;
 };
@@ -27,6 +29,7 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
   if (!project.config.lint.enabled) {
     return {
       diagnostics: [],
+      filters: extractSuppressionsFromProgram(ast),
       src,
       ast,
     };
@@ -60,6 +63,7 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
   }
 
   const result: LintResult = {
+    filters: extractSuppressionsFromProgram(ast),
     ast: newAst,
     diagnostics: [...ast.diagnostics, ...context.diagnostics],
     src: formattedCode,

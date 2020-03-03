@@ -6,7 +6,7 @@
  */
 
 import {Mappings} from '@romejs/codec-source-map';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {PartialDiagnostics, DiagnosticFilterJSON} from '@romejs/diagnostics';
 import {CompileRequest} from '../types';
 import {Cache} from '@romejs/js-compiler';
 import {generateJS} from '@romejs/js-generator';
@@ -18,6 +18,7 @@ export type CompileResult = {
   src: string;
   mappings: Mappings;
   diagnostics: PartialDiagnostics;
+  filters: Array<DiagnosticFilterJSON>;
   cacheDependencies: Array<string>;
 };
 
@@ -45,9 +46,12 @@ export default async function compile(
   }
 
   const {filename} = ast;
-  const {ast: transformedAst, diagnostics, cacheDependencies} = await transform(
-    req,
-  );
+  const {
+    ast: transformedAst,
+    diagnostics,
+    filters,
+    cacheDependencies,
+  } = await transform(req);
   const generator = generateJS(
     transformedAst,
     {
@@ -65,6 +69,7 @@ export default async function compile(
     src,
     diagnostics: [...lintDiagnostics, ...diagnostics],
     cacheDependencies,
+    filters,
   };
   compileCache.set(query, res);
 
