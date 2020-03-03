@@ -21,6 +21,7 @@ import unusedVariables from './unusedVariables';
 import noUnsafeFinally from './noUnsafeFinally';
 import noDeleteVars from './noDeleteVars';
 import noTemplateCurlyInString from './noTemplateCurlyInString';
+import noImportAssign from './noImportAssign';
 
 export const lintTransforms = [
   defaultExportSameBasename,
@@ -39,4 +40,5 @@ export const lintTransforms = [
   noUnsafeFinally,
   noDeleteVars,
   noTemplateCurlyInString,
+  noImportAssign,
 ];
