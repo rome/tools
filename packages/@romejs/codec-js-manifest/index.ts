@@ -312,7 +312,7 @@ function normalizePerson(consumer: Consumer, loose: boolean): ManifestPerson {
     }
 
     const person: ManifestPerson = {
-      name: consumer.get('name').asString(),
+      name: consumer.get('name').asString(loose ? '' : undefined),
       email: consumer.get('email').asStringOrVoid(),
       twitter: consumer.get('twitter').asStringOrVoid(),
       github,
