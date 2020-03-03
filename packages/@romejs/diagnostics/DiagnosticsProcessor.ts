@@ -241,7 +241,9 @@ export default class DiagnosticsProcessor {
     return [...this.unfilteredDiagnostics];
   }
 
-  getCompleteUnfilteredDiagnostics(): Diagnostics {
+  getCompleteUnfilteredDiagnostics(
+    markupOptions: MarkupFormatOptions = {},
+  ): Diagnostics {
     return normalizeDiagnostics(this.unfilteredDiagnostics, markupOptions);
   }
 
