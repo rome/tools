@@ -50,6 +50,7 @@ export default class DiagnosticsProcessor {
     this.unique =
       options.unique === undefined ? DEFAULT_UNIQUE : options.unique;
     this.throwAfter = undefined;
+    this.unfilteredDiagnostics = [];
   }
 
   static createImmediateThrower(
@@ -66,6 +67,7 @@ export default class DiagnosticsProcessor {
 
   unique: UniqueRules;
   includedKeys: Set<string>;
+  unfilteredDiagnostics: PartialDiagnostics;
   diagnostics: PartialDiagnostics;
   filters: Array<DiagnosticFilterWithTest>;
   options: CollectorOptions;
@@ -196,6 +198,8 @@ export default class DiagnosticsProcessor {
 
     // Filter diagnostics
     diagLoop: for (const diag of diags) {
+      this.unfilteredDiagnostics.push(diag);
+
       if (max !== undefined && this.diagnostics.length > max) {
         break;
       }
@@ -231,6 +235,14 @@ export default class DiagnosticsProcessor {
     }
 
     return added;
+  }
+
+  getUnfilteredDiagnostics(): PartialDiagnostics {
+    return [...this.unfilteredDiagnostics];
+  }
+
+  getCompleteUnfilteredDiagnostics(): Diagnostics {
+    return normalizeDiagnostics(this.unfilteredDiagnostics, markupOptions);
   }
 
   getPartialDiagnostics(): PartialDiagnostics {

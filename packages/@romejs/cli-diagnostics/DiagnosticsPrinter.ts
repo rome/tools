@@ -367,11 +367,13 @@ export default class DiagnosticsPrinter extends Error {
   }
 
   print() {
-    const filteredDiagnostics = this.filterDiagnostics();
+    let filteredDiagnostics = this.filterDiagnostics();
+
     if (filteredDiagnostics.length === 0) {
       this.reporter.error(
-        'No diagnostics provided. They have likely all been filtered.',
+        'No diagnostics provided. They have likely all been filtered but this operation does not support suppressions. Showing complete diagnostics instead.',
       );
+      filteredDiagnostics = this.processor.getCompleteUnfilteredDiagnostics();
     }
 
     this.fetchFileSources(filteredDiagnostics);
