@@ -7,7 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
-import { getBindingIdentifiers } from '@romejs/js-ast-utils';
+import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 
 export default {
   name: 'noDupeArgs',
@@ -19,7 +19,6 @@ export default {
 
       for (const param of node.params) {
         for (const {name} of getBindingIdentifiers(param)) {
-
           if (uniqueIdentifiers.has(name)) {
             context.addNodeDiagnostic(param, {
               category: 'lint/noDupeArgs',
