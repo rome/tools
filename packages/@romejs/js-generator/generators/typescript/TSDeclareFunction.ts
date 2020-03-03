@@ -11,5 +11,12 @@ import {Generator} from '@romejs/js-generator';
 export default function TSDeclareFunction(generator: Generator, node: AnyNode) {
   node = tsDeclareFunction.assert(node);
 
-  throw new Error('unimplemented');
+  if (node.declare) {
+    generator.word('declare');
+    generator.space();
+  }
+
+  generator.print(node.id);
+  generator.print(node.head);
+  generator.token(';');
 }

@@ -10,6 +10,6 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSArrayType(generator: Generator, node: AnyNode) {
   node = tsArrayType.assert(node);
-  tsArrayType.assert(node);
-  throw new Error('unimplemented');
+  generator.print(node.elementType, node);
+  generator.token('[]');
 }

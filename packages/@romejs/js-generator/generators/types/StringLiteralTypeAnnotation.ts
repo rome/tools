@@ -11,13 +11,13 @@ import {
   stringLiteralTypeAnnotation,
   AnyNode,
 } from '@romejs/js-ast';
+import StringLiteral from '../literals/StringLiteral';
 
 export default function StringLiteralTypeAnnotation(
   generator: Generator,
   node: AnyNode,
+  parent: AnyNode,
 ) {
   node = stringLiteralTypeAnnotation.assert(node);
-
-  stringLiteralTypeAnnotation.assert(node);
-  throw new Error('unimplemented');
+  StringLiteral(generator, node, parent);
 }

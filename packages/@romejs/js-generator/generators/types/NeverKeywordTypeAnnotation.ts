@@ -5,18 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  NeverKeywordTypeAnnotation,
-  neverKeywordTypeAnnotation,
-  AnyNode,
-} from '@romejs/js-ast';
+import {NeverKeywordTypeAnnotation} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
 
-export default function NeverKeywordTypeAnnotation(
-  generator: Generator,
-  node: AnyNode,
-) {
-  node = neverKeywordTypeAnnotation.assert(node);
-
-  throw new Error('unimplemented');
+export default function NeverKeywordTypeAnnotation(generator: Generator) {
+  generator.word('never');
 }

@@ -10,6 +10,7 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSQualifiedName(generator: Generator, node: AnyNode) {
   node = tsQualifiedName.assert(node);
-
-  throw new Error('unimplemented');
+  generator.print(node.left, node);
+  generator.token('.');
+  generator.print(node.right, node);
 }

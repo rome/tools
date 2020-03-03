@@ -5,18 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  UndefinedKeywordTypeAnnotation,
-  undefinedKeywordTypeAnnotation,
-  AnyNode,
-} from '@romejs/js-ast';
+import {UndefinedKeywordTypeAnnotation} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
 
-export default function UndefinedKeywordTypeAnnotation(
-  generator: Generator,
-  node: AnyNode,
-) {
-  node = undefinedKeywordTypeAnnotation.assert(node);
-
-  throw new Error('unimplemented');
+export default function UndefinedKeywordTypeAnnotation(generator: Generator) {
+  generator.word('undefined');
 }

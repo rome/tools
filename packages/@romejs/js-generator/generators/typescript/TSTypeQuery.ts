@@ -10,6 +10,7 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSTypeQuery(generator: Generator, node: AnyNode) {
   node = tsTypeQuery.assert(node);
-  tsTypeQuery.assert(node);
-  throw new Error('unimplemented');
+  generator.word('typeof');
+  generator.space();
+  generator.print(node.exprName);
 }

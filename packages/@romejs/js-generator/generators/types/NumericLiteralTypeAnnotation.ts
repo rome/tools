@@ -17,7 +17,5 @@ export default function NumericLiteralTypeAnnotation(
   node: AnyNode,
 ) {
   node = numericLiteralTypeAnnotation.assert(node);
-
-  numericLiteralTypeAnnotation.assert(node);
-  throw new Error('unimplemented');
+  generator.number(String(node.value));
 }

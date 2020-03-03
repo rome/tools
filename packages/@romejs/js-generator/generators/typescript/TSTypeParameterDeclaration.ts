@@ -17,6 +17,7 @@ export default function TSTypeParameterDeclaration(
   node: AnyNode,
 ) {
   node = tsTypeParameterDeclaration.assert(node);
-
-  throw new Error('unimplemented');
+  generator.token('<');
+  generator.printCommaList(node.params, node, {});
+  generator.token('>');
 }

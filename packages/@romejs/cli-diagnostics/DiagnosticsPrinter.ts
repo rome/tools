@@ -129,6 +129,7 @@ export default class DiagnosticsPrinter extends Error {
       opts.readFile === undefined ? readDiagnosticsFileLocal : opts.readFile;
     this.cwd = cwd === undefined ? createAbsoluteFilePath(process.cwd()) : cwd;
     this.processor = new DiagnosticsProcessor({
+      filters: opts.filters,
       origins: opts.origins,
     });
 
@@ -367,6 +368,12 @@ export default class DiagnosticsPrinter extends Error {
 
   print() {
     const filteredDiagnostics = this.filterDiagnostics();
+    if (filteredDiagnostics.length === 0) {
+      this.reporter.error(
+        'No diagnostics provided. They have likely all been filtered.',
+      );
+    }
+
     this.fetchFileSources(filteredDiagnostics);
     this.displayDiagnostics(filteredDiagnostics);
   }

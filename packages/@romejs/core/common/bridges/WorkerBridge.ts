@@ -12,7 +12,7 @@ import {Program, ConstSourceType} from '@romejs/js-ast';
 import {CompileResult, TransformStageName} from '@romejs/js-compiler';
 import {Profile} from '@romejs/v8';
 import {ProfilingStartData} from './MasterBridge';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {PartialDiagnostics, DiagnosticFilters} from '@romejs/diagnostics';
 import {ProjectConfigJSON} from '@romejs/project';
 import {DiagnosticsError} from '@romejs/diagnostics';
 import {Bridge} from '@romejs/events';
@@ -95,6 +95,11 @@ export type WorkerFormatResult = {
   diagnostics: PartialDiagnostics;
 };
 
+export type WorkerLintResult = {
+  diagnostics: PartialDiagnostics;
+  filters: DiagnosticFilters;
+};
+
 export default class WorkerBridge extends Bridge {
   log = this.createEvent<string, void>({
     name: 'log',
@@ -163,7 +168,7 @@ export default class WorkerBridge extends Bridge {
       prefetchedModuleSignatures: PrefetchedModuleSignatures;
       fix: boolean;
     },
-    PartialDiagnostics
+    WorkerLintResult
   >({name: 'lint', direction: 'server->client'});
 
   compileJS = this.createEvent<
