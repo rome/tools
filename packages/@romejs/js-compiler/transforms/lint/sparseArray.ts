@@ -7,20 +7,33 @@
 
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
+import {
+  referenceIdentifier,
+  arrayExpression,
+  ArrayExpression,
+} from '@romejs/js-ast';
 
 export default {
   name: 'sparseArray',
   enter(path: Path): AnyNode {
-    const { node } = path;
+    const {node} = path;
 
-    if (node.type === 'ArrayExpression' &&
-      node.elements.includes(undefined)) {
-        path.context.addNodeDiagnostic(node, {
-          category: 'lint/sparseArray',
-          message: 'Your array contains an empty slot'
-        })
+    if (node.type === 'ArrayExpression' && node.elements.includes(undefined)) {
+      path.context.addNodeDiagnostic(node, {
+        category: 'lint/sparseArray',
+        message: 'Your array contains an empty slot',
+      });
+      const fixedArray: ArrayExpression = {
+        type: 'ArrayExpression',
+        elements: node.elements.map(elem =>
+          elem === undefined
+            ? referenceIdentifier.create({name: 'undefined'})
+            : elem,
+        ),
+      };
+      return arrayExpression.create(fixedArray);
     }
 
     return node;
-  }
-}
+  },
+};
