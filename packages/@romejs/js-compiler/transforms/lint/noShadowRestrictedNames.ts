@@ -38,8 +38,12 @@ function extractBindingIdentifiers(
     return bindings;
   }
 
-  if (node.type === 'VariableDeclaration' || node.param) {
+  if (node.type === 'VariableDeclaration') {
     return getBindingIdentifiers(node);
+  }
+
+  if (node.type === 'CatchClause') {
+    return node.param ? getBindingIdentifiers(node.param) : [];
   }
 
   return [];
