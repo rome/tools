@@ -251,3 +251,31 @@ test('disallow var', async t => {
     },
   ]);
 });
+
+test('disallow multiple spaces in regular expression literals', async t => {
+  const res1 = await testLint(
+    `new RegExp("foo  bar")`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+  t.looksLike(res1.diagnostics, [
+    {
+      category: 'lint/disallowMultipleSpacesInRegularExpressionLiterals',
+      message: 'Should use expression {length} instead of multiple spaces',
+      mtime: undefined,
+      filename: 'unknown',
+      start: { index: 11, line: 1, column: 11 },
+      end: { index: 21, line: 1, column: 21 },
+      language: 'js',
+      sourceType: 'module',
+      origins: [{category: 'lint'}]
+    }
+  ])
+
+  const res2 = await testLint(
+    `new RegExp("foo {2}bar")`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.looksLike(res2.diagnostics, [])
+});
+
