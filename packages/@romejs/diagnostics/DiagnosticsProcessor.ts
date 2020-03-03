@@ -9,7 +9,7 @@ import {
   Diagnostics,
   PartialDiagnostics,
   PartialDiagnostic,
-  DiagnosticFilter,
+  DiagnosticFilterWithTest,
   DiagnosticOrigin,
 } from './types';
 import {MarkupFormatOptions} from '@romejs/string-markup';
@@ -30,6 +30,7 @@ type UniqueRule = Array<UniquePart>;
 type UniqueRules = Array<UniqueRule>;
 
 export type CollectorOptions = {
+  filters?: Array<DiagnosticFilterWithTest>;
   unique?: UniqueRules;
   max?: number;
   onDiagnostics?: (diags: PartialDiagnostics) => void;
@@ -43,7 +44,7 @@ const DEFAULT_UNIQUE: UniqueRules = [
 export default class DiagnosticsProcessor {
   constructor(options: CollectorOptions) {
     this.diagnostics = [];
-    this.filters = [];
+    this.filters = options.filters === undefined ? [] : options.filters;
     this.options = options;
     this.includedKeys = new Set();
     this.unique =
@@ -66,7 +67,7 @@ export default class DiagnosticsProcessor {
   unique: UniqueRules;
   includedKeys: Set<string>;
   diagnostics: PartialDiagnostics;
-  filters: Array<DiagnosticFilter>;
+  filters: Array<DiagnosticFilterWithTest>;
   options: CollectorOptions;
   throwAfter: undefined | number;
 
@@ -87,28 +88,28 @@ export default class DiagnosticsProcessor {
     return this.diagnostics.length > 0;
   }
 
-  addFilter(diag: DiagnosticFilter) {
-    this.filters.push(diag);
+  addFilters(filters: Array<DiagnosticFilterWithTest>) {
+    this.filters = this.filters.concat(filters);
+  }
+
+  addFilter(filter: DiagnosticFilterWithTest) {
+    this.filters.push(filter);
   }
 
   doesMatchFilter(diag: PartialDiagnostic): boolean {
     for (const filter of this.filters) {
-      // message
       if (filter.message !== undefined && filter.message !== diag.message) {
         continue;
       }
 
-      // filename
       if (filter.filename !== undefined && filter.filename !== diag.filename) {
         continue;
       }
 
-      // category
       if (filter.category !== undefined && filter.category !== diag.category) {
         continue;
       }
 
-      // start
       if (filter.start !== undefined && diag.start !== undefined) {
         if (
           filter.start.line !== diag.start.line ||
@@ -116,6 +117,14 @@ export default class DiagnosticsProcessor {
         ) {
           continue;
         }
+      }
+
+      if (
+        filter.line !== undefined &&
+        diag.start !== undefined &&
+        diag.start.line !== filter.line
+      ) {
+        continue;
       }
 
       if (filter.test !== undefined && !filter.test(diag)) {
