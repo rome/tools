@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Program} from '@romejs/js-ast';
 import {PartialDiagnostics, DiagnosticFilters} from '@romejs/diagnostics';
 import {TransformRequest} from '../types';
 import {lintTransforms} from '../transforms/lint/index';
@@ -18,20 +17,18 @@ export type LintResult = {
   diagnostics: PartialDiagnostics;
   filters: DiagnosticFilters;
   src: string;
-  ast: Program;
 };
 
 const lintCache: Cache<LintResult> = new Cache();
 
 export default async function lint(req: TransformRequest): Promise<LintResult> {
-  const {ast, sourceText: src, project} = req;
+  const {ast, sourceText, project} = req;
 
   if (!project.config.lint.enabled) {
     return {
       diagnostics: [],
       filters: extractSuppressionsFromProgram(ast),
-      src,
-      ast,
+      src: sourceText,
     };
   }
 
@@ -41,6 +38,31 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
     return cached;
   }
 
+  let formattedCode = sourceText;
+  if (project.config.format.enabled) {
+    // Perform autofixes
+    const context = new Context({
+      ast,
+      project,
+      origin: {
+        category: 'lint',
+      },
+    });
+    const newAst = program.assert(
+      context.reduce(ast, lintTransforms, {frozen: false}),
+    );
+
+    const generator = generateJS(
+      newAst,
+      {
+        typeAnnotations: true,
+      },
+      sourceText,
+    );
+    formattedCode = generator.getCode() + '\n';
+  }
+
+  // Run lints (could be with the autofixed AST)
   const context = new Context({
     ast,
     project,
@@ -48,23 +70,10 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
       category: 'lint',
     },
   });
-  const newAst = program.assert(context.reduce(ast, lintTransforms));
-
-  let formattedCode = src;
-  if (project.config.format.enabled) {
-    const generator = generateJS(
-      newAst,
-      {
-        typeAnnotations: true,
-      },
-      src,
-    );
-    formattedCode = generator.getCode() + '\n';
-  }
+  program.assert(context.reduce(ast, lintTransforms, {frozen: true}));
 
   const result: LintResult = {
     filters: extractSuppressionsFromProgram(ast),
-    ast: newAst,
     diagnostics: [...ast.diagnostics, ...context.diagnostics],
     src: formattedCode,
   };
