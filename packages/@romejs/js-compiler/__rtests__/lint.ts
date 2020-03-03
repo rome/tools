@@ -79,11 +79,11 @@ test('undeclared variable', async t => {
   ]);
 });
 
-// test('sparse array', async t => {
-//   const res = await testLint(`[1,,2]`, LINT_ENABLED_FORMAT_DISABLED_CONFIG);
+test('sparse array', async t => {
+  const res = await testLint(`[1,,2]`, LINT_ENABLED_FORMAT_DISABLED_CONFIG);
 
-//   t.snapshot(res);
-// });
+  t.snapshot(res);
+});
 
 test('unsafe negation', async t => {
   const res = await testLint(
