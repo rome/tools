@@ -6,7 +6,7 @@
  */
 
 import test from '@romejs/test';
-import lint, {LintResult} from '../api/lint';
+import lint from '../api/lint';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import {DEFAULT_PROJECT_CONFIG, ProjectConfig} from '@romejs/project';
@@ -521,39 +521,35 @@ test('no debugger', async t => {
 });
 
 test('no shadow restricted names', async t => {
-  const getNoShadowDiagnostics = (result: LintResult) =>
-    result.diagnostics.filter(
-      d => d.category === 'lint/noShadowRestrictedNames',
+  let failingCases = [
+    'function NaN() {}',
+    'let Set;',
+    '!function Array() {}',
+    'function test(JSON) {}',
+    'try {  } catch(Object) {}',
+  ];
+  for (let failingCase of failingCases) {
+    const res = await testLint(
+      failingCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
     );
-
-  const valid = await testLint(
-    `
-    function SomeFn(param) {
-      let someVar;
-      !function SomeOtherFn(otherParam) {
-        try {
-        } catch (e) {}
-      };
+    if (
+      !res.diagnostics.some(d => d.category === 'lint/noShadowRestrictedNames')
+    ) {
+      t.fail(
+        `expected "\n${failingCase}\n" to report a lint/noShadowRestrictedNames diagnostic but it didn't`,
+        [
+          {
+            type: 'inspect',
+            data: parseJS({
+              input: failingCase,
+              sourceType: 'module',
+              path: createUnknownFilePath('unknown'),
+            }),
+          },
+          {type: 'inspect', data: res.diagnostics},
+        ],
+      );
     }
-    `,
-    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
-  );
-
-  t.is(getNoShadowDiagnostics(valid).length, 0);
-
-  const invalid = await testLint(
-    `
-  function NaN(undefined) {
-    let eval;
-    !function Array(JSON) {
-      try {
-      } catch (Object) {}
-    };
-  }`,
-    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
-  );
-
-  const noShadowDiagnostics = getNoShadowDiagnostics(invalid);
-
-  t.is(noShadowDiagnostics.length, 6);
+  }
 });
