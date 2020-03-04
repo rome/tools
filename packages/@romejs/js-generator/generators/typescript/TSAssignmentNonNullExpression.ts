@@ -17,6 +17,6 @@ export default function TSAssignmentNonNullExpression(
   node: AnyNode,
 ) {
   node = tsAssignmentNonNullExpression.assert(node);
-
-  throw new Error('unimplemented');
+  generator.print(node.expression, node);
+  generator.token('!');
 }

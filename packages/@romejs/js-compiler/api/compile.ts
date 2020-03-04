@@ -6,19 +6,19 @@
  */
 
 import {Mappings} from '@romejs/codec-source-map';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {PartialDiagnostics, DiagnosticFilters} from '@romejs/diagnostics';
 import {CompileRequest} from '../types';
 import {Cache} from '@romejs/js-compiler';
 import {generateJS} from '@romejs/js-generator';
 import transform from '../methods/transform';
-import lint from './lint';
 
 export type CompileResult = {
-  code: string;
-  src: string;
   mappings: Mappings;
   diagnostics: PartialDiagnostics;
+  filters: DiagnosticFilters;
   cacheDependencies: Array<string>;
+  compiledCode: string;
+  sourceText: string;
 };
 
 const compileCache: Cache<CompileResult> = new Cache();
@@ -26,17 +26,7 @@ const compileCache: Cache<CompileResult> = new Cache();
 export default async function compile(
   req: CompileRequest,
 ): Promise<CompileResult> {
-  let {ast} = req;
-  const {sourceText: src} = req;
-
-  // Option to allow linting before compiling
-  let lintDiagnostics: PartialDiagnostics = [];
-  if (req.lint === true) {
-    ({ast, diagnostics: lintDiagnostics} = await lint(req));
-    req = {...req, ast};
-  } else {
-    lintDiagnostics = ast.diagnostics;
-  }
+  const {sourceText, ast} = req;
 
   const query = Cache.buildQuery(req);
   const cached: undefined | CompileResult = compileCache.get(query);
@@ -45,9 +35,12 @@ export default async function compile(
   }
 
   const {filename} = ast;
-  const {ast: transformedAst, diagnostics, cacheDependencies} = await transform(
-    req,
-  );
+  const {
+    ast: transformedAst,
+    diagnostics,
+    filters,
+    cacheDependencies,
+  } = await transform(req);
   const generator = generateJS(
     transformedAst,
     {
@@ -57,16 +50,17 @@ export default async function compile(
       sourceFileName: filename,
       inputSourceMap: req.inputSourceMap,
     },
-    src,
+    sourceText,
   );
-  let res: CompileResult = {
-    code: generator.getCode(),
+
+  const res: CompileResult = {
+    compiledCode: generator.getCode(),
     mappings: generator.getMappings(),
-    src,
-    diagnostics: [...lintDiagnostics, ...diagnostics],
+    diagnostics: [...ast.diagnostics, ...diagnostics],
     cacheDependencies,
+    filters,
+    sourceText,
   };
   compileCache.set(query, res);
-
   return res;
 }

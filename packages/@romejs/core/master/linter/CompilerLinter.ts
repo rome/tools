@@ -7,7 +7,6 @@
 
 import {MasterRequest} from '@romejs/core';
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
-import {PartialDiagnostics} from '@romejs/diagnostics';
 import {ProjectDefinition} from '@romejs/project';
 import {AbsoluteFilePathSet} from '@romejs/path';
 
@@ -74,11 +73,12 @@ export default class CompilerLinter {
           }
 
           // TODO support `fix` flag
-          const fileDiagnostics: PartialDiagnostics = await this.request.requestWorkerLint(
+          const {diagnostics, filters} = await this.request.requestWorkerLint(
             path,
             false,
           );
-          printer.addDiagnostics(fileDiagnostics);
+          printer.addDiagnostics(diagnostics);
+          printer.processor.addFilters(filters);
 
           spinner.tick();
         }
