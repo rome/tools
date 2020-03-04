@@ -40,7 +40,7 @@ export default function FlowDeclareClass(node: AnyNode, scope: Scope) {
   }
 
   const type = new ClassT(bodyScope, node.id, {
-    constructor: undefined,
+    _constructor: undefined,
     instances,
     statics,
     extends: xtends,
