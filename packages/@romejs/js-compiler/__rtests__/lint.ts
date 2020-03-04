@@ -88,6 +88,52 @@ test('unsafe negation', async t => {
   t.snapshot(res);
 });
 
+test('getter return', async t => {
+  const badClass = await testLint(
+    `
+    class p {
+      get name() {
+        console.log('hello')
+      };
+    }
+    console.log(new p())
+    `,
+    LINT_AND_FORMAT_ENABLED_CONFIG,
+  );
+
+  t.snapshot(badClass);
+
+  const badObject = await testLint(
+    `
+    let p;
+    p = {
+      get name() {
+        console.log('hello')
+      }
+    };
+    console.log(p)
+    `,
+    LINT_AND_FORMAT_ENABLED_CONFIG,
+  );
+
+  t.snapshot(badObject);
+
+  const badDefinedProperty = await testLint(
+    `
+    let p = {};
+    Object.defineProperty(p, {
+      get: function (){
+          console.log('hello')
+      }
+    });
+    console.log(p)
+    `,
+    LINT_AND_FORMAT_ENABLED_CONFIG,
+  );
+
+  t.snapshot(badDefinedProperty);
+});
+
 test('no async promise executor', async t => {
   const validTestCases = [
     'new Promise(() => {})',
