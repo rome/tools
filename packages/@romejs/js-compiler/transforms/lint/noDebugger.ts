@@ -19,8 +19,10 @@ export default {
         category: 'lint/noDebugger',
         message: "Unexpected 'debugger' statement",
       });
+
+      return REDUCE_REMOVE;
     }
 
-    return REDUCE_REMOVE;
+    return node;
   },
 };
