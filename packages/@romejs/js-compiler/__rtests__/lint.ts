@@ -263,8 +263,8 @@ test('disallow multiple spaces in regular expression literals', async t => {
       message: 'Disallow multiple spaces in regular expression literals',
       mtime: undefined,
       filename: 'unknown',
-      start: {index: 11, line: 1, column: 11},
-      end: {index: 21, line: 1, column: 21},
+      start: {index: 0, line: 1, column: 0},
+      end: {index: 22, line: 1, column: 22},
       language: 'js',
       sourceType: 'module',
       origins: [{category: 'lint'}],
@@ -277,4 +277,29 @@ test('disallow multiple spaces in regular expression literals', async t => {
   );
 
   t.looksLike(res2.diagnostics, []);
+
+  const res3 = await testLint(
+    `/foo  bar/`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+  t.looksLike(res3.diagnostics, [
+    {
+      category: 'lint/disallowMultipleSpacesInRegularExpressionLiterals',
+      message: 'Disallow multiple spaces in regular expression literals',
+      mtime: undefined,
+      filename: 'unknown',
+      start: {index: 0, line: 1, column: 0},
+      end: {index: 10, line: 1, column: 10},
+      language: 'js',
+      sourceType: 'module',
+      origins: [{category: 'lint'}],
+    },
+  ]);
+
+  const res4 = await testLint(
+    `/foo {2}bar/`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.looksLike(res4.diagnostics, []);
 });

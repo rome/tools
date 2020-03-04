@@ -8,22 +8,25 @@
 import {AnyNode} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 
+const multipleSpacesPattern = /( {2,})(?: [+*{?]|[^+*{?]|$)/gu;
+
 export default {
   name: 'disallowMultipleSpacesInRegularExpressionLiterals',
   enter(path: Path): AnyNode {
     const {context, node} = path;
 
-    const multipleSpacesPattern = /( {2,})(?: [+*{?]|[^+*{?]|$)/gu;
-
     if (
-      node.type === 'NewExpression' &&
-      node.callee.type === 'ReferenceIdentifier' &&
-      node.callee.name === 'RegExp' &&
-      node.arguments.length > 0 &&
-      node.arguments[0].type === 'StringLiteral' &&
-      multipleSpacesPattern.test(node.arguments[0].value)
+      (node.type === 'NewExpression' &&
+        node.callee.type === 'ReferenceIdentifier' &&
+        node.callee.name === 'RegExp' &&
+        node.arguments.length > 0 &&
+        node.arguments[0].type === 'StringLiteral' &&
+        multipleSpacesPattern.test(node.arguments[0].value)) ||
+      (node.type === 'ExpressionStatement' &&
+        node.expression.type === 'RegExpLiteral' &&
+        multipleSpacesPattern.test(node.expression.pattern))
     ) {
-      context.addNodeDiagnostic(node.arguments[0], {
+      context.addNodeDiagnostic(node, {
         category: 'lint/disallowMultipleSpacesInRegularExpressionLiterals',
         message: 'Disallow multiple spaces in regular expression literals',
       });
