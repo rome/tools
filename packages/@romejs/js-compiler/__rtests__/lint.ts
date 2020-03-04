@@ -303,13 +303,13 @@ test('no function reassignment', async t => {
     t.falsy(diagnostics.find(checkCategory));
   }
 
-  invalidTestCases.forEach(async testCase => {
+  for (const testCase of invalidTestCases) {
     const {diagnostics} = await testLint(
       testCase,
       LINT_ENABLED_FORMAT_DISABLED_CONFIG,
     );
     t.truthy(diagnostics.find(checkCategory));
-  });
+  }
 });
 
 test('no duplicated args allowed', async t => {
