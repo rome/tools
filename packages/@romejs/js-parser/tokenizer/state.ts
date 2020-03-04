@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics, DiagnosticFilter} from '@romejs/diagnostics';
+import {PartialDiagnostics, DiagnosticFilters} from '@romejs/diagnostics';
 import {OpeningContext, ScopeType} from '../parser';
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {types as ct, TokContext} from './context';
@@ -18,7 +18,7 @@ type Scopes = {[K in ScopeType]?: Array<unknown>};
 
 export type State = {
   diagnostics: PartialDiagnostics;
-  diagnosticFilters: Array<DiagnosticFilter>;
+  diagnosticFilters: DiagnosticFilters;
   isIterator: boolean;
   tokens: Array<Token>;
   hasHoistedVars: boolean;

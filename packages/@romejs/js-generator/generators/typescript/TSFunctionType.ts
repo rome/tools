@@ -10,6 +10,8 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSFunctionType(generator: Generator, node: AnyNode) {
   node = tsFunctionType.assert(node);
-
-  throw new Error('unimplemented');
+  generator.print(node.meta, node);
+  generator.token('=>');
+  generator.space();
+  generator.print(node.typeAnnotation, node);
 }

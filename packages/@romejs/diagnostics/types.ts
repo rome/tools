@@ -16,6 +16,12 @@ export type DiagnosticFilter = {
   message?: string;
   filename?: string;
   start?: Position;
+  line?: Number1;
+};
+
+export type DiagnosticFilters = Array<DiagnosticFilter>;
+
+export type DiagnosticFilterWithTest = DiagnosticFilter & {
   test?: (diagnostic: PartialDiagnostic) => boolean;
 };
 

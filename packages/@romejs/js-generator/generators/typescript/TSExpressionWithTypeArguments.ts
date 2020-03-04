@@ -17,6 +17,6 @@ export default function TSExpressionWithTypeArguments(
   node: AnyNode,
 ) {
   node = tsExpressionWithTypeArguments.assert(node);
-
-  throw new Error('unimplemented');
+  generator.print(node.expression, node);
+  generator.print(node.typeParameters, node);
 }
