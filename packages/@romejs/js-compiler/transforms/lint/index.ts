@@ -10,11 +10,12 @@ import defaultExportSameBasename from './defaultExportSameBasename';
 import disallowMultipleSpacesInRegularExpressionLiterals from './disallowMultipleSpacesInRegularExpressionLiterals';
 import disallowVar from './disallowVar';
 import emptyBlocks from './emptyBlocks';
+import getterReturn from './getterReturn';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
-import noDebugger from './noDebugger';
 import noDeleteVars from './noDeleteVars';
+import noDebugger from './noDebugger';
 import noDupeArgs from './noDupeArgs';
 import noDuplicateKeys from './noDuplicateKeys';
 import noImportAssign from './noImportAssign';
@@ -32,6 +33,7 @@ export const lintTransforms = [
   disallowMultipleSpacesInRegularExpressionLiterals,
   disallowVar,
   emptyBlocks,
+  getterReturn,
   noAsyncPromiseExecutor,
   noCompareNegZero,
   noCondAssign,
