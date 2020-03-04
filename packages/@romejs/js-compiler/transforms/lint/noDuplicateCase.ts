@@ -17,16 +17,18 @@ export default {
       let uniqueSwitchCases = new Set();
 
       for (const param of node.cases) {
-        const test: any = param.test;
+        if (param.test && param.test.type === 'StringLiteral') {
+          const {test} = param;
 
-        if (test && test.value && uniqueSwitchCases.has(test.value)) {
-          context.addNodeDiagnostic(param, {
-            category: 'lint/noDuplicateCase',
-            message: `Duplicate case <emphasis>${test.value}</emphasis> not allowed`,
-          });
+          if (uniqueSwitchCases.has(test.value)) {
+            context.addNodeDiagnostic(param, {
+              category: 'lint/noDuplicateCase',
+              message: `Duplicate case <emphasis>${test.value}</emphasis> not allowed`,
+            });
+          }
+
+          uniqueSwitchCases.add(test.value);
         }
-
-        test && uniqueSwitchCases.add(test.value);
       }
     }
 
