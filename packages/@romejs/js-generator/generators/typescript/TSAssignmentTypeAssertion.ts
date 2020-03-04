@@ -17,6 +17,9 @@ export default function TSAssignmentTypeAssertion(
   node: AnyNode,
 ) {
   node = tsAssignmentTypeAssertion.assert(node);
-
-  throw new Error('unimplemented');
+  generator.token('<');
+  generator.print(node.typeAnnotation, node);
+  generator.token('>');
+  generator.space();
+  generator.print(node.expression, node);
 }

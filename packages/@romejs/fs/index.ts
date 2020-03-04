@@ -162,12 +162,24 @@ export function existsSync(path: AbsoluteFilePath): boolean {
 
 export function unlink(path: AbsoluteFilePath): Promise<void> {
   return promisifyVoid(path, (filename, callback) =>
-    fs.unlink(filename, callback),
+    fs.unlink(filename, err => {
+      if (err != null && err.code !== 'ENOENT') {
+        callback(err);
+      } else {
+        callback(null);
+      }
+    }),
   );
 }
 
 export function unlinkSync(path: AbsoluteFilePath): void {
-  fs.unlinkSync(path.join());
+  try {
+    fs.unlinkSync(path.join());
+  } catch (err) {
+    if (err.code !== 'ENOENT') {
+      throw err;
+    }
+  }
 }
 
 // createDirectory

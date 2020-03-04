@@ -44,9 +44,9 @@ import WorkerBridge, {
   WorkerParseOptions,
   WorkerCompilerOptions,
   WorkerFormatResult,
+  WorkerLintResult,
 } from '../common/bridges/WorkerBridge';
 import {ModuleSignature} from '@romejs/js-analysis';
-import {PartialDiagnostics} from '@romejs/diagnostics';
 import {
   AbsoluteFilePath,
   createAbsoluteFilePath,
@@ -415,7 +415,7 @@ export default class MasterRequest {
   async requestWorkerLint(
     filename: AbsoluteFilePath,
     fix: boolean,
-  ): Promise<PartialDiagnostics> {
+  ): Promise<WorkerLintResult> {
     const {cache} = this.master;
     const cacheEntry = await cache.get(filename);
     if (cacheEntry.lint !== undefined) {

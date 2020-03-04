@@ -174,6 +174,10 @@ export default class BundleRequest {
       this.diagnostics.addDiagnostics(res.diagnostics);
     }
 
+    if (res.filters.length > 0) {
+      this.diagnostics.addFilters(res.filters);
+    }
+
     this.compiles.set(source, res);
     return res;
   }
@@ -298,8 +302,8 @@ export default class BundleRequest {
 
       declareCJS(module);
 
-      addMappings(module.id, compileResult.src, compileResult.mappings);
-      push(compileResult.code);
+      addMappings(module.id, compileResult.sourceText, compileResult.mappings);
+      push(compileResult.compiledCode);
       push('');
     }
 

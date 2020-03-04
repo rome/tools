@@ -10,7 +10,6 @@ import {
   BindingIdentifier,
   BindingObjectPattern,
   BindingArrayPattern,
-  AnyTargetBindingPattern,
   AnyPrimaryType,
 } from '../index';
 import {createBuilder} from '../utils';
@@ -21,7 +20,6 @@ export type TSIndexSignature = JSNodeBase & {
   parameters: Array<
     BindingIdentifier | BindingObjectPattern | BindingArrayPattern
   >;
-  rest: undefined | AnyTargetBindingPattern;
   typeAnnotation: undefined | AnyPrimaryType;
 };
 
@@ -30,12 +28,10 @@ export const tsIndexSignature = createBuilder<TSIndexSignature>(
   {
     bindingKeys: {
       parameters: true,
-      rest: true,
     },
     visitorKeys: {
       typeAnnotation: true,
       parameters: true,
-      rest: true,
     },
   },
 );

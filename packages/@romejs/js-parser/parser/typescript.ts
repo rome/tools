@@ -624,7 +624,6 @@ export function tryTSParseIndexSignature(
     type: 'TSIndexSignature',
     typeAnnotation,
     parameters,
-    rest: undefined,
   });
 }
 

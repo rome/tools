@@ -17,6 +17,7 @@ export default function TSParenthesizedType(
   node: AnyNode,
 ) {
   node = tsParenthesizedType.assert(node);
-
-  throw new Error('unimplemented');
+  generator.token('(');
+  generator.print(node.typeAnnotation, node);
+  generator.token(')');
 }

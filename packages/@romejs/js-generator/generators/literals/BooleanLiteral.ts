@@ -10,6 +10,5 @@ import {BooleanLiteral, booleanLiteral, AnyNode} from '@romejs/js-ast';
 
 export default function BooleanLiteral(generator: Generator, node: AnyNode) {
   node = booleanLiteral.assert(node);
-
   generator.word(node.value ? 'true' : 'false');
 }
