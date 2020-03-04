@@ -10,6 +10,18 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSImportType(generator: Generator, node: AnyNode) {
   node = tsImportType.assert(node);
-  tsImportType.assert(node);
-  throw new Error('unimplemented');
+
+  generator.word('import');
+  generator.token('(');
+  generator.print(node.argument, node);
+  generator.token(')');
+
+  if (node.qualifier) {
+    generator.token('.');
+    generator.print(node.qualifier, node);
+  }
+
+  if (node.typeParameters) {
+    generator.print(node.typeParameters, node);
+  }
 }

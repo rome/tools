@@ -10,6 +10,6 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSTypeReference(generator: Generator, node: AnyNode) {
   node = tsTypeReference.assert(node);
-
-  throw new Error('unimplemented');
+  generator.print(node.typeName, node);
+  generator.print(node.typeParameters, node);
 }

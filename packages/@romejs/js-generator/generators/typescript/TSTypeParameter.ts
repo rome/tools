@@ -11,5 +11,19 @@ import {Generator} from '@romejs/js-generator';
 export default function TSTypeParameter(generator: Generator, node: AnyNode) {
   node = tsTypeParameter.assert(node);
 
-  throw new Error('unimplemented');
+  generator.word(node.name);
+
+  if (node.constraint) {
+    generator.space();
+    generator.word('extends');
+    generator.space();
+    generator.print(node.constraint, node);
+  }
+
+  if (node.default) {
+    generator.space();
+    generator.token('=');
+    generator.space();
+    generator.print(node.default, node);
+  }
 }

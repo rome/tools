@@ -17,6 +17,7 @@ export default function TSTypeParameterInstantiation(
   node: AnyNode,
 ) {
   node = tsTypeParameterInstantiation.assert(node);
-
-  throw new Error('unimplemented');
+  generator.token('<');
+  generator.printCommaList(node.params, node);
+  generator.token('>');
 }

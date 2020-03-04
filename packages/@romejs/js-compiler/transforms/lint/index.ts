@@ -11,8 +11,15 @@ import emptyBlocks from './emptyBlocks';
 import getterReturn from './getterReturn';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
+import noCondAssign from './noCondAssign';
+import noDeleteVars from './noDeleteVars';
+import noDupeArgs from './noDupeArgs';
 import noDuplicateKeys from './noDuplicateKeys';
+import noImportAssign from './noImportAssign';
 import noLabelVar from './noLabelVar';
+import noTemplateCurlyInString from './noTemplateCurlyInString';
+import noUnsafeFinally from './noUnsafeFinally';
+import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
@@ -24,8 +31,15 @@ export const lintTransforms = [
   getterReturn,
   noAsyncPromiseExecutor,
   noCompareNegZero,
+  noCondAssign,
+  noDeleteVars,
+  noDupeArgs,
   noDuplicateKeys,
+  noImportAssign,
   noLabelVar,
+  noTemplateCurlyInString,
+  noUnsafeFinally,
+  sparseArray,
   undeclaredVariables,
   unsafeNegation,
   unusedVariables,

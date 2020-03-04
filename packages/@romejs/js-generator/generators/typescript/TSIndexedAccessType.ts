@@ -17,6 +17,8 @@ export default function TSIndexedAccessType(
   node: AnyNode,
 ) {
   node = tsIndexedAccessType.assert(node);
-
-  throw new Error('unimplemented');
+  generator.print(node.objectType, node);
+  generator.token('[');
+  generator.print(node.indexType, node);
+  generator.token(']');
 }

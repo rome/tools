@@ -18,5 +18,10 @@ export default function TSAssignmentAsExpression(
 ) {
   node = tsAssignmentAsExpression.assert(node);
 
-  throw new Error('unimplemented');
+  generator.print(node.expression);
+
+  if (generator.options.typeAnnotations) {
+    generator.word('as');
+    generator.print(node.typeAnnotation, node);
+  }
 }
