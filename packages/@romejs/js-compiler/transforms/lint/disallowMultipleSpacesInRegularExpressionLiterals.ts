@@ -22,9 +22,8 @@ export default {
         node.arguments.length > 0 &&
         node.arguments[0].type === 'StringLiteral' &&
         multipleSpacesPattern.test(node.arguments[0].value)) ||
-      (node.type === 'ExpressionStatement' &&
-        node.expression.type === 'RegExpLiteral' &&
-        multipleSpacesPattern.test(node.expression.pattern))
+      (node.type === 'RegExpLiteral' &&
+        multipleSpacesPattern.test(node.pattern))
     ) {
       context.addNodeDiagnostic(node, {
         category: 'lint/disallowMultipleSpacesInRegularExpressionLiterals',
