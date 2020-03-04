@@ -5,42 +5,44 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// Add imports in alphabetical order.
 import defaultExportSameBasename from './defaultExportSameBasename';
 import disallowVar from './disallowVar';
 import emptyBlocks from './emptyBlocks';
-import sparseArray from './sparseArray';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
 import noDebugger from './noDebugger';
-import noDuplicateKeys from './noDuplicateKeys';
+import noDeleteVars from './noDeleteVars';
 import noDupeArgs from './noDupeArgs';
+import noDuplicateKeys from './noDuplicateKeys';
+import noImportAssign from './noImportAssign';
 import noLabelVar from './noLabelVar';
+import noTemplateCurlyInString from './noTemplateCurlyInString';
+import noUnsafeFinally from './noUnsafeFinally';
+import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
-import noUnsafeFinally from './noUnsafeFinally';
-import noDeleteVars from './noDeleteVars';
-import noTemplateCurlyInString from './noTemplateCurlyInString';
-import noImportAssign from './noImportAssign';
 
+// Add transforms in alphabetical order.
 export const lintTransforms = [
   defaultExportSameBasename,
   disallowVar,
   emptyBlocks,
-  sparseArray,
-  noCompareNegZero,
-  unsafeNegation,
   noAsyncPromiseExecutor,
+  noCompareNegZero,
   noCondAssign,
-  noDuplicateKeys,
-  noDupeArgs,
-  noLabelVar,
-  undeclaredVariables,
-  unusedVariables,
-  noUnsafeFinally,
-  noDeleteVars,
-  noTemplateCurlyInString,
-  noImportAssign,
   noDebugger,
+  noDeleteVars,
+  noDupeArgs,
+  noDuplicateKeys,
+  noImportAssign,
+  noLabelVar,
+  noTemplateCurlyInString,
+  noUnsafeFinally,
+  sparseArray,
+  undeclaredVariables,
+  unsafeNegation,
+  unusedVariables,
 ];
