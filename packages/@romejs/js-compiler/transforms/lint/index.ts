@@ -18,6 +18,7 @@ import noDeleteVars from './noDeleteVars';
 import noDebugger from './noDebugger';
 import noDupeArgs from './noDupeArgs';
 import noDuplicateKeys from './noDuplicateKeys';
+import noFunctionAssign from './noFunctionAssign';
 import noImportAssign from './noImportAssign';
 import noLabelVar from './noLabelVar';
 import noTemplateCurlyInString from './noTemplateCurlyInString';
@@ -41,6 +42,7 @@ export const lintTransforms = [
   noDeleteVars,
   noDupeArgs,
   noDuplicateKeys,
+  noFunctionAssign,
   noImportAssign,
   noLabelVar,
   noTemplateCurlyInString,
