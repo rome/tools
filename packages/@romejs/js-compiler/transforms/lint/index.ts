@@ -5,44 +5,50 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// Add imports in alphabetical order.
 import defaultExportSameBasename from './defaultExportSameBasename';
+import disallowMultipleSpacesInRegularExpressionLiterals from './disallowMultipleSpacesInRegularExpressionLiterals';
 import disallowVar from './disallowVar';
 import emptyBlocks from './emptyBlocks';
-import sparseArray from './sparseArray';
+import getterReturn from './getterReturn';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
+import noDeleteVars from './noDeleteVars';
 import noDebugger from './noDebugger';
+import noDupeArgs from './noDupeArgs';
 import noDuplicateKeys from './noDuplicateKeys';
 import noFunctionAssign from './noFunctionAssign';
-import noDupeArgs from './noDupeArgs';
+import noImportAssign from './noImportAssign';
 import noLabelVar from './noLabelVar';
+import noTemplateCurlyInString from './noTemplateCurlyInString';
+import noUnsafeFinally from './noUnsafeFinally';
+import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
-import noUnsafeFinally from './noUnsafeFinally';
-import noDeleteVars from './noDeleteVars';
-import noTemplateCurlyInString from './noTemplateCurlyInString';
-import noImportAssign from './noImportAssign';
 
+// Add transforms in alphabetical order.
 export const lintTransforms = [
   defaultExportSameBasename,
+  disallowMultipleSpacesInRegularExpressionLiterals,
   disallowVar,
   emptyBlocks,
-  sparseArray,
-  noCompareNegZero,
-  unsafeNegation,
+  getterReturn,
   noAsyncPromiseExecutor,
+  noCompareNegZero,
   noCondAssign,
+  noDebugger,
+  noDeleteVars,
+  noDupeArgs,
   noDuplicateKeys,
   noFunctionAssign,
-  noDupeArgs,
-  noLabelVar,
-  undeclaredVariables,
-  unusedVariables,
-  noUnsafeFinally,
-  noDeleteVars,
-  noTemplateCurlyInString,
   noImportAssign,
-  noDebugger,
+  noLabelVar,
+  noTemplateCurlyInString,
+  noUnsafeFinally,
+  sparseArray,
+  undeclaredVariables,
+  unsafeNegation,
+  unusedVariables,
 ];
