@@ -16,6 +16,7 @@ import noDebugger from './noDebugger';
 import noDuplicateKeys from './noDuplicateKeys';
 import noDupeArgs from './noDupeArgs';
 import noLabelVar from './noLabelVar';
+import preferTemplate from './preferTemplate';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
@@ -28,19 +29,20 @@ export const lintTransforms = [
   defaultExportSameBasename,
   disallowVar,
   emptyBlocks,
-  sparseArray,
-  noCompareNegZero,
-  unsafeNegation,
   noAsyncPromiseExecutor,
+  noCompareNegZero,
   noCondAssign,
-  noDuplicateKeys,
-  noDupeArgs,
-  noLabelVar,
-  undeclaredVariables,
-  unusedVariables,
-  noUnsafeFinally,
-  noDeleteVars,
-  noTemplateCurlyInString,
-  noImportAssign,
   noDebugger,
+  noDeleteVars,
+  noDupeArgs,
+  noDuplicateKeys,
+  noImportAssign,
+  noLabelVar,
+  noTemplateCurlyInString,
+  noUnsafeFinally,
+  preferTemplate,
+  sparseArray,
+  undeclaredVariables,
+  unsafeNegation,
+  unusedVariables,
 ];

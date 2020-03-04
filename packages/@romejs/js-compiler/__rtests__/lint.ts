@@ -464,6 +464,22 @@ test('no template curly in string', async t => {
   ]);
 });
 
+test('prefer template', async t => {
+  const template1 = await testLint(
+    `const foo = 'bar'; console.log(foo + 'baz')`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.snapshot(template1);
+
+  const template2 = await testLint(
+    `console.log((1 * 2) + 'baz')`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.snapshot(template2);
+});
+
 test('no import assign', async t => {
   let failingCases = [
     'import x from "y";\nx=1;',
