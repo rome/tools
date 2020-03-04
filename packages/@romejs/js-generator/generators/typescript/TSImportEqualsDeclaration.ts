@@ -18,5 +18,17 @@ export default function TSImportEqualsDeclaration(
 ) {
   node = tsImportEqualsDeclaration.assert(node);
 
-  throw new Error('unimplemented');
+  if (node.isExport) {
+    generator.word('export');
+    generator.space();
+  }
+
+  generator.word('import');
+  generator.space();
+  generator.print(node.id, node);
+  generator.space();
+  generator.token('=');
+  generator.space();
+  generator.print(node.moduleReference, node);
+  generator.token(';');
 }

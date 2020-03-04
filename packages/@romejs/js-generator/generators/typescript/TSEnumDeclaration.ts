@@ -7,9 +7,24 @@
 
 import {TSEnumDeclaration, tsEnumDeclaration, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {printTSBraced} from '../utils';
 
 export default function TSEnumDeclaration(generator: Generator, node: AnyNode) {
   node = tsEnumDeclaration.assert(node);
 
-  throw new Error('unimplemented');
+  if (node.declare) {
+    generator.word('declare');
+    generator.space();
+  }
+
+  if (node.const) {
+    generator.word('const');
+    generator.space();
+  }
+
+  generator.word('enum');
+  generator.space();
+  generator.print(node.id, node);
+  generator.space();
+  printTSBraced(generator, node.members, node);
 }

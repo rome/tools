@@ -18,5 +18,23 @@ export default function TSInterfaceDeclaration(
 ) {
   node = tsInterfaceDeclaration.assert(node);
 
-  throw new Error('unimplemented');
+  if (node.declare) {
+    generator.word('declare');
+    generator.space();
+  }
+
+  generator.word('interface');
+  generator.space();
+  generator.print(node.id, node);
+  generator.print(node.typeParameters, node);
+
+  if (node.extends) {
+    generator.space();
+    generator.word('extends');
+    generator.space();
+    generator.printCommaList(node.extends, node);
+  }
+
+  generator.space();
+  generator.print(node.body, node);
 }

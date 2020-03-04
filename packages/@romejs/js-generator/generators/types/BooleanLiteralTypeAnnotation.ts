@@ -17,7 +17,5 @@ export default function BooleanLiteralTypeAnnotation(
   node: AnyNode,
 ) {
   node = booleanLiteralTypeAnnotation.assert(node);
-
-  booleanLiteralTypeAnnotation.assert(node);
-  throw new Error('unimplemented');
+  generator.word(node.value ? 'true' : 'false');
 }

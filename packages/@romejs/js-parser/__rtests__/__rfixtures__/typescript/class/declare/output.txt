@@ -74,7 +74,6 @@ Program {
         body: Array [
           TSIndexSignature {
             readonly: false
-            rest: undefined
             loc: Object {
               filename: 'input.ts'
               end: Object {

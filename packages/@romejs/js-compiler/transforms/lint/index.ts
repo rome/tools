@@ -5,28 +5,52 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// Add imports in alphabetical order.
 import defaultExportSameBasename from './defaultExportSameBasename';
-import undeclaredVariables from './undeclaredVariables';
-import unusedVariables from './unusedVariables';
-import emptyBlocks from './emptyBlocks';
-import noCompareNegZero from './noCompareNegZero';
-import unsafeNegation from './unsafeNegation';
-import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
-import noLabelVar from './noLabelVar';
-import noDuplicateKeys from './noDuplicateKeys';
+import disallowMultipleSpacesInRegularExpressionLiterals from './disallowMultipleSpacesInRegularExpressionLiterals';
 import disallowVar from './disallowVar';
+import emptyBlocks from './emptyBlocks';
+import getterReturn from './getterReturn';
+import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
+import noCompareNegZero from './noCompareNegZero';
+import noCondAssign from './noCondAssign';
+import noDeleteVars from './noDeleteVars';
+import noDebugger from './noDebugger';
+import noDupeArgs from './noDupeArgs';
+import noDuplicateKeys from './noDuplicateKeys';
 import noEmptyCharacterClass from './noEmptyCharacterClass';
+import noFunctionAssign from './noFunctionAssign';
+import noImportAssign from './noImportAssign';
+import noLabelVar from './noLabelVar';
+import noTemplateCurlyInString from './noTemplateCurlyInString';
+import noUnsafeFinally from './noUnsafeFinally';
+import sparseArray from './sparseArray';
+import undeclaredVariables from './undeclaredVariables';
+import unsafeNegation from './unsafeNegation';
+import unusedVariables from './unusedVariables';
 
+// Add transforms in alphabetical order.
 export const lintTransforms = [
-  undeclaredVariables,
   defaultExportSameBasename,
-  unusedVariables,
-  emptyBlocks,
-  noCompareNegZero,
-  unsafeNegation,
-  noAsyncPromiseExecutor,
-  noLabelVar,
-  noDuplicateKeys,
+  disallowMultipleSpacesInRegularExpressionLiterals,
   disallowVar,
+  emptyBlocks,
+  getterReturn,
+  noAsyncPromiseExecutor,
+  noCompareNegZero,
+  noCondAssign,
+  noDebugger,
+  noDeleteVars,
+  noDupeArgs,
+  noDuplicateKeys,
   noEmptyCharacterClass,
+  noFunctionAssign,
+  noImportAssign,
+  noLabelVar,
+  noTemplateCurlyInString,
+  noUnsafeFinally,
+  sparseArray,
+  undeclaredVariables,
+  unsafeNegation,
+  unusedVariables,
 ];
