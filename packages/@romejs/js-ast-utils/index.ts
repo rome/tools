@@ -30,3 +30,4 @@ export {default as getRequireSource} from './getRequireSource';
 export {default as isIdentifierish} from './isIdentifierish';
 export {default as isVariableIdentifier} from './isVariableIdentifier';
 export {default as isTypeExpressionWrapperNode} from './isTypeExpressionWrapperNode';
+export {default as getCompletionRecords} from './getCompletionRecords';

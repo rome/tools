@@ -6,7 +6,7 @@
  */
 
 import {JSNodeBase, AnyStatement, Directive} from '../index';
-import {createBuilder} from '../utils';
+import {createQuickBuilder} from '../utils';
 
 export type BlockStatement = JSNodeBase & {
   type: 'BlockStatement';
@@ -14,10 +14,14 @@ export type BlockStatement = JSNodeBase & {
   directives?: Array<Directive>;
 };
 
-export const blockStatement = createBuilder<BlockStatement>('BlockStatement', {
-  bindingKeys: {},
-  visitorKeys: {
-    body: true,
-    directives: true,
+export const blockStatement = createQuickBuilder<BlockStatement, 'body'>(
+  'BlockStatement',
+  'body',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      body: true,
+      directives: true,
+    },
   },
-});
+);
