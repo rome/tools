@@ -295,13 +295,13 @@ test('no function reassignment', async t => {
     '(function() { ({x: foo = 0} = bar); function foo() { }; })();',
   ];
 
-  validTestCases.forEach(async testCase => {
+  for (const testCase of validTestCases) {
     const {diagnostics} = await testLint(
       testCase,
       LINT_ENABLED_FORMAT_DISABLED_CONFIG,
     );
     t.falsy(diagnostics.find(checkCategory));
-  });
+  }
 
   invalidTestCases.forEach(async testCase => {
     const {diagnostics} = await testLint(
