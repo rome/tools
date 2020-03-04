@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// Add imports in alphabetical order.
 import defaultExportSameBasename from './defaultExportSameBasename';
 import disallowVar from './disallowVar';
 import emptyBlocks from './emptyBlocks';
@@ -25,6 +26,7 @@ import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
 
+// Add transforms in alphabetical order.
 export const lintTransforms = [
   defaultExportSameBasename,
   disallowVar,
@@ -40,7 +42,6 @@ export const lintTransforms = [
   noImportAssign,
   noLabelVar,
   noTemplateCurlyInString,
-  noUnsafeFinally,
   noUnsafeFinally,
   sparseArray,
   undeclaredVariables,
