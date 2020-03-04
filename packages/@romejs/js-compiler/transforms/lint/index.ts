@@ -13,6 +13,7 @@ import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
 import noDeleteVars from './noDeleteVars';
+import noDebugger from './noDebugger';
 import noDupeArgs from './noDupeArgs';
 import noDuplicateKeys from './noDuplicateKeys';
 import noImportAssign from './noImportAssign';
@@ -32,12 +33,14 @@ export const lintTransforms = [
   noAsyncPromiseExecutor,
   noCompareNegZero,
   noCondAssign,
+  noDebugger,
   noDeleteVars,
   noDupeArgs,
   noDuplicateKeys,
   noImportAssign,
   noLabelVar,
   noTemplateCurlyInString,
+  noUnsafeFinally,
   noUnsafeFinally,
   sparseArray,
   undeclaredVariables,
