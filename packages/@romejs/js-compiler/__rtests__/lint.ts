@@ -10,6 +10,7 @@ import lint from '../api/lint';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import {DEFAULT_PROJECT_CONFIG, ProjectConfig} from '@romejs/project';
+import {PartialDiagnostic} from '@romejs/diagnostics/types';
 
 const LINT_ENABLED_FORMAT_DISABLED_CONFIG: ProjectConfig = {
   ...DEFAULT_PROJECT_CONFIG,
@@ -218,4 +219,46 @@ test('no duplicate keys', async t => {
       },
     },
   ]);
+});
+
+test('no function reassignment', async t => {
+  function checkCategory(diagnostic: PartialDiagnostic): Boolean {
+    return diagnostic.category === 'lint/noFunctionAssign';
+  }
+
+  const validTestCases = [
+    'function foo() { var foo = bar; }',
+    'function foo(foo) { foo = bar; }',
+    'function foo() { var foo; foo = bar; }',
+    'var foo = () => {}; foo = bar;',
+    'var foo = function() {}; foo = bar;',
+    'var foo = function() { foo = bar; };',
+    `import bar from 'bar'; function foo() { var foo = bar; }`,
+  ];
+
+  const invalidTestCases = [
+    'function foo() {}; foo = bar;',
+    'function foo() { foo = bar; }',
+    'foo = bar; function foo() { };',
+    '[foo] = bar; function foo() { };',
+    '({x: foo = 0} = bar); function foo() { };',
+    'function foo() { [foo] = bar; }',
+    '(function() { ({x: foo = 0} = bar); function foo() { }; })();',
+  ];
+
+  validTestCases.forEach(async testCase => {
+    const {diagnostics} = await testLint(
+      testCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    );
+    t.falsy(diagnostics.find(checkCategory));
+  });
+
+  invalidTestCases.forEach(async testCase => {
+    const {diagnostics} = await testLint(
+      testCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    );
+    t.truthy(diagnostics.find(checkCategory));
+  });
 });
