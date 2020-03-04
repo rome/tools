@@ -18,6 +18,7 @@ import {
   WorkerParseOptions,
   WorkerCompilerOptions,
   WorkerFormatResult,
+  WorkerLintResult,
 } from '../common/bridges/WorkerBridge';
 import Logger from '../common/utils/Logger';
 import {removeLoc} from '@romejs/js-ast-utils';
@@ -200,7 +201,7 @@ export default class WorkerAPI {
     ref: FileReference,
     prefetchedModuleSignatures: PrefetchedModuleSignatures,
     fix: boolean,
-  ): Promise<PartialDiagnostics> {
+  ): Promise<WorkerLintResult> {
     const project = this.worker.getProject(ref.project);
     this.logger.info(`Linting:`, ref.real);
 
@@ -209,7 +210,10 @@ export default class WorkerAPI {
 
     const {lint} = handler;
     if (lint === undefined && handler.format === undefined) {
-      return [];
+      return {
+        diagnostics: [],
+        filters: [],
+      };
     }
 
     // Catch any diagnostics, in the case of syntax errors etc
@@ -234,12 +238,18 @@ export default class WorkerAPI {
 
     // These are fatal diagnostics
     if (res.diagnostics !== undefined) {
-      return res.diagnostics;
+      return {
+        filters: [],
+        diagnostics: res.diagnostics,
+      };
     }
 
     // `format` could have return undefined
     if (res.value === undefined) {
-      return [];
+      return {
+        diagnostics: [],
+        filters: [],
+      };
     }
 
     // These are normal diagnostics returned from the linter
@@ -247,6 +257,7 @@ export default class WorkerAPI {
       formatted,
       sourceText: raw,
       diagnostics,
+      filters,
     }: ExtensionLintResult = res.value;
 
     // If the file has pending fixes
@@ -263,23 +274,29 @@ export default class WorkerAPI {
 
     // If there's no pending fix then no need for diagnostics
     if (!needsFix) {
-      return diagnostics;
+      return {
+        diagnostics,
+        filters,
+      };
     }
 
     // Add pending autofix diagnostic
-    return [
-      ...diagnostics,
-      {
-        category: 'lint/pendingFixes',
-        filename: ref.uid,
-        message: 'Pending fixes',
-        advice: [
-          {
-            type: 'diff',
-            diff: diff(raw, formatted),
-          },
-        ],
-      },
-    ];
+    return {
+      filters,
+      diagnostics: [
+        ...diagnostics,
+        {
+          category: 'lint/pendingFixes',
+          filename: ref.uid,
+          message: 'Pending fixes',
+          advice: [
+            {
+              type: 'diff',
+              diff: diff(raw, formatted),
+            },
+          ],
+        },
+      ],
+    };
   }
 }

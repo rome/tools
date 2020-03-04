@@ -12,6 +12,7 @@ export default function TSAsExpression(generator: Generator, node: AnyNode) {
   node = tsAsExpression.assert(node);
 
   generator.print(node.expression);
+
   if (generator.options.typeAnnotations) {
     generator.word('as');
     generator.print(node.typeAnnotation, node);

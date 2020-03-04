@@ -9,6 +9,7 @@ import Generator from '../../Generator';
 import {escapeString} from '@romejs/string-escape';
 import {StringLiteral, stringLiteral, AnyNode} from '@romejs/js-ast';
 import {escapeXHTMLEntities} from '@romejs/js-parser';
+
 export default function StringLiteral(
   generator: Generator,
   node: AnyNode,

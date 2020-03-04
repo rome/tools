@@ -129,29 +129,29 @@ export function encodeVLQ(value: number): string {
  * failure.
  */
 export function decode(charCode: number): number {
-  var bigA = 65; // 'A'
-  var bigZ = 90; // 'Z'
+  const uppercaseA = 65; // 'A'
+  const uppercaseZ = 90; // 'Z'
 
-  var littleA = 97; // 'a'
-  var littleZ = 122; // 'z'
+  const lowercaseA = 97; // 'a'
+  const lowercaseZ = 122; // 'z'
 
-  var zero = 48; // '0'
-  var nine = 57; // '9'
+  const zero = 48; // '0'
+  const nine = 57; // '9'
 
-  var plus = 43; // '+'
-  var slash = 47; // '/'
+  const plus = 43; // '+'
+  const slash = 47; // '/'
 
-  var littleOffset = 26;
-  var numberOffset = 52;
+  const lowercaseOffset = 26;
+  const numberOffset = 52;
 
   // 0 - 25: ABCDEFGHIJKLMNOPQRSTUVWXYZ
-  if (bigA <= charCode && charCode <= bigZ) {
-    return charCode - bigA;
+  if (uppercaseA <= charCode && charCode <= uppercaseZ) {
+    return charCode - uppercaseA;
   }
 
   // 26 - 51: abcdefghijklmnopqrstuvwxyz
-  if (littleA <= charCode && charCode <= littleZ) {
-    return charCode - littleA + littleOffset;
+  if (lowercaseA <= charCode && charCode <= lowercaseZ) {
+    return charCode - lowercaseA + lowercaseOffset;
   }
 
   // 52 - 61: 0123456789

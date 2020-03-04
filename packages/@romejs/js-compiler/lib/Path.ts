@@ -27,6 +27,7 @@ export type PathOptions = {
   listKey?: number;
   parentScope?: Scope;
   scope?: Scope;
+  frozen?: boolean;
   noArrays?: boolean;
   noScopeCreation?: boolean;
   hooks?: Handlers;

@@ -17,6 +17,6 @@ export default function TSNonNullExpression(
   node: AnyNode,
 ) {
   node = tsNonNullExpression.assert(node);
-
-  throw new Error('unimplemented');
+  generator.print(node.expression, node);
+  generator.token('!');
 }
