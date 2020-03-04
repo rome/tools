@@ -13,7 +13,6 @@ import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
 import noDuplicateKeys from './noDuplicateKeys';
-import disallowMultipleSpacesInRegularExpressionLiterals from './disallowMultipleSpacesInRegularExpressionLiterals';
 import noDupeArgs from './noDupeArgs';
 import noLabelVar from './noLabelVar';
 import undeclaredVariables from './undeclaredVariables';
@@ -23,6 +22,7 @@ import noUnsafeFinally from './noUnsafeFinally';
 import noDeleteVars from './noDeleteVars';
 import noTemplateCurlyInString from './noTemplateCurlyInString';
 import noImportAssign from './noImportAssign';
+import disallowMultipleSpacesInRegularExpressionLiterals from './disallowMultipleSpacesInRegularExpressionLiterals';
 
 export const lintTransforms = [
   defaultExportSameBasename,
@@ -34,7 +34,6 @@ export const lintTransforms = [
   noAsyncPromiseExecutor,
   noCondAssign,
   noDuplicateKeys,
-  disallowVar,
   noDupeArgs,
   noLabelVar,
   undeclaredVariables,
