@@ -28,5 +28,5 @@ export const lintTransforms = [
   noLabelVar,
   noDuplicateKeys,
   disallowVar,
-  noEmptyCharacterClass
+  noEmptyCharacterClass,
 ];

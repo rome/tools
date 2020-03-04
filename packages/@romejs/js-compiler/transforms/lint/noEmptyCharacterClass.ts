@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-
 import {AnyNode} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 
@@ -22,17 +21,18 @@ import {Path} from '@romejs/js-compiler';
 const regex = /^([^\\[]|\\.|\[([^\\\]]|\\.)+\])*$/u;
 
 export default {
-	name: 'noEmptyCharacterClass',
-	enter(path: Path): AnyNode {
-		const {context, node} = path;
+  name: 'noEmptyCharacterClass',
+  enter(path: Path): AnyNode {
+    const {context, node} = path;
 
-		if (node.type === "RegExpLiteral" && !regex.test(node.pattern)) {
-			context.addNodeDiagnostic(node, {
-				category: 'lint/noEmptyCharacterClass',
-				message: 'Empty character classes in regular expressions are not allowed',
-			});
-		}
-		
-		return node;
-	},
+    if (node.type === 'RegExpLiteral' && !regex.test(node.pattern)) {
+      context.addNodeDiagnostic(node, {
+        category: 'lint/noEmptyCharacterClass',
+        message:
+          'Empty character classes in regular expressions are not allowed',
+      });
+    }
+
+    return node;
+  },
 };
