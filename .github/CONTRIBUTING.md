@@ -13,7 +13,7 @@ Getting started with developing Rome is as easy as three commands. You will need
 ```bash
 git clone https://github.com/facebookexperimental/rome
 cd rome
-scripts/dev-rome --help
+./scripts/dev-rome --help
 ```
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
@@ -25,7 +25,7 @@ Refer to [Getting Started](https://romejs.dev/docs/introduction/getting-started/
 You can run the test suite with the following command:
 
 ```bash
-scripts/dev-rome test
+./scripts/dev-rome test
 ```
 
 This will run all tests inside of any `__rtests__` directories.
