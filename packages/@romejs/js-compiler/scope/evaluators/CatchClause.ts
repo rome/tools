@@ -17,7 +17,7 @@ export default {
     if (node.param !== undefined) {
       for (const id of getBindingIdentifiers(node.param)) {
         // TODO maybe add a `catch` binding type?
-        scope.addBinding(
+        newScope.addBinding(
           new LetBinding({
             node: id,
             name: id.name,
