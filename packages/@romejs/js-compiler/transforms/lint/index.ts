@@ -14,13 +14,14 @@ import getterReturn from './getterReturn';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
-import noDeleteVars from './noDeleteVars';
 import noDebugger from './noDebugger';
+import noDeleteVars from './noDeleteVars';
 import noDupeArgs from './noDupeArgs';
 import noDuplicateKeys from './noDuplicateKeys';
 import noEmptyCharacterClass from './noEmptyCharacterClass';
 import noFunctionAssign from './noFunctionAssign';
 import noImportAssign from './noImportAssign';
+import noInnerDeclarations from './noInnerDeclarations';
 import noLabelVar from './noLabelVar';
 import noTemplateCurlyInString from './noTemplateCurlyInString';
 import noUnsafeFinally from './noUnsafeFinally';
@@ -46,6 +47,7 @@ export const lintTransforms = [
   noEmptyCharacterClass,
   noFunctionAssign,
   noImportAssign,
+  noInnerDeclarations,
   noLabelVar,
   noTemplateCurlyInString,
   noUnsafeFinally,

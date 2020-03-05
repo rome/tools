@@ -702,3 +702,70 @@ test('disallow multiple spaces in regular expression literals', async t => {
 
   t.looksLike(res4.diagnostics, []);
 });
+
+test('no inner declarations', async t => {
+  const invalidTestCases = [
+    `if (test) { 
+      function doSomethingElse() {}
+    }
+    `,
+    `function doSomething() {
+      do {
+        function somethingElse() {}
+      } while (test);
+    }
+    `,
+    `(function() {
+      if (test) {
+        function doSomething() {}
+      }
+    })();`,
+    `function anotherThing() {
+      if (test) {
+        function declaration() {}
+      }
+    }`,
+  ];
+
+  const validTestCases = [
+    `function doSomething() { }`,
+    `function doSomething() {
+      function somethingElse() {}
+    }`,
+    `if (test) {
+      var fn = function() {};
+    }`,
+    `if (test) {
+      var fn = function expr() {};
+    }`,
+    `function decl() {
+      var fn = function expr() {};
+    }`,
+    `function decl(arg) {
+      var fn;
+      if (arg) {
+        fn = function() {};
+      }
+    }`,
+  ];
+
+  for (const invalidTestCase of invalidTestCases) {
+    const res = await testLint(
+      invalidTestCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    );
+    t.truthy(
+      res.diagnostics.find(d => d.category === 'lint/noInnerDeclarations'),
+    );
+  }
+
+  for (const validTestCase of validTestCases) {
+    const res = await testLint(
+      validTestCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    );
+    t.falsy(
+      res.diagnostics.find(d => d.category === 'lint/noInnerDeclarations'),
+    );
+  }
+});
