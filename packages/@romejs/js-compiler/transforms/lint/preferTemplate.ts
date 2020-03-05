@@ -6,10 +6,24 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
+import {AnyNode, templateElement, TemplateElement, TemplateLiteral, templateLiteral} from '@romejs/js-ast';
+
+const nodeToQuasi = (fromConcat: string, isTail: boolean): TemplateElement => (
+  fromConcat === 'StringLiteral' ? 
+  templateElement.create({ 
+    cooked: fromConcat,
+    raw: fromConcat,
+    tail: isTail
+  }) :
+  templateElement.create({
+    cooked: '',
+    raw: '',
+    tail: isTail
+  })
+)
 
 export default {
-  name: 'sparseArray',
+  name: 'preferTemplate',
   enter(path: Path): AnyNode {
     const {node} = path;
 
@@ -24,6 +38,12 @@ export default {
         message:
           "You're using string concatenation when template literals are preferred",
       });
+
+      return templateLiteral.create({
+      expressions: [node.left, node.right].filter(node => node.type !== 'StringLiteral'),
+      quasis:  [{value: node.left, side: 'left'}, {value: node.right, side: 'right'}].map(quasi => 
+        nodeToQuasi(quasi.value.type, quasi.side === 'right'))
+      })
     }
 
     return node;
