@@ -644,6 +644,7 @@ test('disallow unnecessary boolean casts', async t => {
     forTest.diagnostics.find(d => d.message === `Redundant double negation.`),
   );
 });
+
 test('no shadow restricted names', async t => {
   let failingCases = [
     'function NaN() {}',
