@@ -460,7 +460,6 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
           return 1;
       }
     }
-    
     greet1();
     `,
     LINT_ENABLED_FORMAT_DISABLED_CONFIG,
@@ -474,7 +473,6 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
 
   const breakTest = await testLint(
     `
-    
     function greet2() {
       try {
         throw new Error("Try")
@@ -507,7 +505,6 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
           continue;
       }
     }
-    
     greet3();
     `,
     LINT_ENABLED_FORMAT_DISABLED_CONFIG,
@@ -701,4 +698,95 @@ test('disallow multiple spaces in regular expression literals', async t => {
   );
 
   t.looksLike(res4.diagnostics, []);
+});
+test('no-unreachable code', async t => {
+  const res = await testLint(
+    `
+function foo() {
+  return true;
+  console.log('done');
+}
+
+foo()
+
+function bar() {
+  throw new Error('Oops!');
+  console.log('done');
+}
+
+bar()
+
+while (true) {
+  break;
+  console.log('done');
+}
+
+throw new Error('Oops!');
+console.log('done');
+
+throw 'This is another error, Oops !!';
+`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+  t.snapshot(res);
+
+  t.looksLike(res.diagnostics, [
+    {
+      category: 'lint/unRecheableCode',
+      filename: 'unknown',
+      language: 'js',
+      message: 'Unrecheable code',
+      mtime: undefined,
+      sourceType: 'module',
+      origins: [{category: 'lint'}],
+      end: {
+        column: 22,
+        index: 55,
+        line: 4,
+      },
+      start: {
+        column: 2,
+        index: 35,
+        line: 4,
+      },
+    },
+    {
+      category: 'lint/unRecheableCode',
+      filename: 'unknown',
+      language: 'js',
+      message: 'Unrecheable code',
+      mtime: undefined,
+      sourceType: 'module',
+      origins: [{category: 'lint'}],
+      end: {
+        column: 22,
+        index: 133,
+        line: 11,
+      },
+      start: {
+        column: 2,
+        index: 113,
+        line: 11,
+      },
+    },
+    {
+      category: 'lint/unRecheableCode',
+      filename: 'unknown',
+      language: 'js',
+      message: 'Unrecheable code',
+      mtime: undefined,
+      sourceType: 'module',
+      origins: [{category: 'lint'}],
+      end: {
+        column: 22,
+        index: 190,
+        line: 18,
+      },
+      start: {
+        column: 2,
+        index: 170,
+        line: 18,
+      },
+    },
+  ]);
 });
