@@ -21,7 +21,7 @@ export default {
           new LetBinding({
             node: id,
             name: id.name,
-            scope,
+            scope: newScope,
           }),
         );
       }
