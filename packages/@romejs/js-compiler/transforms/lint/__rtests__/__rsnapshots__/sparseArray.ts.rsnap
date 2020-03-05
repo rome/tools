@@ -1,0 +1,3 @@
+{
+  "sparse array": "Object {\n  filters: Array []\n  src: '[1,,2]'\n  diagnostics: Array [\n    Object {\n      category: 'lint/sparseArray'\n      filename: 'unknown'\n      language: 'js'\n      message: 'Your array contains an empty slot'\n      mtime: undefined\n      sourceType: 'module'\n      origins: Array [Object {category: 'lint'}]\n      end: Object {\n        column: 6\n        index: 6\n        line: 1\n      }\n      start: Object {\n        column: 0\n        index: 0\n        line: 1\n      }\n    }\n  ]\n}"
+}

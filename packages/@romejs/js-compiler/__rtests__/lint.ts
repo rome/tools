@@ -5,15 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// TODO: Shift file into packages/@romejs/js-compiler/transforms/lint/__rtests__
+// after all open linting PRs have been merged.
+
 import test from '@romejs/test';
 import lint from '../api/lint';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import {DEFAULT_PROJECT_CONFIG, ProjectConfig} from '@romejs/project';
-import {PartialDiagnostic} from '@romejs/diagnostics/types';
 import {ConstSourceType} from '@romejs/js-ast';
 
-const LINT_ENABLED_FORMAT_DISABLED_CONFIG: ProjectConfig = {
+export const LINT_ENABLED_FORMAT_DISABLED_CONFIG: ProjectConfig = {
   ...DEFAULT_PROJECT_CONFIG,
   lint: {
     ...DEFAULT_PROJECT_CONFIG.lint,
@@ -25,7 +27,7 @@ const LINT_ENABLED_FORMAT_DISABLED_CONFIG: ProjectConfig = {
   },
 };
 
-const LINT_AND_FORMAT_ENABLED_CONFIG: ProjectConfig = {
+export const LINT_AND_FORMAT_ENABLED_CONFIG: ProjectConfig = {
   ...LINT_ENABLED_FORMAT_DISABLED_CONFIG,
   format: {
     ...LINT_ENABLED_FORMAT_DISABLED_CONFIG.format,
@@ -33,7 +35,7 @@ const LINT_AND_FORMAT_ENABLED_CONFIG: ProjectConfig = {
   },
 };
 
-async function testLint(
+export async function testLint(
   input: string,
   config: ProjectConfig,
   sourceType: ConstSourceType = 'module',
@@ -52,124 +54,6 @@ async function testLint(
     },
   });
 }
-
-test('empty file', async t => {
-  t.snapshot(await testLint('', LINT_ENABLED_FORMAT_DISABLED_CONFIG));
-});
-
-test('undeclared variable', async t => {
-  const res = await testLint('foobar;', LINT_ENABLED_FORMAT_DISABLED_CONFIG);
-  t.snapshot(res);
-
-  // Redundant because of the snapshot above, but this is what we actually care about
-  t.looksLike(res.diagnostics, [
-    {
-      category: 'lint/undeclaredVariables',
-      filename: 'unknown',
-      language: 'js',
-      message: 'Undeclared variable <emphasis>foobar</emphasis>',
-      mtime: undefined,
-      sourceType: 'module',
-      origins: [{category: 'lint'}],
-      end: {
-        column: 6,
-        index: 6,
-        line: 1,
-      },
-      start: {
-        column: 0,
-        index: 0,
-        line: 1,
-      },
-    },
-  ]);
-});
-
-test('sparse array', async t => {
-  const res = await testLint(`[1,,2]`, LINT_ENABLED_FORMAT_DISABLED_CONFIG);
-
-  t.snapshot(res);
-});
-
-test('unsafe negation', async t => {
-  const res = await testLint(
-    `!1 in [1,2]`,
-    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
-  );
-
-  t.snapshot(res);
-});
-
-test('getter return', async t => {
-  const badClass = await testLint(
-    `
-    class p {
-      get name() {
-        console.log('hello')
-      };
-    }
-    console.log(new p())
-    `,
-    LINT_AND_FORMAT_ENABLED_CONFIG,
-  );
-
-  t.snapshot(badClass);
-
-  const badObject = await testLint(
-    `
-    let p;
-    p = {
-      get name() {
-        console.log('hello')
-      }
-    };
-    console.log(p)
-    `,
-    LINT_AND_FORMAT_ENABLED_CONFIG,
-  );
-
-  t.snapshot(badObject);
-
-  const badDefinedProperty = await testLint(
-    `
-    let p = {};
-    Object.defineProperty(p, {
-      get: function (){
-          console.log('hello')
-      }
-    });
-    console.log(p)
-    `,
-    LINT_AND_FORMAT_ENABLED_CONFIG,
-  );
-
-  t.snapshot(badDefinedProperty);
-});
-
-test('no async promise executor', async t => {
-  const validTestCases = [
-    'new Promise(() => {})',
-    'new Promise(() => {}, async function unrelated() {})',
-    'class Foo {} new Foo(async () => {})',
-  ];
-  const invalidTestCases = [
-    'new Promise(async function foo() {})',
-    'new Promise(async () => {})',
-    'new Promise(((((async () => {})))))',
-  ];
-  for (const validTestCase of validTestCases) {
-    const {diagnostics} = await testLint(
-      validTestCase,
-      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
-    );
-    t.is(diagnostics.length, 0);
-  }
-  for (const invalidTestCase of invalidTestCases) {
-    t.snapshot(
-      await testLint(invalidTestCase, LINT_ENABLED_FORMAT_DISABLED_CONFIG),
-    );
-  }
-});
 
 test('format disabled in project config should not regenerate the file', async t => {
   // Intentionally weird formatting

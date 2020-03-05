@@ -1,0 +1,3 @@
+{
+  "undeclared variable": "Object {\n  filters: Array []\n  src: 'foobar;'\n  diagnostics: Array [\n    Object {\n      category: 'lint/undeclaredVariables'\n      filename: 'unknown'\n      language: 'js'\n      message: 'Undeclared variable <emphasis>foobar</emphasis>'\n      mtime: undefined\n      sourceType: 'module'\n      origins: Array [Object {category: 'lint'}]\n      end: Object {\n        column: 6\n        index: 6\n        line: 1\n      }\n      start: Object {\n        column: 0\n        index: 0\n        line: 1\n      }\n    }\n  ]\n}"
+}

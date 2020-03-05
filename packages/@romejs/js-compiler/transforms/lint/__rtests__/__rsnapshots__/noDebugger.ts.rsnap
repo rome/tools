@@ -1,0 +1,3 @@
+{
+  "no debugger": "Array [\n  Object {\n    category: 'lint/noDebugger'\n    filename: 'unknown'\n    fixable: true\n    language: 'js'\n    message: 'Unexpected \\'debugger\\' statement'\n    mtime: undefined\n    sourceType: 'module'\n    origins: Array [Object {category: 'lint'}]\n    end: Object {\n      column: 9\n      index: 9\n      line: 1\n    }\n    start: Object {\n      column: 0\n      index: 0\n      line: 1\n    }\n  }\n]"
+}

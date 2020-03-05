@@ -1,0 +1,3 @@
+{
+  "disallow var": "Object {\n  filters: Array []\n  src: 'var foobar;\\nfoobar'\n  diagnostics: Array [\n    Object {\n      category: 'lint/disallowVar'\n      filename: 'unknown'\n      language: 'js'\n      message: 'Variable declarations using `var` are disallowed, use `let` or `const` instead.'\n      mtime: undefined\n      sourceType: 'module'\n      origins: Array [Object {category: 'lint'}]\n      end: Object {\n        column: 11\n        index: 11\n        line: 1\n      }\n      start: Object {\n        column: 0\n        index: 0\n        line: 1\n      }\n    }\n  ]\n}"
+}
