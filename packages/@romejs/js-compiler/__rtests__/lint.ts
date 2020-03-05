@@ -747,6 +747,18 @@ test('no inner declarations', async t => {
         fn = function() {};
       }
     }`,
+    `class MyClass{
+      doSomething(){
+        function doSomethingElse(){}
+      }
+    }`,
+    `function createMasterCommand() {}
+    createMasterCommand({
+      description: 'TODO',
+      async default(req) {
+        async function executeCode(path) {}
+      },
+    });`
   ];
 
   for (const invalidTestCase of invalidTestCases) {

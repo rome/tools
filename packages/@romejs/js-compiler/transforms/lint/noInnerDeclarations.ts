@@ -23,6 +23,8 @@ export default {
           'FunctionDeclaration',
           'FunctionExpression',
           'ArrowFunctionExpression',
+          'ClassMethod',
+          'ObjectMethod'
         ].indexOf(path.parentPath.parentPath.node.type) < 0
       ) {
         context.addNodeDiagnostic(declaration, {
