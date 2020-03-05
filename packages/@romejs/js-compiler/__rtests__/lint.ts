@@ -758,7 +758,7 @@ test('no inner declarations', async t => {
       async default(req) {
         async function executeCode(path) {}
       },
-    });`
+    });`,
   ];
 
   for (const invalidTestCase of invalidTestCases) {
