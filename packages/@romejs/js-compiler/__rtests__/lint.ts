@@ -460,7 +460,7 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
           return 1;
       }
     }
-    
+
     greet1();
     `,
     LINT_ENABLED_FORMAT_DISABLED_CONFIG,
@@ -474,7 +474,7 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
 
   const breakTest = await testLint(
     `
-    
+
     function greet2() {
       try {
         throw new Error("Try")
@@ -507,7 +507,7 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
           continue;
       }
     }
-    
+
     greet3();
     `,
     LINT_ENABLED_FORMAT_DISABLED_CONFIG,
@@ -701,4 +701,61 @@ test('disallow multiple spaces in regular expression literals', async t => {
   );
 
   t.looksLike(res4.diagnostics, []);
+});
+
+test('no invalid regular expression', async t => {
+  let validTestCases = [
+    "let foo = RegExp('');foo;",
+    'let foo = RegExp();foo;',
+    "let foo = RegExp('.', 'g');foo;",
+    "let foo = new RegExp('.');foo;",
+    'let foo = new RegExp;foo;',
+    "let foo = global.RegExp('\\\\');foo;",
+    "let y = 'y';let foo = new RegExp('.', y);foo;",
+    "let foo = new RegExp('.', 'y');foo;",
+    "let foo = new RegExp('.', 'u');foo;",
+    "let foo = new RegExp('.', 'yu');foo;",
+    "let foo = new RegExp('/', 'yu');foo;",
+    "let foo = new RegExp('\\/', 'yu');foo;",
+    "let foo = new RegExp('.', 'y');foo;",
+    "let foo = new RegExp('.', 'u');foo;",
+    "let foo = new RegExp('.', 'yu');foo;",
+    "let foo = new RegExp('/', 'yu');foo;",
+    "let foo = new RegExp('\\/', 'yu');foo;",
+    "let foo = new RegExp('\\\\u{65}', 'u');foo;",
+    "let foo = new RegExp('[\\\\u0-\\\\u1F]', 'u');foo;",
+    "let foo = new RegExp('.', 's');foo;",
+    "let foo = new RegExp('(?<=a)b');foo;",
+    "let foo = new RegExp('(?<!a)b');foo;",
+    "let foo = new RegExp('(?<a>b)\\k<a>');foo;",
+    "let foo = new RegExp('(?<a>b)\\k<a>', 'u');foo;",
+    "let foo = new RegExp('\\\\p{Letter}', 'u');foo;",
+  ];
+
+  for (const validTestCase of validTestCases) {
+    const {diagnostics} = await testLint(
+      validTestCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    );
+    t.is(diagnostics.length, 0);
+  }
+
+  let invalidTestCases = [
+    "let foo = RegExp('[');foo;",
+    "let foo = new RegExp('[');foo;",
+    "let foo = RegExp('.', 'z');foo;",
+    "let foo = new RegExp('.', 'z');foo;",
+    "let foo = RegExp(')');foo;",
+    "let foo = new RegExp(')');foo;",
+    String.raw`let foo = RegExp('\\');foo;`,
+    String.raw`let foo = new RegExp('\\');foo;`,
+  ];
+
+  for (const invalidTestCase of invalidTestCases) {
+    const res = await testLint(
+      invalidTestCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    );
+    t.snapshot(res);
+  }
 });
