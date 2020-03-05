@@ -1,0 +1,8 @@
+tasks:
+  - init: |
+      npm install
+      ./scripts/dev-rome --help
+    name: Build
+  - init: ./scripts/dev-rome test
+    name: Test
+    openMode: split-right
