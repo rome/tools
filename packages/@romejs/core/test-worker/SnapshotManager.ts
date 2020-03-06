@@ -13,22 +13,32 @@ import {
   exists,
   unlink,
 } from '@romejs/fs';
-import {Dict} from '@romejs/typescript-helpers';
 import {TestRunnerOptions} from '../master/testing/types';
 import TestWorkerRunner from './TestWorkerRunner';
 import {PartialDiagnosticAdvice} from '@romejs/diagnostics';
+import createSnapshotParser from './SnapshotParser';
 
 const SNAPSHOTS_DIR = '__rsnapshots__';
-const SNAPSHOT_EXT = '.rsnap';
+
+function cleanHeading(key: string): string {
+  if (key[0] === '`') {
+    key = key.slice(1);
+  }
+
+  if (key[key.length - 1] === '`') {
+    key = key.slice(-1);
+  }
+
+  return key.trim();
+}
 
 export default class SnapshotManager {
-  constructor(runner: TestWorkerRunner, testFilename: AbsoluteFilePath) {
-    this.testFilename = testFilename.join();
-
-    const folder = testFilename.getParent().append(SNAPSHOTS_DIR);
+  constructor(runner: TestWorkerRunner, testPath: AbsoluteFilePath) {
+    const folder = testPath.getParent().append(SNAPSHOTS_DIR);
     this.folder = folder;
 
-    this.path = folder.append(testFilename.getBasename() + SNAPSHOT_EXT);
+    this.path = folder.append(testPath.getExtensionlessBasename() + '.md');
+    this.testPath = testPath;
 
     this.runner = runner;
     this.options = runner.options;
@@ -39,7 +49,7 @@ export default class SnapshotManager {
     this.entries = new Map();
   }
 
-  testFilename: string;
+  testPath: AbsoluteFilePath;
   folder: AbsoluteFilePath;
   path: AbsoluteFilePath;
   entries: Map<string, string>;
@@ -75,10 +85,41 @@ export default class SnapshotManager {
     const file = await readFileText(snapshotFilename);
     this.raw = file;
 
-    const json = JSON.parse(file);
+    const parser = createSnapshotParser({
+      path: snapshotFilename,
+      input: file,
+    });
 
-    for (const key in json) {
-      this.entries.set(key, String(json[key]));
+    const nodes = parser.parse();
+
+    while (nodes.length > 0) {
+      const node = nodes.shift();
+      if (node === undefined) {
+        throw new Error('Impossible');
+      }
+
+      if (node.type === 'Heading' && node.level === 1) {
+        // Title
+        continue;
+      }
+
+      if (node.type === 'Heading' && node.level === 2) {
+        const codeBlock = nodes.shift();
+        if (codeBlock === undefined || codeBlock.type !== 'CodeBlock') {
+          throw parser.unexpected({
+            message: 'Expected a code block after this heading',
+            loc: node.loc,
+          });
+        }
+
+        this.entries.set(cleanHeading(node.text), codeBlock.value);
+        continue;
+      }
+
+      throw parser.unexpected({
+        message: 'Unexpected node',
+        loc: node.loc,
+      });
     }
   }
 
@@ -101,7 +142,9 @@ export default class SnapshotManager {
     }
 
     // Build the snapshot
-    const json: Dict<string> = {};
+    let lines: Array<string> = [];
+    lines.push(`# \`${this.testPath.getBasename()}\``);
+    lines.push('');
 
     // Get keys and sort them so they're in a predictable order
     const keys = Array.from(this.entries.keys()).sort();
@@ -112,10 +155,16 @@ export default class SnapshotManager {
         throw new Error('Impossible');
       }
 
-      json[key] = value;
+      lines.push(`## \`${key}\``);
+      lines.push('');
+      lines.push('```');
+      // TODO escape triple backquotes
+      lines.push(value);
+      lines.push('```');
+      lines.push('');
     }
 
-    const formatted = JSON.stringify(json, undefined, '  ');
+    const formatted = lines.join('\n');
 
     if (this.options.freezeSnapshots) {
       if (!this.exists) {

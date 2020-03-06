@@ -529,7 +529,8 @@ export default class TestAPI {
   ) {
     const key = this.snapshotManager.toSnapshotKey(this.testName, name);
 
-    const formatted = prettyFormat(expected);
+    const formatted =
+      typeof expected === 'string' ? expected : prettyFormat(expected);
 
     // Get the current snapshot
     const existingSnapshot = this.snapshotManager.get(key);
