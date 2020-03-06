@@ -16,7 +16,7 @@ import {
 import {getSPDXLicense, licenseNames} from './index';
 import {isAlpha, isDigit} from '@romejs/parser-core';
 import {buildSuggestionAdvice} from '@romejs/diagnostics';
-import {add, inc, Number0, get0} from '@romejs/ob1';
+import {inc, Number0, get0} from '@romejs/ob1';
 
 //# Tokens
 

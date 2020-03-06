@@ -31,7 +31,6 @@ import {
   coerce0,
   number0Neg1,
   get0,
-  dec,
 } from '@romejs/ob1';
 import {escapeMarkup} from '@romejs/string-markup';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
