@@ -119,7 +119,7 @@ export default createParser(
                 // Check for trailing newline
                 if (code[code.length - 1] === '\n') {
                   // Trim trailing newline
-                  code = code.slice(-1);
+                  code = code.slice(0, -1);
 
                   // Skip closing ticks
                   end = add(end, 3);
