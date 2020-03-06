@@ -1,0 +1,283 @@
+# `suppressions.ts`
+
+## ```
+
+```
+
+
+```
+
+## `multiple categories`
+
+```
+Object {
+  diagnostics: Array []
+  suppressions: Array [
+    Object {
+      category: 'foo'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+    Object {
+      category: 'bar'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+    Object {
+      category: 'foo'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 2
+        }
+      }
+    }
+    Object {
+      category: 'bar'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 2
+        }
+      }
+    }
+    Object {
+      category: 'foo'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 3
+        }
+      }
+    }
+    Object {
+      category: 'bar'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 3
+        }
+      }
+    }
+    Object {
+      category: 'foo'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 4
+        }
+      }
+    }
+    Object {
+      category: 'bar'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 4
+        }
+      }
+    }
+    Object {
+      category: 'cat'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 4
+        }
+      }
+    }
+    Object {
+      category: 'dog'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 4
+        }
+      }
+    }
+  ]
+}
+```
+
+## `single category`
+
+```
+Object {
+  diagnostics: Array []
+  suppressions: Array [
+    Object {
+      category: 'foo'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+    Object {
+      category: 'foo'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 2
+        }
+      }
+    }
+    Object {
+      category: 'foo'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 3
+        }
+      }
+    }
+    Object {
+      category: 'foo'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 4
+        }
+      }
+    }
+  ]
+}
+```
+
+## `typos`
+
+```
+Object {
+  suppressions: Array []
+  diagnostics: Array [
+    Object {
+      category: 'suppressions'
+      filename: 'unknown'
+      message: 'Invalid suppression prefix <emphasis>rome-ignore</emphasis>'
+      end: Object {
+        column: 0
+        index: 0
+        line: 1
+      }
+      start: Object {
+        column: 0
+        index: 0
+        line: 1
+      }
+      advice: Array [
+        log {
+          category: 'info'
+          message: 'Did you mean <emphasis>rome-suppress</emphasis>?'
+        }
+      ]
+    }
+  ]
+}
+```
