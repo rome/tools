@@ -217,7 +217,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
         case '\t':
         case '\r':
         case '\n':
-          return this._tokenizeWithState(inc(index), input, state);
+          return this.lookahead(inc(index));
       }
     }
 
