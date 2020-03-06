@@ -6,7 +6,7 @@
  */
 
 import {Program} from '@romejs/js-ast';
-import {PartialDiagnostics, DiagnosticFilters} from '@romejs/diagnostics';
+import {PartialDiagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {TransformRequest, TransformVisitors} from '../types';
 import {program} from '@romejs/js-ast';
 import {stageTransforms, stageOrder, hookVisitors} from '../transforms/index';
@@ -16,7 +16,7 @@ import {extractSuppressionsFromProgram} from '../suppressions';
 
 type TransformResult = {
   ast: Program;
-  filters: DiagnosticFilters;
+  suppressions: DiagnosticSuppressions;
   diagnostics: PartialDiagnostics;
   cacheDependencies: Array<string>;
 };
@@ -75,7 +75,7 @@ export default async function transform(
   const compiledAst = program.assert(context.reduce(ast, visitors));
 
   const res: TransformResult = {
-    filters: extractSuppressionsFromProgram(ast),
+    suppressions: extractSuppressionsFromProgram(ast),
     diagnostics: [...prevStageDiagnostics, ...context.diagnostics],
     cacheDependencies: [
       ...prevStageCacheDeps,

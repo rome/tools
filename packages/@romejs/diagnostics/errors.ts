@@ -9,13 +9,13 @@ import {PartialDiagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
 import {escapeMarkup} from '@romejs/string-markup';
 import {stripAnsi} from '@romejs/string-ansi';
 import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
-import {PartialDiagnostic, DiagnosticFilters} from './types';
+import {PartialDiagnostic, DiagnosticSuppressions} from './types';
 
 export class DiagnosticsError extends Error {
   constructor(
     message: string,
     diagnostics: PartialDiagnostics,
-    filters: DiagnosticFilters = [],
+    suppressions: DiagnosticSuppressions = [],
   ) {
     if (diagnostics.length === 0) {
       throw new Error('No diagnostics');
@@ -33,28 +33,27 @@ export class DiagnosticsError extends Error {
 
     super(escapeMarkup(message));
     this.diagnostics = diagnostics;
-    this.filters = filters;
+    this.suppressions = suppressions;
     this.name = 'DiagnosticsError';
   }
 
   diagnostics: PartialDiagnostics;
-  filters: DiagnosticFilters;
+  suppressions: DiagnosticSuppressions;
 }
 
 export function createSingleDiagnosticError(
   diag: PartialDiagnostic,
-  filters?: DiagnosticFilters,
+  suppressions?: DiagnosticSuppressions,
 ): DiagnosticsError {
-  return new DiagnosticsError(diag.message, [diag], filters);
+  return new DiagnosticsError(diag.message, [diag], suppressions);
 }
 
 export function getDiagnosticsFromError(
   err: Error,
 ): undefined | PartialDiagnostics {
   if (err instanceof DiagnosticsError) {
-    const processor = new DiagnosticsProcessor({
-      filters: err.filters,
-    });
+    const processor = new DiagnosticsProcessor({});
+    processor.addSuppressions(err.suppressions);
     processor.addDiagnostics(err.diagnostics);
     return processor.getPartialDiagnostics();
   }

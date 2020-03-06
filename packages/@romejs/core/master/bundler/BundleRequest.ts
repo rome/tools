@@ -170,13 +170,8 @@ export default class BundleRequest {
       this.cached = false;
     }
 
-    if (res.diagnostics.length > 0) {
-      this.diagnostics.addDiagnostics(res.diagnostics);
-    }
-
-    if (res.filters.length > 0) {
-      this.diagnostics.addFilters(res.filters);
-    }
+    this.diagnostics.addSuppressions(res.suppressions);
+    this.diagnostics.addDiagnostics(res.diagnostics);
 
     this.compiles.set(source, res);
     return res;

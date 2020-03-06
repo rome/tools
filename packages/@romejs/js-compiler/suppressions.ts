@@ -6,21 +6,19 @@
  */
 
 import {Program, AnyComment} from '@romejs/js-ast';
-import {DiagnosticFilters} from '@romejs/diagnostics';
-import {add} from '@romejs/ob1';
+import {DiagnosticSuppressions} from '@romejs/diagnostics';
 
 const SUPPRESSION_START = 'rome-suppress';
 
-function extractFiltersFromComment(
+function extractSuppressionsFromComment(
   comment: AnyComment,
-): undefined | DiagnosticFilters {
+): undefined | DiagnosticSuppressions {
   const {loc} = comment;
   if (loc === undefined) {
     return undefined;
   }
 
-  const targetLine = add(loc.end.line, 1);
-  const filters: DiagnosticFilters = [];
+  const suppressions: DiagnosticSuppressions = [];
 
   const lines = comment.value.split('\n');
   const cleanLines = lines.map(line => {
@@ -39,43 +37,53 @@ function extractFiltersFromComment(
       .split(' ');
     const cleanCategories = categories.map(category => category.trim());
 
-    for (const category of cleanCategories) {
+    for (let category of cleanCategories) {
       if (category === '') {
         continue;
       }
 
-      filters.push({
-        filename: loc.filename,
+      // If a category ends with a colon then all the things that follow it are an explanation
+      let shouldBreak = false;
+      if (category[category.length - 1] === ':') {
+        shouldBreak = true;
+        category = category.slice(-1);
+      }
+
+      suppressions.push({
         category,
-        line: targetLine,
+        loc,
       });
+
+      if (shouldBreak) {
+        break;
+      }
     }
   }
 
-  if (filters.length === 0) {
+  if (suppressions.length === 0) {
     return undefined;
   } else {
-    return filters;
+    return suppressions;
   }
 }
 
 export function extractSuppressionsFromComments(
   comments: Array<AnyComment>,
-): DiagnosticFilters {
-  let filters: DiagnosticFilters = [];
+): DiagnosticSuppressions {
+  let suppressions: DiagnosticSuppressions = [];
 
   for (const comment of comments) {
-    const commentFilters = extractFiltersFromComment(comment);
-    if (commentFilters !== undefined) {
-      filters = filters.concat(commentFilters);
+    const commentSuppressions = extractSuppressionsFromComment(comment);
+    if (commentSuppressions !== undefined) {
+      suppressions = suppressions.concat(commentSuppressions);
     }
   }
 
-  return filters;
+  return suppressions;
 }
 
 export function extractSuppressionsFromProgram(
   ast: Program,
-): DiagnosticFilters {
+): DiagnosticSuppressions {
   return extractSuppressionsFromComments(ast.comments);
 }

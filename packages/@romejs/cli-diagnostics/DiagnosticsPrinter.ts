@@ -520,16 +520,6 @@ export default class DiagnosticsPrinter extends Error {
 
   filterDiagnostics(): Diagnostics {
     const diagnostics = this.getDiagnostics();
-
-    if (diagnostics.length === 0) {
-      this.reporter.error(
-        'No diagnostics provided. They have likely all been filtered, but this operation does not check for suppressions. Showing complete diagnostics instead.',
-      );
-      return this.processor.getCompleteUnfilteredDiagnostics(
-        this.reporter.markupOptions,
-      );
-    }
-
     const filteredDiagnostics: Diagnostics = [];
 
     for (const diag of diagnostics) {
