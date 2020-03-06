@@ -115,6 +115,7 @@ export default createParser(
       constructor(opts: JSONParserOptions) {
         super(opts, '@romejs/codec-json');
         this.options = opts;
+        this.ignoreWhitespaceTokens = true;
 
         this.hasExtensions =
           this.path !== undefined && this.path.getBasename().endsWith('.rjson');
@@ -271,13 +272,6 @@ export default createParser(
 
           case ']':
             return this.finishToken('BracketClose');
-
-          // Skip all whitespace characters
-          case ' ':
-          case '\t':
-          case '\r':
-          case '\n':
-            return this.lookaheadToken(inc(index));
         }
 
         // Numbers

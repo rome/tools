@@ -124,6 +124,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     this.currentToken = SOF_TOKEN;
     this.prevToken = SOF_TOKEN;
     this.state = initialState;
+    this.ignoreWhitespaceTokens = false;
   }
 
   offsetPosition: undefined | Position;
@@ -136,6 +137,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   prevToken: TokenValues<Tokens>;
   currentToken: TokenValues<Tokens>;
   eofToken: EOFToken;
+  ignoreWhitespaceTokens: boolean;
 
   path: undefined | UnknownFilePath;
   filename: undefined | string;
@@ -202,6 +204,24 @@ export class ParserCore<Tokens extends TokensShape, State> {
     if (token !== undefined) {
       return {token, state};
     }
+  }
+
+  _tokenizeWithState(
+    index: Number0,
+    input: string,
+    state: State,
+  ): undefined | {token: TokenValues<Tokens>; state: State} {
+    if (this.ignoreWhitespaceTokens) {
+      switch (input[get0(index)]) {
+        case ' ':
+        case '\t':
+        case '\r':
+        case '\n':
+          return this._tokenizeWithState(inc(index), input, state);
+      }
+    }
+
+    return this.tokenizeWithState(index, input, state);
   }
 
   // Get the current token
@@ -304,7 +324,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     this.tokenizing = true;
 
     // Tokenize and do some validation
-    const nextToken = this.tokenizeWithState(index, this.input, this.state);
+    const nextToken = this._tokenizeWithState(index, this.input, this.state);
     if (nextToken === undefined) {
       throw this.unexpected({
         start: this.getPositionFromIndex(index),
