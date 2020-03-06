@@ -17,7 +17,10 @@ import {add, get0, Number0, inc} from '@romejs/ob1';
 
 type Tokens = BaseTokens & {
   Hashes: ValueToken<'Hashes', number>;
-  CodeBlock: ValueToken<'CodeBlock', string>;
+  CodeBlock: ValueToken<
+    'CodeBlock',
+    {text: string; language: undefined | string}
+  >;
   TextLine: ValueToken<'TextLine', string>;
 };
 
@@ -29,7 +32,8 @@ type HeadingNode = NodeBase & {
 
 type CodeBlockNode = NodeBase & {
   type: 'CodeBlock';
-  value: string;
+  language: undefined | string;
+  text: string;
 };
 
 type Node = HeadingNode | CodeBlockNode;
@@ -88,6 +92,14 @@ export default createParser(
             if (nextChar === '`' && nextNextChar === '`') {
               let codeOffset = add(index, 3);
 
+              let language: undefined | string;
+              if (input[get0(codeOffset)] !== '\n') {
+                [language, codeOffset] = this.readInputFrom(
+                  codeOffset,
+                  isntNewline,
+                );
+              }
+
               // Expect the first offset character to be a newline
               if (input[get0(codeOffset)] === '\n') {
                 // Skip leading newline
@@ -114,7 +126,10 @@ export default createParser(
 
                   return this.finishValueToken(
                     'CodeBlock',
-                    unescapeTicks(code),
+                    {
+                      language,
+                      text: unescapeTicks(code),
+                    },
                     end,
                   );
                 } else {
@@ -159,7 +174,7 @@ export default createParser(
             case 'CodeBlock':
               nodes.push({
                 type: 'CodeBlock',
-                value: token.value,
+                ...token.value,
                 loc: this.finishLoc(start),
               });
               this.nextToken();

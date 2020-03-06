@@ -2,7 +2,7 @@
 
 ## `parse`
 
-```
+```javascript
 AbsoluteVersion {
   build: Array []
   major: 1
@@ -27,7 +27,7 @@ AbsoluteVersion {
 
 ## `parse: 1`
 
-```
+```javascript
 AbsoluteVersion {
   build: Array []
   major: 1
@@ -52,7 +52,7 @@ AbsoluteVersion {
 
 ## `parse: 10`
 
-```
+```javascript
 VersionRange {
   loc: Object {
     filename: undefined
@@ -107,7 +107,7 @@ VersionRange {
 
 ## `parse: 11`
 
-```
+```javascript
 AbsoluteVersion {
   build: Array []
   major: 1
@@ -132,7 +132,7 @@ AbsoluteVersion {
 
 ## `parse: 12`
 
-```
+```javascript
 Wildcard {
   loc: Object {
     filename: undefined
@@ -152,7 +152,7 @@ Wildcard {
 
 ## `parse: 13`
 
-```
+```javascript
 Wildcard {
   loc: Object {
     filename: undefined
@@ -172,7 +172,7 @@ Wildcard {
 
 ## `parse: 14`
 
-```
+```javascript
 AbsoluteVersion {
   build: Array []
   major: 1
@@ -197,7 +197,7 @@ AbsoluteVersion {
 
 ## `parse: 15`
 
-```
+```javascript
 WildcardVersion {
   build: Array []
   major: 1
@@ -222,7 +222,7 @@ WildcardVersion {
 
 ## `parse: 16`
 
-```
+```javascript
 WildcardVersion {
   build: Array []
   major: 1
@@ -247,7 +247,7 @@ WildcardVersion {
 
 ## `parse: 17`
 
-```
+```javascript
 WildcardVersion {
   build: Array []
   major: 1
@@ -272,7 +272,7 @@ WildcardVersion {
 
 ## `parse: 18`
 
-```
+```javascript
 WildcardVersion {
   build: Array []
   major: 1
@@ -297,7 +297,7 @@ WildcardVersion {
 
 ## `parse: 19`
 
-```
+```javascript
 WildcardVersion {
   build: Array []
   major: 1
@@ -322,7 +322,7 @@ WildcardVersion {
 
 ## `parse: 2`
 
-```
+```javascript
 AbsoluteVersion {
   build: Array []
   major: 1
@@ -350,7 +350,7 @@ AbsoluteVersion {
 
 ## `parse: 20`
 
-```
+```javascript
 WildcardVersion {
   build: Array []
   major: 1
@@ -375,7 +375,7 @@ WildcardVersion {
 
 ## `parse: 21`
 
-```
+```javascript
 WildcardVersion {
   build: Array []
   major: 1
@@ -400,7 +400,7 @@ WildcardVersion {
 
 ## `parse: 22`
 
-```
+```javascript
 WildcardVersion {
   build: Array []
   major: 1
@@ -425,7 +425,7 @@ WildcardVersion {
 
 ## `parse: 23`
 
-```
+```javascript
 WildcardVersion {
   build: Array []
   major: 1
@@ -450,7 +450,7 @@ WildcardVersion {
 
 ## `parse: 24`
 
-```
+```javascript
 WildcardVersion {
   build: Array []
   major: 1
@@ -475,7 +475,7 @@ WildcardVersion {
 
 ## `parse: 25`
 
-```
+```javascript
 WildcardVersion {
   build: Array []
   major: 1
@@ -500,7 +500,7 @@ WildcardVersion {
 
 ## `parse: 26`
 
-```
+```javascript
 VersionRange {
   loc: Object {
     filename: undefined
@@ -560,7 +560,7 @@ VersionRange {
 
 ## `parse: 27`
 
-```
+```javascript
 LogicalOr {
   loc: Object {
     filename: undefined
@@ -620,7 +620,7 @@ LogicalOr {
 
 ## `parse: 28`
 
-```
+```javascript
 LogicalOr {
   loc: Object {
     filename: undefined
@@ -715,7 +715,7 @@ LogicalOr {
 
 ## `parse: 29`
 
-```
+```javascript
 Comparator {
   operator: '>='
   loc: Object {
@@ -756,7 +756,7 @@ Comparator {
 
 ## `parse: 3`
 
-```
+```javascript
 AbsoluteVersion {
   build: Array []
   major: 1
@@ -788,7 +788,7 @@ AbsoluteVersion {
 
 ## `parse: 30`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -880,7 +880,7 @@ LogicalAnd {
 
 ## `parse: 31`
 
-```
+```javascript
 Comparator {
   operator: '<='
   loc: Object {
@@ -921,7 +921,7 @@ Comparator {
 
 ## `parse: 32`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -1013,7 +1013,7 @@ LogicalAnd {
 
 ## `parse: 33`
 
-```
+```javascript
 Comparator {
   operator: '>'
   loc: Object {
@@ -1054,7 +1054,7 @@ Comparator {
 
 ## `parse: 34`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -1146,7 +1146,7 @@ LogicalAnd {
 
 ## `parse: 35`
 
-```
+```javascript
 Comparator {
   operator: '<'
   loc: Object {
@@ -1187,7 +1187,7 @@ Comparator {
 
 ## `parse: 36`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -1279,7 +1279,7 @@ LogicalAnd {
 
 ## `parse: 37`
 
-```
+```javascript
 Comparator {
   operator: '^'
   loc: Object {
@@ -1320,7 +1320,7 @@ Comparator {
 
 ## `parse: 38`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -1412,7 +1412,7 @@ LogicalAnd {
 
 ## `parse: 39`
 
-```
+```javascript
 Comparator {
   operator: '~'
   loc: Object {
@@ -1453,7 +1453,7 @@ Comparator {
 
 ## `parse: 4`
 
-```
+```javascript
 AbsoluteVersion {
   major: 1
   minor: 2
@@ -1478,7 +1478,7 @@ AbsoluteVersion {
 
 ## `parse: 40`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -1570,7 +1570,7 @@ LogicalAnd {
 
 ## `parse: 41`
 
-```
+```javascript
 Comparator {
   operator: '>='
   loc: Object {
@@ -1611,7 +1611,7 @@ Comparator {
 
 ## `parse: 42`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -1703,7 +1703,7 @@ LogicalAnd {
 
 ## `parse: 43`
 
-```
+```javascript
 Comparator {
   operator: '<='
   loc: Object {
@@ -1744,7 +1744,7 @@ Comparator {
 
 ## `parse: 44`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -1836,7 +1836,7 @@ LogicalAnd {
 
 ## `parse: 45`
 
-```
+```javascript
 Comparator {
   operator: '>'
   loc: Object {
@@ -1877,7 +1877,7 @@ Comparator {
 
 ## `parse: 46`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -1969,7 +1969,7 @@ LogicalAnd {
 
 ## `parse: 47`
 
-```
+```javascript
 Comparator {
   operator: '<'
   loc: Object {
@@ -2010,7 +2010,7 @@ Comparator {
 
 ## `parse: 48`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -2102,7 +2102,7 @@ LogicalAnd {
 
 ## `parse: 49`
 
-```
+```javascript
 Comparator {
   operator: '^'
   loc: Object {
@@ -2143,7 +2143,7 @@ Comparator {
 
 ## `parse: 5`
 
-```
+```javascript
 AbsoluteVersion {
   major: 1
   minor: 2
@@ -2168,7 +2168,7 @@ AbsoluteVersion {
 
 ## `parse: 50`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -2260,7 +2260,7 @@ LogicalAnd {
 
 ## `parse: 51`
 
-```
+```javascript
 Comparator {
   operator: '~'
   loc: Object {
@@ -2301,7 +2301,7 @@ Comparator {
 
 ## `parse: 52`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -2393,7 +2393,7 @@ LogicalAnd {
 
 ## `parse: 53`
 
-```
+```javascript
 Comparator {
   operator: '>='
   loc: Object {
@@ -2434,7 +2434,7 @@ Comparator {
 
 ## `parse: 54`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -2526,7 +2526,7 @@ LogicalAnd {
 
 ## `parse: 55`
 
-```
+```javascript
 Comparator {
   operator: '<='
   loc: Object {
@@ -2567,7 +2567,7 @@ Comparator {
 
 ## `parse: 56`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -2659,7 +2659,7 @@ LogicalAnd {
 
 ## `parse: 57`
 
-```
+```javascript
 Comparator {
   operator: '>'
   loc: Object {
@@ -2700,7 +2700,7 @@ Comparator {
 
 ## `parse: 58`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -2792,7 +2792,7 @@ LogicalAnd {
 
 ## `parse: 59`
 
-```
+```javascript
 Comparator {
   operator: '<'
   loc: Object {
@@ -2833,7 +2833,7 @@ Comparator {
 
 ## `parse: 6`
 
-```
+```javascript
 AbsoluteVersion {
   major: 1
   minor: 2
@@ -2861,7 +2861,7 @@ AbsoluteVersion {
 
 ## `parse: 60`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -2953,7 +2953,7 @@ LogicalAnd {
 
 ## `parse: 61`
 
-```
+```javascript
 Comparator {
   operator: '^'
   loc: Object {
@@ -2994,7 +2994,7 @@ Comparator {
 
 ## `parse: 62`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -3086,7 +3086,7 @@ LogicalAnd {
 
 ## `parse: 63`
 
-```
+```javascript
 Comparator {
   operator: '~'
   loc: Object {
@@ -3127,7 +3127,7 @@ Comparator {
 
 ## `parse: 64`
 
-```
+```javascript
 LogicalAnd {
   loc: Object {
     filename: undefined
@@ -3219,7 +3219,7 @@ LogicalAnd {
 
 ## `parse: 7`
 
-```
+```javascript
 AbsoluteVersion {
   major: 1
   minor: 2
@@ -3251,7 +3251,7 @@ AbsoluteVersion {
 
 ## `parse: 8`
 
-```
+```javascript
 AbsoluteVersion {
   major: 1
   minor: 2
@@ -3289,7 +3289,7 @@ AbsoluteVersion {
 
 ## `parse: 9`
 
-```
+```javascript
 AbsoluteVersion {
   major: 1
   minor: 2

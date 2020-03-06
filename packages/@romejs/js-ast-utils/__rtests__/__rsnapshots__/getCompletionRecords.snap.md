@@ -2,7 +2,7 @@
 
 ## `completions`
 
-```
+```javascript
 Array [
   COMPLETION {
     node: ReturnStatement {
@@ -42,7 +42,7 @@ Array [
 
 ## `completions: 1`
 
-```
+```javascript
 Array [
   COMPLETION {
     node: ReturnStatement {
@@ -67,7 +67,7 @@ Array [
 
 ## `completions: 2`
 
-```
+```javascript
 Array [
   COMPLETION {
     node: ReturnStatement {
@@ -191,7 +191,7 @@ Array [
 
 ## `completions: 3`
 
-```
+```javascript
 Array [
   COMPLETION {
     node: ReturnStatement {
@@ -264,7 +264,7 @@ Array [
 
 ## `completions: 4`
 
-```
+```javascript
 Array [
   COMPLETION {
     node: ReturnStatement {
@@ -304,7 +304,7 @@ Array [
 
 ## `completions: 5`
 
-```
+```javascript
 Array [
   COMPLETION {
     node: ReturnStatement {
@@ -344,7 +344,7 @@ Array [
 
 ## `invalid`
 
-```
+```javascript
 Array [
   INVALID {
     description: 'empty block'
@@ -371,7 +371,7 @@ Array [
 
 ## `invalid: 1`
 
-```
+```javascript
 Array [
   INVALID {
     description: 'empty block'
@@ -415,7 +415,7 @@ Array [
 
 ## `invalid: 2`
 
-```
+```javascript
 Array [
   INVALID {
     description: 'empty block'
@@ -558,7 +558,7 @@ Array [
 
 ## `invalid: 3`
 
-```
+```javascript
 Array [
   INVALID {
     description: 'empty block'
@@ -637,7 +637,7 @@ Array [
 
 ## `invalid: 4`
 
-```
+```javascript
 Array [
   INVALID {
     description: 'switch with no default clause'
@@ -679,7 +679,7 @@ Array [
 
 ## `invalid: 5`
 
-```
+```javascript
 Array [
   INVALID {
     description: 'switch with no default clause'
@@ -772,7 +772,7 @@ Array [
 
 ## `invalid: 6`
 
-```
+```javascript
 Array [
   INVALID {
     description: 'empty block'
@@ -799,7 +799,7 @@ Array [
 
 ## `mix`
 
-```
+```javascript
 Array [
   COMPLETION {
     node: ReturnStatement {

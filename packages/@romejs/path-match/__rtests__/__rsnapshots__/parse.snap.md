@@ -2,7 +2,7 @@
 
 ## `pattern`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: true
@@ -61,7 +61,7 @@ Pattern {
 
 ## `pattern: 1`
 
-```
+```javascript
 Pattern {
   comment: ''
   names: Array []
@@ -86,7 +86,7 @@ Pattern {
 
 ## `pattern: 10`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -213,7 +213,7 @@ Pattern {
 
 ## `pattern: 11`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -323,7 +323,7 @@ Pattern {
 
 ## `pattern: 12`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -430,7 +430,7 @@ Pattern {
 
 ## `pattern: 13`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -537,7 +537,7 @@ Pattern {
 
 ## `pattern: 14`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -659,7 +659,7 @@ Pattern {
 
 ## `pattern: 15`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -797,7 +797,7 @@ Pattern {
 
 ## `pattern: 16`
 
-```
+```javascript
 Pattern {
   comment: ' foobar'
   names: Array []
@@ -822,7 +822,7 @@ Pattern {
 
 ## `pattern: 17`
 
-```
+```javascript
 Pattern {
   comment: ' foobar'
   negate: false
@@ -917,7 +917,7 @@ Pattern {
 
 ## `pattern: 18`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -1012,7 +1012,7 @@ Pattern {
 
 ## `pattern: 19`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -1107,7 +1107,7 @@ Pattern {
 
 ## `pattern: 2`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -1202,7 +1202,7 @@ Pattern {
 
 ## `pattern: 20`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -1297,7 +1297,7 @@ Pattern {
 
 ## `pattern: 21`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -1392,7 +1392,7 @@ Pattern {
 
 ## `pattern: 22`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -1487,7 +1487,7 @@ Pattern {
 
 ## `pattern: 23`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -1594,7 +1594,7 @@ Pattern {
 
 ## `pattern: 24`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -1689,7 +1689,7 @@ Pattern {
 
 ## `pattern: 3`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -1784,7 +1784,7 @@ Pattern {
 
 ## `pattern: 4`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -1879,7 +1879,7 @@ Pattern {
 
 ## `pattern: 5`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -1986,7 +1986,7 @@ Pattern {
 
 ## `pattern: 6`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -2045,7 +2045,7 @@ Pattern {
 
 ## `pattern: 7`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -2104,7 +2104,7 @@ Pattern {
 
 ## `pattern: 8`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false
@@ -2199,7 +2199,7 @@ Pattern {
 
 ## `pattern: 9`
 
-```
+```javascript
 Pattern {
   comment: ''
   negate: false

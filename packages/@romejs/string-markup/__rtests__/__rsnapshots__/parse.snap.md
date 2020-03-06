@@ -2,7 +2,7 @@
 
 ## `should not parse string escapes`
 
-```
+```javascript
 Array [
   Tag {
     name: 'filelink'

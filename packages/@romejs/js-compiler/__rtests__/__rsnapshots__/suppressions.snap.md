@@ -1,15 +1,8 @@
 # `suppressions.ts`
 
-## ```
-
-```
-
-
-```
-
 ## `multiple categories`
 
-```
+```javascript
 Object {
   diagnostics: Array []
   suppressions: Array [
@@ -179,7 +172,7 @@ Object {
 
 ## `single category`
 
-```
+```javascript
 Object {
   diagnostics: Array []
   suppressions: Array [
@@ -253,7 +246,7 @@ Object {
 
 ## `typos`
 
-```
+```javascript
 Object {
   suppressions: Array []
   diagnostics: Array [

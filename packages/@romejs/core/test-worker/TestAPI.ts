@@ -529,14 +529,21 @@ export default class TestAPI {
   ) {
     const key = this.snapshotManager.toSnapshotKey(this.testName, name);
 
-    const formatted =
-      typeof expected === 'string' ? expected : prettyFormat(expected);
+    let language: undefined | string;
+
+    let formatted = '';
+    if (typeof expected === 'string') {
+      formatted = expected;
+    } else {
+      language = 'javascript';
+      formatted = prettyFormat(expected);
+    }
 
     // Get the current snapshot
     const existingSnapshot = this.snapshotManager.get(key);
     if (existingSnapshot === undefined) {
       // No snapshot exists, let's save this one!
-      this.snapshotManager.set(key, formatted);
+      this.snapshotManager.set(key, formatted, language);
       return undefined;
     }
 

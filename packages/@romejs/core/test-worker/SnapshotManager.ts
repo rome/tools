@@ -37,7 +37,7 @@ export default class SnapshotManager {
     const folder = testPath.getParent().append(SNAPSHOTS_DIR);
     this.folder = folder;
 
-    this.path = folder.append(testPath.getExtensionlessBasename() + '.md');
+    this.path = folder.append(testPath.getExtensionlessBasename() + '.snap.md');
     this.testPath = testPath;
 
     this.runner = runner;
@@ -52,7 +52,13 @@ export default class SnapshotManager {
   testPath: AbsoluteFilePath;
   folder: AbsoluteFilePath;
   path: AbsoluteFilePath;
-  entries: Map<string, string>;
+  entries: Map<
+    string,
+    {
+      language: undefined | string;
+      value: string;
+    }
+  >;
 
   runner: TestWorkerRunner;
   options: TestRunnerOptions;
@@ -112,7 +118,10 @@ export default class SnapshotManager {
           });
         }
 
-        this.entries.set(cleanHeading(node.text), codeBlock.value);
+        this.entries.set(cleanHeading(node.text), {
+          language: codeBlock.language,
+          value: codeBlock.text,
+        });
         continue;
       }
 
@@ -150,14 +159,17 @@ export default class SnapshotManager {
     const keys = Array.from(this.entries.keys()).sort();
 
     for (const key of keys) {
-      const value = this.entries.get(key);
-      if (value === undefined) {
+      const entry = this.entries.get(key);
+      if (entry === undefined) {
         throw new Error('Impossible');
       }
 
+      const {value} = entry;
+      const language = entry.language === undefined ? '' : entry.language;
+
       lines.push(`## \`${key}\``);
       lines.push('');
-      lines.push('```');
+      lines.push('```' + language);
       // TODO escape triple backquotes
       lines.push(value);
       lines.push('```');
@@ -192,10 +204,13 @@ export default class SnapshotManager {
   }
 
   get(key: string): undefined | string {
-    return this.entries.get(key);
+    const entry = this.entries.get(key);
+    if (entry !== undefined) {
+      return entry.value;
+    }
   }
 
-  set(key: string, value: string) {
-    this.entries.set(key, value);
+  set(key: string, value: string, language: undefined | string) {
+    this.entries.set(key, {value, language});
   }
 }

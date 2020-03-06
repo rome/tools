@@ -1,15 +1,8 @@
 # `lint.ts`
 
-## ```
-
-```
-
-
-```
-
 ## `disallow var`
 
-```
+```javascript
 Object {
   src: 'var foobar;\nfoobar'
   suppressions: Array []
@@ -39,7 +32,7 @@ Object {
 
 ## `empty file`
 
-```
+```javascript
 Object {
   diagnostics: Array []
   src: ''
@@ -49,7 +42,7 @@ Object {
 
 ## `getter return`
 
-```
+```javascript
 Object {
   src: 'class p {\n  get name() {\n    console.log(\'hello\');\n  }\n}\nconsole.log(new p());\n'
   suppressions: Array []
@@ -79,7 +72,7 @@ Object {
 
 ## `getter return: 1`
 
-```
+```javascript
 Object {
   src: 'let p;\np = {\n  get name() {\n    console.log(\'hello\');\n  }};\nconsole.log(p);\n'
   suppressions: Array []
@@ -109,7 +102,7 @@ Object {
 
 ## `getter return: 2`
 
-```
+```javascript
 Object {
   diagnostics: Array []
   src: 'let p = {};\nObject.defineProperty(p, {\n  get: function() {\n    console.log(\'hello\');\n  }});\nconsole.log(p);\n'
@@ -119,7 +112,7 @@ Object {
 
 ## `no async promise executor`
 
-```
+```javascript
 Object {
   src: 'new Promise(async function foo() {})'
   suppressions: Array []
@@ -149,7 +142,7 @@ Object {
 
 ## `no async promise executor: 1`
 
-```
+```javascript
 Object {
   src: 'new Promise(async () => {})'
   suppressions: Array []
@@ -179,7 +172,7 @@ Object {
 
 ## `no async promise executor: 2`
 
-```
+```javascript
 Object {
   src: 'new Promise(((((async () => {})))))'
   suppressions: Array []
@@ -209,7 +202,7 @@ Object {
 
 ## `no cond assign`
 
-```
+```javascript
 Object {
   src: 'for (let i = 1; i = 10; i++) {\n      console.log(\'foo\')\n    }'
   suppressions: Array []
@@ -239,7 +232,7 @@ Object {
 
 ## `no cond assign: 1`
 
-```
+```javascript
 Object {
   src: 'if(foo = \'bar\') {\n      console.log(\'foo\')\n    }'
   suppressions: Array []
@@ -269,7 +262,7 @@ Object {
 
 ## `no cond assign: 2`
 
-```
+```javascript
 Object {
   src: 'while (foo = \'bar\' {\n      console.log(\'foo\')\n    }'
   suppressions: Array []
@@ -336,7 +329,7 @@ Object {
 
 ## `no cond assign: 3`
 
-```
+```javascript
 Object {
   src: 'do {\n      console.log(\'foo)\n    } while (foo = \'bar\')'
   suppressions: Array []
@@ -404,7 +397,7 @@ Object {
 
 ## `no debugger`
 
-```
+```javascript
 Array [
   Object {
     category: 'lint/noDebugger'
@@ -431,7 +424,7 @@ Array [
 
 ## `no empty character class in regular expression`
 
-```
+```javascript
 Object {
   src: 'let foo = /^abc[]/;foo;'
   suppressions: Array []
@@ -461,7 +454,7 @@ Object {
 
 ## `no empty character class in regular expression: 1`
 
-```
+```javascript
 Object {
   src: 'let foo = /foo[]bar/;foo;'
   suppressions: Array []
@@ -491,7 +484,7 @@ Object {
 
 ## `no empty character class in regular expression: 2`
 
-```
+```javascript
 Object {
   src: 'let foo = "";if (foo.match(/^abc[]/)) { foo; }'
   suppressions: Array []
@@ -521,7 +514,7 @@ Object {
 
 ## `no empty character class in regular expression: 3`
 
-```
+```javascript
 Object {
   src: 'let foo = /[]]/;foo;'
   suppressions: Array []
@@ -551,7 +544,7 @@ Object {
 
 ## `no empty character class in regular expression: 4`
 
-```
+```javascript
 Object {
   src: 'let foo = /\\[[]/;foo;'
   suppressions: Array []
@@ -581,7 +574,7 @@ Object {
 
 ## `no empty character class in regular expression: 5`
 
-```
+```javascript
 Object {
   src: 'let foo = /\\[\\[\\]a-z[]/;foo;'
   suppressions: Array []
@@ -611,7 +604,7 @@ Object {
 
 ## `prefer function declarations`
 
-```
+```javascript
 Object {
   src: 'function foo() {}\n'
   suppressions: Array []
@@ -661,7 +654,7 @@ Object {
 
 ## `prefer function declarations: 1`
 
-```
+```javascript
 Object {
   src: 'function foo() {}\n'
   suppressions: Array []
@@ -711,7 +704,7 @@ Object {
 
 ## `prefer function declarations: 2`
 
-```
+```javascript
 Object {
   src: 'const foo = () => {\n  this;\n};\n'
   suppressions: Array []
@@ -741,7 +734,7 @@ Object {
 
 ## `prefer function declarations: 3`
 
-```
+```javascript
 Object {
   src: 'function foo() {\n  function bar() {\n    this;\n  }\n}\n'
   suppressions: Array []
@@ -810,7 +803,7 @@ Object {
 
 ## `prefer function declarations: 4`
 
-```
+```javascript
 Object {
   src: 'const foo any = function() {};\n'
   suppressions: Array []
@@ -868,7 +861,7 @@ Object {
 
 ## `sparse array`
 
-```
+```javascript
 Object {
   src: '[1,,2]'
   suppressions: Array []
@@ -898,7 +891,7 @@ Object {
 
 ## `undeclared variable`
 
-```
+```javascript
 Object {
   src: 'foobar;'
   suppressions: Array []
@@ -928,7 +921,7 @@ Object {
 
 ## `unsafe negation`
 
-```
+```javascript
 Object {
   src: '!1 in [1,2]'
   suppressions: Array []

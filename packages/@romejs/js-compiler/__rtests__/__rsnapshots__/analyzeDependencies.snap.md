@@ -1,15 +1,8 @@
 # `analyzeDependencies.ts`
 
-## ```
-
-```
-
-
-```
-
 ## `correctly identifies a file with cjs exports as cjs`
 
-```
+```javascript
 Object {
   dependencies: Array []
   firstTopAwaitLocation: undefined
@@ -62,7 +55,7 @@ Object {
 
 ## `correctly identifies a file with es exports as es`
 
-```
+```javascript
 Object {
   dependencies: Array []
   diagnostics: Array []
@@ -95,7 +88,7 @@ Object {
 
 ## `correctly identifies a file with es imports as es`
 
-```
+```javascript
 Object {
   diagnostics: Array []
   exports: Array []
@@ -131,7 +124,7 @@ Object {
 
 ## `correctly identifies a file with no imports or exports as unknown`
 
-```
+```javascript
 Object {
   dependencies: Array []
   diagnostics: Array []
@@ -145,7 +138,7 @@ Object {
 
 ## `disallow mix of es and cjs exports`
 
-```
+```javascript
 Object {
   dependencies: Array []
   firstTopAwaitLocation: undefined
@@ -231,7 +224,7 @@ Object {
 
 ## `discovers async import('foo')`
 
-```
+```javascript
 Object {
   diagnostics: Array []
   exports: Array []
@@ -288,7 +281,7 @@ Object {
 
 ## `discovers commonjs exports`
 
-```
+```javascript
 Object {
   dependencies: Array []
   diagnostics: Array []
@@ -327,7 +320,7 @@ Object {
 
 ## `discovers commonjs module.exports`
 
-```
+```javascript
 Object {
   dependencies: Array []
   diagnostics: Array []
@@ -366,7 +359,7 @@ Object {
 
 ## `discovers export declarations`
 
-```
+```javascript
 Object {
   dependencies: Array []
   diagnostics: Array []
@@ -435,7 +428,7 @@ Object {
 
 ## `discovers export default`
 
-```
+```javascript
 Object {
   dependencies: Array []
   diagnostics: Array []
@@ -468,7 +461,7 @@ Object {
 
 ## `discovers export from`
 
-```
+```javascript
 Object {
   diagnostics: Array []
   firstTopAwaitLocation: undefined
@@ -646,7 +639,7 @@ Object {
 
 ## `discovers export star`
 
-```
+```javascript
 Object {
   diagnostics: Array []
   firstTopAwaitLocation: undefined
@@ -700,7 +693,7 @@ Object {
 
 ## `discovers import default`
 
-```
+```javascript
 Object {
   diagnostics: Array []
   exports: Array []
@@ -753,7 +746,7 @@ Object {
 
 ## `discovers import specifiers`
 
-```
+```javascript
 Object {
   diagnostics: Array []
   exports: Array []
@@ -854,7 +847,7 @@ Object {
 
 ## `discovers import star`
 
-```
+```javascript
 Object {
   diagnostics: Array []
   exports: Array []
@@ -890,7 +883,7 @@ Object {
 
 ## `discovers local export specifiers`
 
-```
+```javascript
 Object {
   dependencies: Array []
   diagnostics: Array []
@@ -959,7 +952,7 @@ Object {
 
 ## `discovers require('module') call`
 
-```
+```javascript
 Object {
   diagnostics: Array []
   exports: Array []
@@ -1016,7 +1009,7 @@ Object {
 
 ## `discovers top level await`
 
-```
+```javascript
 Object {
   dependencies: Array []
   diagnostics: Array []
@@ -1042,7 +1035,7 @@ Object {
 
 ## `ignores require() call if shadowed`
 
-```
+```javascript
 Object {
   dependencies: Array []
   diagnostics: Array []
@@ -1063,7 +1056,7 @@ Object {
 
 ## `ignores require(dynamic) call`
 
-```
+```javascript
 Object {
   dependencies: Array []
   diagnostics: Array []

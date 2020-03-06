@@ -2,7 +2,7 @@
 
 ## `can parse npm dependency patterns`
 
-```
+```javascript
 npm {
   name: 'foo'
   range: undefined
@@ -11,7 +11,7 @@ npm {
 
 ## `can parse npm dependency patterns: 1`
 
-```
+```javascript
 npm {
   name: '@foo/bar'
   range: undefined
@@ -20,7 +20,7 @@ npm {
 
 ## `can parse npm dependency patterns: 2`
 
-```
+```javascript
 npm {
   name: 'foo'
   range: AbsoluteVersion {
@@ -48,7 +48,7 @@ npm {
 
 ## `can parse npm dependency patterns: 3`
 
-```
+```javascript
 npm {
   name: '@foo/bar'
   range: AbsoluteVersion {
