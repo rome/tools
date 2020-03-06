@@ -6,75 +6,132 @@
  */
 
 import {AbsoluteFilePath} from '@romejs/path';
-import {writeFile, readFileText, createDirectory, exists} from '@romejs/fs';
+import {
+  writeFile,
+  readFileText,
+  createDirectory,
+  exists,
+  unlink,
+} from '@romejs/fs';
 import {Dict} from '@romejs/typescript-helpers';
+import {TestRunnerOptions} from '../master/testing/types';
+import TestWorkerRunner from './TestWorkerRunner';
+import {PartialDiagnosticAdvice} from '@romejs/diagnostics';
 
 const SNAPSHOTS_DIR = '__rsnapshots__';
 const SNAPSHOT_EXT = '.rsnap';
 
 export default class SnapshotManager {
-  constructor(testFilename: AbsoluteFilePath, forceUpdate: boolean) {
+  constructor(runner: TestWorkerRunner, testFilename: AbsoluteFilePath) {
     this.testFilename = testFilename.join();
 
-    const snapshotFolder = testFilename.getParent().append(SNAPSHOTS_DIR);
-    this.snapshotFolder = snapshotFolder;
+    const folder = testFilename.getParent().append(SNAPSHOTS_DIR);
+    this.folder = folder;
 
-    this.snapshotFilename = snapshotFolder.append(
-      testFilename.getBasename() + SNAPSHOT_EXT,
-    );
+    this.path = folder.append(testFilename.getBasename() + SNAPSHOT_EXT);
 
-    this.forceUpdate = forceUpdate;
+    this.runner = runner;
+    this.options = runner.options;
 
-    this.snapshots = new Map();
+    this.exists = false;
+    this.raw = undefined;
+
+    this.entries = new Map();
   }
 
   testFilename: string;
-  forceUpdate: boolean;
-  snapshotFolder: AbsoluteFilePath;
-  snapshotFilename: AbsoluteFilePath;
-  snapshots: Map<string, string>;
+  folder: AbsoluteFilePath;
+  path: AbsoluteFilePath;
+  entries: Map<string, string>;
+
+  runner: TestWorkerRunner;
+  options: TestRunnerOptions;
+
+  raw: undefined | string;
+  exists: boolean;
+
+  async emitDiagnostic(message: string, advice?: PartialDiagnosticAdvice) {
+    await this.runner.emitDiagnostic({
+      category: 'test/snapshots',
+      filename: this.path.join(),
+      message,
+      advice,
+    });
+  }
 
   async load() {
-    const {snapshotFilename} = this;
+    const {path: snapshotFilename} = this;
     if (!(await exists(snapshotFilename))) {
-      return undefined;
+      return;
     }
 
+    this.exists = true;
+
     // If we're force updating, pretend that no snapshots exist on disk
-    if (this.forceUpdate) {
-      return undefined;
+    if (this.options.updateSnapshots) {
+      return;
     }
 
     const file = await readFileText(snapshotFilename);
+    this.raw = file;
+
     const json = JSON.parse(file);
 
     for (const key in json) {
-      this.snapshots.set(key, String(json[key]));
+      this.entries.set(key, String(json[key]));
     }
   }
 
   async save() {
+    const {folder, path} = this;
+
+    // TODO `only` will mess this up
+
     // No point producing an empty snapshot file
-    if (this.snapshots.size === 0) {
-      return undefined;
-    }
-
-    const {snapshotFolder, snapshotFilename} = this;
-
-    // Create snapshots directory if it doesn't exist
-    if (!(await exists(snapshotFolder))) {
-      await createDirectory(snapshotFolder);
+    if (this.entries.size === 0) {
+      if (this.exists) {
+        if (this.options.freezeSnapshots) {
+          await this.emitDiagnostic('Snapshot should not exist');
+        } else {
+          // Remove the snapshot file as there were none ran
+          await unlink(path);
+        }
+      }
+      return;
     }
 
     // Build the snapshot
     const json: Dict<string> = {};
-    for (const [key, value] of this.snapshots) {
+
+    // Get keys and sort them so they're in a predictable order
+    const keys = Array.from(this.entries.keys()).sort();
+
+    for (const key of keys) {
+      const value = this.entries.get(key);
+      if (value === undefined) {
+        throw new Error('Impossible');
+      }
+
       json[key] = value;
     }
+
     const formatted = JSON.stringify(json, undefined, '  ');
 
-    // Save the file
-    await writeFile(snapshotFilename, formatted);
+    if (this.options.freezeSnapshots) {
+      if (!this.exists) {
+        await this.emitDiagnostic('Snapshot does not exist');
+      } else if (formatted !== this.raw) {
+        await this.emitDiagnostic('Snapshots do not match');
+      }
+    } else if (formatted !== this.raw) {
+      // Create snapshots directory if it doesn't exist
+      if (!(await exists(folder))) {
+        await createDirectory(folder);
+      }
+
+      // Save the file
+      await writeFile(path, formatted);
+    }
   }
 
   toSnapshotKey(testName: string, id: number | string): string {
@@ -86,10 +143,10 @@ export default class SnapshotManager {
   }
 
   get(key: string): undefined | string {
-    return this.snapshots.get(key);
+    return this.entries.get(key);
   }
 
   set(key: string, value: string) {
-    this.snapshots.set(key, value);
+    this.entries.set(key, value);
   }
 }

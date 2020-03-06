@@ -39,9 +39,10 @@ export default class TestWorkerRunner {
     this.file = convertTransportFileReference(opts.file);
     this.options = opts.options;
     this.bridge = bridge;
+
     this.snapshotManager = new SnapshotManager(
+      this,
       createAbsoluteFilePath(opts.file.real),
-      opts.options.updateSnapshots,
     );
 
     this.hasFocusedTest = false;
@@ -81,6 +82,13 @@ export default class TestWorkerRunner {
     return {
       __ROME__TEST_OPTIONS__: testOptions,
     };
+  }
+
+  async emitDiagnostic(diagnostic: PartialDiagnostic) {
+    await this.bridge.testError.call({
+      ref: undefined,
+      diagnostic,
+    });
   }
 
   // execute the test file and discover tests
