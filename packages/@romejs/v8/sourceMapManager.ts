@@ -250,10 +250,10 @@ export function addSourceMapFactory(
   init();
 
   let map: undefined | SourceMap;
-  const factoryCapture = () => {
+  function factoryCapture() {
     map = factory();
     return map;
-  };
+  }
 
   factories.set(filename, factoryCapture);
 

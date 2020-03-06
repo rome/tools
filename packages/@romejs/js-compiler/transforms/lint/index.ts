@@ -22,13 +22,14 @@ import noEmptyCharacterClass from './noEmptyCharacterClass';
 import noFunctionAssign from './noFunctionAssign';
 import noImportAssign from './noImportAssign';
 import noLabelVar from './noLabelVar';
+import noShadowRestrictedNames from './noShadowRestrictedNames';
 import noTemplateCurlyInString from './noTemplateCurlyInString';
 import noUnsafeFinally from './noUnsafeFinally';
+import preferFunctionDeclarations from './preferFunctionDeclarations';
 import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
-import noShadowRestrictedNames from './noShadowRestrictedNames';
 
 // Add transforms in alphabetical order.
 export const lintTransforms = [
@@ -48,11 +49,12 @@ export const lintTransforms = [
   noFunctionAssign,
   noImportAssign,
   noLabelVar,
+  noShadowRestrictedNames,
   noTemplateCurlyInString,
   noUnsafeFinally,
+  preferFunctionDeclarations,
   sparseArray,
   undeclaredVariables,
   unsafeNegation,
   unusedVariables,
-  noShadowRestrictedNames,
 ];

@@ -460,7 +460,7 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
           return 1;
       }
     }
-    
+
     greet1();
     `,
     LINT_ENABLED_FORMAT_DISABLED_CONFIG,
@@ -474,7 +474,7 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
 
   const breakTest = await testLint(
     `
-    
+
     function greet2() {
       try {
         throw new Error("Try")
@@ -507,7 +507,7 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
           continue;
       }
     }
-    
+
     greet3();
     `,
     LINT_ENABLED_FORMAT_DISABLED_CONFIG,
@@ -735,4 +735,41 @@ test('no shadow restricted names', async t => {
       );
     }
   }
+});
+
+test('prefer function declarations', async t => {
+  // Should complain on these
+  t.snapshot(
+    await testLint(
+      'const foo = function () {};',
+      LINT_AND_FORMAT_ENABLED_CONFIG,
+    ),
+  );
+  t.snapshot(
+    await testLint('const foo = () => {};', LINT_AND_FORMAT_ENABLED_CONFIG),
+  );
+
+  // Should allow arrow functions when they have this
+  t.snapshot(
+    await testLint(
+      'const foo = () => {this;};',
+      LINT_AND_FORMAT_ENABLED_CONFIG,
+    ),
+  );
+
+  // But only if it refers to the actual arrow function
+  t.snapshot(
+    await testLint(
+      'const foo = () => {function bar() {this;}};',
+      LINT_AND_FORMAT_ENABLED_CONFIG,
+    ),
+  );
+
+  // Should ignore functions with return types since you can't express that with a declaration
+  t.snapshot(
+    await testLint(
+      'const foo: any = function () {};',
+      LINT_AND_FORMAT_ENABLED_CONFIG,
+    ),
+  );
 });

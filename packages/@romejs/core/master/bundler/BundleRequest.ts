@@ -267,7 +267,7 @@ export default class BundleRequest {
     */
 
     const declaredCJS: Set<DependencyNode> = new Set();
-    const declareCJS = (module: DependencyNode) => {
+    function declareCJS(module: DependencyNode) {
       if (
         mode !== 'modern' ||
         module.type !== 'cjs' ||
@@ -279,7 +279,7 @@ export default class BundleRequest {
       declaredCJS.add(module);
 
       push(`  var ${getPrefixedBundleNamespace(module.id)} = {};`);
-    };
+    }
 
     // Add on files
     for (const source of files) {
