@@ -31,6 +31,7 @@ import {
   coerce0,
   number0Neg1,
   get0,
+  dec,
 } from '@romejs/ob1';
 import {escapeMarkup} from '@romejs/string-markup';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
@@ -465,19 +466,27 @@ export class ParserCore<Tokens extends TokensShape, State> {
   readInputFrom(
     index: Number0,
     callback?: (char: string, index: Number0, input: string) => boolean,
-  ): string {
+  ): [string, Number0, boolean] {
     const {input} = this;
     let value = '';
 
-    while (
-      get0(index) < input.length &&
-      (callback === undefined || callback(input[get0(index)], index, input))
-    ) {
-      value += input[get0(index)];
-      index = inc(index);
+    while (true) {
+      if (get0(index) >= input.length) {
+        return [value, index, true];
+      }
+
+      if (
+        callback === undefined ||
+        callback(input[get0(index)], index, input)
+      ) {
+        value += input[get0(index)];
+        index = inc(index);
+      } else {
+        break;
+      }
     }
 
-    return value;
+    return [value, index, false];
   }
 
   // Get the string between the specified range

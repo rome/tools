@@ -88,11 +88,11 @@ const createPathMatchParser = createParser(
           return this.finishToken('Separator', add(index, 2));
         }
 
-        const value = this.readInputFrom(
+        const [value, end] = this.readInputFrom(
           index,
           this.isWordCharacter.bind(this),
         );
-        return this.finishValueToken('Word', value, add(index, value.length));
+        return this.finishValueToken('Word', value, end);
       }
 
       eatSeparators(): boolean {

@@ -99,8 +99,7 @@ const createSPDXLicenseParser = createParser(
         }
 
         if (isWordChar(char)) {
-          const value = this.readInputFrom(index, isWordChar);
-          const end = add(index, value.length);
+          const [value, end] = this.readInputFrom(index, isWordChar);
 
           if (value === 'AND') {
             return this.finishToken('And', end);
