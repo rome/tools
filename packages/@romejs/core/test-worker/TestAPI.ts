@@ -509,26 +509,23 @@ export default class TestAPI {
 
   snapshot(expected: unknown, message?: string) {
     const id = this.snapshotCounter++;
-    return this._snapshotNamed(id, expected, message, 2);
+    return this._snapshotNamed(String(id), expected, message, 2);
   }
 
-  snapshotNamed(name: string | number, expected: unknown, message?: string) {
+  snapshotNamed(name: string, expected: unknown, message?: string) {
     return this._snapshotNamed(name, expected, message, 1);
   }
 
-  getSnapshot(name: string | number): unknown {
-    const key = this.snapshotManager.toSnapshotKey(this.testName, name);
-    return this.snapshotManager.get(key);
+  getSnapshot(snapshotName: string): unknown {
+    return this.snapshotManager.get(this.testName, snapshotName);
   }
 
   _snapshotNamed(
-    name: string | number,
+    name: string,
     expected: unknown,
     message: string = "Snapshots don't match",
     framesToPop?: number,
   ) {
-    const key = this.snapshotManager.toSnapshotKey(this.testName, name);
-
     let language: undefined | string;
 
     let formatted = '';
@@ -540,10 +537,15 @@ export default class TestAPI {
     }
 
     // Get the current snapshot
-    const existingSnapshot = this.snapshotManager.get(key);
+    const existingSnapshot = this.snapshotManager.get(this.testName, name);
     if (existingSnapshot === undefined) {
       // No snapshot exists, let's save this one!
-      this.snapshotManager.set(key, formatted, language);
+      this.snapshotManager.set({
+        testName: this.testName,
+        snapshotName: String(name),
+        value: formatted,
+        language,
+      });
       return undefined;
     }
 

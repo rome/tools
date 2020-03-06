@@ -38,6 +38,7 @@ import {
   CoverageFolder,
 } from './types';
 import {percentInsideCoverageFolder, formatPercent, sortMapKeys} from './utils';
+import {serializeJSONProjectConfig} from '@romejs/project';
 
 export default class TestRunner {
   constructor(opts: TestRunnerConstructorOptions) {
@@ -130,6 +131,9 @@ export default class TestRunner {
       try {
         await bridge.runTest.call({
           options: opts,
+          projectFolder: req.master.projectManager
+            .assertProjectExisting(path)
+            .folder.join(),
           file: req.master.projectManager.getTransportFileReference(path),
           cwd: flags.cwd.join(),
           code,

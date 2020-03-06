@@ -36,7 +36,12 @@ type CodeBlockNode = NodeBase & {
   text: string;
 };
 
-type Node = HeadingNode | CodeBlockNode;
+type TextLineNode = NodeBase & {
+  type: 'TextLine';
+  text: string;
+};
+
+type Node = HeadingNode | CodeBlockNode | TextLineNode;
 
 function isHash(char: string): boolean {
   return char === '#';
@@ -68,6 +73,7 @@ export default createParser(
     class SnapshotParser extends ParserCore<Tokens, void> {
       constructor(opts: ParserOptions) {
         super(opts, 'snapshots');
+        this.ignoreWhitespaceTokens = true;
       }
 
       tokenize(index: Number0, input: string) {
@@ -78,12 +84,6 @@ export default createParser(
             const [hashes] = this.readInputFrom(index, isHash);
             const level = hashes.length;
             return this.finishValueToken('Hashes', level, add(index, level));
-
-          case ' ':
-          case '\t':
-          case '\r':
-          case '\n':
-            return this.lookaheadToken(inc(index));
 
           case '`':
             const nextChar = input[get0(add(index, 1))];
@@ -147,8 +147,8 @@ export default createParser(
             }
         }
 
-        const [text] = this.readInputFrom(index, isntNewline);
-        return this.finishValueToken('TextLine', text, add(index, text.length));
+        const [text, end] = this.readInputFrom(index, isntNewline);
+        return this.finishValueToken('TextLine', text, end);
       }
 
       parse(): Array<Node> {
@@ -175,6 +175,15 @@ export default createParser(
               nodes.push({
                 type: 'CodeBlock',
                 ...token.value,
+                loc: this.finishLoc(start),
+              });
+              this.nextToken();
+              break;
+
+            case 'TextLine':
+              nodes.push({
+                type: 'TextLine',
+                text: token.value,
                 loc: this.finishLoc(start),
               });
               this.nextToken();
