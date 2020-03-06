@@ -21,7 +21,7 @@ export default class ClassT extends ObjT {
     scope: Scope,
     originNode: undefined | AnyNode,
     opts: {
-      constructor: undefined | T;
+      _constructor: undefined | T;
       statics: Array<T>;
       instances: Array<T>;
       extends?: T;
@@ -68,7 +68,7 @@ export default class ClassT extends ObjT {
 
     constructorOpen.shouldMatch(this);
 
-    this._constructor = opts.constructor;
+    this._constructor = opts._constructor;
     this._statics = opts.statics;
     this._instances = opts.instances;
     this._extends = opts.extends;
@@ -100,7 +100,7 @@ export default class ClassT extends ObjT {
     getType: HydrateTypeFactory,
   ): T {
     return new ClassT(scope, originNode, {
-      constructor:
+      _constructor:
         data.constructor === undefined ? undefined : getType(data.constructor),
       statics: Array(data.statics).map(id => getType(id)),
       instances: Array(data.instances).map(id => getType(id)),
