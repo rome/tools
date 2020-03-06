@@ -10,7 +10,6 @@ import {SourceMap} from '@romejs/codec-source-map';
 import {TestRunnerOptions} from '../../master/testing/types';
 import {Bridge} from '@romejs/events';
 import {JSONFileReference} from '../types/files';
-import {AbsoluteFilePath} from '@romejs/path';
 
 export type TestRef = {
   filename: string;

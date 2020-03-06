@@ -38,7 +38,6 @@ import {
   CoverageFolder,
 } from './types';
 import {percentInsideCoverageFolder, formatPercent, sortMapKeys} from './utils';
-import {serializeJSONProjectConfig} from '@romejs/project';
 
 export default class TestRunner {
   constructor(opts: TestRunnerConstructorOptions) {

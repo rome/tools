@@ -13,7 +13,7 @@ import {
   ValueToken,
   isEscaped,
 } from '@romejs/parser-core';
-import {add, get0, Number0, inc} from '@romejs/ob1';
+import {add, get0, Number0} from '@romejs/ob1';
 
 type Tokens = BaseTokens & {
   Hashes: ValueToken<'Hashes', number>;
