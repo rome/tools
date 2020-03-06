@@ -6,18 +6,25 @@
  */
 
 import {Program, AnyComment} from '@romejs/js-ast';
-import {DiagnosticSuppressions} from '@romejs/diagnostics';
+import {DiagnosticSuppressions, PartialDiagnostics} from '@romejs/diagnostics';
 
 const SUPPRESSION_START = 'rome-suppress';
+const PREFIX_MISTAKES = ['@rome-suppress', 'rome-ignore', '@rome-ignore'];
+
+type ExtractedSuppressions = {
+  suppressions: DiagnosticSuppressions;
+  diagnostics: PartialDiagnostics;
+};
 
 function extractSuppressionsFromComment(
   comment: AnyComment,
-): undefined | DiagnosticSuppressions {
+): undefined | ExtractedSuppressions {
   const {loc} = comment;
   if (loc === undefined) {
     return undefined;
   }
 
+  const diagnostics: PartialDiagnostics = [];
   const suppressions: DiagnosticSuppressions = [];
 
   const lines = comment.value.split('\n');
@@ -28,6 +35,22 @@ function extractSuppressionsFromComment(
 
   for (const line of cleanLines) {
     if (!line.startsWith(SUPPRESSION_START)) {
+      for (const prefix of PREFIX_MISTAKES) {
+        if (line.startsWith(prefix)) {
+          diagnostics.push({
+            category: 'suppressions',
+            message: `Invalid suppression prefix <emphasis>${prefix}</emphasis>`,
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: `Did you mean <emphasis>${SUPPRESSION_START}</emphasis>?`,
+              },
+            ],
+            ...loc,
+          });
+        }
+      }
       continue;
     }
 
@@ -60,30 +83,32 @@ function extractSuppressionsFromComment(
     }
   }
 
-  if (suppressions.length === 0) {
+  if (suppressions.length === 0 && diagnostics.length === 0) {
     return undefined;
   } else {
-    return suppressions;
+    return {diagnostics, suppressions};
   }
 }
 
 export function extractSuppressionsFromComments(
   comments: Array<AnyComment>,
-): DiagnosticSuppressions {
+): ExtractedSuppressions {
+  let diagnostics: PartialDiagnostics = [];
   let suppressions: DiagnosticSuppressions = [];
 
   for (const comment of comments) {
-    const commentSuppressions = extractSuppressionsFromComment(comment);
-    if (commentSuppressions !== undefined) {
-      suppressions = suppressions.concat(commentSuppressions);
+    const result = extractSuppressionsFromComment(comment);
+    if (result !== undefined) {
+      diagnostics = diagnostics.concat(result.diagnostics);
+      suppressions = suppressions.concat(result.suppressions);
     }
   }
 
-  return suppressions;
+  return {suppressions, diagnostics};
 }
 
 export function extractSuppressionsFromProgram(
   ast: Program,
-): DiagnosticSuppressions {
+): ExtractedSuppressions {
   return extractSuppressionsFromComments(ast.comments);
 }

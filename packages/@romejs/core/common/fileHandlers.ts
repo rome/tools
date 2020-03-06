@@ -311,12 +311,19 @@ function buildJSHandler(
         typeAnnotations: true,
       });
 
+      const extractedSuppressions = compiler.extractSuppressionsFromProgram(
+        ast,
+      );
+
       return worker.api.interceptAndAddGeneratedToDiagnostics(
         {
           formatted: res.getCode(),
           sourceText,
-          suppressions: compiler.extractSuppressionsFromProgram(ast),
-          diagnostics: ast.diagnostics,
+          suppressions: extractedSuppressions.suppressions,
+          diagnostics: [
+            ...ast.diagnostics,
+            ...extractedSuppressions.diagnostics,
+          ],
         },
         generated,
       );

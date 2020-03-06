@@ -74,9 +74,15 @@ export default async function transform(
 
   const compiledAst = program.assert(context.reduce(ast, visitors));
 
+  const extractedSuppressions = extractSuppressionsFromProgram(ast);
+
   const res: TransformResult = {
-    suppressions: extractSuppressionsFromProgram(ast),
-    diagnostics: [...prevStageDiagnostics, ...context.diagnostics],
+    suppressions: extractedSuppressions.suppressions,
+    diagnostics: [
+      ...prevStageDiagnostics,
+      ...context.diagnostics,
+      ...extractedSuppressions.diagnostics,
+    ],
     cacheDependencies: [
       ...prevStageCacheDeps,
       ...context.getCacheDependencies(),

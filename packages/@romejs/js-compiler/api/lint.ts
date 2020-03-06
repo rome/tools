@@ -26,8 +26,7 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
 
   if (!project.config.lint.enabled) {
     return {
-      diagnostics: [],
-      suppressions: extractSuppressionsFromProgram(ast),
+      ...extractSuppressionsFromProgram(ast),
       src: sourceText,
     };
   }
@@ -72,9 +71,15 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
   });
   program.assert(context.reduce(ast, lintTransforms, {frozen: true}));
 
+  const extractedSuppressions = extractSuppressionsFromProgram(ast);
+
   const result: LintResult = {
-    suppressions: extractSuppressionsFromProgram(ast),
-    diagnostics: [...ast.diagnostics, ...context.diagnostics],
+    suppressions: extractedSuppressions.suppressions,
+    diagnostics: [
+      ...ast.diagnostics,
+      ...context.diagnostics,
+      ...extractedSuppressions.diagnostics,
+    ],
     src: formattedCode,
   };
   lintCache.set(query, result);
