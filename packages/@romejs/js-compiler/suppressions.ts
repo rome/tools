@@ -6,21 +6,26 @@
  */
 
 import {Program, AnyComment} from '@romejs/js-ast';
-import {DiagnosticFilters} from '@romejs/diagnostics';
-import {add} from '@romejs/ob1';
+import {DiagnosticSuppressions, PartialDiagnostics} from '@romejs/diagnostics';
 
 const SUPPRESSION_START = 'rome-suppress';
+const PREFIX_MISTAKES = ['@rome-suppress', 'rome-ignore', '@rome-ignore'];
 
-function extractFiltersFromComment(
+type ExtractedSuppressions = {
+  suppressions: DiagnosticSuppressions;
+  diagnostics: PartialDiagnostics;
+};
+
+function extractSuppressionsFromComment(
   comment: AnyComment,
-): undefined | DiagnosticFilters {
+): undefined | ExtractedSuppressions {
   const {loc} = comment;
   if (loc === undefined) {
     return undefined;
   }
 
-  const targetLine = add(loc.end.line, 1);
-  const filters: DiagnosticFilters = [];
+  const diagnostics: PartialDiagnostics = [];
+  const suppressions: DiagnosticSuppressions = [];
 
   const lines = comment.value.split('\n');
   const cleanLines = lines.map(line => {
@@ -30,6 +35,22 @@ function extractFiltersFromComment(
 
   for (const line of cleanLines) {
     if (!line.startsWith(SUPPRESSION_START)) {
+      for (const prefix of PREFIX_MISTAKES) {
+        if (line.startsWith(prefix)) {
+          diagnostics.push({
+            category: 'suppressions',
+            message: `Invalid suppression prefix <emphasis>${prefix}</emphasis>`,
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: `Did you mean <emphasis>${SUPPRESSION_START}</emphasis>?`,
+              },
+            ],
+            ...loc,
+          });
+        }
+      }
       continue;
     }
 
@@ -39,43 +60,55 @@ function extractFiltersFromComment(
       .split(' ');
     const cleanCategories = categories.map(category => category.trim());
 
-    for (const category of cleanCategories) {
+    for (let category of cleanCategories) {
       if (category === '') {
         continue;
       }
 
-      filters.push({
-        filename: loc.filename,
+      // If a category ends with a colon then all the things that follow it are an explanation
+      let shouldBreak = false;
+      if (category[category.length - 1] === ':') {
+        shouldBreak = true;
+        category = category.slice(-1);
+      }
+
+      suppressions.push({
         category,
-        line: targetLine,
+        loc,
       });
+
+      if (shouldBreak) {
+        break;
+      }
     }
   }
 
-  if (filters.length === 0) {
+  if (suppressions.length === 0 && diagnostics.length === 0) {
     return undefined;
   } else {
-    return filters;
+    return {diagnostics, suppressions};
   }
 }
 
 export function extractSuppressionsFromComments(
   comments: Array<AnyComment>,
-): DiagnosticFilters {
-  let filters: DiagnosticFilters = [];
+): ExtractedSuppressions {
+  let diagnostics: PartialDiagnostics = [];
+  let suppressions: DiagnosticSuppressions = [];
 
   for (const comment of comments) {
-    const commentFilters = extractFiltersFromComment(comment);
-    if (commentFilters !== undefined) {
-      filters = filters.concat(commentFilters);
+    const result = extractSuppressionsFromComment(comment);
+    if (result !== undefined) {
+      diagnostics = diagnostics.concat(result.diagnostics);
+      suppressions = suppressions.concat(result.suppressions);
     }
   }
 
-  return filters;
+  return {suppressions, diagnostics};
 }
 
 export function extractSuppressionsFromProgram(
   ast: Program,
-): DiagnosticFilters {
+): ExtractedSuppressions {
   return extractSuppressionsFromComments(ast.comments);
 }

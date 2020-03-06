@@ -73,12 +73,12 @@ export default class CompilerLinter {
           }
 
           // TODO support `fix` flag
-          const {diagnostics, filters} = await this.request.requestWorkerLint(
-            path,
-            false,
-          );
+          const {
+            diagnostics,
+            suppressions,
+          } = await this.request.requestWorkerLint(path, false);
+          printer.processor.addSuppressions(suppressions);
           printer.addDiagnostics(diagnostics);
-          printer.processor.addFilters(filters);
 
           spinner.tick();
         }

@@ -50,3 +50,10 @@ test('multiple categories', t => {
   ]);
   t.snapshot(suppressions);
 });
+
+test('typos', t => {
+  const suppressions = extractSuppressionsFromComments([
+    generateComment('rome-ignore foo bar', 1),
+  ]);
+  t.snapshot(suppressions);
+});

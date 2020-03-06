@@ -49,10 +49,14 @@ export default createMasterCommand({
       res = await req.requestWorkerCompile(resolved.path, 'compile');
     }
 
-    const {compiledCode, diagnostics, filters}: WorkerCompileResult = res;
+    const {compiledCode, diagnostics, suppressions}: WorkerCompileResult = res;
 
     if (diagnostics.length > 0) {
-      throw new DiagnosticsError('Compile diagnostics', diagnostics, filters);
+      throw new DiagnosticsError(
+        'Compile diagnostics',
+        diagnostics,
+        suppressions,
+      );
     }
 
     reporter.writeAll(compiledCode);
