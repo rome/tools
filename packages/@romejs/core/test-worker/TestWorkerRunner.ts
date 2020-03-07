@@ -28,7 +28,7 @@ import {
   convertTransportFileReference,
 } from '../common/types/files';
 import {GlobalTestOptions} from '@romejs/test';
-import {createAbsoluteFilePath} from '@romejs/path';
+import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
 
 const MAX_RUNNING_TESTS = 20;
 
@@ -39,9 +39,11 @@ export default class TestWorkerRunner {
     this.file = convertTransportFileReference(opts.file);
     this.options = opts.options;
     this.bridge = bridge;
+    this.projectFolder = createAbsoluteFilePath(opts.projectFolder);
+
     this.snapshotManager = new SnapshotManager(
+      this,
       createAbsoluteFilePath(opts.file.real),
-      opts.options.updateSnapshots,
     );
 
     this.hasFocusedTest = false;
@@ -59,6 +61,7 @@ export default class TestWorkerRunner {
   hasFocusedTest: boolean;
 
   bridge: TestWorkerBridge;
+  projectFolder: AbsoluteFilePath;
   file: FileReference;
   options: TestRunnerOptions;
   snapshotManager: SnapshotManager;
@@ -81,6 +84,13 @@ export default class TestWorkerRunner {
     return {
       __ROME__TEST_OPTIONS__: testOptions,
     };
+  }
+
+  async emitDiagnostic(diagnostic: PartialDiagnostic) {
+    await this.bridge.testError.call({
+      ref: undefined,
+      diagnostic,
+    });
   }
 
   // execute the test file and discover tests

@@ -535,7 +535,7 @@ export default class Reporter {
       selectedOptions.add(optionNames[0]);
     }
 
-    const boundActive = () => {
+    function boundActive() {
       activeOption = Math.min(activeOption, optionCount - 1);
       activeOption = Math.max(activeOption, 0);
 
@@ -543,7 +543,7 @@ export default class Reporter {
         selectedOptions.clear();
         selectedOptions.add(optionNames[activeOption]);
       }
-    };
+    }
 
     // If we aren't a radio then set the active option to the bottom of any that are enabled
     if (!radio) {

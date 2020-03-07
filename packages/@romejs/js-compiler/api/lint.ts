@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics, DiagnosticFilters} from '@romejs/diagnostics';
+import {PartialDiagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {TransformRequest} from '../types';
 import {lintTransforms} from '../transforms/lint/index';
 import {program} from '@romejs/js-ast';
@@ -15,7 +15,7 @@ import {extractSuppressionsFromProgram} from '../suppressions';
 
 export type LintResult = {
   diagnostics: PartialDiagnostics;
-  filters: DiagnosticFilters;
+  suppressions: DiagnosticSuppressions;
   src: string;
 };
 
@@ -26,8 +26,7 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
 
   if (!project.config.lint.enabled) {
     return {
-      diagnostics: [],
-      filters: extractSuppressionsFromProgram(ast),
+      ...extractSuppressionsFromProgram(ast),
       src: sourceText,
     };
   }
@@ -72,9 +71,15 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
   });
   program.assert(context.reduce(ast, lintTransforms, {frozen: true}));
 
+  const extractedSuppressions = extractSuppressionsFromProgram(ast);
+
   const result: LintResult = {
-    filters: extractSuppressionsFromProgram(ast),
-    diagnostics: [...ast.diagnostics, ...context.diagnostics],
+    suppressions: extractedSuppressions.suppressions,
+    diagnostics: [
+      ...ast.diagnostics,
+      ...context.diagnostics,
+      ...extractedSuppressions.diagnostics,
+    ],
     src: formattedCode,
   };
   lintCache.set(query, result);

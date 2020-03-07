@@ -7,10 +7,27 @@
 
 import {commandCategories} from '../../commands';
 import {createMasterCommand} from '../../commands';
+import {MasterRequest} from '@romejs/core';
+import Linter from '../linter/Linter';
+import test from './test';
 
 export default createMasterCommand({
   category: commandCategories.CODE_QUALITY,
-  description: 'install dependencies, run lint and tests',
+  description: 'run lint and tests',
 
-  async default(): Promise<void> {},
+  async default(req: MasterRequest): Promise<void> {
+    const {reporter} = req;
+
+    reporter.heading('Running lint');
+    const linter = new Linter(req);
+    await linter.lint(false);
+
+    reporter.heading('Running tests');
+    await test.default(req, {
+      coverage: true,
+      freezeSnapshots: true,
+      updateSnapshots: false,
+      showAllCoverage: true,
+    });
+  },
 });

@@ -170,13 +170,8 @@ export default class BundleRequest {
       this.cached = false;
     }
 
-    if (res.diagnostics.length > 0) {
-      this.diagnostics.addDiagnostics(res.diagnostics);
-    }
-
-    if (res.filters.length > 0) {
-      this.diagnostics.addFilters(res.filters);
-    }
+    this.diagnostics.addSuppressions(res.suppressions);
+    this.diagnostics.addDiagnostics(res.diagnostics);
 
     this.compiles.set(source, res);
     return res;
@@ -267,7 +262,7 @@ export default class BundleRequest {
     */
 
     const declaredCJS: Set<DependencyNode> = new Set();
-    const declareCJS = (module: DependencyNode) => {
+    function declareCJS(module: DependencyNode) {
       if (
         mode !== 'modern' ||
         module.type !== 'cjs' ||
@@ -279,7 +274,7 @@ export default class BundleRequest {
       declaredCJS.add(module);
 
       push(`  var ${getPrefixedBundleNamespace(module.id)} = {};`);
-    };
+    }
 
     // Add on files
     for (const source of files) {

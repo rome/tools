@@ -18,6 +18,7 @@ export type TestRef = {
 
 export type TestWorkerBridgeRunOptions = {
   file: JSONFileReference;
+  projectFolder: string;
   code: string;
   cwd: string;
   sourceMap: SourceMap;

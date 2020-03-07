@@ -80,11 +80,11 @@ function transformClass(
   const className: string =
     node.id === undefined ? scope.generateUid('class') : node.id.name;
 
-  let constructor: undefined | ClassMethod = undefined;
+  let _constructor: undefined | ClassMethod = undefined;
   const filteredClassBody = [];
   for (const bodyNode of node.meta.body) {
     if (bodyNode.type === 'ClassMethod' && bodyNode.kind === 'constructor') {
-      constructor = bodyNode;
+      _constructor = bodyNode;
       continue;
     }
 
@@ -121,11 +121,11 @@ function transformClass(
 
   if (constructorAssignments.length) {
     if (node.meta.superClass !== undefined) {
-      if (constructor) {
+      if (_constructor) {
         const visited = new Set();
 
         // find super() and insert assignments
-        const reducedConstructor = context.reduce(constructor, [
+        const reducedConstructor = context.reduce(_constructor, [
           {
             name: 'classPropertiesInjector',
             enter(path) {
@@ -163,30 +163,30 @@ function transformClass(
             },
           },
         ]);
-        constructor = classMethod.assert(reducedConstructor);
+        _constructor = classMethod.assert(reducedConstructor);
       } else {
         // create new constructor with a super() call and assignments
-        constructor = createConstructor(bindingIdentifier.quick('args'), [
+        _constructor = createConstructor(bindingIdentifier.quick('args'), [
           template.statement`super(...args);`,
           ...toExpressionStatements(constructorAssignments),
         ]);
       }
     } else {
-      if (constructor) {
+      if (_constructor) {
         // add assignments to end of constructor
-        constructor = {
-          ...constructor,
+        _constructor = {
+          ..._constructor,
           body: {
-            ...constructor.body,
+            ..._constructor.body,
             body: [
               ...toExpressionStatements(constructorAssignments),
-              ...constructor.body.body,
+              ..._constructor.body.body,
             ],
           },
         };
       } else {
         // create new constructor with just the assignments
-        constructor = createConstructor(
+        _constructor = createConstructor(
           undefined,
           toExpressionStatements(constructorAssignments),
         );
@@ -194,8 +194,8 @@ function transformClass(
     }
   }
 
-  if (constructor !== undefined) {
-    filteredClassBody.unshift(constructor);
+  if (_constructor !== undefined) {
+    filteredClassBody.unshift(_constructor);
   }
 
   const newClass: ClassDeclaration = {

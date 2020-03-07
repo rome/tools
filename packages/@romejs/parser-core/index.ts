@@ -124,6 +124,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     this.currentToken = SOF_TOKEN;
     this.prevToken = SOF_TOKEN;
     this.state = initialState;
+    this.ignoreWhitespaceTokens = false;
   }
 
   offsetPosition: undefined | Position;
@@ -136,6 +137,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   prevToken: TokenValues<Tokens>;
   currentToken: TokenValues<Tokens>;
   eofToken: EOFToken;
+  ignoreWhitespaceTokens: boolean;
 
   path: undefined | UnknownFilePath;
   filename: undefined | string;
@@ -202,6 +204,24 @@ export class ParserCore<Tokens extends TokensShape, State> {
     if (token !== undefined) {
       return {token, state};
     }
+  }
+
+  _tokenizeWithState(
+    index: Number0,
+    input: string,
+    state: State,
+  ): undefined | {token: TokenValues<Tokens>; state: State} {
+    if (this.ignoreWhitespaceTokens) {
+      switch (input[get0(index)]) {
+        case ' ':
+        case '\t':
+        case '\r':
+        case '\n':
+          return this.lookahead(inc(index));
+      }
+    }
+
+    return this.tokenizeWithState(index, input, state);
   }
 
   // Get the current token
@@ -304,7 +324,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     this.tokenizing = true;
 
     // Tokenize and do some validation
-    const nextToken = this.tokenizeWithState(index, this.input, this.state);
+    const nextToken = this._tokenizeWithState(index, this.input, this.state);
     if (nextToken === undefined) {
       throw this.unexpected({
         start: this.getPositionFromIndex(index),
@@ -465,19 +485,27 @@ export class ParserCore<Tokens extends TokensShape, State> {
   readInputFrom(
     index: Number0,
     callback?: (char: string, index: Number0, input: string) => boolean,
-  ): string {
+  ): [string, Number0, boolean] {
     const {input} = this;
     let value = '';
 
-    while (
-      get0(index) < input.length &&
-      (callback === undefined || callback(input[get0(index)], index, input))
-    ) {
-      value += input[get0(index)];
-      index = inc(index);
+    while (true) {
+      if (get0(index) >= input.length) {
+        return [value, index, true];
+      }
+
+      if (
+        callback === undefined ||
+        callback(input[get0(index)], index, input)
+      ) {
+        value += input[get0(index)];
+        index = inc(index);
+      } else {
+        break;
+      }
     }
 
-    return value;
+    return [value, index, false];
   }
 
   // Get the string between the specified range

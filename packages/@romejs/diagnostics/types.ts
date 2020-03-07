@@ -21,6 +21,13 @@ export type DiagnosticFilter = {
 
 export type DiagnosticFilters = Array<DiagnosticFilter>;
 
+export type DiagnosticSuppression = {
+  category: string;
+  loc: SourceLocation;
+};
+
+export type DiagnosticSuppressions = Array<DiagnosticSuppression>;
+
 export type DiagnosticFilterWithTest = DiagnosticFilter & {
   test?: (diagnostic: PartialDiagnostic) => boolean;
 };

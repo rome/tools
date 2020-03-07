@@ -212,7 +212,7 @@ export default class WorkerAPI {
     if (lint === undefined && handler.format === undefined) {
       return {
         diagnostics: [],
-        filters: [],
+        suppressions: [],
       };
     }
 
@@ -239,7 +239,7 @@ export default class WorkerAPI {
     // These are fatal diagnostics
     if (res.diagnostics !== undefined) {
       return {
-        filters: [],
+        suppressions: [],
         diagnostics: res.diagnostics,
       };
     }
@@ -248,7 +248,7 @@ export default class WorkerAPI {
     if (res.value === undefined) {
       return {
         diagnostics: [],
-        filters: [],
+        suppressions: [],
       };
     }
 
@@ -257,7 +257,7 @@ export default class WorkerAPI {
       formatted,
       sourceText: raw,
       diagnostics,
-      filters,
+      suppressions,
     }: ExtensionLintResult = res.value;
 
     // If the file has pending fixes
@@ -276,13 +276,13 @@ export default class WorkerAPI {
     if (!needsFix) {
       return {
         diagnostics,
-        filters,
+        suppressions,
       };
     }
 
     // Add pending autofix diagnostic
     return {
-      filters,
+      suppressions,
       diagnostics: [
         ...diagnostics,
         {

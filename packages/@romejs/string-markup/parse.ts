@@ -138,28 +138,27 @@ const createStringMarkupParser = createParser(
           }
 
           if (isAlpha(char)) {
-            const value = this.readInputFrom(index, isAlpha);
+            const [value, end] = this.readInputFrom(index, isAlpha);
             return {
               state,
-              token: this.finishValueToken(
-                'Word',
-                value,
-                add(index, value.length),
-              ),
+              token: this.finishValueToken('Word', value, end),
             };
           }
 
           if (char === '"') {
-            const value = this.readInputFrom(inc(index), isStringValueChar);
-            const end = add(add(index, value.length), 2);
+            const [value, stringValueEnd, unclosed] = this.readInputFrom(
+              inc(index),
+              isStringValueChar,
+            );
 
-            if (input[get0(end) - 1] !== '"') {
+            if (unclosed) {
               throw this.unexpected({
                 message: 'Unclosed string',
-                start: this.getPositionFromIndex(end),
+                start: this.getPositionFromIndex(stringValueEnd),
               });
             }
 
+            const end = add(stringValueEnd, 1);
             return {
               state,
               token: this.finishValueToken('String', value, end),
@@ -186,14 +185,14 @@ const createStringMarkupParser = createParser(
         }
 
         // Keep eating text until we hit a <
-        const value = this.readInputFrom(index, isTextChar);
+        const [value, end] = this.readInputFrom(index, isTextChar);
         return {
           state,
           token: {
             type: 'Text',
             value: normalizeTextValue(value),
             start: index,
-            end: add(index, value.length),
+            end,
           },
         };
       }
