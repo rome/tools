@@ -97,7 +97,7 @@ const createSemverParser = createParser(
         }
 
         if (isDigit(char)) {
-          const value = this.readInputFrom(index, isDigit);
+          const [value] = this.readInputFrom(index, isDigit);
           return this.finishValueToken(
             'Number',
             Number(value),
@@ -106,7 +106,7 @@ const createSemverParser = createParser(
         }
 
         if (isAlpha(char)) {
-          const value = this.readInputFrom(index, isAlpha);
+          const [value] = this.readInputFrom(index, isAlpha);
           return this.finishValueToken('Word', value, add(index, value.length));
         }
 

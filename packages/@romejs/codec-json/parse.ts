@@ -115,6 +115,7 @@ export default createParser(
       constructor(opts: JSONParserOptions) {
         super(opts, '@romejs/codec-json');
         this.options = opts;
+        this.ignoreWhitespaceTokens = true;
 
         this.hasExtensions =
           this.path !== undefined && this.path.getBasename().endsWith('.rjson');
@@ -163,7 +164,7 @@ export default createParser(
         // Line comment
         if (char === '/' && nextChar === '/') {
           const commentValueIndex = add(index, 2);
-          const value = this.readInputFrom(commentValueIndex, isntNewline);
+          const [value] = this.readInputFrom(commentValueIndex, isntNewline);
           // (comment content start + comment content length)
           return this.finishValueToken(
             'LineComment',
@@ -175,7 +176,7 @@ export default createParser(
         // BlockComment
         if (char === '/' && nextChar === '*') {
           const commentValueIndex = add(index, 2);
-          const value = this.readInputFrom(
+          const [value] = this.readInputFrom(
             commentValueIndex,
             isntBlockCommentEnd,
           );
@@ -200,7 +201,7 @@ export default createParser(
         // Single character token starters
         switch (char) {
           case '"':
-            const value = this.readInputFrom(inc(index), isStringValueChar);
+            const [value] = this.readInputFrom(inc(index), isStringValueChar);
 
             // Check for closed string (index is the current token index + string length + closing quote + 1 for the end char)
             const end = add(add(index, value.length), 2);
@@ -271,20 +272,13 @@ export default createParser(
 
           case ']':
             return this.finishToken('BracketClose');
-
-          // Skip all whitespace characters
-          case ' ':
-          case '\t':
-          case '\r':
-          case '\n':
-            return this.lookaheadToken(inc(index));
         }
 
         // Numbers
         if (isDigit(char)) {
           const value = this.removeUnderscores(
             index,
-            this.readInputFrom(index, isNumberChar),
+            this.readInputFrom(index, isNumberChar)[0],
           );
           const num = Number(value);
           return this.finishValueToken('Number', num, add(index, value.length));
@@ -292,7 +286,7 @@ export default createParser(
 
         // Word - boolean, undefined etc
         if (isWordStartChar(char)) {
-          const value = this.readInputFrom(index, isWordChar);
+          const [value] = this.readInputFrom(index, isWordChar);
           return this.finishValueToken('Word', value, add(index, value.length));
         }
 

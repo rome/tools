@@ -1,6 +1,0 @@
-{
-  "can parse npm dependency patterns": "npm {\n  name: 'foo'\n  range: undefined\n}",
-  "can parse npm dependency patterns: 1": "npm {\n  name: '@foo/bar'\n  range: undefined\n}",
-  "can parse npm dependency patterns: 2": "npm {\n  name: 'foo'\n  range: AbsoluteVersion {\n    build: Array []\n    major: 1\n    minor: 0\n    patch: 0\n    prerelease: Array []\n    loc: Object {\n      filename: undefined\n      end: Object {\n        column: 5\n        index: 5\n        line: 1\n      }\n      start: Object {\n        column: 1\n        index: 0\n        line: 1\n      }\n    }\n  }\n}",
-  "can parse npm dependency patterns: 3": "npm {\n  name: '@foo/bar'\n  range: AbsoluteVersion {\n    build: Array []\n    major: 1\n    minor: 0\n    patch: 0\n    prerelease: Array []\n    loc: Object {\n      filename: undefined\n      end: Object {\n        column: 5\n        index: 5\n        line: 1\n      }\n      start: Object {\n        column: 1\n        index: 0\n        line: 1\n      }\n    }\n  }\n}"
-}
