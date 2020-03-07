@@ -15,11 +15,14 @@ import {
   ValueToken,
   NodeBase,
   SimpleToken,
+  TokenBase,
+  ComplexToken,
 } from './types';
 import {
   PartialDiagnosticAdvice,
   getDiagnosticsFromError,
   createSingleDiagnosticError,
+  PartialDiagnostic,
 } from '@romejs/diagnostics';
 import {
   Number1,
@@ -54,6 +57,7 @@ export type ParserUnexpectedOptions = {
   loc?: SourceLocation;
   start?: Position;
   end?: Position;
+  token?: TokenBase;
   advice?: PartialDiagnosticAdvice;
 };
 
@@ -93,6 +97,13 @@ const SOF_TOKEN: SOFToken = {
   end: number0Neg1,
 };
 
+type ParserSnapshot<Tokens extends TokensShape, State> = {
+  nextTokenIndex: Number0;
+  currentToken: TokenValues<Tokens>;
+  prevToken: TokenValues<Tokens>;
+  state: State;
+};
+
 export class ParserCore<Tokens extends TokensShape, State> {
   constructor(opts: ParserOptions, parserName: string, initialState: State) {
     const {path, mtime, input, offsetPosition} = opts;
@@ -125,6 +136,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
     this.prevToken = SOF_TOKEN;
     this.state = initialState;
     this.ignoreWhitespaceTokens = false;
+
+    this.cachedPositions = new Map();
   }
 
   offsetPosition: undefined | Position;
@@ -138,6 +151,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   currentToken: TokenValues<Tokens>;
   eofToken: EOFToken;
   ignoreWhitespaceTokens: boolean;
+  cachedPositions: Map<Number0, Position>;
 
   path: undefined | UnknownFilePath;
   filename: undefined | string;
@@ -238,6 +252,22 @@ export class ParserCore<Tokens extends TokensShape, State> {
     return this.prevToken;
   }
 
+  save(): ParserSnapshot<Tokens, State> {
+    return {
+      nextTokenIndex: this.nextTokenIndex,
+      currentToken: this.currentToken,
+      prevToken: this.prevToken,
+      state: this.state,
+    };
+  }
+
+  restore(snapshot: ParserSnapshot<Tokens, State>) {
+    this.nextTokenIndex = snapshot.nextTokenIndex;
+    this.currentToken = snapshot.currentToken;
+    this.prevToken = snapshot.prevToken;
+    this.state = snapshot.state;
+  }
+
   // Advance to the next token, returning the new one
   nextToken(): TokenValues<Tokens> {
     if (this.isEOF()) {
@@ -283,12 +313,20 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
   // Get the position of the current token
   getPosition(): Position {
-    const {currentToken} = this;
-    return {
-      index: currentToken === undefined ? number0 : currentToken.start,
+    const index = this.currentToken.start;
+
+    const cached = this.cachedPositions.get(index);
+    if (cached !== undefined) {
+      return cached;
+    }
+
+    const pos: Position = {
+      index,
       line: this.currLine,
       column: this.currColumn,
     };
+    this.cachedPositions.set(index, pos);
+    return pos;
   }
 
   // Get the end position of the current token
@@ -339,6 +377,15 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   getPositionFromIndex(index: Number0): Position {
+    const cached = this.cachedPositions.get(index);
+    if (cached !== undefined) {
+      return cached;
+    }
+
+    if (this.currentToken.start === index) {
+      return this.getPosition();
+    }
+
     const targetIndex = index;
 
     // Find the line/column relative to the source
@@ -365,17 +412,24 @@ export class ParserCore<Tokens extends TokensShape, State> {
       }
     }
 
-    return {
+    const pos: Position = {
       index: targetIndex,
       line,
       column,
     };
+    this.cachedPositions.set(targetIndex, pos);
+    return pos;
   }
 
-  // Return an error to indicate a parser error, this must be thrown at the callsite for refinement
-  unexpected(opts: ParserUnexpectedOptions = {}) {
+  createDiagnostic(opts: ParserUnexpectedOptions = {}): PartialDiagnostic {
     const {currentToken} = this;
-    let {message, start, end, loc} = opts;
+    let {message, start, end, loc, token} = opts;
+
+    // Allow passing in a TokenBase
+    if (token !== undefined) {
+      start = this.getPositionFromIndex(token.start);
+      end = this.getPositionFromIndex(token.end);
+    }
 
     // Allow passing in a SourceLocation as an easy way to point to a particular node
     if (loc !== undefined) {
@@ -422,7 +476,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
       errMessage = `${this.path}: ${errMessage} Input: ${this.input}`;
     }
 
-    throw createSingleDiagnosticError({
+    return {
       message,
       advice: opts.advice,
       category: this.parserName,
@@ -431,7 +485,12 @@ export class ParserCore<Tokens extends TokensShape, State> {
       start,
       end,
       filename: this.filename,
-    });
+    };
+  }
+
+  // Return an error to indicate a parser error, this must be thrown at the callsite for refinement
+  unexpected(opts: ParserUnexpectedOptions = {}) {
+    throw createSingleDiagnosticError(this.createDiagnostic(opts));
   }
 
   //# Token utility methods
@@ -449,6 +508,10 @@ export class ParserCore<Tokens extends TokensShape, State> {
     if (this.matchToken(type)) {
       return this.nextToken();
     }
+  }
+
+  didEatToken(type: keyof Tokens): boolean {
+    return this.eatToken(type) !== undefined;
   }
 
   // Check if we're at the end of the input
@@ -547,6 +610,26 @@ export class ParserCore<Tokens extends TokensShape, State> {
     };
   }
 
+  finishComplexToken<Type extends string, Data>(
+    type: Type,
+    data: Data,
+    end: Number0 = inc(this.nextTokenIndex),
+  ): ComplexToken<Type, Data> {
+    return {
+      type,
+      ...data,
+      start: this.nextTokenIndex,
+      end,
+    };
+  }
+
+  finishLocFromToken(token: TokenBase): SourceLocation {
+    return this.finishLocAt(
+      this.getPositionFromIndex(token.start),
+      this.getPositionFromIndex(token.end),
+    );
+  }
+
   finishLoc(start: Position): SourceLocation {
     return this.finishLocAt(start, this.getEndPosition());
   }
@@ -600,7 +683,7 @@ export function isHexDigit(char: undefined | string): boolean {
   return char !== undefined && /[0-9A-Fa-f]/.test(char);
 }
 
-export function isESIdentifier(char: undefined | string): boolean {
+export function isESIdentifierChar(char: undefined | string): boolean {
   return char !== undefined && /[A-F0-9a-z_$]/.test(char);
 }
 
