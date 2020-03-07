@@ -42,7 +42,7 @@ export default {
       if (first !== undefined && first.type === 'StringLiteral') {
         const pattern = first.value;
         if (isValidRegExpPattern(pattern) === false) {
-          context.addNodeDiagnostic(node.arguments[0], {
+          context.addNodeDiagnostic(first, {
             category: 'lint/noInvalidRegExp',
             message:
               // TODO: Add more informative error message once regex parser has been implemented
