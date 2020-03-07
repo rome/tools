@@ -36,9 +36,11 @@ export default {
       node.callee.type === 'ReferenceIdentifier' &&
       node.callee.name === 'RegExp'
     ) {
+      const [first, second] = node.arguments;
+
       // Test Pattern
-      if (node.arguments[0] && node.arguments[0].type === 'StringLiteral') {
-        const pattern = node.arguments[0].value;
+      if (first !== undefined && first.type === 'StringLiteral') {
+        const pattern = first.value;
         if (isValidRegExpPattern(pattern) === false) {
           context.addNodeDiagnostic(node.arguments[0], {
             category: 'lint/noInvalidRegExp',
@@ -50,10 +52,10 @@ export default {
       }
 
       // Test Flags
-      if (node.arguments[1] && node.arguments[1].type === 'StringLiteral') {
-        const flags = node.arguments[1].value;
+      if (second !== undefined && second.type === 'StringLiteral') {
+        const flags = second.value;
         if (isValidRegExpFlags(flags) === false) {
-          context.addNodeDiagnostic(node.arguments[1], {
+          context.addNodeDiagnostic(second, {
             category: 'lint/noInvalidRegExp',
             message: `Invalid flags supplied to RegExp constructor ${flags}`,
           });
