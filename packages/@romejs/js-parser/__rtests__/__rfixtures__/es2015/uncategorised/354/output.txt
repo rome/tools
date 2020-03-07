@@ -41,7 +41,6 @@ Program {
         insensitive: false
         multiline: false
         noDotNewline: false
-        pattern: 'foo'
         sticky: false
         unicode: false
         loc: Object {
@@ -56,6 +55,55 @@ Program {
             index: 15
             line: 1
           }
+        }
+        expression: RegExpSubExpression {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 19
+              index: 2
+              line: 1
+            }
+            start: Object {
+              column: 16
+              index: -1
+              line: 1
+            }
+          }
+          body: Array [
+            RegExpCharacter {
+              value: 'f'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 18
+                  index: 1
+                  line: 1
+                }
+                start: Object {
+                  column: 17
+                  index: 0
+                  line: 1
+                }
+              }
+            }
+            RegExpCharacter {
+              value: 'o'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 19
+                  index: 2
+                  line: 1
+                }
+                start: Object {
+                  column: 18
+                  index: 1
+                  line: 1
+                }
+              }
+            }
+          ]
         }
       }
     }

@@ -22,23 +22,7 @@ Program {
     }
   }
   body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'fn'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-      }
+    ExpressionStatement {
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -52,32 +36,23 @@ Program {
           line: 1
         }
       }
-      head: FunctionHead {
-        async: true
-        generator: false
-        hasHoistedVars: false
-        params: Array []
-        predicate: undefined
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
+      expression: FunctionExpression {
+        id: BindingIdentifier {
+          name: 'fn'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 17
+              index: 17
+              line: 1
+            }
+            start: Object {
+              column: 15
+              index: 15
+              line: 1
+            }
           }
         }
-      }
-      body: BlockStatement {
-        directives: Array []
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -86,58 +61,67 @@ Program {
             line: 3
           }
           start: Object {
-            column: 20
-            index: 20
+            column: 0
+            index: 0
             line: 1
           }
         }
-        body: Array [
-          ExpressionStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 16
-                index: 38
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 24
-                line: 2
-              }
+        head: FunctionHead {
+          async: true
+          generator: false
+          hasHoistedVars: false
+          params: Array []
+          predicate: undefined
+          rest: undefined
+          returnType: undefined
+          thisType: undefined
+          typeParameters: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 20
+              index: 20
+              line: 1
             }
-            expression: AssignmentExpression {
-              operator: '='
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+        body: BlockStatement {
+          directives: Array []
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 1
+              index: 40
+              line: 3
+            }
+            start: Object {
+              column: 20
+              index: 20
+              line: 1
+            }
+          }
+          body: Array [
+            ExpressionStatement {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 14
-                  index: 36
+                  column: 16
+                  index: 38
                   line: 2
                 }
                 start: Object {
-                  column: 3
-                  index: 25
+                  column: 2
+                  index: 24
                   line: 2
                 }
               }
-              left: AssignmentIdentifier {
-                name: 'x'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 4
-                    index: 26
-                    line: 2
-                  }
-                  start: Object {
-                    column: 3
-                    index: 25
-                    line: 2
-                  }
-                }
-              }
-              right: AwaitExpression {
+              expression: AssignmentExpression {
+                operator: '='
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
@@ -146,13 +130,28 @@ Program {
                     line: 2
                   }
                   start: Object {
-                    column: 7
-                    index: 29
+                    column: 3
+                    index: 25
                     line: 2
                   }
                 }
-                argument: NumericLiteral {
-                  value: 2
+                left: AssignmentIdentifier {
+                  name: 'x'
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 4
+                      index: 26
+                      line: 2
+                    }
+                    start: Object {
+                      column: 3
+                      index: 25
+                      line: 2
+                    }
+                  }
+                }
+                right: AwaitExpression {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
@@ -161,16 +160,32 @@ Program {
                       line: 2
                     }
                     start: Object {
-                      column: 13
-                      index: 35
+                      column: 7
+                      index: 29
                       line: 2
+                    }
+                  }
+                  argument: NumericLiteral {
+                    value: 2
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 14
+                        index: 36
+                        line: 2
+                      }
+                      start: Object {
+                        column: 13
+                        index: 35
+                        line: 2
+                      }
                     }
                   }
                 }
               }
             }
-          }
-        ]
+          ]
+        }
       }
     }
   ]

@@ -22,7 +22,7 @@ Program {
     }
   }
   body: Array [
-    VariableDeclarationStatement {
+    ExpressionStatement {
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -36,8 +36,8 @@ Program {
           line: 1
         }
       }
-      declaration: VariableDeclaration {
-        kind: 'let'
+      expression: AssignmentExpression {
+        operator: '='
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -51,106 +51,72 @@ Program {
             line: 1
           }
         }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingArrayPattern {
-              rest: undefined
+        right: NumericLiteral {
+          value: 0
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 13
+              index: 13
+              line: 1
+            }
+            start: Object {
+              column: 12
+              index: 12
+              line: 1
+            }
+          }
+        }
+        left: MemberExpression {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 9
+              index: 9
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+          object: ReferenceIdentifier {
+            name: 'let'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 3
+                index: 3
+                line: 1
+              }
+              start: Object {
+                column: 0
+                index: 0
+                line: 1
+              }
+            }
+          }
+          property: ComputedMemberProperty {
+            value: ObjectExpression {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 9
-                  index: 9
+                  column: 8
+                  index: 8
                   line: 1
                 }
                 start: Object {
-                  column: 4
-                  index: 4
+                  column: 5
+                  index: 5
                   line: 1
                 }
               }
-              elements: Array [
-                BindingObjectPattern {
-                  rest: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 8
-                      index: 8
-                      line: 1
-                    }
-                    start: Object {
-                      column: 5
-                      index: 5
-                      line: 1
-                    }
-                  }
-                  meta: PatternMeta {
-                    optional: undefined
-                    typeAnnotation: undefined
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 8
-                        index: 8
-                        line: 1
-                      }
-                      start: Object {
-                        column: 5
-                        index: 5
-                        line: 1
-                      }
-                    }
-                  }
-                  properties: Array [
-                    BindingObjectPatternProperty {
-                      key: StaticPropertyKey {
-                        value: Identifier {
-                          name: 'a'
-                          loc: Object {
-                            filename: 'input.js'
-                            end: Object {
-                              column: 7
-                              index: 7
-                              line: 1
-                            }
-                            start: Object {
-                              column: 6
-                              index: 6
-                              line: 1
-                            }
-                          }
-                        }
-                        variance: undefined
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 7
-                            index: 7
-                            line: 1
-                          }
-                          start: Object {
-                            column: 6
-                            index: 6
-                            line: 1
-                          }
-                        }
-                      }
-                      value: BindingIdentifier {
-                        name: 'a'
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 7
-                            index: 7
-                            line: 1
-                          }
-                          start: Object {
-                            column: 6
-                            index: 6
-                            line: 1
-                          }
-                        }
-                      }
+              properties: Array [
+                ObjectProperty {
+                  key: StaticPropertyKey {
+                    value: Identifier {
+                      name: 'a'
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
@@ -165,15 +131,58 @@ Program {
                         }
                       }
                     }
-                  ]
+                    variance: undefined
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 7
+                        index: 7
+                        line: 1
+                      }
+                      start: Object {
+                        column: 6
+                        index: 6
+                        line: 1
+                      }
+                    }
+                  }
+                  value: ReferenceIdentifier {
+                    name: 'a'
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 7
+                        index: 7
+                        line: 1
+                      }
+                      start: Object {
+                        column: 6
+                        index: 6
+                        line: 1
+                      }
+                    }
+                  }
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 7
+                      index: 7
+                      line: 1
+                    }
+                    start: Object {
+                      column: 6
+                      index: 6
+                      line: 1
+                    }
+                  }
                 }
               ]
             }
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 13
-                index: 13
+                column: 9
+                index: 9
                 line: 1
               }
               start: Object {
@@ -182,24 +191,8 @@ Program {
                 line: 1
               }
             }
-            init: NumericLiteral {
-              value: 0
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 13
-                  index: 13
-                  line: 1
-                }
-                start: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-              }
-            }
           }
-        ]
+        }
       }
     }
   ]

@@ -87,7 +87,6 @@ Program {
               insensitive: true
               multiline: false
               noDotNewline: false
-              pattern: '[a-c]'
               sticky: false
               unicode: false
               loc: Object {
@@ -102,6 +101,88 @@ Program {
                   index: 8
                   line: 1
                 }
+              }
+              expression: RegExpSubExpression {
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 15
+                    index: 5
+                    line: 1
+                  }
+                  start: Object {
+                    column: 9
+                    index: -1
+                    line: 1
+                  }
+                }
+                body: Array [
+                  RegExpCharSet {
+                    invert: false
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 15
+                        index: 5
+                        line: 1
+                      }
+                      start: Object {
+                        column: 10
+                        index: 0
+                        line: 1
+                      }
+                    }
+                    body: Array [
+                      RegExpCharSetRange {
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 15
+                            index: 5
+                            line: 1
+                          }
+                          start: Object {
+                            column: 11
+                            index: 1
+                            line: 1
+                          }
+                        }
+                        end: RegExpCharacter {
+                          value: 'c'
+                          loc: Object {
+                            filename: 'input.js'
+                            end: Object {
+                              column: 14
+                              index: 4
+                              line: 1
+                            }
+                            start: Object {
+                              column: 12
+                              index: 3
+                              line: 1
+                            }
+                          }
+                        }
+                        start: RegExpCharacter {
+                          value: 'a'
+                          loc: Object {
+                            filename: 'input.js'
+                            end: Object {
+                              column: 12
+                              index: 2
+                              line: 1
+                            }
+                            start: Object {
+                              column: 11
+                              index: 1
+                              line: 1
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
               }
             }
           }

@@ -1,6 +1,5 @@
 Program {
   comments: Array []
-  diagnostics: Array []
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -21,24 +20,29 @@ Program {
       line: 1
     }
   }
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'await'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
+  diagnostics: Array [
+    Object {
+      advice: undefined
+      category: 'parse/js'
+      filename: 'input.js'
+      message: 'Can not use keyword \'await\' outside an async function'
+      mtime: undefined
+      sourceType: 'script'
+      origins: Array [Object {category: 'js-parser'}]
+      end: Object {
+        column: 20
+        index: 20
+        line: 1
       }
+      start: Object {
+        column: 15
+        index: 15
+        line: 1
+      }
+    }
+  ]
+  body: Array [
+    ExpressionStatement {
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -52,9 +56,23 @@ Program {
           line: 1
         }
       }
-      body: BlockStatement {
-        body: Array []
-        directives: Array []
+      expression: FunctionExpression {
+        id: BindingIdentifier {
+          name: 'await'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 20
+              index: 20
+              line: 1
+            }
+            start: Object {
+              column: 15
+              index: 15
+              line: 1
+            }
+          }
+        }
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -63,33 +81,50 @@ Program {
             line: 1
           }
           start: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-        }
-      }
-      head: FunctionHead {
-        async: true
-        generator: false
-        hasHoistedVars: false
-        params: Array []
-        predicate: undefined
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-          start: Object {
             column: 0
             index: 0
             line: 1
+          }
+        }
+        body: BlockStatement {
+          body: Array []
+          directives: Array []
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 25
+              index: 25
+              line: 1
+            }
+            start: Object {
+              column: 23
+              index: 23
+              line: 1
+            }
+          }
+        }
+        head: FunctionHead {
+          async: true
+          generator: false
+          hasHoistedVars: false
+          params: Array []
+          predicate: undefined
+          rest: undefined
+          returnType: undefined
+          thisType: undefined
+          typeParameters: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 23
+              index: 23
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
           }
         }
       }

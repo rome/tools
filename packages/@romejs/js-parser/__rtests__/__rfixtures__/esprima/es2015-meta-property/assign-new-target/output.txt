@@ -1,6 +1,5 @@
 Program {
   comments: Array []
-  diagnostics: Array []
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -21,6 +20,27 @@ Program {
       line: 1
     }
   }
+  diagnostics: Array [
+    Object {
+      advice: undefined
+      category: 'parse/js'
+      filename: 'input.js'
+      message: 'Expected a semicolon or a line terminator'
+      mtime: undefined
+      sourceType: 'script'
+      origins: Array [Object {category: 'js-parser'}]
+      end: Object {
+        column: 7
+        index: 22
+        line: 2
+      }
+      start: Object {
+        column: 8
+        index: 23
+        line: 2
+      }
+    }
+  ]
   body: Array [
     FunctionDeclaration {
       id: BindingIdentifier {
@@ -92,12 +112,12 @@ Program {
           }
         }
         body: Array [
-          VariableDeclarationStatement {
+          ExpressionStatement {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 23
-                index: 38
+                column: 7
+                index: 22
                 line: 2
               }
               start: Object {
@@ -106,13 +126,13 @@ Program {
                 line: 2
               }
             }
-            declaration: VariableDeclaration {
-              kind: 'let'
+            expression: ReferenceIdentifier {
+              name: 'let'
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 23
-                  index: 38
+                  column: 7
+                  index: 22
                   line: 2
                 }
                 start: Object {
@@ -121,24 +141,85 @@ Program {
                   line: 2
                 }
               }
-              declarations: Array [
-                VariableDeclarator {
-                  id: BindingIdentifier {
-                    name: 'x'
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 9
-                        index: 24
-                        line: 2
-                      }
-                      start: Object {
-                        column: 8
-                        index: 23
-                        line: 2
-                      }
+            }
+          }
+          ExpressionStatement {
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 23
+                index: 38
+                line: 2
+              }
+              start: Object {
+                column: 8
+                index: 23
+                line: 2
+              }
+            }
+            expression: AssignmentExpression {
+              operator: '='
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 22
+                  index: 37
+                  line: 2
+                }
+                start: Object {
+                  column: 8
+                  index: 23
+                  line: 2
+                }
+              }
+              left: AssignmentIdentifier {
+                name: 'x'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 9
+                    index: 24
+                    line: 2
+                  }
+                  start: Object {
+                    column: 8
+                    index: 23
+                    line: 2
+                  }
+                }
+              }
+              right: MetaProperty {
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 22
+                    index: 37
+                    line: 2
+                  }
+                  start: Object {
+                    column: 12
+                    index: 27
+                    line: 2
+                  }
+                }
+                meta: Identifier {
+                  name: 'new'
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 15
+                      index: 30
+                      line: 2
+                    }
+                    start: Object {
+                      column: 12
+                      index: 27
+                      line: 2
                     }
                   }
+                }
+                property: Identifier {
+                  name: 'target'
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
@@ -147,60 +228,13 @@ Program {
                       line: 2
                     }
                     start: Object {
-                      column: 8
-                      index: 23
+                      column: 16
+                      index: 31
                       line: 2
                     }
                   }
-                  init: MetaProperty {
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 22
-                        index: 37
-                        line: 2
-                      }
-                      start: Object {
-                        column: 12
-                        index: 27
-                        line: 2
-                      }
-                    }
-                    meta: Identifier {
-                      name: 'new'
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 15
-                          index: 30
-                          line: 2
-                        }
-                        start: Object {
-                          column: 12
-                          index: 27
-                          line: 2
-                        }
-                      }
-                    }
-                    property: Identifier {
-                      name: 'target'
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 22
-                          index: 37
-                          line: 2
-                        }
-                        start: Object {
-                          column: 16
-                          index: 31
-                          line: 2
-                        }
-                      }
-                    }
-                  }
                 }
-              ]
+              }
             }
           }
         ]

@@ -22,7 +22,7 @@ Program {
     }
   }
   body: Array [
-    VariableDeclarationStatement {
+    ExpressionStatement {
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -36,8 +36,8 @@ Program {
           line: 1
         }
       }
-      declaration: VariableDeclaration {
-        kind: 'let'
+      expression: AssignmentExpression {
+        operator: '='
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -51,65 +51,74 @@ Program {
             line: 1
           }
         }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingArrayPattern {
-              rest: undefined
+        right: NumericLiteral {
+          value: 0
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 10
+              index: 10
+              line: 1
+            }
+            start: Object {
+              column: 9
+              index: 9
+              line: 1
+            }
+          }
+        }
+        left: MemberExpression {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 8
+              index: 8
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+          object: ReferenceIdentifier {
+            name: 'let'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 3
+                index: 3
+                line: 1
+              }
+              start: Object {
+                column: 0
+                index: 0
+                line: 1
+              }
+            }
+          }
+          property: ComputedMemberProperty {
+            value: ArrayExpression {
+              elements: Array []
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 8
-                  index: 8
+                  column: 7
+                  index: 7
                   line: 1
                 }
                 start: Object {
-                  column: 4
-                  index: 4
+                  column: 5
+                  index: 5
                   line: 1
                 }
               }
-              elements: Array [
-                BindingArrayPattern {
-                  elements: Array []
-                  rest: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 7
-                      index: 7
-                      line: 1
-                    }
-                    start: Object {
-                      column: 5
-                      index: 5
-                      line: 1
-                    }
-                  }
-                  meta: PatternMeta {
-                    optional: undefined
-                    typeAnnotation: undefined
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 7
-                        index: 7
-                        line: 1
-                      }
-                      start: Object {
-                        column: 5
-                        index: 5
-                        line: 1
-                      }
-                    }
-                  }
-                }
-              ]
             }
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 10
-                index: 10
+                column: 8
+                index: 8
                 line: 1
               }
               start: Object {
@@ -118,24 +127,8 @@ Program {
                 line: 1
               }
             }
-            init: NumericLiteral {
-              value: 0
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 10
-                  index: 10
-                  line: 1
-                }
-                start: Object {
-                  column: 9
-                  index: 9
-                  line: 1
-                }
-              }
-            }
           }
-        ]
+        }
       }
     }
   ]

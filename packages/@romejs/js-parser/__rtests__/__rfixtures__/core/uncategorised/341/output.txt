@@ -58,7 +58,6 @@ Program {
         insensitive: false
         multiline: false
         noDotNewline: false
-        pattern: '='
         sticky: false
         unicode: false
         loc: Object {
@@ -73,6 +72,39 @@ Program {
             index: 2
             line: 1
           }
+        }
+        expression: RegExpSubExpression {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 4
+              index: 1
+              line: 1
+            }
+            start: Object {
+              column: 3
+              index: -1
+              line: 1
+            }
+          }
+          body: Array [
+            RegExpCharacter {
+              value: '='
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 4
+                  index: 1
+                  line: 1
+                }
+                start: Object {
+                  column: 4
+                  index: 0
+                  line: 1
+                }
+              }
+            }
+          ]
         }
       }
     }

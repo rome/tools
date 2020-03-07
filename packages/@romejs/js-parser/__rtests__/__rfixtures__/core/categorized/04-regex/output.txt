@@ -199,7 +199,6 @@ Program {
               insensitive: true
               multiline: false
               noDotNewline: false
-              pattern: '42'
               sticky: false
               unicode: false
               loc: Object {
@@ -214,6 +213,39 @@ Program {
                   index: 47
                   line: 4
                 }
+              }
+              expression: RegExpSubExpression {
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 5
+                    index: 1
+                    line: 4
+                  }
+                  start: Object {
+                    column: 3
+                    index: -1
+                    line: 4
+                  }
+                }
+                body: Array [
+                  RegExpCharacter {
+                    value: '4'
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 5
+                        index: 1
+                        line: 4
+                      }
+                      start: Object {
+                        column: 4
+                        index: 0
+                        line: 4
+                      }
+                    }
+                  }
+                ]
               }
             }
           }

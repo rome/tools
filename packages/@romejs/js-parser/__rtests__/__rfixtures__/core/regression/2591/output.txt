@@ -1,6 +1,5 @@
 Program {
   comments: Array []
-  diagnostics: Array []
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -21,6 +20,27 @@ Program {
       line: 1
     }
   }
+  diagnostics: Array [
+    Object {
+      advice: undefined
+      category: 'parse/js'
+      filename: 'input.js'
+      message: 'Expected a semicolon or a line terminator'
+      mtime: undefined
+      sourceType: 'script'
+      origins: Array [Object {category: 'js-parser'}]
+      end: Object {
+        column: 5
+        index: 20
+        line: 2
+      }
+      start: Object {
+        column: 6
+        index: 21
+        line: 2
+      }
+    }
+  ]
   body: Array [
     FunctionDeclaration {
       id: BindingIdentifier {
@@ -92,12 +112,12 @@ Program {
           }
         }
         body: Array [
-          VariableDeclarationStatement {
+          ExpressionStatement {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 7
-                index: 22
+                column: 5
+                index: 20
                 line: 2
               }
               start: Object {
@@ -106,13 +126,13 @@ Program {
                 line: 2
               }
             }
-            declaration: VariableDeclaration {
-              kind: 'let'
+            expression: ReferenceIdentifier {
+              name: 'let'
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 7
-                  index: 22
+                  column: 5
+                  index: 20
                   line: 2
                 }
                 start: Object {
@@ -121,25 +141,70 @@ Program {
                   line: 2
                 }
               }
-              declarations: Array [
-                VariableDeclarator {
-                  id: BindingIdentifier {
-                    name: 'x'
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 7
-                        index: 22
-                        line: 2
-                      }
-                      start: Object {
-                        column: 6
-                        index: 21
-                        line: 2
-                      }
-                    }
+            }
+          }
+          ExpressionStatement {
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 8
+                index: 31
+                line: 3
+              }
+              start: Object {
+                column: 6
+                index: 21
+                line: 2
+              }
+            }
+            expression: BinaryExpression {
+              operator: '/'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 8
+                  index: 31
+                  line: 3
+                }
+                start: Object {
+                  column: 6
+                  index: 21
+                  line: 2
+                }
+              }
+              right: ReferenceIdentifier {
+                name: 'INVALID_PLACEHOLDER'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 8
+                    index: 31
+                    line: 3
                   }
-                  init: undefined
+                  start: Object {
+                    column: 7
+                    index: 30
+                    line: 3
+                  }
+                }
+              }
+              left: BinaryExpression {
+                operator: '/'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 6
+                    index: 29
+                    line: 3
+                  }
+                  start: Object {
+                    column: 6
+                    index: 21
+                    line: 2
+                  }
+                }
+                left: ReferenceIdentifier {
+                  name: 'x'
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
@@ -154,42 +219,21 @@ Program {
                     }
                   }
                 }
-              ]
-            }
-          }
-          ExpressionStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 8
-                index: 31
-                line: 3
-              }
-              start: Object {
-                column: 2
-                index: 25
-                line: 3
-              }
-            }
-            expression: RegExpLiteral {
-              global: false
-              insensitive: false
-              multiline: false
-              noDotNewline: false
-              pattern: 'wow'
-              sticky: false
-              unicode: false
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 7
-                  index: 30
-                  line: 3
-                }
-                start: Object {
-                  column: 2
-                  index: 25
-                  line: 3
+                right: ReferenceIdentifier {
+                  name: 'wow'
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 6
+                      index: 29
+                      line: 3
+                    }
+                    start: Object {
+                      column: 3
+                      index: 26
+                      line: 3
+                    }
+                  }
                 }
               }
             }

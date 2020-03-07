@@ -125,23 +125,7 @@ Program {
             }
           }
           body: Array [
-            FunctionDeclaration {
-              id: BindingIdentifier {
-                name: 'inner'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 35
-                    index: 35
-                    line: 1
-                  }
-                  start: Object {
-                    column: 30
-                    index: 30
-                    line: 1
-                  }
-                }
-              }
+            ExpressionStatement {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -155,32 +139,23 @@ Program {
                   line: 1
                 }
               }
-              head: FunctionHead {
-                async: true
-                generator: false
-                hasHoistedVars: false
-                params: Array []
-                predicate: undefined
-                rest: undefined
-                returnType: undefined
-                thisType: undefined
-                typeParameters: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 38
-                    index: 38
-                    line: 1
-                  }
-                  start: Object {
-                    column: 15
-                    index: 15
-                    line: 1
+              expression: FunctionExpression {
+                id: BindingIdentifier {
+                  name: 'inner'
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 35
+                      index: 35
+                      line: 1
+                    }
+                    start: Object {
+                      column: 30
+                      index: 30
+                      line: 1
+                    }
                   }
                 }
-              }
-              body: BlockStatement {
-                directives: Array []
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
@@ -189,27 +164,52 @@ Program {
                     line: 1
                   }
                   start: Object {
-                    column: 38
-                    index: 38
+                    column: 15
+                    index: 15
                     line: 1
                   }
                 }
-                body: Array [
-                  ExpressionStatement {
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 47
-                        index: 47
-                        line: 1
-                      }
-                      start: Object {
-                        column: 40
-                        index: 40
-                        line: 1
-                      }
+                head: FunctionHead {
+                  async: true
+                  generator: false
+                  hasHoistedVars: false
+                  params: Array []
+                  predicate: undefined
+                  rest: undefined
+                  returnType: undefined
+                  thisType: undefined
+                  typeParameters: undefined
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 38
+                      index: 38
+                      line: 1
                     }
-                    expression: AwaitExpression {
+                    start: Object {
+                      column: 15
+                      index: 15
+                      line: 1
+                    }
+                  }
+                }
+                body: BlockStatement {
+                  directives: Array []
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 49
+                      index: 49
+                      line: 1
+                    }
+                    start: Object {
+                      column: 38
+                      index: 38
+                      line: 1
+                    }
+                  }
+                  body: Array [
+                    ExpressionStatement {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
@@ -223,8 +223,7 @@ Program {
                           line: 1
                         }
                       }
-                      argument: ReferenceIdentifier {
-                        name: 'x'
+                      expression: AwaitExpression {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
@@ -233,15 +232,31 @@ Program {
                             line: 1
                           }
                           start: Object {
-                            column: 46
-                            index: 46
+                            column: 40
+                            index: 40
                             line: 1
+                          }
+                        }
+                        argument: ReferenceIdentifier {
+                          name: 'x'
+                          loc: Object {
+                            filename: 'input.js'
+                            end: Object {
+                              column: 47
+                              index: 47
+                              line: 1
+                            }
+                            start: Object {
+                              column: 46
+                              index: 46
+                              line: 1
+                            }
                           }
                         }
                       }
                     }
-                  }
-                ]
+                  ]
+                }
               }
             }
           ]

@@ -1,6 +1,5 @@
 Program {
   comments: Array []
-  diagnostics: Array []
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -21,15 +20,37 @@ Program {
       line: 1
     }
   }
+  diagnostics: Array [
+    Object {
+      advice: undefined
+      category: 'parse/js'
+      filename: 'input.js'
+      message: 'Started with `export async` so we expected to receive an async function but no function keyword was found'
+      mtime: undefined
+      sourceType: 'module'
+      origins: Array [Object {category: 'js-parser'}]
+      end: Object {
+        column: 21
+        index: 21
+        line: 1
+      }
+      start: Object {
+        column: 13
+        index: 13
+        line: 1
+      }
+    }
+  ]
   body: Array [
     ExportLocalDeclaration {
+      declaration: undefined
       exportKind: 'value'
-      specifiers: undefined
+      specifiers: Array []
       loc: Object {
         filename: 'input.js'
         end: Object {
-          column: 30
-          index: 30
+          column: 6
+          index: 6
           line: 1
         }
         start: Object {
@@ -38,7 +59,22 @@ Program {
           line: 1
         }
       }
-      declaration: FunctionDeclaration {
+    }
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 30
+          index: 30
+          line: 1
+        }
+        start: Object {
+          column: 7
+          index: 7
+          line: 1
+        }
+      }
+      expression: FunctionExpression {
         id: BindingIdentifier {
           name: 'foo'
           loc: Object {
@@ -125,7 +161,7 @@ Program {
           line: 2
         }
       }
-      declaration: FunctionDeclaration {
+      declaration: FunctionExpression {
         id: BindingIdentifier {
           name: 'bar'
           loc: Object {

@@ -90,7 +90,6 @@ Program {
         insensitive: false
         multiline: false
         noDotNewline: false
-        pattern: 'foo'
         sticky: false
         unicode: false
         loc: Object {
@@ -105,6 +104,55 @@ Program {
             index: 15
             line: 4
           }
+        }
+        expression: RegExpSubExpression {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 4
+              index: 2
+              line: 4
+            }
+            start: Object {
+              column: 1
+              index: -1
+              line: 4
+            }
+          }
+          body: Array [
+            RegExpCharacter {
+              value: 'f'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 3
+                  index: 1
+                  line: 4
+                }
+                start: Object {
+                  column: 2
+                  index: 0
+                  line: 4
+                }
+              }
+            }
+            RegExpCharacter {
+              value: 'o'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 4
+                  index: 2
+                  line: 4
+                }
+                start: Object {
+                  column: 3
+                  index: 1
+                  line: 4
+                }
+              }
+            }
+          ]
         }
       }
     }

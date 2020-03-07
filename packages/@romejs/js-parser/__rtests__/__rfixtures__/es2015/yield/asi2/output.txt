@@ -160,7 +160,6 @@ Program {
               insensitive: false
               multiline: false
               noDotNewline: false
-              pattern: '1'
               sticky: false
               unicode: false
               loc: Object {
@@ -175,6 +174,39 @@ Program {
                   index: 24
                   line: 2
                 }
+              }
+              expression: RegExpSubExpression {
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 4
+                    index: 1
+                    line: 2
+                  }
+                  start: Object {
+                    column: 3
+                    index: -1
+                    line: 2
+                  }
+                }
+                body: Array [
+                  RegExpCharacter {
+                    value: '1'
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 4
+                        index: 1
+                        line: 2
+                      }
+                      start: Object {
+                        column: 4
+                        index: 0
+                        line: 2
+                      }
+                    }
+                  }
+                ]
               }
             }
           }

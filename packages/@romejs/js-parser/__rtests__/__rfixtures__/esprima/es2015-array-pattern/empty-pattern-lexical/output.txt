@@ -1,6 +1,5 @@
 Program {
   comments: Array []
-  diagnostics: Array []
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -21,8 +20,29 @@ Program {
       line: 1
     }
   }
+  diagnostics: Array [
+    Object {
+      advice: undefined
+      category: 'parse/js'
+      filename: 'input.js'
+      message: 'Unknown start to an member expression computed property'
+      mtime: undefined
+      sourceType: 'script'
+      origins: Array [Object {category: 'js-parser'}]
+      end: Object {
+        column: 5
+        index: 5
+        line: 1
+      }
+      start: Object {
+        column: 5
+        index: 5
+        line: 1
+      }
+    }
+  ]
   body: Array [
-    VariableDeclarationStatement {
+    ExpressionStatement {
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -36,13 +56,12 @@ Program {
           line: 1
         }
       }
-      declaration: VariableDeclaration {
-        kind: 'let'
+      expression: MemberExpression {
         loc: Object {
           filename: 'input.js'
           end: Object {
-            column: 12
-            index: 12
+            column: 11
+            index: 11
             line: 1
           }
           start: Object {
@@ -51,25 +70,25 @@ Program {
             line: 1
           }
         }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingArrayPattern {
-              elements: Array []
-              rest: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
+        object: ReferenceIdentifier {
+          name: 'let'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 3
+              index: 3
+              line: 1
             }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+        property: ComputedMemberProperty {
+          value: AssignmentExpression {
+            operator: '='
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -78,12 +97,28 @@ Program {
                 line: 1
               }
               start: Object {
-                column: 4
-                index: 4
+                column: 5
+                index: 5
                 line: 1
               }
             }
-            init: ArrayExpression {
+            left: AssignmentIdentifier {
+              name: 'INVALID_PLACEHOLDER'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 6
+                  index: 6
+                  line: 1
+                }
+                start: Object {
+                  column: 5
+                  index: 5
+                  line: 1
+                }
+              }
+            }
+            right: ArrayExpression {
               elements: Array []
               loc: Object {
                 filename: 'input.js'
@@ -100,7 +135,20 @@ Program {
               }
             }
           }
-        ]
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 11
+              index: 11
+              line: 1
+            }
+            start: Object {
+              column: 4
+              index: 4
+              line: 1
+            }
+          }
+        }
       }
     }
   ]

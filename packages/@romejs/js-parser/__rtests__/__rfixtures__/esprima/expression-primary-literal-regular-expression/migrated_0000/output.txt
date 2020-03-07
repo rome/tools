@@ -41,7 +41,6 @@ Program {
         insensitive: false
         multiline: false
         noDotNewline: false
-        pattern: 'p'
         sticky: false
         unicode: false
         loc: Object {
@@ -56,6 +55,39 @@ Program {
             index: 0
             line: 1
           }
+        }
+        expression: RegExpSubExpression {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 2
+              index: 1
+              line: 1
+            }
+            start: Object {
+              column: 1
+              index: -1
+              line: 1
+            }
+          }
+          body: Array [
+            RegExpCharacter {
+              value: 'p'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 2
+                  index: 1
+                  line: 1
+                }
+                start: Object {
+                  column: 2
+                  index: 0
+                  line: 1
+                }
+              }
+            }
+          ]
         }
       }
     }
