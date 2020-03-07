@@ -6,21 +6,9 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {AnyNode, templateElement, TemplateElement, TemplateLiteral, templateLiteral} from '@romejs/js-ast';
+import {AnyNode, BinaryExpression, templateElement, TemplateElement, templateLiteral} from '@romejs/js-ast';
 
-const nodeToQuasi = (fromConcat: string, isTail: boolean): TemplateElement => (
-  fromConcat === 'StringLiteral' ? 
-  templateElement.create({ 
-    cooked: fromConcat,
-    raw: fromConcat,
-    tail: isTail
-  }) :
-  templateElement.create({
-    cooked: '',
-    raw: '',
-    tail: isTail
-  })
-)
+
 
 export default {
   name: 'preferTemplate',
@@ -30,8 +18,8 @@ export default {
     if (
       node.type === 'BinaryExpression' &&
       node.operator === '+' &&
-      (node.left.type === 'StringLiteral' ||
-        node.right.type === 'StringLiteral')
+      ((node.left.type === 'StringLiteral' && !node.left.value.includes('`')) ||
+        (node.right.type === 'StringLiteral' && !node.right.value.includes('`')))
     ) {
       path.context.addNodeDiagnostic(node, {
         category: 'lint/preferTemplate',
@@ -41,11 +29,26 @@ export default {
 
       return templateLiteral.create({
       expressions: [node.left, node.right].filter(node => node.type !== 'StringLiteral'),
-      quasis:  [{value: node.left, side: 'left'}, {value: node.right, side: 'right'}].map(quasi => 
-        nodeToQuasi(quasi.value.type, quasi.side === 'right'))
+      quasis: nodeToQuasis(node)
       })
     }
 
     return node;
   },
+
 };
+
+function nodeToQuasis (node: BinaryExpression): TemplateElement[] {
+  return [
+    templateElement.create({
+      cooked: node.left.type === 'StringLiteral' ? node.left.value : '',
+      raw: node.left.type === 'StringLiteral' ? node.left.value : '',
+      tail: false
+    }), 
+    templateElement.create({
+      cooked: node.right.type === 'StringLiteral' ? node.right.value : '',
+      raw: node.right.type === 'StringLiteral' ? node.right.value : '',
+      tail: true
+    })
+  ];
+}
