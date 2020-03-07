@@ -322,6 +322,10 @@ export default class TestWorkerRunner {
       // if there's 5 promises, then wait for one of them to finish
       if (promises.size > MAX_RUNNING_TESTS) {
         await Promise.race(Array.from(promises));
+
+        await new Promise(resolve => {
+          setTimeout(resolve, 0);
+        });
       }
     }
 

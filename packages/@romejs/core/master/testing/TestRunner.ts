@@ -18,6 +18,7 @@ import {
   InspectorClient,
   CoverageCollector,
   sourceMapManager,
+  NativeStructuredError,
 } from '@romejs/v8';
 import {deriveDiagnosticFromError} from '@romejs/diagnostics';
 import {TestWorkerBridge} from '@romejs/core';
@@ -26,7 +27,7 @@ import {ManifestDefinition} from '@romejs/codec-js-manifest';
 import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
 import {urlToFilename} from '@romejs/v8';
 import {coerce0to1} from '@romejs/ob1';
-import {createErrorFromStructure, ErrorFrame} from '@romejs/v8';
+import {ErrorFrame} from '@romejs/v8';
 import {BridgeError} from '@romejs/events';
 import {
   TestRunnerConstructorOptions,
@@ -38,6 +39,8 @@ import {
   CoverageFolder,
 } from './types';
 import {percentInsideCoverageFolder, formatPercent, sortMapKeys} from './utils';
+
+class BridgeStructuredError extends NativeStructuredError {}
 
 export default class TestRunner {
   constructor(opts: TestRunnerConstructorOptions) {
@@ -148,7 +151,7 @@ export default class TestRunner {
     try {
       await nextTest();
     } catch (err) {
-      if (err instanceof BridgeError) {
+      if (err instanceof BridgeError || err instanceof BridgeStructuredError) {
         // When a worker dies, we automatically mark all it's currently running tests as failed
         // However, it will cause all the pending messages to throw an error which will bubble up here
         // We can safely ignore these since we've already handled it
@@ -273,10 +276,11 @@ export default class TestRunner {
   ): Promise<void> {
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
-        container.bridge.end(
-          `Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but we timed out again trying to fetch it...`,
+        resolve(
+          container.bridge.end(
+            `Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but we timed out again trying to fetch it...`,
+          ),
         );
-        resolve();
       }, 3000);
 
       this._handleWorkerTimeout(duration, container)
@@ -287,10 +291,9 @@ export default class TestRunner {
         .catch(err => {
           clearTimeout(timeout);
           if (err instanceof InspectorClientCloseError) {
-            container.bridge.end(
+            return container.bridge.end(
               `Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but the inspector connection closed abruptly`,
             );
-            resolve();
           } else {
             reject(err);
           }
@@ -353,7 +356,7 @@ export default class TestRunner {
     }
 
     bridge.endWithError(
-      createErrorFromStructure({
+      new BridgeStructuredError({
         message: `Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
         frames,
       }),
@@ -427,7 +430,7 @@ export default class TestRunner {
       const ourRunningTests: Set<string> = new Set();
 
       bridge.endEvent.subscribe(error => {
-        // Fail all currently running tests
+        // Cancel all currently running tests
         for (const key of ourRunningTests) {
           const test = this.runningTests.get(key);
           if (test === undefined) {
@@ -437,18 +440,11 @@ export default class TestRunner {
 
           const {ref} = test;
           this.onTestFinished(ref);
-          this.printer.addDiagnostic(
-            deriveDiagnosticFromError({
-              error,
-              category: ref.testName,
-              filename: ref.filename,
-            }),
-            {
-              category: 'test',
-              message:
-                'Worker died and this diagnostic was automatically generated to fail a test',
-            },
-          );
+          this.printer.addDiagnostic({
+            category: ref.testName,
+            filename: ref.filename,
+            message: 'Test was cancelled',
+          });
         }
       });
 

@@ -254,7 +254,7 @@ export default class Bridge {
     }
 
     // Notify listeners
-    this.endEvent.send(err);
+    this.endEvent.callSync(err);
   }
 
   end(message: string = 'Connection died') {

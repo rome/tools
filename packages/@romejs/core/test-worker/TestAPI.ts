@@ -523,7 +523,7 @@ export default class TestAPI {
   _snapshotNamed(
     name: string,
     expected: unknown,
-    message: string = "Snapshots don't match",
+    message: string = `Snapshot ${name} doesn't match`,
     framesToPop?: number,
   ) {
     let language: undefined | string;
