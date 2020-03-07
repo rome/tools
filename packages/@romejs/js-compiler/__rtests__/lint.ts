@@ -10,6 +10,7 @@ import lint from '../api/lint';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import {DEFAULT_PROJECT_CONFIG, ProjectConfig} from '@romejs/project';
+import {PartialDiagnostic} from '@romejs/diagnostics/types';
 import {ConstSourceType} from '@romejs/js-ast';
 
 const LINT_ENABLED_FORMAT_DISABLED_CONFIG: ProjectConfig = {
@@ -97,6 +98,52 @@ test('unsafe negation', async t => {
   );
 
   t.snapshot(res);
+});
+
+test('getter return', async t => {
+  const badClass = await testLint(
+    `
+    class p {
+      get name() {
+        console.log('hello')
+      };
+    }
+    console.log(new p())
+    `,
+    LINT_AND_FORMAT_ENABLED_CONFIG,
+  );
+
+  t.snapshot(badClass);
+
+  const badObject = await testLint(
+    `
+    let p;
+    p = {
+      get name() {
+        console.log('hello')
+      }
+    };
+    console.log(p)
+    `,
+    LINT_AND_FORMAT_ENABLED_CONFIG,
+  );
+
+  t.snapshot(badObject);
+
+  const badDefinedProperty = await testLint(
+    `
+    let p = {};
+    Object.defineProperty(p, {
+      get: function (){
+          console.log('hello')
+      }
+    });
+    console.log(p)
+    `,
+    LINT_AND_FORMAT_ENABLED_CONFIG,
+  );
+
+  t.snapshot(badDefinedProperty);
 });
 
 test('no async promise executor', async t => {
@@ -269,6 +316,48 @@ test('no duplicate keys', async t => {
   ]);
 });
 
+test('no function reassignment', async t => {
+  function checkCategory(diagnostic: PartialDiagnostic): Boolean {
+    return diagnostic.category === 'lint/noFunctionAssign';
+  }
+
+  const validTestCases = [
+    'function foo() { var foo = bar; }',
+    'function foo(foo) { foo = bar; }',
+    'function foo() { var foo; foo = bar; }',
+    'var foo = () => {}; foo = bar;',
+    'var foo = function() {}; foo = bar;',
+    'var foo = function() { foo = bar; };',
+    `import bar from 'bar'; function foo() { var foo = bar; }`,
+  ];
+
+  const invalidTestCases = [
+    'function foo() {}; foo = bar;',
+    'function foo() { foo = bar; }',
+    'foo = bar; function foo() { };',
+    '[foo] = bar; function foo() { };',
+    '({x: foo = 0} = bar); function foo() { };',
+    'function foo() { [foo] = bar; }',
+    '(function() { ({x: foo = 0} = bar); function foo() { }; })();',
+  ];
+
+  for (const testCase of validTestCases) {
+    const {diagnostics} = await testLint(
+      testCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    );
+    t.falsy(diagnostics.find(checkCategory));
+  }
+
+  for (const testCase of invalidTestCases) {
+    const {diagnostics} = await testLint(
+      testCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    );
+    t.truthy(diagnostics.find(checkCategory));
+  }
+});
+
 test('no duplicated args allowed', async t => {
   const duplicatedArgs = await testLint(
     `
@@ -317,6 +406,48 @@ test('disallow var', async t => {
   ]);
 });
 
+test('no empty character class in regular expression', async t => {
+  const validTestCases = [
+    'let foo = /^abc[a-zA-Z]/;foo;',
+    'let regExp = new RegExp("^abc[]");regExp;',
+    'let foo = /^abc/;foo;',
+    'let foo = /[\\[]/;foo;',
+    'let foo = /[\\]]/;foo;',
+    'let foo = /[a-zA-Z\\[]/;foo;',
+    'let foo = /[[]/;foo;',
+    'let foo = /[\\[a-z[]]/;foo;',
+    'let foo = /[\\-\\[\\]\\/\\{\\}\\(\\)\\*\\+\\?\\.\\\\^\\$\\|]/g;foo;',
+    'let foo = /[\\]]/uy;foo;',
+    'let foo = /[\\]]/s;foo;',
+    'let foo = /\\[]/;foo;',
+  ];
+
+  const invalidTestCases = [
+    'let foo = /^abc[]/;foo;',
+    'let foo = /foo[]bar/;foo;',
+    'let foo = "";if (foo.match(/^abc[]/)) { foo; }',
+    'let foo = /[]]/;foo;',
+    'let foo = /\\[[]/;foo;',
+    'let foo = /\\[\\[\\]a-z[]/;foo;',
+  ];
+
+  for (const validTestCase of validTestCases) {
+    const {diagnostics} = await testLint(
+      validTestCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    );
+    t.is(diagnostics.length, 0);
+  }
+
+  for (const invalidTestCase of invalidTestCases) {
+    let res = await testLint(
+      invalidTestCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    );
+    t.snapshot(res);
+  }
+});
+
 test('disallow unsafe usage of break, continue, throw and return', async t => {
   const returnTest = await testLint(
     `
@@ -329,7 +460,7 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
           return 1;
       }
     }
-    
+
     greet1();
     `,
     LINT_ENABLED_FORMAT_DISABLED_CONFIG,
@@ -343,7 +474,7 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
 
   const breakTest = await testLint(
     `
-    
+
     function greet2() {
       try {
         throw new Error("Try")
@@ -376,7 +507,7 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
           continue;
       }
     }
-    
+
     greet3();
     `,
     LINT_ENABLED_FORMAT_DISABLED_CONFIG,
@@ -518,4 +649,127 @@ test('no debugger', async t => {
   );
 
   t.snapshot(badRes.diagnostics);
+});
+
+test('disallow multiple spaces in regular expression literals', async t => {
+  const res1 = await testLint(
+    `new RegExp("foo  bar")`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+  t.looksLike(res1.diagnostics, [
+    {
+      category: 'lint/disallowMultipleSpacesInRegularExpressionLiterals',
+      message: 'Disallow multiple spaces in regular expression literals',
+      mtime: undefined,
+      filename: 'unknown',
+      start: {index: 0, line: 1, column: 0},
+      end: {index: 22, line: 1, column: 22},
+      language: 'js',
+      sourceType: 'module',
+      origins: [{category: 'lint'}],
+    },
+  ]);
+
+  const res2 = await testLint(
+    `new RegExp("foo {2}bar")`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.looksLike(res2.diagnostics, []);
+
+  const res3 = await testLint(
+    `/foo  bar/`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+  t.looksLike(res3.diagnostics, [
+    {
+      category: 'lint/disallowMultipleSpacesInRegularExpressionLiterals',
+      message: 'Disallow multiple spaces in regular expression literals',
+      mtime: undefined,
+      filename: 'unknown',
+      start: {index: 0, line: 1, column: 0},
+      end: {index: 10, line: 1, column: 10},
+      language: 'js',
+      sourceType: 'module',
+      origins: [{category: 'lint'}],
+    },
+  ]);
+
+  const res4 = await testLint(
+    `/foo {2}bar/`,
+    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+  );
+
+  t.looksLike(res4.diagnostics, []);
+});
+
+test('no shadow restricted names', async t => {
+  let failingCases = [
+    'function NaN() {}',
+    'let Set;',
+    '!function Array() {}',
+    'function test(JSON) {}',
+    'try {  } catch(Object) {}',
+  ];
+  for (let failingCase of failingCases) {
+    const res = await testLint(
+      failingCase,
+      LINT_ENABLED_FORMAT_DISABLED_CONFIG,
+    );
+    if (
+      !res.diagnostics.some(d => d.category === 'lint/noShadowRestrictedNames')
+    ) {
+      t.fail(
+        `expected "\n${failingCase}\n" to report a lint/noShadowRestrictedNames diagnostic but it didn't`,
+        [
+          {
+            type: 'inspect',
+            data: parseJS({
+              input: failingCase,
+              sourceType: 'module',
+              path: createUnknownFilePath('unknown'),
+            }),
+          },
+          {type: 'inspect', data: res.diagnostics},
+        ],
+      );
+    }
+  }
+});
+
+test('prefer function declarations', async t => {
+  // Should complain on these
+  t.snapshot(
+    await testLint(
+      'const foo = function () {};',
+      LINT_AND_FORMAT_ENABLED_CONFIG,
+    ),
+  );
+  t.snapshot(
+    await testLint('const foo = () => {};', LINT_AND_FORMAT_ENABLED_CONFIG),
+  );
+
+  // Should allow arrow functions when they have this
+  t.snapshot(
+    await testLint(
+      'const foo = () => {this;};',
+      LINT_AND_FORMAT_ENABLED_CONFIG,
+    ),
+  );
+
+  // But only if it refers to the actual arrow function
+  t.snapshot(
+    await testLint(
+      'const foo = () => {function bar() {this;}};',
+      LINT_AND_FORMAT_ENABLED_CONFIG,
+    ),
+  );
+
+  // Should ignore functions with return types since you can't express that with a declaration
+  t.snapshot(
+    await testLint(
+      'const foo: any = function () {};',
+      LINT_AND_FORMAT_ENABLED_CONFIG,
+    ),
+  );
 });

@@ -228,10 +228,10 @@ async function createWatchmanWatcher(
     }
     clearTimeout(timeout);
 
-    const processChanges = async (
+    async function processChanges(
       data: WatchmanSubscriptionValue,
       diagnostics: DiagnosticsProcessor,
-    ) => {
+    ) {
       if (data['state-enter'] || data['state-leave']) {
         return;
       }
@@ -295,7 +295,7 @@ async function createWatchmanWatcher(
           }
         }),
       );
-    };
+    }
 
     activity.setText(`Processing results`);
     await processChanges(initial, diagnostics);

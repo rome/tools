@@ -42,6 +42,7 @@ import {
   UnknownFilePath,
   UnknownFilePathMap,
   UnknownFilePathSet,
+  AbsoluteFilePathSet,
 } from '@romejs/path';
 import {Number1, Number0} from '@romejs/ob1';
 import {existsSync, readFileTextSync, lstatSync} from '@romejs/fs';
@@ -138,6 +139,7 @@ export default class DiagnosticsPrinter extends Error {
     this.filteredCount = 0;
     this.truncatedCount = 0;
 
+    this.missingFileSources = new AbsoluteFilePathSet();
     this.fileSources = new UnknownFilePathMap();
     this.fileMtimes = new UnknownFilePathMap();
     this.beforeFooterPrint = [];
@@ -149,6 +151,8 @@ export default class DiagnosticsPrinter extends Error {
   flags: DiagnosticsPrinterFlags;
   cwd: AbsoluteFilePath;
   readFile: DiagnosticsFileReader;
+
+  missingFileSources: AbsoluteFilePathSet;
   fileSources: DiagnosticsPrinterFileSources;
   fileMtimes: DiagnosticsPrinterFileMtimes;
 
@@ -344,8 +348,11 @@ export default class DiagnosticsPrinter extends Error {
         continue;
       }
 
-      const stats = this.readFile(path.assertAbsolute());
-      if (stats !== undefined) {
+      const abs = path.assertAbsolute();
+      const stats = this.readFile(abs);
+      if (stats === undefined) {
+        this.missingFileSources.add(abs);
+      } else {
         this.addFileSource(dep, stats);
       }
     }
@@ -477,6 +484,7 @@ export default class DiagnosticsPrinter extends Error {
     for (const item of advice) {
       const noSpacer = printAdvice(item, {
         flags: this.flags,
+        missingFileSources: this.missingFileSources,
         fileSources: this.fileSources,
         diagnostic: diag,
         reporter,
@@ -512,16 +520,6 @@ export default class DiagnosticsPrinter extends Error {
 
   filterDiagnostics(): Diagnostics {
     const diagnostics = this.getDiagnostics();
-
-    if (diagnostics.length === 0) {
-      this.reporter.error(
-        'No diagnostics provided. They have likely all been filtered, but this operation does not check for suppressions. Showing complete diagnostics instead.',
-      );
-      return this.processor.getCompleteUnfilteredDiagnostics(
-        this.reporter.markupOptions,
-      );
-    }
-
     const filteredDiagnostics: Diagnostics = [];
 
     for (const diag of diagnostics) {

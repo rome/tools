@@ -131,12 +131,12 @@ class Builder<Node extends AnyNode> {
     }
   }
 
-  assert(res: TransformExitResult): Node {
-    const node = assertSingleNode(res);
-
-    if (node === undefined) {
+  assert(res: undefined | TransformExitResult): Node {
+    if (res === undefined) {
       throw new Error(`Expected ${this.type} Node but got undefined`);
     }
+
+    const node = assertSingleNode(res);
 
     if (node.type !== this.type) {
       throw new Error(`Expected ${this.type} Node but got ${node.type}`);

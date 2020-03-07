@@ -130,6 +130,9 @@ export default class TestRunner {
       try {
         await bridge.runTest.call({
           options: opts,
+          projectFolder: req.master.projectManager
+            .assertProjectExisting(path)
+            .folder.join(),
           file: req.master.projectManager.getTransportFileReference(path),
           cwd: flags.cwd.join(),
           code,

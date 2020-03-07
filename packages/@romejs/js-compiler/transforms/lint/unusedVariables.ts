@@ -125,6 +125,15 @@ export default {
         }
       }
 
+      if (
+        node.type === 'CatchClause' &&
+        node.param &&
+        node.param.type === 'BindingIdentifier'
+      ) {
+        // Mark error param as used as they are required
+        usedBindings[node.param.name] = true;
+      }
+
       // For a named function expression, don't consider the id to be unused
       if (node.type === 'FunctionExpression' && node.id !== undefined) {
         usedBindings[node.id.name] = true;

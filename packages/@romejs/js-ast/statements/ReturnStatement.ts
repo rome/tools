@@ -6,15 +6,16 @@
  */
 
 import {JSNodeBase, AnyExpression} from '../index';
-import {createBuilder} from '../utils';
+import {createQuickBuilder} from '../utils';
 
 export type ReturnStatement = JSNodeBase & {
   type: 'ReturnStatement';
   argument?: AnyExpression;
 };
 
-export const returnStatement = createBuilder<ReturnStatement>(
+export const returnStatement = createQuickBuilder<ReturnStatement, 'argument'>(
   'ReturnStatement',
+  'argument',
   {
     bindingKeys: {},
     visitorKeys: {

@@ -28,10 +28,11 @@ import {formatAnsi} from '@romejs/string-ansi';
 import {DiagnosticsPrinterFlags} from './types';
 import {number0Neg1} from '@romejs/ob1';
 import {DiagnosticsPrinterFileSources} from './DiagnosticsPrinter';
-import {createUnknownFilePath} from '@romejs/path';
+import {createUnknownFilePath, AbsoluteFilePathSet} from '@romejs/path';
 
 type AdvicePrintOptions = {
   flags: DiagnosticsPrinterFlags;
+  missingFileSources: AbsoluteFilePathSet;
   fileSources: DiagnosticsPrinterFileSources;
   reporter: Reporter;
   diagnostic: Diagnostic;
@@ -143,6 +144,11 @@ function printFrame(
     });
   } else if (filename !== undefined) {
     lines = opts.fileSources.get(path);
+  } else if (
+    path.isAbsolute() &&
+    opts.missingFileSources.has(path.assertAbsolute())
+  ) {
+    lines = [formatAnsi.dim('file does not exist')];
   }
   if (lines === undefined) {
     lines = [];
