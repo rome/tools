@@ -93,8 +93,8 @@ export function tryParseWithOptionalOffsetPosition<
 
 const SOF_TOKEN: SOFToken = {
   type: 'SOF',
-  start: number0Neg1,
-  end: number0Neg1,
+  start: number0,
+  end: number0,
 };
 
 type ParserSnapshot<Tokens extends TokensShape, State> = {
@@ -137,6 +137,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     this.state = initialState;
     this.ignoreWhitespaceTokens = false;
 
+    this.latestPosition = undefined;
     this.cachedPositions = new Map();
   }
 
@@ -149,6 +150,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   state: State;
   prevToken: TokenValues<Tokens>;
   currentToken: TokenValues<Tokens>;
+  latestPosition: undefined | Position;
   eofToken: EOFToken;
   ignoreWhitespaceTokens: boolean;
   cachedPositions: Map<Number0, Position>;
@@ -270,7 +272,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
   // Advance to the next token, returning the new one
   nextToken(): TokenValues<Tokens> {
-    if (this.isEOF()) {
+    if (this.isEOF(this.nextTokenIndex)) {
       this.currentToken = this.eofToken;
       return this.eofToken;
     }
@@ -293,16 +295,9 @@ export class ParserCore<Tokens extends TokensShape, State> {
       );
     }
 
-    // Keep currLine and currColumn up to date
-    for (let i = get0(prevToken.start); i < get0(nextToken.start); i++) {
-      const char = this.input[i];
-      if (char === '\n') {
-        this.currLine = inc(this.currLine);
-        this.currColumn = number0;
-      } else {
-        this.currColumn = inc(this.currColumn);
-      }
-    }
+    const {line, column} = this.getPositionFromIndex(nextToken.start);
+    this.currLine = line;
+    this.currColumn = column;
 
     this.nextTokenIndex = nextToken.end;
     this.prevToken = prevToken;
@@ -382,26 +377,29 @@ export class ParserCore<Tokens extends TokensShape, State> {
       return cached;
     }
 
-    if (this.currentToken.start === index) {
-      return this.getPosition();
-    }
-
-    const targetIndex = index;
-
-    // Find the line/column relative to the source
-    let line: Number1 = this.startLine;
-    let column: Number0 = this.startColumn;
+    let line: Number1 = number1;
+    let column: Number0 = number0;
+    let indexOffset: number = 0;
 
     // Reuse existing line information if possible
+    const {latestPosition} = this;
     const currPosition = this.getPosition();
-    if (currPosition.index < index) {
+    if (
+      (latestPosition === undefined ||
+        currPosition.index > latestPosition.index) &&
+      currPosition.index < index
+    ) {
       line = currPosition.line;
       column = currPosition.column;
-      index = sub(index, currPosition.index);
+      indexOffset = get0(currPosition.index);
+    } else if (latestPosition !== undefined && latestPosition.index < index) {
+      line = latestPosition.line;
+      column = latestPosition.column;
+      indexOffset = get0(latestPosition.index);
     }
 
     // Read the rest of the input until we hit the index
-    for (let i = 0; i < get0(index); i++) {
+    for (let i = indexOffset; i <= get0(index); i++) {
       const char = this.input[i];
 
       if (char === '\n') {
@@ -413,11 +411,16 @@ export class ParserCore<Tokens extends TokensShape, State> {
     }
 
     const pos: Position = {
-      index: targetIndex,
+      index,
       line,
       column,
     };
-    this.cachedPositions.set(targetIndex, pos);
+
+    if (latestPosition === undefined || pos.index > latestPosition.index) {
+      this.latestPosition = pos;
+    }
+
+    this.cachedPositions.set(index, pos);
     return pos;
   }
 
@@ -464,10 +467,14 @@ export class ParserCore<Tokens extends TokensShape, State> {
       ) {
         message = `Unexpected ${currentToken.type}`;
       } else {
-        const char = this.input[get0(start.index)];
-        message = `Unexpected character <emphasis>${escapeMarkup(
-          char,
-        )}</emphasis>`;
+        if (this.isEOF(start.index)) {
+          message = 'Unexpected end of file';
+        } else {
+          const char = this.input[get0(start.index)];
+          message = `Unexpected character <emphasis>${escapeMarkup(
+            char,
+          )}</emphasis>`;
+        }
       }
     }
 
@@ -515,7 +522,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   // Check if we're at the end of the input
-  isEOF(index: Number0 = this.nextTokenIndex): boolean {
+  isEOF(index: Number0): boolean {
     return get0(index) >= this.input.length;
   }
 
