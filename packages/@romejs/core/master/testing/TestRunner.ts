@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter} from '@romejs/cli-reporter';
-import {DiagnosticOrigin} from '@romejs/diagnostics';
+import {Reporter, ProgressShape} from '@romejs/cli-reporter';
+import {DiagnosticOrigin, deriveDiagnosticFromError} from '@romejs/diagnostics';
 import {TestRef} from '../../common/bridges/TestWorkerBridge';
 import {Master, MasterRequest} from '@romejs/core';
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import {createClient} from '@romejs/codec-websocket';
 import {humanizeNumber} from '@romejs/string-utils';
-import {createBridgeFromChildProcess} from '@romejs/events';
+import {createBridgeFromChildProcess, Bridge} from '@romejs/events';
 import {
   InspectorClientCloseError,
   InspectorClient,
   CoverageCollector,
   sourceMapManager,
   NativeStructuredError,
+  StructuredError,
 } from '@romejs/v8';
-import {deriveDiagnosticFromError} from '@romejs/diagnostics';
 import {TestWorkerBridge} from '@romejs/core';
 import fork from '../../common/utils/fork';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
@@ -39,8 +39,20 @@ import {
   CoverageFolder,
 } from './types';
 import {percentInsideCoverageFolder, formatPercent, sortMapKeys} from './utils';
+import {escapeMarkup} from '@romejs/string-markup';
 
-class BridgeStructuredError extends NativeStructuredError {}
+class BridgeStructuredError extends NativeStructuredError {
+  constructor(struct: Partial<StructuredError>, bridge: Bridge) {
+    super(struct);
+    this.bridge = bridge;
+  }
+
+  bridge: Bridge;
+}
+
+function getProgressTestRefText(ref: TestRef) {
+  return `<filelink target="${ref.filename}" />: ${escapeMarkup(ref.testName)}`;
+}
 
 export default class TestRunner {
   constructor(opts: TestRunnerConstructorOptions) {
@@ -50,6 +62,8 @@ export default class TestRunner {
     this.cwd = opts.request.client.flags.cwd;
     this.request = opts.request;
     this.options = opts.options;
+
+    this.ignoreBridgeEndError = new Set();
 
     this.sourcesQueue = Array.from(opts.sources.entries());
 
@@ -62,6 +76,7 @@ export default class TestRunner {
     };
 
     this.runningTests = new Map();
+    this.testFileCounter = 0;
 
     this.printer = opts.request.createDiagnosticsPrinter({
       category: 'test',
@@ -80,6 +95,8 @@ export default class TestRunner {
   cwd: AbsoluteFilePath;
   printer: DiagnosticsPrinter;
   sourcesQueue: Array<[string, TestSource]>;
+  testFileCounter: number;
+  ignoreBridgeEndError: Set<Bridge>;
 
   runningTests: Map<
     string,
@@ -130,8 +147,12 @@ export default class TestRunner {
         sourceMap,
       );
 
+      const id = this.testFileCounter;
+      this.testFileCounter++;
+
       try {
-        await bridge.runTest.call({
+        await bridge.prepareTest.call({
+          id,
           options: opts,
           projectFolder: req.master.projectManager
             .assertProjectExisting(path)
@@ -141,6 +162,8 @@ export default class TestRunner {
           code,
           sourceMap,
         });
+
+        await bridge.runTest.call(id);
       } finally {
         removeSourceMap();
       }
@@ -152,9 +175,14 @@ export default class TestRunner {
       await nextTest();
     } catch (err) {
       if (err instanceof BridgeError || err instanceof BridgeStructuredError) {
-        // When a worker dies, we automatically mark all it's currently running tests as failed
-        // However, it will cause all the pending messages to throw an error which will bubble up here
-        // We can safely ignore these since we've already handled it
+        if (!this.ignoreBridgeEndError.has(err.bridge)) {
+          this.printer.addDiagnostic(
+            deriveDiagnosticFromError({
+              category: 'test',
+              error: err,
+            }),
+          );
+        }
       } else {
         throw err;
       }
@@ -259,13 +287,15 @@ export default class TestRunner {
 
   async init() {
     this.workers = await this.setupWorkers();
-    this.setupProgress();
+    const teardown = this.setupProgress();
 
     const workerContainers: TestWorkerContainers = this.getWorkers();
 
     await Promise.all(
       workerContainers.map(container => this.runWorker(container)),
     );
+
+    teardown();
 
     this.printTestResults();
   }
@@ -356,10 +386,20 @@ export default class TestRunner {
     }
 
     bridge.endWithError(
-      new BridgeStructuredError({
-        message: `Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
-        frames,
-      }),
+      new BridgeStructuredError(
+        {
+          message: `Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
+          frames,
+          advice: [
+            {
+              type: 'log',
+              category: 'info',
+              message: `You can find the specific test that caused this by running <command>rome test --sync-tests</command>`,
+            },
+          ],
+        },
+        bridge,
+      ),
     );
   }
 
@@ -420,8 +460,13 @@ export default class TestRunner {
     this.progress.finished++;
   }
 
-  setupProgress() {
+  setupProgress(): () => void {
     const workers = this.getWorkers();
+
+    const progress = this.request.reporter.progress({
+      persistent: true,
+    });
+    progress.setTitle('Running tests');
 
     for (let i = 0; i < workers.length; i++) {
       const container = workers[i];
@@ -431,30 +476,54 @@ export default class TestRunner {
 
       bridge.endEvent.subscribe(error => {
         // Cancel all currently running tests
+
+        const cancelTests: Array<TestRef> = [];
+
         for (const key of ourRunningTests) {
           const test = this.runningTests.get(key);
-          if (test === undefined) {
-            // Test has already finished
-            continue;
+          if (test !== undefined) {
+            cancelTests.push(test.ref);
           }
+        }
 
-          const {ref} = test;
+        for (const ref of cancelTests) {
           this.onTestFinished(ref);
-          this.printer.addDiagnostic({
-            category: ref.testName,
-            filename: ref.filename,
-            message: 'Test was cancelled',
-          });
+
+          if (cancelTests.length === 1) {
+            // If we only have one test to cancel then let's only point the bridge error to this test
+            this.ignoreBridgeEndError.add(bridge);
+
+            this.printer.addDiagnostic({
+              ...deriveDiagnosticFromError({
+                category: ref.testName,
+                filename: ref.filename,
+                error: error,
+              }),
+
+              // We don't care about the advice
+              advice: [],
+            });
+          } else {
+            this.printer.addDiagnostic({
+              category: ref.testName,
+              filename: ref.filename,
+              message: 'Test was cancelled',
+            });
+          }
         }
       });
 
-      bridge.testFound.subscribe(data => {
-        this.onTestFound(data.ref, data.isSkipped);
+      bridge.testsFound.subscribe(tests => {
+        for (const {ref, isSkipped} of tests) {
+          this.onTestFound(ref, isSkipped);
+        }
+        progress.setTotal(this.progress.total);
       });
 
       bridge.testStart.subscribe(data => {
         ourRunningTests.add(this.refToKey(data.ref));
         this.onTestStart(container, data.ref, data.timeout);
+        progress.pushText(getProgressTestRefText(data.ref));
       });
 
       bridge.testError.subscribe(data => {
@@ -471,6 +540,8 @@ export default class TestRunner {
           );
           origin.message = `Generated from the file <filelink target="${uid}" /> and test name "${ref.testName}"`;
           this.onTestFinished(ref);
+          progress.popText(getProgressTestRefText(ref));
+          progress.tick();
         }
 
         this.printer.addDiagnostic(data.diagnostic, origin);
@@ -478,8 +549,14 @@ export default class TestRunner {
 
       bridge.testSuccess.subscribe(data => {
         this.onTestFinished(data.ref);
+        progress.popText(getProgressTestRefText(data.ref));
+        progress.tick();
       });
     }
+
+    return function() {
+      progress.end();
+    };
   }
 
   printCoverageReport() {

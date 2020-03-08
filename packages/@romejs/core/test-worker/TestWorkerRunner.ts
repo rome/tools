@@ -264,12 +264,13 @@ export default class TestWorkerRunner {
       };
     });
 
-    const api = new TestAPI(
+    const api = new TestAPI({
+      file: this.file,
       testName,
       onTimeout,
-      this.snapshotManager,
-      this.options,
-    );
+      snapshotManager: this.snapshotManager,
+      options: this.options,
+    });
 
     try {
       const res = callback(api);
@@ -296,11 +297,23 @@ export default class TestWorkerRunner {
     }
   }
 
-  async runTests(): Promise<void> {
+  async run(): Promise<void> {
     const promises: Set<Promise<void>> = new Set();
 
+    const {foundTests} = this;
+    if (foundTests.size === 0) {
+      this.bridge.testError.send({
+        ref: undefined,
+        diagnostic: {
+          filename: this.file.uid,
+          message: 'No tests declared in this file',
+          category: 'tests',
+        },
+      });
+    }
+
     // Execute all the tests
-    for (const [testName, {options, callback}] of this.foundTests) {
+    for (const [testName, {options, callback}] of foundTests) {
       if (callback === undefined) {
         continue;
       }
@@ -314,18 +327,19 @@ export default class TestWorkerRunner {
       });
 
       const promise = this.runTest(testName, callback);
-      promise.then(() => {
-        promises.delete(promise);
-      });
-      promises.add(promise);
 
-      // if there's 5 promises, then wait for one of them to finish
-      if (promises.size > MAX_RUNNING_TESTS) {
-        await Promise.race(Array.from(promises));
-
-        await new Promise(resolve => {
-          setTimeout(resolve, 0);
+      if (this.options.syncTests) {
+        await promise;
+      } else {
+        promise.then(() => {
+          promises.delete(promise);
         });
+        promises.add(promise);
+
+        // if there's 5 promises, then wait for one of them to finish
+        if (promises.size > MAX_RUNNING_TESTS) {
+          await Promise.race(Array.from(promises));
+        }
       }
     }
 
@@ -337,7 +351,7 @@ export default class TestWorkerRunner {
   }
 
   async emitFoundTests() {
-    const promises: Array<Promise<void>> = [];
+    const tests = [];
 
     for (const [testName, {callback, options}] of this.foundTests) {
       let isSkipped = callback === undefined;
@@ -345,30 +359,21 @@ export default class TestWorkerRunner {
         isSkipped = true;
       }
 
-      promises.push(
-        this.bridge.testFound.call({
-          ref: {
-            filename: this.file.real.join(),
-            testName,
-          },
-          isSkipped,
-        }),
-      );
+      tests.push({
+        ref: {
+          filename: this.file.real.join(),
+          testName,
+        },
+        isSkipped,
+      });
     }
 
-    await Promise.all(promises);
+    await this.bridge.testsFound.call(tests);
   }
 
-  async run(): Promise<void> {
+  async wrap(callback: () => Promise<void>): Promise<void> {
     try {
-      // Setup
-      await this.snapshotManager.load();
-      await this.discoverTests();
-      await this.emitFoundTests();
-
-      // Execute
-      this.lockTests();
-      await this.runTests();
+      await callback();
     } catch (err) {
       const diagnostics = getDiagnosticsFromError(err);
       if (diagnostics === undefined) {
@@ -393,5 +398,17 @@ export default class TestWorkerRunner {
         }
       }
     }
+  }
+
+  async prepare(): Promise<void> {
+    return this.wrap(async () => {
+      // Setup
+      await this.snapshotManager.load();
+      await this.discoverTests();
+      await this.emitFoundTests();
+
+      // Execute
+      this.lockTests();
+    });
   }
 }

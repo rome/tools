@@ -35,6 +35,7 @@ export type TestRunnerOptions = {
   updateSnapshots: boolean;
   freezeSnapshots: boolean;
   verboseDiagnostics: boolean;
+  syncTests: boolean;
 };
 
 export type CoverageFolder = {

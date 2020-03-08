@@ -163,7 +163,10 @@ export default class SnapshotManager {
   async save() {
     const {folder, path} = this;
 
-    // TODO `only` will mess this up
+    // If there'a s focused test then we don't write or validate a snapshot
+    if (this.runner.hasFocusedTest) {
+      return;
+    }
 
     // No point producing an empty snapshot file
     if (this.entries.size === 0) {

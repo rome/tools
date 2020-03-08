@@ -284,11 +284,7 @@ export class WebServer {
       },
     );
 
-    const bundler = new Bundler(
-      this.masterRequest,
-      this.masterRequest.reporter,
-      bundlerConfig,
-    );
+    const bundler = new Bundler(this.masterRequest, bundlerConfig);
 
     bundler.graph.watch(async () => {
       // TODO HMR
