@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  diagnostics: Array []
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -20,29 +21,8 @@ Program {
       line: 1
     }
   }
-  diagnostics: Array [
-    Object {
-      advice: undefined
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Unknown start to an member expression computed property'
-      mtime: undefined
-      sourceType: 'script'
-      origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-      start: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-    }
-  ]
   body: Array [
-    ExpressionStatement {
+    VariableDeclarationStatement {
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -56,12 +36,13 @@ Program {
           line: 1
         }
       }
-      expression: MemberExpression {
+      declaration: VariableDeclaration {
+        kind: 'let'
         loc: Object {
           filename: 'input.js'
           end: Object {
-            column: 11
-            index: 11
+            column: 12
+            index: 12
             line: 1
           }
           start: Object {
@@ -70,40 +51,11 @@ Program {
             line: 1
           }
         }
-        object: ReferenceIdentifier {
-          name: 'let'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        property: ComputedMemberProperty {
-          value: AssignmentExpression {
-            operator: '='
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 11
-                index: 11
-                line: 1
-              }
-              start: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-            }
-            left: AssignmentIdentifier {
-              name: 'INVALID_PLACEHOLDER'
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingArrayPattern {
+              elements: Array []
+              rest: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -112,13 +64,26 @@ Program {
                   line: 1
                 }
                 start: Object {
-                  column: 5
-                  index: 5
+                  column: 4
+                  index: 4
                   line: 1
                 }
               }
             }
-            right: ArrayExpression {
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 11
+                index: 11
+                line: 1
+              }
+              start: Object {
+                column: 4
+                index: 4
+                line: 1
+              }
+            }
+            init: ArrayExpression {
               elements: Array []
               loc: Object {
                 filename: 'input.js'
@@ -135,20 +100,7 @@ Program {
               }
             }
           }
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-            start: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-          }
-        }
+        ]
       }
     }
   ]

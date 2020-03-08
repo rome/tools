@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  diagnostics: Array []
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -20,30 +21,8 @@ Program {
       line: 1
     }
   }
-  diagnostics: Array [
-    Object {
-      advice: Array []
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Unexpected token, expected ";"'
-      mtime: undefined
-      sourceType: 'script'
-      origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 10
-        index: 10
-        line: 1
-      }
-      start: Object {
-        column: 9
-        index: 9
-        line: 1
-      }
-    }
-  ]
   body: Array [
-    ForStatement {
-      update: undefined
+    ForInStatement {
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -72,24 +51,8 @@ Program {
           }
         }
       }
-      init: ReferenceIdentifier {
-        name: 'let'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-          start: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-        }
-      }
-      test: BinaryExpression {
-        operator: 'in'
+      right: NumericLiteral {
+        value: 0
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -98,43 +61,62 @@ Program {
             line: 1
           }
           start: Object {
-            column: 9
-            index: 9
+            column: 15
+            index: 15
             line: 1
           }
         }
-        left: ObjectExpression {
-          properties: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-            start: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
+      }
+      left: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 11
+            index: 11
+            line: 1
+          }
+          start: Object {
+            column: 5
+            index: 5
+            line: 1
           }
         }
-        right: NumericLiteral {
-          value: 0
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 16
-              index: 16
-              line: 1
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingObjectPattern {
+              properties: Array []
+              rest: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 11
+                  index: 11
+                  line: 1
+                }
+                start: Object {
+                  column: 9
+                  index: 9
+                  line: 1
+                }
+              }
             }
-            start: Object {
-              column: 15
-              index: 15
-              line: 1
+            init: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 11
+                index: 11
+                line: 1
+              }
+              start: Object {
+                column: 9
+                index: 9
+                line: 1
+              }
             }
           }
-        }
+        ]
       }
     }
   ]

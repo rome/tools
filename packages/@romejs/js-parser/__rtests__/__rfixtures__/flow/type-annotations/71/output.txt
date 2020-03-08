@@ -1,0 +1,176 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: true
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 37
+      index: 37
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 37
+          index: 37
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'var'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 37
+            index: 37
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'foo'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 7
+                  index: 7
+                  line: 1
+                }
+                start: Object {
+                  column: 4
+                  index: 4
+                  line: 1
+                }
+              }
+            }
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 36
+                index: 36
+                line: 1
+              }
+              start: Object {
+                column: 4
+                index: 4
+                line: 1
+              }
+            }
+            init: ArrowFunctionExpression {
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 36
+                  index: 36
+                  line: 1
+                }
+                start: Object {
+                  column: 10
+                  index: 10
+                  line: 1
+                }
+              }
+              body: ReferenceIdentifier {
+                name: 'bar'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 36
+                    index: 36
+                    line: 1
+                  }
+                  start: Object {
+                    column: 33
+                    index: 33
+                    line: 1
+                  }
+                }
+              }
+              head: FunctionHead {
+                async: true
+                hasHoistedVars: false
+                rest: undefined
+                thisType: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 33
+                    index: 33
+                    line: 1
+                  }
+                  start: Object {
+                    column: 10
+                    index: 10
+                    line: 1
+                  }
+                }
+                returnType: NumberKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 29
+                      index: 29
+                      line: 1
+                    }
+                    start: Object {
+                      column: 23
+                      index: 23
+                      line: 1
+                    }
+                  }
+                }
+                params: Array [
+                  BindingIdentifier {
+                    name: 'bar'
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 20
+                        index: 20
+                        line: 1
+                      }
+                      start: Object {
+                        column: 17
+                        index: 17
+                        line: 1
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

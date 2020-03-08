@@ -151,13 +151,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 11
-                      index: 1
+                      column: 13
+                      index: 2
                       line: 1
                     }
                     start: Object {
                       column: 9
-                      index: -1
+                      index: 0
                       line: 1
                     }
                   }
@@ -172,8 +172,24 @@ Program {
                           line: 1
                         }
                         start: Object {
-                          column: 10
+                          column: 9
                           index: 0
+                          line: 1
+                        }
+                      }
+                    }
+                    RegExpCharacter {
+                      value: '2'
+                      loc: Object {
+                        filename: 'input.js'
+                        end: Object {
+                          column: 13
+                          index: 2
+                          line: 1
+                        }
+                        start: Object {
+                          column: 11
+                          index: 1
                           line: 1
                         }
                       }

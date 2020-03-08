@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  diagnostics: Array []
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -20,60 +21,8 @@ Program {
       line: 1
     }
   }
-  diagnostics: Array [
-    Object {
-      advice: undefined
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Expected a semicolon or a line terminator'
-      mtime: undefined
-      sourceType: 'script'
-      origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 3
-        index: 3
-        line: 1
-      }
-      start: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-    }
-  ]
   body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 3
-          index: 3
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'let'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 3
-            index: 3
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-    }
-    ExpressionStatement {
+    VariableDeclarationStatement {
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -82,12 +31,13 @@ Program {
           line: 1
         }
         start: Object {
-          column: 4
-          index: 4
+          column: 0
+          index: 0
           line: 1
         }
       }
-      expression: SequenceExpression {
+      declaration: VariableDeclaration {
+        kind: 'let'
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -96,28 +46,14 @@ Program {
             line: 1
           }
           start: Object {
-            column: 4
-            index: 4
+            column: 0
+            index: 0
             line: 1
           }
         }
-        expressions: Array [
-          AssignmentExpression {
-            operator: '='
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 13
-                index: 13
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            left: AssignmentIdentifier {
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
               name: 'eval'
               loc: Object {
                 filename: 'input.js'
@@ -133,7 +69,20 @@ Program {
                 }
               }
             }
-            right: NumericLiteral {
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 13
+                index: 13
+                line: 1
+              }
+              start: Object {
+                column: 4
+                index: 4
+                line: 1
+              }
+            }
+            init: NumericLiteral {
               value: 42
               loc: Object {
                 filename: 'input.js'
@@ -150,22 +99,8 @@ Program {
               }
             }
           }
-          AssignmentExpression {
-            operator: '='
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 29
-                index: 29
-                line: 1
-              }
-              start: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-            }
-            left: AssignmentIdentifier {
+          VariableDeclarator {
+            id: BindingIdentifier {
               name: 'arguments'
               loc: Object {
                 filename: 'input.js'
@@ -181,7 +116,20 @@ Program {
                 }
               }
             }
-            right: NumericLiteral {
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 29
+                index: 29
+                line: 1
+              }
+              start: Object {
+                column: 15
+                index: 15
+                line: 1
+              }
+            }
+            init: NumericLiteral {
               value: 42
               loc: Object {
                 filename: 'input.js'

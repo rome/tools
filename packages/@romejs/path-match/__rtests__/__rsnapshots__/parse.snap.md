@@ -21,7 +21,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -81,7 +81,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -108,7 +108,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -235,7 +235,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -342,7 +342,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -449,7 +449,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -556,7 +556,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -678,7 +678,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -817,7 +817,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -844,7 +844,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -939,7 +939,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1034,7 +1034,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1129,7 +1129,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1224,7 +1224,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1319,7 +1319,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1414,7 +1414,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1506,7 +1506,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1616,7 +1616,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1711,7 +1711,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1806,7 +1806,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1898,7 +1898,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -2005,7 +2005,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -2064,7 +2064,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -2126,7 +2126,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -2221,7 +2221,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }

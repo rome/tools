@@ -5,6 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import test from '@romejs/test';
+
+test('', () => {});
+
 /*
 
 import generate from '@romejs/js-generator';

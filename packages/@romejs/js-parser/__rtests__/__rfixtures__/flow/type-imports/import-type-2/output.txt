@@ -1,0 +1,173 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 33
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ImportDeclaration {
+      importKind: 'type'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 32
+          index: 32
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      source: StringLiteral {
+        value: 'bar'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 31
+            index: 31
+            line: 1
+          }
+          start: Object {
+            column: 26
+            index: 26
+            line: 1
+          }
+        }
+      }
+      specifiers: Array [
+        ImportDefaultSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 11
+              index: 11
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'type'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 11
+                  index: 11
+                  line: 1
+                }
+                start: Object {
+                  column: 7
+                  index: 7
+                  line: 1
+                }
+              }
+            }
+            importKind: 'type'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 11
+                index: 11
+                line: 1
+              }
+              start: Object {
+                column: 7
+                index: 7
+                line: 1
+              }
+            }
+          }
+        }
+        ImportSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 18
+              index: 18
+              line: 1
+            }
+            start: Object {
+              column: 15
+              index: 15
+              line: 1
+            }
+          }
+          imported: Identifier {
+            name: 'foo'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 18
+                index: 18
+                line: 1
+              }
+              start: Object {
+                column: 15
+                index: 15
+                line: 1
+              }
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'foo'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 18
+                  index: 18
+                  line: 1
+                }
+                start: Object {
+                  column: 15
+                  index: 15
+                  line: 1
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 18
+                index: 18
+                line: 1
+              }
+              start: Object {
+                column: 15
+                index: 15
+                line: 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

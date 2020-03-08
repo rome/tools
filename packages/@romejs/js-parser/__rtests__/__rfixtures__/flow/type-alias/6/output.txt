@@ -1,0 +1,106 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 18
+      index: 18
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    TypeAliasTypeAnnotation {
+      id: BindingIdentifier {
+        name: 'a'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+          start: Object {
+            column: 5
+            index: 5
+            line: 1
+          }
+        }
+      }
+      typeParameters: undefined
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 18
+          index: 18
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      right: FlowNullableTypeAnnotation {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 17
+            index: 17
+            line: 1
+          }
+          start: Object {
+            column: 9
+            index: 9
+            line: 1
+          }
+        }
+        typeAnnotation: FlowNullableTypeAnnotation {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 17
+              index: 17
+              line: 1
+            }
+            start: Object {
+              column: 10
+              index: 10
+              line: 1
+            }
+          }
+          typeAnnotation: StringKeywordTypeAnnotation {
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 17
+                index: 17
+                line: 1
+              }
+              start: Object {
+                column: 11
+                index: 11
+                line: 1
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

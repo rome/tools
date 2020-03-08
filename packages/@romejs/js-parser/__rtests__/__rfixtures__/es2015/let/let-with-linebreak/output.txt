@@ -22,38 +22,7 @@ Program {
     }
   }
   body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 3
-          index: 3
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'let'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 3
-            index: 3
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-    }
-    ExpressionStatement {
+    VariableDeclarationStatement {
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -62,26 +31,60 @@ Program {
           line: 2
         }
         start: Object {
-          column: 4
-          index: 8
-          line: 2
+          column: 0
+          index: 0
+          line: 1
         }
       }
-      expression: ReferenceIdentifier {
-        name: 'a'
+      declaration: VariableDeclaration {
+        kind: 'let'
         loc: Object {
           filename: 'input.js'
           end: Object {
-            column: 5
-            index: 9
+            column: 6
+            index: 10
             line: 2
           }
           start: Object {
-            column: 4
-            index: 8
-            line: 2
+            column: 0
+            index: 0
+            line: 1
           }
         }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'a'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 5
+                  index: 9
+                  line: 2
+                }
+                start: Object {
+                  column: 4
+                  index: 8
+                  line: 2
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 5
+                index: 9
+                line: 2
+              }
+              start: Object {
+                column: 4
+                index: 8
+                line: 2
+              }
+            }
+          }
+        ]
       }
     }
   ]

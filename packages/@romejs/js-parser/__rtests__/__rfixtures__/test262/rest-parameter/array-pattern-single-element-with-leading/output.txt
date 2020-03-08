@@ -1,0 +1,199 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 48
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    FunctionDeclaration {
+      id: BindingIdentifier {
+        name: 'singleElementWithLeading'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 33
+            index: 33
+            line: 1
+          }
+          start: Object {
+            column: 9
+            index: 9
+            line: 1
+          }
+        }
+      }
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 47
+          index: 47
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      body: BlockStatement {
+        body: Array []
+        directives: Array []
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 47
+            index: 47
+            line: 1
+          }
+          start: Object {
+            column: 45
+            index: 45
+            line: 1
+          }
+        }
+      }
+      head: FunctionHead {
+        async: false
+        generator: false
+        hasHoistedVars: false
+        predicate: undefined
+        returnType: undefined
+        thisType: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 45
+            index: 45
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        params: Array [
+          BindingIdentifier {
+            name: 'x'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 35
+                index: 35
+                line: 1
+              }
+              start: Object {
+                column: 34
+                index: 34
+                line: 1
+              }
+            }
+            meta: PatternMeta {
+              optional: undefined
+              typeAnnotation: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 35
+                  index: 35
+                  line: 1
+                }
+                start: Object {
+                  column: 34
+                  index: 34
+                  line: 1
+                }
+              }
+            }
+          }
+        ]
+        rest: BindingArrayPattern {
+          rest: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 43
+              index: 43
+              line: 1
+            }
+            start: Object {
+              column: 40
+              index: 40
+              line: 1
+            }
+          }
+          meta: PatternMeta {
+            optional: undefined
+            typeAnnotation: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 43
+                index: 43
+                line: 1
+              }
+              start: Object {
+                column: 40
+                index: 40
+                line: 1
+              }
+            }
+          }
+          elements: Array [
+            BindingIdentifier {
+              name: 'a'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 42
+                  index: 42
+                  line: 1
+                }
+                start: Object {
+                  column: 41
+                  index: 41
+                  line: 1
+                }
+              }
+              meta: PatternMeta {
+                optional: undefined
+                typeAnnotation: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 42
+                    index: 42
+                    line: 1
+                  }
+                  start: Object {
+                    column: 41
+                    index: 41
+                    line: 1
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

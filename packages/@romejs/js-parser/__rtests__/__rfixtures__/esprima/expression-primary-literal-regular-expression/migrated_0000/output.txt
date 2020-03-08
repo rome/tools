@@ -66,7 +66,7 @@ Program {
             }
             start: Object {
               column: 1
-              index: -1
+              index: 0
               line: 1
             }
           }
@@ -81,7 +81,7 @@ Program {
                   line: 1
                 }
                 start: Object {
-                  column: 2
+                  column: 1
                   index: 0
                   line: 1
                 }

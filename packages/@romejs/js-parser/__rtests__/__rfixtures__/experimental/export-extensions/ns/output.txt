@@ -1,0 +1,91 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 27
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExportExternalDeclaration {
+      exportKind: undefined
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 26
+          index: 26
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      source: StringLiteral {
+        value: 'test'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 25
+            index: 25
+            line: 1
+          }
+          start: Object {
+            column: 19
+            index: 19
+            line: 1
+          }
+        }
+      }
+      specifiers: Array [
+        ExportNamespaceSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 13
+              index: 13
+              line: 1
+            }
+            start: Object {
+              column: 7
+              index: 7
+              line: 1
+            }
+          }
+          exported: Identifier {
+            name: 'A'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 13
+                index: 13
+                line: 1
+              }
+              start: Object {
+                column: 12
+                index: 12
+                line: 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

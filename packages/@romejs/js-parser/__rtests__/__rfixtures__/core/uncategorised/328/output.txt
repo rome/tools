@@ -93,13 +93,13 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 4
-              index: 2
+              column: 7
+              index: 3
               line: 3
             }
             start: Object {
               column: 1
-              index: -1
+              index: 0
               line: 3
             }
           }
@@ -114,7 +114,7 @@ Program {
                   line: 3
                 }
                 start: Object {
-                  column: 2
+                  column: 1
                   index: 0
                   line: 3
                 }
@@ -125,13 +125,29 @@ Program {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 4
+                  column: 5
                   index: 2
                   line: 3
                 }
                 start: Object {
                   column: 3
                   index: 1
+                  line: 3
+                }
+              }
+            }
+            RegExpCharacter {
+              value: 'o'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 7
+                  index: 3
+                  line: 3
+                }
+                start: Object {
+                  column: 5
+                  index: 2
                   line: 3
                 }
               }

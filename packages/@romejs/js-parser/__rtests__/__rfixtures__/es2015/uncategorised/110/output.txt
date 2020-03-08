@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  diagnostics: Array []
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -20,34 +21,14 @@ Program {
       line: 1
     }
   }
-  diagnostics: Array [
-    Object {
-      advice: Array []
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Unexpected token, expected ";"'
-      mtime: undefined
-      sourceType: 'script'
-      origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 10
-        index: 10
-        line: 1
-      }
-      start: Object {
-        column: 9
-        index: 9
-        line: 1
-      }
-    }
-  ]
   body: Array [
-    ForStatement {
+    ForOfStatement {
+      await: false
       loc: Object {
         filename: 'input.js'
         end: Object {
-          column: 18
-          index: 18
+          column: 31
+          index: 31
           line: 1
         }
         start: Object {
@@ -56,55 +37,8 @@ Program {
           line: 1
         }
       }
-      init: ReferenceIdentifier {
-        name: 'let'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-          start: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-        }
-      }
-      test: ReferenceIdentifier {
-        name: 'x'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      update: ReferenceIdentifier {
-        name: 'of'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-          start: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-        }
-      }
-      body: ExpressionStatement {
+      right: ReferenceIdentifier {
+        name: 'list'
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -118,75 +52,63 @@ Program {
             line: 1
           }
         }
-        expression: ReferenceIdentifier {
-          name: 'list'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 18
-              index: 18
-              line: 1
-            }
-            start: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-          }
-        }
       }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 19
-          index: 19
-          line: 1
-        }
-        start: Object {
-          column: 18
-          index: 18
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'INVALID_PLACEHOLDER'
+      left: VariableDeclaration {
+        kind: 'let'
         loc: Object {
           filename: 'input.js'
           end: Object {
-            column: 19
-            index: 19
+            column: 10
+            index: 10
             line: 1
           }
           start: Object {
-            column: 18
-            index: 18
+            column: 5
+            index: 5
             line: 1
           }
         }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'x'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 10
+                  index: 10
+                  line: 1
+                }
+                start: Object {
+                  column: 9
+                  index: 9
+                  line: 1
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 10
+                index: 10
+                line: 1
+              }
+              start: Object {
+                column: 9
+                index: 9
+                line: 1
+              }
+            }
+          }
+        ]
       }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 31
-          index: 31
-          line: 1
-        }
-        start: Object {
-          column: 20
-          index: 20
-          line: 1
-        }
-      }
-      expression: CallExpression {
+      body: ExpressionStatement {
         loc: Object {
           filename: 'input.js'
           end: Object {
-            column: 30
-            index: 30
+            column: 31
+            index: 31
             line: 1
           }
           start: Object {
@@ -195,13 +117,12 @@ Program {
             line: 1
           }
         }
-        callee: ReferenceIdentifier {
-          name: 'process'
+        expression: CallExpression {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 27
-              index: 27
+              column: 30
+              index: 30
               line: 1
             }
             start: Object {
@@ -210,25 +131,41 @@ Program {
               line: 1
             }
           }
-        }
-        arguments: Array [
-          ReferenceIdentifier {
-            name: 'x'
+          callee: ReferenceIdentifier {
+            name: 'process'
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 29
-                index: 29
+                column: 27
+                index: 27
                 line: 1
               }
               start: Object {
-                column: 28
-                index: 28
+                column: 20
+                index: 20
                 line: 1
               }
             }
           }
-        ]
+          arguments: Array [
+            ReferenceIdentifier {
+              name: 'x'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 29
+                  index: 29
+                  line: 1
+                }
+                start: Object {
+                  column: 28
+                  index: 28
+                  line: 1
+                }
+              }
+            }
+          ]
+        }
       }
     }
   ]

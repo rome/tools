@@ -1,0 +1,388 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 65
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    FunctionDeclaration {
+      id: BindingIdentifier {
+        name: 'multiElementWithLeading'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 32
+            index: 32
+            line: 1
+          }
+          start: Object {
+            column: 9
+            index: 9
+            line: 1
+          }
+        }
+      }
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 64
+          index: 64
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      body: BlockStatement {
+        body: Array []
+        directives: Array []
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 64
+            index: 64
+            line: 1
+          }
+          start: Object {
+            column: 62
+            index: 62
+            line: 1
+          }
+        }
+      }
+      head: FunctionHead {
+        async: false
+        generator: false
+        hasHoistedVars: false
+        predicate: undefined
+        returnType: undefined
+        thisType: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 62
+            index: 62
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        params: Array [
+          BindingIdentifier {
+            name: 'x'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 34
+                index: 34
+                line: 1
+              }
+              start: Object {
+                column: 33
+                index: 33
+                line: 1
+              }
+            }
+            meta: PatternMeta {
+              optional: undefined
+              typeAnnotation: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 34
+                  index: 34
+                  line: 1
+                }
+                start: Object {
+                  column: 33
+                  index: 33
+                  line: 1
+                }
+              }
+            }
+          }
+          BindingIdentifier {
+            name: 'y'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 37
+                index: 37
+                line: 1
+              }
+              start: Object {
+                column: 36
+                index: 36
+                line: 1
+              }
+            }
+            meta: PatternMeta {
+              optional: undefined
+              typeAnnotation: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 37
+                  index: 37
+                  line: 1
+                }
+                start: Object {
+                  column: 36
+                  index: 36
+                  line: 1
+                }
+              }
+            }
+          }
+        ]
+        rest: BindingObjectPattern {
+          rest: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 60
+              index: 60
+              line: 1
+            }
+            start: Object {
+              column: 42
+              index: 42
+              line: 1
+            }
+          }
+          meta: PatternMeta {
+            optional: undefined
+            typeAnnotation: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 60
+                index: 60
+                line: 1
+              }
+              start: Object {
+                column: 42
+                index: 42
+                line: 1
+              }
+            }
+          }
+          properties: Array [
+            BindingObjectPatternProperty {
+              key: StaticPropertyKey {
+                value: Identifier {
+                  name: 'a'
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 44
+                      index: 44
+                      line: 1
+                    }
+                    start: Object {
+                      column: 43
+                      index: 43
+                      line: 1
+                    }
+                  }
+                }
+                variance: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 44
+                    index: 44
+                    line: 1
+                  }
+                  start: Object {
+                    column: 43
+                    index: 43
+                    line: 1
+                  }
+                }
+              }
+              value: BindingIdentifier {
+                name: 'r'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 47
+                    index: 47
+                    line: 1
+                  }
+                  start: Object {
+                    column: 46
+                    index: 46
+                    line: 1
+                  }
+                }
+              }
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 47
+                  index: 47
+                  line: 1
+                }
+                start: Object {
+                  column: 43
+                  index: 43
+                  line: 1
+                }
+              }
+            }
+            BindingObjectPatternProperty {
+              key: StaticPropertyKey {
+                value: Identifier {
+                  name: 'b'
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 50
+                      index: 50
+                      line: 1
+                    }
+                    start: Object {
+                      column: 49
+                      index: 49
+                      line: 1
+                    }
+                  }
+                }
+                variance: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 50
+                    index: 50
+                    line: 1
+                  }
+                  start: Object {
+                    column: 49
+                    index: 49
+                    line: 1
+                  }
+                }
+              }
+              value: BindingIdentifier {
+                name: 's'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 53
+                    index: 53
+                    line: 1
+                  }
+                  start: Object {
+                    column: 52
+                    index: 52
+                    line: 1
+                  }
+                }
+              }
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 53
+                  index: 53
+                  line: 1
+                }
+                start: Object {
+                  column: 49
+                  index: 49
+                  line: 1
+                }
+              }
+            }
+            BindingObjectPatternProperty {
+              key: StaticPropertyKey {
+                value: Identifier {
+                  name: 'c'
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 56
+                      index: 56
+                      line: 1
+                    }
+                    start: Object {
+                      column: 55
+                      index: 55
+                      line: 1
+                    }
+                  }
+                }
+                variance: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 56
+                    index: 56
+                    line: 1
+                  }
+                  start: Object {
+                    column: 55
+                    index: 55
+                    line: 1
+                  }
+                }
+              }
+              value: BindingIdentifier {
+                name: 't'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 59
+                    index: 59
+                    line: 1
+                  }
+                  start: Object {
+                    column: 58
+                    index: 58
+                    line: 1
+                  }
+                }
+              }
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 59
+                  index: 59
+                  line: 1
+                }
+                start: Object {
+                  column: 55
+                  index: 55
+                  line: 1
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 27
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    FlowInterfaceDeclaration {
+      id: BindingIdentifier {
+        name: 'T'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 11
+            index: 11
+            line: 1
+          }
+          start: Object {
+            column: 10
+            index: 10
+            line: 1
+          }
+        }
+      }
+      extends: Array []
+      implements: Array []
+      mixins: Array []
+      typeParameters: undefined
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 26
+          index: 26
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      body: FlowObjectTypeAnnotation {
+        exact: false
+        inexact: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 26
+            index: 26
+            line: 1
+          }
+          start: Object {
+            column: 12
+            index: 12
+            line: 1
+          }
+        }
+        properties: Array [
+          FlowObjectTypeInternalSlot {
+            id: Identifier {
+              name: 'foo'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 19
+                  index: 19
+                  line: 1
+                }
+                start: Object {
+                  column: 16
+                  index: 16
+                  line: 1
+                }
+              }
+            }
+            value: FlowGenericTypeAnnotation {
+              id: Identifier {
+                name: 'X'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 24
+                    index: 24
+                    line: 1
+                  }
+                  start: Object {
+                    column: 23
+                    index: 23
+                    line: 1
+                  }
+                }
+              }
+              typeParameters: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 24
+                  index: 24
+                  line: 1
+                }
+                start: Object {
+                  column: 23
+                  index: 23
+                  line: 1
+                }
+              }
+            }
+            optional: false
+            static: false
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 24
+                index: 24
+                line: 1
+              }
+              start: Object {
+                column: 14
+                index: 14
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
