@@ -16,7 +16,7 @@ AbsoluteVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 5
+      column: 11
       index: 5
       line: 1
     }
@@ -41,7 +41,7 @@ AbsoluteVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 16
+      column: 24
       index: 16
       line: 1
     }
@@ -61,7 +61,7 @@ VersionRange {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 9
+      column: 19
       index: 9
       line: 1
     }
@@ -75,7 +75,7 @@ VersionRange {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 3
+        column: 5
         index: 2
         line: 1
       }
@@ -95,12 +95,12 @@ VersionRange {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 9
+        column: 19
         index: 9
         line: 1
       }
       start: Object {
-        column: 5
+        column: 9
         index: 4
         line: 1
       }
@@ -121,7 +121,7 @@ AbsoluteVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 6
+      column: 13
       index: 6
       line: 1
     }
@@ -141,7 +141,7 @@ Wildcard {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 2
+      column: 4
       index: 2
       line: 1
     }
@@ -186,7 +186,7 @@ AbsoluteVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 15
+      column: 22
       index: 15
       line: 1
     }
@@ -211,7 +211,7 @@ WildcardVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 1
+      column: 3
       index: 1
       line: 1
     }
@@ -236,7 +236,7 @@ WildcardVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 3
+      column: 7
       index: 3
       line: 1
     }
@@ -261,7 +261,7 @@ WildcardVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 3
+      column: 7
       index: 3
       line: 1
     }
@@ -286,7 +286,7 @@ WildcardVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 5
+      column: 11
       index: 5
       line: 1
     }
@@ -311,7 +311,7 @@ WildcardVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 5
+      column: 11
       index: 5
       line: 1
     }
@@ -339,7 +339,7 @@ AbsoluteVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 11
+      column: 21
       index: 11
       line: 1
     }
@@ -364,7 +364,7 @@ WildcardVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 3
+      column: 7
       index: 3
       line: 1
     }
@@ -389,7 +389,7 @@ WildcardVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 5
+      column: 11
       index: 5
       line: 1
     }
@@ -414,7 +414,7 @@ WildcardVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 5
+      column: 11
       index: 5
       line: 1
     }
@@ -439,7 +439,7 @@ WildcardVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 3
+      column: 7
       index: 3
       line: 1
     }
@@ -464,7 +464,7 @@ WildcardVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 5
+      column: 11
       index: 5
       line: 1
     }
@@ -489,7 +489,7 @@ WildcardVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 5
+      column: 11
       index: 5
       line: 1
     }
@@ -509,7 +509,7 @@ VersionRange {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 13
+      column: 27
       index: 13
       line: 1
     }
@@ -528,7 +528,7 @@ VersionRange {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 7
+        column: 13
         index: 6
         line: 1
       }
@@ -548,12 +548,12 @@ VersionRange {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 13
+        column: 27
         index: 13
         line: 1
       }
       start: Object {
-        column: 9
+        column: 17
         index: 8
         line: 1
       }
@@ -569,7 +569,7 @@ LogicalOr {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 8
+      column: 16
       index: 8
       line: 1
     }
@@ -588,7 +588,7 @@ LogicalOr {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 5
+        column: 9
         index: 4
         line: 1
       }
@@ -608,12 +608,12 @@ LogicalOr {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 8
+        column: 16
         index: 8
         line: 1
       }
       start: Object {
-        column: 8
+        column: 14
         index: 7
         line: 1
       }
@@ -629,7 +629,7 @@ LogicalOr {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 11
+      column: 21
       index: 11
       line: 1
     }
@@ -648,7 +648,7 @@ LogicalOr {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 3
+        column: 5
         index: 2
         line: 1
       }
@@ -663,12 +663,12 @@ LogicalOr {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 11
+        column: 21
         index: 11
         line: 1
       }
       start: Object {
-        column: 6
+        column: 10
         index: 5
         line: 1
       }
@@ -682,12 +682,12 @@ LogicalOr {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 14
           index: 7
           line: 1
         }
         start: Object {
-          column: 6
+          column: 10
           index: 5
           line: 1
         }
@@ -702,12 +702,12 @@ LogicalOr {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 11
+          column: 21
           index: 11
           line: 1
         }
         start: Object {
-          column: 11
+          column: 19
           index: 10
           line: 1
         }
@@ -725,7 +725,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 7
+      column: 14
       index: 7
       line: 1
     }
@@ -744,12 +744,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 7
+        column: 14
         index: 7
         line: 1
       }
       start: Object {
-        column: 3
+        column: 4
         index: 2
         line: 1
       }
@@ -777,7 +777,7 @@ AbsoluteVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 21
+      column: 39
       index: 21
       line: 1
     }
@@ -797,7 +797,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 15
+      column: 29
       index: 15
       line: 1
     }
@@ -812,7 +812,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 9
+        column: 16
         index: 8
         line: 1
       }
@@ -831,12 +831,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 16
           index: 8
           line: 1
         }
         start: Object {
-          column: 3
+          column: 4
           index: 2
           line: 1
         }
@@ -848,12 +848,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 15
+        column: 29
         index: 15
         line: 1
       }
       start: Object {
-        column: 9
+        column: 16
         index: 8
         line: 1
       }
@@ -867,12 +867,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 15
+          column: 29
           index: 15
           line: 1
         }
         start: Object {
-          column: 11
+          column: 19
           index: 10
           line: 1
         }
@@ -890,7 +890,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 7
+      column: 14
       index: 7
       line: 1
     }
@@ -909,12 +909,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 7
+        column: 14
         index: 7
         line: 1
       }
       start: Object {
-        column: 3
+        column: 4
         index: 2
         line: 1
       }
@@ -930,7 +930,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 15
+      column: 29
       index: 15
       line: 1
     }
@@ -945,7 +945,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 9
+        column: 16
         index: 8
         line: 1
       }
@@ -964,12 +964,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 16
           index: 8
           line: 1
         }
         start: Object {
-          column: 3
+          column: 4
           index: 2
           line: 1
         }
@@ -981,12 +981,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 15
+        column: 29
         index: 15
         line: 1
       }
       start: Object {
-        column: 9
+        column: 16
         index: 8
         line: 1
       }
@@ -1000,12 +1000,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 15
+          column: 29
           index: 15
           line: 1
         }
         start: Object {
-          column: 11
+          column: 19
           index: 10
           line: 1
         }
@@ -1023,7 +1023,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 6
+      column: 13
       index: 6
       line: 1
     }
@@ -1042,12 +1042,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 6
+        column: 13
         index: 6
         line: 1
       }
       start: Object {
-        column: 2
+        column: 3
         index: 1
         line: 1
       }
@@ -1063,7 +1063,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 13
+      column: 27
       index: 13
       line: 1
     }
@@ -1078,7 +1078,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 8
+        column: 15
         index: 7
         line: 1
       }
@@ -1097,12 +1097,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 15
           index: 7
           line: 1
         }
         start: Object {
-          column: 2
+          column: 3
           index: 1
           line: 1
         }
@@ -1114,12 +1114,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 13
+        column: 27
         index: 13
         line: 1
       }
       start: Object {
-        column: 8
+        column: 15
         index: 7
         line: 1
       }
@@ -1133,12 +1133,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 13
+          column: 27
           index: 13
           line: 1
         }
         start: Object {
-          column: 9
+          column: 17
           index: 8
           line: 1
         }
@@ -1156,7 +1156,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 6
+      column: 13
       index: 6
       line: 1
     }
@@ -1175,12 +1175,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 6
+        column: 13
         index: 6
         line: 1
       }
       start: Object {
-        column: 2
+        column: 3
         index: 1
         line: 1
       }
@@ -1196,7 +1196,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 13
+      column: 27
       index: 13
       line: 1
     }
@@ -1211,7 +1211,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 8
+        column: 15
         index: 7
         line: 1
       }
@@ -1230,12 +1230,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 15
           index: 7
           line: 1
         }
         start: Object {
-          column: 2
+          column: 3
           index: 1
           line: 1
         }
@@ -1247,12 +1247,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 13
+        column: 27
         index: 13
         line: 1
       }
       start: Object {
-        column: 8
+        column: 15
         index: 7
         line: 1
       }
@@ -1266,12 +1266,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 13
+          column: 27
           index: 13
           line: 1
         }
         start: Object {
-          column: 9
+          column: 17
           index: 8
           line: 1
         }
@@ -1289,7 +1289,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 6
+      column: 13
       index: 6
       line: 1
     }
@@ -1308,12 +1308,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 6
+        column: 13
         index: 6
         line: 1
       }
       start: Object {
-        column: 2
+        column: 3
         index: 1
         line: 1
       }
@@ -1329,7 +1329,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 13
+      column: 27
       index: 13
       line: 1
     }
@@ -1344,7 +1344,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 8
+        column: 15
         index: 7
         line: 1
       }
@@ -1363,12 +1363,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 15
           index: 7
           line: 1
         }
         start: Object {
-          column: 2
+          column: 3
           index: 1
           line: 1
         }
@@ -1380,12 +1380,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 13
+        column: 27
         index: 13
         line: 1
       }
       start: Object {
-        column: 8
+        column: 15
         index: 7
         line: 1
       }
@@ -1399,12 +1399,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 13
+          column: 27
           index: 13
           line: 1
         }
         start: Object {
-          column: 9
+          column: 17
           index: 8
           line: 1
         }
@@ -1422,7 +1422,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 6
+      column: 13
       index: 6
       line: 1
     }
@@ -1441,12 +1441,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 6
+        column: 13
         index: 6
         line: 1
       }
       start: Object {
-        column: 2
+        column: 3
         index: 1
         line: 1
       }
@@ -1467,7 +1467,7 @@ AbsoluteVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 11
+      column: 19
       index: 11
       line: 1
     }
@@ -1487,7 +1487,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 13
+      column: 27
       index: 13
       line: 1
     }
@@ -1502,7 +1502,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 8
+        column: 15
         index: 7
         line: 1
       }
@@ -1521,12 +1521,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 15
           index: 7
           line: 1
         }
         start: Object {
-          column: 2
+          column: 3
           index: 1
           line: 1
         }
@@ -1538,12 +1538,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 13
+        column: 27
         index: 13
         line: 1
       }
       start: Object {
-        column: 8
+        column: 15
         index: 7
         line: 1
       }
@@ -1557,12 +1557,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 13
+          column: 27
           index: 13
           line: 1
         }
         start: Object {
-          column: 9
+          column: 17
           index: 8
           line: 1
         }
@@ -1580,7 +1580,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 5
+      column: 10
       index: 5
       line: 1
     }
@@ -1599,12 +1599,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 5
+        column: 10
         index: 5
         line: 1
       }
       start: Object {
-        column: 3
+        column: 4
         index: 2
         line: 1
       }
@@ -1620,7 +1620,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 11
+      column: 21
       index: 11
       line: 1
     }
@@ -1635,7 +1635,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 7
+        column: 12
         index: 6
         line: 1
       }
@@ -1654,12 +1654,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 7
+          column: 12
           index: 6
           line: 1
         }
         start: Object {
-          column: 3
+          column: 4
           index: 2
           line: 1
         }
@@ -1671,12 +1671,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 11
+        column: 21
         index: 11
         line: 1
       }
       start: Object {
-        column: 7
+        column: 12
         index: 6
         line: 1
       }
@@ -1690,12 +1690,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 11
+          column: 21
           index: 11
           line: 1
         }
         start: Object {
-          column: 9
+          column: 15
           index: 8
           line: 1
         }
@@ -1713,7 +1713,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 5
+      column: 10
       index: 5
       line: 1
     }
@@ -1732,12 +1732,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 5
+        column: 10
         index: 5
         line: 1
       }
       start: Object {
-        column: 3
+        column: 4
         index: 2
         line: 1
       }
@@ -1753,7 +1753,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 11
+      column: 21
       index: 11
       line: 1
     }
@@ -1768,7 +1768,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 7
+        column: 12
         index: 6
         line: 1
       }
@@ -1787,12 +1787,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 7
+          column: 12
           index: 6
           line: 1
         }
         start: Object {
-          column: 3
+          column: 4
           index: 2
           line: 1
         }
@@ -1804,12 +1804,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 11
+        column: 21
         index: 11
         line: 1
       }
       start: Object {
-        column: 7
+        column: 12
         index: 6
         line: 1
       }
@@ -1823,12 +1823,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 11
+          column: 21
           index: 11
           line: 1
         }
         start: Object {
-          column: 9
+          column: 15
           index: 8
           line: 1
         }
@@ -1846,7 +1846,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 4
+      column: 9
       index: 4
       line: 1
     }
@@ -1865,12 +1865,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 4
+        column: 9
         index: 4
         line: 1
       }
       start: Object {
-        column: 2
+        column: 3
         index: 1
         line: 1
       }
@@ -1886,7 +1886,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 9
+      column: 19
       index: 9
       line: 1
     }
@@ -1901,7 +1901,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 6
+        column: 11
         index: 5
         line: 1
       }
@@ -1920,12 +1920,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 6
+          column: 11
           index: 5
           line: 1
         }
         start: Object {
-          column: 2
+          column: 3
           index: 1
           line: 1
         }
@@ -1937,12 +1937,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 9
+        column: 19
         index: 9
         line: 1
       }
       start: Object {
-        column: 6
+        column: 11
         index: 5
         line: 1
       }
@@ -1956,12 +1956,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 19
           index: 9
           line: 1
         }
         start: Object {
-          column: 7
+          column: 13
           index: 6
           line: 1
         }
@@ -1979,7 +1979,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 4
+      column: 9
       index: 4
       line: 1
     }
@@ -1998,12 +1998,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 4
+        column: 9
         index: 4
         line: 1
       }
       start: Object {
-        column: 2
+        column: 3
         index: 1
         line: 1
       }
@@ -2019,7 +2019,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 9
+      column: 19
       index: 9
       line: 1
     }
@@ -2034,7 +2034,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 6
+        column: 11
         index: 5
         line: 1
       }
@@ -2053,12 +2053,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 6
+          column: 11
           index: 5
           line: 1
         }
         start: Object {
-          column: 2
+          column: 3
           index: 1
           line: 1
         }
@@ -2070,12 +2070,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 9
+        column: 19
         index: 9
         line: 1
       }
       start: Object {
-        column: 6
+        column: 11
         index: 5
         line: 1
       }
@@ -2089,12 +2089,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 19
           index: 9
           line: 1
         }
         start: Object {
-          column: 7
+          column: 13
           index: 6
           line: 1
         }
@@ -2112,7 +2112,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 4
+      column: 9
       index: 4
       line: 1
     }
@@ -2131,12 +2131,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 4
+        column: 9
         index: 4
         line: 1
       }
       start: Object {
-        column: 2
+        column: 3
         index: 1
         line: 1
       }
@@ -2157,7 +2157,7 @@ AbsoluteVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 22
+      column: 32
       index: 22
       line: 1
     }
@@ -2177,7 +2177,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 9
+      column: 19
       index: 9
       line: 1
     }
@@ -2192,7 +2192,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 6
+        column: 11
         index: 5
         line: 1
       }
@@ -2211,12 +2211,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 6
+          column: 11
           index: 5
           line: 1
         }
         start: Object {
-          column: 2
+          column: 3
           index: 1
           line: 1
         }
@@ -2228,12 +2228,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 9
+        column: 19
         index: 9
         line: 1
       }
       start: Object {
-        column: 6
+        column: 11
         index: 5
         line: 1
       }
@@ -2247,12 +2247,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 19
           index: 9
           line: 1
         }
         start: Object {
-          column: 7
+          column: 13
           index: 6
           line: 1
         }
@@ -2270,7 +2270,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 4
+      column: 9
       index: 4
       line: 1
     }
@@ -2289,12 +2289,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 4
+        column: 9
         index: 4
         line: 1
       }
       start: Object {
-        column: 2
+        column: 3
         index: 1
         line: 1
       }
@@ -2310,7 +2310,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 9
+      column: 19
       index: 9
       line: 1
     }
@@ -2325,7 +2325,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 6
+        column: 11
         index: 5
         line: 1
       }
@@ -2344,12 +2344,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 6
+          column: 11
           index: 5
           line: 1
         }
         start: Object {
-          column: 2
+          column: 3
           index: 1
           line: 1
         }
@@ -2361,12 +2361,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 9
+        column: 19
         index: 9
         line: 1
       }
       start: Object {
-        column: 6
+        column: 11
         index: 5
         line: 1
       }
@@ -2380,12 +2380,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 19
           index: 9
           line: 1
         }
         start: Object {
-          column: 7
+          column: 13
           index: 6
           line: 1
         }
@@ -2403,7 +2403,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 3
+      column: 6
       index: 3
       line: 1
     }
@@ -2422,12 +2422,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 3
+        column: 6
         index: 3
         line: 1
       }
       start: Object {
-        column: 3
+        column: 4
         index: 2
         line: 1
       }
@@ -2443,7 +2443,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 7
+      column: 13
       index: 7
       line: 1
     }
@@ -2458,7 +2458,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 5
+        column: 8
         index: 4
         line: 1
       }
@@ -2477,12 +2477,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 5
+          column: 8
           index: 4
           line: 1
         }
         start: Object {
-          column: 3
+          column: 4
           index: 2
           line: 1
         }
@@ -2494,12 +2494,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 7
+        column: 13
         index: 7
         line: 1
       }
       start: Object {
-        column: 5
+        column: 8
         index: 4
         line: 1
       }
@@ -2513,12 +2513,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 7
+          column: 13
           index: 7
           line: 1
         }
         start: Object {
-          column: 7
+          column: 11
           index: 6
           line: 1
         }
@@ -2536,7 +2536,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 3
+      column: 6
       index: 3
       line: 1
     }
@@ -2555,12 +2555,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 3
+        column: 6
         index: 3
         line: 1
       }
       start: Object {
-        column: 3
+        column: 4
         index: 2
         line: 1
       }
@@ -2576,7 +2576,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 7
+      column: 13
       index: 7
       line: 1
     }
@@ -2591,7 +2591,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 5
+        column: 8
         index: 4
         line: 1
       }
@@ -2610,12 +2610,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 5
+          column: 8
           index: 4
           line: 1
         }
         start: Object {
-          column: 3
+          column: 4
           index: 2
           line: 1
         }
@@ -2627,12 +2627,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 7
+        column: 13
         index: 7
         line: 1
       }
       start: Object {
-        column: 5
+        column: 8
         index: 4
         line: 1
       }
@@ -2646,12 +2646,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 7
+          column: 13
           index: 7
           line: 1
         }
         start: Object {
-          column: 7
+          column: 11
           index: 6
           line: 1
         }
@@ -2669,7 +2669,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 2
+      column: 5
       index: 2
       line: 1
     }
@@ -2688,12 +2688,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 2
+        column: 5
         index: 2
         line: 1
       }
       start: Object {
-        column: 2
+        column: 3
         index: 1
         line: 1
       }
@@ -2709,7 +2709,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 5
+      column: 11
       index: 5
       line: 1
     }
@@ -2724,7 +2724,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 4
+        column: 7
         index: 3
         line: 1
       }
@@ -2743,12 +2743,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 4
+          column: 7
           index: 3
           line: 1
         }
         start: Object {
-          column: 2
+          column: 3
           index: 1
           line: 1
         }
@@ -2760,12 +2760,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 5
+        column: 11
         index: 5
         line: 1
       }
       start: Object {
-        column: 4
+        column: 7
         index: 3
         line: 1
       }
@@ -2779,12 +2779,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 5
+          column: 11
           index: 5
           line: 1
         }
         start: Object {
-          column: 5
+          column: 9
           index: 4
           line: 1
         }
@@ -2802,7 +2802,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 2
+      column: 5
       index: 2
       line: 1
     }
@@ -2821,12 +2821,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 2
+        column: 5
         index: 2
         line: 1
       }
       start: Object {
-        column: 2
+        column: 3
         index: 1
         line: 1
       }
@@ -2850,7 +2850,7 @@ AbsoluteVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 17
+      column: 29
       index: 17
       line: 1
     }
@@ -2870,7 +2870,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 5
+      column: 11
       index: 5
       line: 1
     }
@@ -2885,7 +2885,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 4
+        column: 7
         index: 3
         line: 1
       }
@@ -2904,12 +2904,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 4
+          column: 7
           index: 3
           line: 1
         }
         start: Object {
-          column: 2
+          column: 3
           index: 1
           line: 1
         }
@@ -2921,12 +2921,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 5
+        column: 11
         index: 5
         line: 1
       }
       start: Object {
-        column: 4
+        column: 7
         index: 3
         line: 1
       }
@@ -2940,12 +2940,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 5
+          column: 11
           index: 5
           line: 1
         }
         start: Object {
-          column: 5
+          column: 9
           index: 4
           line: 1
         }
@@ -2963,7 +2963,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 2
+      column: 5
       index: 2
       line: 1
     }
@@ -2982,12 +2982,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 2
+        column: 5
         index: 2
         line: 1
       }
       start: Object {
-        column: 2
+        column: 3
         index: 1
         line: 1
       }
@@ -3003,7 +3003,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 5
+      column: 11
       index: 5
       line: 1
     }
@@ -3018,7 +3018,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 4
+        column: 7
         index: 3
         line: 1
       }
@@ -3037,12 +3037,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 4
+          column: 7
           index: 3
           line: 1
         }
         start: Object {
-          column: 2
+          column: 3
           index: 1
           line: 1
         }
@@ -3054,12 +3054,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 5
+        column: 11
         index: 5
         line: 1
       }
       start: Object {
-        column: 4
+        column: 7
         index: 3
         line: 1
       }
@@ -3073,12 +3073,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 5
+          column: 11
           index: 5
           line: 1
         }
         start: Object {
-          column: 5
+          column: 9
           index: 4
           line: 1
         }
@@ -3096,7 +3096,7 @@ Comparator {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 2
+      column: 5
       index: 2
       line: 1
     }
@@ -3115,12 +3115,12 @@ Comparator {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 2
+        column: 5
         index: 2
         line: 1
       }
       start: Object {
-        column: 2
+        column: 3
         index: 1
         line: 1
       }
@@ -3136,7 +3136,7 @@ LogicalAnd {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 5
+      column: 11
       index: 5
       line: 1
     }
@@ -3151,7 +3151,7 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 4
+        column: 7
         index: 3
         line: 1
       }
@@ -3170,12 +3170,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 4
+          column: 7
           index: 3
           line: 1
         }
         start: Object {
-          column: 2
+          column: 3
           index: 1
           line: 1
         }
@@ -3187,12 +3187,12 @@ LogicalAnd {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 5
+        column: 11
         index: 5
         line: 1
       }
       start: Object {
-        column: 4
+        column: 7
         index: 3
         line: 1
       }
@@ -3206,12 +3206,12 @@ LogicalAnd {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 5
+          column: 11
           index: 5
           line: 1
         }
         start: Object {
-          column: 5
+          column: 9
           index: 4
           line: 1
         }
@@ -3240,7 +3240,7 @@ AbsoluteVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 27
+      column: 47
       index: 27
       line: 1
     }
@@ -3278,7 +3278,7 @@ AbsoluteVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 37
+      column: 65
       index: 37
       line: 1
     }
@@ -3306,7 +3306,7 @@ AbsoluteVersion {
   loc: Object {
     filename: undefined
     end: Object {
-      column: 25
+      column: 40
       index: 25
       line: 1
     }

@@ -7,15 +7,14 @@
 ### `0`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: true
   root: false
-  names: Array ['foo']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 4
+      column: 6
       index: 4
       line: 1
     }
@@ -30,7 +29,7 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 4
+          column: 6
           index: 4
           line: 1
         }
@@ -46,7 +45,7 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 4
+              column: 6
               index: 4
               line: 1
             }
@@ -66,9 +65,8 @@ Pattern {
 ### `1`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
-  names: Array []
   negate: false
   root: false
   segments: Array []
@@ -91,18 +89,14 @@ Pattern {
 ### `10`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 9
+      column: 14
       index: 9
       line: 1
     }
@@ -117,12 +111,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 6
+          column: 8
           index: 5
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -133,12 +127,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -150,12 +144,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 10
+          column: 14
           index: 9
           line: 1
         }
         start: Object {
-          column: 5
+          column: 6
           index: 4
           line: 1
         }
@@ -165,12 +159,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 7
+              column: 10
               index: 6
               line: 1
             }
             start: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
@@ -182,12 +176,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 14
           index: 9
           line: 1
         }
         start: Object {
-          column: 7
+          column: 10
           index: 6
           line: 1
         }
@@ -198,12 +192,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
+              column: 14
               index: 9
               line: 1
             }
             start: Object {
-              column: 7
+              column: 10
               index: 6
               line: 1
             }
@@ -218,18 +212,14 @@ Pattern {
 ### `11`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 10
+      column: 15
       index: 10
       line: 1
     }
@@ -244,12 +234,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 7
+          column: 9
           index: 6
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -260,12 +250,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -277,12 +267,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 11
+          column: 15
           index: 10
           line: 1
         }
         start: Object {
-          column: 5
+          column: 6
           index: 4
           line: 1
         }
@@ -292,12 +282,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 10
+          column: 15
           index: 10
           line: 1
         }
         start: Object {
-          column: 8
+          column: 11
           index: 7
           line: 1
         }
@@ -308,12 +298,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 10
+              column: 15
               index: 10
               line: 1
             }
             start: Object {
-              column: 8
+              column: 11
               index: 7
               line: 1
             }
@@ -328,15 +318,14 @@ Pattern {
 ### `12`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['foo']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 8
+      column: 12
       index: 8
       line: 1
     }
@@ -351,12 +340,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 6
+          column: 8
           index: 5
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -367,12 +356,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -384,12 +373,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 12
           index: 8
           line: 1
         }
         start: Object {
-          column: 5
+          column: 6
           index: 4
           line: 1
         }
@@ -399,12 +388,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
+              column: 12
               index: 8
               line: 1
             }
             start: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
@@ -415,12 +404,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 8
+              column: 12
               index: 8
               line: 1
             }
             start: Object {
-              column: 6
+              column: 8
               index: 5
               line: 1
             }
@@ -435,15 +424,14 @@ Pattern {
 ### `13`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['foo']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 8
+      column: 12
       index: 8
       line: 1
     }
@@ -458,12 +446,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 10
           index: 7
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -474,12 +462,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -491,12 +479,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 12
           index: 8
           line: 1
         }
         start: Object {
-          column: 5
+          column: 6
           index: 4
           line: 1
         }
@@ -507,12 +495,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
+              column: 12
               index: 8
               line: 1
             }
             start: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
@@ -522,12 +510,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 8
+              column: 12
               index: 8
               line: 1
             }
             start: Object {
-              column: 8
+              column: 10
               index: 7
               line: 1
             }
@@ -542,15 +530,14 @@ Pattern {
 ### `14`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['foo']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 9
+      column: 14
       index: 9
       line: 1
     }
@@ -565,12 +552,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 6
+          column: 8
           index: 5
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -581,12 +568,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -598,12 +585,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 14
           index: 9
           line: 1
         }
         start: Object {
-          column: 5
+          column: 6
           index: 4
           line: 1
         }
@@ -613,12 +600,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
+              column: 12
               index: 8
               line: 1
             }
             start: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
@@ -629,12 +616,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 10
+              column: 14
               index: 9
               line: 1
             }
             start: Object {
-              column: 6
+              column: 8
               index: 5
               line: 1
             }
@@ -644,12 +631,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
+              column: 14
               index: 9
               line: 1
             }
             start: Object {
-              column: 9
+              column: 12
               index: 8
               line: 1
             }
@@ -664,15 +651,14 @@ Pattern {
 ### `15`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['foo']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 13
+      column: 19
       index: 13
       line: 1
     }
@@ -687,12 +673,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 6
+          column: 8
           index: 5
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -703,12 +689,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -720,12 +706,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 13
+          column: 19
           index: 13
           line: 1
         }
         start: Object {
-          column: 5
+          column: 6
           index: 4
           line: 1
         }
@@ -735,12 +721,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
+              column: 12
               index: 8
               line: 1
             }
             start: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
@@ -751,12 +737,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 10
+              column: 14
               index: 9
               line: 1
             }
             start: Object {
-              column: 6
+              column: 8
               index: 5
               line: 1
             }
@@ -766,12 +752,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 14
+              column: 19
               index: 13
               line: 1
             }
             start: Object {
-              column: 9
+              column: 12
               index: 8
               line: 1
             }
@@ -782,12 +768,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 13
+              column: 19
               index: 13
               line: 1
             }
             start: Object {
-              column: 10
+              column: 14
               index: 9
               line: 1
             }
@@ -802,16 +788,15 @@ Pattern {
 ### `16`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ' foobar'
-  names: Array []
   negate: false
   root: false
   segments: Array []
   loc: Object {
     filename: undefined
     end: Object {
-      column: 9
+      column: 10
       index: 8
       line: 1
     }
@@ -827,18 +812,14 @@ Pattern {
 ### `17`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ' foobar'
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar '
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 17
+      column: 21
       index: 16
       line: 1
     }
@@ -853,12 +834,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 11
           index: 8
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -869,12 +850,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -886,12 +867,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 10
+          column: 13
           index: 9
           line: 1
         }
         start: Object {
-          column: 5
+          column: 6
           index: 4
           line: 1
         }
@@ -902,12 +883,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 10
+              column: 13
               index: 9
               line: 1
             }
             start: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
@@ -922,18 +903,14 @@ Pattern {
 ### `18`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar\\#foobar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 15
+      column: 18
       index: 15
       line: 1
     }
@@ -948,12 +925,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 16
+          column: 18
           index: 15
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -964,12 +941,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -981,12 +958,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 15
+          column: 18
           index: 15
           line: 1
         }
         start: Object {
-          column: 5
+          column: 6
           index: 4
           line: 1
         }
@@ -997,12 +974,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 15
+              column: 18
               index: 15
               line: 1
             }
             start: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
@@ -1017,18 +994,14 @@ Pattern {
 ### `19`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    '\\#foobar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 12
+      column: 15
       index: 12
       line: 1
     }
@@ -1043,12 +1016,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 13
+          column: 15
           index: 12
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -1059,12 +1032,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -1076,12 +1049,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 12
+          column: 15
           index: 12
           line: 1
         }
         start: Object {
-          column: 5
+          column: 6
           index: 4
           line: 1
         }
@@ -1092,12 +1065,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 12
+              column: 15
               index: 12
               line: 1
             }
             start: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
@@ -1112,18 +1085,14 @@ Pattern {
 ### `2`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: true
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 8
+      column: 12
       index: 8
       line: 1
     }
@@ -1138,7 +1107,7 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 12
           index: 8
           line: 1
         }
@@ -1154,7 +1123,7 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 6
+              column: 8
               index: 5
               line: 1
             }
@@ -1171,12 +1140,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 12
           index: 8
           line: 1
         }
         start: Object {
-          column: 6
+          column: 8
           index: 5
           line: 1
         }
@@ -1187,12 +1156,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 8
+              column: 12
               index: 8
               line: 1
             }
             start: Object {
-              column: 6
+              column: 8
               index: 5
               line: 1
             }
@@ -1207,301 +1176,15 @@ Pattern {
 ### `20`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: true
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 10
+      column: 14
       index: 10
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  segments: Array [
-    Segment {
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 11
-          index: 10
-          line: 1
-        }
-        start: Object {
-          column: 3
-          index: 2
-          line: 1
-        }
-      }
-      parts: Array [
-        Word {
-          value: 'foo'
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 8
-              index: 7
-              line: 1
-            }
-            start: Object {
-              column: 3
-              index: 2
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-    Segment {
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-        start: Object {
-          column: 8
-          index: 7
-          line: 1
-        }
-      }
-      parts: Array [
-        Word {
-          value: 'bar'
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-            start: Object {
-              column: 8
-              index: 7
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-  ]
-}
-```
-
-### `21`
-
-```javascript
-Pattern {
-  comment: ''
-  negate: false
-  root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 11
-      index: 11
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  segments: Array [
-    Segment {
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 12
-          index: 11
-          line: 1
-        }
-        start: Object {
-          column: 4
-          index: 3
-          line: 1
-        }
-      }
-      parts: Array [
-        Word {
-          value: 'foo'
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 9
-              index: 8
-              line: 1
-            }
-            start: Object {
-              column: 4
-              index: 3
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-    Segment {
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 11
-          index: 11
-          line: 1
-        }
-        start: Object {
-          column: 9
-          index: 8
-          line: 1
-        }
-      }
-      parts: Array [
-        Word {
-          value: 'bar'
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-            start: Object {
-              column: 9
-              index: 8
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-  ]
-}
-```
-
-### `22`
-
-```javascript
-Pattern {
-  comment: ''
-  negate: false
-  root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 12
-      index: 12
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  segments: Array [
-    Segment {
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 13
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 5
-          index: 4
-          line: 1
-        }
-      }
-      parts: Array [
-        Word {
-          value: 'foo'
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 10
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 5
-              index: 4
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-    Segment {
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 10
-          index: 9
-          line: 1
-        }
-      }
-      parts: Array [
-        Word {
-          value: 'bar'
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 12
-              index: 12
-              line: 1
-            }
-            start: Object {
-              column: 10
-              index: 9
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-  ]
-}
-```
-
-### `23`
-
-```javascript
-Pattern {
-  comment: ''
-  negate: false
-  root: false
-  names: Array ['bar']
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 13
-      index: 13
       line: 1
     }
     start: Object {
@@ -1516,212 +1199,7 @@ Pattern {
         filename: undefined
         end: Object {
           column: 14
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 5
-          index: 4
-          line: 1
-        }
-      }
-      parts: Array [
-        Wildcard {
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 9
-              index: 8
-              line: 1
-            }
-            start: Object {
-              column: 5
-              index: 4
-              line: 1
-            }
-          }
-        }
-        Word {
-          value: 'foo'
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 11
-              index: 10
-              line: 1
-            }
-            start: Object {
-              column: 6
-              index: 5
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-    Segment {
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 11
           index: 10
-          line: 1
-        }
-      }
-      parts: Array [
-        Word {
-          value: 'bar'
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 13
-              index: 13
-              line: 1
-            }
-            start: Object {
-              column: 11
-              index: 10
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-  ]
-}
-```
-
-### `24`
-
-```javascript
-Pattern {
-  comment: ''
-  negate: false
-  root: false
-  names: Array [
-    'hello'
-    'world'
-  ]
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 12
-      index: 12
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  segments: Array [
-    Segment {
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 13
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 0
-          line: 1
-        }
-      }
-      parts: Array [
-        Word {
-          value: 'hello'
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 8
-              index: 7
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 0
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-    Segment {
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 8
-          index: 7
-          line: 1
-        }
-      }
-      parts: Array [
-        Word {
-          value: 'world'
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 12
-              index: 12
-              line: 1
-            }
-            start: Object {
-              column: 8
-              index: 7
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-  ]
-}
-```
-
-### `3`
-
-```javascript
-Pattern {
-  comment: ''
-  negate: false
-  root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 9
-      index: 9
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  segments: Array [
-    Segment {
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 10
-          index: 9
           line: 1
         }
         start: Object {
@@ -1736,8 +1214,8 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 7
-              index: 6
+              column: 10
+              index: 7
               line: 1
             }
             start: Object {
@@ -1753,107 +1231,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-        start: Object {
-          column: 7
-          index: 6
-          line: 1
-        }
-      }
-      parts: Array [
-        Word {
-          value: 'bar'
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 7
-              index: 6
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-  ]
-}
-```
-
-### `4`
-
-```javascript
-Pattern {
-  comment: ''
-  negate: false
-  root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 10
-      index: 10
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  segments: Array [
-    Segment {
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 11
+          column: 14
           index: 10
           line: 1
         }
         start: Object {
-          column: 4
-          index: 3
-          line: 1
-        }
-      }
-      parts: Array [
-        Word {
-          value: 'foo'
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 8
-              index: 7
-              line: 1
-            }
-            start: Object {
-              column: 4
-              index: 3
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-    Segment {
-      loc: Object {
-        filename: undefined
-        end: Object {
           column: 10
-          index: 10
-          line: 1
-        }
-        start: Object {
-          column: 8
           index: 7
           line: 1
         }
@@ -1864,12 +1247,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 10
+              column: 14
               index: 10
               line: 1
             }
             start: Object {
-              column: 8
+              column: 10
               index: 7
               line: 1
             }
@@ -1881,18 +1264,17 @@ Pattern {
 }
 ```
 
-### `5`
+### `21`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['bar']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 11
+      column: 16
       index: 11
       line: 1
     }
@@ -1907,43 +1289,119 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 12
+          column: 16
           index: 11
           line: 1
         }
         start: Object {
-          column: 4
+          column: 5
           index: 3
           line: 1
         }
       }
       parts: Array [
-        Wildcard {
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 8
-              index: 7
-              line: 1
-            }
-            start: Object {
-              column: 4
-              index: 3
-              line: 1
-            }
-          }
-        }
         Word {
           value: 'foo'
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
+              column: 12
               index: 8
               line: 1
             }
             start: Object {
               column: 5
+              index: 3
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+    Segment {
+      loc: Object {
+        filename: undefined
+        end: Object {
+          column: 16
+          index: 11
+          line: 1
+        }
+        start: Object {
+          column: 12
+          index: 8
+          line: 1
+        }
+      }
+      parts: Array [
+        Word {
+          value: 'bar'
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 16
+              index: 11
+              line: 1
+            }
+            start: Object {
+              column: 12
+              index: 8
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### `22`
+
+```javascript
+PathPattern {
+  comment: ''
+  negate: false
+  root: false
+  loc: Object {
+    filename: undefined
+    end: Object {
+      column: 17
+      index: 12
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  segments: Array [
+    Segment {
+      loc: Object {
+        filename: undefined
+        end: Object {
+          column: 17
+          index: 12
+          line: 1
+        }
+        start: Object {
+          column: 6
+          index: 4
+          line: 1
+        }
+      }
+      parts: Array [
+        Word {
+          value: 'foo'
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 13
+              index: 9
+              line: 1
+            }
+            start: Object {
+              column: 6
               index: 4
               line: 1
             }
@@ -1955,12 +1413,497 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 11
-          index: 11
+          column: 17
+          index: 12
+          line: 1
+        }
+        start: Object {
+          column: 13
+          index: 9
+          line: 1
+        }
+      }
+      parts: Array [
+        Word {
+          value: 'bar'
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 17
+              index: 12
+              line: 1
+            }
+            start: Object {
+              column: 13
+              index: 9
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### `23`
+
+```javascript
+PathPattern {
+  comment: ''
+  negate: false
+  root: false
+  loc: Object {
+    filename: undefined
+    end: Object {
+      column: 19
+      index: 13
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  segments: Array [
+    Segment {
+      loc: Object {
+        filename: undefined
+        end: Object {
+          column: 19
+          index: 13
+          line: 1
+        }
+        start: Object {
+          column: 6
+          index: 4
+          line: 1
+        }
+      }
+      parts: Array [
+        Wildcard {
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 12
+              index: 8
+              line: 1
+            }
+            start: Object {
+              column: 6
+              index: 4
+              line: 1
+            }
+          }
+        }
+        Word {
+          value: 'foo'
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 15
+              index: 10
+              line: 1
+            }
+            start: Object {
+              column: 8
+              index: 5
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+    Segment {
+      loc: Object {
+        filename: undefined
+        end: Object {
+          column: 19
+          index: 13
+          line: 1
+        }
+        start: Object {
+          column: 15
+          index: 10
+          line: 1
+        }
+      }
+      parts: Array [
+        Word {
+          value: 'bar'
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 19
+              index: 13
+              line: 1
+            }
+            start: Object {
+              column: 15
+              index: 10
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### `24`
+
+```javascript
+PathPattern {
+  comment: ''
+  negate: false
+  root: false
+  loc: Object {
+    filename: undefined
+    end: Object {
+      column: 15
+      index: 12
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  segments: Array [
+    Segment {
+      loc: Object {
+        filename: undefined
+        end: Object {
+          column: 15
+          index: 12
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      parts: Array [
+        Word {
+          value: 'hello'
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 9
+              index: 7
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+    Segment {
+      loc: Object {
+        filename: undefined
+        end: Object {
+          column: 15
+          index: 12
           line: 1
         }
         start: Object {
           column: 9
+          index: 7
+          line: 1
+        }
+      }
+      parts: Array [
+        Word {
+          value: 'world'
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 15
+              index: 12
+              line: 1
+            }
+            start: Object {
+              column: 9
+              index: 7
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### `3`
+
+```javascript
+PathPattern {
+  comment: ''
+  negate: false
+  root: false
+  loc: Object {
+    filename: undefined
+    end: Object {
+      column: 14
+      index: 9
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  segments: Array [
+    Segment {
+      loc: Object {
+        filename: undefined
+        end: Object {
+          column: 14
+          index: 9
+          line: 1
+        }
+        start: Object {
+          column: 4
+          index: 2
+          line: 1
+        }
+      }
+      parts: Array [
+        Word {
+          value: 'foo'
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 10
+              index: 6
+              line: 1
+            }
+            start: Object {
+              column: 4
+              index: 2
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+    Segment {
+      loc: Object {
+        filename: undefined
+        end: Object {
+          column: 14
+          index: 9
+          line: 1
+        }
+        start: Object {
+          column: 10
+          index: 6
+          line: 1
+        }
+      }
+      parts: Array [
+        Word {
+          value: 'bar'
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 14
+              index: 9
+              line: 1
+            }
+            start: Object {
+              column: 10
+              index: 6
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### `4`
+
+```javascript
+PathPattern {
+  comment: ''
+  negate: false
+  root: false
+  loc: Object {
+    filename: undefined
+    end: Object {
+      column: 15
+      index: 10
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  segments: Array [
+    Segment {
+      loc: Object {
+        filename: undefined
+        end: Object {
+          column: 15
+          index: 10
+          line: 1
+        }
+        start: Object {
+          column: 5
+          index: 3
+          line: 1
+        }
+      }
+      parts: Array [
+        Word {
+          value: 'foo'
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 11
+              index: 7
+              line: 1
+            }
+            start: Object {
+              column: 5
+              index: 3
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+    Segment {
+      loc: Object {
+        filename: undefined
+        end: Object {
+          column: 15
+          index: 10
+          line: 1
+        }
+        start: Object {
+          column: 11
+          index: 7
+          line: 1
+        }
+      }
+      parts: Array [
+        Word {
+          value: 'bar'
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 15
+              index: 10
+              line: 1
+            }
+            start: Object {
+              column: 11
+              index: 7
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### `5`
+
+```javascript
+PathPattern {
+  comment: ''
+  negate: false
+  root: false
+  loc: Object {
+    filename: undefined
+    end: Object {
+      column: 17
+      index: 11
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  segments: Array [
+    Segment {
+      loc: Object {
+        filename: undefined
+        end: Object {
+          column: 17
+          index: 11
+          line: 1
+        }
+        start: Object {
+          column: 5
+          index: 3
+          line: 1
+        }
+      }
+      parts: Array [
+        Wildcard {
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 11
+              index: 7
+              line: 1
+            }
+            start: Object {
+              column: 5
+              index: 3
+              line: 1
+            }
+          }
+        }
+        Word {
+          value: 'foo'
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 13
+              index: 8
+              line: 1
+            }
+            start: Object {
+              column: 7
+              index: 4
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+    Segment {
+      loc: Object {
+        filename: undefined
+        end: Object {
+          column: 17
+          index: 11
+          line: 1
+        }
+        start: Object {
+          column: 13
           index: 8
           line: 1
         }
@@ -1971,12 +1914,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 11
+              column: 17
               index: 11
               line: 1
             }
             start: Object {
-              column: 9
+              column: 13
               index: 8
               line: 1
             }
@@ -1991,15 +1934,14 @@ Pattern {
 ### `6`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['foo']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 3
+      column: 4
       index: 3
       line: 1
     }
@@ -2014,12 +1956,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 3
+          column: 4
           index: 3
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -2030,12 +1972,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 3
+              column: 4
               index: 3
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -2050,15 +1992,14 @@ Pattern {
 ### `7`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['foo']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 4
+      column: 6
       index: 4
       line: 1
     }
@@ -2073,12 +2014,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 4
+          column: 6
           index: 4
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -2089,12 +2030,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -2109,18 +2050,14 @@ Pattern {
 ### `8`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 7
+      column: 10
       index: 7
       line: 1
     }
@@ -2135,12 +2072,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 10
           index: 7
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -2151,12 +2088,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -2168,12 +2105,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 7
+          column: 10
           index: 7
           line: 1
         }
         start: Object {
-          column: 5
+          column: 6
           index: 4
           line: 1
         }
@@ -2184,12 +2121,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 7
+              column: 10
               index: 7
               line: 1
             }
             start: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
@@ -2204,18 +2141,14 @@ Pattern {
 ### `9`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 8
+      column: 12
       index: 8
       line: 1
     }
@@ -2230,12 +2163,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 12
           index: 8
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -2246,12 +2179,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
+              column: 6
               index: 4
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -2263,12 +2196,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 12
           index: 8
           line: 1
         }
         start: Object {
-          column: 6
+          column: 8
           index: 5
           line: 1
         }
@@ -2279,12 +2212,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 8
+              column: 12
               index: 8
               line: 1
             }
             start: Object {
-              column: 6
+              column: 8
               index: 5
               line: 1
             }

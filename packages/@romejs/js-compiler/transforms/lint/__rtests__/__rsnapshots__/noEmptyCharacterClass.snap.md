@@ -20,13 +20,13 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 18
-        index: 18
+        column: 23
+        index: 6
         line: 1
       }
       start: Object {
-        column: 10
-        index: 10
+        column: 19
+        index: 4
         line: 1
       }
     }
@@ -50,13 +50,13 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 20
-        index: 20
+        column: 23
+        index: 6
         line: 1
       }
       start: Object {
-        column: 10
-        index: 10
+        column: 17
+        index: 3
         line: 1
       }
     }
@@ -80,13 +80,13 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 35
-        index: 35
+        column: 40
+        index: 6
         line: 1
       }
       start: Object {
-        column: 27
-        index: 27
+        column: 36
+        index: 4
         line: 1
       }
     }
@@ -110,13 +110,13 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 15
-        index: 15
+        column: 17
+        index: 3
         line: 1
       }
       start: Object {
-        column: 10
-        index: 10
+        column: 11
+        index: 0
         line: 1
       }
     }
@@ -140,13 +140,13 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 16
-        index: 16
+        column: 18
+        index: 4
         line: 1
       }
       start: Object {
-        column: 10
-        index: 10
+        column: 14
+        index: 2
         line: 1
       }
     }
@@ -170,13 +170,13 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 23
-        index: 23
+        column: 30
+        index: 11
         line: 1
       }
       start: Object {
-        column: 10
-        index: 10
+        column: 26
+        index: 9
         line: 1
       }
     }

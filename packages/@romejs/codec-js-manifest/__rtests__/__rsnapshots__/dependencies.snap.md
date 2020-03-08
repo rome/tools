@@ -36,7 +36,7 @@ npm {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 5
+        column: 11
         index: 5
         line: 1
       }
@@ -64,7 +64,7 @@ npm {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 5
+        column: 11
         index: 5
         line: 1
       }
