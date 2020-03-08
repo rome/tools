@@ -32,6 +32,8 @@ import {
   inc,
   coerce0,
   get0,
+  add,
+  sub,
 } from '@romejs/ob1';
 import {escapeMarkup} from '@romejs/string-markup';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
@@ -127,6 +129,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
       offsetPosition === undefined ? number1 : offsetPosition.line;
     this.currColumn =
       offsetPosition === undefined ? number0 : offsetPosition.column;
+    this.offsetIndex =
+      offsetPosition === undefined ? number0 : offsetPosition.index;
     this.startLine = this.currLine;
     this.startColumn = this.currColumn;
     this.nextTokenIndex = number0;
@@ -135,20 +139,25 @@ export class ParserCore<Tokens extends TokensShape, State> {
     this.state = initialState;
     this.ignoreWhitespaceTokens = false;
 
-    this.latestPosition = undefined;
+    this.latestPosition = {
+      index: number0, // TODO this.offsetIndex
+      line: this.currLine,
+      column: this.currColumn,
+    };
     this.cachedPositions = new Map();
   }
 
   offsetPosition: undefined | Position;
   startLine: Number1;
   startColumn: Number0;
+  offsetIndex: Number0;
   parserName: string;
   tokenizing: boolean;
   nextTokenIndex: Number0;
   state: State;
   prevToken: TokenValues<Tokens>;
   currentToken: TokenValues<Tokens>;
-  latestPosition: undefined | Position;
+  latestPosition: Position;
   eofToken: EOFToken;
   ignoreWhitespaceTokens: boolean;
   cachedPositions: Map<Number0, Position>;
@@ -314,7 +323,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     }
 
     const pos: Position = {
-      index,
+      index: this.addOffset(index),
       line: this.currLine,
       column: this.currColumn,
     };
@@ -369,6 +378,14 @@ export class ParserCore<Tokens extends TokensShape, State> {
     return nextToken;
   }
 
+  addOffset(index: Number0): Number0 {
+    return add(index, this.offsetIndex);
+  }
+
+  removeOffset(index: Number0): Number0 {
+    return sub(index, this.offsetIndex);
+  }
+
   getPositionFromIndex(index: Number0): Position {
     const cached = this.cachedPositions.get(index);
     if (cached !== undefined) {
@@ -377,27 +394,28 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
     let line: Number1 = number1;
     let column: Number0 = number0;
-    let indexOffset: number = 0;
+    let indexSearchOffset: number = 0;
+
+    const indexWithOffset = this.addOffset(index);
 
     // Reuse existing line information if possible
     const {latestPosition} = this;
     const currPosition = this.getPosition();
     if (
-      (latestPosition === undefined ||
-        currPosition.index > latestPosition.index) &&
-      currPosition.index < index
+      currPosition.index > latestPosition.index &&
+      currPosition.index < indexWithOffset
     ) {
       line = currPosition.line;
       column = currPosition.column;
-      indexOffset = get0(currPosition.index);
-    } else if (latestPosition !== undefined && latestPosition.index < index) {
+      indexSearchOffset = get0(this.removeOffset(currPosition.index));
+    } else if (latestPosition.index < indexWithOffset) {
       line = latestPosition.line;
       column = latestPosition.column;
-      indexOffset = get0(latestPosition.index);
+      indexSearchOffset = get0(this.removeOffset(latestPosition.index));
     }
 
     // Read the rest of the input until we hit the index
-    for (let i = indexOffset; i <= get0(index); i++) {
+    for (let i = indexSearchOffset; i < get0(index); i++) {
       const char = this.input[i];
 
       if (char === '\n') {
@@ -409,7 +427,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     }
 
     const pos: Position = {
-      index,
+      index: indexWithOffset,
       line,
       column,
     };
@@ -636,7 +654,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   finishLoc(start: Position): SourceLocation {
-    return this.finishLocAt(start, this.getEndPosition());
+    return this.finishLocAt(start, this.getPosition());
   }
 
   finishLocAt(start: Position, end: Position): SourceLocation {
