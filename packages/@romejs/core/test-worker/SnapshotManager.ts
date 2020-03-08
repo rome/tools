@@ -38,7 +38,7 @@ export default class SnapshotManager {
     const folder = testPath.getParent().append(SNAPSHOTS_DIR);
     this.folder = folder;
 
-    this.path = folder.append(testPath.getExtensionlessBasename() + '.snap.md');
+    this.path = folder.append(`${testPath.getExtensionlessBasename()}.snap.md`);
     this.testPath = testPath;
 
     this.runner = runner;

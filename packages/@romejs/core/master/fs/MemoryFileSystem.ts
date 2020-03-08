@@ -765,7 +765,7 @@ export default class MemoryFileSystem {
     const basename = path.getBasename();
 
     if (handler.hasteMode === 'ext') {
-      ext = '.' + ext; // we also want to remove the dot suffix from the haste name
+      ext = `.${ext}`; // we also want to remove the dot suffix from the haste name
 
       if (!filename.endsWith(ext)) {
         throw new Error(

@@ -94,7 +94,7 @@ export function toRelativeUrl(root: string, path: string): string {
   // need to remove components from the root one by one, until either we find
   // a prefix that fits, or we run out of components to remove.
   let level = 0;
-  while (path.indexOf(root + '/') !== 0) {
+  while (path.indexOf(`${root}/`) !== 0) {
     const index = root.lastIndexOf('/');
     if (index < 0) {
       return path;

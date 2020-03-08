@@ -473,7 +473,7 @@ const createJSParser = createParser(
       // Asserts that following token is given contextual keyword.
       expectContextual(
         name: string,
-        message: string = 'Expected keyword ' + name,
+        message: string = `Expected keyword ${name}`,
       ): boolean {
         if (this.eatContextual(name)) {
           return true;

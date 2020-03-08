@@ -11,16 +11,12 @@
 
 const version = '10.0.0';
 
-const start = require('unicode-' +
-  version +
-  '/Binary_Property/ID_Start/code-points.js').filter(function(ch) {
+const start = require(`unicode-${version}/Binary_Property/ID_Start/code-points.js`).filter(function(ch) {
   return ch > 0x7f;
 });
 let last = -1;
 const cont = [0x200c, 0x200d].concat(
-  require('unicode-' +
-    version +
-    '/Binary_Property/ID_Continue/code-points.js').filter(function(ch) {
+  require(`unicode-${version}/Binary_Property/ID_Continue/code-points.js`).filter(function(ch) {
     return ch > 0x7f && search(start, ch, last + 1) == -1;
   }),
 );
@@ -33,14 +29,14 @@ function search(arr, ch, starting) {
 }
 
 function pad(str, width) {
-  while (str.length < width) str = '0' + str;
+  while (str.length < width) str = `0${str}`;
   return str;
 }
 
 function esc(code) {
   const hex = code.toString(16);
-  if (hex.length <= 2) return '\\x' + pad(hex, 2);
-  else return '\\u' + pad(hex, 4);
+  if (hex.length <= 2) return `\\x${pad(hex, 2)}`;
+  else return `\\u${pad(hex, 4)}`;
 }
 
 function generate(chars) {
@@ -56,7 +52,7 @@ function generate(chars) {
     if (to <= 0xffff) {
       if (from == to) re += esc(from);
       else if (from + 1 == to) re += esc(from) + esc(to);
-      else re += esc(from) + '-' + esc(to);
+      else re += `${esc(from)}-esc(to)`;
     } else {
       astral.push(from - at, to - from);
       at = to;
@@ -68,13 +64,11 @@ function generate(chars) {
 const startData = generate(start);
 const contData = generate(cont);
 
-console.log('let nonASCIIidentifierStartChars = "' + startData.nonASCII + '";');
-console.log('let nonASCIIidentifierChars = "' + contData.nonASCII + '";');
+console.log(`let nonASCIIidentifierStartChars = "${startData.nonASCII}";`);
+console.log(`let nonASCIIidentifierChars = "${contData.nonASCII}";`);
 console.log(
-  'const astralIdentifierStartCodes = ' +
-    JSON.stringify(startData.astral) +
-    ';',
+  `const astralIdentifierStartCodes = ${JSON.stringify(startData.astral)};`,
 );
 console.log(
-  'const astralIdentifierCodes = ' + JSON.stringify(contData.astral) + ';',
+  `const astralIdentifierCodes = ${JSON.stringify(contData.astral)};`,
 );

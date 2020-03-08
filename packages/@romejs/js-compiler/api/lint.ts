@@ -58,7 +58,7 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
       },
       sourceText,
     );
-    formattedCode = generator.getCode() + '\n';
+    formattedCode = `${generator.getCode()}\n`;
   }
 
   // Run lints (could be with the autofixed AST)

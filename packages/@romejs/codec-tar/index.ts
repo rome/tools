@@ -58,9 +58,9 @@ const FMODE = 0o644;
 function encodeOct(num: number, n: number): string {
   const oct = num.toString(8);
   if (oct.length > n) {
-    return SEVENS.slice(0, n) + ' ';
+    return `${SEVENS.slice(0, n)} `;
   } else {
-    return ZEROS.slice(0, n - oct.length) + oct + ' ';
+    return `${ZEROS.slice(0, n - oct.length)}${oct} `;
   }
 }
 
@@ -119,7 +119,7 @@ function encodeHeader(header: Header): Buffer {
       );
     }
 
-    prefix += prefix ? '/' + name.slice(0, i) : name.slice(0, i);
+    prefix += prefix ? `/${name.slice(0, i)}` : name.slice(0, i);
     name = name.slice(i + 1);
   }
 

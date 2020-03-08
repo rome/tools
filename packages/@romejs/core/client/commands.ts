@@ -78,7 +78,7 @@ localCommands.set('init', {
     }
 
     const configPath = req.client.flags.cwd.append('rome.json');
-    await writeFile(configPath, JSON.stringify(config, null, '  ') + '\n');
+    await writeFile(configPath, `${JSON.stringify(config, null, '  ')}\n`);
 
     reporter.success(
       `Created config <filelink emphasis target="${configPath.join()}" />`,
