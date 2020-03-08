@@ -79,12 +79,13 @@ function escapeChar(
   return undefined;
 }
 
-type QuoteChar = '"' | "'" | '`';
+type QuoteChar = '' | '"' | "'" | '`';
 
 type EscapeStringOptions = {
   quote?: QuoteChar;
   json?: boolean;
   ignoreWhitespaceEscapes?: boolean;
+  unicodeOnly?: boolean;
 };
 
 export default function escapeString(
@@ -94,17 +95,19 @@ export default function escapeString(
   let index = -1;
   let result = '';
 
-  const quote: QuoteChar = opts.quote === undefined ? DOUBLE_QUOTE : opts.quote;
-  const isJSON: boolean = opts.json === undefined ? false : opts.json;
-  const ignoreEscapes: boolean =
-    opts.ignoreWhitespaceEscapes === undefined ? false : true;
+  const {
+    ignoreWhitespaceEscapes = false,
+    quote = '',
+    json = false,
+    unicodeOnly = false,
+  } = opts;
 
   // Loop over each code unit in the string and escape it
   while (++index < str.length) {
     const char = str[index];
 
     // Handle surrogate pairs in non-JSON mode
-    if (isJSON === false) {
+    if (!json) {
       const charCode = str.charCodeAt(index);
       const isHighSurrogate = charCode >= 0xd800 && charCode <= 0xdbff;
       const hasNextCodePoint = str.length > index + 1;
@@ -152,21 +155,23 @@ export default function escapeString(
     }
 
     // Null escape
-    if (char == '\0' && !isJSON && !isDigit(str[index + 1])) {
+    if (char == '\0' && !json && !isDigit(str[index + 1])) {
       result += '\\0';
       continue;
     }
 
     // Simple escapes
-    const replacement = escapeChar(char, ignoreEscapes);
-    if (replacement !== undefined) {
-      result += replacement;
-      continue;
+    if (!unicodeOnly) {
+      const replacement = escapeChar(char, ignoreWhitespaceEscapes);
+      if (replacement !== undefined) {
+        result += replacement;
+        continue;
+      }
     }
 
     // Unicode escape
     const hex = char.charCodeAt(0).toString(16);
-    const isLonghand = isJSON || hex.length > 2;
+    const isLonghand = json || hex.length > 2;
     const modifier = isLonghand ? 'u' : 'x';
     const code = ('0000' + hex).slice(isLonghand ? -4 : -2);
     const escaped = '\\' + modifier + code;

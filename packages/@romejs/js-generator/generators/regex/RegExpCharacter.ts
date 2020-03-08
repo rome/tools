@@ -7,6 +7,7 @@
 
 import Generator from '../../Generator';
 import {AnyNode, RegExpCharacter, regExpCharacter} from '@romejs/js-ast';
+import {escapeString} from '@romejs/string-escape';
 
 export default function RegExpCharacter(
   generator: Generator,
@@ -32,6 +33,10 @@ export default function RegExpCharacter(
       case ')':
       case '|':
         generator.append(node.value);
+        return;
+
+      case '-':
+        generator.append('\\-');
         return;
     }
   }
@@ -80,7 +85,11 @@ export default function RegExpCharacter(
       break;
 
     default:
-      // TODO octals, null, hex
-      generator.append(node.value);
+      generator.append(
+        escapeString(node.value, {
+          json: true,
+          unicodeOnly: true,
+        }),
+      );
   }
 }
