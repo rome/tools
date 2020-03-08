@@ -205,7 +205,7 @@ test('satisfies pass', function(t) {
   for (const [range, ver, loose] of testData.pass) {
     t.true(
       satisfiesSemver(ver, range, {loose: loose === true}),
-      range + ' should be satisfied by ' + ver,
+      `${range} should be satisfied by ${ver}`,
     );
   }
 });
@@ -213,6 +213,6 @@ test('satisfies pass', function(t) {
 test('satisfies fail', function(t) {
   for (const [range, ver, loose] of testData.fail) {
     const found = satisfiesSemver(ver, range, {loose: loose === true});
-    t.false(found, ver + ' should not be satisfied by ' + range);
+    t.false(found, `${ver} should not be satisfied by ${range}`);
   }
 });

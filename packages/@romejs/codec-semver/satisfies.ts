@@ -101,7 +101,7 @@ function compareOp(
     }
 
     default:
-      throw new Error('Unknown operator ' + op);
+      throw new Error(`Unknown operator ${op}`);
   }
 }
 

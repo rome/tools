@@ -253,7 +253,7 @@ export default class Evaluator {
 
     const evaluator = evaluators.get(node.type);
     if (evaluator === undefined) {
-      throw new Error('what is this? ' + node.type);
+      throw new Error(`what is this? ${node.type}`);
     } else {
       const oldEvaluatingType = this.evaluatingType;
       this.evaluatingType = node.type;

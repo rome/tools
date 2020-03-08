@@ -25,7 +25,7 @@ export const ROME_CONFIG_WARN_FILENAMES: Array<string> = [
 // Add dot versions
 for (const basename of ROME_CONFIG_WARN_FILENAMES) {
   if (basename[0] !== '.') {
-    ROME_CONFIG_WARN_FILENAMES.push('.' + basename);
+    ROME_CONFIG_WARN_FILENAMES.push(`.${basename}`);
   }
 }
 for (const filename of ROME_CONFIG_FILENAMES.slice()) {

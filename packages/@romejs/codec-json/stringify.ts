@@ -251,7 +251,7 @@ function stringifyPlainObject(
       // Otherwise we just have a bunch of comments
       // Indent them correctly and just output it as a normal object
       buff = buff.map(str => {
-        return '  ' + str;
+        return `  ${str}`;
       });
     }
   }

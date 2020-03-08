@@ -85,7 +85,7 @@ test('parse', t => {
   ];
   for (const op of operatorTests) {
     rangeTests.push(op);
-    rangeTests.push(op + ' ' + op);
+    rangeTests.push(`${op} ${op}`);
   }
 
   // run range tests

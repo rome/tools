@@ -188,7 +188,7 @@ export default function buildMessageCodeFrame(
     if (!noMarkerLine) {
       result.push(`${pointerIndent}${pointer} ${markerMessage}`);
     }
-    return CODE_FRAME_INDENT + result.join('\n' + CODE_FRAME_INDENT);
+    return CODE_FRAME_INDENT + result.join(`\n${CODE_FRAME_INDENT}`);
   }
 
   // Build marker

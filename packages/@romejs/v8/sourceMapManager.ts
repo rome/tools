@@ -110,7 +110,7 @@ function buildStackString(err: Error): string {
       parts.push('generated source location');
     }
 
-    lines.push('  at ' + parts.join(' '));
+    lines.push(`  at ${parts.join(' ')}`);
   }
 
   return lines.join('\n');

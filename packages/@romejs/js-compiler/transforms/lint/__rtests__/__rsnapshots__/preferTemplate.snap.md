@@ -30,44 +30,6 @@ Object {
         line: 1
       }
     }
-    Object {
-      category: 'lint/undeclaredVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Undeclared variable <emphasis>foo</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
-      origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 34
-        index: 34
-        line: 1
-      }
-      start: Object {
-        column: 31
-        index: 31
-        line: 1
-      }
-    }
-    Object {
-      category: 'lint/unusedVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Unused variable <emphasis>foo</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
-      origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 9
-        index: 9
-        line: 1
-      }
-      start: Object {
-        column: 6
-        index: 6
-        line: 1
-      }
-    }
   ]
 }
 ```

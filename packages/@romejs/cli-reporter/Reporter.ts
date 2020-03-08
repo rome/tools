@@ -1077,7 +1077,7 @@ export default class Reporter {
           inner = String(lines.shift());
 
           for (const line of lines) {
-            inner += '\n' + ' '.repeat(prefix.length) + line;
+            inner += `\n${' '.repeat(prefix.length)}${line}`;
           }
         }
       }
@@ -1213,7 +1213,7 @@ export default class Reporter {
 
       for (const [index, item] of tuples) {
         callback(item, str => {
-          const num: string = rightPad(humanizeNumber(index + 1) + '.', numLen);
+          const num: string = rightPad(`${humanizeNumber(index + 1)}.`, numLen);
           this.logAll(`${indent}<dim>${num}</dim> ${str}`);
         });
       }

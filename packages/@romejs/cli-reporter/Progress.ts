@@ -492,7 +492,7 @@ export default class Progress {
     prefix = prefix.slice(0, width - spacerLength - suffix.length);
 
     // The full raw bar without any coloring
-    const raw = ' ' + prefix + spacer + ' ' + suffix;
+    const raw = ` ${prefix}${spacer} ${suffix}`;
 
     // Make sure the counter is bold
     boldRanges.push([raw.length - suffix.length, raw.length - 1]);

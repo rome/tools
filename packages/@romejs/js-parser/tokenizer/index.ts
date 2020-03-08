@@ -1158,7 +1158,7 @@ function readRadixNumber(parser: JSParser, radix: number): void {
   if (val === undefined) {
     parser.addDiagnostic({
       index: add(start, 2),
-      message: 'Expected number in radix ' + radix,
+      message: `Expected number in radix ${radix}`,
     });
   }
 

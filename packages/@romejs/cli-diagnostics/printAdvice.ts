@@ -253,7 +253,7 @@ function printStacktrace(
         if (logParts.length === 0) {
           logParts.push(header);
         } else {
-          logParts.push('(' + formatAnsi.dim(header) + ')');
+          logParts.push(`(${formatAnsi.dim(header)})`);
         }
       }
 

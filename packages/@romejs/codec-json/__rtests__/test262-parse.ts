@@ -100,11 +100,8 @@ test('U+2028 and U+2029 are not valid JSON whitespace as specified by the produc
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test('Whitespace characters can appear before/after any JSONtoken', () => {
   parse(
-    '\t\r \n{\t\r \n' +
-      '"property"\t\r \n:\t\r \n{\t\r \n}\t\r \n,\t\r \n' +
-      '"prop2"\t\r \n:\t\r \n' +
-      '[\t\r \ntrue\t\r \n,\t\r \nnull\t\r \n,123.456\t\r \n]' +
-      '\t\r \n}\t\r \n',
+    `\t\r \n{\t\r \n"property"\t\r \n:\t\r \n{\t\r \n}\t\r \n,\t\r \n"prop2"\t\r \n:\t\r \n` +
+      `[\t\r \ntrue\t\r \n,\t\r \nnull\t\r \n,123.456\t\r \n]\t\r \n}\t\r \n`,
   ); // should JOSN parse without error
 });
 
@@ -175,13 +172,6 @@ test('A JSONString may not be delimited by single quotes', t => {
 test('A JSONString may not be delimited by Uncode escaped quotes', t => {
   t.throws(function() {
     parse('\\u0022abc\\u0022');
-  });
-});
-
-// Copyright (c) 2012 Ecma International.  All rights reserved.
-test('A JSONString must both begin and end with double quotes', t => {
-  t.throws(function() {
-    parse('"ab' + "c'");
   });
 });
 
@@ -310,7 +300,7 @@ test('parse - parsing an object where property value middles with a null charact
 
   for (const char of nullChars) {
     t.throws(function() {
-      parse('{ "name" : ' + 'Jo' + char + 'hn' + ' } ');
+      parse(`{ "name" : Jo'${char}hn } `);
     }, DiagnosticsError);
   }
 });
@@ -353,7 +343,7 @@ test('parse - parsing an object where property name is a null character', t => {
 
   for (let char of nullChars) {
     t.throws(function() {
-      parse('{ ' + char + ' : "John" }');
+      parse(`{ ${char} : "John" }`);
     }, DiagnosticsError);
   }
 });
@@ -395,7 +385,7 @@ test('parse - parsing an object where property name starts with a null character
   nullChars[31] = '"\u001F"';
   for (let char of nullChars) {
     t.throws(function() {
-      parse('{ ' + char + 'name' + ' : "John" }');
+      parse(`{ ${char}name : "John" }`);
     }, DiagnosticsError);
   }
 });
@@ -438,7 +428,7 @@ test('parse - parsing an object where property name ends with a null character',
 
   for (let char of nullChars) {
     t.throws(function() {
-      parse('{' + 'name' + char + ' : "John" }');
+      parse(`{name${char} : "John" }`);
     }, DiagnosticsError);
   }
 });
@@ -480,7 +470,7 @@ test('parse - parsing an object where property name starts and ends with a null 
   nullChars[31] = '"\u001F"';
   for (let char of nullChars) {
     t.throws(function() {
-      parse('{' + char + 'name' + char + ' : "John" }');
+      parse(`{${char}name${char} : "John" }`);
     }, DiagnosticsError);
   }
 });
@@ -522,7 +512,7 @@ test('parse - parsing an object where property name middles with a null characte
   nullChars[31] = '"\u001F"';
   for (let char of nullChars) {
     t.throws(function() {
-      parse('{ ' + 'na' + char + 'me' + ' : "John" }');
+      parse(`{ na${char}me : "John" }`);
     }, DiagnosticsError);
   }
 });
@@ -564,7 +554,7 @@ test('parse - parsing an object where property value is a null character', t => 
   nullChars[31] = '"\u001F"';
   for (let char of nullChars) {
     t.throws(function() {
-      parse('{ "name" : ' + char + ' }');
+      parse(`{ "name" : ${char} }`);
     }, DiagnosticsError);
   }
 });
@@ -606,7 +596,7 @@ test('parse - parsing an object where property value starts with a null characte
   nullChars[31] = '"\u001F"';
   for (let char of nullChars) {
     t.throws(function() {
-      parse('{ "name" : ' + char + 'John' + ' }');
+      parse(`{ "name" : ${char}John }`);
     }, DiagnosticsError);
   }
 });
@@ -648,7 +638,7 @@ test('parse - parsing an object where property value ends with a null character'
   nullChars[31] = '"\u001F"';
   for (let char of nullChars) {
     t.throws(function() {
-      parse('{ "name" : ' + 'John' + char + ' }');
+      parse(`{ "name" : John${char} }`);
     }, DiagnosticsError);
   }
 });
@@ -690,7 +680,7 @@ test('parse - parsing an object where property value starts and ends with a null
   nullChars[31] = '"\u001F"';
   for (let char of nullChars) {
     t.throws(function() {
-      parse('{ "name" : ' + char + 'John' + char + ' }');
+      parse(`{ "name" : ${char}John${char} }`);
     }, DiagnosticsError);
   }
 });

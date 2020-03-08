@@ -32,16 +32,16 @@ const {
 } = require('../_constants.cjs');
 
 rename(
-  path.join(generatorsFolder, fromType + '.ts'),
-  path.join(generatorsFolder, toType + '.ts'),
+  path.join(generatorsFolder, `${fromType}.ts`),
+  path.join(generatorsFolder, `${toType}ts`),
 );
 rename(
-  path.join(analysisFolder, fromType + '.ts'),
-  path.join(analysisFolder, toType + '.ts'),
+  path.join(analysisFolder, `${fromType}ts`),
+  path.join(analysisFolder, `${toType}ts`),
 );
 rename(
-  path.join(astFolder, fromType + '.ts'),
-  path.join(astFolder, toType + '.ts'),
+  path.join(astFolder, `${fromType}.ts`),
+  path.join(astFolder, `${toType}.ts`),
 );
 
 require('./update.cjs');

@@ -118,7 +118,7 @@ export default function escapeString(
           const codePoint =
             (charCode - 0xd800) * 0x400 + nextCharCode - 0xdc00 + 0x10000;
           const hex = codePoint.toString(16);
-          result += '\\u{' + hex + '}';
+          result += `\\u{${hex}}`;
           index++;
           continue;
         }
@@ -168,11 +168,11 @@ export default function escapeString(
     const hex = char.charCodeAt(0).toString(16);
     const isLonghand = isJSON || hex.length > 2;
     const modifier = isLonghand ? 'u' : 'x';
-    const code = ('0000' + hex).slice(isLonghand ? -4 : -2);
-    const escaped = '\\' + modifier + code;
+    const code = `0000${hex}`.slice(isLonghand ? -4 : -2);
+    const escaped = `\\${modifier}${code}`;
     result += escaped;
     continue;
   }
 
-  return quote + result + quote;
+  return `${quote}${result}${quote}`;
 }

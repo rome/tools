@@ -6,13 +6,7 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {
-  AnyNode,
-  BinaryExpression,
-  templateElement,
-  TemplateElement,
-  templateLiteral,
-} from '@romejs/js-ast';
+import {AnyNode} from '@romejs/js-ast';
 
 export default {
   name: 'preferTemplate',
@@ -31,30 +25,8 @@ export default {
         message:
           "You're using string concatenation when template literals are preferred",
       });
-
-      return templateLiteral.create({
-        expressions: [node.left, node.right].filter(
-          node => node.type !== 'StringLiteral',
-        ),
-        quasis: nodeToQuasis(node),
-      });
     }
 
     return node;
   },
 };
-
-function nodeToQuasis(node: BinaryExpression): TemplateElement[] {
-  return [
-    templateElement.create({
-      cooked: node.left.type === 'StringLiteral' ? node.left.value : '',
-      raw: node.left.type === 'StringLiteral' ? node.left.value : '',
-      tail: false,
-    }),
-    templateElement.create({
-      cooked: node.right.type === 'StringLiteral' ? node.right.value : '',
-      raw: node.right.type === 'StringLiteral' ? node.right.value : '',
-      tail: true,
-    }),
-  ];
-}
