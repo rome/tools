@@ -76,6 +76,10 @@ type RegExpParserOptions = ParserOptions & {
   unicode: boolean;
 };
 
+function isHex(str: string): boolean {
+  return !/[^0-9a-fA-F]/.test(str);
+}
+
 function getCodePoint(char: string): number {
   if (char.length === 1) {
     const point = char.codePointAt(0);
@@ -111,7 +115,7 @@ export const createRegExpParser = createParser(
         const char = input[get0(index)];
 
         if (char === '\\') {
-          const end = add(index, 2);
+          let end = add(index, 2);
 
           const nextChar = input[get0(index) + 1];
           switch (nextChar) {
@@ -172,27 +176,102 @@ export const createRegExpParser = createParser(
                 // TODO named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
               }
 
-            case 'p':
-              if (this.unicode) {
-                // TODO unicode property escapes https://github.com/tc39/proposal-regexp-unicode-property-escapes
-              }
+              return this.finishComplexToken(
+                'Character',
+                {value: 'k', escaped: true},
+                end,
+              );
 
             case 'p':
               if (this.unicode) {
                 // TODO unicode property escapes https://github.com/tc39/proposal-regexp-unicode-property-escapes
               }
+
+              return this.finishComplexToken(
+                'Character',
+                {value: 'p', escaped: true},
+                end,
+              );
+
+            case 'P':
+              if (this.unicode) {
+                // TODO unicode property escapes https://github.com/tc39/proposal-regexp-unicode-property-escapes
+              }
+
+              return this.finishComplexToken(
+                'Character',
+                {value: 'P', escaped: true},
+                end,
+              );
 
             case 'c':
-            // TODO???
+              // TODO???
+              return this.finishComplexToken(
+                'Character',
+                {value: 'c', escaped: true},
+                end,
+              );
 
             case '0':
-            // TODO null and octal
+              // TODO octal
 
-            case 'x':
-            // TODO hex
+              return this.finishComplexToken(
+                'Character',
+                {value: String.fromCharCode(0), escaped: true},
+                end,
+              );
 
-            case 'u':
-            // TODO unicode
+            case 'x': {
+              const possibleHex = input.slice(get0(index) + 1, 2);
+
+              // \xhh
+              if (possibleHex.length === 2 && isHex(possibleHex)) {
+                end = add(end, 2);
+
+                return this.finishComplexToken(
+                  'Character',
+                  {
+                    value: String.fromCharCode(parseInt(possibleHex, 16)),
+                    escaped: true,
+                  },
+                  end,
+                );
+              }
+
+              return this.finishComplexToken(
+                'Character',
+                {value: 'x', escaped: true},
+                end,
+              );
+            }
+
+            case 'u': {
+              const possibleHex = input.slice(get0(index) + 1, 4);
+
+              // \uhhhh
+              if (possibleHex.length === 4 && isHex(possibleHex)) {
+                end = add(end, 4);
+
+                return this.finishComplexToken(
+                  'Character',
+                  {
+                    value: String.fromCharCode(parseInt(possibleHex, 16)),
+                    escaped: true,
+                  },
+                  end,
+                );
+              }
+
+              if (this.unicode) {
+                // TODO \u{hhhh} or \u{hhhhh}
+              }
+
+              return this.finishComplexToken(
+                'Character',
+                {value: 'u', escaped: true},
+                end,
+              );
+            }
 
             // Redundant escaping
             default:
@@ -218,9 +297,6 @@ export const createRegExpParser = createParser(
 
           case '?':
             return this.finishToken('?');
-
-          case '{':
-            return this.finishToken('{');
 
           case '}':
             return this.finishToken('}');
@@ -259,18 +335,21 @@ export const createRegExpParser = createParser(
         if (token.type === 'Character') {
           switch (token.value) {
             case ':':
+              this.nextToken();
               return {
                 type: 'NON_CAPTURE',
                 kind: undefined,
               };
 
             case '=':
+              this.nextToken();
               return {
                 type: 'NON_CAPTURE',
                 kind: 'positive-lookahead',
               };
 
             case '!':
+              this.nextToken();
               return {
                 type: 'NON_CAPTURE',
                 kind: 'negative-lookahead',
@@ -283,12 +362,14 @@ export const createRegExpParser = createParser(
                 switch (nextToken.value) {
                   case '!':
                     this.nextToken();
+                    this.nextToken();
                     return {
                       type: 'NON_CAPTURE',
                       kind: 'negative-lookbehind',
                     };
 
                   case '=':
+                    this.nextToken();
                     this.nextToken();
                     return {
                       type: 'NON_CAPTURE',
@@ -299,6 +380,7 @@ export const createRegExpParser = createParser(
                 if (isESIdentifierStart(nextToken.value)) {
                   let name = '';
 
+                  // 1 is for the <
                   let skipCount = 1;
                   let targetToken: TokenValues<Tokens> = nextToken;
                   while (
@@ -379,7 +461,7 @@ export const createRegExpParser = createParser(
         const body: RegExpCharSet['body'] = [];
         const invert = this.eatToken('^') !== undefined;
 
-        while (!this.isEOF() && !this.matchToken(']')) {
+        while (!this.matchToken('EOF') && !this.matchToken(']')) {
           const part = this.parseCharacterOrRange();
           body.push(part);
         }
@@ -511,12 +593,13 @@ export const createRegExpParser = createParser(
         // Range
         const nextToken = this.getToken();
         if (
+          start.type === 'RegExpCharacter' &&
           nextToken.type === 'Character' &&
           nextToken.value === '-' &&
           !nextToken.escaped
         ) {
           const lookaheadToken = this.lookaheadToken();
-          if (lookaheadToken.type !== '[' && lookaheadToken.type !== 'EOF') {
+          if (lookaheadToken.type === 'Character') {
             // Skip dash
             this.nextToken();
 
@@ -728,7 +811,7 @@ export const createRegExpParser = createParser(
         let alternateStart = start;
 
         while (
-          !this.isEOF() &&
+          !this.matchToken('EOF') &&
           (whileCallback === undefined || whileCallback())
         ) {
           if (this.eatToken('|')) {
