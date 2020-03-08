@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter, ProgressShape} from '@romejs/cli-reporter';
+import {Reporter} from '@romejs/cli-reporter';
 import {DiagnosticOrigin, deriveDiagnosticFromError} from '@romejs/diagnostics';
 import {TestRef} from '../../common/bridges/TestWorkerBridge';
 import {Master, MasterRequest} from '@romejs/core';

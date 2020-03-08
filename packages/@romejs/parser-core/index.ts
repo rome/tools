@@ -29,10 +29,8 @@ import {
   Number0,
   number1,
   number0,
-  sub,
   inc,
   coerce0,
-  number0Neg1,
   get0,
 } from '@romejs/ob1';
 import {escapeMarkup} from '@romejs/string-markup';

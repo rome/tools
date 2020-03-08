@@ -110,7 +110,6 @@ export type DiagnosticAdviceItem =
   | DiagnosticAdviceItemFrame
   | DiagnosticAdviceItemInspect
   | DiagnosticAdviceItemDiff
-  | DiagnosticAdviceItemAction
   | DiagnosticAdviceItemStacktrace;
 
 export type DiagnosticAdvice = Array<DiagnosticAdviceItem>;

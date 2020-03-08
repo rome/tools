@@ -11,7 +11,7 @@ export function stringifyPathPattern(
   node: PathPatternNode | PatternPartNode | PatternSegmentNode,
 ): string {
   switch (node.type) {
-    case 'Pattern':
+    case 'PathPattern':
       return node.segments
         .map(segment => stringifyPathPattern(segment))
         .join('/');

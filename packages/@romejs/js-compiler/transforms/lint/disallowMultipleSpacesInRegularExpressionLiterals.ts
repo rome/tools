@@ -18,7 +18,7 @@ export default {
       for (let i = 0; i < node.body.length; i++) {
         const spaceNodes: Array<RegExpCharacter> = [];
 
-        while (true) {
+        while (i < node.body.length) {
           const item = node.body[i];
           if (item.type === 'RegExpCharacter' && item.value === ' ') {
             spaceNodes.push(item);
