@@ -450,7 +450,6 @@ export const createRegExpParser = createParser(
 
       parseCharSet(): RegExpCharSet {
         const start = this.getPosition();
-        console.log('charset start', start);
         this.nextToken();
 
         const body: RegExpCharSet['body'] = [];

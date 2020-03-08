@@ -20,13 +20,13 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 11
-        index: 5
+        column: 6
+        index: 6
         line: 1
       }
       start: Object {
-        column: 7
-        index: 3
+        column: 4
+        index: 4
         line: 1
       }
     }

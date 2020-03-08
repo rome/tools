@@ -109,13 +109,13 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 7
-              index: 3
+              column: 4
+              index: 19
               line: 4
             }
             start: Object {
               column: 1
-              index: 0
+              index: 16
               line: 4
             }
           }
@@ -125,13 +125,13 @@ Program {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 3
-                  index: 1
+                  column: 2
+                  index: 17
                   line: 4
                 }
                 start: Object {
                   column: 1
-                  index: 0
+                  index: 16
                   line: 4
                 }
               }
@@ -141,29 +141,29 @@ Program {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 5
-                  index: 2
+                  column: 3
+                  index: 18
+                  line: 4
+                }
+                start: Object {
+                  column: 2
+                  index: 17
+                  line: 4
+                }
+              }
+            }
+            RegExpCharacter {
+              value: 'o'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 4
+                  index: 19
                   line: 4
                 }
                 start: Object {
                   column: 3
-                  index: 1
-                  line: 4
-                }
-              }
-            }
-            RegExpCharacter {
-              value: 'o'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 7
-                  index: 3
-                  line: 4
-                }
-                start: Object {
-                  column: 5
-                  index: 2
+                  index: 18
                   line: 4
                 }
               }

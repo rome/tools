@@ -30,13 +30,13 @@ Program {
       sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
       end: Object {
-        column: 28
-        index: 10
+        column: 18
+        index: 18
         line: 1
       }
       start: Object {
-        column: 20
-        index: 6
+        column: 15
+        index: 15
         line: 1
       }
     }
@@ -126,13 +126,13 @@ Program {
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
-                    column: 102
-                    index: 49
+                    column: 58
+                    index: 58
                     line: 1
                   }
                   start: Object {
                     column: 9
-                    index: 0
+                    index: 9
                     line: 1
                   }
                 }
@@ -142,13 +142,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 30
-                        index: 11
+                        column: 19
+                        index: 19
                         line: 1
                       }
                       start: Object {
                         column: 9
-                        index: 0
+                        index: 9
                         line: 1
                       }
                     }
@@ -158,13 +158,13 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 14
-                            index: 3
+                            column: 12
+                            index: 12
                             line: 1
                           }
                           start: Object {
-                            column: 11
-                            index: 1
+                            column: 10
+                            index: 10
                             line: 1
                           }
                         }
@@ -174,13 +174,13 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 16
-                            index: 4
+                            column: 13
+                            index: 13
                             line: 1
                           }
                           start: Object {
-                            column: 14
-                            index: 3
+                            column: 12
+                            index: 12
                             line: 1
                           }
                         }
@@ -190,13 +190,13 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 18
-                            index: 5
+                            column: 14
+                            index: 14
                             line: 1
                           }
                           start: Object {
-                            column: 16
-                            index: 4
+                            column: 13
+                            index: 13
                             line: 1
                           }
                         }
@@ -206,13 +206,13 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 20
-                            index: 6
+                            column: 15
+                            index: 15
                             line: 1
                           }
                           start: Object {
-                            column: 18
-                            index: 5
+                            column: 14
+                            index: 14
                             line: 1
                           }
                         }
@@ -221,13 +221,13 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 28
-                            index: 10
+                            column: 18
+                            index: 18
                             line: 1
                           }
                           start: Object {
-                            column: 20
-                            index: 6
+                            column: 15
+                            index: 15
                             line: 1
                           }
                         }
@@ -236,13 +236,13 @@ Program {
                           loc: Object {
                             filename: 'input.js'
                             end: Object {
-                              column: 22
-                              index: 7
+                              column: 16
+                              index: 16
                               line: 1
                             }
                             start: Object {
-                              column: 20
-                              index: 6
+                              column: 15
+                              index: 15
                               line: 1
                             }
                           }
@@ -252,15 +252,273 @@ Program {
                           loc: Object {
                             filename: 'input.js'
                             end: Object {
-                              column: 26
-                              index: 9
+                              column: 18
+                              index: 18
                               line: 1
                             }
                             start: Object {
-                              column: 24
-                              index: 8
+                              column: 17
+                              index: 17
                               line: 1
                             }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                  RegExpCharSet {
+                    invert: false
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 29
+                        index: 29
+                        line: 1
+                      }
+                      start: Object {
+                        column: 19
+                        index: 19
+                        line: 1
+                      }
+                    }
+                    body: Array [
+                      RegExpCharacter {
+                        value: 'u'
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 22
+                            index: 22
+                            line: 1
+                          }
+                          start: Object {
+                            column: 20
+                            index: 20
+                            line: 1
+                          }
+                        }
+                      }
+                      RegExpCharacter {
+                        value: '0'
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 23
+                            index: 23
+                            line: 1
+                          }
+                          start: Object {
+                            column: 22
+                            index: 22
+                            line: 1
+                          }
+                        }
+                      }
+                      RegExpCharacter {
+                        value: '0'
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 24
+                            index: 24
+                            line: 1
+                          }
+                          start: Object {
+                            column: 23
+                            index: 23
+                            line: 1
+                          }
+                        }
+                      }
+                      RegExpCharacter {
+                        value: '6'
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 25
+                            index: 25
+                            line: 1
+                          }
+                          start: Object {
+                            column: 24
+                            index: 24
+                            line: 1
+                          }
+                        }
+                      }
+                      RegExpCharSetRange {
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 28
+                            index: 28
+                            line: 1
+                          }
+                          start: Object {
+                            column: 25
+                            index: 25
+                            line: 1
+                          }
+                        }
+                        end: RegExpCharacter {
+                          value: 'b'
+                          loc: Object {
+                            filename: 'input.js'
+                            end: Object {
+                              column: 28
+                              index: 28
+                              line: 1
+                            }
+                            start: Object {
+                              column: 27
+                              index: 27
+                              line: 1
+                            }
+                          }
+                        }
+                        start: RegExpCharacter {
+                          value: '1'
+                          loc: Object {
+                            filename: 'input.js'
+                            end: Object {
+                              column: 26
+                              index: 26
+                              line: 1
+                            }
+                            start: Object {
+                              column: 25
+                              index: 25
+                              line: 1
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                  RegExpCharSet {
+                    invert: false
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 39
+                        index: 39
+                        line: 1
+                      }
+                      start: Object {
+                        column: 29
+                        index: 29
+                        line: 1
+                      }
+                    }
+                    body: Array [
+                      RegExpCharSetRange {
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 34
+                            index: 34
+                            line: 1
+                          }
+                          start: Object {
+                            column: 30
+                            index: 30
+                            line: 1
+                          }
+                        }
+                        end: RegExpCharacter {
+                          value: 'u'
+                          loc: Object {
+                            filename: 'input.js'
+                            end: Object {
+                              column: 34
+                              index: 34
+                              line: 1
+                            }
+                            start: Object {
+                              column: 32
+                              index: 32
+                              line: 1
+                            }
+                          }
+                        }
+                        start: RegExpCharacter {
+                          value: 'a'
+                          loc: Object {
+                            filename: 'input.js'
+                            end: Object {
+                              column: 31
+                              index: 31
+                              line: 1
+                            }
+                            start: Object {
+                              column: 30
+                              index: 30
+                              line: 1
+                            }
+                          }
+                        }
+                      }
+                      RegExpCharacter {
+                        value: '{'
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 35
+                            index: 35
+                            line: 1
+                          }
+                          start: Object {
+                            column: 34
+                            index: 34
+                            line: 1
+                          }
+                        }
+                      }
+                      RegExpCharacter {
+                        value: '6'
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 36
+                            index: 36
+                            line: 1
+                          }
+                          start: Object {
+                            column: 35
+                            index: 35
+                            line: 1
+                          }
+                        }
+                      }
+                      RegExpCharacter {
+                        value: '2'
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 37
+                            index: 37
+                            line: 1
+                          }
+                          start: Object {
+                            column: 36
+                            index: 36
+                            line: 1
+                          }
+                        }
+                      }
+                      RegExpCharacter {
+                        value: '}'
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 38
+                            index: 38
+                            line: 1
+                          }
+                          start: Object {
+                            column: 37
+                            index: 37
+                            line: 1
                           }
                         }
                       }
@@ -272,316 +530,58 @@ Program {
                       filename: 'input.js'
                       end: Object {
                         column: 49
-                        index: 21
+                        index: 49
                         line: 1
                       }
                       start: Object {
-                        column: 28
-                        index: 10
+                        column: 39
+                        index: 39
                         line: 1
                       }
                     }
                     body: Array [
-                      RegExpCharacter {
-                        value: 'u'
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 33
-                            index: 13
-                            line: 1
-                          }
-                          start: Object {
-                            column: 30
-                            index: 11
-                            line: 1
-                          }
-                        }
-                      }
-                      RegExpCharacter {
-                        value: '0'
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 35
-                            index: 14
-                            line: 1
-                          }
-                          start: Object {
-                            column: 33
-                            index: 13
-                            line: 1
-                          }
-                        }
-                      }
-                      RegExpCharacter {
-                        value: '0'
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 37
-                            index: 15
-                            line: 1
-                          }
-                          start: Object {
-                            column: 35
-                            index: 14
-                            line: 1
-                          }
-                        }
-                      }
-                      RegExpCharacter {
-                        value: '6'
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 39
-                            index: 16
-                            line: 1
-                          }
-                          start: Object {
-                            column: 37
-                            index: 15
-                            line: 1
-                          }
-                        }
-                      }
                       RegExpCharSetRange {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 47
-                            index: 20
+                            column: 44
+                            index: 44
                             line: 1
                           }
                           start: Object {
-                            column: 39
-                            index: 16
+                            column: 40
+                            index: 40
                             line: 1
                           }
                         }
                         end: RegExpCharacter {
-                          value: 'b'
+                          value: 'u'
                           loc: Object {
                             filename: 'input.js'
                             end: Object {
-                              column: 45
-                              index: 19
+                              column: 44
+                              index: 44
                               line: 1
                             }
                             start: Object {
-                              column: 43
-                              index: 18
+                              column: 42
+                              index: 42
                               line: 1
                             }
                           }
                         }
                         start: RegExpCharacter {
-                          value: '1'
+                          value: 'a'
                           loc: Object {
                             filename: 'input.js'
                             end: Object {
                               column: 41
-                              index: 17
+                              index: 41
                               line: 1
                             }
                             start: Object {
-                              column: 39
-                              index: 16
-                              line: 1
-                            }
-                          }
-                        }
-                      }
-                    ]
-                  }
-                  RegExpCharSet {
-                    invert: false
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 68
-                        index: 31
-                        line: 1
-                      }
-                      start: Object {
-                        column: 47
-                        index: 20
-                        line: 1
-                      }
-                    }
-                    body: Array [
-                      RegExpCharSetRange {
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 58
-                            index: 26
-                            line: 1
-                          }
-                          start: Object {
-                            column: 49
-                            index: 21
-                            line: 1
-                          }
-                        }
-                        end: RegExpCharacter {
-                          value: 'u'
-                          loc: Object {
-                            filename: 'input.js'
-                            end: Object {
-                              column: 56
-                              index: 25
-                              line: 1
-                            }
-                            start: Object {
-                              column: 53
-                              index: 23
-                              line: 1
-                            }
-                          }
-                        }
-                        start: RegExpCharacter {
-                          value: 'a'
-                          loc: Object {
-                            filename: 'input.js'
-                            end: Object {
-                              column: 51
-                              index: 22
-                              line: 1
-                            }
-                            start: Object {
-                              column: 49
-                              index: 21
-                              line: 1
-                            }
-                          }
-                        }
-                      }
-                      RegExpCharacter {
-                        value: '{'
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 58
-                            index: 26
-                            line: 1
-                          }
-                          start: Object {
-                            column: 56
-                            index: 25
-                            line: 1
-                          }
-                        }
-                      }
-                      RegExpCharacter {
-                        value: '6'
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 60
-                            index: 27
-                            line: 1
-                          }
-                          start: Object {
-                            column: 58
-                            index: 26
-                            line: 1
-                          }
-                        }
-                      }
-                      RegExpCharacter {
-                        value: '2'
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 62
-                            index: 28
-                            line: 1
-                          }
-                          start: Object {
-                            column: 60
-                            index: 27
-                            line: 1
-                          }
-                        }
-                      }
-                      RegExpCharacter {
-                        value: '}'
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 64
-                            index: 29
-                            line: 1
-                          }
-                          start: Object {
-                            column: 62
-                            index: 28
-                            line: 1
-                          }
-                        }
-                      }
-                    ]
-                  }
-                  RegExpCharSet {
-                    invert: false
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 88
-                        index: 42
-                        line: 1
-                      }
-                      start: Object {
-                        column: 66
-                        index: 30
-                        line: 1
-                      }
-                    }
-                    body: Array [
-                      RegExpCharSetRange {
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 77
-                            index: 36
-                            line: 1
-                          }
-                          start: Object {
-                            column: 68
-                            index: 31
-                            line: 1
-                          }
-                        }
-                        end: RegExpCharacter {
-                          value: 'u'
-                          loc: Object {
-                            filename: 'input.js'
-                            end: Object {
-                              column: 75
-                              index: 35
-                              line: 1
-                            }
-                            start: Object {
-                              column: 72
-                              index: 33
-                              line: 1
-                            }
-                          }
-                        }
-                        start: RegExpCharacter {
-                          value: 'a'
-                          loc: Object {
-                            filename: 'input.js'
-                            end: Object {
-                              column: 70
-                              index: 32
-                              line: 1
-                            }
-                            start: Object {
-                              column: 68
-                              index: 31
+                              column: 40
+                              index: 40
                               line: 1
                             }
                           }
@@ -592,13 +592,13 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 77
-                            index: 36
+                            column: 45
+                            index: 45
                             line: 1
                           }
                           start: Object {
-                            column: 75
-                            index: 35
+                            column: 44
+                            index: 44
                             line: 1
                           }
                         }
@@ -608,13 +608,13 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 79
-                            index: 37
+                            column: 46
+                            index: 46
                             line: 1
                           }
                           start: Object {
-                            column: 77
-                            index: 36
+                            column: 45
+                            index: 45
                             line: 1
                           }
                         }
@@ -624,13 +624,13 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 81
-                            index: 38
+                            column: 47
+                            index: 47
                             line: 1
                           }
                           start: Object {
-                            column: 79
-                            index: 37
+                            column: 46
+                            index: 46
                             line: 1
                           }
                         }
@@ -640,13 +640,13 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 83
-                            index: 39
+                            column: 48
+                            index: 48
                             line: 1
                           }
                           start: Object {
-                            column: 81
-                            index: 38
+                            column: 47
+                            index: 47
                             line: 1
                           }
                         }
@@ -658,13 +658,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 88
-                        index: 42
+                        column: 51
+                        index: 51
                         line: 1
                       }
                       start: Object {
-                        column: 85
-                        index: 40
+                        column: 49
+                        index: 49
                         line: 1
                       }
                     }
@@ -674,13 +674,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 90
-                        index: 43
+                        column: 52
+                        index: 52
                         line: 1
                       }
                       start: Object {
-                        column: 88
-                        index: 42
+                        column: 51
+                        index: 51
                         line: 1
                       }
                     }
@@ -690,13 +690,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 92
-                        index: 44
+                        column: 53
+                        index: 53
                         line: 1
                       }
                       start: Object {
-                        column: 90
-                        index: 43
+                        column: 52
+                        index: 52
                         line: 1
                       }
                     }
@@ -706,13 +706,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 94
-                        index: 45
+                        column: 54
+                        index: 54
                         line: 1
                       }
                       start: Object {
-                        column: 92
-                        index: 44
+                        column: 53
+                        index: 53
                         line: 1
                       }
                     }
@@ -722,13 +722,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 96
-                        index: 46
+                        column: 55
+                        index: 55
                         line: 1
                       }
                       start: Object {
-                        column: 94
-                        index: 45
+                        column: 54
+                        index: 54
                         line: 1
                       }
                     }
@@ -738,13 +738,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 98
-                        index: 47
+                        column: 56
+                        index: 56
                         line: 1
                       }
                       start: Object {
-                        column: 96
-                        index: 46
+                        column: 55
+                        index: 55
                         line: 1
                       }
                     }
@@ -754,13 +754,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 100
-                        index: 48
+                        column: 57
+                        index: 57
                         line: 1
                       }
                       start: Object {
-                        column: 98
-                        index: 47
+                        column: 56
+                        index: 56
                         line: 1
                       }
                     }
@@ -770,13 +770,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 102
-                        index: 49
+                        column: 58
+                        index: 58
                         line: 1
                       }
                       start: Object {
-                        column: 100
-                        index: 48
+                        column: 57
+                        index: 57
                         line: 1
                       }
                     }

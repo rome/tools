@@ -20,13 +20,13 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 23
-        index: 6
+        column: 16
+        index: 17
         line: 1
       }
       start: Object {
-        column: 19
-        index: 4
+        column: 15
+        index: 15
         line: 1
       }
     }
@@ -50,13 +50,13 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 23
-        index: 6
+        column: 16
+        index: 16
         line: 1
       }
       start: Object {
-        column: 17
-        index: 3
+        column: 14
+        index: 14
         line: 1
       }
     }
@@ -80,13 +80,13 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 40
-        index: 6
+        column: 33
+        index: 34
         line: 1
       }
       start: Object {
-        column: 36
-        index: 4
+        column: 32
+        index: 32
         line: 1
       }
     }
@@ -110,13 +110,13 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 17
-        index: 3
+        column: 13
+        index: 13
         line: 1
       }
       start: Object {
         column: 11
-        index: 0
+        index: 11
         line: 1
       }
     }
@@ -140,13 +140,13 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 18
-        index: 4
+        column: 14
+        index: 15
         line: 1
       }
       start: Object {
-        column: 14
-        index: 2
+        column: 13
+        index: 13
         line: 1
       }
     }
@@ -170,13 +170,13 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 30
-        index: 11
+        column: 21
+        index: 22
         line: 1
       }
       start: Object {
-        column: 26
-        index: 9
+        column: 20
+        index: 20
         line: 1
       }
     }

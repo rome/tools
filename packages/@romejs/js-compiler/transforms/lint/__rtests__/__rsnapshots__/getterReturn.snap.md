@@ -8,7 +8,7 @@
 
 ```javascript
 Object {
-  src: 'class p {\n  get name() {\n    console.log(\'hello\');\n  }\n}\nconsole.log(new p());\n'
+  src: 'class p {\n  get name() {\n    console.log(\'hello\');\n  }\n}console.log(new p());\n'
   suppressions: Array []
   diagnostics: Array [
     Object {

@@ -77,13 +77,13 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 7
-              index: 3
+              column: 4
+              index: 7
               line: 2
             }
             start: Object {
               column: 1
-              index: 0
+              index: 4
               line: 2
             }
           }
@@ -93,13 +93,13 @@ Program {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 3
-                  index: 1
+                  column: 2
+                  index: 5
                   line: 2
                 }
                 start: Object {
                   column: 1
-                  index: 0
+                  index: 4
                   line: 2
                 }
               }
@@ -109,29 +109,29 @@ Program {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 5
-                  index: 2
+                  column: 3
+                  index: 6
+                  line: 2
+                }
+                start: Object {
+                  column: 2
+                  index: 5
+                  line: 2
+                }
+              }
+            }
+            RegExpCharacter {
+              value: 'o'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 4
+                  index: 7
                   line: 2
                 }
                 start: Object {
                   column: 3
-                  index: 1
-                  line: 2
-                }
-              }
-            }
-            RegExpCharacter {
-              value: 'o'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 7
-                  index: 3
-                  line: 2
-                }
-                start: Object {
-                  column: 5
-                  index: 2
+                  index: 6
                   line: 2
                 }
               }

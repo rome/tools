@@ -123,8 +123,8 @@ Program {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
-                          column: 19
-                          index: 19
+                          column: 20
+                          index: 20
                           line: 1
                         }
                         start: Object {
@@ -138,8 +138,8 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 19
-                            index: 19
+                            column: 20
+                            index: 20
                             line: 1
                           }
                           start: Object {
@@ -466,8 +466,8 @@ Program {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
-                          column: 20
-                          index: 78
+                          column: 21
+                          index: 79
                           line: 2
                         }
                         start: Object {
@@ -481,8 +481,8 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 20
-                            index: 78
+                            column: 21
+                            index: 79
                             line: 2
                           }
                           start: Object {

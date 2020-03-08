@@ -90,13 +90,13 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 17
-                index: 3
+                column: 14
+                index: 14
                 line: 1
               }
               start: Object {
                 column: 11
-                index: 0
+                index: 11
                 line: 1
               }
             }
@@ -106,13 +106,13 @@ Program {
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
-                    column: 13
-                    index: 1
+                    column: 12
+                    index: 12
                     line: 1
                   }
                   start: Object {
                     column: 11
-                    index: 0
+                    index: 11
                     line: 1
                   }
                 }
@@ -122,29 +122,29 @@ Program {
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
-                    column: 15
-                    index: 2
+                    column: 13
+                    index: 13
+                    line: 1
+                  }
+                  start: Object {
+                    column: 12
+                    index: 12
+                    line: 1
+                  }
+                }
+              }
+              RegExpCharacter {
+                value: 'o'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 14
+                    index: 14
                     line: 1
                   }
                   start: Object {
                     column: 13
-                    index: 1
-                    line: 1
-                  }
-                }
-              }
-              RegExpCharacter {
-                value: 'o'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 17
-                    index: 3
-                    line: 1
-                  }
-                  start: Object {
-                    column: 15
-                    index: 2
+                    index: 13
                     line: 1
                   }
                 }

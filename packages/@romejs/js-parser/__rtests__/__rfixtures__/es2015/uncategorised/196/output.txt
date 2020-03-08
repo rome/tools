@@ -60,13 +60,13 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 57
-              index: 30
+              column: 30
+              index: 31
               line: 1
             }
             start: Object {
               column: 1
-              index: 0
+              index: 1
               line: 1
             }
           }
@@ -76,13 +76,13 @@ Program {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 57
-                  index: 30
+                  column: 30
+                  index: 31
                   line: 1
                 }
                 start: Object {
                   column: 1
-                  index: 0
+                  index: 1
                   line: 1
                 }
               }
@@ -92,13 +92,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 6
-                      index: 3
+                      column: 4
+                      index: 4
                       line: 1
                     }
                     start: Object {
-                      column: 3
-                      index: 1
+                      column: 2
+                      index: 2
                       line: 1
                     }
                   }
@@ -108,13 +108,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 8
-                      index: 4
+                      column: 5
+                      index: 5
                       line: 1
                     }
                     start: Object {
-                      column: 6
-                      index: 3
+                      column: 4
+                      index: 4
                       line: 1
                     }
                   }
@@ -124,13 +124,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 10
-                      index: 5
+                      column: 6
+                      index: 6
                       line: 1
                     }
                     start: Object {
-                      column: 8
-                      index: 4
+                      column: 5
+                      index: 5
                       line: 1
                     }
                   }
@@ -140,13 +140,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 12
-                      index: 6
+                      column: 7
+                      index: 7
                       line: 1
                     }
                     start: Object {
-                      column: 10
-                      index: 5
+                      column: 6
+                      index: 6
                       line: 1
                     }
                   }
@@ -156,13 +156,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 14
-                      index: 7
+                      column: 8
+                      index: 8
                       line: 1
                     }
                     start: Object {
-                      column: 12
-                      index: 6
+                      column: 7
+                      index: 7
                       line: 1
                     }
                   }
@@ -172,13 +172,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 17
-                      index: 9
+                      column: 10
+                      index: 10
                       line: 1
                     }
                     start: Object {
-                      column: 14
-                      index: 7
+                      column: 8
+                      index: 8
                       line: 1
                     }
                   }
@@ -188,13 +188,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 19
-                      index: 10
+                      column: 11
+                      index: 11
                       line: 1
                     }
                     start: Object {
-                      column: 17
-                      index: 9
+                      column: 10
+                      index: 10
                       line: 1
                     }
                   }
@@ -204,13 +204,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 21
-                      index: 11
+                      column: 12
+                      index: 12
                       line: 1
                     }
                     start: Object {
-                      column: 19
-                      index: 10
+                      column: 11
+                      index: 11
                       line: 1
                     }
                   }
@@ -220,13 +220,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 23
-                      index: 12
+                      column: 13
+                      index: 13
                       line: 1
                     }
                     start: Object {
-                      column: 21
-                      index: 11
+                      column: 12
+                      index: 12
                       line: 1
                     }
                   }
@@ -235,13 +235,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 32
+                      column: 17
                       index: 17
                       line: 1
                     }
                     start: Object {
-                      column: 23
-                      index: 12
+                      column: 13
+                      index: 13
                       line: 1
                     }
                   }
@@ -250,13 +250,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 30
-                        index: 16
+                        column: 17
+                        index: 17
                         line: 1
                       }
                       start: Object {
-                        column: 27
-                        index: 14
+                        column: 15
+                        index: 15
                         line: 1
                       }
                     }
@@ -266,13 +266,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 25
-                        index: 13
+                        column: 14
+                        index: 14
                         line: 1
                       }
                       start: Object {
-                        column: 23
-                        index: 12
+                        column: 13
+                        index: 13
                         line: 1
                       }
                     }
@@ -283,13 +283,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 32
-                      index: 17
+                      column: 18
+                      index: 18
                       line: 1
                     }
                     start: Object {
-                      column: 30
-                      index: 16
+                      column: 17
+                      index: 17
                       line: 1
                     }
                   }
@@ -299,13 +299,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 34
-                      index: 18
+                      column: 19
+                      index: 19
                       line: 1
                     }
                     start: Object {
-                      column: 32
-                      index: 17
+                      column: 18
+                      index: 18
                       line: 1
                     }
                   }
@@ -315,13 +315,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 36
-                      index: 19
+                      column: 20
+                      index: 20
                       line: 1
                     }
                     start: Object {
-                      column: 34
-                      index: 18
+                      column: 19
+                      index: 19
                       line: 1
                     }
                   }
@@ -331,13 +331,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 38
-                      index: 20
+                      column: 21
+                      index: 21
                       line: 1
                     }
                     start: Object {
-                      column: 36
-                      index: 19
+                      column: 20
+                      index: 20
                       line: 1
                     }
                   }
@@ -347,13 +347,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 41
-                      index: 22
+                      column: 23
+                      index: 23
                       line: 1
                     }
                     start: Object {
-                      column: 38
-                      index: 20
+                      column: 21
+                      index: 21
                       line: 1
                     }
                   }
@@ -363,13 +363,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 43
-                      index: 23
+                      column: 24
+                      index: 24
                       line: 1
                     }
                     start: Object {
-                      column: 41
-                      index: 22
+                      column: 23
+                      index: 23
                       line: 1
                     }
                   }
@@ -379,13 +379,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 45
-                      index: 24
+                      column: 25
+                      index: 25
                       line: 1
                     }
                     start: Object {
-                      column: 43
-                      index: 23
+                      column: 24
+                      index: 24
                       line: 1
                     }
                   }
@@ -395,13 +395,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 47
-                      index: 25
+                      column: 26
+                      index: 26
                       line: 1
                     }
                     start: Object {
-                      column: 45
-                      index: 24
+                      column: 25
+                      index: 25
                       line: 1
                     }
                   }
@@ -411,13 +411,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 49
-                      index: 26
+                      column: 27
+                      index: 27
                       line: 1
                     }
                     start: Object {
-                      column: 47
-                      index: 25
+                      column: 26
+                      index: 26
                       line: 1
                     }
                   }
@@ -426,13 +426,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 57
+                      column: 30
                       index: 30
                       line: 1
                     }
                     start: Object {
-                      column: 49
-                      index: 26
+                      column: 27
+                      index: 27
                       line: 1
                     }
                   }
@@ -441,13 +441,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 55
-                        index: 29
+                        column: 30
+                        index: 30
                         line: 1
                       }
                       start: Object {
-                        column: 53
-                        index: 28
+                        column: 29
+                        index: 29
                         line: 1
                       }
                     }
@@ -457,13 +457,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 51
-                        index: 27
+                        column: 28
+                        index: 28
                         line: 1
                       }
                       start: Object {
-                        column: 49
-                        index: 26
+                        column: 27
+                        index: 27
                         line: 1
                       }
                     }

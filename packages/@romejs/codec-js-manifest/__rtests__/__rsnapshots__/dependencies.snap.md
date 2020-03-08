@@ -36,12 +36,12 @@ npm {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 11
+        column: 4
         index: 5
         line: 1
       }
       start: Object {
-        column: 1
+        column: 0
         index: 0
         line: 1
       }
@@ -64,12 +64,12 @@ npm {
     loc: Object {
       filename: undefined
       end: Object {
-        column: 11
+        column: 4
         index: 5
         line: 1
       }
       start: Object {
-        column: 1
+        column: 0
         index: 0
         line: 1
       }

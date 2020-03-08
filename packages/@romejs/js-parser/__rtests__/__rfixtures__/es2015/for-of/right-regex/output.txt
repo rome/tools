@@ -126,13 +126,13 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 21
-              index: 3
+              column: 18
+              index: 18
               line: 1
             }
             start: Object {
               column: 15
-              index: 0
+              index: 15
               line: 1
             }
           }
@@ -142,13 +142,13 @@ Program {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 17
-                  index: 1
+                  column: 16
+                  index: 16
                   line: 1
                 }
                 start: Object {
                   column: 15
-                  index: 0
+                  index: 15
                   line: 1
                 }
               }
@@ -158,29 +158,29 @@ Program {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 19
-                  index: 2
+                  column: 17
+                  index: 17
+                  line: 1
+                }
+                start: Object {
+                  column: 16
+                  index: 16
+                  line: 1
+                }
+              }
+            }
+            RegExpCharacter {
+              value: 'o'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 18
+                  index: 18
                   line: 1
                 }
                 start: Object {
                   column: 17
-                  index: 1
-                  line: 1
-                }
-              }
-            }
-            RegExpCharacter {
-              value: 'o'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 21
-                  index: 3
-                  line: 1
-                }
-                start: Object {
-                  column: 19
-                  index: 2
+                  index: 17
                   line: 1
                 }
               }

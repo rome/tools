@@ -139,13 +139,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 7
-                      index: 3
+                      column: 4
+                      index: 27
                       line: 2
                     }
                     start: Object {
                       column: 1
-                      index: 0
+                      index: 24
                       line: 2
                     }
                   }
@@ -155,13 +155,13 @@ Program {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
-                          column: 3
-                          index: 1
+                          column: 2
+                          index: 25
                           line: 2
                         }
                         start: Object {
                           column: 1
-                          index: 0
+                          index: 24
                           line: 2
                         }
                       }
@@ -171,29 +171,29 @@ Program {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
-                          column: 5
-                          index: 2
+                          column: 3
+                          index: 26
+                          line: 2
+                        }
+                        start: Object {
+                          column: 2
+                          index: 25
+                          line: 2
+                        }
+                      }
+                    }
+                    RegExpCharacter {
+                      value: 'o'
+                      loc: Object {
+                        filename: 'input.js'
+                        end: Object {
+                          column: 4
+                          index: 27
                           line: 2
                         }
                         start: Object {
                           column: 3
-                          index: 1
-                          line: 2
-                        }
-                      }
-                    }
-                    RegExpCharacter {
-                      value: 'o'
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 7
-                          index: 3
-                          line: 2
-                        }
-                        start: Object {
-                          column: 5
-                          index: 2
+                          index: 26
                           line: 2
                         }
                       }
