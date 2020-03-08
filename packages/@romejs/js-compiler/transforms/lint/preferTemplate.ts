@@ -6,9 +6,13 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {AnyNode, BinaryExpression, templateElement, TemplateElement, templateLiteral} from '@romejs/js-ast';
-
-
+import {
+  AnyNode,
+  BinaryExpression,
+  templateElement,
+  TemplateElement,
+  templateLiteral,
+} from '@romejs/js-ast';
 
 export default {
   name: 'preferTemplate',
@@ -19,7 +23,8 @@ export default {
       node.type === 'BinaryExpression' &&
       node.operator === '+' &&
       ((node.left.type === 'StringLiteral' && !node.left.value.includes('`')) ||
-        (node.right.type === 'StringLiteral' && !node.right.value.includes('`')))
+        (node.right.type === 'StringLiteral' &&
+          !node.right.value.includes('`')))
     ) {
       path.context.addNodeDiagnostic(node, {
         category: 'lint/preferTemplate',
@@ -28,27 +33,28 @@ export default {
       });
 
       return templateLiteral.create({
-      expressions: [node.left, node.right].filter(node => node.type !== 'StringLiteral'),
-      quasis: nodeToQuasis(node)
-      })
+        expressions: [node.left, node.right].filter(
+          node => node.type !== 'StringLiteral',
+        ),
+        quasis: nodeToQuasis(node),
+      });
     }
 
     return node;
   },
-
 };
 
-function nodeToQuasis (node: BinaryExpression): TemplateElement[] {
+function nodeToQuasis(node: BinaryExpression): TemplateElement[] {
   return [
     templateElement.create({
       cooked: node.left.type === 'StringLiteral' ? node.left.value : '',
       raw: node.left.type === 'StringLiteral' ? node.left.value : '',
-      tail: false
-    }), 
+      tail: false,
+    }),
     templateElement.create({
       cooked: node.right.type === 'StringLiteral' ? node.right.value : '',
       raw: node.right.type === 'StringLiteral' ? node.right.value : '',
-      tail: true
-    })
+      tail: true,
+    }),
   ];
 }
