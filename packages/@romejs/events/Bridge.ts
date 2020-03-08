@@ -258,7 +258,7 @@ export default class Bridge {
   }
 
   end(message: string = 'Connection died') {
-    this.endWithError(new BridgeError(message));
+    this.endWithError(new BridgeError(message, this));
   }
 
   //# Error serialization
@@ -340,7 +340,7 @@ export default class Bridge {
     } catch (err) {
       if (err instanceof SyntaxError) {
         this.endWithError(
-          new BridgeError(`Error parsing message JSON: ${err.message}`),
+          new BridgeError(`Error parsing message JSON: ${err.message}`, this),
         );
       } else {
         this.endWithError(err);
