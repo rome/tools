@@ -48,7 +48,7 @@ export default class Linter {
     );
   }
 
-  async lint() {
+  async lint(throwAlways: boolean = true) {
     const {request} = this;
     const {reporter} = request;
 
@@ -124,6 +124,10 @@ export default class Linter {
       },
     ]);
 
-    throw printer;
+    if (throwAlways || printer.hasDiagnostics()) {
+      throw printer;
+    } else {
+      printer.footer();
+    }
   }
 }

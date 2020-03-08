@@ -46,6 +46,7 @@ type Flags = {
   coverage: boolean;
   showAllCoverage: boolean;
   updateSnapshots: boolean;
+  freezeSnapshots: boolean;
 };
 
 export default createMasterCommand({
@@ -57,6 +58,7 @@ export default createMasterCommand({
       coverage: c.get('coverage').asBoolean(true),
       showAllCoverage: c.get('showAllCoverage').asBoolean(false),
       updateSnapshots: c.get('updateSnapshots').asBoolean(false),
+      freezeSnapshots: c.get('freezeSnapshots').asBoolean(false),
     };
   },
 
@@ -130,6 +132,7 @@ export default createMasterCommand({
         coverage: commandFlags.coverage,
         showAllCoverage: commandFlags.showAllCoverage,
         updateSnapshots: commandFlags.updateSnapshots,
+        freezeSnapshots: commandFlags.freezeSnapshots,
         verboseDiagnostics: req.query.requestFlags.verboseDiagnostics,
       },
       sources: tests,

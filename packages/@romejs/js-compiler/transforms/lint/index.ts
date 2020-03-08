@@ -22,8 +22,10 @@ import noEmptyCharacterClass from './noEmptyCharacterClass';
 import noFunctionAssign from './noFunctionAssign';
 import noImportAssign from './noImportAssign';
 import noLabelVar from './noLabelVar';
+import noShadowRestrictedNames from './noShadowRestrictedNames';
 import noTemplateCurlyInString from './noTemplateCurlyInString';
 import noUnsafeFinally from './noUnsafeFinally';
+import preferFunctionDeclarations from './preferFunctionDeclarations';
 import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
@@ -47,8 +49,10 @@ export const lintTransforms = [
   noFunctionAssign,
   noImportAssign,
   noLabelVar,
+  noShadowRestrictedNames,
   noTemplateCurlyInString,
   noUnsafeFinally,
+  preferFunctionDeclarations,
   sparseArray,
   undeclaredVariables,
   unsafeNegation,

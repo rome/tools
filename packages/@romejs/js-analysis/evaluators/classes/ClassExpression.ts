@@ -40,13 +40,13 @@ export default function ClassExpression(node: AnyNode, scope: Scope) {
     bodyScope.evaluate(node.meta.typeParameters);
   }
 
-  let constructor: undefined | T = undefined;
+  let _constructor: undefined | T = undefined;
 
   for (const bodyNode of node.meta.body) {
     const type = bodyScope.evaluate(bodyNode);
 
     if (bodyNode.type === 'ClassMethod' && bodyNode.kind === 'constructor') {
-      constructor = type;
+      _constructor = type;
     } else {
       if (
         bodyNode.type !== 'TSIndexSignature' &&
@@ -62,7 +62,7 @@ export default function ClassExpression(node: AnyNode, scope: Scope) {
   //
   const classOrigin = node.id ? node.id : node;
   let type = new ClassT(scope, classOrigin, {
-    constructor,
+    _constructor,
     instances,
     statics,
     extends: node.meta.superClass

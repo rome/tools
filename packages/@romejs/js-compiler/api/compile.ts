@@ -6,7 +6,7 @@
  */
 
 import {Mappings} from '@romejs/codec-source-map';
-import {PartialDiagnostics, DiagnosticFilters} from '@romejs/diagnostics';
+import {PartialDiagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {CompileRequest} from '../types';
 import {Cache} from '@romejs/js-compiler';
 import {generateJS} from '@romejs/js-generator';
@@ -15,7 +15,7 @@ import transform from '../methods/transform';
 export type CompileResult = {
   mappings: Mappings;
   diagnostics: PartialDiagnostics;
-  filters: DiagnosticFilters;
+  suppressions: DiagnosticSuppressions;
   cacheDependencies: Array<string>;
   compiledCode: string;
   sourceText: string;
@@ -38,7 +38,7 @@ export default async function compile(
   const {
     ast: transformedAst,
     diagnostics,
-    filters,
+    suppressions,
     cacheDependencies,
   } = await transform(req);
   const generator = generateJS(
@@ -58,7 +58,7 @@ export default async function compile(
     mappings: generator.getMappings(),
     diagnostics: [...ast.diagnostics, ...diagnostics],
     cacheDependencies,
-    filters,
+    suppressions,
     sourceText,
   };
   compileCache.set(query, res);
