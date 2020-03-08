@@ -12,15 +12,17 @@ export default {
   enter(path: Path): TransformExitResult {
     const {context, node} = path;
 
-    if (node.type === 'RegExpCharSet') {
-      if (node.body.length === 0) {
-        context.addNodeDiagnostic(node, {
-          category: 'lint/noEmptyCharacterClass',
-          message:
-            'Empty character classes in regular expressions are not allowed',
-        });
-        return REDUCE_REMOVE;
-      }
+    if (
+      node.type === 'RegExpCharSet' &&
+      node.body.length === 0 &&
+      !node.invert
+    ) {
+      context.addNodeDiagnostic(node, {
+        category: 'lint/noEmptyCharacterClass',
+        message:
+          'Empty character classes in regular expressions are not allowed',
+      });
+      return REDUCE_REMOVE;
     }
 
     return node;
