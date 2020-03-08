@@ -10,7 +10,6 @@ import {
   createParser,
   ParserOptions,
   ParserUnexpectedOptions,
-  SimpleToken,
   ValueToken,
   TokenValues,
   isDigit,
@@ -34,20 +33,23 @@ import {
 import {PartialDiagnostics} from '@romejs/diagnostics';
 import {Number0, get0, add} from '@romejs/ob1';
 
+type Operator =
+  | '^'
+  | '$'
+  | '.'
+  | '['
+  | ']'
+  | '('
+  | ')'
+  | '?'
+  | '{'
+  | '}'
+  | '+'
+  | '*'
+  | '|';
+
 type Tokens = BaseTokens & {
-  '^': SimpleToken<'^'>;
-  $: SimpleToken<'$'>;
-  '.': SimpleToken<'.'>;
-  '[': SimpleToken<'['>;
-  ']': SimpleToken<']'>;
-  '(': SimpleToken<'('>;
-  ')': SimpleToken<')'>;
-  '?': SimpleToken<'?'>;
-  '{': SimpleToken<'{'>;
-  '}': SimpleToken<'}'>;
-  '+': SimpleToken<'+'>;
-  '*': SimpleToken<'*'>;
-  '|': SimpleToken<'|'>;
+  Operator: ValueToken<'Operator', Operator>;
   Character: ComplexToken<
     'Character',
     {
@@ -287,40 +289,18 @@ export const createRegExpParser = createParser(
 
         switch (char) {
           case '$':
-            return this.finishToken('$');
-
           case '^':
-            return this.finishToken('^');
-
           case '.':
-            return this.finishToken('.');
-
           case '?':
-            return this.finishToken('?');
-
           case '}':
-            return this.finishToken('}');
-
           case '+':
-            return this.finishToken('+');
-
           case '|':
-            return this.finishToken('|');
-
           case '*':
-            return this.finishToken('*');
-
           case '[':
-            return this.finishToken('[');
-
           case ']':
-            return this.finishToken(']');
-
           case '(':
-            return this.finishToken('(');
-
           case ')':
-            return this.finishToken(')');
+            return this.finishValueToken('Operator', char);
         }
 
         return this.finishComplexToken('Character', {
@@ -418,18 +398,32 @@ export const createRegExpParser = createParser(
         });
       }
 
+      matchOperator(op: string): boolean {
+        const token = this.getToken();
+        return token.type === 'Operator' && token.value === op;
+      }
+
+      eatOperator(op: string): boolean {
+        if (this.matchOperator(op)) {
+          this.nextToken();
+          return true;
+        } else {
+          return false;
+        }
+      }
+
       parseGroupCapture(): RegExpGroupCapture | RegExpGroupNonCapture {
         const start = this.getPosition();
         this.nextToken();
 
         let modifiers: GroupModifiers;
-        if (this.eatToken('?')) {
+        if (this.eatOperator('?')) {
           modifiers = this.getGroupModifiers();
         }
 
-        const expression = this.parseExpression(() => !this.matchToken(')'));
+        const expression = this.parseExpression(() => !this.matchOperator(')'));
 
-        if (!this.eatToken(')')) {
+        if (!this.eatOperator(')')) {
           this.addDiagnostic({
             message: 'Unclosed group',
             start,
@@ -456,17 +450,18 @@ export const createRegExpParser = createParser(
 
       parseCharSet(): RegExpCharSet {
         const start = this.getPosition();
+        console.log('charset start', start);
         this.nextToken();
 
         const body: RegExpCharSet['body'] = [];
-        const invert = this.eatToken('^') !== undefined;
+        const invert = this.eatOperator('^');
 
-        while (!this.matchToken('EOF') && !this.matchToken(']')) {
+        while (!this.matchToken('EOF') && !this.matchOperator(']')) {
           const part = this.parseCharacterOrRange();
           body.push(part);
         }
 
-        if (!this.eatToken(']')) {
+        if (!this.eatOperator(']')) {
           this.addDiagnostic({
             message: 'Unclosed character set',
             start,
@@ -484,22 +479,8 @@ export const createRegExpParser = createParser(
       getCharacterFromToken(token: TokenValues<Tokens>): string {
         switch (token.type) {
           case 'Character':
+          case 'Operator':
             return token.value;
-
-          case '$':
-          case '^':
-          case '.':
-          case '?':
-          case '{':
-          case '}':
-          case '+':
-          case '*':
-          case '[':
-          case ']':
-          case '(':
-          case ')':
-          case '|':
-            return token.type;
 
           case 'SOF':
           case 'EOF':
@@ -650,28 +631,28 @@ export const createRegExpParser = createParser(
       }
 
       parseQuantifier(): undefined | {min: number; max?: number} {
-        if (this.eatToken('?')) {
+        if (this.eatOperator('?')) {
           return {
             min: 0,
             max: 1,
           };
         }
 
-        if (this.eatToken('*')) {
+        if (this.eatOperator('*')) {
           return {
             min: 0,
             max: undefined,
           };
         }
 
-        if (this.eatToken('+')) {
+        if (this.eatOperator('+')) {
           return {
             min: 1,
             max: undefined,
           };
         }
 
-        if (this.matchToken('{')) {
+        if (this.matchOperator('{')) {
           const snapshot = this.save();
 
           this.nextToken();
@@ -685,13 +666,16 @@ export const createRegExpParser = createParser(
               const max = this.parseDigits();
 
               const endToken = this.getToken();
-              if (endToken.type === '}') {
+              if (endToken.type === 'Operator' && endToken.value === '}') {
                 return {
                   min,
                   max,
                 };
               }
-            } else if (nextToken.type === '}') {
+            } else if (
+              nextToken.type === 'Operator' &&
+              nextToken.value === '}'
+            ) {
               return {
                 min,
                 max: min,
@@ -719,7 +703,7 @@ export const createRegExpParser = createParser(
             break;
           }
 
-          const lazy = this.didEatToken('?');
+          const lazy = this.eatOperator('?');
 
           const quantified: RegExpQuantified = {
             type: 'RegExpQuantified',
@@ -735,10 +719,8 @@ export const createRegExpParser = createParser(
         return target;
       }
 
-      parseBodyItemPrefix(): undefined | AnyRegExpBodyItem {
-        const token = this.getToken();
-
-        switch (token.type) {
+      parseOperator(token: Tokens['Operator']): undefined | AnyRegExpBodyItem {
+        switch (token.value) {
           case '$':
             this.nextToken();
             return {
@@ -786,6 +768,17 @@ export const createRegExpParser = createParser(
 
           case ']':
           case '}':
+            return this.parseCharacter();
+        }
+      }
+
+      parseBodyItemPrefix(): undefined | AnyRegExpBodyItem {
+        const token = this.getToken();
+
+        switch (token.type) {
+          case 'Operator':
+            return this.parseOperator(token);
+
           case 'EscapedCharacter':
           case 'Character':
             return this.parseCharacter();
@@ -814,7 +807,7 @@ export const createRegExpParser = createParser(
           !this.matchToken('EOF') &&
           (whileCallback === undefined || whileCallback())
         ) {
-          if (this.eatToken('|')) {
+          if (this.eatOperator('|')) {
             alternations.push({
               start: alternateStart,
               end: this.getPosition(),
