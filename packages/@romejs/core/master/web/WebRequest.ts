@@ -200,17 +200,13 @@ export default class WebRequest {
     const {res} = this;
     res.writeHead(200, {'Content-Type': 'application/javascript'});
 
-    const bundler = new Bundler(
-      this.masterRequest,
-      this.masterRequest.reporter,
-      {
-        inlineSourceMap: false,
-        cwd: this.masterRequest.client.flags.cwd,
-        resolver: {
-          platform: 'web',
-        },
+    const bundler = new Bundler(this.masterRequest, {
+      inlineSourceMap: false,
+      cwd: this.masterRequest.client.flags.cwd,
+      resolver: {
+        platform: 'web',
       },
-    );
+    });
     const resolved = await this.master.resolver.resolveEntryAssertPath({
       origin: this.masterRequest.client.flags.cwd,
       source: createUnknownFilePath('@romejs-web/frontend'),

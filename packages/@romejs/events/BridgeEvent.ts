@@ -160,6 +160,7 @@ export default class BridgeEvent<
                 `Timeout of ${String(timeout)}ms for ${this.name}(${String(
                   JSON.stringify(param),
                 )}) event exceeded`,
+                this.bridge,
               ),
             );
           }, timeout);

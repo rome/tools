@@ -42,9 +42,9 @@ Program {
       loc: Object {
         filename: 'input.ts'
         end: Object {
-          column: 1
-          index: 118
-          line: 7
+          column: 0
+          index: 119
+          line: 8
         }
         start: Object {
           column: 0
@@ -109,9 +109,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 19
-                index: 29
-                line: 2
+                column: 4
+                index: 34
+                line: 3
               }
               start: Object {
                 column: 4
@@ -157,9 +157,9 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 19
-                  index: 29
-                  line: 2
+                  column: 4
+                  index: 34
+                  line: 3
                 }
                 start: Object {
                   column: 12
@@ -221,9 +221,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 26
-                index: 56
-                line: 3
+                column: 4
+                index: 61
+                line: 4
               }
               start: Object {
                 column: 4
@@ -264,9 +264,9 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 26
-                  index: 56
-                  line: 3
+                  column: 4
+                  index: 61
+                  line: 4
                 }
                 start: Object {
                   column: 19
@@ -420,9 +420,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 21
-                index: 96
-                line: 5
+                column: 4
+                index: 101
+                line: 6
               }
               start: Object {
                 column: 4
@@ -467,9 +467,9 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 21
-                  index: 96
-                  line: 5
+                  column: 4
+                  index: 101
+                  line: 6
                 }
                 start: Object {
                   column: 14

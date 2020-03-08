@@ -1,6 +1,5 @@
 Program {
   comments: Array []
-  diagnostics: Array []
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -21,6 +20,27 @@ Program {
       line: 1
     }
   }
+  diagnostics: Array [
+    Object {
+      advice: undefined
+      category: 'parse/js'
+      filename: 'input.js'
+      message: 'Expected a semicolon or a line terminator'
+      mtime: undefined
+      sourceType: 'script'
+      origins: Array [Object {category: 'js-parser'}]
+      end: Object {
+        column: 1
+        index: 1
+        line: 1
+      }
+      start: Object {
+        column: 0
+        index: 2
+        line: 2
+      }
+    }
+  ]
   body: Array [
     ExpressionStatement {
       loc: Object {

@@ -26,7 +26,7 @@ export type StructuredError = {
   framesToPop: number;
 };
 
-class NativeStructuredError extends Error {
+export class NativeStructuredError extends Error {
   constructor(struct: Partial<StructuredError>) {
     super(struct.message);
     this.name = struct.name === undefined ? 'Error' : struct.name;

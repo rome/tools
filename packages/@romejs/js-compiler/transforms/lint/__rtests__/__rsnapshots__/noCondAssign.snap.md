@@ -147,14 +147,14 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'js-parser'}]
       end: Object {
-        column: 0
+        column: 23
         index: 28
-        line: 3
+        line: 2
       }
       start: Object {
-        column: 0
+        column: 23
         index: 28
-        line: 3
+        line: 2
       }
     }
     Object {

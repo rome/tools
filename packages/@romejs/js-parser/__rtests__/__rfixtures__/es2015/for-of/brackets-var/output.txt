@@ -59,7 +59,6 @@ Program {
         insensitive: false
         multiline: false
         noDotNewline: false
-        pattern: 'b'
         sticky: false
         unicode: false
         loc: Object {
@@ -74,6 +73,39 @@ Program {
             index: 16
             line: 1
           }
+        }
+        expression: RegExpSubExpression {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 35
+              index: 18
+              line: 1
+            }
+            start: Object {
+              column: 17
+              index: 17
+              line: 1
+            }
+          }
+          body: Array [
+            RegExpCharacter {
+              value: 'b'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 35
+                  index: 18
+                  line: 1
+                }
+                start: Object {
+                  column: 17
+                  index: 17
+                  line: 1
+                }
+              }
+            }
+          ]
         }
       }
       left: VariableDeclaration {

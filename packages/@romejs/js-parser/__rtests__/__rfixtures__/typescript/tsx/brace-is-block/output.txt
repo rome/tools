@@ -80,9 +80,9 @@ Program {
       loc: Object {
         filename: 'input.tsx'
         end: Object {
-          column: 23
-          index: 122
-          line: 2
+          column: 0
+          index: 123
+          line: 3
         }
         start: Object {
           column: 0

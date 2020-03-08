@@ -87,7 +87,6 @@ Program {
               insensitive: false
               multiline: false
               noDotNewline: false
-              pattern: '=([^=\\s])+'
               sticky: false
               unicode: false
               loc: Object {
@@ -102,6 +101,139 @@ Program {
                   index: 8
                   line: 1
                 }
+              }
+              expression: RegExpSubExpression {
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 18
+                    index: 19
+                    line: 1
+                  }
+                  start: Object {
+                    column: 9
+                    index: 9
+                    line: 1
+                  }
+                }
+                body: Array [
+                  RegExpCharacter {
+                    value: '='
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 10
+                        index: 10
+                        line: 1
+                      }
+                      start: Object {
+                        column: 9
+                        index: 9
+                        line: 1
+                      }
+                    }
+                  }
+                  RegExpQuantified {
+                    lazy: false
+                    max: undefined
+                    min: 1
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 18
+                        index: 19
+                        line: 1
+                      }
+                      start: Object {
+                        column: 10
+                        index: 10
+                        line: 1
+                      }
+                    }
+                    item: RegExpGroupCapture {
+                      name: undefined
+                      loc: Object {
+                        filename: 'input.js'
+                        end: Object {
+                          column: 18
+                          index: 18
+                          line: 1
+                        }
+                        start: Object {
+                          column: 10
+                          index: 10
+                          line: 1
+                        }
+                      }
+                      expression: RegExpSubExpression {
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 17
+                            index: 17
+                            line: 1
+                          }
+                          start: Object {
+                            column: 11
+                            index: 11
+                            line: 1
+                          }
+                        }
+                        body: Array [
+                          RegExpCharSet {
+                            invert: true
+                            loc: Object {
+                              filename: 'input.js'
+                              end: Object {
+                                column: 17
+                                index: 17
+                                line: 1
+                              }
+                              start: Object {
+                                column: 11
+                                index: 11
+                                line: 1
+                              }
+                            }
+                            body: Array [
+                              RegExpCharacter {
+                                value: '='
+                                loc: Object {
+                                  filename: 'input.js'
+                                  end: Object {
+                                    column: 14
+                                    index: 14
+                                    line: 1
+                                  }
+                                  start: Object {
+                                    column: 13
+                                    index: 13
+                                    line: 1
+                                  }
+                                }
+                              }
+                              RegExpWhiteSpaceCharacter {
+                                loc: Object {
+                                  filename: 'input.js'
+                                  end: Object {
+                                    column: 16
+                                    index: 16
+                                    line: 1
+                                  }
+                                  start: Object {
+                                    column: 14
+                                    index: 14
+                                    line: 1
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
               }
             }
           }

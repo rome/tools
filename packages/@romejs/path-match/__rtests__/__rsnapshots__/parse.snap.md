@@ -7,21 +7,20 @@
 ### `0`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: true
   root: false
-  names: Array ['foo']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 4
+      column: 1
       index: 4
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -30,12 +29,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 4
+          column: 1
           index: 4
           line: 1
         }
         start: Object {
-          column: 2
+          column: 1
           index: 1
           line: 1
         }
@@ -46,12 +45,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 4
+              column: 1
               index: 4
               line: 1
             }
             start: Object {
-              column: 2
+              column: 1
               index: 1
               line: 1
             }
@@ -66,9 +65,8 @@ Pattern {
 ### `1`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
-  names: Array []
   negate: false
   root: false
   segments: Array []
@@ -81,7 +79,7 @@ Pattern {
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -91,24 +89,20 @@ Pattern {
 ### `10`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 9
+      column: 6
       index: 9
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -117,12 +111,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 6
-          index: 5
+          column: 4
+          index: 4
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -133,12 +127,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
-              index: 4
+              column: 3
+              index: 3
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -150,12 +144,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 10
-          index: 9
+          column: 6
+          index: 6
           line: 1
         }
         start: Object {
-          column: 5
+          column: 4
           index: 4
           line: 1
         }
@@ -165,12 +159,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 7
-              index: 6
+              column: 5
+              index: 5
               line: 1
             }
             start: Object {
-              column: 5
+              column: 4
               index: 4
               line: 1
             }
@@ -182,12 +176,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 6
           index: 9
           line: 1
         }
         start: Object {
-          column: 7
+          column: 6
           index: 6
           line: 1
         }
@@ -198,12 +192,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
+              column: 6
               index: 9
               line: 1
             }
             start: Object {
-              column: 7
+              column: 6
               index: 6
               line: 1
             }
@@ -218,24 +212,20 @@ Pattern {
 ### `11`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 10
+      column: 7
       index: 10
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -244,12 +234,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 7
-          index: 6
+          column: 4
+          index: 4
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -260,12 +250,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
-              index: 4
+              column: 3
+              index: 3
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -277,12 +267,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 11
-          index: 10
+          column: 7
+          index: 7
           line: 1
         }
         start: Object {
-          column: 5
+          column: 4
           index: 4
           line: 1
         }
@@ -292,12 +282,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 10
+          column: 7
           index: 10
           line: 1
         }
         start: Object {
-          column: 8
+          column: 7
           index: 7
           line: 1
         }
@@ -308,12 +298,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 10
+              column: 7
               index: 10
               line: 1
             }
             start: Object {
-              column: 8
+              column: 7
               index: 7
               line: 1
             }
@@ -328,21 +318,20 @@ Pattern {
 ### `12`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['foo']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 8
+      column: 5
       index: 8
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -351,12 +340,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 6
-          index: 5
+          column: 4
+          index: 4
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -367,12 +356,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
-              index: 4
+              column: 3
+              index: 3
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -384,12 +373,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 5
           index: 8
           line: 1
         }
         start: Object {
-          column: 5
+          column: 4
           index: 4
           line: 1
         }
@@ -399,12 +388,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
-              index: 8
+              column: 5
+              index: 5
               line: 1
             }
             start: Object {
-              column: 5
+              column: 4
               index: 4
               line: 1
             }
@@ -415,12 +404,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 8
+              column: 5
               index: 8
               line: 1
             }
             start: Object {
-              column: 6
+              column: 5
               index: 5
               line: 1
             }
@@ -435,21 +424,20 @@ Pattern {
 ### `13`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['foo']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 8
+      column: 7
       index: 8
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -458,12 +446,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
-          index: 7
+          column: 4
+          index: 4
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -474,12 +462,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
-              index: 4
+              column: 3
+              index: 3
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -491,12 +479,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 7
           index: 8
           line: 1
         }
         start: Object {
-          column: 5
+          column: 4
           index: 4
           line: 1
         }
@@ -507,12 +495,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
-              index: 8
+              column: 7
+              index: 7
               line: 1
             }
             start: Object {
-              column: 5
+              column: 4
               index: 4
               line: 1
             }
@@ -522,12 +510,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 8
+              column: 7
               index: 8
               line: 1
             }
             start: Object {
-              column: 8
+              column: 7
               index: 7
               line: 1
             }
@@ -542,21 +530,20 @@ Pattern {
 ### `14`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['foo']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 9
+      column: 8
       index: 9
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -565,12 +552,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 6
-          index: 5
+          column: 4
+          index: 4
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -581,12 +568,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
-              index: 4
+              column: 3
+              index: 3
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -598,12 +585,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 8
           index: 9
           line: 1
         }
         start: Object {
-          column: 5
+          column: 4
           index: 4
           line: 1
         }
@@ -613,12 +600,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
-              index: 8
+              column: 5
+              index: 5
               line: 1
             }
             start: Object {
-              column: 5
+              column: 4
               index: 4
               line: 1
             }
@@ -629,12 +616,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 10
-              index: 9
+              column: 8
+              index: 8
               line: 1
             }
             start: Object {
-              column: 6
+              column: 5
               index: 5
               line: 1
             }
@@ -644,12 +631,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
+              column: 8
               index: 9
               line: 1
             }
             start: Object {
-              column: 9
+              column: 8
               index: 8
               line: 1
             }
@@ -664,21 +651,20 @@ Pattern {
 ### `15`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['foo']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 13
+      column: 9
       index: 13
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -687,12 +673,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 6
-          index: 5
+          column: 4
+          index: 4
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -703,12 +689,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
-              index: 4
+              column: 3
+              index: 3
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -720,12 +706,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 13
+          column: 9
           index: 13
           line: 1
         }
         start: Object {
-          column: 5
+          column: 4
           index: 4
           line: 1
         }
@@ -735,12 +721,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
-              index: 8
+              column: 5
+              index: 5
               line: 1
             }
             start: Object {
-              column: 5
+              column: 4
               index: 4
               line: 1
             }
@@ -751,12 +737,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 10
-              index: 9
+              column: 8
+              index: 8
               line: 1
             }
             start: Object {
-              column: 6
+              column: 5
               index: 5
               line: 1
             }
@@ -766,12 +752,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 14
-              index: 13
+              column: 9
+              index: 9
               line: 1
             }
             start: Object {
-              column: 9
+              column: 8
               index: 8
               line: 1
             }
@@ -782,12 +768,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 13
+              column: 9
               index: 13
               line: 1
             }
             start: Object {
-              column: 10
+              column: 9
               index: 9
               line: 1
             }
@@ -802,22 +788,21 @@ Pattern {
 ### `16`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ' foobar'
-  names: Array []
   negate: false
   root: false
   segments: Array []
   loc: Object {
     filename: undefined
     end: Object {
-      column: 9
-      index: 8
+      column: 1
+      index: 1
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -827,24 +812,20 @@ Pattern {
 ### `17`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ' foobar'
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar '
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 17
-      index: 16
+      column: 9
+      index: 9
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -853,12 +834,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
-          index: 8
+          column: 4
+          index: 4
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -869,12 +850,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
-              index: 4
+              column: 3
+              index: 3
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -886,12 +867,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 10
-          index: 9
+          column: 8
+          index: 8
           line: 1
         }
         start: Object {
-          column: 5
+          column: 4
           index: 4
           line: 1
         }
@@ -902,12 +883,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 10
-              index: 9
+              column: 8
+              index: 8
               line: 1
             }
             start: Object {
-              column: 5
+              column: 4
               index: 4
               line: 1
             }
@@ -922,24 +903,20 @@ Pattern {
 ### `18`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar\\#foobar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 15
+      column: 4
       index: 15
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -948,12 +925,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 16
-          index: 15
+          column: 4
+          index: 4
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -964,12 +941,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
-              index: 4
+              column: 3
+              index: 3
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -981,12 +958,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 15
+          column: 4
           index: 15
           line: 1
         }
         start: Object {
-          column: 5
+          column: 4
           index: 4
           line: 1
         }
@@ -997,12 +974,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 15
+              column: 4
               index: 15
               line: 1
             }
             start: Object {
-              column: 5
+              column: 4
               index: 4
               line: 1
             }
@@ -1017,24 +994,20 @@ Pattern {
 ### `19`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    '\\#foobar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 12
+      column: 4
       index: 12
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1043,12 +1016,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 13
-          index: 12
+          column: 4
+          index: 4
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -1059,12 +1032,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
-              index: 4
+              column: 3
+              index: 3
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -1076,12 +1049,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 12
+          column: 4
           index: 12
           line: 1
         }
         start: Object {
-          column: 5
+          column: 4
           index: 4
           line: 1
         }
@@ -1092,12 +1065,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 12
+              column: 4
               index: 12
               line: 1
             }
             start: Object {
-              column: 5
+              column: 4
               index: 4
               line: 1
             }
@@ -1112,24 +1085,20 @@ Pattern {
 ### `2`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: true
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 8
+      column: 5
       index: 8
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1138,12 +1107,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
-          index: 8
+          column: 5
+          index: 5
           line: 1
         }
         start: Object {
-          column: 2
+          column: 1
           index: 1
           line: 1
         }
@@ -1154,12 +1123,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 6
-              index: 5
+              column: 4
+              index: 4
               line: 1
             }
             start: Object {
-              column: 2
+              column: 1
               index: 1
               line: 1
             }
@@ -1171,12 +1140,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 5
           index: 8
           line: 1
         }
         start: Object {
-          column: 6
+          column: 5
           index: 5
           line: 1
         }
@@ -1187,12 +1156,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 8
+              column: 5
               index: 8
               line: 1
             }
             start: Object {
-              column: 6
+              column: 5
               index: 5
               line: 1
             }
@@ -1207,24 +1176,20 @@ Pattern {
 ### `20`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: true
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 10
+      column: 7
       index: 10
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1233,12 +1198,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 11
-          index: 10
+          column: 7
+          index: 7
           line: 1
         }
         start: Object {
-          column: 3
+          column: 2
           index: 2
           line: 1
         }
@@ -1249,12 +1214,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 8
-              index: 7
+              column: 5
+              index: 5
               line: 1
             }
             start: Object {
-              column: 3
+              column: 2
               index: 2
               line: 1
             }
@@ -1266,12 +1231,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 10
+          column: 7
           index: 10
           line: 1
         }
         start: Object {
-          column: 8
+          column: 7
           index: 7
           line: 1
         }
@@ -1282,12 +1247,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 10
+              column: 7
               index: 10
               line: 1
             }
             start: Object {
-              column: 8
+              column: 7
               index: 7
               line: 1
             }
@@ -1302,24 +1267,20 @@ Pattern {
 ### `21`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 11
+      column: 8
       index: 11
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1328,12 +1289,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 12
-          index: 11
+          column: 8
+          index: 8
           line: 1
         }
         start: Object {
-          column: 4
+          column: 3
           index: 3
           line: 1
         }
@@ -1344,12 +1305,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
-              index: 8
+              column: 6
+              index: 6
               line: 1
             }
             start: Object {
-              column: 4
+              column: 3
               index: 3
               line: 1
             }
@@ -1361,12 +1322,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 11
+          column: 8
           index: 11
           line: 1
         }
         start: Object {
-          column: 9
+          column: 8
           index: 8
           line: 1
         }
@@ -1377,12 +1338,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 11
+              column: 8
               index: 11
               line: 1
             }
             start: Object {
-              column: 9
+              column: 8
               index: 8
               line: 1
             }
@@ -1397,24 +1358,20 @@ Pattern {
 ### `22`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 12
+      column: 9
       index: 12
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1423,12 +1380,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 13
-          index: 12
+          column: 9
+          index: 9
           line: 1
         }
         start: Object {
-          column: 5
+          column: 4
           index: 4
           line: 1
         }
@@ -1439,12 +1396,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 10
-              index: 9
+              column: 7
+              index: 7
               line: 1
             }
             start: Object {
-              column: 5
+              column: 4
               index: 4
               line: 1
             }
@@ -1456,12 +1413,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 12
+          column: 9
           index: 12
           line: 1
         }
         start: Object {
-          column: 10
+          column: 9
           index: 9
           line: 1
         }
@@ -1472,12 +1429,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 12
+              column: 9
               index: 12
               line: 1
             }
             start: Object {
-              column: 10
+              column: 9
               index: 9
               line: 1
             }
@@ -1492,21 +1449,20 @@ Pattern {
 ### `23`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['bar']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 13
+      column: 10
       index: 13
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1515,12 +1471,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 14
-          index: 13
+          column: 10
+          index: 10
           line: 1
         }
         start: Object {
-          column: 5
+          column: 4
           index: 4
           line: 1
         }
@@ -1530,12 +1486,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
-              index: 8
+              column: 5
+              index: 5
               line: 1
             }
             start: Object {
-              column: 5
+              column: 4
               index: 4
               line: 1
             }
@@ -1546,12 +1502,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 11
-              index: 10
+              column: 8
+              index: 8
               line: 1
             }
             start: Object {
-              column: 6
+              column: 5
               index: 5
               line: 1
             }
@@ -1563,12 +1519,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 13
+          column: 10
           index: 13
           line: 1
         }
         start: Object {
-          column: 11
+          column: 10
           index: 10
           line: 1
         }
@@ -1579,12 +1535,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 13
+              column: 10
               index: 13
               line: 1
             }
             start: Object {
-              column: 11
+              column: 10
               index: 10
               line: 1
             }
@@ -1599,24 +1555,20 @@ Pattern {
 ### `24`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'hello'
-    'world'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 12
+      column: 7
       index: 12
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1625,12 +1577,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 13
-          index: 12
+          column: 7
+          index: 7
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -1641,12 +1593,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 8
-              index: 7
+              column: 5
+              index: 5
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -1658,12 +1610,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 12
+          column: 7
           index: 12
           line: 1
         }
         start: Object {
-          column: 8
+          column: 7
           index: 7
           line: 1
         }
@@ -1674,12 +1626,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 12
+              column: 7
               index: 12
               line: 1
             }
             start: Object {
-              column: 8
+              column: 7
               index: 7
               line: 1
             }
@@ -1694,24 +1646,20 @@ Pattern {
 ### `3`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 9
+      column: 6
       index: 9
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1720,12 +1668,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 10
-          index: 9
+          column: 6
+          index: 6
           line: 1
         }
         start: Object {
-          column: 3
+          column: 2
           index: 2
           line: 1
         }
@@ -1736,12 +1684,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 7
-              index: 6
+              column: 5
+              index: 5
               line: 1
             }
             start: Object {
-              column: 3
+              column: 2
               index: 2
               line: 1
             }
@@ -1753,12 +1701,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
+          column: 6
           index: 9
           line: 1
         }
         start: Object {
-          column: 7
+          column: 6
           index: 6
           line: 1
         }
@@ -1769,12 +1717,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
+              column: 6
               index: 9
               line: 1
             }
             start: Object {
-              column: 7
+              column: 6
               index: 6
               line: 1
             }
@@ -1789,24 +1737,20 @@ Pattern {
 ### `4`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 10
+      column: 7
       index: 10
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1815,12 +1759,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 11
-          index: 10
+          column: 7
+          index: 7
           line: 1
         }
         start: Object {
-          column: 4
+          column: 3
           index: 3
           line: 1
         }
@@ -1831,12 +1775,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 8
-              index: 7
+              column: 6
+              index: 6
               line: 1
             }
             start: Object {
-              column: 4
+              column: 3
               index: 3
               line: 1
             }
@@ -1848,12 +1792,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 10
+          column: 7
           index: 10
           line: 1
         }
         start: Object {
-          column: 8
+          column: 7
           index: 7
           line: 1
         }
@@ -1864,12 +1808,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 10
+              column: 7
               index: 10
               line: 1
             }
             start: Object {
-              column: 8
+              column: 7
               index: 7
               line: 1
             }
@@ -1884,21 +1828,20 @@ Pattern {
 ### `5`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['bar']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 11
+      column: 8
       index: 11
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -1907,12 +1850,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 12
-          index: 11
+          column: 8
+          index: 8
           line: 1
         }
         start: Object {
-          column: 4
+          column: 3
           index: 3
           line: 1
         }
@@ -1922,12 +1865,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 8
-              index: 7
+              column: 4
+              index: 4
               line: 1
             }
             start: Object {
-              column: 4
+              column: 3
               index: 3
               line: 1
             }
@@ -1938,12 +1881,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 9
-              index: 8
+              column: 7
+              index: 7
               line: 1
             }
             start: Object {
-              column: 5
+              column: 4
               index: 4
               line: 1
             }
@@ -1955,12 +1898,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 11
+          column: 8
           index: 11
           line: 1
         }
         start: Object {
-          column: 9
+          column: 8
           index: 8
           line: 1
         }
@@ -1971,12 +1914,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 11
+              column: 8
               index: 11
               line: 1
             }
             start: Object {
-              column: 9
+              column: 8
               index: 8
               line: 1
             }
@@ -1991,21 +1934,78 @@ Pattern {
 ### `6`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array ['foo']
   loc: Object {
     filename: undefined
     end: Object {
-      column: 3
+      column: 0
       index: 3
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
+      line: 1
+    }
+  }
+  segments: Array [
+    Segment {
+      loc: Object {
+        filename: undefined
+        end: Object {
+          column: 0
+          index: 3
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      parts: Array [
+        Word {
+          value: 'foo'
+          loc: Object {
+            filename: undefined
+            end: Object {
+              column: 0
+              index: 3
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+### `7`
+
+```javascript
+PathPattern {
+  comment: ''
+  negate: false
+  root: false
+  loc: Object {
+    filename: undefined
+    end: Object {
+      column: 3
+      index: 4
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
       line: 1
     }
   }
@@ -2015,11 +2015,11 @@ Pattern {
         filename: undefined
         end: Object {
           column: 3
-          index: 3
+          index: 4
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -2035,66 +2035,7 @@ Pattern {
               line: 1
             }
             start: Object {
-              column: 1
-              index: 0
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-  ]
-}
-```
-
-### `7`
-
-```javascript
-Pattern {
-  comment: ''
-  negate: false
-  root: false
-  names: Array ['foo']
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: -1
-      line: 1
-    }
-  }
-  segments: Array [
-    Segment {
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 0
-          line: 1
-        }
-      }
-      parts: Array [
-        Word {
-          value: 'foo'
-          loc: Object {
-            filename: undefined
-            end: Object {
-              column: 5
-              index: 4
-              line: 1
-            }
-            start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -2109,24 +2050,20 @@ Pattern {
 ### `8`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 7
+      column: 4
       index: 7
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -2135,12 +2072,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
-          index: 7
+          column: 4
+          index: 4
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -2151,12 +2088,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
-              index: 4
+              column: 3
+              index: 3
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -2168,12 +2105,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 7
+          column: 4
           index: 7
           line: 1
         }
         start: Object {
-          column: 5
+          column: 4
           index: 4
           line: 1
         }
@@ -2184,12 +2121,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 7
+              column: 4
               index: 7
               line: 1
             }
             start: Object {
-              column: 5
+              column: 4
               index: 4
               line: 1
             }
@@ -2204,24 +2141,20 @@ Pattern {
 ### `9`
 
 ```javascript
-Pattern {
+PathPattern {
   comment: ''
   negate: false
   root: false
-  names: Array [
-    'foo'
-    'bar'
-  ]
   loc: Object {
     filename: undefined
     end: Object {
-      column: 8
+      column: 5
       index: 8
       line: 1
     }
     start: Object {
       column: 0
-      index: -1
+      index: 0
       line: 1
     }
   }
@@ -2230,12 +2163,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 9
-          index: 8
+          column: 5
+          index: 5
           line: 1
         }
         start: Object {
-          column: 1
+          column: 0
           index: 0
           line: 1
         }
@@ -2246,12 +2179,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 5
-              index: 4
+              column: 3
+              index: 3
               line: 1
             }
             start: Object {
-              column: 1
+              column: 0
               index: 0
               line: 1
             }
@@ -2263,12 +2196,12 @@ Pattern {
       loc: Object {
         filename: undefined
         end: Object {
-          column: 8
+          column: 5
           index: 8
           line: 1
         }
         start: Object {
-          column: 6
+          column: 5
           index: 5
           line: 1
         }
@@ -2279,12 +2212,12 @@ Pattern {
           loc: Object {
             filename: undefined
             end: Object {
-              column: 8
+              column: 5
               index: 8
               line: 1
             }
             start: Object {
-              column: 6
+              column: 5
               index: 5
               line: 1
             }

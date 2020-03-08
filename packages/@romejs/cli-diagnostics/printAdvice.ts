@@ -15,7 +15,6 @@ import {
   DiagnosticAdviceItemFrame,
   DiagnosticAdviceItemInspect,
   DiagnosticAdviceItemDiff,
-  DiagnosticAdviceItemAction,
   DiagnosticAdviceItemStacktrace,
 } from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
@@ -60,9 +59,6 @@ export default function printAdvice(
 
     case 'stacktrace':
       return printStacktrace(item, opts);
-
-    case 'action':
-      return printAction(item, opts);
 
     case 'inspect':
       return printInspect(item, opts);
@@ -160,21 +156,6 @@ function printFrame(
   }
 
   reporter.logAll(escapeMarkup(frame));
-  return false;
-}
-
-function printAction(
-  item: DiagnosticAdviceItemAction,
-  opts: AdvicePrintOptions,
-): boolean {
-  const {reporter} = opts;
-  reporter.logAll(`<bold>${item.message}</bold>`);
-  reporter.logAll('You have the following choices:');
-  reporter.list(
-    item.buttons.map(button => {
-      return `${button.text}: \`${button.command}\``;
-    }),
-  );
   return false;
 }
 

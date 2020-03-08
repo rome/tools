@@ -180,28 +180,6 @@ Program {
                     line: 1
                   }
                 }
-                object: RegExpLiteral {
-                  global: false
-                  insensitive: false
-                  multiline: false
-                  noDotNewline: false
-                  pattern: '\\d'
-                  sticky: false
-                  unicode: false
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 7
-                      index: 7
-                      line: 1
-                    }
-                    start: Object {
-                      column: 3
-                      index: 3
-                      line: 1
-                    }
-                  }
-                }
                 property: StaticMemberProperty {
                   value: Identifier {
                     name: 'exec'
@@ -231,6 +209,59 @@ Program {
                       index: 8
                       line: 1
                     }
+                  }
+                }
+                object: RegExpLiteral {
+                  global: false
+                  insensitive: false
+                  multiline: false
+                  noDotNewline: false
+                  sticky: false
+                  unicode: false
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 7
+                      index: 7
+                      line: 1
+                    }
+                    start: Object {
+                      column: 3
+                      index: 3
+                      line: 1
+                    }
+                  }
+                  expression: RegExpSubExpression {
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 10
+                        index: 6
+                        line: 1
+                      }
+                      start: Object {
+                        column: 4
+                        index: 4
+                        line: 1
+                      }
+                    }
+                    body: Array [
+                      RegExpDigitCharacter {
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 10
+                            index: 6
+                            line: 1
+                          }
+                          start: Object {
+                            column: 4
+                            index: 4
+                            line: 1
+                          }
+                        }
+                      }
+                    ]
                   }
                 }
               }

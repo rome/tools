@@ -37,7 +37,7 @@ export const LINT_AND_FORMAT_ENABLED_CONFIG: ProjectConfig = {
 
 export async function testLint(
   input: string,
-  config: ProjectConfig,
+  config: ProjectConfig = LINT_ENABLED_FORMAT_DISABLED_CONFIG,
   sourceType: ConstSourceType = 'module',
 ) {
   return await lint({

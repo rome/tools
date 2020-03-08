@@ -119,6 +119,7 @@ import {
 } from './index';
 import {number0, number0Neg1, Number0, get0, inc} from '@romejs/ob1';
 import {splitFunctionParams} from './statement';
+import {createRegExpParser} from '@romejs/codec-js-regexp';
 
 // Check if property name clashes with already added.
 // Object/class getters and setters are not allowed to clash —
@@ -3524,10 +3525,29 @@ function parseRegExpLiteral(parser: JSParser): RegExpLiteral {
   }
   parser.next();
 
-  const {flags} = value;
+  const {flags, pattern} = value;
+
+  const regexParser = createRegExpParser({
+    offsetPosition: {
+      // Advance passed first slash
+      ...start,
+      column: inc(start.column),
+      index: inc(start.index),
+    },
+    path: parser.filename,
+    input: pattern,
+    unicode: flags.has('u'),
+  });
+
+  const {diagnostics, expression} = regexParser.parse();
+
+  for (const diagnostic of diagnostics) {
+    parser.addDiagnostic(diagnostic);
+  }
+
   return parser.finishNode(start, {
     type: 'RegExpLiteral',
-    pattern: value.pattern,
+    expression,
     global: flags.has('g'),
     multiline: flags.has('m'),
     sticky: flags.has('y'),

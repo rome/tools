@@ -154,7 +154,7 @@ export default createParser(
       parse(): Array<Node> {
         const nodes: Array<Node> = [];
 
-        while (!this.isEOF()) {
+        while (!this.matchToken('EOF')) {
           const start = this.getPosition();
           const token = this.getToken();
 

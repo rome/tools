@@ -73,9 +73,9 @@ Program {
       loc: Object {
         filename: 'input.ts'
         end: Object {
-          column: 10
-          index: 18
-          line: 2
+          column: 0
+          index: 19
+          line: 3
         }
         start: Object {
           column: 0

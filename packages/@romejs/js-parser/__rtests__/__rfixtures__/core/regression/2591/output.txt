@@ -42,9 +42,9 @@ Program {
       loc: Object {
         filename: 'input.js'
         end: Object {
-          column: 1
-          index: 33
-          line: 4
+          column: 0
+          index: 34
+          line: 5
         }
         start: Object {
           column: 0
@@ -176,7 +176,6 @@ Program {
               insensitive: false
               multiline: false
               noDotNewline: false
-              pattern: 'wow'
               sticky: false
               unicode: false
               loc: Object {
@@ -191,6 +190,71 @@ Program {
                   index: 25
                   line: 3
                 }
+              }
+              expression: RegExpSubExpression {
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 6
+                    index: 29
+                    line: 3
+                  }
+                  start: Object {
+                    column: 3
+                    index: 26
+                    line: 3
+                  }
+                }
+                body: Array [
+                  RegExpCharacter {
+                    value: 'w'
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 4
+                        index: 27
+                        line: 3
+                      }
+                      start: Object {
+                        column: 3
+                        index: 26
+                        line: 3
+                      }
+                    }
+                  }
+                  RegExpCharacter {
+                    value: 'o'
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 5
+                        index: 28
+                        line: 3
+                      }
+                      start: Object {
+                        column: 4
+                        index: 27
+                        line: 3
+                      }
+                    }
+                  }
+                  RegExpCharacter {
+                    value: 'w'
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 6
+                        index: 29
+                        line: 3
+                      }
+                      start: Object {
+                        column: 5
+                        index: 28
+                        line: 3
+                      }
+                    }
+                  }
+                ]
               }
             }
           }

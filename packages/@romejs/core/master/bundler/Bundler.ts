@@ -34,10 +34,10 @@ export type BundlerEntryResoluton = {
 };
 
 export default class Bundler {
-  constructor(req: MasterRequest, reporter: Reporter, config: BundlerConfig) {
+  constructor(req: MasterRequest, config: BundlerConfig) {
     this.config = config;
     this.master = req.master;
-    this.reporter = reporter;
+    this.reporter = req.reporter;
     this.request = req;
 
     this.entries = [];
@@ -53,7 +53,7 @@ export default class Bundler {
   config: BundlerConfig;
 
   static createFromMasterRequest(req: MasterRequest): Bundler {
-    return new Bundler(req, req.reporter, req.getBundlerConfigFromFlags());
+    return new Bundler(req, req.getBundlerConfigFromFlags());
   }
 
   async getResolvedEntry(
@@ -95,6 +95,7 @@ export default class Bundler {
   createBundleRequest(
     resolvedEntry: AbsoluteFilePath,
     options: BundleOptions,
+    reporter: Reporter,
   ): BundleRequest {
     const project = this.master.projectManager.assertProjectExisting(
       resolvedEntry,
@@ -102,11 +103,17 @@ export default class Bundler {
     const mode: BundlerMode = project.config.bundler.mode;
 
     this.entries.push(resolvedEntry);
-    return new BundleRequest(this, mode, resolvedEntry, options);
+    return new BundleRequest({
+      bundler: this,
+      mode,
+      resolvedEntry,
+      options,
+      reporter,
+    });
   }
 
   async compile(path: AbsoluteFilePath): Promise<WorkerCompileResult> {
-    const bundleRequest = this.createBundleRequest(path, {});
+    const bundleRequest = this.createBundleRequest(path, {}, this.reporter);
     await bundleRequest.stepAnalyze();
     bundleRequest.diagnostics.maybeThrowDiagnosticsError();
     return await bundleRequest.compileJS(path);
@@ -116,6 +123,9 @@ export default class Bundler {
   async bundleMultiple(
     entries: Array<AbsoluteFilePath>,
   ): Promise<Map<AbsoluteFilePath, BundleResult>> {
+    // Clone so we can mess with it
+    entries = [...entries];
+
     // Seed the dependency graph with all the entries at the same time
     const processor = new DiagnosticsProcessor({
       origins: [
@@ -139,15 +149,49 @@ export default class Bundler {
       analyzeProgress,
       validate: false,
     });
+    analyzeProgress.end();
     processor.maybeThrowDiagnosticsError();
 
     // Now actually bundle them
     const map: Map<AbsoluteFilePath, BundleResult> = new Map();
 
+    const progress = this.reporter.progress();
+    progress.setTitle('Bundling');
+    progress.setTotal(entries.length);
+
+    const silentReporter = this.reporter.fork({
+      silent: true,
+    });
+
+    const promises: Set<Promise<void>> = new Set();
+
     // Could maybe do some of this in parallel?
-    for (const resolvedEntry of entries) {
-      map.set(resolvedEntry, await this.bundle(resolvedEntry));
+    while (entries.length > 0) {
+      const entry = entries.shift();
+      if (entry === undefined) {
+        throw new Error('Impossible. We just checked.');
+      }
+
+      const promise = (async () => {
+        const text = `<filelink target="${entry.join()}" />`;
+        progress.pushText(text);
+        map.set(entry, await this.bundle(entry, {}, silentReporter));
+        progress.popText(text);
+        progress.tick();
+      })();
+      promise.then(() => {
+        promises.delete(promise);
+      });
+      promises.add(promise);
+
+      if (promises.size > 5) {
+        await Promise.race(Array.from(promises));
+      }
     }
+
+    await Promise.all(Array.from(promises));
+
+    progress.end();
 
     return map;
   }
@@ -295,14 +339,13 @@ export default class Bundler {
   async bundle(
     resolvedEntry: AbsoluteFilePath,
     options: BundleOptions = {},
+    reporter: Reporter = this.reporter,
   ): Promise<BundleResult> {
-    const {reporter} = this;
-
     reporter.info(
       `Bundling <filelink emphasis target="${resolvedEntry.join()}" />`,
     );
 
-    const req = this.createBundleRequest(resolvedEntry, options);
+    const req = this.createBundleRequest(resolvedEntry, options, reporter);
     const res = await req.bundle();
 
     const processor = new DiagnosticsProcessor({origins: []});

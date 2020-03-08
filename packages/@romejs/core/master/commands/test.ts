@@ -16,6 +16,7 @@ import Bundler from '../bundler/Bundler';
 import {AbsoluteFilePath} from '@romejs/path';
 import {JS_EXTENSIONS} from '../../common/fileHandlers';
 import {TEST_FOLDER_NAME} from '@romejs/core/common/constants';
+import {TestRunnerOptions} from '../testing/types';
 
 function isTestFile(path: AbsoluteFilePath): boolean {
   const parts = path.getSegments();
@@ -42,12 +43,7 @@ function isTestFile(path: AbsoluteFilePath): boolean {
   return false;
 }
 
-type Flags = {
-  coverage: boolean;
-  showAllCoverage: boolean;
-  updateSnapshots: boolean;
-  freezeSnapshots: boolean;
-};
+type Flags = Omit<TestRunnerOptions, 'verboseDiagnostics'>;
 
 export default createMasterCommand({
   category: commandCategories.CODE_QUALITY,
@@ -59,6 +55,7 @@ export default createMasterCommand({
       showAllCoverage: c.get('showAllCoverage').asBoolean(false),
       updateSnapshots: c.get('updateSnapshots').asBoolean(false),
       freezeSnapshots: c.get('freezeSnapshots').asBoolean(false),
+      syncTests: c.get('syncTests').asBoolean(false),
     };
   },
 
@@ -91,9 +88,7 @@ export default createMasterCommand({
       return;
     }
 
-    reporter.info(
-      `Bundling <number emphasis>${files.length}</number> test files`,
-    );
+    reporter.info(`Bundling test files`);
 
     let addDiagnostics: PartialDiagnostics = [];
 
@@ -108,9 +103,6 @@ export default createMasterCommand({
 
     const bundler = new Bundler(
       req,
-      req.reporter.fork({
-        silent: true,
-      }),
       req.getBundlerConfigFromFlags({
         mocks: true,
       }),
@@ -133,6 +125,7 @@ export default createMasterCommand({
         showAllCoverage: commandFlags.showAllCoverage,
         updateSnapshots: commandFlags.updateSnapshots,
         freezeSnapshots: commandFlags.freezeSnapshots,
+        syncTests: commandFlags.syncTests,
         verboseDiagnostics: req.query.requestFlags.verboseDiagnostics,
       },
       sources: tests,

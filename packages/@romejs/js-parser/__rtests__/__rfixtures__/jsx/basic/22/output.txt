@@ -224,9 +224,9 @@ Program {
         loc: Object {
           filename: 'input.mjs'
           end: Object {
-            column: 1
-            index: 115
-            line: 6
+            column: 0
+            index: 116
+            line: 7
           }
           start: Object {
             column: 15

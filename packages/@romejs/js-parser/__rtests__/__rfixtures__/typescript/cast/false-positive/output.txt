@@ -120,7 +120,6 @@ Program {
             insensitive: false
             multiline: false
             noDotNewline: false
-            pattern: 'a'
             sticky: false
             unicode: false
             loc: Object {
@@ -135,6 +134,39 @@ Program {
                 index: 9
                 line: 1
               }
+            }
+            expression: RegExpSubExpression {
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 21
+                  index: 11
+                  line: 1
+                }
+                start: Object {
+                  column: 10
+                  index: 10
+                  line: 1
+                }
+              }
+              body: Array [
+                RegExpCharacter {
+                  value: 'a'
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 21
+                      index: 11
+                      line: 1
+                    }
+                    start: Object {
+                      column: 10
+                      index: 10
+                      line: 1
+                    }
+                  }
+                }
+              ]
             }
           }
         ]

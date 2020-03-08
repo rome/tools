@@ -42,9 +42,9 @@ Program {
       loc: Object {
         filename: 'input.js'
         end: Object {
-          column: 1
-          index: 55
-          line: 5
+          column: 0
+          index: 56
+          line: 6
         }
         start: Object {
           column: 0

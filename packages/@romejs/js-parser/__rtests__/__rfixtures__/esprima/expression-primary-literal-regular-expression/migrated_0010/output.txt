@@ -87,7 +87,6 @@ Program {
               insensitive: false
               multiline: false
               noDotNewline: false
-              pattern: '[\\]/]'
               sticky: false
               unicode: false
               loc: Object {
@@ -102,6 +101,73 @@ Program {
                   index: 8
                   line: 1
                 }
+              }
+              expression: RegExpSubExpression {
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 13
+                    index: 14
+                    line: 1
+                  }
+                  start: Object {
+                    column: 9
+                    index: 9
+                    line: 1
+                  }
+                }
+                body: Array [
+                  RegExpCharSet {
+                    invert: false
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 13
+                        index: 14
+                        line: 1
+                      }
+                      start: Object {
+                        column: 9
+                        index: 9
+                        line: 1
+                      }
+                    }
+                    body: Array [
+                      RegExpCharacter {
+                        value: ']'
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 12
+                            index: 12
+                            line: 1
+                          }
+                          start: Object {
+                            column: 10
+                            index: 10
+                            line: 1
+                          }
+                        }
+                      }
+                      RegExpCharacter {
+                        value: '/'
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 13
+                            index: 13
+                            line: 1
+                          }
+                          start: Object {
+                            column: 12
+                            index: 12
+                            line: 1
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
               }
             }
           }

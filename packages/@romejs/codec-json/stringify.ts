@@ -42,6 +42,7 @@ function stringifyKey(key: string): string {
     return key;
   } else {
     return escapeString(key, {
+      quote: '"',
       ignoreWhitespaceEscapes: true,
       json: true,
     });
@@ -87,7 +88,11 @@ function stringifyPrimitives(value: unknown): undefined | string {
       return value ? 'true' : 'false';
 
     case 'string':
-      return escapeString(value, {json: true, ignoreWhitespaceEscapes: true});
+      return escapeString(value, {
+        quote: '"',
+        json: true,
+        ignoreWhitespaceEscapes: true,
+      });
 
     case 'bigint':
       // This is the actual V8 message lol

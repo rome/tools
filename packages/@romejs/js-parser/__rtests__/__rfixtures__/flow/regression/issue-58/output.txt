@@ -5625,8 +5625,8 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 15
-                        index: 1_412
+                        column: 16
+                        index: 1_413
                         line: 33
                       }
                       start: Object {
@@ -5640,8 +5640,8 @@ Program {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
-                          column: 15
-                          index: 1_412
+                          column: 16
+                          index: 1_413
                           line: 33
                         }
                         start: Object {

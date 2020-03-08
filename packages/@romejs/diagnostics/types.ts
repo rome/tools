@@ -96,16 +96,6 @@ export type DiagnosticAdviceItemDiff = {
   diff: Diffs;
 };
 
-export type DiagnosticAdviceItemAction = {
-  type: 'action';
-  message: string;
-  cancelable: boolean;
-  buttons: Array<{
-    text: string;
-    command: string;
-  }>;
-};
-
 export type DiagnosticAdviceItemStacktrace = {
   type: 'stacktrace';
   title: undefined | string;
@@ -120,7 +110,6 @@ export type DiagnosticAdviceItem =
   | DiagnosticAdviceItemFrame
   | DiagnosticAdviceItemInspect
   | DiagnosticAdviceItemDiff
-  | DiagnosticAdviceItemAction
   | DiagnosticAdviceItemStacktrace;
 
 export type DiagnosticAdvice = Array<DiagnosticAdviceItem>;
@@ -239,15 +228,6 @@ export type PartialDiagnosticAdviceItem =
   | {
       type: 'diff';
       diff: Diffs;
-    }
-  | {
-      type: 'action';
-      message: string;
-      cancelable: boolean;
-      buttons: Array<{
-        text: string;
-        command: string;
-      }>;
     }
   | {
       type: 'stacktrace';

@@ -5,30 +5,41 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
+import {AnyNode, RegExpCharacter} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
-
-const multipleSpacesPattern = /( {2,})(?: [+*{?]|[^+*{?]|$)/gu;
+import {extractSourceLocationRangeFromNodes} from '@romejs/parser-core';
 
 export default {
   name: 'disallowMultipleSpacesInRegularExpressionLiterals',
   enter(path: Path): AnyNode {
     const {context, node} = path;
 
-    if (
-      (node.type === 'NewExpression' &&
-        node.callee.type === 'ReferenceIdentifier' &&
-        node.callee.name === 'RegExp' &&
-        node.arguments.length > 0 &&
-        node.arguments[0].type === 'StringLiteral' &&
-        multipleSpacesPattern.test(node.arguments[0].value)) ||
-      (node.type === 'RegExpLiteral' &&
-        multipleSpacesPattern.test(node.pattern))
-    ) {
-      context.addNodeDiagnostic(node, {
-        category: 'lint/disallowMultipleSpacesInRegularExpressionLiterals',
-        message: 'Disallow multiple spaces in regular expression literals',
-      });
+    if (node.type === 'RegExpSubExpression') {
+      for (let i = 0; i < node.body.length; i++) {
+        const spaceNodes: Array<RegExpCharacter> = [];
+
+        while (i < node.body.length) {
+          const item = node.body[i];
+          if (item.type === 'RegExpCharacter' && item.value === ' ') {
+            spaceNodes.push(item);
+            i++;
+          } else {
+            break;
+          }
+        }
+
+        if (spaceNodes.length > 1) {
+          context.addLocDiagnostic(
+            extractSourceLocationRangeFromNodes(spaceNodes),
+            {
+              category:
+                'lint/disallowMultipleSpacesInRegularExpressionLiterals',
+              message:
+                "Multiple spaces aren't allowed in regular expression literals",
+            },
+          );
+        }
+      }
     }
 
     return node;
