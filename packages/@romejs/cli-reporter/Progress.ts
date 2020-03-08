@@ -22,13 +22,15 @@ export type ProgressOptions = {
   initDelay?: number;
   elapsed?: boolean;
   eta?: boolean;
+  persistent?: boolean;
 };
 
-const DEFAULT_PROGRESS_OPTIONS = {
+const DEFAULT_PROGRESS_OPTIONS: ProgressOptions = {
   name: undefined,
   initDelay: undefined,
   elapsed: true,
   eta: true,
+  persistent: false,
 };
 
 export default class Progress {
@@ -233,7 +235,11 @@ export default class Progress {
     }
 
     // Progress complete
-    if (this.total !== undefined && this.current >= this.total) {
+    if (
+      this.total !== undefined &&
+      this.current >= this.total &&
+      !this.opts.persistent
+    ) {
       this.end();
     }
   }

@@ -499,7 +499,7 @@ export default class DiagnosticsPrinter extends Error {
       const {origins} = diag;
 
       if (origins.length > 0) {
-        reporter.spacer();
+        reporter.optionalSpacer();
         reporter.info('Why are you seeing this diagnostic?');
         reporter.spacer();
         reporter.list(

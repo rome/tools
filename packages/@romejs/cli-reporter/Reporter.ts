@@ -269,7 +269,7 @@ export default class Reporter {
     if (msg.type === 'PROGRESS_CREATE') {
       this.remoteClientProgressBars.set(
         msg.id,
-        this.progressLocal({}, () => {
+        this.progressLocal(msg.opts, () => {
           this.sendRemoteServerMessage.call({
             type: 'ENDED',
             id: msg.id,
