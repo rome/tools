@@ -9,6 +9,7 @@ ecosystem, it can be integrated into existing projects and used
 as much or as little as you like.
 
 ## Integrating Rome
+
 First, navigate into your project folder:
 ```bash
 $ cd my_existing_project
@@ -20,6 +21,7 @@ $ rome init
 ```
 
 ## What did we do?
+
 Running `rome init` with the recommended settings creates a Rome
 configuration file, `rome.json`, which looks like this:
 ```json
@@ -36,6 +38,7 @@ If you want to disable linting or apply advanced settings, see
 the `rome init` documentation.
 
 ## Running your code
+
 The `rome run` command will run whatever file is passed to
 it. Use this command with your project's main file, for example:
 ```bash
@@ -47,18 +50,22 @@ process all source files. If you are able to run a file with `node` but
 not with `rome`, please [create an issue](https://github.com/facebookexperimental/rome/issues/new?labels=bug&template=01_bug.md&title=)
 
 ## Other Commands
+
 ### `lint`
+
 This command will lint a file with a set of default lints and display the produced diagnostics.
 When ran with no arguments, all JavaScript files in a project are linted. For example:
 ```bash
 $ rome lint file.js
 ```
 ### `compile`
+
 This command will compile a file with a set of default transforms. There is currently no options for this command to specify a subset of transforms.
 ```
 $ rome compile file.js
 ```
 ### `parse`
+
 This command will parse a file and output a pretty formatted AST.
 ```
 $ rome parse file.js

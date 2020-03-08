@@ -5,10 +5,12 @@ sidebar_label: Installation
 ---
 
 ## Before you continue
+
 To install Rome, you must have `node` and `npm` installed on your system. If you do not have `node` and `npm`
 installed, install them before continuing.
 
 ## Cloning and building
+
 Rome is not available via `npm` and must be installed from GitHub.
 In a folder of your choice, clone the `rome` repository:
 ```bash
