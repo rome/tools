@@ -11,11 +11,13 @@ as much or as little as you like.
 ## Integrating Rome
 
 First, navigate into your project folder:
+
 ```bash
 $ cd my_existing_project
 ```
 Now, create a Rome configuration for your project. When prompted,
 use the recommended settings:
+
 ```bash
 $ rome init
 ```
@@ -24,6 +26,7 @@ $ rome init
 
 Running `rome init` with the recommended settings creates a Rome
 configuration file, `rome.json`, which looks like this:
+
 ```json
 {
   "version": "^0.0.52",
@@ -32,6 +35,7 @@ configuration file, `rome.json`, which looks like this:
   }
 }
 ```
+
 This file tells `rome` that it should be at least version 0.0.52
 in order to work with your project, and that it should lint your code.
 If you want to disable linting or apply advanced settings, see
@@ -41,6 +45,7 @@ the `rome init` documentation.
 
 The `rome run` command will run whatever file is passed to
 it. Use this command with your project's main file, for example:
+
 ```bash
 $ rome run index.js
 ```
@@ -55,18 +60,23 @@ not with `rome`, please [create an issue](https://github.com/facebookexperimenta
 
 This command will lint a file with a set of default lints and display the produced diagnostics.
 When ran with no arguments, all JavaScript files in a project are linted. For example:
+
 ```bash
 $ rome lint file.js
 ```
+
 ### `compile`
 
 This command will compile a file with a set of default transforms. There is currently no options for this command to specify a subset of transforms.
+
 ```
 $ rome compile file.js
 ```
+
 ### `parse`
 
 This command will parse a file and output a pretty formatted AST.
+
 ```
 $ rome parse file.js
 ```

@@ -13,14 +13,19 @@ installed, install them before continuing.
 
 Rome is not available via `npm` and must be installed from GitHub.
 In a folder of your choice, clone the `rome` repository:
+
 ```bash
 $ git clone https://github.com/facebookexperimental/rome
 ```
+
 Then, navigate into it and build `rome`:
+
 ```bash
 $ cd rome; ./scripts/build-release dist
 ```
+
 Now, install `rome` globally:
+
 ```
 $ npm install -g ./dist/
 ```
