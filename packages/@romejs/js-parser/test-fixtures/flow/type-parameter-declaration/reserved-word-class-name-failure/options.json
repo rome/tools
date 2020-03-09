@@ -1,0 +1,4 @@
+{
+  "throws": "Unexpected keyword 'delete'",
+  "syntax": ["flow", "jsx"]
+}

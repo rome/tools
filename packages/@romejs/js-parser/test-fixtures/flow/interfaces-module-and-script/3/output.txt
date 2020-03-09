@@ -1,0 +1,278 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 36
+      index: 36
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    FlowInterfaceDeclaration {
+      id: BindingIdentifier {
+        name: 'A'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 11
+            index: 11
+            line: 1
+          }
+          start: Object {
+            column: 10
+            index: 10
+            line: 1
+          }
+        }
+      }
+      implements: Array []
+      mixins: Array []
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 36
+          index: 36
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      body: FlowObjectTypeAnnotation {
+        exact: false
+        inexact: undefined
+        properties: Array []
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 36
+            index: 36
+            line: 1
+          }
+          start: Object {
+            column: 34
+            index: 34
+            line: 1
+          }
+        }
+      }
+      typeParameters: FlowTypeParameterDeclaration {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 14
+            index: 14
+            line: 1
+          }
+          start: Object {
+            column: 11
+            index: 11
+            line: 1
+          }
+        }
+        params: Array [
+          FlowTypeParameter {
+            name: 'T'
+            bound: undefined
+            default: undefined
+            variance: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 13
+                index: 13
+                line: 1
+              }
+              start: Object {
+                column: 12
+                index: 12
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+      extends: Array [
+        FlowInterfaceExtends {
+          id: Identifier {
+            name: 'B'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 24
+                index: 24
+                line: 1
+              }
+              start: Object {
+                column: 23
+                index: 23
+                line: 1
+              }
+            }
+          }
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 27
+              index: 27
+              line: 1
+            }
+            start: Object {
+              column: 23
+              index: 23
+              line: 1
+            }
+          }
+          typeParameters: FlowTypeParameterInstantiation {
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 27
+                index: 27
+                line: 1
+              }
+              start: Object {
+                column: 24
+                index: 24
+                line: 1
+              }
+            }
+            params: Array [
+              FlowGenericTypeAnnotation {
+                id: Identifier {
+                  name: 'T'
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 26
+                      index: 26
+                      line: 1
+                    }
+                    start: Object {
+                      column: 25
+                      index: 25
+                      line: 1
+                    }
+                  }
+                }
+                typeParameters: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 26
+                    index: 26
+                    line: 1
+                  }
+                  start: Object {
+                    column: 25
+                    index: 25
+                    line: 1
+                  }
+                }
+              }
+            ]
+          }
+        }
+        FlowInterfaceExtends {
+          id: Identifier {
+            name: 'C'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 30
+                index: 30
+                line: 1
+              }
+              start: Object {
+                column: 29
+                index: 29
+                line: 1
+              }
+            }
+          }
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 33
+              index: 33
+              line: 1
+            }
+            start: Object {
+              column: 29
+              index: 29
+              line: 1
+            }
+          }
+          typeParameters: FlowTypeParameterInstantiation {
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 33
+                index: 33
+                line: 1
+              }
+              start: Object {
+                column: 30
+                index: 30
+                line: 1
+              }
+            }
+            params: Array [
+              FlowGenericTypeAnnotation {
+                id: Identifier {
+                  name: 'T'
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 32
+                      index: 32
+                      line: 1
+                    }
+                    start: Object {
+                      column: 31
+                      index: 31
+                      line: 1
+                    }
+                  }
+                }
+                typeParameters: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 32
+                    index: 32
+                    line: 1
+                  }
+                  start: Object {
+                    column: 31
+                    index: 31
+                    line: 1
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

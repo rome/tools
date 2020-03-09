@@ -1,0 +1,4 @@
+{
+  "plugins": [],
+  "throws": "super() is only valid inside a class constructor of a subclass"
+}

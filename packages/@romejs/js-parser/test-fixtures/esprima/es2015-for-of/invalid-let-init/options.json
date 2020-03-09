@@ -1,0 +1,3 @@
+{
+  "throws": "for-of loop variable declaration may not have an initializer"
+}

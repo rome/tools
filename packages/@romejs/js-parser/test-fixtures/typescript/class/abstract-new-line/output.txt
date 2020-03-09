@@ -1,0 +1,108 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.ts'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: 'input.ts'
+    end: Object {
+      column: 0
+      index: 20
+      line: 3
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 8
+          index: 8
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: ReferenceIdentifier {
+        name: 'abstract'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 8
+            index: 8
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+      }
+    }
+    ClassDeclaration {
+      id: BindingIdentifier {
+        name: 'B'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 7
+            index: 16
+            line: 2
+          }
+          start: Object {
+            column: 6
+            index: 15
+            line: 2
+          }
+        }
+      }
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 0
+          index: 20
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 9
+          line: 2
+        }
+      }
+      meta: ClassHead {
+        body: Array []
+        implements: undefined
+        superClass: undefined
+        superTypeParameters: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 10
+            index: 19
+            line: 2
+          }
+          start: Object {
+            column: 0
+            index: 9
+            line: 2
+          }
+        }
+      }
+    }
+  ]
+}

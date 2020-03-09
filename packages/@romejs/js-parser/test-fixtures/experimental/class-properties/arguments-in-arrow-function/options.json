@@ -1,0 +1,4 @@
+{
+  "plugins": [],
+  "throws": "'arguments' is not allowed in class field initializer"
+}

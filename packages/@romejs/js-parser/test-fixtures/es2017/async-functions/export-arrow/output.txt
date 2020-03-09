@@ -1,0 +1,124 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 39
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExportDefaultDeclaration {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 38
+          index: 38
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: ArrowFunctionExpression {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 38
+            index: 38
+            line: 1
+          }
+          start: Object {
+            column: 15
+            index: 15
+            line: 1
+          }
+        }
+        head: FunctionHead {
+          async: true
+          hasHoistedVars: false
+          params: Array []
+          rest: undefined
+          returnType: undefined
+          thisType: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 27
+              index: 27
+              line: 1
+            }
+            start: Object {
+              column: 15
+              index: 15
+              line: 1
+            }
+          }
+        }
+        body: AwaitExpression {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 38
+              index: 38
+              line: 1
+            }
+            start: Object {
+              column: 27
+              index: 27
+              line: 1
+            }
+          }
+          argument: CallExpression {
+            arguments: Array []
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 38
+                index: 38
+                line: 1
+              }
+              start: Object {
+                column: 33
+                index: 33
+                line: 1
+              }
+            }
+            callee: ReferenceIdentifier {
+              name: 'foo'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 36
+                  index: 36
+                  line: 1
+                }
+                start: Object {
+                  column: 33
+                  index: 33
+                  line: 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

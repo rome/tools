@@ -1,0 +1,127 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 12
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 11
+          index: 11
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: NewExpression {
+        arguments: Array []
+        optional: undefined
+        typeArguments: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 11
+            index: 11
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        callee: TaggedTemplateExpression {
+          typeArguments: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 11
+              index: 11
+              line: 1
+            }
+            start: Object {
+              column: 4
+              index: 4
+              line: 1
+            }
+          }
+          tag: ReferenceIdentifier {
+            name: 'raw'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 7
+                index: 7
+                line: 1
+              }
+              start: Object {
+                column: 4
+                index: 4
+                line: 1
+              }
+            }
+          }
+          quasi: TemplateLiteral {
+            expressions: Array []
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 11
+                index: 11
+                line: 1
+              }
+              start: Object {
+                column: 7
+                index: 7
+                line: 1
+              }
+            }
+            quasis: Array [
+              TemplateElement {
+                cooked: '42'
+                raw: '42'
+                tail: true
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 10
+                    index: 10
+                    line: 1
+                  }
+                  start: Object {
+                    column: 8
+                    index: 8
+                    line: 1
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

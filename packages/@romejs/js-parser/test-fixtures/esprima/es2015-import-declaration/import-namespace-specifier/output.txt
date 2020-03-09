@@ -1,0 +1,107 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 28
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ImportDeclaration {
+      importKind: undefined
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 27
+          index: 27
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      source: StringLiteral {
+        value: 'foo'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 26
+            index: 26
+            line: 1
+          }
+          start: Object {
+            column: 21
+            index: 21
+            line: 1
+          }
+        }
+      }
+      specifiers: Array [
+        ImportNamespaceSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 15
+              index: 15
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'foo'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 15
+                  index: 15
+                  line: 1
+                }
+                start: Object {
+                  column: 12
+                  index: 12
+                  line: 1
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 15
+                index: 15
+                line: 1
+              }
+              start: Object {
+                column: 12
+                index: 12
+                line: 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

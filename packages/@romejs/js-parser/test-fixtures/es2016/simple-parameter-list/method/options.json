@@ -1,0 +1,3 @@
+{
+  "throws": "Illegal 'use strict' directive in function with non-simple parameter list"
+}

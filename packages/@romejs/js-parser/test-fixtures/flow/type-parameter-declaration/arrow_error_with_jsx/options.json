@@ -1,0 +1,4 @@
+{
+  "syntax": ["flow", "jsx"],
+  "throws": "Unclosed JSX element"
+}

@@ -1,0 +1,202 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 70
+      line: 3
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExportLocalDeclaration {
+      exportKind: 'value'
+      specifiers: undefined
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 30
+          index: 30
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: FunctionDeclaration {
+        id: BindingIdentifier {
+          name: 'foo'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 25
+              index: 25
+              line: 1
+            }
+            start: Object {
+              column: 22
+              index: 22
+              line: 1
+            }
+          }
+        }
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 0
+            index: 31
+            line: 2
+          }
+          start: Object {
+            column: 7
+            index: 7
+            line: 1
+          }
+        }
+        body: BlockStatement {
+          body: Array []
+          directives: Array []
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 30
+              index: 30
+              line: 1
+            }
+            start: Object {
+              column: 28
+              index: 28
+              line: 1
+            }
+          }
+        }
+        head: FunctionHead {
+          async: true
+          generator: false
+          hasHoistedVars: false
+          params: Array []
+          predicate: undefined
+          rest: undefined
+          returnType: undefined
+          thisType: undefined
+          typeParameters: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 28
+              index: 28
+              line: 1
+            }
+            start: Object {
+              column: 7
+              index: 7
+              line: 1
+            }
+          }
+        }
+      }
+    }
+    ExportDefaultDeclaration {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 38
+          index: 69
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 31
+          line: 2
+        }
+      }
+      declaration: FunctionDeclaration {
+        id: BindingIdentifier {
+          name: 'bar'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 33
+              index: 64
+              line: 2
+            }
+            start: Object {
+              column: 30
+              index: 61
+              line: 2
+            }
+          }
+        }
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 0
+            index: 70
+            line: 3
+          }
+          start: Object {
+            column: 15
+            index: 46
+            line: 2
+          }
+        }
+        body: BlockStatement {
+          body: Array []
+          directives: Array []
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 38
+              index: 69
+              line: 2
+            }
+            start: Object {
+              column: 36
+              index: 67
+              line: 2
+            }
+          }
+        }
+        head: FunctionHead {
+          async: true
+          generator: false
+          hasHoistedVars: false
+          params: Array []
+          predicate: undefined
+          rest: undefined
+          returnType: undefined
+          thisType: undefined
+          typeParameters: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 36
+              index: 67
+              line: 2
+            }
+            start: Object {
+              column: 15
+              index: 46
+              line: 2
+            }
+          }
+        }
+      }
+    }
+  ]
+}

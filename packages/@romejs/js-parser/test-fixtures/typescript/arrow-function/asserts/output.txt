@@ -1,0 +1,175 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.ts'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: 'input.ts'
+    end: Object {
+      column: 0
+      index: 39
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 38
+          index: 38
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: ArrowFunctionExpression {
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 37
+            index: 37
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        body: BlockStatement {
+          body: Array []
+          directives: Array []
+          loc: Object {
+            filename: 'input.ts'
+            end: Object {
+              column: 37
+              index: 37
+              line: 1
+            }
+            start: Object {
+              column: 35
+              index: 35
+              line: 1
+            }
+          }
+        }
+        head: FunctionHead {
+          async: false
+          hasHoistedVars: false
+          predicate: undefined
+          rest: undefined
+          thisType: undefined
+          loc: Object {
+            filename: 'input.ts'
+            end: Object {
+              column: 35
+              index: 35
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+          returnType: TSTypePredicate {
+            asserts: true
+            typeAnnotation: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 31
+                index: 31
+                line: 1
+              }
+              start: Object {
+                column: 16
+                index: 16
+                line: 1
+              }
+            }
+            parameterName: Identifier {
+              name: 'value'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 31
+                  index: 31
+                  line: 1
+                }
+                start: Object {
+                  column: 26
+                  index: 26
+                  line: 1
+                }
+              }
+            }
+          }
+          params: Array [
+            BindingIdentifier {
+              name: 'value'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 34
+                  index: 34
+                  line: 1
+                }
+                start: Object {
+                  column: 35
+                  index: 35
+                  line: 1
+                }
+              }
+              meta: PatternMeta {
+                optional: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 34
+                    index: 34
+                    line: 1
+                  }
+                  start: Object {
+                    column: 35
+                    index: 35
+                    line: 1
+                  }
+                }
+                typeAnnotation: UnknownKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 15
+                      index: 15
+                      line: 1
+                    }
+                    start: Object {
+                      column: 8
+                      index: 8
+                      line: 1
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
