@@ -21,15 +21,12 @@ export type LintResult = {
 
 const lintCache: Cache<LintResult> = new Cache();
 
-export default async function lint(req: TransformRequest): Promise<LintResult> {
-  const {ast, sourceText, project} = req;
+export type FormatRequest = TransformRequest & {
+  format: boolean;
+};
 
-  if (!project.config.lint.enabled) {
-    return {
-      ...extractSuppressionsFromProgram(ast),
-      src: sourceText,
-    };
-  }
+export default async function lint(req: FormatRequest): Promise<LintResult> {
+  const {ast, sourceText, project, format} = req;
 
   const query = Cache.buildQuery(req);
   const cached = lintCache.get(query);
@@ -38,7 +35,7 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
   }
 
   let formattedCode = sourceText;
-  if (project.config.format.enabled) {
+  if (format) {
     // Perform autofixes
     const context = new Context({
       ast,
