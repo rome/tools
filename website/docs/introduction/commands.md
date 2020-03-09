@@ -15,7 +15,7 @@ The `init` command helps you to initially setup your project for `rome`. Inside 
 $ rome init
 ```
 
-Following this `rome` will ask you whether you want to use the default setup or customize your project further.
+Following this `rome` will ask you whether you want to use the default setup or customize your project further. You can switch between `yes` and `no` with the arrow keys. Press `enter` to confirm your choice.
 
 ```bash
  Welcome to Rome!
@@ -41,7 +41,7 @@ If you choose `yes`, `rome` will create a default configuration file `rome.json`
 
 #### Customized configuration
 
-If you choose to customize your project further with the `no` option, you will be guided through a set of questions. First you get the chance give your project a name:
+If you choose to customize your project further with the `no` option, you will be guided through a set of questions. First you get the chance give your project a name. Enter the name of your project and confirm with the `enter` key.
 
 ```bash
  Welcome to Rome!
@@ -51,7 +51,7 @@ If you choose to customize your project further with the `no` option, you will b
 ? Project name:
 ```
 
-After this you have a choice of whether you want to enable linting and formatting.
+After this you have a choice of whether you want to enable linting and formatting. You can move between the choices with the arrow keys. Check and uncheck a box with the `space` key.
 
 ```bash
  Welcome to Rome!
