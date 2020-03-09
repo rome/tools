@@ -97,7 +97,7 @@ function printList(
     return true;
   } else {
     opts.reporter.list(item.list, {
-      truncate: opts.flags.verboseDiagnostics ? undefined : item.truncate,
+      truncate: opts.flags.verboseDiagnostics ? undefined : 20,
       reverse: item.reverse,
       ordered: item.ordered,
     });
@@ -275,7 +275,7 @@ function printStacktrace(
     },
     {
       ordered: true,
-      truncate: item.truncate,
+      truncate: opts.flags.verboseDiagnostics ? undefined : 20,
     },
   );
 
