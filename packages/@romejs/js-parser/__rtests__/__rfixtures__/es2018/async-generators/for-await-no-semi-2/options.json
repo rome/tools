@@ -1,3 +1,0 @@
-{
-  "throws": "Can't have an await on a regular for loop"
-}

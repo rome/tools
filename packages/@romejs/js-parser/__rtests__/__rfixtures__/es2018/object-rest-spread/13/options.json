@@ -1,4 +1,0 @@
-{
-  "sourceType": "module",
-  "throws": "`foo` has already been exported. Exported identifiers must be unique."
-}
