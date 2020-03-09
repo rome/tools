@@ -1,0 +1,1178 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.ts'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: 'input.ts'
+    end: Object {
+      column: 0
+      index: 185
+      line: 13
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 11
+          index: 11
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 11
+            index: 11
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'a'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 10
+                  index: 10
+                  line: 1
+                }
+                start: Object {
+                  column: 4
+                  index: 4
+                  line: 1
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 10
+                    index: 10
+                    line: 1
+                  }
+                  start: Object {
+                    column: 4
+                    index: 4
+                    line: 1
+                  }
+                }
+                typeAnnotation: AnyKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 10
+                      index: 10
+                      line: 1
+                    }
+                    start: Object {
+                      column: 7
+                      index: 7
+                      line: 1
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 10
+                index: 10
+                line: 1
+              }
+              start: Object {
+                column: 4
+                index: 4
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 16
+          index: 28
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 12
+          line: 2
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 16
+            index: 28
+            line: 2
+          }
+          start: Object {
+            column: 0
+            index: 12
+            line: 2
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'un'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 15
+                  index: 27
+                  line: 2
+                }
+                start: Object {
+                  column: 4
+                  index: 16
+                  line: 2
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 15
+                    index: 27
+                    line: 2
+                  }
+                  start: Object {
+                    column: 4
+                    index: 16
+                    line: 2
+                  }
+                }
+                typeAnnotation: UnknownKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 15
+                      index: 27
+                      line: 2
+                    }
+                    start: Object {
+                      column: 8
+                      index: 20
+                      line: 2
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 15
+                index: 27
+                line: 2
+              }
+              start: Object {
+                column: 4
+                index: 16
+                line: 2
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 15
+          index: 44
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 29
+          line: 3
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 15
+            index: 44
+            line: 3
+          }
+          start: Object {
+            column: 0
+            index: 29
+            line: 3
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'b'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 14
+                  index: 43
+                  line: 3
+                }
+                start: Object {
+                  column: 4
+                  index: 33
+                  line: 3
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 14
+                    index: 43
+                    line: 3
+                  }
+                  start: Object {
+                    column: 4
+                    index: 33
+                    line: 3
+                  }
+                }
+                typeAnnotation: BooleanKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 14
+                      index: 43
+                      line: 3
+                    }
+                    start: Object {
+                      column: 7
+                      index: 36
+                      line: 3
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 14
+                index: 43
+                line: 3
+              }
+              start: Object {
+                column: 4
+                index: 33
+                line: 3
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 14
+          index: 59
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 45
+          line: 4
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 14
+            index: 59
+            line: 4
+          }
+          start: Object {
+            column: 0
+            index: 45
+            line: 4
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'ne'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 13
+                  index: 58
+                  line: 4
+                }
+                start: Object {
+                  column: 4
+                  index: 49
+                  line: 4
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 13
+                    index: 58
+                    line: 4
+                  }
+                  start: Object {
+                    column: 4
+                    index: 49
+                    line: 4
+                  }
+                }
+                typeAnnotation: NeverKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 13
+                      index: 58
+                      line: 4
+                    }
+                    start: Object {
+                      column: 8
+                      index: 53
+                      line: 4
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 13
+                index: 58
+                line: 4
+              }
+              start: Object {
+                column: 4
+                index: 49
+                line: 4
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 14
+          index: 74
+          line: 5
+        }
+        start: Object {
+          column: 0
+          index: 60
+          line: 5
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 14
+            index: 74
+            line: 5
+          }
+          start: Object {
+            column: 0
+            index: 60
+            line: 5
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'nul'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 13
+                  index: 73
+                  line: 5
+                }
+                start: Object {
+                  column: 4
+                  index: 64
+                  line: 5
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 13
+                    index: 73
+                    line: 5
+                  }
+                  start: Object {
+                    column: 4
+                    index: 64
+                    line: 5
+                  }
+                }
+                typeAnnotation: NullKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 13
+                      index: 73
+                      line: 5
+                    }
+                    start: Object {
+                      column: 9
+                      index: 69
+                      line: 5
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 13
+                index: 73
+                line: 5
+              }
+              start: Object {
+                column: 4
+                index: 64
+                line: 5
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 16
+          index: 91
+          line: 6
+        }
+        start: Object {
+          column: 0
+          index: 75
+          line: 6
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 16
+            index: 91
+            line: 6
+          }
+          start: Object {
+            column: 0
+            index: 75
+            line: 6
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'num'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 15
+                  index: 90
+                  line: 6
+                }
+                start: Object {
+                  column: 4
+                  index: 79
+                  line: 6
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 15
+                    index: 90
+                    line: 6
+                  }
+                  start: Object {
+                    column: 4
+                    index: 79
+                    line: 6
+                  }
+                }
+                typeAnnotation: NumberKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 15
+                      index: 90
+                      line: 6
+                    }
+                    start: Object {
+                      column: 9
+                      index: 84
+                      line: 6
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 15
+                index: 90
+                line: 6
+              }
+              start: Object {
+                column: 4
+                index: 79
+                line: 6
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 14
+          index: 106
+          line: 7
+        }
+        start: Object {
+          column: 0
+          index: 92
+          line: 7
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 14
+            index: 106
+            line: 7
+          }
+          start: Object {
+            column: 0
+            index: 92
+            line: 7
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'o'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 13
+                  index: 105
+                  line: 7
+                }
+                start: Object {
+                  column: 4
+                  index: 96
+                  line: 7
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 13
+                    index: 105
+                    line: 7
+                  }
+                  start: Object {
+                    column: 4
+                    index: 96
+                    line: 7
+                  }
+                }
+                typeAnnotation: ObjectKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 13
+                      index: 105
+                      line: 7
+                    }
+                    start: Object {
+                      column: 7
+                      index: 99
+                      line: 7
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 13
+                index: 105
+                line: 7
+              }
+              start: Object {
+                column: 4
+                index: 96
+                line: 7
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 15
+          index: 122
+          line: 8
+        }
+        start: Object {
+          column: 0
+          index: 107
+          line: 8
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 15
+            index: 122
+            line: 8
+          }
+          start: Object {
+            column: 0
+            index: 107
+            line: 8
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'st'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 14
+                  index: 121
+                  line: 8
+                }
+                start: Object {
+                  column: 4
+                  index: 111
+                  line: 8
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 14
+                    index: 121
+                    line: 8
+                  }
+                  start: Object {
+                    column: 4
+                    index: 111
+                    line: 8
+                  }
+                }
+                typeAnnotation: StringKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 14
+                      index: 121
+                      line: 8
+                    }
+                    start: Object {
+                      column: 8
+                      index: 115
+                      line: 8
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 14
+                index: 121
+                line: 8
+              }
+              start: Object {
+                column: 4
+                index: 111
+                line: 8
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 15
+          index: 138
+          line: 9
+        }
+        start: Object {
+          column: 0
+          index: 123
+          line: 9
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 15
+            index: 138
+            line: 9
+          }
+          start: Object {
+            column: 0
+            index: 123
+            line: 9
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'sy'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 14
+                  index: 137
+                  line: 9
+                }
+                start: Object {
+                  column: 4
+                  index: 127
+                  line: 9
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 14
+                    index: 137
+                    line: 9
+                  }
+                  start: Object {
+                    column: 4
+                    index: 127
+                    line: 9
+                  }
+                }
+                typeAnnotation: SymbolKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 14
+                      index: 137
+                      line: 9
+                    }
+                    start: Object {
+                      column: 8
+                      index: 131
+                      line: 9
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 14
+                index: 137
+                line: 9
+              }
+              start: Object {
+                column: 4
+                index: 127
+                line: 9
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 17
+          index: 156
+          line: 10
+        }
+        start: Object {
+          column: 0
+          index: 139
+          line: 10
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 17
+            index: 156
+            line: 10
+          }
+          start: Object {
+            column: 0
+            index: 139
+            line: 10
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'u'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 16
+                  index: 155
+                  line: 10
+                }
+                start: Object {
+                  column: 4
+                  index: 143
+                  line: 10
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 16
+                    index: 155
+                    line: 10
+                  }
+                  start: Object {
+                    column: 4
+                    index: 143
+                    line: 10
+                  }
+                }
+                typeAnnotation: UndefinedKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 16
+                      index: 155
+                      line: 10
+                    }
+                    start: Object {
+                      column: 7
+                      index: 146
+                      line: 10
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 16
+                index: 155
+                line: 10
+              }
+              start: Object {
+                column: 4
+                index: 143
+                line: 10
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 12
+          index: 169
+          line: 11
+        }
+        start: Object {
+          column: 0
+          index: 157
+          line: 11
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 12
+            index: 169
+            line: 11
+          }
+          start: Object {
+            column: 0
+            index: 157
+            line: 11
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'v'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 11
+                  index: 168
+                  line: 11
+                }
+                start: Object {
+                  column: 4
+                  index: 161
+                  line: 11
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 11
+                    index: 168
+                    line: 11
+                  }
+                  start: Object {
+                    column: 4
+                    index: 161
+                    line: 11
+                  }
+                }
+                typeAnnotation: VoidKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 11
+                      index: 168
+                      line: 11
+                    }
+                    start: Object {
+                      column: 7
+                      index: 164
+                      line: 11
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 11
+                index: 168
+                line: 11
+              }
+              start: Object {
+                column: 4
+                index: 161
+                line: 11
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 14
+          index: 184
+          line: 12
+        }
+        start: Object {
+          column: 0
+          index: 170
+          line: 12
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 14
+            index: 184
+            line: 12
+          }
+          start: Object {
+            column: 0
+            index: 170
+            line: 12
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'n'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 13
+                  index: 183
+                  line: 12
+                }
+                start: Object {
+                  column: 4
+                  index: 174
+                  line: 12
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 13
+                    index: 183
+                    line: 12
+                  }
+                  start: Object {
+                    column: 4
+                    index: 174
+                    line: 12
+                  }
+                }
+                typeAnnotation: BigIntKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 13
+                      index: 183
+                      line: 12
+                    }
+                    start: Object {
+                      column: 7
+                      index: 177
+                      line: 12
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 13
+                index: 183
+                line: 12
+              }
+              start: Object {
+                column: 4
+                index: 174
+                line: 12
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

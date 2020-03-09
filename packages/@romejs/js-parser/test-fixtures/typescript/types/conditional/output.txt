@@ -1,0 +1,182 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.ts'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: 'input.ts'
+    end: Object {
+      column: 0
+      index: 47
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 46
+          index: 46
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'let'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 46
+            index: 46
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'x'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 45
+                  index: 45
+                  line: 1
+                }
+                start: Object {
+                  column: 4
+                  index: 4
+                  line: 1
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 45
+                    index: 45
+                    line: 1
+                  }
+                  start: Object {
+                    column: 4
+                    index: 4
+                    line: 1
+                  }
+                }
+                typeAnnotation: TSConditionalType {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 45
+                      index: 45
+                      line: 1
+                    }
+                    start: Object {
+                      column: 5
+                      index: 5
+                      line: 1
+                    }
+                  }
+                  checkType: NumberKeywordTypeAnnotation {
+                    loc: Object {
+                      filename: 'input.ts'
+                      end: Object {
+                        column: 13
+                        index: 13
+                        line: 1
+                      }
+                      start: Object {
+                        column: 7
+                        index: 7
+                        line: 1
+                      }
+                    }
+                  }
+                  extendsType: StringKeywordTypeAnnotation {
+                    loc: Object {
+                      filename: 'input.ts'
+                      end: Object {
+                        column: 28
+                        index: 28
+                        line: 1
+                      }
+                      start: Object {
+                        column: 22
+                        index: 22
+                        line: 1
+                      }
+                    }
+                  }
+                  falseType: NullKeywordTypeAnnotation {
+                    loc: Object {
+                      filename: 'input.ts'
+                      end: Object {
+                        column: 45
+                        index: 45
+                        line: 1
+                      }
+                      start: Object {
+                        column: 41
+                        index: 41
+                        line: 1
+                      }
+                    }
+                  }
+                  trueType: BooleanKeywordTypeAnnotation {
+                    loc: Object {
+                      filename: 'input.ts'
+                      end: Object {
+                        column: 38
+                        index: 38
+                        line: 1
+                      }
+                      start: Object {
+                        column: 31
+                        index: 31
+                        line: 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 45
+                index: 45
+                line: 1
+              }
+              start: Object {
+                column: 4
+                index: 4
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

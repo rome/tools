@@ -1,0 +1,221 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.ts'
+  hasHoistedVars: true
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: 'input.ts'
+    end: Object {
+      column: 0
+      index: 65
+      line: 6
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    TSModuleDeclaration {
+      id: StringLiteral {
+        value: 'm'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 18
+            index: 18
+            line: 1
+          }
+          start: Object {
+            column: 15
+            index: 15
+            line: 1
+          }
+        }
+      }
+      declare: true
+      global: undefined
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 1
+          index: 64
+          line: 5
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      body: TSModuleBlock {
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 1
+            index: 64
+            line: 5
+          }
+          start: Object {
+            column: 19
+            index: 19
+            line: 1
+          }
+        }
+        body: Array [
+          TSModuleDeclaration {
+            id: BindingIdentifier {
+              name: 'global'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 10
+                  index: 31
+                  line: 2
+                }
+                start: Object {
+                  column: 4
+                  index: 25
+                  line: 2
+                }
+              }
+            }
+            global: true
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 5
+                index: 62
+                line: 4
+              }
+              start: Object {
+                column: 4
+                index: 25
+                line: 2
+              }
+            }
+            body: TSModuleBlock {
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 5
+                  index: 62
+                  line: 4
+                }
+                start: Object {
+                  column: 11
+                  index: 32
+                  line: 2
+                }
+              }
+              body: Array [
+                VariableDeclarationStatement {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 22
+                      index: 56
+                      line: 3
+                    }
+                    start: Object {
+                      column: 8
+                      index: 42
+                      line: 3
+                    }
+                  }
+                  declaration: VariableDeclaration {
+                    kind: 'var'
+                    loc: Object {
+                      filename: 'input.ts'
+                      end: Object {
+                        column: 22
+                        index: 56
+                        line: 3
+                      }
+                      start: Object {
+                        column: 8
+                        index: 42
+                        line: 3
+                      }
+                    }
+                    declarations: Array [
+                      VariableDeclarator {
+                        id: BindingIdentifier {
+                          name: 'x'
+                          loc: Object {
+                            filename: 'input.ts'
+                            end: Object {
+                              column: 21
+                              index: 55
+                              line: 3
+                            }
+                            start: Object {
+                              column: 12
+                              index: 46
+                              line: 3
+                            }
+                          }
+                          meta: PatternMeta {
+                            definite: undefined
+                            loc: Object {
+                              filename: 'input.ts'
+                              end: Object {
+                                column: 21
+                                index: 55
+                                line: 3
+                              }
+                              start: Object {
+                                column: 12
+                                index: 46
+                                line: 3
+                              }
+                            }
+                            typeAnnotation: NumberKeywordTypeAnnotation {
+                              loc: Object {
+                                filename: 'input.ts'
+                                end: Object {
+                                  column: 21
+                                  index: 55
+                                  line: 3
+                                }
+                                start: Object {
+                                  column: 15
+                                  index: 49
+                                  line: 3
+                                }
+                              }
+                            }
+                          }
+                        }
+                        init: undefined
+                        loc: Object {
+                          filename: 'input.ts'
+                          end: Object {
+                            column: 21
+                            index: 55
+                            line: 3
+                          }
+                          start: Object {
+                            column: 12
+                            index: 46
+                            line: 3
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
