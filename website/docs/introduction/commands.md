@@ -81,7 +81,7 @@ Choosing both results in a config file like this:
 
 ### `lint`
 
-The `lint` command lets romes linter check your project files for problems. If no arguments are given, the entire project will be included.
+The `lint` command checks your project files for code problems, such as unused variables. If no arguments are given, the entire project will be included.
 
 ```bash
 rome lint [files]
@@ -97,7 +97,7 @@ $ rome lint index.js hello.js
 
 #### Interpreting the result
 
-If everything was fine, you'll get the a result like this:
+If `rome` did not detect any problems, you'll get the a result like this:
 
 ```bash
 ℹ 1 file linted
@@ -119,7 +119,7 @@ foobar.js:1 parse/js ━━━━━━━━━━━━━━━━━━━�
   ℹ Add "type": "module" to your package.json
 ```
 
-Those messages contain the following sections:
+These messages contain the following sections:
 
 ```
 <the affected file>:<line>:<column> <the linter rule that was violated>
