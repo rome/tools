@@ -784,7 +784,7 @@ export const createRegExpParser = createParser(
         }
 
         this.addDiagnostic({
-          message: 'Unknown regex part ' + token.type,
+          message: 'Unknown regex part',
           token,
         });
       }

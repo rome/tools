@@ -81,7 +81,7 @@ export default function RegExpCharacter(
     case '(':
     case ')':
     case '|':
-      generator.append('\\' + node.value);
+      generator.append(`\\${node.value}`);
       break;
 
     default:
