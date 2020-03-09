@@ -5,9 +5,7 @@ sidebar_label: Commands
 description: Detailed description of the available commands.
 ---
 
-## Commands
-
-### `init`
+## `init`
 
 The `init` command helps you to initially setup your project for `rome`. Inside your project root directory run:
 
@@ -26,7 +24,7 @@ Following this `rome` will ask you whether you want to use the default setup or 
   ◯ No
 ```
 
-#### Default configuration
+### Default configuration
 
 If you choose `yes`, `rome` will create a default configuration file `rome.json` that looks like this:
 
@@ -39,7 +37,7 @@ If you choose `yes`, `rome` will create a default configuration file `rome.json`
 }
 ```
 
-#### Customized configuration
+### Customized configuration
 
 If you choose to customize your project further with the `no` option, you will be guided through a set of questions. First you get the chance give your project a name. Enter the name of your project and confirm with the `enter` key.
 
@@ -79,7 +77,7 @@ Choosing both results in a config file like this:
 }
 ```
 
-### `lint`
+## `lint`
 
 The `lint` command checks your project files for code problems, such as unused variables. If no arguments are given, the entire project will be included.
 
@@ -87,7 +85,7 @@ The `lint` command checks your project files for code problems, such as unused v
 rome lint [files]
 ```
 
-#### Checking only certain files
+### Checking only certain files
 
 If you want to lint only certain files, you can add the files you want to check:
 
@@ -95,7 +93,7 @@ If you want to lint only certain files, you can add the files you want to check:
 $ rome lint index.js hello.js
 ```
 
-#### Interpreting the result
+### Interpreting the result
 
 If `rome` did not detect any problems, you'll get the a result like this:
 
@@ -135,7 +133,7 @@ x description of what is not ok
 
 You'll get 1 message for each problem.
 
-#### Example
+### Example
 
 The following code has 2 unused variables: `join` in line 1 and `unused` in line 3.
 
