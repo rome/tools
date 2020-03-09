@@ -324,16 +324,20 @@ export function normalizeProjectConfig(
     if (format.has('enabled')) {
       config.format.enabled = format.get('enabled').asBoolean();
     }
+
+    if (format.has('ignore')) {
+      config.format.ignore = arrayOfPatterns(format.get('ignore'));
+    }
   }
 
-  const testing = consumer.get('testing');
-  if (categoryExists(testing)) {
-    if (testing.has('enabled')) {
-      config.tests.enabled = testing.get('enabled').asBoolean();
+  const tests = consumer.get('tests');
+  if (categoryExists(tests)) {
+    if (tests.has('enabled')) {
+      config.tests.enabled = tests.get('enabled').asBoolean();
     }
 
-    if (testing.has('ignore')) {
-      config.tests.ignore = arrayOfPatterns(testing.get('ignore'));
+    if (tests.has('ignore')) {
+      config.tests.ignore = arrayOfPatterns(tests.get('ignore'));
     }
   }
 

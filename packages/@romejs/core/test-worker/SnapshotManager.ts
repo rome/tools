@@ -6,20 +6,12 @@
  */
 
 import {AbsoluteFilePath} from '@romejs/path';
-import {
-  writeFile,
-  readFileText,
-  createDirectory,
-  exists,
-  unlink,
-} from '@romejs/fs';
+import {writeFile, readFileText, exists, unlink} from '@romejs/fs';
 import {TestRunnerOptions} from '../master/testing/types';
 import TestWorkerRunner from './TestWorkerRunner';
 import {PartialDiagnosticAdvice} from '@romejs/diagnostics';
 import createSnapshotParser from './SnapshotParser';
 import stringDiff from '@romejs/string-diff';
-
-const SNAPSHOTS_DIR = '__rsnapshots__';
 
 function cleanHeading(key: string): string {
   if (key[0] === '`') {
@@ -35,10 +27,9 @@ function cleanHeading(key: string): string {
 
 export default class SnapshotManager {
   constructor(runner: TestWorkerRunner, testPath: AbsoluteFilePath) {
-    const folder = testPath.getParent().append(SNAPSHOTS_DIR);
-    this.folder = folder;
-
-    this.path = folder.append(`${testPath.getExtensionlessBasename()}.snap.md`);
+    this.path = testPath
+      .getParent()
+      .append(`${testPath.getExtensionlessBasename()}.test.md`);
     this.testPath = testPath;
 
     this.runner = runner;
@@ -51,7 +42,6 @@ export default class SnapshotManager {
   }
 
   testPath: AbsoluteFilePath;
-  folder: AbsoluteFilePath;
   path: AbsoluteFilePath;
   entries: Map<
     string,
@@ -161,7 +151,7 @@ export default class SnapshotManager {
   }
 
   async save() {
-    const {folder, path} = this;
+    const {path} = this;
 
     // If there'a s focused test then we don't write or validate a snapshot
     if (this.runner.hasFocusedTest) {
@@ -252,11 +242,6 @@ export default class SnapshotManager {
         ]);
       }
     } else if (formatted !== this.raw) {
-      // Create snapshots directory if it doesn't exist
-      if (!(await exists(folder))) {
-        await createDirectory(folder);
-      }
-
       // Save the file
       await writeFile(path, formatted);
     }

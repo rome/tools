@@ -135,7 +135,7 @@ async function _getFixtures(opts: {
 export async function getFixtures(dir: string): Promise<Array<Fixture>> {
   return _getFixtures({
     name: undefined,
-    dir: createAbsoluteFilePath(dir).append('__rfixtures__'),
+    dir: createAbsoluteFilePath(dir).append('test-fixtures'),
     parts: [],
     options: consumeUnknown({}),
   });

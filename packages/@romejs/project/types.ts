@@ -63,6 +63,7 @@ export type ProjectConfigObjects = {
 
   format: {
     enabled: boolean;
+    ignore: PathPatterns;
   };
 
   tests: {
@@ -209,6 +210,7 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
 
   format: {
     enabled: false,
+    ignore: [],
   },
 
   haste: {

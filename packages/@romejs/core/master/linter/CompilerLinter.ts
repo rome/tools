@@ -7,7 +7,6 @@
 
 import {MasterRequest} from '@romejs/core';
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
-import {ProjectDefinition} from '@romejs/project';
 import {AbsoluteFilePathSet} from '@romejs/path';
 
 export default class CompilerLinter {
@@ -29,48 +28,10 @@ export default class CompilerLinter {
     spinner.setTitle('Linting');
     spinner.setTotal(paths.size);
 
-    const lintDisabledProjects: Set<ProjectDefinition> = new Set();
-
     await Promise.all(
       pathsByWorker.map(async paths => {
         for (const path of paths) {
           spinner.setText(`<filelink target="${path.join()}" />`);
-
-          // Complain about the project config if it has lint disabled
-          const project = master.projectManager.findProjectExisting(path);
-          if (project !== undefined && !project.config.lint.enabled) {
-            if (!lintDisabledProjects.has(project)) {
-              lintDisabledProjects.add(project);
-
-              const {
-                consumer,
-                value,
-              } = master.projectManager.findProjectConfigConsumer(
-                project,
-                consumer =>
-                  consumer.has('lint')
-                    ? consumer.get('lint').get('enabled')
-                    : undefined,
-              );
-
-              if (value === undefined) {
-                printer.addDiagnostic({
-                  category: '',
-                  message:
-                    "Files excluded from linting as it's not enabled for this project. Run `rome config enable-category lint` to enable it.",
-                  ...consumer.getDiagnosticPointer(),
-                });
-              } else {
-                printer.addDiagnostic({
-                  category: '',
-                  message:
-                    "Files excluded from linting as it's disabled in this project config",
-                  ...value.getDiagnosticPointer('value'),
-                });
-              }
-            }
-            continue;
-          }
 
           // TODO support `fix` flag
           const {

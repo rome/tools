@@ -15,33 +15,7 @@ import {commandCategories} from '../../commands';
 import Bundler from '../bundler/Bundler';
 import {AbsoluteFilePath} from '@romejs/path';
 import {JS_EXTENSIONS} from '../../common/fileHandlers';
-import {TEST_FOLDER_NAME} from '@romejs/core/common/constants';
 import {TestRunnerOptions} from '../testing/types';
-
-function isTestFile(path: AbsoluteFilePath): boolean {
-  const parts = path.getSegments();
-
-  for (const part of parts) {
-    // Don't include files/directories that are prefixed with an underscore
-    if (part[0] === '_' && part !== TEST_FOLDER_NAME) {
-      return false;
-    }
-
-    // Don't ever include node_modules
-    if (part === 'node_modules') {
-      return false;
-    }
-  }
-
-  // Make sure we're actually a test file
-  for (const part of parts) {
-    if (part === TEST_FOLDER_NAME) {
-      return true;
-    }
-  }
-
-  return false;
-}
 
 type Flags = Omit<TestRunnerOptions, 'verboseDiagnostics'>;
 
@@ -60,30 +34,45 @@ export default createMasterCommand({
   },
 
   async default(req: MasterRequest, commandFlags: Flags): Promise<void> {
-    const {master, reporter} = req;
-    const {flags} = req.client;
+    const {reporter, master} = req;
 
-    const args: Array<string | AbsoluteFilePath> = [...req.query.args];
-    if (args.length === 0) {
-      const project = await req.assertClientCwdProject();
-      args.push(project.folder);
-    }
+    const files = await req.getFilesFromArgs({
+      getProjectIgnore: project => ({
+        patterns: project.config.tests.ignore,
+        source: master.projectManager.findProjectConfigConsumer(
+          project,
+          consumer =>
+            consumer.has('tests') && consumer.get('tests').has('ignore')
+              ? consumer.get('tests').get('ignore')
+              : undefined,
+        ),
+      }),
+      getProjectEnabled: project => ({
+        enabled: project.config.tests.enabled,
+        source: master.projectManager.findProjectConfigConsumer(
+          project,
+          consumer =>
+            consumer.has('tests')
+              ? consumer.get('tests').get('enabled')
+              : undefined,
+        ),
+      }),
+      test: path => path.hasExtension('test'),
+      noun: 'test',
+      verb: 'testing',
+      configCategory: 'tests',
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          message:
+            'Searched for files with <emphasis>.test.*</emphasis> file extension',
+        },
+      ],
+      extensions: JS_EXTENSIONS,
+    });
 
-    const files: Array<AbsoluteFilePath> = [];
-
-    for (const arg of args) {
-      const loc = flags.cwd.resolve(arg);
-      await master.projectManager.assertProject(loc);
-      const matches = master.memoryFs.glob(loc, {extensions: JS_EXTENSIONS});
-
-      for (const path of matches) {
-        if (isTestFile(path)) {
-          files.push(path);
-        }
-      }
-    }
-
-    if (files.length === 0) {
+    if (files.size === 0) {
       reporter.warn('No tests ran');
       return;
     }
@@ -108,7 +97,7 @@ export default createMasterCommand({
       }),
     );
 
-    for (const [path, res] of await bundler.bundleMultiple(files)) {
+    for (const [path, res] of await bundler.bundleMultiple(Array.from(files))) {
       tests.set(path.join(), {
         code: res.entry.js.content,
         sourceMap: res.entry.sourceMap.map,
