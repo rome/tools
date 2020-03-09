@@ -1,0 +1,108 @@
+Program {
+  comments: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 1
+      index: 3
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  diagnostics: Array [
+    Object {
+      advice: undefined
+      category: 'parse/js'
+      filename: 'input.js'
+      message: 'Expected a semicolon or a line terminator'
+      mtime: undefined
+      sourceType: 'script'
+      origins: Array [Object {category: 'js-parser'}]
+      end: Object {
+        column: 1
+        index: 1
+        line: 1
+      }
+      start: Object {
+        column: 0
+        index: 2
+        line: 2
+      }
+    }
+  ]
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 1
+          index: 1
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: ReferenceIdentifier {
+        name: 'a'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 1
+            index: 1
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+      }
+    }
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 1
+          index: 3
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 2
+          line: 2
+        }
+      }
+      expression: ReferenceIdentifier {
+        name: 'b'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 1
+            index: 3
+            line: 2
+          }
+          start: Object {
+            column: 0
+            index: 2
+            line: 2
+          }
+        }
+      }
+    }
+  ]
+}

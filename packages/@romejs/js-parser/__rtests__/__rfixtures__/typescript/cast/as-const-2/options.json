@@ -1,5 +1,0 @@
-{
-  "sourceType": "module",
-  "syntax": ["ts"],
-  "throws": "Only literal values are allowed in constant contexts"
-}

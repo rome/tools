@@ -1,0 +1,126 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 21
+      index: 21
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentBlock {
+      value: 'The'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 10
+          index: 10
+          line: 1
+        }
+        start: Object {
+          column: 3
+          index: 3
+          line: 1
+        }
+      }
+    }
+    CommentBlock {
+      value: 'Answer'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 21
+          index: 21
+          line: 1
+        }
+        start: Object {
+          column: 11
+          index: 11
+          line: 1
+        }
+      }
+    }
+  ]
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 2
+          index: 2
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: NumericLiteral {
+        value: 42
+        leadingComments: undefined
+        trailingComments: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 2
+            index: 2
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+      }
+      trailingComments: Array [
+        CommentBlock {
+          value: 'The'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 10
+              index: 10
+              line: 1
+            }
+            start: Object {
+              column: 3
+              index: 3
+              line: 1
+            }
+          }
+        }
+        CommentBlock {
+          value: 'Answer'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 21
+              index: 21
+              line: 1
+            }
+            start: Object {
+              column: 11
+              index: 11
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 12
+      line: 3
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentBlock {
+      value: 'a\nb'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 3
+          index: 7
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+  ]
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 7
+          index: 11
+          line: 2
+        }
+        start: Object {
+          column: 4
+          index: 8
+          line: 2
+        }
+      }
+      expression: NumericLiteral {
+        value: 42
+        leadingComments: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 6
+            index: 10
+            line: 2
+          }
+          start: Object {
+            column: 4
+            index: 8
+            line: 2
+          }
+        }
+      }
+      leadingComments: Array [
+        CommentBlock {
+          value: 'a\nb'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 3
+              index: 7
+              line: 2
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

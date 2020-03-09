@@ -1,0 +1,125 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 2
+      index: 39
+      line: 4
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentLine {
+      value: ' Hello, world!'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 16
+          index: 16
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+    CommentLine {
+      value: '   Another hello'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 18
+          index: 36
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 18
+          line: 3
+        }
+      }
+    }
+  ]
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 2
+          index: 39
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 37
+          line: 4
+        }
+      }
+      expression: NumericLiteral {
+        value: 42
+        leadingComments: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 2
+            index: 39
+            line: 4
+          }
+          start: Object {
+            column: 0
+            index: 37
+            line: 4
+          }
+        }
+      }
+      leadingComments: Array [
+        CommentLine {
+          value: ' Hello, world!'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 16
+              index: 16
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+        CommentLine {
+          value: '   Another hello'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 18
+              index: 36
+              line: 3
+            }
+            start: Object {
+              column: 0
+              index: 18
+              line: 3
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

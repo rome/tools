@@ -1,5 +1,0 @@
-{
-  "sourceType": "module",
-  "syntax": ["ts"],
-  "throws": "Template literal types cannot have any substitution"
-}

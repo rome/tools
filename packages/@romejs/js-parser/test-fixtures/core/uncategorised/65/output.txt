@@ -1,0 +1,193 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 50
+      index: 50
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentBlock {
+      value: ' perfect '
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 40
+          index: 40
+          line: 1
+        }
+        start: Object {
+          column: 27
+          index: 27
+          line: 1
+        }
+      }
+    }
+  ]
+  body: Array [
+    SwitchStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 50
+          index: 50
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      discriminant: ReferenceIdentifier {
+        name: 'answer'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 14
+            index: 14
+            line: 1
+          }
+          start: Object {
+            column: 8
+            index: 8
+            line: 1
+          }
+        }
+      }
+      cases: Array [
+        SwitchCase {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 48
+              index: 48
+              line: 1
+            }
+            start: Object {
+              column: 25
+              index: 25
+              line: 1
+            }
+          }
+          test: NumericLiteral {
+            value: 42
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 25
+                index: 25
+                line: 1
+              }
+              start: Object {
+                column: 23
+                index: 23
+                line: 1
+              }
+            }
+          }
+          consequent: Array [
+            ExpressionStatement {
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 48
+                  index: 48
+                  line: 1
+                }
+                start: Object {
+                  column: 41
+                  index: 41
+                  line: 1
+                }
+              }
+              leadingComments: Array [
+                CommentBlock {
+                  value: ' perfect '
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 40
+                      index: 40
+                      line: 1
+                    }
+                    start: Object {
+                      column: 27
+                      index: 27
+                      line: 1
+                    }
+                  }
+                }
+              ]
+              expression: CallExpression {
+                arguments: Array []
+                leadingComments: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 48
+                    index: 48
+                    line: 1
+                  }
+                  start: Object {
+                    column: 41
+                    index: 41
+                    line: 1
+                  }
+                }
+                callee: ReferenceIdentifier {
+                  name: 'bingo'
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 46
+                      index: 46
+                      line: 1
+                    }
+                    start: Object {
+                      column: 41
+                      index: 41
+                      line: 1
+                    }
+                  }
+                  leadingComments: Array [
+                    CommentBlock {
+                      value: ' perfect '
+                      loc: Object {
+                        filename: 'input.js'
+                        end: Object {
+                          column: 40
+                          index: 40
+                          line: 1
+                        }
+                        start: Object {
+                          column: 27
+                          index: 27
+                          line: 1
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

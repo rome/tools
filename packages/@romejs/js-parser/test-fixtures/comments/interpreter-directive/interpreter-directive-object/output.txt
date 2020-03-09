@@ -1,0 +1,228 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: true
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 46
+      line: 4
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  interpreter: InterpreterDirective {
+    value: 'usr/bin/env babel-node'
+    loc: Object {
+      filename: 'input.js'
+      end: Object {
+        column: 25
+        index: 25
+        line: 1
+      }
+      start: Object {
+        column: 1
+        index: 1
+        line: 1
+      }
+    }
+  }
+  comments: Array [
+    CommentLine {
+      value: 'usr/bin/env babel-node'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 25
+          index: 25
+          line: 1
+        }
+        start: Object {
+          column: 1
+          index: 1
+          line: 1
+        }
+      }
+    }
+  ]
+  body: Array [
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 18
+          index: 45
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 27
+          line: 3
+        }
+      }
+      leadingComments: Array [
+        CommentLine {
+          value: 'usr/bin/env babel-node'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 25
+              index: 25
+              line: 1
+            }
+            start: Object {
+              column: 1
+              index: 1
+              line: 1
+            }
+          }
+        }
+      ]
+      declaration: VariableDeclaration {
+        kind: 'var'
+        leadingComments: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 18
+            index: 45
+            line: 3
+          }
+          start: Object {
+            column: 0
+            index: 27
+            line: 3
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingObjectPattern {
+              leadingComments: undefined
+              rest: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 13
+                  index: 40
+                  line: 3
+                }
+                start: Object {
+                  column: 4
+                  index: 31
+                  line: 3
+                }
+              }
+              properties: Array [
+                BindingObjectPatternProperty {
+                  key: StaticPropertyKey {
+                    value: Identifier {
+                      name: 'spawn'
+                      leadingComments: undefined
+                      loc: Object {
+                        filename: 'input.js'
+                        end: Object {
+                          column: 11
+                          index: 38
+                          line: 3
+                        }
+                        start: Object {
+                          column: 6
+                          index: 33
+                          line: 3
+                        }
+                      }
+                    }
+                    leadingComments: undefined
+                    variance: undefined
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 11
+                        index: 38
+                        line: 3
+                      }
+                      start: Object {
+                        column: 6
+                        index: 33
+                        line: 3
+                      }
+                    }
+                  }
+                  value: BindingIdentifier {
+                    name: 'spawn'
+                    leadingComments: undefined
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 11
+                        index: 38
+                        line: 3
+                      }
+                      start: Object {
+                        column: 6
+                        index: 33
+                        line: 3
+                      }
+                    }
+                  }
+                  leadingComments: undefined
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 11
+                      index: 38
+                      line: 3
+                    }
+                    start: Object {
+                      column: 6
+                      index: 33
+                      line: 3
+                    }
+                  }
+                }
+              ]
+            }
+            leadingComments: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 17
+                index: 44
+                line: 3
+              }
+              start: Object {
+                column: 4
+                index: 31
+                line: 3
+              }
+            }
+            init: ReferenceIdentifier {
+              name: 'x'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 17
+                  index: 44
+                  line: 3
+                }
+                start: Object {
+                  column: 16
+                  index: 43
+                  line: 3
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

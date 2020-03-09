@@ -1,0 +1,186 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 41
+      index: 41
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ImportDeclaration {
+      importKind: undefined
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 41
+          index: 41
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      source: StringLiteral {
+        value: 'crypto'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 41
+            index: 41
+            line: 1
+          }
+          start: Object {
+            column: 33
+            index: 33
+            line: 1
+          }
+        }
+      }
+      specifiers: Array [
+        ImportSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 16
+              index: 16
+              line: 1
+            }
+            start: Object {
+              column: 9
+              index: 9
+              line: 1
+            }
+          }
+          imported: Identifier {
+            name: 'encrypt'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 16
+                index: 16
+                line: 1
+              }
+              start: Object {
+                column: 9
+                index: 9
+                line: 1
+              }
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'encrypt'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 16
+                  index: 16
+                  line: 1
+                }
+                start: Object {
+                  column: 9
+                  index: 9
+                  line: 1
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 16
+                index: 16
+                line: 1
+              }
+              start: Object {
+                column: 9
+                index: 9
+                line: 1
+              }
+            }
+          }
+        }
+        ImportSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 26
+              index: 26
+              line: 1
+            }
+            start: Object {
+              column: 18
+              index: 18
+              line: 1
+            }
+          }
+          imported: Identifier {
+            name: 'decrypt'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 25
+                index: 25
+                line: 1
+              }
+              start: Object {
+                column: 18
+                index: 18
+                line: 1
+              }
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'decrypt'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 25
+                  index: 25
+                  line: 1
+                }
+                start: Object {
+                  column: 18
+                  index: 18
+                  line: 1
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 26
+                index: 26
+                line: 1
+              }
+              start: Object {
+                column: 18
+                index: 18
+                line: 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

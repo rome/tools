@@ -1,5 +1,0 @@
-{
-  "sourceType": "module",
-  "syntax": ["flow"],
-  "throws": "Unexpected token"
-}

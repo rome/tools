@@ -1,0 +1,74 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 3
+      index: 3
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 3
+          index: 3
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: UpdateExpression {
+        operator: '--'
+        prefix: false
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 3
+            index: 3
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        argument: ReferenceIdentifier {
+          name: 'x'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 1
+              index: 1
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      }
+    }
+  ]
+}
