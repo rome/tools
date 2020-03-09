@@ -101,6 +101,11 @@ function cleanRelativeUidPath(relative: UnknownFilePath): undefined | string {
   return relative.join();
 }
 
+export type ProjectConfigSource = {
+  consumer: Consumer;
+  value: undefined | Consumer;
+};
+
 export default class ProjectManager {
   constructor(master: Master) {
     this.master = master;
@@ -472,10 +477,7 @@ export default class ProjectManager {
   findProjectConfigConsumer(
     def: ProjectDefinition,
     test: (consumer: Consumer) => undefined | Consumer,
-  ): {
-    consumer: Consumer;
-    value: undefined | Consumer;
-  } {
+  ): ProjectConfigSource {
     const meta = assertHardMeta(def.meta);
 
     for (const consumer of meta.consumersChain) {

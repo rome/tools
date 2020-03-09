@@ -61,7 +61,7 @@ export type DiagnosticAdviceItemLog = {
 export type DiagnosticAdviceItemList = {
   type: 'list';
   list: Array<string>;
-  truncate: number;
+  truncate: boolean;
   reverse: boolean;
   ordered: boolean;
 };
@@ -100,7 +100,7 @@ export type DiagnosticAdviceItemStacktrace = {
   type: 'stacktrace';
   title: undefined | string;
   frames: Array<DiagnosticAdviceStackFrame>;
-  truncate: number;
+  truncate: boolean;
 };
 
 export type DiagnosticAdviceItem =
@@ -196,7 +196,7 @@ export type PartialDiagnosticAdviceItem =
   | {
       type: 'list';
       list: Array<string>;
-      truncate?: number | undefined;
+      truncate?: boolean;
       reverse?: boolean;
       ordered?: boolean;
     }
@@ -232,7 +232,7 @@ export type PartialDiagnosticAdviceItem =
   | {
       type: 'stacktrace';
       title?: string;
-      truncate?: number;
+      truncate?: boolean;
       frames: Array<PartialDiagnosticAdviceStackFrame>;
     };
 

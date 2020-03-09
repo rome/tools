@@ -608,7 +608,7 @@ export default class TestAPI {
       advice.push({
         type: 'log',
         category: 'info',
-        message: markup`Run <command>rome test ${this.file.uid} --update-snapshots</command> to update this snapshot`,
+        message: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
       });
 
       this.fail(message, advice, framesToPop);

@@ -17,6 +17,15 @@ export {parsePattern as parsePathPattern};
 
 export {stringifyPathPattern} from './stringify';
 
+export function flipPathPatterns(patterns: PathPatterns): PathPatterns {
+  return patterns.map(pattern => {
+    return {
+      ...pattern,
+      negate: !pattern.negate,
+    };
+  });
+}
+
 export function matchPath(
   path: AbsoluteFilePath,
   patternNode: PathPatternNode,

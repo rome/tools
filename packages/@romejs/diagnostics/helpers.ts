@@ -72,7 +72,7 @@ export function buildSuggestionAdvice(
       advice.push({
         type: 'list',
         list: strings,
-        truncate: 20,
+        truncate: true,
       });
     }
   }

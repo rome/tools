@@ -11,19 +11,41 @@ import {commandCategories} from '../../commands';
 import {AbsoluteFilePathSet} from '@romejs/path';
 import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import {FORMATTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
-import Linter from '../linter/Linter';
 
 export default createMasterCommand({
   category: commandCategories.INTERNAL,
   description: '',
 
   async default(req: MasterRequest): Promise<void> {
-    const {reporter} = req;
+    const {reporter, master} = req;
 
-    const paths: AbsoluteFilePathSet = await Linter.getFilesFromArgs(
-      req,
-      FORMATTABLE_EXTENSIONS,
-    );
+    const paths: AbsoluteFilePathSet = await req.getFilesFromArgs({
+      getProjectIgnore: project => ({
+        patterns: project.config.format.ignore,
+        source: master.projectManager.findProjectConfigConsumer(
+          project,
+          consumer =>
+            consumer.has('format') && consumer.get('format').has('ignore')
+              ? consumer.get('format').get('ignore')
+              : undefined,
+        ),
+      }),
+      getProjectEnabled: project => ({
+        enabled: project.config.format.enabled,
+        source: master.projectManager.findProjectConfigConsumer(
+          project,
+          consumer =>
+            consumer.has('format')
+              ? consumer.get('format').get('enabled')
+              : undefined,
+        ),
+      }),
+      noun: 'formatting',
+      verb: 'linting',
+      configCategory: 'format',
+      extensions: FORMATTABLE_EXTENSIONS,
+    });
+
     if (paths.size === 0) {
       reporter.warn('No files formatted');
       return;

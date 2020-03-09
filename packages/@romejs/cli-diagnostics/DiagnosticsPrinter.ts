@@ -457,7 +457,7 @@ export default class DiagnosticsPrinter extends Error {
         outdatedAdvice.push({
           type: 'list',
           list: outdatedFilesArr.map(
-            filename => `<fileref target="${filename}" />`,
+            filename => `<filelink target="${filename}" />`,
           ),
         });
       }

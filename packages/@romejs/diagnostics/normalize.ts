@@ -23,9 +23,6 @@ import {
 } from './types';
 import {coerce1, coerce0, number1, number0, number0Neg1} from '@romejs/ob1';
 
-const DEFAULT_LIST_TRUNCATE = 100;
-const DEFAULT_STACKTRACE_TRUNCATE = 10;
-
 function normalizeLanguage(
   language: undefined | DiagnosticLanguage,
 ): DiagnosticLanguage {
@@ -231,7 +228,7 @@ export function normalizeDiagnosticAdviceItem(
       return {
         type: 'list',
         list: part.list,
-        truncate: normalizeValue(part.truncate, DEFAULT_LIST_TRUNCATE),
+        truncate: normalizeValue(part.truncate, false),
         reverse: normalizeValue(part.reverse, false),
         ordered: normalizeValue(part.ordered, false),
       };
@@ -274,7 +271,7 @@ export function normalizeDiagnosticAdviceItem(
         type: 'stacktrace',
         title: part.title,
         frames: normalizeAdviceStackFrames(part.frames, opts),
-        truncate: normalizeValue(part.truncate, DEFAULT_STACKTRACE_TRUNCATE),
+        truncate: normalizeValue(part.truncate, false),
       };
 
     case 'inspect':

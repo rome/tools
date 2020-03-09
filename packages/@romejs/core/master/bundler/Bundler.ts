@@ -27,6 +27,7 @@ import {
 import {WorkerCompileResult} from '../../common/bridges/WorkerBridge';
 import {Dict} from '@romejs/typescript-helpers';
 import {readFile} from '@romejs/fs';
+import {flipPathPatterns} from '@romejs/path-match';
 
 export type BundlerEntryResoluton = {
   manifestDef: undefined | ManifestDefinition;
@@ -286,7 +287,7 @@ export default class Bundler {
     // Copy manifest.files
     if (manifest.files !== undefined) {
       const paths = await this.master.memoryFs.glob(manifestDef.folder, {
-        only: manifest.files,
+        overrideIgnore: flipPathPatterns(manifest.files),
       });
 
       for (const path of paths) {
