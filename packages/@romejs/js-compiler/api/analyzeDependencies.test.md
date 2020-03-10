@@ -33,7 +33,7 @@ Object {
   ]
   diagnostics: Array [
     Object {
-      category: 'analyzeDependencies'
+      category: 'analyzeDependencies/cjsExportInES'
       filename: 'unknown'
       language: 'js'
       message: 'You cannot use CommonJS exports in an ES module'

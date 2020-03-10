@@ -253,7 +253,7 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'suppressions'
+      category: 'suppressions/incorrectPrefix'
       filename: 'unknown'
       message: 'Invalid suppression prefix <emphasis>rome-ignore</emphasis>'
       end: Object {
