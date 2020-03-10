@@ -14,7 +14,7 @@ export default {
     const {node, context} = path;
 
     if (node.type === 'SwitchStatement') {
-      let uniqueSwitchCases = new Set();
+      const uniqueSwitchCases = new Set();
 
       for (const param of node.cases) {
         if (param.test && param.test.type === 'StringLiteral') {
@@ -23,7 +23,7 @@ export default {
           if (uniqueSwitchCases.has(test.value)) {
             context.addNodeDiagnostic(param, {
               category: 'lint/noDuplicateCase',
-              message: `Duplicate case <emphasis>${test.value}</emphasis> not allowed`,
+              message: `Duplicate case <emphasis>${test.value}</emphasis> not allowed.`,
             });
           }
 
