@@ -150,7 +150,7 @@ Program {
                         line: 1
                       }
                     }
-                    item: RegExpGroupCapture {
+                    target: RegExpGroupCapture {
                       name: undefined
                       loc: Object {
                         filename: 'input.js'

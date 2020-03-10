@@ -296,7 +296,7 @@ export default class DependencyNode {
     }
 
     return {
-      category: 'bundler',
+      category: 'bundler/unknownExport',
       ...resolved.loc,
       message,
       advice,
@@ -328,7 +328,7 @@ export default class DependencyNode {
     }
 
     return {
-      category: 'bundler',
+      category: 'bundler/importTypeMismatch',
       ...loc,
       message: `The export <emphasis>${name}</emphasis> in <filelink emphasis target="${node.id}" /> was incorrectly imported as a <emphasis>${kind}</emphasis> when it's actually a <emphasis>${record.kind}</emphasis>`,
       advice,

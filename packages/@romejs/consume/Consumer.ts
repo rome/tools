@@ -12,6 +12,7 @@ import {
   DiagnosticsError,
   DiagnosticPointer,
   getDiagnosticsFromError,
+  DiagnosticCategory,
 } from '@romejs/diagnostics';
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
@@ -53,6 +54,7 @@ import {
 } from '@romejs/path';
 
 type UnexpectedConsumerOptions = {
+  category?: DiagnosticCategory;
   loc?: SourceLocation;
   target?: ConsumeSourceLocationRequestTarget;
   advice?: PartialDiagnosticAdvice;
@@ -186,11 +188,16 @@ export default class Consumer {
   getDiagnosticPointer(
     target: ConsumeSourceLocationRequestTarget = 'all',
   ): undefined | DiagnosticPointer {
+    const {getDiagnosticPointer} = this.context;
+    if (getDiagnosticPointer === undefined) {
+      return undefined;
+    }
+
     const {forceDiagnosticTarget} = this;
     if (forceDiagnosticTarget !== undefined) {
       target = forceDiagnosticTarget;
     }
-    return this.context.getDiagnosticPointer(this.keyPath, target);
+    return getDiagnosticPointer(this.keyPath, target);
   }
 
   getLocation(target?: ConsumeSourceLocationRequestTarget): SourceLocation {
@@ -254,7 +261,12 @@ export default class Consumer {
   }
 
   hasChangedFromSource(): boolean {
-    const originalValue = this.context.getOriginalValue(this.keyPath);
+    const {getOriginalValue} = this.context;
+    if (getOriginalValue === undefined) {
+      return false;
+    }
+
+    const originalValue = getOriginalValue(this.keyPath);
     return !this.wasInSource() || this.value !== originalValue;
   }
 
@@ -357,7 +369,8 @@ export default class Consumer {
     }
 
     const diagnostic: PartialDiagnostic = {
-      category: this.context.category,
+      category:
+        opts.category === undefined ? this.context.category : opts.category,
       filename: this.filename,
       message: msg,
       ...loc,

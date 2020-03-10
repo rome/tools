@@ -269,7 +269,7 @@ export default class DiagnosticsProcessor {
       diagnostics.push({
         ...suppression.loc,
         message: 'Did not hide any error',
-        category: 'suppressions',
+        category: 'suppressions/unused',
       });
     }
 

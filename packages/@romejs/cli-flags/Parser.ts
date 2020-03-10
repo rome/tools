@@ -200,7 +200,7 @@ export default class Parser<T> {
       },
 
       context: {
-        category: 'cli-flags',
+        category: 'flags/invalid',
         getOriginalValue: (keys: ConsumePath) => {
           return flags[keys[0]];
         },

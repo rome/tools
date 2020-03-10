@@ -9,7 +9,7 @@ import {buildSuggestionAdvice} from '@romejs/diagnostics';
 import {Scope} from '../../scopes';
 import T from '../T';
 import {orderBySimilarity} from '@romejs/string-utils';
-import E from './E';
+import E, {ErrorDefinition} from './E';
 import {AnyNode} from '@romejs/js-ast';
 
 export default class UnknownPropE extends E {
@@ -51,10 +51,11 @@ export default class UnknownPropE extends E {
     return sortedProps;
   }
 
-  getError() {
+  getError(): ErrorDefinition {
     let message: string = `Property '${this.key}' not found in`;
 
     return {
+      category: 'typeCheck/unknownProperty',
       message,
       advice: buildSuggestionAdvice(this.key, this.allProps),
       lowerTarget: this.property,

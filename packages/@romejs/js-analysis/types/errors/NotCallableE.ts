@@ -7,7 +7,7 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {Scope} from '../../scopes';
-import E from './E';
+import E, {ErrorDefinition} from './E';
 import T from '../T';
 
 export default class NotCallableE extends E {
@@ -19,8 +19,9 @@ export default class NotCallableE extends E {
   static type = 'NotCallableE';
   callee: T;
 
-  getError() {
+  getError(): ErrorDefinition {
     return {
+      category: 'typeCheck/uncallable',
       message: `This type isn't callable`,
       lowerTarget: this.callee,
     };

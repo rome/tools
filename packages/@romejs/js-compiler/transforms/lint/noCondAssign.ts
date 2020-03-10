@@ -26,6 +26,7 @@ export default {
         message: 'Cannot assign variable in loop condition',
       });
     }
+
     return node;
   },
 };

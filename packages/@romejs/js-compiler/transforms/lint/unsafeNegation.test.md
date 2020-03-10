@@ -12,6 +12,7 @@ Object {
     Object {
       category: 'lint/unsafeNegation'
       filename: 'unknown'
+      fixable: true
       language: 'js'
       message: 'Unsafe usage of negation operator in left side of binary expression'
       mtime: undefined

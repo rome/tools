@@ -38,7 +38,7 @@ function extractSuppressionsFromComment(
       for (const prefix of PREFIX_MISTAKES) {
         if (line.startsWith(prefix)) {
           diagnostics.push({
-            category: 'suppressions',
+            category: 'suppressions/incorrectPrefix',
             message: `Invalid suppression prefix <emphasis>${prefix}</emphasis>`,
             advice: [
               {

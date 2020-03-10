@@ -14,6 +14,7 @@ Object {
     Object {
       category: 'lint/noEmptyCharacterClass'
       filename: 'unknown'
+      fixable: true
       language: 'js'
       message: 'Empty character classes in regular expressions are not allowed'
       mtime: undefined
@@ -44,6 +45,7 @@ Object {
     Object {
       category: 'lint/noEmptyCharacterClass'
       filename: 'unknown'
+      fixable: true
       language: 'js'
       message: 'Empty character classes in regular expressions are not allowed'
       mtime: undefined
@@ -74,6 +76,7 @@ Object {
     Object {
       category: 'lint/noEmptyCharacterClass'
       filename: 'unknown'
+      fixable: true
       language: 'js'
       message: 'Empty character classes in regular expressions are not allowed'
       mtime: undefined
@@ -104,6 +107,7 @@ Object {
     Object {
       category: 'lint/noEmptyCharacterClass'
       filename: 'unknown'
+      fixable: true
       language: 'js'
       message: 'Empty character classes in regular expressions are not allowed'
       mtime: undefined
@@ -134,6 +138,7 @@ Object {
     Object {
       category: 'lint/noEmptyCharacterClass'
       filename: 'unknown'
+      fixable: true
       language: 'js'
       message: 'Empty character classes in regular expressions are not allowed'
       mtime: undefined
@@ -164,6 +169,7 @@ Object {
     Object {
       category: 'lint/noEmptyCharacterClass'
       filename: 'unknown'
+      fixable: true
       language: 'js'
       message: 'Empty character classes in regular expressions are not allowed'
       mtime: undefined

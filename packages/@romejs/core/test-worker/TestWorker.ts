@@ -38,7 +38,7 @@ export default class TestWorker {
         ref: undefined,
         diagnostic: deriveDiagnosticFromError({
           error: err,
-          category: 'unhandledRejection',
+          category: 'tests/unhandledRejection',
         }),
       });
     });

@@ -15,7 +15,7 @@ test('disallow var', async t => {
   // Redundant because of the snapshot above, but this is what we actually care about
   t.looksLike(res.diagnostics, [
     {
-      category: 'lint/disallowVar',
+      category: 'lint/noVar',
       filename: 'unknown',
       language: 'js',
       message:

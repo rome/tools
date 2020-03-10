@@ -18,8 +18,9 @@ test('disallows comparing negative zero', async t => {
     {
       category: 'lint/noCompareNegZero',
       filename: 'unknown',
+      fixable: true,
       language: 'js',
-      message: "Do not use the '>=' operator to compare against -0.",
+      message: "Do not use the '>=' operator to compare against -0",
       mtime: undefined,
       sourceType: 'module',
       origins: [{category: 'lint'}],

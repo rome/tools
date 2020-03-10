@@ -72,7 +72,7 @@ export default createParser(
   ParserCore =>
     class SnapshotParser extends ParserCore<Tokens, void> {
       constructor(opts: ParserOptions) {
-        super(opts, 'snapshots');
+        super(opts, 'parse/snapshots');
         this.ignoreWhitespaceTokens = true;
       }
 

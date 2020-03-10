@@ -24,7 +24,7 @@ const createPathMatchParser = createParser(
   ParserCore =>
     class PathMatchParser extends ParserCore<Tokens, void> {
       constructor(opts: PathMatchParserOptions, mode: ParseMode) {
-        super(opts, '@romejs/patch-match');
+        super(opts, 'parse/patchMatch');
         this.mode = mode;
       }
 

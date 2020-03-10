@@ -91,7 +91,7 @@ export class WatchmanClient {
     const bunser = new BunserBuf();
 
     bunser.valueEvent.subscribe(obj => {
-      this.processResponse(consumeUnknown(obj));
+      this.processResponse(consumeUnknown(obj, 'parse/json'));
     });
 
     socket.on('data', chunk => {

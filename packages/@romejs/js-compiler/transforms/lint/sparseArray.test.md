@@ -12,6 +12,7 @@ Object {
     Object {
       category: 'lint/sparseArray'
       filename: 'unknown'
+      fixable: true
       language: 'js'
       message: 'Your array contains an empty slot'
       mtime: undefined

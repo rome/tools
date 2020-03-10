@@ -9,7 +9,7 @@ import {AbsoluteFilePath} from '@romejs/path';
 import {writeFile, readFileText, exists, unlink} from '@romejs/fs';
 import {TestRunnerOptions} from '../master/testing/types';
 import TestWorkerRunner from './TestWorkerRunner';
-import {PartialDiagnosticAdvice} from '@romejs/diagnostics';
+import {PartialDiagnosticAdvice, DiagnosticCategory} from '@romejs/diagnostics';
 import createSnapshotParser from './SnapshotParser';
 import stringDiff from '@romejs/string-diff';
 
@@ -60,9 +60,13 @@ export default class SnapshotManager {
   raw: string;
   exists: boolean;
 
-  async emitDiagnostic(message: string, advice?: PartialDiagnosticAdvice) {
+  async emitDiagnostic(
+    category: DiagnosticCategory,
+    message: string,
+    advice?: PartialDiagnosticAdvice,
+  ) {
     await this.runner.emitDiagnostic({
-      category: 'test/snapshots',
+      category,
       filename: this.path.join(),
       message,
       advice,
@@ -162,7 +166,10 @@ export default class SnapshotManager {
     if (this.entries.size === 0) {
       if (this.exists) {
         if (this.options.freezeSnapshots) {
-          await this.emitDiagnostic('Snapshot should not exist');
+          await this.emitDiagnostic(
+            'tests/snapshots/redundant',
+            'Snapshot should not exist',
+          );
         } else {
           // Remove the snapshot file as there were none ran
           await unlink(path);
@@ -232,14 +239,21 @@ export default class SnapshotManager {
 
     if (this.options.freezeSnapshots) {
       if (!this.exists) {
-        await this.emitDiagnostic('Snapshot does not exist');
+        await this.emitDiagnostic(
+          'tests/snapshots/missing',
+          'Snapshot does not exist',
+        );
       } else if (formatted !== this.raw) {
-        await this.emitDiagnostic('Snapshots do not match', [
-          {
-            type: 'diff',
-            diff: stringDiff(this.raw, formatted),
-          },
-        ]);
+        await this.emitDiagnostic(
+          'tests/snapshots/incorrect',
+          'Snapshots do not match',
+          [
+            {
+              type: 'diff',
+              diff: stringDiff(this.raw, formatted),
+            },
+          ],
+        );
       }
     } else if (formatted !== this.raw) {
       // Save the file

@@ -113,13 +113,13 @@ export function normalizeDiagnostic(
   const sourceText = diagnostic.sourceText;
   const language = normalizeLanguage(diagnostic.language);
   const sourceType = normalizeValue(diagnostic.sourceType, 'unknown');
-  const category = normalizeValue(diagnostic.category, 'unknown');
   const message = normalizeValue(diagnostic.message, 'No message provided');
   const marker = diagnostic.marker;
   const dependencies = normalizeDependencies(diagnostic.dependencies, opts);
 
   const diag: Diagnostic = {
-    category,
+    category: diagnostic.category,
+    label: diagnostic.label,
     message,
     origins,
     marker,

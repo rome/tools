@@ -7,8 +7,8 @@
 
 // Add imports in alphabetical order.
 import defaultExportSameBasename from './defaultExportSameBasename';
-import disallowMultipleSpacesInRegularExpressionLiterals from './disallowMultipleSpacesInRegularExpressionLiterals';
-import disallowVar from './disallowVar';
+import noMultipleSpacesInRegularExpressionLiterals from './noMultipleSpacesInRegularExpressionLiterals';
+import noVar from './noVar';
 import emptyBlocks from './emptyBlocks';
 import getterReturn from './getterReturn';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
@@ -36,8 +36,8 @@ import unusedVariables from './unusedVariables';
 // Add transforms in alphabetical order.
 export const lintTransforms = [
   defaultExportSameBasename,
-  disallowMultipleSpacesInRegularExpressionLiterals,
-  disallowVar,
+  noMultipleSpacesInRegularExpressionLiterals,
+  noVar,
   emptyBlocks,
   getterReturn,
   noAsyncPromiseExecutor,

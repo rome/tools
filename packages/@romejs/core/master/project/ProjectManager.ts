@@ -584,7 +584,7 @@ export default class ProjectManager {
         }
 
         diagnostics.addDiagnostic({
-          category: 'projectManager',
+          category: 'projectManager/nameCollision',
           filename: def.path.join(),
           message: `Duplicate package name <emphasis>${name}</emphasis>`,
           ...def.consumer.get('name').getDiagnosticPointer('inner-value'),
@@ -667,7 +667,7 @@ export default class ProjectManager {
         }
 
         diagnostics.addDiagnostic({
-          category: 'projectManager',
+          category: 'projectManager/nameCollision',
           filename: hastePath.join(),
           message: `Found a haste collision for <emphasis>${hasteName}</emphasis>`,
           advice: [
@@ -752,7 +752,7 @@ export default class ProjectManager {
 
     throw createSingleDiagnosticError({
       ...pointer,
-      category: 'project',
+      category: 'projectManager/missing',
       message: `Couldn't find a project`,
       advice: [
         {
@@ -917,7 +917,7 @@ export default class ProjectManager {
     diagnostics: DiagnosticsProcessor,
   ) {
     diagnostics.addDiagnostic({
-      category: 'projectManager',
+      category: 'projectManager/incorrectConfigFilename',
       filename: path.join(),
       message: `Invalid rome config filename, <emphasis>${ROME_CONFIG_FILENAMES.join(
         ' or ',
