@@ -165,7 +165,6 @@ export const createRegExpParser = createParser(
 
             case 'd':
             case 'D':
-            case 'b':
             case 'B':
             case 's':
             case 'S':

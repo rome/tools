@@ -6,10 +6,7 @@
  */
 
 import test from '@romejs/test';
-import {
-  testLint,
-  LINT_ENABLED_FORMAT_DISABLED_CONFIG,
-} from '../../../__rtests__/lint';
+import {testLint} from '../../api/lint.test';
 
 test('no duplicated switch cases allowed', async t => {
   const duplicatedSwitchCase = await testLint(
@@ -30,7 +27,6 @@ test('no duplicated switch cases allowed', async t => {
         break;
     }
   `,
-    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
   );
 
   t.truthy(
