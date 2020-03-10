@@ -48,7 +48,6 @@ export default function isStatement(
     case 'FlowDeclareOpaqueType':
     case 'FlowDeclareVariable':
     case 'FlowInterfaceDeclaration':
-    case 'TypeAliasTypeAnnotation':
     case 'FlowOpaqueType':
     case 'TypeAliasTypeAnnotation':
       return true;

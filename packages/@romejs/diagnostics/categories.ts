@@ -33,6 +33,7 @@ export type DiagnosticCategory =
   | 'lint/noDebugger'
   | 'lint/noDeleteVars'
   | 'lint/noDupeArgs'
+  | 'lint/noDuplicateCase'
   | 'lint/noDuplicateKeys'
   | 'lint/noEmptyCharacterClass'
   | 'lint/noExtraBooleanCast'

@@ -17,6 +17,7 @@ import noCondAssign from './noCondAssign';
 import noDebugger from './noDebugger';
 import noDeleteVars from './noDeleteVars';
 import noDupeArgs from './noDupeArgs';
+import noDuplicateCase from './noDuplicateCase';
 import noDuplicateKeys from './noDuplicateKeys';
 import noEmptyCharacterClass from './noEmptyCharacterClass';
 import noExtraBooleanCast from './noExtraBooleanCast';
@@ -46,6 +47,7 @@ export const lintTransforms = [
   noDebugger,
   noDeleteVars,
   noDupeArgs,
+  noDuplicateCase,
   noDuplicateKeys,
   noEmptyCharacterClass,
   noExtraBooleanCast,
