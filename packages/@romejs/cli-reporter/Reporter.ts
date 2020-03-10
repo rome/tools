@@ -501,7 +501,7 @@ export default class Reporter {
   ): Promise<keyof Options> {
     const set = await this.select(message, {...arg, radio: true});
 
-    // Should always have at least one elemet
+    // Should always have at least one element
     return Array.from(set)[0];
   }
 
@@ -526,6 +526,16 @@ export default class Reporter {
 
     let prompt = `<brightBlack>❯</brightBlack> <emphasis>${message}</emphasis>`;
     this.logAll(prompt);
+
+    if (radio) {
+      this.info(
+        'Use arrow keys and then <emphasis>enter</emphasis> to select an option',
+      );
+    } else {
+      this.info(
+        'Use arrow keys and <emphasis>space</emphasis> to select or deselect options and then <emphasis>enter</emphasis> to confirm',
+      );
+    }
 
     const selectedOptions: Set<keyof Options> = new Set(defaults);
     let activeOption = 0;
@@ -605,6 +615,10 @@ export default class Reporter {
       const finish = () => {
         cleanup();
 
+        // Remove initial help message
+        this.writeAll(escapes.cursorUp());
+        this.writeAll(escapes.eraseLine);
+
         // Remove initial log message
         this.writeAll(escapes.cursorUp());
         this.writeAll(escapes.eraseLine);
@@ -651,11 +665,16 @@ export default class Reporter {
 
           case 'c':
             if (key.ctrl) {
+              this.warn('Cancelled by user');
               process.exit(1);
             }
             return;
 
           case 'escape':
+            this.warn('Cancelled by user');
+            process.exit(1);
+            return;
+
           case 'return':
             finish();
             return;
