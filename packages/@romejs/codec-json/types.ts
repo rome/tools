@@ -12,9 +12,10 @@ import {
   ParserOptions,
 } from '@romejs/parser-core';
 import {ConsumeContext} from '@romejs/consume';
+import {DiagnosticCategory} from '@romejs/diagnostics';
 
 export type JSONParserOptions = ParserOptions & {
-  consumeCategory?: string;
+  consumeDiagnosticCategory?: DiagnosticCategory;
 };
 
 export type PathComments = {
@@ -38,7 +39,7 @@ export type Comments = Array<BlockComment | LineComment>;
 
 export type JSONParserResult = {
   value: JSONValue;
-  context: ConsumeContext;
+  context: Required<ConsumeContext>;
 };
 
 export type Tokens = BaseTokens & {

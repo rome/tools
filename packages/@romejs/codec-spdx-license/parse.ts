@@ -71,7 +71,7 @@ const createSPDXLicenseParser = createParser(
   ParserCore =>
     class SPDXLicenseParser extends ParserCore<Tokens, void> {
       constructor(opts: SPDXLicenseParserOptions) {
-        super(opts, 'spdx-license');
+        super(opts, 'parse/spdxLicense');
         this.loose = opts.loose === true;
       }
 

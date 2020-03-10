@@ -9,7 +9,7 @@ import {AnyNode} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 
 export default {
-  name: 'disallowVar',
+  name: 'noVar',
   enter(path: Path): AnyNode {
     const {context, node: declaration} = path;
 
@@ -18,7 +18,7 @@ export default {
       declaration.kind === 'var'
     ) {
       context.addNodeDiagnostic(declaration, {
-        category: 'lint/disallowVar',
+        category: 'lint/noVar',
         message:
           'Variable declarations using `var` are disallowed, use `let` or `const` instead.',
       });

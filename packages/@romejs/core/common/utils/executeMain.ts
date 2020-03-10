@@ -85,7 +85,7 @@ export default async function executeMain(
 
       const syntaxError: PartialDiagnostic = {
         message: err.message,
-        category: 'syntaxError',
+        category: 'v8/syntaxError',
         start: pos,
         end: pos,
         filename,

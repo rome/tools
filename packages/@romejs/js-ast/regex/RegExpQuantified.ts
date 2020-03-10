@@ -10,7 +10,7 @@ import {createBuilder} from '../utils';
 
 export type RegExpQuantified = JSNodeBase & {
   type: 'RegExpQuantified';
-  item: AnyRegExpBodyItem;
+  target: AnyRegExpBodyItem;
   lazy?: boolean;
   min: number;
   max?: number;
@@ -21,7 +21,7 @@ export const regExpQuantified = createBuilder<RegExpQuantified>(
   {
     bindingKeys: {},
     visitorKeys: {
-      item: true,
+      target: true,
     },
   },
 );

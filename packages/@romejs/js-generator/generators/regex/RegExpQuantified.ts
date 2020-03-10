@@ -10,7 +10,7 @@ import {AnyNode, RegExpQuantified, regExpQuantified} from '@romejs/js-ast';
 
 export default function RegExpQuantified(generator: Generator, node: AnyNode) {
   node = regExpQuantified.assert(node);
-  generator.print(node.item, node);
+  generator.print(node.target, node);
 
   if (node.min === 0 && node.max === 1) {
     generator.append('?');

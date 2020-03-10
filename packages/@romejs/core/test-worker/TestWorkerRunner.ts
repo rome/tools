@@ -171,7 +171,8 @@ export default class TestWorkerRunner {
 
     let diagnostic: PartialDiagnostic = deriveDiagnosticFromError({
       error: opts.error,
-      category: testName,
+      category: 'tests/failure',
+      label: testName,
       filename,
       cleanFrames(frames) {
         // TODO we should actually get the frames before module init and do it that way
@@ -307,7 +308,7 @@ export default class TestWorkerRunner {
         diagnostic: {
           filename: this.file.uid,
           message: 'No tests declared in this file',
-          category: 'tests',
+          category: 'tests/noneDeclared',
         },
       });
     }

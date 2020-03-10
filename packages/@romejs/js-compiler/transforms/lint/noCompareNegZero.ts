@@ -6,6 +6,7 @@
  */
 import {AnyNode} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
+import {template} from '@romejs/js-ast-utils';
 
 const OPERATORS_TO_CHECK = ['>', '>=', '<', '<=', '==', '===', '!=', '!=='];
 
@@ -30,8 +31,10 @@ export default {
     ) {
       path.context.addNodeDiagnostic(node, {
         category: 'lint/noCompareNegZero',
-        message: `Do not use the '${node.operator}' operator to compare against -0.`,
+        message: `Do not use the '${node.operator}' operator to compare against -0`,
+        fixable: true,
       });
+      return template.expression`Object.is(${node.left}, ${node.right})`;
     }
 
     return node;

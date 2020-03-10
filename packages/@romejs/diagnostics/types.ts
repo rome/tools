@@ -10,6 +10,7 @@ import {Diffs} from '@romejs/string-diff';
 import {ConstSourceType} from '@romejs/js-ast';
 import {Number0, Number1} from '@romejs/ob1';
 import {JSONPropertyValue} from '@romejs/codec-json';
+import {DiagnosticCategory} from './categories';
 
 export type DiagnosticFilter = {
   category?: string;
@@ -122,8 +123,9 @@ export type DiagnosticDependency = {
 export type DiagnosticDependencies = Array<DiagnosticDependency>;
 
 export type Diagnostic = {
-  category: string;
+  category: DiagnosticCategory;
   message: string;
+  label: undefined | string;
   filename: undefined | string;
 
   origins: Array<DiagnosticOrigin>;
@@ -161,7 +163,8 @@ export type DiagnosticAdviceStackFrame = {
 //# PARTIAL
 
 export type PartialDiagnostic = {
-  category: string;
+  category: DiagnosticCategory;
+  label?: string;
   message: string;
 
   origins?: Array<DiagnosticOrigin>;

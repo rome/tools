@@ -63,7 +63,9 @@ export default class ClientRequest {
 
     let flags;
     if (localCommand.defineFlags !== undefined) {
-      flags = localCommand.defineFlags(consumeUnknown(query.commandFlags));
+      flags = localCommand.defineFlags(
+        consumeUnknown(query.commandFlags, 'flags/invalid'),
+      );
     }
 
     const success = await localCommand.callback(this, flags);

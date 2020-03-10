@@ -23,6 +23,7 @@ import {
   getDiagnosticsFromError,
   createSingleDiagnosticError,
   PartialDiagnostic,
+  DiagnosticCategory,
 } from '@romejs/diagnostics';
 import {
   Number1,
@@ -105,7 +106,11 @@ type ParserSnapshot<Tokens extends TokensShape, State> = {
 };
 
 export class ParserCore<Tokens extends TokensShape, State> {
-  constructor(opts: ParserOptions, parserName: string, initialState: State) {
+  constructor(
+    opts: ParserOptions,
+    diagnosticCategory: DiagnosticCategory,
+    initialState: State,
+  ) {
     const {path, mtime, input, offsetPosition} = opts;
 
     // Input information
@@ -123,7 +128,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
     // Parser/tokenizer state
     this.offsetPosition = offsetPosition;
-    this.parserName = parserName;
+    this.diagnosticCategory = diagnosticCategory;
     this.tokenizing = false;
     this.currLine =
       offsetPosition === undefined ? number1 : offsetPosition.line;
@@ -151,7 +156,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   startLine: Number1;
   startColumn: Number0;
   offsetIndex: Number0;
-  parserName: string;
+  diagnosticCategory: DiagnosticCategory;
   tokenizing: boolean;
   nextTokenIndex: Number0;
   state: State;
@@ -502,7 +507,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     return {
       message,
       advice: opts.advice,
-      category: this.parserName,
+      category: this.diagnosticCategory,
       sourceText: this.path === undefined ? this.input : undefined,
       mtime: this.mtime,
       start,
@@ -680,10 +685,10 @@ export class ParserWithRequiredPath<
 > extends ParserCore<Tokens, State> {
   constructor(
     opts: ParserOptionsWithRequiredPath,
-    parserName: string,
+    diagnosticCategory: DiagnosticCategory,
     initialState: State,
   ) {
-    super(opts, parserName, initialState);
+    super(opts, diagnosticCategory, initialState);
     this.filename = this.getFilenameAssert();
     this.path = this.getPathAssert();
   }

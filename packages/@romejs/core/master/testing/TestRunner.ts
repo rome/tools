@@ -178,7 +178,7 @@ export default class TestRunner {
         if (!this.ignoreBridgeEndError.has(err.bridge)) {
           this.printer.addDiagnostic(
             deriveDiagnosticFromError({
-              category: 'test',
+              category: 'tests/timeout',
               error: err,
             }),
           );
@@ -495,7 +495,8 @@ export default class TestRunner {
 
             this.printer.addDiagnostic({
               ...deriveDiagnosticFromError({
-                category: ref.testName,
+                label: ref.testName,
+                category: 'tests/failure',
                 filename: ref.filename,
                 error: error,
               }),
@@ -505,7 +506,8 @@ export default class TestRunner {
             });
           } else {
             this.printer.addDiagnostic({
-              category: ref.testName,
+              label: ref.testName,
+              category: 'tests/failure',
               filename: ref.filename,
               message: 'Test was cancelled',
             });
@@ -528,7 +530,7 @@ export default class TestRunner {
 
       bridge.testError.subscribe(data => {
         let origin: DiagnosticOrigin = {
-          category: 'test',
+          category: 'test/error',
           message:
             'Generated from a test worker without being attached to a test',
         };

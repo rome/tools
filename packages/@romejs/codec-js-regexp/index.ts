@@ -97,7 +97,7 @@ export const createRegExpParser = createParser(
   ParserCore =>
     class RegExpParser extends ParserCore<Tokens, void> {
       constructor(opts: RegExpParserOptions) {
-        super(opts, '@romejs/codec-js-regexp');
+        super(opts, 'parse/regex');
         this.diagnostics = [];
         this.unicode = opts.unicode;
       }
@@ -707,7 +707,7 @@ export const createRegExpParser = createParser(
           const quantified: RegExpQuantified = {
             type: 'RegExpQuantified',
             loc: this.finishLoc(start),
-            item: target,
+            target: target,
             lazy,
             ...quantifier,
           };

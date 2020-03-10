@@ -18,6 +18,7 @@ export default {
       !node.invert
     ) {
       context.addNodeDiagnostic(node, {
+        fixable: true,
         category: 'lint/noEmptyCharacterClass',
         message:
           'Empty character classes in regular expressions are not allowed',

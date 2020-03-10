@@ -88,7 +88,10 @@ export default class WebRequest {
       let diagnostics = getDiagnosticsFromError(err);
       if (diagnostics === undefined) {
         diagnostics = [
-          deriveDiagnosticFromError({category: 'http-server', error: err}),
+          deriveDiagnosticFromError({
+            category: 'internalError/httpServer',
+            error: err,
+          }),
         ];
       }
 

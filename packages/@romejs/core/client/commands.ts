@@ -179,7 +179,7 @@ localCommands.set('run', {
       return false;
     }
 
-    const data = consumeUnknown(res.data);
+    const data = consumeUnknown(res.data, 'parse/json');
 
     if (data.exists()) {
       const type = data.get('type').asString();

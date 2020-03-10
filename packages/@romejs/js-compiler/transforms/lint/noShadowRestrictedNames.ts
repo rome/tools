@@ -23,6 +23,14 @@ export default {
           context.addNodeDiagnostic(binding.node, {
             category: 'lint/noShadowRestrictedNames',
             message: markup`Shadowing of global property <emphasis>${name}</emphasis>`,
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message:
+                  "Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.",
+              },
+            ],
           });
         }
       }

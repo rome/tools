@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticPointer, PartialDiagnostic} from '@romejs/diagnostics';
+import {
+  DiagnosticPointer,
+  PartialDiagnostic,
+  DiagnosticCategory,
+} from '@romejs/diagnostics';
 import Consumer from './Consumer';
 import {UnknownFilePath} from '@romejs/path';
 import {Number0, Number1} from '@romejs/ob1';
@@ -23,12 +27,12 @@ export type ConsumeSourceLocationRequestTarget =
   | 'inner-value';
 
 export type ConsumeContext = {
-  category: string;
-  getDiagnosticPointer: (
+  category: DiagnosticCategory;
+  getDiagnosticPointer?: (
     keys: ConsumePath,
     target: ConsumeSourceLocationRequestTarget,
   ) => undefined | DiagnosticPointer;
-  getOriginalValue: (path: ConsumePath) => unknown;
+  getOriginalValue?: (path: ConsumePath) => unknown;
 };
 
 export type ConsumePropertyMetadata = {

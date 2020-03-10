@@ -730,7 +730,7 @@ export default class Master {
         },
         objectPath: [],
         context: {
-          category: 'cli-flags',
+          category: 'flags/invalid',
 
           getOriginalValue: () => {
             return undefined;
@@ -858,7 +858,7 @@ export default class Master {
       message: 'Error captured and converted into a diagnostic',
     });
     const errorDiag = deriveDiagnosticFromError({
-      category: 'internalError',
+      category: 'internalError/request',
       error: err,
     });
     printer.addDiagnostic({

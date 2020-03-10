@@ -202,7 +202,10 @@ export default class MasterRequest {
     throw createSingleDiagnosticError({
       message,
       filename: 'argv',
-      category: 'flags',
+      category:
+        target.type === 'arg' || target.type === 'arg-range'
+          ? 'args/invalid'
+          : 'flags/invalid',
       ...pointer,
       advice,
     });
@@ -436,7 +439,7 @@ export default class MasterRequest {
 
       throw createSingleDiagnosticError({
         ...pointer,
-        category: 'flags',
+        category: 'args/fileNotFound',
         message:
           globOpts.noun === undefined
             ? 'No files found'

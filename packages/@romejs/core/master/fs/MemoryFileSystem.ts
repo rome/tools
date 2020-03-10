@@ -837,7 +837,7 @@ export default class MemoryFileSystem {
     const consumer = consumeJSON({
       path: path,
       input: manifestRaw,
-      consumeCategory: 'manifest',
+      consumeDiagnosticCategory: 'parse/manifest',
     });
 
     const {

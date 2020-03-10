@@ -18,6 +18,7 @@ import {
   PartialDiagnosticAdvice,
   buildSuggestionAdvice,
   createSingleDiagnosticError,
+  DiagnosticCategory,
 } from '@romejs/diagnostics';
 import {orderBySimilarity} from '@romejs/string-utils';
 import {createUnknownFilePath, AbsoluteFilePath} from '@romejs/path';
@@ -220,13 +221,16 @@ export default function resolverSuggest(
   const source =
     querySource.source === undefined ? query.source.join() : querySource.source;
   let message = '';
+  let category: DiagnosticCategory = 'resolver/notFound';
 
   if (resolved.type === 'UNSUPPORTED') {
     message = `Unsupported`;
+    category = 'resolver/unsupported';
   } else if (resolved.type === 'MISSING') {
     message = `Cannot find`;
   } else if (resolved.type === 'FETCH_ERROR') {
     message = 'Failed to fetch';
+    category = 'resolver/fetchFailed';
   }
 
   if (resolved.advice !== undefined) {
@@ -237,7 +241,7 @@ export default function resolverSuggest(
 
   throw createSingleDiagnosticError({
     ...pointer,
-    category: 'resolver',
+    category,
     message,
     advice,
   });

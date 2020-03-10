@@ -102,7 +102,7 @@ const createJSParser = createParser(
           mtime: options.mtime,
           input: options.input,
         };
-        super(parserOpts, '@romejs/js-parser', state);
+        super(parserOpts, 'parse/js', state);
 
         this.isTrackingTokens = options.tokens;
 
