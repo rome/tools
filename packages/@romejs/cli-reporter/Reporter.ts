@@ -665,12 +665,14 @@ export default class Reporter {
 
           case 'c':
             if (key.ctrl) {
+              this.spacer();
               this.warn('Cancelled by user');
               process.exit(1);
             }
             return;
 
           case 'escape':
+            this.spacer();
             this.warn('Cancelled by user');
             process.exit(1);
             return;

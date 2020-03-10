@@ -40,7 +40,7 @@ localCommands.set('init', {
     const configPath = req.client.flags.cwd.append('rome.json');
     if (await exists(configPath)) {
       reporter.error(
-        `<filelink target="${configPath.join()}" emphasis>rome.json</emphasis> file already exists`,
+        `<filelink target="${configPath.join()}" emphasis>rome.json</filelink> file already exists`,
       );
       reporter.info(
         'Use <command>rome config</command> to update an existing config',
