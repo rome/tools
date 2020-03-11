@@ -665,14 +665,14 @@ export default class Reporter {
 
           case 'c':
             if (key.ctrl) {
-              this.spacer();
+              this.forceSpacer();
               this.warn('Cancelled by user');
               process.exit(1);
             }
             return;
 
           case 'escape':
-            this.spacer();
+            this.forceSpacer();
             this.warn('Cancelled by user');
             process.exit(1);
             return;
@@ -768,14 +768,13 @@ export default class Reporter {
 
   //# INDENTATION METHODS
 
-  indent(callback?: () => void) {
+  indent(callback: () => void) {
     this.indentLevel++;
     this.updateIndent();
 
-    if (callback !== undefined) {
-      callback();
-      this.dedent();
-    }
+    callback();
+    this.indentLevel--;
+    this.updateIndent();
   }
 
   noIndent(callback: () => void) {
@@ -784,11 +783,6 @@ export default class Reporter {
     this.updateIndent();
     callback();
     this.indentLevel = prevIndentLevel;
-    this.updateIndent();
-  }
-
-  dedent() {
-    this.indentLevel--;
     this.updateIndent();
   }
 
@@ -928,15 +922,15 @@ export default class Reporter {
   //# SECTIONS
 
   heading(text: string) {
-    this.optionalSpacer();
+    this.spacer();
     this.logAll(`<inverse><emphasis>${text}</emphasis></inverse>`, {
       nonTTY: `# ${text}`,
     });
     this.spacer();
   }
 
-  section(title: string, callback: () => void) {
-    this.hr(`<emphasis>${title}</emphasis>`);
+  section(title: undefined | string, callback: () => void) {
+    this.hr(title === undefined ? undefined : `<emphasis>${title}</emphasis>`);
     this.indent(() => {
       callback();
       this.spacer();
@@ -946,7 +940,7 @@ export default class Reporter {
   hr(text?: string) {
     const {hasClearScreen} = this;
 
-    this.optionalSpacer();
+    this.spacer();
 
     if (hasClearScreen && text === undefined) {
       return;
@@ -957,12 +951,12 @@ export default class Reporter {
         stream,
         text === undefined ? '' : ` ${text} `,
       );
-      const prefixLength = stripAnsi(prefix).length;
+      const prefixLength = this.indentString.length + stripAnsi(prefix).length;
       const barLength = Math.max(0, stream.columns - prefixLength);
       this.logOneNoMarkup(stream, prefix + '━'.repeat(barLength));
     }
 
-    this.optionalSpacer();
+    this.spacer();
   }
 
   async steps(
@@ -1007,13 +1001,13 @@ export default class Reporter {
     this.logAll(`<dim>[${current}/${total}]</dim> ${msg}`);
   }
 
-  optionalSpacer() {
+  spacer() {
     if (!this.hasSpacer) {
-      this.spacer();
+      this.forceSpacer();
     }
   }
 
-  spacer() {
+  forceSpacer() {
     this.logAll('');
   }
 

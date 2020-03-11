@@ -70,9 +70,9 @@ function printInspect(
   opts: AdvicePrintOptions,
 ): boolean {
   const {reporter} = opts;
-  reporter.indent();
-  reporter.inspect(item.data);
-  reporter.dedent();
+  reporter.indent(() => {
+    reporter.inspect(item.data);
+  });
   return false;
 }
 
@@ -111,9 +111,9 @@ function printCode(
 ): boolean {
   const {reporter} = opts;
   const {code} = item;
-  reporter.indent();
-  reporter.logAll(escapeMarkup(code));
-  reporter.dedent();
+  reporter.indent(() => {
+    reporter.logAll(escapeMarkup(code));
+  });
   return false;
 }
 
@@ -174,7 +174,7 @@ function printStacktrace(
   const isFirstPart = diagnostic.advice[0] === item;
   if (!isFirstPart) {
     opts.reporter.info(item.title === undefined ? 'Stack trace' : item.title);
-    opts.reporter.spacer();
+    opts.reporter.forceSpacer();
   }
 
   opts.reporter.processedList(
@@ -268,7 +268,7 @@ function printStacktrace(
           opts,
         );
         if (!skipped) {
-          opts.reporter.spacer();
+          opts.reporter.forceSpacer();
           shownCodeFrames++;
         }
       }
