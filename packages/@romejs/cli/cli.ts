@@ -155,6 +155,8 @@ export default async function cli() {
         category: local.category,
         description: local.description,
         defineFlags: local.defineFlags,
+        examples: local.examples,
+        usage: local.usage,
         callback(_commandFlags) {
           if (local.defineFlags !== undefined) {
             commandFlags = _commandFlags;
@@ -174,6 +176,8 @@ export default async function cli() {
         category: master.category,
         description: master.description,
         defineFlags: master.defineFlags,
+        usage: master.usage,
+        examples: master.examples,
 
         callback(_commandFlags) {
           if (master.defineFlags !== undefined) {
@@ -352,6 +356,11 @@ export default async function cli() {
         console.error('Unhandled CLI query error');
         console.error(res.stack);
       }
+      process.exit(1);
+      break;
+
+    case 'INVALID_REQUEST':
+      await p.showHelp();
       process.exit(1);
       break;
 
