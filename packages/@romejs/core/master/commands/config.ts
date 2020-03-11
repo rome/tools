@@ -12,7 +12,20 @@ import {modifyProjectConfig} from '@romejs/project';
 
 export default createMasterCommand({
   category: commandCategories.PROJECT_MANAGEMENT,
-  description: '',
+  description: 'Modify a project config',
+
+  usage: '(enable|disable|enable-category|disable-category|set) key [value]',
+
+  examples: [
+    {
+      command: 'enable-category lint',
+      description: 'Enable linting',
+    },
+    {
+      command: 'set name my_awesome_project',
+      description: 'Set the project name',
+    },
+  ],
 
   async default(req: MasterRequest): Promise<void> {
     const {reporter} = req;
