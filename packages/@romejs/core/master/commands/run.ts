@@ -22,7 +22,7 @@ type RunResult = {
 
 export default createMasterCommand({
   category: commandCategories.PROJECT_MANAGEMENT,
-  description: 'TODO',,
+  description: 'TODO',
 
   async default(req: MasterRequest): Promise<RunResult> {
     const {args} = req.query;

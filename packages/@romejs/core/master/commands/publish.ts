@@ -11,7 +11,7 @@ import {createMasterCommand} from '../../commands';
 
 export default createMasterCommand({
   category: commandCategories.PROJECT_MANAGEMENT,
-  description: 'TODO',,
+  description: 'TODO',
 
   async default(req: MasterRequest): Promise<void> {
     req.expectArgumentLength(1);

@@ -168,7 +168,7 @@ localCommands.set('stop', {
 
 localCommands.set('run', {
   category: commandCategories.PROJECT_MANAGEMENT,
-  description: 'TODO',,
+  description: 'TODO',
   async callback(req: ClientRequest) {
     const bridge = await req.client.findOrStartMaster();
     if (bridge === undefined) {
