@@ -568,6 +568,9 @@ export default class Parser<T> {
           reporter.logAll(`<emphasis>${category} Commands</emphasis>`);
         }
 
+        // Sort by name
+        commands.sort((a, b) => a.name.localeCompare(b.name));
+
         reporter.list(
           commands.map(cmd => {
             return `<emphasis>${cmd.name}</emphasis> ${
