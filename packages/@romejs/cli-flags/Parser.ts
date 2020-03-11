@@ -20,7 +20,7 @@ import {toKebabCase, toCamelCase} from '@romejs/string-utils';
 import {DiagnosticsError} from '@romejs/diagnostics';
 import {createUnknownFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
-import {escapeMarkup, markup} from '@romejs/string-markup';
+import {markup} from '@romejs/string-markup';
 
 export type Examples = Array<{
   description: string;
