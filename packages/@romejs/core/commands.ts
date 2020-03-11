@@ -16,6 +16,11 @@ export type MasterCommand<T> = {
   description: string;
   overrideClientFlags?: Partial<ClientFlags>;
   overrideRequestFlags?: Partial<ClientRequestFlags>;
+  usage?: string;
+  examples?: Array<{
+    description: string;
+    command: string;
+  }>;
   defineFlags?: (c: Consumer) => T;
   default: (
     req: MasterRequest,
@@ -26,6 +31,11 @@ export type MasterCommand<T> = {
 export type LocalCommand<T> = {
   category: string;
   description: string;
+  usage?: string;
+  examples?: Array<{
+    description: string;
+    command: string;
+  }>;
   callback: (api: ClientRequest, commandFlags: T) => Promise<boolean>;
   defineFlags?: (c: Consumer) => T;
 };

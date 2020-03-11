@@ -16,6 +16,7 @@ import {
   DiagnosticOrigin,
   PartialDiagnosticAdvice,
   createSingleDiagnosticError,
+  DiagnosticsError,
 } from '@romejs/diagnostics';
 import {DiagnosticsPrinterFlags} from '@romejs/cli-diagnostics';
 import {ProjectDefinition} from '@romejs/project';
@@ -72,6 +73,8 @@ type NormalizedCommandFlags = {
   flags: undefined | Dict<unknown>;
   defaultFlags: Dict<unknown>;
 };
+
+export class MasterRequestInvalid extends DiagnosticsError {}
 
 export default class MasterRequest {
   constructor(opts: MasterRequestOptions) {
@@ -199,16 +202,18 @@ export default class MasterRequest {
     advice?: PartialDiagnosticAdvice,
   ) {
     const pointer = this.getDiagnosticPointerFromFlags(target);
-    throw createSingleDiagnosticError({
-      message,
-      filename: 'argv',
-      category:
-        target.type === 'arg' || target.type === 'arg-range'
-          ? 'args/invalid'
-          : 'flags/invalid',
-      ...pointer,
-      advice,
-    });
+    throw new MasterRequestInvalid(message, [
+      {
+        message,
+        filename: 'argv',
+        category:
+          target.type === 'arg' || target.type === 'arg-range'
+            ? 'args/invalid'
+            : 'flags/invalid',
+        ...pointer,
+        advice,
+      },
+    ]);
   }
 
   getDiagnosticPointerForClientCwd(): DiagnosticPointer {

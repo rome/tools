@@ -118,7 +118,7 @@ localCommands.set('start', {
 
 localCommands.set('develop', {
   category: commandCategories.PROCESS_MANAGEMENT,
-  description: '',
+  description: 'TODO',
   async callback(req: ClientRequest) {
     const existingServer = await req.client.tryConnectToExistingDaemon();
     const hasExistingServer = existingServer !== undefined;
