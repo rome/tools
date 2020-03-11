@@ -182,7 +182,6 @@ export default class BundleRequest {
       this.cached = false;
     }
 
-    this.diagnostics.addSuppressions(res.suppressions);
     this.diagnostics.addDiagnostics(res.diagnostics);
 
     this.compiles.set(source, res);
