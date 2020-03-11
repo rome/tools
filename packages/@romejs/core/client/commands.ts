@@ -118,7 +118,7 @@ localCommands.set('start', {
 
 localCommands.set('develop', {
   category: commandCategories.PROCESS_MANAGEMENT,
-  description: '',
+  description: 'TODO',
   async callback(req: ClientRequest) {
     const existingServer = await req.client.tryConnectToExistingDaemon();
     const hasExistingServer = existingServer !== undefined;
@@ -168,7 +168,7 @@ localCommands.set('stop', {
 
 localCommands.set('run', {
   category: commandCategories.PROJECT_MANAGEMENT,
-  description: 'TODO',
+  description: 'TODO',,
   async callback(req: ClientRequest) {
     const bridge = await req.client.findOrStartMaster();
     if (bridge === undefined) {

@@ -14,7 +14,7 @@ import {FORMATTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
 
 export default createMasterCommand({
   category: commandCategories.INTERNAL,
-  description: '',
+  description: 'TODO',
 
   async default(req: MasterRequest): Promise<void> {
     const {reporter, master} = req;

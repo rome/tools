@@ -203,7 +203,7 @@ export default async function cli() {
   p.command({
     name: 'rage',
     category: commandCategories.INTERNAL,
-    description: '',
+    description: 'TODO',
 
     callback() {
       overrideCLIFlags = {
@@ -218,7 +218,7 @@ export default async function cli() {
   p.command({
     name: 'logs',
     category: commandCategories.INTERNAL,
-    description: '',
+    description: 'TODO',
 
     callback() {
       overrideCLIFlags = {
