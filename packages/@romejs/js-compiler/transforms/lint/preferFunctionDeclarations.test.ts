@@ -22,5 +22,10 @@ test('prefer function declarations', async t => {
   );
 
   // Should ignore functions with return types since you can't express that with a declaration
-  t.snapshot(await testLint('const foo: any = function () {};', true));
+  t.snapshot(
+    await testLint('const foo: string = function () {};', true, 'module', [
+      'ts',
+      'flow',
+    ]),
+  );
 });
