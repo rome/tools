@@ -36,6 +36,7 @@ export type DiagnosticCategory =
   | 'lint/noDuplicateCase'
   | 'lint/noDuplicateKeys'
   | 'lint/noEmptyCharacterClass'
+  | 'lint/noExplicitAny'
   | 'lint/noExtraBooleanCast'
   | 'lint/noFunctionAssign'
   | 'lint/noImportAssign'
