@@ -230,7 +230,9 @@ export default class Master {
     process.exit();
   }
 
+  // rome-suppress lint/noExplicitAny lint/noExplicitAny
   wrapFatal<T extends (...args: Array<any>) => any>(callback: T): T {
+    // rome-suppress lint/noExplicitAny lint/noExplicitAny
     return ((...args: Array<any>): any => {
       try {
         const res = callback(...args);

@@ -31,6 +31,7 @@ type ListOptions = {
   ordered?: boolean;
 };
 
+// rome-suppress lint/noExplicitAny lint/noExplicitAny
 type WrapperFactory = <T extends (...args: Array<any>) => any>(
   callback: T,
 ) => T;

@@ -278,6 +278,7 @@ export function normalizeDiagnosticAdviceItem(
       return {
         type: 'inspect',
         // @ts-ignore TODO
+        // rome-suppress lint/noExplicitAny
         data: part.data as any,
       };
   }

@@ -272,7 +272,9 @@ async function createWatchmanWatcher(
         return;
       }
 
+      // rome-suppress lint/noExplicitAny
       const dirs: Array<[AbsoluteFilePath, any]> = [];
+      // rome-suppress lint/noExplicitAny
       const files: Array<[AbsoluteFilePath, any]> = [];
 
       for (const file of data.files) {

@@ -9,6 +9,7 @@ import Event from './Event';
 
 export {Event};
 
+// rome-suppress lint/noExplicitAny lint/noExplicitAny
 export type AnyEvent = Event<any, any>;
 
 export {default as Bridge} from './Bridge';

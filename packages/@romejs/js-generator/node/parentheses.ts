@@ -63,6 +63,7 @@ const PRECEDENCE = {
 
 const parens: Map<
   string,
+  // rome-suppress lint/noExplicitAny
   (node: any, parent: AnyNode, printStack: Array<AnyNode>) => boolean
 > = new Map();
 export default parens;
