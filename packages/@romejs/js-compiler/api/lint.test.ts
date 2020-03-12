@@ -13,12 +13,13 @@ import lint from './lint';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import {ConstSourceType} from '@romejs/js-ast';
+import {ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
 
 export async function testLint(
   input: string,
   format: boolean = false,
   sourceType: ConstSourceType = 'module',
+  syntax?: Array<ConstProgramSyntax>,
 ) {
   return await lint({
     options: {},
@@ -27,6 +28,7 @@ export async function testLint(
       input,
       sourceType,
       path: createUnknownFilePath('unknown'),
+      syntax,
     }),
     sourceText: input,
     project: {
