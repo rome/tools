@@ -21,6 +21,7 @@ import noDuplicateCase from './noDuplicateCase';
 import noDuplicateKeys from './noDuplicateKeys';
 import noEmptyCharacterClass from './noEmptyCharacterClass';
 import noExtraBooleanCast from './noExtraBooleanCast';
+import noExtraElseInRegEx from './noExtraElseInRegEx';
 import noFunctionAssign from './noFunctionAssign';
 import noImportAssign from './noImportAssign';
 import noLabelVar from './noLabelVar';
@@ -51,6 +52,7 @@ export const lintTransforms = [
   noDuplicateKeys,
   noEmptyCharacterClass,
   noExtraBooleanCast,
+  noExtraElseInRegEx,
   noFunctionAssign,
   noImportAssign,
   noLabelVar,
