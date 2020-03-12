@@ -16,10 +16,10 @@ $ rome init
 Following this `rome` will ask you whether you want to use the default setup or customize your project further. You can switch between `yes` and `no` with the arrow keys. Press `enter` to confirm your choice.
 
 ```bash
- Welcome to Rome!
+  Welcome to Rome!
 
-ℹ Press space to select an option and enter to confirm
 ❯ Use recommended settings?
+ℹ Use arrow keys and then enter to select an option
   ◉ Yes
   ◯ No
 ```
@@ -49,20 +49,21 @@ If you choose to customize your project further with the `no` option, you will b
 ? Project name:
 ```
 
-After this you have a choice of whether you want to enable linting and formatting. You can move between the choices with the arrow keys. Check and uncheck a box with the `space` key.
+After this you have a choice of whether you want to enable linting, formatting and/or testing. You can move between the choices with the arrow keys. Check and uncheck a box with the `space` key.
 
 ```bash
  Welcome to Rome!
 
-ℹ Press space to select an option and enter to confirm
 ❯ Use recommended settings?: No
 ? Project name: hello-world
 ❯ Features enabled
+ℹ Use arrow keys and space to select or deselect options and then enter to confirm
   ☑ Lint
   ☐ Format
+  ☐ Testing
 ```
 
-Choosing both results in a config file like this:
+Choosing all options results in a config file like this:
 
 ```json
 {
@@ -73,9 +74,23 @@ Choosing both results in a config file like this:
   },
   "format": {
     "enabled": true
+  },
+  "tests": {
+    "enabled": true
   }
 }
 ```
+
+### I already have a configuration file
+
+If the project already contains a configuration file the `init` command will exit with an error.
+
+```bash
+✖ rome.json file already exists
+ℹ Use `rome config` to update an existing config
+```
+
+Instead of `init` use the [`config`](#config) command to update your configuration.
 
 ## `lint`
 
