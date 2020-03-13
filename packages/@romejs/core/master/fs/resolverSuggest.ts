@@ -186,7 +186,6 @@ export default function resolverSuggest(
         advice = [
           ...advice,
           ...buildSuggestionAdvice(query.source.join(), relativeSuggestions, {
-            minRating: 0,
             formatItem: relative => {
               const absolute = relativeToAbsolute.get(relative);
               if (absolute === undefined) {
