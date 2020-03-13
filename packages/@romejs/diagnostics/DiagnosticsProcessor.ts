@@ -20,6 +20,7 @@ import {naturalCompare} from '@romejs/string-utils';
 import {DiagnosticsError} from './errors';
 import {normalizeDiagnostics} from './normalize';
 import {add} from '@romejs/ob1';
+import {DiagnosticCategoryPrefix} from './categories';
 
 type UniquePart =
   | 'filename'
@@ -48,6 +49,7 @@ export default class DiagnosticsProcessor {
   constructor(options: CollectorOptions) {
     this.diagnostics = [];
     this.filters = [];
+    this.allowedUnusedSuppressionPrefixes = new Set();
     this.usedSuppressions = new Set();
     this.suppressions = new Set();
     this.options = options;
@@ -73,6 +75,7 @@ export default class DiagnosticsProcessor {
   includedKeys: Set<string>;
   diagnostics: PartialDiagnostics;
   filters: Array<DiagnosticFilterWithTest>;
+  allowedUnusedSuppressionPrefixes: Set<string>;
   usedSuppressions: Set<DiagnosticSuppression>;
   suppressions: Set<DiagnosticSuppression>;
   options: CollectorOptions;
@@ -93,6 +96,10 @@ export default class DiagnosticsProcessor {
 
   hasDiagnostics(): boolean {
     return this.diagnostics.length > 0;
+  }
+
+  addAllowedUnusedSuppressionPrefix(prefix: DiagnosticCategoryPrefix) {
+    this.allowedUnusedSuppressionPrefixes.add(prefix);
   }
 
   addSuppressions(suppressions: DiagnosticSuppressions) {
@@ -268,13 +275,20 @@ export default class DiagnosticsProcessor {
 
     // Add errors for remaining suppressions
     for (const suppression of this.suppressions) {
-      if (!this.usedSuppressions.has(suppression)) {
-        diagnostics.push({
-          ...suppression.loc,
-          message: 'Did not hide any error',
-          category: 'suppressions/unused',
-        });
+      if (this.usedSuppressions.has(suppression)) {
+        continue;
       }
+
+      const [categoryPrefix] = suppression.category.split('/');
+      if (this.allowedUnusedSuppressionPrefixes.has(categoryPrefix)) {
+        continue;
+      }
+
+      diagnostics.push({
+        ...suppression.loc,
+        message: 'Did not hide any error',
+        category: 'suppressions/unused',
+      });
     }
 
     return diagnostics;
