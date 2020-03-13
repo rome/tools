@@ -13,8 +13,8 @@ import {
   DiagnosticPointer,
   getDiagnosticsFromError,
   DiagnosticCategory,
+  buildSuggestionAdvice,
 } from '@romejs/diagnostics';
-import {suggestClosest} from '@romejs/suggest';
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
   JSONValue,
@@ -533,21 +533,15 @@ export default class Consumer {
 
     for (const [key, value] of this.asMap(false, false)) {
       if (!this.usedNames.has(key)) {
-        const suggestion = suggestClosest(key, knownProperties);
-
         value.unexpected(`Unknown <emphasis>${key}</emphasis> ${type}`, {
           target: 'key',
           at: 'suffix',
           atParent: true,
-          advice: suggestion
-            ? [
-                {
-                  type: 'log',
-                  category: 'info',
-                  message: `Did you mean <emphasis>${suggestion}</emphasis>?`,
-                },
-              ]
-            : undefined,
+          advice: buildSuggestionAdvice({
+            value: key,
+            items: knownProperties,
+            ignoreCase: true,
+          }),
         });
       }
 

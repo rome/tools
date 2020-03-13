@@ -101,6 +101,7 @@ export function orderBySimilarity(
   targets: Array<string>,
   minRating?: number,
   strMap?: (str: string) => string,
+  ignoreCase?: boolean = false,
 ): Ratings {
   if (targets.length === 0) {
     return [];
@@ -113,6 +114,16 @@ export function orderBySimilarity(
       let compareTarget = target;
       if (strMap !== undefined) {
         compareTarget = strMap(target);
+      }
+
+      if (ignoreCase) {
+        return {
+          target,
+          rating: compareTwoStrings(
+            compareStr.toLowerCase(),
+            compareTarget.toLowerCase(),
+          ),
+        };
       }
 
       return {
