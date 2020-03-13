@@ -48,6 +48,7 @@ export default class DiagnosticsProcessor {
   constructor(options: CollectorOptions) {
     this.diagnostics = [];
     this.filters = [];
+    this.usedSuppressions = new Set();
     this.suppressions = new Set();
     this.options = options;
     this.includedKeys = new Set();
@@ -72,6 +73,7 @@ export default class DiagnosticsProcessor {
   includedKeys: Set<string>;
   diagnostics: PartialDiagnostics;
   filters: Array<DiagnosticFilterWithTest>;
+  usedSuppressions: Set<DiagnosticSuppression>;
   suppressions: Set<DiagnosticSuppression>;
   options: CollectorOptions;
   throwAfter: undefined | number;
@@ -116,7 +118,7 @@ export default class DiagnosticsProcessor {
         diag.filename === suppression.loc.filename &&
         diag.start.line === targetLine
       ) {
-        this.suppressions.delete(suppression);
+        this.usedSuppressions.add(suppression);
         return true;
       }
     }
@@ -266,11 +268,13 @@ export default class DiagnosticsProcessor {
 
     // Add errors for remaining suppressions
     for (const suppression of this.suppressions) {
-      diagnostics.push({
-        ...suppression.loc,
-        message: 'Did not hide any error',
-        category: 'suppressions/unused',
-      });
+      if (!this.usedSuppressions.has(suppression)) {
+        diagnostics.push({
+          ...suppression.loc,
+          message: 'Did not hide any error',
+          category: 'suppressions/unused',
+        });
+      }
     }
 
     return diagnostics;

@@ -7,6 +7,7 @@
 
 import {Program, AnyComment} from '@romejs/js-ast';
 import {DiagnosticSuppressions, PartialDiagnostics} from '@romejs/diagnostics';
+import {markup} from '@romejs/string-markup';
 
 const SUPPRESSION_START = 'rome-suppress';
 const PREFIX_MISTAKES = ['@rome-suppress', 'rome-ignore', '@rome-ignore'];
@@ -24,6 +25,7 @@ function extractSuppressionsFromComment(
     return undefined;
   }
 
+  const suppressedCategories: Set<string> = new Set();
   const diagnostics: PartialDiagnostics = [];
   const suppressions: DiagnosticSuppressions = [];
 
@@ -72,10 +74,20 @@ function extractSuppressionsFromComment(
         category = category.slice(-1);
       }
 
-      suppressions.push({
-        category,
-        loc,
-      });
+      if (suppressedCategories.has(category)) {
+        diagnostics.push({
+          category: 'suppressions/duplicate',
+          message: markup`Duplicate suppression category <emphasis>${category}</emphasis>`,
+          ...loc,
+        });
+      } else {
+        suppressedCategories.add(category);
+
+        suppressions.push({
+          category,
+          loc,
+        });
+      }
 
       if (shouldBreak) {
         break;

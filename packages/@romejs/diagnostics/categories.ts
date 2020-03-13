@@ -69,6 +69,7 @@ export type DiagnosticCategory =
   | 'resolver/fetchFailed'
   | 'suppressions/unused'
   | 'suppressions/incorrectPrefix'
+  | 'suppressions/duplicate'
   | 'tests/noneDeclared'
   | 'tests/timeout'
   | 'tests/snapshots/missing'
