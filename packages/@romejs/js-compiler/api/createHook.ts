@@ -23,13 +23,13 @@ export type HookDescriptor<State, CallArg, CallReturn> = {
   exit?: (path: Path, state: State) => TransformExitResult;
 };
 
-// rome-suppress lint/noExplicitAny lint/noExplicitAny lint/noExplicitAny
+// rome-suppress lint/noExplicitAny
 export type AnyHookDescriptor = HookDescriptor<any, any, any>;
 
 export type HookInstance = {
   // rome-suppress lint/noExplicitAny
   state: any;
-  // rome-suppress lint/noExplicitAny lint/noExplicitAny lint/noExplicitAny
+  // rome-suppress lint/noExplicitAny
   descriptor: HookDescriptor<any, any, any>;
 };
 

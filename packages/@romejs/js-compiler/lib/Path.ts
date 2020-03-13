@@ -124,7 +124,7 @@ export default class Path {
   }
 
   provideHook<State>(
-    // rome-suppress lint/noExplicitAny lint/noExplicitAny
+    // rome-suppress lint/noExplicitAny
     descriptor: HookDescriptor<State, any, any>,
     state?: State,
   ): AnyNode {
