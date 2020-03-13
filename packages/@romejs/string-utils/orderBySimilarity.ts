@@ -96,12 +96,15 @@ export type Rating = {
 
 export type Ratings = Array<Rating>;
 
+type OrderBySimilarityOptions = {
+  minRating?: number;
+  formatItem?: (str: string) => string;
+  ignoreCase?: boolean;
+};
 export function orderBySimilarity(
   compareStr: string,
   targets: Array<string>,
-  minRating?: number,
-  strMap?: (str: string) => string,
-  ignoreCase?: boolean = false,
+  {minRating, formatItem, ignoreCase = false}: OrderBySimilarityOptions = {},
 ): Ratings {
   if (targets.length === 0) {
     return [];
@@ -112,8 +115,8 @@ export function orderBySimilarity(
     targets,
     (target: string): Rating => {
       let compareTarget = target;
-      if (strMap !== undefined) {
-        compareTarget = strMap(target);
+      if (formatItem !== undefined) {
+        compareTarget = formatItem(target);
       }
 
       if (ignoreCase) {

@@ -537,9 +537,7 @@ export default class Consumer {
           target: 'key',
           at: 'suffix',
           atParent: true,
-          advice: buildSuggestionAdvice({
-            value: key,
-            items: knownProperties,
+          advice: buildSuggestionAdvice(key, knownProperties, {
             ignoreCase: true,
           }),
         });

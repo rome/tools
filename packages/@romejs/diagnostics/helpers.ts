@@ -13,28 +13,22 @@ import {get1} from '@romejs/ob1';
 import {NEWLINE} from '@romejs/js-parser-utils';
 
 type BuildSuggestionAdviceOptions = {
-  value: string;
-  items: Array<string>;
   minRating?: number;
   ignoreCase?: boolean;
   formatItem?: (item: string) => string;
 };
-export function buildSuggestionAdvice({
-  value,
-  items,
-  minRating = 0.5,
-  ignoreCase,
-  formatItem,
-}: BuildSuggestionAdviceOptions): PartialDiagnosticAdvice {
+export function buildSuggestionAdvice(
+  value: string,
+  items: Array<string>,
+  {minRating = 0.5, ignoreCase, formatItem}: BuildSuggestionAdviceOptions = {},
+): PartialDiagnosticAdvice {
   const advice: PartialDiagnosticAdvice = [];
 
-  const ratings = orderBySimilarity(
-    value,
-    items,
+  const ratings = orderBySimilarity(value, items, {
     minRating,
     formatItem,
     ignoreCase,
-  );
+  });
 
   const strings = ratings.map(item => {
     const {target} = item;

@@ -185,11 +185,9 @@ export default function resolverSuggest(
 
         advice = [
           ...advice,
-          ...buildSuggestionAdvice(
-            query.source.join(),
-            relativeSuggestions,
-            0,
-            relative => {
+          ...buildSuggestionAdvice(query.source.join(), relativeSuggestions, {
+            minRating: 0,
+            formatItem: relative => {
               const absolute = relativeToAbsolute.get(relative);
               if (absolute === undefined) {
                 throw new Error('Should be valid');
@@ -197,7 +195,7 @@ export default function resolverSuggest(
 
               return `<filelink target="${absolute}">${relative}</filelink>`;
             },
-          ),
+          }),
         ];
       }
     }
@@ -315,9 +313,11 @@ function tryPathSuggestions(
       const ratings = orderBySimilarity(
         path.getExtensionlessBasename(),
         entries,
-        MIN_SIMILARITY,
-        target => {
-          return createUnknownFilePath(target).getExtensionlessBasename();
+        {
+          minRating: MIN_SIMILARITY,
+          formatItem: target => {
+            return createUnknownFilePath(target).getExtensionlessBasename();
+          },
         },
       );
 
@@ -361,10 +361,13 @@ function getPackageSuggestions(
 
   // TODO Add node_modules
 
-  const matches: Array<[string, string]> = orderBySimilarity(
+  const matches: Array<[
+    string,
+    string,
+  ]> = orderBySimilarity(
     query.source.join(),
     Array.from(possibleGlobalPackages.keys()),
-    MIN_SIMILARITY,
+    {minRating: MIN_SIMILARITY},
   ).map(item => {
     const name = item.target;
 

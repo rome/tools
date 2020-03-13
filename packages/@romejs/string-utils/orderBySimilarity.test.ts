@@ -76,13 +76,29 @@ test('orderBySimilarity', t => {
   ]);
 
   t.looksLike(
-    orderBySimilarity('french', ['quebec', '123', 'france', 'french'], 0.5),
+    orderBySimilarity('french', ['quebec', '123', 'france', 'french'], {
+      minRating: 0.5,
+    }),
     [{target: 'french', rating: 1}],
   );
 
   t.looksLike(
-    orderBySimilarity('iphone', ['ipod', 'iphone 5s', 'iphone x'], 0.5),
+    orderBySimilarity('iphone', ['ipod', 'iphone 5s', 'iphone x', 'IPHONE'], {
+      minRating: 0.5,
+    }),
     [
+      {target: 'iphone x', rating: 0.9090909090909091},
+      {target: 'iphone 5s', rating: 0.8333333333333334},
+    ],
+  );
+
+  t.looksLike(
+    orderBySimilarity('iphone', ['IPHONE', 'iphone 5s', 'iphone x'], {
+      minRating: 0.5,
+      ignoreCase: true,
+    }),
+    [
+      {target: 'IPHONE', rating: 1},
       {target: 'iphone x', rating: 0.9090909090909091},
       {target: 'iphone 5s', rating: 0.8333333333333334},
     ],
