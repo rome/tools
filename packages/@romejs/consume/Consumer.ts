@@ -13,6 +13,7 @@ import {
   DiagnosticPointer,
   getDiagnosticsFromError,
   DiagnosticCategory,
+  buildSuggestionAdvice,
 } from '@romejs/diagnostics';
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
@@ -528,12 +529,17 @@ export default class Consumer {
       return;
     }
 
+    const knownProperties = Array.from(this.usedNames.keys());
+
     for (const [key, value] of this.asMap(false, false)) {
       if (!this.usedNames.has(key)) {
         value.unexpected(`Unknown <emphasis>${key}</emphasis> ${type}`, {
           target: 'key',
           at: 'suffix',
           atParent: true,
+          advice: buildSuggestionAdvice(key, knownProperties, {
+            ignoreCase: true,
+          }),
         });
       }
 
