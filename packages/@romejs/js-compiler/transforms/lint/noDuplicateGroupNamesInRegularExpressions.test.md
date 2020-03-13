@@ -6,7 +6,7 @@
 
 ```javascript
 Object {
-  src: '/(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])/'
+  src: '/(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/'
   suppressions: Array []
   diagnostics: Array [
     Object {
@@ -27,6 +27,25 @@ Object {
         index: 32
         line: 1
       }
+      advice: Array [
+        log {
+          category: 'info'
+          message: 'Originally defined here'
+        }
+        frame {
+          filename: 'unknown'
+          end: Object {
+            column: 16
+            index: 16
+            line: 1
+          }
+          start: Object {
+            column: 1
+            index: 1
+            line: 1
+          }
+        }
+      ]
     }
     Object {
       category: 'lint/noDuplicateGroupNamesInRegularExpressions'
@@ -46,6 +65,63 @@ Object {
         index: 48
         line: 1
       }
+      advice: Array [
+        log {
+          category: 'info'
+          message: 'Originally defined here'
+        }
+        frame {
+          filename: 'unknown'
+          end: Object {
+            column: 31
+            index: 31
+            line: 1
+          }
+          start: Object {
+            column: 17
+            index: 17
+            line: 1
+          }
+        }
+      ]
+    }
+    Object {
+      category: 'lint/noDuplicateGroupNamesInRegularExpressions'
+      filename: 'unknown'
+      language: 'js'
+      message: 'Duplicate group name <emphasis>month</emphasis> in regular expression'
+      mtime: undefined
+      sourceType: 'module'
+      origins: Array [Object {category: 'lint'}]
+      end: Object {
+        column: 99
+        index: 100
+        line: 1
+      }
+      start: Object {
+        column: 85
+        index: 85
+        line: 1
+      }
+      advice: Array [
+        log {
+          category: 'info'
+          message: 'Originally defined here'
+        }
+        frame {
+          filename: 'unknown'
+          end: Object {
+            column: 47
+            index: 47
+            line: 1
+          }
+          start: Object {
+            column: 32
+            index: 32
+            line: 1
+          }
+        }
+      ]
     }
   ]
 }
