@@ -4,31 +4,64 @@ title: Getting Started
 sidebar_label: Getting Started
 ---
 
-Rome requires a project configuration in order to operate. This can take three possible forms.
+While Rome seeks to fill the role of many tools in the JavaScript
+ecosystem, it can be integrated into existing projects and used
+as much or as little as you like.
 
-- A `rome.json` file
-- A `rome.rjson` file (What is RJSON? See [#13](https://github.com/facebookexperimental/rome/issues/13))
-- A `rome` field on `package.json`
+## Integrating Rome
 
-This can just be an empty file. It's required in order for Rome to determine all the files in a project. This is important as when running the CLI, we build an in-memory file system listing in order to perform operations like module resolution.
+First, navigate into your project folder:
 
 ```bash
-$ mkdir hello-world
-$ cd hello-world
-$ echo '{}' >rome.json
+$ cd my_existing_project
+```
+Now, create a Rome configuration for your project. When prompted,
+use the recommended settings:
+
+```bash
+$ rome init
 ```
 
-## Commands
+## What did we do?
 
-Rome has a dozen different commands. Documented below are some more useful ones when testing functionality.
+Running `rome init` with the recommended settings creates a Rome
+configuration file, `rome.json`, which looks like this:
+
+```json
+{
+  "version": "^0.0.52",
+  "lint": {
+    "enabled": true
+  }
+}
+```
+
+This file tells `rome` that it should be at least version 0.0.52
+in order to work with your project, and that it should lint your code.
+If you want to disable linting or apply advanced settings, see
+the `rome init` documentation.
+
+## Running your code
+
+The `rome run` command will run whatever file is passed to
+it. Use this command with your project's main file, for example:
+
+```bash
+$ rome run index.js
+```
+
+Rome is still under active development and may not be able to properly
+process all source files. If you are able to run a file with `node` but
+not with `rome`, please [create an issue](https://github.com/facebookexperimental/rome/issues/new?labels=bug&template=01_bug.md&title=)
+
+## Other Commands
 
 ### `lint`
 
 This command will lint a file with a set of default lints and display the produced diagnostics.
+When ran with no arguments, all JavaScript files in a project are linted. For example:
 
-When ran with no arguments, all JavaScript files in a project are linted.
-
-```
+```bash
 $ rome lint file.js
 ```
 
@@ -47,13 +80,3 @@ This command will parse a file and output a pretty formatted AST.
 ```
 $ rome parse file.js
 ```
-
-## Daemon
-
-Rome has an optional daemon. When starting the CLI, we'll check if there's a server running, and if there is, we'll connect to and that's where the request will be processed.
-
-You can run the daemon with `rome start`, and stop it with `rome stop`.
-
-The daemon allows Rome to maintain long lived memory caches which can drastically speed up operations. We intend to utilize this server for any LSP integration.
-
-When the CLI is ran without a running server, then we initialize a server inside the CLI process that's only used for the lifetime of the command.
