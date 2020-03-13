@@ -37,5 +37,7 @@ export default function RegExpLiteral(generator: Generator, node: AnyNode) {
     flags.push('u');
   }
 
-  generator.word(`/${node.pattern}/${flags.join('')}`);
+  generator.token(`/`);
+  generator.print(node.expression, node);
+  generator.token(`/${flags.join('')}`);
 }

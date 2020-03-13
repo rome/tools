@@ -456,8 +456,71 @@ generators.set('Program', Program);
 import ReferenceIdentifier from './expressions/ReferenceIdentifier';
 generators.set('ReferenceIdentifier', ReferenceIdentifier);
 
+import RegExpAlternation from './regex/RegExpAlternation';
+generators.set('RegExpAlternation', RegExpAlternation);
+
+import RegExpAnyCharacter from './regex/RegExpAnyCharacter';
+generators.set('RegExpAnyCharacter', RegExpAnyCharacter);
+
+import RegExpCharacter from './regex/RegExpCharacter';
+generators.set('RegExpCharacter', RegExpCharacter);
+
+import RegExpCharSet from './regex/RegExpCharSet';
+generators.set('RegExpCharSet', RegExpCharSet);
+
+import RegExpCharSetRange from './regex/RegExpCharSetRange';
+generators.set('RegExpCharSetRange', RegExpCharSetRange);
+
+import RegExpControlCharacter from './regex/RegExpControlCharacter';
+generators.set('RegExpControlCharacter', RegExpControlCharacter);
+
+import RegExpDigitCharacter from './regex/RegExpDigitCharacter';
+generators.set('RegExpDigitCharacter', RegExpDigitCharacter);
+
+import RegExpEndCharacter from './regex/RegExpEndCharacter';
+generators.set('RegExpEndCharacter', RegExpEndCharacter);
+
+import RegExpGroupCapture from './regex/RegExpGroupCapture';
+generators.set('RegExpGroupCapture', RegExpGroupCapture);
+
+import RegExpGroupNonCapture from './regex/RegExpGroupNonCapture';
+generators.set('RegExpGroupNonCapture', RegExpGroupNonCapture);
+
 import RegExpLiteral from './literals/RegExpLiteral';
 generators.set('RegExpLiteral', RegExpLiteral);
+
+import RegExpNonDigitCharacter from './regex/RegExpNonDigitCharacter';
+generators.set('RegExpNonDigitCharacter', RegExpNonDigitCharacter);
+
+import RegExpNonWhiteSpaceCharacter from './regex/RegExpNonWhiteSpaceCharacter';
+generators.set('RegExpNonWhiteSpaceCharacter', RegExpNonWhiteSpaceCharacter);
+
+import RegExpNonWordBoundaryCharacter from './regex/RegExpNonWordBoundaryCharacter';
+generators.set(
+  'RegExpNonWordBoundaryCharacter',
+  RegExpNonWordBoundaryCharacter,
+);
+
+import RegExpNonWordCharacter from './regex/RegExpNonWordCharacter';
+generators.set('RegExpNonWordCharacter', RegExpNonWordCharacter);
+
+import RegExpQuantified from './regex/RegExpQuantified';
+generators.set('RegExpQuantified', RegExpQuantified);
+
+import RegExpStartCharacter from './regex/RegExpStartCharacter';
+generators.set('RegExpStartCharacter', RegExpStartCharacter);
+
+import RegExpSubExpression from './regex/RegExpSubExpression';
+generators.set('RegExpSubExpression', RegExpSubExpression);
+
+import RegExpWhiteSpaceCharacter from './regex/RegExpWhiteSpaceCharacter';
+generators.set('RegExpWhiteSpaceCharacter', RegExpWhiteSpaceCharacter);
+
+import RegExpWordBoundaryCharacter from './regex/RegExpWordBoundaryCharacter';
+generators.set('RegExpWordBoundaryCharacter', RegExpWordBoundaryCharacter);
+
+import RegExpWordCharacter from './regex/RegExpWordCharacter';
+generators.set('RegExpWordCharacter', RegExpWordCharacter);
 
 import ReturnStatement from './statements/ReturnStatement';
 generators.set('ReturnStatement', ReturnStatement);

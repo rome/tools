@@ -34,10 +34,10 @@ export default function stringify(node: RangeNode): string {
 
       // add on qualifiers
       if (node.prerelease.length > 0) {
-        str += '-' + node.prerelease.join('.');
+        str += `-${node.prerelease.join('.')}`;
       }
       if (node.build.length > 0) {
-        str += '+' + node.build.join('.');
+        str += `+${node.build.join('.')}`;
       }
       return str;
     }

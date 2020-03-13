@@ -10,4 +10,4 @@
 const {execNode} = require('./_utils.cjs');
 const path = require('path');
 
-execNode([path.join(__dirname, 'vendor/rome.cjs'), ...process.argv]);
+execNode([path.join(__dirname, 'vendor/rome.cjs'), ...process.argv.slice(2)]);

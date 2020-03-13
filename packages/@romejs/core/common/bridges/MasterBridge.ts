@@ -58,7 +58,13 @@ export type MasterQueryResponseDiagnostics = {
   diagnostics: Diagnostics;
 };
 
+export type MasterQueryResponseInvalid = {
+  type: 'INVALID_REQUEST';
+  diagnostics: Diagnostics;
+};
+
 export type MasterQueryResponse =
+  | MasterQueryResponseInvalid
   | MasterQueryResponseSuccess
   | MasterQueryResponseError
   | MasterQueryResponseDiagnostics;

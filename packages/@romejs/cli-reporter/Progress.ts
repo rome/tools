@@ -22,13 +22,15 @@ export type ProgressOptions = {
   initDelay?: number;
   elapsed?: boolean;
   eta?: boolean;
+  persistent?: boolean;
 };
 
-const DEFAULT_PROGRESS_OPTIONS = {
+const DEFAULT_PROGRESS_OPTIONS: ProgressOptions = {
   name: undefined,
   initDelay: undefined,
   elapsed: true,
   eta: true,
+  persistent: false,
 };
 
 export default class Progress {
@@ -233,7 +235,11 @@ export default class Progress {
     }
 
     // Progress complete
-    if (this.total !== undefined && this.current >= this.total) {
+    if (
+      this.total !== undefined &&
+      this.current >= this.total &&
+      !this.opts.persistent
+    ) {
       this.end();
     }
   }
@@ -492,7 +498,7 @@ export default class Progress {
     prefix = prefix.slice(0, width - spacerLength - suffix.length);
 
     // The full raw bar without any coloring
-    const raw = ' ' + prefix + spacer + ' ' + suffix;
+    const raw = ` ${prefix}${spacer} ${suffix}`;
 
     // Make sure the counter is bold
     boldRanges.push([raw.length - suffix.length, raw.length - 1]);

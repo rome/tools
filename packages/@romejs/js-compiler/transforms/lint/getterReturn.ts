@@ -13,6 +13,7 @@ export default {
   name: 'getterReturn',
   enter(path: Path): AnyNode {
     const {node} = path;
+
     if (
       (node.type === 'ClassMethod' || node.type === 'ObjectMethod') &&
       node.kind === 'get'
@@ -26,6 +27,7 @@ export default {
         }
       }
     }
+
     return node;
   },
 };

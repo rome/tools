@@ -80,6 +80,7 @@ export function getFileHandlerAssert(
 
 export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
   prefetchedModuleSignatures: PrefetchedModuleSignatures;
+  format: boolean;
 };
 
 export type ExtensionLintResult = {
@@ -330,7 +331,13 @@ function buildJSHandler(
     },
 
     async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {
-      const {file: ref, project, prefetchedModuleSignatures, worker} = info;
+      const {
+        file: ref,
+        project,
+        format,
+        prefetchedModuleSignatures,
+        worker,
+      } = info;
 
       const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
         ref,
@@ -344,6 +351,7 @@ function buildJSHandler(
         ast,
         project,
         sourceText,
+        format,
       });
 
       // Extract lint diagnostics

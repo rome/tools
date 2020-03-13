@@ -457,7 +457,7 @@ export default class DiagnosticsPrinter extends Error {
         outdatedAdvice.push({
           type: 'list',
           list: outdatedFilesArr.map(
-            filename => `<fileref target="${filename}" />`,
+            filename => `<filelink target="${filename}" />`,
           ),
         });
       }
@@ -468,54 +468,54 @@ export default class DiagnosticsPrinter extends Error {
       includeHeaderInAdvice: false,
       outdated: isOutdated,
     });
+
     reporter.hr(derived.header);
-    reporter.indent();
 
-    // Concat all the advice together
-    const derivedAdvice: DiagnosticAdvice = [
-      ...derived.advice,
-      ...outdatedAdvice,
-    ].map(item =>
-      normalizeDiagnosticAdviceItem(diag, item, this.reporter.markupOptions),
-    );
-    const advice: DiagnosticAdvice = derivedAdvice.concat(diag.advice);
+    reporter.indent(() => {
+      // Concat all the advice together
+      const derivedAdvice: DiagnosticAdvice = [
+        ...derived.advice,
+        ...outdatedAdvice,
+      ].map(item =>
+        normalizeDiagnosticAdviceItem(diag, item, this.reporter.markupOptions),
+      );
+      const advice: DiagnosticAdvice = derivedAdvice.concat(diag.advice);
 
-    // Print advice
-    for (const item of advice) {
-      const noSpacer = printAdvice(item, {
-        flags: this.flags,
-        missingFileSources: this.missingFileSources,
-        fileSources: this.fileSources,
-        diagnostic: diag,
-        reporter,
-      });
-      if (!noSpacer) {
-        reporter.optionalSpacer();
+      // Print advice
+      for (const item of advice) {
+        const noSpacer = printAdvice(item, {
+          flags: this.flags,
+          missingFileSources: this.missingFileSources,
+          fileSources: this.fileSources,
+          diagnostic: diag,
+          reporter,
+        });
+        if (!noSpacer) {
+          reporter.spacer();
+        }
       }
-    }
 
-    // Print verbose information
-    if (this.flags.verboseDiagnostics) {
-      const {origins} = diag;
+      // Print verbose information
+      if (this.flags.verboseDiagnostics) {
+        const {origins} = diag;
 
-      if (origins.length > 0) {
-        reporter.spacer();
-        reporter.info('Why are you seeing this diagnostic?');
-        reporter.spacer();
-        reporter.list(
-          origins.map(origin => {
-            let res = `<emphasis>${origin.category}</emphasis>`;
-            if (origin.message !== undefined) {
-              res += `: ${origin.message}`;
-            }
-            return res;
-          }),
-          {ordered: true},
-        );
+        if (origins.length > 0) {
+          reporter.spacer();
+          reporter.info('Why are you seeing this diagnostic?');
+          reporter.forceSpacer();
+          reporter.list(
+            origins.map(origin => {
+              let res = `<emphasis>${origin.category}</emphasis>`;
+              if (origin.message !== undefined) {
+                res += `: ${origin.message}`;
+              }
+              return res;
+            }),
+            {ordered: true},
+          );
+        }
       }
-    }
-
-    reporter.dedent();
+    });
   }
 
   filterDiagnostics(): Diagnostics {

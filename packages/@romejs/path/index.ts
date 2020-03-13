@@ -271,6 +271,16 @@ class BaseFilePath<Super extends UnknownFilePath> {
     return segments[segments.length - 1] === '';
   }
 
+  hasEndExtension(ext: string): boolean {
+    return this.getExtensions().endsWith(`.${ext}`);
+  }
+
+  hasExtension(ext: string): boolean {
+    return (
+      this.hasEndExtension(ext) || this.getExtensions().includes(`.${ext}.`)
+    );
+  }
+
   getExtensions(): string {
     if (this.memoizedExtension === undefined) {
       const ext = getExtension(this.getBasename());

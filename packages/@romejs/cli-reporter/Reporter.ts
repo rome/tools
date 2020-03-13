@@ -269,7 +269,7 @@ export default class Reporter {
     if (msg.type === 'PROGRESS_CREATE') {
       this.remoteClientProgressBars.set(
         msg.id,
-        this.progressLocal({}, () => {
+        this.progressLocal(msg.opts, () => {
           this.sendRemoteServerMessage.call({
             type: 'ENDED',
             id: msg.id,
@@ -501,7 +501,7 @@ export default class Reporter {
   ): Promise<keyof Options> {
     const set = await this.select(message, {...arg, radio: true});
 
-    // Should always have at least one elemet
+    // Should always have at least one element
     return Array.from(set)[0];
   }
 
@@ -526,6 +526,16 @@ export default class Reporter {
 
     let prompt = `<brightBlack>❯</brightBlack> <emphasis>${message}</emphasis>`;
     this.logAll(prompt);
+
+    if (radio) {
+      this.info(
+        'Use arrow keys and then <emphasis>enter</emphasis> to select an option',
+      );
+    } else {
+      this.info(
+        'Use arrow keys and <emphasis>space</emphasis> to select or deselect options and then <emphasis>enter</emphasis> to confirm',
+      );
+    }
 
     const selectedOptions: Set<keyof Options> = new Set(defaults);
     let activeOption = 0;
@@ -605,6 +615,10 @@ export default class Reporter {
       const finish = () => {
         cleanup();
 
+        // Remove initial help message
+        this.writeAll(escapes.cursorUp());
+        this.writeAll(escapes.eraseLine);
+
         // Remove initial log message
         this.writeAll(escapes.cursorUp());
         this.writeAll(escapes.eraseLine);
@@ -651,11 +665,18 @@ export default class Reporter {
 
           case 'c':
             if (key.ctrl) {
+              this.forceSpacer();
+              this.warn('Cancelled by user');
               process.exit(1);
             }
             return;
 
           case 'escape':
+            this.forceSpacer();
+            this.warn('Cancelled by user');
+            process.exit(1);
+            return;
+
           case 'return':
             finish();
             return;
@@ -747,14 +768,13 @@ export default class Reporter {
 
   //# INDENTATION METHODS
 
-  indent(callback?: () => void) {
+  indent(callback: () => void) {
     this.indentLevel++;
     this.updateIndent();
 
-    if (callback !== undefined) {
-      callback();
-      this.dedent();
-    }
+    callback();
+    this.indentLevel--;
+    this.updateIndent();
   }
 
   noIndent(callback: () => void) {
@@ -763,11 +783,6 @@ export default class Reporter {
     this.updateIndent();
     callback();
     this.indentLevel = prevIndentLevel;
-    this.updateIndent();
-  }
-
-  dedent() {
-    this.indentLevel--;
     this.updateIndent();
   }
 
@@ -907,15 +922,15 @@ export default class Reporter {
   //# SECTIONS
 
   heading(text: string) {
-    this.optionalSpacer();
+    this.spacer();
     this.logAll(`<inverse><emphasis>${text}</emphasis></inverse>`, {
       nonTTY: `# ${text}`,
     });
     this.spacer();
   }
 
-  section(title: string, callback: () => void) {
-    this.hr(`<emphasis>${title}</emphasis>`);
+  section(title: undefined | string, callback: () => void) {
+    this.hr(title === undefined ? undefined : `<emphasis>${title}</emphasis>`);
     this.indent(() => {
       callback();
       this.spacer();
@@ -925,7 +940,7 @@ export default class Reporter {
   hr(text?: string) {
     const {hasClearScreen} = this;
 
-    this.optionalSpacer();
+    this.spacer();
 
     if (hasClearScreen && text === undefined) {
       return;
@@ -936,12 +951,12 @@ export default class Reporter {
         stream,
         text === undefined ? '' : ` ${text} `,
       );
-      const prefixLength = stripAnsi(prefix).length;
+      const prefixLength = this.indentString.length + stripAnsi(prefix).length;
       const barLength = Math.max(0, stream.columns - prefixLength);
       this.logOneNoMarkup(stream, prefix + '━'.repeat(barLength));
     }
 
-    this.optionalSpacer();
+    this.spacer();
   }
 
   async steps(
@@ -986,13 +1001,13 @@ export default class Reporter {
     this.logAll(`<dim>[${current}/${total}]</dim> ${msg}`);
   }
 
-  optionalSpacer() {
+  spacer() {
     if (!this.hasSpacer) {
-      this.spacer();
+      this.forceSpacer();
     }
   }
 
-  spacer() {
+  forceSpacer() {
     this.logAll('');
   }
 
@@ -1077,7 +1092,7 @@ export default class Reporter {
           inner = String(lines.shift());
 
           for (const line of lines) {
-            inner += '\n' + ' '.repeat(prefix.length) + line;
+            inner += `\n${' '.repeat(prefix.length)}${line}`;
           }
         }
       }
@@ -1213,7 +1228,7 @@ export default class Reporter {
 
       for (const [index, item] of tuples) {
         callback(item, str => {
-          const num: string = rightPad(humanizeNumber(index + 1) + '.', numLen);
+          const num: string = rightPad(`${humanizeNumber(index + 1)}.`, numLen);
           this.logAll(`${indent}<dim>${num}</dim> ${str}`);
         });
       }

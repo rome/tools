@@ -49,7 +49,6 @@ export default function ExportLocalDeclaration(
         break;
 
       case 'TypeAliasTypeAnnotation':
-      case 'TypeAliasTypeAnnotation':
         const type = scope.getBinding(decl.id.name);
         if (type === undefined) {
           throw new Error(`Couldn't find binding type for ${decl.id.name}`);

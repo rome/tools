@@ -7,7 +7,7 @@
 
 import {
   PatternPartNode,
-  PatternNode,
+  PathPatternNode,
   PatternSegments,
   PatternSegmentNode,
 } from './types';
@@ -73,7 +73,7 @@ function matchSegment(path: string, patternSeg: PatternSegmentNode): boolean {
 
 export default function match(
   pathSegs: PathSegments,
-  pattern: PatternNode,
+  pattern: PathPatternNode,
   cwdSegs: undefined | PathSegments,
 ): boolean {
   // Clone so we can freely mutate
@@ -86,8 +86,13 @@ export default function match(
   }
 
   // Quick optimization, check if the path contains all of the absolute names in the pattern
-  for (const name of pattern.names) {
-    if (!pathSegs.includes(name)) {
+  for (const seg of patternSegs) {
+    if (seg.type !== 'Segment' || seg.parts.length !== 1) {
+      continue;
+    }
+
+    const part = seg.parts[0];
+    if (part.type === 'Word' && !pathSegs.includes(part.value)) {
       return false;
     }
   }

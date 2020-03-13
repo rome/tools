@@ -101,6 +101,11 @@ function cleanRelativeUidPath(relative: UnknownFilePath): undefined | string {
   return relative.join();
 }
 
+export type ProjectConfigSource = {
+  consumer: Consumer;
+  value: undefined | Consumer;
+};
+
 export default class ProjectManager {
   constructor(master: Master) {
     this.master = master;
@@ -472,10 +477,7 @@ export default class ProjectManager {
   findProjectConfigConsumer(
     def: ProjectDefinition,
     test: (consumer: Consumer) => undefined | Consumer,
-  ): {
-    consumer: Consumer;
-    value: undefined | Consumer;
-  } {
+  ): ProjectConfigSource {
     const meta = assertHardMeta(def.meta);
 
     for (const consumer of meta.consumersChain) {
@@ -582,7 +584,7 @@ export default class ProjectManager {
         }
 
         diagnostics.addDiagnostic({
-          category: 'projectManager',
+          category: 'projectManager/nameCollision',
           filename: def.path.join(),
           message: `Duplicate package name <emphasis>${name}</emphasis>`,
           ...def.consumer.get('name').getDiagnosticPointer('inner-value'),
@@ -665,7 +667,7 @@ export default class ProjectManager {
         }
 
         diagnostics.addDiagnostic({
-          category: 'projectManager',
+          category: 'projectManager/nameCollision',
           filename: hastePath.join(),
           message: `Found a haste collision for <emphasis>${hasteName}</emphasis>`,
           advice: [
@@ -750,7 +752,7 @@ export default class ProjectManager {
 
     throw createSingleDiagnosticError({
       ...pointer,
-      category: 'project',
+      category: 'projectManager/missing',
       message: `Couldn't find a project`,
       advice: [
         {
@@ -915,7 +917,7 @@ export default class ProjectManager {
     diagnostics: DiagnosticsProcessor,
   ) {
     diagnostics.addDiagnostic({
-      category: 'projectManager',
+      category: 'projectManager/incorrectConfigFilename',
       filename: path.join(),
       message: `Invalid rome config filename, <emphasis>${ROME_CONFIG_FILENAMES.join(
         ' or ',

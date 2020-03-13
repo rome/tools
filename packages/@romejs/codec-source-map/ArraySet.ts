@@ -78,7 +78,7 @@ export default class ArraySet {
     if (idx >= 0 && idx < this.array.length) {
       return this.array[idx];
     } else {
-      throw new Error('No element indexed by ' + idx);
+      throw new Error(`No element indexed by ${idx}`);
     }
   }
 

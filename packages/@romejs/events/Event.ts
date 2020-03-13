@@ -9,6 +9,14 @@ import {EventOptions, EventSubscription} from './types';
 
 type Callback<Param, Ret> = (param: Param) => Ret | Promise<Ret>;
 
+function noPromise<Ret>(ret: Ret | Promise<Ret>): Ret {
+  if (ret instanceof Promise) {
+    throw new Error('Subscription returned promise for a callSync');
+  } else {
+    return ret;
+  }
+}
+
 export default class Event<Param, Ret = void> {
   constructor(opts: EventOptions) {
     this.subscriptions = new Set();
@@ -57,6 +65,24 @@ export default class Event<Param, Ret = void> {
 
     for (const callback of this.subscriptions) {
       callback(param);
+    }
+  }
+
+  callSync(param: Param): Ret {
+    try {
+      const {rootSubscription, subscriptions} = this;
+      if (rootSubscription === undefined) {
+        throw new Error(`No subscription for event ${this.name}`);
+      }
+
+      const ret = noPromise(rootSubscription(param));
+      for (const callback of subscriptions) {
+        noPromise(callback(param));
+      }
+      return ret;
+    } catch (err) {
+      this.onError(err);
+      throw err;
     }
   }
 

@@ -314,15 +314,15 @@ export default class Client {
           typeof val === 'string' ? val : prettyFormat(val, {compact: true});
         const lines = str.trim().split('\n');
         const indented = lines.join('\n  ');
-        return '\n  ' + indented;
+        return `\n  ${indented}`;
       }
 
       const env = [];
       env.push(`PATH: ${indent(process.env.PATH)}`);
       env.push(`Rome version: ${indent(VERSION)}`);
       env.push(`Node version: ${indent(process.versions.node)}`);
-      env.push(`Platform: ${indent(process.platform + ' ' + process.arch)}`);
-      writer.append({name: 'environment.txt'}, env.join('\n\n') + '\n');
+      env.push(`Platform: ${indent(`${process.platform} ${process.arch}`)}`);
+      writer.append({name: 'environment.txt'}, `${env.join('\n\n')}\n`);
 
       // Don't do this if we never connected to the master
       const bridgeStatus = this.getBridge();
@@ -334,7 +334,7 @@ export default class Client {
         if (status.type === 'SUCCESS') {
           writer.append(
             {name: 'status.txt'},
-            prettyFormat(status.data, {compact: true}) + '\n',
+            `${prettyFormat(status.data, {compact: true})}\n`,
           );
         }
       }

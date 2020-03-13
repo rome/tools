@@ -24,7 +24,7 @@ import {
 } from '@romejs/cli-diagnostics';
 import {consume, ConsumePath} from '@romejs/consume';
 import {Event, EventSubscription} from '@romejs/events';
-import MasterRequest from './MasterRequest';
+import MasterRequest, {MasterRequestInvalid} from './MasterRequest';
 import {
   getDiagnosticsFromError,
   deriveDiagnosticFromError,
@@ -618,6 +618,7 @@ export default class Master {
 
       req.teardown(res);
 
+      // If the query asked for no data then strip all diagnostics and data values
       if (query.noData) {
         if (res.type === 'SUCCESS') {
           return {
@@ -629,6 +630,11 @@ export default class Master {
         } else if (res.type === 'DIAGNOSTICS') {
           return {
             type: 'DIAGNOSTICS',
+            diagnostics: [],
+          };
+        } else if (res.type === 'INVALID_REQUEST') {
+          return {
+            type: 'INVALID_REQUEST',
             diagnostics: [],
           };
         }
@@ -730,7 +736,7 @@ export default class Master {
         },
         objectPath: [],
         context: {
-          category: 'cli-flags',
+          category: 'flags/invalid',
 
           getOriginalValue: () => {
             return undefined;
@@ -816,18 +822,27 @@ export default class Master {
           markers,
         };
       } else {
-        return {
-          type: 'DIAGNOSTICS',
-          diagnostics,
-        };
+        if (err instanceof MasterRequestInvalid) {
+          return {
+            type: 'INVALID_REQUEST',
+            diagnostics,
+          };
+        } else {
+          return {
+            type: 'DIAGNOSTICS',
+            diagnostics,
+          };
+        }
       }
     }
   }
 
   async handleRequestError(
     req: MasterRequest,
-    err: Error,
+    rawErr: Error,
   ): Promise<undefined | Diagnostics> {
+    let err = rawErr;
+
     // If we can derive diagnostics from the error then create a diagnostics printer
     const diagnostics = getDiagnosticsFromError(err);
     if (diagnostics !== undefined) {
@@ -844,7 +859,11 @@ export default class Master {
       const printer = err;
       if (req.bridge.alive) {
         await printer.print();
-        printer.footer();
+
+        // Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
+        if (!(rawErr instanceof MasterRequestInvalid)) {
+          printer.footer();
+        }
       }
       return printer.getDiagnostics();
     }
@@ -858,7 +877,7 @@ export default class Master {
       message: 'Error captured and converted into a diagnostic',
     });
     const errorDiag = deriveDiagnosticFromError({
-      category: 'internalError',
+      category: 'internalError/request',
       error: err,
     });
     printer.addDiagnostic({

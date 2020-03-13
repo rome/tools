@@ -56,7 +56,7 @@ export function serializeCLIFlags(
 
   let code = `$ `;
   if (data.prefix !== undefined) {
-    code += data.prefix + ' ';
+    code += `${data.prefix} `;
   }
   let startColumn: Number0 = number0Neg1;
   let endColumn: Number0 = number0Neg1;
