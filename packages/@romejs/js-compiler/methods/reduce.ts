@@ -169,6 +169,7 @@ export default function reduce(
 
     // Reduce the children
     for (const key of visitorKeys) {
+      // rome-suppress lint/noExplicitAny
       const oldVal = (node as any)[key];
 
       if (Array.isArray(oldVal)) {

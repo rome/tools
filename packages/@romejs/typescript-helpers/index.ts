@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// rome-suppress lint/noExplicitAny
 export type Class<T, Args extends Array<unknown> = Array<any>> = {
   new (...args: Args): T;
 };

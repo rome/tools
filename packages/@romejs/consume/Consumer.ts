@@ -1052,6 +1052,7 @@ export default class Consumer {
     return this.value;
   }
 
+  // rome-suppress lint/noExplicitAny
   asAny(): any {
     return this.value;
   }

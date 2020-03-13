@@ -207,37 +207,9 @@ Object {
 
 ```javascript
 Object {
-  src: 'const foo any = function() {};\n'
+  src: 'const foo string = function() {};\n'
   suppressions: Array []
   diagnostics: Array [
-    Object {
-      category: 'parse/js'
-      filename: 'unknown'
-      message: 'A type annotation is only valid inside of a TypeScript or Flow file'
-      mtime: undefined
-      sourceType: 'module'
-      origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 9
-        index: 9
-        line: 1
-      }
-      start: Object {
-        column: 9
-        index: 9
-        line: 1
-      }
-      advice: Array [
-        log {
-          category: 'info'
-          message: 'Did you mean <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>'
-        }
-        log {
-          category: 'info'
-          message: 'Did you mean <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file'
-        }
-      ]
-    }
     Object {
       category: 'lint/unusedVariables'
       filename: 'unknown'
@@ -247,8 +219,8 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 14
-        index: 14
+        column: 17
+        index: 17
         line: 1
       }
       start: Object {

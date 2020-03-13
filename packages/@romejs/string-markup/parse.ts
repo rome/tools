@@ -215,6 +215,7 @@ const createStringMarkupParser = createParser(
           });
         }
 
+        // rome-suppress lint/noExplicitAny
         const tagName: TagName = rawName as any;
         const attributes: TagAttributes = new Map();
         const children: Children = [];

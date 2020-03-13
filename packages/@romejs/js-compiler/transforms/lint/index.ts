@@ -20,6 +20,7 @@ import noDupeArgs from './noDupeArgs';
 import noDuplicateCase from './noDuplicateCase';
 import noDuplicateKeys from './noDuplicateKeys';
 import noEmptyCharacterClass from './noEmptyCharacterClass';
+import noExplicitAny from './noExplicitAny';
 import noExtraBooleanCast from './noExtraBooleanCast';
 import noFunctionAssign from './noFunctionAssign';
 import noImportAssign from './noImportAssign';
@@ -50,6 +51,7 @@ export const lintTransforms = [
   noDuplicateCase,
   noDuplicateKeys,
   noEmptyCharacterClass,
+  noExplicitAny,
   noExtraBooleanCast,
   noFunctionAssign,
   noImportAssign,

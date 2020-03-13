@@ -93,6 +93,7 @@ const SCOPE_TYPES: Array<ScopeType> = [
 
 const createJSParser = createParser(
   (ParserCore, ParserWithRequiredPath) =>
+    // rome-suppress lint/noExplicitAny
     class JSParser extends ParserWithRequiredPath<any, State> {
       constructor(options: JSParserOptions) {
         const state = createInitialState();

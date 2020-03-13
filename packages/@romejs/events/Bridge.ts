@@ -84,6 +84,7 @@ export default class Bridge {
   type: BridgeType;
 
   messageIdCounter: number;
+  // rome-suppress lint/noExplicitAny lint/noExplicitAny
   events: Map<string, BridgeEvent<any, any>>;
 
   listeners: Set<string>;
