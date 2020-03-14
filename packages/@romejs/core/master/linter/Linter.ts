@@ -28,6 +28,8 @@ export default class Linter {
       message: 'Dispatched',
     });
 
+    printer.processor.addAllowedUnusedSuppressionPrefix('bundler');
+
     const paths: AbsoluteFilePathSet = await request.getFilesFromArgs({
       getProjectIgnore: project => ({
         patterns: project.config.lint.ignore,

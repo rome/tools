@@ -61,6 +61,8 @@ export default class BundleRequest {
         },
       ],
     });
+    this.diagnostics.addAllowedUnusedSuppressionPrefix('lint');
+
     this.compiles = new Map();
     this.assets = new Map();
 
@@ -182,6 +184,7 @@ export default class BundleRequest {
       this.cached = false;
     }
 
+    this.diagnostics.addSuppressions(res.suppressions);
     this.diagnostics.addDiagnostics(res.diagnostics);
 
     this.compiles.set(source, res);

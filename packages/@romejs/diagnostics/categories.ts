@@ -86,3 +86,17 @@ export type DiagnosticCategory =
   | 'typeCheck/notExhaustive'
   | 'typeCheck/missingCondition'
   | 'v8/syntaxError';
+
+export type DiagnosticCategoryPrefix =
+  | 'analyzeDependencies'
+  | 'args'
+  | 'bundler'
+  | 'compiler'
+  | 'flags'
+  | 'internalError'
+  | 'lint'
+  | 'parse'
+  | 'projectManager'
+  | 'tests'
+  | 'typeCheck'
+  | 'v8';
