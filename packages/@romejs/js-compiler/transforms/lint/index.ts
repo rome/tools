@@ -33,6 +33,7 @@ import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
+import noUnmatchedOpeningSquareBracketInRegularExpressions from './noUnmatchedOpeningSquareBracketInRegularExpressions';
 
 // Add transforms in alphabetical order.
 export const lintTransforms = [
@@ -56,6 +57,7 @@ export const lintTransforms = [
   noLabelVar,
   noShadowRestrictedNames,
   noTemplateCurlyInString,
+  noUnmatchedOpeningSquareBracketInRegularExpressions,
   noUnsafeFinally,
   preferFunctionDeclarations,
   preferTemplate,
