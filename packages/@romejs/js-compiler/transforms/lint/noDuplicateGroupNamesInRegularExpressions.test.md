@@ -18,30 +18,43 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 47
-        index: 47
+        column: 16
+        index: 16
         line: 1
       }
       start: Object {
-        column: 32
-        index: 32
+        column: 1
+        index: 1
         line: 1
       }
       advice: Array [
         log {
           category: 'info'
-          message: 'Originally defined here'
+          message: 'Defined again here'
         }
         frame {
           filename: 'unknown'
           end: Object {
-            column: 16
-            index: 16
+            column: 47
+            index: 47
             line: 1
           }
           start: Object {
-            column: 1
-            index: 1
+            column: 32
+            index: 32
+            line: 1
+          }
+        }
+        frame {
+          filename: 'unknown'
+          end: Object {
+            column: 99
+            index: 100
+            line: 1
+          }
+          start: Object {
+            column: 85
+            index: 85
             line: 1
           }
         }
@@ -56,68 +69,30 @@ Object {
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 62
-        index: 62
+        column: 31
+        index: 31
         line: 1
       }
       start: Object {
-        column: 48
-        index: 48
+        column: 17
+        index: 17
         line: 1
       }
       advice: Array [
         log {
           category: 'info'
-          message: 'Originally defined here'
+          message: 'Defined again here'
         }
         frame {
           filename: 'unknown'
           end: Object {
-            column: 31
-            index: 31
+            column: 62
+            index: 62
             line: 1
           }
           start: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-        }
-      ]
-    }
-    Object {
-      category: 'lint/noDuplicateGroupNamesInRegularExpressions'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Duplicate group name <emphasis>month</emphasis> in regular expression'
-      mtime: undefined
-      sourceType: 'module'
-      origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 99
-        index: 100
-        line: 1
-      }
-      start: Object {
-        column: 85
-        index: 85
-        line: 1
-      }
-      advice: Array [
-        log {
-          category: 'info'
-          message: 'Originally defined here'
-        }
-        frame {
-          filename: 'unknown'
-          end: Object {
-            column: 47
-            index: 47
-            line: 1
-          }
-          start: Object {
-            column: 32
-            index: 32
+            column: 48
+            index: 48
             line: 1
           }
         }
