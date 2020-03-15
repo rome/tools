@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, RegExpCharacter, regExpCharacter} from '@romejs/js-ast';
+import {AnyNode, RegExpCharacter} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 
 export default {
