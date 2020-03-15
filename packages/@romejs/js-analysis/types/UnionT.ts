@@ -7,10 +7,9 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
-import {SerialTypeFactory} from './T';
+import T, {SerialTypeFactory} from './T';
 import {Scope} from '../scopes';
 import {HumanBuilder} from '../Utils';
-import T from './T';
 
 export default class UnionT extends T {
   constructor(scope: Scope, originNode: undefined | AnyNode, types: Array<T>) {

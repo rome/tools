@@ -6,8 +6,7 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {commandCategories} from '../../commands';
-import {createMasterCommand} from '../../commands';
+import {commandCategories, createMasterCommand} from '../../commands';
 import {Consumer} from '@romejs/consume';
 import {createUnknownFilePath} from '@romejs/path';
 import {SourceLocation} from '@romejs/parser-core';

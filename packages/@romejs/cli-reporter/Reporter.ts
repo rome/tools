@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MarkupFormatOptions} from '@romejs/string-markup';
+import {
+  MarkupFormatOptions,
+  markupToAnsi,
+  stripMarkupTags,
+} from '@romejs/string-markup';
 import {
   ProgressShape,
   RemoteReporterClientMessage,
@@ -13,12 +17,17 @@ import {
   ReporterStream,
   ReporterDerivedStreams,
 } from './types';
-import {markupToAnsi, stripMarkupTags} from '@romejs/string-markup';
 import {humanizeNumber, removeSuffix} from '@romejs/string-utils';
-import {stripAnsi, splitAnsiLines} from '@romejs/string-ansi';
 import Progress, {ProgressOptions} from './Progress';
 import {interpolate} from './util';
-import {formatAnsi, rightPad, escapes, hasAnsiColor} from '@romejs/string-ansi';
+import {
+  formatAnsi,
+  rightPad,
+  escapes,
+  hasAnsiColor,
+  stripAnsi,
+  splitAnsiLines,
+} from '@romejs/string-ansi';
 import prettyFormat from '@romejs/pretty-format';
 import stream = require('stream');
 import {CWD_PATH} from '@romejs/path';

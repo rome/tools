@@ -6,8 +6,7 @@
  */
 
 import {Consumer} from '@romejs/consume';
-import {PathPatterns} from '@romejs/path-match';
-import {parsePathPattern} from '@romejs/path-match';
+import {PathPatterns, parsePathPattern} from '@romejs/path-match';
 import {AbsoluteFilePathSet, AbsoluteFilePath} from '@romejs/path';
 import {ProjectConfigMeta, ProjectConfigMetaHard} from './types';
 import {ROME_CONFIG_FILENAMES, ROME_CONFIG_FOLDER} from './constants';

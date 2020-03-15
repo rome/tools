@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
+import {Path, Binding, TransformExitResult} from '@romejs/js-compiler';
 import {
   AnyNode,
   ImportDeclaration,
@@ -18,9 +18,7 @@ import {
   importSpecifier,
   importSpecifierLocal,
 } from '@romejs/js-ast';
-import {Binding} from '@romejs/js-compiler';
 import {isIdentifierish} from '@romejs/js-ast-utils';
-import {TransformExitResult} from '@romejs/js-compiler';
 
 // TODO: Remove this. This contains React for the following reason:
 //   A user may write: import * as React from 'react';

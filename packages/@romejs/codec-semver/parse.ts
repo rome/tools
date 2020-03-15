@@ -18,9 +18,14 @@ import {
   LogicalAndNode,
   Tokens,
 } from './types';
-import {TokenValues, ParserOptions} from '@romejs/parser-core';
+import {
+  TokenValues,
+  ParserOptions,
+  createParser,
+  isAlpha,
+  isDigit,
+} from '@romejs/parser-core';
 import {markup} from '@romejs/string-markup';
-import {createParser, isAlpha, isDigit} from '@romejs/parser-core';
 import {Number0, add, get0} from '@romejs/ob1';
 
 type ParseMode = 'version' | 'range';

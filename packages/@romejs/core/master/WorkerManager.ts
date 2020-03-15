@@ -6,17 +6,16 @@
  */
 
 import {ProjectDefinition} from '@romejs/project';
-import {Master} from '@romejs/core';
 import {Stats} from './fs/MemoryFileSystem';
-import {Event} from '@romejs/events';
 import fork from '../common/utils/fork';
 import {
   MAX_MASTER_BYTES_BEFORE_WORKERS,
   MAX_WORKER_BYTES_BEFORE_ADD,
 } from '../common/constants';
-import {WorkerBridge, Worker, MAX_WORKER_COUNT} from '@romejs/core';
+import {Master, WorkerBridge, Worker, MAX_WORKER_COUNT} from '@romejs/core';
 import Locker from '../common/utils/Locker';
 import {
+  Event,
   createBridgeFromLocal,
   createBridgeFromChildProcess,
 } from '@romejs/events';

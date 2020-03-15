@@ -6,7 +6,7 @@
  */
 
 import {ModuleSignature, TypeCheckProvider} from '@romejs/js-analysis';
-import {
+import WorkerBridge, {
   WorkerProjects,
   PrefetchedModuleSignatures,
   WorkerPartialManifest,
@@ -14,7 +14,6 @@ import {
 } from '../common/bridges/WorkerBridge';
 import {Program, ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
 import Logger from '../common/utils/Logger';
-import WorkerBridge from '../common/bridges/WorkerBridge';
 import {parseJS} from '@romejs/js-parser';
 import {Profiler} from '@romejs/v8';
 import WorkerAPI from './WorkerAPI';

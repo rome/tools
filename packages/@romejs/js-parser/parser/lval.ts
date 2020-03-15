@@ -5,10 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {IndexTracker, createIndexTracker} from '@romejs/js-parser-utils';
+import {
+  isStrictBindReservedWord,
+  IndexTracker,
+  createIndexTracker,
+} from '@romejs/js-parser-utils';
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {types as tt} from '../tokenizer/types';
-import {isStrictBindReservedWord} from '@romejs/js-parser-utils';
 import {
   AnyExpression,
   AnyNode,

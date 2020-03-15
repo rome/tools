@@ -12,14 +12,14 @@ import {
   getDiagnosticsFromError,
   INTERNAL_ERROR_LOG_ADVICE,
   createSingleDiagnosticError,
+  deriveDiagnosticFromError,
 } from '@romejs/diagnostics';
-import {TestCallback, TestOptions} from '@romejs/test';
+import {TestCallback, TestOptions, GlobalTestOptions} from '@romejs/test';
 import {
   default as TestWorkerBridge,
   TestWorkerBridgeRunOptions,
 } from '../common/bridges/TestWorkerBridge';
 import {TestRunnerOptions} from '../master/testing/types';
-import {deriveDiagnosticFromError} from '@romejs/diagnostics';
 import SnapshotManager from './SnapshotManager';
 import TestAPI, {OnTimeout} from './TestAPI';
 import executeMain from '../common/utils/executeMain';
@@ -27,7 +27,6 @@ import {
   FileReference,
   convertTransportFileReference,
 } from '../common/types/files';
-import {GlobalTestOptions} from '@romejs/test';
 import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
 
 const MAX_RUNNING_TESTS = 20;

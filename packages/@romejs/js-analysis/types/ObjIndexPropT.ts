@@ -6,11 +6,10 @@
  */
 
 import {AnyNode} from '@romejs/js-ast';
-import {SerialTypeFactory} from './T';
+import T, {SerialTypeFactory} from './T';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
 import {HumanBuilder} from '../Utils';
 import {Scope} from '../scopes';
-import T from './T';
 
 export default class ObjIndexPropT extends T {
   constructor(scope: Scope, originNode: undefined | AnyNode, key: T, value: T) {

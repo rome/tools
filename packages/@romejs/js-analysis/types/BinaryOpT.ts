@@ -8,13 +8,12 @@
 import {AnyNode} from '@romejs/js-ast';
 import {Scope} from '../scopes';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
-import {SerialTypeFactory} from './T';
+import T, {SerialTypeFactory} from './T';
 import NumericLiteralT from './NumericLiteralT';
 import NumericT from './NumericT';
 import BooleanT from './BooleanT';
 import StringT from './StringT';
 import AnyT from './AnyT';
-import T from './T';
 import StringLiteralT from './StringLiteralT';
 
 function isNumber(t: T): boolean {

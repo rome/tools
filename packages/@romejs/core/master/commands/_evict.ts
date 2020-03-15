@@ -6,8 +6,7 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand} from '../../commands';
-import {commandCategories} from '../../commands';
+import {commandCategories, createMasterCommand} from '../../commands';
 
 export default createMasterCommand({
   description: 'evict a file from the memory cache',

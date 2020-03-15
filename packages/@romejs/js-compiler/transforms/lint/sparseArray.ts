@@ -6,8 +6,7 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {referenceIdentifier, arrayExpression} from '@romejs/js-ast';
+import {AnyNode, referenceIdentifier, arrayExpression} from '@romejs/js-ast';
 
 export default {
   name: 'sparseArray',

@@ -6,19 +6,18 @@
  */
 
 import {AnyComment} from '@romejs/js-ast';
-import {Position} from '@romejs/parser-core';
+import {Position, SourceLocation} from '@romejs/parser-core';
 import {JSParser} from '../parser';
 import {xhtmlEntityNameToChar} from '../xhtmlEntities';
 import {
   isIdentifierStart,
   isIdentifierChar,
   getFullCharCodeAt,
-} from '@romejs/js-parser-utils';
-import {
   lineBreak,
   lineBreakG,
   isNewLine,
   nonASCIIwhitespace,
+  validateRegexFlags,
 } from '@romejs/js-parser-utils';
 import {
   types as tt,
@@ -27,8 +26,6 @@ import {
   TokenTypes,
 } from './types';
 import {TokContext, types as ct} from './context';
-import {SourceLocation} from '@romejs/parser-core';
-import {validateRegexFlags} from '@romejs/js-parser-utils';
 import {addComment} from '../parser/index';
 import {UNICODE_MISTAKES, ASCII_NAMES} from './unicodeMistakes';
 import * as charCodes from '@romejs/string-charcodes';

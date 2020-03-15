@@ -6,9 +6,8 @@
  */
 
 import {ConstExportModuleKind, ConstImportModuleKind} from '@romejs/js-ast';
-import {Path} from '@romejs/js-compiler';
+import {Path, ImportBinding} from '@romejs/js-compiler';
 import {AnalyzeDependencyName} from '@romejs/core';
-import {ImportBinding} from '@romejs/js-compiler';
 import {
   isFunctionNode,
   isInTypeAnnotation,

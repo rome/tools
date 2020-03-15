@@ -12,10 +12,13 @@ import {
   UserVersions,
   RangeNode,
 } from './types';
-import {SemverParserOptions} from './parse';
 import satisfiesFromAst from './satisfies';
 import compareFromAst from './compare';
-import {parseSemverRange, parseSemverVersion} from './parse';
+import {
+  parseSemverRange,
+  parseSemverVersion,
+  SemverParserOptions,
+} from './parse';
 import {normalizeUserRange, normalizeUserVersion} from './utils';
 import {DiagnosticsError} from '@romejs/diagnostics';
 

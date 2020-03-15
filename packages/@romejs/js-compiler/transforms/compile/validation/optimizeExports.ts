@@ -5,14 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
+import {Path, ImportBinding} from '@romejs/js-compiler';
 import {
   AnyNode,
   ExportLocalDeclaration,
   ExportExternalDeclaration,
-} from '@romejs/js-ast';
-import {ImportBinding} from '@romejs/js-compiler';
-import {
   exportLocalDeclaration,
   exportExternalDeclaration,
   exportExternalSpecifier,

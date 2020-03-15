@@ -17,6 +17,7 @@ import {
   ProjectConfigMeta,
   ProjectConfigTarget,
   ProjectConfigMetaHard,
+  DEFAULT_PROJECT_CONFIG,
 } from './types';
 import {parsePathPattern} from '@romejs/path-match';
 import {
@@ -26,7 +27,6 @@ import {
   mergeAbsoluteFilePathSets,
   getParentConfigDependencies,
 } from './utils';
-import {DEFAULT_PROJECT_CONFIG} from './types';
 import {consumeJSONExtra, ConsumeJSONResult} from '@romejs/codec-json';
 import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
 import {coerce1, number0, add, inc} from '@romejs/ob1';

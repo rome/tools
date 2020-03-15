@@ -7,9 +7,8 @@
 
 import {Manifest, ManifestDefinition} from '@romejs/codec-js-manifest';
 import Master from '../Master';
-import {Platform} from '../../common/types/platform';
+import {Platform, PLATFORM_ALIASES} from '../../common/types/platform';
 import {ProjectDefinition, DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import {PLATFORM_ALIASES} from '../../common/types/platform';
 import {FileReference} from '../../common/types/files';
 import resolverSuggest from './resolverSuggest';
 import {

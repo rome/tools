@@ -6,8 +6,11 @@
  */
 
 import {RangeNode, AbsoluteVersionNode, UserVersion, UserRange} from './types';
-import {SemverParserOptions} from './parse';
-import {parseSemverRange, parseSemverVersion} from './parse';
+import {
+  parseSemverRange,
+  parseSemverVersion,
+  SemverParserOptions,
+} from './parse';
 
 export function normalizeUserVersion(
   ver: UserVersion,

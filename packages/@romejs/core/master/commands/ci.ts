@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {commandCategories} from '../../commands';
-import {createMasterCommand} from '../../commands';
+import {commandCategories, createMasterCommand} from '../../commands';
 import {MasterRequest} from '@romejs/core';
 import Linter from '../linter/Linter';
 import test from './test';

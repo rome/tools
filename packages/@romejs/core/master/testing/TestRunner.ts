@@ -6,28 +6,26 @@
  */
 
 import {Reporter} from '@romejs/cli-reporter';
-import {DiagnosticOrigin} from '@romejs/diagnostics';
+import {DiagnosticOrigin, deriveDiagnosticFromError} from '@romejs/diagnostics';
 import {TestRef} from '../../common/bridges/TestWorkerBridge';
-import {Master, MasterRequest} from '@romejs/core';
+import {Master, MasterRequest, TestWorkerBridge} from '@romejs/core';
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import {createClient} from '@romejs/codec-websocket';
 import {humanizeNumber} from '@romejs/string-utils';
-import {createBridgeFromChildProcess} from '@romejs/events';
+import {BridgeError, createBridgeFromChildProcess} from '@romejs/events';
 import {
   InspectorClientCloseError,
   InspectorClient,
   CoverageCollector,
   sourceMapManager,
+  urlToFilename,
+  createErrorFromStructure,
+  ErrorFrame,
 } from '@romejs/v8';
-import {deriveDiagnosticFromError} from '@romejs/diagnostics';
-import {TestWorkerBridge} from '@romejs/core';
 import fork from '../../common/utils/fork';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
 import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
-import {urlToFilename} from '@romejs/v8';
 import {coerce0to1} from '@romejs/ob1';
-import {createErrorFromStructure, ErrorFrame} from '@romejs/v8';
-import {BridgeError} from '@romejs/events';
 import {
   TestRunnerConstructorOptions,
   TestRunnerOptions,

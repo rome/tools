@@ -25,7 +25,6 @@ import {
 } from './types/analyzeDependencies';
 import {readFileText} from '@romejs/fs';
 import {generateJS} from '@romejs/js-generator';
-import {TransformProjectDefinition} from '@romejs/js-compiler';
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
 
@@ -91,7 +90,7 @@ export type ExtensionLintResult = {
 
 export type ExtensionHandlerMethodInfo = {
   file: FileReference;
-  project: TransformProjectDefinition;
+  project: compiler.TransformProjectDefinition;
   worker: Worker;
 };
 

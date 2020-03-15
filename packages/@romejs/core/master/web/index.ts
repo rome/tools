@@ -11,12 +11,11 @@ import {WebSocketInterface} from '@romejs/codec-websocket';
 import prettyFormat from '@romejs/pretty-format';
 import http = require('http');
 import {escapeMarkup} from '@romejs/string-markup';
-import {Reporter} from '@romejs/cli-reporter';
+import {Reporter, ReporterStream} from '@romejs/cli-reporter';
 import {
   MasterQueryRequest,
   MasterQueryResponse,
 } from '../../common/bridges/MasterBridge';
-import {ReporterStream} from '@romejs/cli-reporter';
 import {MasterMarker} from '../Master';
 import {ClientFlags} from '../../common/types/client';
 import WebRequest, {stripBundleSuffix} from './WebRequest';

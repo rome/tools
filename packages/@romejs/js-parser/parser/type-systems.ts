@@ -23,6 +23,7 @@ import {
   AmbiguousFlowTypeCastExpression,
   AnyLiteralTypeAnnotation,
   AnyTargetAssignmentPattern,
+  PatternMeta,
 } from '@romejs/js-ast';
 import {types as tt} from '../tokenizer/types';
 import {
@@ -53,7 +54,6 @@ import {
   parseFlowTypeAliasTypeAnnotation,
   toTargetAssignmentPattern,
 } from './index';
-import {PatternMeta} from '@romejs/js-ast';
 
 export function isTypeSystemEnabled(parser: JSParser): boolean {
   return parser.isSyntaxEnabled('flow') || parser.isSyntaxEnabled('ts');

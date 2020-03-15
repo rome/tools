@@ -5,11 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UnknownObject} from '@romejs/typescript-helpers';
+import {UnknownObject, isIterable} from '@romejs/typescript-helpers';
 import {formatAnsi} from '@romejs/string-ansi';
 import {escapeString} from '@romejs/string-escape';
 import {humanizeNumber, naturalCompare} from '@romejs/string-utils';
-import {isIterable} from '@romejs/typescript-helpers';
 import {escapeMarkup} from '@romejs/string-markup';
 
 type RecursiveStack = Array<unknown>;

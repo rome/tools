@@ -12,9 +12,10 @@ import {
   ValueToken,
   SimpleToken,
   createParser,
+  isAlpha,
+  isDigit,
 } from '@romejs/parser-core';
 import {getSPDXLicense, licenseNames} from './index';
-import {isAlpha, isDigit} from '@romejs/parser-core';
 import {buildSuggestionAdvice} from '@romejs/diagnostics';
 import {inc, Number0, get0} from '@romejs/ob1';
 

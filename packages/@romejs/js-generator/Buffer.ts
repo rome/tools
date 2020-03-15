@@ -7,8 +7,11 @@
 
 import {GeneratorOptions} from './Generator';
 import {Position, SourceLocation} from '@romejs/parser-core';
-import {Mappings, SourceMapConsumer} from '@romejs/codec-source-map';
-import {SourceMapGenerator} from '@romejs/codec-source-map';
+import {
+  SourceMapGenerator,
+  Mappings,
+  SourceMapConsumer,
+} from '@romejs/codec-source-map';
 import {
   number1,
   number0,

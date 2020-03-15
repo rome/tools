@@ -10,11 +10,12 @@ import {
   TransformExitResult,
   PathOptions,
   TransformVisitors,
+  Path,
+  REDUCE_SKIP_SUBTREE,
+  REDUCE_REMOVE,
 } from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {visitorKeys as allVisitorKeys} from '@romejs/js-ast';
+import {AnyNode, visitorKeys as allVisitorKeys} from '@romejs/js-ast';
 import {isNodeLike} from '@romejs/js-ast-utils';
-import {Path, REDUCE_SKIP_SUBTREE, REDUCE_REMOVE} from '@romejs/js-compiler';
 
 const BAIL_EXIT: 'BAIL' = 'BAIL';
 const KEEP_EXIT: 'KEEP' = 'KEEP';

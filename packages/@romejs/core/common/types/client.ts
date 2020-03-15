@@ -5,9 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticsPrinterFlags} from '@romejs/cli-diagnostics';
+import {
+  DiagnosticsPrinterFlags,
+  DEFAULT_PRINTER_FLAGS,
+} from '@romejs/cli-diagnostics';
 import {Platform} from './platform';
-import {DEFAULT_PRINTER_FLAGS} from '@romejs/cli-diagnostics';
 import {AbsoluteFilePath, CWD_PATH} from '@romejs/path';
 
 export const DEFAULT_CLIENT_FLAGS: ClientFlags = {

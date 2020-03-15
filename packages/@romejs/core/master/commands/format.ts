@@ -6,8 +6,7 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand} from '../../commands';
-import {commandCategories} from '../../commands';
+import {commandCategories, createMasterCommand} from '../../commands';
 import {AbsoluteFilePathSet} from '@romejs/path';
 import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import {FORMATTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';

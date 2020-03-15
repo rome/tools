@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
+import {Path, createHook} from '@romejs/js-compiler';
 import {
   variableDeclaration,
   thisExpression,
@@ -18,7 +18,6 @@ import {
   variableDeclarationStatement,
 } from '@romejs/js-ast';
 import {inheritLoc} from '@romejs/js-ast-utils';
-import {createHook} from '@romejs/js-compiler';
 
 function isInsideArrow(path: Path): boolean {
   for (const ancestor of path.ancestryPaths) {

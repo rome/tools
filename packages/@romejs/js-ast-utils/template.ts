@@ -10,12 +10,11 @@ import {
   AnyExpression,
   AnyStatement,
   AnyIdentifier,
+  program,
 } from '@romejs/js-ast';
-import {Path} from '@romejs/js-compiler';
+import {Path, Context} from '@romejs/js-compiler';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import {program} from '@romejs/js-ast';
 import removeLoc from './removeLoc';
-import {Context} from '@romejs/js-compiler';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import isIdentifierish from './isIdentifierish';

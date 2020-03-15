@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TransformExitResult} from '@romejs/js-compiler';
-import {Path} from '@romejs/js-compiler';
+import {Path, TransformExitResult} from '@romejs/js-compiler';
 
 export type HookDescriptor<State, CallArg, CallReturn> = {
   name: string;

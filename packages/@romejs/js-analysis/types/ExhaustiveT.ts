@@ -8,11 +8,10 @@
 import {AnyNode} from '@romejs/js-ast';
 import {Scope} from '../scopes';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
-import {SerialTypeFactory} from './T';
+import T, {SerialTypeFactory} from './T';
 import {HumanBuilder} from '../Utils';
 import E from './errors/E';
 import AnyT from './AnyT';
-import T from './T';
 
 class ENotExhaustive extends E {
   constructor(

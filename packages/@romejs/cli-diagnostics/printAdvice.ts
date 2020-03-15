@@ -17,10 +17,10 @@ import {
   DiagnosticAdviceItemDiff,
   DiagnosticAdviceItemAction,
   DiagnosticAdviceItemStacktrace,
+  getDiagnosticHeader,
 } from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
 import {toLines} from './utils';
-import {getDiagnosticHeader} from '@romejs/diagnostics';
 import buildPatchCodeFrame from './buildPatchCodeFrame';
 import buildMessageCodeFrame from './buildMessageCodeFrame';
 import {escapeMarkup} from '@romejs/string-markup';

@@ -6,9 +6,8 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand} from '../../commands';
+import {commandCategories, createMasterCommand} from '../../commands';
 import Bundler from '../bundler/Bundler';
-import {commandCategories} from '../../commands';
 import {createDirectory, writeFile} from '@romejs/fs';
 
 export default createMasterCommand({

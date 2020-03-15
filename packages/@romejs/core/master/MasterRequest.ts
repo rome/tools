@@ -17,7 +17,10 @@ import {
   PartialDiagnosticAdvice,
   createSingleDiagnosticError,
 } from '@romejs/diagnostics';
-import {DiagnosticsPrinterFlags} from '@romejs/cli-diagnostics';
+import {
+  DiagnosticsPrinter,
+  DiagnosticsPrinterFlags,
+} from '@romejs/cli-diagnostics';
 import {ProjectDefinition} from '@romejs/project';
 import {ResolverOptions} from './fs/Resolver';
 import {BundlerConfig} from '../common/types/bundler';
@@ -34,7 +37,6 @@ import {Reporter} from '@romejs/cli-reporter';
 import {PathPatterns} from '@romejs/path-match';
 import {Event} from '@romejs/events';
 import {serializeCLIFlags, SerializeCLITarget} from '@romejs/cli-flags';
-import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import {Program} from '@romejs/js-ast';
 import {TransformStageName} from '@romejs/js-compiler';
 import WorkerBridge, {

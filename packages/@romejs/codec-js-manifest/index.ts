@@ -6,11 +6,9 @@
  */
 
 import {Consumer} from '@romejs/consume';
-import {SemverVersionNode} from '@romejs/codec-semver';
-import {SPDXExpressionNode} from '@romejs/codec-spdx-license';
+import {SemverVersionNode, parseSemverVersion} from '@romejs/codec-semver';
+import {parseSPDXLicense, SPDXExpressionNode} from '@romejs/codec-spdx-license';
 import {normalizeDependencies, parseGitDependencyPattern} from './dependencies';
-import {parseSPDXLicense} from '@romejs/codec-spdx-license';
-import {parseSemverVersion} from '@romejs/codec-semver';
 import {
   MString,
   MBoolean,

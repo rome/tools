@@ -9,6 +9,7 @@
 import defaultExportSameBasename from './defaultExportSameBasename';
 import disallowMultipleSpacesInRegularExpressionLiterals from './disallowMultipleSpacesInRegularExpressionLiterals';
 import disallowVar from './disallowVar';
+import duplicateImportSource from './duplicateImportSource';
 import emptyBlocks from './emptyBlocks';
 import getterReturn from './getterReturn';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
@@ -36,6 +37,7 @@ export const lintTransforms = [
   defaultExportSameBasename,
   disallowMultipleSpacesInRegularExpressionLiterals,
   disallowVar,
+  duplicateImportSource,
   emptyBlocks,
   getterReturn,
   noAsyncPromiseExecutor,

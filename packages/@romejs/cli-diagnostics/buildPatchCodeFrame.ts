@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diffs} from '@romejs/string-diff';
 import {CODE_FRAME_INDENT, CODE_FRAME_CONTEXT_LINES, GUTTER} from './constants';
 import {leftPad, formatAnsi} from '@romejs/string-ansi';
 import {showInvisibles} from './utils';
 import {
+  Diffs,
   constants as diffConstants,
   groupDiffByLines,
 } from '@romejs/string-diff';

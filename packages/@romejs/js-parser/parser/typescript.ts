@@ -6,9 +6,8 @@
  */
 
 import {Position} from '@romejs/parser-core';
-import {TokenType} from '../tokenizer/types';
 import {JSParser} from '../parser';
-import {types as tt} from '../tokenizer/types';
+import {TokenType, types as tt} from '../tokenizer/types';
 import {
   parseExpressionAtom,
   parseIdentifierName,
