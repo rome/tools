@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
+import {AnyNode, RegExpCharacter, regExpCharacter} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 
 export default {
@@ -13,7 +13,7 @@ export default {
   enter(path: Path): AnyNode {
     const {context, node} = path;
 
-    let lastBracketCharacter: string = '';
+    let lastBracketCharacter: Partial<RegExpCharacter> = {};
     let hasOpeningBracket: boolean = false;
 
     if (node.type === 'RegExpSubExpression') {
@@ -23,15 +23,17 @@ export default {
             hasOpeningBracket = true;
           }
 
-          lastBracketCharacter = item.value;
+          lastBracketCharacter = item;
         }
       }
 
-      if (hasOpeningBracket && lastBracketCharacter === '[') {
+      if (hasOpeningBracket && lastBracketCharacter.value === '[') {
         context.addNodeDiagnostic(node, {
           category: 'lint/noUnmatchedOpeningSquareBracketInRegularExpressions',
           message:
             'Unmatched opening square brackets in regular expressions are not allowed',
+          start: lastBracketCharacter.loc?.start,
+          end: lastBracketCharacter.loc?.end,
         });
       }
     }
