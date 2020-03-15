@@ -23,6 +23,7 @@ import {add} from '@romejs/ob1';
 import {readFile} from '@romejs/fs';
 import crypto = require('crypto');
 import {Dict} from '@romejs/typescript-helpers';
+import {Reporter} from '@romejs/cli-reporter';
 
 export type BundleOptions = {
   prefix?: string;
@@ -30,12 +31,20 @@ export type BundleOptions = {
 };
 
 export default class BundleRequest {
-  constructor(
-    bundler: Bundler,
-    mode: BundlerMode,
-    resolvedEntry: AbsoluteFilePath,
-    options: BundleOptions,
-  ) {
+  constructor({
+    bundler,
+    reporter,
+    mode,
+    resolvedEntry,
+    options,
+  }: {
+    bundler: Bundler;
+    reporter: Reporter;
+    mode: BundlerMode;
+    resolvedEntry: AbsoluteFilePath;
+    options: BundleOptions;
+  }) {
+    this.reporter = reporter;
     this.interpreter = options.interpreter;
     this.bundler = bundler;
     this.cached = true;
@@ -52,6 +61,8 @@ export default class BundleRequest {
         },
       ],
     });
+    this.diagnostics.addAllowedUnusedSuppressionPrefix('lint');
+
     this.compiles = new Map();
     this.assets = new Map();
 
@@ -62,6 +73,7 @@ export default class BundleRequest {
 
   interpreter: undefined | string;
   cached: boolean;
+  reporter: Reporter;
   bundler: Bundler;
   resolvedEntry: AbsoluteFilePath;
   resolvedEntryUid: string;
@@ -72,7 +84,8 @@ export default class BundleRequest {
   mode: BundlerMode;
 
   async stepAnalyze(): Promise<DependencyOrder> {
-    const {reporter, graph} = this.bundler;
+    const {graph} = this.bundler;
+    const {reporter} = this;
 
     const analyzeProgress = reporter.progress({
       name: `bundler:analyze:${this.resolvedEntryUid}`,
@@ -93,7 +106,8 @@ export default class BundleRequest {
   }
 
   async stepCompile(paths: Array<AbsoluteFilePath>) {
-    const {reporter, master} = this.bundler;
+    const {master} = this.bundler;
+    const {reporter} = this;
     this.diagnostics.setThrowAfter(undefined);
 
     const compilingSpinner = reporter.progress({
@@ -170,13 +184,8 @@ export default class BundleRequest {
       this.cached = false;
     }
 
-    if (res.diagnostics.length > 0) {
-      this.diagnostics.addDiagnostics(res.diagnostics);
-    }
-
-    if (res.filters.length > 0) {
-      this.diagnostics.addFilters(res.filters);
-    }
+    this.diagnostics.addSuppressions(res.suppressions);
+    this.diagnostics.addDiagnostics(res.diagnostics);
 
     this.compiles.set(source, res);
     return res;
@@ -267,7 +276,7 @@ export default class BundleRequest {
     */
 
     const declaredCJS: Set<DependencyNode> = new Set();
-    const declareCJS = (module: DependencyNode) => {
+    function declareCJS(module: DependencyNode) {
       if (
         mode !== 'modern' ||
         module.type !== 'cjs' ||
@@ -279,7 +288,7 @@ export default class BundleRequest {
       declaredCJS.add(module);
 
       push(`  var ${getPrefixedBundleNamespace(module.id)} = {};`);
-    };
+    }
 
     // Add on files
     for (const source of files) {

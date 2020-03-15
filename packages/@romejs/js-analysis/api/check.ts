@@ -59,6 +59,7 @@ function resolveGraph(hub: Hub): PartialDiagnostics {
       }
 
       const {
+        category,
         lowerTarget,
         upperTarget,
         advice: rawAdvice,
@@ -101,7 +102,7 @@ function resolveGraph(hub: Hub): PartialDiagnostics {
       }
 
       context.addNodeDiagnostic(lowerTarget.originNode, {
-        category: 'typeError',
+        category,
         message,
         advice,
         marker:
@@ -153,7 +154,7 @@ function resolveGraph(hub: Hub): PartialDiagnostics {
         }
 
         context.addNodeDiagnostic(compatibility.lower.originNode, {
-          category: 'typeError',
+          category: 'typeCheck/incompatible',
           message: 'Type incompatibility found',
           marker: utils.humanize(compatibility.lower),
           advice,

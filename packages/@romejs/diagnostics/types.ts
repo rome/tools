@@ -10,6 +10,7 @@ import {Diffs} from '@romejs/string-diff';
 import {ConstSourceType} from '@romejs/js-ast';
 import {Number0, Number1} from '@romejs/ob1';
 import {JSONPropertyValue} from '@romejs/codec-json';
+import {DiagnosticCategory} from './categories';
 
 export type DiagnosticFilter = {
   category?: string;
@@ -20,6 +21,13 @@ export type DiagnosticFilter = {
 };
 
 export type DiagnosticFilters = Array<DiagnosticFilter>;
+
+export type DiagnosticSuppression = {
+  category: string;
+  loc: SourceLocation;
+};
+
+export type DiagnosticSuppressions = Array<DiagnosticSuppression>;
 
 export type DiagnosticFilterWithTest = DiagnosticFilter & {
   test?: (diagnostic: PartialDiagnostic) => boolean;
@@ -54,7 +62,7 @@ export type DiagnosticAdviceItemLog = {
 export type DiagnosticAdviceItemList = {
   type: 'list';
   list: Array<string>;
-  truncate: number;
+  truncate: boolean;
   reverse: boolean;
   ordered: boolean;
 };
@@ -89,21 +97,11 @@ export type DiagnosticAdviceItemDiff = {
   diff: Diffs;
 };
 
-export type DiagnosticAdviceItemAction = {
-  type: 'action';
-  message: string;
-  cancelable: boolean;
-  buttons: Array<{
-    text: string;
-    command: string;
-  }>;
-};
-
 export type DiagnosticAdviceItemStacktrace = {
   type: 'stacktrace';
   title: undefined | string;
   frames: Array<DiagnosticAdviceStackFrame>;
-  truncate: number;
+  truncate: boolean;
 };
 
 export type DiagnosticAdviceItem =
@@ -113,7 +111,6 @@ export type DiagnosticAdviceItem =
   | DiagnosticAdviceItemFrame
   | DiagnosticAdviceItemInspect
   | DiagnosticAdviceItemDiff
-  | DiagnosticAdviceItemAction
   | DiagnosticAdviceItemStacktrace;
 
 export type DiagnosticAdvice = Array<DiagnosticAdviceItem>;
@@ -126,8 +123,9 @@ export type DiagnosticDependency = {
 export type DiagnosticDependencies = Array<DiagnosticDependency>;
 
 export type Diagnostic = {
-  category: string;
+  category: DiagnosticCategory;
   message: string;
+  label: undefined | string;
   filename: undefined | string;
 
   origins: Array<DiagnosticOrigin>;
@@ -165,7 +163,8 @@ export type DiagnosticAdviceStackFrame = {
 //# PARTIAL
 
 export type PartialDiagnostic = {
-  category: string;
+  category: DiagnosticCategory;
+  label?: string;
   message: string;
 
   origins?: Array<DiagnosticOrigin>;
@@ -200,7 +199,7 @@ export type PartialDiagnosticAdviceItem =
   | {
       type: 'list';
       list: Array<string>;
-      truncate?: number | undefined;
+      truncate?: boolean;
       reverse?: boolean;
       ordered?: boolean;
     }
@@ -234,18 +233,9 @@ export type PartialDiagnosticAdviceItem =
       diff: Diffs;
     }
   | {
-      type: 'action';
-      message: string;
-      cancelable: boolean;
-      buttons: Array<{
-        text: string;
-        command: string;
-      }>;
-    }
-  | {
       type: 'stacktrace';
       title?: string;
-      truncate?: number;
+      truncate?: boolean;
       frames: Array<PartialDiagnosticAdviceStackFrame>;
     };
 

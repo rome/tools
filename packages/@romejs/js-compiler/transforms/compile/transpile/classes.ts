@@ -39,7 +39,7 @@ function transformClass(
   path: Path,
   context: Context,
 ): {
-  constructor: FunctionDeclaration;
+  _constructor: FunctionDeclaration;
   prependDeclarations: Array<AnyStatement>;
   declarations: Array<AnyStatement>;
 } {
@@ -257,26 +257,26 @@ function transformClass(
   }
 
   // create the constructor method
-  let constructor: FunctionDeclaration;
+  let _constructor: FunctionDeclaration;
   if (constructorMethod === undefined) {
     if (superClassRef === undefined) {
-      constructor = functionDeclaration.assert(
+      _constructor = functionDeclaration.assert(
         template.statement`function ${className}() {}`,
       );
     } else {
-      constructor = functionDeclaration.assert(
+      _constructor = functionDeclaration.assert(
         template.statement`function ${className}(...args) {${superClassRef}.apply(this, args);}`,
       );
     }
   } else {
-    constructor = functionDeclaration.create({
+    _constructor = functionDeclaration.create({
       id: bindingIdentifier.quick(className),
       head: constructorMethod.head,
       body: constructorMethod.body,
     });
   }
 
-  return {constructor, prependDeclarations, declarations};
+  return {_constructor, prependDeclarations, declarations};
 }
 
 export default {
@@ -291,7 +291,7 @@ export default {
       node.declaration !== undefined &&
       node.declaration.type === 'ClassDeclaration'
     ) {
-      const {constructor, declarations, prependDeclarations} = transformClass(
+      const {_constructor, declarations, prependDeclarations} = transformClass(
         node.declaration,
         path.getChildPath('declaration'),
         context,
@@ -300,7 +300,7 @@ export default {
         ...prependDeclarations,
         {
           ...node,
-          declaration: constructor,
+          declaration: _constructor,
         },
         ...declarations,
       ];
@@ -308,12 +308,12 @@ export default {
     }
 
     if (node.type === 'ClassDeclaration') {
-      const {constructor, prependDeclarations, declarations} = transformClass(
+      const {_constructor, prependDeclarations, declarations} = transformClass(
         node,
         path,
         context,
       );
-      return [...prependDeclarations, constructor, ...declarations];
+      return [...prependDeclarations, _constructor, ...declarations];
     }
 
     // turn a class expression into an IIFE that returns a class declaration

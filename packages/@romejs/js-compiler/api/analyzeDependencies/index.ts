@@ -234,7 +234,7 @@ export default async function analyzeDependencies(
     } else if (record instanceof CJSExportRecord) {
       if (moduleType === 'es') {
         context.addNodeDiagnostic(record.node, {
-          category: 'analyzeDependencies',
+          category: 'analyzeDependencies/cjsExportInES',
           message: 'You cannot use CommonJS exports in an ES module',
         });
       }

@@ -11,12 +11,16 @@ import {
   PartialDiagnostic,
   DiagnosticFilterWithTest,
   DiagnosticOrigin,
+  DiagnosticSuppressions,
+  DiagnosticSuppression,
 } from './types';
 import {MarkupFormatOptions} from '@romejs/string-markup';
 import {addOriginsToDiagnostics} from './derive';
 import {naturalCompare} from '@romejs/string-utils';
 import {DiagnosticsError} from './errors';
 import {normalizeDiagnostics} from './normalize';
+import {add} from '@romejs/ob1';
+import {DiagnosticCategoryPrefix} from './categories';
 
 type UniquePart =
   | 'filename'
@@ -44,13 +48,15 @@ const DEFAULT_UNIQUE: UniqueRules = [
 export default class DiagnosticsProcessor {
   constructor(options: CollectorOptions) {
     this.diagnostics = [];
-    this.filters = options.filters === undefined ? [] : options.filters;
+    this.filters = [];
+    this.allowedUnusedSuppressionPrefixes = new Set();
+    this.usedSuppressions = new Set();
+    this.suppressions = new Set();
     this.options = options;
     this.includedKeys = new Set();
     this.unique =
       options.unique === undefined ? DEFAULT_UNIQUE : options.unique;
     this.throwAfter = undefined;
-    this.unfilteredDiagnostics = [];
   }
 
   static createImmediateThrower(
@@ -67,9 +73,11 @@ export default class DiagnosticsProcessor {
 
   unique: UniqueRules;
   includedKeys: Set<string>;
-  unfilteredDiagnostics: PartialDiagnostics;
   diagnostics: PartialDiagnostics;
   filters: Array<DiagnosticFilterWithTest>;
+  allowedUnusedSuppressionPrefixes: Set<string>;
+  usedSuppressions: Set<DiagnosticSuppression>;
+  suppressions: Set<DiagnosticSuppression>;
   options: CollectorOptions;
   throwAfter: undefined | number;
 
@@ -90,6 +98,16 @@ export default class DiagnosticsProcessor {
     return this.diagnostics.length > 0;
   }
 
+  addAllowedUnusedSuppressionPrefix(prefix: DiagnosticCategoryPrefix) {
+    this.allowedUnusedSuppressionPrefixes.add(prefix);
+  }
+
+  addSuppressions(suppressions: DiagnosticSuppressions) {
+    for (const suppression of suppressions) {
+      this.suppressions.add(suppression);
+    }
+  }
+
   addFilters(filters: Array<DiagnosticFilterWithTest>) {
     this.filters = this.filters.concat(filters);
   }
@@ -99,6 +117,19 @@ export default class DiagnosticsProcessor {
   }
 
   doesMatchFilter(diag: PartialDiagnostic): boolean {
+    for (const suppression of this.suppressions) {
+      const targetLine = add(suppression.loc.end.line, 1);
+      if (
+        diag.filename !== undefined &&
+        diag.start !== undefined &&
+        diag.filename === suppression.loc.filename &&
+        diag.start.line === targetLine
+      ) {
+        this.usedSuppressions.add(suppression);
+        return true;
+      }
+    }
+
     for (const filter of this.filters) {
       if (filter.message !== undefined && filter.message !== diag.message) {
         continue;
@@ -185,6 +216,10 @@ export default class DiagnosticsProcessor {
     diags: PartialDiagnostics,
     origin?: DiagnosticOrigin,
   ): PartialDiagnostics {
+    if (diags.length === 0) {
+      return diags;
+    }
+
     const {max} = this.options;
     const added: PartialDiagnostics = [];
 
@@ -198,8 +233,6 @@ export default class DiagnosticsProcessor {
 
     // Filter diagnostics
     diagLoop: for (const diag of diags) {
-      this.unfilteredDiagnostics.push(diag);
-
       if (max !== undefined && this.diagnostics.length > max) {
         break;
       }
@@ -237,22 +270,32 @@ export default class DiagnosticsProcessor {
     return added;
   }
 
-  getUnfilteredDiagnostics(): PartialDiagnostics {
-    return [...this.unfilteredDiagnostics];
-  }
-
-  getCompleteUnfilteredDiagnostics(
-    markupOptions: MarkupFormatOptions = {},
-  ): Diagnostics {
-    return normalizeDiagnostics(this.unfilteredDiagnostics, markupOptions);
-  }
-
   getPartialDiagnostics(): PartialDiagnostics {
-    return [...this.diagnostics];
+    const diagnostics: PartialDiagnostics = [...this.diagnostics];
+
+    // Add errors for remaining suppressions
+    for (const suppression of this.suppressions) {
+      if (this.usedSuppressions.has(suppression)) {
+        continue;
+      }
+
+      const [categoryPrefix] = suppression.category.split('/');
+      if (this.allowedUnusedSuppressionPrefixes.has(categoryPrefix)) {
+        continue;
+      }
+
+      diagnostics.push({
+        ...suppression.loc,
+        message: 'Did not hide any error',
+        category: 'suppressions/unused',
+      });
+    }
+
+    return diagnostics;
   }
 
   getCompleteDiagnostics(markupOptions: MarkupFormatOptions = {}): Diagnostics {
-    return normalizeDiagnostics(this.diagnostics, markupOptions);
+    return normalizeDiagnostics(this.getPartialDiagnostics(), markupOptions);
   }
 
   getCompleteSortedDiagnostics(

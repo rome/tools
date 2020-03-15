@@ -621,7 +621,7 @@ export default class Resolver {
           const indexResolved = this.resolvePath(
             {
               ...query,
-              source: resolvedOrigin.append('index.' + ext),
+              source: resolvedOrigin.append(`index.${ext}`),
             },
             true,
             ['implicitIndex'],
@@ -803,7 +803,7 @@ export default class Resolver {
 
     // For scoped modules in the form of `@romejs/bar`, make sure we keep the `/bar` on the module name
     if (moduleName[0] === '@' && moduleNameParts.length > 0) {
-      return [moduleName + '/' + moduleNameParts.shift(), moduleNameParts];
+      return [`${moduleName}/${moduleNameParts.shift()}`, moduleNameParts];
     }
 
     return [moduleName, moduleNameParts];

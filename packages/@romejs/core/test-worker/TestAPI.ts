@@ -17,6 +17,8 @@ import diff from '@romejs/string-diff';
 import {createErrorFromStructure} from '@romejs/v8';
 import prettyFormat from '@romejs/pretty-format';
 import {Class} from '@romejs/typescript-helpers';
+import {FileReference} from '../common/types/files';
+import {markup} from '@romejs/string-markup';
 
 type AsyncFunc = () => undefined | Promise<void>;
 type SyncThrower = () => void;
@@ -75,16 +77,24 @@ function maybeTruncate(str: string, noTruncate: boolean): string {
 }
 
 export default class TestAPI {
-  constructor(
-    testName: string,
-    onTimeout: OnTimeout,
-    snapshotManager: SnapshotManager,
-    options: TestRunnerOptions,
-  ) {
+  constructor({
+    testName,
+    onTimeout,
+    file,
+    snapshotManager,
+    options,
+  }: {
+    file: FileReference;
+    testName: string;
+    onTimeout: OnTimeout;
+    snapshotManager: SnapshotManager;
+    options: TestRunnerOptions;
+  }) {
     this.testName = testName;
     this.options = options;
     this.snapshotManager = snapshotManager;
     this.snapshotCounter = 0;
+    this.file = file;
 
     this.teardownEvent = new Event({name: 'TestAPI.teardown'});
 
@@ -99,6 +109,7 @@ export default class TestAPI {
 
   startTime: number;
   options: TestRunnerOptions;
+  file: FileReference;
 
   onTimeout: OnTimeout;
   timeoutId: undefined | NodeJS.Timeout;
@@ -111,10 +122,18 @@ export default class TestAPI {
   snapshotCounter: number;
   snapshotManager: SnapshotManager;
 
-  buildMatchParts(
+  buildMatchAdvice(
     received: unknown,
     expected: unknown,
-    visualMethod?: string,
+    {
+      visualMethod,
+      expectedAlias,
+      receivedAlias,
+    }: {
+      visualMethod?: string;
+      expectedAlias?: string;
+      receivedAlias?: string;
+    } = {},
   ): PartialDiagnosticAdvice {
     let expectedFormat;
     let receivedFormat;
@@ -229,7 +248,24 @@ export default class TestAPI {
 
       advice.push({
         type: 'diff',
-        diff: diff(receivedFormat, expectedFormat),
+        diff: diff(expectedFormat, receivedFormat),
+      });
+
+      advice.push({
+        type: 'log',
+        category: 'none',
+        message: receivedAlias
+          ? `<green>+ ${receivedAlias}</green>`
+          : '<green>+ What we received</green>',
+        compact: true,
+      });
+
+      advice.push({
+        type: 'log',
+        category: 'none',
+        message: expectedAlias
+          ? `<red>- ${expectedAlias}</red>`
+          : '<red>- What we expected</red>',
       });
     }
 
@@ -305,18 +341,15 @@ export default class TestAPI {
   }
 
   fail(
-    message?: string,
-    advice?: PartialDiagnosticAdvice,
+    message: string = 'Test failure triggered by t.fail()',
+    advice: PartialDiagnosticAdvice = [],
     framesToPop: number = 0,
   ) {
-    const actualMessage =
-      message === undefined ? 'Test failure triggered by t.fail()' : message;
-    const error = createErrorFromStructure({
-      message: actualMessage,
+    throw createErrorFromStructure({
+      message,
       advice,
       framesToPop: framesToPop + 1,
     });
-    throw error;
   }
 
   truthy(value: unknown, message: string = 'Expected value to be truthy') {
@@ -407,7 +440,7 @@ export default class TestAPI {
     if (Object.is(received, expected) !== true) {
       this.fail(
         message,
-        this.buildMatchParts(received, expected, 'looksLike'),
+        this.buildMatchAdvice(received, expected, {visualMethod: 'looksLike'}),
         1,
       );
     }
@@ -421,7 +454,9 @@ export default class TestAPI {
     if (Object.is(received, expected) === true) {
       this.fail(
         message,
-        this.buildMatchParts(received, expected, 'notLooksLike'),
+        this.buildMatchAdvice(received, expected, {
+          visualMethod: 'notLooksLike',
+        }),
         1,
       );
     }
@@ -436,7 +471,7 @@ export default class TestAPI {
     const expectedInspect = prettyFormat(expected);
 
     if (actualInspect !== expectedInspect) {
-      this.fail(message, this.buildMatchParts(received, expected), 1);
+      this.fail(message, this.buildMatchAdvice(received, expected), 1);
     }
   }
 
@@ -449,7 +484,7 @@ export default class TestAPI {
     const expectedInspect = prettyFormat(expected);
 
     if (actualInspect === expectedInspect) {
-      this.fail(message, this.buildMatchParts(received, expected), 1);
+      this.fail(message, this.buildMatchAdvice(received, expected), 1);
     }
   }
 
@@ -509,53 +544,74 @@ export default class TestAPI {
 
   snapshot(expected: unknown, message?: string) {
     const id = this.snapshotCounter++;
-    return this._snapshotNamed(id, expected, message, 2);
+    return this._snapshotNamed(String(id), expected, message, 2);
   }
 
-  snapshotNamed(name: string | number, expected: unknown, message?: string) {
+  snapshotNamed(name: string, expected: unknown, message?: string) {
     return this._snapshotNamed(name, expected, message, 1);
   }
 
-  getSnapshot(name: string | number): unknown {
-    const key = this.snapshotManager.toSnapshotKey(this.testName, name);
-    return this.snapshotManager.get(key);
+  getSnapshot(snapshotName: string): unknown {
+    return this.snapshotManager.get(this.testName, snapshotName);
   }
 
   _snapshotNamed(
-    name: string | number,
+    name: string,
     expected: unknown,
-    message: string = "Snapshots don't match",
+    message?: string,
     framesToPop?: number,
   ) {
-    const key = this.snapshotManager.toSnapshotKey(this.testName, name);
+    let language: undefined | string;
 
-    const formatted = prettyFormat(expected);
+    let formatted = '';
+    if (typeof expected === 'string') {
+      formatted = expected;
+    } else {
+      language = 'javascript';
+      formatted = prettyFormat(expected);
+    }
 
     // Get the current snapshot
-    const existingSnapshot = this.snapshotManager.get(key);
+    const existingSnapshot = this.snapshotManager.get(this.testName, name);
     if (existingSnapshot === undefined) {
       // No snapshot exists, let's save this one!
-      this.snapshotManager.set(key, formatted);
+      this.snapshotManager.set({
+        testName: this.testName,
+        snapshotName: String(name),
+        value: formatted,
+        language,
+      });
       return undefined;
     }
 
     // Compare the snapshots
     if (formatted !== existingSnapshot) {
-      this.fail(
-        message,
-        [
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Snapshot diff',
-          },
-          {
-            type: 'diff',
-            diff: diff(existingSnapshot, formatted),
-          },
-        ],
-        framesToPop,
+      const advice: PartialDiagnosticAdvice = this.buildMatchAdvice(
+        formatted,
+        existingSnapshot,
+        {
+          receivedAlias: 'What the code gave us',
+          expectedAlias: 'Existing snapshot',
+        },
       );
+
+      if (message === undefined) {
+        message = markup`Snapshot ${name} at <filelink emphasis target="${this.snapshotManager.path.join()}" /> doesn't match`;
+      } else {
+        advice.push({
+          type: 'log',
+          category: 'info',
+          message: `Snapshot can be found at <filelink emphasis target="${this.snapshotManager.path.join()}" />`,
+        });
+      }
+
+      advice.push({
+        type: 'log',
+        category: 'info',
+        message: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
+      });
+
+      this.fail(message, advice, framesToPop);
     }
   }
 }

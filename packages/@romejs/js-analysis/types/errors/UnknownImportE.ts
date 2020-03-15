@@ -8,7 +8,7 @@
 import {PartialDiagnosticAdvice} from '@romejs/diagnostics';
 import {Scope} from '../../scopes';
 import {findClosestStringMatch} from '@romejs/string-utils';
-import E from './E';
+import E, {ErrorDefinition} from './E';
 import {AnyNode} from '@romejs/js-ast';
 
 export default class UnknownImportE extends E {
@@ -32,7 +32,7 @@ export default class UnknownImportE extends E {
   source: string;
   possibleNames: Array<string>;
 
-  getError() {
+  getError(): ErrorDefinition {
     const {possibleNames} = this;
     const suggestion = findClosestStringMatch(this.importedName, possibleNames);
 
@@ -65,6 +65,7 @@ export default class UnknownImportE extends E {
     }
 
     return {
+      category: 'typeCheck/unknownImport',
       message: `Unknown import '${this.importedName}' in '${this.source}'`,
       advice,
       lowerTarget: this,

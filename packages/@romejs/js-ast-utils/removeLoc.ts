@@ -17,6 +17,7 @@ const removeLocTransform = [
       if (node.loc === undefined) {
         return node;
       } else {
+        // rome-suppress lint/noExplicitAny
         const newNode: any = {...node};
         delete newNode.loc;
 

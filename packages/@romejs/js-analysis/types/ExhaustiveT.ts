@@ -10,7 +10,7 @@ import {Scope} from '../scopes';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
 import {SerialTypeFactory} from './T';
 import {HumanBuilder} from '../Utils';
-import E from './errors/E';
+import E, {ErrorDefinition} from './errors/E';
 import AnyT from './AnyT';
 import T from './T';
 
@@ -34,12 +34,13 @@ class ENotExhaustive extends E {
 
   static type = 'ENotExhaustive';
 
-  getError() {
+  getError(): ErrorDefinition {
     let message = `Expected only a ${this.utils.humanize(
       this.only,
     )} but got ${this.utils.humanize(this.target)}`;
     //message += `but allows ${this.extraenous.map(type => this.utils.humanize(type)).join(' | ')}`;
     return {
+      category: 'typeCheck/notExhaustive',
       message,
       lowerTarget: this.target,
     };

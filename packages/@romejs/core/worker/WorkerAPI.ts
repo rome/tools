@@ -35,6 +35,7 @@ import {
   AnalyzeDependencyResult,
   UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
 } from '../common/types/analyzeDependencies';
+import {matchPathPatterns} from '@romejs/path-match';
 
 export default class WorkerAPI {
   constructor(worker: Worker) {
@@ -178,7 +179,10 @@ export default class WorkerAPI {
     const project = this.worker.getProject(ref.project);
     this.logger.info(`Formatting:`, ref.real);
 
-    if (!project.config.format.enabled) {
+    if (
+      !project.config.format.enabled ||
+      matchPathPatterns(ref.real, project.config.format.ignore)
+    ) {
       return;
     }
 
@@ -212,9 +216,14 @@ export default class WorkerAPI {
     if (lint === undefined && handler.format === undefined) {
       return {
         diagnostics: [],
-        filters: [],
+        suppressions: [],
       };
     }
+
+    const shouldFormat = !matchPathPatterns(
+      ref.real,
+      project.config.format.ignore,
+    );
 
     // Catch any diagnostics, in the case of syntax errors etc
     const res = await catchDiagnostics(
@@ -227,6 +236,7 @@ export default class WorkerAPI {
           return this._format(ref);
         } else {
           return lint({
+            format: shouldFormat,
             file: ref,
             project,
             prefetchedModuleSignatures,
@@ -239,7 +249,7 @@ export default class WorkerAPI {
     // These are fatal diagnostics
     if (res.diagnostics !== undefined) {
       return {
-        filters: [],
+        suppressions: [],
         diagnostics: res.diagnostics,
       };
     }
@@ -248,7 +258,7 @@ export default class WorkerAPI {
     if (res.value === undefined) {
       return {
         diagnostics: [],
-        filters: [],
+        suppressions: [],
       };
     }
 
@@ -257,7 +267,7 @@ export default class WorkerAPI {
       formatted,
       sourceText: raw,
       diagnostics,
-      filters,
+      suppressions,
     }: ExtensionLintResult = res.value;
 
     // If the file has pending fixes
@@ -276,13 +286,13 @@ export default class WorkerAPI {
     if (!needsFix) {
       return {
         diagnostics,
-        filters,
+        suppressions,
       };
     }
 
     // Add pending autofix diagnostic
     return {
-      filters,
+      suppressions,
       diagnostics: [
         ...diagnostics,
         {

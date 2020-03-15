@@ -110,7 +110,7 @@ function buildStackString(err: Error): string {
       parts.push('generated source location');
     }
 
-    lines.push('  at ' + parts.join(' '));
+    lines.push(`  at ${parts.join(' ')}`);
   }
 
   return lines.join('\n');
@@ -250,10 +250,10 @@ export function addSourceMapFactory(
   init();
 
   let map: undefined | SourceMap;
-  const factoryCapture = () => {
+  function factoryCapture() {
     map = factory();
     return map;
-  };
+  }
 
   factories.set(filename, factoryCapture);
 

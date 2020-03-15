@@ -11,7 +11,7 @@ import {
   PatternSegments,
   PatternParts,
   PatternSegmentNode,
-  PatternNode,
+  PathPatternNode,
 } from './types';
 import {ParserOptions, createParser} from '@romejs/parser-core';
 import {Number0, add, number0, get0, coerce0} from '@romejs/ob1';
@@ -24,7 +24,7 @@ const createPathMatchParser = createParser(
   ParserCore =>
     class PathMatchParser extends ParserCore<Tokens, void> {
       constructor(opts: PathMatchParserOptions, mode: ParseMode) {
-        super(opts, '@romejs/patch-match');
+        super(opts, 'parse/patchMatch');
         this.mode = mode;
       }
 
@@ -88,11 +88,11 @@ const createPathMatchParser = createParser(
           return this.finishToken('Separator', add(index, 2));
         }
 
-        const value = this.readInputFrom(
+        const [value, end] = this.readInputFrom(
           index,
           this.isWordCharacter.bind(this),
         );
-        return this.finishValueToken('Word', value, add(index, value.length));
+        return this.finishValueToken('Word', value, end);
       }
 
       eatSeparators(): boolean {
@@ -220,7 +220,7 @@ const createPathMatchParser = createParser(
         return normalized;
       }
 
-      parsePattern(): PatternNode {
+      parsePattern(): PathPatternNode {
         const startPos = this.getPosition();
         const segments: PatternSegments = [];
         const negate = this.eatToken('Exclamation') !== undefined;
@@ -245,26 +245,12 @@ const createPathMatchParser = createParser(
           root = firstSeg.type === 'Segment' && firstSeg.parts.length === 0;
         }
 
-        // Get a list of all segments that only have a single word
-        const names: Array<string> = [];
-        for (const seg of segments) {
-          if (seg.type !== 'Segment' || seg.parts.length !== 1) {
-            continue;
-          }
-
-          const part = seg.parts[0];
-          if (part.type === 'Word') {
-            names.push(part.value);
-          }
-        }
-
         return {
-          type: 'Pattern',
+          type: 'PathPattern',
           loc: this.finishLoc(startPos),
           root,
           comment,
           negate,
-          names,
           segments: this.normalizePatternSegments(segments),
         };
       }
@@ -308,7 +294,7 @@ const createPathMatchParser = createParser(
     },
 );
 
-export function parsePattern(opts: PathMatchParserOptions): PatternNode {
+export function parsePattern(opts: PathMatchParserOptions): PathPatternNode {
   const parser = createPathMatchParser(opts, 'pattern');
   return parser.parsePattern();
 }

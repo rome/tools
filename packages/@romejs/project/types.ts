@@ -63,6 +63,7 @@ export type ProjectConfigObjects = {
 
   format: {
     enabled: boolean;
+    ignore: PathPatterns;
   };
 
   tests: {
@@ -108,6 +109,7 @@ export type ProjectConfigJSON = ProjectConfigJSONObjectReducer<
   };
 
 // Weird way to get the value type from a map
+// rome-suppress lint/noExplicitAny
 type MapValue<T extends Map<string, any>> = NonNullable<ReturnType<T['get']>>;
 
 // Turn any file paths into strings
@@ -118,9 +120,9 @@ type ProjectConfigJSONPropertyReducer<Type> = Type extends AbsoluteFilePath
   : Type extends Array<AbsoluteFilePath>
   ? Array<string>
   : Type extends AbsoluteFilePathSet
-  ? Array<string>
+  ? Array<string> // rome-suppress lint/noExplicitAny
   : Type extends Map<string, any>
-  ? Dict<MapValue<Type>>
+  ? Dict<MapValue<Type>> // rome-suppress lint/noExplicitAny
   : Type extends Dict<any>
   ? ProjectConfigJSONObjectReducer<Type>
   : Type;
@@ -146,6 +148,7 @@ export type PartialProjectConfig = Partial<ProjectConfigBase> &
     >;
   };
 
+// rome-suppress lint/noExplicitAny
 type PartialProjectValue<Type> = Type extends Map<string, any>
   ? Type
   : Partial<Type>;
@@ -209,6 +212,7 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
 
   format: {
     enabled: false,
+    ignore: [],
   },
 
   haste: {

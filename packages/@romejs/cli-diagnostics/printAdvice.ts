@@ -15,7 +15,6 @@ import {
   DiagnosticAdviceItemFrame,
   DiagnosticAdviceItemInspect,
   DiagnosticAdviceItemDiff,
-  DiagnosticAdviceItemAction,
   DiagnosticAdviceItemStacktrace,
 } from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
@@ -28,10 +27,11 @@ import {formatAnsi} from '@romejs/string-ansi';
 import {DiagnosticsPrinterFlags} from './types';
 import {number0Neg1} from '@romejs/ob1';
 import {DiagnosticsPrinterFileSources} from './DiagnosticsPrinter';
-import {createUnknownFilePath} from '@romejs/path';
+import {createUnknownFilePath, AbsoluteFilePathSet} from '@romejs/path';
 
 type AdvicePrintOptions = {
   flags: DiagnosticsPrinterFlags;
+  missingFileSources: AbsoluteFilePathSet;
   fileSources: DiagnosticsPrinterFileSources;
   reporter: Reporter;
   diagnostic: Diagnostic;
@@ -60,9 +60,6 @@ export default function printAdvice(
     case 'stacktrace':
       return printStacktrace(item, opts);
 
-    case 'action':
-      return printAction(item, opts);
-
     case 'inspect':
       return printInspect(item, opts);
   }
@@ -73,9 +70,9 @@ function printInspect(
   opts: AdvicePrintOptions,
 ): boolean {
   const {reporter} = opts;
-  reporter.indent();
-  reporter.inspect(item.data);
-  reporter.dedent();
+  reporter.indent(() => {
+    reporter.inspect(item.data);
+  });
   return false;
 }
 
@@ -100,7 +97,7 @@ function printList(
     return true;
   } else {
     opts.reporter.list(item.list, {
-      truncate: opts.flags.verboseDiagnostics ? undefined : item.truncate,
+      truncate: opts.flags.verboseDiagnostics ? undefined : 20,
       reverse: item.reverse,
       ordered: item.ordered,
     });
@@ -114,9 +111,9 @@ function printCode(
 ): boolean {
   const {reporter} = opts;
   const {code} = item;
-  reporter.indent();
-  reporter.logAll(escapeMarkup(code));
-  reporter.dedent();
+  reporter.indent(() => {
+    reporter.logAll(escapeMarkup(code));
+  });
   return false;
 }
 
@@ -143,6 +140,11 @@ function printFrame(
     });
   } else if (filename !== undefined) {
     lines = opts.fileSources.get(path);
+  } else if (
+    path.isAbsolute() &&
+    opts.missingFileSources.has(path.assertAbsolute())
+  ) {
+    lines = [formatAnsi.dim('file does not exist')];
   }
   if (lines === undefined) {
     lines = [];
@@ -154,21 +156,6 @@ function printFrame(
   }
 
   reporter.logAll(escapeMarkup(frame));
-  return false;
-}
-
-function printAction(
-  item: DiagnosticAdviceItemAction,
-  opts: AdvicePrintOptions,
-): boolean {
-  const {reporter} = opts;
-  reporter.logAll(`<bold>${item.message}</bold>`);
-  reporter.logAll('You have the following choices:');
-  reporter.list(
-    item.buttons.map(button => {
-      return `${button.text}: \`${button.command}\``;
-    }),
-  );
   return false;
 }
 
@@ -187,7 +174,7 @@ function printStacktrace(
   const isFirstPart = diagnostic.advice[0] === item;
   if (!isFirstPart) {
     opts.reporter.info(item.title === undefined ? 'Stack trace' : item.title);
-    opts.reporter.spacer();
+    opts.reporter.forceSpacer();
   }
 
   opts.reporter.processedList(
@@ -247,7 +234,7 @@ function printStacktrace(
         if (logParts.length === 0) {
           logParts.push(header);
         } else {
-          logParts.push('(' + formatAnsi.dim(header) + ')');
+          logParts.push(`(${formatAnsi.dim(header)})`);
         }
       }
 
@@ -281,14 +268,14 @@ function printStacktrace(
           opts,
         );
         if (!skipped) {
-          opts.reporter.spacer();
+          opts.reporter.forceSpacer();
           shownCodeFrames++;
         }
       }
     },
     {
       ordered: true,
-      truncate: item.truncate,
+      truncate: opts.flags.verboseDiagnostics ? undefined : 20,
     },
   );
 

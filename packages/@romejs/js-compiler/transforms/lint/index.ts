@@ -5,40 +5,64 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+// Add imports in alphabetical order.
 import defaultExportSameBasename from './defaultExportSameBasename';
-import disallowVar from './disallowVar';
+import noMultipleSpacesInRegularExpressionLiterals from './noMultipleSpacesInRegularExpressionLiterals';
+import noVar from './noVar';
 import emptyBlocks from './emptyBlocks';
-import sparseArray from './sparseArray';
+import getterReturn from './getterReturn';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
-import noDuplicateKeys from './noDuplicateKeys';
+import noDebugger from './noDebugger';
+import noDeleteVars from './noDeleteVars';
 import noDupeArgs from './noDupeArgs';
+import noDuplicateCase from './noDuplicateCase';
+import noDuplicateKeys from './noDuplicateKeys';
+import noEmptyCharacterClass from './noEmptyCharacterClass';
+import noExplicitAny from './noExplicitAny';
+import noExtraBooleanCast from './noExtraBooleanCast';
+import noFunctionAssign from './noFunctionAssign';
+import noImportAssign from './noImportAssign';
 import noLabelVar from './noLabelVar';
+import noShadowRestrictedNames from './noShadowRestrictedNames';
+import noTemplateCurlyInString from './noTemplateCurlyInString';
+import noUnsafeFinally from './noUnsafeFinally';
+import preferFunctionDeclarations from './preferFunctionDeclarations';
+import preferTemplate from './preferTemplate';
+import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
-import noUnsafeFinally from './noUnsafeFinally';
-import noDeleteVars from './noDeleteVars';
-import noTemplateCurlyInString from './noTemplateCurlyInString';
-import noImportAssign from './noImportAssign';
 
+// Add transforms in alphabetical order.
 export const lintTransforms = [
   defaultExportSameBasename,
-  disallowVar,
+  noMultipleSpacesInRegularExpressionLiterals,
+  noVar,
   emptyBlocks,
-  sparseArray,
-  noCompareNegZero,
-  unsafeNegation,
+  getterReturn,
   noAsyncPromiseExecutor,
+  noCompareNegZero,
   noCondAssign,
-  noDuplicateKeys,
-  noDupeArgs,
-  noLabelVar,
-  undeclaredVariables,
-  unusedVariables,
-  noUnsafeFinally,
+  noDebugger,
   noDeleteVars,
-  noTemplateCurlyInString,
+  noDupeArgs,
+  noDuplicateCase,
+  noDuplicateKeys,
+  noEmptyCharacterClass,
+  noExplicitAny,
+  noExtraBooleanCast,
+  noFunctionAssign,
   noImportAssign,
+  noLabelVar,
+  noShadowRestrictedNames,
+  noTemplateCurlyInString,
+  noUnsafeFinally,
+  preferFunctionDeclarations,
+  preferTemplate,
+  sparseArray,
+  undeclaredVariables,
+  unsafeNegation,
+  unusedVariables,
 ];

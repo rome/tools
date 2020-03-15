@@ -113,8 +113,8 @@ export default class ObjT extends T {
         ...this.props.map(prop => {
           const val = builder.humanize(prop);
           let lines = val.split('\n');
-          lines = lines.map(line => '  ' + line);
-          return lines.join('\n') + ',';
+          lines = lines.map(line => `  ${line}`);
+          return `${lines.join('\n')},`;
         }),
         '}',
       ].join('\n');

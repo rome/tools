@@ -17,7 +17,9 @@ export type TestRef = {
 };
 
 export type TestWorkerBridgeRunOptions = {
+  id: number;
   file: JSONFileReference;
+  projectFolder: string;
   code: string;
   cwd: string;
   sourceMap: SourceMap;
@@ -32,13 +34,21 @@ export default class TestWorkerBridge extends Bridge {
     },
   );
 
-  runTest = this.createEvent<TestWorkerBridgeRunOptions, void>({
+  prepareTest = this.createEvent<TestWorkerBridgeRunOptions, void>({
+    name: 'prepareTest',
+    direction: 'server->client',
+  });
+
+  runTest = this.createEvent<number, void>({
     name: 'runTest',
     direction: 'server->client',
   });
 
-  testFound = this.createEvent<{ref: TestRef; isSkipped: boolean}, void>({
-    name: 'onTestFound',
+  testsFound = this.createEvent<
+    Array<{ref: TestRef; isSkipped: boolean}>,
+    void
+  >({
+    name: 'onTestFounds',
     direction: 'server<-client',
   });
 

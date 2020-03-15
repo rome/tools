@@ -77,7 +77,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
   ast = program.assert(removeLoc(ast));
 
   // traverse and find placeholders paths
-  const collectPlaceholderPaths = (path: Path) => {
+  function collectPlaceholderPaths(path: Path) {
     const {node} = path;
     if (isIdentifierish(node) && node.name in placeholders) {
       placeholders[node.name] = {
@@ -86,7 +86,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
       };
     }
     return node;
-  };
+  }
   const context = new Context({
     ast,
     project: {
@@ -150,6 +150,7 @@ export default function template(
     const {type, path} = placeholderPaths[i];
 
     const substitute: AnyNode = createIdentifier(substitutions[i], type);
+    // rome-suppress lint/noExplicitAny
     let target: any = newAst;
 
     for (let i = 0; i < path.length; i++) {

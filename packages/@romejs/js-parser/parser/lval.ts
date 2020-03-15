@@ -238,7 +238,7 @@ export function toTargetBindingPattern(
 
     default:
       // TODO return Unknown
-      throw new Error('TODO ' + binding.type);
+      throw new Error(`TODO ${binding.type}`);
   }
 }
 
@@ -258,7 +258,7 @@ export function toParamBindingPattern(
 
     default:
       // TODO return Unknown
-      throw new Error('TODO ' + binding.type);
+      throw new Error(`TODO ${binding.type}`);
   }
 }
 

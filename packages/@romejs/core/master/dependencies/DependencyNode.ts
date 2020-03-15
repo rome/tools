@@ -265,11 +265,8 @@ export default class DependencyNode {
       const exportedNames = resolved.node.getExportedNames(kind);
 
       advice = advice.concat(
-        buildSuggestionAdvice(
-          resolved.name,
-          Array.from(exportedNames),
-          0,
-          name => {
+        buildSuggestionAdvice(resolved.name, Array.from(exportedNames), {
+          formatItem: name => {
             const exportInfo = resolved.node.resolveImport(name, undefined);
 
             if (exportInfo.type === 'NOT_FOUND') {
@@ -291,12 +288,12 @@ export default class DependencyNode {
 
             return name;
           },
-        ),
+        }),
       );
     }
 
     return {
-      category: 'bundler',
+      category: 'bundler/unknownExport',
       ...resolved.loc,
       message,
       advice,
@@ -328,7 +325,7 @@ export default class DependencyNode {
     }
 
     return {
-      category: 'bundler',
+      category: 'bundler/importTypeMismatch',
       ...loc,
       message: `The export <emphasis>${name}</emphasis> in <filelink emphasis target="${node.id}" /> was incorrectly imported as a <emphasis>${kind}</emphasis> when it's actually a <emphasis>${record.kind}</emphasis>`,
       advice,

@@ -178,6 +178,7 @@ function formatFunction(val: Function, opts: FormatOptions): string {
     return label;
   }
 
+  // rome-suppress lint/noExplicitAny
   return formatObject(label, val as any, opts, []);
 }
 

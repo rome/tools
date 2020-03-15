@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics, DiagnosticFilters} from '@romejs/diagnostics';
+import {PartialDiagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {TransformRequest} from '../types';
 import {lintTransforms} from '../transforms/lint/index';
 import {program} from '@romejs/js-ast';
@@ -15,22 +15,18 @@ import {extractSuppressionsFromProgram} from '../suppressions';
 
 export type LintResult = {
   diagnostics: PartialDiagnostics;
-  filters: DiagnosticFilters;
+  suppressions: DiagnosticSuppressions;
   src: string;
 };
 
 const lintCache: Cache<LintResult> = new Cache();
 
-export default async function lint(req: TransformRequest): Promise<LintResult> {
-  const {ast, sourceText, project} = req;
+export type FormatRequest = TransformRequest & {
+  format: boolean;
+};
 
-  if (!project.config.lint.enabled) {
-    return {
-      diagnostics: [],
-      filters: extractSuppressionsFromProgram(ast),
-      src: sourceText,
-    };
-  }
+export default async function lint(req: FormatRequest): Promise<LintResult> {
+  const {ast, sourceText, project, format} = req;
 
   const query = Cache.buildQuery(req);
   const cached = lintCache.get(query);
@@ -39,7 +35,7 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
   }
 
   let formattedCode = sourceText;
-  if (project.config.format.enabled) {
+  if (format) {
     // Perform autofixes
     const context = new Context({
       ast,
@@ -59,7 +55,7 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
       },
       sourceText,
     );
-    formattedCode = generator.getCode() + '\n';
+    formattedCode = `${generator.getCode()}\n`;
   }
 
   // Run lints (could be with the autofixed AST)
@@ -72,9 +68,15 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
   });
   program.assert(context.reduce(ast, lintTransforms, {frozen: true}));
 
+  const extractedSuppressions = extractSuppressionsFromProgram(ast);
+
   const result: LintResult = {
-    filters: extractSuppressionsFromProgram(ast),
-    diagnostics: [...ast.diagnostics, ...context.diagnostics],
+    suppressions: extractedSuppressions.suppressions,
+    diagnostics: [
+      ...ast.diagnostics,
+      ...context.diagnostics,
+      ...extractedSuppressions.diagnostics,
+    ],
     src: formattedCode,
   };
   lintCache.set(query, result);

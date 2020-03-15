@@ -42,6 +42,7 @@ import {
   UnknownFilePath,
   UnknownFilePathMap,
   UnknownFilePathSet,
+  AbsoluteFilePathSet,
 } from '@romejs/path';
 import {Number1, Number0} from '@romejs/ob1';
 import {existsSync, readFileTextSync, lstatSync} from '@romejs/fs';
@@ -138,6 +139,7 @@ export default class DiagnosticsPrinter extends Error {
     this.filteredCount = 0;
     this.truncatedCount = 0;
 
+    this.missingFileSources = new AbsoluteFilePathSet();
     this.fileSources = new UnknownFilePathMap();
     this.fileMtimes = new UnknownFilePathMap();
     this.beforeFooterPrint = [];
@@ -149,6 +151,8 @@ export default class DiagnosticsPrinter extends Error {
   flags: DiagnosticsPrinterFlags;
   cwd: AbsoluteFilePath;
   readFile: DiagnosticsFileReader;
+
+  missingFileSources: AbsoluteFilePathSet;
   fileSources: DiagnosticsPrinterFileSources;
   fileMtimes: DiagnosticsPrinterFileMtimes;
 
@@ -344,8 +348,11 @@ export default class DiagnosticsPrinter extends Error {
         continue;
       }
 
-      const stats = this.readFile(path.assertAbsolute());
-      if (stats !== undefined) {
+      const abs = path.assertAbsolute();
+      const stats = this.readFile(abs);
+      if (stats === undefined) {
+        this.missingFileSources.add(abs);
+      } else {
         this.addFileSource(dep, stats);
       }
     }
@@ -450,7 +457,7 @@ export default class DiagnosticsPrinter extends Error {
         outdatedAdvice.push({
           type: 'list',
           list: outdatedFilesArr.map(
-            filename => `<fileref target="${filename}" />`,
+            filename => `<filelink target="${filename}" />`,
           ),
         });
       }
@@ -461,67 +468,58 @@ export default class DiagnosticsPrinter extends Error {
       includeHeaderInAdvice: false,
       outdated: isOutdated,
     });
+
     reporter.hr(derived.header);
-    reporter.indent();
 
-    // Concat all the advice together
-    const derivedAdvice: DiagnosticAdvice = [
-      ...derived.advice,
-      ...outdatedAdvice,
-    ].map(item =>
-      normalizeDiagnosticAdviceItem(diag, item, this.reporter.markupOptions),
-    );
-    const advice: DiagnosticAdvice = derivedAdvice.concat(diag.advice);
+    reporter.indent(() => {
+      // Concat all the advice together
+      const derivedAdvice: DiagnosticAdvice = [
+        ...derived.advice,
+        ...outdatedAdvice,
+      ].map(item =>
+        normalizeDiagnosticAdviceItem(diag, item, this.reporter.markupOptions),
+      );
+      const advice: DiagnosticAdvice = derivedAdvice.concat(diag.advice);
 
-    // Print advice
-    for (const item of advice) {
-      const noSpacer = printAdvice(item, {
-        flags: this.flags,
-        fileSources: this.fileSources,
-        diagnostic: diag,
-        reporter,
-      });
-      if (!noSpacer) {
-        reporter.optionalSpacer();
+      // Print advice
+      for (const item of advice) {
+        const noSpacer = printAdvice(item, {
+          flags: this.flags,
+          missingFileSources: this.missingFileSources,
+          fileSources: this.fileSources,
+          diagnostic: diag,
+          reporter,
+        });
+        if (!noSpacer) {
+          reporter.spacer();
+        }
       }
-    }
 
-    // Print verbose information
-    if (this.flags.verboseDiagnostics) {
-      const {origins} = diag;
+      // Print verbose information
+      if (this.flags.verboseDiagnostics) {
+        const {origins} = diag;
 
-      if (origins.length > 0) {
-        reporter.spacer();
-        reporter.info('Why are you seeing this diagnostic?');
-        reporter.spacer();
-        reporter.list(
-          origins.map(origin => {
-            let res = `<emphasis>${origin.category}</emphasis>`;
-            if (origin.message !== undefined) {
-              res += `: ${origin.message}`;
-            }
-            return res;
-          }),
-          {ordered: true},
-        );
+        if (origins.length > 0) {
+          reporter.spacer();
+          reporter.info('Why are you seeing this diagnostic?');
+          reporter.forceSpacer();
+          reporter.list(
+            origins.map(origin => {
+              let res = `<emphasis>${origin.category}</emphasis>`;
+              if (origin.message !== undefined) {
+                res += `: ${origin.message}`;
+              }
+              return res;
+            }),
+            {ordered: true},
+          );
+        }
       }
-    }
-
-    reporter.dedent();
+    });
   }
 
   filterDiagnostics(): Diagnostics {
     const diagnostics = this.getDiagnostics();
-
-    if (diagnostics.length === 0) {
-      this.reporter.error(
-        'No diagnostics provided. They have likely all been filtered, but this operation does not check for suppressions. Showing complete diagnostics instead.',
-      );
-      return this.processor.getCompleteUnfilteredDiagnostics(
-        this.reporter.markupOptions,
-      );
-    }
-
     const filteredDiagnostics: Diagnostics = [];
 
     for (const diag of diagnostics) {

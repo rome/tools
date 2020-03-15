@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticPointer} from '@romejs/diagnostics';
+import {DiagnosticPointer, DiagnosticCategory} from '@romejs/diagnostics';
 import {
   JSONParserResult,
   JSONParserOptions,
@@ -113,8 +113,9 @@ export default createParser(
   ParserCore =>
     class JSONParser extends ParserCore<Tokens, void> {
       constructor(opts: JSONParserOptions) {
-        super(opts, '@romejs/codec-json');
+        super(opts, 'parse/json');
         this.options = opts;
+        this.ignoreWhitespaceTokens = true;
 
         this.hasExtensions =
           this.path !== undefined && this.path.getBasename().endsWith('.rjson');
@@ -122,8 +123,10 @@ export default createParser(
         this.pathKeys = [];
         this.paths = new Map();
         this.pathToComments = new Map();
-        this.consumeCategory =
-          opts.consumeCategory === undefined ? 'json' : opts.consumeCategory;
+        this.consumeDiagnosticCategory =
+          opts.consumeDiagnosticCategory === undefined
+            ? 'parse/json'
+            : opts.consumeDiagnosticCategory;
       }
 
       pathToComments: PathToComments;
@@ -131,7 +134,7 @@ export default createParser(
       pathKeys: ConsumePath;
       paths: Map<string, PathInfo>;
       options: JSONParserOptions;
-      consumeCategory: string;
+      consumeDiagnosticCategory: DiagnosticCategory;
 
       getPathInfo(path: ConsumePath): undefined | PathInfo {
         return this.paths.get(path.join('.'));
@@ -163,7 +166,7 @@ export default createParser(
         // Line comment
         if (char === '/' && nextChar === '/') {
           const commentValueIndex = add(index, 2);
-          const value = this.readInputFrom(commentValueIndex, isntNewline);
+          const [value] = this.readInputFrom(commentValueIndex, isntNewline);
           // (comment content start + comment content length)
           return this.finishValueToken(
             'LineComment',
@@ -175,7 +178,7 @@ export default createParser(
         // BlockComment
         if (char === '/' && nextChar === '*') {
           const commentValueIndex = add(index, 2);
-          const value = this.readInputFrom(
+          const [value] = this.readInputFrom(
             commentValueIndex,
             isntBlockCommentEnd,
           );
@@ -200,7 +203,7 @@ export default createParser(
         // Single character token starters
         switch (char) {
           case '"':
-            const value = this.readInputFrom(inc(index), isStringValueChar);
+            const [value] = this.readInputFrom(inc(index), isStringValueChar);
 
             // Check for closed string (index is the current token index + string length + closing quote + 1 for the end char)
             const end = add(add(index, value.length), 2);
@@ -271,20 +274,13 @@ export default createParser(
 
           case ']':
             return this.finishToken('BracketClose');
-
-          // Skip all whitespace characters
-          case ' ':
-          case '\t':
-          case '\r':
-          case '\n':
-            return this.lookaheadToken(inc(index));
         }
 
         // Numbers
         if (isDigit(char)) {
           const value = this.removeUnderscores(
             index,
-            this.readInputFrom(index, isNumberChar),
+            this.readInputFrom(index, isNumberChar)[0],
           );
           const num = Number(value);
           return this.finishValueToken('Number', num, add(index, value.length));
@@ -292,7 +288,7 @@ export default createParser(
 
         // Word - boolean, undefined etc
         if (isWordStartChar(char)) {
-          const value = this.readInputFrom(index, isWordChar);
+          const [value] = this.readInputFrom(index, isWordChar);
           return this.finishValueToken('Word', value, add(index, value.length));
         }
 
@@ -767,8 +763,8 @@ export default createParser(
             const value = JSON.parse(this.input);
 
             // Lazy parse when we need location information
-            let context: undefined | ConsumeContext;
-            const getContext = (): ConsumeContext => {
+            let context: undefined | Required<ConsumeContext>;
+            const getContext = (): Required<ConsumeContext> => {
               if (context === undefined) {
                 const res = this._parse();
                 context = res.context;
@@ -780,7 +776,7 @@ export default createParser(
 
             return {
               context: {
-                category: this.consumeCategory,
+                category: this.consumeDiagnosticCategory,
                 getOriginalValue(path) {
                   return getContext().getOriginalValue(path);
                 },
@@ -825,8 +821,8 @@ export default createParser(
 
         this.finalize();
 
-        const context: ConsumeContext = {
-          category: this.consumeCategory,
+        const context: Required<ConsumeContext> = {
+          category: this.consumeDiagnosticCategory,
 
           getDiagnosticPointer: (
             keys: ConsumePath,

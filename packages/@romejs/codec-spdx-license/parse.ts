@@ -16,7 +16,7 @@ import {
 import {getSPDXLicense, licenseNames} from './index';
 import {isAlpha, isDigit} from '@romejs/parser-core';
 import {buildSuggestionAdvice} from '@romejs/diagnostics';
-import {add, inc, Number0, get0} from '@romejs/ob1';
+import {inc, Number0, get0} from '@romejs/ob1';
 
 //# Tokens
 
@@ -71,7 +71,7 @@ const createSPDXLicenseParser = createParser(
   ParserCore =>
     class SPDXLicenseParser extends ParserCore<Tokens, void> {
       constructor(opts: SPDXLicenseParserOptions) {
-        super(opts, 'spdx-license');
+        super(opts, 'parse/spdxLicense');
         this.loose = opts.loose === true;
       }
 
@@ -99,8 +99,7 @@ const createSPDXLicenseParser = createParser(
         }
 
         if (isWordChar(char)) {
-          const value = this.readInputFrom(index, isWordChar);
-          const end = add(index, value.length);
+          const [value, end] = this.readInputFrom(index, isWordChar);
 
           if (value === 'AND') {
             return this.finishToken('And', end);
