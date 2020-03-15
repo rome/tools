@@ -13,6 +13,7 @@ export default {
   name: 'noFunctionAssign',
   enter(path: Path): AnyNode {
     const {node, scope} = path;
+
     if (
       node.type === 'AssignmentIdentifier' &&
       scope.getBinding(node.name) instanceof FunctionBinding
@@ -22,6 +23,7 @@ export default {
         message: 'Reassignment of function declaration',
       });
     }
+
     return node;
   },
 };

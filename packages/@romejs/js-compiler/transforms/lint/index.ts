@@ -7,18 +7,21 @@
 
 // Add imports in alphabetical order.
 import defaultExportSameBasename from './defaultExportSameBasename';
-import disallowMultipleSpacesInRegularExpressionLiterals from './disallowMultipleSpacesInRegularExpressionLiterals';
-import disallowVar from './disallowVar';
+import noMultipleSpacesInRegularExpressionLiterals from './noMultipleSpacesInRegularExpressionLiterals';
+import noVar from './noVar';
 import emptyBlocks from './emptyBlocks';
 import getterReturn from './getterReturn';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
-import noDeleteVars from './noDeleteVars';
 import noDebugger from './noDebugger';
+import noDeleteVars from './noDeleteVars';
 import noDupeArgs from './noDupeArgs';
+import noDuplicateCase from './noDuplicateCase';
 import noDuplicateKeys from './noDuplicateKeys';
 import noEmptyCharacterClass from './noEmptyCharacterClass';
+import noExplicitAny from './noExplicitAny';
+import noExtraBooleanCast from './noExtraBooleanCast';
 import noFunctionAssign from './noFunctionAssign';
 import noImportAssign from './noImportAssign';
 import noLabelVar from './noLabelVar';
@@ -26,6 +29,7 @@ import noShadowRestrictedNames from './noShadowRestrictedNames';
 import noTemplateCurlyInString from './noTemplateCurlyInString';
 import noUnsafeFinally from './noUnsafeFinally';
 import preferFunctionDeclarations from './preferFunctionDeclarations';
+import preferTemplate from './preferTemplate';
 import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
@@ -34,8 +38,8 @@ import unusedVariables from './unusedVariables';
 // Add transforms in alphabetical order.
 export const lintTransforms = [
   defaultExportSameBasename,
-  disallowMultipleSpacesInRegularExpressionLiterals,
-  disallowVar,
+  noMultipleSpacesInRegularExpressionLiterals,
+  noVar,
   emptyBlocks,
   getterReturn,
   noAsyncPromiseExecutor,
@@ -44,8 +48,11 @@ export const lintTransforms = [
   noDebugger,
   noDeleteVars,
   noDupeArgs,
+  noDuplicateCase,
   noDuplicateKeys,
   noEmptyCharacterClass,
+  noExplicitAny,
+  noExtraBooleanCast,
   noFunctionAssign,
   noImportAssign,
   noLabelVar,
@@ -53,6 +60,7 @@ export const lintTransforms = [
   noTemplateCurlyInString,
   noUnsafeFinally,
   preferFunctionDeclarations,
+  preferTemplate,
   sparseArray,
   undeclaredVariables,
   unsafeNegation,

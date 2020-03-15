@@ -1,3 +1,5 @@
+import Bridge from './Bridge';
+
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -6,7 +8,10 @@
  */
 
 export default class BridgeError extends Error {
-  constructor(message: string) {
+  constructor(message: string, bridge: Bridge) {
     super(message);
+    this.bridge = bridge;
   }
+
+  bridge: Bridge;
 }

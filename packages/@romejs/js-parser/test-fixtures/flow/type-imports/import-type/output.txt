@@ -1,0 +1,1288 @@
+Program {
+  comments: Array []
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 451
+      line: 14
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ImportDeclaration {
+      importKind: 'type'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 28
+          index: 28
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      source: StringLiteral {
+        value: 'foo'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 27
+            index: 27
+            line: 1
+          }
+          start: Object {
+            column: 22
+            index: 22
+            line: 1
+          }
+        }
+      }
+      specifiers: Array [
+        ImportDefaultSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 16
+              index: 16
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'Def1'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 16
+                  index: 16
+                  line: 1
+                }
+                start: Object {
+                  column: 12
+                  index: 12
+                  line: 1
+                }
+              }
+            }
+            importKind: 'type'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 16
+                index: 16
+                line: 1
+              }
+              start: Object {
+                column: 12
+                index: 12
+                line: 1
+              }
+            }
+          }
+        }
+      ]
+    }
+    ImportDeclaration {
+      importKind: 'type'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 32
+          index: 61
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 29
+          line: 2
+        }
+      }
+      source: StringLiteral {
+        value: 'foo'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 31
+            index: 60
+            line: 2
+          }
+          start: Object {
+            column: 26
+            index: 55
+            line: 2
+          }
+        }
+      }
+      specifiers: Array [
+        ImportSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 19
+              index: 48
+              line: 2
+            }
+            start: Object {
+              column: 13
+              index: 42
+              line: 2
+            }
+          }
+          imported: Identifier {
+            name: 'named1'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 19
+                index: 48
+                line: 2
+              }
+              start: Object {
+                column: 13
+                index: 42
+                line: 2
+              }
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'named1'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 19
+                  index: 48
+                  line: 2
+                }
+                start: Object {
+                  column: 13
+                  index: 42
+                  line: 2
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 19
+                index: 48
+                line: 2
+              }
+              start: Object {
+                column: 13
+                index: 42
+                line: 2
+              }
+            }
+          }
+        }
+      ]
+    }
+    ImportDeclaration {
+      importKind: 'type'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 38
+          index: 100
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 62
+          line: 3
+        }
+      }
+      source: StringLiteral {
+        value: 'foo'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 37
+            index: 99
+            line: 3
+          }
+          start: Object {
+            column: 32
+            index: 94
+            line: 3
+          }
+        }
+      }
+      specifiers: Array [
+        ImportDefaultSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 16
+              index: 78
+              line: 3
+            }
+            start: Object {
+              column: 0
+              index: 62
+              line: 3
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'Def2'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 16
+                  index: 78
+                  line: 3
+                }
+                start: Object {
+                  column: 12
+                  index: 74
+                  line: 3
+                }
+              }
+            }
+            importKind: 'type'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 16
+                index: 78
+                line: 3
+              }
+              start: Object {
+                column: 12
+                index: 74
+                line: 3
+              }
+            }
+          }
+        }
+        ImportSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 25
+              index: 87
+              line: 3
+            }
+            start: Object {
+              column: 19
+              index: 81
+              line: 3
+            }
+          }
+          imported: Identifier {
+            name: 'named2'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 25
+                index: 87
+                line: 3
+              }
+              start: Object {
+                column: 19
+                index: 81
+                line: 3
+              }
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'named2'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 25
+                  index: 87
+                  line: 3
+                }
+                start: Object {
+                  column: 19
+                  index: 81
+                  line: 3
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 25
+                index: 87
+                line: 3
+              }
+              start: Object {
+                column: 19
+                index: 81
+                line: 3
+              }
+            }
+          }
+        }
+      ]
+    }
+    ImportDeclaration {
+      importKind: 'type'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 31
+          index: 132
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 101
+          line: 4
+        }
+      }
+      source: StringLiteral {
+        value: 'foo'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 30
+            index: 131
+            line: 4
+          }
+          start: Object {
+            column: 25
+            index: 126
+            line: 4
+          }
+        }
+      }
+      specifiers: Array [
+        ImportDefaultSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 19
+              index: 120
+              line: 4
+            }
+            start: Object {
+              column: 0
+              index: 101
+              line: 4
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'switch1'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 19
+                  index: 120
+                  line: 4
+                }
+                start: Object {
+                  column: 12
+                  index: 113
+                  line: 4
+                }
+              }
+            }
+            importKind: 'type'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 19
+                index: 120
+                line: 4
+              }
+              start: Object {
+                column: 12
+                index: 113
+                line: 4
+              }
+            }
+          }
+        }
+      ]
+    }
+    ImportDeclaration {
+      importKind: 'type'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 35
+          index: 168
+          line: 5
+        }
+        start: Object {
+          column: 0
+          index: 133
+          line: 5
+        }
+      }
+      source: StringLiteral {
+        value: 'foo'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 34
+            index: 167
+            line: 5
+          }
+          start: Object {
+            column: 29
+            index: 162
+            line: 5
+          }
+        }
+      }
+      specifiers: Array [
+        ImportSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 22
+              index: 155
+              line: 5
+            }
+            start: Object {
+              column: 14
+              index: 147
+              line: 5
+            }
+          }
+          imported: Identifier {
+            name: 'switch2'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 21
+                index: 154
+                line: 5
+              }
+              start: Object {
+                column: 14
+                index: 147
+                line: 5
+              }
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'switch2'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 21
+                  index: 154
+                  line: 5
+                }
+                start: Object {
+                  column: 14
+                  index: 147
+                  line: 5
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 22
+                index: 155
+                line: 5
+              }
+              start: Object {
+                column: 14
+                index: 147
+                line: 5
+              }
+            }
+          }
+        }
+      ]
+    }
+    ImportDeclaration {
+      importKind: 'type'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 38
+          index: 207
+          line: 6
+        }
+        start: Object {
+          column: 0
+          index: 169
+          line: 6
+        }
+      }
+      source: StringLiteral {
+        value: 'baz'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 37
+            index: 206
+            line: 6
+          }
+          start: Object {
+            column: 32
+            index: 201
+            line: 6
+          }
+        }
+      }
+      specifiers: Array [
+        ImportSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 18
+              index: 187
+              line: 6
+            }
+            start: Object {
+              column: 14
+              index: 183
+              line: 6
+            }
+          }
+          imported: Identifier {
+            name: 'foo1'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 18
+                index: 187
+                line: 6
+              }
+              start: Object {
+                column: 14
+                index: 183
+                line: 6
+              }
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'foo1'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 18
+                  index: 187
+                  line: 6
+                }
+                start: Object {
+                  column: 14
+                  index: 183
+                  line: 6
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 18
+                index: 187
+                line: 6
+              }
+              start: Object {
+                column: 14
+                index: 183
+                line: 6
+              }
+            }
+          }
+        }
+        ImportSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 25
+              index: 194
+              line: 6
+            }
+            start: Object {
+              column: 20
+              index: 189
+              line: 6
+            }
+          }
+          imported: Identifier {
+            name: 'bar1'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 24
+                index: 193
+                line: 6
+              }
+              start: Object {
+                column: 20
+                index: 189
+                line: 6
+              }
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'bar1'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 24
+                  index: 193
+                  line: 6
+                }
+                start: Object {
+                  column: 20
+                  index: 189
+                  line: 6
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 25
+                index: 194
+                line: 6
+              }
+              start: Object {
+                column: 20
+                index: 189
+                line: 6
+              }
+            }
+          }
+        }
+      ]
+    }
+    ImportDeclaration {
+      importKind: undefined
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 23
+          index: 231
+          line: 7
+        }
+        start: Object {
+          column: 0
+          index: 208
+          line: 7
+        }
+      }
+      source: StringLiteral {
+        value: 'foo'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 22
+            index: 230
+            line: 7
+          }
+          start: Object {
+            column: 17
+            index: 225
+            line: 7
+          }
+        }
+      }
+      specifiers: Array [
+        ImportDefaultSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 11
+              index: 219
+              line: 7
+            }
+            start: Object {
+              column: 0
+              index: 208
+              line: 7
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'type'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 11
+                  index: 219
+                  line: 7
+                }
+                start: Object {
+                  column: 7
+                  index: 215
+                  line: 7
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 11
+                index: 219
+                line: 7
+              }
+              start: Object {
+                column: 7
+                index: 215
+                line: 7
+              }
+            }
+          }
+        }
+      ]
+    }
+    ImportDeclaration {
+      importKind: 'typeof'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 30
+          index: 262
+          line: 8
+        }
+        start: Object {
+          column: 0
+          index: 232
+          line: 8
+        }
+      }
+      source: StringLiteral {
+        value: 'bar'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 29
+            index: 261
+            line: 8
+          }
+          start: Object {
+            column: 24
+            index: 256
+            line: 8
+          }
+        }
+      }
+      specifiers: Array [
+        ImportDefaultSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 18
+              index: 250
+              line: 8
+            }
+            start: Object {
+              column: 0
+              index: 232
+              line: 8
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'foo3'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 18
+                  index: 250
+                  line: 8
+                }
+                start: Object {
+                  column: 14
+                  index: 246
+                  line: 8
+                }
+              }
+            }
+            importKind: 'typeof'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 18
+                index: 250
+                line: 8
+              }
+              start: Object {
+                column: 14
+                index: 246
+                line: 8
+              }
+            }
+          }
+        }
+      ]
+    }
+    ImportDeclaration {
+      importKind: 'typeof'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 33
+          index: 296
+          line: 9
+        }
+        start: Object {
+          column: 0
+          index: 263
+          line: 9
+        }
+      }
+      source: StringLiteral {
+        value: 'foo'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 32
+            index: 295
+            line: 9
+          }
+          start: Object {
+            column: 27
+            index: 290
+            line: 9
+          }
+        }
+      }
+      specifiers: Array [
+        ImportDefaultSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 21
+              index: 284
+              line: 9
+            }
+            start: Object {
+              column: 0
+              index: 263
+              line: 9
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'switch4'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 21
+                  index: 284
+                  line: 9
+                }
+                start: Object {
+                  column: 14
+                  index: 277
+                  line: 9
+                }
+              }
+            }
+            importKind: 'typeof'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 21
+                index: 284
+                line: 9
+              }
+              start: Object {
+                column: 14
+                index: 277
+                line: 9
+              }
+            }
+          }
+        }
+      ]
+    }
+    ImportDeclaration {
+      importKind: 'typeof'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 37
+          index: 334
+          line: 10
+        }
+        start: Object {
+          column: 0
+          index: 297
+          line: 10
+        }
+      }
+      source: StringLiteral {
+        value: 'foo'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 36
+            index: 333
+            line: 10
+          }
+          start: Object {
+            column: 31
+            index: 328
+            line: 10
+          }
+        }
+      }
+      specifiers: Array [
+        ImportSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 24
+              index: 321
+              line: 10
+            }
+            start: Object {
+              column: 16
+              index: 313
+              line: 10
+            }
+          }
+          imported: Identifier {
+            name: 'switch5'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 23
+                index: 320
+                line: 10
+              }
+              start: Object {
+                column: 16
+                index: 313
+                line: 10
+              }
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'switch5'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 23
+                  index: 320
+                  line: 10
+                }
+                start: Object {
+                  column: 16
+                  index: 313
+                  line: 10
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 24
+                index: 321
+                line: 10
+              }
+              start: Object {
+                column: 16
+                index: 313
+                line: 10
+              }
+            }
+          }
+        }
+      ]
+    }
+    ImportDeclaration {
+      importKind: 'typeof'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 41
+          index: 376
+          line: 11
+        }
+        start: Object {
+          column: 0
+          index: 335
+          line: 11
+        }
+      }
+      source: StringLiteral {
+        value: 'baz'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 40
+            index: 375
+            line: 11
+          }
+          start: Object {
+            column: 35
+            index: 370
+            line: 11
+          }
+        }
+      }
+      specifiers: Array [
+        ImportSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 28
+              index: 363
+              line: 11
+            }
+            start: Object {
+              column: 16
+              index: 351
+              line: 11
+            }
+          }
+          imported: Identifier {
+            name: 'foo'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 19
+                index: 354
+                line: 11
+              }
+              start: Object {
+                column: 16
+                index: 351
+                line: 11
+              }
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'bar6'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 27
+                  index: 362
+                  line: 11
+                }
+                start: Object {
+                  column: 23
+                  index: 358
+                  line: 11
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 28
+                index: 363
+                line: 11
+              }
+              start: Object {
+                column: 16
+                index: 351
+                line: 11
+              }
+            }
+          }
+        }
+      ]
+    }
+    ImportDeclaration {
+      importKind: 'typeof'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 34
+          index: 411
+          line: 12
+        }
+        start: Object {
+          column: 0
+          index: 377
+          line: 12
+        }
+      }
+      source: StringLiteral {
+        value: 'foo'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 33
+            index: 410
+            line: 12
+          }
+          start: Object {
+            column: 28
+            index: 405
+            line: 12
+          }
+        }
+      }
+      specifiers: Array [
+        ImportNamespaceSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 22
+              index: 399
+              line: 12
+            }
+            start: Object {
+              column: 0
+              index: 377
+              line: 12
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'ns7'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 22
+                  index: 399
+                  line: 12
+                }
+                start: Object {
+                  column: 19
+                  index: 396
+                  line: 12
+                }
+              }
+            }
+            importKind: 'typeof'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 22
+                index: 399
+                line: 12
+              }
+              start: Object {
+                column: 19
+                index: 396
+                line: 12
+              }
+            }
+          }
+        }
+      ]
+    }
+    ImportDeclaration {
+      importKind: 'typeof'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 38
+          index: 450
+          line: 13
+        }
+        start: Object {
+          column: 0
+          index: 412
+          line: 13
+        }
+      }
+      source: StringLiteral {
+        value: 'foo'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 37
+            index: 449
+            line: 13
+          }
+          start: Object {
+            column: 32
+            index: 444
+            line: 13
+          }
+        }
+      }
+      specifiers: Array [
+        ImportNamespaceSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 26
+              index: 438
+              line: 13
+            }
+            start: Object {
+              column: 0
+              index: 412
+              line: 13
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'switch8'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 26
+                  index: 438
+                  line: 13
+                }
+                start: Object {
+                  column: 19
+                  index: 431
+                  line: 13
+                }
+              }
+            }
+            importKind: 'typeof'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 26
+                index: 438
+                line: 13
+              }
+              start: Object {
+                column: 19
+                index: 431
+                line: 13
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

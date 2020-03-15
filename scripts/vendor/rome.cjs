@@ -44689,7 +44689,7 @@ const ___R$project$rome$$romejs$project$load_ts = {
       }
     }
 
-    const testing = consumer.get('testing');
+    const testing = consumer.get('tests');
     if (___R$$priv$project$rome$$romejs$project$load_ts$categoryExists(testing)) {
       if (testing.has('enabled')) {
         config.tests.enabled = testing.get('enabled').asBoolean();

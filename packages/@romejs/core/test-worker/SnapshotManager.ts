@@ -6,20 +6,12 @@
  */
 
 import {AbsoluteFilePath} from '@romejs/path';
-import {
-  writeFile,
-  readFileText,
-  createDirectory,
-  exists,
-  unlink,
-} from '@romejs/fs';
+import {writeFile, readFileText, exists, unlink} from '@romejs/fs';
 import {TestRunnerOptions} from '../master/testing/types';
 import TestWorkerRunner from './TestWorkerRunner';
-import {PartialDiagnosticAdvice} from '@romejs/diagnostics';
+import {PartialDiagnosticAdvice, DiagnosticCategory} from '@romejs/diagnostics';
 import createSnapshotParser from './SnapshotParser';
 import stringDiff from '@romejs/string-diff';
-
-const SNAPSHOTS_DIR = '__rsnapshots__';
 
 function cleanHeading(key: string): string {
   if (key[0] === '`') {
@@ -35,10 +27,9 @@ function cleanHeading(key: string): string {
 
 export default class SnapshotManager {
   constructor(runner: TestWorkerRunner, testPath: AbsoluteFilePath) {
-    const folder = testPath.getParent().append(SNAPSHOTS_DIR);
-    this.folder = folder;
-
-    this.path = folder.append(testPath.getExtensionlessBasename() + '.snap.md');
+    this.path = testPath
+      .getParent()
+      .append(`${testPath.getExtensionlessBasename()}.test.md`);
     this.testPath = testPath;
 
     this.runner = runner;
@@ -51,7 +42,6 @@ export default class SnapshotManager {
   }
 
   testPath: AbsoluteFilePath;
-  folder: AbsoluteFilePath;
   path: AbsoluteFilePath;
   entries: Map<
     string,
@@ -70,9 +60,13 @@ export default class SnapshotManager {
   raw: string;
   exists: boolean;
 
-  async emitDiagnostic(message: string, advice?: PartialDiagnosticAdvice) {
+  async emitDiagnostic(
+    category: DiagnosticCategory,
+    message: string,
+    advice?: PartialDiagnosticAdvice,
+  ) {
     await this.runner.emitDiagnostic({
-      category: 'test/snapshots',
+      category,
       filename: this.path.join(),
       message,
       advice,
@@ -161,15 +155,21 @@ export default class SnapshotManager {
   }
 
   async save() {
-    const {folder, path} = this;
+    const {path} = this;
 
-    // TODO `only` will mess this up
+    // If there'a s focused test then we don't write or validate a snapshot
+    if (this.runner.hasFocusedTest) {
+      return;
+    }
 
     // No point producing an empty snapshot file
     if (this.entries.size === 0) {
       if (this.exists) {
         if (this.options.freezeSnapshots) {
-          await this.emitDiagnostic('Snapshot should not exist');
+          await this.emitDiagnostic(
+            'tests/snapshots/redundant',
+            'Snapshot should not exist',
+          );
         } else {
           // Remove the snapshot file as there were none ran
           await unlink(path);
@@ -239,21 +239,23 @@ export default class SnapshotManager {
 
     if (this.options.freezeSnapshots) {
       if (!this.exists) {
-        await this.emitDiagnostic('Snapshot does not exist');
+        await this.emitDiagnostic(
+          'tests/snapshots/missing',
+          'Snapshot does not exist',
+        );
       } else if (formatted !== this.raw) {
-        await this.emitDiagnostic('Snapshots do not match', [
-          {
-            type: 'diff',
-            diff: stringDiff(this.raw, formatted),
-          },
-        ]);
+        await this.emitDiagnostic(
+          'tests/snapshots/incorrect',
+          'Snapshots do not match',
+          [
+            {
+              type: 'diff',
+              diff: stringDiff(this.raw, formatted),
+            },
+          ],
+        );
       }
     } else if (formatted !== this.raw) {
-      // Create snapshots directory if it doesn't exist
-      if (!(await exists(folder))) {
-        await createDirectory(folder);
-      }
-
       // Save the file
       await writeFile(path, formatted);
     }

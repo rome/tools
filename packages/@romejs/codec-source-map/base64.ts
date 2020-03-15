@@ -53,7 +53,7 @@ export function encode(number: number): string {
   if (0 <= number && number < intToCharMap.length) {
     return intToCharMap[number];
   } else {
-    throw new TypeError('Must be between 0 and 63: ' + number);
+    throw new TypeError(`Must be between 0 and 63: ${number}`);
   }
 }
 
@@ -187,7 +187,7 @@ export function decodeVLQ(aStr: string, aIndex: number): [number, number] {
 
     digit = decode(aStr.charCodeAt(aIndex++));
     if (digit === -1) {
-      throw new Error('Invalid base64 digit: ' + aStr.charAt(aIndex - 1));
+      throw new Error(`Invalid base64 digit: ${aStr.charAt(aIndex - 1)}`);
     }
 
     continuation = !!(digit & VLQ_CONTINUATION_BIT);

@@ -84,6 +84,7 @@ export default class Bridge {
   type: BridgeType;
 
   messageIdCounter: number;
+  // rome-suppress lint/noExplicitAny
   events: Map<string, BridgeEvent<any, any>>;
 
   listeners: Set<string>;
@@ -254,11 +255,11 @@ export default class Bridge {
     }
 
     // Notify listeners
-    this.endEvent.send(err);
+    this.endEvent.callSync(err);
   }
 
   end(message: string = 'Connection died') {
-    this.endWithError(new BridgeError(message));
+    this.endWithError(new BridgeError(message, this));
   }
 
   //# Error serialization
@@ -340,7 +341,7 @@ export default class Bridge {
     } catch (err) {
       if (err instanceof SyntaxError) {
         this.endWithError(
-          new BridgeError(`Error parsing message JSON: ${err.message}`),
+          new BridgeError(`Error parsing message JSON: ${err.message}`, this),
         );
       } else {
         this.endWithError(err);

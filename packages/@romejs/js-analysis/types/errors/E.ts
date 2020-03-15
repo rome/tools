@@ -6,10 +6,21 @@
  */
 
 import {Scope} from '../../scopes';
-import {PartialDiagnosticAdviceItem} from '@romejs/diagnostics';
+import {
+  PartialDiagnosticAdviceItem,
+  DiagnosticCategory,
+} from '@romejs/diagnostics';
 import {AnyNode} from '@romejs/js-ast';
 import AnyT from '../AnyT';
 import T from '../T';
+
+export type ErrorDefinition = {
+  category: DiagnosticCategory;
+  advice?: Array<PartialDiagnosticAdviceItem>;
+  message: string;
+  lowerTarget: T;
+  upperTarget?: T;
+};
 
 export default class E extends T {
   static type = 'E';
@@ -22,12 +33,7 @@ export default class E extends T {
     return this.getError().message;
   }
 
-  getError(): {
-    advice?: Array<PartialDiagnosticAdviceItem>;
-    message: string;
-    lowerTarget: T;
-    upperTarget?: T;
-  } {
+  getError(): ErrorDefinition {
     throw new Error('unimplemented');
   }
 

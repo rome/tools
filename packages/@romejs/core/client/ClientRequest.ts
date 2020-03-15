@@ -57,13 +57,16 @@ export default class ClientRequest {
   }
 
   async initFromLocal(
+    // rome-suppress lint/noExplicitAny
     localCommand: LocalCommand<any>,
   ): Promise<MasterQueryResponse> {
     const {query} = this;
 
     let flags;
     if (localCommand.defineFlags !== undefined) {
-      flags = localCommand.defineFlags(consumeUnknown(query.commandFlags));
+      flags = localCommand.defineFlags(
+        consumeUnknown(query.commandFlags, 'flags/invalid'),
+      );
     }
 
     const success = await localCommand.callback(this, flags);

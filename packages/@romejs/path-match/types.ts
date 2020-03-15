@@ -45,13 +45,12 @@ export type PatternSegmentNode =
   | PatternWildcardSegmentNode;
 export type PatternSegments = Array<PatternSegmentNode>;
 
-export type PatternNode = ComplexNode<
-  'Pattern',
+export type PathPatternNode = ComplexNode<
+  'PathPattern',
   {
     comment: string;
     negate: boolean;
     root: boolean;
     segments: PatternSegments;
-    names: Array<string>;
   }
 >;

@@ -74,10 +74,13 @@ async function _getFixtures(opts: {
   const options: Consumer =
     ownOptions === undefined
       ? inheritOptions
-      : consumeUnknown({
-          ...inheritOptions.asUnknownObject(),
-          ...ownOptions.asUnknownObject(),
-        });
+      : consumeUnknown(
+          {
+            ...inheritOptions.asUnknownObject(),
+            ...ownOptions.asUnknownObject(),
+          },
+          'tests/fixtureOptions',
+        );
 
   // An array of folders names that lead to this fixture
   const ownParts = name === undefined ? parts : [...parts, name];
@@ -135,9 +138,9 @@ async function _getFixtures(opts: {
 export async function getFixtures(dir: string): Promise<Array<Fixture>> {
   return _getFixtures({
     name: undefined,
-    dir: createAbsoluteFilePath(dir).append('__rfixtures__'),
+    dir: createAbsoluteFilePath(dir).append('test-fixtures'),
     parts: [],
-    options: consumeUnknown({}),
+    options: consumeUnknown({}, 'tests/fixtureOptions'),
   });
 }
 

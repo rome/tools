@@ -19,6 +19,7 @@ import {
   ErrorFrames,
   getSourceLocationFromErrorFrame,
 } from '@romejs/v8';
+import {DiagnosticCategory} from './categories';
 
 function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
   if (Array.isArray(val)) {
@@ -89,8 +90,16 @@ export function deriveRootAdviceFromDiagnostic(
     filename: diag.filename,
   });
 
-  if (diag.category !== undefined) {
-    header += ` <emphasis>${diag.category}</emphasis>`;
+  if (diag.label !== undefined) {
+    header += ` <emphasis>${diag.label}</emphasis>`;
+
+    if (diag.category !== undefined) {
+      header += ` <dim>${diag.category}</dim>`;
+    }
+  } else {
+    if (diag.category !== undefined) {
+      header += ` <emphasis>${diag.category}</emphasis>`;
+    }
   }
 
   if (diag.fixable === true) {
@@ -141,7 +150,8 @@ export function deriveRootAdviceFromDiagnostic(
 
 type DeriveErrorDiagnosticOpts = {
   error: unknown;
-  category: string;
+  category: DiagnosticCategory;
+  label?: string;
   filename?: string;
   cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
 };
@@ -182,6 +192,7 @@ export function deriveDiagnosticFromError(
     end: targetLoc === undefined ? undefined : targetLoc.end,
     sourceText: targetCode,
     category: opts.category,
+    label: opts.label,
     message,
     advice,
   };

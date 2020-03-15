@@ -5,51 +5,39 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConsumerOptions, ConsumeContext} from './types';
+import {ConsumerOptions} from './types';
 import Consumer from './Consumer';
+import {RequiredProps} from '@romejs/typescript-helpers';
+import {DiagnosticCategory} from '@romejs/diagnostics';
 
-export const EMPTY_CONSUME_CONTEXT: ConsumeContext = {
-  category: 'unknown',
-
-  getOriginalValue() {
-    return undefined;
-  },
-
-  getDiagnosticPointer() {
-    return undefined;
-  },
-};
-
-const EMPTY_CONSUME_OPTIONS: ConsumerOptions = {
+const EMPTY_CONSUME_OPTIONS: Omit<ConsumerOptions, 'context'> = {
   propertyMetadata: undefined,
   value: undefined,
   handleUnexpectedDiagnostic: undefined,
   onDefinition: undefined,
   filePath: undefined,
-  context: EMPTY_CONSUME_CONTEXT,
   objectPath: [],
   parent: undefined,
 };
 
 export function consume(
-  opts: Partial<Omit<ConsumerOptions, 'value' | 'context'>> & {
-    value: unknown;
-    context?: Partial<ConsumeContext>;
-  },
+  opts: RequiredProps<Partial<ConsumerOptions>, 'context'>,
 ): Consumer {
   return new Consumer({
     ...EMPTY_CONSUME_OPTIONS,
     ...opts,
-    context: {
-      ...EMPTY_CONSUME_CONTEXT,
-      ...opts.context,
-    },
   });
 }
 
-export function consumeUnknown(value: unknown): Consumer {
+export function consumeUnknown(
+  value: unknown,
+  category: DiagnosticCategory,
+): Consumer {
   return new Consumer({
     ...EMPTY_CONSUME_OPTIONS,
+    context: {
+      category,
+    },
     value,
   });
 }

@@ -1,0 +1,239 @@
+Program {
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 55
+      line: 3
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentBlock {
+      value: ': string '
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 35
+          index: 35
+          line: 1
+        }
+        start: Object {
+          column: 22
+          index: 22
+          line: 1
+        }
+      }
+    }
+    CommentBlock {
+      value: ': number '
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 50
+          index: 50
+          line: 1
+        }
+        start: Object {
+          column: 37
+          index: 37
+          line: 1
+        }
+      }
+    }
+  ]
+  body: Array [
+    FunctionDeclaration {
+      id: BindingIdentifier {
+        name: 'method'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 15
+            index: 15
+            line: 1
+          }
+          start: Object {
+            column: 9
+            index: 9
+            line: 1
+          }
+        }
+      }
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 0
+          index: 55
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      body: BlockStatement {
+        body: Array []
+        directives: Array []
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 1
+            index: 54
+            line: 2
+          }
+          start: Object {
+            column: 51
+            index: 51
+            line: 1
+          }
+        }
+        leadingComments: Array [
+          CommentBlock {
+            value: ': string '
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 35
+                index: 35
+                line: 1
+              }
+              start: Object {
+                column: 22
+                index: 22
+                line: 1
+              }
+            }
+          }
+          CommentBlock {
+            value: ': number '
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 50
+                index: 50
+                line: 1
+              }
+              start: Object {
+                column: 37
+                index: 37
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+      head: FunctionHead {
+        async: false
+        generator: false
+        hasHoistedVars: false
+        predicate: undefined
+        rest: undefined
+        returnType: undefined
+        thisType: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 51
+            index: 51
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        params: Array [
+          BindingIdentifier {
+            name: 'param'
+            leadingComments: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 21
+                index: 21
+                line: 1
+              }
+              start: Object {
+                column: 16
+                index: 16
+                line: 1
+              }
+            }
+            trailingComments: Array [
+              CommentBlock {
+                value: ': string '
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 35
+                    index: 35
+                    line: 1
+                  }
+                  start: Object {
+                    column: 22
+                    index: 22
+                    line: 1
+                  }
+                }
+              }
+            ]
+            meta: PatternMeta {
+              optional: undefined
+              typeAnnotation: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 21
+                  index: 21
+                  line: 1
+                }
+                start: Object {
+                  column: 16
+                  index: 16
+                  line: 1
+                }
+              }
+              trailingComments: Array [
+                CommentBlock {
+                  value: ': string '
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 35
+                      index: 35
+                      line: 1
+                    }
+                    start: Object {
+                      column: 22
+                      index: 22
+                      line: 1
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

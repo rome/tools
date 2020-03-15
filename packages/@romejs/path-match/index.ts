@@ -5,21 +5,30 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PatternNode} from './types';
+import {PathPatternNode} from './types';
 import {parsePattern} from './parse';
 import match from './match';
 import {PathSegments, AbsoluteFilePath} from '@romejs/path';
 
-export type PathPatterns = Array<PatternNode>;
-export type PathPattern = PatternNode;
+export type PathPatterns = Array<PathPatternNode>;
+export type PathPattern = PathPatternNode;
 
 export {parsePattern as parsePathPattern};
 
 export {stringifyPathPattern} from './stringify';
 
+export function flipPathPatterns(patterns: PathPatterns): PathPatterns {
+  return patterns.map(pattern => {
+    return {
+      ...pattern,
+      negate: !pattern.negate,
+    };
+  });
+}
+
 export function matchPath(
   path: AbsoluteFilePath,
-  patternNode: PatternNode,
+  patternNode: PathPatternNode,
   cwdSegs?: PathSegments,
 ): boolean {
   const matches = match(path.getSegments(), patternNode, cwdSegs);

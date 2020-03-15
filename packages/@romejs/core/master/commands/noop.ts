@@ -11,7 +11,7 @@ import {commandCategories} from '../../commands';
 
 export default createMasterCommand({
   category: commandCategories.INTERNAL,
-  description: '',
+  description: 'TODO',
 
   async default(req: MasterRequest): Promise<void> {
     req;

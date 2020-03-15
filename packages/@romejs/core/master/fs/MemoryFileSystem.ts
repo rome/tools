@@ -7,8 +7,12 @@
 
 import Master from '../Master';
 import {Manifest, ManifestDefinition} from '@romejs/codec-js-manifest';
-import {PathPatterns} from '@romejs/path-match';
-import {ProjectConfig, ROME_CONFIG_FILENAMES} from '@romejs/project';
+import {PathPatterns, parsePathPattern} from '@romejs/path-match';
+import {
+  ProjectConfig,
+  ROME_CONFIG_FILENAMES,
+  ProjectDefinition,
+} from '@romejs/project';
 import {
   DiagnosticsProcessor,
   getDiagnosticsFromError,
@@ -34,14 +38,28 @@ import {
   getFileHandler,
   getFileHandlerExtensions,
 } from '../../common/fileHandlers';
-import {
-  TEST_FOLDER_NAME,
-  MOCKS_FOLDER_NAME,
-} from '@romejs/core/common/constants';
+import {ProjectConfigSource} from '../project/ProjectManager';
 
 const DEFAULT_DENYLIST = ['.hg', '.git'];
 
 const PACKAGE_JSON = 'package.json';
+
+const GLOB_IGNORE: PathPatterns = [
+  parsePathPattern({input: 'node_modules'}),
+  parsePathPattern({input: '.git'}),
+  parsePathPattern({input: '.hg'}),
+];
+
+function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
+  // If there are any negate patterns then it'll never include GLOB_IGNORE
+  for (const {negate} of patterns) {
+    if (negate) {
+      return patterns;
+    }
+  }
+
+  return [...GLOB_IGNORE, ...patterns];
+}
 
 // Whenever we're performing an operation on a set of files, always do these first as they may influence how the rest are processed
 const PRIORITY_FILES = new Set(ROME_CONFIG_FILENAMES);
@@ -70,6 +88,24 @@ export type Stats = {
 };
 
 export type WatcherClose = () => void;
+
+export type MemoryFSGlobOptions = {
+  extensions?: Array<string>;
+  overrideIgnore?: PathPatterns;
+  getProjectIgnore?: (
+    project: ProjectDefinition,
+  ) => {
+    patterns: PathPatterns;
+    source?: ProjectConfigSource;
+  };
+  getProjectEnabled?: (
+    project: ProjectDefinition,
+  ) => {
+    enabled: boolean;
+    source?: ProjectConfigSource;
+  };
+  test?: (path: AbsoluteFilePath) => boolean;
+};
 
 export type HasteCollisionCallback = (
   hasteName: string,
@@ -236,7 +272,9 @@ async function createWatchmanWatcher(
         return;
       }
 
+      // rome-suppress lint/noExplicitAny
       const dirs: Array<[AbsoluteFilePath, any]> = [];
+      // rome-suppress lint/noExplicitAny
       const files: Array<[AbsoluteFilePath, any]> = [];
 
       for (const file of data.files) {
@@ -720,21 +758,8 @@ export default class MemoryFileSystem {
   }
 
   isInsideHaste(path: AbsoluteFilePath): boolean {
-    const parts = path.getSegments();
-
     if (!this.isInsideProject(path)) {
       return false;
-    }
-
-    // Don't consider files in mocks
-    const project = this.master.projectManager.findProjectExisting(path);
-    if (project !== undefined) {
-      if (
-        parts.includes(TEST_FOLDER_NAME) ||
-        parts.includes(MOCKS_FOLDER_NAME)
-      ) {
-        return false;
-      }
     }
 
     // Check if we're inside a haste package, child files of a haste package shouldn't be added to the haste map
@@ -765,7 +790,7 @@ export default class MemoryFileSystem {
     const basename = path.getBasename();
 
     if (handler.hasteMode === 'ext') {
-      ext = '.' + ext; // we also want to remove the dot suffix from the haste name
+      ext = `.${ext}`; // we also want to remove the dot suffix from the haste name
 
       if (!filename.endsWith(ext)) {
         throw new Error(
@@ -814,7 +839,7 @@ export default class MemoryFileSystem {
     const consumer = consumeJSON({
       path: path,
       input: manifestRaw,
-      consumeCategory: 'manifest',
+      consumeDiagnosticCategory: 'parse/manifest',
     });
 
     const {
@@ -871,19 +896,21 @@ export default class MemoryFileSystem {
 
   glob(
     cwd: AbsoluteFilePath,
-    opts: {
-      extensions?: Array<string>;
-      ignore?: PathPatterns;
-      only?: PathPatterns;
-    } = {},
+    opts: MemoryFSGlobOptions = {},
   ): AbsoluteFilePathSet {
-    const {extensions, ignore, only} = opts;
+    const {
+      extensions,
+      getProjectIgnore,
+      getProjectEnabled,
+      test,
+      overrideIgnore = [],
+    } = opts;
 
     const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
-    const ignoreParsed: PathPatterns = ignore === undefined ? [] : ignore;
-
     let crawl: Array<AbsoluteFilePath> = [cwd];
+
+    const ignoresByProject: Map<ProjectDefinition, PathPatterns> = new Map();
 
     while (crawl.length > 0) {
       const path = crawl.pop();
@@ -891,7 +918,25 @@ export default class MemoryFileSystem {
         throw new Error('crawl.length already validated');
       }
 
-      const ignoreMatched = matchPathPatterns(path, ignoreParsed, cwd);
+      const project = this.master.projectManager.assertProjectExisting(path);
+
+      let ignore: PathPatterns = overrideIgnore;
+
+      // Get ignore patterns
+      if (getProjectIgnore !== undefined) {
+        const projectIgnore = ignoresByProject.get(project);
+        if (projectIgnore === undefined) {
+          ignore = concatGlobIgnore([
+            ...ignore,
+            ...getProjectIgnore(project).patterns,
+          ]);
+          ignoresByProject.set(project, ignore);
+        } else {
+          ignore = projectIgnore;
+        }
+      }
+
+      const ignoreMatched = matchPathPatterns(path, ignore, cwd);
 
       // Don't even recurse into explicit matches
       if (ignoreMatched === 'EXPLICIT_MATCH') {
@@ -900,19 +945,32 @@ export default class MemoryFileSystem {
 
       // Add if a matching file
       if (this.files.has(path) && ignoreMatched === 'NO_MATCH') {
-        // Check if any only filter if present
         if (
-          only !== undefined &&
-          matchPathPatterns(path, only, cwd) === 'NO_MATCH'
+          getProjectEnabled !== undefined &&
+          !getProjectEnabled(project).enabled
         ) {
           continue;
         }
 
-        // Remove the prefixed dot
-        const ext = path.getExtensions().slice(1);
-        if (extensions === undefined || extensions.includes(ext)) {
-          paths.add(path);
+        if (test !== undefined && !test(path)) {
+          continue;
         }
+
+        // Check extensions
+        if (extensions !== undefined) {
+          let matchedExt = false;
+          for (const ext of extensions) {
+            matchedExt = path.hasEndExtension(ext);
+            if (matchedExt) {
+              break;
+            }
+          }
+          if (!matchedExt) {
+            continue;
+          }
+        }
+
+        paths.add(path);
         continue;
       }
 

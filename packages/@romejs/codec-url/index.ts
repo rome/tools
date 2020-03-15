@@ -17,11 +17,13 @@ export type ConsumableUrl = {
 export function consumeUrl(rawUrl: string): ConsumableUrl {
   const parts = url.parse(rawUrl, true);
 
-  const query = consumeUnknown({...parts.query});
+  const query = consumeUnknown({...parts.query}, 'parse/url/query');
 
   const path = consume({
     value: parts.pathname,
     context: {
+      category: 'parse/url',
+
       getDiagnosticPointer() {
         return {
           language: 'url',

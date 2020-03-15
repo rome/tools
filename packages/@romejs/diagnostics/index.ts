@@ -13,3 +13,4 @@ export * from './derive';
 export * from './helpers';
 export {default as DiagnosticsProcessor} from './DiagnosticsProcessor';
 export * from './constants';
+export * from './categories';

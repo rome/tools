@@ -515,7 +515,7 @@ export function parseBreakContinueStatement(
   if (i === parser.state.labels.length) {
     parser.addDiagnostic({
       start,
-      message: 'Unsyntactic ' + keyword,
+      message: `Unsyntactic ${keyword}`,
     });
   }
 
@@ -989,7 +989,7 @@ export function parseLabeledStatement(
       statementContext = context;
     } else {
       // @ts-ignore
-      statementContext = context + 'label';
+      statementContext = `${context}label`;
     }
   }
   const body = parseStatement(parser, statementContext);

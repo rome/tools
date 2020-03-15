@@ -72,7 +72,7 @@ export default createParser(
   ParserCore =>
     class SnapshotParser extends ParserCore<Tokens, void> {
       constructor(opts: ParserOptions) {
-        super(opts, 'snapshots');
+        super(opts, 'parse/snapshots');
         this.ignoreWhitespaceTokens = true;
       }
 
@@ -154,7 +154,7 @@ export default createParser(
       parse(): Array<Node> {
         const nodes: Array<Node> = [];
 
-        while (!this.isEOF()) {
+        while (!this.matchToken('EOF')) {
           const start = this.getPosition();
           const token = this.getToken();
 

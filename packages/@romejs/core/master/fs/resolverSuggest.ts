@@ -18,6 +18,7 @@ import {
   PartialDiagnosticAdvice,
   buildSuggestionAdvice,
   createSingleDiagnosticError,
+  DiagnosticCategory,
 } from '@romejs/diagnostics';
 import {orderBySimilarity} from '@romejs/string-utils';
 import {createUnknownFilePath, AbsoluteFilePath} from '@romejs/path';
@@ -184,11 +185,8 @@ export default function resolverSuggest(
 
         advice = [
           ...advice,
-          ...buildSuggestionAdvice(
-            query.source.join(),
-            relativeSuggestions,
-            0,
-            relative => {
+          ...buildSuggestionAdvice(query.source.join(), relativeSuggestions, {
+            formatItem: relative => {
               const absolute = relativeToAbsolute.get(relative);
               if (absolute === undefined) {
                 throw new Error('Should be valid');
@@ -196,7 +194,7 @@ export default function resolverSuggest(
 
               return `<filelink target="${absolute}">${relative}</filelink>`;
             },
-          ),
+          }),
         ];
       }
     }
@@ -220,13 +218,16 @@ export default function resolverSuggest(
   const source =
     querySource.source === undefined ? query.source.join() : querySource.source;
   let message = '';
+  let category: DiagnosticCategory = 'resolver/notFound';
 
   if (resolved.type === 'UNSUPPORTED') {
     message = `Unsupported`;
+    category = 'resolver/unsupported';
   } else if (resolved.type === 'MISSING') {
     message = `Cannot find`;
   } else if (resolved.type === 'FETCH_ERROR') {
     message = 'Failed to fetch';
+    category = 'resolver/fetchFailed';
   }
 
   if (resolved.advice !== undefined) {
@@ -237,7 +238,7 @@ export default function resolverSuggest(
 
   throw createSingleDiagnosticError({
     ...pointer,
-    category: 'resolver',
+    category,
     message,
     advice,
   });
@@ -311,9 +312,11 @@ function tryPathSuggestions(
       const ratings = orderBySimilarity(
         path.getExtensionlessBasename(),
         entries,
-        MIN_SIMILARITY,
-        target => {
-          return createUnknownFilePath(target).getExtensionlessBasename();
+        {
+          minRating: MIN_SIMILARITY,
+          formatItem: target => {
+            return createUnknownFilePath(target).getExtensionlessBasename();
+          },
         },
       );
 
@@ -357,10 +360,13 @@ function getPackageSuggestions(
 
   // TODO Add node_modules
 
-  const matches: Array<[string, string]> = orderBySimilarity(
+  const matches: Array<[
+    string,
+    string,
+  ]> = orderBySimilarity(
     query.source.join(),
     Array.from(possibleGlobalPackages.keys()),
-    MIN_SIMILARITY,
+    {minRating: MIN_SIMILARITY},
   ).map(item => {
     const name = item.target;
 

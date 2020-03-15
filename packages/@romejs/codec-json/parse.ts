@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticPointer} from '@romejs/diagnostics';
+import {DiagnosticPointer, DiagnosticCategory} from '@romejs/diagnostics';
 import {
   JSONParserResult,
   JSONParserOptions,
@@ -113,7 +113,7 @@ export default createParser(
   ParserCore =>
     class JSONParser extends ParserCore<Tokens, void> {
       constructor(opts: JSONParserOptions) {
-        super(opts, '@romejs/codec-json');
+        super(opts, 'parse/json');
         this.options = opts;
         this.ignoreWhitespaceTokens = true;
 
@@ -123,8 +123,10 @@ export default createParser(
         this.pathKeys = [];
         this.paths = new Map();
         this.pathToComments = new Map();
-        this.consumeCategory =
-          opts.consumeCategory === undefined ? 'json' : opts.consumeCategory;
+        this.consumeDiagnosticCategory =
+          opts.consumeDiagnosticCategory === undefined
+            ? 'parse/json'
+            : opts.consumeDiagnosticCategory;
       }
 
       pathToComments: PathToComments;
@@ -132,7 +134,7 @@ export default createParser(
       pathKeys: ConsumePath;
       paths: Map<string, PathInfo>;
       options: JSONParserOptions;
-      consumeCategory: string;
+      consumeDiagnosticCategory: DiagnosticCategory;
 
       getPathInfo(path: ConsumePath): undefined | PathInfo {
         return this.paths.get(path.join('.'));
@@ -761,8 +763,8 @@ export default createParser(
             const value = JSON.parse(this.input);
 
             // Lazy parse when we need location information
-            let context: undefined | ConsumeContext;
-            const getContext = (): ConsumeContext => {
+            let context: undefined | Required<ConsumeContext>;
+            const getContext = (): Required<ConsumeContext> => {
               if (context === undefined) {
                 const res = this._parse();
                 context = res.context;
@@ -774,7 +776,7 @@ export default createParser(
 
             return {
               context: {
-                category: this.consumeCategory,
+                category: this.consumeDiagnosticCategory,
                 getOriginalValue(path) {
                   return getContext().getOriginalValue(path);
                 },
@@ -819,8 +821,8 @@ export default createParser(
 
         this.finalize();
 
-        const context: ConsumeContext = {
-          category: this.consumeCategory,
+        const context: Required<ConsumeContext> = {
+          category: this.consumeDiagnosticCategory,
 
           getDiagnosticPointer: (
             keys: ConsumePath,

@@ -107,7 +107,7 @@ const createStringMarkupParser = createParser(
   ParserCore =>
     class StringMarkupParser extends ParserCore<Tokens, State> {
       constructor(opts: StringMarkupParserOptions) {
-        super(opts, '@romejs/string-markup', {inTagHead: false});
+        super(opts, 'parse/stringMarkup', {inTagHead: false});
       }
 
       tokenizeWithState(
@@ -215,6 +215,7 @@ const createStringMarkupParser = createParser(
           });
         }
 
+        // rome-suppress lint/noExplicitAny
         const tagName: TagName = rawName as any;
         const attributes: TagAttributes = new Map();
         const children: Children = [];

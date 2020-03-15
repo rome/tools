@@ -93,6 +93,7 @@ const SCOPE_TYPES: Array<ScopeType> = [
 
 const createJSParser = createParser(
   (ParserCore, ParserWithRequiredPath) =>
+    // rome-suppress lint/noExplicitAny
     class JSParser extends ParserWithRequiredPath<any, State> {
       constructor(options: JSParserOptions) {
         const state = createInitialState();
@@ -102,7 +103,7 @@ const createJSParser = createParser(
           mtime: options.mtime,
           input: options.input,
         };
-        super(parserOpts, '@romejs/js-parser', state);
+        super(parserOpts, 'parse/js', state);
 
         this.isTrackingTokens = options.tokens;
 
@@ -473,7 +474,7 @@ const createJSParser = createParser(
       // Asserts that following token is given contextual keyword.
       expectContextual(
         name: string,
-        message: string = 'Expected keyword ' + name,
+        message: string = `Expected keyword ${name}`,
       ): boolean {
         if (this.eatContextual(name)) {
           return true;

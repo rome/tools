@@ -31,6 +31,7 @@ export type BridgeEventOptions = EventOptions & {
 };
 
 function validateDirection(
+  // rome-suppress lint/noExplicitAny
   event: BridgeEvent<any, any>,
   eventDirection: BridgeEventDirection,
   bridgeType: BridgeType,
@@ -160,6 +161,7 @@ export default class BridgeEvent<
                 `Timeout of ${String(timeout)}ms for ${this.name}(${String(
                   JSON.stringify(param),
                 )}) event exceeded`,
+                this.bridge,
               ),
             );
           }, timeout);

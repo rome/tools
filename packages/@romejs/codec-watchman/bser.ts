@@ -90,7 +90,7 @@ export class Accumulator {
   assertReadableSize(size: number) {
     if (this.readAvail() < size) {
       throw new Error(
-        'wanted to read ' + size + ' bytes but only have ' + this.readAvail(),
+        `wanted to read ${size} bytes but only have ${this.readAvail()}`,
       );
     }
   }
@@ -131,7 +131,7 @@ export class Accumulator {
         throw new Error("64-bit numbers aren't supported");
 
       default:
-        throw new Error('invalid integer size ' + size);
+        throw new Error(`invalid integer size ${size}`);
     }
   }
 
@@ -159,9 +159,7 @@ export class Accumulator {
       this.assertReadableSize(size);
     } else if (size < 0 && this.readOffset + size < 0) {
       throw new Error(
-        'advance with negative offset ' +
-          size +
-          ' would seek off the start of the buffer',
+        `advance with negative offset ${size} would seek off the start of the buffer`,
       );
     }
     this.readOffset += size;
@@ -197,7 +195,7 @@ export class Accumulator {
         break;
 
       default:
-        throw new Error('unsupported integer size ' + size);
+        throw new Error(`unsupported integer size ${size}`);
     }
     this.writeOffset += size;
   }
@@ -351,7 +349,7 @@ export class BunserBuf {
   expectCode(expected: number) {
     const code = this.acc.readInt(1);
     if (code != expected) {
-      this.raise('Expected bser opcode ' + expected + ' but got ' + code);
+      this.raise(`Expected bser opcode ${expected} but got ${code}`);
     }
   }
 
@@ -393,7 +391,7 @@ export class BunserBuf {
         return this.decodeTemplate();
 
       default:
-        this.raise('Unhandled bser opcode ' + code);
+        this.raise(`Unhandled bser opcode ${code}`);
     }
   }
 
@@ -481,7 +479,7 @@ export class BunserBuf {
         break;
 
       default:
-        throw this.raise('invalid bser int encoding ' + code);
+        throw this.raise(`invalid bser int encoding ${code}`);
     }
 
     return size;

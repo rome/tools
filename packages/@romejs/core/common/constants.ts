@@ -30,5 +30,4 @@ export const SOCKET_PATH = TEMP_PATH.append(`rome-${VERSION}.sock`);
 
 export const CLI_SOCKET_PATH = TEMP_PATH.append(`rome-wait-${VERSION}.sock`);
 
-export const TEST_FOLDER_NAME = '__rtests__';
 export const MOCKS_FOLDER_NAME = '__rmocks__';

@@ -33,7 +33,7 @@ const createSemverParser = createParser(
   ParserCore =>
     class SemverParser extends ParserCore<Tokens, void> {
       constructor({loose, ...opts}: SemverParserOptions, mode: ParseMode) {
-        super(opts, 'semver-parser');
+        super(opts, 'parse/semver');
         this.input = this.input.trimRight();
         this.mode = mode;
         this.loose = loose === undefined ? false : loose;

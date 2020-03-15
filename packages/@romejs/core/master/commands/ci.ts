@@ -28,6 +28,7 @@ export default createMasterCommand({
       freezeSnapshots: true,
       updateSnapshots: false,
       showAllCoverage: true,
+      syncTests: false,
     });
   },
 });

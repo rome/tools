@@ -8,28 +8,9 @@
 import {MasterRequest} from '@romejs/core';
 import CompilerLinter from './CompilerLinter';
 import {LINTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
-import {parsePathPattern, PathPatterns} from '@romejs/path-match';
 import {AbsoluteFilePathSet} from '@romejs/path';
 import DependencyGraph from '../dependencies/DependencyGraph';
 import {humanizeNumber} from '@romejs/string-utils';
-
-const globalIgnorePatterns: PathPatterns = [
-  parsePathPattern({input: 'node_modules'}),
-  parsePathPattern({input: '__generated__'}),
-];
-
-function concatLintIgnore(patterns: PathPatterns): PathPatterns {
-  // Only add the global ignore patterns when there's no ignore negate patterns
-  // When there's a negate with a single segments, all files are basically included since they'll all
-  // "not match" the global ones with the same priority
-  for (const pattern of patterns) {
-    if (pattern.negate) {
-      return patterns;
-    }
-  }
-
-  return patterns.concat(globalIgnorePatterns);
-}
 
 export default class Linter {
   constructor(req: MasterRequest) {
@@ -38,29 +19,43 @@ export default class Linter {
 
   request: MasterRequest;
 
-  static async getFilesFromArgs(
-    request: MasterRequest,
-    extenstions: Array<string>,
-  ): Promise<AbsoluteFilePathSet> {
-    return request.getFilesFromArgs(
-      project => concatLintIgnore(project.config.lint.ignore),
-      extenstions,
-    );
-  }
-
   async lint(throwAlways: boolean = true) {
     const {request} = this;
-    const {reporter} = request;
+    const {reporter, master} = request;
 
     const printer = request.createDiagnosticsPrinter({
       category: 'lint',
       message: 'Dispatched',
     });
 
-    const paths: AbsoluteFilePathSet = await Linter.getFilesFromArgs(
-      request,
-      LINTABLE_EXTENSIONS,
-    );
+    printer.processor.addAllowedUnusedSuppressionPrefix('bundler');
+
+    const paths: AbsoluteFilePathSet = await request.getFilesFromArgs({
+      getProjectIgnore: project => ({
+        patterns: project.config.lint.ignore,
+        source: master.projectManager.findProjectConfigConsumer(
+          project,
+          consumer =>
+            consumer.has('lint') && consumer.get('lint').has('ignore')
+              ? consumer.get('lint').get('ignore')
+              : undefined,
+        ),
+      }),
+      getProjectEnabled: project => ({
+        enabled: project.config.lint.enabled,
+        source: master.projectManager.findProjectConfigConsumer(
+          project,
+          consumer =>
+            consumer.has('lint')
+              ? consumer.get('lint').get('enabled')
+              : undefined,
+        ),
+      }),
+      noun: 'lint',
+      verb: 'linting',
+      configCategory: 'lint',
+      extensions: LINTABLE_EXTENSIONS,
+    });
 
     printer.onBeforeFooterPrint(() => {
       const fileCount = paths.size;

@@ -47,14 +47,12 @@ function getQualifiedJSXName(node: JSXElement['name'] | JSXIdentifier): string {
       return node.name;
 
     case 'JSXNamespacedName':
-      return node.namespace.name + ':' + node.name.name;
+      return `${node.namespace.name}:${node.name.name}`;
 
     case 'JSXMemberExpression':
-      return (
-        getQualifiedJSXName(node.object) +
-        '.' +
-        getQualifiedJSXName(node.property)
-      );
+      return `${getQualifiedJSXName(node.object)}.${getQualifiedJSXName(
+        node.property,
+      )}`;
   }
 }
 
@@ -528,9 +526,8 @@ function parseJSXElementAt(
 function checkAccidentalFragment(parser: JSParser) {
   if (parser.match(tt.relational) && parser.state.tokenValue === '<') {
     parser.addDiagnostic({
-      message:
-        'Adjacent JSX elements must be wrapped in an enclosing tag. ' +
-        'Did you want a JSX fragment <>...</>?',
+      message: `Adjacent JSX elements must be wrapped in an enclosing tag. 
+        Did you want a JSX fragment <>...</>?`,
     });
   }
 }
