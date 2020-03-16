@@ -16,7 +16,7 @@ module.exports = {
   organizationName: 'facebookexperimental',
   projectName: 'rome',
   themeConfig: {
-    image: 'https://romejs.dev/img/rome-logo.png',
+    image: 'img/rome-logo.png',
     navbar: {
       title: 'Rome',
       logo: {
