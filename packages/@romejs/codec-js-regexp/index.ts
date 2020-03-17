@@ -291,6 +291,7 @@ export const createRegExpParser = createParser(
           case '^':
           case '.':
           case '?':
+          case '{':
           case '}':
           case '+':
           case '|':
@@ -686,14 +687,14 @@ export const createRegExpParser = createParser(
       }
 
       parseBodyItem(): undefined | AnyRegExpBodyItem {
-        const start = this.getPosition();
-
         const prefix = this.parseBodyItemPrefix();
         if (prefix === undefined) {
           return undefined;
         }
 
         let target = prefix;
+
+        const start = this.getEndPosition();
 
         while (true) {
           const quantifier = this.parseQuantifier();
@@ -753,6 +754,10 @@ export const createRegExpParser = createParser(
               token,
             });
             return;
+
+          case '{':
+            this.nextToken();
+            return this.parseBodyItem();
 
           case '?':
           case '*':
