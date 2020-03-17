@@ -27,6 +27,7 @@ export type DiagnosticCategory =
   | 'lint/noVar'
   | 'lint/emptyBlocks'
   | 'lint/getterReturn'
+  | 'lint/invalidQuantifierRange'
   | 'lint/noAsyncPromiseExecutor'
   | 'lint/noCompareNegZero'
   | 'lint/noCondAssign'

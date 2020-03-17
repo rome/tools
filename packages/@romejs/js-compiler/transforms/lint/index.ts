@@ -11,6 +11,7 @@ import noMultipleSpacesInRegularExpressionLiterals from './noMultipleSpacesInReg
 import noVar from './noVar';
 import emptyBlocks from './emptyBlocks';
 import getterReturn from './getterReturn';
+import invalidQuantifierRange from './invalidQuantifierRange';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
@@ -42,6 +43,7 @@ export const lintTransforms = [
   noVar,
   emptyBlocks,
   getterReturn,
+  invalidQuantifierRange,
   noAsyncPromiseExecutor,
   noCompareNegZero,
   noCondAssign,
