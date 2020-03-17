@@ -18,10 +18,41 @@ export default function UnionTypeAnnotation(
 ) {
   node = unionTypeAnnotation.assert(node);
 
-  generator.printJoin(node.types, node, {separator: orSeparator});
+  generator.multiline(
+    node,
+    (multiline, node) => {
+      if (multiline) {
+        generator.indent();
+        orNewlineSeparator(generator, false);
+      }
+
+      generator.printJoin(node.types, node, {
+        after: multiline ? orNewlineSeparator : orSpaceSeparator,
+      });
+
+      if (multiline) {
+        generator.dedent();
+      }
+    },
+    {conditions: ['more-than-one-line'], indent: true},
+  );
 }
 
-function orSeparator(generator: Generator) {
+function orNewlineSeparator(generator: Generator, isLast: boolean) {
+  if (isLast) {
+    return;
+  }
+
+  generator.newline();
+  generator.token('|');
+  generator.space();
+}
+
+function orSpaceSeparator(generator: Generator, isLast: boolean) {
+  if (isLast) {
+    return;
+  }
+
   generator.space();
   generator.token('|');
   generator.space();

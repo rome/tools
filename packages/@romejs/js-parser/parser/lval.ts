@@ -82,7 +82,7 @@ export function toAssignmentPattern(
 
     case 'BindingIdentifier':
     case 'ReferenceIdentifier':
-      return toAssignmentIdentifier(node);
+      return toAssignmentIdentifier(parser, node);
 
     case 'TSAsExpression':
       return {
@@ -173,6 +173,7 @@ export function toAssignmentPattern(
       }
 
       return {
+        ...node,
         type: 'AssignmentAssignmentPattern',
         left: toTargetAssignmentPattern(parser, node.left, contextDescription),
         right: node.right,
@@ -187,6 +188,7 @@ export function toAssignmentPattern(
         message,
       });
       return toAssignmentIdentifier(
+        parser,
         parser.createUnknownIdentifier(contextDescription),
       );
     }
@@ -290,7 +292,7 @@ export function toBindingPattern(
         rest:
           binding.rest === undefined
             ? undefined
-            : toBindingIdentifier(binding.rest),
+            : toBindingIdentifier(parser, binding.rest),
         properties: binding.properties.map(prop => {
           const bindingProp = toBindingPattern(
             parser,
@@ -678,6 +680,7 @@ export function filterSpread<T extends AnyNode>(
       });
 
       elems[i] = toReferenceIdentifier(
+        parser,
         parser.createUnknownIdentifier('spread substitute'),
       );
     }
@@ -920,14 +923,14 @@ export function parseBindingListItemTypes(
     typeAnnotation = parsePrimaryTypeAnnotation(parser);
   }
 
-  return {
+  return parser.finalizeNode({
     ...param,
     meta: parser.finishNode(start, {
       type: 'PatternMeta',
       optional,
       typeAnnotation,
     }),
-  };
+  });
 }
 
 // Parses assignment pattern around given atom if possible.

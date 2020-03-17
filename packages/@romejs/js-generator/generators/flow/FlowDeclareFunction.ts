@@ -25,13 +25,6 @@ export default function FlowDeclareFunction(
   }
   generator.word('function');
   generator.space();
-
-  const {id} = node;
-  generator.print(id, node);
-
-  if (id.meta !== undefined && id.meta.typeAnnotation !== undefined) {
-    generator.printTypeColon(id.meta.typeAnnotation, node);
-  }
-
+  generator.print(node.id, node);
   generator.semicolon();
 }

@@ -91,6 +91,7 @@ export type PrefetchedModuleSignatures = {
 };
 
 export type WorkerFormatResult = {
+  original: string;
   formatted: string;
   diagnostics: PartialDiagnostics;
 };

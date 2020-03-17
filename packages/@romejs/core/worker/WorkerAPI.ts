@@ -171,18 +171,28 @@ export default class WorkerAPI {
     if (res === undefined) {
       return undefined;
     } else {
-      return {formatted: res.formatted, diagnostics: res.diagnostics};
+      return {
+        formatted: res.formatted,
+        original: res.sourceText,
+        diagnostics: res.diagnostics,
+      };
     }
+  }
+
+  shouldFormat(ref: FileReference): boolean {
+    const project = this.worker.getProject(ref.project);
+
+    return (
+      project.config.format.enabled &&
+      matchPathPatterns(ref.real, project.config.format.ignore) === 'NO_MATCH'
+    );
   }
 
   async _format(ref: FileReference): Promise<undefined | ExtensionLintResult> {
     const project = this.worker.getProject(ref.project);
     this.logger.info(`Formatting:`, ref.real);
 
-    if (
-      !project.config.format.enabled ||
-      matchPathPatterns(ref.real, project.config.format.ignore)
-    ) {
+    if (!this.shouldFormat(ref)) {
       return;
     }
 
@@ -220,11 +230,6 @@ export default class WorkerAPI {
       };
     }
 
-    const shouldFormat = !matchPathPatterns(
-      ref.real,
-      project.config.format.ignore,
-    );
-
     // Catch any diagnostics, in the case of syntax errors etc
     const res = await catchDiagnostics(
       {
@@ -236,7 +241,7 @@ export default class WorkerAPI {
           return this._format(ref);
         } else {
           return lint({
-            format: shouldFormat,
+            format: this.shouldFormat(ref),
             file: ref,
             project,
             prefetchedModuleSignatures,
@@ -303,6 +308,10 @@ export default class WorkerAPI {
             {
               type: 'diff',
               diff: diff(raw, formatted),
+              legend: {
+                add: 'Code to be added',
+                delete: 'Code to be removed',
+              },
             },
           ],
         },

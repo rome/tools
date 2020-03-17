@@ -11,7 +11,8 @@ import {
   exportLocalDeclaration,
   AnyNode,
 } from '@romejs/js-ast';
-import {isStatement} from '@romejs/js-ast-utils';
+import {isDeclaration} from '@romejs/js-ast-utils';
+
 export default function ExportLocalDeclaration(
   generator: Generator,
   node: AnyNode,
@@ -35,7 +36,7 @@ export function _ExportDeclaration(generator: Generator, node: AnyNode) {
   if (node.declaration) {
     const declar = node.declaration;
     generator.print(declar, node);
-    if (!isStatement(declar)) {
+    if (!isDeclaration(declar)) {
       generator.semicolon();
     }
   } else {
@@ -48,16 +49,23 @@ export function _ExportDeclaration(generator: Generator, node: AnyNode) {
       generator.space();
     }
 
-    if (node.specifiers === undefined) {
+    const {specifiers} = node;
+    if (specifiers === undefined) {
       throw new Error('Expected specifiers since there was no declaration');
     }
 
-    generator.token('{');
-    if (node.specifiers.length > 0) {
-      generator.printCommaList(node.specifiers, node);
-    }
-    generator.token('}');
+    generator.multiline(node, (multiline, node) => {
+      generator.token('{');
 
-    generator.semicolon();
+      if (specifiers.length > 0) {
+        generator.printCommaList(specifiers, node, {
+          multiline,
+          trailing: true,
+        });
+      }
+      generator.token('}');
+
+      generator.semicolon();
+    });
   }
 }

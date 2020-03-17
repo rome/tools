@@ -10,11 +10,13 @@ import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import {AbsoluteFilePathSet} from '@romejs/path';
 
 export default class CompilerLinter {
-  constructor(req: MasterRequest, printer: DiagnosticsPrinter) {
+  constructor(req: MasterRequest, printer: DiagnosticsPrinter, fix: boolean) {
     this.request = req;
+    this.fix = fix;
     this.printer = printer;
   }
 
+  fix: boolean;
   request: MasterRequest;
   printer: DiagnosticsPrinter;
 
@@ -31,21 +33,19 @@ export default class CompilerLinter {
     await Promise.all(
       pathsByWorker.map(async paths => {
         for (const path of paths) {
-          spinner.setText(`<filelink target="${path.join()}" />`);
+          const text = `<filelink target="${path.join()}" />`;
+          spinner.pushText(text);
 
-          // TODO support `fix` flag
           const {
             diagnostics,
             suppressions,
-          } = await this.request.requestWorkerLint(path, false);
+          } = await this.request.requestWorkerLint(path, this.fix);
           printer.processor.addSuppressions(suppressions);
           printer.addDiagnostics(diagnostics);
 
+          spinner.popText(text);
           spinner.tick();
         }
-
-        spinner.setText('Done');
-        spinner.pause();
       }),
     );
 

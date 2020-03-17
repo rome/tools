@@ -12,36 +12,38 @@ import {printBindingPatternParams} from '../utils';
 export default function FunctionHead(generator: Generator, node: AnyNode) {
   node = functionHead.assert(node);
 
-  const {typeAnnotations} = generator.options;
+  generator.multiline(
+    node,
+    (multiline, node) => {
+      const {typeAnnotations} = generator.options;
 
-  generator.print(node.typeParameters, node);
-  generator.token('(');
+      generator.print(node.typeParameters, node);
+      generator.token('(');
 
-  printBindingPatternParams(generator, node, node.params);
+      printBindingPatternParams(
+        generator,
+        node,
+        node.params,
+        node.rest,
+        multiline,
+      );
 
-  if (node.rest !== undefined) {
-    if (node.params.length > 0) {
-      generator.token(',');
-      generator.space();
-    }
+      generator.token(')');
 
-    generator.token('...');
-    generator.print(node.rest, node);
-  }
+      if (typeAnnotations) {
+        if (node.returnType) {
+          generator.printTypeColon(node.returnType, node);
+        }
 
-  generator.token(')');
-
-  if (typeAnnotations) {
-    if (node.returnType) {
-      generator.printTypeColon(node.returnType, node);
-    }
-
-    if (node.predicate) {
-      if (!node.returnType) {
-        generator.token(':');
+        if (node.predicate) {
+          if (!node.returnType) {
+            generator.token(':');
+          }
+          generator.space();
+          generator.print(node.predicate, node);
+        }
       }
-      generator.space();
-      generator.print(node.predicate, node);
-    }
-  }
+    },
+    {conditions: ['any-line-exceeds', 'more-than-one-line']},
+  );
 }

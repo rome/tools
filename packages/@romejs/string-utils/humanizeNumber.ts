@@ -5,15 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+const SCIENTIFIC_NOTATION = /e/i;
+
 export function humanizeNumber(
   num: bigint | number,
   sep: string = '_',
 ): string {
+  let str = String(num);
+
   if (num < 1000) {
-    return String(num);
+    return str;
   }
 
-  const decimals = String(num).split('.');
+  if (SCIENTIFIC_NOTATION.test(str)) {
+    return str;
+  }
+
+  const decimals = str.split('.');
 
   let intChars: Array<string> = String(decimals.shift()).split('');
   let intParts: Array<string> = [];

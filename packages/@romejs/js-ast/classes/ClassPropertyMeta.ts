@@ -5,13 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyPrimaryType, ConstTSAccessibility} from '../index';
+import {JSNodeBase, ConstTSAccessibility} from '../index';
 import {createBuilder} from '../utils';
 
 export type ClassPropertyMeta = JSNodeBase & {
   type: 'ClassPropertyMeta';
   static?: boolean;
-  typeAnnotation?: AnyPrimaryType;
   accessibility?: ConstTSAccessibility;
   optional?: boolean;
   readonly?: boolean;
@@ -22,8 +21,6 @@ export const classPropertyMeta = createBuilder<ClassPropertyMeta>(
   'ClassPropertyMeta',
   {
     bindingKeys: {},
-    visitorKeys: {
-      typeAnnotation: true,
-    },
+    visitorKeys: {},
   },
 );

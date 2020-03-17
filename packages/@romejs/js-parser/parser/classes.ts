@@ -56,10 +56,10 @@ export function parseClassExpression(
   parser: JSParser,
   start: Position,
 ): ClassExpression {
-  return {
+  return parser.finalizeNode({
     ...parseClass(parser, start, true),
     type: 'ClassExpression',
-  };
+  });
 }
 
 export function parseExportDefaultClassDeclaration(
@@ -77,11 +77,11 @@ export function parseExportDefaultClassDeclaration(
     };
   }
 
-  return {
+  return parser.finalizeNode({
     ...shape,
     type: 'ClassDeclaration',
     id,
-  };
+  });
 }
 
 export function parseClassDeclaration(
@@ -94,11 +94,11 @@ export function parseClassDeclaration(
     throw new Error('Expected id');
   }
 
-  return {
+  return parser.finalizeNode({
     ...shape,
     type: 'ClassDeclaration',
     id,
-  };
+  });
 }
 
 // Parse a class declaration or expression
@@ -676,11 +676,11 @@ function parseClassMethod(
   };
 
   if (body === undefined) {
-    return {
+    return parser.finalizeNode({
       ...method,
       type: 'TSDeclareMethod',
       body: undefined,
-    };
+    });
   } else {
     if (body.type !== 'BlockStatement') {
       throw new Error('Expected BlockStatement body');
@@ -690,11 +690,11 @@ function parseClassMethod(
       throw new Error('Expected to hit other private methods instead');
     }
 
-    return {
+    return parser.finalizeNode({
       ...method,
       body,
       type: 'ClassMethod',
-    };
+    });
   }
 }
 
@@ -852,6 +852,7 @@ function parseClassId(
         message: 'A class name is required',
       });
       id = toBindingIdentifier(
+        parser,
         parser.createUnknownIdentifier('required class name'),
       );
     }

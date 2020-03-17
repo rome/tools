@@ -264,6 +264,7 @@ export function normalizeDiagnosticAdviceItem(
       return {
         type: 'diff',
         diff: part.diff,
+        legend: part.legend,
       };
 
     case 'stacktrace':

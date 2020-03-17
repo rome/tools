@@ -95,6 +95,10 @@ export type DiagnosticAdviceItemInspect = {
 export type DiagnosticAdviceItemDiff = {
   type: 'diff';
   diff: Diffs;
+  legend?: {
+    add: string;
+    delete: string;
+  };
 };
 
 export type DiagnosticAdviceItemStacktrace = {
@@ -231,6 +235,10 @@ export type PartialDiagnosticAdviceItem =
   | {
       type: 'diff';
       diff: Diffs;
+      legend?: {
+        add: string;
+        delete: string;
+      };
     }
   | {
       type: 'stacktrace';

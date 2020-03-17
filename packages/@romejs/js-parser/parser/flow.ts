@@ -377,6 +377,7 @@ export function parseFlowDeclare(
   return parser.finishNode(start, {
     type: 'FlowDeclareVariable',
     id: toBindingIdentifier(
+      parser,
       parser.createUnknownIdentifier('flow declaration', start),
     ),
   });
@@ -1865,7 +1866,7 @@ export function parseFlowClassImplemented(
     implemented.push(
       parser.finishNode(start, {
         type: 'FlowClassImplements',
-        id: toReferenceIdentifier(id),
+        id: toReferenceIdentifier(parser, id),
         typeParameters,
       }),
     );

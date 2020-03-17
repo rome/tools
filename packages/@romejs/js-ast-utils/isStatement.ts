@@ -6,12 +6,17 @@
  */
 
 import {AnyNode, AnyStatement} from '@romejs/js-ast';
+import isDeclaration from './isDeclaration';
 
 export default function isStatement(
   node: undefined | AnyNode,
 ): node is AnyStatement {
   if (node === undefined) {
     return false;
+  }
+
+  if (isDeclaration(node)) {
+    return true;
   }
 
   switch (node.type) {
@@ -24,35 +29,23 @@ export default function isStatement(
     case 'ExpressionStatement':
     case 'ForInStatement':
     case 'ForStatement':
-    case 'FunctionDeclaration':
     case 'IfStatement':
     case 'LabeledStatement':
     case 'ReturnStatement':
     case 'SwitchStatement':
     case 'ThrowStatement':
     case 'TryStatement':
-    case 'VariableDeclaration':
     case 'WhileStatement':
     case 'WithStatement':
-    case 'ClassDeclaration':
-    case 'ExportAllDeclaration':
-    case 'ExportDefaultDeclaration':
-    case 'ExportLocalDeclaration':
     case 'ForOfStatement':
-    case 'ImportDeclaration':
-    case 'FlowDeclareClass':
-    case 'FlowDeclareFunction':
-    case 'FlowDeclareInterface':
-    case 'FlowDeclareModule':
-    case 'FlowDeclareModuleExports':
-    case 'FlowDeclareOpaqueType':
-    case 'FlowDeclareVariable':
-    case 'FlowInterfaceDeclaration':
-    case 'FlowOpaqueType':
-    case 'TypeAliasTypeAnnotation':
+      const statement: AnyStatement = node;
+      statement;
       return true;
 
     default:
+      // Assert that all statements were handled
+      const notStatement: Exclude<AnyNode, AnyStatement> = node;
+      notStatement;
       return false;
   }
 }

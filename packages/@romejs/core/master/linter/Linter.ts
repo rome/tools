@@ -13,11 +13,13 @@ import DependencyGraph from '../dependencies/DependencyGraph';
 import {humanizeNumber} from '@romejs/string-utils';
 
 export default class Linter {
-  constructor(req: MasterRequest) {
+  constructor(req: MasterRequest, fix: boolean) {
     this.request = req;
+    this.fix = fix;
   }
 
   request: MasterRequest;
+  fix: boolean;
 
   async lint(throwAlways: boolean = true) {
     const {request} = this;
@@ -92,8 +94,8 @@ export default class Linter {
       {
         clear: true,
         message: 'Analyzing files',
-        async callback() {
-          const compilerLinter = new CompilerLinter(request, printer);
+        callback: async () => {
+          const compilerLinter = new CompilerLinter(request, printer, this.fix);
           await compilerLinter.lint(paths);
         },
       },

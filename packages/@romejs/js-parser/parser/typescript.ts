@@ -608,14 +608,19 @@ export function tryTSParseIndexSignature(
   parser.expect(tt.bracketL);
 
   const idStart = parser.getPosition();
-  const _id = parseBindingIdentifier(parser);
-  const id = parser.finishNode(idStart, {
-    ..._id,
-    typeAnnotation: parseTSTypeAnnotation(parser),
+  const id = parseBindingIdentifier(parser);
+
+  const keyTypeAnnotation = parseTSTypeAnnotation(parser);
+  const key = parser.finishNode(idStart, {
+    ...id,
+    meta: parser.finishNode(idStart, {
+      ...id.meta,
+      type: 'PatternMeta',
+      typeAnnotation: keyTypeAnnotation,
+    }),
   });
 
   parser.expect(tt.bracketR);
-  const parameters = [id];
 
   const typeAnnotation = tryTSParseTypeAnnotation(parser);
 
@@ -623,7 +628,7 @@ export function tryTSParseIndexSignature(
   return parser.finishNode(start, {
     type: 'TSIndexSignature',
     typeAnnotation,
-    parameters,
+    key: key,
   });
 }
 
@@ -1040,6 +1045,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
   return parser.finishNode(parser.getPosition(), {
     type: 'TSTypeReference',
     typeName: toReferenceIdentifier(
+      parser,
       parser.createUnknownIdentifier('ts non array type start'),
     ),
   });
@@ -1884,6 +1890,7 @@ export function parseTSDeclare(
           type: 'VariableDeclarator',
           loc,
           id: toBindingIdentifier(
+            parser,
             parser.createUnknownIdentifier('typescript declare start', start),
           ),
           init: undefined,

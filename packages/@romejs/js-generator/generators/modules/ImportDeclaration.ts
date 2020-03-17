@@ -19,38 +19,47 @@ export default function ImportDeclaration(generator: Generator, node: AnyNode) {
     generator.space();
   }
 
-  let {specifiers} = node;
-  if (specifiers !== undefined && specifiers.length > 0) {
-    specifiers = [...specifiers];
+  generator.multiline(
+    node,
+    (multiline, node) => {
+      let {specifiers} = node;
+      if (specifiers !== undefined && specifiers.length > 0) {
+        specifiers = [...specifiers];
 
-    // Print "special" specifiers first
-    while (specifiers.length > 0) {
-      const first = specifiers[0];
-      if (
-        first.type === 'ImportDefaultSpecifier' ||
-        first.type === 'ImportNamespaceSpecifier'
-      ) {
-        generator.print(specifiers.shift(), node);
-        if (specifiers.length) {
-          generator.token(',');
-          generator.space();
+        // Print "special" specifiers first
+        while (specifiers.length > 0) {
+          const first = specifiers[0];
+          if (
+            first.type === 'ImportDefaultSpecifier' ||
+            first.type === 'ImportNamespaceSpecifier'
+          ) {
+            generator.print(specifiers.shift(), node);
+            if (specifiers.length) {
+              generator.token(',');
+              generator.space();
+            }
+          } else {
+            break;
+          }
         }
-      } else {
-        break;
+
+        if (specifiers.length > 0) {
+          generator.token('{');
+          generator.printCommaList(specifiers, node, {
+            multiline,
+            trailing: true,
+          });
+          generator.token('}');
+        }
+
+        generator.space();
+        generator.word('from');
+        generator.space();
       }
-    }
 
-    if (specifiers.length > 0) {
-      generator.token('{');
-      generator.printCommaList(specifiers, node);
-      generator.token('}');
-    }
-
-    generator.space();
-    generator.word('from');
-    generator.space();
-  }
-
-  generator.print(node.source, node);
-  generator.semicolon();
+      generator.print(node.source, node);
+      generator.semicolon();
+    },
+    {conditions: ['more-than-one-line']},
+  );
 }

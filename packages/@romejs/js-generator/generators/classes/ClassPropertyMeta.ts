@@ -11,5 +11,21 @@ import {ClassPropertyMeta, classPropertyMeta, AnyNode} from '@romejs/js-ast';
 export default function ClassPropertyMeta(generator: Generator, node: AnyNode) {
   node = classPropertyMeta.assert(node);
 
-  throw new Error('unimplemented');
+  if (!generator.options.typeAnnotations) {
+    if (node.accessibility) {
+      generator.word(node.accessibility);
+    }
+
+    if (node.readonly) {
+      generator.word('readonly');
+    }
+
+    if (node.abstract) {
+      generator.word('abstract');
+    }
+  }
+
+  if (node.static) {
+    generator.word('static');
+  }
 }

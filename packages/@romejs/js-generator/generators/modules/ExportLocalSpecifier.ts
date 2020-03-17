@@ -16,7 +16,10 @@ export default function ExportLocalSpecifier(
   generator: Generator,
   node: AnyNode,
 ) {
-  node = exportLocalSpecifier.assert(node);
+  node =
+    node.type === 'ExportExternalSpecifier'
+      ? node
+      : exportLocalSpecifier.assert(node);
 
   generator.print(node.local, node);
   if (node.exported && node.local.name !== node.exported.name) {

@@ -249,23 +249,10 @@ export default class TestAPI {
       advice.push({
         type: 'diff',
         diff: diff(expectedFormat, receivedFormat),
-      });
-
-      advice.push({
-        type: 'log',
-        category: 'none',
-        message: receivedAlias
-          ? `<green>+ ${receivedAlias}</green>`
-          : '<green>+ What we received</green>',
-        compact: true,
-      });
-
-      advice.push({
-        type: 'log',
-        category: 'none',
-        message: expectedAlias
-          ? `<red>- ${expectedAlias}</red>`
-          : '<red>- What we expected</red>',
+        legend: {
+          add: receivedAlias ? receivedAlias : 'What we received',
+          delete: expectedAlias ? expectedAlias : 'What we expected<',
+        },
       });
     }
 

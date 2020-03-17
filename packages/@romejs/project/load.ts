@@ -220,7 +220,7 @@ export function normalizeProjectConfig(
     consumer,
     consumersChain: [consumer],
     configHashes: [hash],
-    configSourceSubKey: configSourceSubKey,
+    configSourceSubKey,
     configDependencies: getParentConfigDependencies(projectFolder),
   };
 

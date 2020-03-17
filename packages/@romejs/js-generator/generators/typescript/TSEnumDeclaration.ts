@@ -26,5 +26,5 @@ export default function TSEnumDeclaration(generator: Generator, node: AnyNode) {
   generator.space();
   generator.print(node.id, node);
   generator.space();
-  printTSBraced(generator, node.members, node);
+  printTSBraced(generator, node, node.members);
 }

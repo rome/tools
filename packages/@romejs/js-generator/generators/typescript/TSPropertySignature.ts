@@ -29,5 +29,9 @@ export default function TSPropertySignature(
     generator.token('?');
   }
 
+  generator.token(':');
+  generator.space();
+
   generator.print(node.typeAnnotation, node);
+  generator.token(';');
 }

@@ -11,8 +11,11 @@ import {
   forOfStatement,
   AnyNode,
   throwStatement,
-  objectMethod,
+  TSDeclareMethod,
+  ObjectMethod,
   AnyBindingPattern,
+  ClassMethod,
+  PatternMeta,
 } from '@romejs/js-ast';
 
 export function buildForXStatementGenerator(op: 'of' | 'in'): GeneratorMethod {
@@ -67,35 +70,38 @@ export function buildLabelStatementGenerator(prefix: string): GeneratorMethod {
 
     generator.word(prefix);
 
-    let arg: undefined | AnyNode;
     if (
       (node.type === 'ContinueStatement' || node.type === 'BreakStatement') &&
       node.label !== undefined
     ) {
-      arg = node.label;
+      generator.space();
+      generator.print(node.label, node);
     }
+
     if (
       (node.type === 'ThrowStatement' || node.type === 'ReturnStatement') &&
       node.argument !== undefined
     ) {
-      arg = node.argument;
-    }
-
-    if (arg !== undefined) {
       generator.space();
 
-      const terminatorState = generator.startTerminatorless();
-      generator.print(arg, node);
-      generator.endTerminatorless(terminatorState);
+      generator.multiline(node, (multiline, node) => {
+        const terminatorState = generator.startTerminatorless();
+        if (multiline) {
+          generator.forceNewline();
+        }
+        generator.print(node.argument, node);
+        generator.endTerminatorless(terminatorState);
+      });
     }
 
     generator.semicolon();
   };
 }
 
-export function printMethod(generator: Generator, node: AnyNode) {
-  node = node.type === 'ClassMethod' ? node : objectMethod.assert(node);
-
+export function printMethod(
+  generator: Generator,
+  node: TSDeclareMethod | ClassMethod | ObjectMethod,
+) {
   const kind = node.kind;
 
   if (kind === 'method' && node.head.generator === true) {
@@ -110,6 +116,11 @@ export function printMethod(generator: Generator, node: AnyNode) {
   if (node.head.async === true) {
     generator.word('async');
     generator.space();
+  }
+
+  if (node.type === 'TSDeclareMethod') {
+    generator.print(node.head, node);
+    return;
   }
 
   generator.print(node.key, node);
@@ -128,35 +139,69 @@ export function printBindingPatternParams(
   generator: Generator,
   node: AnyNode,
   params: Array<AnyBindingPattern>,
+  rest: undefined | AnyBindingPattern,
+  multiline: boolean = false,
 ) {
   generator.printCommaList(params, node, {
-    iterator: node => {
-      if (generator.options.typeAnnotations && node.meta !== undefined) {
-        if (node.meta.optional) {
-          generator.token('?');
-        }
-        generator.printTypeColon(node.meta.typeAnnotation, node);
-      }
-    },
+    trailing: true,
+    multiline,
   });
+
+  if (rest !== undefined) {
+    if (params.length > 0) {
+      if (!multiline) {
+        generator.token(',');
+      }
+      generator.spaceOrNewline(multiline);
+    }
+
+    generator.token('...');
+    generator.print(rest, node);
+  }
 }
 
 export function printTSBraced(
   generator: Generator,
-  members: Array<AnyNode>,
   node: AnyNode,
+  members: Array<AnyNode>,
 ) {
   generator.token('{');
-  if (members.length) {
+
+  if (members.length > 0) {
+    const multiline = members.length > 1;
+
     generator.indent();
-    generator.newline();
-    for (const member of members) {
-      generator.print(member, node);
+
+    if (multiline) {
       generator.newline();
     }
+
+    for (const member of members) {
+      generator.print(member, node);
+
+      if (multiline) {
+        generator.newline();
+      } else {
+        generator.buf.removeTrailing(';');
+      }
+    }
+
     generator.dedent();
     generator.rightBrace();
   } else {
     generator.token('}');
+  }
+}
+
+export function printPatternMeta(
+  generator: Generator,
+  node: AnyNode,
+  meta: undefined | PatternMeta,
+) {
+  if (generator.options.typeAnnotations && meta !== undefined) {
+    if (meta.optional) {
+      generator.token('?');
+    }
+    generator.printTypeColon(meta.typeAnnotation, node);
   }
 }

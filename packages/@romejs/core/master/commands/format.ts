@@ -11,12 +11,24 @@ import {commandCategories} from '../../commands';
 import {AbsoluteFilePathSet} from '@romejs/path';
 import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import {FORMATTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
+import {Consumer} from '@romejs/consume';
+import stringDiff from '@romejs/string-diff';
+
+type Flags = {
+  write: boolean;
+};
 
 export default createMasterCommand({
   category: commandCategories.INTERNAL,
   description: 'TODO',
 
-  async default(req: MasterRequest): Promise<void> {
+  defineFlags(consumer: Consumer): Flags {
+    return {
+      write: consumer.get('write').asBoolean(false),
+    };
+  },
+
+  async default(req: MasterRequest, flags: Flags): Promise<void> {
     const {reporter, master} = req;
 
     const paths: AbsoluteFilePathSet = await req.getFilesFromArgs({
@@ -79,14 +91,40 @@ export default createMasterCommand({
             continue;
           }
 
-          //await writeFile(path, res.formatted);
+          if (!flags.write && res.formatted !== res.original) {
+            // TODO abstract this and the pendingFixes diagnostic in WorkerAPI
+            diagnosticsProcessor.addDiagnostic({
+              category: 'lint/pendingFixes',
+              filename: path.join(),
+              message: 'Pending fixes',
+              advice: [
+                {
+                  type: 'diff',
+                  diff: stringDiff(res.original, res.formatted),
+                },
+                {
+                  type: 'code',
+                  code: res.formatted,
+                },
+              ],
+            });
+          } else {
+            //await writeFile(path, res.formatted);
+          }
         }
       }),
     );
 
     diagnosticsProcessor.maybeThrowDiagnosticsError();
-    reporter.success(
-      `<number>${paths.size}</number> files formatted successfully`,
-    );
+
+    if (flags.write) {
+      reporter.success(
+        `<number emphasis>${paths.size}</number> files formatted successfully`,
+      );
+    } else {
+      reporter.success(
+        `<number emphasis>${paths.size}</number> files formatted correctly`,
+      );
+    }
   },
 });

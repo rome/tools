@@ -120,6 +120,7 @@ export function parseExport(
       specifiers = [
         ...specifiers,
         ...convertLocalToExternalSpecifiers(
+          parser,
           parseExportLocalSpecifiersMaybe(parser),
         ),
       ];
@@ -226,7 +227,7 @@ function createExportExternalDeclaration(
   const specifiers =
     rawSpecifiers === undefined
       ? undefined
-      : convertLocalToExternalSpecifiers(rawSpecifiers);
+      : convertLocalToExternalSpecifiers(parser, rawSpecifiers);
   checkExport(parser, specifiers, undefined, true, false);
 
   return parser.finishNode(start, {
@@ -238,6 +239,7 @@ function createExportExternalDeclaration(
 }
 
 function convertLocalToExternalSpecifiers(
+  parser: JSParser,
   specifiers: Array<AnyExportExternalSpecifier | ExportLocalSpecifier>,
 ): Array<AnyExportExternalSpecifier> {
   return specifiers.map(specifier => {
@@ -245,7 +247,7 @@ function convertLocalToExternalSpecifiers(
       return {
         ...specifier,
         type: 'ExportExternalSpecifier',
-        local: toIdentifier(specifier.local),
+        local: toIdentifier(parser, specifier.local),
       };
     } else {
       return specifier;
@@ -511,6 +513,7 @@ function parseExportNamespace(
   specifiers = [
     ...specifiers,
     ...convertLocalToExternalSpecifiers(
+      parser,
       parseExportLocalSpecifiersMaybe(parser),
     ),
   ];
@@ -674,7 +677,7 @@ function parseExportSpecifiers(parser: JSParser): Array<ExportLocalSpecifier> {
     const local = parseReferenceIdentifier(parser, true);
     const exported = parser.eatContextual('as')
       ? parseIdentifier(parser, true)
-      : toIdentifier(parser.cloneNode(local));
+      : toIdentifier(parser, parser.cloneNode(local));
     specifiers.push(
       parser.finishNode(start, {
         type: 'ExportLocalSpecifier',
@@ -916,7 +919,7 @@ function parseImportSpecifier(
     ) {
       // `import {type as ,` or `import {type as }`
       imported = as_ident;
-      local = toBindingIdentifier(parser.cloneNode(as_ident));
+      local = toBindingIdentifier(parser, parser.cloneNode(as_ident));
     } else {
       // `import {type as foo`
       imported = firstIdent;
@@ -933,13 +936,13 @@ function parseImportSpecifier(
       local = parseBindingIdentifier(parser);
     } else {
       isBinding = true;
-      local = toBindingIdentifier(parser.cloneNode(imported));
+      local = toBindingIdentifier(parser, parser.cloneNode(imported));
     }
   } else {
     isBinding = true;
     imported = firstIdent;
     importKind = undefined;
-    local = toBindingIdentifier(parser.cloneNode(imported));
+    local = toBindingIdentifier(parser, parser.cloneNode(imported));
   }
 
   const nodeIsTypeImport = hasTypeImportKind(nodeKind);
@@ -965,15 +968,13 @@ function parseImportSpecifier(
 
   checkLVal(parser, local, true, undefined, 'import specifier');
 
-  return {
+  return parser.finishNode(start, {
     type: 'ImportSpecifier',
-    loc,
     imported,
-    local: {
+    local: parser.finishNode(start, {
       type: 'ImportSpecifierLocal',
-      loc,
       name: local,
       importKind,
-    },
-  };
+    }),
+  });
 }

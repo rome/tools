@@ -9,53 +9,65 @@ import Generator from '../../Generator';
 import {
   AnyNode,
   AssignmentExpression,
+  BinaryExpression,
+  LogicalExpression,
   assignmentExpression,
 } from '@romejs/js-ast';
 import * as n from '../../node/index';
 
+type OurNode = AssignmentExpression | BinaryExpression | LogicalExpression;
+
 export default function AssignmentExpression(
   generator: Generator,
-  node: AnyNode,
+  _node: AnyNode,
   parent: AnyNode,
 ) {
-  node =
-    node.type === 'BinaryExpression' || node.type === 'LogicalExpression'
-      ? node
-      : assignmentExpression.assert(node);
+  const node: OurNode =
+    _node.type === 'BinaryExpression' || _node.type === 'LogicalExpression'
+      ? _node
+      : assignmentExpression.assert(_node);
 
   // Somewhere inside a for statement `init` node but doesn't usually
   // needs a paren except for `in` expressions: `for (a in b ? a : b;;)`
-  const parens =
+  const needsExtraParens =
     generator.inForStatementInitCounter > 0 &&
     node.operator === 'in' &&
     !n.needsParens(node, parent, []);
-  const {left, right} = node;
 
-  if (parens) {
+  if (needsExtraParens) {
     generator.token('(');
   }
 
-  generator.print(left, node);
+  generator.multiline(
+    node,
+    (multiline, node) => {
+      const shouldIndent = multiline && node.operator === '&&';
 
-  generator.space();
-  if (node.operator === 'in' || node.operator === 'instanceof') {
-    generator.word(node.operator);
-  } else {
-    generator.token(node.operator);
-  }
-  generator.space();
+      generator.print(node.left, node);
 
-  const isMultiLine =
-    left.loc !== undefined &&
-    right.loc !== undefined &&
-    right.loc.start.line > left.loc.end.line;
-  if (isMultiLine) {
-    generator.newline();
-  }
+      generator.space();
+      if (node.operator === 'in' || node.operator === 'instanceof') {
+        generator.word(node.operator);
+      } else {
+        generator.token(node.operator);
+      }
 
-  generator.print(right, node);
+      generator.spaceOrNewline(multiline);
 
-  if (parens) {
+      if (shouldIndent) {
+        generator.indent();
+      }
+
+      generator.print(node.right, node);
+
+      if (shouldIndent) {
+        generator.dedent();
+      }
+    },
+    {conditions: ['any-line-exceeds', 'defer-parent-multiline']},
+  );
+
+  if (needsExtraParens) {
     generator.token(')');
   }
 }

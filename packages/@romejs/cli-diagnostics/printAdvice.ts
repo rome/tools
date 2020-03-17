@@ -86,6 +86,15 @@ function printDiff(
   }
 
   opts.reporter.logAll(escapeMarkup(frame));
+
+  const {legend} = item;
+  if (legend !== undefined) {
+    opts.reporter.spacer();
+    opts.reporter.logAll(`<green>+ ${escapeMarkup(legend.add)}</green>`);
+    opts.reporter.logAll(`<red>- ${escapeMarkup(legend.delete)}</red>`);
+    opts.reporter.spacer();
+  }
+
   return false;
 }
 

@@ -18,15 +18,7 @@ export default function BindingAssignmentPattern(
 ) {
   node = bindingAssignmentPattern.assert(node);
 
-  const {left} = node;
   generator.print(node.left, node);
-  if (generator.options.typeAnnotations && left.meta !== undefined) {
-    if (left.meta.optional === true) {
-      generator.token('?');
-    }
-    generator.print(left.meta.typeAnnotation, left.meta);
-  }
-
   generator.space();
   generator.token('=');
   generator.space();

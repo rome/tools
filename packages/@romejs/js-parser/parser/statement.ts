@@ -111,6 +111,7 @@ export function parseTopLevel(parser: JSParser): Program {
 
   return {
     type: 'Program',
+    corrupt: parser.state.corrupt,
     loc,
     body,
     directives,
@@ -576,7 +577,7 @@ export function parseForStatement(
 
   let awaitAt;
   if (parser.inScope('ASYNC') && parser.eatContextual('await')) {
-    awaitAt = parser.getEndPosition();
+    awaitAt = parser.getLastEndPosition();
   }
 
   const openContext = parser.expectOpening(tt.parenL, tt.parenR, 'for head');
@@ -1371,19 +1372,19 @@ export function parseFunctionDeclaration(
   }
 
   if (body === undefined) {
-    return {
+    return parser.finalizeNode({
       type: 'TSDeclareFunction',
       ...shape,
       id,
-    };
+    });
   }
 
-  return {
+  return parser.finalizeNode({
+    type: 'FunctionDeclaration',
     ...shape,
     id,
     body,
-    type: 'FunctionDeclaration',
-  };
+  });
 }
 
 export function parseExportDefaultFunctionDeclaration(
@@ -1408,19 +1409,19 @@ export function parseExportDefaultFunctionDeclaration(
   }
 
   if (body === undefined) {
-    return {
+    return parser.finalizeNode({
       type: 'TSDeclareFunction',
       ...shape,
       id,
-    };
+    });
   }
 
-  return {
+  return parser.finalizeNode({
+    type: 'FunctionDeclaration',
     ...shape,
     id,
     body,
-    type: 'FunctionDeclaration',
-  };
+  });
 }
 
 export function parseFunctionExpression(

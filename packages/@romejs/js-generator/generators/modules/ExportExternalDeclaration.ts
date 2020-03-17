@@ -18,6 +18,9 @@ export default function ExportExternalDeclaration(
 ) {
   node = exportExternalDeclaration.assert(node);
 
+  generator.word('export');
+  generator.space();
+
   if (node.exportKind === 'type') {
     generator.word('type');
     generator.space();
@@ -29,38 +32,43 @@ export default function ExportExternalDeclaration(
 
   const specifiers = node.specifiers.slice(0);
 
-  // print "special" specifiers first
-  let hasSpecial = false;
-  while (true) {
-    const first = specifiers[0];
-    if (
-      first !== undefined &&
-      (first.type === 'ExportDefaultSpecifier' ||
-        first.type === 'ExportNamespaceSpecifier')
-    ) {
-      hasSpecial = true;
-      generator.print(specifiers.shift(), node);
-      if (specifiers.length) {
-        generator.token(',');
-        generator.space();
+  generator.multiline(node, (multiline, node) => {
+    // print "special" specifiers first
+    let hasSpecial = false;
+    while (true) {
+      const first = specifiers[0];
+      if (
+        first !== undefined &&
+        (first.type === 'ExportDefaultSpecifier' ||
+          first.type === 'ExportNamespaceSpecifier')
+      ) {
+        hasSpecial = true;
+        generator.print(specifiers.shift(), node);
+        if (specifiers.length) {
+          generator.token(',');
+          generator.space();
+        }
+      } else {
+        break;
       }
-    } else {
-      break;
     }
-  }
 
-  if (specifiers.length || (!specifiers.length && !hasSpecial)) {
-    generator.token('{');
-    if (specifiers.length) {
-      generator.printCommaList(specifiers, node);
+    if (specifiers.length || (!specifiers.length && !hasSpecial)) {
+      generator.token('{');
+      if (specifiers.length) {
+        generator.printCommaList(specifiers, node, {
+          multiline,
+          trailing: true,
+        });
+      }
+      generator.token('}');
     }
-    generator.token('}');
-  }
 
-  generator.space();
-  generator.word('from');
-  generator.space();
-  generator.print(node.source, node);
+    generator.space();
+    generator.word('from');
+    generator.space();
+    generator.print(node.source, node);
 
-  generator.semicolon();
+    generator.semicolon();
+  });
 }

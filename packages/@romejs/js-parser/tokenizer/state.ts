@@ -22,6 +22,7 @@ export type State = {
   isIterator: boolean;
   tokens: Array<Token>;
   hasHoistedVars: boolean;
+  corrupt: boolean;
 
   possibleIncorrectOpenParens: Array<OpeningContext>;
   indentLevel: Number0;
@@ -140,6 +141,7 @@ export function createInitialState(): State {
     diagnostics: [],
     diagnosticFilters: [],
     hasHoistedVars: false,
+    corrupt: false,
     tokens: [],
     potentialArrowAt: number0Neg1,
     commaAfterSpreadAt: number0Neg1,

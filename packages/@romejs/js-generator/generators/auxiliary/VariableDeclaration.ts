@@ -55,30 +55,44 @@ export default function VariableDeclaration(
         : variableDeclarationIndent;
   }
 
-  generator.printJoin(node.declarations, node, {separator});
+  generator.printJoin(node.declarations, node, {
+    after: separator,
+  });
 }
 
-function variableDeclarationNormal(generator: Generator) {
+function variableDeclarationNormal(generator: Generator, isLast: boolean) {
+  if (isLast) {
+    return;
+  }
+
   generator.token(',');
   generator.space();
 }
 
-function variableDeclarationIndent(generator: Generator) {
+function variableDeclarationIndent(generator: Generator, isLast: boolean) {
+  if (isLast) {
+    return;
+  }
+
   // "let " or "var " indentation.
   generator.token(',');
-  generator.newline();
-  if (generator.endsWith('\n')) {
+  generator.forceNewline();
+  if (generator.buf.endsWith('\n')) {
     for (let i = 0; i < 4; i++) {
       generator.space();
     }
   }
 }
 
-function constDeclarationIndent(generator: Generator) {
+function constDeclarationIndent(generator: Generator, isLast: boolean) {
+  if (isLast) {
+    return;
+  }
+
   // "const " indentation.
   generator.token(',');
-  generator.newline();
-  if (generator.endsWith('\n')) {
+  generator.forceNewline();
+  if (generator.buf.endsWith('\n')) {
     for (let i = 0; i < 6; i++) {
       generator.space();
     }

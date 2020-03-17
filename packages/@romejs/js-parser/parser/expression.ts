@@ -284,6 +284,7 @@ export function parseMaybeAssign<T extends AnyNode = AnyExpression>(
             'Expected an arrow function after this type parameter declaration',
         });
         return toReferenceIdentifier(
+          parser,
           parser.createUnknownIdentifier('type params without arrow function'),
         );
       }
@@ -1505,13 +1506,13 @@ export function parseExpressionAtom(
         const oldYield = parser.state.yieldInPossibleArrowParameters;
         parser.state.yieldInPossibleArrowParameters = undefined;
         const node = parseArrowExpression(parser, start, {
-          assignmentList: [toReferenceIdentifier(id)],
+          assignmentList: [toReferenceIdentifier(parser, id)],
         });
         parser.state.yieldInPossibleArrowParameters = oldYield;
         return node;
       }
 
-      return toReferenceIdentifier(id);
+      return toReferenceIdentifier(parser, id);
     }
 
     case tt._do:
@@ -1566,6 +1567,7 @@ export function parseExpressionAtom(
       });
       parser.next();
       return toReferenceIdentifier(
+        parser,
         parser.createUnknownIdentifier(context, start),
       );
     }
@@ -1824,6 +1826,7 @@ export function parseParenAndDistinguishExpression(
 
     exprList.push(
       toReferenceIdentifier(
+        parser,
         parser.createUnknownIdentifier(
           'empty parenthesized expression',
           innerStart,
@@ -2581,6 +2584,7 @@ export function parseObjectProperty(
 
     if (isPattern) {
       let value: AnyBindingPattern = toBindingIdentifier(
+        parser,
         parser.cloneNode(key.value),
       );
 
@@ -2602,7 +2606,7 @@ export function parseObjectProperty(
     return parser.finishNode(start, {
       type: 'ObjectProperty',
       key,
-      value: toReferenceIdentifier(parser.cloneNode(key.value)),
+      value: toReferenceIdentifier(parser, parser.cloneNode(key.value)),
     });
   }
 }
@@ -2760,16 +2764,17 @@ export function parseMethod(
     kind,
     allowTSModifiers,
   );
+  const start = parser.getPosition();
   const {body, head} = parseFunctionBodyAndFinish(parser, {
+    rest,
+    params,
+    id: undefined,
     allowBodiless: isClass,
     isArrowFunction: false,
     isAsync,
     isGenerator,
     isMethod: true,
-    id: undefined,
-    params,
-    rest,
-    start: parser.getPosition(),
+    start,
   });
 
   parser.popScope('METHOD');
@@ -2841,6 +2846,26 @@ export function parseArrowExpression(
 
   parser.pushScope('FUNCTION', true);
 
+  const oldYieldPos = parser.state.yieldPos;
+  const oldAwaitPos = parser.state.awaitPos;
+  const oldMaybeInArrowParameters = parser.state.maybeInArrowParameters;
+  parser.pushScope('GENERATOR', false);
+  parser.state.maybeInArrowParameters = false;
+  parser.state.yieldPos = number0;
+  parser.state.awaitPos = number0;
+
+  const headEnd = parser.getPosition();
+
+  const {body, hasHoistedVars} = parseFunctionBody(parser, {
+    id: undefined,
+    allowBodiless: false,
+    isArrowFunction: true,
+    isMethod: false,
+    isAsync,
+    isGenerator: false,
+    start,
+  });
+
   let params: Array<AnyBindingPattern> = [];
   let rest: undefined | AnyTargetBindingPattern = opts.rest;
 
@@ -2856,27 +2881,18 @@ export function parseArrowExpression(
     ));
   }
 
-  const oldYieldPos = parser.state.yieldPos;
-  const oldAwaitPos = parser.state.awaitPos;
-  const oldMaybeInArrowParameters = parser.state.maybeInArrowParameters;
-  parser.pushScope('GENERATOR', false);
-  parser.state.maybeInArrowParameters = false;
-  parser.state.yieldPos = number0;
-  parser.state.awaitPos = number0;
-
-  const headEnd = parser.getPosition();
-
-  const {body, hasHoistedVars} = parseFunctionBody(parser, {
-    allowBodiless: false,
-    isArrowFunction: true,
-    isMethod: false,
-    isAsync,
-    isGenerator: false,
-    params,
-    rest,
-    id: undefined,
-    start,
-  });
+  checkFunctionNameAndParams(
+    parser,
+    {
+      isArrowFunction: true,
+      isMethod: false,
+      id: undefined,
+      params,
+      rest,
+      start,
+    },
+    body,
+  );
 
   parser.popScope('GENERATOR');
   parser.popScope('FUNCTION');
@@ -2913,15 +2929,13 @@ type FunctionBodyParseOpts = {
   isAsync: boolean;
   isGenerator: boolean;
   isMethod: boolean;
-  id: undefined | BindingIdentifier;
-  params: Array<AnyBindingPattern>;
-  rest: undefined | AnyTargetBindingPattern;
   start: Position;
+  id: BindingIdentifier | undefined;
 };
 
 export function parseFunctionBodyAndFinish(
   parser: JSParser,
-  opts: FunctionBodyParseOpts,
+  opts: CheckFunctionNameParamsOpts & FunctionBodyParseOpts,
 ): {
   head: FunctionHead;
   body: undefined | ParseFunctionBodyReturn['body'];
@@ -2953,16 +2967,35 @@ export function parseFunctionBodyAndFinish(
   }
 
   const headEnd = parser.getPosition();
+
   const {body, hasHoistedVars} = parseFunctionBody(parser, opts);
+
+  const head = createFunctionHead(parser, opts.params, opts.rest, {
+    loc: parser.finishLocAt(opts.start, headEnd),
+    generator: opts.isGenerator,
+    async: opts.isAsync,
+    hasHoistedVars: false,
+    returnType,
+    predicate,
+  });
+
+  checkFunctionNameAndParams(
+    parser,
+    {
+      isArrowFunction: opts.isArrowFunction,
+      isMethod: opts.isMethod,
+      id: opts.id,
+      start: opts.start,
+      params: opts.params,
+      rest: opts.rest,
+    },
+    body,
+  );
+
+  head.hasHoistedVars = hasHoistedVars;
+
   return {
-    head: createFunctionHead(parser, opts.params, opts.rest, {
-      loc: parser.finishLocAt(opts.start, headEnd),
-      hasHoistedVars,
-      generator: opts.isGenerator,
-      async: opts.isAsync,
-      returnType,
-      predicate,
-    }),
+    head,
     body,
   };
 }
@@ -3021,11 +3054,30 @@ function _parseFunctionBody(
   }
 
   parser.popScope('ASYNC');
-  checkFunctionNameAndParams(parser, opts, body);
   parser.popScope('PARAMETERS');
 
+  return {body, hasHoistedVars};
+}
+
+type CheckFunctionNameParamsOpts = {
+  isArrowFunction: boolean;
+  isMethod: boolean;
+  id: undefined | BindingIdentifier;
+  params: Array<AnyBindingPattern>;
+  rest: undefined | AnyTargetBindingPattern;
+  start: Position;
+};
+
+export function checkFunctionNameAndParams(
+  parser: JSParser,
+  opts: CheckFunctionNameParamsOpts,
+  body: AnyExpression | BlockStatement,
+  force?: boolean,
+): void {
+  const {isArrowFunction, isMethod, id, rest, params, start} = opts;
+
   if (
-    !isSimpleParamList(opts.params) &&
+    !isSimpleParamList(params, rest) &&
     body.type === 'BlockStatement' &&
     body.directives !== undefined
   ) {
@@ -3038,23 +3090,6 @@ function _parseFunctionBody(
       });
     }
   }
-
-  return {body, hasHoistedVars};
-}
-
-export function checkFunctionNameAndParams(
-  parser: JSParser,
-  opts: {
-    isArrowFunction: boolean;
-    isMethod: boolean;
-    id: undefined | BindingIdentifier;
-    params: Array<AnyBindingPattern>;
-    start: Position;
-  },
-  body: AnyExpression | BlockStatement,
-  force?: boolean,
-): void {
-  const {isArrowFunction, isMethod, id, params, start} = opts;
 
   if (
     isArrowFunction &&
@@ -3069,7 +3104,7 @@ export function checkFunctionNameAndParams(
   const _isStrictBody = isStrictBody(parser, body);
   const isStrict = parser.inScope('STRICT') || _isStrictBody;
 
-  const isSimpleParams = isSimpleParamList(params);
+  const isSimpleParams = isSimpleParamList(params, rest);
   const shouldCheckLVal: boolean =
     isStrict || isArrowFunction || isMethod || !isSimpleParams;
 
@@ -3096,12 +3131,20 @@ export function checkFunctionNameAndParams(
   parser.popScope('STRICT');
 }
 
-function isSimpleParamList(params: Array<AnyNode>): boolean {
+function isSimpleParamList(
+  params: Array<AnyBindingPattern>,
+  rest: undefined | AnyTargetBindingPattern,
+): boolean {
+  if (rest !== undefined) {
+    return false;
+  }
+
   for (const param of params) {
-    if (param.type !== 'Identifier') {
+    if (param.type !== 'BindingIdentifier') {
       return false;
     }
   }
+
   return true;
 }
 
@@ -3218,44 +3261,48 @@ export function parseBindingIdentifier(
   parser: JSParser,
   liberal?: boolean,
 ): BindingIdentifier {
-  return toBindingIdentifier(parseIdentifier(parser, liberal));
+  return toBindingIdentifier(parser, parseIdentifier(parser, liberal));
 }
 
 export function parseReferenceIdentifier(
   parser: JSParser,
   liberal?: boolean,
 ): ReferenceIdentifier {
-  return toReferenceIdentifier(parseIdentifier(parser, liberal));
+  return toReferenceIdentifier(parser, parseIdentifier(parser, liberal));
 }
 
 export function toBindingIdentifier(
+  parser: JSParser,
   node: ReferenceIdentifier | Identifier | AssignmentIdentifier,
 ): BindingIdentifier {
-  return {
+  return parser.finalizeNode({
     ...node,
     type: 'BindingIdentifier',
-  };
+  });
 }
 
 export function toAssignmentIdentifier(
+  parser: JSParser,
   node: ReferenceIdentifier | Identifier | BindingIdentifier,
 ): AssignmentIdentifier {
-  return {
+  return parser.finalizeNode({
     ...node,
     type: 'AssignmentIdentifier',
-  };
+  });
 }
 
 export function toReferenceIdentifier(
+  parser: JSParser,
   node: BindingIdentifier | Identifier | AssignmentIdentifier,
 ): ReferenceIdentifier {
-  return {
+  return parser.finalizeNode({
     ...node,
     type: 'ReferenceIdentifier',
-  };
+  });
 }
 
 export function toIdentifier(
+  parser: JSParser,
   node: BindingIdentifier | ReferenceIdentifier | AssignmentIdentifier,
 ): Identifier {
   return {
@@ -3581,6 +3628,7 @@ function parseImportCall(parser: JSParser): ImportCall {
     });
 
     argument = toReferenceIdentifier(
+      parser,
       parser.createUnknownIdentifier('import call argument'),
     );
   } else {
@@ -3676,10 +3724,10 @@ function parseSuper(parser: JSParser): Super {
     });
   }
 
-  return {
+  return parser.finalizeNode({
     type: 'Super',
     loc,
-  };
+  });
 }
 
 function parseDoExpression(parser: JSParser): DoExpression {

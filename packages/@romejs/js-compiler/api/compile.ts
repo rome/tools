@@ -54,8 +54,8 @@ export default async function compile(
   );
 
   const res: CompileResult = {
-    compiledCode: generator.getCode(),
-    mappings: generator.getMappings(),
+    compiledCode: generator.buf.getCode(),
+    mappings: generator.buf.getMappings(),
     diagnostics: [...ast.diagnostics, ...diagnostics],
     cacheDependencies,
     suppressions,

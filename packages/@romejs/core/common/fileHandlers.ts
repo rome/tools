@@ -310,6 +310,7 @@ function buildJSHandler(
 
       const res = generateJS(ast, {
         typeAnnotations: true,
+        format: 'pretty',
       });
 
       const extractedSuppressions = compiler.extractSuppressionsFromProgram(
@@ -318,7 +319,7 @@ function buildJSHandler(
 
       return worker.api.interceptAndAddGeneratedToDiagnostics(
         {
-          formatted: res.getCode(),
+          formatted: res.buf.getCode(),
           sourceText,
           suppressions: extractedSuppressions.suppressions,
           diagnostics: [

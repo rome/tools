@@ -24,6 +24,7 @@ export type Program = JSNodeBase & {
   filename: string;
   interpreter: undefined | InterpreterDirective;
   mtime: undefined | number;
+  corrupt: boolean;
   sourceType: ConstSourceType;
   diagnostics: PartialDiagnostics;
   comments: Array<AnyComment>;
@@ -38,6 +39,7 @@ export const MOCK_PROGRAM: Program = {
   filename: 'unknown',
   mtime: undefined,
   interpreter: undefined,
+  corrupt: false,
   sourceType: 'module',
   diagnostics: [],
   comments: [],

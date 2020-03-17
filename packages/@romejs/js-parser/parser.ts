@@ -211,8 +211,13 @@ const createJSParser = createParser(
         }
       }
 
+      finalizeNode<T extends AnyNode>(node: T): T {
+        attachComments(this, node);
+        return node;
+      }
+
       finishNode<T extends AnyNode>(start: Position, node: T): T {
-        return this.finishNodeAt(start, this.getEndPosition(), node);
+        return this.finishNodeAt(start, this.getLastEndPosition(), node);
       }
 
       finishNodeAt<T extends AnyNode>(
@@ -225,15 +230,15 @@ const createJSParser = createParser(
           ...node,
           loc: this.finishLocAt(start, end),
         };
-        attachComments(this, newNode);
-        return newNode;
+        return this.finalizeNode(newNode);
       }
 
       createUnknownIdentifier(
         reason: string,
         start: Position = this.getPosition(),
-        end: Position = this.getEndPosition(),
+        end: Position = this.getLastEndPosition(),
       ): Identifier {
+        this.state.corrupt = true;
         return {
           type: 'Identifier',
           name: 'INVALID_PLACEHOLDER',
@@ -244,8 +249,9 @@ const createJSParser = createParser(
       createUnknownStringLiteral(
         reason: string,
         start: Position = this.getPosition(),
-        end: Position = this.getEndPosition(),
+        end: Position = this.getLastEndPosition(),
       ): StringLiteral {
+        this.state.corrupt = true;
         return {
           type: 'StringLiteral',
           value: 'INVALID_PLACEHOLDER',
@@ -365,7 +371,7 @@ const createJSParser = createParser(
         // If we weren't given a start then default to the provided end, or the current token start
         if (start === undefined && end === undefined) {
           start = this.getPosition();
-          end = this.getEndPosition();
+          end = this.getLastEndPosition();
         }
 
         if (start === undefined && end !== undefined) {
@@ -729,8 +735,8 @@ const createJSParser = createParser(
         return this.state.startPos;
       }
 
-      // Overrides ParserCore#getEndPosition
-      getEndPosition(): Position {
+      // Overrides ParserCore#getLastEndPosition
+      getLastEndPosition(): Position {
         return this.state.lastEndPos;
       }
 

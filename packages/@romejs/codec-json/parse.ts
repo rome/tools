@@ -366,7 +366,7 @@ export default createParser(
           // Parse the value.
           const valueStart = this.getPosition();
           const value = this.parseExpression();
-          const valueEnd = this.getPrevEndPosition();
+          const valueEnd = this.getLastEndPosition();
 
           // Eat the comments after the expression and associate the comments with them
           let trailingValueComments = this.eatComments();
@@ -515,7 +515,7 @@ export default createParser(
           // Parse the value
           const item = this.parseExpression();
           arr.push(item);
-          const end = this.getPrevEndPosition();
+          const end = this.getLastEndPosition();
 
           // Trailing comments are really weird, but let's handle them just like object properties
           const trailingComments = this.eatComments();

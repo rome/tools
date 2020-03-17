@@ -22,6 +22,10 @@ export default function VariableDeclarationStatement(
     return;
   }
 
+  if (node.declare) {
+    generator.word('declare');
+  }
+
   generator.print(node.declaration, node);
   generator.semicolon();
 }

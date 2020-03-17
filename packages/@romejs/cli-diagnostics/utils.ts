@@ -17,10 +17,10 @@ export function showInvisibles(str: string): string {
         ret += '·'; // Middle Dot, \u00B7
         break;
       case '\r':
-        ret += '␍\r';
+        ret += '␍';
         break;
       case '\n':
-        ret += '⏎\n'; // Return Symbol, \u23ce
+        ret += '⏎'; // Return Symbol, \u23ce
         break;
       case '\t':
         ret += '↹'; // Left Arrow To Bar Over Right Arrow To Bar, \u21b9

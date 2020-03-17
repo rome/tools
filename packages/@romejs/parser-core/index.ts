@@ -337,13 +337,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   // Get the end position of the current token
-  getEndPosition() {
-    const token = this.getToken();
-    return this.getPositionFromIndex(token.end);
-  }
-
-  // Get the end position of the previous token
-  getPrevEndPosition() {
+  getLastEndPosition() {
     return this.getPositionFromIndex(this.prevToken.end);
   }
 
@@ -463,7 +457,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
     // When both properties are omitted then we will default to the current token range
     if (start === undefined && end === undefined) {
-      end = this.getEndPosition();
+      end = this.getLastEndPosition();
     }
 
     if (start === undefined) {
@@ -659,7 +653,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   finishLoc(start: Position): SourceLocation {
-    return this.finishLocAt(start, this.getPosition());
+    return this.finishLocAt(start, this.getLastEndPosition());
   }
 
   finishLocAt(start: Position, end: Position): SourceLocation {

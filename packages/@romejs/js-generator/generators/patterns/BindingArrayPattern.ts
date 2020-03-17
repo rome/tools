@@ -12,6 +12,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 import ArrayExpression from '../expressions/ArrayExpression';
+import {printPatternMeta} from '../utils';
 
 export default function BindingArrayPattern(
   generator: Generator,
@@ -20,4 +21,5 @@ export default function BindingArrayPattern(
   node = bindingArrayPattern.assert(node);
 
   ArrayExpression(generator, node);
+  printPatternMeta(generator, node, node.meta);
 }

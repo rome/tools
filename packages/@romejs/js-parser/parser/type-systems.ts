@@ -484,7 +484,7 @@ export function parseTypeExpressionStatement(
       if (parser.match(tt.braceL)) {
         addTSDiagnostic(parser, 'module declaration', start);
         const global = true;
-        const id = toBindingIdentifier(expr);
+        const id = toBindingIdentifier(parser, expr);
         const body = parseTSModuleBlock(parser);
         return parser.finishNode(start, {
           type: 'TSModuleDeclaration',

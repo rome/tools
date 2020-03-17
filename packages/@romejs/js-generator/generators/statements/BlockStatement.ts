@@ -19,21 +19,19 @@ export default function BlockStatement(generator: Generator, node: AnyNode) {
   );
 
   if (node.body.length > 0 || hasDirectives) {
-    generator.newline();
+    generator.forceNewline();
 
     generator.printStatementList(node.directives, node, {indent: true});
     if (hasDirectives) {
-      generator.newline();
+      generator.forceNewline();
     }
 
     generator.printStatementList(node.body, node, {indent: true});
-    generator.removeTrailingNewline();
 
     generator.source('end', node.loc);
 
-    if (!generator.endsWith('\n')) {
-      generator.newline();
-    }
+    generator.buf.removeTrailingNewlines();
+    generator.forceNewline();
 
     generator.rightBrace();
   } else {
