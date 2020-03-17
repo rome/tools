@@ -670,22 +670,6 @@ Program {
                     }
                   }
                   RegExpCharacter {
-                    value: '{'
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 52
-                        index: 52
-                        line: 1
-                      }
-                      start: Object {
-                        column: 51
-                        index: 51
-                        line: 1
-                      }
-                    }
-                  }
-                  RegExpCharacter {
                     value: '1'
                     loc: Object {
                       filename: 'input.js'
