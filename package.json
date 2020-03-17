@@ -30,6 +30,9 @@
     "tests": {
       "enabled": true
     },
+    "format": {
+      "enabled": true
+    },
     "lint": {
       "enabled": true,
       "ignore": [
