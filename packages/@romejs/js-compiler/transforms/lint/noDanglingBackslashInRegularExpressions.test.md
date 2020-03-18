@@ -15,7 +15,7 @@ Object {
       category: 'lint/noDanglingBackslash'
       filename: 'unknown'
       language: 'js'
-      message: 'Found a dangling backslash in the regular expression'
+      message: 'Dangling backslash in a regular expression'
       mtime: undefined
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
@@ -45,7 +45,7 @@ Object {
       category: 'lint/noDanglingBackslash'
       filename: 'unknown'
       language: 'js'
-      message: 'Found a dangling backslash in the regular expression'
+      message: 'Dangling backslash in a regular expression'
       mtime: undefined
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
@@ -94,7 +94,7 @@ Object {
       category: 'lint/noDanglingBackslash'
       filename: 'unknown'
       language: 'js'
-      message: 'Found a dangling backslash in the regular expression'
+      message: 'Dangling backslash in a regular expression'
       mtime: undefined
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
@@ -162,7 +162,7 @@ Object {
       category: 'lint/noDanglingBackslash'
       filename: 'unknown'
       language: 'js'
-      message: 'Found a dangling backslash in the regular expression'
+      message: 'Dangling backslash in a regular expression'
       mtime: undefined
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
