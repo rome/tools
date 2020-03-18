@@ -29,6 +29,12 @@ Object {
         index: 13
         line: 1
       }
+      advice: Array [
+        log {
+          category: 'info'
+          message: 'Did you mean <emphasis>{1,2}</emphasis>?'
+        }
+      ]
     }
   ]
 }
@@ -59,6 +65,12 @@ Object {
         index: 17
         line: 1
       }
+      advice: Array [
+        log {
+          category: 'info'
+          message: 'Did you mean <emphasis>{1,10}</emphasis>?'
+        }
+      ]
     }
   ]
 }

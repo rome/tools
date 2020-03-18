@@ -21,6 +21,13 @@ export default {
       context.addNodeDiagnostic(node, {
         category: 'lint/invalidQuantifierRange',
         message: 'Quantifier minimum is greater than maximum',
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: `Did you mean <emphasis>{${node.max},${node.min}}</emphasis>?`,
+          },
+        ],
       });
     }
 
