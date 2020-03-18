@@ -536,7 +536,7 @@ export default class MasterRequest {
     filename: AbsoluteFilePath,
     opts: WorkerParseOptions,
   ): Promise<Program> {
-    return this.wrapRequestDiagnostic('parse', filename, (bridge, file) =>
+    return this.wrapRequestDiagnostic('parse', filename, (bridge: WorkerBridge, file) =>
       bridge.parseJS.call({file, opts}),
     );
   }
@@ -558,7 +558,7 @@ export default class MasterRequest {
     const res = await this.wrapRequestDiagnostic(
       'lint',
       filename,
-      (bridge, file) =>
+      (bridge: WorkerBridge, file) =>
         bridge.lint.call({file, fix, prefetchedModuleSignatures}),
     );
 
@@ -572,7 +572,7 @@ export default class MasterRequest {
   async requestWorkerFormat(
     path: AbsoluteFilePath,
   ): Promise<undefined | WorkerFormatResult> {
-    return await this.wrapRequestDiagnostic('format', path, (bridge, file) =>
+    return await this.wrapRequestDiagnostic('format', path, (bridge: WorkerBridge, file) =>
       bridge.format.call({file}),
     );
   }
@@ -605,7 +605,7 @@ export default class MasterRequest {
     const compileRes = await this.wrapRequestDiagnostic(
       'compile',
       path,
-      (bridge, file) => {
+      (bridge: WorkerBridge, file) => {
         // We allow options to be passed in as undefined so we can compute an easy cache key
         if (options === undefined) {
           options = {};
@@ -647,7 +647,7 @@ export default class MasterRequest {
     const res = await this.wrapRequestDiagnostic(
       'analyzeDependencies',
       path,
-      (bridge, file) => bridge.analyzeDependencies.call({file}),
+      (bridge: WorkerBridge, file) => bridge.analyzeDependencies.call({file}),
     );
     await cache.update(path, {
       analyzeDependencies: {
@@ -675,7 +675,7 @@ export default class MasterRequest {
     const res = await this.wrapRequestDiagnostic(
       'moduleSignature',
       filename,
-      (bridge, file) => bridge.moduleSignatureJS.call({file}),
+      (bridge: WorkerBridge, file) => bridge.moduleSignatureJS.call({file}),
     );
     await cache.update(filename, {
       moduleSignature: res,
