@@ -20,7 +20,7 @@ export default {
         if (last && last.type === 'RegExpCharacter' && !last.value) {
           context.addNodeDiagnostic(last, {
             category: 'lint/noDanglingBackslash',
-            message: 'Found a dangling backslash in the regular expression',
+            message: 'Dangling backslash in a regular expression',
           });
         }
       }
