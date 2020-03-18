@@ -536,8 +536,10 @@ export default class MasterRequest {
     filename: AbsoluteFilePath,
     opts: WorkerParseOptions,
   ): Promise<Program> {
-    return this.wrapRequestDiagnostic('parse', filename, (bridge: WorkerBridge, file) =>
-      bridge.parseJS.call({file, opts}),
+    return this.wrapRequestDiagnostic(
+      'parse',
+      filename,
+      (bridge: WorkerBridge, file) => bridge.parseJS.call({file, opts}),
     );
   }
 
@@ -572,8 +574,10 @@ export default class MasterRequest {
   async requestWorkerFormat(
     path: AbsoluteFilePath,
   ): Promise<undefined | WorkerFormatResult> {
-    return await this.wrapRequestDiagnostic('format', path, (bridge: WorkerBridge, file) =>
-      bridge.format.call({file}),
+    return await this.wrapRequestDiagnostic(
+      'format',
+      path,
+      (bridge: WorkerBridge, file) => bridge.format.call({file}),
     );
   }
 
