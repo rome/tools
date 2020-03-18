@@ -34,6 +34,7 @@ import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
+import noDuplicateGroupNamesInRegularExpressions from './noDuplicateGroupNamesInRegularExpressions';
 
 // Add transforms in alphabetical order.
 export const lintTransforms = [
@@ -65,4 +66,5 @@ export const lintTransforms = [
   undeclaredVariables,
   unsafeNegation,
   unusedVariables,
+  noDuplicateGroupNamesInRegularExpressions,
 ];

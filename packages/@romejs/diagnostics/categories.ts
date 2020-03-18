@@ -24,6 +24,7 @@ export type DiagnosticCategory =
   | 'lint/pendingFixes'
   | 'lint/defaultExportSameBasename'
   | 'lint/noMultipleSpacesInRegularExpressionLiterals'
+  | 'lint/noDuplicateGroupNamesInRegularExpressions'
   | 'lint/noVar'
   | 'lint/emptyBlocks'
   | 'lint/getterReturn'
