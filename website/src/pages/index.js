@@ -36,9 +36,9 @@ function Home() {
               Rome is an experimental <br />
               JavaScript toolchain
             </h1>
-            <p className={styles.heroBannerSubtitle}>
+            <h2 className={styles.heroBannerSubtitle}>
               A compiler, linter, formatter, bundler, testing framework and more
-            </p>
+            </h2>
           </div>
           <div className={styles.buttons}>
             <Link
