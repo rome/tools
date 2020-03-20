@@ -24,7 +24,7 @@ import {SourceMap} from '@romejs/codec-source-map';
 
 assertNodeTypeSet(generatorFunctions, 'generators');
 
-export type GeneratorMethod = (generator: Generator, node: AnyNode, parent: AnyNode) => 
+export type GeneratorMethod = (generator: Generator, node: AnyNode, parent: AnyNode) =>
     | void
     | never;
 
@@ -72,7 +72,7 @@ type GeneratorSnapshot = {
   buffer: BufferSnapshot;
 };
 
-type MultilineCondition = 
+type MultilineCondition =
     | 'more-than-one-line'
     | 'any-line-exceeds'
     | 'source-had-multiline';
@@ -355,6 +355,7 @@ export default class Generator {
       return;
     }
 
+    this.buf.removeTrailing(' ');
     this.append('\n');
   }
 
@@ -641,7 +642,7 @@ export default class Generator {
   }
 
   printBlock(
-    parent: 
+    parent:
         | WithStatement
         | ForInStatement
         | ForOfStatement

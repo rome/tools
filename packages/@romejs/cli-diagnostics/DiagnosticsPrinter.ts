@@ -86,7 +86,7 @@ function equalPosition(
   return true;
 }
 
-type BeforeFooterPrintFn = (reporter: Reporter) => void;
+type BeforeFooterPrintFn = (reporter: Reporter, error: boolean) => void;
 
 export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
   grep: '',
@@ -439,7 +439,7 @@ export default class DiagnosticsPrinter extends Error {
 
         outdatedAdvice.push({
           type: 'list',
-          list: outdatedFilesArr.map((filename) => 
+          list: outdatedFilesArr.map((filename) =>
             `<filelink target="${filename}" />`
           ),
         });
@@ -459,7 +459,7 @@ export default class DiagnosticsPrinter extends Error {
       const derivedAdvice: DiagnosticAdvice = [
         ...derived.advice,
         ...outdatedAdvice,
-      ].map((item) => 
+      ].map((item) =>
         normalizeDiagnosticAdviceItem(diag, item, this.reporter.markupOptions)
       );
       const advice: DiagnosticAdvice = derivedAdvice.concat(diag.advice);
@@ -525,15 +525,17 @@ export default class DiagnosticsPrinter extends Error {
   footer() {
     const {reporter, problemCount} = this;
 
-    if (problemCount > 0) {
+    const isError = problemCount > 0;
+
+    if (isError) {
       reporter.hr();
     }
 
     for (const handler of this.beforeFooterPrint) {
-      handler(reporter);
+      handler(reporter, isError);
     }
 
-    if (problemCount > 0) {
+    if (isError) {
       this.footerError();
     } else {
       this.footerSuccess();

@@ -10,7 +10,6 @@ import CompilerLinter from './CompilerLinter';
 import {LINTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
 import {AbsoluteFilePathSet} from '@romejs/path';
 import DependencyGraph from '../dependencies/DependencyGraph';
-import {humanizeNumber} from '@romejs/string-utils';
 
 export default class Linter {
   constructor(req: MasterRequest, fix: boolean) {
@@ -33,22 +32,22 @@ export default class Linter {
     printer.processor.addAllowedUnusedSuppressionPrefix('bundler');
 
     const paths: AbsoluteFilePathSet = await request.getFilesFromArgs({
-      getProjectIgnore: (project) => 
+      getProjectIgnore: (project) =>
         ({
           patterns: project.config.lint.ignore,
           source: master.projectManager.findProjectConfigConsumer(project, (
             consumer,
-          ) => 
+          ) =>
             consumer.has('lint') && consumer.get('lint').has('ignore')
               ? consumer.get('lint').get('ignore') : undefined
           ),
         }),
-      getProjectEnabled: (project) => 
+      getProjectEnabled: (project) =>
         ({
           enabled: project.config.lint.enabled,
           source: master.projectManager.findProjectConfigConsumer(project, (
             consumer,
-          ) => 
+          ) =>
             consumer.has('lint')
               ? consumer.get('lint').get('enabled') : undefined
           ),
@@ -59,16 +58,31 @@ export default class Linter {
       extensions: LINTABLE_EXTENSIONS,
     });
 
-    printer.onBeforeFooterPrint(() => {
-      const fileCount = paths.size;
-      if (fileCount === 0) {
-        reporter.warn('No files linted');
-      } else if (fileCount === 1) {
-        reporter.info(`<emphasis>1</emphasis> file linted`);
+    printer.onBeforeFooterPrint((reporter, isError) => {
+      if (isError) {
+        let hasPendingFixes = false;
+
+        for (const {category} of printer.processor.getPartialDiagnostics()) {
+          if (category === 'lint/pendingFixes') {
+            hasPendingFixes = true;
+            break;
+          }
+        }
+
+        if (hasPendingFixes) {
+          reporter.info('Fixes available. Run <command>rome lint --fix</command> to apply.');
+        }
       } else {
-        reporter.info(
-          `<emphasis>${humanizeNumber(fileCount)}</emphasis> files linted`,
-        );
+        const fileCount = paths.size;
+        if (fileCount === 0) {
+          reporter.warn('No files linted');
+        } else if (fileCount === 1) {
+          reporter.info(`<emphasis>1</emphasis> file linted`);
+        } else {
+          reporter.info(
+            `<number emphasis>${fileCount}</number> files linted`,
+          );
+        }
       }
     });
 
