@@ -296,9 +296,7 @@ export default class Client {
       writer.append({name: 'logs.txt'}, logs);
 
       // Add requests
-      for (let i = 0;
-      i < responses.length;
-      i++) {
+      for (let i = 0; i < responses.length; i++) {
         const {request, response} = responses[i];
         const dirname = `requests/${i}-${request.commandName}`;
         writer.append({name: `${dirname}/request.json`}, stringify(request));

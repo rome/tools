@@ -207,9 +207,7 @@ export default createParser((ParserCore) =>
           }
 
           // Don't allow newlines in JSON
-          for (let strIndex = 0;
-          strIndex < value.length;
-          strIndex++) {
+          for (let strIndex = 0; strIndex < value.length; strIndex++) {
             const char = value[strIndex];
 
             if (char === '\n') {
@@ -423,9 +421,7 @@ export default createParser((ParserCore) =>
     removeUnderscores(index: Number0, raw: string): string {
       let str = '';
 
-      for (let i = 0;
-      i < raw.length;
-      i++) {
+      for (let i = 0; i < raw.length; i++) {
         const char = raw[i];
 
         if (char === '_') {

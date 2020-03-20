@@ -70,9 +70,7 @@ function isComputedPart(part: ConsumeKey): boolean {
 function joinPath(path: ConsumePath): string {
   let str = '';
 
-  for (let i = 0;
-  i < path.length;
-  i++) {
+  for (let i = 0; i < path.length; i++) {
     const part = path[i];
     const nextPart = path[i + 1];
 
@@ -661,9 +659,7 @@ export default class Consumer {
     const setVals: Set<unknown> = new Set();
     const set: Set<Consumer> = new Set();
 
-    for (let i = 0;
-    i < arr.length;
-    i++) {
+    for (let i = 0; i < arr.length; i++) {
       const consumer = arr[i];
       const value = consumer.asUnknown();
       if (setVals.has(value)) {

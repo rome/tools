@@ -24,9 +24,7 @@ const cont = [8_204, 8_205].concat(require(
 }));
 
 function search(arr, ch, starting) {
-  for (let i = starting;
-  arr[i] <= ch && i < arr.length;
-  last = i++) {
+  for (let i = starting; arr[i] <= ch && i < arr.length; last = i++) {
     if (arr[i] === ch) return i;
   }
   return -1;
@@ -45,9 +43,7 @@ function esc(code) {
 function generate(chars) {
   const astral = [];
   let re = '';
-  for (let i = 0, at = 65_536;
-  i < chars.length;
-  i++) {
+  for (let i = 0, at = 65_536; i < chars.length; i++) {
     const from = chars[i];
     let to = from;
     while (i < chars.length - 1 && chars[i + 1] == to + 1) {

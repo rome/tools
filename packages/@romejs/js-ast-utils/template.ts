@@ -47,9 +47,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
   // create path ids
   let placeholders: TemplatePlaceholders = {};
   const placeholderIds: Array<string> = [];
-  for (let i = 0;
-  i < pathCount;
-  i++) {
+  for (let i = 0; i < pathCount; i++) {
     const id = `__${String(i)}__`;
     placeholderIds.push(id);
     placeholders[id] = undefined;
@@ -57,9 +55,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 
   // interpolate placeholders and original code
   let code = '';
-  for (let i = 0;
-  i < strs.length;
-  i++) {
+  for (let i = 0; i < strs.length; i++) {
     // add original part of code
     code += strs[i];
 
@@ -150,18 +146,14 @@ export default function template(
 
   const newAst = {...ast};
 
-  for (let i = 0;
-  i < placeholderPaths.length;
-  i++) {
+  for (let i = 0; i < placeholderPaths.length; i++) {
     const {type, path} = placeholderPaths[i];
 
     const substitute: AnyNode = createIdentifier(substitutions[i], type);
     // rome-suppress lint/noExplicitAny
     let target: any = newAst;
 
-    for (let i = 0;
-    i < path.length;
-    i++) {
+    for (let i = 0; i < path.length; i++) {
       const key = path[i];
       const isLast = i === path.length - 1;
 

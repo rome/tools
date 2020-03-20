@@ -120,9 +120,7 @@ export function toAssignmentPattern(
       {
         const props = [];
         let rest: undefined | AssignmentIdentifier;
-        for (let index = 0;
-        index < node.properties.length;
-        index++) {
+        for (let index = 0; index < node.properties.length; index++) {
           const prop = node.properties[index];
           if (prop.type === 'SpreadProperty') {
             const arg = toTargetAssignmentPattern(
@@ -488,9 +486,7 @@ export function toAssignableList(
   }
 
   // Turn type casts that we found in function parameter head into type annotated params
-  for (let i = 0;
-  i < end;
-  i++) {
+  for (let i = 0; i < end; i++) {
     const expr = exprList[i];
     if (expr === undefined) {
       continue;
@@ -508,9 +504,7 @@ export function toAssignableList(
     }
   }
 
-  for (let i = 0;
-  i < end;
-  i++) {
+  for (let i = 0; i < end; i++) {
     const elt = exprList[i];
     if (elt === undefined) {
       continue;
@@ -582,9 +576,7 @@ export function toReferencedList(
   exprList: Array<ToReferencedItem>,
   isParenthesizedExpr?: boolean,
 ): Array<SpreadElement | AnyExpression> {
-  for (let i = 0;
-  i < exprList.length;
-  i++) {
+  for (let i = 0; i < exprList.length; i++) {
     const expr = exprList[i];
     exprList[i] = toReferencedItem(
       parser,
@@ -603,9 +595,7 @@ export function toReferencedListOptional(
   exprList: Array<undefined | ToReferencedItem>,
   isParenthesizedExpr?: boolean,
 ): Array<undefined | SpreadElement | AnyExpression> {
-  for (let i = 0;
-  i < exprList.length;
-  i++) {
+  for (let i = 0; i < exprList.length; i++) {
     const expr = exprList[i];
     if (expr !== undefined) {
       exprList[i] = toReferencedItem(
@@ -686,9 +676,7 @@ export function filterSpread<T extends AnyNode>(
   parser: JSParser,
   elems: Array<T | ReferenceIdentifier | SpreadElement>,
 ): Array<ReferenceIdentifier | T> {
-  for (let i = 0;
-  i < elems.length;
-  i++) {
+  for (let i = 0; i < elems.length; i++) {
     const elem = elems[i];
     if (elem.type === 'SpreadElement') {
       parser.addDiagnostic({
@@ -729,9 +717,7 @@ function toReferencedListDeepItems(
   parser: JSParser,
   exprList: Array<undefined | ToReferencedItem>,
 ) {
-  for (let i = 0;
-  i < exprList.length;
-  i++) {
+  for (let i = 0; i < exprList.length; i++) {
     const expr = exprList[i];
     if (expr !== undefined && expr.type === 'ArrayExpression') {
       toReferencedListDeepOptional(parser, expr.elements);

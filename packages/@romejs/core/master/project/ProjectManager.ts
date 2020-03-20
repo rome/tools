@@ -60,9 +60,7 @@ function cleanUidParts(parts: Array<string>): string {
 
     // Prune off any prefix shared with the last part
     let sharedPrefix = '';
-    for (let i = 0;
-    i < part.length && lastPart[i] === part[i];
-    i++) {
+    for (let i = 0; i < part.length && lastPart[i] === part[i]; i++) {
       sharedPrefix += part[i];
     }
 

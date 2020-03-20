@@ -85,9 +85,7 @@ export default class SourceMapConsumer {
 
         // segment again.
         let end = index;
-        for (;
-        end < length;
-        end++) {
+        for (; end < length; end++) {
           if (SourceMapConsumer.charIsMappingSeparator(rawStr, end)) {
             break;
           }

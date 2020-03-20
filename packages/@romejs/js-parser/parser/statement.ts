@@ -504,9 +504,7 @@ export function parseBreakContinueStatement(
 
   // continue to.
   let i;
-  for (i = 0;
-  i < parser.state.labels.length;
-  ++i) {
+  for (i = 0; i < parser.state.labels.length; ++i) {
     const lab = parser.state.labels[i];
     if (label === undefined || lab.name === label.name) {
       if (lab.kind !== undefined && (isBreak || lab.kind === 'loop')) {
@@ -965,9 +963,7 @@ export function parseLabeledStatement(
     kind = 'switch';
   }
 
-  for (let i = parser.state.labels.length - 1;
-  i >= 0;
-  i--) {
+  for (let i = parser.state.labels.length - 1; i >= 0; i--) {
     const label = parser.state.labels[i];
     if (label.statementStart === start.index) {
       label.statementStart = parser.state.startPos.index;

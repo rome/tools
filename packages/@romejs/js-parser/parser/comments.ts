@@ -104,9 +104,7 @@ function adjustCommentsAfterTrailingComma(
     throw new Error('No commentPreviousNode found');
   }
 
-  for (let j = 0;
-  j < parser.state.leadingComments.length;
-  j++) {
+  for (let j = 0; j < parser.state.leadingComments.length; j++) {
     if (end(parser.state.leadingComments[j]) < end(commentPreviousNode)) {
       parser.state.leadingComments.splice(j, 1);
       j--;
@@ -114,9 +112,7 @@ function adjustCommentsAfterTrailingComma(
   }
 
   const newTrailingComments = [];
-  for (let i = 0;
-  i < parser.state.leadingComments.length;
-  i++) {
+  for (let i = 0; i < parser.state.leadingComments.length; i++) {
     const leadingComment = parser.state.leadingComments[i];
     if (end(leadingComment) < end(node)) {
       newTrailingComments.push(leadingComment);
@@ -255,9 +251,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
         // so this takes back the leading comment.
 
         // See also: https://github.com/eslint/espree/issues/158
-        for (let i = lastChild.leadingComments.length - 2;
-        i >= 0;
-        --i) {
+        for (let i = lastChild.leadingComments.length - 2; i >= 0; --i) {
           if (end(lastChild.leadingComments[i]) <= start(node)) {
             node.leadingComments = lastChild.leadingComments.splice(0, i + 1);
             break;
@@ -268,9 +262,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
   } else if (parser.state.leadingComments.length > 0) {
     if (end(last(parser.state.leadingComments)) <= start(node)) {
       if (parser.state.commentPreviousNode) {
-        for (let j = 0;
-        j < parser.state.leadingComments.length;
-        j++) {
+        for (let j = 0; j < parser.state.leadingComments.length; j++) {
           if (end(parser.state.leadingComments[j]) < end(
             parser.state.commentPreviousNode,
           )) {
@@ -342,9 +334,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
   if (trailingComments) {
     let innerEndIndex = -1;
 
-    for (let i = 0;
-    i < trailingComments.length;
-    i++) {
+    for (let i = 0; i < trailingComments.length; i++) {
       const comment = trailingComments[i];
       if (start(comment) >= start(node) && end(comment) <= end(node)) {
         innerEndIndex++;

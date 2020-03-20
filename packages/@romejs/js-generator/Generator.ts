@@ -200,9 +200,11 @@ export default class Generator {
             shouldMultiline = doesLineExceed(this.buf.position.column);
 
             // Check previous lines
-            for (let i = snapshot.buffer.lineLengthsIndex;
-            i < this.buf.lineLengths.length;
-            i++) {
+            for (
+              let i = snapshot.buffer.lineLengthsIndex;
+              i < this.buf.lineLengths.length;
+              i++
+            ) {
               if (shouldMultiline) {
                 break;
               }
@@ -399,9 +401,7 @@ export default class Generator {
     this.parenPushNewlineState = undefined;
 
     let i;
-    for (i = 0;
-    i < str.length && str[i] === ' ';
-    i++) {
+    for (i = 0; i < str.length && str[i] === ' '; i++) {
       continue;
     }
     if (i === str.length) {
@@ -732,9 +732,7 @@ export default class Generator {
       return undefined;
     }
 
-    for (let i = 0;
-    i < comments.length;
-    i++) {
+    for (let i = 0; i < comments.length; i++) {
       const comment = comments[i];
       this.printComment(comment);
 

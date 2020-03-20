@@ -282,9 +282,7 @@ function tryPathSuggestions(
   const chain = path.getChain();
 
   // Get all segments that are unknown
-  for (let i = chain.length - 1;
-  i >= 0;
-  i--) {
+  for (let i = chain.length - 1; i >= 0; i--) {
     const path = chain[i];
 
     if (memoryFs.exists(path)) {

@@ -500,9 +500,7 @@ export default class Resolver {
     if (handler !== undefined && handler.canHaveScale === true &&
       !callees.includes('implicitScale')) {
       const scale = query.scale === undefined ? 3 : query.scale;
-      for (let i = scale;
-      i >= 1;
-      i--) {
+      for (let i = scale; i >= 1; i--) {
         yield* this._getFilenameVariants(query, path.changeBasename(
           `${path.getExtensionlessBasename()}@${String(i)}x${path.memoizedExtension}`,
         ), [...callees, 'implicitScale']);

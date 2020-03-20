@@ -9,7 +9,7 @@ import {MasterRequest} from '@romejs/core';
 import CompilerLinter from './CompilerLinter';
 import {LINTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
 import DependencyGraph from '../dependencies/DependencyGraph';
-import { DiagnosticPointer } from '@romejs/diagnostics';
+import {DiagnosticPointer} from '@romejs/diagnostics';
 
 export default class Linter {
   constructor(req: MasterRequest, fix: undefined | DiagnosticPointer) {

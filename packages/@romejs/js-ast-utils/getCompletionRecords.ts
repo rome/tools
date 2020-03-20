@@ -49,9 +49,7 @@ function getLastCompletionRecordFromNodes(
   nodes: Array<AnyStatement>,
 ): undefined | Records {
   // Get the last node to produce records
-  for (let i = nodes.length - 1;
-  i >= 0;
-  i--) {
+  for (let i = nodes.length - 1; i >= 0; i--) {
     const node = nodes[i];
     const records = _getCompletionRecords(node);
     if (records !== undefined) {

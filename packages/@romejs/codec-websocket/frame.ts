@@ -22,9 +22,7 @@ export function unmaskPayload(
     return payload;
   }
 
-  for (let i = 0;
-  i < payload.length;
-  i++) {
+  for (let i = 0; i < payload.length; i++) {
     payload[i] ^= mask[offset + i & 3];
   }
 
@@ -66,9 +64,7 @@ export function buildFrame(opts: BuildFrameOpts, shouldMask: boolean): Buffer {
     head[offset - 1] = mask[3];
 
     const masked = Buffer.alloc(dataLength);
-    for (let i = 0;
-    i < dataLength;
-    ++i) {
+    for (let i = 0; i < dataLength; ++i) {
       masked[i] = data[i] ^ mask[i & 3];
     }
 

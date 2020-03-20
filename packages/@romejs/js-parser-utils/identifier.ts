@@ -741,9 +741,7 @@ export function getFullCharCodeAt(str: string, offset: number) {
 // rare.
 function isInAstralSet(code: number, set: Array<number>): boolean {
   let pos = 65_536;
-  for (let i = 0;
-  i < set.length;
-  i += 2) {
+  for (let i = 0; i < set.length; i += 2) {
     pos += set[i];
     if (pos > code) {
       return false;

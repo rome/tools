@@ -134,9 +134,7 @@ export default class SourceMapGenerator {
     let result: string = '';
 
     const mappings = this.mappings.toArray();
-    for (let i = 0;
-    i < mappings.length;
-    i++) {
+    for (let i = 0; i < mappings.length; i++) {
       const mapping = mappings[i];
       let next = '';
 

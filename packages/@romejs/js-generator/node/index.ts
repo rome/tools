@@ -76,9 +76,7 @@ export function getLinesBetween(
     bNode.loc !== undefined) {
     const [a, b] = orderLoc(aNode.loc, bNode.loc);
     const lines: Array<Number1> = [];
-    for (let line = get1(a.end.line);
-    line < get1(b.start.line);
-    line++) {
+    for (let line = get1(a.end.line); line < get1(b.start.line); line++) {
       lines.push(coerce1(line));
     }
     return lines;

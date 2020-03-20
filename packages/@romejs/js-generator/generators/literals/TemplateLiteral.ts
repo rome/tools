@@ -13,9 +13,7 @@ export default function TemplateLiteral(generator: Generator, node: AnyNode) {
 
   const quasis = node.quasis;
 
-  for (let i = 0;
-  i < quasis.length;
-  i++) {
+  for (let i = 0; i < quasis.length; i++) {
     generator.print(quasis[i], node);
 
     if (i + 1 < quasis.length) {

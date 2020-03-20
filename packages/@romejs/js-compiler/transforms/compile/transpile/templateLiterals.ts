@@ -50,9 +50,7 @@ export default {
 
       // Build the final expression
       let root = nodes[0];
-      for (let i = 1;
-      i < nodes.length;
-      i++) {
+      for (let i = 1; i < nodes.length; i++) {
         root = binaryExpression.create({
           operator: '+',
           left: root,

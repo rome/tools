@@ -234,7 +234,8 @@ export const createRegExpParser = createParser((ParserCore) =>
 
           case 'u':
             {
-              const possibleHex = input.slice(get0(index) + 1, 4);
+              // Get the next 4 characters after \u
+              const possibleHex = input.slice(get0(index) + 2, get0(index) + 6);
 
               // \uhhhh
               if (possibleHex.length === 4 && isHex(possibleHex)) {
@@ -356,9 +357,7 @@ export const createRegExpParser = createParser((ParserCore) =>
                   // Skip through all the name tokens
 
                   // This is kinda a hacky solution, and slower than it could be
-                  for (let i = 0;
-                  i < skipCount;
-                  i++) {
+                  for (let i = 0; i < skipCount; i++) {
                     this.nextToken();
                   }
 

@@ -237,9 +237,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
     }
 
     // Check that we start with the same segments as the other
-    for (let i = 0;
-    i < otherSegments.length;
-    i++) {
+    for (let i = 0; i < otherSegments.length; i++) {
       if (otherSegments[i] !== ourSegments[i]) {
         return false;
       }
@@ -372,9 +370,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
       return false;
     }
 
-    for (let i = 0;
-    i < a.length;
-    i++) {
+    for (let i = 0; i < a.length; i++) {
       if (a[i] !== b[i]) {
         return false;
       }
@@ -557,9 +553,7 @@ export class AbsoluteFilePath extends BaseFilePath<AbsoluteFilePath> {
     }
 
     let finalSegments: PathSegments = [];
-    for (let i = 0;
-    i < absolute.length;
-    i++) {
+    for (let i = 0; i < absolute.length; i++) {
       finalSegments.push('..');
     }
     finalSegments = finalSegments.concat(relative);
@@ -721,9 +715,7 @@ function normalizeSegments(
   absoluteSegments: Array<string>,
 ): Array<string> {
   const relativeSegments: PathSegments = [];
-  for (let i = offset;
-  i < segments.length;
-  i++) {
+  for (let i = offset; i < segments.length; i++) {
     let seg = segments[i];
 
     // Only allow a dot part in the first position, otherwise it's a noop

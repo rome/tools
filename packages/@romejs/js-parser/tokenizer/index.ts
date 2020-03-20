@@ -1065,9 +1065,7 @@ function readInt(
 
   let total = 0;
 
-  for (let i = 0, e = len === undefined ? Infinity : len;
-  i < e;
-  ++i) {
+  for (let i = 0, e = len === undefined ? Infinity : len; i < e; ++i) {
     const code = parser.input.charCodeAt(getIndex(parser));
     let val;
 

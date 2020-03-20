@@ -42,9 +42,7 @@ export default function executeAtom(
       }
 
     case 'BindingArrayPattern':
-      for (let i = 0;
-      i < leftNode.elements.length;
-      i++) {
+      for (let i = 0; i < leftNode.elements.length; i++) {
         const elem = leftNode.elements[i];
         if (elem === undefined) {
           continue;

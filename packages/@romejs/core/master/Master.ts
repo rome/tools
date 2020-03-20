@@ -672,9 +672,7 @@ export default class Master {
     progress.setTitle('Running benchmark');
     progress.setTotal(benchmarkIterations);
     const benchmarkStart = Date.now();
-    for (let i = 0;
-    i < benchmarkIterations;
-    i++) {
+    for (let i = 0; i < benchmarkIterations; i++) {
       await this.dispatchRequest(req, bridgeEndPromise, ['benchmark']);
       progress.tick();
     }

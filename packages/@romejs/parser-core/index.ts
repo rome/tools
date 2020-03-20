@@ -424,9 +424,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     }
 
     // Read the rest of the input until we hit the index
-    for (let i = indexSearchOffset;
-    i < get0(index);
-    i++) {
+    for (let i = indexSearchOffset; i < get0(index); i++) {
       const char = this.input[i];
 
       if (char === '\n') {

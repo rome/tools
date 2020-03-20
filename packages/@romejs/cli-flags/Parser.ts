@@ -265,9 +265,7 @@ export default class Parser<T> {
   ): Promise<undefined | DefinedCommand> {
     // A command name could be made of multiple strings
     const commandParts = splitCommandName(commandName);
-    for (let i = 0;
-    i < commandParts.length;
-    i++) {
+    for (let i = 0; i < commandParts.length; i++) {
       if (commandParts[i] !== this.args[i]) {
         return;
       }

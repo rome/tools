@@ -279,7 +279,7 @@ export default class MasterRequest {
     globOpts:
       & MemoryFSGlobOptions
       & {
-        disabledDiagnosticCategory?: DiagnosticCategory,
+        disabledDiagnosticCategory?: DiagnosticCategory;
         advice?: PartialDiagnosticAdvice;
         configCategory?: string;
         verb?: string;
@@ -287,7 +287,7 @@ export default class MasterRequest {
       } = {},
   ): Promise<{
     projects: Set<ProjectDefinition>;
-    paths: AbsoluteFilePathSet,
+    paths: AbsoluteFilePathSet;
   }> {
     const {master} = this;
     const {flags} = this.client;
@@ -310,9 +310,7 @@ export default class MasterRequest {
       });
       projects.add(project);
     } else {
-      for (let i = 0;
-      i < rawArgs.length;
-      i++) {
+      for (let i = 0; i < rawArgs.length; i++) {
         const arg = rawArgs[i];
 
         const pointer = this.getDiagnosticPointerFromFlags({

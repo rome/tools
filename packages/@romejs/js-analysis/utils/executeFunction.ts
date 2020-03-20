@@ -63,9 +63,7 @@ export default function executeFunction(
     params.push(paramType);
   }
 
-  for (let i = 0;
-  i < head.params.length;
-  i++) {
+  for (let i = 0; i < head.params.length; i++) {
     executeAtom(head.params[i], params[i], scope);
   }
   const block = bodyScope.evaluate(node.body);

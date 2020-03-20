@@ -57,9 +57,7 @@ export function compareTwoStrings(aStr: string, bStr: string): number {
   }
 
   let firstBigrams: Map<string, number> = new Map();
-  for (let i = 0;
-  i < a.length - 1;
-  i++) {
+  for (let i = 0; i < a.length - 1; i++) {
     const bigram = a.substring(i, i + 2);
 
     const count = firstBigrams.has(bigram) ? getMap(firstBigrams, bigram) + 1 : 1;
@@ -71,9 +69,7 @@ export function compareTwoStrings(aStr: string, bStr: string): number {
   }
 
   let intersectionSize: number = 0;
-  for (let i = 0;
-  i < b.length - 1;
-  i++) {
+  for (let i = 0; i < b.length - 1; i++) {
     const bigram = b.substring(i, i + 2);
 
     const count = getMap(firstBigrams, bigram, 0);

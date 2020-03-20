@@ -98,9 +98,7 @@ export default class DependencyOrderer {
   detectCycles() {
     const flatOrder = Array.from(this.orderedNodes);
 
-    for (let i = 0;
-    i < flatOrder.length;
-    i++) {
+    for (let i = 0; i < flatOrder.length; i++) {
       const node = flatOrder[i];
 
       for (const imp of node.analyze.importFirstUsage) {

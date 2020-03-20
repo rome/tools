@@ -31,8 +31,11 @@ export default function ForStatement(generator: Generator, node: AnyNode) {
       generator.spaceOrNewline(multiline);
       generator.print(node.update, node);
     }
-
-  }, {conditions: ['more-than-one-line'], indent: true, indentTrailingNewline: true});
+  }, {
+    conditions: ['more-than-one-line'],
+    indent: true,
+    indentTrailingNewline: true,
+  });
 
   generator.token(')');
   generator.printBlock(node);

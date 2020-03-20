@@ -50,9 +50,7 @@ const relativeTests: Array<[string, string, string]> = [
   ['/page1/page2/foo', '/', '../../..'],
 ];
 
-for (let i = 0;
-i < relativeTests.length;
-i++) {
+for (let i = 0; i < relativeTests.length; i++) {
   const [absolute, arg, expected] = relativeTests[i];
 
   test(`relative ${i}: ${absolute}`, (t) => {
@@ -88,9 +86,7 @@ const segmentTests: Array<[string, Array<string>]> = [
   ['foo/', ['foo', '']],
 ];
 
-for (let i = 0;
-i < segmentTests.length;
-i++) {
+for (let i = 0; i < segmentTests.length; i++) {
   const [loc, expectedSegments] = segmentTests[i];
 
   test(`segments: ${i}: ${loc}`, (t) => {

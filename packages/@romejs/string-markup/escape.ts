@@ -14,9 +14,7 @@ export function markup(
 ...values: Array<unknown>): string {
   let out = '';
 
-  for (let i = 0;
-  i < strs.length;
-  i++) {
+  for (let i = 0; i < strs.length; i++) {
     const str = strs[i];
     out += str;
 
@@ -49,9 +47,7 @@ export function safeMarkup(input: string): SafeMarkup {
 
 export function escapeMarkup(input: string): string {
   let escaped = '';
-  for (let i = 0;
-  i < input.length;
-  i++) {
+  for (let i = 0; i < input.length; i++) {
     const char = input[i];
 
     if (isTagChar(coerce0(i), input)) {

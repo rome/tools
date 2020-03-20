@@ -185,9 +185,7 @@ export default function reduce(
         // items
         let length = children.length;
 
-        for (let i = 0;
-        i < length;
-        i++) {
+        for (let i = 0; i < length; i++) {
           // Calculate the correct index that this children can be found at
           const correctedIndex = childrenOffset + i;
 

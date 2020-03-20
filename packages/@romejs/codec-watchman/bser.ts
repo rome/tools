@@ -410,9 +410,7 @@ export class BunserBuf {
     this.expectCode(BSER_ARRAY);
     const nitems = this.decodeInt();
     const arr: Array<unknown> = [];
-    for (let i = 0;
-    i < nitems;
-    ++i) {
+    for (let i = 0; i < nitems; ++i) {
       arr.push(this.decodeAny());
     }
     return arr;
@@ -422,9 +420,7 @@ export class BunserBuf {
     this.expectCode(BSER_OBJECT);
     const nitems = this.decodeInt();
     const res: Dict<unknown> = {};
-    for (let i = 0;
-    i < nitems;
-    ++i) {
+    for (let i = 0; i < nitems; ++i) {
       const key = this.decodeString();
       const val = this.decodeAny();
       res[key] = val;
@@ -437,13 +433,9 @@ export class BunserBuf {
     const keys = this.decodeArray();
     const nitems = this.decodeInt();
     const arr: Array<unknown> = [];
-    for (let i = 0;
-    i < nitems;
-    ++i) {
+    for (let i = 0; i < nitems; ++i) {
       const obj: Dict<unknown> = {};
-      for (let keyidx = 0;
-      keyidx < keys.length;
-      ++keyidx) {
+      for (let keyidx = 0; keyidx < keys.length; ++keyidx) {
         if (this.acc.peekInt(1) == BSER_SKIP) {
           this.acc.readAdvance(1);
           continue;
@@ -549,9 +541,7 @@ function dumpInt(buf: Accumulator, val: number) {
 function dumpArray(buf: Accumulator, val: Array<unknown>) {
   buf.writeByte(BSER_ARRAY);
   dumpInt(buf, val.length);
-  for (let i = 0;
-  i < val.length;
-  ++i) {
+  for (let i = 0; i < val.length; ++i) {
     dumpUnknown(buf, val[i]);
   }
 }
@@ -577,9 +567,7 @@ function dumpObject(buf: Accumulator, val: object | null) {
 
   // First pass to compute number of defined keys
   let num_keys = keys.length;
-  for (let i = 0;
-  i < keys.length;
-  ++i) {
+  for (let i = 0; i < keys.length; ++i) {
     const key = keys[i];
     const v = val[key];
     if (typeof v === 'undefined') {
@@ -589,9 +577,7 @@ function dumpObject(buf: Accumulator, val: object | null) {
 
   dumpInt(buf, num_keys);
 
-  for (let i = 0;
-  i < keys.length;
-  ++i) {
+  for (let i = 0; i < keys.length; ++i) {
     const key = keys[i];
     const v = val[key];
     if (typeof v === 'undefined') {

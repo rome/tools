@@ -227,9 +227,7 @@ export default class Buffer {
     this.buf.push(str);
     this.last = str[str.length - 1];
 
-    for (let i = 0;
-    i < str.length;
-    i++) {
+    for (let i = 0; i < str.length; i++) {
       this.position.index = inc(this.position.index);
 
       if (str[i] === '\n') {

@@ -66,14 +66,10 @@ function encodeOct(num: number, n: number): string {
 
 function checksum(block: Buffer): number {
   let sum = 8 * 32;
-  for (let i = 0;
-  i < 148;
-  i++) {
+  for (let i = 0; i < 148; i++) {
     sum += block[i];
   }
-  for (let j = 156;
-  j < 512;
-  j++) {
+  for (let j = 156; j < 512; j++) {
     sum += block[j];
   }
   return sum;

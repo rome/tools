@@ -36,9 +36,7 @@ function validateNamePart(
 ) {
   let normalizedName: string = '';
 
-  for (let i = 0;
-  i < name.length;
-  i++) {
+  for (let i = 0; i < name.length; i++) {
     const char = name[i];
 
     if (isOrg && char === '@' && i === 0) {

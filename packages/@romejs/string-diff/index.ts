@@ -237,9 +237,7 @@ function bisect(text1: string, text2: string): Diffs {
   // Setting all elements to -1 is faster in Chrome & Firefox than mixing
 
   // integers and undefined.
-  for (let x = 0;
-  x < v_length;
-  x++) {
+  for (let x = 0; x < v_length; x++) {
     v1[x] = -1;
     v2[x] = -1;
   }
@@ -257,13 +255,9 @@ function bisect(text1: string, text2: string): Diffs {
   let k1end = 0;
   let k2start = 0;
   let k2end = 0;
-  for (let d = 0;
-  d < max_d;
-  d++) {
+  for (let d = 0; d < max_d; d++) {
     // Walk the front path one step.
-    for (let k1 = -d + k1start;
-    k1 <= d - k1end;
-    k1 += 2) {
+    for (let k1 = -d + k1start; k1 <= d - k1end; k1 += 2) {
       let k1_offset = v_offset + k1;
       let x1;
       if (k1 === -d || k1 !== d && v1[k1_offset - 1] < v1[k1_offset + 1]) {
@@ -298,9 +292,7 @@ function bisect(text1: string, text2: string): Diffs {
     }
 
     // Walk the reverse path one step.
-    for (let k2 = -d + k2start;
-    k2 <= d - k2end;
-    k2 += 2) {
+    for (let k2 = -d + k2start; k2 <= d - k2end; k2 += 2) {
       let k2_offset = v_offset + k2;
       let x2: number;
       if (k2 === -d || k2 !== d && v2[k2_offset - 1] < v2[k2_offset + 1]) {

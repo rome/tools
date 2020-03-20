@@ -11,9 +11,7 @@ import {RangeNode} from './types';
 function compactRight(
   parts: Array<undefined | number>,
 ): Array<undefined | number> {
-  for (let i = parts.length - 1;
-  i >= 0;
-  i--) {
+  for (let i = parts.length - 1; i >= 0; i--) {
     const part = parts[i];
     if (part !== undefined) {
       return parts.slice(0, i + 1);

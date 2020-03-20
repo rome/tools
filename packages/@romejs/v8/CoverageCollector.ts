@@ -225,9 +225,7 @@ export default class CoverageCollector {
 
       for (const {count, kind, start, end} of ranges) {
         // Fill in lines
-        for (let i = start.line;
-        i <= end.line;
-        i = inc(i)) {
+        for (let i = start.line; i <= end.line; i = inc(i)) {
           if (count === 0) {
             uncoveredLines.add(i);
           } else {

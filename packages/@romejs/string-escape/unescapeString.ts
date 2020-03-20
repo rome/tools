@@ -93,9 +93,7 @@ export default function unescapeString(
       }
 
       // Validate that each character is a valid hex digit
-      for (let i = 0;
-      i < rawCode.length;
-      i++) {
+      for (let i = 0; i < rawCode.length; i++) {
         const char = rawCode[i];
         if (!isHexDigit(char)) {
           // Get the current source index for this character

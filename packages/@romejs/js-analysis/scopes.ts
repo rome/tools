@@ -82,9 +82,7 @@ export class Scope {
     }
 
     //invariant(initial !== undefined, `Expected "${paths[0]}" binding`);
-    for (let i = 1;
-    i < paths.length;
-    i++) {
+    for (let i = 1; i < paths.length; i++) {
       initial = new GetPropT(this, undefined, initial, new StringLiteralT(
         this,
         undefined,

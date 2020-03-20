@@ -60,9 +60,7 @@ export function serializeCLIFlags(
   let endColumn: Number0 = number0Neg1;
 
   // Add args
-  for (let i = 0;
-  i < args.length;
-  i++) {
+  for (let i = 0; i < args.length; i++) {
     const arg = args[i];
 
     let isTarget = false;

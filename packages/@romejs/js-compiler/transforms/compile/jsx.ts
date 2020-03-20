@@ -185,9 +185,7 @@ function cleanJSXElementLiteralChild(value: string): undefined | StringLiteral {
 
   let lastNonEmptyLine = 0;
 
-  for (let i = 0;
-  i < lines.length;
-  i++) {
+  for (let i = 0; i < lines.length; i++) {
     if (lines[i].match(/[^ \t]/)) {
       lastNonEmptyLine = i;
     }
@@ -195,9 +193,7 @@ function cleanJSXElementLiteralChild(value: string): undefined | StringLiteral {
 
   let str = '';
 
-  for (let i = 0;
-  i < lines.length;
-  i++) {
+  for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
     const isFirstLine = i === 0;

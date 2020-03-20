@@ -551,9 +551,7 @@ export default class Reporter {
     }
 
     const render = () => {
-      for (let i = 0;
-      i < optionNames.length;
-      i++) {
+      for (let i = 0; i < optionNames.length; i++) {
         const key = optionNames[i];
         const {label} = options[key];
         const formattedLabel = optionNames.indexOf(key) === activeOption
@@ -574,9 +572,7 @@ export default class Reporter {
     };
 
     const cleanup = () => {
-      for (let i = 0;
-      i < optionCount;
-      i++) {
+      for (let i = 0; i < optionCount; i++) {
         this.writeAll(escapes.eraseLine);
 
         // Don't move above the top line
@@ -815,18 +811,14 @@ export default class Reporter {
 
     // Get column widths
     const cols: Array<number> = [];
-    for (let i = 0;
-    i < head.length;
-    i++) {
+    for (let i = 0; i < head.length; i++) {
       const widths = rows.map((row): number => stripAnsi(row[i]).length);
       cols[i] = Math.max(...widths);
     }
 
     // Format all rows
     const builtRows = rows.map((row): string => {
-      for (let i = 0;
-      i < row.length;
-      i++) {
+      for (let i = 0; i < row.length; i++) {
         const field = row[i];
         const padding = cols[i] - stripAnsi(field).length;
 

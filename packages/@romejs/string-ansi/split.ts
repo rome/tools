@@ -128,9 +128,7 @@ export function splitAnsiLines(input: string, maxWidth?: number): Array<string> 
 
     // Otherwise, get all the characters until a space for soft wrapping
     let word = char;
-    for (let i = index + 1;
-    i < input.length && input[i] !== ' ';
-    i++) {
+    for (let i = index + 1; i < input.length && input[i] !== ' '; i++) {
       word += input[i];
     }
 

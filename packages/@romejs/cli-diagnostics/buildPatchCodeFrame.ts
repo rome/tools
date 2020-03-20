@@ -33,9 +33,7 @@ export default function buildPatchCodeFrame(rawDiffs: Diffs): string {
 
   // Calculate the parts of the diff we should show
   const shownLines: Set<number> = new Set();
-  for (let i = 0;
-  i < diffsByLine.length;
-  i++) {
+  for (let i = 0; i < diffsByLine.length; i++) {
     const diffs = diffsByLine[i];
 
     let hasChange = false;
@@ -47,9 +45,11 @@ export default function buildPatchCodeFrame(rawDiffs: Diffs): string {
     }
 
     if (hasChange) {
-      for (let start = i - CODE_FRAME_CONTEXT_LINES;
-      start < i + CODE_FRAME_CONTEXT_LINES;
-      start++) {
+      for (
+        let start = i - CODE_FRAME_CONTEXT_LINES;
+        start < i + CODE_FRAME_CONTEXT_LINES;
+        start++
+      ) {
         shownLines.add(start);
 
         if (start > lastVisibleLine) {
@@ -67,9 +67,7 @@ export default function buildPatchCodeFrame(rawDiffs: Diffs): string {
   // Build the actual frame
   const frame = [];
   let lastDisplayedLine = -1;
-  for (let i = 0;
-  i < diffsByLine.length;
-  i++) {
+  for (let i = 0; i < diffsByLine.length; i++) {
     if (shownLines.has(i) === false) {
       continue;
     }

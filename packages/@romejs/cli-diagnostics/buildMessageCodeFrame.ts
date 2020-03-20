@@ -61,9 +61,7 @@ export default function buildMessageCodeFrame(
         lineIndex: Number0;
       }
       | undefined> = [];
-  for (let i = contextStartIndex;
-  i <= contextEndIndex;
-  i = inc(i)) {
+  for (let i = contextStartIndex; i <= contextEndIndex; i = inc(i)) {
     let line: undefined | string = allLines[get0(i)];
     if (line === undefined) {
       continue;
@@ -126,9 +124,7 @@ export default function buildMessageCodeFrame(
   }
 
   // Remove trailing blank lines
-  for (let i = formattedLines.length - 1;
-  i >= 0;
-  i--) {
+  for (let i = formattedLines.length - 1; i >= 0; i--) {
     const info = formattedLines[i];
     if (info !== undefined && info.line === '') {
       formattedLines.pop();

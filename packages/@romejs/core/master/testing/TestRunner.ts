@@ -439,9 +439,7 @@ export default class TestRunner {
     });
     progress.setTitle('Running tests');
 
-    for (let i = 0;
-    i < workers.length;
-    i++) {
+    for (let i = 0; i < workers.length; i++) {
       const container = workers[i];
       const {bridge} = container;
 

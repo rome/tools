@@ -80,9 +80,7 @@ function variableDeclarationIndent(generator: Generator, isLast: boolean) {
   generator.token(',');
   generator.forceNewline();
   if (generator.buf.endsWith('\n')) {
-    for (let i = 0;
-    i < 4;
-    i++) {
+    for (let i = 0; i < 4; i++) {
       generator.space();
     }
   }
@@ -97,9 +95,7 @@ function constDeclarationIndent(generator: Generator, isLast: boolean) {
   generator.token(',');
   generator.forceNewline();
   if (generator.buf.endsWith('\n')) {
-    for (let i = 0;
-    i < 6;
-    i++) {
+    for (let i = 0; i < 6; i++) {
       generator.space();
     }
   }
