@@ -104,11 +104,11 @@ const createStringMarkupParser = createParser((ParserCore) =>
       input: string,
       state: State,
     ):
-        | undefined
-        | {
-          token: TokenValues<Tokens>;
-          state: State;
-        } {
+      | undefined
+      | {
+        token: TokenValues<Tokens>;
+        state: State;
+      } {
       const escaped = isEscaped(index, input);
       const char = input[get0(index)];
 

@@ -22,9 +22,9 @@ type CallOptions = {
 };
 
 export type BridgeEventDirection =
-    | 'server->client'
-    | 'server<-client'
-    | 'server<->client';
+  | 'server->client'
+  | 'server<-client'
+  | 'server<->client';
 
 export type BridgeEventOptions = EventOptions & {direction: BridgeEventDirection};
 

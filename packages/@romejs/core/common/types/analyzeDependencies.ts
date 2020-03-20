@@ -32,21 +32,21 @@ export type AnalyzeExportLocal = {
 };
 
 export type AnyAnalyzeExport =
-    | AnalyzeExportLocal
-    | {
-      type: 'external';
-      kind: ConstImportModuleKind;
-      loc?: SourceLocation;
-      imported: string;
-      exported: string;
-      source: string;
-    }
-    | {
-      type: 'externalAll';
-      loc?: SourceLocation;
-      kind: ConstImportModuleKind;
-      source: string;
-    };
+  | AnalyzeExportLocal
+  | {
+    type: 'external';
+    kind: ConstImportModuleKind;
+    loc?: SourceLocation;
+    imported: string;
+    exported: string;
+    source: string;
+  }
+  | {
+    type: 'externalAll';
+    loc?: SourceLocation;
+    kind: ConstImportModuleKind;
+    source: string;
+  };
 
 export type AnalyzeDependency = {
   names: Array<AnalyzeDependencyName>;

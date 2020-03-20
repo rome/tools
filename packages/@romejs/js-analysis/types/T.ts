@@ -19,12 +19,12 @@ let counter = 0;
 export type SerialTypeFactory = (type: T) => string;
 
 export type TypeCompatibilityReturn =
-    | {type: 'compatible'}
-    | {
-      type: 'incompatible';
-      lower: T;
-      upper: T;
-    };
+  | {type: 'compatible'}
+  | {
+    type: 'incompatible';
+    lower: T;
+    upper: T;
+  };
 
 export default class T {
   constructor(scope: Scope, originNode: undefined | AnyNode) {

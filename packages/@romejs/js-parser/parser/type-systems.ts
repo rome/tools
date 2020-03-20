@@ -297,8 +297,8 @@ export function parseDeclare(
 }
 
 export type TypeAnnotationAndPredicate = [undefined | AnyPrimaryType,
-    | undefined
-    | AnyFlowPredicate];
+  | undefined
+  | AnyFlowPredicate];
 
 export function parseTypeAnnotationAndPredicate(
   parser: JSParser,
@@ -368,13 +368,13 @@ export function maybeParseTypeArguments(
 }
 
 type TypeExpressionStatement =
-    | TSDeclareNode
-    | TypeAliasTypeAnnotation
-    | AnyFlowDeclare
-    | FlowOpaqueType
-    | TypeAliasTypeAnnotation
-    | TSInterfaceDeclaration
-    | FlowInterfaceDeclaration;
+  | TSDeclareNode
+  | TypeAliasTypeAnnotation
+  | AnyFlowDeclare
+  | FlowOpaqueType
+  | TypeAliasTypeAnnotation
+  | TSInterfaceDeclaration
+  | FlowInterfaceDeclaration;
 
 export function parseTypeExpressionStatement(
   parser: JSParser,

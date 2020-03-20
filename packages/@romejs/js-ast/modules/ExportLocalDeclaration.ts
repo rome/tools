@@ -27,18 +27,18 @@ export type ExportLocalDeclaration =
   & {
     type: 'ExportLocalDeclaration';
     declaration?:
-        | undefined
-        | VariableDeclarationStatement
-        | FunctionDeclaration
-        | ClassDeclaration
-        | TSModuleDeclaration
-        | TSEnumDeclaration
-        | FlowInterfaceDeclaration
-        | TypeAliasTypeAnnotation
-        | TSInterfaceDeclaration
-        | TSDeclareFunction
-        | FlowOpaqueType
-        | TypeAliasTypeAnnotation;
+      | undefined
+      | VariableDeclarationStatement
+      | FunctionDeclaration
+      | ClassDeclaration
+      | TSModuleDeclaration
+      | TSEnumDeclaration
+      | FlowInterfaceDeclaration
+      | TypeAliasTypeAnnotation
+      | TSInterfaceDeclaration
+      | TSDeclareFunction
+      | FlowOpaqueType
+      | TypeAliasTypeAnnotation;
     specifiers?: Array<ExportLocalSpecifier>;
     exportKind?: ConstExportModuleKind;
     declare?: boolean;

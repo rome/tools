@@ -62,10 +62,10 @@ export type MasterQueryResponseInvalid = {
 };
 
 export type MasterQueryResponse =
-    | MasterQueryResponseInvalid
-    | MasterQueryResponseSuccess
-    | MasterQueryResponseError
-    | MasterQueryResponseDiagnostics;
+  | MasterQueryResponseInvalid
+  | MasterQueryResponseSuccess
+  | MasterQueryResponseError
+  | MasterQueryResponseDiagnostics;
 
 export type ProfilingStartData = {samplingInterval: number};
 

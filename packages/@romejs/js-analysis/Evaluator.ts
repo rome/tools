@@ -29,8 +29,8 @@ export type HydrateTypeFactory = (id: unknown) => T;
 export type HydrateData = JSONObject;
 
 export type GetModuleSignature = (source: string, relative: string) => Promise<
-    | undefined
-    | ModuleSignatureManager>;
+  | undefined
+  | ModuleSignatureManager>;
 
 export class ModuleSignatureManager {
   constructor(
@@ -190,15 +190,15 @@ export class ModuleSignatureManager {
 }
 
 type Export =
-    | {
-      type: 'local';
-      name: string;
-      value: T;
-    }
-    | {
-      type: 'all';
-      source: string;
-    };
+  | {
+    type: 'local';
+    name: string;
+    value: T;
+  }
+  | {
+    type: 'all';
+    source: string;
+  };
 
 export default class Evaluator {
   constructor(hub: Hub, filename: string) {

@@ -18,19 +18,19 @@ export type AssignmentExpression =
   };
 
 export type AssignmentOperator =
-    | '='
-    | '+='
-    | '-='
-    | '*='
-    | '/='
-    | '%='
-    | '<<='
-    | '>>='
-    | '>>>='
-    | '|='
-    | '^='
-    | '&='
-    | '??=';
+  | '='
+  | '+='
+  | '-='
+  | '*='
+  | '/='
+  | '%='
+  | '<<='
+  | '>>='
+  | '>>>='
+  | '|='
+  | '^='
+  | '&='
+  | '??=';
 
 export const assignmentExpression = createBuilder<AssignmentExpression>(
   'AssignmentExpression',

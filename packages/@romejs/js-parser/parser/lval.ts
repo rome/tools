@@ -53,10 +53,10 @@ import {
 const VALID_REST_ARGUMENT_TYPES = ['Identifier', 'MemberExpression'];
 
 type ToAssignmentPatternNode =
-    | AnyExpression
-    | AnyAssignmentPattern
-    | AnyTargetBindingPattern
-    | AnyAuxiliary;
+  | AnyExpression
+  | AnyAssignmentPattern
+  | AnyTargetBindingPattern
+  | AnyAuxiliary;
 
 // Convert existing expression atom to assignable pattern if possible.
 export function toAssignmentPattern(
@@ -445,11 +445,11 @@ export function toAssignmentObjectProperty(
 export function toAssignableList(
   parser: JSParser,
   exprList: Array<
-      | undefined
-      | AnyAssignmentPattern
-      | AmbiguousFlowTypeCastExpression
-      | SpreadElement
-      | AnyExpression>,
+    | undefined
+    | AnyAssignmentPattern
+    | AmbiguousFlowTypeCastExpression
+    | SpreadElement
+    | AnyExpression>,
 
   contextDescription: string,
 ): {
@@ -612,9 +612,9 @@ export function toReferencedListOptional(
 }
 
 export type ToReferencedItem =
-    | AmbiguousFlowTypeCastExpression
-    | SpreadElement
-    | AnyExpression;
+  | AmbiguousFlowTypeCastExpression
+  | SpreadElement
+  | AnyExpression;
 
 export function toReferencedItem(
   parser: JSParser,

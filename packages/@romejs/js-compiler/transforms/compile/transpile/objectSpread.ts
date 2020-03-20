@@ -40,11 +40,11 @@ function hasSpreadProperty(props: Array<AnyNode>): boolean {
 
 function getRestProperty(
   node:
-      | undefined
-      | VariableDeclarator
-      | VariableDeclarationStatement
-      | VariableDeclaration
-      | AnyTargetBindingPattern,
+    | undefined
+    | VariableDeclarator
+    | VariableDeclarationStatement
+    | VariableDeclaration
+    | AnyTargetBindingPattern,
 ): undefined | BindingIdentifier {
   if (node === undefined) {
     return undefined;

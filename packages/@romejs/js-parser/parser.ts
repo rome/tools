@@ -59,20 +59,20 @@ export type OpeningContext = {
 };
 
 export type ScopeType =
-    | 'FUNCTION_LOC'
-    | 'NON_ARROW_FUNCTION'
-    | 'FUNCTION'
-    | 'GENERATOR'
-    | 'ASYNC'
-    | 'PROPERTY_NAME'
-    | 'CLASS_PROPERTY'
-    | 'PARAMETERS'
-    | 'METHOD'
-    | 'CLASS'
-    | 'TYPE'
-    | 'MAX_NEW_DIAGNOSTICS'
-    | 'STRICT'
-    | 'FLOW_COMMENT';
+  | 'FUNCTION_LOC'
+  | 'NON_ARROW_FUNCTION'
+  | 'FUNCTION'
+  | 'GENERATOR'
+  | 'ASYNC'
+  | 'PROPERTY_NAME'
+  | 'CLASS_PROPERTY'
+  | 'PARAMETERS'
+  | 'METHOD'
+  | 'CLASS'
+  | 'TYPE'
+  | 'MAX_NEW_DIAGNOSTICS'
+  | 'STRICT'
+  | 'FLOW_COMMENT';
 
 const SCOPE_TYPES: Array<ScopeType> = [
   'FUNCTION_LOC',

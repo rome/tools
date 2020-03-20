@@ -16,9 +16,9 @@ import {
 import {createBuilder} from '../utils';
 
 export type AnyExportExternalSpecifier =
-    | ExportNamespaceSpecifier
-    | ExportDefaultSpecifier
-    | ExportExternalSpecifier;
+  | ExportNamespaceSpecifier
+  | ExportDefaultSpecifier
+  | ExportExternalSpecifier;
 
 export type ExportExternalDeclaration =
   & JSNodeBase

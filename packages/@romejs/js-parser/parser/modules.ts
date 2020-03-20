@@ -64,14 +64,14 @@ import {
 } from './index';
 
 export type ParseExportResult =
-    | AnyStatement
-    | ExportAllDeclaration
-    | ExportLocalDeclaration
-    | ExportExternalDeclaration
-    | ExportDefaultDeclaration
-    | TSNamespaceExportDeclaration
-    | TSExportAssignment
-    | TSImportEqualsDeclaration;
+  | AnyStatement
+  | ExportAllDeclaration
+  | ExportLocalDeclaration
+  | ExportExternalDeclaration
+  | ExportDefaultDeclaration
+  | TSNamespaceExportDeclaration
+  | TSExportAssignment
+  | TSImportEqualsDeclaration;
 
 export function parseExport(parser: JSParser, start: Position): ParseExportResult {
   const tsNode = parseTSExport(parser, start);
@@ -203,8 +203,8 @@ function createExportExternalDeclaration(
   parser: JSParser,
   start: Position,
   rawSpecifiers:
-      | undefined
-      | Array<ExportLocalSpecifier | AnyExportExternalSpecifier>,
+    | undefined
+    | Array<ExportLocalSpecifier | AnyExportExternalSpecifier>,
 
   source: StringLiteral,
   exportKind?: ConstExportModuleKind,
@@ -503,8 +503,8 @@ function shouldParseExportDeclaration(parser: JSParser): boolean {
 function checkExport(
   parser: JSParser,
   specifiers:
-      | undefined
-      | Array<ExportLocalSpecifier | AnyExportExternalSpecifier>,
+    | undefined
+    | Array<ExportLocalSpecifier | AnyExportExternalSpecifier>,
 
   declaration: undefined | AnyNode,
   checkNames: boolean = false,
@@ -730,9 +730,9 @@ function parseImportSpecifiers(
   start: Position,
 ): {
   specifiers: Array<
-      | ImportSpecifier
-      | ImportDefaultSpecifier
-      | ImportNamespaceSpecifier>;
+    | ImportSpecifier
+    | ImportDefaultSpecifier
+    | ImportNamespaceSpecifier>;
   importKind: undefined | ConstImportModuleKind;
 } {
   let importKind: undefined | ConstImportModuleKind = undefined;
@@ -765,9 +765,9 @@ function parseImportSpecifiers(
   }
 
   const specifiers: Array<
-      | ImportSpecifier
-      | ImportDefaultSpecifier
-      | ImportNamespaceSpecifier> = [];
+    | ImportSpecifier
+    | ImportDefaultSpecifier
+    | ImportNamespaceSpecifier> = [];
 
   let first = true;
 

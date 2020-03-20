@@ -31,11 +31,11 @@ import {Consumer} from '@romejs/consume';
 function request(
   url: string,
 ): Promise<
-    | ResolverQueryResponseFetchError
-    | {
-      type: 'DOWNLOADED';
-      content: string;
-    }> {
+  | ResolverQueryResponseFetchError
+  | {
+    type: 'DOWNLOADED';
+    content: string;
+  }> {
   return new Promise((resolve) => {
     const req = https.get(url, (res) => {
       if (res.statusCode !== 200) {
@@ -101,20 +101,20 @@ export type ResolverLocalQuery =
   & {origin: AbsoluteFilePath};
 
 export type ResolverQuerySource =
-    | undefined
-    | {
-      source?: string;
-      pointer?: DiagnosticPointer;
-    };
+  | undefined
+  | {
+    source?: string;
+    pointer?: DiagnosticPointer;
+  };
 
 type ResolverQueryResponseFoundType =
-    | 'package'
-    | 'mock'
-    | 'haste'
-    | 'implicitPlatform'
-    | 'implicitScale'
-    | 'implicitExtension'
-    | 'implicitIndex';
+  | 'package'
+  | 'mock'
+  | 'haste'
+  | 'implicitPlatform'
+  | 'implicitScale'
+  | 'implicitExtension'
+  | 'implicitIndex';
 
 export type ResolverQueryResponseFound = {
   type: 'FOUND';
@@ -152,10 +152,10 @@ const QUERY_RESPONSE_MISSING: ResolverQueryResponseMissing = {
 };
 
 export type ResolverQueryResponse =
-    | ResolverQueryResponseFound
-    | ResolverQueryResponseMissing
-    | ResolverQueryResponseFetchError
-    | ResolverQueryResponseUnsupported;
+  | ResolverQueryResponseFound
+  | ResolverQueryResponseMissing
+  | ResolverQueryResponseFetchError
+  | ResolverQueryResponseUnsupported;
 
 function shouldReturnQueryResponse(res: ResolverQueryResponse): boolean {
   return res.type === 'FOUND' || res.source !== undefined;

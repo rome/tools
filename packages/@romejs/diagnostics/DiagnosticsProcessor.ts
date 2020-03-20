@@ -23,11 +23,11 @@ import {add} from '@romejs/ob1';
 import {DiagnosticCategoryPrefix} from './categories';
 
 type UniquePart =
-    | 'filename'
-    | 'message'
-    | 'start.line'
-    | 'start.column'
-    | 'category';
+  | 'filename'
+  | 'message'
+  | 'start.line'
+  | 'start.column'
+  | 'category';
 
 type UniqueRule = Array<UniquePart>;
 

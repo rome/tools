@@ -44,9 +44,9 @@ export function assertNodeTypeSet(names: Map<string, unknown>, desc: string) {
 }
 
 type JustNodeKeysProp<K, V> = V extends
-    | NodeBase
-    | Array<NodeBase>
-    | Array<undefined | NodeBase> ? K : never;
+  | NodeBase
+  | Array<NodeBase>
+  | Array<undefined | NodeBase> ? K : never;
 
 type JustNodeKeys<T> = ExcludeCoreNodeKeys<{ [K in keyof T]: JustNodeKeysProp<
   K,

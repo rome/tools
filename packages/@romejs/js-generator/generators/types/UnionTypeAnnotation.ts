@@ -13,17 +13,12 @@ export default function UnionTypeAnnotation(generator: Generator, node: AnyNode)
 
   generator.multiline(node, (multiline, node) => {
     if (multiline) {
-      generator.indent();
       orNewlineSeparator(generator, false);
     }
 
     generator.printJoin(node.types, node, {
       after: multiline ? orNewlineSeparator : orSpaceSeparator,
     });
-
-    if (multiline) {
-      generator.dedent();
-    }
   }, {conditions: ['more-than-one-line'], indent: true});
 }
 

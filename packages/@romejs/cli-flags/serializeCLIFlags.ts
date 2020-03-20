@@ -20,21 +20,21 @@ type SerializeCLIData = {
 };
 
 export type SerializeCLITarget =
-    | {
-      type: 'flag';
-      key: string;
-      target?: ConsumeSourceLocationRequestTarget;
-    }
-    | {
-      type: 'arg';
-      key: number;
-    }
-    | {
-      type: 'arg-range';
-      from: number;
-      to?: number;
-    }
-    | {type: 'none'};
+  | {
+    type: 'flag';
+    key: string;
+    target?: ConsumeSourceLocationRequestTarget;
+  }
+  | {
+    type: 'arg';
+    key: number;
+  }
+  | {
+    type: 'arg-range';
+    from: number;
+    to?: number;
+  }
+  | {type: 'none'};
 
 function normalizeFlagValue(val: unknown): unknown {
   if (val === 'true') {

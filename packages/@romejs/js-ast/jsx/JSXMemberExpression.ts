@@ -18,10 +18,10 @@ export type JSXMemberExpression =
   & {
     type: 'JSXMemberExpression';
     object:
-        | JSXMemberExpression
-        | JSXIdentifier
-        | JSXReferenceIdentifier
-        | JSXNamespacedName;
+      | JSXMemberExpression
+      | JSXIdentifier
+      | JSXReferenceIdentifier
+      | JSXNamespacedName;
     property: JSXIdentifier;
   };
 

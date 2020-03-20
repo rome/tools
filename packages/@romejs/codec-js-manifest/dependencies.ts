@@ -14,14 +14,14 @@ import {normalizeName} from './name';
 import {add} from '@romejs/ob1';
 
 export type DependencyPattern =
-    | HostedGitPattern
-    | HTTPTarballPattern
-    | SemverPattern
-    | GitPattern
-    | FilePattern
-    | TagPattern
-    | NpmPattern
-    | LinkPattern;
+  | HostedGitPattern
+  | HTTPTarballPattern
+  | SemverPattern
+  | GitPattern
+  | FilePattern
+  | TagPattern
+  | NpmPattern
+  | LinkPattern;
 
 export type ManifestDependencies = Map<string, DependencyPattern>;
 

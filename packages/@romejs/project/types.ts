@@ -135,9 +135,9 @@ export type ProjectConfigMeta = {
 };
 
 export type ProjectConfigMetaHard = RequiredProps<ProjectConfigMeta,
-    | 'consumer'
-    | 'projectFolder'
-    | 'configPath'>;
+  | 'consumer'
+  | 'projectFolder'
+  | 'configPath'>;
 
 // Final project config
 export type ProjectConfig = ProjectConfigBase & ProjectConfigObjects;

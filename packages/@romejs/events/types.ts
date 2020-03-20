@@ -65,11 +65,11 @@ export type BridgeErrorResponseMessage = {
 };
 
 export type BridgeResponseMessage =
-    | BridgeSuccessResponseMessage
-    | BridgeErrorResponseMessage;
+  | BridgeSuccessResponseMessage
+  | BridgeErrorResponseMessage;
 
 export type BridgeMessage =
-    | BridgeHandshakeMessage
-    | BridgeSubscriptionsMessage
-    | BridgeRequestMessage
-    | BridgeResponseMessage;
+  | BridgeHandshakeMessage
+  | BridgeSubscriptionsMessage
+  | BridgeRequestMessage
+  | BridgeResponseMessage;

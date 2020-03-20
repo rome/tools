@@ -22,9 +22,9 @@ export type NewExpression =
     callee: AnyExpression | Super;
     arguments: Array<AnyExpression | SpreadElement>;
     typeArguments?:
-        | undefined
-        | FlowTypeParameterInstantiation
-        | TSTypeParameterInstantiation;
+      | undefined
+      | FlowTypeParameterInstantiation
+      | TSTypeParameterInstantiation;
     optional?: boolean;
   };
 
