@@ -60,18 +60,26 @@ export default class Linter {
 
     printer.onBeforeFooterPrint((reporter, isError) => {
       if (isError) {
+        let couldFix = false;
         let hasPendingFixes = false;
 
-        for (const {category} of printer.processor.getPartialDiagnostics()) {
+        for (const {category, fixable} of printer.processor.getPartialDiagnostics()) {
           if (category === 'lint/pendingFixes') {
             hasPendingFixes = true;
-            break;
+          }
+
+          if (fixable) {
+            couldFix = true;
           }
         }
 
         if (hasPendingFixes) {
           reporter.info(
             'Fixes available. Run <command>rome lint --fix</command> to apply.',
+          );
+        } else if (couldFix) {
+          reporter.warn(
+            'Autofixes are available for some of these errors when formatting is enabled. Run <command>rome config enable-category format</command> to enable.',
           );
         }
       } else {
