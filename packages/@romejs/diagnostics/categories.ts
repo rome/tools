@@ -31,6 +31,7 @@ export type DiagnosticCategory =
   | 'lint/noAsyncPromiseExecutor'
   | 'lint/noCompareNegZero'
   | 'lint/noCondAssign'
+  | 'lint/noDanglingBackslash'
   | 'lint/noDebugger'
   | 'lint/noDeleteVars'
   | 'lint/noDupeArgs'
