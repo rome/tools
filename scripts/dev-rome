@@ -19,8 +19,6 @@ function inverse(str) {
   return `\u001b[7m ${str} \u001b[27m`;
 }
 
-process.env.ROME_CACHE = '0';
-
 unlink(DEV_FOLDER);
 fs.mkdirSync(DEV_FOLDER);
 
@@ -30,7 +28,10 @@ execNode([
   'bundle',
   path.join(root, 'packages/@romejs/cli/bin/rome.ts'),
   DEV_FOLDER,
+  '--quiet',
 ]);
+
+process.env.ROME_CACHE = '0';
 
 console.log(inverse('Executing trunk'));
 execNode([path.join(DEV_FOLDER, 'index.js'), ...argv]);
