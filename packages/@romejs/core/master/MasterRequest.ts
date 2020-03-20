@@ -17,6 +17,7 @@ import {
   PartialDiagnosticAdvice,
   createSingleDiagnosticError,
   DiagnosticsError,
+  DiagnosticCategory,
 } from '@romejs/diagnostics';
 import {DiagnosticsPrinterFlags} from '@romejs/cli-diagnostics';
 import {ProjectDefinition} from '@romejs/project';
@@ -278,14 +279,19 @@ export default class MasterRequest {
     globOpts:
       & MemoryFSGlobOptions
       & {
+        disabledDiagnosticCategory?: DiagnosticCategory,
         advice?: PartialDiagnosticAdvice;
         configCategory?: string;
         verb?: string;
         noun?: string;
       } = {},
-  ): Promise<AbsoluteFilePathSet> {
+  ): Promise<{
+    projects: Set<ProjectDefinition>;
+    paths: AbsoluteFilePathSet,
+  }> {
     const {master} = this;
     const {flags} = this.client;
+    const projects: Set<ProjectDefinition> = new Set();
 
     // Build up args, defaulting to the current project dir if none passed
     const rawArgs = [...this.query.args];
@@ -302,6 +308,7 @@ export default class MasterRequest {
         pointer,
         project,
       });
+      projects.add(project);
     } else {
       for (let i = 0;
       i < rawArgs.length;
@@ -321,10 +328,13 @@ export default class MasterRequest {
           pointer,
         });
 
+        const project = this.master.projectManager.assertProjectExisting(
+          resolved.path,
+        );
+        projects.add(project);
+
         resolvedArgs.push({
-          project: this.master.projectManager.assertProjectExisting(
-            resolved.path,
-          ),
+          project,
           path: resolved.path,
           pointer,
         });
@@ -343,6 +353,8 @@ export default class MasterRequest {
         continue;
       }
 
+      let category: DiagnosticCategory = 'args/fileNotFound';
+
       let advice: PartialDiagnosticAdvice = globOpts.advice === undefined
         ? [] : [...globOpts.advice];
 
@@ -355,6 +367,10 @@ export default class MasterRequest {
 
           const explanationPrefix = globOpts.verb === undefined
             ? 'Files excluded' : `Files excluded from ${globOpts.verb}`;
+
+          if (globOpts.disabledDiagnosticCategory !== undefined) {
+            category = globOpts.disabledDiagnosticCategory;
+          }
 
           if (testSource.value === undefined) {
             let explanation =
@@ -392,7 +408,7 @@ export default class MasterRequest {
       if (globOpts.getProjectIgnore !== undefined) {
         const ignore = globOpts.getProjectIgnore(project);
 
-        const withoutIgnore = await this.getFilesFromArgs({
+        const {paths: withoutIgnore} = await this.getFilesFromArgs({
           ...globOpts,
           getProjectIgnore: undefined,
         });
@@ -435,14 +451,14 @@ export default class MasterRequest {
 
       throw createSingleDiagnosticError({
         ...pointer,
-        category: 'args/fileNotFound',
+        category,
         message: globOpts.noun === undefined
           ? 'No files found' : `No files to ${globOpts.noun} found`,
         advice,
       });
     }
 
-    return paths;
+    return {paths, projects};
   }
 
   normalizeCompileResult(res: WorkerCompileResult): WorkerCompileResult {

@@ -36,7 +36,7 @@ export default createMasterCommand({
   async default(req: MasterRequest, commandFlags: Flags): Promise<void> {
     const {reporter, master} = req;
 
-    const files = await req.getFilesFromArgs({
+    const {paths} = await req.getFilesFromArgs({
       getProjectIgnore: (project) =>
         ({
           patterns: project.config.tests.ignore,
@@ -69,9 +69,10 @@ export default createMasterCommand({
         },
       ],
       extensions: JS_EXTENSIONS,
+      disabledDiagnosticCategory: 'tests/disabled',
     });
 
-    if (files.size === 0) {
+    if (paths.size === 0) {
       reporter.warn('No tests ran');
       return;
     }
@@ -90,7 +91,7 @@ export default createMasterCommand({
       mocks: true,
     }));
 
-    for (const [path, res] of await bundler.bundleMultiple(Array.from(files))) {
+    for (const [path, res] of await bundler.bundleMultiple(Array.from(paths))) {
       tests.set(path.join(), {
         code: res.entry.js.content,
         sourceMap: res.entry.sourceMap.map,

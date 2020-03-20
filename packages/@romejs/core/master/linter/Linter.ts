@@ -8,17 +8,17 @@
 import {MasterRequest} from '@romejs/core';
 import CompilerLinter from './CompilerLinter';
 import {LINTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
-import {AbsoluteFilePathSet} from '@romejs/path';
 import DependencyGraph from '../dependencies/DependencyGraph';
+import { DiagnosticPointer } from '@romejs/diagnostics';
 
 export default class Linter {
-  constructor(req: MasterRequest, fix: boolean) {
+  constructor(req: MasterRequest, fix: undefined | DiagnosticPointer) {
     this.request = req;
     this.fix = fix;
   }
 
   request: MasterRequest;
-  fix: boolean;
+  fix: undefined | DiagnosticPointer;
 
   async lint(throwAlways: boolean = true) {
     const {request} = this;
@@ -31,7 +31,7 @@ export default class Linter {
 
     printer.processor.addAllowedUnusedSuppressionPrefix('bundler');
 
-    const paths: AbsoluteFilePathSet = await request.getFilesFromArgs({
+    const {paths, projects} = await request.getFilesFromArgs({
       getProjectIgnore: (project) =>
         ({
           patterns: project.config.lint.ignore,
@@ -56,7 +56,24 @@ export default class Linter {
       verb: 'linting',
       configCategory: 'lint',
       extensions: LINTABLE_EXTENSIONS,
+      disabledDiagnosticCategory: 'lint/disabled',
     });
+
+    const {fix} = this;
+    const shouldFix = fix !== undefined;
+
+    if (fix !== undefined) {
+      for (const project of projects) {
+        if (!project.config.format.enabled) {
+          printer.addDiagnostic({
+            ...fix,
+            category: 'format/disabled',
+            message: 'Format is disabled for this project',
+            // TODO advice and better error message
+          });
+        }
+      }
+    }
 
     printer.onBeforeFooterPrint((reporter, isError) => {
       if (isError) {
@@ -118,7 +135,7 @@ export default class Linter {
         clear: true,
         message: 'Analyzing files',
         callback: async () => {
-          const compilerLinter = new CompilerLinter(request, printer, this.fix);
+          const compilerLinter = new CompilerLinter(request, printer, shouldFix);
           await compilerLinter.lint(paths);
         },
       },

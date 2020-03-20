@@ -29,7 +29,7 @@ export default createMasterCommand({
   async default(req: MasterRequest, flags: Flags): Promise<void> {
     const {reporter, master} = req;
 
-    const paths: AbsoluteFilePathSet = await req.getFilesFromArgs({
+    const {paths} = await req.getFilesFromArgs({
       getProjectIgnore: (project) =>
         ({
           patterns: project.config.format.ignore,
@@ -54,6 +54,7 @@ export default createMasterCommand({
       verb: 'linting',
       configCategory: 'format',
       extensions: FORMATTABLE_EXTENSIONS,
+      disabledDiagnosticCategory: 'format/disabled',
     });
 
     if (paths.size === 0) {
