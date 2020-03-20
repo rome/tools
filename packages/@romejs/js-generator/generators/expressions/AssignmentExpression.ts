@@ -59,7 +59,7 @@ export default function AssignmentExpression(
     if (shouldIndent) {
       generator.dedent();
     }
-  }, {conditions: ['any-line-exceeds', 'defer-parent-multiline']});
+  }, {conditions: ['any-line-exceeds']});
 
   if (needsExtraParens) {
     generator.token(')');

@@ -41,7 +41,9 @@ import {AnyNode} from '@romejs/js-ast';
 
 type ScopeEvaluator = {
   creator: boolean;
-  build(node: AnyNode, parent: AnyNode, scope: Scope) ;
+
+  // rome-suppress lint/noExplicitAny
+  build: (node: any, parent: AnyNode, scope: Scope) => void | Scope;
 };
 
 const evaluators: Map<string, ScopeEvaluator> = new Map();

@@ -28,6 +28,10 @@ export function isPlainObject<T = UnknownObject>(
 }
 
 export function isIterable(obj: unknown): obj is Iterable<unknown> {
-  return typeof obj === 'object' && obj != null && // @ts-ignore
-  typeof obj[Symbol.iterator] === 'function';
+  if (typeof obj === 'object' && obj != null) {
+    // @ts-ignore
+    return typeof obj[Symbol.iterator] === 'function';
+  } else {
+    return false;
+  }
 }
