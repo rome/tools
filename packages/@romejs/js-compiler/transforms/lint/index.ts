@@ -14,6 +14,7 @@ import getterReturn from './getterReturn';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
+import noDanglingBackslashInRegularExpressions from './noDanglingBackslashInRegularExpressions';
 import noDebugger from './noDebugger';
 import noDeleteVars from './noDeleteVars';
 import noDupeArgs from './noDupeArgs';
@@ -34,6 +35,7 @@ import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
+import noDuplicateGroupNamesInRegularExpressions from './noDuplicateGroupNamesInRegularExpressions';
 
 // Add transforms in alphabetical order.
 export const lintTransforms = [
@@ -45,6 +47,7 @@ export const lintTransforms = [
   noAsyncPromiseExecutor,
   noCompareNegZero,
   noCondAssign,
+  noDanglingBackslashInRegularExpressions,
   noDebugger,
   noDeleteVars,
   noDupeArgs,
@@ -65,4 +68,5 @@ export const lintTransforms = [
   undeclaredVariables,
   unsafeNegation,
   unusedVariables,
+  noDuplicateGroupNamesInRegularExpressions,
 ];

@@ -991,6 +991,7 @@ export function readRegexp(parser: JSParser): void {
     }
 
     const ch = parser.input.charAt(getIndex(parser));
+    const nextCh = parser.input.charAt(getIndex(parser) + 1);
     if (lineBreak.test(ch)) {
       parser.addDiagnostic({
         end: parser.getPositionFromIndex(parser.state.index),
@@ -1000,6 +1001,13 @@ export function readRegexp(parser: JSParser): void {
     }
 
     if (escaped) {
+      if (
+        ch === '/' &&
+        !inClass &&
+        (nextCh === ';' || lineBreak.test(nextCh))
+      ) {
+        break;
+      }
       escaped = false;
     } else {
       if (ch === '[') {
