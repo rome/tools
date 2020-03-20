@@ -10,8 +10,8 @@ import {AnyNode, Identifier, identifier} from '@romejs/js-ast';
 
 export default function Identifier(generator: Generator, node: AnyNode) {
   node =
-  node.type === 'ReferenceIdentifier' || node.type === 'BindingIdentifier' ||
-  node.type === 'AssignmentIdentifier' ? node : identifier.assert(node);
+    node.type === 'ReferenceIdentifier' || node.type === 'BindingIdentifier' ||
+    node.type === 'AssignmentIdentifier' ? node : identifier.assert(node);
 
   generator.word(node.name);
 }

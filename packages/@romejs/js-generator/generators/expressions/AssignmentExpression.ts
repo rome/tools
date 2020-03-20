@@ -36,7 +36,8 @@ export default function AssignmentExpression(
   }
 
   generator.multiline(node, (multiline, node) => {
-    const shouldIndent = multiline && node.operator === '&&';
+    const shouldIndent = multiline && (node.operator === '&&' ||
+    node.operator === '=');
 
     generator.print(node.left, node);
 

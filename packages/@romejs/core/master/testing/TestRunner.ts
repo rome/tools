@@ -395,10 +395,10 @@ export default class TestRunner {
     let timeout = undefined;
     if (timeoutMs !== undefined) {
       timeout =
-      setTimeout(() => {
-        // TODO This will kill the whole worker, maybe it's possible to just terminate the current test? Throw an error, see if the next test was ran, or else terminate completely
-        this.handleWorkerTimeout(`${String(timeoutMs)}ms`, container);
-      }, timeoutMs);
+        setTimeout(() => {
+          // TODO This will kill the whole worker, maybe it's possible to just terminate the current test? Throw an error, see if the next test was ran, or else terminate completely
+          this.handleWorkerTimeout(`${String(timeoutMs)}ms`, container);
+        }, timeoutMs);
     }
 
     this.runningTests.set(this.refToKey(ref), {
@@ -513,7 +513,7 @@ export default class TestRunner {
             ref.filename,
           ));
           origin.message =
-          `Generated from the file <filelink target="${uid}" /> and test name "${ref.testName}"`;
+            `Generated from the file <filelink target="${uid}" /> and test name "${ref.testName}"`;
           this.onTestFinished(ref);
           progress.popText(getProgressTestRefText(ref));
           progress.tick();

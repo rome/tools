@@ -220,14 +220,14 @@ async function createWatchmanWatcher(
 
   function queueCallout() {
     timeout =
-    setTimeout(memoryFs.master.wrapFatal(() => {
-      connectedReporters.warn(
-        'Watchman is taking a while to respond. Watchman may have just started and is still crawling the disk.',
-      );
+      setTimeout(memoryFs.master.wrapFatal(() => {
+        connectedReporters.warn(
+          'Watchman is taking a while to respond. Watchman may have just started and is still crawling the disk.',
+        );
 
-      // Show an even more aggressive message when watchman takes longer
-      queueCallout();
-    }), 5_000);
+        // Show an even more aggressive message when watchman takes longer
+        queueCallout();
+      }), 5_000);
   }
 
   // Show a message when watchman takes too long

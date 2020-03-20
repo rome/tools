@@ -264,34 +264,34 @@ export default class DependencyNode {
       const exportedNames = resolved.node.getExportedNames(kind);
 
       advice =
-      advice.concat(buildSuggestionAdvice(resolved.name, Array.from(
-        exportedNames,
-      ), {
-        formatItem: (name) => {
-          const exportInfo = resolved.node.resolveImport(name, undefined);
+        advice.concat(buildSuggestionAdvice(resolved.name, Array.from(
+          exportedNames,
+        ), {
+          formatItem: (name) => {
+            const exportInfo = resolved.node.resolveImport(name, undefined);
 
-          if (exportInfo.type === 'NOT_FOUND') {
-            throw new Error(
-              `mod.resolveImport returned NOT_FOUND for an export ${name} in ${exportInfo.node.path} despite being returned by getExportedNames`,
-            );
-          }
-
-          const {record} = exportInfo;
-
-          const {loc} = record;
-          if (loc !== undefined) {
-            name =
-            `<filelink target="${loc.filename}" line="${loc.start.line}" column="${loc.start.column}">${name}</filelink>`;
-
-            if (exportInfo.node !== resolved.node) {
-              name +=
-              ` <dim>(from <filelink target="${exportInfo.node.path.join()}" />)</dim>`;
+            if (exportInfo.type === 'NOT_FOUND') {
+              throw new Error(
+                `mod.resolveImport returned NOT_FOUND for an export ${name} in ${exportInfo.node.path} despite being returned by getExportedNames`,
+              );
             }
-          }
 
-          return name;
-        },
-      }));
+            const {record} = exportInfo;
+
+            const {loc} = record;
+            if (loc !== undefined) {
+              name =
+                `<filelink target="${loc.filename}" line="${loc.start.line}" column="${loc.start.column}">${name}</filelink>`;
+
+              if (exportInfo.node !== resolved.node) {
+                name +=
+                ` <dim>(from <filelink target="${exportInfo.node.path.join()}" />)</dim>`;
+              }
+            }
+
+            return name;
+          },
+        }));
     }
 
     return {

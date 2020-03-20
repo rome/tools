@@ -26,8 +26,8 @@ export default function FlowInterfaceDeclaration(
 
 export function _interfaceish(generator: Generator, node: AnyNode) {
   node =
-  node.type === 'FlowDeclareInterface' || node.type === 'FlowDeclareClass'
-    ? node : flowInterfaceDeclaration.assert(node);
+    node.type === 'FlowDeclareInterface' || node.type === 'FlowDeclareClass'
+      ? node : flowInterfaceDeclaration.assert(node);
 
   generator.print(node.id, node);
   generator.print(node.typeParameters, node);

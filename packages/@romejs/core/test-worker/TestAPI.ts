@@ -560,7 +560,7 @@ export default class TestAPI {
 
       if (message === undefined) {
         message =
-        markup`Snapshot ${name} at <filelink emphasis target="${this.snapshotManager.path.join()}" /> doesn't match`;
+          markup`Snapshot ${name} at <filelink emphasis target="${this.snapshotManager.path.join()}" /> doesn't match`;
       } else {
         advice.push({
           type: 'log',

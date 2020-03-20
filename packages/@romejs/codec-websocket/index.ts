@@ -179,10 +179,10 @@ export class WebSocketInterface {
 
   addBufferToIncompleteFrame(incompleteFrame: Frame, buff: Buffer) {
     incompleteFrame.payload =
-    Buffer.concat([
-      incompleteFrame.payload,
-      unmaskPayload(buff, incompleteFrame.mask, incompleteFrame.payload.length),
-    ]);
+      Buffer.concat([
+        incompleteFrame.payload,
+        unmaskPayload(buff, incompleteFrame.mask, incompleteFrame.payload.length),
+      ]);
 
     if (isCompleteFrame(incompleteFrame)) {
       this.incompleteFrame = undefined;

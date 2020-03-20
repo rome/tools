@@ -738,13 +738,13 @@ function readToken_numberSign(parser: JSParser): void {
   let advice: undefined | PartialDiagnosticAdvice;
   if (parser.input[getIndex(parser) + 1] === '!') {
     advice =
-    [
-      {
-        type: 'log',
-        category: 'info',
-        message: 'Did you want to write a hashbang? A hashbang can only be the first thing in a file.',
-      },
-    ];
+      [
+        {
+          type: 'log',
+          category: 'info',
+          message: 'Did you want to write a hashbang? A hashbang can only be the first thing in a file.',
+        },
+      ];
   }
 
   // TODO make this a diagnostic, and advance to the next line if suspected hashbang

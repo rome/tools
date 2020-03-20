@@ -496,7 +496,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
         } else {
           const char = this.input[get0(start.index)];
           message =
-          `Unexpected character <emphasis>${escapeMarkup(char)}</emphasis>`;
+            `Unexpected character <emphasis>${escapeMarkup(char)}</emphasis>`;
         }
       }
     }

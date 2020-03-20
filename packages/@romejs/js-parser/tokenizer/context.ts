@@ -57,25 +57,25 @@ export const types: Dict<TokContext> = {
 };
 
 // Token-specific context update code
-tt.parenR.updateContext =
-tt.braceR.updateContext =
-function(parser) {
-  if (parser.state.context.length === 1) {
-    parser.state.exprAllowed = true;
-    return undefined;
-  }
+tt.parenR.updateContext = tt.braceR.updateContext =
+  function(parser) {
+    if (parser.state.context.length === 1) {
+      parser.state.exprAllowed = true;
+      return undefined;
+    }
 
-  let out = parser.state.context.pop();
-  if (out === types.braceStatement && getCurContext(parser).token === 'function') {
-    out = parser.state.context.pop();
-  }
+    let out = parser.state.context.pop();
+    if (out === types.braceStatement && getCurContext(parser).token ===
+    'function') {
+      out = parser.state.context.pop();
+    }
 
-  if (out === undefined) {
-    throw new Error('No context found');
-  }
+    if (out === undefined) {
+      throw new Error('No context found');
+    }
 
-  parser.state.exprAllowed = !out.isExpr;
-};
+    parser.state.exprAllowed = !out.isExpr;
+  };
 
 tt.name.updateContext = function(parser, prevType) {
   let allowed = false;
@@ -146,11 +146,11 @@ tt.backQuote.updateContext = function(parser) {
 };
 
 tt.jsxTagStart.updateContext =
-function(parser) {
-  parser.state.context.push(types.jsxInner); // treat as beginning of JSX expression
-  parser.state.context.push(types.jsxOpenTag); // start opening tag context
-  parser.state.exprAllowed = false;
-};
+  function(parser) {
+    parser.state.context.push(types.jsxInner); // treat as beginning of JSX expression
+    parser.state.context.push(types.jsxOpenTag); // start opening tag context
+    parser.state.exprAllowed = false;
+  };
 
 tt.jsxTagEnd.updateContext = function(parser, prevType) {
   const out = parser.state.context.pop();

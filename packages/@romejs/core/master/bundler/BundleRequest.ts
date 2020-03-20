@@ -57,14 +57,14 @@ export default class BundleRequest {
     this.resolvedEntryUid = bundler.master.projectManager.getUid(resolvedEntry);
 
     this.diagnostics =
-    new DiagnosticsProcessor({
-      origins: [
-        {
-          category: 'bundler',
-          message: `Requested bundle for <filelink target="${this.resolvedEntryUid}" />`,
-        },
-      ],
-    });
+      new DiagnosticsProcessor({
+        origins: [
+          {
+            category: 'bundler',
+            message: `Requested bundle for <filelink target="${this.resolvedEntryUid}" />`,
+          },
+        ],
+      });
     this.diagnostics.addAllowedUnusedSuppressionPrefix('lint');
 
     this.compiles = new Map();

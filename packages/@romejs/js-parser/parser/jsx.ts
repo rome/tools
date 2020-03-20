@@ -370,7 +370,7 @@ function getJSXCloseElementAdvice(
     message = 'But found a closing fragment instead';
   } else {
     message =
-    `But found a closing tag of <emphasis>${getQualifiedJSXName(name)}</emphasis> instead`;
+      `But found a closing tag of <emphasis>${getQualifiedJSXName(name)}</emphasis> instead`;
   }
 
   return [

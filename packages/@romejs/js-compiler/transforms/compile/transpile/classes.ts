@@ -259,9 +259,9 @@ function transformClass(
       );
     } else {
       _constructor =
-      functionDeclaration.assert(
-        template.statement`function ${className}(...args) {${superClassRef}.apply(this, args);}`,
-      );
+        functionDeclaration.assert(
+          template.statement`function ${className}(...args) {${superClassRef}.apply(this, args);}`,
+        );
     }
   } else {
     _constructor = functionDeclaration.create({

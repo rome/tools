@@ -175,7 +175,7 @@ export default class MasterRequest {
       if (args.length > max) {
         excessive = true;
         message =
-        `Expected no more than <number emphasis>${min}</number> arguments`;
+          `Expected no more than <number emphasis>${min}</number> arguments`;
       }
     }
 

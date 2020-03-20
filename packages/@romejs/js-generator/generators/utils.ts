@@ -61,8 +61,8 @@ export function buildYieldAwaitGenerator(keyword: string): GeneratorMethod {
 export function buildLabelStatementGenerator(prefix: string): GeneratorMethod {
   return function(generator: Generator, node: AnyNode) {
     node =
-    node.type === 'ContinueStatement' || node.type === 'ReturnStatement' ||
-    node.type === 'BreakStatement' ? node : throwStatement.assert(node);
+      node.type === 'ContinueStatement' || node.type === 'ReturnStatement' ||
+      node.type === 'BreakStatement' ? node : throwStatement.assert(node);
 
     generator.word(prefix);
 
