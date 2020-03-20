@@ -6,7 +6,9 @@
  */
 
 // Inspired by the original Metro ob1 library by Moti Zilberman @motiz88
+
 // These weird number intersections are to create fake opaque types
+
 // https://github.com/Microsoft/TypeScript/issues/15807
 
 // A type representing 0-based offsets.
@@ -65,11 +67,10 @@ export function get1(x: undefined | Number1): undefined | number {
 export function coerce0(x: number): Number0;
 export function coerce0(x: undefined): undefined;
 export function coerce0(x: undefined | number): Number0 | undefined;
-export function coerce0(
-  x: undefined | number | AnyNumber,
-): Number0 | undefined {
-  return x as Number0;
+export function coerce0(x: undefined | number | AnyNumber): Number0 | undefined {
+  return (x as Number0);
 }
+
 export const number0 = coerce0(0);
 export const number0Neg1 = coerce0(-1);
 
@@ -77,24 +78,23 @@ export const number0Neg1 = coerce0(-1);
 export function coerce1(x: number): Number1;
 export function coerce1(x: undefined): undefined;
 export function coerce1(x: undefined | number): Number1 | undefined;
-export function coerce1(
-  x: undefined | number | AnyNumber,
-): Number1 | undefined {
-  return x as Number1;
+export function coerce1(x: undefined | number | AnyNumber): Number1 | undefined {
+  return (x as Number1);
 }
+
 export const number1 = coerce1(1);
 export const number1Neg1 = coerce1(-1);
 
 // Add 1 to a 0-based offset, thus converting it to 1-based.
 export function coerce0to1(x: Number0): Number1 {
   // @ts-ignore
-  return (x + 1) as Number1;
+  return (x + 1 as Number1);
 }
 
 // Subtract 1 from a 1-based offset, thus converting it to 0-based.
 export function coerce1to0(x: Number1 | number): Number0 {
   // @ts-ignore
-  return (x - 1) as Number0;
+  return (x - 1 as Number0);
 }
 
 // Increment

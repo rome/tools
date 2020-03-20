@@ -28,20 +28,18 @@ export default function executeAtom(
       }
       break;
 
-    case 'BindingObjectPatternProperty': {
-      const {key} = leftNode;
-      if (
-        key.type === 'ComputedPropertyKey' ||
-        key.value.type !== 'Identifier'
-      ) {
-        throw new Error('unimplemented');
-      }
+    case 'BindingObjectPatternProperty':
+      {
+        const {key} = leftNode;
+        if (key.type === 'ComputedPropertyKey' || key.value.type !== 'Identifier') {
+          throw new Error('unimplemented');
+        }
 
-      const propKey = new StringLiteralT(scope, key, key.value.name);
-      const getProp = new GetPropT(scope, leftNode, rightType, propKey);
-      executeAtom(leftNode.value, getProp, scope);
-      break;
-    }
+        const propKey = new StringLiteralT(scope, key, key.value.name);
+        const getProp = new GetPropT(scope, leftNode, rightType, propKey);
+        executeAtom(leftNode.value, getProp, scope);
+        break;
+      }
 
     case 'BindingArrayPattern':
       for (let i = 0; i < leftNode.elements.length; i++) {

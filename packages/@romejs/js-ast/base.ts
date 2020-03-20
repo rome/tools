@@ -8,8 +8,10 @@
 import {NodeBase} from '@romejs/parser-core';
 import {AnyComment} from './index';
 
-export type JSNodeBase = NodeBase & {
-  leadingComments?: Array<AnyComment>;
-  trailingComments?: Array<AnyComment>;
-  innerComments?: Array<AnyComment>;
-};
+export type JSNodeBase =
+  & NodeBase
+  & {
+    leadingComments?: Array<AnyComment>;
+    trailingComments?: Array<AnyComment>;
+    innerComments?: Array<AnyComment>;
+  };

@@ -13,13 +13,15 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FunctionDeclaration = JSNodeBase & {
-  type: 'FunctionDeclaration';
-  id: BindingIdentifier;
-  declare?: boolean;
-  head: FunctionHead;
-  body: BlockStatement;
-};
+export type FunctionDeclaration =
+  & JSNodeBase
+  & {
+    type: 'FunctionDeclaration';
+    id: BindingIdentifier;
+    declare?: boolean;
+    head: FunctionHead;
+    body: BlockStatement;
+  };
 
 export const functionDeclaration = createBuilder<FunctionDeclaration>(
   'FunctionDeclaration',

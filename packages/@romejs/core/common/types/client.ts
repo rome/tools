@@ -30,19 +30,21 @@ export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
   ...DEFAULT_PRINTER_FLAGS,
 };
 
-export type ClientRequestFlags = DiagnosticsPrinterFlags & {
-  watch: boolean;
+export type ClientRequestFlags =
+  & DiagnosticsPrinterFlags
+  & {
+    watch: boolean;
 
-  // Debugging
-  collectMarkers: boolean;
-  benchmark: boolean;
-  benchmarkIterations: number;
+    // Debugging
+    collectMarkers: boolean;
+    benchmark: boolean;
+    benchmarkIterations: number;
 
-  // Bundler flags
-  resolverPlatform: undefined | Platform;
-  resolverScale: undefined | number;
-  resolverMocks: boolean;
-};
+    // Bundler flags
+    resolverPlatform: undefined | Platform;
+    resolverScale: undefined | number;
+    resolverMocks: boolean;
+  };
 
 export type ClientFlags = {
   clientName: string;

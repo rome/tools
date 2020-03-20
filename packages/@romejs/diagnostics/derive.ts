@@ -31,8 +31,7 @@ function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
 
 export function mergeDiagnostics(
   rootDiag: PartialDiagnostic,
-  ...diags: Array<PartialDiagnostic>
-): PartialDiagnostic {
+...diags: Array<PartialDiagnostic>): PartialDiagnostic {
   let mergedAdvice: PartialDiagnosticAdvice = [
     ...normalizeArray(rootDiag.advice),
   ];
@@ -51,10 +50,12 @@ export function mergeDiagnostics(
   };
 }
 
-export function getDiagnosticHeader(opts: {
-  filename: undefined | string;
-  start: undefined | Position;
-}): string {
+export function getDiagnosticHeader(
+  opts: {
+    filename: undefined | string;
+    start: undefined | Position;
+  },
+): string {
   const {start, filename} = opts;
 
   if (filename === undefined) {
@@ -65,7 +66,9 @@ export function getDiagnosticHeader(opts: {
     return `<filelink target="${filename}" />`;
   }
 
-  return `<filelink target="${filename}" line="${start.line}" column="${start.column}" />`;
+  return (
+    `<filelink target="${filename}" line="${start.line}" column="${start.column}" />`
+  );
 }
 
 export function deriveRootAdviceFromDiagnostic(
@@ -233,7 +236,7 @@ export function getErrorStackAdvice(
       message: escapeMarkup(cleanStack),
     });
   } else {
-    const adviceFrames = frames.map(frame => {
+    const adviceFrames = frames.map((frame) => {
       const {
         typeName,
         functionName,
@@ -298,7 +301,7 @@ export function addOriginsToDiagnostics(
   origins: Array<DiagnosticOrigin>,
   diagnostics: PartialDiagnostics,
 ): PartialDiagnostics {
-  return diagnostics.map(diag => {
+  return diagnostics.map((diag) => {
     return addOriginsToDiagnostic(origins, diag);
   });
 }
@@ -307,8 +310,10 @@ export function addOriginsToDiagnostic(
   origins: Array<DiagnosticOrigin>,
   diag: PartialDiagnostic,
 ): PartialDiagnostic {
-  const newOrigins =
-    diag.origins === undefined ? origins : [...origins, ...diag.origins];
+  const newOrigins = diag.origins === undefined ? origins : [
+    ...origins,
+    ...diag.origins,
+  ];
   return {
     ...diag,
     origins: newOrigins,

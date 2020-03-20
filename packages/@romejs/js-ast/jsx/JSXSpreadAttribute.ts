@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXSpreadAttribute = JSNodeBase & {
-  type: 'JSXSpreadAttribute';
-  argument: AnyExpression;
-};
+export type JSXSpreadAttribute =
+  & JSNodeBase
+  & {
+    type: 'JSXSpreadAttribute';
+    argument: AnyExpression;
+  };
 
 export const jsxSpreadAttribute = createBuilder<JSXSpreadAttribute>(
   'JSXSpreadAttribute',

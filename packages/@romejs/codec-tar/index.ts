@@ -8,14 +8,14 @@
 import stream = require('stream');
 
 type HeaderType =
-  | 'file'
-  | 'link'
-  | 'symlink'
-  | 'directory'
-  | 'block-device'
-  | 'character-device'
-  | 'fifo'
-  | 'contiguous-file';
+    | 'file'
+    | 'link'
+    | 'symlink'
+    | 'directory'
+    | 'block-device'
+    | 'character-device'
+    | 'fifo'
+    | 'contiguous-file';
 
 type Header = {
   name: string;
@@ -46,14 +46,14 @@ type PartialHeader = {
   devminor?: number;
 };
 
-const END_OF_TAR = Buffer.alloc(1024);
+const END_OF_TAR = Buffer.alloc(1_024);
 const ZEROS = '0000000000000000000';
 const SEVENS = '7777777777777777777';
 const ZERO_OFFSET = '0'.charCodeAt(0);
 const USTAR = 'ustar\x0000';
-const MASK = 0o7777;
-const DMODE = 0o755;
-const FMODE = 0o644;
+const MASK = 4_095;
+const DMODE = 493;
+const FMODE = 420;
 
 function encodeOct(num: number, n: number): string {
   const oct = num.toString(8);
@@ -131,10 +131,7 @@ function encodeHeader(header: Header): Buffer {
     throw new Error('prefix is too long for USTAR');
   }
 
-  if (
-    header.linkname !== undefined &&
-    Buffer.byteLength(header.linkname) > 100
-  ) {
+  if (header.linkname !== undefined && Buffer.byteLength(header.linkname) > 100) {
     throw new Error('linkname is too long for USTAR');
   }
 
@@ -143,7 +140,7 @@ function encodeHeader(header: Header): Buffer {
   buf.write(encodeOct(header.uid, 6), 108);
   buf.write(encodeOct(header.gid, 6), 116);
   buf.write(encodeOct(header.size, 11), 124);
-  buf.write(encodeOct((header.mtime.getTime() / 1000) | 0, 11), 136);
+  buf.write(encodeOct(header.mtime.getTime() / 1_000 | 0, 11), 136);
 
   buf[156] = ZERO_OFFSET + toTypeflag(header.type);
 
@@ -217,8 +214,8 @@ export class TarWriter {
       throw new Error('Already finalized file');
     }
 
-    const buffer: Buffer =
-      rawBuffer instanceof Buffer ? rawBuffer : Buffer.from(rawBuffer);
+    const buffer: Buffer = rawBuffer instanceof Buffer
+      ? rawBuffer : Buffer.from(rawBuffer);
     const header = TarWriter.normalizeHeader(rawHeader, buffer.length);
 
     this.stream.write(encodeHeader(header));
@@ -236,7 +233,7 @@ export class TarWriter {
         resolve();
       });
 
-      stream.on('error', err => {
+      stream.on('error', (err) => {
         reject(err);
       });
 

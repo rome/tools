@@ -33,7 +33,7 @@ async function testCheck(code: string): Promise<PartialDiagnostics> {
   });
 }
 
-test("discovers require('module') call", async () => {
+test('discovers require(\'module\') call', async () => {
   testCheck;
 
   /*const diagnostics = await testCheck(`

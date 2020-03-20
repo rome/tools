@@ -12,9 +12,9 @@ export default function getBindingIdentifiers(
   node: AnyNode | Array<AnyNode>,
 ): Array<BindingIdentifier> {
   const ids: Array<BindingIdentifier> = [];
-  let queue: Array<undefined | AnyNode> = Array.isArray(node)
-    ? [...node]
-    : [node];
+  let queue: Array<undefined | AnyNode> = Array.isArray(node) ? [...node] : [
+    node,
+  ];
 
   while (queue.length) {
     const node = queue.pop();

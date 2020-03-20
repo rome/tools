@@ -54,7 +54,7 @@ export default function RegExpCharacter(
       generator.append('\\r');
       break;
 
-    case '\v':
+    case '\x0b':
       generator.append('\\v');
       break;
 
@@ -85,11 +85,9 @@ export default function RegExpCharacter(
       break;
 
     default:
-      generator.append(
-        escapeString(node.value, {
-          json: true,
-          unicodeOnly: true,
-        }),
-      );
+      generator.append(escapeString(node.value, {
+        json: true,
+        unicodeOnly: true,
+      }));
   }
 }

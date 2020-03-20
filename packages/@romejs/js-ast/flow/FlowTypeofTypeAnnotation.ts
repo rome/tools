@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyFlowPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowTypeofTypeAnnotation = JSNodeBase & {
-  type: 'FlowTypeofTypeAnnotation';
-  argument: AnyFlowPrimary;
-};
+export type FlowTypeofTypeAnnotation =
+  & JSNodeBase
+  & {
+    type: 'FlowTypeofTypeAnnotation';
+    argument: AnyFlowPrimary;
+  };
 
 export const flowTypeofTypeAnnotation = createBuilder<FlowTypeofTypeAnnotation>(
   'FlowTypeofTypeAnnotation',

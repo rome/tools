@@ -14,13 +14,11 @@ export default {
   creator: false,
   build(node: FunctionDeclaration, parent: AnyNode, scope: Scope) {
     if (node.id !== undefined) {
-      scope.addBinding(
-        new FunctionBinding({
-          node: node.id,
-          name: node.id.name,
-          scope,
-        }),
-      );
+      scope.addBinding(new FunctionBinding({
+        node: node.id,
+        name: node.id.name,
+        scope,
+      }));
     }
 
     const newScope = scope.fork('function', node);

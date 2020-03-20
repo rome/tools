@@ -20,8 +20,18 @@ export type DeltaBundle = {
 };
 
 export type BundleVariant =
-  | ({base: true; revisionId: string} & Bundle)
-  | ({base: false; revisionId: string} & DeltaBundle);
+    | (
+      & {
+        base: true;
+        revisionId: string;
+      }
+      & Bundle)
+    | (
+      & {
+        base: false;
+        revisionId: string;
+      }
+      & DeltaBundle);
 
 export type BundleMetadata = {
   pre: number;
@@ -62,39 +72,31 @@ export type HmrServerErrorMessage = {
 export type HmrClientLogMessage = {
   type: 'log';
   level:
-    | 'trace'
-    | 'info'
-    | 'warn'
-    | 'log'
-    | 'group'
-    | 'groupCollapsed'
-    | 'groupEnd'
-    | 'debug';
+      | 'trace'
+      | 'info'
+      | 'warn'
+      | 'log'
+      | 'group'
+      | 'groupCollapsed'
+      | 'groupEnd'
+      | 'debug';
   data: Array<unknown>;
 };
 
 export type HmrClientMessage =
-  | {
+    | {
       type: 'register-entrypoints';
       entryPoints: Array<string>;
     }
-  | HmrClientLogMessage
-  | {
-      type: 'log-opt-in';
-    };
+    | HmrClientLogMessage
+    | {type: 'log-opt-in'};
 
 export type HmrServerMessage =
-  | {
-      type: 'bundle-registered';
-    }
-  | {
+    | {type: 'bundle-registered'}
+    | {
       type: 'update-start';
-      body: {
-        isInitialUpdate: boolean;
-      };
+      body: {isInitialUpdate: boolean};
     }
-  | {
-      type: 'update-done';
-    }
-  | HmrServerUpdateMessage
-  | HmrServerErrorMessage;
+    | {type: 'update-done'}
+    | HmrServerUpdateMessage
+    | HmrServerErrorMessage;

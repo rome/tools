@@ -22,25 +22,27 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type ExportLocalDeclaration = JSNodeBase & {
-  type: 'ExportLocalDeclaration';
-  declaration?:
-    | undefined
-    | VariableDeclarationStatement
-    | FunctionDeclaration
-    | ClassDeclaration
-    | TSModuleDeclaration
-    | TSEnumDeclaration
-    | FlowInterfaceDeclaration
-    | TypeAliasTypeAnnotation
-    | TSInterfaceDeclaration
-    | TSDeclareFunction
-    | FlowOpaqueType
-    | TypeAliasTypeAnnotation;
-  specifiers?: Array<ExportLocalSpecifier>;
-  exportKind?: ConstExportModuleKind;
-  declare?: boolean;
-};
+export type ExportLocalDeclaration =
+  & JSNodeBase
+  & {
+    type: 'ExportLocalDeclaration';
+    declaration?:
+        | undefined
+        | VariableDeclarationStatement
+        | FunctionDeclaration
+        | ClassDeclaration
+        | TSModuleDeclaration
+        | TSEnumDeclaration
+        | FlowInterfaceDeclaration
+        | TypeAliasTypeAnnotation
+        | TSInterfaceDeclaration
+        | TSDeclareFunction
+        | FlowOpaqueType
+        | TypeAliasTypeAnnotation;
+    specifiers?: Array<ExportLocalSpecifier>;
+    exportKind?: ConstExportModuleKind;
+    declare?: boolean;
+  };
 
 export const exportLocalDeclaration = createBuilder<ExportLocalDeclaration>(
   'ExportLocalDeclaration',

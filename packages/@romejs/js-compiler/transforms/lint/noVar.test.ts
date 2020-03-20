@@ -8,7 +8,7 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('disallow var', async t => {
+test('disallow var', async (t) => {
   const res = await testLint('var foobar;\nfoobar');
   t.snapshot(res);
 
@@ -18,8 +18,7 @@ test('disallow var', async t => {
       category: 'lint/noVar',
       filename: 'unknown',
       language: 'js',
-      message:
-        'Variable declarations using `var` are disallowed, use `let` or `const` instead.',
+      message: 'Variable declarations using `var` are disallowed, use `let` or `const` instead.',
       mtime: undefined,
       sourceType: 'module',
       origins: [{category: 'lint'}],

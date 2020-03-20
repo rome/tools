@@ -18,13 +18,26 @@ export default function ConditionalExpression(
 ) {
   node = conditionalExpression.assert(node);
 
-  generator.print(node.test, node);
-  generator.space();
-  generator.token('?');
-  generator.space();
-  generator.print(node.consequent, node);
-  generator.space();
-  generator.token(':');
-  generator.space();
-  generator.print(node.alternate, node);
+  generator.multiline(node, (multiline, node) => {
+    generator.print(node.test, node);
+
+    if (multiline) {
+      generator.newline();
+      generator.indent();
+    } else {
+      generator.space();
+    }
+
+    generator.token('?');
+    generator.space();
+    generator.print(node.consequent, node);
+    generator.space();
+    generator.token(':');
+    generator.space();
+    generator.print(node.alternate, node);
+
+    if (multiline) {
+      generator.dedent();
+    }
+  });
 }

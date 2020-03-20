@@ -72,18 +72,14 @@ export default class Context {
   origin: undefined | DiagnosticOrigin;
   options: CompilerOptions;
 
-  async normalizeTransforms(
-    transforms: Transforms,
-  ): Promise<TransformVisitors> {
-    return Promise.all(
-      transforms.map(async visitor => {
-        if (typeof visitor === 'function') {
-          return await visitor(this);
-        } else {
-          return visitor;
-        }
-      }),
-    );
+  async normalizeTransforms(transforms: Transforms): Promise<TransformVisitors> {
+    return Promise.all(transforms.map(async (visitor) => {
+      if (typeof visitor === 'function') {
+        return await visitor(this);
+      } else {
+        return visitor;
+      }
+    }));
   }
 
   getRootScope(): RootScope {
@@ -152,10 +148,7 @@ export default class Context {
     node: undefined | {loc?: SourceLocation},
     diag: ContextPartialDiagnostic,
   ) {
-    return this.addLocDiagnostic(
-      node === undefined ? undefined : node.loc,
-      diag,
-    );
+    return this.addLocDiagnostic(node === undefined ? undefined : node.loc, diag);
   }
 
   addNodesRangeDiagnostic(

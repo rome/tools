@@ -19,9 +19,13 @@ import {Dict} from '@romejs/typescript-helpers';
 import {PathPatterns} from '@romejs/path-match';
 
 export type StringObject = Dict<string>;
+
 export type MString = undefined | string;
+
 export type MStringArray = undefined | Array<string>;
+
 export type MStringObject = undefined | StringObject;
+
 export type MBoolean = undefined | boolean;
 
 export type ManifestMap = Map<string, string>;
@@ -47,13 +51,10 @@ export type ManifestBugs = {
 
 export type ManifestExports = RelativeFilePathMap<ManifestExportConditions>;
 
-export type ManifestExportConditions = Map<
-  string,
-  {
-    consumer: Consumer;
-    relative: RelativeFilePath;
-  }
->;
+export type ManifestExportConditions = Map<string, {
+  consumer: Consumer;
+  relative: RelativeFilePath;
+}>;
 
 export type Manifest = {
   name: MString;
@@ -62,33 +63,26 @@ export type Manifest = {
   license: undefined | SPDXExpressionNode;
   private: boolean;
   type: undefined | 'module' | 'commonjs';
-
   homepage: MString;
   repository: undefined | ManifestRepository;
   bugs: undefined | ManifestBugs;
-
   main: MString;
   exports: boolean | ManifestExports;
-
   author: undefined | ManifestPerson;
   contributors: undefined | Array<ManifestPerson>;
   maintainers: undefined | Array<ManifestPerson>;
-
   files: PathPatterns;
   keywords: Array<string>;
   cpu: Array<string>;
   os: Array<string>;
-
   bin: ManifestMap;
   scripts: ManifestMap;
   engines: ManifestMap;
-
   dependencies: ManifestDependencies;
   devDependencies: ManifestDependencies;
   optionalDependencies: ManifestDependencies;
   peerDependencies: ManifestDependencies;
   bundledDependencies: Array<string>;
-
   raw: JSONObject;
 };
 
@@ -100,33 +94,26 @@ export type JSONManifest = {
   license: MString;
   private: Manifest['private'];
   type: Manifest['type'];
-
   homepage: Manifest['homepage'];
   repository: Manifest['repository'];
   bugs: Manifest['bugs'];
-
   main: Manifest['main'];
   exports: undefined | false | JSONManifestExports;
-
   author: Manifest['author'];
   contributors: Manifest['contributors'];
   maintainers: Manifest['maintainers'];
-
   files: MStringArray;
   keywords: MStringArray;
   cpu: MStringArray;
   os: MStringArray;
-
   bin: MStringObject;
   scripts: MStringObject;
   engines: MStringObject;
-
   dependencies: MStringObject;
   devDependencies: MStringObject;
   optionalDependencies: MStringObject;
   peerDependencies: MStringObject;
   bundledDependencies: MStringArray;
-
   [key: string]: JSONPropertyValue;
 };
 

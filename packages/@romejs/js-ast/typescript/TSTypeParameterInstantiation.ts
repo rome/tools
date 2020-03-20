@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTypeParameterInstantiation = JSNodeBase & {
-  type: 'TSTypeParameterInstantiation';
-  params: Array<AnyTSPrimary>;
-};
+export type TSTypeParameterInstantiation =
+  & JSNodeBase
+  & {
+    type: 'TSTypeParameterInstantiation';
+    params: Array<AnyTSPrimary>;
+  };
 
 export const tsTypeParameterInstantiation = createBuilder<
   TSTypeParameterInstantiation

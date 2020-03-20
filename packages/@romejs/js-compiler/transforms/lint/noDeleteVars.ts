@@ -13,11 +13,8 @@ export default {
   enter(path: Path): AnyNode {
     const {node} = path;
 
-    if (
-      node.type === 'UnaryExpression' &&
-      node.operator === 'delete' &&
-      node.argument.type === 'ReferenceIdentifier'
-    ) {
+    if (node.type === 'UnaryExpression' && node.operator === 'delete' &&
+      node.argument.type === 'ReferenceIdentifier') {
       path.context.addNodeDiagnostic(node, {
         category: 'lint/noDeleteVars',
         message: 'Variables should not be deleted.',

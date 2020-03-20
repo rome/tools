@@ -22,6 +22,7 @@ import {AbsoluteFilePath} from '@romejs/path';
 import {add} from '@romejs/ob1';
 import {readFile} from '@romejs/fs';
 import crypto = require('crypto');
+
 import {Dict} from '@romejs/typescript-helpers';
 import {Reporter} from '@romejs/cli-reporter';
 
@@ -31,19 +32,21 @@ export type BundleOptions = {
 };
 
 export default class BundleRequest {
-  constructor({
-    bundler,
-    reporter,
-    mode,
-    resolvedEntry,
-    options,
-  }: {
-    bundler: Bundler;
-    reporter: Reporter;
-    mode: BundlerMode;
-    resolvedEntry: AbsoluteFilePath;
-    options: BundleOptions;
-  }) {
+  constructor(
+    {
+      bundler,
+      reporter,
+      mode,
+      resolvedEntry,
+      options,
+    }: {
+      bundler: Bundler;
+      reporter: Reporter;
+      mode: BundlerMode;
+      resolvedEntry: AbsoluteFilePath;
+      options: BundleOptions;
+    },
+  ) {
     this.reporter = reporter;
     this.interpreter = options.interpreter;
     this.bundler = bundler;
@@ -53,14 +56,15 @@ export default class BundleRequest {
     this.resolvedEntry = resolvedEntry;
     this.resolvedEntryUid = bundler.master.projectManager.getUid(resolvedEntry);
 
-    this.diagnostics = new DiagnosticsProcessor({
-      origins: [
-        {
-          category: 'bundler',
-          message: `Requested bundle for <filelink target="${this.resolvedEntryUid}" />`,
-        },
-      ],
-    });
+    this.diagnostics =
+      new DiagnosticsProcessor({
+        origins: [
+          {
+            category: 'bundler',
+            message: `Requested bundle for <filelink target="${this.resolvedEntryUid}" />`,
+          },
+        ],
+      });
     this.diagnostics.addAllowedUnusedSuppressionPrefix('lint');
 
     this.compiles = new Map();
@@ -117,17 +121,15 @@ export default class BundleRequest {
     compilingSpinner.setTitle('Compiling');
 
     const groupedPaths = await master.fileAllocator.groupPathsByWorker(paths);
-    await Promise.all(
-      groupedPaths.map(async paths => {
-        for (const path of paths) {
-          const progressText = `<filelink target="${path.join()}" />`;
-          compilingSpinner.pushText(progressText);
-          await this.compileJS(path);
-          compilingSpinner.tick();
-          compilingSpinner.popText(progressText);
-        }
-      }),
-    );
+    await Promise.all(groupedPaths.map(async (paths) => {
+      for (const path of paths) {
+        const progressText = `<filelink target="${path.join()}" />`;
+        compilingSpinner.pushText(progressText);
+        await this.compileJS(path);
+        compilingSpinner.tick();
+        compilingSpinner.popText(progressText);
+      }
+    }));
     compilingSpinner.end();
   }
 
@@ -145,19 +147,17 @@ export default class BundleRequest {
     }
 
     // Diagnostics would have already been added during the initial DependencyGraph.seed
+
     // We're doing the work of resolving everything again, maybe we should cache it?
-    const resolvedImports: BundleCompileResolvedImports = mod.resolveImports()
-      .resolved;
+    const resolvedImports: BundleCompileResolvedImports =
+      mod.resolveImports().resolved;
 
     let assetPath: undefined | string;
     if (mod.handler !== undefined && mod.handler.isAsset) {
       const buffer = await readFile(mod.path);
 
       // Asset path in the form of: BASENAME-SHA1HASH.EXTENSIONS
-      const hash = crypto
-        .createHash('sha1')
-        .update(buffer)
-        .digest('hex');
+      const hash = crypto.createHash('sha1').update(buffer).digest('hex');
       const basename = mod.path.getExtensionlessBasename();
       const exts = mod.path.getExtensions();
 
@@ -174,11 +174,14 @@ export default class BundleRequest {
       assetPath,
     };
 
-    const res: WorkerCompileResult = await this.bundler.request.requestWorkerCompile(
-      path,
-      'compileForBundle',
-      {bundle: opts},
-    );
+    const res: WorkerCompileResult =
+      await this.bundler.request.requestWorkerCompile(
+        path,
+        'compileForBundle',
+        {
+          bundle: opts,
+        },
+      );
 
     if (!res.cached) {
       this.cached = false;
@@ -242,8 +245,7 @@ export default class BundleRequest {
             filename: loc.filename,
             start: loc.start,
             end: loc.end,
-            message:
-              "This module contains a top level await which isn't supported in wrapper mode",
+            message: 'This module contains a top level await which isn\'t supported in wrapper mode',
             mtime,
           });
         }
@@ -259,6 +261,7 @@ export default class BundleRequest {
     }
 
     // TODO prelude
+
     /*
     const path = createAbsoluteFilePath(loc);
     const res = await this.bundler.request.requestWorkerCompile(
@@ -274,14 +277,9 @@ export default class BundleRequest {
     push(res.code);
     push('})();');
     */
-
     const declaredCJS: Set<DependencyNode> = new Set();
     function declareCJS(module: DependencyNode) {
-      if (
-        mode !== 'modern' ||
-        module.type !== 'cjs' ||
-        declaredCJS.has(module)
-      ) {
+      if (mode !== 'modern' || module.type !== 'cjs' || declaredCJS.has(module)) {
         return;
       }
 
@@ -326,7 +324,7 @@ export default class BundleRequest {
 
     // push footer
     push(
-      "})(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this);",
+      '})(typeof global !== \'undefined\' ? global : typeof window !== \'undefined\' ? window : this);',
     );
 
     //

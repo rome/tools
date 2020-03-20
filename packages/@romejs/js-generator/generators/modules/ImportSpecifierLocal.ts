@@ -12,10 +12,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function ImportSpecifierLocal(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function ImportSpecifierLocal(generator: Generator, node: AnyNode) {
   node = importSpecifierLocal.assert(node);
 
   throw new Error('unimplemented');

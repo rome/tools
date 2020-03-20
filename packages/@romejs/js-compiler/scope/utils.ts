@@ -24,33 +24,31 @@ export function addFunctionBindings(
   // Add type parameters
   scope.evaluate(head.typeParameters);
 
-  const params =
-    head.rest === undefined ? head.params : [...head.params, head.rest];
+  const params = head.rest === undefined ? head.params : [
+    ...head.params,
+    head.rest,
+  ];
 
   // Add parameters
   for (const param of params) {
     for (const id of getBindingIdentifiers(param)) {
       // TODO maybe add a `param` binding type?
-      scope.addBinding(
-        new LetBinding({
-          node: id,
-          name: id.name,
-          scope,
-          kind: 'parameter',
-        }),
-      );
+      scope.addBinding(new LetBinding({
+        node: id,
+        name: id.name,
+        scope,
+        kind: 'parameter',
+      }));
     }
   }
 
   // Add `arguments` binding
   if (hasArguments) {
-    scope.addBinding(
-      new ArgumentsBinding({
-        name: 'arguments',
-        node,
-        scope,
-      }),
-    );
+    scope.addBinding(new ArgumentsBinding({
+      name: 'arguments',
+      node,
+      scope,
+    }));
   }
 
   if (head.hasHoistedVars) {
@@ -62,29 +60,25 @@ export function addVarBindings(scope: Scope, topNode: AnyFunction | Program) {
   const {context} = scope.getRootScope();
   scope.setHoistedVars();
 
-  context.reduce(
-    topNode,
-    [
-      {
-        name: 'scopeVarFunc',
-        enter: path => {
-          const {node, parent} = path;
-
-          if (isFunctionNode(node) && node !== topNode) {
-            return REDUCE_SKIP_SUBTREE;
-          }
-
-          if (node.type === 'VariableDeclaration' && node.kind === 'var') {
-            scope.evaluate(node, parent);
-          }
-
-          return node;
-        },
-      },
-    ],
+  context.reduce(topNode, [
     {
-      scope,
-      noScopeCreation: true,
+      name: 'scopeVarFunc',
+      enter: (path) => {
+        const {node, parent} = path;
+
+        if (isFunctionNode(node) && node !== topNode) {
+          return REDUCE_SKIP_SUBTREE;
+        }
+
+        if (node.type === 'VariableDeclaration' && node.kind === 'var') {
+          scope.evaluate(node, parent);
+        }
+
+        return node;
+      },
     },
-  );
+  ], {
+    scope,
+    noScopeCreation: true,
+  });
 }

@@ -8,10 +8,7 @@
 import Generator from '../../Generator';
 import {JSXEmptyExpression, jsxEmptyExpression, AnyNode} from '@romejs/js-ast';
 
-export default function JSXEmptyExpression(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function JSXEmptyExpression(generator: Generator, node: AnyNode) {
   node = jsxEmptyExpression.assert(node);
 
   generator.printInnerComments(node);

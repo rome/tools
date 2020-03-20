@@ -32,8 +32,8 @@ export type AnalyzeExportLocal = {
 };
 
 export type AnyAnalyzeExport =
-  | AnalyzeExportLocal
-  | {
+    | AnalyzeExportLocal
+    | {
       type: 'external';
       kind: ConstImportModuleKind;
       loc?: SourceLocation;
@@ -41,7 +41,7 @@ export type AnyAnalyzeExport =
       exported: string;
       source: string;
     }
-  | {
+    | {
       type: 'externalAll';
       loc?: SourceLocation;
       kind: ConstImportModuleKind;

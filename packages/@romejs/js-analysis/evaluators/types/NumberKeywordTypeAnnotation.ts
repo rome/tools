@@ -13,10 +13,7 @@ import {
 } from '@romejs/js-ast';
 import NumericT from '../../types/NumericT';
 
-export default function NumberKeywordTypeAnnotation(
-  node: AnyNode,
-  scope: Scope,
-) {
+export default function NumberKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
   node = numberKeywordTypeAnnotation.assert(node);
   return new NumericT(scope, node);
 }

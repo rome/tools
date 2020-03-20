@@ -17,15 +17,16 @@ export default function stringify(node: ExpressionNode): string {
     case 'And':
       return `${stringify(node.left)} AND ${stringify(node.right)}`;
 
-    case 'License': {
-      let str = node.id;
-      if (node.plus) {
-        str += '+';
+    case 'License':
+      {
+        let str = node.id;
+        if (node.plus) {
+          str += '+';
+        }
+        if (node.exception !== undefined) {
+          str += ` WITH ${node.exception}`;
+        }
+        return str;
       }
-      if (node.exception !== undefined) {
-        str += ` WITH ${node.exception}`;
-      }
-      return str;
-    }
   }
 }

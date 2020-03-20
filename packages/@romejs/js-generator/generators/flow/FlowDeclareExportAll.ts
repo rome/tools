@@ -12,10 +12,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function FlowDeclareExportAll(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function FlowDeclareExportAll(generator: Generator, node: AnyNode) {
   node = flowDeclareExportAll.assert(node);
 
   flowDeclareExportAll.assert(node);

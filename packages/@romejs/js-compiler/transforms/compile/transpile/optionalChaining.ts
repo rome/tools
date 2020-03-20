@@ -18,20 +18,26 @@ export default {
     if (node.type === 'MemberExpression' && node.property.optional) {
       // TODO assign `node.object` to a variable and use it as a reference
       if (node.property.type === 'ComputedMemberProperty') {
-        return template.expression`${node.object} == null ? undefined : ${node.object}[${node.property.value}]`;
+        return (
+          template.expression`${node.object} == null ? undefined : ${node.object}[${node.property.value}]`
+        );
       } else {
-        return template.expression`${node.object} == null ? undefined : ${node.object}.${node.property.value}`;
+        return (
+          template.expression`${node.object} == null ? undefined : ${node.object}.${node.property.value}`
+        );
       }
     }
 
     if (node.type === 'OptionalCallExpression') {
       // TODO assign `node.callee` to a variable and use it as a reference
-      return template.expression`${
-        node.callee
-      } == null ? undefined : ${callExpression.create({
-        callee: node.callee,
-        arguments: node.arguments,
-      })}`;
+      return (
+        template.expression`${node.callee} == null ? undefined : ${callExpression.create(
+          {
+            callee: node.callee,
+            arguments: node.arguments,
+          },
+        )}`
+      );
     }
 
     return node;

@@ -16,9 +16,7 @@ import {
 } from '@romejs/path';
 import {readFileTextSync, existsSync} from '@romejs/fs';
 
-export type UserConfig = {
-  cachePath: AbsoluteFilePath;
-};
+export type UserConfig = {cachePath: AbsoluteFilePath};
 
 export const DEFAULT_USER_CONFIG: UserConfig = {
   cachePath: TEMP_PATH.append(`rome-${VERSION}`),

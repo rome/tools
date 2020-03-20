@@ -49,9 +49,9 @@ export type ParserOptions = {
   offsetPosition?: Position;
 };
 
-export type ParserOptionsWithRequiredPath = Omit<ParserOptions, 'path'> & {
-  path: NonNullable<ParserOptions['path']>;
-};
+export type ParserOptionsWithRequiredPath =
+  & Omit<ParserOptions, 'path'>
+  & {path: NonNullable<ParserOptions['path']>};
 
 export type ParserUnexpectedOptions = {
   message?: string;
@@ -63,8 +63,8 @@ export type ParserUnexpectedOptions = {
 };
 
 export type TokenValues<Tokens extends TokensShape> =
-  | Tokens[keyof Tokens]
-  | BaseTokens[keyof BaseTokens];
+    | Tokens[keyof Tokens]
+    | BaseTokens[keyof BaseTokens];
 
 export function tryParseWithOptionalOffsetPosition<
   Opts extends ParserOptions,
@@ -130,12 +130,11 @@ export class ParserCore<Tokens extends TokensShape, State> {
     this.offsetPosition = offsetPosition;
     this.diagnosticCategory = diagnosticCategory;
     this.tokenizing = false;
-    this.currLine =
-      offsetPosition === undefined ? number1 : offsetPosition.line;
-    this.currColumn =
-      offsetPosition === undefined ? number0 : offsetPosition.column;
-    this.offsetIndex =
-      offsetPosition === undefined ? number0 : offsetPosition.index;
+    this.currLine = offsetPosition === undefined ? number1 : offsetPosition.line;
+    this.currColumn = offsetPosition === undefined
+      ? number0 : offsetPosition.column;
+    this.offsetIndex = offsetPosition === undefined
+      ? number0 : offsetPosition.index;
     this.startLine = this.currLine;
     this.startColumn = this.currColumn;
     this.nextTokenIndex = number0;
@@ -227,7 +226,12 @@ export class ParserCore<Tokens extends TokensShape, State> {
     index: Number0,
     input: string,
     state: State,
-  ): undefined | {token: TokenValues<Tokens>; state: State} {
+  ):
+      | undefined
+      | {
+        token: TokenValues<Tokens>;
+        state: State;
+      } {
     const token = this.tokenize(index, input);
     if (token !== undefined) {
       return {token, state};
@@ -238,7 +242,12 @@ export class ParserCore<Tokens extends TokensShape, State> {
     index: Number0,
     input: string,
     state: State,
-  ): undefined | {token: TokenValues<Tokens>; state: State} {
+  ):
+      | undefined
+      | {
+        token: TokenValues<Tokens>;
+        state: State;
+      } {
     if (this.ignoreWhitespaceTokens) {
       switch (input[get0(index)]) {
         case ' ':
@@ -290,7 +299,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     }
 
     if (this.tokenizing) {
-      throw new Error("Can't call nextToken while tokenizing");
+      throw new Error('Can\'t call nextToken while tokenizing');
     }
 
     const prevToken = this.currentToken;
@@ -337,13 +346,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   // Get the end position of the current token
-  getEndPosition() {
-    const token = this.getToken();
-    return this.getPositionFromIndex(token.end);
-  }
-
-  // Get the end position of the previous token
-  getPrevEndPosition() {
+  getLastEndPosition() {
     return this.getPositionFromIndex(this.prevToken.end);
   }
 
@@ -355,7 +358,10 @@ export class ParserCore<Tokens extends TokensShape, State> {
   // Return the token and state that's after the current token without advancing to it
   lookahead(
     index: Number0 = this.nextTokenIndex,
-  ): {token: TokenValues<Tokens>; state: State} {
+  ): {
+    token: TokenValues<Tokens>;
+    state: State;
+  } {
     if (this.isEOF(index)) {
       return {token: this.eofToken, state: this.state};
     }
@@ -406,10 +412,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
     // Reuse existing line information if possible
     const {latestPosition} = this;
     const currPosition = this.getPosition();
-    if (
-      currPosition.index > latestPosition.index &&
-      currPosition.index < indexWithOffset
-    ) {
+    if (currPosition.index > latestPosition.index && currPosition.index <
+    indexWithOffset) {
       line = currPosition.line;
       column = currPosition.column;
       indexSearchOffset = get0(this.removeOffset(currPosition.index));
@@ -463,7 +467,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
     // When both properties are omitted then we will default to the current token range
     if (start === undefined && end === undefined) {
-      end = this.getEndPosition();
+      end = this.getLastEndPosition();
     }
 
     if (start === undefined) {
@@ -481,20 +485,16 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
     // Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
     if (message === undefined) {
-      if (
-        currentToken !== undefined &&
-        start !== undefined &&
-        start.index === currentToken.start
-      ) {
+      if (currentToken !== undefined && start !== undefined && start.index ===
+      currentToken.start) {
         message = `Unexpected ${currentToken.type}`;
       } else {
         if (this.isEOF(start.index)) {
           message = 'Unexpected end of file';
         } else {
           const char = this.input[get0(start.index)];
-          message = `Unexpected character <emphasis>${escapeMarkup(
-            char,
-          )}</emphasis>`;
+          message =
+            `Unexpected character <emphasis>${escapeMarkup(char)}</emphasis>`;
         }
       }
     }
@@ -522,7 +522,6 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   //# Token utility methods
-
   assertNoSpace() {
     if (this.currentToken.start !== this.prevToken.end) {
       throw this.unexpected({
@@ -564,10 +563,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
       return token;
     } else {
       throw this.unexpected({
-        message:
-          message === undefined
-            ? `Expected token ${type} but got ${token.type}`
-            : message,
+        message: message === undefined
+          ? `Expected token ${type} but got ${token.type}` : message,
       });
     }
   }
@@ -585,10 +582,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
         return [value, index, true];
       }
 
-      if (
-        callback === undefined ||
-        callback(input[get0(index)], index, input)
-      ) {
+      if (callback === undefined || callback(input[get0(index)], index, input)) {
         value += input[get0(index)];
         index = inc(index);
       } else {
@@ -605,7 +599,6 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   //# Utility methods to make it easy to construct nodes or tokens
-
   getLoc(node: undefined | NodeBase): SourceLocation {
     if (node === undefined || node.loc === undefined) {
       throw new Error('Tried to fetch node loc start but none found');
@@ -659,7 +652,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   finishLoc(start: Position): SourceLocation {
-    return this.finishLocAt(start, this.getPosition());
+    return this.finishLocAt(start, this.getLastEndPosition());
   }
 
   finishLocAt(start: Position, end: Position): SourceLocation {
@@ -679,10 +672,10 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 }
 
-export class ParserWithRequiredPath<
-  Tokens extends TokensShape,
+export class ParserWithRequiredPath<Tokens extends TokensShape, State> extends ParserCore<
+  Tokens,
   State
-> extends ParserCore<Tokens, State> {
+> {
   constructor(
     opts: ParserOptionsWithRequiredPath,
     diagnosticCategory: DiagnosticCategory,
@@ -698,7 +691,6 @@ export class ParserWithRequiredPath<
 }
 
 //# Helpers methods for basic token parsing
-
 export function isDigit(char: undefined | string): boolean {
   return char !== undefined && /[0-9]/.test(char);
 }
@@ -732,10 +724,10 @@ export function readUntilLineBreak(char: string): boolean {
 
 // Lazy initialize a ParserCore subclass... Circular dependencies are wild and necessitate this as ParserCore may not be available
 export function createParser<T, Args extends Array<unknown>>(
-  callback: (
-    parser: typeof ParserCore,
-    parserRequiredPath: typeof ParserWithRequiredPath,
-  ) => Class<T, Args>,
+  callback: (parser: typeof ParserCore, parserRequiredPath: typeof ParserWithRequiredPath) => Class<
+    T,
+    Args
+  >,
 ): (...args: Args) => T {
   let klass: undefined | Class<T, Args>;
 

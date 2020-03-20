@@ -53,11 +53,7 @@ if (fs.existsSync(fileLoc, 'utf8')) {
 write(fileLoc, file);
 
 // Write generator
-const generatorDefFile = path.join(
-  generatorsFolder,
-  category,
-  `${nodeType}.ts`,
-);
+const generatorDefFile = path.join(generatorsFolder, category, `${nodeType}.ts`);
 const generatorContent = `/**
 * Copyright (c) Facebook, Inc. and its affiliates.
 *

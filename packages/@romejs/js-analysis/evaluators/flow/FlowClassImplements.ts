@@ -6,11 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {
-  FlowClassImplements,
-  flowClassImplements,
-  AnyNode,
-} from '@romejs/js-ast';
+import {FlowClassImplements, flowClassImplements, AnyNode} from '@romejs/js-ast';
 
 export default function FlowClassImplements(node: AnyNode, scope: Scope) {
   node = flowClassImplements.assert(node);

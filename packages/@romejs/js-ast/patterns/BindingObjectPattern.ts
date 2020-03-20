@@ -13,12 +13,14 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type BindingObjectPattern = JSNodeBase & {
-  meta?: PatternMeta;
-  type: 'BindingObjectPattern';
-  properties: Array<BindingObjectPatternProperty>;
-  rest: undefined | BindingIdentifier;
-};
+export type BindingObjectPattern =
+  & JSNodeBase
+  & {
+    meta?: PatternMeta;
+    type: 'BindingObjectPattern';
+    properties: Array<BindingObjectPatternProperty>;
+    rest: undefined | BindingIdentifier;
+  };
 
 export const bindingObjectPattern = createBuilder<BindingObjectPattern>(
   'BindingObjectPattern',

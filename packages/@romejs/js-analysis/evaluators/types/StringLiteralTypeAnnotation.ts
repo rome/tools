@@ -12,10 +12,7 @@ import {
   StringLiteralTypeAnnotation,
 } from '@romejs/js-ast';
 
-export default function StringLiteralTypeAnnotation(
-  node: AnyNode,
-  scope: Scope,
-) {
+export default function StringLiteralTypeAnnotation(node: AnyNode, scope: Scope) {
   node = stringLiteralTypeAnnotation.assert(node);
   scope;
   throw new Error('unimplemented');

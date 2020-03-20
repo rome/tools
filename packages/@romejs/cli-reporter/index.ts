@@ -8,4 +8,5 @@
 export {ReporterOptions} from './Reporter';
 export {default as Reporter} from './Reporter';
 export * from './types';
+
 export {ProgressShape as ReporterProgress} from './types';

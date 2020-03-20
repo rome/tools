@@ -16,47 +16,35 @@ import {SourceMap} from '@romejs/codec-source-map';
 import {Dict} from '@romejs/typescript-helpers';
 
 //
-
 export type TransformStageName = 'pre' | 'compile' | 'compileForBundle';
 
-export type TransformStageFactory = (
-  projectConfig: ProjectConfig,
-  options: Object,
-) => Transforms;
+export type TransformStageFactory = (projectConfig: ProjectConfig, options: Object) => Transforms;
 
-export type TransformStageFactories = {
-  [key in TransformStageName]: TransformStageFactory;
-};
+export type TransformStageFactories = { [key in TransformStageName]: TransformStageFactory };
 
 //
-
 export type Transform =
-  | TransformVisitor
-  | ((context: Context) => TransformVisitor);
+    | TransformVisitor
+    | ((context: Context) => TransformVisitor);
 
 export type Transforms = Array<Transform>;
 
-export type TransformExitResult =
-  | Array<AnyNode>
-  | AnyNode
-  | typeof REDUCE_REMOVE;
+export type TransformExitResult = Array<AnyNode> | AnyNode | typeof REDUCE_REMOVE;
 
 export type TransformEnterResult =
-  | TransformExitResult
-  | typeof REDUCE_SKIP_SUBTREE;
+    | TransformExitResult
+    | typeof REDUCE_SKIP_SUBTREE;
 
 export type TransformVisitor = {
   name: string;
   enter?: (path: Path) => TransformEnterResult;
   exit?: (path: Path) => TransformExitResult;
 };
+
 export type TransformVisitors = Array<TransformVisitor>;
 
 //
-
-export type CompileRequest = TransformRequest & {
-  inputSourceMap?: SourceMap;
-};
+export type CompileRequest = TransformRequest & {inputSourceMap?: SourceMap};
 
 export type TransformProjectDefinition = {
   config: ProjectConfig;
@@ -71,9 +59,10 @@ export type TransformRequest = {
   stage?: TransformStageName;
 };
 
-export type BundleCompileResolvedImports = {
-  [key: string]: {id: string; name: string};
-};
+export type BundleCompileResolvedImports = {[key: string]: {
+    id: string;
+    name: string;
+  }};
 
 export type BundleCompileOptions = {
   mode: BundlerMode;
@@ -85,6 +74,4 @@ export type BundleCompileOptions = {
   assetPath: undefined | string;
 };
 
-export type CompilerOptions = {
-  bundle?: BundleCompileOptions;
-};
+export type CompilerOptions = {bundle?: BundleCompileOptions};

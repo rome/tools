@@ -16,16 +16,18 @@ import {
 import {createBuilder} from '../utils';
 
 export type AnyImportSpecifier =
-  | ImportSpecifier
-  | ImportDefaultSpecifier
-  | ImportNamespaceSpecifier;
+    | ImportSpecifier
+    | ImportDefaultSpecifier
+    | ImportNamespaceSpecifier;
 
-export type ImportDeclaration = JSNodeBase & {
-  type: 'ImportDeclaration';
-  specifiers?: Array<AnyImportSpecifier>;
-  source: StringLiteral;
-  importKind?: ConstImportModuleKind;
-};
+export type ImportDeclaration =
+  & JSNodeBase
+  & {
+    type: 'ImportDeclaration';
+    specifiers?: Array<AnyImportSpecifier>;
+    source: StringLiteral;
+    importKind?: ConstImportModuleKind;
+  };
 
 export const importDeclaration = createBuilder<ImportDeclaration>(
   'ImportDeclaration',

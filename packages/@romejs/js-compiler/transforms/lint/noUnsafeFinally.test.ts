@@ -8,9 +8,10 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('disallow unsafe usage of break, continue, throw and return', async t => {
-  const returnTest = await testLint(
-    `
+test(
+  'disallow unsafe usage of break, continue, throw and return',
+  async (t) => {
+    const returnTest = await testLint(`
     function greet1() {
       try {
         throw new Error("Try")
@@ -22,17 +23,13 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
     }
 
     greet1();
-    `,
-  );
+    `);
 
-  t.truthy(
-    returnTest.diagnostics.find(
-      d => d.message === `Unsafe usage of ReturnStatement.`,
-    ),
-  );
+    t.truthy(returnTest.diagnostics.find((d) =>
+      d.message === `Unsafe usage of ReturnStatement.`
+    ));
 
-  const breakTest = await testLint(
-    `
+    const breakTest = await testLint(`
 
     function greet2() {
       try {
@@ -45,17 +42,13 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
     }
 
     greet2();
-    `,
-  );
+    `);
 
-  t.truthy(
-    breakTest.diagnostics.find(
-      d => d.message === `Unsafe usage of BreakStatement.`,
-    ),
-  );
+    t.truthy(breakTest.diagnostics.find((d) =>
+      d.message === `Unsafe usage of BreakStatement.`
+    ));
 
-  const continueTest = await testLint(
-    `
+    const continueTest = await testLint(`
     function greet3() {
       try {
         throw new Error("Try")
@@ -67,17 +60,13 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
     }
 
     greet3();
-    `,
-  );
+    `);
 
-  t.truthy(
-    continueTest.diagnostics.find(
-      d => d.message === `Unsafe usage of ContinueStatement.`,
-    ),
-  );
+    t.truthy(continueTest.diagnostics.find((d) =>
+      d.message === `Unsafe usage of ContinueStatement.`
+    ));
 
-  const throwTest = await testLint(
-    `
+    const throwTest = await testLint(`
     function greet4() {
       try {
         throw new Error("Try")
@@ -89,12 +78,10 @@ test('disallow unsafe usage of break, continue, throw and return', async t => {
     }
 
     greet4();
-    `,
-  );
+    `);
 
-  t.truthy(
-    throwTest.diagnostics.find(
-      d => d.message === `Unsafe usage of ThrowStatement.`,
-    ),
-  );
-});
+    t.truthy(throwTest.diagnostics.find((d) =>
+      d.message === `Unsafe usage of ThrowStatement.`
+    ));
+  },
+);

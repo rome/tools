@@ -7,18 +7,12 @@
 
 import Generator from '../../Generator';
 import {bindingObjectPatternProperty, AnyNode} from '@romejs/js-ast';
+import ObjectProperty from '../objects/ObjectProperty';
 
 export default function BindingObjectPatternProperty(
   generator: Generator,
   node: AnyNode,
 ) {
-  node =
-    node.type === 'AssignmentObjectPatternProperty'
-      ? node
-      : bindingObjectPatternProperty.assert(node);
-
-  generator.print(node.key, node);
-  generator.token(':');
-  generator.space();
-  generator.print(node.value, node);
+  node = bindingObjectPatternProperty.assert(node);
+  ObjectProperty(generator, node);
 }

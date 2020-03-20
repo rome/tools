@@ -6,11 +6,7 @@
  */
 
 import Generator from '../../Generator';
-import {
-  AnyNode,
-  VariableDeclaration,
-  variableDeclaration,
-} from '@romejs/js-ast';
+import {AnyNode, VariableDeclaration, variableDeclaration} from '@romejs/js-ast';
 import {isFor} from '@romejs/js-ast-utils';
 
 export default function VariableDeclaration(
@@ -36,49 +32,69 @@ export default function VariableDeclaration(
   }
 
   //
+
   // use a pretty separator when we aren't in compact mode, have initializers and don't have retainLines on
+
   // this will format declarations like:
   //
+
   //   let foo = "bar", bar = "foo";
-  //
-  // into
-  //
-  //   let foo = "bar",
-  //       bar = "foo";
+
   //
 
+  // into
+
+  //
+
+  //   let foo = "bar",
+
+  //       bar = "foo";
+
+  //
   let separator = variableDeclarationNormal;
   if (hasInits) {
-    separator =
-      node.kind === 'const'
-        ? constDeclarationIndent
-        : variableDeclarationIndent;
+    separator = node.kind === 'const'
+      ? constDeclarationIndent : variableDeclarationIndent;
   }
 
-  generator.printJoin(node.declarations, node, {separator});
+  generator.printJoin(node.declarations, node, {
+    after: separator,
+  });
 }
 
-function variableDeclarationNormal(generator: Generator) {
+function variableDeclarationNormal(generator: Generator, isLast: boolean) {
+  if (isLast) {
+    return;
+  }
+
   generator.token(',');
   generator.space();
 }
 
-function variableDeclarationIndent(generator: Generator) {
+function variableDeclarationIndent(generator: Generator, isLast: boolean) {
+  if (isLast) {
+    return;
+  }
+
   // "let " or "var " indentation.
   generator.token(',');
-  generator.newline();
-  if (generator.endsWith('\n')) {
+  generator.forceNewline();
+  if (generator.buf.endsWith('\n')) {
     for (let i = 0; i < 4; i++) {
       generator.space();
     }
   }
 }
 
-function constDeclarationIndent(generator: Generator) {
+function constDeclarationIndent(generator: Generator, isLast: boolean) {
+  if (isLast) {
+    return;
+  }
+
   // "const " indentation.
   generator.token(',');
-  generator.newline();
-  if (generator.endsWith('\n')) {
+  generator.forceNewline();
+  if (generator.buf.endsWith('\n')) {
     for (let i = 0; i < 6; i++) {
       generator.space();
     }

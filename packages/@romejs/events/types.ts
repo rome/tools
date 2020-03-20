@@ -15,9 +15,9 @@ export type BridgeCreatorOptions = {
 
 export type BridgeType = 'server' | 'client' | 'server&client';
 
-export type BridgeOptions = BridgeCreatorOptions & {
-  sendMessage: (msg: BridgeMessage) => void;
-};
+export type BridgeOptions =
+  & BridgeCreatorOptions
+  & {sendMessage: (msg: BridgeMessage) => void};
 
 export type EventOptions = {
   name: string;
@@ -26,9 +26,7 @@ export type EventOptions = {
   serial?: boolean;
 };
 
-export type EventSubscription = {
-  unsubscribe: () => void;
-};
+export type EventSubscription = {unsubscribe: () => void};
 
 export type BridgeHandshakeMessage = {
   type: 'handshake';
@@ -67,11 +65,11 @@ export type BridgeErrorResponseMessage = {
 };
 
 export type BridgeResponseMessage =
-  | BridgeSuccessResponseMessage
-  | BridgeErrorResponseMessage;
+    | BridgeSuccessResponseMessage
+    | BridgeErrorResponseMessage;
 
 export type BridgeMessage =
-  | BridgeHandshakeMessage
-  | BridgeSubscriptionsMessage
-  | BridgeRequestMessage
-  | BridgeResponseMessage;
+    | BridgeHandshakeMessage
+    | BridgeSubscriptionsMessage
+    | BridgeRequestMessage
+    | BridgeResponseMessage;

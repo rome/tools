@@ -8,7 +8,7 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('undeclared variable', async t => {
+test('undeclared variable', async (t) => {
   const res = await testLint('foobar;');
   t.snapshot(res);
 

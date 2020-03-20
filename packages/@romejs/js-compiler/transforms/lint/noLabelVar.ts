@@ -16,8 +16,9 @@ export default {
     if (node.type === 'LabeledStatement') {
       const name = node.label.name;
       const binding = scope.getBinding(name);
-      const isDefined =
-        binding !== undefined || scope.getRootScope().isGlobal(name);
+      const isDefined = binding !== undefined || scope.getRootScope().isGlobal(
+        name,
+      );
 
       if (isDefined) {
         path.context.addNodeDiagnostic(node, {

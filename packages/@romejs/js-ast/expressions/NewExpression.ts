@@ -15,16 +15,18 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type NewExpression = JSNodeBase & {
-  type: 'NewExpression';
-  callee: AnyExpression | Super;
-  arguments: Array<AnyExpression | SpreadElement>;
-  typeArguments?:
-    | undefined
-    | FlowTypeParameterInstantiation
-    | TSTypeParameterInstantiation;
-  optional?: boolean;
-};
+export type NewExpression =
+  & JSNodeBase
+  & {
+    type: 'NewExpression';
+    callee: AnyExpression | Super;
+    arguments: Array<AnyExpression | SpreadElement>;
+    typeArguments?:
+        | undefined
+        | FlowTypeParameterInstantiation
+        | TSTypeParameterInstantiation;
+    optional?: boolean;
+  };
 
 export const newExpression = createBuilder<NewExpression>('NewExpression', {
   bindingKeys: {},

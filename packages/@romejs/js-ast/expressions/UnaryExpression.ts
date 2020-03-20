@@ -8,22 +8,24 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type UnaryExpression = JSNodeBase & {
-  type: 'UnaryExpression';
-  operator: UnaryOperator;
-  prefix?: boolean;
-  argument: AnyExpression;
-};
+export type UnaryExpression =
+  & JSNodeBase
+  & {
+    type: 'UnaryExpression';
+    operator: UnaryOperator;
+    prefix?: boolean;
+    argument: AnyExpression;
+  };
 
 export type UnaryOperator =
-  | '-'
-  | '+'
-  | '!'
-  | '~'
-  | 'typeof'
-  | 'void'
-  | 'delete'
-  | 'throw';
+    | '-'
+    | '+'
+    | '!'
+    | '~'
+    | 'typeof'
+    | 'void'
+    | 'delete'
+    | 'throw';
 
 export const unaryExpression = createBuilder<UnaryExpression>(
   'UnaryExpression',

@@ -23,7 +23,7 @@ export function unmaskPayload(
   }
 
   for (let i = 0; i < payload.length; i++) {
-    payload[i] ^= mask[(offset + i) & 3];
+    payload[i] ^= mask[offset + i & 3];
   }
 
   return payload;
@@ -35,7 +35,7 @@ export function buildFrame(opts: BuildFrameOpts, shouldMask: boolean): Buffer {
   let offset = shouldMask ? 6 : 2;
   let dataLength = data.length;
 
-  if (dataLength >= 65536) {
+  if (dataLength >= 65_536) {
     offset += 8;
     dataLength = 127;
   } else if (dataLength > 125) {
@@ -45,7 +45,7 @@ export function buildFrame(opts: BuildFrameOpts, shouldMask: boolean): Buffer {
 
   const head = Buffer.allocUnsafe(offset);
 
-  head[0] = fin ? opcode | 0x80 : opcode;
+  head[0] = fin ? opcode | 128 : opcode;
   head[1] = dataLength;
 
   if (dataLength === 126) {
@@ -57,7 +57,7 @@ export function buildFrame(opts: BuildFrameOpts, shouldMask: boolean): Buffer {
 
   if (shouldMask) {
     const mask = crypto.randomBytes(4);
-    head[1] |= 0x80;
+    head[1] |= 128;
     head[offset - 4] = mask[0];
     head[offset - 3] = mask[1];
     head[offset - 2] = mask[2];
@@ -76,24 +76,24 @@ export function buildFrame(opts: BuildFrameOpts, shouldMask: boolean): Buffer {
 
 export function parseFrame(buffer: Buffer): Frame {
   const firstByte = buffer.readUInt8(0);
-  const isFinalFrame: boolean = Boolean((firstByte >>> 7) & 0x1);
-  const opcode: number = firstByte & 0xf;
+  const isFinalFrame: boolean = Boolean(firstByte >>> 7 & 1);
+  const opcode: number = firstByte & 15;
 
   const [reserved1, reserved2, reserved3] = [
-    ((firstByte >>> 6) & 0x1) === 1,
-    ((firstByte >>> 5) & 0x1) === 1,
-    ((firstByte >>> 4) & 0x1) === 1,
+    (firstByte >>> 6 & 1) === 1,
+    (firstByte >>> 5 & 1) === 1,
+    (firstByte >>> 4 & 1) === 1,
   ];
   reserved1;
   reserved2;
   reserved3;
 
   const secondByte: number = buffer.readUInt8(1);
-  const isMasked: boolean = Boolean((secondByte >>> 7) & 0x1);
+  const isMasked: boolean = Boolean(secondByte >>> 7 & 1);
 
   // Keep track of our current position as we advance through the buffer
   let currentOffset = 2;
-  let payloadLength = secondByte & 0x7f;
+  let payloadLength = secondByte & 127;
   if (payloadLength > 125) {
     if (payloadLength === 126) {
       payloadLength = buffer.readUInt16BE(currentOffset);
@@ -103,11 +103,10 @@ export function parseFrame(buffer: Buffer): Frame {
       currentOffset += 4;
 
       // The maximum safe integer in JavaScript is 2^53 - 1. An error is returned
+
       // if payload length is greater than this number.
       if (leftPart >= Number.MAX_SAFE_INTEGER) {
-        throw new Error(
-          'Unsupported WebSocket frame: payload length > 2^53 - 1',
-        );
+        throw new Error('Unsupported WebSocket frame: payload length > 2^53 - 1');
       }
 
       const rightPart = buffer.readUInt32BE(currentOffset);

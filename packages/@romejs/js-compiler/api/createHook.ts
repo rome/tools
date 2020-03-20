@@ -11,11 +11,7 @@ import {Path} from '@romejs/js-compiler';
 export type HookDescriptor<State, CallArg, CallReturn> = {
   name: string;
   initialState: State extends void ? never : State;
-  call?: (
-    path: Path,
-    state: State,
-    arg: CallArg,
-  ) => {
+  call?: (path: Path, state: State, arg: CallArg) => {
     bubble?: boolean;
     value: CallReturn;
     state: State;

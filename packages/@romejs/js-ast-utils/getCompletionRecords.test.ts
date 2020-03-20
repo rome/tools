@@ -11,17 +11,13 @@ import {parseJS} from '@romejs/js-parser';
 import {functionDeclaration} from '@romejs/js-ast';
 
 function helper(input: string) {
-  return getCompletionRecords(
-    functionDeclaration.assert(
-      parseJS({
-        path: 'unknown',
-        input: `function foo(){${input}}`,
-      }).body[0],
-    ).body,
-  );
+  return getCompletionRecords(functionDeclaration.assert(parseJS({
+    path: 'unknown',
+    input: `function foo(){${input}}`,
+  }).body[0]).body);
 }
 
-test('invalid', t => {
+test('invalid', (t) => {
   t.snapshot(helper(`{}`));
   t.snapshot(helper(`'foobar';`));
   t.snapshot(helper(`if (bar) {'foobar';}`));
@@ -31,7 +27,7 @@ test('invalid', t => {
   t.snapshot(helper(`switch (foo) {default: {}}`));
 });
 
-test('completions', t => {
+test('completions', (t) => {
   t.snapshot(helper(`return false;`));
   t.snapshot(helper(`return; invalid;`));
   t.snapshot(helper(`if (bar) {return false;}`));
@@ -40,6 +36,6 @@ test('completions', t => {
   t.snapshot(helper(`switch (foo) {default: {return false;}}`));
 });
 
-test('mix', t => {
+test('mix', (t) => {
   t.snapshot(helper(`switch (foo) {default: {if (true) {return false;}}}`));
 });

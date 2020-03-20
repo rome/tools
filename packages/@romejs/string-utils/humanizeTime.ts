@@ -9,7 +9,7 @@ export function humanizeTime(
   ms: number,
   allowMilliseconds: boolean = false,
 ): string {
-  const s = Math.floor(ms / 1000);
+  const s = Math.floor(ms / 1_000);
   const m = Math.floor(s / 60);
   const h = Math.floor(m / 60);
 
@@ -17,7 +17,7 @@ export function humanizeTime(
     if (allowMilliseconds) {
       return `${ms}ms`;
     } else {
-      return `${(ms / 1000).toFixed(2)}s`;
+      return `${(ms / 1_000).toFixed(2)}s`;
     }
   }
 

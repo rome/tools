@@ -10,6 +10,7 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSMethodSignature(generator: Generator, node: AnyNode) {
   node = tsMethodSignature.assert(node);
-
-  throw new Error('unimplemented');
+  generator.print(node.key, node);
+  generator.print(node.meta, node);
+  generator.token(';');
 }

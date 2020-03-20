@@ -14,11 +14,13 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type MemberExpression = JSNodeBase & {
-  type: 'MemberExpression';
-  object: AnyExpression | Super;
-  property: StaticMemberProperty | ComputedMemberProperty;
-};
+export type MemberExpression =
+  & JSNodeBase
+  & {
+    type: 'MemberExpression';
+    object: AnyExpression | Super;
+    property: StaticMemberProperty | ComputedMemberProperty;
+  };
 
 export const memberExpression = createBuilder<MemberExpression>(
   'MemberExpression',

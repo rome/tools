@@ -8,13 +8,12 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type VoidKeywordTypeAnnotation = JSNodeBase & {
-  type: 'VoidKeywordTypeAnnotation';
-};
+export type VoidKeywordTypeAnnotation =
+  & JSNodeBase
+  & {type: 'VoidKeywordTypeAnnotation'};
 
-export const voidKeywordTypeAnnotation = createBuilder<
-  VoidKeywordTypeAnnotation
->('VoidKeywordTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const voidKeywordTypeAnnotation =
+  createBuilder<VoidKeywordTypeAnnotation>('VoidKeywordTypeAnnotation', {
+    bindingKeys: {},
+    visitorKeys: {},
+  });

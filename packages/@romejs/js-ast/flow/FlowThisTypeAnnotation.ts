@@ -8,9 +8,9 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowThisTypeAnnotation = JSNodeBase & {
-  type: 'FlowThisTypeAnnotation';
-};
+export type FlowThisTypeAnnotation =
+  & JSNodeBase
+  & {type: 'FlowThisTypeAnnotation'};
 
 export const flowThisTypeAnnotation = createBuilder<FlowThisTypeAnnotation>(
   'FlowThisTypeAnnotation',

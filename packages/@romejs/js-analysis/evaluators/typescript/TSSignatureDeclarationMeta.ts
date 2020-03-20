@@ -12,10 +12,7 @@ import {
   TSSignatureDeclarationMeta,
 } from '@romejs/js-ast';
 
-export default function TSSignatureDeclarationMeta(
-  node: AnyNode,
-  scope: Scope,
-) {
+export default function TSSignatureDeclarationMeta(node: AnyNode, scope: Scope) {
   node = tsSignatureDeclarationMeta.assert(node);
   scope;
   throw new Error('unimplemented');

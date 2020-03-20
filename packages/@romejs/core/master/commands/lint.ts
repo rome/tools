@@ -9,17 +9,27 @@ import {MasterRequest} from '@romejs/core';
 import {createMasterCommand} from '../../commands';
 import Linter from '../linter/Linter';
 import {commandCategories} from '../../commands';
+import {Consumer} from '@romejs/consume';
+import {DiagnosticPointer} from '@romejs/diagnostics';
 
-export default createMasterCommand({
+type Flags = {fix: boolean};
+
+export default createMasterCommand<Flags>({
   category: commandCategories.CODE_QUALITY,
   description: 'run lint against a set of files',
 
-  async default(req: MasterRequest): Promise<void> {
+  defineFlags(consumer: Consumer): Flags {
+    return {
+      fix: consumer.get('fix').asBoolean(false),
+    };
+  },
+
+  async default(req: MasterRequest, flags: Flags): Promise<void> {
     return new Promise((resolve, reject) => {
       if (req.query.requestFlags.watch) {
         initWatchLint(req, reject);
       } else {
-        resolve(runLint(req));
+        resolve(runLint(req, flags.fix));
       }
     });
   },
@@ -29,6 +39,7 @@ function initWatchLint(req: MasterRequest, reject: (err: Error) => void) {
   const {master, reporter} = req;
 
   // whenever a file change happens, we wait 250ms to do lint, this is in case there's multiple
+
   // files being linted, like if an autofix is triggered
   let queued = false;
 
@@ -36,6 +47,7 @@ function initWatchLint(req: MasterRequest, reject: (err: Error) => void) {
   let running = false;
 
   // if a file event happens while we're linting then we'll need to run the full lint again to make
+
   // sure it's up to date
   let runAgainAfterComplete = false;
 
@@ -49,7 +61,7 @@ function initWatchLint(req: MasterRequest, reject: (err: Error) => void) {
     running = true;
     reporter.clear();
 
-    runLint(req).then(() => {
+    runLint(req, false).then(() => {
       running = false;
 
       if (runAgainAfterComplete) {
@@ -83,7 +95,10 @@ function initWatchLint(req: MasterRequest, reject: (err: Error) => void) {
   runWatchLint();
 }
 
-async function runLint(req: MasterRequest): Promise<void> {
-  const linter = new Linter(req);
+async function runLint(
+  req: MasterRequest,
+  fix: undefined | DiagnosticPointer,
+): Promise<void> {
+  const linter = new Linter(req, fix);
   await linter.lint();
 }

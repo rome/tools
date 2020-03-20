@@ -8,10 +8,7 @@
 import Generator from '../../Generator';
 import {JSXSpreadAttribute, jsxSpreadAttribute, AnyNode} from '@romejs/js-ast';
 
-export default function JSXSpreadAttribute(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function JSXSpreadAttribute(generator: Generator, node: AnyNode) {
   node = jsxSpreadAttribute.assert(node);
 
   generator.token('{');

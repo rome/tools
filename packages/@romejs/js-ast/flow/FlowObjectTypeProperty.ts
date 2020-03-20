@@ -18,20 +18,22 @@ import {createBuilder} from '../utils';
 export type FlowObjectTypePropertyKind = 'init' | 'get' | 'set';
 
 export type FlowObjectTypePropertyKey =
-  | Identifier
-  | StringLiteral
-  | NumericLiteral;
+    | Identifier
+    | StringLiteral
+    | NumericLiteral;
 
-export type FlowObjectTypeProperty = JSNodeBase & {
-  type: 'FlowObjectTypeProperty';
-  key: FlowObjectTypePropertyKey;
-  value: AnyFlowPrimary;
-  kind: FlowObjectTypePropertyKind;
-  static?: boolean;
-  optional?: boolean;
-  proto?: boolean;
-  variance?: FlowVariance;
-};
+export type FlowObjectTypeProperty =
+  & JSNodeBase
+  & {
+    type: 'FlowObjectTypeProperty';
+    key: FlowObjectTypePropertyKey;
+    value: AnyFlowPrimary;
+    kind: FlowObjectTypePropertyKind;
+    static?: boolean;
+    optional?: boolean;
+    proto?: boolean;
+    variance?: FlowVariance;
+  };
 
 export const flowObjectTypeProperty = createBuilder<FlowObjectTypeProperty>(
   'FlowObjectTypeProperty',

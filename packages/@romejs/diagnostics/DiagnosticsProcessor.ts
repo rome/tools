@@ -23,11 +23,11 @@ import {add} from '@romejs/ob1';
 import {DiagnosticCategoryPrefix} from './categories';
 
 type UniquePart =
-  | 'filename'
-  | 'message'
-  | 'start.line'
-  | 'start.column'
-  | 'category';
+    | 'filename'
+    | 'message'
+    | 'start.line'
+    | 'start.column'
+    | 'category';
 
 type UniqueRule = Array<UniquePart>;
 
@@ -54,8 +54,7 @@ export default class DiagnosticsProcessor {
     this.suppressions = new Set();
     this.options = options;
     this.includedKeys = new Set();
-    this.unique =
-      options.unique === undefined ? DEFAULT_UNIQUE : options.unique;
+    this.unique = options.unique === undefined ? DEFAULT_UNIQUE : options.unique;
     this.throwAfter = undefined;
   }
 
@@ -119,12 +118,9 @@ export default class DiagnosticsProcessor {
   doesMatchFilter(diag: PartialDiagnostic): boolean {
     for (const suppression of this.suppressions) {
       const targetLine = add(suppression.loc.end.line, 1);
-      if (
-        diag.filename !== undefined &&
-        diag.start !== undefined &&
-        diag.filename === suppression.loc.filename &&
-        diag.start.line === targetLine
-      ) {
+      if (diag.filename !== undefined && diag.start !== undefined &&
+        diag.filename === suppression.loc.filename && diag.start.line ===
+      targetLine) {
         this.usedSuppressions.add(suppression);
         return true;
       }
@@ -144,19 +140,14 @@ export default class DiagnosticsProcessor {
       }
 
       if (filter.start !== undefined && diag.start !== undefined) {
-        if (
-          filter.start.line !== diag.start.line ||
-          filter.start.column !== diag.start.column
-        ) {
+        if (filter.start.line !== diag.start.line || filter.start.column !==
+        diag.start.column) {
           continue;
         }
       }
 
-      if (
-        filter.line !== undefined &&
-        diag.start !== undefined &&
-        diag.start.line !== filter.line
-      ) {
+      if (filter.line !== undefined && diag.start !== undefined &&
+        diag.start.line !== filter.line) {
         continue;
       }
 
@@ -224,8 +215,8 @@ export default class DiagnosticsProcessor {
     const added: PartialDiagnostics = [];
 
     // Add origins to diagnostics
-    const origins: Array<DiagnosticOrigin> =
-      this.options.origins === undefined ? [] : [...this.options.origins];
+    const origins: Array<DiagnosticOrigin> = this.options.origins === undefined
+      ? [] : [...this.options.origins];
     if (origin !== undefined) {
       origins.push(origin);
     }
@@ -302,6 +293,7 @@ export default class DiagnosticsProcessor {
     markupOptions: MarkupFormatOptions = {},
   ): Diagnostics {
     // Sort files by filename to ensure they're always in the same order
+
     // TODO also sort by line/column
     return this.getCompleteDiagnostics(markupOptions).sort((a, b) => {
       if (a.filename === undefined || b.filename === undefined) {

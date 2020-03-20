@@ -22,10 +22,9 @@ export type MasterCommand<T> = {
     command: string;
   }>;
   defineFlags?: (c: Consumer) => T;
-  default: (
-    req: MasterRequest,
-    commandFlags: T,
-  ) => undefined | Promise<JSONPropertyValue>;
+  default: (req: MasterRequest, commandFlags: T) =>
+      | undefined
+      | Promise<JSONPropertyValue>;
 };
 
 export type LocalCommand<T> = {
@@ -40,9 +39,7 @@ export type LocalCommand<T> = {
   defineFlags?: (c: Consumer) => T;
 };
 
-export function createMasterCommand<T>(
-  cmd: MasterCommand<T>,
-): MasterCommand<T> {
+export function createMasterCommand<T>(cmd: MasterCommand<T>): MasterCommand<T> {
   return cmd;
 }
 

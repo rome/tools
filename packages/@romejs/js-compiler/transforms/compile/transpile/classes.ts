@@ -53,10 +53,9 @@ function transformClass(
   let superClassRef: undefined | ReferenceIdentifier;
   const {superClass} = node.meta;
   if (superClass !== undefined) {
-    if (
-      superClass.type === 'ReferenceIdentifier' &&
-      scope.hasBinding(superClass.name)
-    ) {
+    if (superClass.type === 'ReferenceIdentifier' && scope.hasBinding(
+      superClass.name,
+    )) {
       superClassRef = superClass;
     } else {
       superClassRef = referenceIdentifier.create({
@@ -69,8 +68,8 @@ function transformClass(
   }
 
   // get the class name, if there's no class id then generate a new name
-  const className: string =
-    node.id === undefined ? scope.generateUid('class') : node.id.name;
+  const className: string = node.id === undefined
+    ? scope.generateUid('class') : node.id.name;
 
   // push on the superClass setup
   if (superClass !== undefined) {
@@ -79,6 +78,7 @@ function transformClass(
     }
 
     // inherit static properties
+
     // technically this isn't correct, the fully spec compliant version is Object.setPrototypeOf(Class, SuperClass);
     declarations.push(
       template.statement`Object.assign(${className}, ${superClassRef});`,
@@ -100,100 +100,77 @@ function transformClass(
     );
   }
 
-  const newNode = classDeclaration.assert(
-    path.reduce({
-      name: 'classesSuperTransform',
-      enter(path) {
-        if (superClassRef === undefined) {
-          throw new Error('Impossible');
-        }
+  const newNode = classDeclaration.assert(path.reduce({
+    name: 'classesSuperTransform',
+    enter(path) {
+      if (superClassRef === undefined) {
+        throw new Error('Impossible');
+      }
 
-        const {node} = path;
+      const {node} = path;
 
-        // TODO correctly support super() by using return value
-        if (node.type === 'CallExpression' && node.callee.type === 'Super') {
-          // replace super(...args); with Super.call(this, ...args);
-          return callExpression.create({
-            callee: memberExpression.create({
-              object: superClassRef,
-              property: staticMemberProperty.quick(identifier.quick('call')),
-            }),
-            arguments: [thisExpression.create({}), ...node.arguments],
-          });
-        }
-
-        // TODO super.foo
-        if (node.type === 'MemberExpression' && node.object.type === 'Super') {
-          const classMethod2 = path.findAncestry(
-            path => path.node.type === 'ClassMethod',
-          );
-          if (classMethod2 === undefined) {
-            throw new Error('Expected to find class method here');
-          }
-          const isStatic =
-            classMethod.assert(classMethod2.node).meta.static === true;
-
-          const {property} = node;
-
-          if (isStatic) {
-            return memberExpression.create({
-              object: superClassRef,
-              property,
-            });
-          }
-
-          const superProtoRef = memberExpression.create({
+      // TODO correctly support super() by using return value
+      if (node.type === 'CallExpression' && node.callee.type === 'Super') {
+        // replace super(...args); with Super.call(this, ...args);
+        return callExpression.create({
+          callee: memberExpression.create({
             object: superClassRef,
-            property: staticMemberProperty.quick(identifier.quick('prototype')),
-          });
+            property: staticMemberProperty.quick(identifier.quick('call')),
+          }),
+          arguments: [thisExpression.create({}), ...node.arguments],
+        });
+      }
+
+      // TODO super.foo
+      if (node.type === 'MemberExpression' && node.object.type === 'Super') {
+        const classMethod2 = path.findAncestry((path) =>
+          path.node.type === 'ClassMethod'
+        );
+        if (classMethod2 === undefined) {
+          throw new Error('Expected to find class method here');
+        }
+        const isStatic = classMethod.assert(classMethod2.node).meta.static ===
+        true;
+
+        const {property} = node;
+
+        if (isStatic) {
           return memberExpression.create({
-            object: superProtoRef,
+            object: superClassRef,
             property,
           });
         }
 
-        // super.foo();
-        if (
-          node.type === 'CallExpression' &&
-          node.callee.type === 'MemberExpression' &&
-          node.callee.object.type === 'Super'
-        ) {
-          const classMethod2 = path.findAncestry(
-            path => path.node.type === 'ClassMethod',
-          );
-          if (classMethod2 === undefined) {
-            throw new Error('Expected to find class method here');
-          }
-          const isStatic =
-            classMethod.assert(classMethod2.node).meta.static === true;
+        const superProtoRef = memberExpression.create({
+          object: superClassRef,
+          property: staticMemberProperty.quick(identifier.quick('prototype')),
+        });
+        return memberExpression.create({
+          object: superProtoRef,
+          property,
+        });
+      }
 
-          const args = node.arguments;
-          const {property} = node.callee;
+      // super.foo();
+      if (node.type === 'CallExpression' && node.callee.type ===
+      'MemberExpression' && node.callee.object.type === 'Super') {
+        const classMethod2 = path.findAncestry((path) =>
+          path.node.type === 'ClassMethod'
+        );
+        if (classMethod2 === undefined) {
+          throw new Error('Expected to find class method here');
+        }
+        const isStatic = classMethod.assert(classMethod2.node).meta.static ===
+        true;
 
-          // for static methods replace `super.foo(...args);` with `Super.foo.call(Class, ...args);`
-          if (isStatic) {
-            let methodRef;
-            methodRef = memberExpression.create({
-              object: superClassRef,
-              property,
-            });
-            return callExpression.create({
-              callee: memberExpression.create({
-                object: methodRef,
-                property: staticMemberProperty.quick(identifier.quick('call')),
-              }),
-              arguments: [referenceIdentifier.quick(className), ...args],
-            });
-          }
+        const args = node.arguments;
+        const {property} = node.callee;
 
-          // for instance methods replace `super.foo(...args)` with `Super.prototype.call(this, ...args)`
+        // for static methods replace `super.foo(...args);` with `Super.foo.call(Class, ...args);`
+        if (isStatic) {
           let methodRef;
-          let prototypeRef = memberExpression.create({
-            object: superClassRef,
-            property: staticMemberProperty.quick(identifier.quick('prototype')),
-          });
           methodRef = memberExpression.create({
-            object: prototypeRef,
+            object: superClassRef,
             property,
           });
           return callExpression.create({
@@ -201,16 +178,33 @@ function transformClass(
               object: methodRef,
               property: staticMemberProperty.quick(identifier.quick('call')),
             }),
-            arguments: [thisExpression.create({}), ...args],
+            arguments: [referenceIdentifier.quick(className), ...args],
           });
         }
 
-        // TODO break when inside of functions
+        // for instance methods replace `super.foo(...args)` with `Super.prototype.call(this, ...args)`
+        let methodRef;
+        let prototypeRef = memberExpression.create({
+          object: superClassRef,
+          property: staticMemberProperty.quick(identifier.quick('prototype')),
+        });
+        methodRef = memberExpression.create({
+          object: prototypeRef,
+          property,
+        });
+        return callExpression.create({
+          callee: memberExpression.create({
+            object: methodRef,
+            property: staticMemberProperty.quick(identifier.quick('call')),
+          }),
+          arguments: [thisExpression.create({}), ...args],
+        });
+      }
 
-        return node;
-      },
-    }),
-  );
+      // TODO break when inside of functions
+      return node;
+    },
+  }));
 
   // setup method declarations
   let constructorMethod = undefined;
@@ -218,7 +212,7 @@ function transformClass(
     if (bodyNode.type !== 'ClassMethod') {
       context.addNodeDiagnostic(bodyNode, {
         category: 'compile/classes',
-        message: "The classes transform doesn't know how to transform this",
+        message: 'The classes transform doesn\'t know how to transform this',
       });
       continue;
     }
@@ -264,9 +258,10 @@ function transformClass(
         template.statement`function ${className}() {}`,
       );
     } else {
-      _constructor = functionDeclaration.assert(
-        template.statement`function ${className}(...args) {${superClassRef}.apply(this, args);}`,
-      );
+      _constructor =
+        functionDeclaration.assert(
+          template.statement`function ${className}(...args) {${superClassRef}.apply(this, args);}`,
+        );
     }
   } else {
     _constructor = functionDeclaration.create({
@@ -285,12 +280,9 @@ export default {
     const {node, scope, context} = path;
 
     // correctly replace an export class with the class node then append the declarations
-    if (
-      (node.type === 'ExportLocalDeclaration' ||
-        node.type === 'ExportDefaultDeclaration') &&
-      node.declaration !== undefined &&
-      node.declaration.type === 'ClassDeclaration'
-    ) {
+    if ((node.type === 'ExportLocalDeclaration' || node.type ===
+    'ExportDefaultDeclaration') && node.declaration !== undefined &&
+      node.declaration.type === 'ClassDeclaration') {
       const {_constructor, declarations, prependDeclarations} = transformClass(
         node.declaration,
         path.getChildPath('declaration'),
@@ -318,8 +310,8 @@ export default {
 
     // turn a class expression into an IIFE that returns a class declaration
     if (node.type === 'ClassExpression') {
-      const className =
-        node.id === undefined ? scope.generateUid('class') : node.id.name;
+      const className = node.id === undefined
+        ? scope.generateUid('class') : node.id.name;
 
       return callExpression.create({
         callee: arrowFunctionExpression.create({

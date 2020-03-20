@@ -7,9 +7,13 @@
 
 import {TSDeclareMethod, tsDeclareMethod, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {printMethod} from '../utils';
 
 export default function TSDeclareMethod(generator: Generator, node: AnyNode) {
   node = tsDeclareMethod.assert(node);
 
-  throw new Error('unimplemented');
+  generator.print(node.meta, node);
+  generator.print(node.key, node);
+  printMethod(generator, node);
+  generator.forceNewline();
 }

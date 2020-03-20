@@ -20,10 +20,7 @@ export default function ClassProperty(node: AnyNode, scope: Scope) {
   }
 
   const classScope = scope.find(ClassScope);
-  const funcScope = new ThisScope(
-    {parentScope: scope},
-    classScope.meta.instance,
-  );
+  const funcScope = new ThisScope({parentScope: scope}, classScope.meta.instance);
 
   let annotatedType;
   let inferredType;
@@ -45,8 +42,7 @@ export default function ClassProperty(node: AnyNode, scope: Scope) {
     inferredType = new AnyT(scope, node);
   }
 
-  const actualValue =
-    annotatedType === undefined ? inferredType : annotatedType;
+  const actualValue = annotatedType === undefined ? inferredType : annotatedType;
   if (actualValue === undefined) {
     throw new Error('Expected actual value');
   }

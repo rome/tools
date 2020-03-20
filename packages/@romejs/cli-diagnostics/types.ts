@@ -19,11 +19,14 @@ export type DiagnosticsPrinterFlags = {
   showAllDiagnostics: boolean;
 };
 
-export type DiagnosticsFileReader = (
-  path: AbsoluteFilePath,
-) => undefined | DiagnosticsFileReaderStats;
+export type DiagnosticsFileReader = (path: AbsoluteFilePath) =>
+    | undefined
+    | DiagnosticsFileReaderStats;
 
-export type DiagnosticsFileReaderStats = {content: string; mtime: number};
+export type DiagnosticsFileReaderStats = {
+  content: string;
+  mtime: number;
+};
 
 export type DiagnosticsPrinterOptions = {
   origins?: Array<DiagnosticOrigin>;

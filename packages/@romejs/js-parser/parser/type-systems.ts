@@ -65,76 +65,79 @@ export function parseTypeLiteralAnnotation(
   const start = parser.getPosition();
 
   switch (parser.state.tokenType) {
-    case tt.string: {
-      const value = String(parser.state.tokenValue);
-      parser.next();
-      return parser.finishNode(start, {
-        type: 'StringLiteralTypeAnnotation',
-        value,
-      });
-    }
-
-    case tt.num: {
-      const value = Number(parser.state.tokenValue);
-      parser.next();
-      return parser.finishNode(start, {
-        type: 'NumericLiteralTypeAnnotation',
-        value,
-      });
-    }
-
-    case tt._true:
-    case tt._false: {
-      const value = parser.match(tt._true);
-      parser.next();
-      return parser.finishNode(start, {
-        type: 'BooleanLiteralTypeAnnotation',
-        value,
-      });
-    }
-
-    case tt.plusMin: {
-      if (parser.state.tokenValue === '-') {
+    case tt.string:
+      {
+        const value = String(parser.state.tokenValue);
         parser.next();
+        return parser.finishNode(start, {
+          type: 'StringLiteralTypeAnnotation',
+          value,
+        });
+      }
 
-        if (!parser.match(tt.num)) {
-          parser.addDiagnostic({
-            message: `Unexpected token, expected "number"`,
-          });
-          parser.next();
-          return parser.finishNode(start, {
-            type: 'NumericLiteralTypeAnnotation',
-            value: 0,
-          });
-        }
-
+    case tt.num:
+      {
         const value = Number(parser.state.tokenValue);
         parser.next();
         return parser.finishNode(start, {
           type: 'NumericLiteralTypeAnnotation',
-          value: -value,
+          value,
         });
-      } else {
-        parser.addDiagnostic({
-          message:
-            'Numeric literal type annotations cannot stand with a +, omit it instead',
-        });
-        parser.next();
+      }
 
-        if (!parser.match(tt.num)) {
-          parser.addDiagnostic({
-            message: `Unexpected token, expected "number"`,
-          });
+    case tt._true:
+    case tt._false:
+      {
+        const value = parser.match(tt._true);
+        parser.next();
+        return parser.finishNode(start, {
+          type: 'BooleanLiteralTypeAnnotation',
+          value,
+        });
+      }
+
+    case tt.plusMin:
+      {
+        if (parser.state.tokenValue === '-') {
+          parser.next();
+
+          if (!parser.match(tt.num)) {
+            parser.addDiagnostic({
+              message: `Unexpected token, expected "number"`,
+            });
+            parser.next();
+            return parser.finishNode(start, {
+              type: 'NumericLiteralTypeAnnotation',
+              value: 0,
+            });
+          }
+
+          const value = Number(parser.state.tokenValue);
           parser.next();
           return parser.finishNode(start, {
             type: 'NumericLiteralTypeAnnotation',
-            value: 0,
+            value: -value,
           });
-        }
+        } else {
+          parser.addDiagnostic({
+            message: 'Numeric literal type annotations cannot stand with a +, omit it instead',
+          });
+          parser.next();
 
-        return parseTypeLiteralAnnotation(parser);
+          if (!parser.match(tt.num)) {
+            parser.addDiagnostic({
+              message: `Unexpected token, expected "number"`,
+            });
+            parser.next();
+            return parser.finishNode(start, {
+              type: 'NumericLiteralTypeAnnotation',
+              value: 0,
+            });
+          }
+
+          return parseTypeLiteralAnnotation(parser);
+        }
       }
-    }
 
     default:
       throw new Error(
@@ -201,14 +204,12 @@ export function addFlowOrTSDiagnostic(
       {
         type: 'log',
         category: 'info',
-        message:
-          'Did you mean <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
+        message: 'Did you mean <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
       },
       {
         type: 'log',
         category: 'info',
-        message:
-          'Did you mean <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
+        message: 'Did you mean <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
       },
     ],
   });
@@ -230,18 +231,13 @@ export function addFlowDiagnostic(
       {
         type: 'log',
         category: 'info',
-        message:
-          'To enable <emphasis>Flow</emphasis> support, add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
+        message: 'To enable <emphasis>Flow</emphasis> support, add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
       },
     ],
   });
 }
 
-export function addTSDiagnostic(
-  parser: JSParser,
-  label: string,
-  start: Position,
-) {
+export function addTSDiagnostic(parser: JSParser, label: string, start: Position) {
   if (parser.isSyntaxEnabled('ts')) {
     return;
   }
@@ -253,8 +249,7 @@ export function addTSDiagnostic(
       {
         type: 'log',
         category: 'info',
-        message:
-          'To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
+        message: 'To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
       },
     ],
   });
@@ -273,7 +268,7 @@ export function parseClassImplements(
 
 export function parsePrimaryTypeAnnotation(parser: JSParser): AnyPrimaryType {
   return parseFlowOrTS(parser, 'type annotation', parseFlowTypeAnnotation, () =>
-    parseTSTypeAnnotation(parser, true),
+    parseTSTypeAnnotation(parser, true)
   );
 }
 
@@ -286,11 +281,9 @@ export function parseInterface(
     start,
   });
 
-  return parseFlowOrTS(
-    parser,
-    'interface',
-    () => parseFlowInterface(parser, start),
-    () => parseTSInterfaceDeclaration(parser, start),
+  return parseFlowOrTS(parser, 'interface', () =>
+    parseFlowInterface(parser, start), () =>
+    parseTSInterfaceDeclaration(parser, start)
   );
 }
 
@@ -298,46 +291,35 @@ export function parseDeclare(
   parser: JSParser,
   start: Position,
 ): TSDeclareNode | AnyFlowDeclare {
-  return parseFlowOrTS(
-    parser,
-    'type declaration',
-    () => parseFlowDeclare(parser, start),
-    () => parseTSDeclare(parser, start),
+  return parseFlowOrTS(parser, 'type declaration', () =>
+    parseFlowDeclare(parser, start), () => parseTSDeclare(parser, start)
   );
 }
 
-export type TypeAnnotationAndPredicate = [
-  undefined | AnyPrimaryType,
-  undefined | AnyFlowPredicate,
-];
+export type TypeAnnotationAndPredicate = [undefined | AnyPrimaryType,
+    | undefined
+    | AnyFlowPredicate];
 
 export function parseTypeAnnotationAndPredicate(
   parser: JSParser,
 ): TypeAnnotationAndPredicate {
-  return parseFlowOrTS(
-    parser,
-    'type annotation and a predicate',
-    () => {
-      return parseFlowTypeAndPredicateInitialiser(parser);
-    },
-    () => {
-      return [
-        parseTSTypeOrTypePredicateAnnotation(parser, tt.colon),
-        undefined,
-      ];
-    },
-  );
+  return parseFlowOrTS(parser, 'type annotation and a predicate', () => {
+    return parseFlowTypeAndPredicateInitialiser(parser);
+  }, () => {
+    return [
+      parseTSTypeOrTypePredicateAnnotation(parser, tt.colon),
+      undefined,
+    ];
+  });
 }
 
 export function parseTypeAlias(
   parser: JSParser,
   start: Position,
 ): TypeAliasTypeAnnotation | TypeAliasTypeAnnotation {
-  return parseFlowOrTS(
-    parser,
-    'type alias',
-    () => parseFlowTypeAliasTypeAnnotation(parser, start),
-    () => parseTSTypeAliasTypeAnnotation(parser, start),
+  return parseFlowOrTS(parser, 'type alias', () =>
+    parseFlowTypeAliasTypeAnnotation(parser, start), () =>
+    parseTSTypeAliasTypeAnnotation(parser, start)
   );
 }
 
@@ -345,11 +327,8 @@ export function parseTypeParameters(
   parser: JSParser,
   allowDefault: boolean = false,
 ): AnyTypeParameter {
-  return parseFlowOrTS(
-    parser,
-    'type parameters',
-    () => parseFlowTypeParameterDeclaration(parser, allowDefault),
-    parseTSTypeParameters,
+  return parseFlowOrTS(parser, 'type parameters', () =>
+    parseFlowTypeParameterDeclaration(parser, allowDefault), parseTSTypeParameters
   );
 }
 
@@ -389,13 +368,13 @@ export function maybeParseTypeArguments(
 }
 
 type TypeExpressionStatement =
-  | TSDeclareNode
-  | TypeAliasTypeAnnotation
-  | AnyFlowDeclare
-  | FlowOpaqueType
-  | TypeAliasTypeAnnotation
-  | TSInterfaceDeclaration
-  | FlowInterfaceDeclaration;
+    | TSDeclareNode
+    | TypeAliasTypeAnnotation
+    | AnyFlowDeclare
+    | FlowOpaqueType
+    | TypeAliasTypeAnnotation
+    | TSInterfaceDeclaration
+    | FlowInterfaceDeclaration;
 
 export function parseTypeExpressionStatement(
   parser: JSParser,
@@ -408,6 +387,7 @@ export function parseTypeExpressionStatement(
   }
 
   // In TS, line breaks aren't allowed between the keyword and the rest of the statement
+
   // In Flow, they are allowed
   if (parser.isSyntaxEnabled('ts') && parser.hasPrecedingLineBreak()) {
     return undefined;
@@ -415,14 +395,11 @@ export function parseTypeExpressionStatement(
 
   switch (expr.name) {
     case 'declare':
-      if (
-        parser.match(tt._class) ||
-        parser.match(tt.name) ||
-        parser.match(tt._function) ||
-        parser.match(tt._const) ||
-        parser.match(tt._var) ||
-        parser.match(tt._export)
-      ) {
+      if (parser.match(tt._class) || parser.match(tt.name) || parser.match(
+        tt._function,
+      ) || parser.match(tt._const) || parser.match(tt._var) || parser.match(
+        tt._export,
+      )) {
         return parseDeclare(parser, start);
       } else {
         break;
@@ -449,14 +426,15 @@ export function parseTypeExpressionStatement(
         break;
       }
 
-    case 'enum': {
-      if (parser.match(tt.name)) {
-        addTSDiagnostic(parser, 'enum declaration', start);
-        return parseTSEnumDeclaration(parser, start, /* isConst */ false);
-      } else {
-        break;
+    case 'enum':
+      {
+        if (parser.match(tt.name)) {
+          addTSDiagnostic(parser, 'enum declaration', start);
+          return parseTSEnumDeclaration(parser, start, /* isConst */false);
+        } else {
+          break;
+        }
       }
-    }
 
     case 'module':
       if (parser.match(tt.string)) {
@@ -480,11 +458,12 @@ export function parseTypeExpressionStatement(
     // TODO abstract this into typescript.js
     case 'global':
       // `global { }` (with no `declare`) may appear inside an ambient module declaration.
+
       // Would like to use parseTSAmbientExternalModuleDeclaration here, but already ran past 'global'.
       if (parser.match(tt.braceL)) {
         addTSDiagnostic(parser, 'module declaration', start);
         const global = true;
-        const id = toBindingIdentifier(expr);
+        const id = toBindingIdentifier(parser, expr);
         const body = parseTSModuleBlock(parser);
         return parser.finishNode(start, {
           type: 'TSModuleDeclaration',

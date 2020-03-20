@@ -81,13 +81,12 @@ export default class ParserBranchFinder<T> {
     parser.setState(prevState);
 
     // Verify that we didn't exceed the maxDiagnostics, this should have already been done in Parser#addDiagnostic
+
     // but do it again as a sanity check. Previously some code caused the state to be manipulated in odd ways
     const newDiagnosticCount = newState.diagnostics.length;
     const prevDiagnosticCount = prevState.diagnostics.length;
-    if (
-      maxNewDiagnostics !== undefined &&
-      newDiagnosticCount - prevDiagnosticCount > maxNewDiagnostics
-    ) {
+    if (maxNewDiagnostics !== undefined && newDiagnosticCount -
+    prevDiagnosticCount > maxNewDiagnostics) {
       throw new Error(
         `Max diagnostics unexpectedly exceeded ${maxNewDiagnostics}. Prev: ${prevDiagnosticCount} New: ${newDiagnosticCount}`,
       );
@@ -114,27 +113,21 @@ export default class ParserBranchFinder<T> {
       }
 
       // Promote if we have a priority but the top branch doesn't
-      if (
-        branch.diagnosticsPriority !== undefined &&
-        topBranch.diagnosticsPriority === undefined
-      ) {
+      if (branch.diagnosticsPriority !== undefined &&
+        topBranch.diagnosticsPriority === undefined) {
         shouldPromote = true;
       }
 
       // Promote if we have a priority, and the top branch does, and we're higher
-      if (
-        branch.diagnosticsPriority !== undefined &&
+      if (branch.diagnosticsPriority !== undefined &&
         topBranch.diagnosticsPriority !== undefined &&
-        branch.diagnosticsPriority > topBranch.diagnosticsPriority
-      ) {
+        branch.diagnosticsPriority > topBranch.diagnosticsPriority) {
         shouldPromote = true;
       }
 
       // Don't promote if the top branch has a priority but we don't
-      if (
-        topBranch.diagnosticsPriority !== undefined &&
-        branch.diagnosticsPriority === undefined
-      ) {
+      if (topBranch.diagnosticsPriority !== undefined &&
+        branch.diagnosticsPriority === undefined) {
         shouldPromote = false;
       }
     }

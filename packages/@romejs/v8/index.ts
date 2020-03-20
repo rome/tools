@@ -9,7 +9,9 @@ import * as sourceMapManager from './sourceMapManager';
 export {sourceMapManager};
 
 export * from './errors';
+
 export * from './utils';
+
 export {default as Profiler} from './Profiler';
 export {default as Trace} from './Trace';
 export {

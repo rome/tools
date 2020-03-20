@@ -7,9 +7,31 @@
 
 import {AnyNode, MOCK_PROGRAM} from '@romejs/js-ast';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import {Context, Path} from '@romejs/js-compiler';
+import {Context, Path, TransformVisitors} from '@romejs/js-compiler';
+import {SourceLocation} from '@romejs/parser-core';
+import {AnyComment} from '@romejs/js-ast/unions';
+import {JSNodeBase} from '@romejs/js-ast/base';
 
-const removeLocTransform = [
+function removeProp<T extends {loc?: SourceLocation}>(obj: T): Omit<T, 'loc'> {
+  const {loc, ...locless} = obj;
+  loc;
+  return locless;
+}
+
+function removeComments(
+  comments: undefined | Array<AnyComment>,
+): undefined | Array<AnyComment> {
+  if (comments === undefined) {
+    return undefined;
+  }
+
+  const newComments: Array<AnyComment> = comments.map((comment) =>
+    comment.type === 'CommentBlock' ? removeProp(comment) : removeProp(comment)
+  );
+  return newComments;
+}
+
+const removeLocTransform: TransformVisitors = [
   {
     name: 'removeLocTransform',
     enter(path: Path) {
@@ -17,18 +39,24 @@ const removeLocTransform = [
       if (node.loc === undefined) {
         return node;
       } else {
-        // rome-suppress lint/noExplicitAny
-        const newNode: any = {...node};
-        delete newNode.loc;
+        const newNode: JSNodeBase = {
+          ...removeProp(node),
+          leadingComments: removeComments(node.leadingComments),
+          trailingComments: removeComments(node.trailingComments),
+          innerComments: removeComments(node.innerComments),
+        };
 
         // Also remove any `undefined` properties
+
+        // rome-suppress lint/noExplicitAny
+        const escaped: any = newNode;
         for (const key in newNode) {
-          if (newNode[key] === undefined) {
-            delete newNode[key];
+          if (escaped[key] === undefined) {
+            delete escaped[key];
           }
         }
 
-        return newNode;
+        return (newNode as AnyNode);
       }
     },
   },

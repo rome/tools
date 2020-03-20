@@ -12,10 +12,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function FlowObjectTypeCallProperty(
-  node: AnyNode,
-  scope: Scope,
-) {
+export default function FlowObjectTypeCallProperty(node: AnyNode, scope: Scope) {
   node = flowObjectTypeCallProperty.assert(node);
 
   return scope.evaluate(node.value);

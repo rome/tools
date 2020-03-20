@@ -8,9 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type DebuggerStatement = JSNodeBase & {
-  type: 'DebuggerStatement';
-};
+export type DebuggerStatement = JSNodeBase & {type: 'DebuggerStatement'};
 
 export const debuggerStatement = createBuilder<DebuggerStatement>(
   'DebuggerStatement',

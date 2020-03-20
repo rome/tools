@@ -8,7 +8,7 @@
 import {findClosestStringMatch} from './findClosestStringMatch';
 import test from '@romejs/test';
 
-test('findClosestStringMatch', t => {
+test('findClosestStringMatch', (t) => {
   t.is(
     findClosestStringMatch('french', ['quebec', '123', 'france', 'frenc']),
     'frenc',
@@ -18,10 +18,11 @@ test('findClosestStringMatch', t => {
     'iphone 5s',
   );
 
-  t.is(
-    findClosestStringMatch('french', ['quebec', '123', 'france', 'frenc'], 0.9),
-    undefined,
-  );
+  t.is(findClosestStringMatch(
+    'french',
+    ['quebec', '123', 'france', 'frenc'],
+    0.9,
+  ), undefined);
   t.is(
     findClosestStringMatch('iphone', ['ipod', 'iphone 5s', 'iphones x'], 0.9),
     undefined,

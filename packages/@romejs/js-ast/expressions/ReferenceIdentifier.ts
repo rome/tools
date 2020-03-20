@@ -8,19 +8,23 @@
 import {JSNodeBase, PatternMeta} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type ReferenceIdentifier = JSNodeBase & {
-  type: 'ReferenceIdentifier';
-  name: string;
-  definite?: boolean;
-  meta?: PatternMeta;
-};
+export type ReferenceIdentifier =
+  & JSNodeBase
+  & {
+    type: 'ReferenceIdentifier';
+    name: string;
+    definite?: boolean;
+    meta?: PatternMeta;
+  };
 
-export const referenceIdentifier = createQuickBuilder<
-  ReferenceIdentifier,
-  'name'
->('ReferenceIdentifier', 'name', {
-  bindingKeys: {},
-  visitorKeys: {
-    meta: true,
-  },
-});
+export const referenceIdentifier =
+  createQuickBuilder<ReferenceIdentifier, 'name'>(
+    'ReferenceIdentifier',
+    'name',
+    {
+      bindingKeys: {},
+      visitorKeys: {
+        meta: true,
+      },
+    },
+  );

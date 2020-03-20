@@ -14,14 +14,16 @@ import {
 import {createBuilder} from '../utils';
 import {AnyObjectPropertyKey} from '../unions';
 
-export type ClassMethod = JSNodeBase & {
-  type: 'ClassMethod';
-  meta: ClassPropertyMeta;
-  key: AnyObjectPropertyKey;
-  kind: ClassMethodKind;
-  head: FunctionHead;
-  body: BlockStatement;
-};
+export type ClassMethod =
+  & JSNodeBase
+  & {
+    type: 'ClassMethod';
+    meta: ClassPropertyMeta;
+    key: AnyObjectPropertyKey;
+    kind: ClassMethodKind;
+    head: FunctionHead;
+    body: BlockStatement;
+  };
 
 export type ClassMethodKind = 'constructor' | 'method' | 'get' | 'set';
 

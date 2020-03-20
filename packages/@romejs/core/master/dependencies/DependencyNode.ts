@@ -48,10 +48,8 @@ function equalKind(
   consumerKind: ConstImportModuleKind,
 ): boolean {
   // Allow importing functions and classes as `type` and `typeof`
-  if (
-    (producer.valueType === 'class' || producer.valueType === 'function') &&
-    (consumerKind === 'type' || consumerKind === 'typeof')
-  ) {
+  if ((producer.valueType === 'class' || producer.valueType === 'function') &&
+    (consumerKind === 'type' || consumerKind === 'typeof')) {
     return true;
   }
 
@@ -153,9 +151,7 @@ export default class DependencyNode {
     });
   }
 
-  getDependencyInfoFromAbsolute(
-    path: AbsoluteFilePath,
-  ): DependencyNodeDependency {
+  getDependencyInfoFromAbsolute(path: AbsoluteFilePath): DependencyNodeDependency {
     const dep = this.absoluteToAnalyzeDependency.get(path);
     if (dep === undefined) {
       throw new Error('Expected dependency');
@@ -223,9 +219,11 @@ export default class DependencyNode {
       }
 
       if (exp.type === 'external') {
-        const resolved = this.getNodeFromRelativeDependency(
-          exp.source,
-        ).resolveImport(exp.imported, exp.loc);
+        const resolved =
+          this.getNodeFromRelativeDependency(exp.source).resolveImport(
+            exp.imported,
+            exp.loc,
+          );
         if (resolved.type === 'FOUND' && equalKind(resolved.record, kind)) {
           names.add(exp.exported);
         }
@@ -251,22 +249,25 @@ export default class DependencyNode {
   ): PartialDiagnostic {
     const resolvedFileLink = `<filelink emphasis target="${resolved.node.id}" />`;
 
-    const message = `Couldn't find export <emphasis>${resolved.name}</emphasis> in ${resolvedFileLink}`;
+    const message =
+      `Couldn't find export <emphasis>${resolved.name}</emphasis> in ${resolvedFileLink}`;
     let advice: PartialDiagnosticAdvice = [];
 
     if (resolved.node.analyze.exports.length === 0) {
       advice.push({
         type: 'log',
         category: 'info',
-        message: "This file doesn't have any exports",
+        message: 'This file doesn\'t have any exports',
       });
     } else {
       // Provide suggestion on unknown import
       const exportedNames = resolved.node.getExportedNames(kind);
 
-      advice = advice.concat(
-        buildSuggestionAdvice(resolved.name, Array.from(exportedNames), {
-          formatItem: name => {
+      advice =
+        advice.concat(buildSuggestionAdvice(resolved.name, Array.from(
+          exportedNames,
+        ), {
+          formatItem: (name) => {
             const exportInfo = resolved.node.resolveImport(name, undefined);
 
             if (exportInfo.type === 'NOT_FOUND') {
@@ -279,17 +280,18 @@ export default class DependencyNode {
 
             const {loc} = record;
             if (loc !== undefined) {
-              name = `<filelink target="${loc.filename}" line="${loc.start.line}" column="${loc.start.column}">${name}</filelink>`;
+              name =
+                `<filelink target="${loc.filename}" line="${loc.start.line}" column="${loc.start.column}">${name}</filelink>`;
 
               if (exportInfo.node !== resolved.node) {
-                name += ` <dim>(from <filelink target="${exportInfo.node.path.join()}" />)</dim>`;
+                name +=
+                  ` <dim>(from <filelink target="${exportInfo.node.path.join()}" />)</dim>`;
               }
             }
 
             return name;
           },
-        }),
-      );
+        }));
     }
 
     return {
@@ -356,8 +358,8 @@ export default class DependencyNode {
         continue;
       }
 
-      const usedNames = this.getDependencyInfoFromAbsolute(absolute).analyze
-        .names;
+      const usedNames =
+        this.getDependencyInfoFromAbsolute(absolute).analyze.names;
 
       // Try to resolve these exports
       for (const nameInfo of usedNames) {
@@ -371,17 +373,17 @@ export default class DependencyNode {
 
         // Unknown import
         if (resolved.type === 'NOT_FOUND') {
-          diagnostics.push(
-            this.buildDiagnosticForUnknownExport(kind, resolved),
-          );
+          diagnostics.push(this.buildDiagnosticForUnknownExport(kind, resolved));
           continue;
         }
 
         // Flag imports of the wrong type
         if (!allowTypeImportsAsValue && !equalKind(resolved.record, kind)) {
-          diagnostics.push(
-            this.buildDiagnosticForTypeMismatch(resolved, mod, nameInfo),
-          );
+          diagnostics.push(this.buildDiagnosticForTypeMismatch(
+            resolved,
+            mod,
+            nameInfo,
+          ));
           continue;
         }
 
@@ -423,18 +425,12 @@ export default class DependencyNode {
 
     for (const record of exports) {
       // When resolving exportAll we never want to include the default export of those modules
-      if (
-        record.type === 'local' &&
-        record.name === 'default' &&
-        ignoreDefault
-      ) {
+      if (record.type === 'local' && record.name === 'default' && ignoreDefault) {
         continue;
       }
 
-      if (
-        record.type === 'local' &&
-        (record.name === name || record.name === '*')
-      ) {
+      if (record.type === 'local' &&
+        (record.name === name || record.name === '*')) {
         return {
           type: 'FOUND',
           node: this,
@@ -452,9 +448,13 @@ export default class DependencyNode {
       }
 
       if (record.type === 'externalAll') {
-        const resolved = this.getNodeFromRelativeDependency(
-          record.source,
-        ).resolveImport(name, record.loc, true, subAncestry);
+        const resolved =
+          this.getNodeFromRelativeDependency(record.source).resolveImport(
+            name,
+            record.loc,
+            true,
+            subAncestry,
+          );
 
         if (resolved.type === 'FOUND') {
           return resolved;

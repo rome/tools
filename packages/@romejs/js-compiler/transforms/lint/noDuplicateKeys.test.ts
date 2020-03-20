@@ -8,9 +8,8 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('no duplicate keys', async t => {
-  const res = await testLint(
-    `
+test('no duplicate keys', async (t) => {
+  const res = await testLint(`
     const foo = {
       test: true,
       test2: true,
@@ -19,8 +18,7 @@ test('no duplicate keys', async t => {
 
     // mark const as used
     console.log(foo);
-    `,
-  );
+    `);
 
   t.looksLike(res.diagnostics, [
     {

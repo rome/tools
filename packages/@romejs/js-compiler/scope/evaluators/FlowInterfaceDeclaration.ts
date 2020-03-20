@@ -12,16 +12,10 @@ import {FlowInterfaceDeclaration, AnyNode} from '@romejs/js-ast';
 export default {
   creator: false,
   build(node: FlowInterfaceDeclaration, parent: AnyNode, scope: Scope) {
-    scope.addBinding(
-      new TypeBinding(
-        {
-          node: node.id,
-          name: node.id.name,
-          scope,
-        },
-        node,
-        'interface',
-      ),
-    );
+    scope.addBinding(new TypeBinding({
+      node: node.id,
+      name: node.id.name,
+      scope,
+    }, node, 'interface'));
   },
 };

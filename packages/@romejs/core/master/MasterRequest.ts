@@ -17,6 +17,7 @@ import {
   PartialDiagnosticAdvice,
   createSingleDiagnosticError,
   DiagnosticsError,
+  DiagnosticCategory,
 } from '@romejs/diagnostics';
 import {DiagnosticsPrinterFlags} from '@romejs/cli-diagnostics';
 import {ProjectDefinition} from '@romejs/project';
@@ -54,6 +55,7 @@ import {
   createUnknownFilePath,
 } from '@romejs/path';
 import crypto = require('crypto');
+
 import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
 import {Dict, RequiredProps} from '@romejs/typescript-helpers';
 import {number1, number0, coerce0} from '@romejs/ob1';
@@ -173,26 +175,24 @@ export default class MasterRequest {
 
       if (args.length > max) {
         excessive = true;
-        message = `Expected no more than <number emphasis>${min}</number> arguments`;
+        message =
+          `Expected no more than <number emphasis>${min}</number> arguments`;
       }
     }
 
     if (message !== undefined) {
-      this.throwDiagnosticFlagError(
-        excessive ? 'Too many arguments' : 'Missing arguments',
+      this.throwDiagnosticFlagError(excessive
+        ? 'Too many arguments' : 'Missing arguments', {
+        type: 'arg-range',
+        from: min,
+        to: max,
+      }, [
         {
-          type: 'arg-range',
-          from: min,
-          to: max,
+          type: 'log',
+          category: 'info',
+          message,
         },
-        [
-          {
-            type: 'log',
-            category: 'info',
-            message,
-          },
-        ],
-      );
+      ]);
     }
   }
 
@@ -206,10 +206,8 @@ export default class MasterRequest {
       {
         message,
         filename: 'argv',
-        category:
-          target.type === 'arg' || target.type === 'arg-range'
-            ? 'args/invalid'
-            : 'flags/invalid',
+        category: target.type === 'arg' || target.type === 'arg-range'
+          ? 'args/invalid' : 'flags/invalid',
         ...pointer,
         advice,
       },
@@ -236,25 +234,22 @@ export default class MasterRequest {
 
   getDiagnosticPointerFromFlags(target: SerializeCLITarget): DiagnosticPointer {
     const {query} = this;
-    return serializeCLIFlags(
-      {
-        prefix: `rome ${query.commandName}`,
-        flags: {
-          ...this.client.flags,
-          ...query.requestFlags,
-          ...this.normalizedCommandFlags.flags,
-        } as Dict<unknown>,
-        args: query.args,
-        defaultFlags: {
-          ...DEFAULT_CLIENT_FLAGS,
-          ...DEFAULT_CLIENT_REQUEST_FLAGS,
-          ...this.normalizedCommandFlags.defaultFlags,
-          clientName: this.client.flags.clientName,
-        },
-        shorthandFlags: new Set(),
+    return serializeCLIFlags({
+      prefix: `rome ${query.commandName}`,
+      flags: ({
+        ...this.client.flags,
+        ...query.requestFlags,
+        ...this.normalizedCommandFlags.flags,
+      } as Dict<unknown>),
+      args: query.args,
+      defaultFlags: {
+        ...DEFAULT_CLIENT_FLAGS,
+        ...DEFAULT_CLIENT_REQUEST_FLAGS,
+        ...this.normalizedCommandFlags.defaultFlags,
+        clientName: this.client.flags.clientName,
       },
-      target,
-    );
+      shorthandFlags: new Set(),
+    }, target);
   }
 
   getResolverOptionsFromFlags(): RequiredProps<ResolverOptions, 'origin'> {
@@ -281,15 +276,22 @@ export default class MasterRequest {
   }
 
   async getFilesFromArgs(
-    globOpts: MemoryFSGlobOptions & {
-      advice?: PartialDiagnosticAdvice;
-      configCategory?: string;
-      verb?: string;
-      noun?: string;
-    } = {},
-  ): Promise<AbsoluteFilePathSet> {
+    globOpts:
+      & MemoryFSGlobOptions
+      & {
+        disabledDiagnosticCategory?: DiagnosticCategory;
+        advice?: PartialDiagnosticAdvice;
+        configCategory?: string;
+        verb?: string;
+        noun?: string;
+      } = {},
+  ): Promise<{
+    projects: Set<ProjectDefinition>;
+    paths: AbsoluteFilePathSet;
+  }> {
     const {master} = this;
     const {flags} = this.client;
+    const projects: Set<ProjectDefinition> = new Set();
 
     // Build up args, defaulting to the current project dir if none passed
     const rawArgs = [...this.query.args];
@@ -306,6 +308,7 @@ export default class MasterRequest {
         pointer,
         project,
       });
+      projects.add(project);
     } else {
       for (let i = 0; i < rawArgs.length; i++) {
         const arg = rawArgs[i];
@@ -315,21 +318,21 @@ export default class MasterRequest {
           key: i,
         });
 
-        const resolved = await this.master.resolver.resolveEntryAssert(
-          {
-            origin: flags.cwd,
-            source: createUnknownFilePath(arg),
-            requestedType: 'folder',
-          },
-          {
-            pointer,
-          },
+        const resolved = await this.master.resolver.resolveEntryAssert({
+          origin: flags.cwd,
+          source: createUnknownFilePath(arg),
+          requestedType: 'folder',
+        }, {
+          pointer,
+        });
+
+        const project = this.master.projectManager.assertProjectExisting(
+          resolved.path,
         );
+        projects.add(project);
 
         resolvedArgs.push({
-          project: this.master.projectManager.assertProjectExisting(
-            resolved.path,
-          ),
+          project,
           path: resolved.path,
           pointer,
         });
@@ -348,8 +351,10 @@ export default class MasterRequest {
         continue;
       }
 
-      let advice: PartialDiagnosticAdvice =
-        globOpts.advice === undefined ? [] : [...globOpts.advice];
+      let category: DiagnosticCategory = 'args/fileNotFound';
+
+      let advice: PartialDiagnosticAdvice = globOpts.advice === undefined
+        ? [] : [...globOpts.advice];
 
       // Hint if `path` failed `globOpts.test`
       if (globOpts.getProjectEnabled !== undefined) {
@@ -358,15 +363,19 @@ export default class MasterRequest {
         if (!test.enabled && test.source !== undefined) {
           const testSource = test.source;
 
-          const explanationPrefix =
-            globOpts.verb === undefined
-              ? 'Files excluded'
-              : `Files excluded from ${globOpts.verb}`;
+          const explanationPrefix = globOpts.verb === undefined
+            ? 'Files excluded' : `Files excluded from ${globOpts.verb}`;
+
+          if (globOpts.disabledDiagnosticCategory !== undefined) {
+            category = globOpts.disabledDiagnosticCategory;
+          }
 
           if (testSource.value === undefined) {
-            let explanation = `${explanationPrefix} as it's not enabled for this project`;
+            let explanation =
+              `${explanationPrefix} as it's not enabled for this project`;
             if (globOpts.configCategory !== undefined) {
-              explanation += `. Run <command>rome config enable-category ${globOpts.configCategory}</command> to enable it.`;
+              explanation +=
+                `. Run <command>rome config enable-category ${globOpts.configCategory}</command> to enable it.`;
             }
             advice.push({
               type: 'log',
@@ -397,7 +406,7 @@ export default class MasterRequest {
       if (globOpts.getProjectIgnore !== undefined) {
         const ignore = globOpts.getProjectIgnore(project);
 
-        const withoutIgnore = await this.getFilesFromArgs({
+        const {paths: withoutIgnore} = await this.getFilesFromArgs({
           ...globOpts,
           getProjectIgnore: undefined,
         });
@@ -411,17 +420,13 @@ export default class MasterRequest {
 
           advice.push({
             type: 'list',
-            list: Array.from(
-              withoutIgnore,
-              path => `<filelink target="${path.join()}" />`,
+            list: Array.from(withoutIgnore, (path) =>
+              `<filelink target="${path.join()}" />`
             ),
             truncate: true,
           });
 
-          if (
-            ignore.source !== undefined &&
-            ignore.source.value !== undefined
-          ) {
+          if (ignore.source !== undefined && ignore.source.value !== undefined) {
             const ignorePointer = ignore.source.value.getDiagnosticPointer(
               'value',
             );
@@ -444,16 +449,14 @@ export default class MasterRequest {
 
       throw createSingleDiagnosticError({
         ...pointer,
-        category: 'args/fileNotFound',
-        message:
-          globOpts.noun === undefined
-            ? 'No files found'
-            : `No files to ${globOpts.noun} found`,
+        category,
+        message: globOpts.noun === undefined
+          ? 'No files found' : `No files to ${globOpts.noun} found`,
         advice,
       });
     }
 
-    return paths;
+    return {paths, projects};
   }
 
   normalizeCompileResult(res: WorkerCompileResult): WorkerCompileResult {
@@ -462,9 +465,10 @@ export default class MasterRequest {
     // Turn all the cacheDependencies entries from 'absolute paths to UIDs
     return {
       ...res,
-      cacheDependencies: res.cacheDependencies.map(filename => {
-        return projectManager.getFileReference(createAbsoluteFilePath(filename))
-          .uid;
+      cacheDependencies: res.cacheDependencies.map((filename) => {
+        return (
+          projectManager.getFileReference(createAbsoluteFilePath(filename)).uid
+        );
       }),
     };
   }
@@ -537,7 +541,7 @@ export default class MasterRequest {
     opts: WorkerParseOptions,
   ): Promise<Program> {
     return this.wrapRequestDiagnostic('parse', filename, (bridge, file) =>
-      bridge.parseJS.call({file, opts}),
+      bridge.parseJS.call({file, opts})
     );
   }
 
@@ -558,8 +562,7 @@ export default class MasterRequest {
     const res = await this.wrapRequestDiagnostic(
       'lint',
       filename,
-      (bridge, file) =>
-        bridge.lint.call({file, fix, prefetchedModuleSignatures}),
+      (bridge, file) => bridge.lint.call({file, fix, prefetchedModuleSignatures}),
     );
 
     await cache.update(filename, {
@@ -573,7 +576,7 @@ export default class MasterRequest {
     path: AbsoluteFilePath,
   ): Promise<undefined | WorkerFormatResult> {
     return await this.wrapRequestDiagnostic('format', path, (bridge, file) =>
-      bridge.format.call({file}),
+      bridge.format.call({file})
     );
   }
 
@@ -585,13 +588,9 @@ export default class MasterRequest {
     const {cache} = this.master;
 
     // Create a cache key comprised of the stage and hash of the options
-    const optionsHash =
-      options === undefined
-        ? 'none'
-        : crypto
-            .createHash('sha256')
-            .update(JSON.stringify(options))
-            .digest('hex');
+    const optionsHash = options === undefined ? 'none' : crypto.createHash(
+      'sha256',
+    ).update(JSON.stringify(options)).digest('hex');
     const cacheKey = `${stage}:${optionsHash}`;
 
     // Check cache for this stage and options
@@ -602,18 +601,17 @@ export default class MasterRequest {
       return cached;
     }
 
-    const compileRes = await this.wrapRequestDiagnostic(
-      'compile',
-      path,
-      (bridge, file) => {
-        // We allow options to be passed in as undefined so we can compute an easy cache key
-        if (options === undefined) {
-          options = {};
-        }
+    const compileRes = await this.wrapRequestDiagnostic('compile', path, (
+      bridge,
+      file,
+    ) => {
+      // We allow options to be passed in as undefined so we can compute an easy cache key
+      if (options === undefined) {
+        options = {};
+      }
 
-        return bridge.compileJS.call({file, stage, options});
-      },
-    );
+      return bridge.compileJS.call({file, stage, options});
+    });
 
     const res = this.normalizeCompileResult({
       ...compileRes,
@@ -621,15 +619,17 @@ export default class MasterRequest {
     });
 
     // There's a race condition here between the file being opened and then rewritten
-    await cache.update(path, cacheEntry => ({
-      compile: {
-        ...cacheEntry.compile,
-        [cacheKey]: {
-          ...res,
-          cached: true,
+    await cache.update(path, (cacheEntry) =>
+      ({
+        compile: {
+          ...cacheEntry.compile,
+          [cacheKey]: {
+            ...res,
+            cached: true,
+          },
         },
-      },
-    }));
+      })
+    );
 
     return res;
   }
@@ -644,11 +644,10 @@ export default class MasterRequest {
       return cacheEntry.analyzeDependencies;
     }
 
-    const res = await this.wrapRequestDiagnostic(
-      'analyzeDependencies',
-      path,
-      (bridge, file) => bridge.analyzeDependencies.call({file}),
-    );
+    const res = await this.wrapRequestDiagnostic('analyzeDependencies', path, (
+      bridge,
+      file,
+    ) => bridge.analyzeDependencies.call({file}));
     await cache.update(path, {
       analyzeDependencies: {
         ...res,
@@ -672,11 +671,10 @@ export default class MasterRequest {
       return cacheEntry.moduleSignature;
     }
 
-    const res = await this.wrapRequestDiagnostic(
-      'moduleSignature',
-      filename,
-      (bridge, file) => bridge.moduleSignatureJS.call({file}),
-    );
+    const res = await this.wrapRequestDiagnostic('moduleSignature', filename, (
+      bridge,
+      file,
+    ) => bridge.moduleSignatureJS.call({file}));
     await cache.update(filename, {
       moduleSignature: res,
     });
@@ -695,6 +693,7 @@ export default class MasterRequest {
     }
 
     // get the owner of this file
+
     /*const rootOwner = await fileAllocator.getOrAssignOwner(filename);
     const rootOwnerId = workerManager.getIdFromBridge(rootOwner);
 
@@ -761,7 +760,6 @@ export default class MasterRequest {
         graph,
       };
     }*/
-
     return prefetchedModuleSignatures;
   }
 }

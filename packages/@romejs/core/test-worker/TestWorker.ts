@@ -33,7 +33,7 @@ export default class TestWorker {
       type: 'server',
     });
 
-    process.on('unhandledRejection', err => {
+    process.on('unhandledRejection', (err) => {
       bridge.testError.send({
         ref: undefined,
         diagnostic: deriveDiagnosticFromError({
@@ -49,7 +49,7 @@ export default class TestWorker {
       };
     });
 
-    bridge.prepareTest.subscribe(data => {
+    bridge.prepareTest.subscribe((data) => {
       return this.prepareTest(data);
     });
 

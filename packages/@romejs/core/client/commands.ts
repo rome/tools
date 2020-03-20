@@ -19,9 +19,7 @@ import {VERSION} from '../common/constants';
 // rome-suppress lint/noExplicitAny
 export const localCommands: Map<string, LocalCommand<any>> = new Map();
 
-type InitFlags = {
-  defaults: boolean;
-};
+type InitFlags = {defaults: boolean};
 
 localCommands.set('init', {
   category: commandCategories.PROJECT_MANAGEMENT,
@@ -128,13 +126,10 @@ localCommands.set('develop', {
       await req.client.forceStartDaemon();
     }
 
-    await req.client.query(
-      {
-        ...req.query,
-        terminateWhenIdle: true,
-      },
-      'master',
-    );
+    await req.client.query({
+      ...req.query,
+      terminateWhenIdle: true,
+    }, 'master');
 
     return true;
   },
@@ -148,12 +143,9 @@ localCommands.set('stop', {
     const {reporter} = req.client;
     const bridge = await req.client.tryConnectToExistingDaemon();
     if (bridge) {
-      const stop = await req.client.query(
-        {
-          command: 'stop',
-        },
-        'master',
-      );
+      const stop = await req.client.query({
+        command: 'stop',
+      }, 'master');
       if (stop.type === 'ERROR' && stop.fatal) {
         reporter.success('Stopped server.');
       } else {
@@ -176,18 +168,15 @@ localCommands.set('run', {
       return false;
     }
 
-    process.on('unhandledRejection', error => {
+    process.on('unhandledRejection', (error) => {
       error;
       //console.log('unhandledRejection', error.stack);
     });
 
-    const res = await req.client.query(
-      {
-        command: 'run',
-        args: req.query.args,
-      },
-      'master',
-    );
+    const res = await req.client.query({
+      command: 'run',
+      args: req.query.args,
+    }, 'master');
 
     if (res.type !== 'SUCCESS') {
       return false;
@@ -249,12 +238,9 @@ localCommands.set('status', {
     const {reporter} = req.client;
     const bridge = await req.client.tryConnectToExistingDaemon();
     if (bridge) {
-      const status = await req.client.query(
-        {
-          command: 'status',
-        },
-        'master',
-      );
+      const status = await req.client.query({
+        command: 'status',
+      }, 'master');
       if (status.type === 'SUCCESS') {
         reporter.inspect(status.data);
         return true;

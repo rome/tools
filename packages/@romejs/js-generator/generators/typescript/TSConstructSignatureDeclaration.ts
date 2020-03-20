@@ -18,5 +18,15 @@ export default function TSConstructSignatureDeclaration(
 ) {
   node = tsConstructSignatureDeclaration.assert(node);
 
-  throw new Error('unimplemented');
+  generator.word('new');
+  generator.space();
+  generator.print(node.meta, node);
+
+  if (node.typeAnnotation !== undefined) {
+    generator.token(':');
+    generator.space();
+    generator.print(node.typeAnnotation, node);
+  }
+
+  generator.token(';');
 }

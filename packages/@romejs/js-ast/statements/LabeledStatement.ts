@@ -8,11 +8,13 @@
 import {JSNodeBase, Identifier, AnyStatement} from '../index';
 import {createBuilder} from '../utils';
 
-export type LabeledStatement = JSNodeBase & {
-  type: 'LabeledStatement';
-  label: Identifier;
-  body: AnyStatement;
-};
+export type LabeledStatement =
+  & JSNodeBase
+  & {
+    type: 'LabeledStatement';
+    label: Identifier;
+    body: AnyStatement;
+  };
 
 export const labeledStatement = createBuilder<LabeledStatement>(
   'LabeledStatement',

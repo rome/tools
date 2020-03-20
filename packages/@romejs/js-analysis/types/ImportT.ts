@@ -23,8 +23,8 @@ export default class ImportT extends T {
   ) {
     super(scope, originNode);
     this.importedName = opts.importedName;
-    this.relative =
-      opts.relative === undefined ? scope.evaluator.filename : opts.relative;
+    this.relative = opts.relative === undefined
+      ? scope.evaluator.filename : opts.relative;
     this.source = opts.source;
     this.absolute = undefined;
     this.resolvedType = undefined;

@@ -8,11 +8,13 @@
 import {JSNodeBase, TemplateElement, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type TemplateLiteral = JSNodeBase & {
-  type: 'TemplateLiteral';
-  quasis: Array<TemplateElement>;
-  expressions: Array<AnyExpression>;
-};
+export type TemplateLiteral =
+  & JSNodeBase
+  & {
+    type: 'TemplateLiteral';
+    quasis: Array<TemplateElement>;
+    expressions: Array<AnyExpression>;
+  };
 
 export const templateLiteral = createBuilder<TemplateLiteral>(
   'TemplateLiteral',
