@@ -1001,11 +1001,7 @@ export function readRegexp(parser: JSParser): void {
     }
 
     if (escaped) {
-      if (
-        ch === '/' &&
-        !inClass &&
-        (nextCh === ';' || lineBreak.test(nextCh))
-      ) {
+      if (ch === '/' && !inClass && (nextCh === ';' || lineBreak.test(nextCh))) {
         break;
       }
       escaped = false;

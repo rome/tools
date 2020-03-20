@@ -40,22 +40,22 @@ export default {
 
         const firstUsage = usages[0];
 
-        const duplicateAdvice: PartialDiagnosticAdvice = usages
-          .slice(1)
-          .map(node => {
-            if (node.loc === undefined) {
-              return {
-                type: 'log',
-                category: 'warn',
-                message: 'Unable to find location',
-              };
-            } else {
-              return {
-                type: 'frame',
-                ...node.loc,
-              };
-            }
-          });
+        const duplicateAdvice: PartialDiagnosticAdvice = usages.slice(1).map((
+          node,
+        ) => {
+          if (node.loc === undefined) {
+            return {
+              type: 'log',
+              category: 'warn',
+              message: 'Unable to find location',
+            };
+          } else {
+            return {
+              type: 'frame',
+              ...node.loc,
+            };
+          }
+        });
 
         context.addNodeDiagnostic(firstUsage, {
           category: 'lint/noDuplicateGroupNamesInRegularExpressions',

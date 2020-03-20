@@ -8,7 +8,7 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('Dangling backslash in regex', async t => {
+test('Dangling backslash in regex', async (t) => {
   const validTestCases = [
     String.raw`let foo = /\\/;foo;`,
     String.raw`let foo = /2\/1=2/;foo;`,
