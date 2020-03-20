@@ -93,11 +93,11 @@ import {
 } from '@romejs/js-ast';
 
 type ParsingContext =
-    | 'EnumMembers'
-    | 'HeritageClauseElement'
-    | 'TupleElementTypes'
-    | 'TypeMembers'
-    | 'TypeParametersOrArguments';
+  | 'EnumMembers'
+  | 'HeritageClauseElement'
+  | 'TupleElementTypes'
+  | 'TypeMembers'
+  | 'TypeParametersOrArguments';
 
 // Doesn't handle 'void' or 'null' because those are keywords, not identifiers.
 function keywordTypeFromName(
@@ -967,10 +967,10 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
     case tt._null:
       {
         let type:
-            | undefined
-            | AnyTSKeywordTypeAnnotation['type']
-            | 'VoidKeywordTypeAnnotation'
-            | 'NullKeywordTypeAnnotation';
+          | undefined
+          | AnyTSKeywordTypeAnnotation['type']
+          | 'VoidKeywordTypeAnnotation'
+          | 'NullKeywordTypeAnnotation';
         if (parser.match(tt._void)) {
           type = 'VoidKeywordTypeAnnotation';
         } else if (parser.match(tt._null)) {
@@ -1755,14 +1755,14 @@ function tryTSParse<T>(
 }
 
 export type TSDeclareNode =
-    | TSEnumDeclaration
-    | FunctionDeclaration
-    | ClassDeclaration
-    | VariableDeclarationStatement
-    | TSDeclareFunction
-    | TSModuleDeclaration
-    | TypeAliasTypeAnnotation
-    | TSInterfaceDeclaration;
+  | TSEnumDeclaration
+  | FunctionDeclaration
+  | ClassDeclaration
+  | VariableDeclarationStatement
+  | TSDeclareFunction
+  | TSModuleDeclaration
+  | TypeAliasTypeAnnotation
+  | TSInterfaceDeclaration;
 
 export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode {
   let starttype = parser.state.tokenType;
@@ -1942,10 +1942,10 @@ export function parseTSExport(
   parser: JSParser,
   start: Position,
 ):
-    | undefined
-    | TSNamespaceExportDeclaration
-    | TSExportAssignment
-    | TSImportEqualsDeclaration {
+  | undefined
+  | TSNamespaceExportDeclaration
+  | TSExportAssignment
+  | TSImportEqualsDeclaration {
   if (!parser.isSyntaxEnabled('ts')) {
     return undefined;
   }

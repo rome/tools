@@ -34,19 +34,19 @@ import {PartialDiagnostics} from '@romejs/diagnostics';
 import {Number0, get0, add} from '@romejs/ob1';
 
 type Operator =
-    | '^'
-    | '$'
-    | '.'
-    | '['
-    | ']'
-    | '('
-    | ')'
-    | '?'
-    | '{'
-    | '}'
-    | '+'
-    | '*'
-    | '|';
+  | '^'
+  | '$'
+  | '.'
+  | '['
+  | ']'
+  | '('
+  | ')'
+  | '?'
+  | '{'
+  | '}'
+  | '+'
+  | '*'
+  | '|';
 
 type Tokens =
   & BaseTokens
@@ -57,26 +57,26 @@ type Tokens =
       escaped: boolean;
     }>;
     EscapedCharacter: ValueToken<'EscapedCharacter',
-        | 'd'
-        | 'D'
-        | 'b'
-        | 'B'
-        | 's'
-        | 'S'
-        | 'w'
-        | 'W'>;
+      | 'd'
+      | 'D'
+      | 'b'
+      | 'B'
+      | 's'
+      | 'S'
+      | 'w'
+      | 'W'>;
   };
 
 type GroupModifiers =
-    | undefined
-    | {
-      type: 'NON_CAPTURE';
-      kind: RegExpGroupNonCapture['kind'];
-    }
-    | {
-      type: 'NAMED_CAPTURE';
-      name: string;
-    };
+  | undefined
+  | {
+    type: 'NON_CAPTURE';
+    kind: RegExpGroupNonCapture['kind'];
+  }
+  | {
+    type: 'NAMED_CAPTURE';
+    name: string;
+  };
 
 type RegExpParserOptions = ParserOptions & {unicode: boolean};
 
@@ -603,11 +603,11 @@ export const createRegExpParser = createParser((ParserCore) =>
     }
 
     parseQuantifier():
-        | undefined
-        | {
-          min: number;
-          max?: number;
-        } {
+      | undefined
+      | {
+        min: number;
+        max?: number;
+      } {
       if (this.eatOperator('?')) {
         return {
           min: 0,

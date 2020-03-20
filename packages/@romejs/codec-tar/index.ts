@@ -8,14 +8,14 @@
 import stream = require('stream');
 
 type HeaderType =
-    | 'file'
-    | 'link'
-    | 'symlink'
-    | 'directory'
-    | 'block-device'
-    | 'character-device'
-    | 'fifo'
-    | 'contiguous-file';
+  | 'file'
+  | 'link'
+  | 'symlink'
+  | 'directory'
+  | 'block-device'
+  | 'character-device'
+  | 'fifo'
+  | 'contiguous-file';
 
 type Header = {
   name: string;

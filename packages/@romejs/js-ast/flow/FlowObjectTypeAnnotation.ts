@@ -20,11 +20,11 @@ export type FlowObjectTypeAnnotation =
   & {
     type: 'FlowObjectTypeAnnotation';
     properties: Array<
-        | FlowObjectTypeProperty
-        | FlowObjectTypeSpreadProperty
-        | FlowObjectTypeIndexer
-        | FlowObjectTypeCallProperty
-        | FlowObjectTypeInternalSlot>;
+      | FlowObjectTypeProperty
+      | FlowObjectTypeSpreadProperty
+      | FlowObjectTypeIndexer
+      | FlowObjectTypeCallProperty
+      | FlowObjectTypeInternalSlot>;
     exact?: boolean;
     inexact?: boolean;
   };

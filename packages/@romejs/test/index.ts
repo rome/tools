@@ -12,11 +12,11 @@ export type TestName = string | Array<string>;
 declare const __ROME__TEST_OPTIONS__: GlobalTestOptions;
 
 export type GlobalTestOptions =
-    | undefined
-    | {
-      dirname?: string;
-      register?: (err: Error, opts: import('@romejs/test').TestOptions, callback?: import('@romejs/test').TestCallback) => void;
-    };
+  | undefined
+  | {
+    dirname?: string;
+    register?: (err: Error, opts: import('@romejs/test').TestOptions, callback?: import('@romejs/test').TestCallback) => void;
+  };
 
 type NamelessTestOptions = {
   timeout?: number;
@@ -106,9 +106,9 @@ function splitArgs(
 export * from './fixtures';
 
 type TestRegisterFunctionArgs =
-    | [TestName]
-    | [TestName, TestCallback]
-    | [TestName, NamelessTestOptions, TestCallback];
+  | [TestName]
+  | [TestName, TestCallback]
+  | [TestName, NamelessTestOptions, TestCallback];
 
 type TestRegisterFunction = (...args: TestRegisterFunctionArgs) => void;
 

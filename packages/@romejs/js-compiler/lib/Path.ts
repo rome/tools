@@ -137,11 +137,11 @@ export default class Path {
     descriptor: AnyHookDescriptor,
     requiredDepth: number = 0,
   ):
-      | undefined
-      | {
-        ref: HookInstance;
-        depth: number;
-      } {
+    | undefined
+    | {
+      ref: HookInstance;
+      depth: number;
+    } {
     let depth = 0;
     for (const {hooks} of this.ancestryPaths) {
       for (const hook of hooks) {

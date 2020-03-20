@@ -25,8 +25,8 @@ export type ClassHead =
     typeParameters?: AnyTypeParameter;
     superTypeParameters?: AnyTypeArguments;
     implements?:
-        | undefined
-        | Array<FlowClassImplements | TSExpressionWithTypeArguments>;
+      | undefined
+      | Array<FlowClassImplements | TSExpressionWithTypeArguments>;
   };
 
 export const classHead = createQuickBuilder<ClassHead, 'body'>(

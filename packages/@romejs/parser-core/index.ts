@@ -63,8 +63,8 @@ export type ParserUnexpectedOptions = {
 };
 
 export type TokenValues<Tokens extends TokensShape> =
-    | Tokens[keyof Tokens]
-    | BaseTokens[keyof BaseTokens];
+  | Tokens[keyof Tokens]
+  | BaseTokens[keyof BaseTokens];
 
 export function tryParseWithOptionalOffsetPosition<
   Opts extends ParserOptions,
@@ -227,11 +227,11 @@ export class ParserCore<Tokens extends TokensShape, State> {
     input: string,
     state: State,
   ):
-      | undefined
-      | {
-        token: TokenValues<Tokens>;
-        state: State;
-      } {
+    | undefined
+    | {
+      token: TokenValues<Tokens>;
+      state: State;
+    } {
     const token = this.tokenize(index, input);
     if (token !== undefined) {
       return {token, state};
@@ -243,11 +243,11 @@ export class ParserCore<Tokens extends TokensShape, State> {
     input: string,
     state: State,
   ):
-      | undefined
-      | {
-        token: TokenValues<Tokens>;
-        state: State;
-      } {
+    | undefined
+    | {
+      token: TokenValues<Tokens>;
+      state: State;
+    } {
     if (this.ignoreWhitespaceTokens) {
       switch (input[get0(index)]) {
         case ' ':

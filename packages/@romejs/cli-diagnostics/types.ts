@@ -20,8 +20,8 @@ export type DiagnosticsPrinterFlags = {
 };
 
 export type DiagnosticsFileReader = (path: AbsoluteFilePath) =>
-    | undefined
-    | DiagnosticsFileReaderStats;
+  | undefined
+  | DiagnosticsFileReaderStats;
 
 export type DiagnosticsFileReaderStats = {
   content: string;

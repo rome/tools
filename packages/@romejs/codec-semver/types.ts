@@ -67,12 +67,12 @@ export type VersionRangeNode = ComplexNode<'VersionRange', {
 }>;
 
 export type RangeNode =
-    | LogicalAndNode
-    | VersionRangeNode
-    | LogicalOrNode
-    | ComparatorNode
-    | WildcardNode
-    | VersionNode;
+  | LogicalAndNode
+  | VersionRangeNode
+  | LogicalOrNode
+  | ComparatorNode
+  | WildcardNode
+  | VersionNode;
 
 // TOKENS
 export type Tokens =

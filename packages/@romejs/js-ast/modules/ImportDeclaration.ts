@@ -16,9 +16,9 @@ import {
 import {createBuilder} from '../utils';
 
 export type AnyImportSpecifier =
-    | ImportSpecifier
-    | ImportDefaultSpecifier
-    | ImportNamespaceSpecifier;
+  | ImportSpecifier
+  | ImportDefaultSpecifier
+  | ImportNamespaceSpecifier;
 
 export type ImportDeclaration =
   & JSNodeBase

@@ -52,12 +52,12 @@ function promisifyVoid(
 export function watch(
   path: AbsoluteFilePath,
   options:
-      | {
-        encoding?: BufferEncoding | null;
-        persistent?: boolean;
-        recursive?: boolean;
-      }
-      | undefined,
+    | {
+      encoding?: BufferEncoding | null;
+      persistent?: boolean;
+      recursive?: boolean;
+    }
+    | undefined,
 
   listener?: (event: string, filename: null | string) => void,
 ) {

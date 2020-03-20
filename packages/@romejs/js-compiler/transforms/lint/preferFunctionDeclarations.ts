@@ -51,8 +51,8 @@ const hook = createHook<State, Arg, ThisExpression>({
     path: Path,
     state: State,
   ):
-      | VariableDeclarationStatement
-      | Array<VariableDeclarationStatement | FunctionDeclaration> {
+    | VariableDeclarationStatement
+    | Array<VariableDeclarationStatement | FunctionDeclaration> {
     const node = variableDeclarationStatement.assert(path.node);
 
     // We may have invalidated all declarations

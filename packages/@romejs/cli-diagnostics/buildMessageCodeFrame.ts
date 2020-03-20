@@ -55,12 +55,12 @@ export default function buildMessageCodeFrame(
   ));
 
   let formattedLines: Array<
-      | {
-        gutter: string;
-        line: string;
-        lineIndex: Number0;
-      }
-      | undefined> = [];
+    | {
+      gutter: string;
+      line: string;
+      lineIndex: Number0;
+    }
+    | undefined> = [];
   for (let i = contextStartIndex; i <= contextEndIndex; i = inc(i)) {
     let line: undefined | string = allLines[get0(i)];
     if (line === undefined) {

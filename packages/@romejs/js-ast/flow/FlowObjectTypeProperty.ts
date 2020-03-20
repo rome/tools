@@ -18,9 +18,9 @@ import {createBuilder} from '../utils';
 export type FlowObjectTypePropertyKind = 'init' | 'get' | 'set';
 
 export type FlowObjectTypePropertyKey =
-    | Identifier
-    | StringLiteral
-    | NumericLiteral;
+  | Identifier
+  | StringLiteral
+  | NumericLiteral;
 
 export type FlowObjectTypeProperty =
   & JSNodeBase

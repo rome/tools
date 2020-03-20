@@ -25,8 +25,8 @@ import {SourceMap} from '@romejs/codec-source-map';
 assertNodeTypeSet(generatorFunctions, 'generators');
 
 export type GeneratorMethod = (generator: Generator, node: AnyNode, parent: AnyNode) =>
-    | void
-    | never;
+  | void
+  | never;
 
 const SCIENTIFIC_NOTATION = /e/i;
 const ZERO_DECIMAL_INTEGER = /\.0+$/;
@@ -73,9 +73,9 @@ type GeneratorSnapshot = {
 };
 
 type MultilineCondition =
-    | 'more-than-one-line'
-    | 'any-line-exceeds'
-    | 'source-had-multiline';
+  | 'more-than-one-line'
+  | 'any-line-exceeds'
+  | 'source-had-multiline';
 
 export default class Generator {
   constructor(opts: GeneratorOptions, code: string) {
@@ -645,11 +645,11 @@ export default class Generator {
 
   printBlock(
     parent:
-        | WithStatement
-        | ForInStatement
-        | ForOfStatement
-        | ForStatement
-        | WhileStatement,
+      | WithStatement
+      | ForInStatement
+      | ForOfStatement
+      | ForStatement
+      | WhileStatement,
   ) {
     const node = parent.body;
 

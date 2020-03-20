@@ -620,8 +620,8 @@ export function parseExpressionOp(
   if (prec !== undefined && (!noIn || !parser.match(tt._in))) {
     if (prec > minPrec) {
       const operator = (String(parser.state.tokenValue) as
-          | BinaryOperator
-          | LogicalOperator);
+        | BinaryOperator
+        | LogicalOperator);
 
       if (operator === '**' && left.type === 'UnaryExpression' &&
         !parser.isParenthesized(left)) {
@@ -691,8 +691,8 @@ export function parseMaybeUnary(
     const start = parser.getPosition();
     const update = parser.match(tt.incDec);
     const operator = (String(parser.state.tokenValue) as
-        | UnaryOperator
-        | UpdateOperator);
+      | UnaryOperator
+      | UpdateOperator);
     const prefix = true;
 
     parser.next();
@@ -1181,14 +1181,14 @@ export function parseCallExpressionArguments(
 ): {
   args: CallExpression['arguments'];
   params:
-      | undefined
-      | Array<AnyExpression | SpreadElement | AmbiguousFlowTypeCastExpression>;
+    | undefined
+    | Array<AnyExpression | SpreadElement | AmbiguousFlowTypeCastExpression>;
 } {
   let callArgs: CallExpression['arguments'] = [];
   let funcParams: Array<
-      | AnyExpression
-      | SpreadElement
-      | AmbiguousFlowTypeCastExpression> = [];
+    | AnyExpression
+    | SpreadElement
+    | AmbiguousFlowTypeCastExpression> = [];
 
   let innerParenStart;
   let first = true;
@@ -1328,60 +1328,60 @@ export function parseNoCallExpr(
 }
 
 type ExpressionContext =
-    | 'await argument'
-    | 'export default declaration'
-    | 'export from'
-    | 'import source'
-    | 'return argument'
-    | 'switch discriminant'
-    | 'case test'
-    | 'throw argument'
-    | 'flow object property key'
-    | 'flow declare module id'
-    | 'flow declared predicate'
-    | 'class private property'
-    | 'class property value'
-    | 'assignment right'
-    | 'class heritage'
-    | 'new callee'
-    | 'var init'
-    | 'for right'
-    | 'for update'
-    | 'for test'
-    | 'for init'
-    | 'with object'
-    | 'while test'
-    | 'do test'
-    | 'if test'
-    | 'conditional consequent'
-    | 'conditional alternate'
-    | 'class private property value'
-    | 'statement expression'
-    | 'class private property value'
-    | 'optional member expression property'
-    | 'member expression computed property'
-    | 'call expression argument'
-    | 'new expression argument'
-    | 'template expression value'
-    | 'object property value'
-    | 'property name'
-    | 'function body'
-    | 'yield argument'
-    | 'array element'
-    | 'spread argument'
-    | 'assignment pattern right'
-    | 'ts export assignment'
-    | 'ts external module reference expression'
-    | 'ts enum member initializer'
-    | 'ts enum member id'
-    | 'ts type assertion'
-    | 'ts literal type'
-    | 'ts import argument'
-    | 'jsx inner expression container'
-    | 'jsx attribute value'
-    | 'jsx spread child expression'
-    | 'jsx attribute spread'
-    | 'jsx text';
+  | 'await argument'
+  | 'export default declaration'
+  | 'export from'
+  | 'import source'
+  | 'return argument'
+  | 'switch discriminant'
+  | 'case test'
+  | 'throw argument'
+  | 'flow object property key'
+  | 'flow declare module id'
+  | 'flow declared predicate'
+  | 'class private property'
+  | 'class property value'
+  | 'assignment right'
+  | 'class heritage'
+  | 'new callee'
+  | 'var init'
+  | 'for right'
+  | 'for update'
+  | 'for test'
+  | 'for init'
+  | 'with object'
+  | 'while test'
+  | 'do test'
+  | 'if test'
+  | 'conditional consequent'
+  | 'conditional alternate'
+  | 'class private property value'
+  | 'statement expression'
+  | 'class private property value'
+  | 'optional member expression property'
+  | 'member expression computed property'
+  | 'call expression argument'
+  | 'new expression argument'
+  | 'template expression value'
+  | 'object property value'
+  | 'property name'
+  | 'function body'
+  | 'yield argument'
+  | 'array element'
+  | 'spread argument'
+  | 'assignment pattern right'
+  | 'ts export assignment'
+  | 'ts external module reference expression'
+  | 'ts enum member initializer'
+  | 'ts enum member id'
+  | 'ts type assertion'
+  | 'ts literal type'
+  | 'ts import argument'
+  | 'jsx inner expression container'
+  | 'jsx attribute value'
+  | 'jsx spread child expression'
+  | 'jsx attribute spread'
+  | 'jsx text';
 
 // Parse an atomic expression — either a single token that is an
 
@@ -2349,12 +2349,12 @@ export function isGetterOrSetterMethod(
 export function checkGetterSetterParamCount(
   parser: JSParser,
   method:
-      | FlowFunctionTypeAnnotation
-      | ObjectMethod
-      | ClassMethod
-      | ClassPrivateMethod
-      | TSDeclareFunction
-      | TSDeclareMethod,
+    | FlowFunctionTypeAnnotation
+    | ObjectMethod
+    | ClassMethod
+    | ClassPrivateMethod
+    | TSDeclareFunction
+    | TSDeclareMethod,
 
   kind: string,
 ): void {
@@ -2584,10 +2584,10 @@ export function parseObjectPropertyValue(
   }
 
   let node:
-      | undefined
-      | ObjectMethod
-      | ObjectProperty
-      | BindingObjectPatternProperty = parseObjectMethod(parser, {
+    | undefined
+    | ObjectMethod
+    | ObjectProperty
+    | BindingObjectPatternProperty = parseObjectMethod(parser, {
     key,
     start,
     isGenerator,

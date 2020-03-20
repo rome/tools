@@ -18,14 +18,14 @@ export type UnaryExpression =
   };
 
 export type UnaryOperator =
-    | '-'
-    | '+'
-    | '!'
-    | '~'
-    | 'typeof'
-    | 'void'
-    | 'delete'
-    | 'throw';
+  | '-'
+  | '+'
+  | '!'
+  | '~'
+  | 'typeof'
+  | 'void'
+  | 'delete'
+  | 'throw';
 
 export const unaryExpression = createBuilder<UnaryExpression>(
   'UnaryExpression',

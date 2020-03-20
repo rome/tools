@@ -28,9 +28,9 @@ export default function resolverSuggest(
   resolver: Resolver,
   query: ResolverRemoteQuery,
   resolved:
-      | ResolverQueryResponseFetchError
-      | ResolverQueryResponseMissing
-      | ResolverQueryResponseUnsupported,
+    | ResolverQueryResponseFetchError
+    | ResolverQueryResponseMissing
+    | ResolverQueryResponseUnsupported,
 
   origQuerySource?: ResolverQuerySource,
 ): Error {

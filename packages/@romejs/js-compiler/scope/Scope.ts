@@ -20,12 +20,12 @@ Error.stackTraceLimit = Infinity;
 type ScopeBindings = Map<string, Binding>;
 
 export type ScopeKind =
-    | 'root'
-    | 'program'
-    | 'function'
-    | 'block'
-    | 'loop'
-    | 'class';
+  | 'root'
+  | 'program'
+  | 'function'
+  | 'block'
+  | 'loop'
+  | 'class';
 
 export default class Scope {
   constructor(

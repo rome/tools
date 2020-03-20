@@ -65,22 +65,22 @@ export type WorkerStatus = {
 };
 
 export type PrefetchedModuleSignatures = {[key: string]:
-      | {
-        type: 'USE_CACHED';
-        filename: string;
-      }
-      | {
-        type: 'RESOLVED';
-        graph: ModuleSignature;
-      }
-      | {
-        type: 'OWNED';
-        file: JSONFileReference;
-      }
-      | {
-        type: 'POINTER';
-        key: string;
-      }};
+    | {
+      type: 'USE_CACHED';
+      filename: string;
+    }
+    | {
+      type: 'RESOLVED';
+      graph: ModuleSignature;
+    }
+    | {
+      type: 'OWNED';
+      file: JSONFileReference;
+    }
+    | {
+      type: 'POINTER';
+      key: string;
+    }};
 
 export type WorkerFormatResult = {
   original: string;
@@ -132,8 +132,8 @@ export default class WorkerBridge extends Bridge {
   });
 
   format = this.createEvent<{file: JSONFileReference},
-      | undefined
-      | WorkerFormatResult>({
+    | undefined
+    | WorkerFormatResult>({
     name: 'format',
     direction: 'server->client',
   }

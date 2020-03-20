@@ -23,8 +23,8 @@ export type MasterCommand<T> = {
   }>;
   defineFlags?: (c: Consumer) => T;
   default: (req: MasterRequest, commandFlags: T) =>
-      | undefined
-      | Promise<JSONPropertyValue>;
+    | undefined
+    | Promise<JSONPropertyValue>;
 };
 
 export type LocalCommand<T> = {

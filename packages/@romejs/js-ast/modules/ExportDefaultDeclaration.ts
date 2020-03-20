@@ -21,12 +21,12 @@ export type ExportDefaultDeclaration =
   & {
     type: 'ExportDefaultDeclaration';
     declaration:
-        | FunctionDeclaration
-        | ClassDeclaration
-        | FlowDeclareOpaqueType
-        | TSInterfaceDeclaration
-        | TSDeclareFunction
-        | AnyExpression;
+      | FunctionDeclaration
+      | ClassDeclaration
+      | FlowDeclareOpaqueType
+      | TSInterfaceDeclaration
+      | TSDeclareFunction
+      | AnyExpression;
     exportKind?: undefined;
     declare?: boolean;
   };

@@ -22,11 +22,11 @@ export type JSXAttribute =
     type: 'JSXAttribute';
     name: JSXIdentifier | JSXNamespacedName;
     value?:
-        | undefined
-        | JSXElement
-        | JSXFragment
-        | StringLiteral
-        | JSXExpressionContainer;
+      | undefined
+      | JSXElement
+      | JSXFragment
+      | StringLiteral
+      | JSXExpressionContainer;
   };
 
 export const jsxAttribute = createBuilder<JSXAttribute>('JSXAttribute', {

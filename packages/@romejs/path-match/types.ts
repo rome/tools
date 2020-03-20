@@ -40,8 +40,8 @@ export type PatternWordSegmentNode = ComplexNode<'Segment', {parts: PatternParts
 export type PatternWildcardSegmentNode = SimpleNode<'WildcardSegment'>;
 
 export type PatternSegmentNode =
-    | PatternWordSegmentNode
-    | PatternWildcardSegmentNode;
+  | PatternWordSegmentNode
+  | PatternWildcardSegmentNode;
 
 export type PatternSegments = Array<PatternSegmentNode>;
 

@@ -10,14 +10,14 @@ import {addOriginsToDiagnostics} from './derive';
 import {getDiagnosticsFromError} from './errors';
 
 type WrapResult<T> =
-    | {
-      readonly value: T;
-      readonly diagnostics: undefined;
-    }
-    | {
-      readonly value: undefined;
-      readonly diagnostics: PartialDiagnostics;
-    };
+  | {
+    readonly value: T;
+    readonly diagnostics: undefined;
+  }
+  | {
+    readonly value: undefined;
+    readonly diagnostics: PartialDiagnostics;
+  };
 
 export async function catchDiagnostics<T>(
   origin: DiagnosticOrigin,

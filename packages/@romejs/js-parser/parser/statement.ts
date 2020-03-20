@@ -217,13 +217,13 @@ export function isLetStart(parser: JSParser, context?: string): boolean {
 }
 
 type StatementContext =
-    | undefined
-    | 'if'
-    | 'label'
-    | 'do'
-    | 'while'
-    | 'with'
-    | 'for';
+  | undefined
+  | 'if'
+  | 'label'
+  | 'do'
+  | 'while'
+  | 'with'
+  | 'for';
 
 // Parse a single statement.
 
@@ -725,12 +725,12 @@ export function parseSwitchStatement(
     // adding statements to.
 
     let cur:
-        | undefined
-        | {
-          start: Position;
-          test: undefined | AnyExpression;
-          consequent: Array<AnyStatement>;
-        };
+      | undefined
+      | {
+        start: Position;
+        test: undefined | AnyExpression;
+        consequent: Array<AnyStatement>;
+      };
 
     function pushCase() {
       if (cur === undefined) {
@@ -1523,9 +1523,9 @@ export function parseFunctionParams(
   allowTSModifiers?: boolean,
 ): {
   typeParameters:
-      | undefined
-      | TSTypeParameterDeclaration
-      | FlowTypeParameterDeclaration;
+    | undefined
+    | TSTypeParameterDeclaration
+    | FlowTypeParameterDeclaration;
   params: Array<AnyBindingPattern>;
   rest: undefined | AnyTargetBindingPattern;
 } {

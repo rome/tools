@@ -246,12 +246,12 @@ parens.set('ClassExpression', function ClassExpression(
 
 function UnaryExpression(
   node:
-      | UnaryExpression
-      | ArrowFunctionExpression
-      | AssignmentExpression
-      | ConditionalExpression
-      | SpreadElement
-      | SpreadProperty,
+    | UnaryExpression
+    | ArrowFunctionExpression
+    | AssignmentExpression
+    | ConditionalExpression
+    | SpreadElement
+    | SpreadProperty,
 
   parent: AnyNode,
 ): boolean {

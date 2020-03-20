@@ -109,13 +109,13 @@ export type DiagnosticAdviceItemStacktrace = {
 };
 
 export type DiagnosticAdviceItem =
-    | DiagnosticAdviceItemLog
-    | DiagnosticAdviceItemList
-    | DiagnosticAdviceItemCode
-    | DiagnosticAdviceItemFrame
-    | DiagnosticAdviceItemInspect
-    | DiagnosticAdviceItemDiff
-    | DiagnosticAdviceItemStacktrace;
+  | DiagnosticAdviceItemLog
+  | DiagnosticAdviceItemList
+  | DiagnosticAdviceItemCode
+  | DiagnosticAdviceItemFrame
+  | DiagnosticAdviceItemInspect
+  | DiagnosticAdviceItemDiff
+  | DiagnosticAdviceItemStacktrace;
 
 export type DiagnosticAdvice = Array<DiagnosticAdviceItem>;
 
@@ -183,57 +183,57 @@ export type PartialDiagnostic = {
 export type PartialDiagnostics = Array<PartialDiagnostic>;
 
 export type PartialDiagnosticAdviceItem =
-    | {
-      type: 'log';
-      category: DiagnosticLogCategory;
-      message: string;
-      compact?: boolean;
-    }
-    | {
-      type: 'list';
-      list: Array<string>;
-      truncate?: boolean;
-      reverse?: boolean;
-      ordered?: boolean;
-    }
-    | {
-      type: 'inspect';
-      data: JSONPropertyValue;
-    }
-    | {
-      type: 'code';
-      code: string;
-      sourceType?: ConstSourceType;
-      language?: DiagnosticLanguage;
-    }
-    | {
-      type: 'frame';
-      mtime?: number;
-      language?: DiagnosticLanguage;
-      sourceType?: ConstSourceType;
-      sourceText?: string;
-      marker?: string;
-      filename?: string;
-      start: Position;
-      end: Position;
+  | {
+    type: 'log';
+    category: DiagnosticLogCategory;
+    message: string;
+    compact?: boolean;
+  }
+  | {
+    type: 'list';
+    list: Array<string>;
+    truncate?: boolean;
+    reverse?: boolean;
+    ordered?: boolean;
+  }
+  | {
+    type: 'inspect';
+    data: JSONPropertyValue;
+  }
+  | {
+    type: 'code';
+    code: string;
+    sourceType?: ConstSourceType;
+    language?: DiagnosticLanguage;
+  }
+  | {
+    type: 'frame';
+    mtime?: number;
+    language?: DiagnosticLanguage;
+    sourceType?: ConstSourceType;
+    sourceText?: string;
+    marker?: string;
+    filename?: string;
+    start: Position;
+    end: Position;
 
-      // From SourceLocation, will never appear in the final diagnostic, makes it easy to spread
-      identifierName?: string;
-    }
-    | {
-      type: 'diff';
-      diff: Diffs;
-      legend?: {
-        add: string;
-        delete: string;
-      };
-    }
-    | {
-      type: 'stacktrace';
-      title?: string;
-      truncate?: boolean;
-      frames: Array<PartialDiagnosticAdviceStackFrame>;
+    // From SourceLocation, will never appear in the final diagnostic, makes it easy to spread
+    identifierName?: string;
+  }
+  | {
+    type: 'diff';
+    diff: Diffs;
+    legend?: {
+      add: string;
+      delete: string;
     };
+  }
+  | {
+    type: 'stacktrace';
+    title?: string;
+    truncate?: boolean;
+    frames: Array<PartialDiagnosticAdviceStackFrame>;
+  };
 
 export type PartialDiagnosticAdvice = Array<PartialDiagnosticAdviceItem>;
 

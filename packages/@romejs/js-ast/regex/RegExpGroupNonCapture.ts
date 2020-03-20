@@ -14,10 +14,10 @@ export type RegExpGroupNonCapture =
     type: 'RegExpGroupNonCapture';
     expression: AnyRegExpExpression;
     kind?:
-        | 'positive-lookahead'
-        | 'negative-lookahead'
-        | 'positive-lookbehind'
-        | 'negative-lookbehind';
+      | 'positive-lookahead'
+      | 'negative-lookahead'
+      | 'positive-lookbehind'
+      | 'negative-lookbehind';
   };
 
 export const regExpGroupNonCapture = createBuilder<RegExpGroupNonCapture>(
