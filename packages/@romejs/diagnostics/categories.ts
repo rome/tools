@@ -10,7 +10,7 @@
 // all category names are defined. This allows the naming scheme to be more easily reviewed and
 
 // made consistent.
-export type DiagnosticCategory = 
+export type DiagnosticCategory =
     | 'analyzeDependencies/cjsExportInES'
     | 'args/fileNotFound'
     | 'args/invalid'
@@ -89,7 +89,7 @@ export type DiagnosticCategory =
     | 'typeCheck/missingCondition'
     | 'v8/syntaxError';
 
-export type DiagnosticCategoryPrefix = 
+export type DiagnosticCategoryPrefix =
     | 'analyzeDependencies'
     | 'args'
     | 'bundler'

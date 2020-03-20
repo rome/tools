@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type BindingObjectPattern = 
+export type BindingObjectPattern =
   & JSNodeBase
   & {
     meta?: PatternMeta;

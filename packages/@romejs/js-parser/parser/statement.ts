@@ -216,7 +216,7 @@ export function isLetStart(parser: JSParser, context?: string): boolean {
   return false;
 }
 
-type StatementContext = 
+type StatementContext =
     | undefined
     | 'if'
     | 'label'
@@ -726,7 +726,7 @@ export function parseSwitchStatement(
 
     // adding statements to.
 
-    let cur: 
+    let cur:
         | undefined
         | {
           start: Position;
@@ -1526,7 +1526,7 @@ export function parseFunctionParams(
   kind?: string,
   allowTSModifiers?: boolean,
 ): {
-  typeParameters: 
+  typeParameters:
       | undefined
       | TSTypeParameterDeclaration
       | FlowTypeParameterDeclaration;

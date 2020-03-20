@@ -16,7 +16,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclareExportNamed = 
+export type FlowDeclareExportNamed =
   & JSNodeBase
   & {
     type: 'FlowDeclareExportNamed';

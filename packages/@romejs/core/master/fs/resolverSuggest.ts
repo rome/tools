@@ -27,7 +27,7 @@ import {PLATFORMS} from '../../common/types/platform';
 export default function resolverSuggest(
   resolver: Resolver,
   query: ResolverRemoteQuery,
-  resolved: 
+  resolved:
       | ResolverQueryResponseFetchError
       | ResolverQueryResponseMissing
       | ResolverQueryResponseUnsupported,
@@ -302,7 +302,7 @@ function tryPathSuggestions(
 
     // Our basename isn't valid, but our parent exists
     if (!memoryFs.exists(path) && memoryFs.exists(parentPath)) {
-      const entries = Array.from(memoryFs.readdir(parentPath), (path) => 
+      const entries = Array.from(memoryFs.readdir(parentPath), (path) =>
         path.join()
       );
       if (entries.length === 0) {

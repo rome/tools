@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyFlowPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowTupleTypeAnnotation = 
+export type FlowTupleTypeAnnotation =
   & JSNodeBase
   & {
     type: 'FlowTupleTypeAnnotation';

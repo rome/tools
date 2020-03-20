@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type SpreadElement = 
+export type SpreadElement =
   & JSNodeBase
   & {
     type: 'SpreadElement';

@@ -19,7 +19,7 @@ Error.stackTraceLimit = Infinity;
 
 type ScopeBindings = Map<string, Binding>;
 
-export type ScopeKind = 
+export type ScopeKind =
     | 'root'
     | 'program'
     | 'function'

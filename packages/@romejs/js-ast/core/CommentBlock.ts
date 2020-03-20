@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type CommentBlock = 
+export type CommentBlock =
   & JSNodeBase
   & {
     type: 'CommentBlock';

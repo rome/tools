@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowNumericLiteral = 
+export type FlowNumericLiteral =
   & JSNodeBase
   & {
     type: 'FlowNumericLiteral';

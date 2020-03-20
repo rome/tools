@@ -66,7 +66,7 @@ export type VersionRangeNode = ComplexNode<'VersionRange', {
   right: WildcardNode | VersionNode;
 }>;
 
-export type RangeNode = 
+export type RangeNode =
     | LogicalAndNode
     | VersionRangeNode
     | LogicalOrNode
@@ -75,7 +75,7 @@ export type RangeNode =
     | VersionNode;
 
 // TOKENS
-export type Tokens = 
+export type Tokens =
   & BaseTokens
   & {
     Space: SimpleToken<'Space'>;

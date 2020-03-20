@@ -52,7 +52,7 @@ import {
 
 const VALID_REST_ARGUMENT_TYPES = ['Identifier', 'MemberExpression'];
 
-type ToAssignmentPatternNode = 
+type ToAssignmentPatternNode =
     | AnyExpression
     | AnyAssignmentPattern
     | AnyTargetBindingPattern
@@ -330,7 +330,7 @@ export function toBindingPattern(
         const newNode: BindingArrayPattern = {
           ...binding,
           type: 'BindingArrayPattern',
-          elements: binding.elements.map((elem) => 
+          elements: binding.elements.map((elem) =>
             elem === undefined ? elem : toParamBindingPattern(
               parser,
               elem,
@@ -621,7 +621,7 @@ export function toReferencedListOptional(
   return exprList;
 }
 
-export type ToReferencedItem = 
+export type ToReferencedItem =
     | AmbiguousFlowTypeCastExpression
     | SpreadElement
     | AnyExpression;

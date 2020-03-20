@@ -37,22 +37,22 @@ export default createMasterCommand({
     const {reporter, master} = req;
 
     const files = await req.getFilesFromArgs({
-      getProjectIgnore: (project) => 
+      getProjectIgnore: (project) =>
         ({
           patterns: project.config.tests.ignore,
           source: master.projectManager.findProjectConfigConsumer(project, (
             consumer,
-          ) => 
+          ) =>
             consumer.has('tests') && consumer.get('tests').has('ignore')
               ? consumer.get('tests').get('ignore') : undefined
           ),
         }),
-      getProjectEnabled: (project) => 
+      getProjectEnabled: (project) =>
         ({
           enabled: project.config.tests.enabled,
           source: master.projectManager.findProjectConfigConsumer(project, (
             consumer,
-          ) => 
+          ) =>
             consumer.has('tests')
               ? consumer.get('tests').get('enabled') : undefined
           ),

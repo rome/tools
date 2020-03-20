@@ -379,7 +379,7 @@ export default class ProjectManager {
 
       // Evict packages
       bridge.updateManifests.send({
-        manifests: Array.from(project.manifests.values(), (def) => 
+        manifests: Array.from(project.manifests.values(), (def) =>
           ({
             id: def.id,
             manifest: undefined,
@@ -400,7 +400,7 @@ export default class ProjectManager {
         ownedFiles.push(path);
       }
     }
-    await Promise.all(ownedFiles.map((path) => 
+    await Promise.all(ownedFiles.map((path) =>
       this.master.fileAllocator.evict(path)
     ));
 

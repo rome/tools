@@ -13,11 +13,11 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXMemberExpression = 
+export type JSXMemberExpression =
   & JSNodeBase
   & {
     type: 'JSXMemberExpression';
-    object: 
+    object:
         | JSXMemberExpression
         | JSXIdentifier
         | JSXReferenceIdentifier

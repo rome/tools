@@ -380,7 +380,7 @@ export function normalizeProjectConfig(
   if (categoryExists(targets)) {
     for (const [name, object] of targets.asMap()) {
       const target: ProjectConfigTarget = {
-        constraints: object.get('constraints').asImplicitArray().map((item) => 
+        constraints: object.get('constraints').asImplicitArray().map((item) =>
           item.asString()
         ),
       };

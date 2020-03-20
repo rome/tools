@@ -246,7 +246,7 @@ export default {
     }
 
     // Detect top level await
-    if (node.type === 'AwaitExpression' && path.findAncestry((path) => 
+    if (node.type === 'AwaitExpression' && path.findAncestry((path) =>
       isFunctionNode(path.node)
     ) === undefined) {
       const {loc} = node;
@@ -271,7 +271,7 @@ export default {
         // These are nodes that will defer the execution of code outside the init path
 
         // (They could still be triggered with an actual function call but this is just for some basic analysis)
-        const deferredExecution = path.findAncestry((path) => 
+        const deferredExecution = path.findAncestry((path) =>
           isFunctionNode(path.node) || path.node.type === 'ClassProperty'
         );
         const isTop = deferredExecution === undefined;

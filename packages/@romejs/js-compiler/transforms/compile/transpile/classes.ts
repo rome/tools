@@ -123,7 +123,7 @@ function transformClass(
 
       // TODO super.foo
       if (node.type === 'MemberExpression' && node.object.type === 'Super') {
-        const classMethod2 = path.findAncestry((path) => 
+        const classMethod2 = path.findAncestry((path) =>
           path.node.type === 'ClassMethod'
         );
         if (classMethod2 === undefined) {
@@ -154,7 +154,7 @@ function transformClass(
       // super.foo();
       if (node.type === 'CallExpression' && node.callee.type ===
       'MemberExpression' && node.callee.object.type === 'Super') {
-        const classMethod2 = path.findAncestry((path) => 
+        const classMethod2 = path.findAncestry((path) =>
           path.node.type === 'ClassMethod'
         );
         if (classMethod2 === undefined) {

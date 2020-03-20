@@ -14,7 +14,7 @@ import {
 import {ConsumeContext} from '@romejs/consume';
 import {DiagnosticCategory} from '@romejs/diagnostics';
 
-export type JSONParserOptions = 
+export type JSONParserOptions =
   & ParserOptions
   & {consumeDiagnosticCategory?: DiagnosticCategory};
 
@@ -42,7 +42,7 @@ export type JSONParserResult = {
   context: Required<ConsumeContext>;
 };
 
-export type Tokens = 
+export type Tokens =
   & BaseTokens
   & {
     BlockComment: ValueToken<'BlockComment', string>;

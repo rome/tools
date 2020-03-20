@@ -22,11 +22,11 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type ExportLocalDeclaration = 
+export type ExportLocalDeclaration =
   & JSNodeBase
   & {
     type: 'ExportLocalDeclaration';
-    declaration?: 
+    declaration?:
         | undefined
         | VariableDeclarationStatement
         | FunctionDeclaration

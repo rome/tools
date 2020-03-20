@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression, JSXEmptyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXExpressionContainer = 
+export type JSXExpressionContainer =
   & JSNodeBase
   & {
     type: 'JSXExpressionContainer';

@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXText = 
+export type JSXText =
   & JSNodeBase
   & {
     type: 'JSXText';

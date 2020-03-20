@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression, AnyStatement} from '../index';
 import {createBuilder} from '../utils';
 
-export type IfStatement = 
+export type IfStatement =
   & JSNodeBase
   & {
     type: 'IfStatement';

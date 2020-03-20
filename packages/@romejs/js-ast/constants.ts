@@ -11,7 +11,7 @@ export type ConstExportModuleKind = 'type' | 'value';
 
 export type ConstImportModuleKind = 'typeof' | ConstExportModuleKind;
 
-export type ConstTSModifier = 
+export type ConstTSModifier =
     | 'readonly'
     | 'abstract'
     | 'static'

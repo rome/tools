@@ -16,11 +16,11 @@ import {
 import {createBuilder} from '../utils';
 import {TSDeclareFunction} from '../typescript/TSDeclareFunction';
 
-export type ExportDefaultDeclaration = 
+export type ExportDefaultDeclaration =
   & JSNodeBase
   & {
     type: 'ExportDefaultDeclaration';
-    declaration: 
+    declaration:
         | FunctionDeclaration
         | ClassDeclaration
         | FlowDeclareOpaqueType

@@ -19,7 +19,7 @@ type FormatReduceCallback = (name: TagName, attributes: TagAttributes, value: st
 
 export type MarkupFormatFilenameNormalizer = (filename: string) => string;
 
-export type MarkupFormatFilenameHumanizer = (filename: string) => 
+export type MarkupFormatFilenameHumanizer = (filename: string) =>
     | undefined
     | string;
 

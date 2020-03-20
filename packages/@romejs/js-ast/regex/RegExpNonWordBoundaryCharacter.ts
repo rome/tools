@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpNonWordBoundaryCharacter = 
+export type RegExpNonWordBoundaryCharacter =
   & JSNodeBase
   & {type: 'RegExpNonWordBoundaryCharacter'};
 

@@ -8,7 +8,7 @@
 import {JSNodeBase, ObjectProperties} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type ObjectExpression = 
+export type ObjectExpression =
   & JSNodeBase
   & {
     type: 'ObjectExpression';

@@ -21,11 +21,11 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXElement = 
+export type JSXElement =
   & JSNodeBase
   & {
     type: 'JSXElement';
-    name: 
+    name:
         | JSXReferenceIdentifier
         | JSXIdentifier
         | JSXNamespacedName

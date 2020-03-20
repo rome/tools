@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type YieldExpression = 
+export type YieldExpression =
   & JSNodeBase
   & {
     type: 'YieldExpression';

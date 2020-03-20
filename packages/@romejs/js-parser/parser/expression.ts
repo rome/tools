@@ -279,7 +279,7 @@ export function parseMaybeAssign<T extends AnyNode = AnyExpression>(
       const arrowExpression = forwardNoArrowParamsConversionAt(
         parser,
         start,
-        () => 
+        () =>
           _parseMaybeAssign<T>(
             parser,
             context,
@@ -501,7 +501,7 @@ export function parseConditional(
     });
   }
 
-  const alternate = forwardNoArrowParamsConversionAt(parser, startPos, () => 
+  const alternate = forwardNoArrowParamsConversionAt(parser, startPos, () =>
     parseMaybeAssign(
       parser,
       'conditional alternate',
@@ -826,7 +826,7 @@ export function parseSubscripts(
     parser.isRelational('<')) {
     const branch = parser.createBranch<AnyExpression>();
     branch.add(() => parseAsyncArrowWithFlowTypeParameters(parser, startPos));
-    branch.add(() => 
+    branch.add(() =>
       parseExpressionSubscriptsRecursively(
         parser,
         base,
@@ -1180,7 +1180,7 @@ export function parseCallExpressionArguments(
   refTrailingCommaPos?: IndexTracker,
 ): {
   args: CallExpression['arguments'];
-  params: 
+  params:
       | undefined
       | Array<AnyExpression | SpreadElement | AmbiguousFlowTypeCastExpression>;
 } {
@@ -1327,7 +1327,7 @@ export function parseNoCallExpr(
   );
 }
 
-type ExpressionContext = 
+type ExpressionContext =
     | 'await argument'
     | 'export default declaration'
     | 'export from'
@@ -2348,7 +2348,7 @@ export function isGetterOrSetterMethod(
 // set methods must have exactly 1 parameter
 export function checkGetterSetterParamCount(
   parser: JSParser,
-  method: 
+  method:
       | FlowFunctionTypeAnnotation
       | ObjectMethod
       | ClassMethod
@@ -2583,7 +2583,7 @@ export function parseObjectPropertyValue(
     parser.unexpectedToken();
   }
 
-  let node: 
+  let node:
       | undefined
       | ObjectMethod
       | ObjectProperty
@@ -2935,7 +2935,7 @@ export function parseFunctionBody(
   opts: FunctionBodyParseOpts,
 ): ParseFunctionBodyReturn {
   if (opts.isArrowFunction) {
-    return forwardNoArrowParamsConversionAt(parser, opts.start, () => 
+    return forwardNoArrowParamsConversionAt(parser, opts.start, () =>
       _parseFunctionBody(parser, opts)
     );
   } else {

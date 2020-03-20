@@ -16,7 +16,7 @@ type WorkerQueueItem<M> = {
   queue: Queue<M>;
 };
 
-type Callback<M> = (filename: AbsoluteFilePath, metadata: M) => 
+type Callback<M> = (filename: AbsoluteFilePath, metadata: M) =>
     | undefined
     | Promise<void>;
 

@@ -83,7 +83,7 @@ function request(
 
 const NODE_MODULES = 'node_modules';
 
-export type ResolverRemoteQuery = 
+export type ResolverRemoteQuery =
   & Omit<ResolverOptions, 'origin'>
   & {
     origin: URLFilePath | AbsoluteFilePath;
@@ -96,18 +96,18 @@ export type ResolverRemoteQuery =
     strict?: boolean;
   };
 
-export type ResolverLocalQuery = 
+export type ResolverLocalQuery =
   & Omit<ResolverRemoteQuery, 'origin'>
   & {origin: AbsoluteFilePath};
 
-export type ResolverQuerySource = 
+export type ResolverQuerySource =
     | undefined
     | {
       source?: string;
       pointer?: DiagnosticPointer;
     };
 
-type ResolverQueryResponseFoundType = 
+type ResolverQueryResponseFoundType =
     | 'package'
     | 'mock'
     | 'haste'
@@ -151,7 +151,7 @@ const QUERY_RESPONSE_MISSING: ResolverQueryResponseMissing = {
   source: undefined,
 };
 
-export type ResolverQueryResponse = 
+export type ResolverQueryResponse =
     | ResolverQueryResponseFound
     | ResolverQueryResponseMissing
     | ResolverQueryResponseFetchError

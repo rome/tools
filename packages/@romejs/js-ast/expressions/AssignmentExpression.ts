@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyAssignmentPattern, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type AssignmentExpression = 
+export type AssignmentExpression =
   & JSNodeBase
   & {
     type: 'AssignmentExpression';
@@ -17,7 +17,7 @@ export type AssignmentExpression =
     right: AnyExpression;
   };
 
-export type AssignmentOperator = 
+export type AssignmentOperator =
     | '='
     | '+='
     | '-='

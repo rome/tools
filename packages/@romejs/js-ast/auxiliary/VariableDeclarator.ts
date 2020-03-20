@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyTargetBindingPattern, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type VariableDeclarator = 
+export type VariableDeclarator =
   & JSNodeBase
   & {
     type: 'VariableDeclarator';

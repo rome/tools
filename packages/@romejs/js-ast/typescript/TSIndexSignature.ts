@@ -8,7 +8,7 @@
 import {JSNodeBase, BindingIdentifier, AnyPrimaryType} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSIndexSignature = 
+export type TSIndexSignature =
   & JSNodeBase
   & {
     type: 'TSIndexSignature';

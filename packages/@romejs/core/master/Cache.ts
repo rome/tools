@@ -161,7 +161,7 @@ export default class Cache {
 
   async update(
     filename: AbsoluteFilePath,
-    partialEntryCallback: 
+    partialEntryCallback:
         | Partial<CacheEntry>
         | ((entry: CacheEntry) => Partial<CacheEntry>),
   ) {

@@ -10,7 +10,7 @@ export type Class<T, Args extends Array<unknown> = Array<any>> = {new (...args: 
 
 export type Dict<T> = {[key: string]: T};
 
-export type RequiredProps<Obj, Keys extends keyof Obj> = 
+export type RequiredProps<Obj, Keys extends keyof Obj> =
   & Omit<Obj, Keys>
   & { [Key in Keys]-?: NonNullable<Obj[Key]> };
 

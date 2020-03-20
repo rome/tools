@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type ComputedMemberProperty = 
+export type ComputedMemberProperty =
   & JSNodeBase
   & {
     type: 'ComputedMemberProperty';

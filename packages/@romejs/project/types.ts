@@ -75,7 +75,7 @@ export type ProjectConfigTarget = {constraints: Array<string>};
 // This is a project config that contains only things that can be JSON serializable
 
 // This is used to transport and reserialize projects in workers
-export type ProjectConfigJSON = 
+export type ProjectConfigJSON =
   & ProjectConfigJSONObjectReducer<ProjectConfigBase>
   & { [ObjectKey in keyof ProjectConfigObjects]: ProjectConfigJSONPropertyReducer<
     ProjectConfigObjects[ObjectKey]
@@ -113,7 +113,7 @@ type ProjectConfigBase = {
 };
 
 // Data structure we pass around when normalizing and merging project configs
-export type PartialProjectConfig = 
+export type PartialProjectConfig =
   & Partial<ProjectConfigBase>
   & { [Key in keyof ProjectConfigObjects]: PartialProjectValue<
     ProjectConfigObjects[Key]
@@ -134,7 +134,7 @@ export type ProjectConfigMeta = {
   consumersChain: Array<Consumer>;
 };
 
-export type ProjectConfigMetaHard = RequiredProps<ProjectConfigMeta, 
+export type ProjectConfigMetaHard = RequiredProps<ProjectConfigMeta,
     | 'consumer'
     | 'projectFolder'
     | 'configPath'>;

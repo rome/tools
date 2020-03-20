@@ -15,7 +15,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowObjectTypeAnnotation = 
+export type FlowObjectTypeAnnotation =
   & JSNodeBase
   & {
     type: 'FlowObjectTypeAnnotation';

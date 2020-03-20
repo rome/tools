@@ -14,7 +14,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSDeclareMethod = 
+export type TSDeclareMethod =
   & JSNodeBase
   & {
     type: 'TSDeclareMethod';

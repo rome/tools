@@ -16,12 +16,12 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXAttribute = 
+export type JSXAttribute =
   & JSNodeBase
   & {
     type: 'JSXAttribute';
     name: JSXIdentifier | JSXNamespacedName;
-    value?: 
+    value?:
         | undefined
         | JSXElement
         | JSXFragment

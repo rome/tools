@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyPrimaryType} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type PatternMeta = 
+export type PatternMeta =
   & JSNodeBase
   & {
     type: 'PatternMeta';

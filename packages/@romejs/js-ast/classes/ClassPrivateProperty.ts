@@ -9,7 +9,7 @@ import {JSNodeBase, PrivateName, AnyExpression, AnyPrimaryType} from '../index';
 import {createBuilder} from '../utils';
 import {ClassPropertyMeta} from './ClassPropertyMeta';
 
-export type ClassPrivateProperty = 
+export type ClassPrivateProperty =
   & JSNodeBase
   & {
     type: 'ClassPrivateProperty';

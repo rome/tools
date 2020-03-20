@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyObjectPropertyKey, AnyAssignmentPattern} from '../index';
 import {createBuilder} from '../utils';
 
-export type AssignmentObjectPatternProperty = 
+export type AssignmentObjectPatternProperty =
   & JSNodeBase
   & {
     type: 'AssignmentObjectPatternProperty';

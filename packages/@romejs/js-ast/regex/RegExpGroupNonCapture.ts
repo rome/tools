@@ -8,12 +8,12 @@
 import {JSNodeBase, AnyRegExpExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpGroupNonCapture = 
+export type RegExpGroupNonCapture =
   & JSNodeBase
   & {
     type: 'RegExpGroupNonCapture';
     expression: AnyRegExpExpression;
-    kind?: 
+    kind?:
         | 'positive-lookahead'
         | 'negative-lookahead'
         | 'positive-lookbehind'

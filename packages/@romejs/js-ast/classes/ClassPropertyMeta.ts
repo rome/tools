@@ -8,7 +8,7 @@
 import {JSNodeBase, ConstTSAccessibility} from '../index';
 import {createBuilder} from '../utils';
 
-export type ClassPropertyMeta = 
+export type ClassPropertyMeta =
   & JSNodeBase
   & {
     type: 'ClassPropertyMeta';

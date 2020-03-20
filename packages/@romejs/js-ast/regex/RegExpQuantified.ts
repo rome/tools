@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyRegExpBodyItem} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpQuantified = 
+export type RegExpQuantified =
   & JSNodeBase
   & {
     type: 'RegExpQuantified';

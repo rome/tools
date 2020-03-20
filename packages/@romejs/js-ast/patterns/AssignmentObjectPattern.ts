@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type AssignmentObjectPattern = 
+export type AssignmentObjectPattern =
   & JSNodeBase
   & {
     type: 'AssignmentObjectPattern';

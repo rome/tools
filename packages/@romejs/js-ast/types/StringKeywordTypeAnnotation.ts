@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type StringKeywordTypeAnnotation = 
+export type StringKeywordTypeAnnotation =
   & JSNodeBase
   & {type: 'StringKeywordTypeAnnotation'};
 

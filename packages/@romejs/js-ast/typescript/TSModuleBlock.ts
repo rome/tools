@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyStatement} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSModuleBlock = 
+export type TSModuleBlock =
   & JSNodeBase
   & {
     type: 'TSModuleBlock';

@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type TemplateLiteralTypeAnnotation = 
+export type TemplateLiteralTypeAnnotation =
   & JSNodeBase
   & {
     type: 'TemplateLiteralTypeAnnotation';

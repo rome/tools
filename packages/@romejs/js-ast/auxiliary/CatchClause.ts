@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyBindingPattern, BlockStatement} from '../index';
 import {createBuilder} from '../utils';
 
-export type CatchClause = 
+export type CatchClause =
   & JSNodeBase
   & {
     type: 'CatchClause';

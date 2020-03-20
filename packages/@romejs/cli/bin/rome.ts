@@ -34,7 +34,7 @@ async function main() {
 }
 
 sourceMapManager.init();
-sourceMapManager.addSourceMapFactory(BIN.join(), () => 
+sourceMapManager.addSourceMapFactory(BIN.join(), () =>
   JSON.parse(readFileTextSync(MAP))
 );
 

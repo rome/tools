@@ -275,7 +275,7 @@ export default class MasterRequest {
   }
 
   async getFilesFromArgs(
-    globOpts: 
+    globOpts:
       & MemoryFSGlobOptions
       & {
         advice?: PartialDiagnosticAdvice;
@@ -406,7 +406,7 @@ export default class MasterRequest {
 
           advice.push({
             type: 'list',
-            list: Array.from(withoutIgnore, (path) => 
+            list: Array.from(withoutIgnore, (path) =>
               `<filelink target="${path.join()}" />`
             ),
             truncate: true,
@@ -526,7 +526,7 @@ export default class MasterRequest {
     filename: AbsoluteFilePath,
     opts: WorkerParseOptions,
   ): Promise<Program> {
-    return this.wrapRequestDiagnostic('parse', filename, (bridge, file) => 
+    return this.wrapRequestDiagnostic('parse', filename, (bridge, file) =>
       bridge.parseJS.call({file, opts})
     );
   }
@@ -561,7 +561,7 @@ export default class MasterRequest {
   async requestWorkerFormat(
     path: AbsoluteFilePath,
   ): Promise<undefined | WorkerFormatResult> {
-    return await this.wrapRequestDiagnostic('format', path, (bridge, file) => 
+    return await this.wrapRequestDiagnostic('format', path, (bridge, file) =>
       bridge.format.call({file})
     );
   }
@@ -605,7 +605,7 @@ export default class MasterRequest {
     });
 
     // There's a race condition here between the file being opened and then rewritten
-    await cache.update(path, (cacheEntry) => 
+    await cache.update(path, (cacheEntry) =>
       ({
         compile: {
           ...cacheEntry.compile,

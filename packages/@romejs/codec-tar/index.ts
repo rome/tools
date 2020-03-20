@@ -7,7 +7,7 @@
 
 import stream = require('stream');
 
-type HeaderType = 
+type HeaderType =
     | 'file'
     | 'link'
     | 'symlink'

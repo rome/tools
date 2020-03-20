@@ -8,7 +8,7 @@
 import {JSNodeBase, PatternMeta} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type BindingIdentifier = 
+export type BindingIdentifier =
   & JSNodeBase
   & {
     type: 'BindingIdentifier';

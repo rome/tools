@@ -32,7 +32,7 @@ export type WebMasterTime = {
   endTime: undefined | number;
 };
 
-export type WebMasterClient = 
+export type WebMasterClient =
   & WebMasterTime
   & {
     id: number;
@@ -41,7 +41,7 @@ export type WebMasterClient =
     stdoutHTML: string;
   };
 
-export type WebMasterRequest = 
+export type WebMasterRequest =
   & WebMasterTime
   & {
     id: number;

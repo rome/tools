@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TypeAliasTypeAnnotation = 
+export type TypeAliasTypeAnnotation =
   & JSNodeBase
   & {
     type: 'TypeAliasTypeAnnotation';

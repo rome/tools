@@ -13,7 +13,7 @@ import {createUnknownFilePath, UnknownFilePath} from '@romejs/path';
 import {normalizeName} from './name';
 import {add} from '@romejs/ob1';
 
-export type DependencyPattern = 
+export type DependencyPattern =
     | HostedGitPattern
     | HTTPTarballPattern
     | SemverPattern

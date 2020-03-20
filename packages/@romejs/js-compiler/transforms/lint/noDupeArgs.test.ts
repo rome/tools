@@ -16,7 +16,7 @@ test('no duplicated args allowed', async (t) => {
   hello();
   `);
 
-  t.truthy(duplicatedArgs.diagnostics.find((d) => 
+  t.truthy(duplicatedArgs.diagnostics.find((d) =>
     d.category === 'lint/noDupeArgs'
   ));
 });

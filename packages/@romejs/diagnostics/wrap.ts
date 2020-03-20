@@ -9,7 +9,7 @@ import {PartialDiagnostics, DiagnosticOrigin} from './types';
 import {addOriginsToDiagnostics} from './derive';
 import {getDiagnosticsFromError} from './errors';
 
-type WrapResult<T> = 
+type WrapResult<T> =
     | {
       readonly value: T;
       readonly diagnostics: undefined;

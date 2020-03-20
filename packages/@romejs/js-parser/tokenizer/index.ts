@@ -554,7 +554,7 @@ function readToken_mult_modulo(parser: JSParser, code: number): void {
   }
 
   // '%*'
-  let type: 
+  let type:
       | typeof tt['star']
       | typeof tt['modulo']
       | typeof tt['exponent']

@@ -16,7 +16,7 @@ import {
 } from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type FunctionHead = 
+export type FunctionHead =
   & JSNodeBase
   & {
     type: 'FunctionHead';

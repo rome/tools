@@ -15,7 +15,7 @@ import {
 } from '@romejs/parser-core';
 
 //# Tokens
-export type Tokens = 
+export type Tokens =
   & BaseTokens
   & {
     Exclamation: SimpleToken<'Exclamation'>;
@@ -39,7 +39,7 @@ export type PatternWordSegmentNode = ComplexNode<'Segment', {parts: PatternParts
 
 export type PatternWildcardSegmentNode = SimpleNode<'WildcardSegment'>;
 
-export type PatternSegmentNode = 
+export type PatternSegmentNode =
     | PatternWordSegmentNode
     | PatternWildcardSegmentNode;
 

@@ -45,7 +45,7 @@ export function convertManifestToJSON(manifest: Manifest): JSONManifest {
       manifest.license,
     ),
 
-    files: maybeArray(manifest.files.map((pattern) => 
+    files: maybeArray(manifest.files.map((pattern) =>
       stringifyPathPattern(pattern)
     )),
     keywords: maybeArray(manifest.keywords),

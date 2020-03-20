@@ -136,7 +136,7 @@ export default class Path {
   findHook(
     descriptor: AnyHookDescriptor,
     requiredDepth: number = 0,
-  ): 
+  ):
       | undefined
       | {
         ref: HookInstance;

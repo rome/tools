@@ -8,7 +8,7 @@
 import {JSNodeBase, FlowTypeParameter} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowTypeParameterDeclaration = 
+export type FlowTypeParameterDeclaration =
   & JSNodeBase
   & {
     type: 'FlowTypeParameterDeclaration';

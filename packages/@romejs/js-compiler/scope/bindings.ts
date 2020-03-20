@@ -39,7 +39,7 @@ export class Binding {
   }
 }
 
-export type ImportBindingMeta = 
+export type ImportBindingMeta =
     | {
       type: 'name';
       imported: string;
@@ -90,7 +90,7 @@ export class FunctionBinding extends Binding {
   }
 }
 
-export type TypeBindingKind = 
+export type TypeBindingKind =
     | 'function'
     | 'class'
     | 'interface'

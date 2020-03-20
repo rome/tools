@@ -12,7 +12,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTypeReference = 
+export type TSTypeReference =
   & JSNodeBase
   & {
     type: 'TSTypeReference';

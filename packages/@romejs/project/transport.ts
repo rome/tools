@@ -49,7 +49,7 @@ export function hydrateJSONProjectConfig(
     },
     typeCheck: {
       ...config.typeCheck,
-      libs: new AbsoluteFilePathSet(config.typeCheck.libs.map((str) => 
+      libs: new AbsoluteFilePathSet(config.typeCheck.libs.map((str) =>
         createAbsoluteFilePath(str)
       )),
     },

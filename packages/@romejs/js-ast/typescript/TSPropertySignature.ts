@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyObjectPropertyKey, AnyPrimaryType} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSPropertySignature = 
+export type TSPropertySignature =
   & JSNodeBase
   & {
     type: 'TSPropertySignature';

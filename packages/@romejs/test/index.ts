@@ -11,7 +11,7 @@ export type TestName = string | Array<string>;
 
 declare const __ROME__TEST_OPTIONS__: GlobalTestOptions;
 
-export type GlobalTestOptions = 
+export type GlobalTestOptions =
     | undefined
     | {
       dirname?: string;
@@ -105,7 +105,7 @@ function splitArgs(
 
 export * from './fixtures';
 
-type TestRegisterFunctionArgs = 
+type TestRegisterFunctionArgs =
     | [TestName]
     | [TestName, TestCallback]
     | [TestName, NamelessTestOptions, TestCallback];

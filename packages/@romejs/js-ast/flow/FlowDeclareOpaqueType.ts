@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclareOpaqueType = 
+export type FlowDeclareOpaqueType =
   & JSNodeBase
   & {
     type: 'FlowDeclareOpaqueType';

@@ -10,7 +10,7 @@ import {createBuilder} from '../utils';
 
 export type TSMappedTypeBoolean = undefined | boolean | '+' | '-';
 
-export type TSMappedType = 
+export type TSMappedType =
   & JSNodeBase
   & {
     type: 'TSMappedType';

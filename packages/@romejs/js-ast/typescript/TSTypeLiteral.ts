@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyTSTypeElement} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTypeLiteral = 
+export type TSTypeLiteral =
   & JSNodeBase
   & {
     type: 'TSTypeLiteral';

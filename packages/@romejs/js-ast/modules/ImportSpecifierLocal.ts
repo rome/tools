@@ -8,7 +8,7 @@
 import {JSNodeBase, BindingIdentifier, ConstImportModuleKind} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type ImportSpecifierLocal = 
+export type ImportSpecifierLocal =
   & JSNodeBase
   & {
     type: 'ImportSpecifierLocal';

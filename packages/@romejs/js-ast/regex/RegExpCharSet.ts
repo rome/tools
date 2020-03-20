@@ -12,7 +12,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpCharSet = 
+export type RegExpCharSet =
   & JSNodeBase
   & {
     type: 'RegExpCharSet';

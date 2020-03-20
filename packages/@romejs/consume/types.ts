@@ -20,7 +20,7 @@ export type ConsumeKey = number | string;
 
 export type ConsumePath = Array<ConsumeKey>;
 
-export type ConsumeSourceLocationRequestTarget = 
+export type ConsumeSourceLocationRequestTarget =
     | 'all'
     | 'key'
     | 'value'
@@ -28,7 +28,7 @@ export type ConsumeSourceLocationRequestTarget =
 
 export type ConsumeContext = {
   category: DiagnosticCategory;
-  getDiagnosticPointer?: (keys: ConsumePath, target: ConsumeSourceLocationRequestTarget) => 
+  getDiagnosticPointer?: (keys: ConsumePath, target: ConsumeSourceLocationRequestTarget) =>
       | undefined
       | DiagnosticPointer;
   getOriginalValue?: (path: ConsumePath) => unknown;
@@ -43,9 +43,9 @@ type ConsumePropertyDefinitionBase = {
   metadata?: ConsumePropertyMetadata;
 };
 
-type ConsumePropertyPrimitiveDefinition = 
+type ConsumePropertyPrimitiveDefinition =
   & ConsumePropertyDefinitionBase
-  & {type: 
+  & {type:
         | 'string'
         | 'number'
         | 'boolean'
@@ -54,7 +54,7 @@ type ConsumePropertyPrimitiveDefinition =
         | 'array'
         | 'object'};
 
-type ConsumePropertyNumberRangeDefinition = 
+type ConsumePropertyNumberRangeDefinition =
   & ConsumePropertyDefinitionBase
   & {
     type: 'number-range';
@@ -62,7 +62,7 @@ type ConsumePropertyNumberRangeDefinition =
     max: undefined | Number0 | Number1 | number;
   };
 
-export type ConsumePropertyDefinition = 
+export type ConsumePropertyDefinition =
     | ConsumePropertyPrimitiveDefinition
     | ConsumePropertyNumberRangeDefinition;
 

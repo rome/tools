@@ -15,7 +15,7 @@ export type BridgeCreatorOptions = {
 
 export type BridgeType = 'server' | 'client' | 'server&client';
 
-export type BridgeOptions = 
+export type BridgeOptions =
   & BridgeCreatorOptions
   & {sendMessage: (msg: BridgeMessage) => void};
 
@@ -64,11 +64,11 @@ export type BridgeErrorResponseMessage = {
   metadata: JSONObject;
 };
 
-export type BridgeResponseMessage = 
+export type BridgeResponseMessage =
     | BridgeSuccessResponseMessage
     | BridgeErrorResponseMessage;
 
-export type BridgeMessage = 
+export type BridgeMessage =
     | BridgeHandshakeMessage
     | BridgeSubscriptionsMessage
     | BridgeRequestMessage

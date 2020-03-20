@@ -8,7 +8,7 @@
 import {JSNodeBase, TSSignatureDeclarationMeta, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSConstructSignatureDeclaration = 
+export type TSConstructSignatureDeclaration =
   & JSNodeBase
   & {
     type: 'TSConstructSignatureDeclaration';

@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSModuleDeclaration = 
+export type TSModuleDeclaration =
   & JSNodeBase
   & {
     type: 'TSModuleDeclaration';

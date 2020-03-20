@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowInterfaceExtends = 
+export type FlowInterfaceExtends =
   & JSNodeBase
   & {
     type: 'FlowInterfaceExtends';

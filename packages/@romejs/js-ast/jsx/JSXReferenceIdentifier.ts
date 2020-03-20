@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXReferenceIdentifier = 
+export type JSXReferenceIdentifier =
   & JSNodeBase
   & {
     type: 'JSXReferenceIdentifier';

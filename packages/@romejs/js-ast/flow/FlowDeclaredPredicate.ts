@@ -8,7 +8,7 @@
 import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclaredPredicate = 
+export type FlowDeclaredPredicate =
   & JSNodeBase
   & {
     type: 'FlowDeclaredPredicate';

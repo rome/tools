@@ -21,7 +21,7 @@ type TransformResult = {
   cacheDependencies: Array<string>;
 };
 
-const transformCaches: Array<Cache<TransformResult>> = stageOrder.map(() => 
+const transformCaches: Array<Cache<TransformResult>> = stageOrder.map(() =>
   new Cache()
 );
 

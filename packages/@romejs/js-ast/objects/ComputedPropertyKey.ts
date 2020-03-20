@@ -8,7 +8,7 @@
 import {JSNodeBase, FlowVariance, AnyExpression} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type ComputedPropertyKey = 
+export type ComputedPropertyKey =
   & JSNodeBase
   & {
     type: 'ComputedPropertyKey';

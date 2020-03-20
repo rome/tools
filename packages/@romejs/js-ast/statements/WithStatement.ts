@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression, AnyStatement} from '../index';
 import {createBuilder} from '../utils';
 
-export type WithStatement = 
+export type WithStatement =
   & JSNodeBase
   & {
     type: 'WithStatement';

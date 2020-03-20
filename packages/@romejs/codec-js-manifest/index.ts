@@ -67,7 +67,7 @@ function normalizeString(consumer: Consumer, key: string): MString {
 }
 
 function normalizePathPatterns(consumer: Consumer, loose: boolean): PathPatterns {
-  return normalizeStringArray(consumer, loose).map((str) => 
+  return normalizeStringArray(consumer, loose).map((str) =>
     parsePathPattern({input: str})
   );
 }
@@ -184,7 +184,7 @@ function normalizeLicense(
   // Support some legacy ways of specifying licenses: https://docs.npmjs.com/files/package.json#license
   const raw = licenseProp.asUnknown();
   if (loose && Array.isArray(raw)) {
-    const licenseIds = licenseProp.asArray().map((consumer) => 
+    const licenseIds = licenseProp.asArray().map((consumer) =>
       extractLicenseFromObjectConsumer(consumer)[0]
     );
     licenseId = `(${licenseIds.join(' OR ')})`;

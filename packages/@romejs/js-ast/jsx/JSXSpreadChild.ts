@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXSpreadChild = 
+export type JSXSpreadChild =
   & JSNodeBase
   & {
     type: 'JSXSpreadChild';

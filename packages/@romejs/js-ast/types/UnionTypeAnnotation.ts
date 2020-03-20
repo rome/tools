@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyFlowPrimary, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type UnionTypeAnnotation = 
+export type UnionTypeAnnotation =
   & JSNodeBase
   & {
     type: 'UnionTypeAnnotation';

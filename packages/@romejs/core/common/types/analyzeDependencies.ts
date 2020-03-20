@@ -31,7 +31,7 @@ export type AnalyzeExportLocal = {
   name: string;
 };
 
-export type AnyAnalyzeExport = 
+export type AnyAnalyzeExport =
     | AnalyzeExportLocal
     | {
       type: 'external';

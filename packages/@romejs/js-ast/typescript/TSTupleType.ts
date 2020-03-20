@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyTSPrimary, TSOptionalType} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTupleType = 
+export type TSTupleType =
   & JSNodeBase
   & {
     type: 'TSTupleType';

@@ -22,7 +22,7 @@ export type MasterCommand<T> = {
     command: string;
   }>;
   defineFlags?: (c: Consumer) => T;
-  default: (req: MasterRequest, commandFlags: T) => 
+  default: (req: MasterRequest, commandFlags: T) =>
       | undefined
       | Promise<JSONPropertyValue>;
 };

@@ -30,22 +30,22 @@ export default createMasterCommand({
     const {reporter, master} = req;
 
     const paths: AbsoluteFilePathSet = await req.getFilesFromArgs({
-      getProjectIgnore: (project) => 
+      getProjectIgnore: (project) =>
         ({
           patterns: project.config.format.ignore,
           source: master.projectManager.findProjectConfigConsumer(project, (
             consumer,
-          ) => 
+          ) =>
             consumer.has('format') && consumer.get('format').has('ignore')
               ? consumer.get('format').get('ignore') : undefined
           ),
         }),
-      getProjectEnabled: (project) => 
+      getProjectEnabled: (project) =>
         ({
           enabled: project.config.format.enabled,
           source: master.projectManager.findProjectConfigConsumer(project, (
             consumer,
-          ) => 
+          ) =>
             consumer.has('format')
               ? consumer.get('format').get('enabled') : undefined
           ),

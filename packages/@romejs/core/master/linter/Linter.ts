@@ -70,7 +70,9 @@ export default class Linter {
         }
 
         if (hasPendingFixes) {
-          reporter.info('Fixes available. Run <command>rome lint --fix</command> to apply.');
+          reporter.info(
+            'Fixes available. Run <command>rome lint --fix</command> to apply.',
+          );
         }
       } else {
         const fileCount = paths.size;
@@ -79,9 +81,7 @@ export default class Linter {
         } else if (fileCount === 1) {
           reporter.info(`<emphasis>1</emphasis> file linted`);
         } else {
-          reporter.info(
-            `<number emphasis>${fileCount}</number> files linted`,
-          );
+          reporter.info(`<number emphasis>${fileCount}</number> files linted`);
         }
       }
     });

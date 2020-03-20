@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression, AnyStatement} from '../index';
 import {createBuilder} from '../utils';
 
-export type WhileStatement = 
+export type WhileStatement =
   & JSNodeBase
   & {
     type: 'WhileStatement';

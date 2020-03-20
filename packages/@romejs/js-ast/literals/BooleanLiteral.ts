@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type BooleanLiteral = 
+export type BooleanLiteral =
   & JSNodeBase
   & {
     type: 'BooleanLiteral';

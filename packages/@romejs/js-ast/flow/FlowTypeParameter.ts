@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowTypeParameter = 
+export type FlowTypeParameter =
   & JSNodeBase
   & {
     type: 'FlowTypeParameter';

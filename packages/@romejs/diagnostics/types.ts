@@ -29,11 +29,11 @@ export type DiagnosticSuppression = {
 
 export type DiagnosticSuppressions = Array<DiagnosticSuppression>;
 
-export type DiagnosticFilterWithTest = 
+export type DiagnosticFilterWithTest =
   & DiagnosticFilter
   & {test?: (diagnostic: PartialDiagnostic) => boolean};
 
-export type DiagnosticPointer = 
+export type DiagnosticPointer =
   & SourceLocation
   & {
     sourceText?: string;
@@ -108,7 +108,7 @@ export type DiagnosticAdviceItemStacktrace = {
   truncate: boolean;
 };
 
-export type DiagnosticAdviceItem = 
+export type DiagnosticAdviceItem =
     | DiagnosticAdviceItemLog
     | DiagnosticAdviceItemList
     | DiagnosticAdviceItemCode
@@ -182,7 +182,7 @@ export type PartialDiagnostic = {
 
 export type PartialDiagnostics = Array<PartialDiagnostic>;
 
-export type PartialDiagnosticAdviceItem = 
+export type PartialDiagnosticAdviceItem =
     | {
       type: 'log';
       category: DiagnosticLogCategory;

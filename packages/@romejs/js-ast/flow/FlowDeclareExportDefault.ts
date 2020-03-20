@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyFlowPrimary, AnyFlowDeclare} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclareExportDefault = 
+export type FlowDeclareExportDefault =
   & JSNodeBase
   & {
     type: 'FlowDeclareExportDefault';

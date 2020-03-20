@@ -10,7 +10,7 @@ import {createBuilder} from '../utils';
 import {BlockStatement} from '../statements/BlockStatement';
 import {AnyExpression} from '../unions';
 
-export type ArrowFunctionExpression = 
+export type ArrowFunctionExpression =
   & JSNodeBase
   & {
     type: 'ArrowFunctionExpression';

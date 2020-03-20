@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXSpreadAttribute = 
+export type JSXSpreadAttribute =
   & JSNodeBase
   & {
     type: 'JSXSpreadAttribute';

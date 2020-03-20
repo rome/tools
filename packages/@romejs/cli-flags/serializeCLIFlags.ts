@@ -19,7 +19,7 @@ type SerializeCLIData = {
   shorthandFlags: Set<string>;
 };
 
-export type SerializeCLITarget = 
+export type SerializeCLITarget =
     | {
       type: 'flag';
       key: string;

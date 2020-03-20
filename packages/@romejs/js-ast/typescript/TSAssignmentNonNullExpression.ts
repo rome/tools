@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyTargetAssignmentPattern} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSAssignmentNonNullExpression = 
+export type TSAssignmentNonNullExpression =
   & JSNodeBase
   & {
     type: 'TSAssignmentNonNullExpression';

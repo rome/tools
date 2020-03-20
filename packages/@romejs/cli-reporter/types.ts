@@ -47,7 +47,7 @@ export type RemoteReporterReceiveMessage = {
   id: string;
 };
 
-export type RemoteReporterClientMessage = 
+export type RemoteReporterClientMessage =
     | {
       type: 'PROGRESS_CREATE';
       id: string;

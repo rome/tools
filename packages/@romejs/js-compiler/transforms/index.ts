@@ -47,7 +47,7 @@ export const hookVisitors: TransformVisitors = [variableInjectorVisitor];
 export const stageTransforms: TransformStageFactories = {
   // These may effect dependency analysis
   pre: () => [optimizeImports, optimizeExports, jsx],
-  compile: () => 
+  compile: () =>
     [
       paramlessCatch,
       optionalChaining,

@@ -9,7 +9,7 @@ import {JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 import {VariableDeclaration} from '../auxiliary/VariableDeclaration';
 
-export type VariableDeclarationStatement = 
+export type VariableDeclarationStatement =
   & JSNodeBase
   & {
     type: 'VariableDeclarationStatement';

@@ -14,7 +14,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclareClass = 
+export type FlowDeclareClass =
   & JSNodeBase
   & {
     type: 'FlowDeclareClass';

@@ -8,7 +8,7 @@
 import {JSNodeBase, BindingIdentifier, AnyTSModuleReference} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSImportEqualsDeclaration = 
+export type TSImportEqualsDeclaration =
   & JSNodeBase
   & {
     type: 'TSImportEqualsDeclaration';

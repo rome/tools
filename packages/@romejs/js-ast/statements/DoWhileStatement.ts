@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyStatement, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type DoWhileStatement = 
+export type DoWhileStatement =
   & JSNodeBase
   & {
     type: 'DoWhileStatement';

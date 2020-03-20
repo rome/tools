@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type BigIntLiteral = 
+export type BigIntLiteral =
   & JSNodeBase
   & {
     type: 'BigIntLiteral';

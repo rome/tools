@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpControlCharacter = 
+export type RegExpControlCharacter =
   & JSNodeBase
   & {type: 'RegExpControlCharacter'};
 

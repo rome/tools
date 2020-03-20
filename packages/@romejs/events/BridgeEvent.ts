@@ -21,7 +21,7 @@ type CallOptions = {
   priority?: boolean;
 };
 
-export type BridgeEventDirection = 
+export type BridgeEventDirection =
     | 'server->client'
     | 'server<-client'
     | 'server<->client';

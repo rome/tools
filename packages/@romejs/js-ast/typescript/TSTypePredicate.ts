@@ -8,7 +8,7 @@
 import {JSNodeBase, TSThisType, Identifier, AnyPrimaryType} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTypePredicate = 
+export type TSTypePredicate =
   & JSNodeBase
   & {
     type: 'TSTypePredicate';

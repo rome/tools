@@ -9,7 +9,7 @@ import {JSNodeBase, BindingIdentifier} from '../index';
 import {createBuilder} from '../utils';
 import {FunctionHead} from '../auxiliary/FunctionHead';
 
-export type TSDeclareFunction = 
+export type TSDeclareFunction =
   & JSNodeBase
   & {
     type: 'TSDeclareFunction';

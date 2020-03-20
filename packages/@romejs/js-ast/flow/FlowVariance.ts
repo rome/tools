@@ -10,7 +10,7 @@ import {createBuilder} from '../utils';
 
 export type FlowVarianceKind = 'plus' | 'minus';
 
-export type FlowVariance = 
+export type FlowVariance =
   & JSNodeBase
   & {
     type: 'FlowVariance';

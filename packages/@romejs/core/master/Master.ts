@@ -90,7 +90,7 @@ export type MasterUnfinishedMarker = {
   facet: string;
 };
 
-export type MasterMarker = 
+export type MasterMarker =
   & MasterUnfinishedMarker
   & {// End time in milliseconds
     end: number};

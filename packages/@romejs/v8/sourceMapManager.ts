@@ -124,7 +124,7 @@ function noNull<T>(val: null | T): undefined | T {
 }
 
 function addErrorFrames(
-  err: 
+  err:
     & Error
     & {
       [ERROR_FRAMES_PROP]?: unknown;

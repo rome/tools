@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpNonWhiteSpaceCharacter = 
+export type RegExpNonWhiteSpaceCharacter =
   & JSNodeBase
   & {type: 'RegExpNonWhiteSpaceCharacter'};
 

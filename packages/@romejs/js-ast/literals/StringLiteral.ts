@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type StringLiteral = 
+export type StringLiteral =
   & JSNodeBase
   & {
     type: 'StringLiteral';

@@ -43,7 +43,7 @@ export function assertNodeTypeSet(names: Map<string, unknown>, desc: string) {
   }
 }
 
-type JustNodeKeysProp<K, V> = V extends 
+type JustNodeKeysProp<K, V> = V extends
     | NodeBase
     | Array<NodeBase>
     | Array<undefined | NodeBase> ? K : never;

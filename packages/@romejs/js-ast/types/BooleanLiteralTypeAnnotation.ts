@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type BooleanLiteralTypeAnnotation = 
+export type BooleanLiteralTypeAnnotation =
   & JSNodeBase
   & {
     type: 'BooleanLiteralTypeAnnotation';

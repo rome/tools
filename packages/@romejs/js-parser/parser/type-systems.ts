@@ -267,11 +267,8 @@ export function parseClassImplements(
 }
 
 export function parsePrimaryTypeAnnotation(parser: JSParser): AnyPrimaryType {
-  return parseFlowOrTS(
-    parser,
-    'type annotation',
-    parseFlowTypeAnnotation,
-    () => parseTSTypeAnnotation(parser, true),
+  return parseFlowOrTS(parser, 'type annotation', parseFlowTypeAnnotation, () =>
+    parseTSTypeAnnotation(parser, true)
   );
 }
 
@@ -284,8 +281,8 @@ export function parseInterface(
     start,
   });
 
-  return parseFlowOrTS(parser, 'interface', () => 
-    parseFlowInterface(parser, start), () => 
+  return parseFlowOrTS(parser, 'interface', () =>
+    parseFlowInterface(parser, start), () =>
     parseTSInterfaceDeclaration(parser, start)
   );
 }
@@ -294,12 +291,12 @@ export function parseDeclare(
   parser: JSParser,
   start: Position,
 ): TSDeclareNode | AnyFlowDeclare {
-  return parseFlowOrTS(parser, 'type declaration', () => 
+  return parseFlowOrTS(parser, 'type declaration', () =>
     parseFlowDeclare(parser, start), () => parseTSDeclare(parser, start)
   );
 }
 
-export type TypeAnnotationAndPredicate = [undefined | AnyPrimaryType, 
+export type TypeAnnotationAndPredicate = [undefined | AnyPrimaryType,
     | undefined
     | AnyFlowPredicate];
 
@@ -320,8 +317,8 @@ export function parseTypeAlias(
   parser: JSParser,
   start: Position,
 ): TypeAliasTypeAnnotation | TypeAliasTypeAnnotation {
-  return parseFlowOrTS(parser, 'type alias', () => 
-    parseFlowTypeAliasTypeAnnotation(parser, start), () => 
+  return parseFlowOrTS(parser, 'type alias', () =>
+    parseFlowTypeAliasTypeAnnotation(parser, start), () =>
     parseTSTypeAliasTypeAnnotation(parser, start)
   );
 }
@@ -330,7 +327,7 @@ export function parseTypeParameters(
   parser: JSParser,
   allowDefault: boolean = false,
 ): AnyTypeParameter {
-  return parseFlowOrTS(parser, 'type parameters', () => 
+  return parseFlowOrTS(parser, 'type parameters', () =>
     parseFlowTypeParameterDeclaration(parser, allowDefault), parseTSTypeParameters
   );
 }
@@ -370,7 +367,7 @@ export function maybeParseTypeArguments(
   }
 }
 
-type TypeExpressionStatement = 
+type TypeExpressionStatement =
     | TSDeclareNode
     | TypeAliasTypeAnnotation
     | AnyFlowDeclare

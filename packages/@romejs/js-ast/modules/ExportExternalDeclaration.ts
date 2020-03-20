@@ -15,12 +15,12 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type AnyExportExternalSpecifier = 
+export type AnyExportExternalSpecifier =
     | ExportNamespaceSpecifier
     | ExportDefaultSpecifier
     | ExportExternalSpecifier;
 
-export type ExportExternalDeclaration = 
+export type ExportExternalDeclaration =
   & JSNodeBase
   & {
     type: 'ExportExternalDeclaration';

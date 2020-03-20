@@ -145,7 +145,7 @@ type StringifyOptions = {
   stack: Set<unknown>;
 };
 
-type StringifyObjectOptions = 
+type StringifyObjectOptions =
   & StringifyOptions
   & {
     prevIndent: string;

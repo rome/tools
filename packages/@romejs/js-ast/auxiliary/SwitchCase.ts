@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression, AnyStatement} from '../index';
 import {createBuilder} from '../utils';
 
-export type SwitchCase = 
+export type SwitchCase =
   & JSNodeBase
   & {
     type: 'SwitchCase';

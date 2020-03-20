@@ -33,7 +33,7 @@ import {
 import {PartialDiagnostics} from '@romejs/diagnostics';
 import {Number0, get0, add} from '@romejs/ob1';
 
-type Operator = 
+type Operator =
     | '^'
     | '$'
     | '.'
@@ -48,7 +48,7 @@ type Operator =
     | '*'
     | '|';
 
-type Tokens = 
+type Tokens =
   & BaseTokens
   & {
     Operator: ValueToken<'Operator', Operator>;
@@ -56,7 +56,7 @@ type Tokens =
       value: string;
       escaped: boolean;
     }>;
-    EscapedCharacter: ValueToken<'EscapedCharacter', 
+    EscapedCharacter: ValueToken<'EscapedCharacter',
         | 'd'
         | 'D'
         | 'b'
@@ -67,7 +67,7 @@ type Tokens =
         | 'W'>;
   };
 
-type GroupModifiers = 
+type GroupModifiers =
     | undefined
     | {
       type: 'NON_CAPTURE';
@@ -95,7 +95,7 @@ function getCodePoint(char: string): number {
   throw new Error('Input was not 1 character long');
 }
 
-export const createRegExpParser = createParser((ParserCore) => 
+export const createRegExpParser = createParser((ParserCore) =>
   class RegExpParser extends ParserCore<Tokens, void> {
     constructor(opts: RegExpParserOptions) {
       super(opts, 'parse/regex');
@@ -603,7 +603,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       }
     }
 
-    parseQuantifier(): 
+    parseQuantifier():
         | undefined
         | {
           min: number;

@@ -8,7 +8,7 @@
 import {JSNodeBase, StringLiteral, Identifier, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSEnumMember = 
+export type TSEnumMember =
   & JSNodeBase
   & {
     type: 'TSEnumMember';

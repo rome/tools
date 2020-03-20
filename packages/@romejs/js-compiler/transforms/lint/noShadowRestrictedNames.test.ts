@@ -20,7 +20,7 @@ test('no shadow restricted names', async (t) => {
   ];
   for (let failingCase of failingCases) {
     const res = await testLint(failingCase);
-    if (!res.diagnostics.some((d) => 
+    if (!res.diagnostics.some((d) =>
       d.category === 'lint/noShadowRestrictedNames'
     )) {
       t.fail(

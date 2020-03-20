@@ -8,7 +8,7 @@
 import {JSNodeBase, BindingIdentifier, TSEnumMember} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSEnumDeclaration = 
+export type TSEnumDeclaration =
   & JSNodeBase
   & {
     type: 'TSEnumDeclaration';

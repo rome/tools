@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type JSXIdentifier = 
+export type JSXIdentifier =
   & JSNodeBase
   & {
     type: 'JSXIdentifier';

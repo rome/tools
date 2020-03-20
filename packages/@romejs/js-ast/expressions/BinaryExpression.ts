@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type BinaryExpression = 
+export type BinaryExpression =
   & JSNodeBase
   & {
     type: 'BinaryExpression';
@@ -17,7 +17,7 @@ export type BinaryExpression =
     right: AnyExpression;
   };
 
-export type BinaryOperator = 
+export type BinaryOperator =
     | '=='
     | '!='
     | '==='

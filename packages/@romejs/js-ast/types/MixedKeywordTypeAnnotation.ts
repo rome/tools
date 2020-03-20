@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type MixedKeywordTypeAnnotation = 
+export type MixedKeywordTypeAnnotation =
   & JSNodeBase
   & {type: 'MixedKeywordTypeAnnotation'};
 

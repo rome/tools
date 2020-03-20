@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FunctionDeclaration = 
+export type FunctionDeclaration =
   & JSNodeBase
   & {
     type: 'FunctionDeclaration';

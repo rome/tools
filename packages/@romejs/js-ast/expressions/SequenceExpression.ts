@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type SequenceExpression = 
+export type SequenceExpression =
   & JSNodeBase
   & {
     type: 'SequenceExpression';

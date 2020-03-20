@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyTSPrimary, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSAsExpression = 
+export type TSAsExpression =
   & JSNodeBase
   & {
     type: 'TSAsExpression';

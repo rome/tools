@@ -8,7 +8,7 @@
 import {JSNodeBase, BindingIdentifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclareVariable = 
+export type FlowDeclareVariable =
   & JSNodeBase
   & {
     type: 'FlowDeclareVariable';

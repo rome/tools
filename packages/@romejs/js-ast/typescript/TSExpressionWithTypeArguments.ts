@@ -12,7 +12,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSExpressionWithTypeArguments = 
+export type TSExpressionWithTypeArguments =
   & JSNodeBase
   & {
     type: 'TSExpressionWithTypeArguments';

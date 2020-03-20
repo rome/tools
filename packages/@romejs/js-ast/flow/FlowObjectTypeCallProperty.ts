@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyFlowPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowObjectTypeCallProperty = 
+export type FlowObjectTypeCallProperty =
   & JSNodeBase
   & {
     type: 'FlowObjectTypeCallProperty';

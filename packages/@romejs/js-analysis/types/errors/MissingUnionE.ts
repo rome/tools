@@ -32,7 +32,7 @@ export default class MissingUnionE extends E {
   getError(): ErrorDefinition {
     return {
       category: 'typeCheck/missingCondition',
-      message: `Missing the conditions ${this.missing.map((type) => 
+      message: `Missing the conditions ${this.missing.map((type) =>
         this.utils.humanize(type)
       ).join(', ')}`,
       lowerTarget: this.target,

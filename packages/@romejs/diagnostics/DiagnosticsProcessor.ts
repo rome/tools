@@ -22,7 +22,7 @@ import {normalizeDiagnostics} from './normalize';
 import {add} from '@romejs/ob1';
 import {DiagnosticCategoryPrefix} from './categories';
 
-type UniquePart = 
+type UniquePart =
     | 'filename'
     | 'message'
     | 'start.line'

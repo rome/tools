@@ -21,7 +21,7 @@ export default {
         message: 'Your array contains an empty slot',
       });
 
-      return arrayExpression.quick(node.elements.map((elem) => 
+      return arrayExpression.quick(node.elements.map((elem) =>
         elem === undefined
           ? referenceIdentifier.create({name: 'undefined'}) : elem
       ));

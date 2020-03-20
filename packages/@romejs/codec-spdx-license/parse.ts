@@ -19,7 +19,7 @@ import {buildSuggestionAdvice} from '@romejs/diagnostics';
 import {inc, Number0, get0} from '@romejs/ob1';
 
 //# Tokens
-type Tokens = 
+type Tokens =
   & BaseTokens
   & {
     ParenOpen: SimpleToken<'ParenOpen'>;
@@ -56,7 +56,7 @@ function isWordChar(char: string) {
 
 type SPDXLicenseParserOptions = ParserOptions & {loose?: boolean};
 
-const createSPDXLicenseParser = createParser((ParserCore) => 
+const createSPDXLicenseParser = createParser((ParserCore) =>
   class SPDXLicenseParser extends ParserCore<Tokens, void> {
     constructor(opts: SPDXLicenseParserOptions) {
       super(opts, 'parse/spdxLicense');

@@ -14,7 +14,7 @@ export type Mapping = {
     line: Number1;
     column: Number0;
   };
-  original: 
+  original:
       | undefined
       | {
         line: Number1;

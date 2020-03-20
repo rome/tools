@@ -35,7 +35,7 @@ export type Profile = {
   memorySamples: MemorySamples;
 };
 
-export type CoverageRangeWithMetadata = 
+export type CoverageRangeWithMetadata =
   & inspector.Profiler.CoverageRange
   & {kind: LocationRangeKind};
 

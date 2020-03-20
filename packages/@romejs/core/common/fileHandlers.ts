@@ -75,7 +75,7 @@ export function getFileHandlerAssert(
   }
 }
 
-export type ExtensionLintInfo = 
+export type ExtensionLintInfo =
   & ExtensionHandlerMethodInfo
   & {
     prefetchedModuleSignatures: PrefetchedModuleSignatures;

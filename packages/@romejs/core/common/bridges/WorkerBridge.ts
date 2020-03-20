@@ -43,7 +43,7 @@ export type WorkerCompilerOptions = {bundle?: WorkerBundleCompileOptions};
 export type WorkerBundleCompileOptions = Omit<BundleCompileOptions, 'analyze'>;
 
 //
-export type WorkerAnalyzeDependencyResult = 
+export type WorkerAnalyzeDependencyResult =
   & AnalyzeDependencyResult
   & {cached: boolean};
 
@@ -64,7 +64,7 @@ export type WorkerStatus = {
   uptime: number;
 };
 
-export type PrefetchedModuleSignatures = {[key: string]: 
+export type PrefetchedModuleSignatures = {[key: string]:
       | {
         type: 'USE_CACHED';
         filename: string;
@@ -131,7 +131,7 @@ export default class WorkerBridge extends Bridge {
     direction: 'server->client',
   });
 
-  format = this.createEvent<{file: JSONFileReference}, 
+  format = this.createEvent<{file: JSONFileReference},
       | undefined
       | WorkerFormatResult>({
     name: 'format',

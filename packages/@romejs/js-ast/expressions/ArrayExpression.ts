@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression, SpreadElement} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type ArrayExpression = 
+export type ArrayExpression =
   & JSNodeBase
   & {
     type: 'ArrayExpression';

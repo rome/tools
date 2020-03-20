@@ -51,7 +51,7 @@ function promisifyVoid(
 // watch
 export function watch(
   path: AbsoluteFilePath,
-  options: 
+  options:
       | {
         encoding?: BufferEncoding | null;
         persistent?: boolean;
@@ -66,7 +66,7 @@ export function watch(
 
 // readFile
 export function readFile(path: AbsoluteFilePath): Promise<Buffer> {
-  return promisifyData(path, (filename, callback) => 
+  return promisifyData(path, (filename, callback) =>
     fs.readFile(filename, callback)
   );
 }
@@ -89,7 +89,7 @@ export function writeFile(
   path: AbsoluteFilePath,
   content: string | Buffer,
 ): Promise<void> {
-  return promisifyVoid(path, (filename, callback) => 
+  return promisifyVoid(path, (filename, callback) =>
     fs.writeFile(filename, content, callback)
   );
 }
@@ -154,7 +154,7 @@ export function existsSync(path: AbsoluteFilePath): boolean {
 
 // unlink
 export function unlink(path: AbsoluteFilePath): Promise<void> {
-  return promisifyVoid(path, (filename, callback) => 
+  return promisifyVoid(path, (filename, callback) =>
     fs.unlink(filename, (err) => {
       if (err != null && err.code !== 'ENOENT') {
         callback(err);
@@ -180,7 +180,7 @@ export function createDirectory(
   path: AbsoluteFilePath,
   opts: CreateDirectoryOptions = {},
 ): Promise<void> {
-  return promisifyVoid(path, (filename, callback) => 
+  return promisifyVoid(path, (filename, callback) =>
     fs.mkdir(filename, {recursive: opts.recursive}, callback)
   );
 }

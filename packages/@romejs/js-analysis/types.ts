@@ -26,7 +26,7 @@ export type ModuleSignatureType = {
   data: HydrateData;
 };
 
-export type ModuleSignatureExport = 
+export type ModuleSignatureExport =
     | {
       type: 'local';
       name: string;

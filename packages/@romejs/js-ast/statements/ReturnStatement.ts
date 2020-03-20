@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type ReturnStatement = 
+export type ReturnStatement =
   & JSNodeBase
   & {
     type: 'ReturnStatement';

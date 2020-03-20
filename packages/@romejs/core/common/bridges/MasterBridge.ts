@@ -28,7 +28,7 @@ export type MasterQueryRequest = {
   terminateWhenIdle: boolean;
 };
 
-export type PartialMasterQueryRequest = 
+export type PartialMasterQueryRequest =
   & Partial<Omit<MasterQueryRequest, 'requestFlags'>>
   & {
     requestFlags?: Partial<ClientRequestFlags>;
@@ -61,7 +61,7 @@ export type MasterQueryResponseInvalid = {
   diagnostics: Diagnostics;
 };
 
-export type MasterQueryResponse = 
+export type MasterQueryResponse =
     | MasterQueryResponseInvalid
     | MasterQueryResponseSuccess
     | MasterQueryResponseError

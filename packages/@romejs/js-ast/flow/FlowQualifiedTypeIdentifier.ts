@@ -8,7 +8,7 @@
 import {JSNodeBase, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowQualifiedTypeIdentifier = 
+export type FlowQualifiedTypeIdentifier =
   & JSNodeBase
   & {
     type: 'FlowQualifiedTypeIdentifier';

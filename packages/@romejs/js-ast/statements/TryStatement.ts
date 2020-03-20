@@ -8,7 +8,7 @@
 import {JSNodeBase, BlockStatement, CatchClause} from '../index';
 import {createBuilder} from '../utils';
 
-export type TryStatement = 
+export type TryStatement =
   & JSNodeBase
   & {
     type: 'TryStatement';

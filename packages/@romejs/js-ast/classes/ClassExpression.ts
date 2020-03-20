@@ -8,7 +8,7 @@
 import {JSNodeBase, ClassHead, BindingIdentifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type ClassExpression = 
+export type ClassExpression =
   & JSNodeBase
   & {
     type: 'ClassExpression';

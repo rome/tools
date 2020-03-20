@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type ExportLocalSpecifier = 
+export type ExportLocalSpecifier =
   & JSNodeBase
   & {
     type: 'ExportLocalSpecifier';

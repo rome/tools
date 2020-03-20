@@ -8,7 +8,7 @@
 import {JSNodeBase, Identifier, AnyStatement} from '../index';
 import {createBuilder} from '../utils';
 
-export type LabeledStatement = 
+export type LabeledStatement =
   & JSNodeBase
   & {
     type: 'LabeledStatement';

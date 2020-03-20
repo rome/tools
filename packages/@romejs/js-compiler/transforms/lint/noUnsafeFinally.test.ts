@@ -25,7 +25,7 @@ test(
     greet1();
     `);
 
-    t.truthy(returnTest.diagnostics.find((d) => 
+    t.truthy(returnTest.diagnostics.find((d) =>
       d.message === `Unsafe usage of ReturnStatement.`
     ));
 
@@ -44,7 +44,7 @@ test(
     greet2();
     `);
 
-    t.truthy(breakTest.diagnostics.find((d) => 
+    t.truthy(breakTest.diagnostics.find((d) =>
       d.message === `Unsafe usage of BreakStatement.`
     ));
 
@@ -62,7 +62,7 @@ test(
     greet3();
     `);
 
-    t.truthy(continueTest.diagnostics.find((d) => 
+    t.truthy(continueTest.diagnostics.find((d) =>
       d.message === `Unsafe usage of ContinueStatement.`
     ));
 
@@ -80,7 +80,7 @@ test(
     greet4();
     `);
 
-    t.truthy(throwTest.diagnostics.find((d) => 
+    t.truthy(throwTest.diagnostics.find((d) =>
       d.message === `Unsafe usage of ThrowStatement.`
     ));
   },

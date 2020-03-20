@@ -63,7 +63,7 @@ import {
   parseExportDefaultClassDeclaration,
 } from './index';
 
-export type ParseExportResult = 
+export type ParseExportResult =
     | AnyStatement
     | ExportAllDeclaration
     | ExportLocalDeclaration
@@ -202,7 +202,7 @@ export function parseExport(parser: JSParser, start: Position): ParseExportResul
 function createExportExternalDeclaration(
   parser: JSParser,
   start: Position,
-  rawSpecifiers: 
+  rawSpecifiers:
       | undefined
       | Array<ExportLocalSpecifier | AnyExportExternalSpecifier>,
 
@@ -502,7 +502,7 @@ function shouldParseExportDeclaration(parser: JSParser): boolean {
 
 function checkExport(
   parser: JSParser,
-  specifiers: 
+  specifiers:
       | undefined
       | Array<ExportLocalSpecifier | AnyExportExternalSpecifier>,
 

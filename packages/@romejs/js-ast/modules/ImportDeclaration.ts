@@ -15,12 +15,12 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type AnyImportSpecifier = 
+export type AnyImportSpecifier =
     | ImportSpecifier
     | ImportDefaultSpecifier
     | ImportNamespaceSpecifier;
 
-export type ImportDeclaration = 
+export type ImportDeclaration =
   & JSNodeBase
   & {
     type: 'ImportDeclaration';

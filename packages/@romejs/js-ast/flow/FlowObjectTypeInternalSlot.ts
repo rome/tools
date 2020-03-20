@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyFlowPrimary, FlowObjectTypePropertyKey} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowObjectTypeInternalSlot = 
+export type FlowObjectTypeInternalSlot =
   & JSNodeBase
   & {
     type: 'FlowObjectTypeInternalSlot';

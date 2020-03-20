@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type UndefinedKeywordTypeAnnotation = 
+export type UndefinedKeywordTypeAnnotation =
   & JSNodeBase
   & {type: 'UndefinedKeywordTypeAnnotation'};
 

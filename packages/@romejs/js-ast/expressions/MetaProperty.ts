@@ -8,7 +8,7 @@
 import {JSNodeBase, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type MetaProperty = 
+export type MetaProperty =
   & JSNodeBase
   & {
     type: 'MetaProperty';

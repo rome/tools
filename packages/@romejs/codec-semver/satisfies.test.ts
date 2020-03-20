@@ -31,7 +31,7 @@ const testData: {
   fail: TestDataItems;
 } = {
   pass: [
-    ...(looseOnly.map(([range, version]) => 
+    ...(looseOnly.map(([range, version]) =>
       [
         range,
         version,

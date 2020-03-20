@@ -14,7 +14,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type ForOfStatement = 
+export type ForOfStatement =
   & JSNodeBase
   & {
     type: 'ForOfStatement';

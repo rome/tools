@@ -92,7 +92,7 @@ import {
   TSOptionalType,
 } from '@romejs/js-ast';
 
-type ParsingContext = 
+type ParsingContext =
     | 'EnumMembers'
     | 'HeritageClauseElement'
     | 'TupleElementTypes'
@@ -966,7 +966,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
     case tt._void:
     case tt._null:
       {
-        let type: 
+        let type:
             | undefined
             | AnyTSKeywordTypeAnnotation['type']
             | 'VoidKeywordTypeAnnotation'
@@ -1754,7 +1754,7 @@ function tryTSParse<T>(
   }
 }
 
-export type TSDeclareNode = 
+export type TSDeclareNode =
     | TSEnumDeclaration
     | FunctionDeclaration
     | ClassDeclaration
@@ -1941,7 +1941,7 @@ export function isTSAbstractClass(parser: JSParser): boolean {
 export function parseTSExport(
   parser: JSParser,
   start: Position,
-): 
+):
     | undefined
     | TSNamespaceExportDeclaration
     | TSExportAssignment

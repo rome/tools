@@ -119,7 +119,7 @@ export default class Utils {
       data.set('evaluator', originEvaluator);
     }
 
-    const dataStr = Array.from(data.keys()).map((key) => 
+    const dataStr = Array.from(data.keys()).map((key) =>
       `${key}: ${String(data.get(key))}`
     ).join(', ');
 

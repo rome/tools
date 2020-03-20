@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSMethodSignature = 
+export type TSMethodSignature =
   & JSNodeBase
   & {
     key: AnyObjectPropertyKey;

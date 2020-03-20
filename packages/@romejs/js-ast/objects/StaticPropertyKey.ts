@@ -15,7 +15,7 @@ import {
 } from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type StaticPropertyKey = 
+export type StaticPropertyKey =
   & JSNodeBase
   & {
     type: 'StaticPropertyKey';

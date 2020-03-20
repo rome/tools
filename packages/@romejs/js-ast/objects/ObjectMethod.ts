@@ -16,7 +16,7 @@ import {createBuilder} from '../utils';
 
 export type ObjectMethodKind = 'get' | 'set' | 'method';
 
-export type ObjectMethod = 
+export type ObjectMethod =
   & JSNodeBase
   & {
     key: ComputedPropertyKey | StaticPropertyKey;

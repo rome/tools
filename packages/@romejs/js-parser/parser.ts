@@ -58,7 +58,7 @@ export type OpeningContext = {
   close: TokenType;
 };
 
-export type ScopeType = 
+export type ScopeType =
     | 'FUNCTION_LOC'
     | 'NON_ARROW_FUNCTION'
     | 'FUNCTION'
@@ -91,7 +91,7 @@ const SCOPE_TYPES: Array<ScopeType> = [
   'FLOW_COMMENT',
 ];
 
-const createJSParser = createParser((ParserCore, ParserWithRequiredPath) => 
+const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
   // rome-suppress lint/noExplicitAny
   class JSParser extends ParserWithRequiredPath<any, State> {
     constructor(options: JSParserOptions) {

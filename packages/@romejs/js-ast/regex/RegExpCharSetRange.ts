@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyRegExpEscapedCharacter} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpCharSetRange = 
+export type RegExpCharSetRange =
   & JSNodeBase
   & {
     type: 'RegExpCharSetRange';

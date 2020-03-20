@@ -15,7 +15,7 @@ test('disallow unnecessary boolean casts', async (t) => {
     }
     `);
 
-  t.truthy(ifTest.diagnostics.find((d) => 
+  t.truthy(ifTest.diagnostics.find((d) =>
     d.message === `Redundant double negation.`
   ));
 
@@ -25,7 +25,7 @@ test('disallow unnecessary boolean casts', async (t) => {
     }
     `);
 
-  t.truthy(whileTest.diagnostics.find((d) => 
+  t.truthy(whileTest.diagnostics.find((d) =>
     d.message === `Redundant double negation.`
   ));
 
@@ -37,7 +37,7 @@ test('disallow unnecessary boolean casts', async (t) => {
     } while (Boolean(x));
     `);
 
-  t.truthy(doWhileTest.diagnostics.find((d) => 
+  t.truthy(doWhileTest.diagnostics.find((d) =>
     d.message === `Redundant double negation.`
   ));
 
@@ -47,7 +47,7 @@ test('disallow unnecessary boolean casts', async (t) => {
     }
     `);
 
-  t.truthy(forTest.diagnostics.find((d) => 
+  t.truthy(forTest.diagnostics.find((d) =>
     d.message === `Redundant double negation.`
   ));
 });

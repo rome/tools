@@ -8,7 +8,7 @@
 import {JSNodeBase, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSNamespaceExportDeclaration = 
+export type TSNamespaceExportDeclaration =
   & JSNodeBase
   & {
     type: 'TSNamespaceExportDeclaration';

@@ -10,7 +10,7 @@ import {createBuilder} from '../utils';
 
 export type VariableDeclarationKind = 'var' | 'let' | 'const';
 
-export type VariableDeclaration = 
+export type VariableDeclaration =
   & JSNodeBase
   & {
     type: 'VariableDeclaration';

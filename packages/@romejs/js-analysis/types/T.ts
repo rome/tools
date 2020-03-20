@@ -18,7 +18,7 @@ let counter = 0;
 
 export type SerialTypeFactory = (type: T) => string;
 
-export type TypeCompatibilityReturn = 
+export type TypeCompatibilityReturn =
     | {type: 'compatible'}
     | {
       type: 'incompatible';

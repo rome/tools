@@ -17,7 +17,7 @@ import {
 import {PartialDiagnostics} from '@romejs/diagnostics';
 import {createBuilder} from '../utils';
 
-export type Program = 
+export type Program =
   & JSNodeBase
   & {
     type: 'Program';

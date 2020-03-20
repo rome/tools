@@ -16,7 +16,7 @@ import {
 import {createBuilder} from '../utils';
 import {FlowVariance} from '../flow/FlowVariance';
 
-export type ClassPrivateMethod = 
+export type ClassPrivateMethod =
   & JSNodeBase
   & {
     type: 'ClassPrivateMethod';

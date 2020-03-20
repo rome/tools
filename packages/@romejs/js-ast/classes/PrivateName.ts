@@ -8,7 +8,7 @@
 import {JSNodeBase, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type PrivateName = 
+export type PrivateName =
   & JSNodeBase
   & {
     type: 'PrivateName';

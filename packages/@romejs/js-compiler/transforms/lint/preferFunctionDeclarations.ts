@@ -50,7 +50,7 @@ const hook = createHook<State, Arg, ThisExpression>({
   exit(
     path: Path,
     state: State,
-  ): 
+  ):
       | VariableDeclarationStatement
       | Array<VariableDeclarationStatement | FunctionDeclaration> {
     const node = variableDeclarationStatement.assert(path.node);
@@ -66,7 +66,7 @@ const hook = createHook<State, Arg, ThisExpression>({
       ...node,
       declaration: {
         ...node.declaration,
-        declarations: node.declaration.declarations.filter((decl) => 
+        declarations: node.declaration.declarations.filter((decl) =>
           !state.declarators.includes(decl)
         ),
       },

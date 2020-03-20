@@ -197,7 +197,7 @@ export default class DependencyGraph {
     });
 
     // Add initial queue items
-    const roots: Array<DependencyNode> = await Promise.all(paths.map((path) => 
+    const roots: Array<DependencyNode> = await Promise.all(paths.map((path) =>
       this.resolve(path, {
         workerQueue,
         all: true,

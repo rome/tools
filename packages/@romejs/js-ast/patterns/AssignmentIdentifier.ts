@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type AssignmentIdentifier = 
+export type AssignmentIdentifier =
   & JSNodeBase
   & {
     type: 'AssignmentIdentifier';

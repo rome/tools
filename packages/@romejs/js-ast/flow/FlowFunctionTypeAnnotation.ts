@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowFunctionTypeAnnotation = 
+export type FlowFunctionTypeAnnotation =
   & JSNodeBase
   & {
     type: 'FlowFunctionTypeAnnotation';

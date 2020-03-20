@@ -27,7 +27,7 @@ test('no duplicated switch cases allowed', async (t) => {
     }
   `);
 
-  t.truthy(duplicatedSwitchCase.diagnostics.find((d) => 
+  t.truthy(duplicatedSwitchCase.diagnostics.find((d) =>
     d.category === 'lint/noDuplicateCase'
   ));
 });

@@ -19,7 +19,7 @@ export type DiagnosticsPrinterFlags = {
   showAllDiagnostics: boolean;
 };
 
-export type DiagnosticsFileReader = (path: AbsoluteFilePath) => 
+export type DiagnosticsFileReader = (path: AbsoluteFilePath) =>
     | undefined
     | DiagnosticsFileReaderStats;
 

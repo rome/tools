@@ -132,7 +132,7 @@ export default class Bundler {
         },
       ],
     });
-    const entryUids = entries.map((entry) => 
+    const entryUids = entries.map((entry) =>
       this.master.projectManager.getUid(entry)
     );
     const analyzeProgress = this.reporter.progress({

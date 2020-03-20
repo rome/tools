@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type AwaitExpression = 
+export type AwaitExpression =
   & JSNodeBase
   & {
     type: 'AwaitExpression';

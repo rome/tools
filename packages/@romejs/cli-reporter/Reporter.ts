@@ -57,7 +57,7 @@ export type LogOptions = {
   newline?: boolean;
 };
 
-export type LogCategoryOptions = 
+export type LogCategoryOptions =
   & LogOptions
   & {
     prefix: string;
@@ -87,7 +87,7 @@ let remoteProgressIdCounter = 0;
 
 const INDENT = '  ';
 
-type Stdout = 
+type Stdout =
   & stream.Writable
   & {
     isTTY?: boolean;
@@ -797,7 +797,7 @@ export default class Reporter {
   //# VISUALISATION
   table(head: Array<string>, rawBody: Array<Array<string | number>>) {
     // Format the head, just treat it like another row
-    head = head.map((field: string): string => 
+    head = head.map((field: string): string =>
       formatAnsi.bold(formatAnsi.underline(field))
     );
 

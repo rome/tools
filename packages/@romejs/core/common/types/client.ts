@@ -30,7 +30,7 @@ export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
   ...DEFAULT_PRINTER_FLAGS,
 };
 
-export type ClientRequestFlags = 
+export type ClientRequestFlags =
   & DiagnosticsPrinterFlags
   & {
     watch: boolean;

@@ -15,13 +15,13 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type NewExpression = 
+export type NewExpression =
   & JSNodeBase
   & {
     type: 'NewExpression';
     callee: AnyExpression | Super;
     arguments: Array<AnyExpression | SpreadElement>;
-    typeArguments?: 
+    typeArguments?:
         | undefined
         | FlowTypeParameterInstantiation
         | TSTypeParameterInstantiation;

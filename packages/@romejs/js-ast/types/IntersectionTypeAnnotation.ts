@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyFlowPrimary, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type IntersectionTypeAnnotation = 
+export type IntersectionTypeAnnotation =
   & JSNodeBase
   & {
     type: 'IntersectionTypeAnnotation';

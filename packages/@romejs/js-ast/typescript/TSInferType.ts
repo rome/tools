@@ -8,7 +8,7 @@
 import {JSNodeBase, TSTypeParameter} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSInferType = 
+export type TSInferType =
   & JSNodeBase
   & {
     type: 'TSInferType';

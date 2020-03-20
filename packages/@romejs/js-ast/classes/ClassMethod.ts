@@ -14,7 +14,7 @@ import {
 import {createBuilder} from '../utils';
 import {AnyObjectPropertyKey} from '../unions';
 
-export type ClassMethod = 
+export type ClassMethod =
   & JSNodeBase
   & {
     type: 'ClassMethod';

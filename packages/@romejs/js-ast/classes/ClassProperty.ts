@@ -14,7 +14,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type ClassProperty = 
+export type ClassProperty =
   & JSNodeBase
   & {
     type: 'ClassProperty';

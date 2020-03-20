@@ -14,7 +14,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type OptionalCallExpression = 
+export type OptionalCallExpression =
   & JSNodeBase
   & {
     type: 'OptionalCallExpression';

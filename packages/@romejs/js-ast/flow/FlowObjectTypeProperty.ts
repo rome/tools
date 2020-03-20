@@ -17,12 +17,12 @@ import {createBuilder} from '../utils';
 
 export type FlowObjectTypePropertyKind = 'init' | 'get' | 'set';
 
-export type FlowObjectTypePropertyKey = 
+export type FlowObjectTypePropertyKey =
     | Identifier
     | StringLiteral
     | NumericLiteral;
 
-export type FlowObjectTypeProperty = 
+export type FlowObjectTypeProperty =
   & JSNodeBase
   & {
     type: 'FlowObjectTypeProperty';

@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TaggedTemplateExpression = 
+export type TaggedTemplateExpression =
   & JSNodeBase
   & {
     type: 'TaggedTemplateExpression';

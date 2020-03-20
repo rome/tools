@@ -14,7 +14,7 @@ import {
 import {createBuilder} from '../utils';
 import {RequiredProps} from '@romejs/typescript-helpers';
 
-export type FlowDeclareFunction = 
+export type FlowDeclareFunction =
   & JSNodeBase
   & {
     type: 'FlowDeclareFunction';

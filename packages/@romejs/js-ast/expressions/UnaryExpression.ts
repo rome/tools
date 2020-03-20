@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type UnaryExpression = 
+export type UnaryExpression =
   & JSNodeBase
   & {
     type: 'UnaryExpression';
@@ -17,7 +17,7 @@ export type UnaryExpression =
     argument: AnyExpression;
   };
 
-export type UnaryOperator = 
+export type UnaryOperator =
     | '-'
     | '+'
     | '!'

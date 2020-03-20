@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type ForStatement = 
+export type ForStatement =
   & JSNodeBase
   & {
     type: 'ForStatement';

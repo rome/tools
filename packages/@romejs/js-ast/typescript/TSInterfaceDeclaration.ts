@@ -14,7 +14,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSInterfaceDeclaration = 
+export type TSInterfaceDeclaration =
   & JSNodeBase
   & {
     type: 'TSInterfaceDeclaration';

@@ -7,7 +7,7 @@
 
 import {BaseTokens, ValueToken, SimpleToken} from '@romejs/parser-core';
 
-export type Tokens = 
+export type Tokens =
   & BaseTokens
   & {
     Text: ValueToken<'Text', string>;
@@ -38,7 +38,7 @@ export type ChildNode = TextNode | TagNode;
 
 export type Children = Array<ChildNode>;
 
-export type TagName = 
+export type TagName =
     | 'command'
     | 'inverse'
     | 'dim'

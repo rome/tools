@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTypeAssertion = 
+export type TSTypeAssertion =
   & JSNodeBase
   & {
     type: 'TSTypeAssertion';

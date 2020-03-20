@@ -355,7 +355,9 @@ export default class Generator {
       return;
     }
 
-    this.buf.removeTrailing(' ');
+    if (!this.parenPushNewlineState) {
+      this.buf.removeTrailing(' ');
+    }
     this.append('\n');
   }
 

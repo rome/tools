@@ -8,7 +8,7 @@
 import {JSNodeBase, JSXIdentifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXNamespacedName = 
+export type JSXNamespacedName =
   & JSNodeBase
   & {
     type: 'JSXNamespacedName';

@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyTSEntityName, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSQualifiedName = 
+export type TSQualifiedName =
   & JSNodeBase
   & {
     type: 'TSQualifiedName';

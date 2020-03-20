@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyRegExpBodyItem} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpSubExpression = 
+export type RegExpSubExpression =
   & JSNodeBase
   & {
     type: 'RegExpSubExpression';

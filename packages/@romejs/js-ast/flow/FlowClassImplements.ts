@@ -12,7 +12,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowClassImplements = 
+export type FlowClassImplements =
   & JSNodeBase
   & {
     type: 'FlowClassImplements';

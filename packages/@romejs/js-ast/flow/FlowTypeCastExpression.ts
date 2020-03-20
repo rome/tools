@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression, AnyPrimaryType} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowTypeCastExpression = 
+export type FlowTypeCastExpression =
   & JSNodeBase
   & {
     type: 'FlowTypeCastExpression';

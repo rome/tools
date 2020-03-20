@@ -8,7 +8,7 @@
 import {JSNodeBase, StringLiteral} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSExternalModuleReference = 
+export type TSExternalModuleReference =
   & JSNodeBase
   & {
     type: 'TSExternalModuleReference';

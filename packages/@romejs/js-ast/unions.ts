@@ -9,7 +9,7 @@ import * as n from './index';
 
 export type AnyTSEntityName = n.ReferenceIdentifier | n.TSQualifiedName;
 
-export type AnyTSTypeElement = 
+export type AnyTSTypeElement =
     | n.TSCallSignatureDeclaration
     | n.TSConstructSignatureDeclaration
     | n.TSIndexSignature
@@ -18,15 +18,15 @@ export type AnyTSTypeElement =
 
 export type AnyTSModuleReference = AnyTSEntityName | n.TSExternalModuleReference;
 
-export type AnyTSFunctionOrConstructorType = 
+export type AnyTSFunctionOrConstructorType =
     | n.TSFunctionType
     | n.TSConstructorType;
 
-export type AnyTypeParameter = 
+export type AnyTypeParameter =
     | n.TSTypeParameterDeclaration
     | n.FlowTypeParameterDeclaration;
 
-export type AnyTypeArguments = 
+export type AnyTypeArguments =
     | n.FlowTypeParameterInstantiation
     | n.TSTypeParameterInstantiation;
 
@@ -35,14 +35,14 @@ export type ObjectProperties = Array<
     | n.ObjectMethod
     | n.SpreadProperty>;
 
-export type AnyFunction = 
+export type AnyFunction =
     | n.ArrowFunctionExpression
     | n.FunctionDeclaration
     | n.FunctionExpression
     | n.ObjectMethod
     | n.ClassMethod;
 
-export type AnyVariableIdentifier = 
+export type AnyVariableIdentifier =
     | n.BindingIdentifier
     | n.AssignmentIdentifier
     | n.ReferenceIdentifier
@@ -50,7 +50,7 @@ export type AnyVariableIdentifier =
 
 export type AnyObjectOrClassMember = AnyClassMember | AnyObjectMember;
 
-export type AnyClassMember = 
+export type AnyClassMember =
     | n.ClassMethod
     | n.ClassPrivateMethod
     | n.ClassProperty
@@ -66,7 +66,7 @@ export type AnyForStatement = AnyForInOfStatement | n.ForStatement;
 
 export type AnyForInOfStatement = n.ForInStatement | n.ForOfStatement;
 
-export type AnyLiteral = 
+export type AnyLiteral =
     | n.StringLiteral
     | n.BooleanLiteral
     | n.NumericLiteral
@@ -77,7 +77,7 @@ export type AnyClass = n.ClassDeclaration | n.ClassExpression;
 
 export type AnyFlowPredicate = n.FlowInferredPredicate | n.FlowDeclaredPredicate;
 
-export type AnyFlowDeclare = 
+export type AnyFlowDeclare =
     | n.FlowDeclareClass
     | n.FlowDeclareFunction
     | n.FlowDeclareVariable
@@ -90,7 +90,7 @@ export type AnyFlowDeclare =
     | n.FlowDeclareExportAll
     | n.TypeAliasTypeAnnotation;
 
-export type AnyAuxiliary = 
+export type AnyAuxiliary =
     | AnyClassMember
     | AnyObjectMember
     | n.ObjectProperty
@@ -136,7 +136,7 @@ export type AnyAuxiliary =
 
 export type AnyComment = n.CommentBlock | n.CommentLine;
 
-export type AnyIdentifier = 
+export type AnyIdentifier =
     | n.Identifier
     | n.JSXIdentifier
     | n.BindingIdentifier
@@ -146,7 +146,7 @@ export type AnyIdentifier =
 
 export type AnyReference = n.ReferenceIdentifier | n.MemberExpression;
 
-export type AnyExpression = 
+export type AnyExpression =
     | n.ReferenceIdentifier
     | n.JSXElement
     | n.JSXFragment
@@ -195,7 +195,7 @@ type AnyStatementWithBodyReducer<T> = T extends {body: AnyStatement} ? T : never
 
 export type AnyStatementWithBody = AnyStatementWithBodyReducer<AnyStatement>;
 
-export type AnyStatement = 
+export type AnyStatement =
     | n.AnyDeclaration
     | n.ExpressionStatement
     | n.ForStatement
@@ -216,28 +216,28 @@ export type AnyStatement =
     | n.ThrowStatement
     | n.TryStatement;
 
-export type AnyBindingPattern = 
+export type AnyBindingPattern =
     | n.BindingAssignmentPattern
     | n.BindingIdentifier
     | n.BindingObjectPattern
     | n.BindingArrayPattern
     | n.BindingObjectPatternProperty;
 
-export type AnyParamBindingPattern = 
+export type AnyParamBindingPattern =
     | n.AnyTargetBindingPattern
     | n.BindingAssignmentPattern;
 
-export type AnyTargetBindingPattern = 
+export type AnyTargetBindingPattern =
     | n.BindingIdentifier
     | n.BindingArrayPattern
     | n.BindingObjectPattern;
 
-export type AnyAssignmentPattern = 
+export type AnyAssignmentPattern =
     | n.AssignmentAssignmentPattern
     | n.AssignmentObjectPatternProperty
     | n.AnyTargetAssignmentPattern;
 
-export type AnyTargetAssignmentPattern = 
+export type AnyTargetAssignmentPattern =
     | n.MemberExpression
     | n.AssignmentIdentifier
     | n.AssignmentArrayPattern
@@ -246,7 +246,7 @@ export type AnyTargetAssignmentPattern =
     | n.TSAssignmentNonNullExpression
     | n.TSAssignmentTypeAssertion;
 
-export type AnyDeclaration = 
+export type AnyDeclaration =
     | n.VariableDeclarationStatement
     | n.ClassDeclaration
     | n.FunctionDeclaration
@@ -272,7 +272,7 @@ export type AnyDeclaration =
     | n.TSModuleDeclaration
     | AnyFlowDeclare;
 
-export type AnyFlowPrimary = 
+export type AnyFlowPrimary =
     | n.FlowFunctionTypeAnnotation
     | n.FlowTupleTypeAnnotation
     | n.FlowObjectTypeAnnotation
@@ -294,26 +294,26 @@ export type AnyFlowPrimary =
     | AnyLiteralTypeAnnotation
     | AnyFlowKeywordTypeAnnotation;
 
-export type AnyLiteralTypeAnnotation = 
+export type AnyLiteralTypeAnnotation =
     | n.StringLiteralTypeAnnotation
     | n.BooleanLiteralTypeAnnotation
     | n.NumericLiteralTypeAnnotation;
 
 // Keyword type annotations that both Flow and TS share
-export type AnySharedKeywordTypeAnnotation = 
+export type AnySharedKeywordTypeAnnotation =
     | n.AnyKeywordTypeAnnotation
     | n.BooleanKeywordTypeAnnotation
     | n.NumberKeywordTypeAnnotation
     | n.StringKeywordTypeAnnotation
     | n.BigIntKeywordTypeAnnotation;
 
-export type AnyFlowKeywordTypeAnnotation = 
+export type AnyFlowKeywordTypeAnnotation =
     | AnySharedKeywordTypeAnnotation
     | n.VoidKeywordTypeAnnotation
     | n.MixedKeywordTypeAnnotation
     | n.EmptyKeywordTypeAnnotation;
 
-export type AnyTSKeywordTypeAnnotation = 
+export type AnyTSKeywordTypeAnnotation =
     | AnySharedKeywordTypeAnnotation
     | n.NeverKeywordTypeAnnotation
     | n.NumberKeywordTypeAnnotation
@@ -322,7 +322,7 @@ export type AnyTSKeywordTypeAnnotation =
     | n.UndefinedKeywordTypeAnnotation
     | n.UnknownKeywordTypeAnnotation;
 
-export type AnyTSPrimary = 
+export type AnyTSPrimary =
     | n.TSOptionalType
     | n.TSTypeLiteral
     | n.TSTypeReference
@@ -348,7 +348,7 @@ export type AnyTSPrimary =
 
 export type AnyPrimaryType = AnyFlowPrimary | AnyTSPrimary;
 
-export type AnyRegExpEscapedCharacter = 
+export type AnyRegExpEscapedCharacter =
     | n.RegExpCharacter
     | n.RegExpDigitCharacter
     | n.RegExpNonDigitCharacter
@@ -360,7 +360,7 @@ export type AnyRegExpEscapedCharacter =
     | n.RegExpNonWordCharacter
     | n.RegExpControlCharacter;
 
-export type AnyRegExpBodyItem = 
+export type AnyRegExpBodyItem =
     | AnyRegExpEscapedCharacter
     | n.RegExpStartCharacter
     | n.RegExpEndCharacter
@@ -385,7 +385,7 @@ export type AnyRegExpBodyItem =
 export type AnyRegExpExpression = n.RegExpSubExpression | n.RegExpAlternation;
 
 // EVERYTHING BELOW IS AUTOGENERATED. SEE SCRIPTS FOLDER FOR UPDATE SCRIPTS
-export type AnyNode = 
+export type AnyNode =
     | n.AmbiguousFlowTypeCastExpression
     | n.AnyKeywordTypeAnnotation
     | n.ArrayExpression

@@ -18,7 +18,7 @@ type UserOptionsBase = {
 
 export type JSParserUserOptions = ParserOptionsWithRequiredPath & UserOptionsBase;
 
-export type JSParserOptions = 
+export type JSParserOptions =
   & ParserOptionsWithRequiredPath
   & Required<UserOptionsBase>;
 

@@ -49,7 +49,7 @@ export type ParserOptions = {
   offsetPosition?: Position;
 };
 
-export type ParserOptionsWithRequiredPath = 
+export type ParserOptionsWithRequiredPath =
   & Omit<ParserOptions, 'path'>
   & {path: NonNullable<ParserOptions['path']>};
 
@@ -62,7 +62,7 @@ export type ParserUnexpectedOptions = {
   advice?: PartialDiagnosticAdvice;
 };
 
-export type TokenValues<Tokens extends TokensShape> = 
+export type TokenValues<Tokens extends TokensShape> =
     | Tokens[keyof Tokens]
     | BaseTokens[keyof BaseTokens];
 
@@ -226,7 +226,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     index: Number0,
     input: string,
     state: State,
-  ): 
+  ):
       | undefined
       | {
         token: TokenValues<Tokens>;
@@ -242,7 +242,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     index: Number0,
     input: string,
     state: State,
-  ): 
+  ):
       | undefined
       | {
         token: TokenValues<Tokens>;

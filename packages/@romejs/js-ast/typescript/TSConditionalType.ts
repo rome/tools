@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSConditionalType = 
+export type TSConditionalType =
   & JSNodeBase
   & {
     type: 'TSConditionalType';

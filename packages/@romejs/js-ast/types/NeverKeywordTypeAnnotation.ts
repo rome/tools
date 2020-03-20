@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type NeverKeywordTypeAnnotation = 
+export type NeverKeywordTypeAnnotation =
   & JSNodeBase
   & {type: 'NeverKeywordTypeAnnotation'};
 

@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyPrimaryType} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclareModuleExports = 
+export type FlowDeclareModuleExports =
   & JSNodeBase
   & {
     type: 'FlowDeclareModuleExports';

@@ -8,7 +8,7 @@
 import {JSNodeBase, BlockStatement} from '../index';
 import {createBuilder} from '../utils';
 
-export type DoExpression = 
+export type DoExpression =
   & JSNodeBase
   & {
     type: 'DoExpression';

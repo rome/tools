@@ -15,12 +15,12 @@ export type NodeBase = {
 
 export type SimpleNode<Type extends string> = NodeBase & {type: Type};
 
-export type ComplexNode<Type extends string, Data> = 
+export type ComplexNode<Type extends string, Data> =
   & NodeBase
   & Data
   & {type: Type};
 
-export type ValueNode<Type extends string, Value> = 
+export type ValueNode<Type extends string, Value> =
   & NodeBase
   & {
     type: Type;
@@ -43,12 +43,12 @@ export type TokensShape = {
 
 export type SimpleToken<Type extends string> = TokenBase & {type: Type};
 
-export type ComplexToken<Type extends string, Data> = 
+export type ComplexToken<Type extends string, Data> =
   & TokenBase
   & Data
   & {type: Type};
 
-export type ValueToken<Type extends string, Value> = 
+export type ValueToken<Type extends string, Value> =
   & TokenBase
   & {
     type: Type;

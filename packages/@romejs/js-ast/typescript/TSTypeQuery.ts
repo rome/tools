@@ -8,7 +8,7 @@
 import {JSNodeBase, TSImportType, AnyTSEntityName} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTypeQuery = 
+export type TSTypeQuery =
   & JSNodeBase
   & {
     type: 'TSTypeQuery';

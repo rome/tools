@@ -8,7 +8,7 @@
 import {JSNodeBase, TSSignatureDeclarationMeta, AnyPrimaryType} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSFunctionType = 
+export type TSFunctionType =
   & JSNodeBase
   & {
     type: 'TSFunctionType';

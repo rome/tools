@@ -276,7 +276,7 @@ export default class TestRunner {
 
     const workerContainers: TestWorkerContainers = this.getWorkers();
 
-    await Promise.all(workerContainers.map((container) => 
+    await Promise.all(workerContainers.map((container) =>
       this.runWorker(container)
     ));
 

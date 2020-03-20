@@ -8,7 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowThisTypeAnnotation = 
+export type FlowThisTypeAnnotation =
   & JSNodeBase
   & {type: 'FlowThisTypeAnnotation'};
 

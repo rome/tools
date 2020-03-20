@@ -8,7 +8,7 @@
 import {JSNodeBase, TemplateElement, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type TemplateLiteral = 
+export type TemplateLiteral =
   & JSNodeBase
   & {
     type: 'TemplateLiteral';

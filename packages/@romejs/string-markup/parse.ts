@@ -93,7 +93,7 @@ type State = {inTagHead: boolean};
 
 type StringMarkupParserOptions = ParserOptions;
 
-const createStringMarkupParser = createParser((ParserCore) => 
+const createStringMarkupParser = createParser((ParserCore) =>
   class StringMarkupParser extends ParserCore<Tokens, State> {
     constructor(opts: StringMarkupParserOptions) {
       super(opts, 'parse/stringMarkup', {inTagHead: false});
@@ -103,7 +103,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
       index: Number0,
       input: string,
       state: State,
-    ): 
+    ):
         | undefined
         | {
           token: TokenValues<Tokens>;

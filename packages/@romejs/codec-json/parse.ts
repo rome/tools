@@ -107,7 +107,7 @@ type PathInfo = {
   valueEnd: Position;
 };
 
-export default createParser((ParserCore) => 
+export default createParser((ParserCore) =>
   class JSONParser extends ParserCore<Tokens, void> {
     constructor(opts: JSONParserOptions) {
       super(opts, 'parse/json');

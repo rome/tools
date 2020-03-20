@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type AmbiguousFlowTypeCastExpression = 
+export type AmbiguousFlowTypeCastExpression =
   & JSNodeBase
   & {
     type: 'AmbiguousFlowTypeCastExpression';

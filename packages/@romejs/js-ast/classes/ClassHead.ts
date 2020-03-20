@@ -16,7 +16,7 @@ import {
 } from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type ClassHead = 
+export type ClassHead =
   & JSNodeBase
   & {
     type: 'ClassHead';
@@ -24,7 +24,7 @@ export type ClassHead =
     body: Array<AnyClassMember>;
     typeParameters?: AnyTypeParameter;
     superTypeParameters?: AnyTypeArguments;
-    implements?: 
+    implements?:
         | undefined
         | Array<FlowClassImplements | TSExpressionWithTypeArguments>;
   };

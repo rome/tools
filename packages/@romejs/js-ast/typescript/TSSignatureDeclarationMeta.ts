@@ -15,7 +15,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSSignatureDeclarationMeta = 
+export type TSSignatureDeclarationMeta =
   & JSNodeBase
   & {
     type: 'TSSignatureDeclarationMeta';

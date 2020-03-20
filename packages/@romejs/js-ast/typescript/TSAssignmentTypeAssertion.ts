@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyTSPrimary, AnyTargetAssignmentPattern} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSAssignmentTypeAssertion = 
+export type TSAssignmentTypeAssertion =
   & JSNodeBase
   & {
     type: 'TSAssignmentTypeAssertion';

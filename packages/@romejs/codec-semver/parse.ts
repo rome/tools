@@ -27,7 +27,7 @@ type ParseMode = 'version' | 'range';
 
 export type SemverParserOptions = ParserOptions & {loose?: boolean};
 
-const createSemverParser = createParser((ParserCore) => 
+const createSemverParser = createParser((ParserCore) =>
   class SemverParser extends ParserCore<Tokens, void> {
     constructor({loose, ...opts}: SemverParserOptions, mode: ParseMode) {
       super(opts, 'parse/semver');

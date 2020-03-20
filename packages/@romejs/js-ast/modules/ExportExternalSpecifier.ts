@@ -8,7 +8,7 @@
 import {JSNodeBase, Identifier, ConstExportModuleKind} from '../index';
 import {createBuilder} from '../utils';
 
-export type ExportExternalSpecifier = 
+export type ExportExternalSpecifier =
   & JSNodeBase
   & {
     type: 'ExportExternalSpecifier';

@@ -814,7 +814,7 @@ function parseClassId(
   optionalId: boolean,
 ): {
   id: undefined | BindingIdentifier;
-  typeParameters: 
+  typeParameters:
       | undefined
       | TSTypeParameterDeclaration
       | FlowTypeParameterDeclaration;
@@ -859,7 +859,7 @@ function parseClassSuper(
     superTypeParameters = maybeParseTypeArguments(parser);
   }
 
-  let implemented: 
+  let implemented:
       | undefined
       | Array<FlowClassImplements | TSExpressionWithTypeArguments>;
   if (parser.isContextual('implements')) {

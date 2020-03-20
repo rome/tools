@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyTSTypeElement} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSInterfaceBody = 
+export type TSInterfaceBody =
   & JSNodeBase
   & {
     type: 'TSInterfaceBody';

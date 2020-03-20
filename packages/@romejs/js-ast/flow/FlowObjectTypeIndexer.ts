@@ -13,7 +13,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowObjectTypeIndexer = 
+export type FlowObjectTypeIndexer =
   & JSNodeBase
   & {
     type: 'FlowObjectTypeIndexer';

@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type ImportCall = 
+export type ImportCall =
   & JSNodeBase
   & {
     type: 'ImportCall';

@@ -9,7 +9,7 @@ import {JSNodeBase, BindingIdentifier, FunctionHead} from '../index';
 import {createBuilder} from '../utils';
 import {BlockStatement} from '../statements/BlockStatement';
 
-export type FunctionExpression = 
+export type FunctionExpression =
   & JSNodeBase
   & {
     type: 'FunctionExpression';

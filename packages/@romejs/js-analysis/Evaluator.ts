@@ -189,7 +189,7 @@ export class ModuleSignatureManager {
   }
 }
 
-type Export = 
+type Export =
     | {
       type: 'local';
       name: string;

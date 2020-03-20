@@ -8,7 +8,7 @@
 import {JSNodeBase, ConstExportModuleKind, StringLiteral} from '../index';
 import {createBuilder} from '../utils';
 
-export type ExportAllDeclaration = 
+export type ExportAllDeclaration =
   & JSNodeBase
   & {
     type: 'ExportAllDeclaration';

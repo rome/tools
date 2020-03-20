@@ -8,7 +8,7 @@
 import {JSNodeBase, AnyStatement, Directive} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type BlockStatement = 
+export type BlockStatement =
   & JSNodeBase
   & {
     type: 'BlockStatement';

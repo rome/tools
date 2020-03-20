@@ -245,7 +245,7 @@ parens.set('ClassExpression', function ClassExpression(
 });
 
 function UnaryExpression(
-  node: 
+  node:
       | UnaryExpression
       | ArrowFunctionExpression
       | AssignmentExpression

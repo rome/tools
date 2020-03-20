@@ -15,7 +15,7 @@ import {
 } from '@romejs/parser-core';
 import {add, get0, Number0} from '@romejs/ob1';
 
-type Tokens = 
+type Tokens =
   & BaseTokens
   & {
     Hashes: ValueToken<'Hashes', number>;
@@ -26,7 +26,7 @@ type Tokens =
     TextLine: ValueToken<'TextLine', string>;
   };
 
-type HeadingNode = 
+type HeadingNode =
   & NodeBase
   & {
     type: 'Heading';
@@ -34,7 +34,7 @@ type HeadingNode =
     level: number;
   };
 
-type CodeBlockNode = 
+type CodeBlockNode =
   & NodeBase
   & {
     type: 'CodeBlock';
@@ -42,7 +42,7 @@ type CodeBlockNode =
     text: string;
   };
 
-type TextLineNode = 
+type TextLineNode =
   & NodeBase
   & {
     type: 'TextLine';
@@ -73,7 +73,7 @@ function unescapeTicks(code: string): string {
   return code;
 }
 
-export default createParser((ParserCore) => 
+export default createParser((ParserCore) =>
   class SnapshotParser extends ParserCore<Tokens, void> {
     constructor(opts: ParserOptions) {
       super(opts, 'parse/snapshots');

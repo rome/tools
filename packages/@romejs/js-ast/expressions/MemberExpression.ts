@@ -14,7 +14,7 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type MemberExpression = 
+export type MemberExpression =
   & JSNodeBase
   & {
     type: 'MemberExpression';
