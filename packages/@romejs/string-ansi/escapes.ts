@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const ESC = '\u001B[';
+const ESC = '\x1b[';
 
 export const escapes = {
-  clearScreen: '\u001Bc',
+  clearScreen: '\x1bc',
   eraseLine: `${ESC}2K`,
 
   cursorUp(count: number = 1): string {

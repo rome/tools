@@ -7,6 +7,7 @@
 
 import {consumeUnknown, Consumer, consume} from '@romejs/consume';
 import url = require('url');
+
 import {number0, number1, coerce0} from '@romejs/ob1';
 
 export type ConsumableUrl = {

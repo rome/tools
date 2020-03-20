@@ -13,13 +13,15 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSMethodSignature = JSNodeBase & {
-  key: AnyObjectPropertyKey;
-  type: 'TSMethodSignature';
-  optional?: boolean;
-  meta: TSSignatureDeclarationMeta;
-  typeAnnotation?: AnyTSPrimary;
-};
+export type TSMethodSignature = 
+  & JSNodeBase
+  & {
+    key: AnyObjectPropertyKey;
+    type: 'TSMethodSignature';
+    optional?: boolean;
+    meta: TSSignatureDeclarationMeta;
+    typeAnnotation?: AnyTSPrimary;
+  };
 
 export const tsMethodSignature = createBuilder<TSMethodSignature>(
   'TSMethodSignature',

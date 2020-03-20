@@ -14,7 +14,7 @@ function getMap<Key, Value>(
 
   if (existing === undefined) {
     if (defaultValue === undefined) {
-      throw new Error("Key didn't exist and no defaultValue passed");
+      throw new Error('Key didn\'t exist and no defaultValue passed');
     }
 
     map.set(key, defaultValue);
@@ -27,7 +27,6 @@ function getMap<Key, Value>(
 /**
  * Forked from the project https://github.com/aceakash/string-similarity by Akash K, licensed under ISC
  */
-
 export function compareTwoStrings(aStr: string, bStr: string): number {
   const a = aStr.replace(/\s+/g, '');
   const b = bStr.replace(/\s+/g, '');
@@ -58,12 +57,12 @@ export function compareTwoStrings(aStr: string, bStr: string): number {
   }
 
   let firstBigrams: Map<string, number> = new Map();
-  for (let i = 0; i < a.length - 1; i++) {
+  for (let i = 0;
+  i < a.length - 1;
+  i++) {
     const bigram = a.substring(i, i + 2);
 
-    const count = firstBigrams.has(bigram)
-      ? getMap(firstBigrams, bigram) + 1
-      : 1;
+    const count = firstBigrams.has(bigram) ? getMap(firstBigrams, bigram) + 1 : 1;
     if (count === undefined) {
       throw new Error('Already used has() above');
     }
@@ -72,7 +71,9 @@ export function compareTwoStrings(aStr: string, bStr: string): number {
   }
 
   let intersectionSize: number = 0;
-  for (let i = 0; i < b.length - 1; i++) {
+  for (let i = 0;
+  i < b.length - 1;
+  i++) {
     const bigram = b.substring(i, i + 2);
 
     const count = getMap(firstBigrams, bigram, 0);
@@ -86,7 +87,7 @@ export function compareTwoStrings(aStr: string, bStr: string): number {
     }
   }
 
-  return (2.0 * intersectionSize) / (a.length + b.length - 2);
+  return 2 * intersectionSize / (a.length + b.length - 2);
 }
 
 export type Rating = {
@@ -101,6 +102,7 @@ type OrderBySimilarityOptions = {
   formatItem?: (str: string) => string;
   ignoreCase?: boolean;
 };
+
 export function orderBySimilarity(
   compareStr: string,
   targets: Array<string>,
@@ -111,37 +113,32 @@ export function orderBySimilarity(
   }
 
   // Calculate the rating for each target string
-  const ratings: Ratings = Array.from(
-    targets,
-    (target: string): Rating => {
-      let compareTarget = target;
-      if (formatItem !== undefined) {
-        compareTarget = formatItem(target);
-      }
+  const ratings: Ratings = Array.from(targets, (target: string): Rating => {
+    let compareTarget = target;
+    if (formatItem !== undefined) {
+      compareTarget = formatItem(target);
+    }
 
-      if (ignoreCase) {
-        return {
-          target,
-          rating: compareTwoStrings(
-            compareStr.toLowerCase(),
-            compareTarget.toLowerCase(),
-          ),
-        };
-      }
-
+    if (ignoreCase) {
       return {
         target,
-        rating: compareTwoStrings(compareStr, compareTarget),
+        rating: compareTwoStrings(
+          compareStr.toLowerCase(),
+          compareTarget.toLowerCase(),
+        ),
       };
-    },
-  );
+    }
+
+    return {
+      target,
+      rating: compareTwoStrings(compareStr, compareTarget),
+    };
+  });
 
   // Sort ratings, with the highest at the beginning
-  const sortedRatings: Ratings = ratings
-    .sort((a, b) => {
-      return b.rating - a.rating;
-    })
-    .filter(item => minRating === undefined || item.rating >= minRating);
+  const sortedRatings: Ratings = ratings.sort((a, b) => {
+    return b.rating - a.rating;
+  }).filter((item) => minRating === undefined || item.rating >= minRating);
 
   return sortedRatings;
 }

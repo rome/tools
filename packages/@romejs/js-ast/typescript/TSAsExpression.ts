@@ -8,11 +8,13 @@
 import {JSNodeBase, AnyTSPrimary, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSAsExpression = JSNodeBase & {
-  type: 'TSAsExpression';
-  typeAnnotation: AnyTSPrimary;
-  expression: AnyExpression;
-};
+export type TSAsExpression = 
+  & JSNodeBase
+  & {
+    type: 'TSAsExpression';
+    typeAnnotation: AnyTSPrimary;
+    expression: AnyExpression;
+  };
 
 export const tsAsExpression = createBuilder<TSAsExpression>('TSAsExpression', {
   bindingKeys: {},

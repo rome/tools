@@ -8,11 +8,13 @@
 import {JSNodeBase, AnyRegExpExpression, RegExpSubExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpAlternation = JSNodeBase & {
-  type: 'RegExpAlternation';
-  left: AnyRegExpExpression;
-  right: RegExpSubExpression;
-};
+export type RegExpAlternation = 
+  & JSNodeBase
+  & {
+    type: 'RegExpAlternation';
+    left: AnyRegExpExpression;
+    right: RegExpSubExpression;
+  };
 
 export const regExpAlternation = createBuilder<RegExpAlternation>(
   'RegExpAlternation',

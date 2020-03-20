@@ -140,7 +140,9 @@ export default function match(
   }
 
   // Match the rest of the path segments
-  for (let i = 0; i < patternSegs.length; i++) {
+  for (let i = 0;
+  i < patternSegs.length;
+  i++) {
     const patternSeg = patternSegs[i];
 
     // If we have no more path segments then it's impossible for this to match

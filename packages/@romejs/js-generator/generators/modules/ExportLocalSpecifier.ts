@@ -12,14 +12,9 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function ExportLocalSpecifier(
-  generator: Generator,
-  node: AnyNode,
-) {
-  node =
-    node.type === 'ExportExternalSpecifier'
-      ? node
-      : exportLocalSpecifier.assert(node);
+export default function ExportLocalSpecifier(generator: Generator, node: AnyNode) {
+  node = node.type === 'ExportExternalSpecifier'
+    ? node : exportLocalSpecifier.assert(node);
 
   generator.print(node.local, node);
   if (node.exported && node.local.name !== node.exported.name) {

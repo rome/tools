@@ -8,10 +8,12 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type NumericLiteralTypeAnnotation = JSNodeBase & {
-  type: 'NumericLiteralTypeAnnotation';
-  value: number;
-};
+export type NumericLiteralTypeAnnotation = 
+  & JSNodeBase
+  & {
+    type: 'NumericLiteralTypeAnnotation';
+    value: number;
+  };
 
 export const numericLiteralTypeAnnotation = createBuilder<
   NumericLiteralTypeAnnotation

@@ -13,7 +13,7 @@ function _parsePathPattern(input: string): PathPattern {
   return parsePathPattern({input});
 }
 
-test('pattern', t => {
+test('pattern', (t) => {
   // Negate and wildcard
   t.snapshot(_parsePathPattern('!foo'));
   t.snapshot(_parsePathPattern(''));

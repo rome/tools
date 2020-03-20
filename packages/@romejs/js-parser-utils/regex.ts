@@ -16,7 +16,9 @@ export function validateRegexFlags(
 ): Set<string> {
   const foundFlags: Set<string> = new Set();
 
-  for (let i = 0; i < flags.length; i++) {
+  for (let i = 0;
+  i < flags.length;
+  i++) {
     const flag = flags[i];
 
     if (VALID_REGEX_FLAGS.includes(flag)) {

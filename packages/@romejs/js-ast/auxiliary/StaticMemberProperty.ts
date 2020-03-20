@@ -8,11 +8,13 @@
 import {JSNodeBase, Identifier, PrivateName} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type StaticMemberProperty = JSNodeBase & {
-  type: 'StaticMemberProperty';
-  value: Identifier | PrivateName;
-  optional?: boolean;
-};
+export type StaticMemberProperty = 
+  & JSNodeBase
+  & {
+    type: 'StaticMemberProperty';
+    value: Identifier | PrivateName;
+    optional?: boolean;
+  };
 
 export const staticMemberProperty = createQuickBuilder<
   StaticMemberProperty,

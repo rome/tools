@@ -6,11 +6,7 @@
  */
 
 import Generator from '../../Generator';
-import {
-  FlowDeclareFunction,
-  flowDeclareFunction,
-  AnyNode,
-} from '@romejs/js-ast';
+import {FlowDeclareFunction, flowDeclareFunction, AnyNode} from '@romejs/js-ast';
 
 export default function FlowDeclareFunction(
   generator: Generator,

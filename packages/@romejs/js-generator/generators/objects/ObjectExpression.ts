@@ -9,47 +9,37 @@ import Generator from '../../Generator';
 import {ObjectExpression, objectExpression, AnyNode} from '@romejs/js-ast';
 
 export default function ObjectExpression(generator: Generator, _node: AnyNode) {
-  const node =
-    _node.type === 'BindingObjectPattern' ||
-    _node.type === 'AssignmentObjectPattern'
-      ? _node
-      : objectExpression.assert(_node);
+  const node = _node.type === 'BindingObjectPattern' || _node.type ===
+  'AssignmentObjectPattern' ? _node : objectExpression.assert(_node);
 
-  generator.multiline(
-    node,
-    (multiline, node) => {
-      const props = node.properties;
+  generator.multiline(node, (multiline, node) => {
+    const props = node.properties;
 
-      generator.token('{');
-      generator.printInnerComments(node);
-      generator.printCommaList<typeof props[number]>(props, node, {
-        multiline,
-        trailing: true,
-      });
+    generator.token('{');
+    generator.printInnerComments(node);
+    generator.printCommaList<typeof props[number]>(props, node, {
+      multiline,
+      trailing: true,
+    });
 
-      if (
-        (node.type === 'BindingObjectPattern' ||
-          node.type === 'AssignmentObjectPattern') &&
-        node.rest !== undefined
-      ) {
-        if (props.length > 0) {
-          if (!multiline) {
-            generator.token(',');
-          }
-          generator.spaceOrNewline(multiline);
+    if ((node.type === 'BindingObjectPattern' || node.type ===
+    'AssignmentObjectPattern') && node.rest !== undefined) {
+      if (props.length > 0) {
+        if (!multiline) {
+          generator.token(',');
         }
-
-        generator.token('...');
-        generator.print(node.rest, node);
+        generator.spaceOrNewline(multiline);
       }
 
-      if (multiline) {
-        generator.buf.removeTrailingNewlines();
-        generator.forceNewline();
-      }
+      generator.token('...');
+      generator.print(node.rest, node);
+    }
 
-      generator.token('}');
-    },
-    {conditions: ['more-than-one-line', 'source-had-multiline']},
-  );
+    if (multiline) {
+      generator.buf.removeTrailingNewlines();
+      generator.forceNewline();
+    }
+
+    generator.token('}');
+  }, {conditions: ['more-than-one-line', 'source-had-multiline']});
 }

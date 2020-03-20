@@ -60,7 +60,9 @@ function cleanUidParts(parts: Array<string>): string {
 
     // Prune off any prefix shared with the last part
     let sharedPrefix = '';
-    for (let i = 0; i < part.length && lastPart[i] === part[i]; i++) {
+    for (let i = 0;
+    i < part.length && lastPart[i] === part[i];
+    i++) {
       sharedPrefix += part[i];
     }
 
@@ -152,7 +154,7 @@ export default class ProjectManager {
   projectFolderToId: AbsoluteFilePathMap<number>;
 
   async init() {
-    this.master.memoryFs.deletedFileEvent.subscribe(path => {
+    this.master.memoryFs.deletedFileEvent.subscribe((path) => {
       this.handleDeleted(path);
     });
 
@@ -223,7 +225,9 @@ export default class ProjectManager {
     const project = this.assertProjectExisting(path);
 
     // For haste projects, use the haste name as the uid. If the user has multiple projects
+
     // with colliding uids then that's fine, it will just cause more cache misses as we compare
+
     // mtime, project config hash etc stored in the cache.
     if (this.isHasteDeclared(path, project)) {
       const hasteName = this.master.memoryFs.getHasteName(path);
@@ -285,10 +289,7 @@ export default class ProjectManager {
     };
   }
 
-  getURLFileReference(
-    local: AbsoluteFilePath,
-    url: URLFilePath,
-  ): FileReference {
+  getURLFileReference(local: AbsoluteFilePath, url: URLFilePath): FileReference {
     if (!this.remoteToLocalPath.has(url)) {
       this.remoteToLocalPath.set(url, local);
       this.localPathToRemote.set(local, url);
@@ -378,10 +379,12 @@ export default class ProjectManager {
 
       // Evict packages
       bridge.updateManifests.send({
-        manifests: Array.from(project.manifests.values(), def => ({
-          id: def.id,
-          manifest: undefined,
-        })),
+        manifests: Array.from(project.manifests.values(), (def) => 
+          ({
+            id: def.id,
+            manifest: undefined,
+          })
+        ),
       });
     }
 
@@ -397,9 +400,9 @@ export default class ProjectManager {
         ownedFiles.push(path);
       }
     }
-    await Promise.all(
-      ownedFiles.map(path => this.master.fileAllocator.evict(path)),
-    );
+    await Promise.all(ownedFiles.map((path) => 
+      this.master.fileAllocator.evict(path)
+    ));
 
     // Tell the MemoryFileSystem to stop watching and clear it's maps
     this.master.memoryFs.unwatch(project.folder);
@@ -421,7 +424,7 @@ export default class ProjectManager {
 
     // If we're currently adding a project then add it to the queue
     if (this.isAddingProject) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         this.pendingAddProjects.push({projectFolder, configPath, resolve});
       });
     }
@@ -439,8 +442,7 @@ export default class ProjectManager {
       project: ProjectDefinition;
       resolve: (project: ProjectDefinition) => void;
     }> = [];
-    for (const {projectFolder, configPath, resolve} of this
-      .pendingAddProjects) {
+    for (const {projectFolder, configPath, resolve} of this.pendingAddProjects) {
       // Check if the project has already been resolved
       const existing = resolvedProjectsByDir.get(projectFolder.join());
       if (existing !== undefined) {
@@ -503,15 +505,17 @@ export default class ProjectManager {
     });
   }
 
-  async addProjectWithConfig({
-    projectFolder,
-    meta,
-    config,
-  }: {
-    projectFolder: AbsoluteFilePath;
-    meta: ProjectConfigMeta;
-    config: ProjectConfig;
-  }): Promise<ProjectDefinition> {
+  async addProjectWithConfig(
+    {
+      projectFolder,
+      meta,
+      config,
+    }: {
+      projectFolder: AbsoluteFilePath;
+      meta: ProjectConfigMeta;
+      config: ProjectConfig;
+    },
+  ): Promise<ProjectDefinition> {
     // Make sure there's no project with the same `name` as us
     for (const project of this.projects.values()) {
       if (project.config.name === config.name) {
@@ -659,10 +663,9 @@ export default class ProjectManager {
         });
 
         // If both resolve to the same location then this isn't a collision and we should just ignore it
-        if (
-          existingResolved.type === 'FOUND' &&
-          hastePath.equal(existingResolved.ref.real)
-        ) {
+        if (existingResolved.type === 'FOUND' && hastePath.equal(
+          existingResolved.ref.real,
+        )) {
           continue;
         }
 
@@ -716,9 +719,9 @@ export default class ProjectManager {
       promises.push(
         worker.bridge.updateProjects.call({projects: projectsSerial}),
       );
-      promises.push(
-        worker.bridge.updateManifests.call({manifests: manifestsSerial}),
-      );
+      promises.push(worker.bridge.updateManifests.call({
+        manifests: manifestsSerial,
+      }));
     }
 
     await Promise.all(promises);
@@ -734,6 +737,7 @@ export default class ProjectManager {
 
     if (project) {
       // Continue searching for projects up the directory
+
       // We don't do this for root projects since it would be a waste, but there's no implications other than some unnecessary work if we did
       if (project.config.root === false && syncProject === undefined) {
         await this.findProject(project.folder.getParent());
@@ -744,9 +748,7 @@ export default class ProjectManager {
 
     if (pointer === undefined) {
       throw new Error(
-        `Couldn't find a project. Checked ${ROME_CONFIG_FILENAMES.join(
-          ' or ',
-        )} for ${path.join()}`,
+        `Couldn't find a project. Checked ${ROME_CONFIG_FILENAMES.join(' or ')} for ${path.join()}`,
       );
     }
 
@@ -758,8 +760,7 @@ export default class ProjectManager {
         {
           type: 'log',
           category: 'info',
-          message:
-            'Run <command>rome init</command> in this folder to initialize a project',
+          message: 'Run <command>rome init</command> in this folder to initialize a project',
         },
       ],
     });
@@ -775,9 +776,7 @@ export default class ProjectManager {
     }
   }
 
-  getHierarchyFromFilename(
-    filename: AbsoluteFilePath,
-  ): Array<ProjectDefinition> {
+  getHierarchyFromFilename(filename: AbsoluteFilePath): Array<ProjectDefinition> {
     const project = this.findProjectExisting(filename);
     if (project === undefined) {
       return [];
@@ -786,9 +785,7 @@ export default class ProjectManager {
     }
   }
 
-  getHierarchyFromProject(
-    project: ProjectDefinition,
-  ): Array<ProjectDefinition> {
+  getHierarchyFromProject(project: ProjectDefinition): Array<ProjectDefinition> {
     const projects: Array<ProjectDefinition> = [];
 
     let currProject: undefined | ProjectDefinition = project;
@@ -862,9 +859,9 @@ export default class ProjectManager {
         }
 
         // Check a .config folder
-        const configPathNested = dir
-          .append(ROME_CONFIG_FOLDER)
-          .append(configFilename);
+        const configPathNested = dir.append(ROME_CONFIG_FOLDER).append(
+          configFilename,
+        );
         const hasProjectNested = await this.master.memoryFs.existsHard(
           configPathNested,
         );

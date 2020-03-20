@@ -8,17 +8,21 @@
 import {JSNodeBase, ObjectProperties} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type ObjectExpression = JSNodeBase & {
-  type: 'ObjectExpression';
-  properties: ObjectProperties;
-};
+export type ObjectExpression = 
+  & JSNodeBase
+  & {
+    type: 'ObjectExpression';
+    properties: ObjectProperties;
+  };
 
-export const objectExpression = createQuickBuilder<
-  ObjectExpression,
-  'properties'
->('ObjectExpression', 'properties', {
-  bindingKeys: {},
-  visitorKeys: {
-    properties: true,
+export const objectExpression =
+createQuickBuilder<ObjectExpression, 'properties'>(
+  'ObjectExpression',
+  'properties',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      properties: true,
+    },
   },
-});
+);

@@ -27,7 +27,6 @@ export type BufferSnapshot = {
   lineLengthsIndex: number;
   bufIndex: number;
   last: string;
-
   position: Position;
   sourcePosition: {
     identifierName: undefined | string;
@@ -43,16 +42,13 @@ export type BufferSnapshot = {
  * call. This allows V8 to optimize the output efficiently by not requiring it to store the
  * string in contiguous memory.
  */
-
 export default class Buffer {
   constructor(opts: GeneratorOptions, code: string) {
     this.originalCode = code;
     this.opts = opts;
     this.mappings = [];
-    this.inputSourceMap =
-      opts.inputSourceMap === undefined
-        ? undefined
-        : new SourceMapConsumer(opts.inputSourceMap);
+    this.inputSourceMap = opts.inputSourceMap === undefined
+      ? undefined : new SourceMapConsumer(opts.inputSourceMap);
 
     this.lineLengths = [];
     this.buf = [];
@@ -154,18 +150,17 @@ export default class Buffer {
     filename: undefined | string = this.opts.sourceFileName,
   ) {
     // TODO: emit a mapping with `original: undefined` in this case - after
+
     // deduplicating using lastSourceLine and lastSourceColumn.
     if (originalLine === undefined || originalColumn === undefined) {
       return undefined;
     }
 
     // If this mapping points to the same source location as the last one, we can ignore it since
+
     // the previous one covers it.
-    if (
-      this.lastGenLine === generatedLine &&
-      this.lastSourceLine === originalLine &&
-      this.lastSourceColumn === originalColumn
-    ) {
+    if (this.lastGenLine === generatedLine && this.lastSourceLine ===
+    originalLine && this.lastSourceColumn === originalColumn) {
       return undefined;
     }
 
@@ -232,7 +227,9 @@ export default class Buffer {
     this.buf.push(str);
     this.last = str[str.length - 1];
 
-    for (let i = 0; i < str.length; i++) {
+    for (let i = 0;
+    i < str.length;
+    i++) {
       this.position.index = inc(this.position.index);
 
       if (str[i] === '\n') {
@@ -310,7 +307,6 @@ export default class Buffer {
    * Sets a given position as the current source location so generated code after this call
    * will be given this position in the sourcemap.
    */
-
   source(prop: string, loc: undefined | SourceLocation): void {
     if (prop && !loc) {
       return undefined;
@@ -319,21 +315,16 @@ export default class Buffer {
     // @ts-ignore
     const pos = loc ? loc[prop] : undefined;
 
-    this.sourcePosition.identifierName =
-      (loc && loc.identifierName) || undefined;
+    this.sourcePosition.identifierName = loc && loc.identifierName || undefined;
     this.sourcePosition.line = pos ? pos.line : undefined;
     this.sourcePosition.column = pos ? pos.column : undefined;
-    this.sourcePosition.filename = (loc && loc.filename) || undefined;
+    this.sourcePosition.filename = loc && loc.filename || undefined;
   }
 
   /**
    * Call a callback with a specific source location and restore on completion.
    */
-  withSource(
-    prop: string,
-    loc: undefined | SourceLocation,
-    cb: () => void,
-  ): void {
+  withSource(prop: string, loc: undefined | SourceLocation, cb: () => void): void {
     // Use the call stack to manage a stack of "source location" data.
     const originalLine = this.sourcePosition.line;
     const originalColumn = this.sourcePosition.column;

@@ -11,11 +11,8 @@ import {UnaryExpression, unaryExpression, AnyNode} from '@romejs/js-ast';
 export default function UnaryExpression(generator: Generator, node: AnyNode) {
   node = unaryExpression.assert(node);
 
-  if (
-    node.operator === 'void' ||
-    node.operator === 'delete' ||
-    node.operator === 'typeof'
-  ) {
+  if (node.operator === 'void' || node.operator === 'delete' ||
+  node.operator === 'typeof') {
     generator.word(node.operator);
     generator.space();
   } else {

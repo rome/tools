@@ -48,16 +48,15 @@ export default class DependencyOrderer {
     const filename = path.join();
 
     // We flag a possible cycle when a dependency has yet to have it's own transitive dependencies resolve but it ends up going back to itself
-    const isPossibleCycle =
-      this.orderedNodes.has(node) === false && ancestry.includes(filename);
+    const isPossibleCycle = this.orderedNodes.has(node) === false &&
+      ancestry.includes(filename);
     if (isPossibleCycle) {
       const ourCyclePath = ancestry.concat([filename]);
       const existingCycle = this.possibleCyclePaths.get(node);
 
       // We want to get the shortest cycle path since it's likely the most easily resolved
-      const isShortestCycle =
-        existingCycle === undefined ||
-        existingCycle.length > ourCyclePath.length;
+      const isShortestCycle = existingCycle === undefined ||
+      existingCycle.length > ourCyclePath.length;
       if (isShortestCycle) {
         this.possibleCyclePaths.set(node, ourCyclePath);
       }
@@ -94,17 +93,22 @@ export default class DependencyOrderer {
   }
 
   // We detect cycles by determining if there were any references to imports at the top level that
+
   // are for a module that will be initialized before
   detectCycles() {
     const flatOrder = Array.from(this.orderedNodes);
 
-    for (let i = 0; i < flatOrder.length; i++) {
+    for (let i = 0;
+    i < flatOrder.length;
+    i++) {
       const node = flatOrder[i];
 
       for (const imp of node.analyze.importFirstUsage) {
-        const resolved = node
-          .getNodeFromRelativeDependency(imp.source)
-          .resolveImport(imp.imported, imp.loc);
+        const resolved =
+        node.getNodeFromRelativeDependency(imp.source).resolveImport(
+          imp.imported,
+          imp.loc,
+        );
         if (resolved.type !== 'FOUND') {
           continue;
         }
@@ -136,9 +140,9 @@ export default class DependencyOrderer {
     }
 
     const target = path[path.length - 1];
-    const culprit = String(
-      path.find((value, index) => path[index - 1] === target),
-    );
+    const culprit = String(path.find(
+      (value, index) => path[index - 1] === target,
+    ));
 
     function formatPart(part: string, index?: number): string {
       const tagged = `<filelink target="${part}" />`;
@@ -164,15 +168,12 @@ export default class DependencyOrderer {
         {
           type: 'log',
           category: 'info',
-          message:
-            'This is because the module it belongs to wont be executed yet. This is due to a circular dependency creating a module cycle.',
+          message: 'This is because the module it belongs to wont be executed yet. This is due to a circular dependency creating a module cycle.',
         },
         {
           type: 'log',
           category: 'info',
-          message: `The likely cause is the file ${formatPart(
-            culprit,
-          )} that was required by ${formatPart(
+          message: `The likely cause is the file ${formatPart(culprit)} that was required by ${formatPart(
             target,
           )} which created a circular dependency:`,
         },
@@ -189,12 +190,12 @@ export default class DependencyOrderer {
   order(path: AbsoluteFilePath): DependencyOrder {
     this.addFile(path, []);
     // TODO only enable when bundlerMode === 'modern'
-    // this.detectCycles();
 
+    // this.detectCycles();
     return {
       firstTopAwaitLocations: this.firstTopAwaitLocations,
       diagnostics: this.diagnostics,
-      files: Array.from(this.orderedNodes, node => node.path),
+      files: Array.from(this.orderedNodes, (node) => node.path),
     };
   }
 }

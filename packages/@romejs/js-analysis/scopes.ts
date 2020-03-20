@@ -76,21 +76,20 @@ export class Scope {
   query(paths: Array<string>): T {
     let initial = this.getBinding(paths[0]);
     if (initial === undefined) {
-      throw new Error(
-        `Expected "${paths[0]}" binding, found ${JSON.stringify(
-          this.getBindingNames(),
-        )} ${this.evaluator.filename}`,
-      );
+      throw new Error(`Expected "${paths[0]}" binding, found ${JSON.stringify(
+        this.getBindingNames(),
+      )} ${this.evaluator.filename}`);
     }
-    //invariant(initial !== undefined, `Expected "${paths[0]}" binding`);
 
-    for (let i = 1; i < paths.length; i++) {
-      initial = new GetPropT(
+    //invariant(initial !== undefined, `Expected "${paths[0]}" binding`);
+    for (let i = 1;
+    i < paths.length;
+    i++) {
+      initial = new GetPropT(this, undefined, initial, new StringLiteralT(
         this,
         undefined,
-        initial,
-        new StringLiteralT(this, undefined, paths[i]),
-      );
+        paths[i],
+      ));
     }
 
     return initial;
@@ -112,10 +111,7 @@ export class Scope {
     }
 
     const existingBinding = this.bindings.get(name);
-    if (
-      existingBinding !== undefined &&
-      existingBinding.status === 'declared'
-    ) {
+    if (existingBinding !== undefined && existingBinding.status === 'declared') {
       if (!(existingBinding.type instanceof OpenT)) {
         throw new Error('expected OpenT');
       }
@@ -130,8 +126,8 @@ export class Scope {
   }
 
   getBindingNames(): Array<string> {
-    const names: Set<string> = new Set(
-      this.parentScope ? this.parentScope.getBindingNames() : [],
+    const names: Set<string> = new Set(this.parentScope
+      ? this.parentScope.getBindingNames() : []
     );
 
     for (const [name] of this.bindings) {
@@ -190,11 +186,9 @@ export class Scope {
 }
 
 //#
-
 export class RefineScope extends Scope {}
 
 //#
-
 type ClassScopeMeta = {
   instance: OpenT;
   static: OpenT;
@@ -210,7 +204,6 @@ export class ClassScope extends Scope {
 }
 
 //#
-
 export class ThisScope extends Scope {
   constructor(opts: ScopeOptions, context: T) {
     super(opts);
@@ -221,7 +214,6 @@ export class ThisScope extends Scope {
 }
 
 //#
-
 type FunctionScopeMeta = {
   thisContext: T;
   returnType: OpenT;

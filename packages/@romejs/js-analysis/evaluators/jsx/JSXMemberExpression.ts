@@ -6,11 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {
-  JSXMemberExpression,
-  jsxMemberExpression,
-  AnyNode,
-} from '@romejs/js-ast';
+import {JSXMemberExpression, jsxMemberExpression, AnyNode} from '@romejs/js-ast';
 
 export default function JSXMemberExpression(node: AnyNode, scope: Scope) {
   node = jsxMemberExpression.assert(node);

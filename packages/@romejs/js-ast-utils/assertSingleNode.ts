@@ -11,9 +11,7 @@ import {AnyNode} from '@romejs/js-ast';
 export default function assertSingleNode(result: TransformExitResult): AnyNode {
   if (Array.isArray(result)) {
     if (result.length !== 1) {
-      throw new Error(
-        `Expected node list length of 1 but got ${result.length}`,
-      );
+      throw new Error(`Expected node list length of 1 but got ${result.length}`);
     }
     return result[0];
   } else if (result === undefined) {

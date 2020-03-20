@@ -13,12 +13,14 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclareModule = JSNodeBase & {
-  type: 'FlowDeclareModule';
-  id: BindingIdentifier | StringLiteral;
-  body: BlockStatement;
-  kind?: 'commonjs' | 'es';
-};
+export type FlowDeclareModule = 
+  & JSNodeBase
+  & {
+    type: 'FlowDeclareModule';
+    id: BindingIdentifier | StringLiteral;
+    body: BlockStatement;
+    kind?: 'commonjs' | 'es';
+  };
 
 export const flowDeclareModule = createBuilder<FlowDeclareModule>(
   'FlowDeclareModule',

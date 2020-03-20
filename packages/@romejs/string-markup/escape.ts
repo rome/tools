@@ -11,11 +11,12 @@ import {coerce0} from '@romejs/ob1';
 // A tagged template literal helper that will escape all interpolated strings, ensuring only markup works
 export function markup(
   strs: TemplateStringsArray,
-  ...values: Array<unknown>
-): string {
+...values: Array<unknown>): string {
   let out = '';
 
-  for (let i = 0; i < strs.length; i++) {
+  for (let i = 0;
+  i < strs.length;
+  i++) {
     const str = strs[i];
     out += str;
 
@@ -48,7 +49,9 @@ export function safeMarkup(input: string): SafeMarkup {
 
 export function escapeMarkup(input: string): string {
   let escaped = '';
-  for (let i = 0; i < input.length; i++) {
+  for (let i = 0;
+  i < input.length;
+  i++) {
     const char = input[i];
 
     if (isTagChar(coerce0(i), input)) {

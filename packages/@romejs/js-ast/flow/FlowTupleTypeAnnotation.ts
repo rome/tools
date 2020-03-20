@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyFlowPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowTupleTypeAnnotation = JSNodeBase & {
-  type: 'FlowTupleTypeAnnotation';
-  types: Array<AnyFlowPrimary>;
-};
+export type FlowTupleTypeAnnotation = 
+  & JSNodeBase
+  & {
+    type: 'FlowTupleTypeAnnotation';
+    types: Array<AnyFlowPrimary>;
+  };
 
 export const flowTupleTypeAnnotation = createBuilder<FlowTupleTypeAnnotation>(
   'FlowTupleTypeAnnotation',

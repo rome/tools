@@ -14,8 +14,8 @@ export default function BlockStatement(generator: Generator, node: AnyNode) {
   generator.token('{');
   generator.printInnerComments(node);
 
-  const hasDirectives: boolean = Boolean(
-    node.directives && node.directives.length > 0,
+  const hasDirectives: boolean = Boolean(node.directives &&
+    node.directives.length > 0
   );
 
   if (node.body.length > 0 || hasDirectives) {

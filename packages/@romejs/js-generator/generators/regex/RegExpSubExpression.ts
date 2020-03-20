@@ -6,16 +6,9 @@
  */
 
 import Generator from '../../Generator';
-import {
-  AnyNode,
-  RegExpSubExpression,
-  regExpSubExpression,
-} from '@romejs/js-ast';
+import {AnyNode, RegExpSubExpression, regExpSubExpression} from '@romejs/js-ast';
 
-export default function RegExpSubExpression(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function RegExpSubExpression(generator: Generator, node: AnyNode) {
   node = regExpSubExpression.assert(node);
 
   for (const item of node.body) {

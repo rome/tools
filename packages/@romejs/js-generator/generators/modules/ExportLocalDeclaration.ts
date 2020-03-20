@@ -28,10 +28,8 @@ export default function ExportLocalDeclaration(
 }
 
 export function _ExportDeclaration(generator: Generator, node: AnyNode) {
-  node =
-    node.type === 'ExportDefaultDeclaration'
-      ? node
-      : exportLocalDeclaration.assert(node);
+  node = node.type === 'ExportDefaultDeclaration'
+    ? node : exportLocalDeclaration.assert(node);
 
   if (node.declaration) {
     const declar = node.declaration;

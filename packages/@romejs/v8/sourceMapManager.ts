@@ -34,7 +34,9 @@ function prepareStackTrace(err: Error, frames: Array<NodeJS.CallSite>) {
     addErrorFrames(err, frames);
     return buildStackString(err);
   } catch (err2) {
-    return `${err.name}: ${err.message}\n  Failed to generate stacktrace: ${err2.message}`;
+    return (
+      `${err.name}: ${err.message}\n  Failed to generate stacktrace: ${err2.message}`
+    );
   }
 }
 
@@ -98,11 +100,8 @@ function buildStackString(err: Error): string {
 
     if (isNative) {
       parts.push('native');
-    } else if (
-      filename !== undefined &&
-      lineNumber !== undefined &&
-      columnNumber !== undefined
-    ) {
+    } else if (filename !== undefined && lineNumber !== undefined &&
+      columnNumber !== undefined) {
       parts.push(`(${filename}:${lineNumber}:${columnNumber})`);
     }
 
@@ -125,73 +124,71 @@ function noNull<T>(val: null | T): undefined | T {
 }
 
 function addErrorFrames(
-  err: Error & {
-    [ERROR_FRAMES_PROP]?: unknown;
-    [ERROR_POP_FRAMES_PROP]?: unknown;
-  },
+  err: 
+    & Error
+    & {
+      [ERROR_FRAMES_PROP]?: unknown;
+      [ERROR_POP_FRAMES_PROP]?: unknown;
+    },
+
   frames: Array<NodeJS.CallSite>,
 ) {
   if (err[ERROR_FRAMES_PROP]) {
     return undefined;
   }
 
-  let builtFrames = frames.map(
-    (frameApi): ErrorFrame => {
-      const filename = frameApi.getFileName();
-      const lineNumber = frameApi.getLineNumber();
-      const columnNumber = frameApi.getColumnNumber();
+  let builtFrames = frames.map((frameApi): ErrorFrame => {
+    const filename = frameApi.getFileName();
+    const lineNumber = frameApi.getLineNumber();
+    const columnNumber = frameApi.getColumnNumber();
 
-      const frame: ErrorFrame = {
-        typeName: noNull(frameApi.getTypeName()),
-        functionName: noNull(frameApi.getFunctionName()),
-        methodName: noNull(frameApi.getMethodName()),
+    const frame: ErrorFrame = {
+      typeName: noNull(frameApi.getTypeName()),
+      functionName: noNull(frameApi.getFunctionName()),
+      methodName: noNull(frameApi.getMethodName()),
 
-        isTopLevel: frameApi.isToplevel(),
-        isEval: frameApi.isEval(),
-        isNative: frameApi.isNative(),
-        isConstructor: frameApi.isConstructor(),
+      isTopLevel: frameApi.isToplevel(),
+      isEval: frameApi.isEval(),
+      isNative: frameApi.isNative(),
+      isConstructor: frameApi.isConstructor(),
 
-        // TODO frameApi.isAsync
-        isAsync: false,
+      // TODO frameApi.isAsync
+      isAsync: false,
 
-        resolvedLocation: true,
+      resolvedLocation: true,
 
-        filename: noNull(filename),
-        lineNumber: lineNumber == null ? undefined : coerce1(lineNumber),
+      filename: noNull(filename),
+      lineNumber: lineNumber == null ? undefined : coerce1(lineNumber),
 
-        // Rome expects 0-indexed columns, V8 provides 1-indexed
-        columnNumber:
-          columnNumber == null ? undefined : coerce1to0(columnNumber),
+      // Rome expects 0-indexed columns, V8 provides 1-indexed
+      columnNumber: columnNumber == null ? undefined : coerce1to0(columnNumber),
+    };
+
+    if (frame.filename !== undefined && frame.lineNumber !== undefined &&
+      frame.columnNumber !== undefined) {
+      const {found, line, column, filename, name} = resolveLocation(
+        frame.filename,
+        frame.lineNumber,
+        frame.columnNumber,
+      );
+
+      return {
+        ...frame,
+        functionName: frame.functionName === undefined
+          ? name : frame.functionName,
+        methodName: frame.methodName === undefined ? name : frame.methodName,
+        resolvedLocation: found,
+        lineNumber: line,
+        columnNumber: column,
+        filename,
       };
-
-      if (
-        frame.filename !== undefined &&
-        frame.lineNumber !== undefined &&
-        frame.columnNumber !== undefined
-      ) {
-        const {found, line, column, filename, name} = resolveLocation(
-          frame.filename,
-          frame.lineNumber,
-          frame.columnNumber,
-        );
-
-        return {
-          ...frame,
-          functionName:
-            frame.functionName === undefined ? name : frame.functionName,
-          methodName: frame.methodName === undefined ? name : frame.methodName,
-          resolvedLocation: found,
-          lineNumber: line,
-          columnNumber: column,
-          filename,
-        };
-      } else {
-        return frame;
-      }
-    },
-  );
+    } else {
+      return frame;
+    }
+  });
 
   // This is a property that an error object can define that will remove that amount of frames
+
   // This is useful for removing levels of indirection, for example, an invariant error
   const framesToProp = err[ERROR_POP_FRAMES_PROP];
   if (typeof framesToProp === 'number') {
@@ -242,6 +239,7 @@ export function addSourceMap(filename: string, map: SourceMap) {
 }
 
 // Add a source map factory. We jump through some hoops to return a function to remove the source map.
+
 // We make sure not to remove the source map if it's been subsequently added by another call.
 export function addSourceMapFactory(
   filename: string,

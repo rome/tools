@@ -7,18 +7,19 @@
 
 import {BaseTokens, ValueToken, SimpleToken} from '@romejs/parser-core';
 
-export type Tokens = BaseTokens & {
-  Text: ValueToken<'Text', string>;
-  Slash: SimpleToken<'Slash'>;
-  Less: SimpleToken<'Less'>;
-  Equals: SimpleToken<'Equals'>;
-  Greater: SimpleToken<'Greater'>;
-  Word: ValueToken<'Word', string>;
-  String: ValueToken<'String', string>;
-};
+export type Tokens = 
+  & BaseTokens
+  & {
+    Text: ValueToken<'Text', string>;
+    Slash: SimpleToken<'Slash'>;
+    Less: SimpleToken<'Less'>;
+    Equals: SimpleToken<'Equals'>;
+    Greater: SimpleToken<'Greater'>;
+    Word: ValueToken<'Word', string>;
+    String: ValueToken<'String', string>;
+  };
 
 //
-
 export type TextNode = {
   type: 'Text';
   value: string;
@@ -37,48 +38,48 @@ export type ChildNode = TextNode | TagNode;
 
 export type Children = Array<ChildNode>;
 
-export type TagName =
-  | 'command'
-  | 'inverse'
-  | 'dim'
-  | 'emphasis'
-  | 'number'
-  | 'hyperlink'
-  | 'filelink'
-  | 'duration'
-  | 'filesize'
-  | 'italic'
-  | 'underline'
-  | 'strike'
-  | 'black'
-  | 'brightBlack'
-  | 'red'
-  | 'brightRed'
-  | 'green'
-  | 'brightGreen'
-  | 'yellow'
-  | 'brightYellow'
-  | 'blue'
-  | 'brightBlue'
-  | 'magenta'
-  | 'brightMagenta'
-  | 'cyan'
-  | 'brightCyan'
-  | 'white'
-  | 'brightWhite'
-  | 'bgBlack'
-  | 'bgBrightBlack'
-  | 'bgRed'
-  | 'bgBrightRed'
-  | 'bgGreen'
-  | 'bgBrightGreen'
-  | 'bgYellow'
-  | 'bgBrightYellow'
-  | 'bgBlue'
-  | 'bgBrightBlue'
-  | 'bgMagenta'
-  | 'bgBrightMagenta'
-  | 'bgCyan'
-  | 'bgBrightCyan'
-  | 'bgWhite'
-  | 'bgBrightWhite';
+export type TagName = 
+    | 'command'
+    | 'inverse'
+    | 'dim'
+    | 'emphasis'
+    | 'number'
+    | 'hyperlink'
+    | 'filelink'
+    | 'duration'
+    | 'filesize'
+    | 'italic'
+    | 'underline'
+    | 'strike'
+    | 'black'
+    | 'brightBlack'
+    | 'red'
+    | 'brightRed'
+    | 'green'
+    | 'brightGreen'
+    | 'yellow'
+    | 'brightYellow'
+    | 'blue'
+    | 'brightBlue'
+    | 'magenta'
+    | 'brightMagenta'
+    | 'cyan'
+    | 'brightCyan'
+    | 'white'
+    | 'brightWhite'
+    | 'bgBlack'
+    | 'bgBrightBlack'
+    | 'bgRed'
+    | 'bgBrightRed'
+    | 'bgGreen'
+    | 'bgBrightGreen'
+    | 'bgYellow'
+    | 'bgBrightYellow'
+    | 'bgBlue'
+    | 'bgBrightBlue'
+    | 'bgMagenta'
+    | 'bgBrightMagenta'
+    | 'bgCyan'
+    | 'bgBrightCyan'
+    | 'bgWhite'
+    | 'bgBrightWhite';

@@ -6,11 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {
-  FunctionDeclaration,
-  functionDeclaration,
-  AnyNode,
-} from '@romejs/js-ast';
+import {FunctionDeclaration, functionDeclaration, AnyNode} from '@romejs/js-ast';
 import executeFunction from '../../utils/executeFunction';
 
 export default function FunctionDeclaration(node: AnyNode, scope: Scope) {

@@ -8,12 +8,14 @@
 import {JSNodeBase, PatternMeta} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type BindingIdentifier = JSNodeBase & {
-  type: 'BindingIdentifier';
-  name: string;
-  definite?: boolean;
-  meta?: PatternMeta;
-};
+export type BindingIdentifier = 
+  & JSNodeBase
+  & {
+    type: 'BindingIdentifier';
+    name: string;
+    definite?: boolean;
+    meta?: PatternMeta;
+  };
 
 export const bindingIdentifier = createQuickBuilder<BindingIdentifier, 'name'>(
   'BindingIdentifier',

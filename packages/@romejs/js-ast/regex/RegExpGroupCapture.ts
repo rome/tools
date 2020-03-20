@@ -8,11 +8,13 @@
 import {JSNodeBase, AnyRegExpExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpGroupCapture = JSNodeBase & {
-  type: 'RegExpGroupCapture';
-  expression: AnyRegExpExpression;
-  name?: string;
-};
+export type RegExpGroupCapture = 
+  & JSNodeBase
+  & {
+    type: 'RegExpGroupCapture';
+    expression: AnyRegExpExpression;
+    name?: string;
+  };
 
 export const regExpGroupCapture = createBuilder<RegExpGroupCapture>(
   'RegExpGroupCapture',

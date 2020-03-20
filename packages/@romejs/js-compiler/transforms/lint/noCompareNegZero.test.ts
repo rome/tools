@@ -8,7 +8,7 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('disallows comparing negative zero', async t => {
+test('disallows comparing negative zero', async (t) => {
   const sourceTextA = '(1 >= -0)';
 
   const sourceTextB = '(1 >= 0)';
@@ -20,7 +20,7 @@ test('disallows comparing negative zero', async t => {
       filename: 'unknown',
       fixable: true,
       language: 'js',
-      message: "Do not use the '>=' operator to compare against -0",
+      message: 'Do not use the \'>=\' operator to compare against -0',
       mtime: undefined,
       sourceType: 'module',
       origins: [{category: 'lint'}],

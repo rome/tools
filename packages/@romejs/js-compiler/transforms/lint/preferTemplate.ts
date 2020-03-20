@@ -13,17 +13,12 @@ export default {
   enter(path: Path): AnyNode {
     const {node} = path;
 
-    if (
-      node.type === 'BinaryExpression' &&
-      node.operator === '+' &&
-      ((node.left.type === 'StringLiteral' && !node.left.value.includes('`')) ||
-        (node.right.type === 'StringLiteral' &&
-          !node.right.value.includes('`')))
-    ) {
+    if (node.type === 'BinaryExpression' && node.operator === '+' &&
+      (node.left.type === 'StringLiteral' && !node.left.value.includes('`') ||
+      node.right.type === 'StringLiteral' && !node.right.value.includes('`'))) {
       path.context.addNodeDiagnostic(node, {
         category: 'lint/preferTemplate',
-        message:
-          "You're using string concatenation when template literals are preferred",
+        message: 'You\'re using string concatenation when template literals are preferred',
       });
     }
 

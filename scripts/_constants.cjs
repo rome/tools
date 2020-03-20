@@ -14,10 +14,6 @@ exports.generatorsFolder = path.join(
   'js-generator',
   'generators',
 );
-exports.analysisFolder = path.join(
-  exports.packages,
-  'js-analysis',
-  'evaluators',
-);
+exports.analysisFolder = path.join(exports.packages, 'js-analysis', 'evaluators');
 exports.astFolder = path.join(exports.packages, 'js-ast');
 exports.argv = process.argv.slice(2);

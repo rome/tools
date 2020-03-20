@@ -13,13 +13,15 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TypeAliasTypeAnnotation = JSNodeBase & {
-  type: 'TypeAliasTypeAnnotation';
-  id: BindingIdentifier;
-  typeParameters?: AnyTypeParameter;
-  right: AnyPrimaryType;
-  declare?: boolean | undefined;
-};
+export type TypeAliasTypeAnnotation = 
+  & JSNodeBase
+  & {
+    type: 'TypeAliasTypeAnnotation';
+    id: BindingIdentifier;
+    typeParameters?: AnyTypeParameter;
+    right: AnyPrimaryType;
+    declare?: boolean | undefined;
+  };
 
 export const typeAliasTypeAnnotation = createBuilder<TypeAliasTypeAnnotation>(
   'TypeAliasTypeAnnotation',

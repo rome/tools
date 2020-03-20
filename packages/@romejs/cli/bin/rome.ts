@@ -17,10 +17,8 @@ import worker from '../worker';
 import {readFileTextSync} from '@romejs/fs';
 
 async function main() {
-  switch (
-    process.env.ROME_PROCESS_VERSION === VERSION &&
-    process.env.ROME_PROCESS_TYPE
-  ) {
+  switch (process.env.ROME_PROCESS_VERSION === VERSION &&
+    process.env.ROME_PROCESS_TYPE) {
     case 'master':
       return master();
 
@@ -36,11 +34,11 @@ async function main() {
 }
 
 sourceMapManager.init();
-sourceMapManager.addSourceMapFactory(BIN.join(), () =>
-  JSON.parse(readFileTextSync(MAP)),
+sourceMapManager.addSourceMapFactory(BIN.join(), () => 
+  JSON.parse(readFileTextSync(MAP))
 );
 
-main().catch(err => {
+main().catch((err) => {
   const diags = getDiagnosticsFromError(err);
   if (diags === undefined) {
     console.error('Error thrown inside the CLI handler');

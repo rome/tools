@@ -36,7 +36,7 @@ function createCoverageFileStats(
     uncovered,
     covered,
     total,
-    percent: total === 0 ? 100 : (100 / total) * covered,
+    percent: total === 0 ? 100 : 100 / total * covered,
   };
 }
 
@@ -45,14 +45,11 @@ export default class CoverageCollector {
     this.sourceMaps = new Map();
   }
 
-  sourceMaps: Map<
-    string,
-    {
-      code: string;
-      ranges: Array<CoverageRangeWithMetadata>;
-      map: SourceMap;
-    }
-  >;
+  sourceMaps: Map<string, {
+    code: string;
+    ranges: Array<CoverageRangeWithMetadata>;
+    map: SourceMap;
+  }>;
 
   addSourceMap(filename: string, code: string, map: SourceMap) {
     this.sourceMaps.set(filename, {
@@ -72,20 +69,19 @@ export default class CoverageCollector {
       }
 
       for (const {ranges, functionName, isBlockCoverage} of entry.functions) {
-        data.ranges = data.ranges.concat(
-          ranges.map(range => {
-            let kind: LocationRangeKind = 'expression';
-            if (functionName !== '') {
-              kind = 'function';
-            } else if (isBlockCoverage) {
-              kind = 'branch';
-            }
-            return {
-              kind,
-              ...range,
-            };
-          }),
-        );
+        data.ranges = data.ranges.concat(ranges.map((range) => {
+          let kind: LocationRangeKind = 'expression';
+          if (functionName !== '') {
+            kind = 'function';
+          } else if (isBlockCoverage) {
+            kind = 'branch';
+          }
+
+          return {
+            kind,
+            ...range,
+          };
+        }));
       }
     }
   }
@@ -229,7 +225,9 @@ export default class CoverageCollector {
 
       for (const {count, kind, start, end} of ranges) {
         // Fill in lines
-        for (let i = start.line; i <= end.line; i = inc(i)) {
+        for (let i = start.line;
+        i <= end.line;
+        i = inc(i)) {
           if (count === 0) {
             uncoveredLines.add(i);
           } else {
@@ -268,11 +266,8 @@ export default class CoverageCollector {
       }
 
       // No point showing fully covered files
-      if (
-        uncoveredLines.size === 0 &&
-        uncoveredBranches.size === 0 &&
-        uncoveredFunctions.size === 0
-      ) {
+      if (uncoveredLines.size === 0 && uncoveredBranches.size === 0 &&
+        uncoveredFunctions.size === 0) {
         continue;
       }
 

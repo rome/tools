@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyFlowPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowArrayTypeAnnotation = JSNodeBase & {
-  type: 'FlowArrayTypeAnnotation';
-  elementType: AnyFlowPrimary;
-};
+export type FlowArrayTypeAnnotation = 
+  & JSNodeBase
+  & {
+    type: 'FlowArrayTypeAnnotation';
+    elementType: AnyFlowPrimary;
+  };
 
 export const flowArrayTypeAnnotation = createBuilder<FlowArrayTypeAnnotation>(
   'FlowArrayTypeAnnotation',

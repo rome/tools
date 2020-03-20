@@ -14,11 +14,7 @@ import {ROME_CONFIG_FILENAMES, ROME_CONFIG_FOLDER} from './constants';
 
 export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
   const {configPath, projectFolder: folder, consumer} = meta;
-  if (
-    configPath === undefined ||
-    folder === undefined ||
-    consumer === undefined
-  ) {
+  if (configPath === undefined || folder === undefined || consumer === undefined) {
     throw new Error('This is not a disk project');
   }
 
@@ -32,7 +28,7 @@ export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
 
 export function arrayOfStrings(consumer: Consumer): Array<string> {
   if (consumer.exists()) {
-    return consumer.asArray().map(item => item.asString());
+    return consumer.asArray().map((item) => item.asString());
   } else {
     return [];
   }
@@ -40,7 +36,7 @@ export function arrayOfStrings(consumer: Consumer): Array<string> {
 
 export function arrayOfPatterns(consumer: Consumer): PathPatterns {
   // TODO consumer.handleThrownDiagnostics
-  return consumer.asArray().map(item => {
+  return consumer.asArray().map((item) => {
     return parsePathPattern({
       path: consumer.filename,
       input: item.asString(),

@@ -37,27 +37,27 @@ export default createMasterCommand({
     const {reporter, master} = req;
 
     const files = await req.getFilesFromArgs({
-      getProjectIgnore: project => ({
-        patterns: project.config.tests.ignore,
-        source: master.projectManager.findProjectConfigConsumer(
-          project,
-          consumer =>
+      getProjectIgnore: (project) => 
+        ({
+          patterns: project.config.tests.ignore,
+          source: master.projectManager.findProjectConfigConsumer(project, (
+            consumer,
+          ) => 
             consumer.has('tests') && consumer.get('tests').has('ignore')
-              ? consumer.get('tests').get('ignore')
-              : undefined,
-        ),
-      }),
-      getProjectEnabled: project => ({
-        enabled: project.config.tests.enabled,
-        source: master.projectManager.findProjectConfigConsumer(
-          project,
-          consumer =>
+              ? consumer.get('tests').get('ignore') : undefined
+          ),
+        }),
+      getProjectEnabled: (project) => 
+        ({
+          enabled: project.config.tests.enabled,
+          source: master.projectManager.findProjectConfigConsumer(project, (
+            consumer,
+          ) => 
             consumer.has('tests')
-              ? consumer.get('tests').get('enabled')
-              : undefined,
-        ),
-      }),
-      test: path => path.hasExtension('test'),
+              ? consumer.get('tests').get('enabled') : undefined
+          ),
+        }),
+      test: (path) => path.hasExtension('test'),
       noun: 'test',
       verb: 'testing',
       configCategory: 'tests',
@@ -65,8 +65,7 @@ export default createMasterCommand({
         {
           type: 'log',
           category: 'info',
-          message:
-            'Searched for files with <emphasis>.test.*</emphasis> file extension',
+          message: 'Searched for files with <emphasis>.test.*</emphasis> file extension',
         },
       ],
       extensions: JS_EXTENSIONS,
@@ -81,21 +80,15 @@ export default createMasterCommand({
 
     let addDiagnostics: PartialDiagnostics = [];
 
-    const tests: Map<
-      string,
-      {
-        code: string;
-        sourceMap: SourceMap;
-        path: AbsoluteFilePath;
-      }
-    > = new Map();
+    const tests: Map<string, {
+      code: string;
+      sourceMap: SourceMap;
+      path: AbsoluteFilePath;
+    }> = new Map();
 
-    const bundler = new Bundler(
-      req,
-      req.getBundlerConfigFromFlags({
-        mocks: true,
-      }),
-    );
+    const bundler = new Bundler(req, req.getBundlerConfigFromFlags({
+      mocks: true,
+    }));
 
     for (const [path, res] of await bundler.bundleMultiple(Array.from(files))) {
       tests.set(path.join(), {

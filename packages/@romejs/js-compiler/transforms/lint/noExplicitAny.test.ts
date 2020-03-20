@@ -8,7 +8,7 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('no explicit any', async t => {
+test('no explicit any', async (t) => {
   const validTestCases = [
     'const age: number = 17;age;',
     'const ages: number[] = [17];ages;',
@@ -22,9 +22,9 @@ test('no explicit any', async t => {
   ];
 
   const invalidTestCases = [
-    "const age: any = 'seventeen';age;",
-    "const ages: any[] = ['seventeen'];ages;",
-    "const ages: Array<any> = ['seventeen'];ages;",
+    'const age: any = \'seventeen\';age;',
+    'const ages: any[] = [\'seventeen\'];ages;',
+    'const ages: Array<any> = [\'seventeen\'];ages;',
     'function greet(): any {};greet();',
     'function greet(): any[] {};greet();',
     'function greet(): Array<any> {};greet();',

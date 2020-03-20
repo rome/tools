@@ -15,11 +15,13 @@ import OpenT from '../types/OpenT';
 import buildGraph from './buildGraph';
 import {TransformProjectDefinition} from '@romejs/js-compiler';
 
-export default async function check(opts: {
-  ast: Program;
-  project: TransformProjectDefinition;
-  provider: CheckProvider;
-}): Promise<PartialDiagnostics> {
+export default async function check(
+  opts: {
+    ast: Program;
+    project: TransformProjectDefinition;
+    provider: CheckProvider;
+  },
+): Promise<PartialDiagnostics> {
   const hub = await buildGraph({
     ast: opts.ast,
     connected: true,
@@ -38,6 +40,7 @@ function resolveGraph(hub: Hub): PartialDiagnostics {
   const {graph, utils, context} = hub;
 
   // we track caught errors here as if a normal type returns a error in it's reduce() method
+
   // then it will be added to the graph, however we'd have already dealt with it
   const caughtErrors: Set<T> = new Set();
 
@@ -74,10 +77,8 @@ function resolveGraph(hub: Hub): PartialDiagnostics {
       let advice: PartialDiagnosticAdvice = [];
 
       if (upperTarget !== undefined) {
-        const marker =
-          upperTarget && !(upperTarget instanceof reduced.constructor)
-            ? utils.humanize(upperTarget)
-            : undefined;
+        const marker = upperTarget && !(upperTarget instanceof
+        reduced.constructor) ? utils.humanize(upperTarget) : undefined;
         const {originLoc} = upperTarget;
 
         if (originLoc !== undefined && marker !== undefined) {
@@ -105,10 +106,8 @@ function resolveGraph(hub: Hub): PartialDiagnostics {
         category,
         message,
         advice,
-        marker:
-          lowerTarget && !(lowerTarget instanceof reduced.constructor)
-            ? utils.humanize(lowerTarget)
-            : undefined,
+        marker: lowerTarget && !(lowerTarget instanceof reduced.constructor)
+          ? utils.humanize(lowerTarget) : undefined,
       });
       continue;
     }

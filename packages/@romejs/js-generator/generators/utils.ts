@@ -41,8 +41,7 @@ export function buildForXStatementGenerator(op: 'of' | 'in'): GeneratorMethod {
 
 export function buildYieldAwaitGenerator(keyword: string): GeneratorMethod {
   return function(generator: Generator, node: AnyNode) {
-    node =
-      node.type === 'YieldExpression' ? node : awaitExpression.assert(node);
+    node = node.type === 'YieldExpression' ? node : awaitExpression.assert(node);
 
     generator.word(keyword);
 
@@ -62,26 +61,19 @@ export function buildYieldAwaitGenerator(keyword: string): GeneratorMethod {
 export function buildLabelStatementGenerator(prefix: string): GeneratorMethod {
   return function(generator: Generator, node: AnyNode) {
     node =
-      node.type === 'ContinueStatement' ||
-      node.type === 'ReturnStatement' ||
-      node.type === 'BreakStatement'
-        ? node
-        : throwStatement.assert(node);
+    node.type === 'ContinueStatement' || node.type === 'ReturnStatement' ||
+    node.type === 'BreakStatement' ? node : throwStatement.assert(node);
 
     generator.word(prefix);
 
-    if (
-      (node.type === 'ContinueStatement' || node.type === 'BreakStatement') &&
-      node.label !== undefined
-    ) {
+    if ((node.type === 'ContinueStatement' || node.type === 'BreakStatement') &&
+      node.label !== undefined) {
       generator.space();
       generator.print(node.label, node);
     }
 
-    if (
-      (node.type === 'ThrowStatement' || node.type === 'ReturnStatement') &&
-      node.argument !== undefined
-    ) {
+    if ((node.type === 'ThrowStatement' || node.type === 'ReturnStatement') &&
+      node.argument !== undefined) {
       generator.space();
 
       generator.multiline(node, (multiline, node) => {

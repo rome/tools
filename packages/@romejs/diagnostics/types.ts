@@ -29,15 +29,17 @@ export type DiagnosticSuppression = {
 
 export type DiagnosticSuppressions = Array<DiagnosticSuppression>;
 
-export type DiagnosticFilterWithTest = DiagnosticFilter & {
-  test?: (diagnostic: PartialDiagnostic) => boolean;
-};
+export type DiagnosticFilterWithTest = 
+  & DiagnosticFilter
+  & {test?: (diagnostic: PartialDiagnostic) => boolean};
 
-export type DiagnosticPointer = SourceLocation & {
-  sourceText?: string;
-  mtime?: number;
-  language?: DiagnosticLanguage;
-};
+export type DiagnosticPointer = 
+  & SourceLocation
+  & {
+    sourceText?: string;
+    mtime?: number;
+    language?: DiagnosticLanguage;
+  };
 
 export type DiagnosticOrigin = {
   category: string;
@@ -45,7 +47,6 @@ export type DiagnosticOrigin = {
 };
 
 //# FULL
-
 export type DiagnosticLogCategory = 'none' | 'info' | 'warn' | 'error';
 
 export type DiagnosticLanguage = 'json' | 'js' | 'url' | 'shell' | 'unknown';
@@ -80,7 +81,6 @@ export type DiagnosticAdviceItemFrame = {
   sourceType: DiagnosticSourceType;
   sourceText: undefined | string;
   marker: undefined | string;
-
   filename: string;
   mtime: undefined | number;
   start: Position;
@@ -108,14 +108,14 @@ export type DiagnosticAdviceItemStacktrace = {
   truncate: boolean;
 };
 
-export type DiagnosticAdviceItem =
-  | DiagnosticAdviceItemLog
-  | DiagnosticAdviceItemList
-  | DiagnosticAdviceItemCode
-  | DiagnosticAdviceItemFrame
-  | DiagnosticAdviceItemInspect
-  | DiagnosticAdviceItemDiff
-  | DiagnosticAdviceItemStacktrace;
+export type DiagnosticAdviceItem = 
+    | DiagnosticAdviceItemLog
+    | DiagnosticAdviceItemList
+    | DiagnosticAdviceItemCode
+    | DiagnosticAdviceItemFrame
+    | DiagnosticAdviceItemInspect
+    | DiagnosticAdviceItemDiff
+    | DiagnosticAdviceItemStacktrace;
 
 export type DiagnosticAdvice = Array<DiagnosticAdviceItem>;
 
@@ -131,20 +131,16 @@ export type Diagnostic = {
   message: string;
   label: undefined | string;
   filename: undefined | string;
-
   origins: Array<DiagnosticOrigin>;
   mtime: undefined | number;
   dependencies: DiagnosticDependencies;
-
   sourceType: DiagnosticSourceType;
   language: DiagnosticLanguage;
   sourceText: undefined | string;
   start: undefined | Position;
   end: undefined | Position;
-
   marker: undefined | string;
   fixable: boolean;
-
   advice: DiagnosticAdvice;
 };
 
@@ -155,76 +151,68 @@ export type DiagnosticAdviceStackFrame = {
   prefix: undefined | string;
   object: undefined | string;
   property: undefined | string;
-
   filename: undefined | string;
   line: undefined | Number1;
   column: undefined | Number0;
-
   language: DiagnosticLanguage;
   sourceText: undefined | string;
 };
 
 //# PARTIAL
-
 export type PartialDiagnostic = {
   category: DiagnosticCategory;
   label?: string;
   message: string;
-
   origins?: Array<DiagnosticOrigin>;
   dependencies?: Array<{
     filename: string;
     mtime: string;
   }>;
-
   filename?: string;
   mtime?: number;
   sourceType?: DiagnosticSourceType;
   language?: DiagnosticLanguage;
   fixable?: boolean;
   sourceText?: string;
-
   marker?: string;
   start?: Position;
   end?: Position;
-
   advice?: PartialDiagnosticAdvice;
 };
 
 export type PartialDiagnostics = Array<PartialDiagnostic>;
 
-export type PartialDiagnosticAdviceItem =
-  | {
+export type PartialDiagnosticAdviceItem = 
+    | {
       type: 'log';
       category: DiagnosticLogCategory;
       message: string;
       compact?: boolean;
     }
-  | {
+    | {
       type: 'list';
       list: Array<string>;
       truncate?: boolean;
       reverse?: boolean;
       ordered?: boolean;
     }
-  | {
+    | {
       type: 'inspect';
       data: JSONPropertyValue;
     }
-  | {
+    | {
       type: 'code';
       code: string;
       sourceType?: ConstSourceType;
       language?: DiagnosticLanguage;
     }
-  | {
+    | {
       type: 'frame';
       mtime?: number;
       language?: DiagnosticLanguage;
       sourceType?: ConstSourceType;
       sourceText?: string;
       marker?: string;
-
       filename?: string;
       start: Position;
       end: Position;
@@ -232,7 +220,7 @@ export type PartialDiagnosticAdviceItem =
       // From SourceLocation, will never appear in the final diagnostic, makes it easy to spread
       identifierName?: string;
     }
-  | {
+    | {
       type: 'diff';
       diff: Diffs;
       legend?: {
@@ -240,7 +228,7 @@ export type PartialDiagnosticAdviceItem =
         delete: string;
       };
     }
-  | {
+    | {
       type: 'stacktrace';
       title?: string;
       truncate?: boolean;
@@ -254,11 +242,9 @@ export type PartialDiagnosticAdviceStackFrame = {
   suffix?: string;
   object?: string;
   property?: string;
-
   filename?: string;
   line?: Number1;
   column?: Number0;
-
   language?: DiagnosticLanguage;
   sourceText?: string;
 };

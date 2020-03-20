@@ -13,14 +13,16 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowObjectTypeIndexer = JSNodeBase & {
-  type: 'FlowObjectTypeIndexer';
-  id?: FlowObjectTypePropertyKey;
-  key: AnyFlowPrimary;
-  value: AnyFlowPrimary;
-  static?: boolean;
-  variance?: FlowVariance;
-};
+export type FlowObjectTypeIndexer = 
+  & JSNodeBase
+  & {
+    type: 'FlowObjectTypeIndexer';
+    id?: FlowObjectTypePropertyKey;
+    key: AnyFlowPrimary;
+    value: AnyFlowPrimary;
+    static?: boolean;
+    variance?: FlowVariance;
+  };
 
 export const flowObjectTypeIndexer = createBuilder<FlowObjectTypeIndexer>(
   'FlowObjectTypeIndexer',

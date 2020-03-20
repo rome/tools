@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type ExpressionStatement = JSNodeBase & {
-  type: 'ExpressionStatement';
-  expression: AnyExpression;
-};
+export type ExpressionStatement = 
+  & JSNodeBase
+  & {
+    type: 'ExpressionStatement';
+    expression: AnyExpression;
+  };
 
 export const expressionStatement = createBuilder<ExpressionStatement>(
   'ExpressionStatement',

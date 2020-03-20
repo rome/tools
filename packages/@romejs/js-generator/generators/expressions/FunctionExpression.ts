@@ -8,14 +8,10 @@
 import Generator from '../../Generator';
 import {FunctionExpression, functionExpression, AnyNode} from '@romejs/js-ast';
 
-export default function FunctionExpression(
-  generator: Generator,
-  node: AnyNode,
-) {
-  node =
-    node.type === 'FunctionDeclaration'
-      ? node
-      : functionExpression.assert(node);
+export default function FunctionExpression(generator: Generator, node: AnyNode) {
+  node = node.type === 'FunctionDeclaration' ? node : functionExpression.assert(
+    node,
+  );
 
   if (node.head.async === true) {
     generator.word('async');

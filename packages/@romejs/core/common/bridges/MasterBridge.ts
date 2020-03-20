@@ -28,19 +28,17 @@ export type MasterQueryRequest = {
   terminateWhenIdle: boolean;
 };
 
-export type PartialMasterQueryRequest = Partial<
-  Omit<MasterQueryRequest, 'requestFlags'>
-> & {
-  requestFlags?: Partial<ClientRequestFlags>;
-  command: string;
-};
+export type PartialMasterQueryRequest = 
+  & Partial<Omit<MasterQueryRequest, 'requestFlags'>>
+  & {
+    requestFlags?: Partial<ClientRequestFlags>;
+    command: string;
+  };
 
 export type MasterQueryResponseSuccess = {
   type: 'SUCCESS';
-
   hasData: boolean;
   data: JSONPropertyValue;
-
   markers: Array<MasterMarker>;
 };
 
@@ -63,19 +61,15 @@ export type MasterQueryResponseInvalid = {
   diagnostics: Diagnostics;
 };
 
-export type MasterQueryResponse =
-  | MasterQueryResponseInvalid
-  | MasterQueryResponseSuccess
-  | MasterQueryResponseError
-  | MasterQueryResponseDiagnostics;
+export type MasterQueryResponse = 
+    | MasterQueryResponseInvalid
+    | MasterQueryResponseSuccess
+    | MasterQueryResponseError
+    | MasterQueryResponseDiagnostics;
 
-export type ProfilingStartData = {
-  samplingInterval: number;
-};
+export type ProfilingStartData = {samplingInterval: number};
 
-export type MasterBridgeJSONFlags = Omit<ClientFlags, 'cwd'> & {
-  cwd: string;
-};
+export type MasterBridgeJSONFlags = Omit<ClientFlags, 'cwd'> & {cwd: string};
 
 export type MasterBridgeInfo = {
   version: string;
@@ -107,7 +101,10 @@ export default class MasterBridge extends Bridge {
     direction: 'server<-client',
   });
 
-  log = this.createEvent<{origin: 'master' | 'worker'; chunk: string}, void>({
+  log = this.createEvent<{
+    origin: 'master' | 'worker';
+    chunk: string;
+  }, void>({
     name: 'log',
     direction: 'server->client',
   });

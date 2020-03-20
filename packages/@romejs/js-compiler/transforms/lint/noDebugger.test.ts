@@ -8,13 +8,11 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('no debugger', async t => {
-  const goodRes = await testLint(
-    `const test = { debugger: 1 };
+test('no debugger', async (t) => {
+  const goodRes = await testLint(`const test = { debugger: 1 };
     test.debugger;
     console.log(test); // To not trigger the unused var rule.
-    `,
-  );
+    `);
 
   t.is(goodRes.diagnostics.length, 0);
 

@@ -10,7 +10,7 @@ import {createUnknownFilePath} from '@romejs/path';
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('no import assign', async t => {
+test('no import assign', async (t) => {
   let failingCases = [
     'import x from "y";\nx=1;',
     'import x from "y";\n[x]=1;',
@@ -25,7 +25,7 @@ test('no import assign', async t => {
   ];
   for (let failingCase of failingCases) {
     const res = await testLint(failingCase);
-    if (!res.diagnostics.some(d => d.category === 'lint/noImportAssign')) {
+    if (!res.diagnostics.some((d) => d.category === 'lint/noImportAssign')) {
       t.fail(
         `expected "\n${failingCase}\n" to report a lint/noImportAssign diagnostic but it didn't`,
         [

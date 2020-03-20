@@ -11,13 +11,13 @@ export type ConstExportModuleKind = 'type' | 'value';
 
 export type ConstImportModuleKind = 'typeof' | ConstExportModuleKind;
 
-export type ConstTSModifier =
-  | 'readonly'
-  | 'abstract'
-  | 'static'
-  | 'public'
-  | 'private'
-  | 'protected';
+export type ConstTSModifier = 
+    | 'readonly'
+    | 'abstract'
+    | 'static'
+    | 'public'
+    | 'private'
+    | 'protected';
 
 export type ConstTSAccessibility = 'public' | 'protected' | 'private';
 

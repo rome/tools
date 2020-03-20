@@ -30,24 +30,22 @@ export default class CompilerLinter {
     spinner.setTitle('Linting');
     spinner.setTotal(paths.size);
 
-    await Promise.all(
-      pathsByWorker.map(async paths => {
-        for (const path of paths) {
-          const text = `<filelink target="${path.join()}" />`;
-          spinner.pushText(text);
+    await Promise.all(pathsByWorker.map(async (paths) => {
+      for (const path of paths) {
+        const text = `<filelink target="${path.join()}" />`;
+        spinner.pushText(text);
 
-          const {
-            diagnostics,
-            suppressions,
-          } = await this.request.requestWorkerLint(path, this.fix);
-          printer.processor.addSuppressions(suppressions);
-          printer.addDiagnostics(diagnostics);
+        const {
+          diagnostics,
+          suppressions,
+        } = await this.request.requestWorkerLint(path, this.fix);
+        printer.processor.addSuppressions(suppressions);
+        printer.addDiagnostics(diagnostics);
 
-          spinner.popText(text);
-          spinner.tick();
-        }
-      }),
-    );
+        spinner.popText(text);
+        spinner.tick();
+      }
+    }));
 
     spinner.end();
   }

@@ -7,13 +7,10 @@
 
 const SCIENTIFIC_NOTATION = /e/i;
 
-export function humanizeNumber(
-  num: bigint | number,
-  sep: string = '_',
-): string {
+export function humanizeNumber(num: bigint | number, sep: string = '_'): string {
   let str = String(num);
 
-  if (num < 1000) {
+  if (num < 1_000) {
     return str;
   }
 

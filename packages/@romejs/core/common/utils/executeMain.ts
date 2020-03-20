@@ -9,7 +9,9 @@ import {UnknownObject} from '@romejs/typescript-helpers';
 import {SourceMap} from '@romejs/codec-source-map';
 import {sourceMapManager} from '@romejs/v8';
 import internalModule = require('module');
+
 import vm = require('vm');
+
 import {
   PartialDiagnostic,
   truncateSourceText,
@@ -28,9 +30,7 @@ type ExecuteMainOptions = {
 
 export default async function executeMain(
   opts: ExecuteMainOptions,
-): Promise<{
-  syntaxError: undefined | PartialDiagnostic;
-}> {
+): Promise<{syntaxError: undefined | PartialDiagnostic}> {
   const {path, code, sourceMap, globals} = opts;
 
   const filename = path.join();
@@ -51,9 +51,9 @@ export default async function executeMain(
     setImmediate,
     setInterval,
     setTimeout,
-    require: internalModule.createRequire
-      ? internalModule.createRequire(filename)
-      : internalModule.createRequireFromPath(filename),
+    require: internalModule.createRequire ? internalModule.createRequire(
+      filename,
+    ) : internalModule.createRequireFromPath(filename),
     console,
     __dirname: path.getParent().join(),
     __filename: filename,

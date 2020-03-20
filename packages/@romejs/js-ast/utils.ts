@@ -43,25 +43,21 @@ export function assertNodeTypeSet(names: Map<string, unknown>, desc: string) {
   }
 }
 
-type JustNodeKeysProp<K, V> = V extends
-  | NodeBase
-  | Array<NodeBase>
-  | Array<undefined | NodeBase>
-  ? K
-  : never;
+type JustNodeKeysProp<K, V> = V extends 
+    | NodeBase
+    | Array<NodeBase>
+    | Array<undefined | NodeBase> ? K : never;
 
-type JustNodeKeys<T> = ExcludeCoreNodeKeys<
-  {
-    // Only include properties that are node-like
-    [K in keyof T]: JustNodeKeysProp<K, NonNullable<T[K]>>;
-  }[keyof T]
->;
+type JustNodeKeys<T> = ExcludeCoreNodeKeys<{ [K in keyof T]: JustNodeKeysProp<
+  K,
+  NonNullable<T[K]>
+> }[keyof T]>;
 
 type ExcludeCoreNodeKeys<T> = Exclude<T, keyof JSNodeBase>;
 
-type VisitorKeys<T> = {[K in JustNodeKeys<T>]: true};
+type VisitorKeys<T> = { [K in JustNodeKeys<T>]: true };
 
-type BindingKeys<T> = {[K in JustNodeKeys<T>]?: true};
+type BindingKeys<T> = { [K in JustNodeKeys<T>]?: true };
 
 type CreateBuilderOptions<Node> = {
   bindingKeys: BindingKeys<Node>;
@@ -148,29 +144,18 @@ class Builder<Node extends AnyNode> {
 }
 
 class QuickBuilder<Node extends AnyNode, Arg> extends Builder<Node> {
-  constructor(
-    type: string,
-    visitorKeys: VisitorKeys<Node>,
-    quickKey: keyof Node,
-  ) {
+  constructor(type: string, visitorKeys: VisitorKeys<Node>, quickKey: keyof Node) {
     super(type, visitorKeys);
     this.quickKey = quickKey;
   }
 
   quickKey: keyof Node;
 
-  quick(
-    arg: Arg,
-    opts?: Partial<Omit<Node, 'type'>>,
-    inheritNode?: Node,
-  ): Node {
-    return this.create(
-      // @ts-ignore
-      {
-        ...opts,
-        [this.quickKey]: arg,
-      },
-      inheritNode,
-    );
+  quick(arg: Arg, opts?: Partial<Omit<Node, 'type'>>, inheritNode?: Node): Node {
+    return this.create( // @ts-ignore
+    {
+      ...opts,
+      [this.quickKey]: arg,
+    }, inheritNode);
   }
 }

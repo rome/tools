@@ -42,9 +42,8 @@ export default createMasterCommand({
     }
 
     // Get the current project
-    const project:
-      | undefined
-      | ProjectDefinition = await master.projectManager.findProject(flags.cwd);
+    const project: undefined | ProjectDefinition =
+    await master.projectManager.findProject(flags.cwd);
 
     // check for absolute paths
     const target = args[0];
@@ -78,7 +77,6 @@ export default createMasterCommand({
     // TODO check node_modules/.bin
 
     // TODO check package.json scripts
-
     throw new Error(`Failed to find "${target}"`);
   },
 });

@@ -21,8 +21,8 @@ type TransformResult = {
   cacheDependencies: Array<string>;
 };
 
-const transformCaches: Array<Cache<TransformResult>> = stageOrder.map(
-  () => new Cache(),
+const transformCaches: Array<Cache<TransformResult>> = stageOrder.map(() => 
+  new Cache()
 );
 
 export default async function transform(

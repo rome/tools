@@ -13,14 +13,10 @@ export default {
   enter(path: Path): AnyNode {
     const {context, node: declaration} = path;
 
-    if (
-      declaration.type === 'VariableDeclaration' &&
-      declaration.kind === 'var'
-    ) {
+    if (declaration.type === 'VariableDeclaration' && declaration.kind === 'var') {
       context.addNodeDiagnostic(declaration, {
         category: 'lint/noVar',
-        message:
-          'Variable declarations using `var` are disallowed, use `let` or `const` instead.',
+        message: 'Variable declarations using `var` are disallowed, use `let` or `const` instead.',
       });
     }
 

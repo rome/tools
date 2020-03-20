@@ -33,26 +33,26 @@ export default class Linter {
     printer.processor.addAllowedUnusedSuppressionPrefix('bundler');
 
     const paths: AbsoluteFilePathSet = await request.getFilesFromArgs({
-      getProjectIgnore: project => ({
-        patterns: project.config.lint.ignore,
-        source: master.projectManager.findProjectConfigConsumer(
-          project,
-          consumer =>
+      getProjectIgnore: (project) => 
+        ({
+          patterns: project.config.lint.ignore,
+          source: master.projectManager.findProjectConfigConsumer(project, (
+            consumer,
+          ) => 
             consumer.has('lint') && consumer.get('lint').has('ignore')
-              ? consumer.get('lint').get('ignore')
-              : undefined,
-        ),
-      }),
-      getProjectEnabled: project => ({
-        enabled: project.config.lint.enabled,
-        source: master.projectManager.findProjectConfigConsumer(
-          project,
-          consumer =>
+              ? consumer.get('lint').get('ignore') : undefined
+          ),
+        }),
+      getProjectEnabled: (project) => 
+        ({
+          enabled: project.config.lint.enabled,
+          source: master.projectManager.findProjectConfigConsumer(project, (
+            consumer,
+          ) => 
             consumer.has('lint')
-              ? consumer.get('lint').get('enabled')
-              : undefined,
-        ),
-      }),
+              ? consumer.get('lint').get('enabled') : undefined
+          ),
+        }),
       noun: 'lint',
       verb: 'linting',
       configCategory: 'lint',
@@ -73,9 +73,10 @@ export default class Linter {
     });
 
     // Add a filter so that only files that are explicitly referenced will be included
+
     // For example, we don't want to show analysis or parse errors for transitive dependencies if the user only requested a specific file
     printer.processor.addFilter({
-      test: diag => {
+      test: (diag) => {
         const {filename} = diag;
         if (filename === undefined) {
           return false;

@@ -39,13 +39,10 @@ export default createMasterCommand({
     const {args} = req.query;
     req.expectArgumentLength(1);
 
-    const filename = await master.resolver.resolveEntryAssertPath(
-      {
-        ...req.getResolverOptionsFromFlags(),
-        source: createUnknownFilePath(args[0]),
-      },
-      {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
-    );
+    const filename = await master.resolver.resolveEntryAssertPath({
+      ...req.getResolverOptionsFromFlags(),
+      source: createUnknownFilePath(args[0]),
+    }, {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
 
     let res = await req.requestWorkerAnalyzeDependencies(filename);
 
@@ -53,22 +50,23 @@ export default createMasterCommand({
     if (focusSource !== undefined) {
       res = {
         ...res,
-        importFirstUsage: res.importFirstUsage.filter(dep => {
+        importFirstUsage: res.importFirstUsage.filter((dep) => {
           return dep.source === focusSource;
         }),
-        dependencies: res.dependencies.filter(dep => {
+        dependencies: res.dependencies.filter((dep) => {
           return dep.source === focusSource;
         }),
       };
     }
 
     if (commandFlags.compact) {
-      res = {
+      res =
+      {
         ...res,
-        importFirstUsage: res.importFirstUsage.map(imp => {
+        importFirstUsage: res.importFirstUsage.map((imp) => {
           return removeLoc(imp);
         }),
-        exports: res.exports.map(exp => {
+        exports: res.exports.map((exp) => {
           // This weird switch is because TS only returns an object with the properties common amongst all
           switch (exp.type) {
             case 'local':
@@ -81,10 +79,10 @@ export default createMasterCommand({
               return removeLoc(exp);
           }
         }),
-        dependencies: res.dependencies.map(dep => {
+        dependencies: res.dependencies.map((dep) => {
           return {
             ...removeLoc(dep),
-            names: dep.names.map(name => {
+            names: dep.names.map((name) => {
               return removeLoc(name);
             }),
           };

@@ -15,21 +15,22 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type AnyExportExternalSpecifier =
-  | ExportNamespaceSpecifier
-  | ExportDefaultSpecifier
-  | ExportExternalSpecifier;
+export type AnyExportExternalSpecifier = 
+    | ExportNamespaceSpecifier
+    | ExportDefaultSpecifier
+    | ExportExternalSpecifier;
 
-export type ExportExternalDeclaration = JSNodeBase & {
-  type: 'ExportExternalDeclaration';
-  specifiers?: Array<AnyExportExternalSpecifier>;
-  source: StringLiteral;
-  exportKind?: ConstExportModuleKind;
-};
+export type ExportExternalDeclaration = 
+  & JSNodeBase
+  & {
+    type: 'ExportExternalDeclaration';
+    specifiers?: Array<AnyExportExternalSpecifier>;
+    source: StringLiteral;
+    exportKind?: ConstExportModuleKind;
+  };
 
-export const exportExternalDeclaration = createBuilder<
-  ExportExternalDeclaration
->('ExportExternalDeclaration', {
+export const exportExternalDeclaration =
+createBuilder<ExportExternalDeclaration>('ExportExternalDeclaration', {
   bindingKeys: {},
   visitorKeys: {
     specifiers: true,

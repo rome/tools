@@ -8,10 +8,7 @@
 import Generator from '../../Generator';
 import {AnyNode, RegExpGroupCapture, regExpGroupCapture} from '@romejs/js-ast';
 
-export default function RegExpGroupCapture(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function RegExpGroupCapture(generator: Generator, node: AnyNode) {
   node = regExpGroupCapture.assert(node);
 
   generator.append('(');

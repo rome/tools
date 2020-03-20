@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyFlowPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowObjectTypeSpreadProperty = JSNodeBase & {
-  type: 'FlowObjectTypeSpreadProperty';
-  argument: AnyFlowPrimary;
-};
+export type FlowObjectTypeSpreadProperty = 
+  & JSNodeBase
+  & {
+    type: 'FlowObjectTypeSpreadProperty';
+    argument: AnyFlowPrimary;
+  };
 
 export const flowObjectTypeSpreadProperty = createBuilder<
   FlowObjectTypeSpreadProperty

@@ -14,9 +14,7 @@ import {createUnknownFilePath} from '@romejs/path';
 import {Consumer} from '@romejs/consume';
 import Bundler from '../bundler/Bundler';
 
-type Flags = {
-  bundle: boolean;
-};
+type Flags = {bundle: boolean};
 
 export default createMasterCommand({
   category: commandCategories.SOURCE_CODE,
@@ -33,13 +31,10 @@ export default createMasterCommand({
     const {args} = req.query;
     req.expectArgumentLength(1);
 
-    const resolved = await master.resolver.resolveEntryAssert(
-      {
-        ...req.getResolverOptionsFromFlags(),
-        source: createUnknownFilePath(args[0]),
-      },
-      {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
-    );
+    const resolved = await master.resolver.resolveEntryAssert({
+      ...req.getResolverOptionsFromFlags(),
+      source: createUnknownFilePath(args[0]),
+    }, {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
 
     let res: WorkerCompileResult;
     if (commandFlags.bundle) {

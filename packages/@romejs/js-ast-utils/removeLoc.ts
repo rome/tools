@@ -25,8 +25,8 @@ function removeComments(
     return undefined;
   }
 
-  const newComments: Array<AnyComment> = comments.map(comment =>
-    comment.type === 'CommentBlock' ? removeProp(comment) : removeProp(comment),
+  const newComments: Array<AnyComment> = comments.map((comment) => 
+    comment.type === 'CommentBlock' ? removeProp(comment) : removeProp(comment)
   );
   return newComments;
 }
@@ -47,6 +47,7 @@ const removeLocTransform: TransformVisitors = [
         };
 
         // Also remove any `undefined` properties
+
         // rome-suppress lint/noExplicitAny
         const escaped: any = newNode;
         for (const key in newNode) {
@@ -55,7 +56,7 @@ const removeLocTransform: TransformVisitors = [
           }
         }
 
-        return newNode as AnyNode;
+        return (newNode as AnyNode);
       }
     },
   },

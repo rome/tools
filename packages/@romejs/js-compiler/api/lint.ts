@@ -21,9 +21,7 @@ export type LintResult = {
 
 const lintCache: Cache<LintResult> = new Cache();
 
-export type FormatRequest = TransformRequest & {
-  format: boolean;
-};
+export type FormatRequest = TransformRequest & {format: boolean};
 
 export default async function lint(req: FormatRequest): Promise<LintResult> {
   const {ast, sourceText, project, format} = req;
@@ -54,18 +52,14 @@ export default async function lint(req: FormatRequest): Promise<LintResult> {
         category: 'lint',
       },
     });
-    const newAst = program.assert(
-      context.reduce(ast, lintTransforms, {frozen: false}),
-    );
+    const newAst = program.assert(context.reduce(ast, lintTransforms, {
+      frozen: false,
+    }));
 
-    const generator = generateJS(
-      newAst,
-      {
-        typeAnnotations: true,
-        format: 'pretty',
-      },
-      sourceText,
-    );
+    const generator = generateJS(newAst, {
+      typeAnnotations: true,
+      format: 'pretty',
+    }, sourceText);
     formattedCode = generator.buf.getCode();
   }
 

@@ -6,11 +6,7 @@
  */
 
 import {Program} from '@romejs/js-ast';
-import {
-  JSParserUserOptions,
-  normalizeOptions,
-  JSParserOptions,
-} from './options';
+import {JSParserUserOptions, normalizeOptions, JSParserOptions} from './options';
 import {Token} from './tokenizer/index';
 import {types as tokTypes} from './tokenizer/types';
 import createParser from './parser';
@@ -38,9 +34,7 @@ export function tokenizeJS(
     const invalidStart = firstDiag.start;
     const invalidEnd = firstDiag.end;
     if (invalidStart === undefined || invalidEnd === undefined) {
-      throw new Error(
-        'All parser diagnostics are expected to have a start/end',
-      );
+      throw new Error('All parser diagnostics are expected to have a start/end');
     }
 
     const invalidStartIndex = invalidStart.index;
@@ -57,7 +51,7 @@ export function tokenizeJS(
     };
 
     // Remove all tokens after our invalid one
-    tokens = tokens.filter(token => {
+    tokens = tokens.filter((token) => {
       return token.loc.start.index >= invalidStartIndex;
     });
 
@@ -68,6 +62,8 @@ export function tokenizeJS(
 }
 
 export {Token};
+
 export {tokTypes};
+
 export {keywords as keywordTokTypes} from './tokenizer/types';
 export * from './xhtmlEntities';

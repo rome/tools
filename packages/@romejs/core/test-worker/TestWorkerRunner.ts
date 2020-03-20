@@ -41,23 +41,19 @@ export default class TestWorkerRunner {
     this.bridge = bridge;
     this.projectFolder = createAbsoluteFilePath(opts.projectFolder);
 
-    this.snapshotManager = new SnapshotManager(
-      this,
-      createAbsoluteFilePath(opts.file.real),
-    );
+    this.snapshotManager = new SnapshotManager(this, createAbsoluteFilePath(
+      opts.file.real,
+    ));
 
     this.hasFocusedTest = false;
     this.foundTests = new Map();
   }
 
-  foundTests: Map<
-    string,
-    {
-      callsiteError: Error;
-      options: TestOptions;
-      callback: undefined | TestCallback;
-    }
-  >;
+  foundTests: Map<string, {
+    callsiteError: Error;
+    options: TestOptions;
+    callback: undefined | TestCallback;
+  }>;
   hasFocusedTest: boolean;
 
   bridge: TestWorkerBridge;
@@ -105,7 +101,8 @@ export default class TestWorkerRunner {
     });
 
     if (res.syntaxError !== undefined) {
-      const message = `A bundle was generated that contained a syntax error: ${res.syntaxError.message}`;
+      const message =
+      `A bundle was generated that contained a syntax error: ${res.syntaxError.message}`;
 
       throw createSingleDiagnosticError({
         ...res.syntaxError,
@@ -126,7 +123,7 @@ export default class TestWorkerRunner {
     callback: undefined | TestCallback,
   ) {
     if (this.locked) {
-      throw new Error("Test can't be added outside of init");
+      throw new Error('Test can\'t be added outside of init');
     }
 
     let testName = options.name;
@@ -179,20 +176,16 @@ export default class TestWorkerRunner {
 
         // Remove everything before the original module factory
         let latestTestWorkerFrame = frames.find((frame, i) => {
-          if (
-            frame.typeName === 'global' &&
-            frame.methodName === undefined &&
-            frame.functionName === undefined
-          ) {
+          if (frame.typeName === 'global' && frame.methodName === undefined &&
+            frame.functionName === undefined) {
             // We are the global.<anonymous> frame
+
             // Now check for Script.runInContext
             const nextFrame = frames[i + 1];
-            if (
-              nextFrame !== undefined &&
-              nextFrame.typeName === 'Script' &&
-              nextFrame.methodName === 'runInContext'
-            ) {
+            if (nextFrame !== undefined && nextFrame.typeName === 'Script' &&
+              nextFrame.methodName === 'runInContext') {
               // Yes!
+
               // TODO also check for ___$romejs$core$common$utils$executeMain_ts$default (packages/romejs/core/common/utils/executeMain.ts:69:17)
               return true;
             }
@@ -203,10 +196,9 @@ export default class TestWorkerRunner {
 
         // And if there was no module factory frame, then we must be inside of a test
         if (latestTestWorkerFrame === undefined) {
-          latestTestWorkerFrame = frames.find(frame => {
-            return (
-              frame.filename !== undefined &&
-              frame.filename.includes('core/test-worker')
+          latestTestWorkerFrame = frames.find((frame) => {
+            return frame.filename !== undefined && frame.filename.includes(
+              'core/test-worker',
             );
           });
         }
@@ -256,7 +248,7 @@ export default class TestWorkerRunner {
 
   async runTest(testName: string, callback: TestCallback) {
     let onTimeout: OnTimeout = () => {
-      throw new Error("Promise wasn't created. Should be impossible.");
+      throw new Error('Promise wasn\'t created. Should be impossible.');
     };
 
     const timeoutPromise = new Promise((resolve, reject) => {

@@ -8,12 +8,14 @@
 import {JSNodeBase, AnyExpression, AnyStatement} from '../index';
 import {createBuilder} from '../utils';
 
-export type IfStatement = JSNodeBase & {
-  type: 'IfStatement';
-  test: AnyExpression;
-  consequent: AnyStatement;
-  alternate?: AnyStatement;
-};
+export type IfStatement = 
+  & JSNodeBase
+  & {
+    type: 'IfStatement';
+    test: AnyExpression;
+    consequent: AnyStatement;
+    alternate?: AnyStatement;
+  };
 
 export const ifStatement = createBuilder<IfStatement>('IfStatement', {
   bindingKeys: {},

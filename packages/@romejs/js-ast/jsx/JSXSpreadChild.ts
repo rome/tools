@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXSpreadChild = JSNodeBase & {
-  type: 'JSXSpreadChild';
-  expression: AnyExpression;
-};
+export type JSXSpreadChild = 
+  & JSNodeBase
+  & {
+    type: 'JSXSpreadChild';
+    expression: AnyExpression;
+  };
 
 export const jsxSpreadChild = createBuilder<JSXSpreadChild>('JSXSpreadChild', {
   bindingKeys: {},

@@ -111,20 +111,17 @@ export default class Utils {
     if (originLoc === undefined) {
       data.set('origin', 'unknown');
     } else {
-      data.set(
-        'origin',
-        `${String(originLoc.filename)}:${String(originLoc.start.line)}:${String(
-          originLoc.start.column,
-        )}`,
-      );
+      data.set('origin', `${String(originLoc.filename)}:${String(
+        originLoc.start.line,
+      )}:${String(originLoc.start.column)}`);
     }
     if (originEvaluator !== undefined) {
       data.set('evaluator', originEvaluator);
     }
 
-    const dataStr = Array.from(data.keys())
-      .map(key => `${key}: ${String(data.get(key))}`)
-      .join(', ');
+    const dataStr = Array.from(data.keys()).map((key) => 
+      `${key}: ${String(data.get(key))}`
+    ).join(', ');
 
     let info = `${t.getConstructor().type}<`;
     if (safe === false) {
@@ -208,6 +205,7 @@ export default class Utils {
     } else {
       res = ret;
     }
+
     lower.compatibilityCache.set(upper, res);
 
     return res;
@@ -259,10 +257,7 @@ export default class Utils {
 
       if (reduced.getConstructor().type === 'OpenT') {
         throw new Error(
-          `The reduce() method for ${this.inspect(
-            type,
-            true,
-          )} returned an OpenT. This should never be possible. It likely forgot to return utils.reduce() on it.`,
+          `The reduce() method for ${this.inspect(type, true)} returned an OpenT. This should never be possible. It likely forgot to return utils.reduce() on it.`,
         );
       }
 

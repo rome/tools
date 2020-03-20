@@ -41,11 +41,7 @@ import {
   spreadElement,
 } from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
-import {
-  template,
-  isValidIdentifierName,
-  inheritLoc,
-} from '@romejs/js-ast-utils';
+import {template, isValidIdentifierName, inheritLoc} from '@romejs/js-ast-utils';
 
 function convertJSXIdentifier(
   path: Path,
@@ -56,12 +52,9 @@ function convertJSXIdentifier(
     if (node.name === 'this') {
       return thisExpression.create({});
     } else {
-      return referenceIdentifier.create(
-        {
-          name: node.name,
-        },
-        node,
-      );
+      return referenceIdentifier.create({
+        name: node.name,
+      }, node);
     }
   } else if (node.type === 'JSXIdentifier') {
     return stringLiteral.quick(node.name);
@@ -105,13 +98,11 @@ function extractName(node: JSXIdentifier | JSXNamespacedName): string {
 }
 
 function convertAttribute(node: JSXAttribute): ObjectProperty {
-  let valueNode = convertAttributeValue(
-    node.value || booleanLiteral.create({value: true}),
-  );
-  if (
-    valueNode.type === 'StringLiteral' &&
-    (!node.value || node.value.type !== 'JSXExpressionContainer')
-  ) {
+  let valueNode = convertAttributeValue(node.value || booleanLiteral.create({
+    value: true,
+  }));
+  if (valueNode.type === 'StringLiteral' && (!node.value || node.value.type !==
+  'JSXExpressionContainer')) {
     valueNode = stringLiteral.create({
       value: valueNode.value.replace(/\n\s+/g, ' '),
     });
@@ -194,7 +185,9 @@ function cleanJSXElementLiteralChild(value: string): undefined | StringLiteral {
 
   let lastNonEmptyLine = 0;
 
-  for (let i = 0; i < lines.length; i++) {
+  for (let i = 0;
+  i < lines.length;
+  i++) {
     if (lines[i].match(/[^ \t]/)) {
       lastNonEmptyLine = i;
     }
@@ -202,7 +195,9 @@ function cleanJSXElementLiteralChild(value: string): undefined | StringLiteral {
 
   let str = '';
 
-  for (let i = 0; i < lines.length; i++) {
+  for (let i = 0;
+  i < lines.length;
+  i++) {
     const line = lines[i];
 
     const isFirstLine = i === 0;

@@ -7,7 +7,9 @@
 
 export {default as assertMultipleNodes} from './assertMultipleNodes';
 export {default as assertSingleNode} from './assertSingleNode';
-export {default as assertSingleOrMultipleNode} from './assertSingleOrMultipleNodes';
+export {
+  default as assertSingleOrMultipleNode,
+} from './assertSingleOrMultipleNodes';
 export {default as doesNodeMatchPattern} from './doesNodeMatchPattern';
 export {default as getBindingIdentifiers} from './getBindingIdentifiers';
 export {default as getNodeReferenceParts} from './getNodeReferenceParts';
@@ -29,6 +31,8 @@ export {default as inheritLoc} from './inheritLoc';
 export {default as getRequireSource} from './getRequireSource';
 export {default as isIdentifierish} from './isIdentifierish';
 export {default as isVariableIdentifier} from './isVariableIdentifier';
-export {default as isTypeExpressionWrapperNode} from './isTypeExpressionWrapperNode';
+export {
+  default as isTypeExpressionWrapperNode,
+} from './isTypeExpressionWrapperNode';
 export {default as getCompletionRecords} from './getCompletionRecords';
 export {default as isDeclaration} from './isDeclaration';

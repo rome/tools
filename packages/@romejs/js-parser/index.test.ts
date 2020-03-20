@@ -16,11 +16,8 @@ const promise = createFixtureTests((fixture, t) => {
   const {options, files} = fixture;
 
   // Get the input JS
-  const inputFile =
-    files.get('input.js') ||
-    files.get('input.mjs') ||
-    files.get('input.ts') ||
-    files.get('input.tsx');
+  const inputFile = files.get('input.js') || files.get('input.mjs') ||
+  files.get('input.ts') || files.get('input.tsx');
   if (inputFile === undefined) {
     throw new Error(
       `The fixture ${fixture.dir} did not have an input.(mjs|js|ts|tsx)`,
@@ -40,17 +37,14 @@ const promise = createFixtureTests((fixture, t) => {
     throw sourceTypeProp.unexpected('Expected either script or module');
   }
 
-  const allowReturnOutsideFunction = options
-    .get('allowReturnOutsideFunction')
-    .asBoolean(false);
+  const allowReturnOutsideFunction =
+  options.get('allowReturnOutsideFunction').asBoolean(false);
   const filename = inputFile.relative;
 
-  const syntax: Array<ConstProgramSyntax> = options
-    .get('syntax')
-    .asArray(true)
-    .map(item => {
-      return item.asStringSet(['jsx', 'ts', 'flow']);
-    });
+  const syntax: Array<ConstProgramSyntax> =
+  options.get('syntax').asArray(true).map((item) => {
+    return item.asStringSet(['jsx', 'ts', 'flow']);
+  });
 
   t.addToAdvice({
     type: 'log',
@@ -94,7 +88,7 @@ const promise = createFixtureTests((fixture, t) => {
 
   let {diagnostics} = ast;
   if (diagnostics.length > 0) {
-    diagnostics = diagnostics.map(diag => {
+    diagnostics = diagnostics.map((diag) => {
       return {
         ...diag,
         code: inputContent,
@@ -105,8 +99,7 @@ const promise = createFixtureTests((fixture, t) => {
       /*throw new DiagnosticsError(
         "Parser has diagnostics when we didn't expect any",
         diagnostics,
-      );*/
-    } else {
+      );*/} else {
       // TODO
       if (expectError === 'Unexpected token') {
         return;
@@ -144,6 +137,7 @@ const promise = createFixtureTests((fixture, t) => {
   // If we expected an error to thrown it should have already
   if (expectError !== undefined) {
     // TODO
+
     /*throw new Error(
       `Expected an error to be thrown of "${escapeMarkup(expectError)}" in ${
         inputFile.absolute
@@ -154,6 +148,7 @@ const promise = createFixtureTests((fixture, t) => {
 
   if (outputContent === undefined) {
     // If we didn't expect an error to be thrown and we have no expected output AST
+
     // then we should write it
     writeFileSync(fixture.dir.append('output.txt'), prettyFormat(ast));
   }

@@ -41,17 +41,13 @@ export default async function compile(
     suppressions,
     cacheDependencies,
   } = await transform(req);
-  const generator = generateJS(
-    transformedAst,
-    {
-      typeAnnotations: false,
-      indent: req.stage === 'compileForBundle' ? 1 : 0,
-      sourceMapTarget: filename,
-      sourceFileName: filename,
-      inputSourceMap: req.inputSourceMap,
-    },
-    sourceText,
-  );
+  const generator = generateJS(transformedAst, {
+    typeAnnotations: false,
+    indent: req.stage === 'compileForBundle' ? 1 : 0,
+    sourceMapTarget: filename,
+    sourceFileName: filename,
+    inputSourceMap: req.inputSourceMap,
+  }, sourceText);
 
   const res: CompileResult = {
     compiledCode: generator.buf.getCode(),

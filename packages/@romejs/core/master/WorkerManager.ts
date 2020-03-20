@@ -21,6 +21,7 @@ import {
   createBridgeFromChildProcess,
 } from '@romejs/events';
 import child = require('child_process');
+
 import {AbsoluteFilePath} from '@romejs/path';
 
 export type WorkerContainer = {
@@ -58,7 +59,9 @@ export default class WorkerManager {
   workers: Map<number, WorkerContainer>;
 
   // We use an idCounter rather than using workers.size due to race conditions
+
   // If we use workers.size to generate the next id, then by the time we insert it
+
   // into the map between async operations, it could already be filled!
   idCounter: number;
 
@@ -91,7 +94,7 @@ export default class WorkerManager {
 
   // Get all the workers that live in external processes
   getExternalWorkers(): Array<WorkerContainer> {
-    return this.getWorkers().filter(worker => worker.process !== undefined);
+    return this.getWorkers().filter((worker) => worker.process !== undefined);
   }
 
   end() {
@@ -106,10 +109,8 @@ export default class WorkerManager {
     let smallestWorker;
     let byteCount;
     for (const worker of this.workers.values()) {
-      if (
-        !worker.ghost &&
-        (byteCount === undefined || byteCount > worker.byteCount)
-      ) {
+      if (!worker.ghost && (byteCount === undefined || byteCount >
+      worker.byteCount)) {
         smallestWorker = worker;
         byteCount = worker.byteCount;
       }
@@ -132,6 +133,7 @@ export default class WorkerManager {
     });
 
     // We make an assumption elsewhere in the code that this is always the first worker
+
     // Let's use an invariant here for completeness
     const id = this.getNextWorkerId();
     if (id !== 0) {
@@ -172,6 +174,7 @@ export default class WorkerManager {
       masterWorker.bridge.end();
 
       // Swap the workers
+
       // We perform this as a single atomic operation rather than doing it in spawnWorker so we have predictable worker retrieval
       this.workers.set(0, {
         id: 0,
@@ -196,7 +199,7 @@ export default class WorkerManager {
 
   async workerHandshake(worker: WorkerContainer) {
     const {bridge} = worker;
-    await bridge.handshake({timeout: 3000});
+    await bridge.handshake({timeout: 3_000});
     await this.master.projectManager.notifyWorkersOfProjects([worker]);
     worker.ready = true;
   }
@@ -223,7 +226,7 @@ export default class WorkerManager {
 
     const bridge = createBridgeFromChildProcess(WorkerBridge, process, {
       type: 'client',
-      onSendMessage: data => {
+      onSendMessage: (data) => {
         this.master.logger.info(
           `[WorkerManager] Sending worker request to %s:`,
           workerId,
@@ -243,9 +246,11 @@ export default class WorkerManager {
     };
     this.workers.set(workerId, worker);
 
-    process.once('error', err => {
+    process.once('error', (err) => {
       // The process could not be spawned, or
+
       // The process could not be killed, or
+
       // Sending a message to the child process failed.
       this.master.onFatalError(err);
       process.kill();
@@ -302,6 +307,7 @@ export default class WorkerManager {
     await this.locker.waitLock(0);
 
     // If the worker is running in the master process and we've exceed our byte limit
+
     // then start up a dedicated worker process
     if (this.selfWorker) {
       const worker = this.getWorkerAssert(0);
@@ -315,11 +321,10 @@ export default class WorkerManager {
     let workerId = smallestWorker.id;
 
     // When the smallest worker exceeds the max worker byte limit and we're still under
+
     // our max worker limit, then let's start a new one
-    if (
-      smallestWorker.byteCount > MAX_WORKER_BYTES_BEFORE_ADD &&
-      this.getWorkerCount() < MAX_WORKER_COUNT
-    ) {
+    if (smallestWorker.byteCount > MAX_WORKER_BYTES_BEFORE_ADD &&
+      this.getWorkerCount() < MAX_WORKER_COUNT) {
       logger.info(
         `[WorkerManager] Spawning a new worker as we've exceeded ${MAX_WORKER_BYTES_BEFORE_ADD} bytes across each worker`,
       );

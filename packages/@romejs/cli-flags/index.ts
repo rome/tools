@@ -25,8 +25,8 @@ export function parseCLIFlagsFromProcess<T>(
 ): ParserInterface<T> {
   return parseCLIFlags(Reporter.fromProcess(), process.argv.slice(2), {
     ...opts,
-    programName:
-      opts.programName === undefined ? process.argv[1] : opts.programName,
+    programName: opts.programName === undefined
+      ? process.argv[1] : opts.programName,
   });
 }
 

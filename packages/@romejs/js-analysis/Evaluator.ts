@@ -25,12 +25,12 @@ import {ModuleSignatureType} from './types';
 assertNodeTypeSet(evaluators, 'evaluators');
 
 export type HydrateTypeFactory = (id: unknown) => T;
+
 export type HydrateData = JSONObject;
 
-export type GetModuleSignature = (
-  source: string,
-  relative: string,
-) => Promise<undefined | ModuleSignatureManager>;
+export type GetModuleSignature = (source: string, relative: string) => Promise<
+    | undefined
+    | ModuleSignatureManager>;
 
 export class ModuleSignatureManager {
   constructor(
@@ -96,9 +96,7 @@ export class ModuleSignatureManager {
 
       if (type === undefined) {
         throw new Error(
-          `${
-            graph.filename
-          }: Expected type of id ${id} but it doesn't exist, serialized data: ${String(
+          `${graph.filename}: Expected type of id ${id} but it doesn't exist, serialized data: ${String(
             JSON.stringify(currGetType),
           )}`,
         );
@@ -108,23 +106,18 @@ export class ModuleSignatureManager {
     };
 
     // Fetch the graphs of `export *` dependencies, future calls to `this.getModuleSignature` will fetch from 'cache
-    await Promise.all(
-      graph.exports.map(def => {
-        if (def.type === 'all') {
-          return this.getModuleSignature(def.source, graph.filename);
-        } else {
-          return undefined;
-        }
-      }),
-    );
+    await Promise.all(graph.exports.map((def) => {
+      if (def.type === 'all') {
+        return this.getModuleSignature(def.source, graph.filename);
+      } else {
+        return undefined;
+      }
+    }));
 
     // Resolve all exports
     for (const def of graph.exports) {
       if (def.type === 'all') {
-        const manager = await this.getModuleSignature(
-          def.source,
-          graph.filename,
-        );
+        const manager = await this.getModuleSignature(def.source, graph.filename);
         if (manager !== undefined) {
           this.addAll(manager);
         }
@@ -152,6 +145,7 @@ export class ModuleSignatureManager {
       }
 
       // Create the type
+
       // @ts-ignore
       const realT = TConstructor.hydrate(
         this.topScope,
@@ -195,13 +189,13 @@ export class ModuleSignatureManager {
   }
 }
 
-type Export =
-  | {
+type Export = 
+    | {
       type: 'local';
       name: string;
       value: T;
     }
-  | {
+    | {
       type: 'all';
       source: string;
     };

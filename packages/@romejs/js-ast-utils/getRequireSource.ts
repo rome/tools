@@ -21,11 +21,8 @@ export default function getRequireSource(
     return;
   }
 
-  if (
-    allowStaticMember &&
-    node.type === 'MemberExpression' &&
-    node.property.type === 'StaticMemberProperty'
-  ) {
+  if (allowStaticMember && node.type === 'MemberExpression' &&
+    node.property.type === 'StaticMemberProperty') {
     node = node.object;
   }
 
@@ -40,14 +37,13 @@ export default function getRequireSource(
     return;
   }
 
-  const validRequireCallee =
-    callee.type === 'ReferenceIdentifier' &&
-    callee.name === 'require' &&
-    scope.getBinding('require') === undefined;
+  const validRequireCallee = callee.type === 'ReferenceIdentifier' &&
+    callee.name === 'require' && scope.getBinding('require') === undefined;
 
-  const validRomeRequreCallee =
-    (doesNodeMatchPattern(callee, ROME_DEFAULT_REQUIRE) ||
-      doesNodeMatchPattern(callee, ROME_NAMESPACE_REQUIRE)) &&
+  const validRomeRequreCallee = (doesNodeMatchPattern(
+    callee,
+    ROME_DEFAULT_REQUIRE,
+  ) || doesNodeMatchPattern(callee, ROME_NAMESPACE_REQUIRE)) &&
     scope.getBinding('Rome') === undefined;
 
   if (validRequireCallee || validRomeRequreCallee) {

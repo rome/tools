@@ -13,11 +13,13 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type ObjectProperty = JSNodeBase & {
-  type: 'ObjectProperty';
-  key: StaticPropertyKey | ComputedPropertyKey;
-  value: AnyExpression;
-};
+export type ObjectProperty = 
+  & JSNodeBase
+  & {
+    type: 'ObjectProperty';
+    key: StaticPropertyKey | ComputedPropertyKey;
+    value: AnyExpression;
+  };
 
 export const objectProperty = createBuilder<ObjectProperty>('ObjectProperty', {
   bindingKeys: {},

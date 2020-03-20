@@ -8,17 +8,15 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('no duplicated args allowed', async t => {
-  const duplicatedArgs = await testLint(
-    `
+test('no duplicated args allowed', async (t) => {
+  const duplicatedArgs = await testLint(`
   function hello(a, a) {
     console.log("Hello);
   }
   hello();
-  `,
-  );
+  `);
 
-  t.truthy(
-    duplicatedArgs.diagnostics.find(d => d.category === 'lint/noDupeArgs'),
-  );
+  t.truthy(duplicatedArgs.diagnostics.find((d) => 
+    d.category === 'lint/noDupeArgs'
+  ));
 });

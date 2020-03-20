@@ -8,11 +8,13 @@
 import {JSNodeBase, JSXIdentifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXNamespacedName = JSNodeBase & {
-  type: 'JSXNamespacedName';
-  namespace: JSXIdentifier;
-  name: JSXIdentifier;
-};
+export type JSXNamespacedName = 
+  & JSNodeBase
+  & {
+    type: 'JSXNamespacedName';
+    namespace: JSXIdentifier;
+    name: JSXIdentifier;
+  };
 
 export const jsxNamespacedName = createBuilder<JSXNamespacedName>(
   'JSXNamespacedName',

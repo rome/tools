@@ -13,13 +13,15 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclareOpaqueType = JSNodeBase & {
-  type: 'FlowDeclareOpaqueType';
-  id: BindingIdentifier;
-  typeParameters?: FlowTypeParameterDeclaration;
-  supertype?: AnyFlowPrimary;
-  impltype?: AnyFlowPrimary;
-};
+export type FlowDeclareOpaqueType = 
+  & JSNodeBase
+  & {
+    type: 'FlowDeclareOpaqueType';
+    id: BindingIdentifier;
+    typeParameters?: FlowTypeParameterDeclaration;
+    supertype?: AnyFlowPrimary;
+    impltype?: AnyFlowPrimary;
+  };
 
 export const flowDeclareOpaqueType = createBuilder<FlowDeclareOpaqueType>(
   'FlowDeclareOpaqueType',

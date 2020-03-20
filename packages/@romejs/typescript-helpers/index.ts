@@ -6,22 +6,17 @@
  */
 
 // rome-suppress lint/noExplicitAny
-export type Class<T, Args extends Array<unknown> = Array<any>> = {
-  new (...args: Args): T;
-};
+export type Class<T, Args extends Array<unknown> = Array<any>> = {new (...args: Args) : T};
 
-export type Dict<T> = {
-  [key: string]: T;
-};
+export type Dict<T> = {[key: string]: T};
 
-export type RequiredProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> &
-  {
-    [Key in Keys]-?: NonNullable<Obj[Key]>;
-  };
+export type RequiredProps<Obj, Keys extends keyof Obj> = 
+  & Omit<Obj, Keys>
+  & { [Key in Keys]-?: NonNullable<Obj[Key]> };
 
 // Turn a type that contains interfaces into regular objects
 export type InterfaceToObject<T> = T extends {}
-  ? {[K in keyof T]: InterfaceToObject<T[K]>}
+  ? { [K in keyof T]: InterfaceToObject<T[K]> }
   : T;
 
 export type UnknownObject = Dict<unknown>;
@@ -33,10 +28,6 @@ export function isPlainObject<T = UnknownObject>(
 }
 
 export function isIterable(obj: unknown): obj is Iterable<unknown> {
-  return (
-    typeof obj === 'object' &&
-    obj != null &&
-    // @ts-ignore
-    typeof obj[Symbol.iterator] === 'function'
-  );
+  return typeof obj === 'object' && obj != null && // @ts-ignore
+  typeof obj[Symbol.iterator] === 'function';
 }

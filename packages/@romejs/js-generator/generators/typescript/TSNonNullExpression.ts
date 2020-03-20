@@ -5,17 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  TSNonNullExpression,
-  tsNonNullExpression,
-  AnyNode,
-} from '@romejs/js-ast';
+import {TSNonNullExpression, tsNonNullExpression, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
 
-export default function TSNonNullExpression(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function TSNonNullExpression(generator: Generator, node: AnyNode) {
   node = tsNonNullExpression.assert(node);
   generator.print(node.expression, node);
   generator.token('!');

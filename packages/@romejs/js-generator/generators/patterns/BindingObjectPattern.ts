@@ -14,10 +14,7 @@ import {
 import ObjectExpression from '../objects/ObjectExpression';
 import {printPatternMeta} from '../utils';
 
-export default function BindingObjectPattern(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function BindingObjectPattern(generator: Generator, node: AnyNode) {
   node = bindingObjectPattern.assert(node);
 
   ObjectExpression(generator, node);

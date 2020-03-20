@@ -6,21 +6,13 @@
  */
 
 import {Scope} from '../../scopes';
-import {
-  UnionTypeAnnotation,
-  unionTypeAnnotation,
-  AnyNode,
-} from '@romejs/js-ast';
+import {UnionTypeAnnotation, unionTypeAnnotation, AnyNode} from '@romejs/js-ast';
 import UnionT from '../../types/UnionT';
 
 export default function UnionTypeAnnotation(node: AnyNode, scope: Scope) {
   node = unionTypeAnnotation.assert(node);
 
-  return new UnionT(
-    scope,
-    node,
-    node.types.map(type => {
-      return scope.evaluate(type);
-    }),
-  );
+  return new UnionT(scope, node, node.types.map((type) => {
+    return scope.evaluate(type);
+  }));
 }

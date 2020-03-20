@@ -31,11 +31,13 @@ const testData: {
   fail: TestDataItems;
 } = {
   pass: [
-    ...(looseOnly.map(([range, version]) => [
-      range,
-      version,
-      true,
-    ]) as TestDataItems),
+    ...(looseOnly.map(([range, version]) => 
+      [
+        range,
+        version,
+        true,
+      ]
+    ) as TestDataItems),
     ['1.0.0 - 2.0.0', '1.2.3'],
     ['^1.2.3+build', '1.2.3'],
     ['^1.2.3+build', '1.3.0'],

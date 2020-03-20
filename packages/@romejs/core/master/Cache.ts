@@ -22,9 +22,7 @@ type CacheEntry = {
   configHash: string;
   projectDir: string;
   mtime: number;
-  compile: {
-    [key: string]: WorkerCompileResult;
-  };
+  compile: {[key: string]: WorkerCompileResult};
   lint: undefined | WorkerLintResult;
   analyzeDependencies: undefined | WorkerAnalyzeDependencyResult;
   moduleSignature: undefined | ModuleSignature;
@@ -64,7 +62,7 @@ export default class Cache {
   cachePath: AbsoluteFilePath;
 
   async init() {
-    this.master.memoryFs.deletedFileEvent.subscribe(filename => {
+    this.master.memoryFs.deletedFileEvent.subscribe((filename) => {
       return this.master.cache.handleDeleted(filename);
     });
 
@@ -163,15 +161,13 @@ export default class Cache {
 
   async update(
     filename: AbsoluteFilePath,
-    partialEntryCallback:
-      | Partial<CacheEntry>
-      | ((entry: CacheEntry) => Partial<CacheEntry>),
+    partialEntryCallback: 
+        | Partial<CacheEntry>
+        | ((entry: CacheEntry) => Partial<CacheEntry>),
   ) {
     const currEntry = await this.get(filename);
-    const partialEntry: Partial<CacheEntry> =
-      typeof partialEntryCallback === 'function'
-        ? partialEntryCallback(currEntry)
-        : partialEntryCallback;
+    const partialEntry: Partial<CacheEntry> = typeof partialEntryCallback ===
+    'function' ? partialEntryCallback(currEntry) : partialEntryCallback;
 
     const entry: CacheEntry = {
       ...currEntry,

@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyExpression, JSXEmptyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXExpressionContainer = JSNodeBase & {
-  type: 'JSXExpressionContainer';
-  expression: AnyExpression | JSXEmptyExpression;
-};
+export type JSXExpressionContainer = 
+  & JSNodeBase
+  & {
+    type: 'JSXExpressionContainer';
+    expression: AnyExpression | JSXEmptyExpression;
+  };
 
 export const jsxExpressionContainer = createBuilder<JSXExpressionContainer>(
   'JSXExpressionContainer',

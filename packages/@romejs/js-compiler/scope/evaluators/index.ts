@@ -41,7 +41,7 @@ import {AnyNode} from '@romejs/js-ast';
 
 type ScopeEvaluator = {
   creator: boolean;
-  build(node: AnyNode, parent: AnyNode, scope: Scope): undefined | void | Scope;
+  build(node: AnyNode, parent: AnyNode, scope: Scope) ;
 };
 
 const evaluators: Map<string, ScopeEvaluator> = new Map();

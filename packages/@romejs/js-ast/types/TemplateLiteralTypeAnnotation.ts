@@ -8,10 +8,12 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type TemplateLiteralTypeAnnotation = JSNodeBase & {
-  type: 'TemplateLiteralTypeAnnotation';
-  value: string;
-};
+export type TemplateLiteralTypeAnnotation = 
+  & JSNodeBase
+  & {
+    type: 'TemplateLiteralTypeAnnotation';
+    value: string;
+  };
 
 export const templateLiteralTypeAnnotation = createBuilder<
   TemplateLiteralTypeAnnotation

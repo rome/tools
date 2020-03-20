@@ -8,6 +8,6 @@
 import test from '@romejs/test';
 import {parseMarkup} from './parse';
 
-test('should not parse string escapes', t => {
+test('should not parse string escapes', (t) => {
   t.snapshot(parseMarkup('<filelink target="C:\\Users\\sebmck\\file.ts" />'));
 });

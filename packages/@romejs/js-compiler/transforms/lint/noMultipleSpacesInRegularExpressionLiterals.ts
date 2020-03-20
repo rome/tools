@@ -19,16 +19,17 @@ import {extractSourceLocationRangeFromNodes} from '@romejs/parser-core';
 function isSpaceChar(
   node: undefined | AnyRegExpBodyItem,
 ): node is RegExpCharacter {
-  return (
-    node !== undefined && node.type === 'RegExpCharacter' && node.value === ' '
-  );
+  return node !== undefined && node.type === 'RegExpCharacter' && node.value ===
+  ' ';
 }
 
 function checkRegex(
   node: RegExpSubExpression,
   context: Context,
 ): RegExpSubExpression {
-  for (let i = 0; i < node.body.length; i++) {
+  for (let i = 0;
+  i < node.body.length;
+  i++) {
     const item = node.body[i];
 
     // Do some quick checks to see if we'll produce an error
@@ -39,7 +40,9 @@ function checkRegex(
     const spaceNodes: Array<RegExpCharacter> = [];
 
     // Get all the space nodes
-    for (let x = i; x < node.body.length; x++) {
+    for (let x = i;
+    x < node.body.length;
+    x++) {
       const item = node.body[i];
       if (isSpaceChar(item)) {
         spaceNodes.push(item);

@@ -11,15 +11,11 @@ export type TestName = string | Array<string>;
 
 declare const __ROME__TEST_OPTIONS__: GlobalTestOptions;
 
-export type GlobalTestOptions =
-  | undefined
-  | {
+export type GlobalTestOptions = 
+    | undefined
+    | {
       dirname?: string;
-      register?: (
-        err: Error,
-        opts: import('@romejs/test').TestOptions,
-        callback?: import('@romejs/test').TestCallback,
-      ) => void;
+      register?: (err: Error, opts: import('@romejs/test').TestOptions, callback?: import('@romejs/test').TestCallback) => void;
     };
 
 type NamelessTestOptions = {
@@ -29,17 +25,15 @@ type NamelessTestOptions = {
 
 export type TestCallback = (t: TestAPI) => void | undefined | Promise<void>;
 
-export type TestOptions = NamelessTestOptions & {
-  name: TestName;
-};
+export type TestOptions = NamelessTestOptions & {name: TestName};
 
 type TestArg = TestName | NamelessTestOptions | TestCallback | undefined;
 
-const testOptions: NonNullable<GlobalTestOptions> =
-  __ROME__TEST_OPTIONS__ === undefined ? {} : __ROME__TEST_OPTIONS__;
+const testOptions: NonNullable<GlobalTestOptions> = __ROME__TEST_OPTIONS__ ===
+undefined ? {} : __ROME__TEST_OPTIONS__;
 
-export const dirname =
-  testOptions.dirname === undefined ? '' : testOptions.dirname;
+export const dirname = testOptions.dirname === undefined
+  ? '' : testOptions.dirname;
 
 function registerTest(
   callsiteError: Error,
@@ -111,15 +105,15 @@ function splitArgs(
 
 export * from './fixtures';
 
-type TestRegisterFunctionArgs =
-  | [TestName]
-  | [TestName, TestCallback]
-  | [TestName, NamelessTestOptions, TestCallback];
+type TestRegisterFunctionArgs = 
+    | [TestName]
+    | [TestName, TestCallback]
+    | [TestName, NamelessTestOptions, TestCallback];
 
 type TestRegisterFunction = (...args: TestRegisterFunctionArgs) => void;
 
 const test: {
-  (...args: TestRegisterFunctionArgs): void;
+  (...args: TestRegisterFunctionArgs) : void;
   skip: TestRegisterFunction;
   only: TestRegisterFunction;
 } = function(...args: TestRegisterFunctionArgs) {
@@ -134,14 +128,10 @@ test.skip = function(...args: TestRegisterFunctionArgs) {
 
 test.only = function(...args: TestRegisterFunctionArgs) {
   const {options, callback} = splitArgs(args);
-  registerTest(
-    new Error(),
-    {
-      ...options,
-      only: true,
-    },
-    callback,
-  );
+  registerTest(new Error(), {
+    ...options,
+    only: true,
+  }, callback);
 };
 
 export default test;

@@ -8,13 +8,15 @@
 import {JSNodeBase, AnyRegExpBodyItem} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpQuantified = JSNodeBase & {
-  type: 'RegExpQuantified';
-  target: AnyRegExpBodyItem;
-  lazy?: boolean;
-  min: number;
-  max?: number;
-};
+export type RegExpQuantified = 
+  & JSNodeBase
+  & {
+    type: 'RegExpQuantified';
+    target: AnyRegExpBodyItem;
+    lazy?: boolean;
+    min: number;
+    max?: number;
+  };
 
 export const regExpQuantified = createBuilder<RegExpQuantified>(
   'RegExpQuantified',

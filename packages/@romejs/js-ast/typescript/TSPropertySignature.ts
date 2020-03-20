@@ -8,13 +8,15 @@
 import {JSNodeBase, AnyObjectPropertyKey, AnyPrimaryType} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSPropertySignature = JSNodeBase & {
-  type: 'TSPropertySignature';
-  key: AnyObjectPropertyKey;
-  optional?: boolean;
-  readonly?: boolean;
-  typeAnnotation?: AnyPrimaryType;
-};
+export type TSPropertySignature = 
+  & JSNodeBase
+  & {
+    type: 'TSPropertySignature';
+    key: AnyObjectPropertyKey;
+    optional?: boolean;
+    readonly?: boolean;
+    typeAnnotation?: AnyPrimaryType;
+  };
 
 export const tsPropertySignature = createBuilder<TSPropertySignature>(
   'TSPropertySignature',

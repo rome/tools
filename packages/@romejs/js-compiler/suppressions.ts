@@ -30,7 +30,7 @@ function extractSuppressionsFromComment(
   const suppressions: DiagnosticSuppressions = [];
 
   const lines = comment.value.split('\n');
-  const cleanLines = lines.map(line => {
+  const cleanLines = lines.map((line) => {
     // Trim line and remove leading star
     return line.trim().replace(/\*[\s]/, '');
   });
@@ -56,11 +56,8 @@ function extractSuppressionsFromComment(
       continue;
     }
 
-    const categories = line
-      .slice(SUPPRESSION_START.length)
-      .trim()
-      .split(' ');
-    const cleanCategories = categories.map(category => category.trim());
+    const categories = line.slice(SUPPRESSION_START.length).trim().split(' ');
+    const cleanCategories = categories.map((category) => category.trim());
 
     for (let category of cleanCategories) {
       if (category === '') {

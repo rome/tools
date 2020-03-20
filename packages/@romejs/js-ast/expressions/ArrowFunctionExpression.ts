@@ -10,12 +10,14 @@ import {createBuilder} from '../utils';
 import {BlockStatement} from '../statements/BlockStatement';
 import {AnyExpression} from '../unions';
 
-export type ArrowFunctionExpression = JSNodeBase & {
-  type: 'ArrowFunctionExpression';
-  head: FunctionHead;
-  body: BlockStatement | AnyExpression;
-  generator?: void;
-};
+export type ArrowFunctionExpression = 
+  & JSNodeBase
+  & {
+    type: 'ArrowFunctionExpression';
+    head: FunctionHead;
+    body: BlockStatement | AnyExpression;
+    generator?: void;
+  };
 
 export const arrowFunctionExpression = createBuilder<ArrowFunctionExpression>(
   'ArrowFunctionExpression',

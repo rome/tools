@@ -8,9 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type NullLiteral = JSNodeBase & {
-  type: 'NullLiteral';
-};
+export type NullLiteral = JSNodeBase & {type: 'NullLiteral'};
 
 export const nullLiteral = createBuilder<NullLiteral>('NullLiteral', {
   bindingKeys: {},

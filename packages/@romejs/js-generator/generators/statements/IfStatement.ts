@@ -14,13 +14,9 @@ export default function IfStatement(generator: Generator, node: AnyNode) {
   generator.word('if');
   generator.space();
   generator.token('(');
-  generator.multiline(
-    node.test,
-    (multiline, test) => {
-      generator.print(test, node);
-    },
-    {indent: true, indentTrailingNewline: true},
-  );
+  generator.multiline(node.test, (multiline, test) => {
+    generator.print(test, node);
+  }, {indent: true, indentTrailingNewline: true});
   generator.token(')');
   generator.space();
 
@@ -57,13 +53,12 @@ export default function IfStatement(generator: Generator, node: AnyNode) {
 // Recursively get the last statement.
 function getLastStatement(statement: AnyNode): AnyNode {
   if (
-    (statement.type === 'WithStatement' ||
-      statement.type === 'WhileStatement' ||
-      statement.type === 'DoWhileStatement' ||
-      statement.type === 'ForOfStatement' ||
-      statement.type === 'ForInStatement' ||
-      statement.type === 'ForStatement') &&
-    isStatement(statement.body)
+    (statement.type === 'WithStatement' || statement.type === 'WhileStatement' ||
+    statement.type === 'DoWhileStatement' ||
+    statement.type === 'ForOfStatement' ||
+    statement.type === 'ForInStatement' ||
+    statement.type === 'ForStatement') &&
+      isStatement(statement.body)
   ) {
     return getLastStatement(statement.body);
   } else {

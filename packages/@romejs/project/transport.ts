@@ -24,7 +24,7 @@ export function serializeJSONProjectConfig(
     },
     typeCheck: {
       ...config.typeCheck,
-      libs: Array.from(config.typeCheck.libs, path => path.join()),
+      libs: Array.from(config.typeCheck.libs, (path) => path.join()),
     },
     files: {
       ...config.files,
@@ -49,9 +49,9 @@ export function hydrateJSONProjectConfig(
     },
     typeCheck: {
       ...config.typeCheck,
-      libs: new AbsoluteFilePathSet(
-        config.typeCheck.libs.map(str => createAbsoluteFilePath(str)),
-      ),
+      libs: new AbsoluteFilePathSet(config.typeCheck.libs.map((str) => 
+        createAbsoluteFilePath(str)
+      )),
     },
     targets: new Map(Object.entries(config.targets)),
   };

@@ -27,8 +27,7 @@ export default {
               {
                 type: 'log',
                 category: 'info',
-                message:
-                  "Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.",
+                message: 'Consider renaming this variable. It\'s easy to confuse the origin of variables when they\'re named after a known global.',
               },
             ],
           });

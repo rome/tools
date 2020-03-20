@@ -8,10 +8,12 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type InterpreterDirective = JSNodeBase & {
-  type: 'InterpreterDirective';
-  value: string;
-};
+export type InterpreterDirective = 
+  & JSNodeBase
+  & {
+    type: 'InterpreterDirective';
+    value: string;
+  };
 
 export const interpreterDirective = createBuilder<InterpreterDirective>(
   'InterpreterDirective',

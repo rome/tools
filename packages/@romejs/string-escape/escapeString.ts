@@ -48,8 +48,8 @@ function escapeChar(
     case '"':
       return '\\"';
 
-    case "'":
-      return "\\'";
+    case '\'':
+      return '\\\'';
 
     case '\b':
       return '\\b';
@@ -79,7 +79,7 @@ function escapeChar(
   return undefined;
 }
 
-type QuoteChar = '' | '"' | "'" | '`';
+type QuoteChar = '' | '"' | '\'' | '`';
 
 type EscapeStringOptions = {
   quote?: QuoteChar;
@@ -109,17 +109,17 @@ export default function escapeString(
     // Handle surrogate pairs in non-JSON mode
     if (!json) {
       const charCode = str.charCodeAt(index);
-      const isHighSurrogate = charCode >= 0xd800 && charCode <= 0xdbff;
+      const isHighSurrogate = charCode >= 55_296 && charCode <= 56_319;
       const hasNextCodePoint = str.length > index + 1;
       const isSurrogatePairStart = isHighSurrogate && hasNextCodePoint;
 
       if (isSurrogatePairStart) {
         const nextCharCode = str.charCodeAt(index + 1);
-        const isLowSurrogate = nextCharCode >= 0xdc00 && nextCharCode <= 0xdfff;
+        const isLowSurrogate = nextCharCode >= 56_320 && nextCharCode <= 57_343;
         if (isLowSurrogate) {
           // https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
           const codePoint =
-            (charCode - 0xd800) * 0x400 + nextCharCode - 0xdc00 + 0x10000;
+          (charCode - 55_296) * 1_024 + nextCharCode - 56_320 + 65_536;
           const hex = codePoint.toString(16);
           result += `\\u{${hex}}`;
           index++;
@@ -131,6 +131,7 @@ export default function escapeString(
     //
     if (PRINTABLE_ASCII.test(char)) {
       // It’s a printable ASCII character that is not `"`, `'` or `\`,
+
       // so don’t escape it.
       result += char;
       continue;
@@ -144,7 +145,7 @@ export default function escapeString(
 
     // Escape single quotes
     if (char == SINGLE_QUOTE) {
-      result += quote == char ? "\\'" : char;
+      result += quote == char ? '\\\'' : char;
       continue;
     }
 

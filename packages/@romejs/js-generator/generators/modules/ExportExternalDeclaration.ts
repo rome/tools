@@ -37,11 +37,8 @@ export default function ExportExternalDeclaration(
     let hasSpecial = false;
     while (true) {
       const first = specifiers[0];
-      if (
-        first !== undefined &&
-        (first.type === 'ExportDefaultSpecifier' ||
-          first.type === 'ExportNamespaceSpecifier')
-      ) {
+      if (first !== undefined && (first.type === 'ExportDefaultSpecifier' ||
+      first.type === 'ExportNamespaceSpecifier')) {
         hasSpecial = true;
         generator.print(specifiers.shift(), node);
         if (specifiers.length) {
@@ -53,7 +50,7 @@ export default function ExportExternalDeclaration(
       }
     }
 
-    if (specifiers.length || (!specifiers.length && !hasSpecial)) {
+    if (specifiers.length || !specifiers.length && !hasSpecial) {
       generator.token('{');
       if (specifiers.length) {
         generator.printCommaList(specifiers, node, {

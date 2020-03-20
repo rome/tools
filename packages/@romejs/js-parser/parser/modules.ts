@@ -63,20 +63,17 @@ import {
   parseExportDefaultClassDeclaration,
 } from './index';
 
-export type ParseExportResult =
-  | AnyStatement
-  | ExportAllDeclaration
-  | ExportLocalDeclaration
-  | ExportExternalDeclaration
-  | ExportDefaultDeclaration
-  | TSNamespaceExportDeclaration
-  | TSExportAssignment
-  | TSImportEqualsDeclaration;
+export type ParseExportResult = 
+    | AnyStatement
+    | ExportAllDeclaration
+    | ExportLocalDeclaration
+    | ExportExternalDeclaration
+    | ExportDefaultDeclaration
+    | TSNamespaceExportDeclaration
+    | TSExportAssignment
+    | TSImportEqualsDeclaration;
 
-export function parseExport(
-  parser: JSParser,
-  start: Position,
-): ParseExportResult {
+export function parseExport(parser: JSParser, start: Position): ParseExportResult {
   const tsNode = parseTSExport(parser, start);
   if (tsNode !== undefined) {
     return tsNode;
@@ -94,28 +91,21 @@ export function parseExport(
     const defExported = parseIdentifier(parser, true);
     let specifiers: Array<AnyExportExternalSpecifier> = [];
 
-    specifiers.push(
-      parser.finishNode(defStart, {
-        type: 'ExportDefaultSpecifier',
-        exported: defExported,
-      }),
-    );
+    specifiers.push(parser.finishNode(defStart, {
+      type: 'ExportDefaultSpecifier',
+      exported: defExported,
+    }));
 
-    if (
-      parser.match(tt.comma) &&
-      parser.lookaheadState().tokenType === tt.star
-    ) {
+    if (parser.match(tt.comma) && parser.lookaheadState().tokenType === tt.star) {
       parser.expect(tt.comma);
       const specifierStart = parser.getPosition();
       parser.expect(tt.star);
       parser.expectContextual('as');
       const exported = parseIdentifier(parser);
-      specifiers.push(
-        parser.finishNode(specifierStart, {
-          type: 'ExportNamespaceSpecifier',
-          exported,
-        }),
-      );
+      specifiers.push(parser.finishNode(specifierStart, {
+        type: 'ExportNamespaceSpecifier',
+        exported,
+      }));
     } else {
       specifiers = [
         ...specifiers,
@@ -147,7 +137,7 @@ export function parseExport(
     if (source !== undefined) {
       if (declaration !== undefined) {
         throw new Error(
-          "When there's a source we don't also expect a declaration",
+          'When there\'s a source we don\'t also expect a declaration',
         );
       }
 
@@ -159,17 +149,15 @@ export function parseExport(
         exportKind,
       );
     }
-  } else if (
-    parser.isContextual('async') &&
-    !isAsyncFunctionDeclarationStart(parser)
-  ) {
+  } else if (parser.isContextual('async') && !isAsyncFunctionDeclarationStart(
+    parser,
+  )) {
     const next = parser.lookaheadState();
 
     parser.addDiagnostic({
       start: next.startPos,
       end: next.endPos,
-      message:
-        'Started with `export async` so we expected to receive an async function but no function keyword was found',
+      message: 'Started with `export async` so we expected to receive an async function but no function keyword was found',
     });
     declaration = undefined;
     specifiers = [];
@@ -186,18 +174,14 @@ export function parseExport(
   checkExport(parser, specifiers, declaration, true, false);
 
   if (declaration !== undefined) {
-    if (
-      declaration.type !== 'VariableDeclarationStatement' &&
-      declaration.type !== 'ClassDeclaration' &&
-      declaration.type !== 'FunctionDeclaration' &&
-      declaration.type !== 'TSModuleDeclaration' &&
-      declaration.type !== 'TSEnumDeclaration' &&
-      declaration.type !== 'FlowInterfaceDeclaration' &&
-      declaration.type !== 'TypeAliasTypeAnnotation' &&
+    if (declaration.type !== 'VariableDeclarationStatement' &&
+      declaration.type !== 'ClassDeclaration' && declaration.type !==
+    'FunctionDeclaration' && declaration.type !== 'TSModuleDeclaration' &&
+      declaration.type !== 'TSEnumDeclaration' && declaration.type !==
+    'FlowInterfaceDeclaration' && declaration.type !== 'TypeAliasTypeAnnotation' &&
       declaration.type !== 'TSInterfaceDeclaration' &&
       declaration.type !== 'TSDeclareFunction' &&
-      declaration.type !== 'FlowOpaqueType'
-    ) {
+      declaration.type !== 'FlowOpaqueType') {
       parser.addDiagnostic({
         loc: declaration.loc,
         message: 'Invalid export declaration',
@@ -218,16 +202,15 @@ export function parseExport(
 function createExportExternalDeclaration(
   parser: JSParser,
   start: Position,
-  rawSpecifiers:
-    | undefined
-    | Array<ExportLocalSpecifier | AnyExportExternalSpecifier>,
+  rawSpecifiers: 
+      | undefined
+      | Array<ExportLocalSpecifier | AnyExportExternalSpecifier>,
+
   source: StringLiteral,
   exportKind?: ConstExportModuleKind,
 ): ExportExternalDeclaration {
-  const specifiers =
-    rawSpecifiers === undefined
-      ? undefined
-      : convertLocalToExternalSpecifiers(parser, rawSpecifiers);
+  const specifiers = rawSpecifiers === undefined
+    ? undefined : convertLocalToExternalSpecifiers(parser, rawSpecifiers);
   checkExport(parser, specifiers, undefined, true, false);
 
   return parser.finishNode(start, {
@@ -242,7 +225,7 @@ function convertLocalToExternalSpecifiers(
   parser: JSParser,
   specifiers: Array<AnyExportExternalSpecifier | ExportLocalSpecifier>,
 ): Array<AnyExportExternalSpecifier> {
-  return specifiers.map(specifier => {
+  return specifiers.map((specifier) => {
     if (specifier.type === 'ExportLocalSpecifier') {
       return {
         ...specifier,
@@ -289,8 +272,7 @@ function parseExportDefaultExpression(
 
   if (parser.match(tt._const) || parser.match(tt._var) || isLetStart(parser)) {
     parser.addDiagnostic({
-      message:
-        'Only expressions, functions or classes are allowed as the `default` export.',
+      message: 'Only expressions, functions or classes are allowed as the `default` export.',
     });
   }
 
@@ -356,10 +338,8 @@ function parseExportDeclaration(
 
 function isExportDefaultSpecifier(parser: JSParser): boolean {
   const lookahead = parser.lookaheadState();
-  if (
-    lookahead.tokenType === tt.comma ||
-    (lookahead.tokenType === tt.name && lookahead.tokenValue === 'from')
-  ) {
+  if (lookahead.tokenType === tt.comma || lookahead.tokenType === tt.name &&
+    lookahead.tokenValue === 'from') {
     return true;
   }
 
@@ -367,19 +347,14 @@ function isExportDefaultSpecifier(parser: JSParser): boolean {
     return false;
   }
 
-  if (
-    parser.match(tt.name) &&
-    (parser.state.tokenValue === 'type' ||
-      parser.state.tokenValue === 'interface' ||
-      parser.state.tokenValue == 'opaque')
-  ) {
+  if (parser.match(tt.name) && (parser.state.tokenValue === 'type' ||
+  parser.state.tokenValue === 'interface' || parser.state.tokenValue == 'opaque')) {
     return false;
   }
 
   if (parser.match(tt.name)) {
-    return (
-      parser.state.tokenValue !== 'async' && parser.state.tokenValue !== 'let'
-    );
+    return parser.state.tokenValue !== 'async' && parser.state.tokenValue !==
+    'let';
   }
 
   if (!parser.match(tt._default)) {
@@ -445,11 +420,8 @@ function parseExportFrom(
 }
 
 function shouldParseExportStar(parser: JSParser): boolean {
-  return (
-    parser.match(tt.star) ||
-    (parser.isContextual('type') &&
-      parser.lookaheadState().tokenType === tt.star)
-  );
+  return parser.match(tt.star) || parser.isContextual('type') &&
+    parser.lookaheadState().tokenType === tt.star;
 }
 
 function parseExportStar(
@@ -493,7 +465,7 @@ function parseExportNamespace(
 } {
   if (exportKind === 'type') {
     parser.addDiagnostic({
-      message: "Can't have a type export namespacer specifier",
+      message: 'Can\'t have a type export namespacer specifier',
     });
   }
 
@@ -503,19 +475,16 @@ function parseExportNamespace(
 
   let specifiers: Array<AnyExportExternalSpecifier> = [];
 
-  specifiers.push(
-    parser.finishNode(specifierStart, {
-      type: 'ExportNamespaceSpecifier',
-      exported,
-    }),
-  );
+  specifiers.push(parser.finishNode(specifierStart, {
+    type: 'ExportNamespaceSpecifier',
+    exported,
+  }));
 
   specifiers = [
     ...specifiers,
-    ...convertLocalToExternalSpecifiers(
+    ...convertLocalToExternalSpecifiers(parser, parseExportLocalSpecifiersMaybe(
       parser,
-      parseExportLocalSpecifiersMaybe(parser),
-    ),
+    )),
   ];
 
   const source = parseExportFromExpect(parser);
@@ -523,26 +492,20 @@ function parseExportNamespace(
 }
 
 function shouldParseExportDeclaration(parser: JSParser): boolean {
-  return (
-    isTSDeclarationStart(parser) ||
-    parser.isContextual('type') ||
-    parser.isContextual('interface') ||
-    parser.isContextual('opaque') ||
-    parser.state.tokenType.keyword === 'var' ||
-    parser.state.tokenType.keyword === 'const' ||
-    parser.state.tokenType.keyword === 'function' ||
-    parser.state.tokenType.keyword === 'class' ||
-    isLetStart(parser) ||
-    isAsyncFunctionDeclarationStart(parser) ||
-    parser.match(tt.at)
-  );
+  return isTSDeclarationStart(parser) || parser.isContextual('type') ||
+  parser.isContextual('interface') || parser.isContextual('opaque') ||
+  parser.state.tokenType.keyword === 'var' || parser.state.tokenType.keyword ===
+  'const' || parser.state.tokenType.keyword === 'function' ||
+  parser.state.tokenType.keyword === 'class' || isLetStart(parser) ||
+  isAsyncFunctionDeclarationStart(parser) || parser.match(tt.at);
 }
 
 function checkExport(
   parser: JSParser,
-  specifiers:
-    | undefined
-    | Array<ExportLocalSpecifier | AnyExportExternalSpecifier>,
+  specifiers: 
+      | undefined
+      | Array<ExportLocalSpecifier | AnyExportExternalSpecifier>,
+
   declaration: undefined | AnyNode,
   checkNames: boolean = false,
   isDefault: boolean = false,
@@ -622,10 +585,8 @@ function checkDuplicateExports(
   if (existing !== undefined) {
     parser.addDiagnostic({
       loc: node.loc,
-      message:
-        name === 'default'
-          ? 'Only one default export allowed per module.'
-          : `\`${name}\` has already been exported. Exported identifiers must be unique.`,
+      message: name === 'default'
+        ? 'Only one default export allowed per module.' : `\`${name}\` has already been exported. Exported identifiers must be unique.`,
       advice: [
         {
           type: 'log',
@@ -646,7 +607,6 @@ function checkDuplicateExports(
 }
 
 // Parses a comma-separated list of module exports.
-
 function parseExportSpecifiers(parser: JSParser): Array<ExportLocalSpecifier> {
   const specifiers: Array<ExportLocalSpecifier> = [];
   let first = true;
@@ -676,16 +636,15 @@ function parseExportSpecifiers(parser: JSParser): Array<ExportLocalSpecifier> {
     const start = parser.getPosition();
     const local = parseReferenceIdentifier(parser, true);
     const exported = parser.eatContextual('as')
-      ? parseIdentifier(parser, true)
-      : toIdentifier(parser, parser.cloneNode(local));
-    specifiers.push(
-      parser.finishNode(start, {
-        type: 'ExportLocalSpecifier',
+      ? parseIdentifier(parser, true) : toIdentifier(parser, parser.cloneNode(
         local,
-        exported,
-        // TODO exportKind?
-      }),
-    );
+      ));
+    specifiers.push(parser.finishNode(start, {
+      type: 'ExportLocalSpecifier',
+      local,
+      exported,
+      // TODO exportKind?
+    }));
   }
 
   return specifiers;
@@ -693,10 +652,7 @@ function parseExportSpecifiers(parser: JSParser): Array<ExportLocalSpecifier> {
 
 export type ParseImportResult = ImportDeclaration | TSImportEqualsDeclaration;
 
-export function parseImport(
-  parser: JSParser,
-  start: Position,
-): ParseImportResult {
+export function parseImport(parser: JSParser, start: Position): ParseImportResult {
   if (parser.match(tt.name) && parser.lookaheadState().tokenType === tt.eq) {
     return parseTSImportEqualsDeclaration(parser, start);
   }
@@ -754,9 +710,10 @@ function parseImportSpecifierLocal(
 ): ImportSpecifierLocal {
   const start = parser.getPosition();
 
-  const local = hasTypeImportKind(importKind)
-    ? parseFlowRestrictedIdentifier(parser, true)
-    : parseBindingIdentifier(parser);
+  const local = hasTypeImportKind(importKind) ? parseFlowRestrictedIdentifier(
+    parser,
+    true,
+  ) : parseBindingIdentifier(parser);
 
   checkLVal(parser, local, true, undefined, contextDescription);
 
@@ -773,19 +730,19 @@ function parseImportSpecifiers(
   start: Position,
 ): {
   specifiers: Array<
-    ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier
-  >;
+      | ImportSpecifier
+      | ImportDefaultSpecifier
+      | ImportNamespaceSpecifier>;
   importKind: undefined | ConstImportModuleKind;
 } {
   let importKind: undefined | ConstImportModuleKind = undefined;
 
   // Ensure that when parsing `import from './type.js` we don't mistakenly think it's an import type';
+
   // TODO probably need to check for a comma and `as`
   const lh = parser.lookaheadState();
-  if (
-    lh.tokenType !== tt.name ||
-    (lh.tokenType === tt.name && lh.tokenValue !== 'from')
-  ) {
+  if (lh.tokenType !== tt.name || lh.tokenType === tt.name && lh.tokenValue !==
+  'from') {
     if (parser.match(tt._typeof)) {
       importKind = 'typeof';
     } else if (parser.isContextual('type')) {
@@ -801,18 +758,16 @@ function parseImportSpecifiers(
       });
     }
 
-    if (
-      isMaybeDefaultImport(lh) ||
-      lh.tokenType === tt.braceL ||
-      lh.tokenType === tt.star
-    ) {
+    if (isMaybeDefaultImport(lh) || lh.tokenType === tt.braceL ||
+    lh.tokenType === tt.star) {
       parser.next();
     }
   }
 
   const specifiers: Array<
-    ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier
-  > = [];
+      | ImportSpecifier
+      | ImportDefaultSpecifier
+      | ImportNamespaceSpecifier> = [];
 
   let first = true;
 
@@ -824,12 +779,10 @@ function parseImportSpecifiers(
       'default import specifier',
     );
 
-    specifiers.push(
-      parser.finishNode(start, {
-        type: 'ImportDefaultSpecifier',
-        local: meta,
-      }),
-    );
+    specifiers.push(parser.finishNode(start, {
+      type: 'ImportDefaultSpecifier',
+      local: meta,
+    }));
 
     if (!parser.eat(tt.comma)) {
       return {specifiers, importKind};
@@ -846,12 +799,10 @@ function parseImportSpecifiers(
       'import namespace specifier',
     );
 
-    specifiers.push(
-      parser.finishNode(start, {
-        type: 'ImportNamespaceSpecifier',
-        local: meta,
-      }),
-    );
+    specifiers.push(parser.finishNode(start, {
+      type: 'ImportNamespaceSpecifier',
+      local: meta,
+    }));
 
     return {specifiers, importKind};
   }
@@ -874,8 +825,7 @@ function parseImportSpecifiers(
       // Detect an attempt to deep destructure
       if (parser.eat(tt.colon)) {
         parser.addDiagnostic({
-          message:
-            'ES2015 named imports do not destructure. Use another statement for destructuring after the import.',
+          message: 'ES2015 named imports do not destructure. Use another statement for destructuring after the import.',
         });
       }
 
@@ -912,11 +862,8 @@ function parseImportSpecifier(
   let isBinding = false;
   if (parser.isContextual('as') && !parser.isLookaheadContextual('as')) {
     const as_ident = parseIdentifier(parser, true);
-    if (
-      importKind !== undefined &&
-      !parser.match(tt.name) &&
-      parser.state.tokenType.keyword === undefined
-    ) {
+    if (importKind !== undefined && !parser.match(tt.name) &&
+      parser.state.tokenType.keyword === undefined) {
       // `import {type as ,` or `import {type as }`
       imported = as_ident;
       local = toBindingIdentifier(parser, parser.cloneNode(as_ident));
@@ -926,10 +873,8 @@ function parseImportSpecifier(
       importKind = undefined;
       local = parseBindingIdentifier(parser);
     }
-  } else if (
-    importKind !== undefined &&
-    (parser.match(tt.name) || parser.state.tokenType.keyword)
-  ) {
+  } else if (importKind !== undefined && (parser.match(tt.name) ||
+  parser.state.tokenType.keyword)) {
     // `import {type foo`
     imported = parseIdentifier(parser, true);
     if (parser.eatContextual('as')) {
@@ -951,8 +896,7 @@ function parseImportSpecifier(
   if (nodeIsTypeImport && specifierIsTypeImport) {
     parser.addDiagnostic({
       start: firstIdentPos,
-      message:
-        'The `type` and `typeof` keywords on named imports can only be used on regular `import` statements. It cannot be used with `import type` or `import typeof` statements',
+      message: 'The `type` and `typeof` keywords on named imports can only be used on regular `import` statements. It cannot be used with `import type` or `import typeof` statements',
     });
   }
 

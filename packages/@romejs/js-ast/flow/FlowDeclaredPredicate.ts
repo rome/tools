@@ -8,10 +8,12 @@
 import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclaredPredicate = JSNodeBase & {
-  type: 'FlowDeclaredPredicate';
-  value: AnyExpression;
-};
+export type FlowDeclaredPredicate = 
+  & JSNodeBase
+  & {
+    type: 'FlowDeclaredPredicate';
+    value: AnyExpression;
+  };
 
 export const flowDeclaredPredicate = createBuilder<FlowDeclaredPredicate>(
   'FlowDeclaredPredicate',

@@ -8,11 +8,13 @@
 import {JSNodeBase, AnyStatement, Directive} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type BlockStatement = JSNodeBase & {
-  type: 'BlockStatement';
-  body: Array<AnyStatement>;
-  directives?: Array<Directive>;
-};
+export type BlockStatement = 
+  & JSNodeBase
+  & {
+    type: 'BlockStatement';
+    body: Array<AnyStatement>;
+    directives?: Array<Directive>;
+  };
 
 export const blockStatement = createQuickBuilder<BlockStatement, 'body'>(
   'BlockStatement',

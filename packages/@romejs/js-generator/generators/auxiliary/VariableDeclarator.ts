@@ -8,10 +8,7 @@
 import Generator from '../../Generator';
 import {VariableDeclarator, variableDeclarator, AnyNode} from '@romejs/js-ast';
 
-export default function VariableDeclarator(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function VariableDeclarator(generator: Generator, node: AnyNode) {
   node = variableDeclarator.assert(node);
 
   generator.print(node.id, node);

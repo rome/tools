@@ -14,14 +14,16 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type ClassProperty = JSNodeBase & {
-  type: 'ClassProperty';
-  key: AnyObjectPropertyKey;
-  meta: ClassPropertyMeta;
-  value?: AnyExpression;
-  typeAnnotation?: AnyPrimaryType;
-  definite?: boolean;
-};
+export type ClassProperty = 
+  & JSNodeBase
+  & {
+    type: 'ClassProperty';
+    key: AnyObjectPropertyKey;
+    meta: ClassPropertyMeta;
+    value?: AnyExpression;
+    typeAnnotation?: AnyPrimaryType;
+    definite?: boolean;
+  };
 
 export const classProperty = createBuilder<ClassProperty>('ClassProperty', {
   bindingKeys: {},

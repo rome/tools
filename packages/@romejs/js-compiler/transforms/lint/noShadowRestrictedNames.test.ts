@@ -10,7 +10,7 @@ import {createUnknownFilePath} from '@romejs/path';
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('no shadow restricted names', async t => {
+test('no shadow restricted names', async (t) => {
   let failingCases = [
     'function NaN() {}',
     'let Set;',
@@ -20,9 +20,9 @@ test('no shadow restricted names', async t => {
   ];
   for (let failingCase of failingCases) {
     const res = await testLint(failingCase);
-    if (
-      !res.diagnostics.some(d => d.category === 'lint/noShadowRestrictedNames')
-    ) {
+    if (!res.diagnostics.some((d) => 
+      d.category === 'lint/noShadowRestrictedNames'
+    )) {
       t.fail(
         `expected "\n${failingCase}\n" to report a lint/noShadowRestrictedNames diagnostic but it didn't`,
         [

@@ -42,9 +42,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const intToCharMap = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split(
-  '',
-);
+const intToCharMap =
+'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('');
 
 /**
  * Encode an integer in the range of 0 to 63 to a single base 64 digit.
@@ -58,17 +57,26 @@ export function encode(number: number): string {
 }
 
 // A single base 64 digit can contain 6 bits of data. For the base 64 variable
-// length quantities we use in the source map spec, the first bit is the sign,
-// the next four bits are the actual value, and the 6th bit is the
-// continuation bit. The continuation bit tells us whether there are more
-// digits in this value following this digit.
-//
-//   Continuation
-//   |    Sign
-//   |    |
-//   V    V
-//   101011
 
+// length quantities we use in the source map spec, the first bit is the sign,
+
+// the next four bits are the actual value, and the 6th bit is the
+
+// continuation bit. The continuation bit tells us whether there are more
+
+// digits in this value following this digit.
+
+//
+
+//   Continuation
+
+//   |    Sign
+
+//   |    |
+
+//   V    V
+
+//   101011
 const VLQ_BASE_SHIFT = 5;
 
 // binary: 100000
@@ -115,6 +123,7 @@ export function encodeVLQ(value: number): string {
     vlq >>>= VLQ_BASE_SHIFT;
     if (vlq > 0) {
       // There are still more digits in this value, so we must make sure the
+
       // continuation bit is marked.
       digit |= VLQ_CONTINUATION_BIT;
     }
@@ -131,16 +140,12 @@ export function encodeVLQ(value: number): string {
 export function decode(charCode: number): number {
   const uppercaseA = 65; // 'A'
   const uppercaseZ = 90; // 'Z'
-
   const lowercaseA = 97; // 'a'
   const lowercaseZ = 122; // 'z'
-
   const zero = 48; // '0'
   const nine = 57; // '9'
-
   const plus = 43; // '+'
   const slash = 47; // '/'
-
   const lowercaseOffset = 26;
   const numberOffset = 52;
 

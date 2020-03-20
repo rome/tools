@@ -14,14 +14,16 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSInterfaceDeclaration = JSNodeBase & {
-  type: 'TSInterfaceDeclaration';
-  id: BindingIdentifier;
-  body: TSInterfaceBody;
-  typeParameters?: TSTypeParameterDeclaration;
-  extends?: Array<TSExpressionWithTypeArguments>;
-  declare?: boolean;
-};
+export type TSInterfaceDeclaration = 
+  & JSNodeBase
+  & {
+    type: 'TSInterfaceDeclaration';
+    id: BindingIdentifier;
+    body: TSInterfaceBody;
+    typeParameters?: TSTypeParameterDeclaration;
+    extends?: Array<TSExpressionWithTypeArguments>;
+    declare?: boolean;
+  };
 
 export const tsInterfaceDeclaration = createBuilder<TSInterfaceDeclaration>(
   'TSInterfaceDeclaration',

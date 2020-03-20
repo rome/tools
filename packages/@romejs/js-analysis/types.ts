@@ -12,10 +12,9 @@ import {Dict} from '@romejs/typescript-helpers';
 
 export type CheckProvider = {
   libs?: Array<Program>;
-  getExportTypes: (
-    origin: string,
-    relative: string,
-  ) => Promise<undefined | ModuleSignature>;
+  getExportTypes: (origin: string, relative: string) => Promise<
+      | undefined
+      | ModuleSignature>;
 };
 
 export type TypeCheckProvider = CheckProvider;
@@ -27,13 +26,13 @@ export type ModuleSignatureType = {
   data: HydrateData;
 };
 
-export type ModuleSignatureExport =
-  | {
+export type ModuleSignatureExport = 
+    | {
       type: 'local';
       name: string;
       value: string;
     }
-  | {
+    | {
       type: 'all';
       source: string;
     };

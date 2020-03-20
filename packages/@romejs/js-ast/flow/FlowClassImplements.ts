@@ -12,11 +12,13 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowClassImplements = JSNodeBase & {
-  type: 'FlowClassImplements';
-  id: ReferenceIdentifier;
-  typeParameters?: FlowTypeParameterInstantiation;
-};
+export type FlowClassImplements = 
+  & JSNodeBase
+  & {
+    type: 'FlowClassImplements';
+    id: ReferenceIdentifier;
+    typeParameters?: FlowTypeParameterInstantiation;
+  };
 
 export const flowClassImplements = createBuilder<FlowClassImplements>(
   'FlowClassImplements',

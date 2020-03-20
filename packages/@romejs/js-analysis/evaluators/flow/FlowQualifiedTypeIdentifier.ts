@@ -12,10 +12,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function FlowQualifiedTypeIdentifier(
-  node: AnyNode,
-  scope: Scope,
-) {
+export default function FlowQualifiedTypeIdentifier(node: AnyNode, scope: Scope) {
   node = flowQualifiedTypeIdentifier.assert(node);
   scope;
   throw new Error('unimplemented');

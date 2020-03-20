@@ -11,9 +11,7 @@ import Linter from '../linter/Linter';
 import {commandCategories} from '../../commands';
 import {Consumer} from '@romejs/consume';
 
-type Flags = {
-  fix: boolean;
-};
+type Flags = {fix: boolean};
 
 export default createMasterCommand<Flags>({
   category: commandCategories.CODE_QUALITY,
@@ -40,6 +38,7 @@ function initWatchLint(req: MasterRequest, reject: (err: Error) => void) {
   const {master, reporter} = req;
 
   // whenever a file change happens, we wait 250ms to do lint, this is in case there's multiple
+
   // files being linted, like if an autofix is triggered
   let queued = false;
 
@@ -47,6 +46,7 @@ function initWatchLint(req: MasterRequest, reject: (err: Error) => void) {
   let running = false;
 
   // if a file event happens while we're linting then we'll need to run the full lint again to make
+
   // sure it's up to date
   let runAgainAfterComplete = false;
 

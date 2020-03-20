@@ -10,16 +10,17 @@ import {OPCODES, GUID} from './types';
 import {parseFrame, buildFrame, unmaskPayload, isCompleteFrame} from './frame';
 import {Event} from '@romejs/events';
 import crypto = require('crypto');
+
 import url = require('url');
+
 import http = require('http');
+
 import net = require('net');
+
 import {Reporter} from '@romejs/cli-reporter';
 
 export function createKey(key: string): string {
-  return crypto
-    .createHash('sha1')
-    .update(`${key}${GUID}`)
-    .digest('base64');
+  return crypto.createHash('sha1').update(`${key}${GUID}`).digest('base64');
 }
 
 type WebSocketType = 'client' | 'server';
@@ -41,7 +42,7 @@ export class WebSocketInterface {
     this.errorEvent = new Event({name: 'WebSocketInterface.error'});
     this.endEvent = new Event({name: 'WebSocketInterface.end', serial: true});
 
-    socket.on('data', buff => {
+    socket.on('data', (buff) => {
       this.addBuffer(buff);
     });
 
@@ -93,7 +94,7 @@ export class WebSocketInterface {
         data: buff,
       });
     } else {
-      throw new Error("Don't know how to send this");
+      throw new Error('Don\'t know how to send this');
     }
   }
 
@@ -177,7 +178,8 @@ export class WebSocketInterface {
   }
 
   addBufferToIncompleteFrame(incompleteFrame: Frame, buff: Buffer) {
-    incompleteFrame.payload = Buffer.concat([
+    incompleteFrame.payload =
+    Buffer.concat([
       incompleteFrame.payload,
       unmaskPayload(buff, incompleteFrame.mask, incompleteFrame.payload.length),
     ]);
@@ -207,9 +209,7 @@ export class WebSocketInterface {
   }
 }
 
-export async function createClient(
-  rawUrl: string,
-): Promise<WebSocketInterface> {
+export async function createClient(rawUrl: string): Promise<WebSocketInterface> {
   const parts = url.parse(rawUrl);
 
   return new Promise((resolve, reject) => {
@@ -229,7 +229,7 @@ export async function createClient(
       },
     });
 
-    req.on('response', res => {
+    req.on('response', (res) => {
       if (res.statusCode && res.statusCode >= 400) {
         process.stderr.write(`Unexpected HTTP code: ${res.statusCode}\n`);
         res.pipe(process.stderr);
@@ -241,11 +241,9 @@ export async function createClient(
     req.on('upgrade', (res, socket, head) => {
       if (res.headers['sec-websocket-accept'] !== digest) {
         socket.end();
-        reject(
-          new Error(
-            `Digest mismatch ${digest} !== ${res.headers['sec-websocket-accept']}`,
-          ),
-        );
+        reject(new Error(
+          `Digest mismatch ${digest} !== ${res.headers['sec-websocket-accept']}`,
+        ));
         return undefined;
       }
 
@@ -255,7 +253,7 @@ export async function createClient(
       resolve(client);
     });
 
-    req.on('error', err => {
+    req.on('error', (err) => {
       reject(err);
     });
 

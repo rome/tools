@@ -9,10 +9,8 @@ import Generator from '../../Generator';
 import {CallExpression, callExpression, AnyNode} from '@romejs/js-ast';
 
 export default function CallExpression(generator: Generator, node: AnyNode) {
-  node =
-    node.type === 'OptionalCallExpression' || node.type === 'NewExpression'
-      ? node
-      : callExpression.assert(node);
+  node = node.type === 'OptionalCallExpression' || node.type === 'NewExpression'
+    ? node : callExpression.assert(node);
 
   generator.multiline(node, (multiline, node) => {
     generator.print(node.callee, node);

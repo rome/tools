@@ -14,30 +14,20 @@ import {
 } from '@romejs/js-ast';
 
 function isShorthand(key: AnyObjectPropertyKey, value: AnyNode): boolean {
-  return (
-    key.type === 'StaticPropertyKey' &&
-    key.value.type === 'Identifier' &&
-    (value.type === 'ReferenceIdentifier' ||
-      value.type === 'BindingIdentifier' ||
-      value.type === 'AssignmentIdentifier') &&
-    value.name === key.value.name
-  );
+  return key.type === 'StaticPropertyKey' && key.value.type === 'Identifier' &&
+    (value.type === 'ReferenceIdentifier' || value.type === 'BindingIdentifier' ||
+    value.type === 'AssignmentIdentifier') &&
+    value.name === key.value.name;
 }
 
 export default function ObjectProperty(generator: Generator, node: AnyNode) {
-  node =
-    node.type === 'BindingObjectPatternProperty' ||
-    node.type === 'AssignmentObjectPatternProperty'
-      ? node
-      : objectProperty.assert(node);
+  node = node.type === 'BindingObjectPatternProperty' || node.type ===
+  'AssignmentObjectPatternProperty' ? node : objectProperty.assert(node);
 
   generator.print(node.key, node);
 
-  if (
-    (node.value.type === 'BindingAssignmentPattern' ||
-      node.value.type === 'AssignmentAssignmentPattern') &&
-    isShorthand(node.key, node.value.left)
-  ) {
+  if ((node.value.type === 'BindingAssignmentPattern' || node.value.type ===
+  'AssignmentAssignmentPattern') && isShorthand(node.key, node.value.left)) {
     generator.space();
     generator.token('=');
     generator.space();

@@ -24,11 +24,9 @@ import {SourceMap} from '@romejs/codec-source-map';
 
 assertNodeTypeSet(generatorFunctions, 'generators');
 
-export type GeneratorMethod = (
-  generator: Generator,
-  node: AnyNode,
-  parent: AnyNode,
-) => void | never;
+export type GeneratorMethod = (generator: Generator, node: AnyNode, parent: AnyNode) => 
+    | void
+    | never;
 
 const SCIENTIFIC_NOTATION = /e/i;
 const ZERO_DECIMAL_INTEGER = /\.0+$/;
@@ -44,9 +42,7 @@ export type GeneratorOptions = {
   sourceFileName?: string;
 };
 
-type TerminatorState = {
-  printed: boolean;
-};
+type TerminatorState = {printed: boolean};
 
 type PrintJoinOptions<N> = {
   indent?: boolean;
@@ -76,10 +72,10 @@ type GeneratorSnapshot = {
   buffer: BufferSnapshot;
 };
 
-type MultilineCondition =
-  | 'more-than-one-line'
-  | 'any-line-exceeds'
-  | 'source-had-multiline';
+type MultilineCondition = 
+    | 'more-than-one-line'
+    | 'any-line-exceeds'
+    | 'source-had-multiline';
 
 export default class Generator {
   constructor(opts: GeneratorOptions, code: string) {
@@ -169,9 +165,8 @@ export default class Generator {
 
     // If we have the source-had-multiline condition and the original source had multiple lines then assume multiline always
     if (
-      conditions !== undefined &&
-      conditions.includes('source-had-multiline') &&
-      n.isMultiLine(node)
+      conditions !== undefined && conditions.includes('source-had-multiline') &&
+        n.isMultiLine(node)
     ) {
       callback(true, node);
       return;
@@ -196,8 +191,8 @@ export default class Generator {
       for (const condition of conditions) {
         switch (condition) {
           case 'more-than-one-line':
-            shouldMultiline =
-              this.buf.position.line !== snapshot.buffer.position.line;
+            shouldMultiline = this.buf.position.line !==
+            snapshot.buffer.position.line;
             break;
 
           case 'any-line-exceeds':
@@ -205,11 +200,9 @@ export default class Generator {
             shouldMultiline = doesLineExceed(this.buf.position.column);
 
             // Check previous lines
-            for (
-              let i = snapshot.buffer.lineLengthsIndex;
-              i < this.buf.lineLengths.length;
-              i++
-            ) {
+            for (let i = snapshot.buffer.lineLengthsIndex;
+            i < this.buf.lineLengths.length;
+            i++) {
               if (shouldMultiline) {
                 break;
               }
@@ -246,7 +239,6 @@ export default class Generator {
   /**
    * Add a semicolon to the buffer.
    */
-
   semicolon(): void {
     this.append(';');
   }
@@ -254,7 +246,6 @@ export default class Generator {
   /**
    * Add a right brace to the buffer.
    */
-
   rightBrace(): void {
     // TODO remove this?
     this.token('}');
@@ -271,14 +262,10 @@ export default class Generator {
   /**
    * Add a space to the buffer unless it is compact.
    */
-
   space(force: boolean = false): void {
-    if (
-      (this.buf.hasContent() &&
-        !this.buf.endsWith(' ') &&
-        !this.buf.endsWith('\n')) ||
-      force
-    ) {
+    if (this.buf.hasContent() && !this.buf.endsWith(' ') && !this.buf.endsWith(
+      '\n',
+    ) || force) {
       this._space();
     }
   }
@@ -286,7 +273,6 @@ export default class Generator {
   /**
    * Writes a token that can't be safely parsed without taking whitespace into account.
    */
-
   word(str: string): void {
     if (this.endsWithWord) {
       this.space();
@@ -300,35 +286,30 @@ export default class Generator {
   /**
    * Writes a number token so that we can validate if it is an integer.
    */
-
   number(str: string): void {
     this.word(str);
 
     // Integer tokens need special handling because they cannot have '.'s inserted
+
     // immediately after them.
-    this.endsWithInteger =
-      Number.isInteger(Number(str)) &&
-      !NON_DECIMAL_LITERAL.test(str) &&
-      !SCIENTIFIC_NOTATION.test(str) &&
-      !ZERO_DECIMAL_INTEGER.test(str) &&
-      str[str.length - 1] !== '.';
+    this.endsWithInteger = Number.isInteger(Number(str)) &&
+      !NON_DECIMAL_LITERAL.test(str) && !SCIENTIFIC_NOTATION.test(str) &&
+      !ZERO_DECIMAL_INTEGER.test(str) && str[str.length - 1] !== '.';
   }
 
   /**
    * Writes a simple token.
    */
-
   token(str: string): void {
     // space is mandatory to avoid outputting <!--
+
     // http://javascript.spec.whatwg.org/#comment-syntax
-    if (
-      (str === '--' && this.buf.endsWith('!')) ||
-      // Need spaces for operators of the same kind to avoid: `a+++b`
-      (str[0] === '+' && this.buf.endsWith('+')) ||
-      (str[0] === '-' && this.buf.endsWith('-')) ||
-      // Needs spaces to avoid changing '34' to '34.', which would still be a valid number.
-      (str[0] === '.' && this.endsWithInteger)
-    ) {
+    if (str === '--' && this.buf.endsWith('!') ||
+    // Need spaces for operators of the same kind to avoid: `a+++b`
+    str[0] === '+' && this.buf.endsWith('+') || str[0] === '-' &&
+      this.buf.endsWith('-') ||
+    // Needs spaces to avoid changing '34' to '34.', which would still be a valid number.
+    str[0] === '.' && this.endsWithInteger) {
       this.space();
     }
 
@@ -415,7 +396,9 @@ export default class Generator {
     this.parenPushNewlineState = undefined;
 
     let i;
-    for (i = 0; i < str.length && str[i] === ' '; i++) {
+    for (i = 0;
+    i < str.length && str[i] === ' ';
+    i++) {
       continue;
     }
     if (i === str.length) {
@@ -434,7 +417,6 @@ export default class Generator {
   /**
    * Get the current indent.
    */
-
   getIndent(): string {
     return '  '.repeat(this.currentIndentLevel);
   }
@@ -454,17 +436,15 @@ export default class Generator {
    *
    *  `undefined` will be returned and not `foo` due to the terminator.
    */
-
   startTerminatorless(): TerminatorState {
-    return (this.parenPushNewlineState = {
+    return this.parenPushNewlineState = {
       printed: false,
-    });
+    };
   }
 
   /**
    * Print an ending parentheses if a starting one has been printed.
    */
-
   endTerminatorless(state: TerminatorState) {
     if (state.printed) {
       this.dedent();
@@ -513,11 +493,8 @@ export default class Generator {
       return;
     }
 
-    if (
-      this.options.typeAnnotations === false &&
-      isTypeNode(node) &&
-      !isTypeExpressionWrapperNode(node)
-    ) {
+    if (this.options.typeAnnotations === false && isTypeNode(node) &&
+      !isTypeExpressionWrapperNode(node)) {
       return;
     }
 
@@ -617,27 +594,20 @@ export default class Generator {
         this.print(node, parent, printAfter);
 
         if (opts.multiline === true) {
-          let nextNode = nodes[i + 1] as AnyNode;
+          let nextNode = (nodes[i + 1] as AnyNode);
 
           // Don't print a newline if the next node has a leadingComment that begins on the same line as this node
           let hasNextTrailingCommentOnSameLine = false;
 
           // Lots of refinements...
-          if (
-            nextNode !== undefined &&
-            node.loc !== undefined &&
-            nextNode.loc !== undefined &&
-            nextNode.leadingComments !== undefined
-          ) {
+          if (nextNode !== undefined && node.loc !== undefined &&
+            nextNode.loc !== undefined && nextNode.leadingComments !== undefined) {
             const firstNextNodeLeadingComments = nextNode.leadingComments[0];
-            if (
-              firstNextNodeLeadingComments !== undefined &&
-              firstNextNodeLeadingComments.loc !== undefined
-            ) {
+            if (firstNextNodeLeadingComments !== undefined &&
+              firstNextNodeLeadingComments.loc !== undefined) {
               nextNode = firstNextNodeLeadingComments;
-              hasNextTrailingCommentOnSameLine =
-                node.loc.end.line ===
-                firstNextNodeLeadingComments.loc.start.line;
+              hasNextTrailingCommentOnSameLine = node.loc.end.line ===
+              firstNextNodeLeadingComments.loc.start.line;
             }
           }
 
@@ -657,10 +627,7 @@ export default class Generator {
     }
   }
 
-  maybeInsertExtraStatementNewlines(
-    node: AnyNode,
-    nextNode: undefined | AnyNode,
-  ) {
+  maybeInsertExtraStatementNewlines(node: AnyNode, nextNode: undefined | AnyNode) {
     // Insert an inferred newline or extra if it satisfies our conditions
     const linesBetween = n.getLinesBetween(node, nextNode);
     if (linesBetween.length > 1) {
@@ -674,12 +641,12 @@ export default class Generator {
   }
 
   printBlock(
-    parent:
-      | WithStatement
-      | ForInStatement
-      | ForOfStatement
-      | ForStatement
-      | WhileStatement,
+    parent: 
+        | WithStatement
+        | ForInStatement
+        | ForOfStatement
+        | ForStatement
+        | WhileStatement,
   ) {
     const node = parent.body;
 
@@ -725,7 +692,7 @@ export default class Generator {
       this.printJoin<N>(items, parent, {
         after: separator,
         indent: multiline,
-        multiline: multiline,
+        multiline,
       });
     };
 
@@ -762,7 +729,9 @@ export default class Generator {
       return undefined;
     }
 
-    for (let i = 0; i < comments.length; i++) {
+    for (let i = 0;
+    i < comments.length;
+    i++) {
       const comment = comments[i];
       this.printComment(comment);
 
@@ -797,10 +766,9 @@ export default class Generator {
       return true;
     }
 
-    if (
-      comment.loc !== undefined &&
-      this.printedCommentStarts.has(comment.loc.start.index)
-    ) {
+    if (comment.loc !== undefined && this.printedCommentStarts.has(
+      comment.loc.start.index,
+    )) {
       return true;
     }
 
@@ -830,8 +798,7 @@ export default class Generator {
     this.buf.withSource('start', comment.loc, () => {
       const isBlockComment = comment.type === 'CommentBlock';
       const val = isBlockComment
-        ? `/*${comment.value}*/`
-        : `//${comment.value}\n`;
+        ? `/*${comment.value}*/` : `//${comment.value}\n`;
       this.append(val);
     });
   }

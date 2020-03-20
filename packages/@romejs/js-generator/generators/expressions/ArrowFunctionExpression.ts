@@ -33,21 +33,17 @@ export default function ArrowFunctionExpression(
   if (body.type === 'BlockStatement') {
     generator.print(body, node);
   } else {
-    generator.multiline(
-      node,
-      multiline => {
-        if (multiline) {
-          generator.newline();
-          generator.indent();
-        }
+    generator.multiline(node, (multiline) => {
+      if (multiline) {
+        generator.newline();
+        generator.indent();
+      }
 
-        generator.print(body, node);
+      generator.print(body, node);
 
-        if (multiline) {
-          generator.dedent();
-        }
-      },
-      {conditions: ['more-than-one-line']},
-    );
+      if (multiline) {
+        generator.dedent();
+      }
+    }, {conditions: ['more-than-one-line']});
   }
 }

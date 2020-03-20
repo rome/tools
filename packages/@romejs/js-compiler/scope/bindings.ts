@@ -39,14 +39,14 @@ export class Binding {
   }
 }
 
-export type ImportBindingMeta =
-  | {
+export type ImportBindingMeta = 
+    | {
       type: 'name';
       imported: string;
       source: string;
       kind: ConstImportModuleKind;
     }
-  | {
+    | {
       type: 'namespace';
       source: string;
       kind: ConstImportModuleKind;
@@ -90,12 +90,12 @@ export class FunctionBinding extends Binding {
   }
 }
 
-export type TypeBindingKind =
-  | 'function'
-  | 'class'
-  | 'interface'
-  | 'typealias'
-  | 'parameter';
+export type TypeBindingKind = 
+    | 'function'
+    | 'class'
+    | 'interface'
+    | 'typealias'
+    | 'parameter';
 
 export class TypeBinding extends ConstBinding {
   constructor(

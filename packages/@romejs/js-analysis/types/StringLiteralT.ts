@@ -38,7 +38,7 @@ export default class StringLiteralT extends ObjT {
 
   humanize(): string {
     let str: string = JSON.stringify(this.value);
-    if (this.value.includes("'")) {
+    if (this.value.includes('\'')) {
       return str;
     } else {
       return `'${str.slice(1, -1)}'`;

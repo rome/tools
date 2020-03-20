@@ -5,17 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  TSPropertySignature,
-  tsPropertySignature,
-  AnyNode,
-} from '@romejs/js-ast';
+import {TSPropertySignature, tsPropertySignature, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
 
-export default function TSPropertySignature(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function TSPropertySignature(generator: Generator, node: AnyNode) {
   node = tsPropertySignature.assert(node);
 
   if (node.readonly) {

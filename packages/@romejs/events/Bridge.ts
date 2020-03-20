@@ -49,6 +49,7 @@ export default class Bridge {
     });
 
     // A Set of event names that are being listened to on the other end
+
     // We track this to avoid sending over subscriptions that aren't needed
     this.listeners = new Set();
 
@@ -76,7 +77,10 @@ export default class Bridge {
   deprioritizedResponseQueue: Array<BridgeResponseMessage>;
   postHandshakeQueue: Array<BridgeMessage>;
 
-  handshakeEvent: Event<{first: boolean; subscriptions: Array<string>}, void>;
+  handshakeEvent: Event<{
+    first: boolean;
+    subscriptions: Array<string>;
+  }, void>;
   hasHandshook: boolean;
   endEvent: Event<Error, void>;
 
@@ -99,10 +103,7 @@ export default class Bridge {
     });
   }
 
-  monitorHeartbeat(
-    timeout: number,
-    onExceeded: () => undefined | Promise<void>,
-  ) {
+  monitorHeartbeat(timeout: number, onExceeded: () => undefined | Promise<void>) {
     this.heartbeatTimeout = setTimeout(async () => {
       try {
         await this.heartbeatEvent.call(undefined, {timeout});
@@ -116,7 +117,7 @@ export default class Bridge {
           throw err;
         }
       }
-    }, 1000);
+    }, 1_000);
   }
 
   clearPrioritization(id: number) {
@@ -131,7 +132,10 @@ export default class Bridge {
   }
 
   async handshake(
-    opts: {timeout?: number; second?: boolean} = {},
+    opts: {
+      timeout?: number;
+      second?: boolean;
+    } = {},
   ): Promise<void> {
     if (this.hasHandshook) {
       throw new Error('Already performed handshake');
@@ -187,10 +191,12 @@ export default class Bridge {
     }
 
     // Notify the other side of what we're currently subscribed to
-    // We send over a list of all of our subscriptions every time
-    // This is fine since we don't change subscriptions often and they aren't very large
-    // If we have a lot of subscriptions, or are changing them a lot in the future then this could be optimized
 
+    // We send over a list of all of our subscriptions every time
+
+    // This is fine since we don't change subscriptions often and they aren't very large
+
+    // If we have a lot of subscriptions, or are changing them a lot in the future then this could be optimized
     this.sendMessage({
       type: 'subscriptions',
       names: this.getSubscriptions(),
@@ -229,7 +235,6 @@ export default class Bridge {
   }
 
   //# Connection death
-
   assertAlive() {
     if (this.alive === false) {
       throw new Error('Bridge is dead');
@@ -263,7 +268,6 @@ export default class Bridge {
   }
 
   //# Error serialization
-
   buildError(value: StructuredError, data: JSONObject) {
     const transport = this.errorTransports.get(value.name);
     if (transport === undefined) {
@@ -283,8 +287,8 @@ export default class Bridge {
 
     // Fetch some metadata for hydration
     const tranport = this.errorTransports.get(err.name);
-    const metadata: JSONObject =
-      tranport === undefined ? {} : tranport.serialize(err);
+    const metadata: JSONObject = tranport === undefined
+      ? {} : tranport.serialize(err);
 
     return {
       id,
@@ -301,9 +305,9 @@ export default class Bridge {
   }
 
   //# Message transmission
-
   sendMessage(msg: BridgeMessage) {
     // There's no try-catch gated around sendMessage because the call stack here will include some other error handler
+
     // We need to be specific for handleMessage because it could come from anywhere
 
     if (msg.type !== 'handshake' && !this.hasHandshook) {
@@ -314,10 +318,9 @@ export default class Bridge {
     this.assertAlive();
 
     if (msg.type === 'response') {
-      if (
-        this.prioritizedResponses.size > 0 &&
-        !this.prioritizedResponses.has(msg.id)
-      ) {
+      if (this.prioritizedResponses.size > 0 && !this.prioritizedResponses.has(
+        msg.id,
+      )) {
         this.deprioritizedResponseQueue.push(msg);
         return;
       }
@@ -340,9 +343,10 @@ export default class Bridge {
       this.handleMessage(data);
     } catch (err) {
       if (err instanceof SyntaxError) {
-        this.endWithError(
-          new BridgeError(`Error parsing message JSON: ${err.message}`, this),
-        );
+        this.endWithError(new BridgeError(
+          `Error parsing message JSON: ${err.message}`,
+          this,
+        ));
       } else {
         this.endWithError(err);
       }
@@ -408,6 +412,7 @@ export default class Bridge {
 
     if (id === undefined) {
       // We don't need to do anything with the return value of this since
+
       // there's nothing on the other end to catch it
       eventHandler.dispatchRequest(param);
     } else {
@@ -415,21 +420,17 @@ export default class Bridge {
         this.prioritizedResponses.add(id);
       }
 
-      eventHandler
-        .dispatchRequest(param)
-        .then(value => {
-          this.sendMessage({
-            event,
-            id,
-            type: 'response',
-            responseStatus: 'success',
-            value,
-          });
-        })
-        .catch(err => {
-          this.sendMessage(this.buildErrorResponse(id, event, err));
-        })
-        .catch(err => this.endWithError(err));
+      eventHandler.dispatchRequest(param).then((value) => {
+        this.sendMessage({
+          event,
+          id,
+          type: 'response',
+          responseStatus: 'success',
+          value,
+        });
+      }).catch((err) => {
+        this.sendMessage(this.buildErrorResponse(id, event, err));
+      }).catch((err) => this.endWithError(err));
     }
   }
 }

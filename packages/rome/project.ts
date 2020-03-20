@@ -30,7 +30,8 @@ type FoundProject = {
   definition: TransformProjectDefinition;
 };
 
-const foundProjects: AbsoluteFilePathMap<FoundProject> = new AbsoluteFilePathMap();
+const foundProjects: AbsoluteFilePathMap<FoundProject> =
+new AbsoluteFilePathMap();
 
 function addProject(
   projectFolder: AbsoluteFilePath,
@@ -78,9 +79,7 @@ function evictProject(evictProject: FoundProject) {
   }
 }
 
-export async function findProject(
-  path: AbsoluteFilePath,
-): Promise<FoundProject> {
+export async function findProject(path: AbsoluteFilePath): Promise<FoundProject> {
   const tried: Array<AbsoluteFilePath> = [];
 
   for (const segment of path.getChain()) {

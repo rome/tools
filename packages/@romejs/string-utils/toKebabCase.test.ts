@@ -8,7 +8,7 @@
 import {toKebabCase} from './toKebabCase';
 import test from '@romejs/test';
 
-test('toKebabCase', t => {
+test('toKebabCase', (t) => {
   const testCases = [
     {input: 'rometest', expected: 'rometest'},
     {input: 'rome test', expected: 'rome-test'},
@@ -16,7 +16,7 @@ test('toKebabCase', t => {
     {input: 'ROME TEST', expected: 'rome-test'},
   ];
 
-  testCases.forEach(td => {
+  testCases.forEach((td) => {
     t.is(toKebabCase(td.input), td.expected);
   });
 });

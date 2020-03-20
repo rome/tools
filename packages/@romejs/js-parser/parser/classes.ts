@@ -116,9 +116,7 @@ export function parseClass(
 
   parser.next();
   const {id, typeParameters} = parseClassId(parser, optionalId);
-  const {superClass, superTypeParameters, implemented} = parseClassSuper(
-    parser,
-  );
+  const {superClass, superTypeParameters, implemented} = parseClassSuper(parser);
 
   parser.pushScope('CLASS', superClass === undefined ? 'normal' : 'derived');
 
@@ -146,11 +144,8 @@ export function parseClass(
 
 function isClassProperty(parser: JSParser): boolean {
   return (
-    parser.match(tt.bang) ||
-    parser.match(tt.colon) ||
-    parser.match(tt.eq) ||
-    parser.match(tt.semi) ||
-    parser.match(tt.braceR)
+    parser.match(tt.bang) || parser.match(tt.colon) || parser.match(tt.eq) ||
+    parser.match(tt.semi) || parser.match(tt.braceR)
   );
 }
 
@@ -173,11 +168,8 @@ function isNonstaticConstructor(
     return false;
   }
 
-  if (
-    key.type === 'StaticPropertyKey' &&
-    key.value.type === 'Identifier' &&
-    key.value.name === 'constructor'
-  ) {
+  if (key.type === 'StaticPropertyKey' && key.value.type === 'Identifier' &&
+    key.value.name === 'constructor') {
     return true;
   }
 
@@ -188,9 +180,7 @@ function isNonstaticConstructor(
   return false;
 }
 
-type ClassBodyState = {
-  hadConstructor: boolean;
-};
+type ClassBodyState = {hadConstructor: boolean};
 
 function parseClassBody(parser: JSParser): Array<AnyClassMember> {
   // class bodies are implicitly strict
@@ -367,7 +357,7 @@ function parseClassMemberWithIsStatic(
     if (isNonstaticConstructor(parser, key, meta)) {
       parser.addDiagnostic({
         loc: key.loc,
-        message: "Constructor can't be a generator",
+        message: 'Constructor can\'t be a generator',
       });
     }
 
@@ -439,11 +429,8 @@ function parseClassMemberWithIsStatic(
   }
 
   // Async method
-  if (
-    key.value.type === 'Identifier' &&
-    key.value.name === 'async' &&
-    !parser.isLineTerminator()
-  ) {
+  if (key.value.type === 'Identifier' && key.value.name === 'async' &&
+    !parser.isLineTerminator()) {
     parser.banUnicodeEscape(escapePosition, 'async');
 
     // an async method
@@ -478,7 +465,7 @@ function parseClassMemberWithIsStatic(
       if (isNonstaticConstructor(parser, key, meta)) {
         parser.addDiagnostic({
           loc: key.loc,
-          message: "Constructor can't be an async function",
+          message: 'Constructor can\'t be an async function',
         });
       }
 
@@ -487,12 +474,12 @@ function parseClassMemberWithIsStatic(
   }
 
   // Getter/setter method
-  if (
-    key.value.type === 'Identifier' &&
-    (key.value.name === 'get' || key.value.name === 'set') &&
-    !(parser.isLineTerminator() && parser.match(tt.star))
-  ) {
+  if (key.value.type === 'Identifier' && (key.value.name === 'get' ||
+  key.value.name === 'set') && !(parser.isLineTerminator() && parser.match(
+    tt.star,
+  ))) {
     // `get\n*` is an uninitialized property named 'get' followed by a generator.
+
     // a getter or setter
     const kind: 'get' | 'set' = key.value.name;
     parser.banUnicodeEscape(escapePosition, kind);
@@ -528,7 +515,7 @@ function parseClassMemberWithIsStatic(
       if (isNonstaticConstructor(parser, key, meta)) {
         parser.addDiagnostic({
           loc: methodKey.loc,
-          message: "Constructor can't have get/set modifier",
+          message: 'Constructor can\'t have get/set modifier',
         });
       }
 
@@ -572,12 +559,8 @@ function parseClassPropertyMeta(
 
   const key = parseObjectPropertyKey(parser);
 
-  if (
-    key.type === 'StaticPropertyKey' &&
-    opts.static === true &&
-    key.value.type === 'Identifier' &&
-    key.value.name === 'prototype'
-  ) {
+  if (key.type === 'StaticPropertyKey' && opts.static === true &&
+    key.value.type === 'Identifier' && key.value.name === 'prototype') {
     parser.addDiagnostic({
       loc: key.loc,
       message: 'Classes may not have static property named prototype',
@@ -587,7 +570,7 @@ function parseClassPropertyMeta(
   if (key.value.type === 'PrivateName' && key.value.id.name === 'constructor') {
     parser.addDiagnostic({
       loc: key.loc,
-      message: "Classes may not have a private field named '#constructor'",
+      message: 'Classes may not have a private field named \'#constructor\'',
     });
   }
 
@@ -625,7 +608,7 @@ function pushClassProperty(
   if (isNonstaticConstructor(parser, key, meta)) {
     parser.addDiagnostic({
       loc: key.loc,
-      message: "Classes may not have a non-static field named 'constructor'",
+      message: 'Classes may not have a non-static field named \'constructor\'',
     });
   }
 
@@ -761,9 +744,9 @@ function parseClassPrivateProperty(
     typeAnnotation = parsePrimaryTypeAnnotation(parser);
   }
 
-  const value: undefined | AnyExpression = parser.eat(tt.eq)
-    ? parseMaybeAssign<AnyExpression>(parser, 'class private property value')
-    : undefined;
+  const value: undefined | AnyExpression = parser.eat(tt.eq) ? parseMaybeAssign<
+    AnyExpression
+  >(parser, 'class private property value') : undefined;
   parser.semicolon();
   parser.popScope('CLASS_PROPERTY');
 
@@ -831,10 +814,10 @@ function parseClassId(
   optionalId: boolean,
 ): {
   id: undefined | BindingIdentifier;
-  typeParameters:
-    | undefined
-    | TSTypeParameterDeclaration
-    | FlowTypeParameterDeclaration;
+  typeParameters: 
+      | undefined
+      | TSTypeParameterDeclaration
+      | FlowTypeParameterDeclaration;
 } {
   let idAllowed = true;
 
@@ -851,10 +834,9 @@ function parseClassId(
       parser.addDiagnostic({
         message: 'A class name is required',
       });
-      id = toBindingIdentifier(
-        parser,
-        parser.createUnknownIdentifier('required class name'),
-      );
+      id = toBindingIdentifier(parser, parser.createUnknownIdentifier(
+        'required class name',
+      ));
     }
   }
 
@@ -870,17 +852,16 @@ function parseClassSuper(
   implemented: ClassHead['implements'];
 } {
   let superClass = parser.eat(tt._extends)
-    ? parseExpressionWithPossibleSubscripts(parser, 'class heritage')
-    : undefined;
+    ? parseExpressionWithPossibleSubscripts(parser, 'class heritage') : undefined;
   let superTypeParameters;
 
   if (superClass !== undefined) {
     superTypeParameters = maybeParseTypeArguments(parser);
   }
 
-  let implemented:
-    | undefined
-    | Array<FlowClassImplements | TSExpressionWithTypeArguments>;
+  let implemented: 
+      | undefined
+      | Array<FlowClassImplements | TSExpressionWithTypeArguments>;
   if (parser.isContextual('implements')) {
     parser.next();
     implemented = parseClassImplements(parser);
