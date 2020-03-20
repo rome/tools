@@ -16,13 +16,13 @@ export type ObjectExpression =
   };
 
 export const objectExpression =
-createQuickBuilder<ObjectExpression, 'properties'>(
-  'ObjectExpression',
-  'properties',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      properties: true,
+  createQuickBuilder<ObjectExpression, 'properties'>(
+    'ObjectExpression',
+    'properties',
+    {
+      bindingKeys: {},
+      visitorKeys: {
+        properties: true,
+      },
     },
-  },
-);
+  );

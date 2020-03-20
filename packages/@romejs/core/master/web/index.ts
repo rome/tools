@@ -276,9 +276,9 @@ export class WebServer {
     }
 
     const bundlerConfig: BundlerConfig =
-    this.masterRequest.getBundlerConfigFromFlags({
-      platform,
-    });
+      this.masterRequest.getBundlerConfigFromFlags({
+        platform,
+      });
 
     const bundler = new Bundler(this.masterRequest, bundlerConfig);
 

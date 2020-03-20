@@ -31,7 +31,7 @@ type FoundProject = {
 };
 
 const foundProjects: AbsoluteFilePathMap<FoundProject> =
-new AbsoluteFilePathMap();
+  new AbsoluteFilePathMap();
 
 function addProject(
   projectFolder: AbsoluteFilePath,

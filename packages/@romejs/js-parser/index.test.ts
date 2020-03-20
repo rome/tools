@@ -38,13 +38,13 @@ const promise = createFixtureTests((fixture, t) => {
   }
 
   const allowReturnOutsideFunction =
-  options.get('allowReturnOutsideFunction').asBoolean(false);
+    options.get('allowReturnOutsideFunction').asBoolean(false);
   const filename = inputFile.relative;
 
   const syntax: Array<ConstProgramSyntax> =
-  options.get('syntax').asArray(true).map((item) => {
-    return item.asStringSet(['jsx', 'ts', 'flow']);
-  });
+    options.get('syntax').asArray(true).map((item) => {
+      return item.asStringSet(['jsx', 'ts', 'flow']);
+    });
 
   t.addToAdvice({
     type: 'log',

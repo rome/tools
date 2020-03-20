@@ -105,10 +105,10 @@ export default class DependencyOrderer {
 
       for (const imp of node.analyze.importFirstUsage) {
         const resolved =
-        node.getNodeFromRelativeDependency(imp.source).resolveImport(
-          imp.imported,
-          imp.loc,
-        );
+          node.getNodeFromRelativeDependency(imp.source).resolveImport(
+            imp.imported,
+            imp.loc,
+          );
         if (resolved.type !== 'FOUND') {
           continue;
         }

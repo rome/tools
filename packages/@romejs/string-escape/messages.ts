@@ -7,6 +7,6 @@
 
 export const NOT_ENOUGH_CODE_POINTS = 'Not enough code point digits';
 export const INVALID_STRING_CHARACTER =
-'Invalid string character (U+0000 to U+001F)';
+  'Invalid string character (U+0000 to U+001F)';
 export const INVALID_HEX_DIGIT_FOR_ESCAPE =
-'Invalid hex digit for unicode escape';
+  'Invalid hex digit for unicode escape';

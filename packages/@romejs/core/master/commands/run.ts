@@ -43,7 +43,7 @@ export default createMasterCommand({
 
     // Get the current project
     const project: undefined | ProjectDefinition =
-    await master.projectManager.findProject(flags.cwd);
+      await master.projectManager.findProject(flags.cwd);
 
     // check for absolute paths
     const target = args[0];

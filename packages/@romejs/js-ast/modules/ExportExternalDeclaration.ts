@@ -30,10 +30,10 @@ export type ExportExternalDeclaration =
   };
 
 export const exportExternalDeclaration =
-createBuilder<ExportExternalDeclaration>('ExportExternalDeclaration', {
-  bindingKeys: {},
-  visitorKeys: {
-    specifiers: true,
-    source: true,
-  },
-});
+  createBuilder<ExportExternalDeclaration>('ExportExternalDeclaration', {
+    bindingKeys: {},
+    visitorKeys: {
+      specifiers: true,
+      source: true,
+    },
+  });

@@ -43,7 +43,7 @@
  */
 
 const intToCharMap =
-'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('');
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('');
 
 /**
  * Encode an integer in the range of 0 to 63 to a single base 64 digit.

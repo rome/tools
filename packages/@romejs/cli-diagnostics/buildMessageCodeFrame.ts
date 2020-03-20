@@ -188,7 +188,7 @@ export default function buildMessageCodeFrame(
   // Build marker
   const markerGutterIndent: string = ' '.repeat(maxGutterLength - GUTTER.length);
   const markerLine: string =
-  `${markerGutterIndent}${formatAnsi.bold(GUTTER)}${pointerIndent}${pointer} ${markerMessage}`;
+    `${markerGutterIndent}${formatAnsi.bold(GUTTER)}${pointerIndent}${pointer} ${markerMessage}`;
 
   // Build up the line we display when source lines are omitted
   const omittedDots = '...';

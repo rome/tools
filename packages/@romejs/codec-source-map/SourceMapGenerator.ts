@@ -232,7 +232,7 @@ export default class SourceMapGenerator {
     const jsonMap = this.toString();
     const base64Map = new Buffer(jsonMap).toString('base64');
     const comment =
-    `//# sourceMappingURL=data:application/json;charset=utf-8;base64,${base64Map}`;
+      `//# sourceMappingURL=data:application/json;charset=utf-8;base64,${base64Map}`;
     return comment;
   }
 

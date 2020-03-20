@@ -77,7 +77,8 @@ export default class Bundler {
       source: createUnknownFilePath(unresolvedEntry),
     });
     const manifestRoot: undefined | AbsoluteFilePath =
-    manifestRootResolved.type === 'FOUND' ? manifestRootResolved.path : undefined;
+      manifestRootResolved.type === 'FOUND'
+        ? manifestRootResolved.path : undefined;
     let manifestDef;
     if (manifestRoot !== undefined) {
       const def = master.memoryFs.getManifestDefinition(manifestRoot);
@@ -303,9 +304,9 @@ export default class Bundler {
 
       for (const [binName, relative] of manifest.bin) {
         const pointer =
-        (isBinShorthand ? binConsumer : binConsumer.get(binName)).getDiagnosticPointer(
-          'inner-value',
-        );
+          (isBinShorthand ? binConsumer : binConsumer.get(binName)).getDiagnosticPointer(
+            'inner-value',
+          );
 
         const absolute = await this.master.resolver.resolveAssert({
           ...this.config.resolver,

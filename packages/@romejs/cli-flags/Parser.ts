@@ -511,7 +511,7 @@ export default class Parser<T> {
 
     // Sort commands into their appropriate categories for output
     const commandsByCategory: Map<undefined | string, Array<AnyCommandOptions>> =
-    new Map();
+      new Map();
     const categoryNames: Set<string | undefined> = new Set();
     for (const [name, command] of this.commands) {
       if (name[0] === '_') {

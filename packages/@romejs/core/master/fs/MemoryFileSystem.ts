@@ -149,12 +149,12 @@ async function createRegularWatcher(
 
         memoryFs.stat(path).then((newStats) => {
           const diagnostics =
-          memoryFs.master.createDisconnectedDiagnosticsProcessor([
-            {
-              category: 'memory-fs',
-              message: 'Processing fs.watch changes',
-            },
-          ]);
+            memoryFs.master.createDisconnectedDiagnosticsProcessor([
+              {
+                category: 'memory-fs',
+                message: 'Processing fs.watch changes',
+              },
+            ]);
 
           if (newStats.type === 'file') {
             memoryFs.handleFileChange(path, newStats, {

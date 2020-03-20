@@ -232,7 +232,7 @@ export default function resolverSuggest(
   }
 
   message +=
-  ` <emphasis>${source}</emphasis> from <filelink emphasis target="${pointer.filename}" />`;
+    ` <emphasis>${source}</emphasis> from <filelink emphasis target="${pointer.filename}" />`;
 
   throw createSingleDiagnosticError({
     ...pointer,

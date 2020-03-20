@@ -17,6 +17,15 @@ import * as n from '../../node/index';
 
 type OurNode = AssignmentExpression | BinaryExpression | LogicalExpression;
 
+const INDENT_OPERATORS: Set<OurNode['operator']> = new Set([
+  '&&',
+  '=',
+  '-=',
+  '+=',
+  '/=',
+  '*=',
+]);
+
 export default function AssignmentExpression(
   generator: Generator,
   _node: AnyNode,
@@ -36,8 +45,7 @@ export default function AssignmentExpression(
   }
 
   generator.multiline(node, (multiline, node) => {
-    const shouldIndent = multiline && (node.operator === '&&' ||
-    node.operator === '=');
+    const shouldIndent = multiline && INDENT_OPERATORS.has(node.operator);
 
     generator.print(node.left, node);
 

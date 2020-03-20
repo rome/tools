@@ -13,7 +13,7 @@ export type VoidKeywordTypeAnnotation =
   & {type: 'VoidKeywordTypeAnnotation'};
 
 export const voidKeywordTypeAnnotation =
-createBuilder<VoidKeywordTypeAnnotation>('VoidKeywordTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+  createBuilder<VoidKeywordTypeAnnotation>('VoidKeywordTypeAnnotation', {
+    bindingKeys: {},
+    visitorKeys: {},
+  });

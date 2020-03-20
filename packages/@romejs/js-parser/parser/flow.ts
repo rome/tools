@@ -448,7 +448,7 @@ function parseFlowDeclareModule(
   let kind: undefined | 'commonjs' | 'es';
   let hasModuleExport = false;
   const errorMessage =
-  'Found both `declare module.exports` and `declare export` in the same module. Modules can only have 1 since they are either an ES module or they are a CommonJS module';
+    'Found both `declare module.exports` and `declare export` in the same module. Modules can only have 1 since they are either an ES module or they are a CommonJS module';
 
   for (const bodyElement of body) {
     if (isEsModuleType(bodyElement)) {

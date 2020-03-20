@@ -17,7 +17,7 @@ export type TSAssignmentTypeAssertion =
   };
 
 export const tsAssignmentTypeAssertion =
-createBuilder<TSAssignmentTypeAssertion>('TSAssignmentTypeAssertion', {
-  bindingKeys: {},
-  visitorKeys: {expression: true, typeAnnotation: true},
-});
+  createBuilder<TSAssignmentTypeAssertion>('TSAssignmentTypeAssertion', {
+    bindingKeys: {},
+    visitorKeys: {expression: true, typeAnnotation: true},
+  });

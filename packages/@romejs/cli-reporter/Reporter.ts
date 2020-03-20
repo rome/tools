@@ -387,7 +387,7 @@ export default class Reporter {
     const stdin = this.getStdin();
 
     const origPrompt =
-    `<brightBlack emphasis>?</brightBlack> <emphasis>${message}</emphasis>`;
+      `<brightBlack emphasis>?</brightBlack> <emphasis>${message}</emphasis>`;
     let prompt = origPrompt;
     if (hint !== undefined) {
       prompt += ` <dim>${hint}</dim>`;
@@ -616,7 +616,7 @@ export default class Reporter {
         prompt += ': ';
         if (selectedOptions.size > 0) {
           prompt +=
-          Array.from(selectedOptions, (key) => options[key].label).join(', ');
+            Array.from(selectedOptions, (key) => options[key].label).join(', ');
         } else {
           prompt += '<dim>none</dim>';
         }

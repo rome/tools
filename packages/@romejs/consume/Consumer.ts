@@ -379,7 +379,7 @@ export default class Consumer {
     };
 
     const errMsg =
-    `Error occurred while consuming at ${loc.filename} (${loc.start.line}:${loc.start.column}): ${msg}`;
+      `Error occurred while consuming at ${loc.filename} (${loc.start.line}:${loc.start.column}): ${msg}`;
     const err = new DiagnosticsError(errMsg, [diagnostic]);
 
     if (this.handleUnexpected === undefined) {

@@ -102,7 +102,7 @@ export default class TestWorkerRunner {
 
     if (res.syntaxError !== undefined) {
       const message =
-      `A bundle was generated that contained a syntax error: ${res.syntaxError.message}`;
+        `A bundle was generated that contained a syntax error: ${res.syntaxError.message}`;
 
       throw createSingleDiagnosticError({
         ...res.syntaxError,

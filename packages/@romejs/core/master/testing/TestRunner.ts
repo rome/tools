@@ -340,9 +340,9 @@ export default class TestRunner {
       ).asZeroIndexedNumber());
 
       const name =
-      callFrame.get('scopeChain').asArray()[0].get('name').asString('').split(
-        '$',
-      ).pop();
+        callFrame.get('scopeChain').asArray()[0].get('name').asString('').split(
+          '$',
+        ).pop();
 
       frames.push({
         resolvedLocation: resolved.found,

@@ -756,7 +756,7 @@ export default class Master {
 
       // Get command
       const commandOpts: undefined | MasterCommand<Dict<unknown>> =
-      masterCommands.get(query.commandName);
+        masterCommands.get(query.commandName);
       if (commandOpts) {
         // Warn about disabled disk caching
         if (process.env.ROME_CACHE === '0' && !this.warnedCacheClients.has(

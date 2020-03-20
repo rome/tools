@@ -18,9 +18,13 @@ export type ReferenceIdentifier =
   };
 
 export const referenceIdentifier =
-createQuickBuilder<ReferenceIdentifier, 'name'>('ReferenceIdentifier', 'name', {
-  bindingKeys: {},
-  visitorKeys: {
-    meta: true,
-  },
-});
+  createQuickBuilder<ReferenceIdentifier, 'name'>(
+    'ReferenceIdentifier',
+    'name',
+    {
+      bindingKeys: {},
+      visitorKeys: {
+        meta: true,
+      },
+    },
+  );

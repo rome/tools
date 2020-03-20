@@ -18,9 +18,9 @@ export type TSImportEqualsDeclaration =
   };
 
 export const tsImportEqualsDeclaration =
-createBuilder<TSImportEqualsDeclaration>('TSImportEqualsDeclaration', {
-  bindingKeys: {
-    id: true,
-  },
-  visitorKeys: {id: true, moduleReference: true},
-});
+  createBuilder<TSImportEqualsDeclaration>('TSImportEqualsDeclaration', {
+    bindingKeys: {
+      id: true,
+    },
+    visitorKeys: {id: true, moduleReference: true},
+  });

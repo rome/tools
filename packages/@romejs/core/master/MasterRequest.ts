@@ -358,10 +358,10 @@ export default class MasterRequest {
 
           if (testSource.value === undefined) {
             let explanation =
-            `${explanationPrefix} as it's not enabled for this project`;
+              `${explanationPrefix} as it's not enabled for this project`;
             if (globOpts.configCategory !== undefined) {
               explanation +=
-              `. Run <command>rome config enable-category ${globOpts.configCategory}</command> to enable it.`;
+                `. Run <command>rome config enable-category ${globOpts.configCategory}</command> to enable it.`;
             }
             advice.push({
               type: 'log',

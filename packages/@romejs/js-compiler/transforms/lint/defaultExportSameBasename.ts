@@ -69,11 +69,11 @@ export default {
               adviceMessage += 'The';
             } else {
               adviceMessage +=
-              `Filename should be <emphasis>${correctFilename}</emphasis> or the`;
+                `Filename should be <emphasis>${correctFilename}</emphasis> or the`;
             }
 
             adviceMessage +=
-            ` ${type} name should be <emphasis>${basename}</emphasis>`;
+              ` ${type} name should be <emphasis>${basename}</emphasis>`;
 
             context.addNodeDiagnostic(id, {
               fixable: true,

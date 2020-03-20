@@ -36,9 +36,9 @@ class ENotExhaustive extends E {
 
   getError(): ErrorDefinition {
     let message =
-    `Expected only a ${this.utils.humanize(this.only)} but got ${this.utils.humanize(
-      this.target,
-    )}`;
+      `Expected only a ${this.utils.humanize(this.only)} but got ${this.utils.humanize(
+        this.target,
+      )}`;
     //message += `but allows ${this.extraenous.map(type => this.utils.humanize(type)).join(' | ')}`;
     return {
       category: 'typeCheck/notExhaustive',

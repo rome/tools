@@ -220,10 +220,10 @@ export default class DependencyNode {
 
       if (exp.type === 'external') {
         const resolved =
-        this.getNodeFromRelativeDependency(exp.source).resolveImport(
-          exp.imported,
-          exp.loc,
-        );
+          this.getNodeFromRelativeDependency(exp.source).resolveImport(
+            exp.imported,
+            exp.loc,
+          );
         if (resolved.type === 'FOUND' && equalKind(resolved.record, kind)) {
           names.add(exp.exported);
         }
@@ -250,7 +250,7 @@ export default class DependencyNode {
     const resolvedFileLink = `<filelink emphasis target="${resolved.node.id}" />`;
 
     const message =
-    `Couldn't find export <emphasis>${resolved.name}</emphasis> in ${resolvedFileLink}`;
+      `Couldn't find export <emphasis>${resolved.name}</emphasis> in ${resolvedFileLink}`;
     let advice: PartialDiagnosticAdvice = [];
 
     if (resolved.node.analyze.exports.length === 0) {
@@ -285,7 +285,7 @@ export default class DependencyNode {
 
               if (exportInfo.node !== resolved.node) {
                 name +=
-                ` <dim>(from <filelink target="${exportInfo.node.path.join()}" />)</dim>`;
+                  ` <dim>(from <filelink target="${exportInfo.node.path.join()}" />)</dim>`;
               }
             }
 
@@ -359,7 +359,7 @@ export default class DependencyNode {
       }
 
       const usedNames =
-      this.getDependencyInfoFromAbsolute(absolute).analyze.names;
+        this.getDependencyInfoFromAbsolute(absolute).analyze.names;
 
       // Try to resolve these exports
       for (const nameInfo of usedNames) {
@@ -449,12 +449,12 @@ export default class DependencyNode {
 
       if (record.type === 'externalAll') {
         const resolved =
-        this.getNodeFromRelativeDependency(record.source).resolveImport(
-          name,
-          record.loc,
-          true,
-          subAncestry,
-        );
+          this.getNodeFromRelativeDependency(record.source).resolveImport(
+            name,
+            record.loc,
+            true,
+            subAncestry,
+          );
 
         if (resolved.type === 'FOUND') {
           return resolved;

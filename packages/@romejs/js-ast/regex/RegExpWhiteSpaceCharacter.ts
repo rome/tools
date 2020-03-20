@@ -13,7 +13,7 @@ export type RegExpWhiteSpaceCharacter =
   & {type: 'RegExpWhiteSpaceCharacter'};
 
 export const regExpWhiteSpaceCharacter =
-createBuilder<RegExpWhiteSpaceCharacter>('RegExpWhiteSpaceCharacter', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+  createBuilder<RegExpWhiteSpaceCharacter>('RegExpWhiteSpaceCharacter', {
+    bindingKeys: {},
+    visitorKeys: {},
+  });

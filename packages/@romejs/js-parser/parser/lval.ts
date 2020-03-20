@@ -187,7 +187,7 @@ export function toAssignmentPattern(
     default:
       {
         const message =
-        `Invalid left-hand side in ${contextDescription} ${node.type}`;
+          `Invalid left-hand side in ${contextDescription} ${node.type}`;
         parser.addDiagnostic({
           loc: node.loc,
           message,
@@ -536,7 +536,7 @@ export function toFunctionParamsBindingList(
   rest: undefined | AnyTargetBindingPattern;
 } {
   const bindingList: Array<BindingAssignmentPattern | AnyTargetBindingPattern> =
-  [];
+    [];
 
   const {list: assignmentList, rest: assignmentRest} = toAssignableList(
     parser,

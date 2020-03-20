@@ -150,7 +150,7 @@ export default class BundleRequest {
 
     // We're doing the work of resolving everything again, maybe we should cache it?
     const resolvedImports: BundleCompileResolvedImports =
-    mod.resolveImports().resolved;
+      mod.resolveImports().resolved;
 
     let assetPath: undefined | string;
     if (mod.handler !== undefined && mod.handler.isAsset) {
@@ -175,9 +175,13 @@ export default class BundleRequest {
     };
 
     const res: WorkerCompileResult =
-    await this.bundler.request.requestWorkerCompile(path, 'compileForBundle', {
-      bundle: opts,
-    });
+      await this.bundler.request.requestWorkerCompile(
+        path,
+        'compileForBundle',
+        {
+          bundle: opts,
+        },
+      );
 
     if (!res.cached) {
       this.cached = false;

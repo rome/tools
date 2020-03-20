@@ -22,10 +22,10 @@ export type FlowGenericTypeAnnotation =
   };
 
 export const flowGenericTypeAnnotation =
-createBuilder<FlowGenericTypeAnnotation>('FlowGenericTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {
-    id: true,
-    typeParameters: true,
-  },
-});
+  createBuilder<FlowGenericTypeAnnotation>('FlowGenericTypeAnnotation', {
+    bindingKeys: {},
+    visitorKeys: {
+      id: true,
+      typeParameters: true,
+    },
+  });

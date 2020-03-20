@@ -119,7 +119,7 @@ export default function escapeString(
         if (isLowSurrogate) {
           // https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
           const codePoint =
-          (charCode - 55_296) * 1_024 + nextCharCode - 56_320 + 65_536;
+            (charCode - 55_296) * 1_024 + nextCharCode - 56_320 + 65_536;
           const hex = codePoint.toString(16);
           result += `\\u{${hex}}`;
           index++;

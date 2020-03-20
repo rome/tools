@@ -16,7 +16,7 @@ export type TSExternalModuleReference =
   };
 
 export const tsExternalModuleReference =
-createBuilder<TSExternalModuleReference>('TSExternalModuleReference', {
-  bindingKeys: {},
-  visitorKeys: {expression: true},
-});
+  createBuilder<TSExternalModuleReference>('TSExternalModuleReference', {
+    bindingKeys: {},
+    visitorKeys: {expression: true},
+  });

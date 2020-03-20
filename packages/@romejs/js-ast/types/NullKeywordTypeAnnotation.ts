@@ -13,7 +13,7 @@ export type NullKeywordTypeAnnotation =
   & {type: 'NullKeywordTypeAnnotation'};
 
 export const nullKeywordTypeAnnotation =
-createBuilder<NullKeywordTypeAnnotation>('NullKeywordTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+  createBuilder<NullKeywordTypeAnnotation>('NullKeywordTypeAnnotation', {
+    bindingKeys: {},
+    visitorKeys: {},
+  });

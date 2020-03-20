@@ -16,10 +16,10 @@ export default function VariableDeclarator(generator: Generator, node: AnyNode) 
   if (node.init) {
     generator.space();
     generator.token('=');
+    generator.space();
 
     generator.multiline(node, (multiline, node) => {
-      generator.spaceOrNewline(multiline);
       generator.print(node.init, node);
-    });
+    }, {indent: true});
   }
 }
