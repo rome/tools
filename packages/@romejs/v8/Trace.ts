@@ -29,6 +29,7 @@ export default class Trace {
 
   decodeProfileSourceMap(profile: Profile) {
     // This method mutates the profile for performance/ergonomics
+
     // Nothing else should be relying on this so it doesn't really matter
 
     for (const node of profile.cpuProfile.nodes) {
@@ -40,10 +41,9 @@ export default class Trace {
       }
 
       // Call frame line numbers are 0-index while Rome is 1-indexed
-      const resolved = sourceMap.approxOriginalPositionFor(
-        coerce0to1(coerce0(callFrame.lineNumber)),
-        coerce0(callFrame.columnNumber),
-      );
+      const resolved = sourceMap.approxOriginalPositionFor(coerce0to1(coerce0(
+        callFrame.lineNumber,
+      )), coerce0(callFrame.columnNumber));
       if (resolved !== undefined) {
         callFrame.url = resolved.source;
         callFrame.lineNumber = get0(coerce1to0(resolved.line));

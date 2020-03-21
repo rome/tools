@@ -157,44 +157,6 @@ Object {
         line: 2
       }
     }
-    Object {
-      category: 'lint/undeclaredVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Undeclared variable <emphasis>INVALID_PLACEHOLDER</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
-      origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 50
-        index: 55
-        line: 2
-      }
-      start: Object {
-        column: 50
-        index: 55
-        line: 2
-      }
-    }
-    Object {
-      category: 'lint/undeclaredVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Undeclared variable <emphasis>bar</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
-      origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 47
-        index: 52
-        line: 2
-      }
-      start: Object {
-        column: 44
-        index: 49
-        line: 2
-      }
-    }
   ]
 }
 ```

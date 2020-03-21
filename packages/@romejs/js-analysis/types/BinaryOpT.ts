@@ -54,13 +54,9 @@ export default class BinaryOpT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new BinaryOpT(
-      scope,
-      originNode,
-      getType(data.left),
-      String(data.operator),
-      getType(data.right),
-    );
+    return new BinaryOpT(scope, originNode, getType(data.left), String(
+      data.operator,
+    ), getType(data.right));
   }
 
   reduce(): T {
@@ -70,8 +66,8 @@ export default class BinaryOpT extends T {
 
     // return type
     switch (operator) {
-      // returns booleans
-      case '===':
+      case // returns booleans
+      '===':
       case '==':
       case '!=':
       case '!==':
@@ -88,26 +84,14 @@ export default class BinaryOpT extends T {
       case '+':
         if (left instanceof AnyT || right instanceof AnyT) {
           return new AnyT(scope, originNode);
-        } else if (
-          left instanceof NumericLiteralT &&
-          right instanceof NumericLiteralT
-        ) {
-          return new NumericLiteralT(
-            scope,
-            originNode,
-            left.value + right.value,
-          );
+        } else if (left instanceof NumericLiteralT && right instanceof
+        NumericLiteralT) {
+          return new NumericLiteralT(scope, originNode, left.value + right.value);
         } else if (isNumber(left) && isNumber(right)) {
           return new NumericT(scope, originNode);
-        } else if (
-          left instanceof StringLiteralT &&
-          right instanceof StringLiteralT
-        ) {
-          return new StringLiteralT(
-            scope,
-            originNode,
-            left.value + right.value,
-          );
+        } else if (left instanceof StringLiteralT && right instanceof
+        StringLiteralT) {
+          return new StringLiteralT(scope, originNode, left.value + right.value);
         } else {
           return new StringT(scope, originNode);
         }

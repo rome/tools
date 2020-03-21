@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyTSTypeElement} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSInterfaceBody = JSNodeBase & {
-  type: 'TSInterfaceBody';
-  body: Array<AnyTSTypeElement>;
-};
+export type TSInterfaceBody =
+  & JSNodeBase
+  & {
+    type: 'TSInterfaceBody';
+    body: Array<AnyTSTypeElement>;
+  };
 
 export const tsInterfaceBody = createBuilder<TSInterfaceBody>(
   'TSInterfaceBody',

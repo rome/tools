@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSParenthesizedType = JSNodeBase & {
-  type: 'TSParenthesizedType';
-  typeAnnotation: AnyTSPrimary;
-};
+export type TSParenthesizedType =
+  & JSNodeBase
+  & {
+    type: 'TSParenthesizedType';
+    typeAnnotation: AnyTSPrimary;
+  };
 
 export const tsParenthesizedType = createBuilder<TSParenthesizedType>(
   'TSParenthesizedType',

@@ -12,15 +12,9 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function FlowInterfaceExtends(
-  generator: Generator,
-  node: AnyNode,
-) {
-  node =
-    node.type === 'FlowGenericTypeAnnotation' ||
-    node.type === 'FlowClassImplements'
-      ? node
-      : flowInterfaceExtends.assert(node);
+export default function FlowInterfaceExtends(generator: Generator, node: AnyNode) {
+  node = node.type === 'FlowGenericTypeAnnotation' || node.type ===
+  'FlowClassImplements' ? node : flowInterfaceExtends.assert(node);
 
   generator.print(node.id, node);
   generator.print(node.typeParameters, node);

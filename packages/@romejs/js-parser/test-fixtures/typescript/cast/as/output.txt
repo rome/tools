@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -312,6 +313,7 @@ Program {
         }
         left: ReferenceIdentifier {
           name: 'x'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.ts'
             end: Object {
@@ -325,24 +327,6 @@ Program {
               line: 3
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' (x < y) as boolean;'
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 40
-                  index: 48
-                  line: 2
-                }
-                start: Object {
-                  column: 18
-                  index: 26
-                  line: 2
-                }
-              }
-            }
-          ]
         }
         right: TSAsExpression {
           loc: Object {
@@ -503,6 +487,7 @@ Program {
           }
           expression: ReferenceIdentifier {
             name: 'x'
+            leadingComments: undefined
             loc: Object {
               filename: 'input.ts'
               end: Object {
@@ -516,24 +501,6 @@ Program {
                 line: 4
               }
             }
-            leadingComments: Array [
-              CommentLine {
-                value: ' x === (1 as number);'
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 42
-                    index: 91
-                    line: 3
-                  }
-                  start: Object {
-                    column: 19
-                    index: 68
-                    line: 3
-                  }
-                }
-              }
-            ]
           }
         }
       }

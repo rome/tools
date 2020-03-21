@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -159,6 +160,7 @@ Program {
           }
           left: ReferenceIdentifier {
             name: 'f'
+            leadingComments: undefined
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -172,24 +174,6 @@ Program {
                 line: 2
               }
             }
-            leadingComments: Array [
-              CommentLine {
-                value: ' @flow'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 8
-                    index: 8
-                    line: 1
-                  }
-                  start: Object {
-                    column: 0
-                    index: 0
-                    line: 1
-                  }
-                }
-              }
-            ]
           }
         }
       }

@@ -8,15 +8,11 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('no delete vars', async t => {
-  const res = await testLint(
-    `
+test('no delete vars', async (t) => {
+  const res = await testLint(`
     const foo = "test";
     delete foo;
-    `,
-    false,
-    'script',
-  );
+    `, false, 'script');
 
   t.looksLike(res.diagnostics, [
     {

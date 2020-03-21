@@ -12,15 +12,14 @@
     "@types/node": "^13.7.7",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.5",
-    "typescript": "^3.7.0",
-    "prettier": "^1.19.1"
+    "typescript": "^3.7.0"
   },
-  "prettier": {
-    "trailingComma": "all",
-    "tabWidth": 2,
-    "singleQuote": true,
-    "bracketSpacing": false,
-    "jsxBracketSameLine": true
+  "scripts": {
+    "rome": "./scripts/vendor-rome",
+    "dev-rome": "./scripts/dev-rome",
+    "test": "./scripts/dev-rome test",
+    "lint": "./scripts/dev-rome lint",
+    "fix": "./scripts/dev-rome --fix"
   },
   "rome": {
     "root": true,
@@ -28,6 +27,9 @@
       "mode": "modern"
     },
     "tests": {
+      "enabled": true
+    },
+    "format": {
       "enabled": true
     },
     "lint": {

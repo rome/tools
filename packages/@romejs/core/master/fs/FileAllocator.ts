@@ -23,7 +23,7 @@ export default class FileAllocator {
   fileToWorker: Map<string, number>;
 
   init() {
-    this.master.memoryFs.deletedFileEvent.subscribe(path => {
+    this.master.memoryFs.deletedFileEvent.subscribe((path) => {
       return this.handleDeleted(path);
     });
 
@@ -89,18 +89,16 @@ export default class FileAllocator {
     const pathsByWorker: Map<number, Array<AbsoluteFilePath>> = new Map();
 
     // Populate our queues
-    await Promise.all(
-      Array.from(paths, async path => {
-        const worker = await this.getOrAssignOwner(path);
+    await Promise.all(Array.from(paths, async (path) => {
+      const worker = await this.getOrAssignOwner(path);
 
-        let queue = pathsByWorker.get(worker.id);
-        if (queue === undefined) {
-          queue = [];
-          pathsByWorker.set(worker.id, queue);
-        }
-        queue.push(path);
-      }),
-    );
+      let queue = pathsByWorker.get(worker.id);
+      if (queue === undefined) {
+        queue = [];
+        pathsByWorker.set(worker.id, queue);
+      }
+      queue.push(path);
+    }));
 
     return Array.from(pathsByWorker.values());
   }
@@ -170,9 +168,7 @@ export default class FileAllocator {
       }
       workerManager.disown(workerId, oldStats);
       workerManager.own(workerId, newStats);
-    } else if (
-      await this.master.projectManager.maybeEvictPossibleConfig(path)
-    ) {
+    } else if (await this.master.projectManager.maybeEvictPossibleConfig(path)) {
       logger.info(
         `[FileAllocator] Evicted the project belonging to config %s`,
         filename,

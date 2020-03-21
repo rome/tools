@@ -16,13 +16,15 @@ import {createBuilder} from '../utils';
 
 export type ObjectMethodKind = 'get' | 'set' | 'method';
 
-export type ObjectMethod = JSNodeBase & {
-  key: ComputedPropertyKey | StaticPropertyKey;
-  type: 'ObjectMethod';
-  kind: ObjectMethodKind;
-  head: FunctionHead;
-  body: BlockStatement;
-};
+export type ObjectMethod =
+  & JSNodeBase
+  & {
+    key: ComputedPropertyKey | StaticPropertyKey;
+    type: 'ObjectMethod';
+    kind: ObjectMethodKind;
+    head: FunctionHead;
+    body: BlockStatement;
+  };
 
 export const objectMethod = createBuilder<ObjectMethod>('ObjectMethod', {
   bindingKeys: {},

@@ -8,12 +8,14 @@
 import {JSNodeBase, AnyAssignmentPattern, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type AssignmentExpression = JSNodeBase & {
-  type: 'AssignmentExpression';
-  operator: AssignmentOperator;
-  left: AnyAssignmentPattern;
-  right: AnyExpression;
-};
+export type AssignmentExpression =
+  & JSNodeBase
+  & {
+    type: 'AssignmentExpression';
+    operator: AssignmentOperator;
+    left: AnyAssignmentPattern;
+    right: AnyExpression;
+  };
 
 export type AssignmentOperator =
   | '='

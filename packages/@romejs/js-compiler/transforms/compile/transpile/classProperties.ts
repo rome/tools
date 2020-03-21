@@ -57,7 +57,7 @@ function createConstructor(
 function toExpressionStatements(
   expressions: Array<AnyExpression>,
 ): Array<AnyStatement> {
-  return expressions.map(expr => {
+  return expressions.map((expr) => {
     return expressionStatement.create({expression: expr});
   });
 }
@@ -77,8 +77,8 @@ function transformClass(
 } {
   const bodyReplacements: Array<AnyStatement> = [];
   const constructorAssignments: Array<AnyExpression> = [];
-  const className: string =
-    node.id === undefined ? scope.generateUid('class') : node.id.name;
+  const className: string = node.id === undefined
+    ? scope.generateUid('class') : node.id.name;
 
   let _constructor: undefined | ClassMethod = undefined;
   const filteredClassBody = [];
@@ -135,10 +135,7 @@ function transformClass(
                 return node;
               }
 
-              if (
-                isSuperCall(node) &&
-                path.parent.type !== 'ExpressionStatement'
-              ) {
+              if (isSuperCall(node) && path.parent.type !== 'ExpressionStatement') {
                 visited.add(node);
 
                 // TODO retain proper value of super()
@@ -147,16 +144,15 @@ function transformClass(
                 });
               }
 
-              if (
-                node.type === 'ExpressionStatement' &&
-                isSuperCall(node.expression)
-              ) {
+              if (node.type === 'ExpressionStatement' && isSuperCall(
+                node.expression,
+              )) {
                 visited.add(node);
 
-                return [
+                return ([
                   node,
                   ...toExpressionStatements(constructorAssignments),
-                ] as Array<AnyNode>;
+                ] as Array<AnyNode>);
               }
 
               return node;
@@ -186,10 +182,9 @@ function transformClass(
         };
       } else {
         // create new constructor with just the assignments
-        _constructor = createConstructor(
-          undefined,
-          toExpressionStatements(constructorAssignments),
-        );
+        _constructor = createConstructor(undefined, toExpressionStatements(
+          constructorAssignments,
+        ));
       }
     }
   }
@@ -200,12 +195,10 @@ function transformClass(
 
   const newClass: ClassDeclaration = {
     ...node,
-    id:
-      node.id !== undefined && node.id.name === className
-        ? node.id
-        : bindingIdentifier.create({
-            name: className,
-          }),
+    id: node.id !== undefined && node.id.name === className
+      ? node.id : bindingIdentifier.create({
+        name: className,
+      }),
     meta: {
       ...node.meta,
       body: filteredClassBody,
@@ -225,31 +218,29 @@ export default {
     const {node, scope, context} = path;
 
     // correctly replace an export class with the class node then append the declarations
-    if (
-      (node.type === 'ExportLocalDeclaration' ||
-        node.type === 'ExportDefaultDeclaration') &&
-      node.declaration !== undefined &&
-      node.declaration.type === 'ClassDeclaration' &&
-      hasClassProps(node.declaration)
-    ) {
+    if ((node.type === 'ExportLocalDeclaration' || node.type ===
+    'ExportDefaultDeclaration') && node.declaration !== undefined &&
+      node.declaration.type === 'ClassDeclaration' && hasClassProps(
+      node.declaration,
+    )) {
       const {newClass, declarations} = transformClass(
         node.declaration,
         scope,
         context,
       );
-      return [
+      return ([
         {
           ...node,
           declaration: newClass,
         },
         ...declarations,
-      ] as Array<AnyNode>;
+      ] as Array<AnyNode>);
     }
 
     // turn a class expression into an IIFE that returns a class declaration
     if (node.type === 'ClassExpression' && hasClassProps(node)) {
-      const className =
-        node.id === undefined ? scope.generateUid('class') : node.id.name;
+      const className = node.id === undefined
+        ? scope.generateUid('class') : node.id.name;
 
       return callExpression.create({
         callee: arrowFunctionExpression.create({
@@ -273,7 +264,7 @@ export default {
 
     if (node.type === 'ClassDeclaration' && hasClassProps(node)) {
       const {newClass, declarations} = transformClass(node, scope, context);
-      return [newClass, ...declarations] as Array<AnyNode>;
+      return ([newClass, ...declarations] as Array<AnyNode>);
     }
 
     return node;

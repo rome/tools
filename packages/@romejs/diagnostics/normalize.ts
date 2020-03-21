@@ -55,11 +55,8 @@ export function normalizePosition(
 
   const {line, column, index} = position;
 
-  if (
-    typeof line !== 'number' ||
-    typeof column !== 'number' ||
-    typeof index !== 'number'
-  ) {
+  if (typeof line !== 'number' || typeof column !== 'number' || typeof index !==
+  'number') {
     return undefined;
   }
 
@@ -82,7 +79,7 @@ export function normalizeDiagnostics(
   diagnostics: PartialDiagnostics,
   opts: MarkupFormatOptions,
 ): Diagnostics {
-  return diagnostics.map(diag => normalizeDiagnostic(diag, opts));
+  return diagnostics.map((diag) => normalizeDiagnostic(diag, opts));
 }
 
 function normalizeFilename(
@@ -153,12 +150,8 @@ function normalizeDependencies(
     const deps: DiagnosticDependencies = [];
 
     for (const elem of value) {
-      if (
-        typeof elem === 'object' &&
-        elem != null &&
-        typeof elem.filename === 'string' &&
-        typeof elem.mtime === 'number'
-      ) {
+      if (typeof elem === 'object' && elem != null && typeof elem.filename ===
+      'string' && typeof elem.mtime === 'number') {
         deps.push({
           filename: normalizeFilename(elem.filename, opts),
           mtime: elem.mtime,
@@ -192,7 +185,7 @@ function normalizeAdviceStackFrames(
   opts: MarkupFormatOptions,
 ): Array<DiagnosticAdviceStackFrame> {
   if (Array.isArray(value)) {
-    return value.map(item => normalizeAdviceStackFrame(item, opts));
+    return value.map((item) => normalizeAdviceStackFrame(item, opts));
   } else {
     return [];
   }
@@ -204,7 +197,7 @@ function normalizeDiagnosticAdvice(
   opts: MarkupFormatOptions,
 ): DiagnosticAdvice {
   if (Array.isArray(value)) {
-    return value.map(item => normalizeDiagnosticAdviceItem(diag, item, opts));
+    return value.map((item) => normalizeDiagnosticAdviceItem(diag, item, opts));
   } else {
     return [];
   }
@@ -238,19 +231,13 @@ export function normalizeDiagnosticAdviceItem(
         type: 'code',
         code: normalizeValue(part.code, ''),
         language: normalizeLanguage(part.language || diag.language),
-        sourceType: normalizeValue(
-          part.sourceType || diag.sourceType,
-          'unknown',
-        ),
+        sourceType: normalizeValue(part.sourceType || diag.sourceType, 'unknown'),
       };
 
     case 'frame':
       return {
         type: 'frame',
-        sourceType: normalizeValue(
-          part.sourceType || diag.sourceType,
-          'unknown',
-        ),
+        sourceType: normalizeValue(part.sourceType || diag.sourceType, 'unknown'),
         language: normalizeLanguage(part.language || diag.language),
         sourceText: part.sourceText,
         marker: part.marker,
@@ -264,6 +251,7 @@ export function normalizeDiagnosticAdviceItem(
       return {
         type: 'diff',
         diff: part.diff,
+        legend: part.legend,
       };
 
     case 'stacktrace':
@@ -278,8 +266,9 @@ export function normalizeDiagnosticAdviceItem(
       return {
         type: 'inspect',
         // @ts-ignore TODO
+
         // rome-suppress lint/noExplicitAny
-        data: part.data as any,
+        data: (part.data as any),
       };
   }
 }

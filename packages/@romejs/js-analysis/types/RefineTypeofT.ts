@@ -61,6 +61,7 @@ export default class RefineTypeofT extends T {
       }
 
       // make sure our refinement is actually possible and matches a value in `fallback`
+
       // then pluck the matching type
       const types = utils.explodeUnion(fallback);
       for (const type of types) {

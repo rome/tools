@@ -16,15 +16,17 @@ import {
 import {createBuilder} from '../utils';
 import {FlowVariance} from '../flow/FlowVariance';
 
-export type ClassPrivateMethod = JSNodeBase & {
-  type: 'ClassPrivateMethod';
-  kind: ClassMethodKind;
-  key: PrivateName;
-  head: FunctionHead;
-  body: BlockStatement;
-  meta: ClassPropertyMeta;
-  variance?: FlowVariance;
-};
+export type ClassPrivateMethod =
+  & JSNodeBase
+  & {
+    type: 'ClassPrivateMethod';
+    kind: ClassMethodKind;
+    key: PrivateName;
+    head: FunctionHead;
+    body: BlockStatement;
+    meta: ClassPropertyMeta;
+    variance?: FlowVariance;
+  };
 
 export const classPrivateMethod = createBuilder<ClassPrivateMethod>(
   'ClassPrivateMethod',

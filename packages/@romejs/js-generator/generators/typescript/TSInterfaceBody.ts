@@ -11,5 +11,5 @@ import {printTSBraced} from '../utils';
 
 export default function TSInterfaceBody(generator: Generator, node: AnyNode) {
   node = tsInterfaceBody.assert(node);
-  printTSBraced(generator, node.body, node);
+  printTSBraced(generator, node, node.body);
 }

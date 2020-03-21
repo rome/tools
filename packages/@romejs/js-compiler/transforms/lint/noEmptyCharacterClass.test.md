@@ -22,7 +22,7 @@ Object {
       origins: Array [Object {category: 'lint'}]
       end: Object {
         column: 16
-        index: 17
+        index: 16
         line: 1
       }
       start: Object {
@@ -84,7 +84,7 @@ Object {
       origins: Array [Object {category: 'lint'}]
       end: Object {
         column: 33
-        index: 34
+        index: 33
         line: 1
       }
       start: Object {
@@ -146,7 +146,7 @@ Object {
       origins: Array [Object {category: 'lint'}]
       end: Object {
         column: 14
-        index: 15
+        index: 14
         line: 1
       }
       start: Object {
@@ -177,7 +177,7 @@ Object {
       origins: Array [Object {category: 'lint'}]
       end: Object {
         column: 21
-        index: 22
+        index: 21
         line: 1
       }
       start: Object {

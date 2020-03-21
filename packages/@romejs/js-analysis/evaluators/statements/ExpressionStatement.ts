@@ -6,11 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {
-  ExpressionStatement,
-  expressionStatement,
-  AnyNode,
-} from '@romejs/js-ast';
+import {ExpressionStatement, expressionStatement, AnyNode} from '@romejs/js-ast';
 
 export default function ExpressionStatement(node: AnyNode, scope: Scope) {
   node = expressionStatement.assert(node);

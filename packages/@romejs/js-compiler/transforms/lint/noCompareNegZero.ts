@@ -11,12 +11,8 @@ import {template} from '@romejs/js-ast-utils';
 const OPERATORS_TO_CHECK = ['>', '>=', '<', '<=', '==', '===', '!=', '!=='];
 
 function isNegZero(node: AnyNode): boolean {
-  return (
-    node.type === 'UnaryExpression' &&
-    node.operator === '-' &&
-    node.argument.type === 'NumericLiteral' &&
-    node.argument.value === 0
-  );
+  return node.type === 'UnaryExpression' && node.operator === '-' &&
+    node.argument.type === 'NumericLiteral' && node.argument.value === 0;
 }
 
 export default {
@@ -24,11 +20,9 @@ export default {
   enter(path: Path) {
     const {node} = path;
 
-    if (
-      node.type === 'BinaryExpression' &&
-      OPERATORS_TO_CHECK.includes(node.operator) &&
-      (isNegZero(node.left) || isNegZero(node.right))
-    ) {
+    if (node.type === 'BinaryExpression' && OPERATORS_TO_CHECK.includes(
+      node.operator,
+    ) && (isNegZero(node.left) || isNegZero(node.right))) {
       path.context.addNodeDiagnostic(node, {
         category: 'lint/noCompareNegZero',
         message: `Do not use the '${node.operator}' operator to compare against -0`,

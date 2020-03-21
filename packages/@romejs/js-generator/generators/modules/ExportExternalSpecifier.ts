@@ -11,11 +11,12 @@ import {
   ExportExternalSpecifier,
   exportExternalSpecifier,
 } from '@romejs/js-ast';
+import ExportLocalSpecifier from './ExportLocalSpecifier';
 
 export default function ExportExternalSpecifier(
   generator: Generator,
   node: AnyNode,
 ) {
   node = exportExternalSpecifier.assert(node);
-  throw new Error('unimplemented');
+  ExportLocalSpecifier(generator, node);
 }

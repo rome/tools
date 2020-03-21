@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '13.x'
+          node-version: "13.x"
       - name: Run TypeScript
         run: node ./node_modules/.bin/tsc --noEmit
 
@@ -28,10 +28,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '13.x'
-      - name: Check Prettier formatting
-        run: ./scripts/prettier-check
-      - name: Run Rome ci
+          node-version: "13.x"
+      - name: Run Rome CI
         run: ./scripts/dev-rome ci
 
   build:
@@ -42,7 +40,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '13.x'
+          node-version: "13.x"
 
       - name: Build release
         run: ./scripts/build-release dist

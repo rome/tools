@@ -8,7 +8,7 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('no empty character class in regular expression', async t => {
+test('no empty character class in regular expression', async (t) => {
   const validTestCases = [
     'let foo = /^abc[a-zA-Z]/;foo;',
     'let regExp = new RegExp("^abc[]");regExp;',

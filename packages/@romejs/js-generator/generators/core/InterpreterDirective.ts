@@ -12,10 +12,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function InterpreterDirective(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function InterpreterDirective(generator: Generator, node: AnyNode) {
   node = interpreterDirective.assert(node);
 
   throw new Error('unimplemented');

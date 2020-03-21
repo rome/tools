@@ -12,5 +12,5 @@ export default function TSInferType(generator: Generator, node: AnyNode) {
   node = tsInferType.assert(node);
   generator.token('infer');
   generator.space();
-  generator.print(node.typeParameter);
+  generator.print(node.typeParameter, node);
 }

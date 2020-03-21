@@ -49,59 +49,59 @@ export type RemoteReporterReceiveMessage = {
 
 export type RemoteReporterClientMessage =
   | {
-      type: 'PROGRESS_CREATE';
-      id: string;
-      opts: undefined | Partial<ProgressOptions>;
-    }
+    type: 'PROGRESS_CREATE';
+    id: string;
+    opts: undefined | Partial<ProgressOptions>;
+  }
   | {
-      type: 'PROGRESS_SET_CURRENT';
-      current: number;
-      id: string;
-    }
+    type: 'PROGRESS_SET_CURRENT';
+    current: number;
+    id: string;
+  }
   | {
-      type: 'PROGRESS_SET_APPROXIMATE_ETA';
-      duration: number;
-      id: string;
-    }
+    type: 'PROGRESS_SET_APPROXIMATE_ETA';
+    duration: number;
+    id: string;
+  }
   | {
-      type: 'PROGRESS_SET_TOTAL';
-      total: number;
-      id: string;
-      approximate: boolean;
-    }
+    type: 'PROGRESS_SET_TOTAL';
+    total: number;
+    id: string;
+    approximate: boolean;
+  }
   | {
-      type: 'PROGRESS_SET_TITLE';
-      title: string;
-      id: string;
-    }
+    type: 'PROGRESS_SET_TITLE';
+    title: string;
+    id: string;
+  }
   | {
-      type: 'PROGRESS_SET_TEXT';
-      text: string;
-      id: string;
-    }
+    type: 'PROGRESS_SET_TEXT';
+    text: string;
+    id: string;
+  }
   | {
-      type: 'PROGRESS_PUSH_TEXT';
-      text: string;
-      id: string;
-    }
+    type: 'PROGRESS_PUSH_TEXT';
+    text: string;
+    id: string;
+  }
   | {
-      type: 'PROGRESS_POP_TEXT';
-      text: string;
-      id: string;
-    }
+    type: 'PROGRESS_POP_TEXT';
+    text: string;
+    id: string;
+  }
   | {
-      type: 'PROGRESS_TICK';
-      id: string;
-    }
+    type: 'PROGRESS_TICK';
+    id: string;
+  }
   | {
-      type: 'PROGRESS_END';
-      id: string;
-    }
+    type: 'PROGRESS_END';
+    id: string;
+  }
   | {
-      type: 'PROGRESS_PAUSE';
-      id: string;
-    }
+    type: 'PROGRESS_PAUSE';
+    id: string;
+  }
   | {
-      type: 'PROGRESS_RESUME';
-      id: string;
-    };
+    type: 'PROGRESS_RESUME';
+    id: string;
+  };

@@ -11,5 +11,5 @@ import {printTSBraced} from '../utils';
 
 export default function TSModuleBlock(generator: Generator, node: AnyNode) {
   node = tsModuleBlock.assert(node);
-  printTSBraced(generator, node.body, node);
+  printTSBraced(generator, node, node.body);
 }

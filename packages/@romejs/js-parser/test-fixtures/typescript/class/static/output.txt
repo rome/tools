@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -42,9 +43,9 @@ Program {
       loc: Object {
         filename: 'input.ts'
         end: Object {
-          column: 0
-          index: 101
-          line: 7
+          column: 1
+          index: 100
+          line: 6
         }
         start: Object {
           column: 0
@@ -109,9 +110,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 4
-                index: 30
-                line: 3
+                column: 15
+                index: 25
+                line: 2
               }
               start: Object {
                 column: 4
@@ -132,9 +133,9 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 4
-                  index: 30
-                  line: 3
+                  column: 15
+                  index: 25
+                  line: 2
                 }
                 start: Object {
                   column: 14
@@ -208,9 +209,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 4
-                index: 53
-                line: 4
+                column: 22
+                index: 48
+                line: 3
               }
               start: Object {
                 column: 4
@@ -231,9 +232,9 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 4
-                  index: 53
-                  line: 4
+                  column: 22
+                  index: 48
+                  line: 3
                 }
                 start: Object {
                   column: 21
@@ -307,9 +308,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 4
-                index: 79
-                line: 5
+                column: 25
+                index: 74
+                line: 4
               }
               start: Object {
                 column: 4
@@ -330,9 +331,9 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 4
-                  index: 79
-                  line: 5
+                  column: 25
+                  index: 74
+                  line: 4
                 }
                 start: Object {
                   column: 24
@@ -406,9 +407,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 0
-                index: 99
-                line: 6
+                column: 23
+                index: 98
+                line: 5
               }
               start: Object {
                 column: 4
@@ -429,9 +430,9 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 0
-                  index: 99
-                  line: 6
+                  column: 23
+                  index: 98
+                  line: 5
                 }
                 start: Object {
                   column: 22

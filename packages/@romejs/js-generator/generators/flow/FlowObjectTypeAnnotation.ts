@@ -11,7 +11,6 @@ import {
   flowObjectTypeAnnotation,
   AnyNode,
 } from '@romejs/js-ast';
-import {isMultiLine} from '../../node/index';
 
 export default function FlowObjectTypeAnnotation(
   generator: Generator,
@@ -25,23 +24,7 @@ export default function FlowObjectTypeAnnotation(
     generator.token('{');
   }
 
-  const props = node.properties;
-  if (props.length) {
-    generator.space();
-
-    generator.printJoin(props, node, {
-      indent: true,
-      iterator: () => {
-        if (props.length !== 1) {
-          generator.token(',');
-          generator.space();
-        }
-      },
-      statement: isMultiLine(node),
-    });
-
-    generator.space();
-  }
+  generator.printCommaList(node.properties, node);
 
   if (node.exact === true) {
     generator.token('|}');

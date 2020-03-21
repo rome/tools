@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -172,14 +173,14 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 70
-                        index: 70
+                        column: 73
+                        index: 73
                         line: 1
                       }
                       start: Object {
-                        column: 71
-                        index: 71
-                        line: 1
+                        column: 0
+                        index: 74
+                        line: 2
                       }
                     }
                     meta: PatternMeta {
@@ -187,14 +188,14 @@ Program {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
-                          column: 70
-                          index: 70
+                          column: 73
+                          index: 73
                           line: 1
                         }
                         start: Object {
-                          column: 71
-                          index: 71
-                          line: 1
+                          column: 0
+                          index: 74
+                          line: 2
                         }
                       }
                       typeAnnotation: StringKeywordTypeAnnotation {
@@ -220,14 +221,14 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 70
-                      index: 70
+                      column: 73
+                      index: 73
                       line: 1
                     }
                     start: Object {
-                      column: 71
-                      index: 71
-                      line: 1
+                      column: 0
+                      index: 74
+                      line: 2
                     }
                   }
                   meta: PatternMeta {
@@ -235,14 +236,14 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 70
-                        index: 70
+                        column: 73
+                        index: 73
                         line: 1
                       }
                       start: Object {
-                        column: 71
-                        index: 71
-                        line: 1
+                        column: 0
+                        index: 74
+                        line: 2
                       }
                     }
                     typeAnnotation: FlowGenericTypeAnnotation {

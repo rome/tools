@@ -8,10 +8,12 @@
 import {JSNodeBase, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type ExportDefaultSpecifier = JSNodeBase & {
-  type: 'ExportDefaultSpecifier';
-  exported: Identifier;
-};
+export type ExportDefaultSpecifier =
+  & JSNodeBase
+  & {
+    type: 'ExportDefaultSpecifier';
+    exported: Identifier;
+  };
 
 export const exportDefaultSpecifier = createBuilder<ExportDefaultSpecifier>(
   'ExportDefaultSpecifier',

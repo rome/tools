@@ -18,5 +18,13 @@ export default function TSCallSignatureDeclaration(
 ) {
   node = tsCallSignatureDeclaration.assert(node);
 
-  throw new Error('unimplemented');
+  generator.print(node.meta, node);
+
+  if (node.typeAnnotation !== undefined) {
+    generator.token(':');
+    generator.space();
+    generator.print(node.typeAnnotation, node);
+  }
+
+  generator.semicolon();
 }

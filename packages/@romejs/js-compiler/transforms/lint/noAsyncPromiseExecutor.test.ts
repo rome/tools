@@ -8,7 +8,7 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('no async promise executor', async t => {
+test('no async promise executor', async (t) => {
   const validTestCases = [
     'new Promise(() => {})',
     'new Promise(() => {}, async function unrelated() {})',

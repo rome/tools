@@ -12,10 +12,7 @@ import {
   booleanLiteralTypeAnnotation,
 } from '@romejs/js-ast';
 
-export default function BooleanLiteralTypeAnnotation(
-  node: AnyNode,
-  scope: Scope,
-) {
+export default function BooleanLiteralTypeAnnotation(node: AnyNode, scope: Scope) {
   node = booleanLiteralTypeAnnotation.assert(node);
   scope;
   throw new Error('unimplemented');

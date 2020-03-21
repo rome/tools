@@ -13,10 +13,7 @@ import {
 } from '@romejs/js-ast';
 import FlowInterfaceDeclaration from './FlowInterfaceDeclaration';
 
-export default function FlowDeclareInterface(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function FlowDeclareInterface(generator: Generator, node: AnyNode) {
   node = flowDeclareInterface.assert(node);
 
   generator.word('declare');

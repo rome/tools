@@ -8,10 +8,12 @@
 import {JSNodeBase, JSXElement} from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXFragment = JSNodeBase & {
-  type: 'JSXFragment';
-  children: JSXElement['children'];
-};
+export type JSXFragment =
+  & JSNodeBase
+  & {
+    type: 'JSXFragment';
+    children: JSXElement['children'];
+  };
 
 export const jsxFragment = createBuilder<JSXFragment>('JSXFragment', {
   bindingKeys: {},

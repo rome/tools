@@ -115,11 +115,9 @@ export default async function analyzeDependencies(
       let {data} = record;
 
       // If this source was only ever used as a type then convert us to a value
-      if (
-        data.type === 'es' &&
-        data.kind === 'value' &&
-        sourcesUsedAsType.has(data.source)
-      ) {
+      if (data.type === 'es' && data.kind === 'value' && sourcesUsedAsType.has(
+        data.source,
+      )) {
         const names: Array<AnalyzeDependencyName> = [];
 
         for (const name of data.names) {
@@ -156,8 +154,11 @@ export default async function analyzeDependencies(
         };
 
         // Map ordering is by insertion time, so in the case where the previous import was a type import
+
         // then we don't want to place our combined record in that position, it should be at the end.
+
         // Inserting a type import statement at the top of the file shouldn't change the execution order
+
         // if it was imported later
         if (existing.kind === 'type' && data.kind === 'value') {
           dependenciesBySource.delete(data.source);
@@ -180,12 +181,10 @@ export default async function analyzeDependencies(
       if (firstTopAwaitLocation === undefined) {
         firstTopAwaitLocation = record.loc;
       }
-    } else if (
-      record instanceof ImportUsageRecord &&
-      record.isTop &&
-      record.data.kind === 'value'
-    ) {
+    } else if (record instanceof ImportUsageRecord && record.isTop &&
+      record.data.kind === 'value') {
       // Track the first reference to a value import that's not in a function
+
       // This is used to detect module cycles
       const {data} = record;
       const key = `${data.source}:${data.imported}`;
@@ -204,8 +203,7 @@ export default async function analyzeDependencies(
   );
 
   // Infer the module type
-  let moduleType: AnalyzeModuleType =
-    ast.sourceType === 'script' ? 'cjs' : 'es';
+  let moduleType: AnalyzeModuleType = ast.sourceType === 'script' ? 'cjs' : 'es';
 
   // Infer module type in legacy mode
   if (project.config.bundler.mode === 'legacy') {
@@ -229,8 +227,7 @@ export default async function analyzeDependencies(
           message: `CommonJS variable <emphasis>${
             record.node.name
           }</emphasis> is not available in an ES module`,
-        });*/
-      }
+        });*/}
     } else if (record instanceof CJSExportRecord) {
       if (moduleType === 'es') {
         context.addNodeDiagnostic(record.node, {

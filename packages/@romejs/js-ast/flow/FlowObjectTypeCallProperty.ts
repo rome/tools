@@ -8,11 +8,13 @@
 import {JSNodeBase, AnyFlowPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowObjectTypeCallProperty = JSNodeBase & {
-  type: 'FlowObjectTypeCallProperty';
-  value: AnyFlowPrimary;
-  static?: boolean;
-};
+export type FlowObjectTypeCallProperty =
+  & JSNodeBase
+  & {
+    type: 'FlowObjectTypeCallProperty';
+    value: AnyFlowPrimary;
+    static?: boolean;
+  };
 
 export const flowObjectTypeCallProperty = createBuilder<
   FlowObjectTypeCallProperty

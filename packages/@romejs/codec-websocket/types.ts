@@ -20,12 +20,12 @@ export type Frame = {
 };
 
 export const OPCODES = {
-  CONTINUATION: 0x0,
-  TEXT: 0x1,
-  BINARY: 0x2,
-  TERMINATE: 0x8,
-  PING: 0x9,
-  PONG: 0xa,
+  CONTINUATION: 0,
+  TEXT: 1,
+  BINARY: 2,
+  TERMINATE: 8,
+  PING: 9,
+  PONG: 10,
 };
 
 export const GUID = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';

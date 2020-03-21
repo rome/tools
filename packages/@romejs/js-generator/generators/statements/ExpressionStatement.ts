@@ -6,16 +6,9 @@
  */
 
 import Generator from '../../Generator';
-import {
-  ExpressionStatement,
-  expressionStatement,
-  AnyNode,
-} from '@romejs/js-ast';
+import {ExpressionStatement, expressionStatement, AnyNode} from '@romejs/js-ast';
 
-export default function ExpressionStatement(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function ExpressionStatement(generator: Generator, node: AnyNode) {
   node = expressionStatement.assert(node);
 
   generator.print(node.expression, node);

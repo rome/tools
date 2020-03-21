@@ -17,8 +17,8 @@ export default function UnaryExpression(node: AnyNode, scope: Scope) {
   const argType = scope.evaluate(node.argument);
 
   switch (node.operator) {
-    // booleans
-    case 'delete':
+    case // booleans
+    'delete':
     case '!':
       return new BooleanT(scope, node);
 

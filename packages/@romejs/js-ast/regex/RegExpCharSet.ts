@@ -12,11 +12,13 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpCharSet = JSNodeBase & {
-  type: 'RegExpCharSet';
-  invert?: boolean;
-  body: Array<RegExpCharSetRange | AnyRegExpEscapedCharacter>;
-};
+export type RegExpCharSet =
+  & JSNodeBase
+  & {
+    type: 'RegExpCharSet';
+    invert?: boolean;
+    body: Array<RegExpCharSetRange | AnyRegExpEscapedCharacter>;
+  };
 
 export const regExpCharSet = createBuilder<RegExpCharSet>('RegExpCharSet', {
   bindingKeys: {},

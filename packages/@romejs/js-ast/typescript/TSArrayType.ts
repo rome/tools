@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSArrayType = JSNodeBase & {
-  type: 'TSArrayType';
-  elementType: AnyTSPrimary;
-};
+export type TSArrayType =
+  & JSNodeBase
+  & {
+    type: 'TSArrayType';
+    elementType: AnyTSPrimary;
+  };
 
 export const tsArrayType = createBuilder<TSArrayType>('TSArrayType', {
   bindingKeys: {},

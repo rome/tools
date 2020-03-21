@@ -57,9 +57,7 @@ export default class Bundler {
     return new Bundler(req, req.getBundlerConfigFromFlags());
   }
 
-  async getResolvedEntry(
-    unresolvedEntry: string,
-  ): Promise<BundlerEntryResoluton> {
+  async getResolvedEntry(unresolvedEntry: string): Promise<BundlerEntryResoluton> {
     const {cwd} = this.config;
 
     const res = await this.master.resolver.resolveEntryAssert({
@@ -80,8 +78,7 @@ export default class Bundler {
     });
     const manifestRoot: undefined | AbsoluteFilePath =
       manifestRootResolved.type === 'FOUND'
-        ? manifestRootResolved.path
-        : undefined;
+        ? manifestRootResolved.path : undefined;
     let manifestDef;
     if (manifestRoot !== undefined) {
       const def = master.memoryFs.getManifestDefinition(manifestRoot);
@@ -136,8 +133,8 @@ export default class Bundler {
         },
       ],
     });
-    const entryUids = entries.map(entry =>
-      this.master.projectManager.getUid(entry),
+    const entryUids = entries.map((entry) =>
+      this.master.projectManager.getUid(entry)
     );
     const analyzeProgress = this.reporter.progress({
       name: `bundler:analyze:${entryUids.join(',')}`,
@@ -223,7 +220,6 @@ export default class Bundler {
     });
 
     // TODO ensure that __dirname is relative to the project root
-
     if (manifestDef !== undefined) {
       const newManifest = await this.deriveManifest(
         manifestDef,
@@ -256,10 +252,10 @@ export default class Bundler {
   async deriveManifest(
     manifestDef: ManifestDefinition,
     entryBundle: BundleResultBundle,
-    createBundle: (
-      resolvedSegment: AbsoluteFilePath,
-      options: BundleOptions,
-    ) => Promise<BundleResultBundle>,
+    createBundle: (resolvedSegment: AbsoluteFilePath, options: BundleOptions) => Promise<
+      BundleResultBundle
+    >,
+
     addFile: (relative: string, buffer: Buffer | string) => void,
   ): Promise<JSONManifest> {
     // TODO figure out some way to use bundleMultiple here
@@ -307,21 +303,18 @@ export default class Bundler {
       const isBinShorthand = typeof binConsumer.asUnknown() === 'string';
 
       for (const [binName, relative] of manifest.bin) {
-        const pointer = (isBinShorthand
-          ? binConsumer
-          : binConsumer.get(binName)
-        ).getDiagnosticPointer('inner-value');
+        const pointer =
+          (isBinShorthand ? binConsumer : binConsumer.get(binName)).getDiagnosticPointer(
+            'inner-value',
+          );
 
-        const absolute = await this.master.resolver.resolveAssert(
-          {
-            ...this.config.resolver,
-            origin: manifestDef.folder,
-            source: createUnknownFilePath(relative).toExplicitRelative(),
-          },
-          {
-            pointer,
-          },
-        );
+        const absolute = await this.master.resolver.resolveAssert({
+          ...this.config.resolver,
+          origin: manifestDef.folder,
+          source: createUnknownFilePath(relative).toExplicitRelative(),
+        }, {
+          pointer,
+        });
 
         const res = await createBundle(absolute.path, {
           prefix: `bin/${binName}`,

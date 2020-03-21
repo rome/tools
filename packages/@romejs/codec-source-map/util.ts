@@ -42,8 +42,7 @@ export function compareByGeneratedPositionsInflated(
   mappingA: Mapping,
   mappingB: Mapping,
 ): number {
-  let cmp: number =
-    get1(mappingA.generated.line) - get1(mappingB.generated.line);
+  let cmp: number = get1(mappingA.generated.line) - get1(mappingB.generated.line);
   if (cmp !== 0) {
     return cmp;
   }
@@ -90,8 +89,11 @@ export function toRelativeUrl(root: string, path: string): string {
   root = root.replace(/\/$/, '');
 
   // It is possible for the path to be above the root. In this case, simply
+
   // checking whether the root is a prefix of the path won't work. Instead, we
+
   // need to remove components from the root one by one, until either we find
+
   // a prefix that fits, or we run out of components to remove.
   let level = 0;
   while (path.indexOf(`${root}/`) !== 0) {
@@ -101,7 +103,9 @@ export function toRelativeUrl(root: string, path: string): string {
     }
 
     // If the only part of the root that is left is the scheme (i.e. http://,
+
     // file:///, etc.), one or more slashes (/), or simply nothing at all, we
+
     // have exhausted all components, so the path is not relative to the root.
     root = root.slice(0, index);
     if (root.match(/^([^\/]+:\/)?\/*$/)) {

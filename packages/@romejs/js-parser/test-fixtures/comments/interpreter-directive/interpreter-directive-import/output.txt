@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -105,6 +106,7 @@ Program {
       ]
       specifiers: Array [
         ImportSpecifier {
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -156,6 +158,7 @@ Program {
               }
             }
             importKind: undefined
+            leadingComments: undefined
             loc: Object {
               filename: 'input.js'
               end: Object {

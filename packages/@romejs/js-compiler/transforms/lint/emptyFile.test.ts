@@ -8,6 +8,6 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('empty file', async t => {
+test('empty file', async (t) => {
   t.snapshot(await testLint(''));
 });

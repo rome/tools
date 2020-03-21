@@ -38,41 +38,46 @@ export default createMasterCommand({
 
     const [action] = req.query.args;
     switch (action) {
-      case 'enable': {
-        req.expectArgumentLength(2);
-        keyParts = req.query.args[1];
-        value = true;
-        break;
-      }
+      case 'enable':
+        {
+          req.expectArgumentLength(2);
+          keyParts = req.query.args[1];
+          value = true;
+          break;
+        }
 
-      case 'disable': {
-        req.expectArgumentLength(2);
-        keyParts = req.query.args[1];
-        value = false;
-        break;
-      }
+      case 'disable':
+        {
+          req.expectArgumentLength(2);
+          keyParts = req.query.args[1];
+          value = false;
+          break;
+        }
 
-      case 'enable-category': {
-        req.expectArgumentLength(2);
-        const category = req.query.args[1];
-        keyParts = `${category}.enabled`;
-        value = true;
-        break;
-      }
+      case 'enable-category':
+        {
+          req.expectArgumentLength(2);
+          const category = req.query.args[1];
+          keyParts = `${category}.enabled`;
+          value = true;
+          break;
+        }
 
-      case 'disable-category': {
-        req.expectArgumentLength(2);
-        const category = req.query.args[1];
-        keyParts = `${category}.enabled`;
-        value = false;
-        break;
-      }
+      case 'disable-category':
+        {
+          req.expectArgumentLength(2);
+          const category = req.query.args[1];
+          keyParts = `${category}.enabled`;
+          value = false;
+          break;
+        }
 
-      case 'set': {
-        req.expectArgumentLength(3);
-        [, keyParts, value] = req.query.args;
-        break;
-      }
+      case 'set':
+        {
+          req.expectArgumentLength(3);
+          [keyParts, value] = req.query.args;
+          break;
+        }
 
       default:
         throw req.throwDiagnosticFlagError(`Unknown action ${action}`, {
@@ -83,7 +88,7 @@ export default createMasterCommand({
 
     try {
       await modifyProjectConfig(project.meta, {
-        pre: meta => {
+        pre: (meta) => {
           reporter.success(
             `Setting <emphasis>${keyParts}</emphasis> to <emphasis>${JSON.stringify(
               value,
@@ -99,7 +104,7 @@ export default createMasterCommand({
           }
         },
 
-        modify: consumer => {
+        modify: (consumer) => {
           // Set the specified value
           let keyConsumer = consumer;
           for (const key of keyParts.split('.')) {

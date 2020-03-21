@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: true
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -169,6 +170,7 @@ Program {
                     }
                   }
                   value: AssignmentAssignmentPattern {
+                    operator: '='
                     loc: Object {
                       filename: 'input.js'
                       end: Object {

@@ -11,5 +11,5 @@ import {printTSBraced} from '../utils';
 
 export default function TSTypeLiteral(generator: Generator, node: AnyNode) {
   node = tsTypeLiteral.assert(node);
-  printTSBraced(generator, node.members, node);
+  printTSBraced(generator, node, node.members);
 }

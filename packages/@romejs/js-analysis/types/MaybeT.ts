@@ -54,11 +54,8 @@ export default class MaybeT extends T {
     if (otherType instanceof MaybeT) {
       return this.utils.checkCompability(this.parent, otherType.parent);
     } else {
-      return (
-        otherType instanceof VoidT ||
-        otherType instanceof NullT ||
-        this.utils.checkCompability(this.parent, otherType)
-      );
+      return otherType instanceof VoidT || otherType instanceof NullT ||
+      this.utils.checkCompability(this.parent, otherType);
     }
   }
 }

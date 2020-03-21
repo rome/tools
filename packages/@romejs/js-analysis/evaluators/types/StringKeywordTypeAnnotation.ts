@@ -13,10 +13,7 @@ import {
 } from '@romejs/js-ast';
 import StringT from '../../types/StringT';
 
-export default function StringKeywordTypeAnnotation(
-  node: AnyNode,
-  scope: Scope,
-) {
+export default function StringKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
   node = stringKeywordTypeAnnotation.assert(node);
   return new StringT(scope, node);
 }

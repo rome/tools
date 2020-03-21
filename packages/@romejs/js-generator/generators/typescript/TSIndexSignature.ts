@@ -7,7 +7,6 @@
 
 import {TSIndexSignature, tsIndexSignature, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
-import {printBindingPatternParams} from '../utils';
 
 export default function TSIndexSignature(generator: Generator, node: AnyNode) {
   node = tsIndexSignature.assert(node);
@@ -18,8 +17,10 @@ export default function TSIndexSignature(generator: Generator, node: AnyNode) {
   }
 
   generator.token('[');
-  printBindingPatternParams(generator, node, node.parameters);
+  generator.print(node.key, node);
   generator.token(']');
+  generator.token(':');
+  generator.space();
   generator.print(node.typeAnnotation, node);
   generator.token(';');
 }

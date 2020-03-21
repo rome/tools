@@ -8,22 +8,19 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('getter return', async t => {
-  const badClass = await testLint(
-    `
+test('getter return', async (t) => {
+  const badClass = await testLint(`
     class p {
       get name() {
         console.log('hello')
       };
     }
     console.log(new p())
-    `,
-  );
+    `);
 
   t.snapshot(badClass);
 
-  const badObject = await testLint(
-    `
+  const badObject = await testLint(`
     let p;
     p = {
       get name() {
@@ -31,13 +28,11 @@ test('getter return', async t => {
       }
     };
     console.log(p)
-    `,
-  );
+    `);
 
   t.snapshot(badObject);
 
-  const badDefinedProperty = await testLint(
-    `
+  const badDefinedProperty = await testLint(`
     let p = {};
     Object.defineProperty(p, {
       get: function (){
@@ -45,8 +40,7 @@ test('getter return', async t => {
       }
     });
     console.log(p)
-    `,
-  );
+    `);
 
   t.snapshot(badDefinedProperty);
 });

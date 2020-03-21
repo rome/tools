@@ -7,6 +7,7 @@
 
 import packageJson from '../package.json';
 import os = require('os');
+
 import {TEMP_PATH, createAbsoluteFilePath} from '@romejs/path';
 
 export const CHILD_ARGS = ['--max-old-space-size=8192'];
@@ -15,7 +16,7 @@ export const CHILD_ARGS = ['--max-old-space-size=8192'];
 export const BIN = createAbsoluteFilePath(process.mainModule.filename);
 export const MAP = BIN.addExtension('.map');
 
-const MEGABYTE = 10000;
+const MEGABYTE = 10_000;
 
 export const MAX_MASTER_BYTES_BEFORE_WORKERS = 0.5 * MEGABYTE;
 

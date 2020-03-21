@@ -19,9 +19,8 @@ import {extractSourceLocationRangeFromNodes} from '@romejs/parser-core';
 function isSpaceChar(
   node: undefined | AnyRegExpBodyItem,
 ): node is RegExpCharacter {
-  return (
-    node !== undefined && node.type === 'RegExpCharacter' && node.value === ' '
-  );
+  return node !== undefined && node.type === 'RegExpCharacter' && node.value ===
+  ' ';
 }
 
 function checkRegex(

@@ -11,9 +11,10 @@ import {Generator} from '@romejs/js-generator';
 export default function TSAsExpression(generator: Generator, node: AnyNode) {
   node = tsAsExpression.assert(node);
 
-  generator.print(node.expression);
+  generator.print(node.expression, node);
 
   if (generator.options.typeAnnotations) {
+    generator.space();
     generator.word('as');
     generator.print(node.typeAnnotation, node);
   }

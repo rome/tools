@@ -28,16 +28,13 @@ export type ConsumeSourceLocationRequestTarget =
 
 export type ConsumeContext = {
   category: DiagnosticCategory;
-  getDiagnosticPointer?: (
-    keys: ConsumePath,
-    target: ConsumeSourceLocationRequestTarget,
-  ) => undefined | DiagnosticPointer;
+  getDiagnosticPointer?: (keys: ConsumePath, target: ConsumeSourceLocationRequestTarget) =>
+    | undefined
+    | DiagnosticPointer;
   getOriginalValue?: (path: ConsumePath) => unknown;
 };
 
-export type ConsumePropertyMetadata = {
-  description?: string;
-};
+export type ConsumePropertyMetadata = {description?: string};
 
 type ConsumePropertyDefinitionBase = {
   objectPath: ConsumePath;
@@ -46,30 +43,30 @@ type ConsumePropertyDefinitionBase = {
   metadata?: ConsumePropertyMetadata;
 };
 
-type ConsumePropertyPrimitiveDefinition = ConsumePropertyDefinitionBase & {
-  type:
-    | 'string'
-    | 'number'
-    | 'boolean'
-    | 'bigint'
-    | 'date'
-    | 'array'
-    | 'object';
-};
+type ConsumePropertyPrimitiveDefinition =
+  & ConsumePropertyDefinitionBase
+  & {type:
+      | 'string'
+      | 'number'
+      | 'boolean'
+      | 'bigint'
+      | 'date'
+      | 'array'
+      | 'object'};
 
-type ConsumePropertyNumberRangeDefinition = ConsumePropertyDefinitionBase & {
-  type: 'number-range';
-  min: undefined | Number0 | Number1 | number;
-  max: undefined | Number0 | Number1 | number;
-};
+type ConsumePropertyNumberRangeDefinition =
+  & ConsumePropertyDefinitionBase
+  & {
+    type: 'number-range';
+    min: undefined | Number0 | Number1 | number;
+    max: undefined | Number0 | Number1 | number;
+  };
 
 export type ConsumePropertyDefinition =
   | ConsumePropertyPrimitiveDefinition
   | ConsumePropertyNumberRangeDefinition;
 
-export type ConsumerOnDefinition = (
-  definition: ConsumePropertyDefinition,
-) => void;
+export type ConsumerOnDefinition = (definition: ConsumePropertyDefinition) => void;
 
 export type ConsumerHandleUnexpected = (diagnostic: PartialDiagnostic) => void;
 

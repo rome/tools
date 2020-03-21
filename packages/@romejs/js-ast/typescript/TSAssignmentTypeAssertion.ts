@@ -8,15 +8,16 @@
 import {JSNodeBase, AnyTSPrimary, AnyTargetAssignmentPattern} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSAssignmentTypeAssertion = JSNodeBase & {
-  type: 'TSAssignmentTypeAssertion';
-  typeAnnotation: AnyTSPrimary;
-  expression: AnyTargetAssignmentPattern;
-};
+export type TSAssignmentTypeAssertion =
+  & JSNodeBase
+  & {
+    type: 'TSAssignmentTypeAssertion';
+    typeAnnotation: AnyTSPrimary;
+    expression: AnyTargetAssignmentPattern;
+  };
 
-export const tsAssignmentTypeAssertion = createBuilder<
-  TSAssignmentTypeAssertion
->('TSAssignmentTypeAssertion', {
-  bindingKeys: {},
-  visitorKeys: {expression: true, typeAnnotation: true},
-});
+export const tsAssignmentTypeAssertion =
+  createBuilder<TSAssignmentTypeAssertion>('TSAssignmentTypeAssertion', {
+    bindingKeys: {},
+    visitorKeys: {expression: true, typeAnnotation: true},
+  });

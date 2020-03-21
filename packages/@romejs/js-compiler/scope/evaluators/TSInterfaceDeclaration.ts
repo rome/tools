@@ -12,16 +12,10 @@ import {TypeBinding} from '@romejs/js-compiler';
 export default {
   creator: false,
   build(node: TSInterfaceDeclaration, parent: AnyNode, scope: Scope) {
-    scope.addBinding(
-      new TypeBinding(
-        {
-          node: node.id,
-          name: node.id.name,
-          scope,
-        },
-        node,
-        'interface',
-      ),
-    );
+    scope.addBinding(new TypeBinding({
+      node: node.id,
+      name: node.id.name,
+      scope,
+    }, node, 'interface'));
   },
 };

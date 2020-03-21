@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -78,9 +79,9 @@ Program {
       loc: Object {
         filename: 'input.js'
         end: Object {
-          column: 0
-          index: 55
-          line: 3
+          column: 1
+          index: 54
+          line: 2
         }
         start: Object {
           column: 0
@@ -164,7 +165,6 @@ Program {
         params: Array [
           BindingIdentifier {
             name: 'param'
-            leadingComments: undefined
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -176,6 +176,24 @@ Program {
                 column: 16
                 index: 16
                 line: 1
+              }
+            }
+            meta: PatternMeta {
+              optional: undefined
+              trailingComments: undefined
+              typeAnnotation: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 21
+                  index: 21
+                  line: 1
+                }
+                start: Object {
+                  column: 16
+                  index: 16
+                  line: 1
+                }
               }
             }
             trailingComments: Array [
@@ -196,41 +214,6 @@ Program {
                 }
               }
             ]
-            meta: PatternMeta {
-              optional: undefined
-              typeAnnotation: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 21
-                  index: 21
-                  line: 1
-                }
-                start: Object {
-                  column: 16
-                  index: 16
-                  line: 1
-                }
-              }
-              trailingComments: Array [
-                CommentBlock {
-                  value: ': string '
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 35
-                      index: 35
-                      line: 1
-                    }
-                    start: Object {
-                      column: 22
-                      index: 22
-                      line: 1
-                    }
-                  }
-                }
-              ]
-            }
           }
         ]
       }

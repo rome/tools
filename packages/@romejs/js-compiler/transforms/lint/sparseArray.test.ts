@@ -8,7 +8,7 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('sparse array', async t => {
+test('sparse array', async (t) => {
   const res = await testLint(`[1,,2]`);
 
   t.snapshot(res);

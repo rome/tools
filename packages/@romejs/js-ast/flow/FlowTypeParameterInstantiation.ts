@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyFlowPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowTypeParameterInstantiation = JSNodeBase & {
-  type: 'FlowTypeParameterInstantiation';
-  params: Array<AnyFlowPrimary>;
-};
+export type FlowTypeParameterInstantiation =
+  & JSNodeBase
+  & {
+    type: 'FlowTypeParameterInstantiation';
+    params: Array<AnyFlowPrimary>;
+  };
 
 export const flowTypeParameterInstantiation = createBuilder<
   FlowTypeParameterInstantiation

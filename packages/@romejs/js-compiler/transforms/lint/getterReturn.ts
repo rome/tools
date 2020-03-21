@@ -14,10 +14,8 @@ export default {
   enter(path: Path): AnyNode {
     const {node} = path;
 
-    if (
-      (node.type === 'ClassMethod' || node.type === 'ObjectMethod') &&
-      node.kind === 'get'
-    ) {
+    if ((node.type === 'ClassMethod' || node.type === 'ObjectMethod') &&
+      node.kind === 'get') {
       for (const record of getCompletionRecords(node.body)) {
         if (record.type === 'INVALID') {
           path.context.addNodeDiagnostic(record.node, {

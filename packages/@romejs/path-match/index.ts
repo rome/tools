@@ -11,6 +11,7 @@ import match from './match';
 import {PathSegments, AbsoluteFilePath} from '@romejs/path';
 
 export type PathPatterns = Array<PathPatternNode>;
+
 export type PathPattern = PathPatternNode;
 
 export {parsePattern as parsePathPattern};
@@ -18,7 +19,7 @@ export {parsePattern as parsePathPattern};
 export {stringifyPathPattern} from './stringify';
 
 export function flipPathPatterns(patterns: PathPatterns): PathPatterns {
-  return patterns.map(pattern => {
+  return patterns.map((pattern) => {
     return {
       ...pattern,
       negate: !pattern.negate,

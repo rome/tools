@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -110,7 +111,6 @@ Program {
           body: Array [
             ReturnStatement {
               argument: undefined
-              leadingComments: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -157,6 +157,23 @@ Program {
                   line: 2
                 }
               }
+              expression: ReferenceIdentifier {
+                name: 'x'
+                leadingComments: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 11
+                    index: 43
+                    line: 2
+                  }
+                  start: Object {
+                    column: 10
+                    index: 42
+                    line: 2
+                  }
+                }
+              }
               leadingComments: Array [
                 CommentBlock {
                   value: ' Multiline\nComment '
@@ -175,40 +192,6 @@ Program {
                   }
                 }
               ]
-              expression: ReferenceIdentifier {
-                name: 'x'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 11
-                    index: 43
-                    line: 2
-                  }
-                  start: Object {
-                    column: 10
-                    index: 42
-                    line: 2
-                  }
-                }
-                leadingComments: Array [
-                  CommentBlock {
-                    value: ' Multiline\nComment '
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 10
-                        index: 42
-                        line: 2
-                      }
-                      start: Object {
-                        column: 19
-                        index: 19
-                        line: 1
-                      }
-                    }
-                  }
-                ]
-              }
             }
           ]
         }

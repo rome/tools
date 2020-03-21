@@ -31,11 +31,8 @@ function typesToMap(types: TypeDefinitions): Map<string, T> {
 function isTypeofNode(
   node: AnyNode,
 ): node is UnaryExpression & {argument: ReferenceIdentifier} {
-  return (
-    node.type === 'UnaryExpression' &&
-    node.operator === 'typeof' &&
-    node.argument.type === 'ReferenceIdentifier'
-  );
+  return node.type === 'UnaryExpression' && node.operator === 'typeof' &&
+    node.argument.type === 'ReferenceIdentifier';
 }
 
 function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
@@ -69,6 +66,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
               });
             }
           }
+
           // foo === 'bar'
           if (left.type === 'ReferenceIdentifier') {
             types.push({
@@ -76,6 +74,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
               value: evaluator.getTypeFromEvaluatedNode(right),
             });
           }
+
           // 'string' === typeof foo
           if (isTypeofNode(right)) {
             const name = right.argument.name;
@@ -92,6 +91,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
               });
             }
           }
+
           // 'bar' === foo
           if (right.type === 'ReferenceIdentifier') {
             types.push({
@@ -142,32 +142,29 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
           const rightMap = typesToMap(genTypes(node.right, scope));
           const names = new Set([...leftMap.keys(), ...rightMap.keys()]);
 
-          return Array.from(
-            names,
-            (name: string): TypeDefinition => {
-              const left = leftMap.get(name);
-              const right = rightMap.get(name);
+          return Array.from(names, (name: string): TypeDefinition => {
+            const left = leftMap.get(name);
+            const right = rightMap.get(name);
 
-              let type;
+            let type;
 
-              if (left === undefined) {
-                type = right;
-              } else if (right === undefined) {
-                type = left;
-              } else {
-                type = new UnionT(scope, undefined, [left, right]);
-              }
+            if (left === undefined) {
+              type = right;
+            } else if (right === undefined) {
+              type = left;
+            } else {
+              type = new UnionT(scope, undefined, [left, right]);
+            }
 
-              if (type === undefined) {
-                throw new Error('Expected type');
-              }
+            if (type === undefined) {
+              throw new Error('Expected type');
+            }
 
-              return {
-                name,
-                value: type,
-              };
-            },
-          );
+            return {
+              name,
+              value: type,
+            };
+          });
 
         case '&&':
           return [
@@ -206,8 +203,11 @@ export default function refine(
 
   for (const [name, types] of testTypes) {
     // Build up the type in the case it's been refined to multiple values
-    const type =
-      types.length === 1 ? types[0] : new UnionT(outerScope, undefined, types);
+    const type = types.length === 1 ? types[0] : new UnionT(
+      outerScope,
+      undefined,
+      types,
+    );
 
     // Set type on `consequent`
     consequent.addBinding(name, type);
@@ -221,6 +221,5 @@ export default function refine(
   }
 
   // TODO, get binding refinements that were made inside
-
   return {consequent, alternate};
 }

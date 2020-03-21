@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -170,6 +171,23 @@ Program {
                 line: 2
               }
             }
+            object: ReferenceIdentifier {
+              name: 'instance'
+              leadingComments: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 8
+                  index: 16
+                  line: 2
+                }
+                start: Object {
+                  column: 0
+                  index: 8
+                  line: 2
+                }
+              }
+            }
             property: StaticMemberProperty {
               value: Identifier {
                 name: 'method'
@@ -200,40 +218,6 @@ Program {
                   line: 2
                 }
               }
-            }
-            object: ReferenceIdentifier {
-              name: 'instance'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 8
-                  index: 16
-                  line: 2
-                }
-                start: Object {
-                  column: 0
-                  index: 8
-                  line: 2
-                }
-              }
-              leadingComments: Array [
-                CommentLine {
-                  value: '@flow'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 7
-                      index: 7
-                      line: 1
-                    }
-                    start: Object {
-                      column: 0
-                      index: 0
-                      line: 1
-                    }
-                  }
-                }
-              ]
             }
           }
         }

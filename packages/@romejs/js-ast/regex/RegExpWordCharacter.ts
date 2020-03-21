@@ -8,9 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpWordCharacter = JSNodeBase & {
-  type: 'RegExpWordCharacter';
-};
+export type RegExpWordCharacter = JSNodeBase & {type: 'RegExpWordCharacter'};
 
 export const regExpWordCharacter = createBuilder<RegExpWordCharacter>(
   'RegExpWordCharacter',

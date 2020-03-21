@@ -6,11 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {
-  VariableDeclaration,
-  variableDeclaration,
-  AnyNode,
-} from '@romejs/js-ast';
+import {VariableDeclaration, variableDeclaration, AnyNode} from '@romejs/js-ast';
 import OpenT from '../../types/OpenT';
 import VoidT from '../../types/VoidT';
 import executeAtom from '../../utils/executeAtom';

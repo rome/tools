@@ -13,17 +13,13 @@ export default {
   enter(path: Path): AnyNode {
     const {node} = path;
 
-    if (
-      node.type === 'BinaryExpression' &&
-      (node.operator === 'in' || node.operator === 'instanceof') &&
-      node.left.type === 'UnaryExpression' &&
-      node.left.operator === '!'
-    ) {
+    if (node.type === 'BinaryExpression' && (node.operator === 'in' ||
+    node.operator === 'instanceof') && node.left.type === 'UnaryExpression' &&
+      node.left.operator === '!') {
       path.context.addNodeDiagnostic(node, {
         fixable: true,
         category: 'lint/unsafeNegation',
-        message:
-          'Unsafe usage of negation operator in left side of binary expression',
+        message: 'Unsafe usage of negation operator in left side of binary expression',
       });
 
       return unaryExpression.create({

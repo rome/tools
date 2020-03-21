@@ -18,6 +18,6 @@ export default function TSTypeParameterDeclaration(
 ) {
   node = tsTypeParameterDeclaration.assert(node);
   generator.token('<');
-  generator.printCommaList(node.params, node, {});
+  generator.printCommaList(node.params, node);
   generator.token('>');
 }

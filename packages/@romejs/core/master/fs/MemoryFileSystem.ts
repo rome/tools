@@ -33,7 +33,9 @@ import {
 } from '@romejs/path';
 import {lstat, readFileText, exists, readdir, watch} from '@romejs/fs';
 import crypto = require('crypto');
+
 import fs = require('fs');
+
 import {
   getFileHandler,
   getFileHandlerExtensions,
@@ -92,26 +94,18 @@ export type WatcherClose = () => void;
 export type MemoryFSGlobOptions = {
   extensions?: Array<string>;
   overrideIgnore?: PathPatterns;
-  getProjectIgnore?: (
-    project: ProjectDefinition,
-  ) => {
+  getProjectIgnore?: (project: ProjectDefinition) => {
     patterns: PathPatterns;
     source?: ProjectConfigSource;
   };
-  getProjectEnabled?: (
-    project: ProjectDefinition,
-  ) => {
+  getProjectEnabled?: (project: ProjectDefinition) => {
     enabled: boolean;
     source?: ProjectConfigSource;
   };
   test?: (path: AbsoluteFilePath) => boolean;
 };
 
-export type HasteCollisionCallback = (
-  hasteName: string,
-  existing: string,
-  filename: string,
-) => void;
+export type HasteCollisionCallback = (hasteName: string, existing: string, filename: string) => void;
 
 async function createRegularWatcher(
   memoryFs: MemoryFileSystem,
@@ -123,7 +117,7 @@ async function createRegularWatcher(
 
   // Create activity spinners for all connected reporters
   const activity = memoryFs.master.connectedReporters.progress({
-    initDelay: 1000,
+    initDelay: 1_000,
   });
   activity.setTitle(`Adding project ${projectFolder}`);
 
@@ -142,51 +136,46 @@ async function createRegularWatcher(
         return;
       }
 
-      const watcher = watch(
-        folderPath,
-        {recursive: true, persistent: false},
-        (eventType, filename) => {
-          if (filename === null) {
-            // TODO not sure how we want to handle this?
-            return;
-          }
+      const watcher = watch(folderPath, {recursive: true, persistent: false}, (
+        eventType,
+        filename,
+      ) => {
+        if (filename === null) {
+          // TODO not sure how we want to handle this?
+          return;
+        }
 
-          const path = folderPath.resolve(filename);
+        const path = folderPath.resolve(filename);
 
-          memoryFs
-            .stat(path)
-            .then(newStats => {
-              const diagnostics = memoryFs.master.createDisconnectedDiagnosticsProcessor(
-                [
-                  {
-                    category: 'memory-fs',
-                    message: 'Processing fs.watch changes',
-                  },
-                ],
-              );
+        memoryFs.stat(path).then((newStats) => {
+          const diagnostics =
+            memoryFs.master.createDisconnectedDiagnosticsProcessor([
+              {
+                category: 'memory-fs',
+                message: 'Processing fs.watch changes',
+              },
+            ]);
 
-              if (newStats.type === 'file') {
-                memoryFs.handleFileChange(path, newStats, {
-                  diagnostics,
-                  crawl: true,
-                });
-              } else if (newStats.type === 'directory') {
-                memoryFs.addDirectory(path, newStats, {
-                  crawl: true,
-                  diagnostics,
-                  onFoundDirectory,
-                });
-              }
-            })
-            .catch(err => {
-              if (err.code === 'ENOENT') {
-                memoryFs.handleDeletion(path);
-              } else {
-                throw err;
-              }
+          if (newStats.type === 'file') {
+            memoryFs.handleFileChange(path, newStats, {
+              diagnostics,
+              crawl: true,
             });
-        },
-      );
+          } else if (newStats.type === 'directory') {
+            memoryFs.addDirectory(path, newStats, {
+              crawl: true,
+              diagnostics,
+              onFoundDirectory,
+            });
+          }
+        }).catch((err) => {
+          if (err.code === 'ENOENT') {
+            memoryFs.handleDeletion(path);
+          } else {
+            throw err;
+          }
+        });
+      });
       watchers.set(folderPath, watcher);
     }
 
@@ -230,17 +219,15 @@ async function createWatchmanWatcher(
   let timeout;
 
   function queueCallout() {
-    timeout = setTimeout(
-      memoryFs.master.wrapFatal(() => {
+    timeout =
+      setTimeout(memoryFs.master.wrapFatal(() => {
         connectedReporters.warn(
           'Watchman is taking a while to respond. Watchman may have just started and is still crawling the disk.',
         );
 
         // Show an even more aggressive message when watchman takes longer
         queueCallout();
-      }),
-      5000,
-    );
+      }), 5_000);
   }
 
   // Show a message when watchman takes too long
@@ -298,41 +285,33 @@ async function createWatchmanWatcher(
         }
       }
 
-      await Promise.all(
-        dirs.map(async ([path, info]) => {
-          await memoryFs.addDirectory(
-            path,
-            {
-              size: info.size,
-              mtime: info.mtime,
-              type: 'directory',
-            },
-            {diagnostics, crawl: false},
-          );
-        }),
-      );
+      await Promise.all(dirs.map(async ([path, info]) => {
+        await memoryFs.addDirectory(path, {
+          size: info.size,
+          mtime: info.mtime,
+          type: 'directory',
+        }, {diagnostics, crawl: false});
+      }));
 
-      await Promise.all(
-        files.map(async ([path, info]) => {
-          const stats: Stats = {
-            size: info.size,
-            mtime: info.mtime,
-            type: 'file',
-          };
+      await Promise.all(files.map(async ([path, info]) => {
+        const stats: Stats = {
+          size: info.size,
+          mtime: info.mtime,
+          type: 'file',
+        };
 
-          if (memoryFs.files.has(path)) {
-            await memoryFs.handleFileChange(path, stats, {
-              diagnostics,
-              crawl: false,
-            });
-          } else {
-            await memoryFs.addFile(path, stats, {
-              diagnostics,
-              crawl: false,
-            });
-          }
-        }),
-      );
+        if (memoryFs.files.has(path)) {
+          await memoryFs.handleFileChange(path, stats, {
+            diagnostics,
+            crawl: false,
+          });
+        } else {
+          await memoryFs.addFile(path, stats, {
+            diagnostics,
+            crawl: false,
+          });
+        }
+      }));
     }
 
     activity.setText(`Processing results`);
@@ -401,26 +380,21 @@ export default class MemoryFileSystem {
   files: AbsoluteFilePathMap<Stats>;
   manifests: AbsoluteFilePathMap<ManifestDefinition>;
 
-  watchers: Map<
-    string,
-    {
-      path: AbsoluteFilePath;
-      close: WatcherClose;
-    }
-  >;
+  watchers: Map<string, {
+    path: AbsoluteFilePath;
+    close: WatcherClose;
+  }>;
 
-  watchPromises: Map<
-    string,
-    {
-      promise: Promise<WatcherClose>;
-      path: AbsoluteFilePath;
-    }
-  >;
+  watchPromises: Map<string, {
+    promise: Promise<WatcherClose>;
+    path: AbsoluteFilePath;
+  }>;
 
-  changedFileEvent: Event<
-    {path: AbsoluteFilePath; oldStats: undefined | Stats; newStats: Stats},
-    void
-  >;
+  changedFileEvent: Event<{
+    path: AbsoluteFilePath;
+    oldStats: undefined | Stats;
+    newStats: Stats;
+  }, void>;
   deletedFileEvent: Event<AbsoluteFilePath, void>;
 
   init() {}
@@ -436,7 +410,9 @@ export default class MemoryFileSystem {
     watcher.close();
 
     // Go through and clear all files and directories from our internal maps
+
     // NOTE: We deliberately do not call 'deletedFileEvent' as the code that
+
     // calls us will already be cleaning up
     let queue: Array<AbsoluteFilePath> = [dirPath];
     while (queue.length > 0) {
@@ -644,9 +620,7 @@ export default class MemoryFileSystem {
     }
 
     // New watch target
-    logger.info(
-      `[MemoryFileSystem] Adding new project folder ${projectFolder}`,
-    );
+    logger.info(`[MemoryFileSystem] Adding new project folder ${projectFolder}`);
 
     // Remove watchers that are descedents of this folder as this watcher will handle them
     for (const [loc, {close, path}] of this.watchers) {
@@ -791,7 +765,6 @@ export default class MemoryFileSystem {
 
     if (handler.hasteMode === 'ext') {
       ext = `.${ext}`; // we also want to remove the dot suffix from the haste name
-
       if (!filename.endsWith(ext)) {
         throw new Error(
           `Expected ${filename} to end with ${ext} as it was returned as the extension name`,
@@ -807,9 +780,7 @@ export default class MemoryFileSystem {
   }
 
   // This is a wrapper around _declareManifest as it can produce diagnostics
-  async declareManifest(
-    opts: DeclareManifestOpts,
-  ): Promise<undefined | string> {
+  async declareManifest(opts: DeclareManifestOpts): Promise<undefined | string> {
     try {
       return await this._declareManifest(opts);
     } catch (err) {
@@ -824,20 +795,19 @@ export default class MemoryFileSystem {
     }
   }
 
-  async _declareManifest({
-    path,
-    hasteName,
-    diagnostics,
-  }: DeclareManifestOpts): Promise<undefined | string> {
+  async _declareManifest(
+    {
+      path,
+      hasteName,
+      diagnostics,
+    }: DeclareManifestOpts,
+  ): Promise<undefined | string> {
     // Fetch the manifest
     const manifestRaw = await readFileText(path);
-    const hash = crypto
-      .createHash('sha256')
-      .update(manifestRaw)
-      .digest('hex');
+    const hash = crypto.createHash('sha256').update(manifestRaw).digest('hex');
 
     const consumer = consumeJSON({
-      path: path,
+      path,
       input: manifestRaw,
       consumeDiagnosticCategory: 'parse/manifest',
     });
@@ -857,7 +827,7 @@ export default class MemoryFileSystem {
     const manifestId = this.manifestCounter++;
     const def: ManifestDefinition = {
       id: manifestId,
-      path: path,
+      path,
       folder,
       consumer,
       manifest,
@@ -876,12 +846,7 @@ export default class MemoryFileSystem {
     const {projectManager} = this.master;
     const project = projectManager.findProjectExisting(path);
     if (project !== undefined) {
-      projectManager.declareManifest(
-        project,
-        isProjectPackage,
-        def,
-        diagnostics,
-      );
+      projectManager.declareManifest(project, isProjectPackage, def, diagnostics);
     }
 
     // Tell all workers of our discovery
@@ -945,10 +910,8 @@ export default class MemoryFileSystem {
 
       // Add if a matching file
       if (this.files.has(path) && ignoreMatched === 'NO_MATCH') {
-        if (
-          getProjectEnabled !== undefined &&
-          !getProjectEnabled(project).enabled
-        ) {
+        if (getProjectEnabled !== undefined &&
+          !getProjectEnabled(project).enabled) {
           continue;
         }
 
@@ -975,6 +938,7 @@ export default class MemoryFileSystem {
       }
 
       // Crawl if we're a folder
+
       // NOTE: We still continue crawling on implicit matches
       const listing = this.directoryListings.get(path);
       if (listing !== undefined) {

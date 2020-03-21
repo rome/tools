@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: true
   directives: Array []
   filename: 'input.ts'
   hasHoistedVars: false
@@ -193,9 +194,9 @@ Program {
         loc: Object {
           filename: 'input.ts'
           end: Object {
-            column: 0
-            index: 239
-            line: 9
+            column: 26
+            index: 238
+            line: 8
           }
           start: Object {
             column: 7
@@ -424,9 +425,9 @@ Program {
                 loc: Object {
                   filename: 'input.ts'
                   end: Object {
-                    column: 0
-                    index: 93
-                    line: 4
+                    column: 25
+                    index: 92
+                    line: 3
                   }
                   start: Object {
                     column: 7

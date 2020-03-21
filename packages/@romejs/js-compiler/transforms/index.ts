@@ -47,19 +47,17 @@ export const hookVisitors: TransformVisitors = [variableInjectorVisitor];
 export const stageTransforms: TransformStageFactories = {
   // These may effect dependency analysis
   pre: () => [optimizeImports, optimizeExports, jsx],
-  compile: () => [
-    paramlessCatch,
-    optionalChaining,
-    nullishCoalescing,
-    objectSpread,
-    classProperties,
-    templateLiterals,
-    callSpread,
-  ],
-  compileForBundle: (
-    projectConfig: ProjectConfig,
-    options: CompilerOptions,
-  ) => {
+  compile: () =>
+    [
+      paramlessCatch,
+      optionalChaining,
+      nullishCoalescing,
+      objectSpread,
+      classProperties,
+      templateLiterals,
+      callSpread,
+    ],
+  compileForBundle: (projectConfig: ProjectConfig, options: CompilerOptions) => {
     const opts = options.bundle;
     if (opts === undefined) {
       throw new Error('Expected bundle options for compileForBundle stage');
@@ -77,8 +75,8 @@ export const stageTransforms: TransformStageFactories = {
 
     if (opts.mode === 'modern') {
       transforms.push(requireRewriteTransform);
-      transforms.push(
-        opts.analyze.moduleType === 'cjs' ? cjsRootTransform : esToRefTransform,
+      transforms.push(opts.analyze.moduleType === 'cjs'
+        ? cjsRootTransform : esToRefTransform
       );
     } else {
       transforms.push(inlineRequiresTransform);

@@ -49,8 +49,8 @@ const HEX_NUMBER = /^[\da-fA-F]+$/;
 const DECIMAL_NUMBER = /^\d+$/;
 
 // The following character codes are forbidden from 'being
-// an immediate sibling of NumericLiteralSeparator _
 
+// an immediate sibling of NumericLiteralSeparator _
 const forbiddenNumericSeparatorSiblings = {
   decBinOct: [
     charCodes.dot,
@@ -116,7 +116,9 @@ const allowedNumericSeparatorSiblings = {
 };
 
 // Object type used to represent tokens. Note that normally, tokens
+
 // simply exist as properties on the parser object. This is only
+
 // used for the onToken callback and the external tokenizer.
 export type Token = {
   type: TokenTypes;
@@ -136,7 +138,6 @@ export class RegExpTokenValue {
 }
 
 // ## Tokenizer
-
 function bumpIndex(parser: JSParser): Number0 {
   const index = inc(parser.state.index);
   parser.state.index = index;
@@ -149,17 +150,16 @@ function getIndex(parser: JSParser): number {
 
 function codePointToString(code: number): string {
   // UTF-16 Decoding
-  if (code <= 0xffff) {
+  if (code <= 65_535) {
     return String.fromCharCode(code);
   } else {
-    return String.fromCharCode(
-      ((code - 0x10000) >> 10) + 0xd800,
-      ((code - 0x10000) & 1023) + 0xdc00,
-    );
+    return String.fromCharCode((code - 65_536 >> 10) + 55_296, (code - 65_536 &
+    1_023) + 56_320);
   }
 }
 
 // Toggle strict mode. Re-reads the next number or string to please
+
 // pedantic tests (`"use strict"; 010;` should fail).
 export function setStrict(parser: JSParser, isStrict: boolean): void {
   parser.pushScope('STRICT', isStrict);
@@ -170,9 +170,9 @@ export function setStrict(parser: JSParser, isStrict: boolean): void {
 
   parser.state.index = parser.state.startPos.index;
   while (parser.state.index < parser.state.lineStartIndex) {
-    parser.state.lineStartIndex = coerce0(
-      parser.input.lastIndexOf('\n', get0(parser.state.lineStartIndex) - 2) + 1,
-    );
+    parser.state.lineStartIndex = coerce0(parser.input.lastIndexOf('\n', get0(
+      parser.state.lineStartIndex,
+    ) - 2) + 1);
     parser.state.curLine = inc(parser.state.curLine);
   }
   nextToken(parser);
@@ -183,8 +183,8 @@ export function getCurContext(parser: JSParser): TokContext {
 }
 
 // Read a single token, updating the parser object's token-related
-// properties.
 
+// properties.
 export function nextToken(parser: JSParser): void {
   const curContext = getCurContext(parser);
 
@@ -249,20 +249,15 @@ function readJSXToken(parser: JSParser, code: number): boolean {
       return true;
     }
 
-    if (
-      (code === charCodes.quotationMark || code === charCodes.apostrophe) &&
-      context === ct.jsxOpenTag
-    ) {
+    if ((code === charCodes.quotationMark || code === charCodes.apostrophe) &&
+      context === ct.jsxOpenTag) {
       readToken_jsxString(parser, code);
       return true;
     }
   }
 
-  if (
-    code === charCodes.lessThan &&
-    parser.state.exprAllowed &&
-    parser.input.charCodeAt(getIndex(parser) + 1) !== charCodes.exclamationMark
-  ) {
+  if (code === charCodes.lessThan && parser.state.exprAllowed &&
+    parser.input.charCodeAt(getIndex(parser) + 1) !== charCodes.exclamationMark) {
     bumpIndex(parser);
     finishToken(parser, tt.jsxTagStart);
     return true;
@@ -273,6 +268,7 @@ function readJSXToken(parser: JSParser, code: number): boolean {
 
 function readNormalToken(parser: JSParser, code: number): void {
   // Identifier or keyword. '\uXXXX' sequences are allowed in
+
   // identifiers, so '\' also dispatches to that.
   if (isIdentifierStart(code) || code === charCodes.backslash) {
     readWord(parser);
@@ -311,13 +307,14 @@ function pushComment(
   }
 
   // TODO maybe make sure this is at the head?
+
   // We should enable flow syntax when there's a comment with @\flow
+
   // We also handle @\noflow here as it's sometimes in files that have type annotations
   if (opts.text.includes('@flow') || opts.text.includes('@noflow')) {
     if (parser.syntax.has('ts')) {
       parser.addDiagnostic({
-        message:
-          'Cannot have a @flow annotation comment when TypeScript syntax has been enabled',
+        message: 'Cannot have a @flow annotation comment when TypeScript syntax has been enabled',
       });
     } else {
       parser.syntax.add('flow');
@@ -341,8 +338,7 @@ function pushComment(
     /*parser.pushToken({
       type: tt.comment,
       loc,
-    });*/
-  }
+    });*/}
 
   return comment;
 }
@@ -368,10 +364,9 @@ function skipBlockComment(parser: JSParser): void {
   lineBreakG.lastIndex = get0(startIndex);
 
   let match;
-  while (
-    (match = lineBreakG.exec(parser.input)) &&
-    match.index < get0(parser.state.index)
-  ) {
+  while ((match = lineBreakG.exec(parser.input)) && match.index < get0(
+    parser.state.index,
+  )) {
     parser.state.curLine = inc(parser.state.curLine);
     parser.resetTokenizerLine();
     parser.state.lineStartIndex = coerce0(match.index + match[0].length);
@@ -385,22 +380,15 @@ function skipBlockComment(parser: JSParser): void {
   });
 }
 
-export function skipLineComment(
-  parser: JSParser,
-  startSkip: number,
-): AnyComment {
+export function skipLineComment(parser: JSParser, startSkip: number): AnyComment {
   const startIndex = parser.state.index;
   const startPos = parser.getPositionFromState();
   parser.state.index = add(parser.state.index, startSkip);
   let ch = parser.input.charCodeAt(getIndex(parser));
   if (parser.state.index < parser.length) {
-    while (
-      ch !== charCodes.lineFeed &&
-      ch !== charCodes.carriageReturn &&
-      ch !== charCodes.lineSeparator &&
-      ch !== charCodes.paragraphSeparator &&
-      bumpIndex(parser) < parser.length
-    ) {
+    while (ch !== charCodes.lineFeed && ch !== charCodes.carriageReturn &&
+      ch !== charCodes.lineSeparator && ch !== charCodes.paragraphSeparator &&
+      bumpIndex(parser) < parser.length) {
       ch = parser.input.charCodeAt(getIndex(parser));
     }
   }
@@ -414,6 +402,7 @@ export function skipLineComment(
 }
 
 // Called at the start of the parse and after every token. Skips
+
 // whitespace and comments, and.
 function skipSpace(parser: JSParser): void {
   loop: while (parser.state.index < parser.length) {
@@ -427,11 +416,9 @@ function skipSpace(parser: JSParser): void {
       }
     }
 
-    if (
-      ch === charCodes.carriageReturn &&
-      parser.input.charCodeAt(get0(parser.state.index) + 1) ===
-        charCodes.lineFeed
-    ) {
+    if (ch === charCodes.carriageReturn && parser.input.charCodeAt(get0(
+      parser.state.index,
+    ) + 1) === charCodes.lineFeed) {
       bumpIndex(parser);
     }
 
@@ -455,9 +442,8 @@ function skipSpace(parser: JSParser): void {
           case charCodes.asterisk:
             // Break the loop and don't consume Flow comment code
             if (
-              parser.input.charCodeAt(getIndex(parser) + 2) ===
-                charCodes.colon &&
-              parser.input.charCodeAt(getIndex(parser) + 3) === charCodes.colon
+              parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.colon &&
+                parser.input.charCodeAt(getIndex(parser) + 3) === charCodes.colon
             ) {
               break loop;
             }
@@ -475,11 +461,10 @@ function skipSpace(parser: JSParser): void {
         break;
 
       default:
-        if (
-          (ch > charCodes.backSpace && ch < charCodes.shiftOut) ||
-          (ch >= charCodes.oghamSpaceMark &&
-            nonASCIIwhitespace.test(String.fromCharCode(ch)))
-        ) {
+        if (ch > charCodes.backSpace && ch < charCodes.shiftOut || ch >=
+        charCodes.oghamSpaceMark && nonASCIIwhitespace.test(String.fromCharCode(
+          ch,
+        ))) {
           bumpIndex(parser);
         } else {
           break loop;
@@ -489,10 +474,12 @@ function skipSpace(parser: JSParser): void {
 }
 
 // Called at the end of every token. Sets `end`, `val`, and
-// maintains `context` and `exprAllowed`, and skips the space after
-// the token, so that the next one's `start` will point at the
-// right position.
 
+// maintains `context` and `exprAllowed`, and skips the space after
+
+// the token, so that the next one's `start` will point at the
+
+// right position.
 export function finishToken(
   parser: JSParser,
   type: TokenTypes,
@@ -528,12 +515,12 @@ function readToken_slash(parser: JSParser): void {
   const next = parser.input.charCodeAt(getIndex(parser) + 1);
 
   // If this starts with /*:: then it's a Flow comment
+
   // TODO Flow also allows "flow-include" in place of "::"
-  if (
-    next === charCodes.asterisk &&
-    parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.colon &&
-    parser.input.charCodeAt(getIndex(parser) + 3) === charCodes.colon
-  ) {
+  if (next === charCodes.asterisk && parser.input.charCodeAt(
+    getIndex(parser) + 2,
+  ) === charCodes.colon && parser.input.charCodeAt(getIndex(parser) + 3) ===
+  charCodes.colon) {
     parser.state.index = add(parser.state.index, 4);
     parser.pushScope('FLOW_COMMENT');
     nextToken(parser);
@@ -558,11 +545,8 @@ function readToken_mult_modulo(parser: JSParser, code: number): void {
   let next = parser.input.charCodeAt(getIndex(parser) + 1);
 
   // */ Is the end of a Flow comment
-  if (
-    code === charCodes.asterisk &&
-    parser.inScope('FLOW_COMMENT') &&
-    next === charCodes.slash
-  ) {
+  if (code === charCodes.asterisk && parser.inScope('FLOW_COMMENT') && next ===
+  charCodes.slash) {
     parser.popScope('FLOW_COMMENT');
     parser.state.index = add(parser.state.index, 2);
     nextToken(parser);
@@ -598,10 +582,8 @@ function readToken_pipe_amp(parser: JSParser, code: number): void {
   const next = parser.input.charCodeAt(getIndex(parser) + 1);
 
   if (next === code) {
-    finishOp(
-      parser,
-      code === charCodes.verticalBar ? tt.logicalOR : tt.logicalAND,
-      2,
+    finishOp(parser, code === charCodes.verticalBar
+      ? tt.logicalOR : tt.logicalAND, 2
     );
     return undefined;
   }
@@ -639,15 +621,13 @@ function readToken_plus_min(parser: JSParser, code: number): void {
   const next = parser.input.charCodeAt(getIndex(parser) + 1);
 
   if (next === code) {
-    if (
-      next === charCodes.dash &&
-      !parser.inModule &&
-      parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.greaterThan &&
-      (parser.state.lastEndPos.index === number0 ||
-        lineBreak.test(
-          parser.getRawInput(parser.state.lastEndPos.index, parser.state.index),
-        ))
-    ) {
+    if (next === charCodes.dash && !parser.inModule && parser.input.charCodeAt(
+      getIndex(parser) + 2,
+    ) === charCodes.greaterThan && (parser.state.lastEndPos.index === number0 ||
+    lineBreak.test(parser.getRawInput(
+      parser.state.lastEndPos.index,
+      parser.state.index,
+    )))) {
       // A `-->` line comment
       skipLineComment(parser, 3);
       skipSpace(parser);
@@ -672,14 +652,10 @@ function readToken_lt_gt(parser: JSParser, code: number): void {
 
   // we need to check if we're in a type to avoid interpreting the >> in Array<Array<string>> as a bitshift
   if (next === code && !parser.inScope('TYPE')) {
-    size =
-      code === charCodes.greaterThan &&
-      parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.greaterThan
-        ? 3
-        : 2;
-    if (
-      parser.input.charCodeAt(getIndex(parser) + size) === charCodes.equalsTo
-    ) {
+    size = code === charCodes.greaterThan && parser.input.charCodeAt(getIndex(
+      parser,
+    ) + 2) === charCodes.greaterThan ? 3 : 2;
+    if (parser.input.charCodeAt(getIndex(parser) + size) === charCodes.equalsTo) {
       finishOp(parser, tt.assign, size + 1);
       return undefined;
     }
@@ -687,13 +663,10 @@ function readToken_lt_gt(parser: JSParser, code: number): void {
     return undefined;
   }
 
-  if (
-    code === charCodes.lessThan &&
-    next === charCodes.exclamationMark &&
-    !parser.inModule &&
-    parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.dash &&
-    parser.input.charCodeAt(getIndex(parser) + 3) === charCodes.dash
-  ) {
+  if (code === charCodes.lessThan && next === charCodes.exclamationMark &&
+    !parser.inModule && parser.input.charCodeAt(getIndex(parser) + 2) ===
+  charCodes.dash && parser.input.charCodeAt(getIndex(parser) + 3) ===
+  charCodes.dash) {
     // `<!--`, an XML-style comment that should be interpreted as a line comment
     skipLineComment(parser, 4);
     skipSpace(parser);
@@ -717,8 +690,7 @@ function readToken_eq_excl(parser: JSParser, code: number): void {
       parser,
       tt.equality,
       parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.equalsTo
-        ? 3
-        : 2,
+        ? 3 : 2,
     );
     return undefined;
   }
@@ -742,10 +714,8 @@ function readToken_question(parser: JSParser): void {
       // '??'
       finishOp(parser, tt.nullishCoalescing, 2);
     }
-  } else if (
-    next === charCodes.dot &&
-    !(next2 >= charCodes.digit0 && next2 <= charCodes.digit9)
-  ) {
+  } else if (next === charCodes.dot && !(next2 >= charCodes.digit0 && next2 <=
+  charCodes.digit9)) {
     // '.' not followed by a number
     parser.state.index = add(parser.state.index, 2);
     finishToken(parser, tt.questionDot);
@@ -767,14 +737,14 @@ function readToken_numberSign(parser: JSParser): void {
   // Check if there's a ! after this, in that case it's a confused hashbang
   let advice: undefined | PartialDiagnosticAdvice;
   if (parser.input[getIndex(parser) + 1] === '!') {
-    advice = [
-      {
-        type: 'log',
-        category: 'info',
-        message:
-          'Did you want to write a hashbang? A hashbang can only be the first thing in a file.',
-      },
-    ];
+    advice =
+      [
+        {
+          type: 'log',
+          category: 'info',
+          message: 'Did you want to write a hashbang? A hashbang can only be the first thing in a file.',
+        },
+      ];
   }
 
   // TODO make this a diagnostic, and advance to the next line if suspected hashbang
@@ -814,6 +784,7 @@ function getTokenFromCode(parser: JSParser, code: number): void {
       return readToken_numberSign(parser);
 
     // The interpretation of a dot depends on whether it is followed
+
     // by a digit or another two dots.
     case charCodes.dot:
       readToken_dot(parser);
@@ -851,9 +822,7 @@ function getTokenFromCode(parser: JSParser, code: number): void {
       return undefined;
 
     case charCodes.leftCurlyBrace:
-      if (
-        parser.input.charCodeAt(getIndex(parser) + 1) === charCodes.verticalBar
-      ) {
+      if (parser.input.charCodeAt(getIndex(parser) + 1) === charCodes.verticalBar) {
         finishOp(parser, tt.braceBarL, 2);
       } else {
         bumpIndex(parser);
@@ -879,18 +848,19 @@ function getTokenFromCode(parser: JSParser, code: number): void {
       readToken_question(parser);
       return undefined;
 
-    case charCodes.atSign: {
-      // The token @@ is the start of a Flow iterator name
-      const next = parser.input.charCodeAt(getIndex(parser) + 1);
-      if (next === charCodes.atSign) {
-        parser.state.isIterator = true;
-        readWord(parser);
-      } else {
-        bumpIndex(parser);
-        finishToken(parser, tt.at);
+    case charCodes.atSign:
+      {
+        // The token @@ is the start of a Flow iterator name
+        const next = parser.input.charCodeAt(getIndex(parser) + 1);
+        if (next === charCodes.atSign) {
+          parser.state.isIterator = true;
+          readWord(parser);
+        } else {
+          bumpIndex(parser);
+          finishToken(parser, tt.at);
+        }
+        return undefined;
       }
-      return undefined;
-    }
 
     case charCodes.graveAccent:
       bumpIndex(parser);
@@ -898,6 +868,7 @@ function getTokenFromCode(parser: JSParser, code: number): void {
       return undefined;
 
     // Anything else beginning with a digit is an integer, octal
+
     // number, or float.
     case charCodes.digit0:
     case charCodes.digit1:
@@ -919,10 +890,12 @@ function getTokenFromCode(parser: JSParser, code: number): void {
       return undefined;
 
     // Operators are parsed inline in tiny state machines. '=' (charCodes.equalsTo) is
-    // often referred to. `finishOp` simply skips the amount of
-    // characters it is given as second argument, and returns a token
-    // of the type given by its first argument.
 
+    // often referred to. `finishOp` simply skips the amount of
+
+    // characters it is given as second argument, and returns a token
+
+    // of the type given by its first argument.
     case charCodes.slash:
       readToken_slash(parser);
       return undefined;
@@ -997,10 +970,10 @@ function getTokenFromCode(parser: JSParser, code: number): void {
 }
 
 function finishOp(parser: JSParser, type: TokenTypes, size: number): void {
-  const str = parser.getRawInput(
+  const str = parser.getRawInput(parser.state.index, add(
     parser.state.index,
-    add(parser.state.index, size),
-  );
+    size,
+  ));
   parser.state.index = add(parser.state.index, size);
   finishToken(parser, type, str);
 }
@@ -1018,6 +991,7 @@ export function readRegexp(parser: JSParser): void {
     }
 
     const ch = parser.input.charAt(getIndex(parser));
+    const nextCh = parser.input.charAt(getIndex(parser) + 1);
     if (lineBreak.test(ch)) {
       parser.addDiagnostic({
         end: parser.getPositionFromIndex(parser.state.index),
@@ -1027,6 +1001,9 @@ export function readRegexp(parser: JSParser): void {
     }
 
     if (escaped) {
+      if (ch === '/' && !inClass && (nextCh === ';' || lineBreak.test(nextCh))) {
+        break;
+      }
       escaped = false;
     } else {
       if (ch === '[') {
@@ -1036,6 +1013,7 @@ export function readRegexp(parser: JSParser): void {
       } else if (ch === '/' && !inClass) {
         break;
       }
+
       escaped = ch === '\\';
     }
 
@@ -1050,7 +1028,7 @@ export function readRegexp(parser: JSParser): void {
   if (parser.state.escapePosition !== undefined) {
     parser.addDiagnostic({
       index: parser.state.escapePosition,
-      message: "Regular expression flags can't contain unicode escapes",
+      message: 'Regular expression flags can\'t contain unicode escapes',
     });
   }
 
@@ -1065,19 +1043,18 @@ export function readRegexp(parser: JSParser): void {
 }
 
 // Read an integer in the given radix. Return null if zero digits
-// were read, the integer value otherwise. When `len` is given, this
-// will return `null` unless the integer has exactly `len` digits.
 
+// were read, the integer value otherwise. When `len` is given, this
+
+// will return `null` unless the integer has exactly `len` digits.
 function readInt(
   parser: JSParser,
   radix: number,
   len?: number,
 ): number | undefined {
   const start = parser.state.index;
-  const forbiddenSiblings =
-    radix === 16
-      ? forbiddenNumericSeparatorSiblings.hex
-      : forbiddenNumericSeparatorSiblings.decBinOct;
+  const forbiddenSiblings = radix === 16
+    ? forbiddenNumericSeparatorSiblings.hex : forbiddenNumericSeparatorSiblings.decBinOct;
 
   let allowedSiblings;
   if (radix === 16) {
@@ -1105,11 +1082,8 @@ function readInt(
         });
       }
 
-      if (
-        forbiddenSiblings.indexOf(prev) > -1 ||
-        forbiddenSiblings.indexOf(next) > -1 ||
-        Number.isNaN(next)
-      ) {
+      if (forbiddenSiblings.indexOf(prev) > -1 ||
+      forbiddenSiblings.indexOf(next) > -1 || Number.isNaN(next)) {
         parser.addDiagnostic({
           message: 'Invalid or unexpected token',
         });
@@ -1138,10 +1112,8 @@ function readInt(
     total = total * radix + val;
   }
 
-  if (
-    parser.state.index === start ||
-    (len !== undefined && getIndex(parser) - get0(start) !== len)
-  ) {
+  if (parser.state.index === start || len !== undefined && getIndex(parser) -
+  get0(start) !== len) {
     return undefined;
   }
 
@@ -1153,7 +1125,6 @@ function readRadixNumber(parser: JSParser, radix: number): void {
   let isBigInt = false;
 
   parser.state.index = add(parser.state.index, 2); // 0x
-
   const val = readInt(parser, radix);
   if (val === undefined) {
     parser.addDiagnostic({
@@ -1175,9 +1146,10 @@ function readRadixNumber(parser: JSParser, radix: number): void {
   }
 
   if (isBigInt) {
-    const str = parser
-      .getRawInput(start, parser.state.index)
-      .replace(/[_n]/g, '');
+    const str = parser.getRawInput(start, parser.state.index).replace(
+      /[_n]/g,
+      '',
+    );
     finishToken(parser, tt.bigint, str);
     return undefined;
   }
@@ -1186,7 +1158,6 @@ function readRadixNumber(parser: JSParser, radix: number): void {
 }
 
 // Read an integer, octal integer, or floating-point number.
-
 function readNumber(parser: JSParser, startsWithDot: boolean): void {
   const start = parser.state.startPos;
   let isFloat = false;
@@ -1199,8 +1170,7 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
     });
   }
 
-  let isOctal =
-    get0(parser.state.index) - get0(start.index) >= 2 &&
+  let isOctal = get0(parser.state.index) - get0(start.index) >= 2 &&
     parser.input.charCodeAt(get0(start.index)) === charCodes.digit0;
   if (isOctal) {
     if (parser.inScope('STRICT')) {
@@ -1223,10 +1193,8 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
     next = parser.input.charCodeAt(getIndex(parser));
   }
 
-  if (
-    (next === charCodes.uppercaseE || next === charCodes.lowercaseE) &&
-    !isOctal
-  ) {
+  if ((next === charCodes.uppercaseE || next === charCodes.lowercaseE) &&
+    !isOctal) {
     next = parser.input.charCodeAt(get0(bumpIndex(parser)));
 
     if (next === charCodes.plusSign || next === charCodes.dash) {
@@ -1249,14 +1217,14 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
     if (isFloat) {
       parser.addDiagnostic({
         index: parser.state.index,
-        message: "A bigint can't have a decimal",
+        message: 'A bigint can\'t have a decimal',
       });
     }
 
     if (isOctal) {
       parser.addDiagnostic({
         index: parser.state.index,
-        message: "A bigint can't be an octal",
+        message: 'A bigint can\'t be an octal',
       });
     }
 
@@ -1272,9 +1240,10 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
   }
 
   // Remove "_" for numeric literal separator, and "n" for BigInts
-  const str = parser
-    .getRawInput(start.index, parser.state.index)
-    .replace(/[_n]/g, '');
+  const str = parser.getRawInput(start.index, parser.state.index).replace(
+    /[_n]/g,
+    '',
+  );
 
   if (isBigInt) {
     finishToken(parser, tt.bigint, str);
@@ -1286,7 +1255,6 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 }
 
 // Read a string value, interpreting backslash-escapes.
-
 function readCodePoint(
   parser: JSParser,
   throwOnInvalid: boolean,
@@ -1297,16 +1265,13 @@ function readCodePoint(
   if (ch === charCodes.leftCurlyBrace) {
     const codePos = parser.state.index;
     bumpIndex(parser);
-    code = readHexChar(
-      parser,
-      parser.input.indexOf('}', getIndex(parser)) - getIndex(parser),
-      throwOnInvalid,
-    );
+    code = readHexChar(parser, parser.input.indexOf('}', getIndex(parser)) -
+    getIndex(parser), throwOnInvalid);
     bumpIndex(parser);
     if (code === undefined) {
       // @ts-ignore
       parser.state.invalidTemplateEscapePosition--; // to point to the '\'' instead of the 'u'
-    } else if (code > 0x10ffff) {
+    } else if (code > 1_114_111) {
       if (throwOnInvalid) {
         parser.addDiagnostic({
           index: codePos,
@@ -1345,10 +1310,8 @@ function readString(parser: JSParser, quote: number): void {
       out += parser.getRawInput(chunkStart, parser.state.index);
       out += readEscapedChar(parser, false);
       chunkStart = parser.state.index;
-    } else if (
-      ch === charCodes.lineSeparator ||
-      ch === charCodes.paragraphSeparator
-    ) {
+    } else if (ch === charCodes.lineSeparator || ch ===
+    charCodes.paragraphSeparator) {
       bumpIndex(parser);
       parser.state.curLine = inc(parser.state.curLine);
     } else {
@@ -1368,7 +1331,6 @@ function readString(parser: JSParser, quote: number): void {
 }
 
 // Reads template string tokens.
-
 export function readTemplateToken(parser: JSParser): void {
   let out = '';
   let chunkStart = parser.state.index;
@@ -1384,16 +1346,11 @@ export function readTemplateToken(parser: JSParser): void {
     }
 
     const ch = parser.input.charCodeAt(getIndex(parser));
-    if (
-      ch === charCodes.graveAccent ||
-      (ch === charCodes.dollarSign &&
-        parser.input.charCodeAt(getIndex(parser) + 1) ===
-          charCodes.leftCurlyBrace)
-    ) {
-      if (
-        parser.state.index === parser.state.startPos.index &&
-        parser.match(tt.template)
-      ) {
+    if (ch === charCodes.graveAccent || ch === charCodes.dollarSign &&
+      parser.input.charCodeAt(getIndex(parser) + 1) === charCodes.leftCurlyBrace) {
+      if (parser.state.index === parser.state.startPos.index && parser.match(
+        tt.template,
+      )) {
         if (ch === charCodes.dollarSign) {
           parser.state.index = add(parser.state.index, 2);
           finishToken(parser, tt.dollarBraceL);
@@ -1422,10 +1379,9 @@ export function readTemplateToken(parser: JSParser): void {
       out += parser.getRawInput(chunkStart, parser.state.index);
       bumpIndex(parser);
 
-      if (
-        ch === charCodes.carriageReturn &&
-        parser.input.charCodeAt(getIndex(parser)) === charCodes.lineFeed
-      ) {
+      if (ch === charCodes.carriageReturn && parser.input.charCodeAt(getIndex(
+        parser,
+      )) === charCodes.lineFeed) {
         bumpIndex(parser);
       }
 
@@ -1458,10 +1414,9 @@ function readEscapedChar(
   const ch = parser.input.charCodeAt(get0(bumpIndex(parser)));
   bumpIndex(parser);
 
-  if (
-    ch === charCodes.carriageReturn &&
-    parser.input.charCodeAt(getIndex(parser)) === charCodes.lineFeed
-  ) {
+  if (ch === charCodes.carriageReturn && parser.input.charCodeAt(
+    getIndex(parser),
+  ) === charCodes.lineFeed) {
     bumpIndex(parser);
   }
 
@@ -1472,15 +1427,17 @@ function readEscapedChar(
     case charCodes.lowercaseR:
       return '\r';
 
-    case charCodes.lowercaseX: {
-      const code = readHexChar(parser, 2, throwOnInvalid);
-      return code === undefined ? undefined : String.fromCharCode(code);
-    }
+    case charCodes.lowercaseX:
+      {
+        const code = readHexChar(parser, 2, throwOnInvalid);
+        return code === undefined ? undefined : String.fromCharCode(code);
+      }
 
-    case charCodes.lowercaseU: {
-      const code = readCodePoint(parser, throwOnInvalid);
-      return code === undefined ? undefined : codePointToString(code);
-    }
+    case charCodes.lowercaseU:
+      {
+        const code = readCodePoint(parser, throwOnInvalid);
+        return code === undefined ? undefined : codePointToString(code);
+      }
 
     case charCodes.lowercaseT:
       return '\t';
@@ -1489,7 +1446,7 @@ function readEscapedChar(
       return '\b';
 
     case charCodes.lowercaseV:
-      return '\u000b';
+      return '\x0b';
 
     case charCodes.lowercaseF:
       return '\f';
@@ -1503,9 +1460,9 @@ function readEscapedChar(
     default:
       if (ch >= charCodes.digit0 && ch <= charCodes.digit7) {
         const codePos = dec(parser.state.index);
-        const octalMatches = parser.input
-          .substr(getIndex(parser) - 1, 3)
-          .match(/^[0-7]+/);
+        const octalMatches = parser.input.substr(getIndex(parser) - 1, 3).match(
+          /^[0-7]+/,
+        );
 
         if (octalMatches == null) {
           throw new Error('No octals found, impossible since we checked it');
@@ -1529,6 +1486,7 @@ function readEscapedChar(
             });
           } else if (!parser.state.containsOctal) {
             // These properties are only used to throw an error for an octal which occurs
+
             // in a directive which occurs prior to a "use strict" directive.
             parser.state.containsOctal = true;
             parser.state.octalPosition = codePos;
@@ -1570,9 +1528,13 @@ function readHexChar(
 }
 
 // Read an identifier, and return it as a string. Sets `parser.state.escapePosition`
+
 // to an index if the word contained a '\u' escape.
+
 //
+
 // Incrementally adds only escaped chars, adding other chunks as-is
+
 // as a micro-optimization.
 function readWord1(parser: JSParser): string {
   parser.state.escapePosition = undefined;
@@ -1584,7 +1546,7 @@ function readWord1(parser: JSParser): string {
     const ch = fullCharCodeAtPos(parser);
 
     if (isIdentifierChar(ch)) {
-      parser.state.index = add(parser.state.index, ch <= 0xffff ? 1 : 2);
+      parser.state.index = add(parser.state.index, ch <= 65_535 ? 1 : 2);
     } else if (parser.state.isIterator && ch === charCodes.atSign) {
       bumpIndex(parser);
     } else if (ch === charCodes.backslash) {
@@ -1592,10 +1554,8 @@ function readWord1(parser: JSParser): string {
 
       word += parser.getRawInput(chunkStart, parser.state.index);
 
-      if (
-        parser.input.charCodeAt(get0(bumpIndex(parser))) !==
-        charCodes.lowercaseU
-      ) {
+      if (parser.input.charCodeAt(get0(bumpIndex(parser))) !==
+      charCodes.lowercaseU) {
         parser.addDiagnostic({
           index: parser.state.index,
           message: 'Expecting Unicode escape sequence \\uXXXX',
@@ -1630,8 +1590,8 @@ function readWord1(parser: JSParser): string {
 }
 
 // Read an identifier or keyword token. Will check for reserved
-// words when necessary.
 
+// words when necessary.
 function readWord(parser: JSParser): void {
   const word = readWord1(parser);
 
@@ -1645,10 +1605,7 @@ function readWord(parser: JSParser): void {
     });
   }
 
-  if (
-    parser.state.isIterator &&
-    (!isIterator(word) || !parser.inScope('TYPE'))
-  ) {
+  if (parser.state.isIterator && (!isIterator(word) || !parser.inScope('TYPE'))) {
     parser.addDiagnostic({
       message: `Invalid identifier ${word}`,
     });
@@ -1666,35 +1623,25 @@ export function isBraceBlock(parser: JSParser, prevType: TokenType): boolean {
   if (parent === ct.functionExpression || parent === ct.functionStatement) {
     return true;
   }
-  if (
-    prevType === tt.colon &&
-    (parent === ct.braceStatement || parent === ct.braceExpression)
-  ) {
+  if (prevType === tt.colon && (parent === ct.braceStatement || parent ===
+  ct.braceExpression)) {
     return !parent.isExpr;
   }
 
   // The check for `tt.name && exprAllowed` detects whether we are
+
   // after a `yield` or `of` construct. See the `updateContext` for
+
   // `tt.name`.
-  if (
-    prevType === tt._return ||
-    (prevType === tt.name && parser.state.exprAllowed)
-  ) {
-    return lineBreak.test(
-      parser.getRawInput(
-        parser.state.lastEndPos.index,
-        parser.state.startPos.index,
-      ),
-    );
+  if (prevType === tt._return || prevType === tt.name && parser.state.exprAllowed) {
+    return lineBreak.test(parser.getRawInput(
+      parser.state.lastEndPos.index,
+      parser.state.startPos.index,
+    ));
   }
 
-  if (
-    prevType === tt._else ||
-    prevType === tt.semi ||
-    prevType === tt.eof ||
-    prevType === tt.parenR ||
-    prevType === tt.arrow
-  ) {
+  if (prevType === tt._else || prevType === tt.semi || prevType === tt.eof ||
+  prevType === tt.parenR || prevType === tt.arrow) {
     return true;
   }
 
@@ -1724,6 +1671,7 @@ function updateContext(parser: JSParser, prevType: TokenType) {
     } else {
       _updateContext(parser, prevType);
     }
+
     parser.state.exprAllowed = true;
   } else if (parser.match(tt.slash) && prevType === tt.jsxTagStart) {
     parser.state.context.length -= 2; // do not consider JSX expr -> JSX open tag -> ... anymore
@@ -1737,10 +1685,8 @@ function updateContext(parser: JSParser, prevType: TokenType) {
 function _updateContext(parser: JSParser, prevType: TokenType): void {
   const type = parser.state.tokenType;
 
-  if (
-    type.keyword !== undefined &&
-    (prevType === tt.dot || prevType === tt.questionDot)
-  ) {
+  if (type.keyword !== undefined && (prevType === tt.dot || prevType ===
+  tt.questionDot)) {
     parser.state.exprAllowed = false;
   } else if (type.updateContext !== undefined) {
     type.updateContext(parser, prevType);
@@ -1792,18 +1738,14 @@ function readToken_jsx(parser: JSParser): void {
   }
 }
 
-function readToken_jsxNewLine(
-  parser: JSParser,
-  normalizeCRLF: boolean,
-): string {
+function readToken_jsxNewLine(parser: JSParser, normalizeCRLF: boolean): string {
   const ch = parser.input.charCodeAt(getIndex(parser));
   let out;
   bumpIndex(parser);
 
-  if (
-    ch === charCodes.carriageReturn &&
-    parser.input.charCodeAt(getIndex(parser)) === charCodes.lineFeed
-  ) {
+  if (ch === charCodes.carriageReturn && parser.input.charCodeAt(
+    getIndex(parser),
+  ) === charCodes.lineFeed) {
     bumpIndex(parser);
     out = normalizeCRLF ? '\n' : '\r\n';
   } else {
@@ -1891,10 +1833,15 @@ function readToken_jsxEntity(parser: JSParser): string {
 }
 
 // Read a JSX identifier (valid tag or attribute name).
+
 //
+
 // Optimized version since JSX identifiers can't contain
+
 // escape characters and so can be read as single slice.
+
 // Also assumes that first character was already checked
+
 // by isIdentifierStart in readToken.
 function readToken_jsxWord(parser: JSParser): void {
   let ch;
@@ -1902,9 +1849,8 @@ function readToken_jsxWord(parser: JSParser): void {
   do {
     ch = parser.input.charCodeAt(get0(bumpIndex(parser)));
   } while (isIdentifierChar(ch) || ch === charCodes.dash);
-  return finishToken(
-    parser,
-    tt.jsxName,
-    parser.getRawInput(start, parser.state.index),
-  );
+  return finishToken(parser, tt.jsxName, parser.getRawInput(
+    start,
+    parser.state.index,
+  ));
 }

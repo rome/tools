@@ -9,8 +9,9 @@ import Generator from '../../Generator';
 import {FlowOpaqueType, flowOpaqueType, AnyNode} from '@romejs/js-ast';
 
 export default function FlowOpaqueType(generator: Generator, node: AnyNode) {
-  node =
-    node.type === 'FlowDeclareOpaqueType' ? node : flowOpaqueType.assert(node);
+  node = node.type === 'FlowDeclareOpaqueType' ? node : flowOpaqueType.assert(
+    node,
+  );
 
   generator.word('opaque');
   generator.space();

@@ -47,7 +47,7 @@ export default class UnknownPropE extends E {
     }
 
     const ratings = orderBySimilarity(this.key, props);
-    const sortedProps = ratings.map(prop => prop.target);
+    const sortedProps = ratings.map((prop) => prop.target);
     return sortedProps;
   }
 

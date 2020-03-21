@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -151,7 +152,7 @@ Program {
               }
               expression: ReferenceIdentifier {
                 name: 'let'
-                leadingComments: undefined
+                trailingComments: undefined
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
@@ -165,24 +166,6 @@ Program {
                     line: 2
                   }
                 }
-                trailingComments: Array [
-                  CommentLine {
-                    value: ' ASI'
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 17
-                        index: 30
-                        line: 2
-                      }
-                      start: Object {
-                        column: 11
-                        index: 24
-                        line: 2
-                      }
-                    }
-                  }
-                ]
               }
             }
           }

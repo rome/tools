@@ -7,7 +7,6 @@
 
 import {
   assertNodeTypeSet,
-  MOCK_PARENT,
   WithStatement,
   ForInStatement,
   ForOfStatement,
@@ -18,18 +17,16 @@ import {SourceLocation} from '@romejs/parser-core';
 import {AnyNode, AnyComment} from '@romejs/js-ast';
 import generatorFunctions from './generators/index';
 import * as n from './node/index';
-import Buffer from './Buffer';
-import {Number0} from '@romejs/ob1';
+import Buffer, {BufferSnapshot} from './Buffer';
+import {Number0, get0, Number1} from '@romejs/ob1';
 import {isTypeNode, isTypeExpressionWrapperNode} from '@romejs/js-ast-utils';
 import {SourceMap} from '@romejs/codec-source-map';
 
 assertNodeTypeSet(generatorFunctions, 'generators');
 
-export type GeneratorMethod = (
-  generator: Generator,
-  node: AnyNode,
-  parent: AnyNode,
-) => void | never;
+export type GeneratorMethod = (generator: Generator, node: AnyNode, parent: AnyNode) =>
+  | void
+  | never;
 
 const SCIENTIFIC_NOTATION = /e/i;
 const ZERO_DECIMAL_INTEGER = /\.0+$/;
@@ -37,6 +34,7 @@ const NON_DECIMAL_LITERAL = /^0[box]/;
 
 export type GeneratorOptions = {
   typeAnnotations: boolean;
+  format?: 'pretty' | 'compact';
   indent?: number;
   inputSourceMap?: SourceMap;
   sourceMapTarget?: string;
@@ -44,26 +42,50 @@ export type GeneratorOptions = {
   sourceFileName?: string;
 };
 
-type TerminatorState = {
-  printed: boolean;
-};
+type TerminatorState = {printed: boolean};
 
 type PrintJoinOptions<N> = {
   indent?: boolean;
-  statement?: boolean;
-  iterator?: (node: N, i: number) => void;
-  separator?: (generator: Generator) => void;
+  multiline?: boolean;
+  noSeparatorLast?: boolean;
+  after?: (generator: Generator, isLast: boolean) => void;
 };
 
-type AnyNodeButComment = Exclude<AnyNode, AnyComment>;
+const MAX_PRETTY_LINE_LENGTH = 80;
+
+function doesLineExceed(column: Number0): boolean {
+  // We take off 1 as column is the column that the line ends, which is not a character
+  return get0(column) - 1 > MAX_PRETTY_LINE_LENGTH;
+}
+
+type GeneratorSnapshot = {
+  inForStatementInitCounter: number;
+  printedCommentStarts: Set<Number0>;
+  printedComments: Set<AnyComment>;
+  inferredNewlines: Set<Number1>;
+  printStackIndex: number;
+  parenPushNewlineState: undefined | TerminatorState;
+  endsWithInteger: boolean;
+  endsWithWord: boolean;
+  currentIndentLevel: number;
+  currentLineIndentLevel: number;
+  buffer: BufferSnapshot;
+};
+
+type MultilineCondition =
+  | 'more-than-one-line'
+  | 'any-line-exceeds'
+  | 'source-had-multiline';
 
 export default class Generator {
   constructor(opts: GeneratorOptions, code: string) {
     this.buf = new Buffer(opts, code);
     this.currentIndentLevel = opts.indent === undefined ? 0 : opts.indent;
+    this.currentLineIndentLevel = this.currentIndentLevel;
 
     this.options = opts;
     this.inForStatementInitCounter = 0;
+    this.inferredNewlines = new Set();
     this.printedCommentStarts = new Set();
     this.printedComments = new Set();
     this.printStack = [];
@@ -82,6 +104,8 @@ export default class Generator {
   endsWithInteger: boolean;
   endsWithWord: boolean;
   currentIndentLevel: number;
+  currentLineIndentLevel: number;
+  inferredNewlines: Set<Number1>;
 
   indent(): void {
     this.currentIndentLevel++;
@@ -91,31 +115,159 @@ export default class Generator {
     this.currentIndentLevel--;
   }
 
+  save(): GeneratorSnapshot {
+    return {
+      inForStatementInitCounter: this.inForStatementInitCounter,
+      printedCommentStarts: new Set(this.printedCommentStarts),
+      printedComments: new Set(this.printedComments),
+      inferredNewlines: new Set(this.inferredNewlines),
+      printStackIndex: this.printStack.length,
+      parenPushNewlineState: this.parenPushNewlineState,
+      endsWithInteger: this.endsWithInteger,
+      endsWithWord: this.endsWithWord,
+      currentIndentLevel: this.currentIndentLevel,
+      currentLineIndentLevel: this.currentLineIndentLevel,
+      buffer: this.buf.save(),
+    };
+  }
+
+  restore(snapshot: GeneratorSnapshot) {
+    this.buf.restore(snapshot.buffer);
+    this.inForStatementInitCounter = snapshot.inForStatementInitCounter;
+    this.printedCommentStarts = snapshot.printedCommentStarts;
+    this.printedComments = snapshot.printedComments;
+    this.inferredNewlines = snapshot.inferredNewlines;
+    this.printStack = this.printStack.slice(0, snapshot.printStackIndex);
+    this.parenPushNewlineState = snapshot.parenPushNewlineState;
+    this.endsWithInteger = snapshot.endsWithInteger;
+    this.endsWithWord = snapshot.endsWithWord;
+    this.currentIndentLevel = snapshot.currentIndentLevel;
+    this.currentLineIndentLevel = snapshot.currentLineIndentLevel;
+  }
+
+  multiline<N extends AnyNode>(
+    node: N,
+    callback: (multiline: boolean, node: N) => void,
+    {
+      conditions,
+      indentTrailingNewline,
+      indent,
+    }: {
+      indent?: boolean;
+      indentTrailingNewline?: boolean;
+      conditions?: Array<MultilineCondition>;
+    } = {},
+  ) {
+    if (this.options.format !== 'pretty') {
+      callback(n.isMultiLine(node), node);
+      return;
+    }
+
+    // If we have the source-had-multiline condition and the original source had multiple lines then assume multiline always
+    if (
+      conditions !== undefined && conditions.includes('source-had-multiline') &&
+        n.isMultiLine(node)
+    ) {
+      callback(true, node);
+      return;
+    }
+
+    const snapshot = this.save();
+
+    callback(false, node);
+
+    let shouldMultiline = false;
+
+    // AKA first-line-exceeds
+    if (this.buf.position.line === snapshot.buffer.position.line) {
+      shouldMultiline = doesLineExceed(this.buf.position.column);
+    } else {
+      shouldMultiline = doesLineExceed(
+        this.buf.lineLengths[snapshot.buffer.lineLengthsIndex],
+      );
+    }
+
+    if (conditions !== undefined && !shouldMultiline) {
+      for (const condition of conditions) {
+        switch (condition) {
+          case 'more-than-one-line':
+            shouldMultiline = this.buf.position.line !==
+            snapshot.buffer.position.line;
+            break;
+
+          case 'any-line-exceeds':
+            // Check current line
+            shouldMultiline = doesLineExceed(this.buf.position.column);
+
+            // Check previous lines
+            for (
+              let i = snapshot.buffer.lineLengthsIndex;
+              i < this.buf.lineLengths.length;
+              i++
+            ) {
+              if (shouldMultiline) {
+                break;
+              }
+              shouldMultiline = doesLineExceed(this.buf.lineLengths[i]);
+            }
+            break;
+        }
+
+        if (shouldMultiline) {
+          break;
+        }
+      }
+    }
+
+    if (shouldMultiline) {
+      this.restore(snapshot);
+
+      if (indent) {
+        this.newline();
+        this.indent();
+      }
+
+      callback(true, node);
+
+      if (indent) {
+        if (indentTrailingNewline) {
+          this.newline();
+        }
+        this.dedent();
+      }
+    }
+  }
+
   /**
    * Add a semicolon to the buffer.
    */
-
-  semicolon(force: boolean = false): void {
-    this.append(';', !force /* queue */);
+  semicolon(): void {
+    this.append(';');
   }
 
   /**
    * Add a right brace to the buffer.
    */
-
   rightBrace(): void {
+    // TODO remove this?
     this.token('}');
+  }
+
+  spaceOrNewline(newline: boolean) {
+    if (newline) {
+      this.newline();
+    } else {
+      this.space();
+    }
   }
 
   /**
    * Add a space to the buffer unless it is compact.
    */
-
   space(force: boolean = false): void {
-    if (
-      (this.buf.hasContent() && !this.endsWith(' ') && !this.endsWith('\n')) ||
-      force
-    ) {
+    if (this.buf.hasContent() && !this.buf.endsWith(' ') && !this.buf.endsWith(
+      '\n',
+    ) || force) {
       this._space();
     }
   }
@@ -123,7 +275,6 @@ export default class Generator {
   /**
    * Writes a token that can't be safely parsed without taking whitespace into account.
    */
-
   word(str: string): void {
     if (this.endsWithWord) {
       this.space();
@@ -137,47 +288,34 @@ export default class Generator {
   /**
    * Writes a number token so that we can validate if it is an integer.
    */
-
   number(str: string): void {
     this.word(str);
 
     // Integer tokens need special handling because they cannot have '.'s inserted
+
     // immediately after them.
-    this.endsWithInteger =
-      Number.isInteger(Number(str)) &&
-      !NON_DECIMAL_LITERAL.test(str) &&
-      !SCIENTIFIC_NOTATION.test(str) &&
-      !ZERO_DECIMAL_INTEGER.test(str) &&
-      str[str.length - 1] !== '.';
+    this.endsWithInteger = Number.isInteger(Number(str)) &&
+      !NON_DECIMAL_LITERAL.test(str) && !SCIENTIFIC_NOTATION.test(str) &&
+      !ZERO_DECIMAL_INTEGER.test(str) && str[str.length - 1] !== '.';
   }
 
   /**
    * Writes a simple token.
    */
-
   token(str: string): void {
     // space is mandatory to avoid outputting <!--
+
     // http://javascript.spec.whatwg.org/#comment-syntax
-    if (
-      (str === '--' && this.endsWith('!')) ||
-      // Need spaces for operators of the same kind to avoid: `a+++b`
-      (str[0] === '+' && this.endsWith('+')) ||
-      (str[0] === '-' && this.endsWith('-')) ||
-      // Needs spaces to avoid changing '34' to '34.', which would still be a valid number.
-      (str[0] === '.' && this.endsWithInteger)
-    ) {
+    if (str === '--' && this.buf.endsWith('!') ||
+    // Need spaces for operators of the same kind to avoid: `a+++b`
+    str[0] === '+' && this.buf.endsWith('+') || str[0] === '-' &&
+      this.buf.endsWith('-') ||
+    // Needs spaces to avoid changing '34' to '34.', which would still be a valid number.
+    str[0] === '.' && this.endsWithInteger) {
       this.space();
     }
 
     this.append(str);
-  }
-
-  endsWith(str: string): boolean {
-    return this.buf.endsWith(str);
-  }
-
-  removeTrailingNewline(): void {
-    this.buf.removeTrailingNewline();
   }
 
   source(prop: string, loc: undefined | SourceLocation): void {
@@ -185,51 +323,72 @@ export default class Generator {
   }
 
   _space(): void {
-    this.append(' ', true /* queue */);
+    this.append(' ');
   }
 
-  newline(): void {
+  newline() {
+    if (!this.buf.endsWith('\n')) {
+      this.forceNewline();
+    }
+  }
+
+  inferredNewline(line: Number1): boolean {
+    if (this.inferredNewlines.has(line)) {
+      return false;
+    } else {
+      this.inferredNewlines.add(line);
+      this.forceNewline();
+      return true;
+    }
+  }
+
+  forceNewline(): void {
     if (this.buf.isEmpty()) {
       return;
     }
 
     // Never allow more than two lines
-    if (this.endsWith('\n\n')) {
+    if (this.buf.endsWith('\n\n')) {
       return;
     }
 
     //
-    if (this.endsWith('{\n') || this.endsWith(':\n')) {
+    if (this.buf.endsWith('{\n') || this.buf.endsWith(':\n')) {
       return;
     }
 
-    this.append('\n', true /* queue */);
+    if (!this.parenPushNewlineState) {
+      this.buf.removeTrailing(' ');
+    }
+    this.append('\n');
   }
 
   newlineX(num: number) {
-    for (let i = 0; i < num && i < 2; i++) {
-      this.newline();
+    if (num >= 1) {
+      this.forceNewline();
+    }
+    if (num >= 2) {
+      this.forceNewline();
     }
   }
 
-  append(str: string, queue: boolean = false) {
+  append(str: string) {
     this.maybeAddParen(str);
     this.maybeIndent(str);
-
-    if (queue) {
-      this.buf.queue(str);
-    } else {
-      this.buf.append(str);
-    }
-
+    this.buf.append(str);
     this.endsWithWord = false;
     this.endsWithInteger = false;
   }
 
   maybeIndent(str: string): void {
     // we've got a newline before us so prepend on the indentation
-    if (this.currentIndentLevel > 0 && this.endsWith('\n') && str[0] !== '\n') {
-      this.buf.queue(this.getIndent());
+    if (this.buf.endsWith('\n') && str[0] !== '\n') {
+      if (this.currentIndentLevel > 0) {
+        this.buf.append(this.getIndent());
+        this.currentLineIndentLevel = this.currentIndentLevel;
+      } else {
+        this.currentLineIndentLevel = 0;
+      }
     }
   }
 
@@ -261,7 +420,6 @@ export default class Generator {
   /**
    * Get the current indent.
    */
-
   getIndent(): string {
     return '  '.repeat(this.currentIndentLevel);
   }
@@ -281,27 +439,25 @@ export default class Generator {
    *
    *  `undefined` will be returned and not `foo` due to the terminator.
    */
-
   startTerminatorless(): TerminatorState {
-    return (this.parenPushNewlineState = {
+    return this.parenPushNewlineState = {
       printed: false,
-    });
+    };
   }
 
   /**
    * Print an ending parentheses if a starting one has been printed.
    */
-
   endTerminatorless(state: TerminatorState) {
     if (state.printed) {
       this.dedent();
-      this.newline();
+      this.forceNewline();
       this.token(')');
     }
   }
 
   // If the passed in node exists then print a colon followed by the node
-  printTypeColon(node: undefined | AnyNode, parent?: AnyNode) {
+  printTypeColon(node: undefined | AnyNode, parent: AnyNode) {
     if (node !== undefined) {
       this.token(':');
       this.space();
@@ -309,16 +465,39 @@ export default class Generator {
     }
   }
 
-  print(node: undefined | AnyNode, parent: AnyNode = MOCK_PARENT) {
+  maybeCommentNewlines(
+    node: AnyNode,
+    comment: undefined | AnyComment,
+    trailing: boolean,
+  ) {
+    if (comment === undefined) {
+      return;
+    }
+
+    const lines = n.getLinesBetween(node, comment);
+
+    // BlockComment already has a newline
+    if (lines.length >= 1 && (comment.type !== 'CommentLine' || trailing)) {
+      this.inferredNewline(lines[0]);
+    }
+
+    if (lines.length >= 2) {
+      this.inferredNewline(lines[1]);
+    }
+  }
+
+  print(
+    node: undefined | AnyNode,
+    parent: AnyNode,
+    beforeTrailing?: () => void,
+    includeTrailingComments: boolean = true,
+  ) {
     if (node === undefined) {
       return;
     }
 
-    if (
-      this.options.typeAnnotations === false &&
-      isTypeNode(node) &&
-      !isTypeExpressionWrapperNode(node)
-    ) {
+    if (this.options.typeAnnotations === false && isTypeNode(node) &&
+      !isTypeExpressionWrapperNode(node)) {
       return;
     }
 
@@ -335,7 +514,7 @@ export default class Generator {
 
     const needsParens = n.needsParens(node, parent, this.printStack);
 
-    if (needsParens === true) {
+    if (needsParens) {
       this.token('(');
     }
 
@@ -344,65 +523,41 @@ export default class Generator {
     const leadingComments = this.getComments(true, node);
     this.printComments(leadingComments);
 
-    // if leading comment had an empty line after then retain it
-    const lastComment =
-      leadingComments && leadingComments[leadingComments.length - 1];
-    this.newlineX(n.getLinesBetween(lastComment, node) - 1);
+    // If leading comment had an empty line after then retain it
+    if (leadingComments !== undefined) {
+      this.maybeCommentNewlines(
+        node,
+        leadingComments[leadingComments.length - 1],
+        false,
+      );
+    }
 
     this.buf.withSource('start', loc, () => {
       printMethod(this, node, parent);
     });
 
-    // if there's an empty line between the node and it's trailing comments then keep it
-    const trailingComments = this.getComments(false, node);
-    this.newlineX(
-      n.getLinesBetween(trailingComments && trailingComments[0], node),
-    );
-    this.printComments(trailingComments);
-
-    if (needsParens === true) {
+    if (needsParens) {
       this.token(')');
     }
 
-    // end
+    if (beforeTrailing !== undefined) {
+      beforeTrailing();
+    }
+
+    // If there's an empty line between the node and it's trailing comments then keep it
+    if (includeTrailingComments) {
+      const trailingComments = this.getComments(false, node);
+      if (trailingComments !== undefined) {
+        this.maybeCommentNewlines(node, trailingComments[0], true);
+      }
+      this.printComments(trailingComments);
+    }
+
     this.printStack.pop();
   }
 
-  getStatementList<N extends AnyNodeButComment>(
-    nodes: Array<N>,
-  ): Array<N | AnyComment> {
-    const allNodes: Set<N | AnyComment> = new Set();
-
-    for (const node of nodes) {
-      this.getStatementList_addComments(allNodes, this.getComments(true, node));
-
-      allNodes.add(node);
-
-      this.getStatementList_addComments(
-        allNodes,
-        this.getComments(false, node),
-      );
-    }
-
-    return Array.from(allNodes);
-  }
-
-  getStatementList_addComments<N>(
-    allNodes: Set<N | AnyComment>,
-    comments: undefined | Array<AnyComment>,
-  ) {
-    if (!comments) {
-      return;
-    }
-
-    for (const comment of comments) {
-      this.printedComments.add(comment);
-      allNodes.add(comment);
-    }
-  }
-
-  printJoin<N extends AnyNodeButComment>(
-    nodes: undefined | Array<N>,
+  printJoin<N extends AnyNode>(
+    nodes: undefined | Array<undefined | N>,
     parent: AnyNode,
     opts: PrintJoinOptions<N> = {},
   ) {
@@ -414,54 +569,77 @@ export default class Generator {
       this.indent();
     }
 
-    if (opts.statement === true) {
-      this.newline();
+    if (opts.multiline === true) {
+      this.forceNewline();
     }
 
-    let interleavedNodes: Array<N | AnyComment> = nodes;
-    if (opts.statement === true) {
-      interleavedNodes = this.getStatementList(nodes);
+    let isLastNode = false;
+    let i = 0;
+
+    let printAfter;
+    if (opts.after !== undefined) {
+      printAfter = () => {
+        if (opts.after) {
+          opts.after(this, isLastNode);
+        }
+      };
     }
 
-    for (let i = 0; i < interleavedNodes.length; i++) {
-      const node = interleavedNodes[i];
-      if (!node) {
-        continue;
-      }
+    while (i < nodes.length) {
+      const node = nodes[i];
+      isLastNode = i === nodes.length - 1;
 
-      if (node.type === 'CommentBlock' || node.type === 'CommentLine') {
-        this.printComment(node);
+      if (node === undefined) {
+        if (printAfter !== undefined) {
+          printAfter();
+        }
       } else {
-        this.print(node, parent);
+        this.print(node, parent, printAfter);
 
-        if (opts.iterator) {
-          opts.iterator(node, i);
-        }
+        if (opts.multiline === true) {
+          let nextNode = (nodes[i + 1] as AnyNode);
 
-        const isLastNode = i === interleavedNodes.length - 1;
-        if (opts.separator && !isLastNode) {
-          opts.separator(this);
-        }
-      }
+          // Don't print a newline if the next node has a leadingComment that begins on the same line as this node
+          let hasNextTrailingCommentOnSameLine = false;
 
-      if (opts.statement === true) {
-        const nextNode = interleavedNodes[i + 1];
-        if (nextNode) {
-          if (node.loc && nextNode.loc) {
-            let linesBetween = n.getLinesBetween(node, nextNode);
-            if (node.type === 'CommentLine') {
-              linesBetween--;
+          // Lots of refinements...
+          if (nextNode !== undefined && node.loc !== undefined &&
+            nextNode.loc !== undefined && nextNode.leadingComments !== undefined) {
+            const firstNextNodeLeadingComments = nextNode.leadingComments[0];
+            if (firstNextNodeLeadingComments !== undefined &&
+              firstNextNodeLeadingComments.loc !== undefined) {
+              nextNode = firstNextNodeLeadingComments;
+              hasNextTrailingCommentOnSameLine = node.loc.end.line ===
+              firstNextNodeLeadingComments.loc.start.line;
             }
-            this.newlineX(linesBetween);
-          } else {
+          }
+
+          if (!hasNextTrailingCommentOnSameLine) {
             this.newline();
           }
+
+          this.maybeInsertExtraStatementNewlines(node, nextNode);
         }
       }
+
+      i++;
     }
 
     if (opts.indent === true) {
       this.dedent();
+    }
+  }
+
+  maybeInsertExtraStatementNewlines(node: AnyNode, nextNode: undefined | AnyNode) {
+    // Insert an inferred newline or extra if it satisfies our conditions
+    const linesBetween = n.getLinesBetween(node, nextNode);
+    if (linesBetween.length > 1) {
+      this.inferredNewline(linesBetween[1]);
+      return;
+    }
+
+    if (n.hasExtraLineBetween(node)) {
+      this.forceNewline();
     }
   }
 
@@ -482,39 +660,67 @@ export default class Generator {
     this.print(node, parent);
   }
 
-  printStatementList<N extends AnyNodeButComment>(
+  printStatementList<N extends AnyNode>(
     nodes: undefined | Array<N>,
     parent: AnyNode,
     opts: PrintJoinOptions<N> = {},
   ) {
-    return this.printJoin<N>(nodes, parent, {...opts, statement: true});
+    return this.printJoin<N>(nodes, parent, {...opts, multiline: true});
   }
 
-  printCommaList<N extends AnyNodeButComment>(
-    items: undefined | Array<N>,
+  printCommaList<N extends AnyNode>(
+    items: undefined | Array<undefined | N>,
     parent: AnyNode,
-    opts: PrintJoinOptions<N> = {},
+    opts: {
+      trailing?: boolean;
+      multiline?: boolean;
+    } = {},
   ) {
     if (!items || !items.length) {
       return undefined;
     }
 
-    this.printJoin<N>(items, parent, {
-      ...opts,
-      separator: opts.separator || commaSeparator,
-    });
+    const print = (multiline: boolean) => {
+      function separator(generator: Generator, isLast: boolean) {
+        if (isLast && (!opts.trailing || !multiline)) {
+          return;
+        }
+
+        generator.token(',');
+        if (!multiline) {
+          generator.space();
+        }
+      }
+
+      this.printJoin<N>(items, parent, {
+        after: separator,
+        indent: multiline,
+        multiline,
+      });
+    };
+
+    if (opts.multiline === undefined) {
+      this.multiline(parent, print);
+    } else {
+      print(opts.multiline);
+    }
   }
 
   printInnerComments(node: AnyNode, indent: boolean = true) {
-    if (!node.innerComments) {
-      return undefined;
+    const {innerComments} = node;
+    if (innerComments === undefined) {
+      return;
     }
 
     if (indent) {
       this.indent();
     }
 
-    this.printComments(node.innerComments);
+    if (n.getLinesBetween(node, innerComments[0])) {
+      this.forceNewline();
+    }
+
+    this.printComments(innerComments);
 
     if (indent) {
       this.dedent();
@@ -531,20 +737,8 @@ export default class Generator {
       this.printComment(comment);
 
       const nextComment = comments[i + 1];
-      if (nextComment) {
-        // comment lines always have a line after but comment blocks don't, only insert one if it's
-        // present in the original source
-        if (
-          comment.type === 'CommentBlock' &&
-          n.getLinesBetween(comment, nextComment) > 0
-        ) {
-          this.newline();
-        }
-
-        // extra newline between these two comments, retain it
-        if (n.hasExtraLineBetween(comment, nextComment)) {
-          this.newline();
-        }
+      if (nextComment !== undefined) {
+        this.maybeCommentNewlines(comment, nextComment, true);
       }
     }
   }
@@ -573,10 +767,9 @@ export default class Generator {
       return true;
     }
 
-    if (
-      comment.loc !== undefined &&
-      this.printedCommentStarts.has(comment.loc.start.index)
-    ) {
+    if (comment.loc !== undefined && this.printedCommentStarts.has(
+      comment.loc.start.index,
+    )) {
       return true;
     }
 
@@ -584,33 +777,30 @@ export default class Generator {
   }
 
   printComment(comment: AnyComment) {
+    if (this.hasPrintedComment(comment)) {
+      return;
+    }
+
     this.printedComments.add(comment);
 
     if (comment.loc !== undefined) {
       this.printedCommentStarts.add(comment.loc.start.index);
     }
 
-    const isBlockComment = comment.type === 'CommentBlock';
-    const val = isBlockComment
-      ? `/*${comment.value}*/`
-      : `//${comment.value}\n`;
-
-    if (!this.endsWith('[') && !this.endsWith('{')) {
+    if (!this.buf.endsWith('[') && !this.buf.endsWith('{')) {
       this.space();
     }
 
     // Avoid creating //* comments
-    if (this.endsWith('/')) {
+    if (this.buf.endsWith('/')) {
       this.space();
     }
 
     this.buf.withSource('start', comment.loc, () => {
+      const isBlockComment = comment.type === 'CommentBlock';
+      const val = isBlockComment
+        ? `/*${comment.value}*/` : `//${comment.value}\n`;
       this.append(val);
     });
   }
-}
-
-function commaSeparator(generator: Generator) {
-  generator.token(',');
-  generator.space();
 }

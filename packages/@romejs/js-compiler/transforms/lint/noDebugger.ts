@@ -17,7 +17,7 @@ export default {
       path.context.addNodeDiagnostic(node, {
         fixable: true,
         category: 'lint/noDebugger',
-        message: "Unexpected 'debugger' statement",
+        message: 'Unexpected \'debugger\' statement',
       });
 
       return REDUCE_REMOVE;

@@ -8,16 +8,14 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('no template curly in string', async t => {
-  const res = await testLint(
-    `
+test('no template curly in string', async (t) => {
+  const res = await testLint(`
     const user = "Faustina";
     const helloUser = "Hello, \${user}!";
 
     // mark consts as used
     console.log(user, helloUser)
-    `,
-  );
+    `);
 
   t.looksLike(res.diagnostics, [
     {

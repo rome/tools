@@ -16,7 +16,9 @@ export default {
 
     if (node.type === 'LogicalExpression' && node.operator === '??') {
       // TODO assign `node.left` to a variable and use it as a reference
-      return template.expression`${node.left} == null ? ${node.right} : ${node.left}`;
+      return (
+        template.expression`${node.left} == null ? ${node.right} : ${node.left}`
+      );
     }
 
     return node;

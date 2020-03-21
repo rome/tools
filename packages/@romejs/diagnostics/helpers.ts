@@ -17,6 +17,7 @@ type BuildSuggestionAdviceOptions = {
   ignoreCase?: boolean;
   formatItem?: (item: string) => string;
 };
+
 export function buildSuggestionAdvice(
   value: string,
   items: Array<string>,
@@ -30,7 +31,7 @@ export function buildSuggestionAdvice(
     ignoreCase,
   });
 
-  const strings = ratings.map(item => {
+  const strings = ratings.map((item) => {
     const {target} = item;
     if (formatItem === undefined) {
       return target;
@@ -86,10 +87,8 @@ export function buildSuggestionAdvice(
   }
 
   // TODO check if ANY of the suggestions match
-  if (
-    topRatingRaw !== value &&
-    topRatingRaw.toLowerCase() === value.toLowerCase()
-  ) {
+  if (topRatingRaw !== value && topRatingRaw.toLowerCase() ===
+  value.toLowerCase()) {
     advice.push({
       type: 'log',
       category: 'warn',

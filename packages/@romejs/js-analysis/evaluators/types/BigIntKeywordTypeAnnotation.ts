@@ -12,10 +12,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function BigIntKeywordTypeAnnotation(
-  node: AnyNode,
-  scope: Scope,
-) {
+export default function BigIntKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
   node = bigIntKeywordTypeAnnotation.assert(node);
   scope;
   throw new Error('unimplemented');

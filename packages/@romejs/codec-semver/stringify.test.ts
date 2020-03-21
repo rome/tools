@@ -9,7 +9,7 @@ import '@romejs/string-markup';
 import {stringifySemver, parseSemverRange} from '@romejs/codec-semver';
 import test from '@romejs/test';
 
-test('stringify', t => {
+test('stringify', (t) => {
   // basic version and whitespace
   t.is(stringifySemver(parseSemverRange({input: '1.2.3'})), '1.2.3');
   t.is(stringifySemver(parseSemverRange({input: '    1.2.3'})), '1.2.3');
@@ -21,10 +21,7 @@ test('stringify', t => {
     stringifySemver(parseSemverRange({input: '1.2.3-prerelease'})),
     '1.2.3-prerelease',
   );
-  t.is(
-    stringifySemver(parseSemverRange({input: '1.2.3+build'})),
-    '1.2.3+build',
-  );
+  t.is(stringifySemver(parseSemverRange({input: '1.2.3+build'})), '1.2.3+build');
   t.is(
     stringifySemver(parseSemverRange({input: '1.2.3-prerelease+build'})),
     '1.2.3-prerelease+build',

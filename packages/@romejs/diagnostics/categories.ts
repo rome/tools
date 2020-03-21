@@ -6,7 +6,9 @@
  */
 
 // Rather than having a generic `string` type, we use string literals so there's one place where
+
 // all category names are defined. This allows the naming scheme to be more easily reviewed and
+
 // made consistent.
 export type DiagnosticCategory =
   | 'analyzeDependencies/cjsExportInES'
@@ -19,17 +21,21 @@ export type DiagnosticCategory =
   | 'compile/jsx'
   | 'compile/classes'
   | 'flags/invalid'
+  | 'format/disabled'
   | 'internalError/request'
   | 'internalError/httpServer'
+  | 'lint/disabled'
   | 'lint/pendingFixes'
   | 'lint/defaultExportSameBasename'
   | 'lint/noMultipleSpacesInRegularExpressionLiterals'
+  | 'lint/noDuplicateGroupNamesInRegularExpressions'
   | 'lint/noVar'
   | 'lint/emptyBlocks'
   | 'lint/getterReturn'
   | 'lint/noAsyncPromiseExecutor'
   | 'lint/noCompareNegZero'
   | 'lint/noCondAssign'
+  | 'lint/noDanglingBackslash'
   | 'lint/noDebugger'
   | 'lint/noDeleteVars'
   | 'lint/noDupeArgs'
@@ -70,6 +76,7 @@ export type DiagnosticCategory =
   | 'suppressions/unused'
   | 'suppressions/incorrectPrefix'
   | 'suppressions/duplicate'
+  | 'tests/disabled'
   | 'tests/noneDeclared'
   | 'tests/timeout'
   | 'tests/snapshots/missing'

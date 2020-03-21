@@ -1,5 +1,6 @@
 Program {
   body: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'

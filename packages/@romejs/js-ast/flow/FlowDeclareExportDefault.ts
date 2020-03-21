@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyFlowPrimary, AnyFlowDeclare} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclareExportDefault = JSNodeBase & {
-  type: 'FlowDeclareExportDefault';
-  declaration: AnyFlowPrimary | AnyFlowDeclare;
-};
+export type FlowDeclareExportDefault =
+  & JSNodeBase
+  & {
+    type: 'FlowDeclareExportDefault';
+    declaration: AnyFlowPrimary | AnyFlowDeclare;
+  };
 
 export const flowDeclareExportDefault = createBuilder<FlowDeclareExportDefault>(
   'FlowDeclareExportDefault',

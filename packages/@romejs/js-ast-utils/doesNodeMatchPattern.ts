@@ -20,8 +20,7 @@ export default function doesNodeMatchPattern(
   }
 
   const expectedParts: Array<string> = Array.isArray(match)
-    ? match.slice()
-    : match.split('.');
+    ? match.slice() : match.split('.');
 
   const [bailed, actualParts] = getNodeReferenceParts(member);
 

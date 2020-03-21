@@ -27,6 +27,7 @@ function joinList(
     const first = items[0].trim();
 
     // We never want to place a comment in between braces because it will break for line comments
+
     // and look weird for blocks
     if (first[0] !== '/') {
       return open + first + close;
@@ -53,7 +54,7 @@ export function stringifyComments(
   indent: string,
   comments: Comments,
 ): Array<string> {
-  return comments.map(node => {
+  return comments.map((node) => {
     if (node.type === 'BlockComment') {
       return `${indent}/*${node.value}*/`;
     } else {
@@ -69,11 +70,8 @@ function stringifyPrimitives(value: unknown): undefined | string {
   }
 
   // Coerce primitive objects to their primitive form, as specified in ECMA262 24.5.2.1
-  if (
-    value instanceof Number ||
-    value instanceof String ||
-    value instanceof Boolean
-  ) {
+  if (value instanceof Number || value instanceof String || value instanceof
+  Boolean) {
     value = value.valueOf();
   }
 
@@ -147,10 +145,12 @@ type StringifyOptions = {
   stack: Set<unknown>;
 };
 
-type StringifyObjectOptions = StringifyOptions & {
-  prevIndent: string;
-  nextIndent: string;
-};
+type StringifyObjectOptions =
+  & StringifyOptions
+  & {
+    prevIndent: string;
+    nextIndent: string;
+  };
 
 function getComments(consumer: Consumer, opts: StringifyOptions): PathComments {
   const comments = opts.comments.get(consumer.keyPath.join('.'));
@@ -207,11 +207,8 @@ function stringifyPlainObject(
   for (const [key, consumer] of map) {
     const value = consumer.asUnknown();
 
-    if (
-      typeof value === 'function' ||
-      typeof value === 'undefined' ||
-      typeof value === 'symbol'
-    ) {
+    if (typeof value === 'function' || typeof value === 'undefined' ||
+    typeof value === 'symbol') {
       map.delete(key);
     }
   }
@@ -242,6 +239,7 @@ function stringifyPlainObject(
   }
 
   // We track this so we know whether we can safely put everything at the top level
+
   // If we only have comments then there's no way the parser could infer it was originally an object
   const hasProps = buff.length > 0;
 
@@ -254,8 +252,9 @@ function stringifyPlainObject(
       return buff.join('\n');
     } else if (buff.length > 0) {
       // Otherwise we just have a bunch of comments
+
       // Indent them correctly and just output it as a normal object
-      buff = buff.map(str => {
+      buff = buff.map((str) => {
         return `  ${str}`;
       });
     }

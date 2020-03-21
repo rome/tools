@@ -8,10 +8,7 @@
 import Generator from '../../Generator';
 import {SequenceExpression, sequenceExpression, AnyNode} from '@romejs/js-ast';
 
-export default function SequenceExpression(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function SequenceExpression(generator: Generator, node: AnyNode) {
   node = sequenceExpression.assert(node);
 
   generator.printCommaList(node.expressions, node);

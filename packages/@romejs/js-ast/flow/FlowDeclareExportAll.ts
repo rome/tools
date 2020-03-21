@@ -8,9 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclareExportAll = JSNodeBase & {
-  type: 'FlowDeclareExportAll';
-};
+export type FlowDeclareExportAll = JSNodeBase & {type: 'FlowDeclareExportAll'};
 
 export const flowDeclareExportAll = createBuilder<FlowDeclareExportAll>(
   'FlowDeclareExportAll',

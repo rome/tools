@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -87,7 +88,6 @@ Program {
         body: Array [
           BreakStatement {
             label: undefined
-            leadingComments: undefined
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -134,6 +134,23 @@ Program {
                 line: 2
               }
             }
+            expression: ReferenceIdentifier {
+              name: 'there'
+              leadingComments: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 15
+                  index: 49
+                  line: 2
+                }
+                start: Object {
+                  column: 10
+                  index: 44
+                  line: 2
+                }
+              }
+            }
             leadingComments: Array [
               CommentBlock {
                 value: ' Multiline\nComment '
@@ -152,40 +169,6 @@ Program {
                 }
               }
             ]
-            expression: ReferenceIdentifier {
-              name: 'there'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 15
-                  index: 49
-                  line: 2
-                }
-                start: Object {
-                  column: 10
-                  index: 44
-                  line: 2
-                }
-              }
-              leadingComments: Array [
-                CommentBlock {
-                  value: ' Multiline\nComment '
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 10
-                      index: 44
-                      line: 2
-                    }
-                    start: Object {
-                      column: 21
-                      index: 21
-                      line: 1
-                    }
-                  }
-                }
-              ]
-            }
           }
         ]
       }

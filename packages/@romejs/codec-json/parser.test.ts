@@ -12,12 +12,11 @@ import {ParserOptions} from '@romejs/parser-core';
 import {createUnknownFilePath} from '@romejs/path';
 
 // These are just some very basic tests, most of it is already covered by test262-parse so most are redundant
-
 function parseExtJSON(opts: ParserOptions) {
   return parseJSON({...opts, path: createUnknownFilePath('input.rjson')});
 }
 
-test('comments', t => {
+test('comments', (t) => {
   // comment at beginning
   t.true(parseExtJSON({input: '// comment\ntrue'}));
   t.true(parseExtJSON({input: '/* comment */\ntrue'}));
@@ -92,19 +91,19 @@ test('comments', t => {
   }, messages.UNCLOSED_BLOCK_COMMENT());
 });
 
-test('numbers', t => {
+test('numbers', (t) => {
   t.is(parseExtJSON({input: '1'}), 1);
   t.is(parseExtJSON({input: '12'}), 12);
   t.is(parseExtJSON({input: '123'}), 123);
   t.is(parseExtJSON({input: '1.2'}), 1.2);
-  t.is(parseExtJSON({input: '1234.21234'}), 1234.21234);
-  t.is(parseExtJSON({input: '0.5e+5'}), 0.5e5);
-  t.is(parseExtJSON({input: '0.5e-5'}), 0.5e-5);
-  t.is(parseExtJSON({input: '0.5E+5'}), 0.5e5);
-  t.is(parseExtJSON({input: '0.5E-5'}), 0.5e-5);
+  t.is(parseExtJSON({input: '1234.21234'}), 1_234.21234);
+  t.is(parseExtJSON({input: '0.5e+5'}), 50_000);
+  t.is(parseExtJSON({input: '0.5e-5'}), 0.000005);
+  t.is(parseExtJSON({input: '0.5E+5'}), 50_000);
+  t.is(parseExtJSON({input: '0.5E-5'}), 0.000005);
 });
 
-test('strings', t => {
+test('strings', (t) => {
   t.is(parseExtJSON({input: '"foo"'}), 'foo');
   t.is(parseExtJSON({input: '"foo\u1234"'}), 'foo\u1234');
   t.is(parseExtJSON({input: '"foo\\n"'}), 'foo\n');
@@ -119,30 +118,32 @@ test('strings', t => {
   }, messages.UNCLOSED_STRING());
 
   t.throws(() => {
-    parseExtJSON({input: "'foo'"});
+    parseExtJSON({input: '\'foo\''});
   }, messages.SINGLE_QUOTE_USAGE());
 
   // TODO escMessage.INVALID_HEX_DIGIT_FOR_ESCAPE
+
   // TODO escMessage.INVALID_STRING_CHARACTER
+
   // TODO escMessage.NOT_ENOUGH_CODE_POINTS
 });
 
-test('booleans', t => {
+test('booleans', (t) => {
   t.is(parseExtJSON({input: 'true'}), true);
   t.is(parseExtJSON({input: 'false'}), false);
 });
 
-test('null', t => {
+test('null', (t) => {
   t.is(parseExtJSON({input: 'null'}), null);
 });
 
-test('undefined', t => {
+test('undefined', (t) => {
   t.throws(() => {
     t.is(parseExtJSON({input: 'undefined'}), undefined);
   }, messages.UNDEFINED_IN_JSON());
 });
 
-test('arrays', t => {
+test('arrays', (t) => {
   t.looksLike(parseExtJSON({input: '[]'}), []);
   t.looksLike(parseExtJSON({input: '[1, 2, 3]'}), [1, 2, 3]);
   t.looksLike(parseExtJSON({input: '[[1, 2, 3]]'}), [[1, 2, 3]]);
@@ -164,7 +165,7 @@ test('arrays', t => {
   }, messages.MISTAKEN_ARRAY_IDENTITY());
 });
 
-test('objects', t => {
+test('objects', (t) => {
   t.looksLike(parseExtJSON({input: '{}'}), {});
   t.looksLike(parseExtJSON({input: '{"foo": "bar"}'}), {foo: 'bar'});
   t.looksLike(parseExtJSON({input: '{"foo": "bar", "bar": "foo"}'}), {
@@ -185,7 +186,7 @@ test('objects', t => {
   }, messages.REDUNDANT_COMMA());
 });
 
-test('regular JSON', t => {
+test('regular JSON', (t) => {
   t.throws(() => {
     parseJSON({input: '{foo: "bar"}'});
   }, messages.PROPERTY_KEY_UNQUOTED_IN_JSON());

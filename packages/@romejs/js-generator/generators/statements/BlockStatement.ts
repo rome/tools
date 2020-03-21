@@ -14,26 +14,24 @@ export default function BlockStatement(generator: Generator, node: AnyNode) {
   generator.token('{');
   generator.printInnerComments(node);
 
-  const hasDirectives: boolean = Boolean(
-    node.directives && node.directives.length > 0,
+  const hasDirectives: boolean = Boolean(node.directives &&
+    node.directives.length > 0
   );
 
   if (node.body.length > 0 || hasDirectives) {
-    generator.newline();
+    generator.forceNewline();
 
     generator.printStatementList(node.directives, node, {indent: true});
     if (hasDirectives) {
-      generator.newline();
+      generator.forceNewline();
     }
 
     generator.printStatementList(node.body, node, {indent: true});
-    generator.removeTrailingNewline();
 
     generator.source('end', node.loc);
 
-    if (!generator.endsWith('\n')) {
-      generator.newline();
-    }
+    generator.buf.removeTrailingNewlines();
+    generator.forceNewline();
 
     generator.rightBrace();
   } else {

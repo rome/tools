@@ -8,10 +8,7 @@
 import {TSExportAssignment, tsExportAssignment, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
 
-export default function TSExportAssignment(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function TSExportAssignment(generator: Generator, node: AnyNode) {
   node = tsExportAssignment.assert(node);
   generator.word('export');
   generator.space();
