@@ -13,12 +13,17 @@ import {
 
 test('duplicate import source', async t => {
   const res = await testLint(
-    `import getterReturn from '../lint/getterReturn';
-  import getterReturn from '../lint/getterReturn';
+    `
+    import foo from './testdummy.ts';
+    import {bar} from './testdummy.ts';
+    import type {fooType} from './testdummy.ts';
   
-  console.log(getterReturn)`,
+    const typedFoo: fooType = {
+      type: 'foo'
+    } 
+    console.log(typedFoo, foo, bar);
+    `,
     LINT_ENABLED_FORMAT_DISABLED_CONFIG,
   );
-
   t.snapshot(res);
 });

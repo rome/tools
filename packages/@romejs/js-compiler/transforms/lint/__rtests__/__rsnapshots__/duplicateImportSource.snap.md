@@ -6,26 +6,93 @@
 
 ```javascript
 Object {
-  src: 'import getterReturn from \'../lint/getterReturn\';\n  import getterReturn from \'../lint/getterReturn\';\n  \n  console.log(getterReturn)'
+  src: '\n    import foo from \'./testdummy.ts\';\n    import {bar} from \'./testdummy.ts\';\n    import type {fooType} from \'./testdummy.ts\';\n  \n    const typedFoo: fooType = {\n      type: \'foo\'\n    } \n    console.log(typedFoo, foo, bar);\n    '
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/duplicateImport'
+      category: 'parse/js'
       filename: 'unknown'
+      message: 'A type annotation is only valid inside of a TypeScript or Flow file'
+      mtime: undefined
+      sourceType: 'module'
+      origins: Array [Object {category: 'js-parser'}]
+      end: Object {
+        column: 18
+        index: 149
+        line: 6
+      }
+      start: Object {
+        column: 18
+        index: 149
+        line: 6
+      }
+      advice: Array [
+        log {
+          category: 'info'
+          message: 'Did you mean <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>'
+        }
+        log {
+          category: 'info'
+          message: 'Did you mean <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file'
+        }
+      ]
+    }
+    Object {
+      category: 'lint/duplicateImportSource'
+      filename: 'unknown'
+      fixable: true
       language: 'js'
-      message: 'You are importing from the the following sources more than once:\n               ../lint/getterReturn'
+      message: 'This module has already been imported'
       mtime: undefined
       sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
       end: Object {
-        column: 27
-        index: 130
+        column: 39
+        index: 78
+        line: 3
+      }
+      start: Object {
+        column: 4
+        index: 43
+        line: 3
+      }
+      advice: Array [
+        log {
+          category: 'info'
+          message: 'Previously imported here'
+        }
+        frame {
+          filename: 'unknown'
+          end: Object {
+            column: 37
+            index: 38
+            line: 2
+          }
+          start: Object {
+            column: 4
+            index: 5
+            line: 2
+          }
+        }
+      ]
+    }
+    Object {
+      category: 'lint/unusedVariables'
+      filename: 'unknown'
+      language: 'js'
+      message: 'Unused import <emphasis>fooType</emphasis>'
+      mtime: undefined
+      sourceType: 'module'
+      origins: Array [Object {category: 'lint'}]
+      end: Object {
+        column: 24
+        index: 103
         line: 4
       }
       start: Object {
-        column: 0
-        index: 0
-        line: 1
+        column: 17
+        index: 96
+        line: 4
       }
     }
   ]
