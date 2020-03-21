@@ -50,6 +50,7 @@ export type DiagnosticCategory =
   | 'lint/noShadowRestrictedNames'
   | 'lint/noTemplateCurlyInString'
   | 'lint/noUnsafeFinally'
+  | 'lint/noExAssign'
   | 'lint/preferFunctionDeclarations'
   | 'lint/preferTemplate'
   | 'lint/sparseArray'
