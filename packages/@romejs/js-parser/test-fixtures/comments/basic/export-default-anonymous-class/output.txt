@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -93,9 +94,9 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 0
-              index: 122
-              line: 11
+              column: 1
+              index: 121
+              line: 10
             }
             start: Object {
               column: 15
@@ -104,12 +105,13 @@ Program {
             }
           }
         }
+        leadingComments: undefined
         loc: Object {
           filename: 'input.js'
           end: Object {
-            column: 0
-            index: 122
-            line: 11
+            column: 1
+            index: 121
+            line: 10
           }
           start: Object {
             column: 15
@@ -176,9 +178,9 @@ Program {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 0
-                  index: 120
-                  line: 10
+                  column: 5
+                  index: 119
+                  line: 9
                 }
                 start: Object {
                   column: 4
@@ -203,6 +205,24 @@ Program {
                   }
                 }
               }
+              leadingComments: Array [
+                CommentBlock {
+                  value: '*\n     * this is method1.\n     '
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 7
+                      index: 98
+                      line: 7
+                    }
+                    start: Object {
+                      column: 4
+                      index: 63
+                      line: 5
+                    }
+                  }
+                }
+              ]
               head: FunctionHead {
                 async: false
                 generator: false
@@ -230,6 +250,7 @@ Program {
               meta: ClassPropertyMeta {
                 abstract: false
                 accessibility: undefined
+                leadingComments: undefined
                 optional: false
                 readonly: false
                 static: false
@@ -252,24 +273,6 @@ Program {
                     line: 8
                   }
                 }
-                leadingComments: Array [
-                  CommentBlock {
-                    value: '*\n     * this is method1.\n     '
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 7
-                        index: 98
-                        line: 7
-                      }
-                      start: Object {
-                        column: 4
-                        index: 63
-                        line: 5
-                      }
-                    }
-                  }
-                ]
               }
             }
           ]

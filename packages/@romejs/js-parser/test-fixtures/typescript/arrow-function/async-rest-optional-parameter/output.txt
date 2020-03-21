@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -105,14 +106,14 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 31
-                index: 31
+                column: 34
+                index: 34
                 line: 1
               }
               start: Object {
-                column: 32
-                index: 32
-                line: 1
+                column: 0
+                index: 35
+                line: 2
               }
             }
             meta: PatternMeta {
@@ -120,14 +121,14 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 31
-                  index: 31
+                  column: 34
+                  index: 34
                   line: 1
                 }
                 start: Object {
-                  column: 32
-                  index: 32
-                  line: 1
+                  column: 0
+                  index: 35
+                  line: 2
                 }
               }
               typeAnnotation: TSArrayType {

@@ -1,4 +1,5 @@
 Program {
+  corrupt: true
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -610,6 +611,7 @@ Program {
         }
         alternate: ReferenceIdentifier {
           name: 'INVALID_PLACEHOLDER'
+          trailingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -626,6 +628,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -639,24 +642,6 @@ Program {
               line: 2
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' Valid lhs value inside parentheses'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 37
-                  index: 37
-                  line: 1
-                }
-                start: Object {
-                  column: 0
-                  index: 0
-                  line: 1
-                }
-              }
-            }
-          ]
         }
         consequent: ArrowFunctionExpression {
           loc: Object {
@@ -844,6 +829,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -857,24 +843,6 @@ Program {
               line: 3
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? b : (c => d)'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 37
-                  index: 75
-                  line: 2
-                }
-                start: Object {
-                  column: 18
-                  index: 56
-                  line: 2
-                }
-              }
-            }
-          ]
         }
         consequent: ArrowFunctionExpression {
           loc: Object {
@@ -1078,6 +1046,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -1091,24 +1060,6 @@ Program {
               line: 4
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? ((b): c => d) : e'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 46
-                  index: 122
-                  line: 3
-                }
-                start: Object {
-                  column: 22
-                  index: 98
-                  line: 3
-                }
-              }
-            }
-          ]
         }
         alternate: ArrowFunctionExpression {
           loc: Object {
@@ -1297,6 +1248,7 @@ Program {
         }
         alternate: ReferenceIdentifier {
           name: 'INVALID_PLACEHOLDER'
+          trailingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -1313,6 +1265,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -1326,40 +1279,6 @@ Program {
               line: 7
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? b : ((c): d => e)'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 48
-                  index: 171
-                  line: 4
-                }
-                start: Object {
-                  column: 24
-                  index: 147
-                  line: 4
-                }
-              }
-            }
-            CommentLine {
-              value: ' Nested arrow function inside parentheses'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 43
-                  index: 216
-                  line: 6
-                }
-                start: Object {
-                  column: 0
-                  index: 173
-                  line: 6
-                }
-              }
-            }
-          ]
         }
         consequent: ArrowFunctionExpression {
           loc: Object {
@@ -1444,6 +1363,7 @@ Program {
             }
             params: Array [
               BindingAssignmentPattern {
+                operator: '='
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
@@ -1648,6 +1568,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -1661,24 +1582,6 @@ Program {
               line: 8
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? (b = (c) => d) : (e => f)'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 61
-                  index: 278
-                  line: 7
-                }
-                start: Object {
-                  column: 29
-                  index: 246
-                  line: 7
-                }
-              }
-            }
-          ]
         }
         consequent: ArrowFunctionExpression {
           loc: Object {
@@ -1763,6 +1666,7 @@ Program {
             }
             params: Array [
               BindingAssignmentPattern {
+                operator: '='
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
@@ -1967,6 +1871,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'b'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -1980,40 +1885,6 @@ Program {
               line: 11
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? ((b = (c) => d): e => f) : g'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 68
-                  index: 347
-                  line: 8
-                }
-                start: Object {
-                  column: 33
-                  index: 312
-                  line: 8
-                }
-              }
-            }
-            CommentLine {
-              value: ' Nested conditional expressions'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 33
-                  index: 382
-                  line: 10
-                }
-                start: Object {
-                  column: 0
-                  index: 349
-                  line: 10
-                }
-              }
-            }
-          ]
         }
         consequent: ConditionalExpression {
           loc: Object {
@@ -2233,6 +2104,7 @@ Program {
         }
         alternate: ReferenceIdentifier {
           name: 'INVALID_PLACEHOLDER'
+          trailingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -2249,6 +2121,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -2262,24 +2135,6 @@ Program {
               line: 12
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' b ? (c ? ((d): e => f) : g) : h'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 70
-                  index: 453
-                  line: 11
-                }
-                start: Object {
-                  column: 36
-                  index: 419
-                  line: 11
-                }
-              }
-            }
-          ]
         }
         consequent: ConditionalExpression {
           loc: Object {
@@ -2577,6 +2432,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -2590,24 +2446,6 @@ Program {
               line: 14
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? (b ? (c ? d : (e => f)) : g) : h'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 75
-                  index: 529
-                  line: 12
-                }
-                start: Object {
-                  column: 36
-                  index: 490
-                  line: 12
-                }
-              }
-            }
-          ]
         }
         consequent: ConditionalExpression {
           loc: Object {
@@ -2858,6 +2696,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -2871,40 +2710,6 @@ Program {
               line: 17
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? (b ? c : ((d): e => f)) : g'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 68
-                  index: 599
-                  line: 14
-                }
-                start: Object {
-                  column: 34
-                  index: 565
-                  line: 14
-                }
-              }
-            }
-            CommentLine {
-              value: ' Multiple arrow functions'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 27
-                  index: 628
-                  line: 16
-                }
-                start: Object {
-                  column: 0
-                  index: 601
-                  line: 16
-                }
-              }
-            }
-          ]
         }
         alternate: ArrowFunctionExpression {
           loc: Object {
@@ -3209,6 +3014,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -3222,40 +3028,6 @@ Program {
               line: 20
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? ((b): c => d) : ((e): f => g)'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 69
-                  index: 698
-                  line: 17
-                }
-                start: Object {
-                  column: 33
-                  index: 662
-                  line: 17
-                }
-              }
-            }
-            CommentLine {
-              value: ' Multiple nested arrow functions (<T> is needed to avoid ambiguities)'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 71
-                  index: 771
-                  line: 19
-                }
-                start: Object {
-                  column: 0
-                  index: 700
-                  line: 19
-                }
-              }
-            }
-          ]
         }
         consequent: ArrowFunctionExpression {
           loc: Object {
@@ -3513,6 +3285,7 @@ Program {
         }
         alternate: ReferenceIdentifier {
           name: 'INVALID_PLACEHOLDER'
+          trailingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -3529,6 +3302,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -3542,24 +3316,6 @@ Program {
               line: 21
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? ((b): c => ((d): e => f)) : g'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 69
-                  index: 841
-                  line: 20
-                }
-                start: Object {
-                  column: 33
-                  index: 805
-                  line: 20
-                }
-              }
-            }
-          ]
         }
         consequent: ArrowFunctionExpression {
           loc: Object {
@@ -3869,6 +3625,7 @@ Program {
         }
         alternate: ReferenceIdentifier {
           name: 'INVALID_PLACEHOLDER'
+          trailingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -3885,6 +3642,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -3898,24 +3656,6 @@ Program {
               line: 22
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? b : (c => (<T>(d): e => f))'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 66
-                  index: 908
-                  line: 21
-                }
-                start: Object {
-                  column: 32
-                  index: 874
-                  line: 21
-                }
-              }
-            }
-          ]
         }
         consequent: ArrowFunctionExpression {
           loc: Object {
@@ -4225,6 +3965,7 @@ Program {
         }
         alternate: ReferenceIdentifier {
           name: 'INVALID_PLACEHOLDER'
+          trailingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -4241,6 +3982,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -4254,40 +3996,6 @@ Program {
               line: 25
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? (<T>(b): c => d) : (e => f)'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 66
-                  index: 975
-                  line: 22
-                }
-                start: Object {
-                  column: 32
-                  index: 941
-                  line: 22
-                }
-              }
-            }
-            CommentLine {
-              value: ' Invalid lhs value inside parentheses'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 39
-                  index: 1_016
-                  line: 24
-                }
-                start: Object {
-                  column: 0
-                  index: 977
-                  line: 24
-                }
-              }
-            }
-          ]
         }
         consequent: ArrowFunctionExpression {
           loc: Object {
@@ -4344,13 +4052,13 @@ Program {
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
-                    column: 19
-                    index: 1_036
+                    column: 21
+                    index: 1_038
                     line: 25
                   }
                   start: Object {
-                    column: 20
-                    index: 1_037
+                    column: 21
+                    index: 1_038
                     line: 25
                   }
                 }
@@ -4476,6 +4184,7 @@ Program {
         }
         alternate: ReferenceIdentifier {
           name: 'INVALID_PLACEHOLDER'
+          trailingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -4492,6 +4201,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -4505,24 +4215,6 @@ Program {
               line: 26
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? (b => c) : (d => e)'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 49
-                  index: 1_066
-                  line: 25
-                }
-                start: Object {
-                  column: 23
-                  index: 1_040
-                  line: 25
-                }
-              }
-            }
-          ]
         }
         consequent: ConditionalExpression {
           loc: Object {
@@ -4625,13 +4317,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 23
-                      index: 1_090
+                      column: 25
+                      index: 1_092
                       line: 26
                     }
                     start: Object {
-                      column: 24
-                      index: 1_091
+                      column: 26
+                      index: 1_093
                       line: 26
                     }
                   }
@@ -4758,6 +4450,7 @@ Program {
         }
         alternate: ReferenceIdentifier {
           name: 'INVALID_PLACEHOLDER'
+          trailingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -4774,6 +4467,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -4787,40 +4481,6 @@ Program {
               line: 29
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? (b ? (c => d) : (e => f)) : g'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 67
-                  index: 1_134
-                  line: 26
-                }
-                start: Object {
-                  column: 31
-                  index: 1_098
-                  line: 26
-                }
-              }
-            }
-            CommentLine {
-              value: ' Invalid lhs value inside parentheses inside arrow function'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 61
-                  index: 1_197
-                  line: 28
-                }
-                start: Object {
-                  column: 0
-                  index: 1_136
-                  line: 28
-                }
-              }
-            }
-          ]
         }
         consequent: ArrowFunctionExpression {
           loc: Object {
@@ -4961,13 +4621,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 30
-                      index: 1_228
+                      column: 32
+                      index: 1_230
                       line: 29
                     }
                     start: Object {
-                      column: 31
-                      index: 1_229
+                      column: 32
+                      index: 1_230
                       line: 29
                     }
                   }
@@ -5093,6 +4753,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -5104,291 +4765,6 @@ Program {
               column: 0
               index: 1_271
               line: 30
-            }
-          }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? ((b): c => (d => e)) : (f => g)'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 72
-                  index: 1_270
-                  line: 29
-                }
-                start: Object {
-                  column: 34
-                  index: 1_232
-                  line: 29
-                }
-              }
-            }
-          ]
-        }
-        consequent: ConditionalExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 42
-              index: 1_313
-              line: 30
-            }
-            start: Object {
-              column: 4
-              index: 1_275
-              line: 30
-            }
-          }
-          alternate: ReferenceIdentifier {
-            name: 'INVALID_PLACEHOLDER'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 42
-                index: 1_313
-                line: 30
-              }
-              start: Object {
-                column: 41
-                index: 1_312
-                line: 30
-              }
-            }
-          }
-          test: ReferenceIdentifier {
-            name: 'b'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 5
-                index: 1_276
-                line: 30
-              }
-              start: Object {
-                column: 4
-                index: 1_275
-                line: 30
-              }
-            }
-          }
-          trailingComments: Array [
-            CommentLine {
-              value: ' a ? (b ? (c => d) : (e => (f => g))) : (h => i)'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 93
-                  index: 1_364
-                  line: 30
-                }
-                start: Object {
-                  column: 43
-                  index: 1_314
-                  line: 30
-                }
-              }
-            }
-            CommentLine {
-              value: ' Function as type annotation'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 30
-                  index: 1_396
-                  line: 32
-                }
-                start: Object {
-                  column: 0
-                  index: 1_366
-                  line: 32
-                }
-              }
-            }
-          ]
-          consequent: ArrowFunctionExpression {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 41
-                index: 1_312
-                line: 30
-              }
-              start: Object {
-                column: 8
-                index: 1_279
-                line: 30
-              }
-            }
-            head: FunctionHead {
-              async: false
-              hasHoistedVars: false
-              predicate: undefined
-              rest: undefined
-              thisType: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 24
-                  index: 1_295
-                  line: 30
-                }
-                start: Object {
-                  column: 8
-                  index: 1_279
-                  line: 30
-                }
-              }
-              params: Array [
-                BindingIdentifier {
-                  name: 'INVALID_PLACEHOLDER'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 23
-                      index: 1_294
-                      line: 30
-                    }
-                    start: Object {
-                      column: 24
-                      index: 1_295
-                      line: 30
-                    }
-                  }
-                }
-              ]
-              returnType: FlowGenericTypeAnnotation {
-                id: Identifier {
-                  name: 'e'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 20
-                      index: 1_291
-                      line: 30
-                    }
-                    start: Object {
-                      column: 19
-                      index: 1_290
-                      line: 30
-                    }
-                  }
-                }
-                typeParameters: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 20
-                    index: 1_291
-                    line: 30
-                  }
-                  start: Object {
-                    column: 19
-                    index: 1_290
-                    line: 30
-                  }
-                }
-              }
-            }
-            body: ArrowFunctionExpression {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 41
-                  index: 1_312
-                  line: 30
-                }
-                start: Object {
-                  column: 24
-                  index: 1_295
-                  line: 30
-                }
-              }
-              body: ReferenceIdentifier {
-                name: 'i'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 41
-                    index: 1_312
-                    line: 30
-                  }
-                  start: Object {
-                    column: 40
-                    index: 1_311
-                    line: 30
-                  }
-                }
-              }
-              head: FunctionHead {
-                async: false
-                hasHoistedVars: false
-                predicate: undefined
-                rest: undefined
-                thisType: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 40
-                    index: 1_311
-                    line: 30
-                  }
-                  start: Object {
-                    column: 24
-                    index: 1_295
-                    line: 30
-                  }
-                }
-                params: Array [
-                  BindingIdentifier {
-                    name: 'INVALID_PLACEHOLDER'
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 39
-                        index: 1_310
-                        line: 30
-                      }
-                      start: Object {
-                        column: 40
-                        index: 1_311
-                        line: 30
-                      }
-                    }
-                  }
-                ]
-                returnType: FlowGenericTypeAnnotation {
-                  id: Identifier {
-                    name: 'h'
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 36
-                        index: 1_307
-                        line: 30
-                      }
-                      start: Object {
-                        column: 35
-                        index: 1_306
-                        line: 30
-                      }
-                    }
-                  }
-                  typeParameters: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 36
-                      index: 1_307
-                      line: 30
-                    }
-                    start: Object {
-                      column: 35
-                      index: 1_306
-                      line: 30
-                    }
-                  }
-                }
-              }
             }
           }
         }
@@ -5422,6 +4798,23 @@ Program {
               }
             }
           }
+          test: ReferenceIdentifier {
+            name: 'a'
+            leadingComments: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 1
+                index: 1_398
+                line: 33
+              }
+              start: Object {
+                column: 0
+                index: 1_397
+                line: 33
+              }
+            }
+          }
           leadingComments: Array [
             CommentLine {
               value: ' a ? (b ? (c => d) : (e => (f => g))) : (h => i)'
@@ -5456,56 +4849,6 @@ Program {
               }
             }
           ]
-          test: ReferenceIdentifier {
-            name: 'a'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 1
-                index: 1_398
-                line: 33
-              }
-              start: Object {
-                column: 0
-                index: 1_397
-                line: 33
-              }
-            }
-            leadingComments: Array [
-              CommentLine {
-                value: ' a ? (b ? (c => d) : (e => (f => g))) : (h => i)'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 93
-                    index: 1_364
-                    line: 30
-                  }
-                  start: Object {
-                    column: 43
-                    index: 1_314
-                    line: 30
-                  }
-                }
-              }
-              CommentLine {
-                value: ' Function as type annotation'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 30
-                    index: 1_396
-                    line: 32
-                  }
-                  start: Object {
-                    column: 0
-                    index: 1_366
-                    line: 32
-                  }
-                }
-              }
-            ]
-          }
           consequent: ArrowFunctionExpression {
             loc: Object {
               filename: 'input.js'
@@ -5625,8 +4968,8 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 16
-                        index: 1_413
+                        column: 15
+                        index: 1_412
                         line: 33
                       }
                       start: Object {
@@ -5640,8 +4983,8 @@ Program {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
-                          column: 16
-                          index: 1_413
+                          column: 15
+                          index: 1_412
                           line: 33
                         }
                         start: Object {
@@ -5685,6 +5028,274 @@ Program {
                     }
                   }
                 ]
+              }
+            }
+          }
+        }
+        consequent: ConditionalExpression {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 42
+              index: 1_313
+              line: 30
+            }
+            start: Object {
+              column: 4
+              index: 1_275
+              line: 30
+            }
+          }
+          test: ReferenceIdentifier {
+            name: 'b'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 5
+                index: 1_276
+                line: 30
+              }
+              start: Object {
+                column: 4
+                index: 1_275
+                line: 30
+              }
+            }
+          }
+          alternate: ReferenceIdentifier {
+            name: 'INVALID_PLACEHOLDER'
+            trailingComments: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 42
+                index: 1_313
+                line: 30
+              }
+              start: Object {
+                column: 41
+                index: 1_312
+                line: 30
+              }
+            }
+          }
+          trailingComments: Array [
+            CommentLine {
+              value: ' a ? (b ? (c => d) : (e => (f => g))) : (h => i)'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 93
+                  index: 1_364
+                  line: 30
+                }
+                start: Object {
+                  column: 43
+                  index: 1_314
+                  line: 30
+                }
+              }
+            }
+            CommentLine {
+              value: ' Function as type annotation'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 30
+                  index: 1_396
+                  line: 32
+                }
+                start: Object {
+                  column: 0
+                  index: 1_366
+                  line: 32
+                }
+              }
+            }
+          ]
+          consequent: ArrowFunctionExpression {
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 41
+                index: 1_312
+                line: 30
+              }
+              start: Object {
+                column: 8
+                index: 1_279
+                line: 30
+              }
+            }
+            head: FunctionHead {
+              async: false
+              hasHoistedVars: false
+              predicate: undefined
+              rest: undefined
+              thisType: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 24
+                  index: 1_295
+                  line: 30
+                }
+                start: Object {
+                  column: 8
+                  index: 1_279
+                  line: 30
+                }
+              }
+              params: Array [
+                BindingIdentifier {
+                  name: 'INVALID_PLACEHOLDER'
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 41
+                      index: 1_312
+                      line: 30
+                    }
+                    start: Object {
+                      column: 41
+                      index: 1_312
+                      line: 30
+                    }
+                  }
+                }
+              ]
+              returnType: FlowGenericTypeAnnotation {
+                id: Identifier {
+                  name: 'e'
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 20
+                      index: 1_291
+                      line: 30
+                    }
+                    start: Object {
+                      column: 19
+                      index: 1_290
+                      line: 30
+                    }
+                  }
+                }
+                typeParameters: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 20
+                    index: 1_291
+                    line: 30
+                  }
+                  start: Object {
+                    column: 19
+                    index: 1_290
+                    line: 30
+                  }
+                }
+              }
+            }
+            body: ArrowFunctionExpression {
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 41
+                  index: 1_312
+                  line: 30
+                }
+                start: Object {
+                  column: 24
+                  index: 1_295
+                  line: 30
+                }
+              }
+              body: ReferenceIdentifier {
+                name: 'i'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 41
+                    index: 1_312
+                    line: 30
+                  }
+                  start: Object {
+                    column: 40
+                    index: 1_311
+                    line: 30
+                  }
+                }
+              }
+              head: FunctionHead {
+                async: false
+                hasHoistedVars: false
+                predicate: undefined
+                rest: undefined
+                thisType: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 40
+                    index: 1_311
+                    line: 30
+                  }
+                  start: Object {
+                    column: 24
+                    index: 1_295
+                    line: 30
+                  }
+                }
+                params: Array [
+                  BindingIdentifier {
+                    name: 'INVALID_PLACEHOLDER'
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 41
+                        index: 1_312
+                        line: 30
+                      }
+                      start: Object {
+                        column: 41
+                        index: 1_312
+                        line: 30
+                      }
+                    }
+                  }
+                ]
+                returnType: FlowGenericTypeAnnotation {
+                  id: Identifier {
+                    name: 'h'
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 36
+                        index: 1_307
+                        line: 30
+                      }
+                      start: Object {
+                        column: 35
+                        index: 1_306
+                        line: 30
+                      }
+                    }
+                  }
+                  typeParameters: undefined
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 36
+                      index: 1_307
+                      line: 30
+                    }
+                    start: Object {
+                      column: 35
+                      index: 1_306
+                      line: 30
+                    }
+                  }
+                }
               }
             }
           }
@@ -5775,6 +5386,7 @@ Program {
         }
         alternate: ReferenceIdentifier {
           name: 'INVALID_PLACEHOLDER'
+          trailingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -5791,6 +5403,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -5804,40 +5417,6 @@ Program {
               line: 36
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? ((b): (c => d) => e) : f'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 60
-                  index: 1_457
-                  line: 33
-                }
-                start: Object {
-                  column: 29
-                  index: 1_426
-                  line: 33
-                }
-              }
-            }
-            CommentLine {
-              value: ' Async functions or calls'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 27
-                  index: 1_486
-                  line: 35
-                }
-                start: Object {
-                  column: 0
-                  index: 1_459
-                  line: 35
-                }
-              }
-            }
-          ]
         }
         consequent: ArrowFunctionExpression {
           loc: Object {
@@ -6024,6 +5603,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -6037,24 +5617,6 @@ Program {
               line: 37
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? (async(b)) : (c => d)'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 52
-                  index: 1_539
-                  line: 36
-                }
-                start: Object {
-                  column: 24
-                  index: 1_511
-                  line: 36
-                }
-              }
-            }
-          ]
         }
         consequent: ArrowFunctionExpression {
           loc: Object {
@@ -6226,6 +5788,7 @@ Program {
         }
         alternate: ReferenceIdentifier {
           name: 'INVALID_PLACEHOLDER'
+          trailingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -6242,6 +5805,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -6255,24 +5819,6 @@ Program {
               line: 38
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? (async (b): c => d) : e'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 58
-                  index: 1_598
-                  line: 37
-                }
-                start: Object {
-                  column: 28
-                  index: 1_568
-                  line: 37
-                }
-              }
-            }
-          ]
         }
         consequent: ArrowFunctionExpression {
           loc: Object {
@@ -6328,13 +5874,13 @@ Program {
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
-                    column: 25
-                    index: 1_624
+                    column: 27
+                    index: 1_626
                     line: 38
                   }
                   start: Object {
-                    column: 26
-                    index: 1_625
+                    column: 27
+                    index: 1_626
                     line: 38
                   }
                 }
@@ -6460,6 +6006,7 @@ Program {
         }
         alternate: ReferenceIdentifier {
           name: 'INVALID_PLACEHOLDER'
+          trailingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -6476,6 +6023,7 @@ Program {
         }
         test: ReferenceIdentifier {
           name: 'a'
+          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -6489,24 +6037,6 @@ Program {
               line: 39
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? (async(b => c)) : (d => e)'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 62
-                  index: 1_661
-                  line: 38
-                }
-                start: Object {
-                  column: 29
-                  index: 1_628
-                  line: 38
-                }
-              }
-            }
-          ]
         }
         consequent: ArrowFunctionExpression {
           loc: Object {
@@ -6615,13 +6145,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 32
-                      index: 1_694
+                      column: 34
+                      index: 1_696
                       line: 39
                     }
                     start: Object {
-                      column: 33
-                      index: 1_695
+                      column: 34
+                      index: 1_696
                       line: 39
                     }
                   }
@@ -6732,6 +6262,7 @@ Program {
           VariableDeclarator {
             id: BindingIdentifier {
               name: 'icecream'
+              leadingComments: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -6745,40 +6276,6 @@ Program {
                   line: 42
                 }
               }
-              leadingComments: Array [
-                CommentLine {
-                  value: ' a ? (async (b) => c => d) : (e => f)'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 75
-                      index: 1_737
-                      line: 39
-                    }
-                    start: Object {
-                      column: 36
-                      index: 1_698
-                      line: 39
-                    }
-                  }
-                }
-                CommentLine {
-                  value: ' https://github.com/prettier/prettier/issues/2194'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 51
-                      index: 1_790
-                      line: 41
-                    }
-                    start: Object {
-                      column: 0
-                      index: 1_739
-                      line: 41
-                    }
-                  }
-                }
-              ]
             }
             leadingComments: undefined
             loc: Object {
@@ -6962,13 +6459,13 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 8
-                            index: 1_902
+                            column: 35
+                            index: 1_929
                             line: 44
                           }
                           start: Object {
-                            column: 9
-                            index: 1_903
+                            column: 35
+                            index: 1_929
                             line: 44
                           }
                         }

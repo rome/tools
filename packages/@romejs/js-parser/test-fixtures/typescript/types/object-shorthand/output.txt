@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -164,7 +165,7 @@ Program {
                   body: BlockStatement {
                     body: Array []
                     directives: Array []
-                    leadingComments: undefined
+                    trailingComments: Array []
                     loc: Object {
                       filename: 'input.ts'
                       end: Object {

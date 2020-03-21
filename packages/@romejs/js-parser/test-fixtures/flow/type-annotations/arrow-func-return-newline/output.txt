@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -156,14 +157,14 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 11
-                        index: 35
+                        column: 14
+                        index: 38
                         line: 2
                       }
                       start: Object {
-                        column: 12
-                        index: 36
-                        line: 2
+                        column: 0
+                        index: 39
+                        line: 3
                       }
                     }
                     meta: PatternMeta {
@@ -171,14 +172,14 @@ Program {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
-                          column: 11
-                          index: 35
+                          column: 14
+                          index: 38
                           line: 2
                         }
                         start: Object {
-                          column: 12
-                          index: 36
-                          line: 2
+                          column: 0
+                          index: 39
+                          line: 3
                         }
                       }
                       typeAnnotation: StringKeywordTypeAnnotation {

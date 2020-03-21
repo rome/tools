@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   directives: Array []
   filename: 'input.mjs'
   hasHoistedVars: false
@@ -122,6 +123,7 @@ Program {
       ]
       specifiers: Array [
         ImportSpecifier {
+          leadingComments: undefined
           loc: Object {
             filename: 'input.mjs'
             end: Object {
@@ -173,6 +175,7 @@ Program {
               }
             }
             importKind: undefined
+            leadingComments: undefined
             loc: Object {
               filename: 'input.mjs'
               end: Object {
@@ -224,9 +227,9 @@ Program {
         loc: Object {
           filename: 'input.mjs'
           end: Object {
-            column: 0
-            index: 116
-            line: 7
+            column: 1
+            index: 115
+            line: 6
           }
           start: Object {
             column: 15

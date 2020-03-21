@@ -207,7 +207,7 @@ Object {
 
 ```javascript
 Object {
-  src: 'const foo string = function() {};\n'
+  src: 'const foo: string = function() {};\n'
   suppressions: Array []
   diagnostics: Array [
     Object {

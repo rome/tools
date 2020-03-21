@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -88,7 +89,6 @@ Program {
       cases: Array [
         SwitchCase {
           consequent: Array []
-          leadingComments: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {

@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -59,9 +60,9 @@ Program {
       loc: Object {
         filename: 'input.ts'
         end: Object {
-          column: 0
-          index: 258
-          line: 12
+          column: 1
+          index: 257
+          line: 11
         }
         start: Object {
           column: 0
@@ -125,9 +126,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 0
-                index: 256
-                line: 11
+                column: 33
+                index: 255
+                line: 10
               }
               start: Object {
                 column: 4
@@ -434,6 +435,7 @@ Program {
                   }
                   left: BindingIdentifier {
                     name: 'x'
+                    leadingComments: undefined
                     loc: Object {
                       filename: 'input.ts'
                       end: Object {
@@ -447,24 +449,6 @@ Program {
                         line: 9
                       }
                     }
-                    leadingComments: Array [
-                      CommentLine {
-                        value: ' Also works on AssignmentPattern'
-                        loc: Object {
-                          filename: 'input.ts'
-                          end: Object {
-                            column: 42
-                            index: 197
-                            line: 8
-                          }
-                          start: Object {
-                            column: 8
-                            index: 163
-                            line: 8
-                          }
-                        }
-                      }
-                    ]
                     meta: PatternMeta {
                       leadingComments: undefined
                       optional: undefined

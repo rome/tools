@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -68,22 +69,22 @@ Program {
             line: 1
           }
         }
-        right: ReferenceIdentifier {
-          name: 'baz'
+        left: ReferenceIdentifier {
+          name: 'foo'
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 4
-              index: 16
-              line: 2
+              column: 3
+              index: 3
+              line: 1
             }
             start: Object {
-              column: 1
-              index: 13
-              line: 2
+              column: 0
+              index: 0
+              line: 1
             }
           }
-          leadingComments: Array [
+          trailingComments: Array [
             CommentLine {
               value: 'bar'
               loc: Object {
@@ -102,23 +103,22 @@ Program {
             }
           ]
         }
-        left: ReferenceIdentifier {
-          name: 'foo'
-          leadingComments: undefined
+        right: ReferenceIdentifier {
+          name: 'baz'
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 3
-              index: 3
-              line: 1
+              column: 4
+              index: 16
+              line: 2
             }
             start: Object {
-              column: 0
-              index: 0
-              line: 1
+              column: 1
+              index: 13
+              line: 2
             }
           }
-          trailingComments: Array [
+          leadingComments: Array [
             CommentLine {
               value: 'bar'
               loc: Object {

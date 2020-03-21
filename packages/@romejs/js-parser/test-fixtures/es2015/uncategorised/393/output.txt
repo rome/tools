@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: true
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false

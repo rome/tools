@@ -25,17 +25,27 @@ export default createMasterCommand<Flags>({
   },
 
   async default(req: MasterRequest, flags: Flags): Promise<void> {
+    const fix = flags.fix === false
+      ? undefined : req.getDiagnosticPointerFromFlags({
+        type: 'flag',
+        key: 'fix',
+      });
+
     return new Promise((resolve, reject) => {
       if (req.query.requestFlags.watch) {
-        initWatchLint(req, reject);
+        initWatchLint(req, fix, reject);
       } else {
-        resolve(runLint(req, flags.fix));
+        resolve(runLint(req, fix));
       }
     });
   },
 });
 
-function initWatchLint(req: MasterRequest, reject: (err: Error) => void) {
+function initWatchLint(
+  req: MasterRequest,
+  fix: undefined | DiagnosticPointer,
+  reject: (err: Error) => void,
+) {
   const {master, reporter} = req;
 
   // whenever a file change happens, we wait 250ms to do lint, this is in case there's multiple
@@ -61,7 +71,7 @@ function initWatchLint(req: MasterRequest, reject: (err: Error) => void) {
     running = true;
     reporter.clear();
 
-    runLint(req, false).then(() => {
+    runLint(req, fix).then(() => {
       running = false;
 
       if (runAgainAfterComplete) {

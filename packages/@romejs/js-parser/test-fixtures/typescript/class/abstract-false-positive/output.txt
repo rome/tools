@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -53,6 +54,23 @@ Program {
           line: 2
         }
       }
+      declaration: ReferenceIdentifier {
+        name: 'abstract'
+        leadingComments: undefined
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 23
+            index: 86
+            line: 2
+          }
+          start: Object {
+            column: 15
+            index: 78
+            line: 2
+          }
+        }
+      }
       leadingComments: Array [
         CommentLine {
           value: ' Exports an identifier, doesn\'t try parsing `abstract class`'
@@ -71,40 +89,6 @@ Program {
           }
         }
       ]
-      declaration: ReferenceIdentifier {
-        name: 'abstract'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 23
-            index: 86
-            line: 2
-          }
-          start: Object {
-            column: 15
-            index: 78
-            line: 2
-          }
-        }
-        leadingComments: Array [
-          CommentLine {
-            value: ' Exports an identifier, doesn\'t try parsing `abstract class`'
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 62
-                index: 62
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-          }
-        ]
-      }
     }
   ]
 }

@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -111,9 +112,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 29
-                line: 3
+                column: 16
+                index: 26
+                line: 2
               }
               start: Object {
                 column: 2
@@ -261,9 +262,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 46
-                line: 4
+                column: 16
+                index: 43
+                line: 3
               }
               start: Object {
                 column: 2
@@ -411,9 +412,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 62
-                line: 5
+                column: 15
+                index: 59
+                line: 4
               }
               start: Object {
                 column: 2
@@ -561,9 +562,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 75
-                line: 6
+                column: 12
+                index: 72
+                line: 5
               }
               start: Object {
                 column: 2
@@ -711,9 +712,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 99
-                line: 7
+                column: 23
+                index: 96
+                line: 6
               }
               start: Object {
                 column: 2
@@ -861,9 +862,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 123
-                line: 8
+                column: 23
+                index: 120
+                line: 7
               }
               start: Object {
                 column: 2
@@ -1011,9 +1012,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 146
-                line: 9
+                column: 22
+                index: 143
+                line: 8
               }
               start: Object {
                 column: 2
@@ -1161,9 +1162,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 0
-                index: 164
-                line: 10
+                column: 19
+                index: 163
+                line: 9
               }
               start: Object {
                 column: 2

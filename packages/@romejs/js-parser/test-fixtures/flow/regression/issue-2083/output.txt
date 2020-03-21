@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -45,9 +46,9 @@ Program {
       loc: Object {
         filename: 'input.js'
         end: Object {
-          column: 0
-          index: 165
-          line: 12
+          column: 1
+          index: 164
+          line: 11
         }
         start: Object {
           column: 0
@@ -111,9 +112,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 114
-                line: 8
+                column: 3
+                index: 110
+                line: 6
               }
               start: Object {
                 column: 2
@@ -416,9 +417,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 0
-                index: 163
-                line: 11
+                column: 3
+                index: 162
+                line: 10
               }
               start: Object {
                 column: 2

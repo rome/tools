@@ -37,7 +37,7 @@ npm {
       filename: undefined
       end: Object {
         column: 4
-        index: 5
+        index: 4
         line: 1
       }
       start: Object {
@@ -65,7 +65,7 @@ npm {
       filename: undefined
       end: Object {
         column: 4
-        index: 5
+        index: 4
         line: 1
       }
       start: Object {

@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -106,13 +107,13 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 20
-                  index: 20
+                  column: 22
+                  index: 22
                   line: 1
                 }
                 start: Object {
-                  column: 21
-                  index: 21
+                  column: 22
+                  index: 22
                   line: 1
                 }
               }
@@ -121,13 +122,13 @@ Program {
                 loc: Object {
                   filename: 'input.ts'
                   end: Object {
-                    column: 20
-                    index: 20
+                    column: 22
+                    index: 22
                     line: 1
                   }
                   start: Object {
-                    column: 21
-                    index: 21
+                    column: 22
+                    index: 22
                     line: 1
                   }
                 }
@@ -269,13 +270,13 @@ Program {
                 loc: Object {
                   filename: 'input.ts'
                   end: Object {
-                    column: 8
-                    index: 32
+                    column: 14
+                    index: 38
                     line: 2
                   }
                   start: Object {
-                    column: 9
-                    index: 33
+                    column: 14
+                    index: 38
                     line: 2
                   }
                 }
@@ -285,13 +286,13 @@ Program {
                   loc: Object {
                     filename: 'input.ts'
                     end: Object {
-                      column: 8
-                      index: 32
+                      column: 14
+                      index: 38
                       line: 2
                     }
                     start: Object {
-                      column: 9
-                      index: 33
+                      column: 14
+                      index: 38
                       line: 2
                     }
                   }

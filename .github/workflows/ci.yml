@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "13.x"
-      - name: Run Rome ci
+      - name: Run Rome CI
         run: ./scripts/dev-rome ci
 
   build:

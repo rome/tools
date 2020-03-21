@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -121,7 +122,6 @@ Program {
           consequent: Array [
             BreakStatement {
               label: undefined
-              leadingComments: undefined
               trailingComments: undefined
               loc: Object {
                 filename: 'input.js'

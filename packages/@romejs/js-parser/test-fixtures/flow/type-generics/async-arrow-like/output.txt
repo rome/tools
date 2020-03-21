@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -366,8 +367,8 @@ Program {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 28
-                  index: 163
+                  column: 27
+                  index: 162
                   line: 5
                 }
                 start: Object {
@@ -381,8 +382,8 @@ Program {
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
-                    column: 28
-                    index: 163
+                    column: 27
+                    index: 162
                     line: 5
                   }
                   start: Object {
@@ -522,6 +523,23 @@ Program {
                 line: 5
               }
             }
+            left: ReferenceIdentifier {
+              name: 'async'
+              leadingComments: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 6
+                  index: 141
+                  line: 5
+                }
+                start: Object {
+                  column: 1
+                  index: 136
+                  line: 5
+                }
+              }
+            }
             right: BinaryExpression {
               operator: '+'
               loc: Object {
@@ -569,56 +587,6 @@ Program {
                   }
                 }
               }
-            }
-            left: ReferenceIdentifier {
-              name: 'async'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 6
-                  index: 141
-                  line: 5
-                }
-                start: Object {
-                  column: 1
-                  index: 136
-                  line: 5
-                }
-              }
-              leadingComments: Array [
-                CommentLine {
-                  value: ' This looks A LOT like an async arrow function, but it isn\'t because'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 70
-                      index: 95
-                      line: 3
-                    }
-                    start: Object {
-                      column: 0
-                      index: 25
-                      line: 3
-                    }
-                  }
-                }
-                CommentLine {
-                  value: ' T + U isn\'t a valid type parameter.'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 38
-                      index: 134
-                      line: 4
-                    }
-                    start: Object {
-                      column: 0
-                      index: 96
-                      line: 4
-                    }
-                  }
-                }
-              ]
             }
           }
         }

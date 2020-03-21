@@ -49,7 +49,7 @@ Object {
           filename: 'unknown'
           end: Object {
             column: 99
-            index: 100
+            index: 99
             line: 1
           }
           start: Object {

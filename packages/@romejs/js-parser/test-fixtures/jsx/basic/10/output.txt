@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -105,7 +106,6 @@ Program {
               }
             }
             expression: JSXEmptyExpression {
-              leadingComments: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {

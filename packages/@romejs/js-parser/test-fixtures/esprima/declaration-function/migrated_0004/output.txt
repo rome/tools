@@ -1,5 +1,7 @@
 Program {
   comments: Array []
+  corrupt: false
+  diagnostics: Array []
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -20,45 +22,6 @@ Program {
       line: 1
     }
   }
-  diagnostics: Array [
-    Object {
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Argument name clash in strict mode'
-      mtime: undefined
-      sourceType: 'script'
-      origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 19
-        index: 19
-        line: 1
-      }
-      start: Object {
-        column: 18
-        index: 18
-        line: 1
-      }
-      advice: Array [
-        log {
-          category: 'info'
-          message: 'Collides with this existing definition'
-        }
-        frame {
-          filename: 'input.js'
-          end: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-      ]
-    }
-  ]
   body: Array [
     ExpressionStatement {
       loc: Object {

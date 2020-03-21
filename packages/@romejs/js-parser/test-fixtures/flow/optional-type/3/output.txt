@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -142,14 +143,14 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 33
-                        index: 33
+                        column: 36
+                        index: 36
                         line: 1
                       }
                       start: Object {
-                        column: 34
-                        index: 34
-                        line: 1
+                        column: 0
+                        index: 37
+                        line: 2
                       }
                     }
                     meta: PatternMeta {
@@ -158,19 +159,20 @@ Program {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
-                          column: 33
-                          index: 33
+                          column: 36
+                          index: 36
                           line: 1
                         }
                         start: Object {
-                          column: 34
-                          index: 34
-                          line: 1
+                          column: 0
+                          index: 37
+                          line: 2
                         }
                       }
                     }
                   }
                   BindingAssignmentPattern {
+                    operator: '='
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
