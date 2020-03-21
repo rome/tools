@@ -21,6 +21,7 @@ import {
   sourceMapManager,
   urlToFilename,
   ErrorFrame,
+  StructuredError,
 } from '@romejs/v8';
 import fork from '../../common/utils/fork';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
