@@ -5,9 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MemberExpression, TSInferType} from '@romejs/js-ast';
-import {isFor, isUnaryLike, isConditional, isBinary} from '@romejs/js-ast-utils';
 import {
+  MemberExpression,
+  TSInferType,
+
   AnyNode,
   FlowNullableTypeAnnotation,
   UpdateExpression,
@@ -28,6 +29,7 @@ import {
   FlowFunctionTypeAnnotation,
   OptionalCallExpression,
 } from '@romejs/js-ast';
+import {isFor, isUnaryLike, isConditional, isBinary} from '@romejs/js-ast-utils';
 
 const PRECEDENCE = {
   '||': 0,

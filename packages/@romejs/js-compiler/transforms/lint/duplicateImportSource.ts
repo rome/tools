@@ -23,10 +23,8 @@ export default {
           const source = bodyNode.source.value;
 
           // Allow duplicate sources if the `importKind` is different
-          const sourceKey =
-            bodyNode.importKind === undefined
-              ? source
-              : `${bodyNode.importKind}:${source}`;
+          const sourceKey = bodyNode.importKind === undefined
+            ? source : `${bodyNode.importKind}:${source}`;
 
           const seenLoc = seenSources.get(sourceKey);
           if (seenLoc === undefined) {
@@ -68,18 +66,16 @@ export default {
               continue;
             }
 
-            let specifiers =
-              bodyNode.specifiers === undefined ? [] : bodyNode.specifiers;
+            let specifiers = bodyNode.specifiers === undefined
+              ? [] : bodyNode.specifiers;
 
             // Find and concat all duplicate imports
             for (let x = i + 1; x < node.body.length; x++) {
               const possibleDuplicateNode = node.body[x];
 
-              if (
-                possibleDuplicateNode.type === 'ImportDeclaration' &&
+              if (possibleDuplicateNode.type === 'ImportDeclaration' &&
                 bodyNode.source.value === possibleDuplicateNode.source.value &&
-                bodyNode.importKind === possibleDuplicateNode.importKind
-              ) {
+                bodyNode.importKind === possibleDuplicateNode.importKind) {
                 skipImports.add(possibleDuplicateNode);
                 if (possibleDuplicateNode.specifiers !== undefined) {
                   specifiers = [

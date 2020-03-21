@@ -11,8 +11,16 @@ import {
   ManifestDefinition,
   normalizeManifest,
 } from '@romejs/codec-js-manifest';
-import {PathPatterns, matchPathPatterns, parsePathPattern} from '@romejs/path-match';
-import {ProjectConfig, ROME_CONFIG_FILENAMES, ProjectDefinition} from '@romejs/project';
+import {
+  PathPatterns,
+  matchPathPatterns,
+  parsePathPattern,
+} from '@romejs/path-match';
+import {
+  ProjectConfig,
+  ROME_CONFIG_FILENAMES,
+  ProjectDefinition,
+} from '@romejs/project';
 import {
   DiagnosticsProcessor,
   getDiagnosticsFromError,

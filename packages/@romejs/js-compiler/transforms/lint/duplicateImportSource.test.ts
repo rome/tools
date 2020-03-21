@@ -6,14 +6,10 @@
  */
 
 import test from '@romejs/test';
-import {
-  testLint,
-  LINT_ENABLED_FORMAT_DISABLED_CONFIG,
-} from '../../../__rtests__/lint';
+import {testLint} from '../../api/lint.test';
 
-test('duplicate import source', async t => {
-  const res = await testLint(
-    `
+test('duplicate import source', async (t) => {
+  const res = await testLint(`
     import foo from './testdummy.ts';
     import {bar} from './testdummy.ts';
     import type {fooType} from './testdummy.ts';
@@ -22,8 +18,6 @@ test('duplicate import source', async t => {
       type: 'foo'
     } 
     console.log(typedFoo, foo, bar);
-    `,
-    LINT_ENABLED_FORMAT_DISABLED_CONFIG,
-  );
+    `);
   t.snapshot(res);
 });

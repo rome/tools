@@ -17,6 +17,7 @@ import {
   InspectorClientCloseError,
   InspectorClient,
   CoverageCollector,
+  NativeStructuredError,
   sourceMapManager,
   urlToFilename,
   ErrorFrame,
