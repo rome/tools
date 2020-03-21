@@ -26,5 +26,13 @@ test(
         category: 'lint/preferTemplate',
       },
     );
+
+    await testLint(
+      t,
+      `const foo = 'bar'; const bar = 'foo' console.log(foo + 'baz' + bar + 'bam' + 'boo' + foo)`,
+      {
+        category: 'lint/preferTemplate',
+      },
+    );
   },
 );

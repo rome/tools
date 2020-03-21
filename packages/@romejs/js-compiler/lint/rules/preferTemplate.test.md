@@ -62,3 +62,34 @@ console.log(`${foo}baz`);
 console.log(`${1 * 2}baz`);
 
 ```
+
+### `2`
+
+```
+
+ unknown:1:49 lint/preferTemplate FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Template literals are preferred over string concatenation
+
+    const foo = 'bar'; const bar = 'foo' console.log(foo + 'baz' + bar + 'bam' + 'boo' + foo)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+  ℹ Recommended fix
+
+  - foo·+·'baz'·+·bar·+·'bam'·+·'boo'·+·foo
+  + `${foo}baz${bar}bamboo${foo}`
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `2: formatted`
+
+```
+const foo = 'bar';
+const bar = 'foo';
+console.log(`${foo}baz${bar}bamboo${foo}`);
+
+```
