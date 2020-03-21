@@ -76,9 +76,13 @@ export default class SourceMapConsumer {
         };
 
         // Because each offset is encoded relative to the previous one,
+
         // many segments often have the same encoding. We can exploit this
+
         // fact by caching the parsed variable length fields of each segment,
+
         // allowing us to avoid a second parse if we encounter the same
+
         // segment again.
         let end = index;
         for (; end < length; end++) {
@@ -184,20 +188,17 @@ export default class SourceMapConsumer {
       return undefined;
     }
 
-    const source =
-      mapping.source == undefined
-        ? this.map.file
-        : this.map.sources[mapping.source];
+    const source = mapping.source == undefined
+      ? this.map.file : this.map.sources[mapping.source];
     if (source === undefined) {
       throw new Error('Mapping provided unknown source');
     }
 
     return {
-      source: source,
+      source,
       line: mapping.originalLine,
       column: mapping.originalColumn,
-      name:
-        mapping.name === undefined ? undefined : this.map.names[mapping.name],
+      name: mapping.name === undefined ? undefined : this.map.names[mapping.name],
     };
   }
 }

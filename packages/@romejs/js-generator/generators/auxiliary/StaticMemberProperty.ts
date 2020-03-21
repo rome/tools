@@ -12,10 +12,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function StaticMemberProperty(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function StaticMemberProperty(generator: Generator, node: AnyNode) {
   node = staticMemberProperty.assert(node);
 
   generator.token('.');

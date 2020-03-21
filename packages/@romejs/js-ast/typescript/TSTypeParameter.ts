@@ -8,12 +8,14 @@
 import {JSNodeBase, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTypeParameter = JSNodeBase & {
-  type: 'TSTypeParameter';
-  name: string;
-  default?: AnyTSPrimary;
-  constraint?: AnyTSPrimary;
-};
+export type TSTypeParameter =
+  & JSNodeBase
+  & {
+    type: 'TSTypeParameter';
+    name: string;
+    default?: AnyTSPrimary;
+    constraint?: AnyTSPrimary;
+  };
 
 export const tsTypeParameter = createBuilder<TSTypeParameter>(
   'TSTypeParameter',

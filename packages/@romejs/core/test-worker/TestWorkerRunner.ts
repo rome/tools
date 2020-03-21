@@ -40,23 +40,19 @@ export default class TestWorkerRunner {
     this.bridge = bridge;
     this.projectFolder = createAbsoluteFilePath(opts.projectFolder);
 
-    this.snapshotManager = new SnapshotManager(
-      this,
-      createAbsoluteFilePath(opts.file.real),
-    );
+    this.snapshotManager = new SnapshotManager(this, createAbsoluteFilePath(
+      opts.file.real,
+    ));
 
     this.hasFocusedTest = false;
     this.foundTests = new Map();
   }
 
-  foundTests: Map<
-    string,
-    {
-      callsiteError: Error;
-      options: TestOptions;
-      callback: undefined | TestCallback;
-    }
-  >;
+  foundTests: Map<string, {
+    callsiteError: Error;
+    options: TestOptions;
+    callback: undefined | TestCallback;
+  }>;
   hasFocusedTest: boolean;
 
   bridge: TestWorkerBridge;
@@ -104,7 +100,8 @@ export default class TestWorkerRunner {
     });
 
     if (res.syntaxError !== undefined) {
-      const message = `A bundle was generated that contained a syntax error: ${res.syntaxError.message}`;
+      const message =
+        `A bundle was generated that contained a syntax error: ${res.syntaxError.message}`;
 
       throw createSingleDiagnosticError({
         ...res.syntaxError,
@@ -125,7 +122,7 @@ export default class TestWorkerRunner {
     callback: undefined | TestCallback,
   ) {
     if (this.locked) {
-      throw new Error("Test can't be added outside of init");
+      throw new Error('Test can\'t be added outside of init');
     }
 
     let testName = options.name;
@@ -170,27 +167,24 @@ export default class TestWorkerRunner {
 
     let diagnostic: PartialDiagnostic = deriveDiagnosticFromError({
       error: opts.error,
-      category: testName,
+      category: 'tests/failure',
+      label: testName,
       filename,
       cleanFrames(frames) {
         // TODO we should actually get the frames before module init and do it that way
 
         // Remove everything before the original module factory
         let latestTestWorkerFrame = frames.find((frame, i) => {
-          if (
-            frame.typeName === 'global' &&
-            frame.methodName === undefined &&
-            frame.functionName === undefined
-          ) {
+          if (frame.typeName === 'global' && frame.methodName === undefined &&
+            frame.functionName === undefined) {
             // We are the global.<anonymous> frame
+
             // Now check for Script.runInContext
             const nextFrame = frames[i + 1];
-            if (
-              nextFrame !== undefined &&
-              nextFrame.typeName === 'Script' &&
-              nextFrame.methodName === 'runInContext'
-            ) {
+            if (nextFrame !== undefined && nextFrame.typeName === 'Script' &&
+              nextFrame.methodName === 'runInContext') {
               // Yes!
+
               // TODO also check for ___$romejs$core$common$utils$executeMain_ts$default (packages/romejs/core/common/utils/executeMain.ts:69:17)
               return true;
             }
@@ -201,10 +195,9 @@ export default class TestWorkerRunner {
 
         // And if there was no module factory frame, then we must be inside of a test
         if (latestTestWorkerFrame === undefined) {
-          latestTestWorkerFrame = frames.find(frame => {
-            return (
-              frame.filename !== undefined &&
-              frame.filename.includes('core/test-worker')
+          latestTestWorkerFrame = frames.find((frame) => {
+            return frame.filename !== undefined && frame.filename.includes(
+              'core/test-worker',
             );
           });
         }
@@ -254,7 +247,7 @@ export default class TestWorkerRunner {
 
   async runTest(testName: string, callback: TestCallback) {
     let onTimeout: OnTimeout = () => {
-      throw new Error("Promise wasn't created. Should be impossible.");
+      throw new Error('Promise wasn\'t created. Should be impossible.');
     };
 
     const timeoutPromise = new Promise((resolve, reject) => {
@@ -263,12 +256,13 @@ export default class TestWorkerRunner {
       };
     });
 
-    const api = new TestAPI(
+    const api = new TestAPI({
+      file: this.file,
       testName,
       onTimeout,
-      this.snapshotManager,
-      this.options,
-    );
+      snapshotManager: this.snapshotManager,
+      options: this.options,
+    });
 
     try {
       const res = callback(api);
@@ -295,11 +289,23 @@ export default class TestWorkerRunner {
     }
   }
 
-  async runTests(): Promise<void> {
+  async run(): Promise<void> {
     const promises: Set<Promise<void>> = new Set();
 
+    const {foundTests} = this;
+    if (foundTests.size === 0) {
+      this.bridge.testError.send({
+        ref: undefined,
+        diagnostic: {
+          filename: this.file.uid,
+          message: 'No tests declared in this file',
+          category: 'tests/noneDeclared',
+        },
+      });
+    }
+
     // Execute all the tests
-    for (const [testName, {options, callback}] of this.foundTests) {
+    for (const [testName, {options, callback}] of foundTests) {
       if (callback === undefined) {
         continue;
       }
@@ -313,14 +319,19 @@ export default class TestWorkerRunner {
       });
 
       const promise = this.runTest(testName, callback);
-      promise.then(() => {
-        promises.delete(promise);
-      });
-      promises.add(promise);
 
-      // if there's 5 promises, then wait for one of them to finish
-      if (promises.size > MAX_RUNNING_TESTS) {
-        await Promise.race(Array.from(promises));
+      if (this.options.syncTests) {
+        await promise;
+      } else {
+        promise.then(() => {
+          promises.delete(promise);
+        });
+        promises.add(promise);
+
+        // if there's 5 promises, then wait for one of them to finish
+        if (promises.size > MAX_RUNNING_TESTS) {
+          await Promise.race(Array.from(promises));
+        }
       }
     }
 
@@ -332,7 +343,7 @@ export default class TestWorkerRunner {
   }
 
   async emitFoundTests() {
-    const promises: Array<Promise<void>> = [];
+    const tests = [];
 
     for (const [testName, {callback, options}] of this.foundTests) {
       let isSkipped = callback === undefined;
@@ -340,30 +351,21 @@ export default class TestWorkerRunner {
         isSkipped = true;
       }
 
-      promises.push(
-        this.bridge.testFound.call({
-          ref: {
-            filename: this.file.real.join(),
-            testName,
-          },
-          isSkipped,
-        }),
-      );
+      tests.push({
+        ref: {
+          filename: this.file.real.join(),
+          testName,
+        },
+        isSkipped,
+      });
     }
 
-    await Promise.all(promises);
+    await this.bridge.testsFound.call(tests);
   }
 
-  async run(): Promise<void> {
+  async wrap(callback: () => Promise<void>): Promise<void> {
     try {
-      // Setup
-      await this.snapshotManager.load();
-      await this.discoverTests();
-      await this.emitFoundTests();
-
-      // Execute
-      this.lockTests();
-      await this.runTests();
+      await callback();
     } catch (err) {
       const diagnostics = getDiagnosticsFromError(err);
       if (diagnostics === undefined) {
@@ -388,5 +390,17 @@ export default class TestWorkerRunner {
         }
       }
     }
+  }
+
+  async prepare(): Promise<void> {
+    return this.wrap(async () => {
+      // Setup
+      await this.snapshotManager.load();
+      await this.discoverTests();
+      await this.emitFoundTests();
+
+      // Execute
+      this.lockTests();
+    });
   }
 }

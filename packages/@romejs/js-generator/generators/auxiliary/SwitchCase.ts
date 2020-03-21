@@ -21,7 +21,7 @@ export default function SwitchCase(generator: Generator, node: AnyNode) {
     generator.token(':');
   }
 
-  generator.newline();
+  generator.forceNewline();
 
   if (node.consequent.length) {
     generator.printStatementList(node.consequent, node, {indent: true});

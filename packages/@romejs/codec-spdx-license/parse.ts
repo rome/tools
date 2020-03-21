@@ -20,242 +20,231 @@ import {buildSuggestionAdvice} from '@romejs/diagnostics';
 import {inc, Number0, get0} from '@romejs/ob1';
 
 //# Tokens
-
-type Tokens = BaseTokens & {
-  ParenOpen: SimpleToken<'ParenOpen'>;
-  ParenClose: SimpleToken<'ParenClose'>;
-  Plus: SimpleToken<'Plus'>;
-  And: SimpleToken<'And'>;
-  With: SimpleToken<'With'>;
-  Or: SimpleToken<'Or'>;
-  Word: ValueToken<'Word', string>;
-};
+type Tokens =
+  & BaseTokens
+  & {
+    ParenOpen: SimpleToken<'ParenOpen'>;
+    ParenClose: SimpleToken<'ParenClose'>;
+    Plus: SimpleToken<'Plus'>;
+    And: SimpleToken<'And'>;
+    With: SimpleToken<'With'>;
+    Or: SimpleToken<'Or'>;
+    Word: ValueToken<'Word', string>;
+  };
 
 //# Nodes
-
 export type ExpressionNode = LicenseNode | AndNode | OrNode;
 
-type AndNode = ComplexNode<
-  'And',
-  {
-    left: ExpressionNode;
-    right: ExpressionNode;
-  }
->;
+type AndNode = ComplexNode<'And', {
+  left: ExpressionNode;
+  right: ExpressionNode;
+}>;
 
-type OrNode = ComplexNode<
-  'Or',
-  {
-    left: ExpressionNode;
-    right: ExpressionNode;
-  }
->;
+type OrNode = ComplexNode<'Or', {
+  left: ExpressionNode;
+  right: ExpressionNode;
+}>;
 
-type LicenseNode = ComplexNode<
-  'License',
-  {
-    plus: boolean;
-    id: string;
-    exception: undefined | string;
-  }
->;
+type LicenseNode = ComplexNode<'License', {
+  plus: boolean;
+  id: string;
+  exception: undefined | string;
+}>;
 
 function isWordChar(char: string) {
   return isAlpha(char) || isDigit(char) || char === '-' || char === '.';
 }
 
-type SPDXLicenseParserOptions = ParserOptions & {
-  loose?: boolean;
-};
+type SPDXLicenseParserOptions = ParserOptions & {loose?: boolean};
 
-const createSPDXLicenseParser = createParser(
-  ParserCore =>
-    class SPDXLicenseParser extends ParserCore<Tokens, void> {
-      constructor(opts: SPDXLicenseParserOptions) {
-        super(opts, 'spdx-license');
-        this.loose = opts.loose === true;
+const createSPDXLicenseParser = createParser((ParserCore) =>
+  class SPDXLicenseParser extends ParserCore<Tokens, void> {
+    constructor(opts: SPDXLicenseParserOptions) {
+      super(opts, 'parse/spdxLicense');
+      this.loose = opts.loose === true;
+    }
+
+    loose: boolean;
+
+    // For some reason Flow will throw an error without the type casts...
+    tokenize(index: Number0, input: string) {
+      const char = input[get0(index)];
+
+      if (char === '+') {
+        return this.finishToken('Plus');
       }
 
-      loose: boolean;
+      if (char === '(') {
+        return this.finishToken('ParenOpen');
+      }
 
-      // For some reason Flow will throw an error without the type casts...
-      tokenize(index: Number0, input: string) {
-        const char = input[get0(index)];
+      if (char === ')') {
+        return this.finishToken('ParenClose');
+      }
 
-        if (char === '+') {
-          return this.finishToken('Plus');
+      // Skip spaces
+      if (char === ' ') {
+        return this.lookaheadToken(inc(index));
+      }
+
+      if (isWordChar(char)) {
+        const [value, end] = this.readInputFrom(index, isWordChar);
+
+        if (value === 'AND') {
+          return this.finishToken('And', end);
+        } else if (value === 'OR') {
+          return this.finishToken('Or', end);
+        } else if (value === 'WITH') {
+          return this.finishToken('With', end);
+        } else {
+          return this.finishValueToken('Word', value, end);
         }
+      }
+    }
 
-        if (char === '(') {
-          return this.finishToken('ParenOpen');
-        }
+    parseLicense(token: Tokens['Word']): LicenseNode {
+      const startPos = this.getPosition();
+      this.nextToken();
 
-        if (char === ')') {
-          return this.finishToken('ParenClose');
-        }
+      // Validate id
+      const id = token.value;
+      let licenseInfo = getSPDXLicense(id);
+      const nextToken = this.getToken();
 
-        // Skip spaces
-        if (char === ' ') {
-          return this.lookaheadToken(inc(index));
-        }
+      // Sometimes licenses will be specified as "Apache 2.0" but what they actually meant was "Apache-2.0"
 
-        if (isWordChar(char)) {
-          const [value, end] = this.readInputFrom(index, isWordChar);
+      // In loose mode, just make it equivalent, otherwise, complain
+      if (licenseInfo === undefined && nextToken.type === 'Word') {
+        const possibleCorrectLicense = `${id}-${nextToken.value}`;
+        const possibleLicenseInfo = getSPDXLicense(possibleCorrectLicense);
 
-          if (value === 'AND') {
-            return this.finishToken('And', end);
-          } else if (value === 'OR') {
-            return this.finishToken('Or', end);
-          } else if (value === 'WITH') {
-            return this.finishToken('With', end);
+        if (possibleLicenseInfo !== undefined) {
+          if (this.loose) {
+            // Just allow it...
+            licenseInfo = possibleLicenseInfo;
+            this.nextToken();
           } else {
-            return this.finishValueToken('Word', value, end);
+            throw this.unexpected({
+              message: `Missing dash between SPDX license name and version`,
+              start: this.getPositionFromIndex(token.start),
+              end: this.getPositionFromIndex(nextToken.end),
+              advice: [
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: `Did you mean <emphasis>${possibleCorrectLicense}</emphasis>?`,
+                },
+              ],
+            });
           }
         }
       }
 
-      parseLicense(token: Tokens['Word']): LicenseNode {
-        const startPos = this.getPosition();
-        this.nextToken();
+      if (licenseInfo === undefined) {
+        throw this.unexpected({
+          message: `Unknown SPDX license <emphasis>${id}</emphasis>`,
+          start: this.getPositionFromIndex(token.start),
+          end: this.getPositionFromIndex(token.end),
+          advice: buildSuggestionAdvice(id, licenseNames),
+        });
+      }
 
-        // Validate id
-        const id = token.value;
-        let licenseInfo = getSPDXLicense(id);
-        const nextToken = this.getToken();
+      // Is this a plus? (wtf is this)
+      const plus = this.eatToken('Plus') !== undefined;
 
-        // Sometimes licenses will be specified as "Apache 2.0" but what they actually meant was "Apache-2.0"
-        // In loose mode, just make it equivalent, otherwise, complain
-        if (licenseInfo === undefined && nextToken.type === 'Word') {
-          const possibleCorrectLicense = `${id}-${nextToken.value}`;
-          const possibleLicenseInfo = getSPDXLicense(possibleCorrectLicense);
-
-          if (possibleLicenseInfo !== undefined) {
-            if (this.loose) {
-              // Just allow it...
-              licenseInfo = possibleLicenseInfo;
-              this.nextToken();
-            } else {
-              throw this.unexpected({
-                message: `Missing dash between SPDX license name and version`,
-                start: this.getPositionFromIndex(token.start),
-                end: this.getPositionFromIndex(nextToken.end),
-                advice: [
-                  {
-                    type: 'log',
-                    category: 'info',
-                    message: `Did you mean <emphasis>${possibleCorrectLicense}</emphasis>?`,
-                  },
-                ],
-              });
-            }
-          }
-        }
-
-        if (licenseInfo === undefined) {
+      // Get exception
+      let exception;
+      if (this.eatToken('With')) {
+        const token = this.getToken();
+        if (token.type === 'Word') {
+          exception = token.value;
+          this.nextToken();
+        } else {
           throw this.unexpected({
-            message: `Unknown SPDX license <emphasis>${id}</emphasis>`,
-            start: this.getPositionFromIndex(token.start),
-            end: this.getPositionFromIndex(token.end),
-            advice: buildSuggestionAdvice(id, licenseNames),
+            message: 'Only a license id can be on the right side of a WITH',
           });
         }
-
-        // Is this a plus? (wtf is this)
-        const plus = this.eatToken('Plus') !== undefined;
-
-        // Get exception
-        let exception;
-        if (this.eatToken('With')) {
-          const token = this.getToken();
-          if (token.type === 'Word') {
-            exception = token.value;
-            this.nextToken();
-          } else {
-            throw this.unexpected({
-              message: 'Only a license id can be on the right side of a WITH',
-            });
-          }
-        }
-
-        return {
-          type: 'License',
-          loc: this.finishLoc(startPos),
-          id,
-          exception,
-          plus,
-        };
       }
 
-      parseExpression(): ExpressionNode {
-        const startPos = this.getPosition();
-        const startToken = this.getToken();
+      return {
+        type: 'License',
+        loc: this.finishLoc(startPos),
+        id,
+        exception,
+        plus,
+      };
+    }
 
-        let value;
+    parseExpression(): ExpressionNode {
+      const startPos = this.getPosition();
+      const startToken = this.getToken();
 
-        switch (startToken.type) {
-          case 'ParenOpen':
-            this.nextToken();
-            value = this.parseExpression();
-            this.expectToken('ParenClose');
-            break;
+      let value;
 
-          case 'Word':
-            value = this.parseLicense(startToken);
-            break;
+      switch (startToken.type) {
+        case 'ParenOpen':
+          this.nextToken();
+          value = this.parseExpression();
+          this.expectToken('ParenClose');
+          break;
 
-          case 'Or':
-          case 'And':
-            throw this.unexpected({
-              message: 'Can only use AND/OR in between an expression',
-            });
+        case 'Word':
+          value = this.parseLicense(startToken);
+          break;
 
-          case 'Plus':
-            throw this.unexpected({
-              message: 'A plus can only come after a license id',
-            });
+        case 'Or':
+        case 'And':
+          throw this.unexpected({
+            message: 'Can only use AND/OR in between an expression',
+          });
 
-          case 'ParenClose':
-            throw this.unexpected({message: 'Nothing open to close'});
+        case 'Plus':
+          throw this.unexpected({
+            message: 'A plus can only come after a license id',
+          });
 
-          case 'EOF':
-            throw this.unexpected({message: 'Unexpected end of file'});
+        case 'ParenClose':
+          throw this.unexpected({message: 'Nothing open to close'});
 
-          default:
-            throw this.unexpected();
-        }
+        case 'EOF':
+          throw this.unexpected({message: 'Unexpected end of file'});
 
-        // Parse and/or
-        const nextToken = this.getToken();
-        switch (nextToken.type) {
-          case 'Or':
-            this.nextToken();
-            return {
-              type: 'Or',
-              loc: this.finishLoc(startPos),
-              left: value,
-              right: this.parseExpression(),
-            };
-
-          case 'And':
-            this.nextToken();
-            return {
-              type: 'And',
-              loc: this.finishLoc(startPos),
-              left: value,
-              right: this.parseExpression(),
-            };
-
-          default:
-            return value;
-        }
+        default:
+          throw this.unexpected();
       }
 
-      parse(): ExpressionNode {
-        const expr = this.parseExpression();
-        this.finalize();
-        return expr;
+      // Parse and/or
+      const nextToken = this.getToken();
+      switch (nextToken.type) {
+        case 'Or':
+          this.nextToken();
+          return {
+            type: 'Or',
+            loc: this.finishLoc(startPos),
+            left: value,
+            right: this.parseExpression(),
+          };
+
+        case 'And':
+          this.nextToken();
+          return {
+            type: 'And',
+            loc: this.finishLoc(startPos),
+            left: value,
+            right: this.parseExpression(),
+          };
+
+        default:
+          return value;
       }
-    },
+    }
+
+    parse(): ExpressionNode {
+      const expr = this.parseExpression();
+      this.finalize();
+      return expr;
+    }
+  }
 );
 
 export default function parse(opts: SPDXLicenseParserOptions): ExpressionNode {

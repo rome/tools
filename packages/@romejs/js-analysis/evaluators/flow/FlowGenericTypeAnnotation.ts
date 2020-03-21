@@ -28,7 +28,9 @@ export default function FlowGenericTypeAnnotation(node: AnyNode, scope: Scope) {
 
   //if (node.typeParameters) {
   //  // TODO execute type params
+
   //  return new InstanceT(scope, node, node.id.name, scope.evaluate(node.id), []);
+
   //} else {
   return new GenericT(scope, node, getName(node.id), scope.evaluate(node.id));
   //}

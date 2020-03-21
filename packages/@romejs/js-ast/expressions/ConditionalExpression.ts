@@ -8,12 +8,14 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type ConditionalExpression = JSNodeBase & {
-  type: 'ConditionalExpression';
-  test: AnyExpression;
-  alternate: AnyExpression;
-  consequent: AnyExpression;
-};
+export type ConditionalExpression =
+  & JSNodeBase
+  & {
+    type: 'ConditionalExpression';
+    test: AnyExpression;
+    alternate: AnyExpression;
+    consequent: AnyExpression;
+  };
 
 export const conditionalExpression = createBuilder<ConditionalExpression>(
   'ConditionalExpression',

@@ -16,9 +16,13 @@ export {masterCommands} from './master/commands/index';
 
 // Types
 export * from './common/types/platform';
+
 export * from './common/types/bundler';
+
 export * from './common/types/client';
+
 export * from './common/types/files';
+
 export * from './common/types/analyzeDependencies';
 
 export {default as Master} from './master/Master';

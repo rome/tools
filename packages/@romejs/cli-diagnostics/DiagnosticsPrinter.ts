@@ -52,7 +52,10 @@ type Banner = {
   rows: Array<Array<number | Array<number>>>;
 };
 
-type PositionLike = {line: undefined | Number1; column: undefined | Number0};
+type PositionLike = {
+  line: undefined | Number1;
+  column: undefined | Number0;
+};
 
 export function readDiagnosticsFileLocal(
   path: AbsoluteFilePath,
@@ -81,7 +84,7 @@ function equalPosition(
   return true;
 }
 
-type BeforeFooterPrintFn = (reporter: Reporter) => void;
+type BeforeFooterPrintFn = (reporter: Reporter, error: boolean) => void;
 
 export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
   grep: '',
@@ -118,14 +121,14 @@ export type DiagnosticsPrinterFileMtimes = UnknownFilePathMap<number>;
 export default class DiagnosticsPrinter extends Error {
   constructor(opts: DiagnosticsPrinterOptions) {
     super(
-      "Diagnostics printer. If you're seeing this then it wasn't caught and printed correctly.",
+      'Diagnostics printer. If you\'re seeing this then it wasn\'t caught and printed correctly.',
     );
     const {cwd, reporter, flags = DEFAULT_PRINTER_FLAGS} = opts;
 
     this.reporter = reporter;
     this.flags = flags;
-    this.readFile =
-      opts.readFile === undefined ? readDiagnosticsFileLocal : opts.readFile;
+    this.readFile = opts.readFile === undefined
+      ? readDiagnosticsFileLocal : opts.readFile;
     this.cwd = cwd === undefined ? createAbsoluteFilePath(process.cwd()) : cwd;
     this.processor = new DiagnosticsProcessor({
       filters: opts.filters,
@@ -174,10 +177,8 @@ export default class DiagnosticsPrinter extends Error {
   }
 
   shouldTruncate(): boolean {
-    if (
-      !this.flags.showAllDiagnostics &&
-      this.displayedCount > this.flags.maxDiagnostics
-    ) {
+    if (!this.flags.showAllDiagnostics && this.displayedCount >
+    this.flags.maxDiagnostics) {
       return true;
     } else {
       return false;
@@ -248,21 +249,16 @@ export default class DiagnosticsPrinter extends Error {
     this.fileMtimes.set(info.path, stats.mtime);
 
     if (info.type === 'reference') {
-      this.fileSources.set(
-        info.path,
-        toLines({
-          path: info.path,
-          input: stats.content,
-          sourceType: info.sourceType,
-          language: info.language,
-        }),
-      );
+      this.fileSources.set(info.path, toLines({
+        path: info.path,
+        input: stats.content,
+        sourceType: info.sourceType,
+        language: info.language,
+      }));
     }
   }
 
-  getDependenciesFromDiagnostics(
-    diagnostics: Diagnostics,
-  ): Array<FileDependency> {
+  getDependenciesFromDiagnostics(diagnostics: Diagnostics): Array<FileDependency> {
     const deps: Array<FileDependency> = [];
 
     for (const {
@@ -292,11 +288,8 @@ export default class DiagnosticsPrinter extends Error {
       }
 
       for (const item of advice) {
-        if (
-          item.type === 'frame' &&
-          item.filename !== undefined &&
-          item.sourceText === undefined
-        ) {
+        if (item.type === 'frame' && item.filename !== undefined &&
+          item.sourceText === undefined) {
           deps.push({
             type: 'reference',
             path: createUnknownFilePath(item.filename),
@@ -356,10 +349,7 @@ export default class DiagnosticsPrinter extends Error {
     }
   }
 
-  addDiagnostic(
-    partialDiagnostic: PartialDiagnostic,
-    origin?: DiagnosticOrigin,
-  ) {
+  addDiagnostic(partialDiagnostic: PartialDiagnostic, origin?: DiagnosticOrigin) {
     this.addDiagnostics([partialDiagnostic], origin);
   }
 
@@ -390,17 +380,15 @@ export default class DiagnosticsPrinter extends Error {
     const {start, end, filename} = diag;
 
     // Determine if we should skip showing the frame at the top of the diagnostic output
+
     // We check if there are any frame advice entries that match us exactly, this is
+
     // useful for stuff like reporting call stacks
     let skipFrame = false;
     if (start !== undefined && end !== undefined) {
       adviceLoop: for (const item of diag.advice) {
-        if (
-          item.type === 'frame' &&
-          item.filename === filename &&
-          equalPosition(item.start, start) &&
-          equalPosition(item.end, end)
-        ) {
+        if (item.type === 'frame' && item.filename === filename &&
+          equalPosition(item.start, start) && equalPosition(item.end, end)) {
           skipFrame = true;
           break;
         }
@@ -423,11 +411,8 @@ export default class DiagnosticsPrinter extends Error {
       mtime: expectedMtime,
     } of this.getDependenciesFromDiagnostics([diag])) {
       const mtime = this.fileMtimes.get(path);
-      if (
-        mtime !== undefined &&
-        expectedMtime !== undefined &&
-        mtime > expectedMtime
-      ) {
+      if (mtime !== undefined && expectedMtime !== undefined && mtime >
+      expectedMtime) {
         outdatedFiles.add(path);
       }
     }
@@ -435,27 +420,25 @@ export default class DiagnosticsPrinter extends Error {
     const outdatedAdvice: PartialDiagnosticAdvice = [];
     const isOutdated = outdatedFiles.size > 0;
     if (isOutdated) {
-      const outdatedFilesArr = Array.from(outdatedFiles, path => path.join());
+      const outdatedFilesArr = Array.from(outdatedFiles, (path) => path.join());
 
       if (outdatedFilesArr.length === 1 && outdatedFilesArr[0] === filename) {
         outdatedAdvice.push({
           type: 'log',
           category: 'warn',
-          message:
-            'This file has been changed since the diagnostic was produced and may be out of date',
+          message: 'This file has been changed since the diagnostic was produced and may be out of date',
         });
       } else {
         outdatedAdvice.push({
           type: 'log',
           category: 'warn',
-          message:
-            'This diagnostic may be out of date as it relies on the following files that have been changed since the diagnostic was generated',
+          message: 'This diagnostic may be out of date as it relies on the following files that have been changed since the diagnostic was generated',
         });
 
         outdatedAdvice.push({
           type: 'list',
-          list: outdatedFilesArr.map(
-            filename => `<fileref target="${filename}" />`,
+          list: outdatedFilesArr.map((filename) =>
+            `<filelink target="${filename}" />`
           ),
         });
       }
@@ -466,54 +449,51 @@ export default class DiagnosticsPrinter extends Error {
       includeHeaderInAdvice: false,
       outdated: isOutdated,
     });
+
     reporter.hr(derived.header);
-    reporter.indent();
 
-    // Concat all the advice together
-    const derivedAdvice: DiagnosticAdvice = [
-      ...derived.advice,
-      ...outdatedAdvice,
-    ].map(item =>
-      normalizeDiagnosticAdviceItem(diag, item, this.reporter.markupOptions),
-    );
-    const advice: DiagnosticAdvice = derivedAdvice.concat(diag.advice);
+    reporter.indent(() => {
+      // Concat all the advice together
+      const derivedAdvice: DiagnosticAdvice = [
+        ...derived.advice,
+        ...outdatedAdvice,
+      ].map((item) =>
+        normalizeDiagnosticAdviceItem(diag, item, this.reporter.markupOptions)
+      );
+      const advice: DiagnosticAdvice = derivedAdvice.concat(diag.advice);
 
-    // Print advice
-    for (const item of advice) {
-      const noSpacer = printAdvice(item, {
-        flags: this.flags,
-        missingFileSources: this.missingFileSources,
-        fileSources: this.fileSources,
-        diagnostic: diag,
-        reporter,
-      });
-      if (!noSpacer) {
-        reporter.optionalSpacer();
+      // Print advice
+      for (const item of advice) {
+        const noSpacer = printAdvice(item, {
+          flags: this.flags,
+          missingFileSources: this.missingFileSources,
+          fileSources: this.fileSources,
+          diagnostic: diag,
+          reporter,
+        });
+        if (!noSpacer) {
+          reporter.spacer();
+        }
       }
-    }
 
-    // Print verbose information
-    if (this.flags.verboseDiagnostics) {
-      const {origins} = diag;
+      // Print verbose information
+      if (this.flags.verboseDiagnostics) {
+        const {origins} = diag;
 
-      if (origins.length > 0) {
-        reporter.spacer();
-        reporter.info('Why are you seeing this diagnostic?');
-        reporter.spacer();
-        reporter.list(
-          origins.map(origin => {
+        if (origins.length > 0) {
+          reporter.spacer();
+          reporter.info('Why are you seeing this diagnostic?');
+          reporter.forceSpacer();
+          reporter.list(origins.map((origin) => {
             let res = `<emphasis>${origin.category}</emphasis>`;
             if (origin.message !== undefined) {
               res += `: ${origin.message}`;
             }
             return res;
-          }),
-          {ordered: true},
-        );
+          }), {ordered: true});
+        }
       }
-    }
-
-    reporter.dedent();
+    });
   }
 
   filterDiagnostics(): Diagnostics {
@@ -543,15 +523,17 @@ export default class DiagnosticsPrinter extends Error {
   footer() {
     const {reporter, problemCount} = this;
 
-    if (problemCount > 0) {
+    const isError = problemCount > 0;
+
+    if (isError) {
       reporter.hr();
     }
 
     for (const handler of this.beforeFooterPrint) {
-      handler(reporter);
+      handler(reporter, isError);
     }
 
-    if (problemCount > 0) {
+    if (isError) {
       this.footerError();
     } else {
       this.footerSuccess();
@@ -571,11 +553,11 @@ export default class DiagnosticsPrinter extends Error {
           }
 
           const pallete = banner.palettes[palleteIndex];
-          stream.write(
-            formatAnsi
-              .bgRgb(' ', {r: pallete[0], g: pallete[1], b: pallete[2]})
-              .repeat(times),
-          );
+          stream.write(formatAnsi.bgRgb(' ', {
+            r: pallete[0],
+            g: pallete[1],
+            b: pallete[2],
+          }).repeat(times));
         }
         stream.write('\n');
       }
@@ -615,7 +597,7 @@ export default class DiagnosticsPrinter extends Error {
       const {maxDiagnostics} = this.flags;
       reporter.warn(
         `Only <number>${maxDiagnostics}</number> errors shown, add the <emphasis>--show-all-diagnostics</emphasis> flag to view the remaining <number>${displayableProblems -
-          maxDiagnostics}</number> errors`,
+        maxDiagnostics}</number> errors`,
       );
     }
   }

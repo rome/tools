@@ -18,6 +18,7 @@ import {
   PartialDiagnosticAdvice,
   buildSuggestionAdvice,
   createSingleDiagnosticError,
+  DiagnosticCategory,
 } from '@romejs/diagnostics';
 import {orderBySimilarity} from '@romejs/string-utils';
 import {createUnknownFilePath, AbsoluteFilePath} from '@romejs/path';
@@ -30,6 +31,7 @@ export default function resolverSuggest(
     | ResolverQueryResponseFetchError
     | ResolverQueryResponseMissing
     | ResolverQueryResponseUnsupported,
+
   origQuerySource?: ResolverQuerySource,
 ): Error {
   let errMsg = '';
@@ -40,11 +42,12 @@ export default function resolverSuggest(
   } else if (resolved.type === 'FETCH_ERROR') {
     errMsg = 'Failed to fetch';
   }
+
   errMsg += ` "${query.source.join()}" from "${query.origin.join()}"`;
 
   // Use the querySource returned by the resolution which will be the one that actually triggered this error, otherwise use the query source provided to us
-  const querySource =
-    resolved.source === undefined ? origQuerySource : resolved.source;
+  const querySource = resolved.source === undefined
+    ? origQuerySource : resolved.source;
   if (querySource === undefined || querySource.pointer === undefined) {
     // TODO do something about the `advice` on some `resolved` that may contain metadata?
     throw new Error(errMsg);
@@ -110,8 +113,7 @@ export default function resolverSuggest(
         advice.push({
           type: 'log',
           category: 'info',
-          message:
-            'No platform was specified but we found modules for the following platforms',
+          message: 'No platform was specified but we found modules for the following platforms',
         });
       } else {
         advice.push({
@@ -131,9 +133,8 @@ export default function resolverSuggest(
 
     // Hint on any indirection
     if (
-      origQuerySource !== undefined &&
-      origQuerySource.pointer !== undefined &&
-      resolved.source !== undefined
+      origQuerySource !== undefined && origQuerySource.pointer !== undefined &&
+        resolved.source !== undefined
     ) {
       advice.push({
         type: 'log',
@@ -184,11 +185,8 @@ export default function resolverSuggest(
 
         advice = [
           ...advice,
-          ...buildSuggestionAdvice(
-            query.source.join(),
-            relativeSuggestions,
-            0,
-            relative => {
+          ...buildSuggestionAdvice(query.source.join(), relativeSuggestions, {
+            formatItem: (relative) => {
               const absolute = relativeToAbsolute.get(relative);
               if (absolute === undefined) {
                 throw new Error('Should be valid');
@@ -196,48 +194,49 @@ export default function resolverSuggest(
 
               return `<filelink target="${absolute}">${relative}</filelink>`;
             },
-          ),
+          }),
         ];
       }
     }
 
     // Hint if this was an entry resolve and the cwd wasn't a project
-    if (
-      query.entry === true &&
+    if (query.entry === true &&
       resolver.master.projectManager.findProjectExisting(localQuery.origin) ===
-        undefined
-    ) {
+      undefined) {
       advice.push({
         type: 'log',
         category: 'warn',
-        message: "You aren't in a Rome project",
+        message: 'You aren\'t in a Rome project',
       });
     }
   }
 
   // TODO check if this would have been successful if not for exports access control
-
-  const source =
-    querySource.source === undefined ? query.source.join() : querySource.source;
+  const source = querySource.source === undefined
+    ? query.source.join() : querySource.source;
   let message = '';
+  let category: DiagnosticCategory = 'resolver/notFound';
 
   if (resolved.type === 'UNSUPPORTED') {
     message = `Unsupported`;
+    category = 'resolver/unsupported';
   } else if (resolved.type === 'MISSING') {
     message = `Cannot find`;
   } else if (resolved.type === 'FETCH_ERROR') {
     message = 'Failed to fetch';
+    category = 'resolver/fetchFailed';
   }
 
   if (resolved.advice !== undefined) {
     advice = advice.concat(resolved.advice);
   }
 
-  message += ` <emphasis>${source}</emphasis> from <filelink emphasis target="${pointer.filename}" />`;
+  message +=
+    ` <emphasis>${source}</emphasis> from <filelink emphasis target="${pointer.filename}" />`;
 
   throw createSingleDiagnosticError({
     ...pointer,
-    category: 'resolver',
+    category,
     message,
     advice,
   });
@@ -301,8 +300,8 @@ function tryPathSuggestions(
 
     // Our basename isn't valid, but our parent exists
     if (!memoryFs.exists(path) && memoryFs.exists(parentPath)) {
-      const entries = Array.from(memoryFs.readdir(parentPath), path =>
-        path.join(),
+      const entries = Array.from(memoryFs.readdir(parentPath), (path) =>
+        path.join()
       );
       if (entries.length === 0) {
         continue;
@@ -311,20 +310,18 @@ function tryPathSuggestions(
       const ratings = orderBySimilarity(
         path.getExtensionlessBasename(),
         entries,
-        MIN_SIMILARITY,
-        target => {
-          return createUnknownFilePath(target).getExtensionlessBasename();
+        {
+          minRating: MIN_SIMILARITY,
+          formatItem: (target) => {
+            return createUnknownFilePath(target).getExtensionlessBasename();
+          },
         },
       );
 
       for (const rating of ratings) {
-        tryPathSuggestions(
-          resolver,
-          suggestions,
-          createUnknownFilePath(rating.target)
-            .append(segments.slice(1))
-            .assertAbsolute(),
-        );
+        tryPathSuggestions(resolver, suggestions, createUnknownFilePath(
+          rating.target,
+        ).append(segments.slice(1)).assertAbsolute());
       }
     }
   }
@@ -356,12 +353,11 @@ function getPackageSuggestions(
   }
 
   // TODO Add node_modules
-
   const matches: Array<[string, string]> = orderBySimilarity(
     query.source.join(),
     Array.from(possibleGlobalPackages.keys()),
-    MIN_SIMILARITY,
-  ).map(item => {
+    {minRating: MIN_SIMILARITY},
+  ).map((item) => {
     const name = item.target;
 
     const absolute = possibleGlobalPackages.get(name);

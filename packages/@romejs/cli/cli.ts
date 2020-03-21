@@ -30,6 +30,7 @@ import {
 import {commandCategories} from '@romejs/core/commands';
 import {writeFile} from '@romejs/fs';
 import fs = require('fs');
+
 import {stripAnsi} from '@romejs/string-ansi';
 import {Dict} from '@romejs/typescript-helpers';
 
@@ -88,45 +89,43 @@ export default async function cli() {
           ),
           logs: c.get('logs').asBoolean(false),
           logWorkers: c.get('logWorkers').asBooleanOrVoid(),
-          logPath: maybeCreateAbsoluteFilePath(
-            c.get('logPath').asStringOrVoid(),
-          ),
+          logPath: maybeCreateAbsoluteFilePath(c.get('logPath').asStringOrVoid()),
           ...overrideCLIFlags,
         },
 
         requestFlags: {
-          benchmark: c
-            .get('benchmark')
-            .asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.benchmark),
-          benchmarkIterations: c
-            .get('benchmarkIterations')
-            .asNumber(DEFAULT_CLIENT_REQUEST_FLAGS.benchmarkIterations),
-          collectMarkers: c
-            .get('collectMarkers')
-            .asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.collectMarkers),
+          benchmark: c.get('benchmark').asBoolean(
+            DEFAULT_CLIENT_REQUEST_FLAGS.benchmark,
+          ),
+          benchmarkIterations: c.get('benchmarkIterations').asNumber(
+            DEFAULT_CLIENT_REQUEST_FLAGS.benchmarkIterations,
+          ),
+          collectMarkers: c.get('collectMarkers').asBoolean(
+            DEFAULT_CLIENT_REQUEST_FLAGS.collectMarkers,
+          ),
           watch: c.get('watch').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.watch),
           fieri: c.get('fieri').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.fieri),
           focus: c.get('focus').asString(DEFAULT_CLIENT_REQUEST_FLAGS.focus),
           grep: c.get('grep').asString(DEFAULT_CLIENT_REQUEST_FLAGS.grep),
-          maxDiagnostics: c
-            .get('maxDiagnostics')
-            .asNumber(DEFAULT_CLIENT_REQUEST_FLAGS.maxDiagnostics),
-          verboseDiagnostics: c
-            .get('verboseDiagnostics')
-            .asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.verboseDiagnostics),
-          showAllDiagnostics: c
-            .get('showAllDiagnostics')
-            .asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.showAllDiagnostics),
-          inverseGrep: c
-            .get('inverseGrep')
-            .asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.inverseGrep),
-          resolverPlatform: c
-            .get('resolverPlatform')
-            .asStringSetOrVoid(PLATFORMS),
+          maxDiagnostics: c.get('maxDiagnostics').asNumber(
+            DEFAULT_CLIENT_REQUEST_FLAGS.maxDiagnostics,
+          ),
+          verboseDiagnostics: c.get('verboseDiagnostics').asBoolean(
+            DEFAULT_CLIENT_REQUEST_FLAGS.verboseDiagnostics,
+          ),
+          showAllDiagnostics: c.get('showAllDiagnostics').asBoolean(
+            DEFAULT_CLIENT_REQUEST_FLAGS.showAllDiagnostics,
+          ),
+          inverseGrep: c.get('inverseGrep').asBoolean(
+            DEFAULT_CLIENT_REQUEST_FLAGS.inverseGrep,
+          ),
+          resolverPlatform: c.get('resolverPlatform').asStringSetOrVoid(
+            PLATFORMS,
+          ),
           resolverScale: c.get('resolverScale').asNumberOrVoid(),
-          resolverMocks: c
-            .get('resolverMocks')
-            .asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.resolverMocks),
+          resolverMocks: c.get('resolverMocks').asBoolean(
+            DEFAULT_CLIENT_REQUEST_FLAGS.resolverMocks,
+          ),
           ...overrideRequestFlags,
         },
       };
@@ -153,6 +152,8 @@ export default async function cli() {
         category: local.category,
         description: local.description,
         defineFlags: local.defineFlags,
+        examples: local.examples,
+        usage: local.usage,
         callback(_commandFlags) {
           if (local.defineFlags !== undefined) {
             commandFlags = _commandFlags;
@@ -172,6 +173,8 @@ export default async function cli() {
         category: master.category,
         description: master.description,
         defineFlags: master.defineFlags,
+        usage: master.usage,
+        examples: master.examples,
 
         callback(_commandFlags) {
           if (master.defineFlags !== undefined) {
@@ -197,7 +200,7 @@ export default async function cli() {
   p.command({
     name: 'rage',
     category: commandCategories.INTERNAL,
-    description: '',
+    description: 'TODO',
 
     callback() {
       overrideCLIFlags = {
@@ -212,7 +215,7 @@ export default async function cli() {
   p.command({
     name: 'logs',
     category: commandCategories.INTERNAL,
-    description: '',
+    description: 'TODO',
 
     callback() {
       overrideCLIFlags = {
@@ -224,7 +227,7 @@ export default async function cli() {
   });
 
   // Initialize flags
-  let {clientFlags: clientFlags, cliFlags, requestFlags} = await p.init();
+  let {clientFlags, cliFlags, requestFlags} = await p.init();
 
   // Force collection of markers if markersPath or we are raging
   if (cliFlags.markersPath || cliFlags.rage) {
@@ -255,26 +258,20 @@ export default async function cli() {
 
     if (cliFlags.rage) {
       const {ragePath} = cliFlags;
-      const filename = clientFlags.cwd
-        .resolve(
-          ragePath === undefined
-            ? `rome-rage-${getFilenameTimestamp()}.tar.gz`
-            : ragePath,
-        )
-        .join();
+      const filename = clientFlags.cwd.resolve(ragePath === undefined
+        ? `rome-rage-${getFilenameTimestamp()}.tar.gz` : ragePath
+      ).join();
       await client.rage(filename, profileOptions);
       return;
     }
 
     if (cliFlags.profile) {
-      await client.profile(profileOptions, async events => {
+      await client.profile(profileOptions, async (events) => {
         const {cwd} = clientFlags;
         const {profilePath} = cliFlags;
 
-        const resolvedProfilePath = cwd.resolve(
-          profilePath === undefined
-            ? `Profile-${getFilenameTimestamp()}.json`
-            : profilePath,
+        const resolvedProfilePath = cwd.resolve(profilePath === undefined
+          ? `Profile-${getFilenameTimestamp()}.json` : profilePath
         );
 
         const str = JSON.stringify(events, undefined, '  ');
@@ -300,7 +297,7 @@ export default async function cli() {
         });
       }
 
-      await client.subscribeLogs(cliFlags.logWorkers === true, chunk => {
+      await client.subscribeLogs(cliFlags.logWorkers === true, (chunk) => {
         if (fileout === undefined) {
           client.reporter.writeAll(chunk);
         } else {
@@ -330,11 +327,8 @@ export default async function cli() {
   if (res.type === 'SUCCESS') {
     // Write markers if we were collecting them
     if (requestFlags.collectMarkers) {
-      const markersPath = clientFlags.cwd.resolve(
-        cliFlags.markersPath === undefined
-          ? `Markers-${getFilenameTimestamp()}.json`
-          : cliFlags.markersPath,
-      );
+      const markersPath = clientFlags.cwd.resolve(cliFlags.markersPath ===
+      undefined ? `Markers-${getFilenameTimestamp()}.json` : cliFlags.markersPath);
 
       await writeFile(markersPath, JSON.stringify(res.markers, null, '  '));
 
@@ -350,6 +344,11 @@ export default async function cli() {
         console.error('Unhandled CLI query error');
         console.error(res.stack);
       }
+      process.exit(1);
+      break;
+
+    case 'INVALID_REQUEST':
+      await p.showHelp();
       process.exit(1);
       break;
 

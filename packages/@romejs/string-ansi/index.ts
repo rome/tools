@@ -6,7 +6,11 @@
  */
 
 export * from './format';
+
 export * from './regex';
+
 export * from './pad';
+
 export * from './escapes';
+
 export * from './split';

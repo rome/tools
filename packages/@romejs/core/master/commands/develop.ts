@@ -10,11 +10,9 @@ import {Consumer} from '@romejs/consume';
 import {WebServer} from '../web/index';
 import {commandCategories, createMasterCommand} from '../../commands';
 
-type Flags = {
-  port: number;
-};
+type Flags = {port: number};
 
-const DEFAULT_PORT = 8081;
+const DEFAULT_PORT = 8_081;
 
 export default createMasterCommand({
   category: commandCategories.SOURCE_CODE,

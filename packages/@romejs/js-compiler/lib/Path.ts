@@ -55,10 +55,8 @@ export default class Path {
     this.parent = this.parentPath.node;
     this.context = context;
 
-    const parentScope =
-      opts.parentScope === undefined
-        ? context.getRootScope()
-        : opts.parentScope;
+    const parentScope = opts.parentScope === undefined
+      ? context.getRootScope() : opts.parentScope;
 
     let scope = opts.scope;
     if (scope === undefined) {
@@ -94,6 +92,7 @@ export default class Path {
   listKey: undefined | number;
 
   callHook<CallArg, CallReturn>(
+    // rome-suppress lint/noExplicitAny
     descriptor: HookDescriptor<any, CallArg, CallReturn>,
     arg: CallArg,
     optionalRet?: CallReturn,
@@ -108,7 +107,7 @@ export default class Path {
       }
     }
     if (descriptor.call === undefined) {
-      throw new Error("Hook doesn't have a call method");
+      throw new Error('Hook doesn\'t have a call method');
     }
 
     const {depth, ref} = hook;
@@ -123,6 +122,7 @@ export default class Path {
   }
 
   provideHook<State>(
+    // rome-suppress lint/noExplicitAny
     descriptor: HookDescriptor<State, any, any>,
     state?: State,
   ): AnyNode {
@@ -140,7 +140,12 @@ export default class Path {
   findHook(
     descriptor: AnyHookDescriptor,
     requiredDepth: number = 0,
-  ): undefined | {ref: HookInstance; depth: number} {
+  ):
+    | undefined
+    | {
+      ref: HookInstance;
+      depth: number;
+    } {
     let depth = 0;
     for (const {hooks} of this.ancestryPaths) {
       for (const hook of hooks) {
@@ -164,6 +169,7 @@ export default class Path {
   }
 
   getChildPath(key: string): Path {
+    // rome-suppress lint/noExplicitAny
     const node = (this.node as any)[key];
     if (node === undefined) {
       throw new Error(
@@ -179,6 +185,7 @@ export default class Path {
   }
 
   getChildPaths(key: string): Array<Path> {
+    // rome-suppress lint/noExplicitAny
     const nodes = (this.node as any)[key];
 
     if (nodes === undefined) {
@@ -228,8 +235,7 @@ export default class Path {
     return {
       ...this.opts,
       hooks: this.hooks,
-      parentScope:
-        this.scope === undefined ? undefined : this.scope.parentScope,
+      parentScope: this.scope === undefined ? undefined : this.scope.parentScope,
     };
   }
 

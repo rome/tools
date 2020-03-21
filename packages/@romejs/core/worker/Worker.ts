@@ -77,7 +77,7 @@ export default class Worker {
     this.api = new WorkerAPI(this);
 
     if (opts.globalErrorHandlers) {
-      setupGlobalErrorHandlers(err => {
+      setupGlobalErrorHandlers((err) => {
         // TODO
         err;
       });
@@ -105,6 +105,7 @@ export default class Worker {
 
   end() {
     // This will only actually be called when a Worker is created inside of the Master
+
     // Clear internal maps for memory, in case the Worker instance sticks around
     this.astCache.clear();
     this.projects.clear();
@@ -119,7 +120,7 @@ export default class Worker {
     });
 
     let profiler: undefined | Profiler;
-    bridge.profilingStart.subscribe(async data => {
+    bridge.profilingStart.subscribe(async (data) => {
       if (profiler !== undefined) {
         throw new Error('Expected no profiler to be running');
       }
@@ -136,7 +137,7 @@ export default class Worker {
       return workerProfile;
     });
 
-    bridge.compileJS.subscribe(payload => {
+    bridge.compileJS.subscribe((payload) => {
       return this.api.compileJS(
         convertTransportFileReference(payload.file),
         payload.stage,
@@ -144,14 +145,14 @@ export default class Worker {
       );
     });
 
-    bridge.parseJS.subscribe(payload => {
+    bridge.parseJS.subscribe((payload) => {
       return this.api.parseJS(
         convertTransportFileReference(payload.file),
         payload.opts,
       );
     });
 
-    bridge.lint.subscribe(payload => {
+    bridge.lint.subscribe((payload) => {
       return this.api.lint(
         convertTransportFileReference(payload.file),
         payload.prefetchedModuleSignatures,
@@ -159,32 +160,32 @@ export default class Worker {
       );
     });
 
-    bridge.format.subscribe(payload => {
+    bridge.format.subscribe((payload) => {
       return this.api.format(convertTransportFileReference(payload.file));
     });
 
-    bridge.analyzeDependencies.subscribe(payload => {
-      return this.api.analyzeDependencies(
-        convertTransportFileReference(payload.file),
-      );
+    bridge.analyzeDependencies.subscribe((payload) => {
+      return this.api.analyzeDependencies(convertTransportFileReference(
+        payload.file,
+      ));
     });
 
-    bridge.evict.subscribe(payload => {
+    bridge.evict.subscribe((payload) => {
       this.evict(createAbsoluteFilePath(payload.filename));
       return undefined;
     });
 
-    bridge.moduleSignatureJS.subscribe(payload => {
-      return this.api.moduleSignatureJS(
-        convertTransportFileReference(payload.file),
-      );
+    bridge.moduleSignatureJS.subscribe((payload) => {
+      return this.api.moduleSignatureJS(convertTransportFileReference(
+        payload.file,
+      ));
     });
 
-    bridge.updateProjects.subscribe(payload => {
+    bridge.updateProjects.subscribe((payload) => {
       return this.updateProjects(payload.projects);
     });
 
-    bridge.updateManifests.subscribe(payload => {
+    bridge.updateManifests.subscribe((payload) => {
       return this.updateManifests(payload.manifests);
     });
 
@@ -205,6 +206,7 @@ export default class Worker {
     const libs: Array<Program> = [];
 
     // TODO Figure out how to get the uids for the libraries, probably adding some additional stuff to ProjectConfig?
+
     /*
     const projectConfig = this.getProjectConfig(projectId);
     for (const filename of projectConfig.typeChecking.libs) {
@@ -217,7 +219,6 @@ export default class Worker {
       }
     }
     */
-
     const resolveGraph = async (
       key: string,
     ): Promise<undefined | ModuleSignature> => {
@@ -228,24 +229,23 @@ export default class Worker {
 
       switch (value.type) {
         case 'RESOLVED':
-          this.moduleSignatureCache.set(
-            createUnknownFilePath(value.graph.filename),
-            value.graph,
-          );
+          this.moduleSignatureCache.set(createUnknownFilePath(
+            value.graph.filename,
+          ), value.graph);
           return value.graph;
 
         case 'OWNED':
-          return this.api.moduleSignatureJS(
-            convertTransportFileReference(value.file),
-          );
+          return this.api.moduleSignatureJS(convertTransportFileReference(
+            value.file,
+          ));
 
         case 'POINTER':
           return resolveGraph(value.key);
 
         case 'USE_CACHED':
-          const cached = this.moduleSignatureCache.get(
-            createUnknownFilePath(value.filename),
-          );
+          const cached = this.moduleSignatureCache.get(createUnknownFilePath(
+            value.filename,
+          ));
           if (cached === undefined) {
             throw new Error(
               `Master told us we have the export types for ${value.filename} cached but we dont!`,
@@ -266,9 +266,7 @@ export default class Worker {
     };
   }
 
-  populateDiagnosticsMtime(
-    diagnostics: PartialDiagnostics,
-  ): PartialDiagnostics {
+  populateDiagnosticsMtime(diagnostics: PartialDiagnostics): PartialDiagnostics {
     return diagnostics;
   }
 
@@ -323,6 +321,7 @@ export default class Worker {
     const cacheEnabled = opts.cache !== false;
     if (cacheEnabled) {
       // Update the lastAccessed of the ast cache and return it, it will be evicted on
+
       // any file change
       const cachedResult: undefined | ParseResult = this.astCache.get(path);
       if (cachedResult && cachedResult.ast.sourceType === sourceType) {

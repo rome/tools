@@ -21,7 +21,7 @@ export default function TSSignatureDeclarationMeta(
 
   generator.print(node.typeParameters, node);
   generator.token('(');
-  printBindingPatternParams(generator, node, node.parameters);
+  printBindingPatternParams(generator, node, node.parameters, node.rest);
   generator.token(')');
   generator.space();
 }

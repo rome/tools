@@ -18,15 +18,10 @@ export default function FlowTypeParameterInstantiation(
   generator: Generator,
   node: AnyNode,
 ) {
-  node =
-    node.type === 'FlowTypeParameterDeclaration'
-      ? node
-      : flowTypeParameterInstantiation.assert(node);
+  node = node.type === 'FlowTypeParameterDeclaration'
+    ? node : flowTypeParameterInstantiation.assert(node);
 
   generator.token('<');
-  generator.printCommaList<AnyFlowPrimary | FlowTypeParameter>(
-    node.params,
-    node,
-  );
+  generator.printCommaList<AnyFlowPrimary | FlowTypeParameter>(node.params, node);
   generator.token('>');
 }

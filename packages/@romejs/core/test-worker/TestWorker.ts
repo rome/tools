@@ -15,8 +15,10 @@ import inspector = require('inspector');
 export default class TestWorker {
   constructor() {
     this.bridge = this.buildBridge();
+    this.runners = new Map();
   }
 
+  runners: Map<number, TestWorkerRunner>;
   bridge: TestWorkerBridge;
 
   async init() {
@@ -31,12 +33,12 @@ export default class TestWorker {
       type: 'server',
     });
 
-    process.on('unhandledRejection', err => {
+    process.on('unhandledRejection', (err) => {
       bridge.testError.send({
         ref: undefined,
         diagnostic: deriveDiagnosticFromError({
           error: err,
-          category: 'unhandledRejection',
+          category: 'tests/unhandledRejection',
         }),
       });
     });
@@ -47,15 +49,29 @@ export default class TestWorker {
       };
     });
 
-    bridge.runTest.subscribe((data: TestWorkerBridgeRunOptions) => {
-      return this.runTest(data);
+    bridge.prepareTest.subscribe((data) => {
+      return this.prepareTest(data);
+    });
+
+    bridge.runTest.subscribe((id: number) => {
+      return this.runTest(id);
     });
 
     return bridge;
   }
 
-  async runTest(opts: TestWorkerBridgeRunOptions): Promise<void> {
-    const testRun = new TestWorkerRunner(opts, this.bridge);
-    await testRun.run();
+  async runTest(id: number): Promise<void> {
+    const runner = this.runners.get(id);
+    if (runner === undefined) {
+      throw new Error(`No runner ${id} found`);
+    } else {
+      await runner.run();
+    }
+  }
+
+  async prepareTest(opts: TestWorkerBridgeRunOptions): Promise<void> {
+    const runner = new TestWorkerRunner(opts, this.bridge);
+    await runner.prepare();
+    this.runners.set(opts.id, runner);
   }
 }

@@ -15,20 +15,15 @@ export default {
     const {moduleReference, id} = node;
 
     if (moduleReference.type === 'TSExternalModuleReference') {
-      scope.addBinding(
-        new ImportBinding(
-          {
-            node: id,
-            name: id.name,
-            scope,
-          },
-          {
-            type: 'namespace',
-            kind: 'value',
-            source: moduleReference.expression.value,
-          },
-        ),
-      );
+      scope.addBinding(new ImportBinding({
+        node: id,
+        name: id.name,
+        scope,
+      }, {
+        type: 'namespace',
+        kind: 'value',
+        source: moduleReference.expression.value,
+      }));
     } else {
       // TODO
     }

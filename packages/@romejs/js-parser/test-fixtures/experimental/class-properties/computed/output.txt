@@ -1,0 +1,474 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 62
+      line: 10
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ClassDeclaration {
+      id: BindingIdentifier {
+        name: 'Foo'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 9
+            index: 9
+            line: 1
+          }
+          start: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+        }
+      }
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 1
+          index: 27
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      meta: ClassHead {
+        implements: undefined
+        superClass: undefined
+        superTypeParameters: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 1
+            index: 27
+            line: 4
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        body: Array [
+          ClassProperty {
+            key: ComputedPropertyKey {
+              value: ReferenceIdentifier {
+                name: 'x'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 4
+                    index: 16
+                    line: 2
+                  }
+                  start: Object {
+                    column: 3
+                    index: 15
+                    line: 2
+                  }
+                }
+              }
+              variance: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 5
+                  index: 17
+                  line: 2
+                }
+                start: Object {
+                  column: 2
+                  index: 14
+                  line: 2
+                }
+              }
+            }
+            value: undefined
+            definite: undefined
+            typeAnnotation: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 5
+                index: 17
+                line: 2
+              }
+              start: Object {
+                column: 2
+                index: 14
+                line: 2
+              }
+            }
+            meta: ClassPropertyMeta {
+              abstract: false
+              accessibility: undefined
+              optional: false
+              readonly: false
+              static: false
+              typeAnnotation: undefined
+              start: Object {
+                column: 2
+                index: 14
+                line: 2
+              }
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 5
+                  index: 17
+                  line: 2
+                }
+                start: Object {
+                  column: 2
+                  index: 14
+                  line: 2
+                }
+              }
+            }
+          }
+          ClassProperty {
+            key: ComputedPropertyKey {
+              value: StringLiteral {
+                value: 'y'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 6
+                    index: 24
+                    line: 3
+                  }
+                  start: Object {
+                    column: 3
+                    index: 21
+                    line: 3
+                  }
+                }
+              }
+              variance: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 7
+                  index: 25
+                  line: 3
+                }
+                start: Object {
+                  column: 2
+                  index: 20
+                  line: 3
+                }
+              }
+            }
+            value: undefined
+            definite: undefined
+            typeAnnotation: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 7
+                index: 25
+                line: 3
+              }
+              start: Object {
+                column: 2
+                index: 20
+                line: 3
+              }
+            }
+            meta: ClassPropertyMeta {
+              abstract: false
+              accessibility: undefined
+              optional: false
+              readonly: false
+              static: false
+              typeAnnotation: undefined
+              start: Object {
+                column: 2
+                index: 20
+                line: 3
+              }
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 7
+                  index: 25
+                  line: 3
+                }
+                start: Object {
+                  column: 2
+                  index: 20
+                  line: 3
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+    ClassDeclaration {
+      id: BindingIdentifier {
+        name: 'Foo2'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 10
+            index: 39
+            line: 6
+          }
+          start: Object {
+            column: 6
+            index: 35
+            line: 6
+          }
+        }
+      }
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 1
+          index: 61
+          line: 9
+        }
+        start: Object {
+          column: 0
+          index: 29
+          line: 6
+        }
+      }
+      meta: ClassHead {
+        implements: undefined
+        superClass: undefined
+        superTypeParameters: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 1
+            index: 61
+            line: 9
+          }
+          start: Object {
+            column: 0
+            index: 29
+            line: 6
+          }
+        }
+        body: Array [
+          ClassProperty {
+            key: ComputedPropertyKey {
+              value: ReferenceIdentifier {
+                name: 'p'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 4
+                    index: 46
+                    line: 7
+                  }
+                  start: Object {
+                    column: 3
+                    index: 45
+                    line: 7
+                  }
+                }
+              }
+              variance: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 5
+                  index: 47
+                  line: 7
+                }
+                start: Object {
+                  column: 2
+                  index: 44
+                  line: 7
+                }
+              }
+            }
+            value: undefined
+            definite: undefined
+            typeAnnotation: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 5
+                index: 47
+                line: 7
+              }
+              start: Object {
+                column: 2
+                index: 44
+                line: 7
+              }
+            }
+            meta: ClassPropertyMeta {
+              abstract: false
+              accessibility: undefined
+              optional: false
+              readonly: false
+              static: false
+              typeAnnotation: undefined
+              start: Object {
+                column: 2
+                index: 44
+                line: 7
+              }
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 5
+                  index: 47
+                  line: 7
+                }
+                start: Object {
+                  column: 2
+                  index: 44
+                  line: 7
+                }
+              }
+            }
+          }
+          ClassMethod {
+            kind: 'method'
+            key: ComputedPropertyKey {
+              value: ReferenceIdentifier {
+                name: 'm'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 4
+                    index: 52
+                    line: 8
+                  }
+                  start: Object {
+                    column: 3
+                    index: 51
+                    line: 8
+                  }
+                }
+              }
+              variance: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 5
+                  index: 53
+                  line: 8
+                }
+                start: Object {
+                  column: 2
+                  index: 50
+                  line: 8
+                }
+              }
+            }
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 11
+                index: 59
+                line: 8
+              }
+              start: Object {
+                column: 2
+                index: 50
+                line: 8
+              }
+            }
+            body: BlockStatement {
+              body: Array []
+              directives: Array []
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 11
+                  index: 59
+                  line: 8
+                }
+                start: Object {
+                  column: 9
+                  index: 57
+                  line: 8
+                }
+              }
+            }
+            head: FunctionHead {
+              async: false
+              generator: false
+              hasHoistedVars: false
+              params: Array []
+              predicate: undefined
+              rest: undefined
+              returnType: undefined
+              thisType: undefined
+              typeParameters: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 9
+                  index: 57
+                  line: 8
+                }
+                start: Object {
+                  column: 9
+                  index: 57
+                  line: 8
+                }
+              }
+            }
+            meta: ClassPropertyMeta {
+              abstract: false
+              accessibility: undefined
+              optional: false
+              readonly: false
+              static: false
+              typeAnnotation: undefined
+              start: Object {
+                column: 2
+                index: 50
+                line: 8
+              }
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 5
+                  index: 53
+                  line: 8
+                }
+                start: Object {
+                  column: 2
+                  index: 50
+                  line: 8
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

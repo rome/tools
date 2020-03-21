@@ -1,0 +1,116 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 23
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 22
+          index: 22
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: FunctionExpression {
+        id: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 21
+            index: 21
+            line: 1
+          }
+          start: Object {
+            column: 1
+            index: 1
+            line: 1
+          }
+        }
+        head: FunctionHead {
+          async: false
+          generator: false
+          hasHoistedVars: false
+          params: Array []
+          predicate: undefined
+          rest: undefined
+          returnType: undefined
+          thisType: undefined
+          typeParameters: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 11
+              index: 11
+              line: 1
+            }
+            start: Object {
+              column: 1
+              index: 1
+              line: 1
+            }
+          }
+        }
+        body: BlockStatement {
+          directives: Array []
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 21
+              index: 21
+              line: 1
+            }
+            start: Object {
+              column: 11
+              index: 11
+              line: 1
+            }
+          }
+          body: Array [
+            ReturnStatement {
+              argument: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 19
+                  index: 19
+                  line: 1
+                }
+                start: Object {
+                  column: 13
+                  index: 13
+                  line: 1
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -8,6 +8,7 @@
 import Generator from '../../Generator';
 import {BindingIdentifier, bindingIdentifier, AnyNode} from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
+import {printPatternMeta} from '../utils';
 
 export default function BindingIdentifier(generator: Generator, node: AnyNode) {
   node = bindingIdentifier.assert(node);
@@ -18,4 +19,5 @@ export default function BindingIdentifier(generator: Generator, node: AnyNode) {
   }
 
   Identifier(generator, node);
+  printPatternMeta(generator, node, node.meta);
 }

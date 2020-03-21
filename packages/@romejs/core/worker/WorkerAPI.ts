@@ -25,14 +25,12 @@ import Logger from '../common/utils/Logger';
 import {removeLoc} from '@romejs/js-ast-utils';
 import * as jsAnalysis from '@romejs/js-analysis';
 import diff from '@romejs/string-diff';
-import {
-  getFileHandlerAssert,
-  ExtensionLintResult,
-} from '../common/fileHandlers';
+import {getFileHandlerAssert, ExtensionLintResult} from '../common/fileHandlers';
 import {
   AnalyzeDependencyResult,
   UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
 } from '../common/types/analyzeDependencies';
+import {matchPathPatterns} from '@romejs/path-match';
 
 export default class WorkerAPI {
   constructor(worker: Worker) {
@@ -45,9 +43,12 @@ export default class WorkerAPI {
 
   interceptAndAddGeneratedToDiagnostics<
     T extends {diagnostics: PartialDiagnostics}
-  >(val: T, generated: boolean): T {
+  >(
+    val: T,
+    generated: boolean,
+  ): T {
     if (generated) {
-      const diagnostics = val.diagnostics.map(diag => {
+      const diagnostics = val.diagnostics.map((diag) => {
         const diagAdvice = diag.advice === undefined ? [] : diag.advice;
         return {
           ...diag,
@@ -56,8 +57,7 @@ export default class WorkerAPI {
             {
               type: 'log',
               category: 'warn',
-              message:
-                'This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect',
+              message: 'This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect',
             },
           ],
         };
@@ -81,9 +81,7 @@ export default class WorkerAPI {
     });
   }
 
-  async analyzeDependencies(
-    ref: FileReference,
-  ): Promise<AnalyzeDependencyResult> {
+  async analyzeDependencies(ref: FileReference): Promise<AnalyzeDependencyResult> {
     const project = this.worker.getProject(ref.project);
     const {handler} = getFileHandlerAssert(ref.real, project.config);
     this.logger.info(`Analyze dependencies:`, ref.real);
@@ -124,31 +122,23 @@ export default class WorkerAPI {
     stage: TransformStageName,
     workerOptions: WorkerCompilerOptions,
   ): Promise<CompileResult> {
-    const {ast, project, sourceText, generated} = await this.worker.parseJS(
-      ref,
-    );
+    const {ast, project, sourceText, generated} = await this.worker.parseJS(ref);
     this.logger.info(`Compiling:`, ref.real);
 
     const options = await this.workerCompilerOptionsToCompilerOptions(
       ref,
       workerOptions,
     );
-    return this.interceptAndAddGeneratedToDiagnostics(
-      await compile({
-        ast,
-        sourceText,
-        options,
-        project,
-        stage,
-      }),
-      generated,
-    );
+    return this.interceptAndAddGeneratedToDiagnostics(await compile({
+      ast,
+      sourceText,
+      options,
+      project,
+      stage,
+    }), generated);
   }
 
-  async parseJS(
-    ref: FileReference,
-    opts: WorkerParseOptions,
-  ): Promise<Program> {
+  async parseJS(ref: FileReference, opts: WorkerParseOptions): Promise<Program> {
     let {ast, generated} = await this.worker.parseJS(ref, {
       sourceType: opts.sourceType,
       cache: false,
@@ -168,15 +158,28 @@ export default class WorkerAPI {
     if (res === undefined) {
       return undefined;
     } else {
-      return {formatted: res.formatted, diagnostics: res.diagnostics};
+      return {
+        formatted: res.formatted,
+        original: res.sourceText,
+        diagnostics: res.diagnostics,
+      };
     }
+  }
+
+  shouldFormat(ref: FileReference): boolean {
+    const project = this.worker.getProject(ref.project);
+
+    return project.config.format.enabled && matchPathPatterns(
+      ref.real,
+      project.config.format.ignore,
+    ) === 'NO_MATCH';
   }
 
   async _format(ref: FileReference): Promise<undefined | ExtensionLintResult> {
     const project = this.worker.getProject(ref.project);
     this.logger.info(`Formatting:`, ref.real);
 
-    if (!project.config.format.enabled) {
+    if (!this.shouldFormat(ref)) {
       return;
     }
 
@@ -215,24 +218,22 @@ export default class WorkerAPI {
     }
 
     // Catch any diagnostics, in the case of syntax errors etc
-    const res = await catchDiagnostics(
-      {
-        category: 'lint',
-        message: 'Caught by WorkerAPI.lint',
-      },
-      () => {
-        if (lint === undefined) {
-          return this._format(ref);
-        } else {
-          return lint({
-            file: ref,
-            project,
-            prefetchedModuleSignatures,
-            worker: this.worker,
-          });
-        }
-      },
-    );
+    const res = await catchDiagnostics({
+      category: 'lint',
+      message: 'Caught by WorkerAPI.lint',
+    }, () => {
+      if (lint === undefined) {
+        return this._format(ref);
+      } else {
+        return lint({
+          format: this.shouldFormat(ref),
+          file: ref,
+          project,
+          prefetchedModuleSignatures,
+          worker: this.worker,
+        });
+      }
+    });
 
     // These are fatal diagnostics
     if (res.diagnostics !== undefined) {
@@ -291,6 +292,10 @@ export default class WorkerAPI {
             {
               type: 'diff',
               diff: diff(raw, formatted),
+              legend: {
+                add: 'Code to be added',
+                delete: 'Code to be removed',
+              },
             },
           ],
         },

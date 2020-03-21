@@ -8,12 +8,14 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type LogicalExpression = JSNodeBase & {
-  type: 'LogicalExpression';
-  operator: LogicalOperator;
-  left: AnyExpression;
-  right: AnyExpression;
-};
+export type LogicalExpression =
+  & JSNodeBase
+  & {
+    type: 'LogicalExpression';
+    operator: LogicalOperator;
+    left: AnyExpression;
+    right: AnyExpression;
+  };
 
 export type LogicalOperator = '||' | '&&' | '??';
 

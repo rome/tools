@@ -24,7 +24,7 @@ export function getPrivateName(name: string, moduleId: string) {
 // This is necessary so we can take our module uids which are paths on the file system into a valid JS identifier name
 export function normalizeModuleId(id: string): string {
   // TODO probably need more stuff in this
-  return id.replace(/[\\\/\@\-]/g, '$').replace(/[-\.]/g, '_');
+  return id.replace(/[\\\/@\-]/g, '$').replace(/[\-.]/g, '_');
 }
 
 export function getPrefixedName(

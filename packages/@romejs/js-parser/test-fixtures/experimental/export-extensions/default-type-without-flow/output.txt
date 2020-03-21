@@ -1,0 +1,92 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 25
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExportExternalDeclaration {
+      exportKind: undefined
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 24
+          index: 24
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      source: StringLiteral {
+        value: 'test'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 23
+            index: 23
+            line: 1
+          }
+          start: Object {
+            column: 17
+            index: 17
+            line: 1
+          }
+        }
+      }
+      specifiers: Array [
+        ExportDefaultSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 11
+              index: 11
+              line: 1
+            }
+            start: Object {
+              column: 7
+              index: 7
+              line: 1
+            }
+          }
+          exported: Identifier {
+            name: 'type'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 11
+                index: 11
+                line: 1
+              }
+              start: Object {
+                column: 7
+                index: 7
+                line: 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

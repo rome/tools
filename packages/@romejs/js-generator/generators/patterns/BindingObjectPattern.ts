@@ -12,12 +12,11 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 import ObjectExpression from '../objects/ObjectExpression';
+import {printPatternMeta} from '../utils';
 
-export default function BindingObjectPattern(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function BindingObjectPattern(generator: Generator, node: AnyNode) {
   node = bindingObjectPattern.assert(node);
 
   ObjectExpression(generator, node);
+  printPatternMeta(generator, node, node.meta);
 }

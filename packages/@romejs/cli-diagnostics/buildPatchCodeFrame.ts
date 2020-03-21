@@ -15,18 +15,16 @@ import {
 } from '@romejs/string-diff';
 
 function formatDiffLine(diffs: Diffs) {
-  return diffs
-    .map(([type, text]) => {
-      if (type === diffConstants.DELETE) {
-        return formatAnsi.red(showInvisibles(text));
-      } else if (type === diffConstants.ADD) {
-        return formatAnsi.green(showInvisibles(text));
-      } else {
-        // type === diffConstants.EQUAL
-        return text;
-      }
-    })
-    .join('');
+  return diffs.map(([type, text]) => {
+    if (type === diffConstants.DELETE) {
+      return formatAnsi.red(showInvisibles(text));
+    } else if (type === diffConstants.ADD) {
+      return formatAnsi.green(showInvisibles(text));
+    } else {
+      // type === diffConstants.EQUAL
+      return text;
+    }
+  }).join('');
 }
 
 const DELETE_MARKER = formatAnsi.red('-');
@@ -81,7 +79,7 @@ export default function buildPatchCodeFrame(rawDiffs: Diffs): string {
     const lineNo = i + 1;
 
     if (noGutter) {
-      frame.push('  ' + formatDiffLine(diffs));
+      frame.push(`  ${formatDiffLine(diffs)}`);
       lastDisplayedLine = lineNo;
       continue;
     }
@@ -112,26 +110,27 @@ export default function buildPatchCodeFrame(rawDiffs: Diffs): string {
     }
 
     if (lastDisplayedLine !== lineNo - 1 && lastDisplayedLine !== -1) {
-      frame.push(
-        formatAnsi.bold(CODE_FRAME_INDENT + '.'.repeat(lineLength) + GUTTER),
-      );
+      frame.push(formatAnsi.bold(
+        `${CODE_FRAME_INDENT}${'.'.repeat(lineLength)}${GUTTER}`,
+      ));
     }
 
-    const gutter = formatAnsi.bold(
-      CODE_FRAME_INDENT + leftPad(String(lineNo), lineLength) + GUTTER,
-    );
+    const gutter = formatAnsi.bold(`${CODE_FRAME_INDENT}${leftPad(
+      String(lineNo),
+      lineLength,
+    )}${GUTTER}`);
 
     if (hasAddition) {
-      frame.push(gutter + ADD_MARKER + ' ' + formatDiffLine(addition));
+      frame.push(`${gutter}${ADD_MARKER} ${formatDiffLine(addition)}`);
     }
 
     if (hasDeletions) {
-      frame.push(gutter + DELETE_MARKER + ' ' + formatDiffLine(deletions));
+      frame.push(`${gutter}${DELETE_MARKER} ${formatDiffLine(deletions)}`);
     }
 
     if (!hasAddition && !hasDeletions) {
       // Output one of the lines, they're the same
-      frame.push(gutter + '  ' + formatDiffLine(addition));
+      frame.push(`${gutter}  ${formatDiffLine(addition)}`);
     }
 
     lastDisplayedLine = lineNo;

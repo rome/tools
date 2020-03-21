@@ -32,7 +32,8 @@ import {isValidIdentifierName} from '@romejs/js-ast-utils';
 
 // Indicates whether we should create a JSXIdentifier or a JSXReferenceIdentifier
 function isHTMLTagName(tagName: string): boolean {
-  return /^[a-z]|-/.test(tagName) && isValidIdentifierName(tagName);
+  return (/^[a-z]|-/.test(tagName) && isValidIdentifierName(tagName)
+  );
 }
 
 // Transforms JSX element name to string.
@@ -47,14 +48,12 @@ function getQualifiedJSXName(node: JSXElement['name'] | JSXIdentifier): string {
       return node.name;
 
     case 'JSXNamespacedName':
-      return node.namespace.name + ':' + node.name.name;
+      return `${node.namespace.name}:${node.name.name}`;
 
     case 'JSXMemberExpression':
-      return (
-        getQualifiedJSXName(node.object) +
-        '.' +
-        getQualifiedJSXName(node.property)
-      );
+      return `${getQualifiedJSXName(node.object)}.${getQualifiedJSXName(
+        node.property,
+      )}`;
   }
 }
 
@@ -72,6 +71,7 @@ function parseJSXIdentifier(parser: JSParser): JSXIdentifier {
     });
     name = '';
   }
+
   parser.next();
   return parser.finishNode(start, {
     type: 'JSXIdentifier',
@@ -99,6 +99,7 @@ function parseJSXNamespacedName(
 }
 
 // Parses element name in any form - namespaced, member
+
 // or single identifier.
 function parseJSXElementName(parser: JSParser): JSXElement['name'] {
   const start = parser.getPosition();
@@ -106,10 +107,9 @@ function parseJSXElementName(parser: JSParser): JSXElement['name'] {
   const namespacedName = parseJSXNamespacedName(parser);
 
   let node: JSXElement['name'];
-  if (
-    namespacedName.type === 'JSXIdentifier' &&
-    !isHTMLTagName(namespacedName.name)
-  ) {
+  if (namespacedName.type === 'JSXIdentifier' && !isHTMLTagName(
+    namespacedName.name,
+  )) {
     node = {
       ...namespacedName,
       type: 'JSXReferenceIdentifier',
@@ -141,8 +141,7 @@ function parseJSXAttributeValue(
       if (node.expression.type === 'JSXEmptyExpression') {
         parser.addDiagnostic({
           loc: node.loc,
-          message:
-            'JSX attributes must only be assigned a non-empty expression',
+          message: 'JSX attributes must only be assigned a non-empty expression',
         });
       }
       return node;
@@ -153,21 +152,23 @@ function parseJSXAttributeValue(
     case tt.string:
       return parseStringLiteral(parser);
 
-    default: {
-      parser.addDiagnostic({
-        message:
-          'JSX value should be either an expression or a quoted JSX text',
-      });
-      return parser.finishNode(parser.getPosition(), {
-        type: 'StringLiteral',
-        value: '?',
-      });
-    }
+    default:
+      {
+        parser.addDiagnostic({
+          message: 'JSX value should be either an expression or a quoted JSX text',
+        });
+        return parser.finishNode(parser.getPosition(), {
+          type: 'StringLiteral',
+          value: '?',
+        });
+      }
   }
 }
 
 // JSXEmptyExpression is unique type since it doesn't actually parse anything,
+
 // and so it should start at the end of last read token (left brace) and finish
+
 // at the beginning of the next one (right brace).
 function parseJSXEmptyExpression(parser: JSParser): JSXEmptyExpression {
   return parser.finishNode(parser.state.lastEndPos, {
@@ -215,9 +216,7 @@ function parseJSXExpressionContainer(parser: JSParser): JSXExpressionContainer {
 }
 
 // Parses following JSX attribute name-value pair.
-function parseJSXAttribute(
-  parser: JSParser,
-): JSXSpreadAttribute | JSXAttribute {
+function parseJSXAttribute(parser: JSParser): JSXSpreadAttribute | JSXAttribute {
   const start = parser.getPosition();
 
   if (parser.match(tt.braceL)) {
@@ -287,12 +286,10 @@ function parseJSXOpeningElementAt(
   }
 
   // We need to check for isRelational('>') here as the above type arguments parsing can put the tokenizer
+
   // into an unusual state for: <foo<bar>></foo>
-  while (
-    !parser.match(tt.slash) &&
-    !parser.match(tt.jsxTagEnd) &&
-    !parser.atEOF()
-  ) {
+  while (!parser.match(tt.slash) && !parser.match(tt.jsxTagEnd) &&
+    !parser.atEOF()) {
     attributes.push(parseJSXAttribute(parser));
   }
   const selfClosing = parser.eat(tt.slash);
@@ -352,7 +349,7 @@ function getJSXOpenElementAdvice(
     {
       type: 'log',
       category: 'info',
-      message: message,
+      message,
     },
     {
       type: 'frame',
@@ -372,16 +369,15 @@ function getJSXCloseElementAdvice(
   if (name === undefined) {
     message = 'But found a closing fragment instead';
   } else {
-    message = `But found a closing tag of <emphasis>${getQualifiedJSXName(
-      name,
-    )}</emphasis> instead`;
+    message =
+      `But found a closing tag of <emphasis>${getQualifiedJSXName(name)}</emphasis> instead`;
   }
 
   return [
     {
       type: 'log',
       category: 'info',
-      message: message,
+      message,
     },
     {
       type: 'frame',
@@ -399,6 +395,7 @@ function recoverFromUnclosedJSX(parser: JSParser) {
 }
 
 // Parses entire JSX element, including it"s opening tag
+
 // (starting after "<"), attributes, contents and closing tag.
 function parseJSXElementAt(
   parser: JSParser,
@@ -414,21 +411,22 @@ function parseJSXElementAt(
   if (openingDef.selfClosing === false) {
     contents: while (true) {
       switch (parser.state.tokenType) {
-        case tt.jsxTagStart: {
-          const start = parser.getPosition();
-          parser.next();
-          if (parser.eat(tt.slash)) {
-            closingName = parseJSXClosingElementAt(parser);
-            closingNameLoc = {
-              filename: parser.filename,
-              start,
-              end: parser.getPosition(),
-            };
-            break contents;
+        case tt.jsxTagStart:
+          {
+            const start = parser.getPosition();
+            parser.next();
+            if (parser.eat(tt.slash)) {
+              closingName = parseJSXClosingElementAt(parser);
+              closingNameLoc = {
+                filename: parser.filename,
+                start,
+                end: parser.getPosition(),
+              };
+              break contents;
+            }
+            children.push(parseJSXElementAt(parser, start));
+            break;
           }
-          children.push(parseJSXElementAt(parser, start));
-          break;
-        }
 
         case tt.jsxText:
           children.push(parseJSXText(parser));
@@ -490,10 +488,9 @@ function parseJSXElementAt(
 
     // Validate element names: Element open, element close
     if (openingDef.name !== undefined && closingName !== undefined) {
-      if (
-        getQualifiedJSXName(closingName) !==
-        getQualifiedJSXName(openingDef.name)
-      ) {
+      if (getQualifiedJSXName(closingName) !== getQualifiedJSXName(
+        openingDef.name,
+      )) {
         parser.addDiagnostic({
           loc: openingDef.loc,
           message: `Expected a corresponding JSX closing tag for <emphasis>${getQualifiedJSXName(
@@ -528,9 +525,8 @@ function parseJSXElementAt(
 function checkAccidentalFragment(parser: JSParser) {
   if (parser.match(tt.relational) && parser.state.tokenValue === '<') {
     parser.addDiagnostic({
-      message:
-        'Adjacent JSX elements must be wrapped in an enclosing tag. ' +
-        'Did you want a JSX fragment <>...</>?',
+      message: `Adjacent JSX elements must be wrapped in an enclosing tag. 
+        Did you want a JSX fragment <>...</>?`,
     });
   }
 }
@@ -553,37 +549,33 @@ export function parseJSXElement(parser: JSParser): JSXElement | JSXFragment {
   if (!parser.isSyntaxEnabled('jsx')) {
     if (parser.isSyntaxEnabled('ts')) {
       parser.addDiagnostic({
-        message: "JSX isn't allowed in regular TypeScript files",
+        message: 'JSX isn\'t allowed in regular TypeScript files',
         advice: [
           {
             type: 'log',
             category: 'info',
-            message:
-              'Change the file extension to <emphasis>.tsx</emphasis> to enable JSX support',
+            message: 'Change the file extension to <emphasis>.tsx</emphasis> to enable JSX support',
           },
         ],
       });
     } else {
       parser.addDiagnostic({
-        message: "JSX syntax isn't enabled",
+        message: 'JSX syntax isn\'t enabled',
         advice: [
           {
             type: 'log',
             category: 'info',
-            message:
-              'Are you using <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.tsx</emphasis>',
+            message: 'Are you using <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.tsx</emphasis>',
           },
           {
             type: 'log',
             category: 'info',
-            message:
-              'Are you using <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
+            message: 'Are you using <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
           },
           {
             type: 'log',
             category: 'info',
-            message:
-              'Not using either? Change the file extension to <emphasis>.jsx</emphasis>',
+            message: 'Not using either? Change the file extension to <emphasis>.jsx</emphasis>',
           },
         ],
       });

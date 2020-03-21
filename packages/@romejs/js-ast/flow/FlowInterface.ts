@@ -8,9 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowInterface = JSNodeBase & {
-  type: 'FlowInterface';
-};
+export type FlowInterface = JSNodeBase & {type: 'FlowInterface'};
 
 export const flowInterface = createBuilder<FlowInterface>('FlowInterface', {
   bindingKeys: {},

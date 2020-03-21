@@ -16,12 +16,7 @@ export default function ClassProperty(generator: Generator, node: AnyNode) {
     return;
   }
 
-  const {meta} = node;
-
-  if (meta.static === true) {
-    generator.word('static');
-    generator.space();
-  }
+  generator.print(node.meta, node);
 
   generator.print(node.key, node);
   generator.printTypeColon(node.typeAnnotation, node);
@@ -32,5 +27,6 @@ export default function ClassProperty(generator: Generator, node: AnyNode) {
     generator.space();
     generator.print(node.value, node);
   }
+
   generator.semicolon();
 }

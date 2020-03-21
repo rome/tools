@@ -9,8 +9,11 @@ import {dumpToBuffer, BunserBuf} from './bser';
 import {Reporter} from '@romejs/cli-reporter';
 import {Event} from '@romejs/events';
 import child_process = require('child_process');
+
 import util = require('util');
+
 import net = require('net');
+
 import {Consumer, consumeUnknown} from '@romejs/consume';
 import {Dict} from '@romejs/typescript-helpers';
 
@@ -35,9 +38,7 @@ export type WatchmanSubscriptionValue = {
   clock: string;
 };
 
-function normalizeWatchmanSubscription(
-  res: Consumer,
-): WatchmanSubscriptionValue {
+function normalizeWatchmanSubscription(res: Consumer): WatchmanSubscriptionValue {
   return {
     'state-enter': res.get('state-enter').asStringOrVoid(),
     'state-leave': res.get('state-leave').asStringOrVoid(),
@@ -90,11 +91,11 @@ export class WatchmanClient {
 
     const bunser = new BunserBuf();
 
-    bunser.valueEvent.subscribe(obj => {
-      this.processResponse(consumeUnknown(obj));
+    bunser.valueEvent.subscribe((obj) => {
+      this.processResponse(consumeUnknown(obj, 'parse/json'));
     });
 
-    socket.on('data', chunk => {
+    socket.on('data', (chunk) => {
       bunser.append(chunk);
     });
 
@@ -113,7 +114,7 @@ export class WatchmanClient {
       const event = this.subscriptions.get(name);
       if (event === undefined) {
         this.reporter.warn(
-          "Received a watchman subscription event for %s that we aren't listening for",
+          'Received a watchman subscription event for %s that we aren\'t listening for',
           name,
         );
       } else {
@@ -129,7 +130,7 @@ export class WatchmanClient {
 
     if (res.get('unilateral').asBooleanOrVoid() === true) {
       this.reporter.warn(
-        "Received a watchman unilateral event that we don't support",
+        'Received a watchman unilateral event that we don\'t support',
         res.asUnknown(),
       );
       return;
@@ -201,11 +202,8 @@ export async function getWatchmanSocketLocation(): Promise<string> {
       const data = JSON.parse(stdout);
 
       // Validate JSON result
-      if (
-        typeof data !== 'object' ||
-        data == null ||
-        typeof data.sockname !== 'string'
-      ) {
+      if (typeof data !== 'object' || data == null || typeof data.sockname !==
+      'string') {
         throw new Error(
           `Watchman returned JSON payload that wasnt an object with a sockname property`,
         );
@@ -239,7 +237,7 @@ export async function createWatchmanClient(
   const socket = net.createConnection(sockname);
 
   return new Promise((resolve, reject) => {
-    socket.on('error', err => {
+    socket.on('error', (err) => {
       reject(err);
     });
 

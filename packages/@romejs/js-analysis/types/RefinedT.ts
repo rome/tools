@@ -11,12 +11,7 @@ import MissingUnionE from './errors/MissingUnionE';
 import T from './T';
 
 export default class RefinedT extends T {
-  constructor(
-    scope: Scope,
-    originNode: undefined | AnyNode,
-    root: T,
-    remove: T,
-  ) {
+  constructor(scope: Scope, originNode: undefined | AnyNode, root: T, remove: T) {
     super(scope, originNode);
     this.root = root;
     this.remove = remove;
@@ -40,6 +35,7 @@ export default class RefinedT extends T {
       let compatible = false;
 
       // check if any of the removed types are compatible, if every removed type is incompatible then
+
       // we've refined away the type
       for (const remove of removeTypes) {
         if (this.utils.isCompatibleWith(type, remove)) {

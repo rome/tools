@@ -8,9 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type Super = JSNodeBase & {
-  type: 'Super';
-};
+export type Super = JSNodeBase & {type: 'Super'};
 
 export const _super = createBuilder<Super>('Super', {
   bindingKeys: {},

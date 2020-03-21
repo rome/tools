@@ -6,17 +6,12 @@
  */
 
 import {Scope} from '../../scopes';
-import {
-  FlowDeclareFunction,
-  flowDeclareFunction,
-  AnyNode,
-} from '@romejs/js-ast';
+import {FlowDeclareFunction, flowDeclareFunction, AnyNode} from '@romejs/js-ast';
 
 export default function FlowDeclareFunction(node: AnyNode, scope: Scope) {
   node = flowDeclareFunction.assert(node);
 
-  return scope.addBinding(
-    node.id.name,
-    scope.evaluate(node.id.meta.typeAnnotation),
-  );
+  return scope.addBinding(node.id.name, scope.evaluate(
+    node.id.meta.typeAnnotation,
+  ));
 }

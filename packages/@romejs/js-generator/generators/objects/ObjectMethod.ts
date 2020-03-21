@@ -11,6 +11,5 @@ import {ObjectMethod, objectMethod, AnyNode} from '@romejs/js-ast';
 
 export default function ObjectMethod(generator: Generator, node: AnyNode) {
   node = objectMethod.assert(node);
-  objectMethod.assert(node);
   printMethod(generator, node);
 }

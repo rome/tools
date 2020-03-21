@@ -1,0 +1,393 @@
+Program {
+  comments: Array []
+  corrupt: false
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: true
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 44
+      line: 5
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  diagnostics: Array [
+    Object {
+      advice: Array []
+      category: 'parse/js'
+      filename: 'input.js'
+      message: 'Invalid parenthesized binding'
+      mtime: undefined
+      sourceType: 'script'
+      origins: Array [Object {category: 'js-parser'}]
+      end: Object {
+        column: 2
+        index: 9
+        line: 2
+      }
+      start: Object {
+        column: 1
+        index: 8
+        line: 2
+      }
+    }
+  ]
+  body: Array [
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 6
+          index: 6
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'var'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'a'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 5
+                  index: 5
+                  line: 1
+                }
+                start: Object {
+                  column: 4
+                  index: 4
+                  line: 1
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 5
+                index: 5
+                line: 1
+              }
+              start: Object {
+                column: 4
+                index: 4
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+    }
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 9
+          index: 16
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 7
+          line: 2
+        }
+      }
+      expression: AssignmentExpression {
+        operator: '='
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 8
+            index: 15
+            line: 2
+          }
+          start: Object {
+            column: 0
+            index: 7
+            line: 2
+          }
+        }
+        left: AssignmentIdentifier {
+          name: 'a'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 2
+              index: 9
+              line: 2
+            }
+            start: Object {
+              column: 1
+              index: 8
+              line: 2
+            }
+          }
+        }
+        right: ObjectExpression {
+          properties: Array []
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 8
+              index: 15
+              line: 2
+            }
+            start: Object {
+              column: 6
+              index: 13
+              line: 2
+            }
+          }
+        }
+      }
+    }
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 11
+          index: 28
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 17
+          line: 3
+        }
+      }
+      expression: AssignmentExpression {
+        operator: '='
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 10
+            index: 27
+            line: 3
+          }
+          start: Object {
+            column: 0
+            index: 17
+            line: 3
+          }
+        }
+        right: ObjectExpression {
+          properties: Array []
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 10
+              index: 27
+              line: 3
+            }
+            start: Object {
+              column: 8
+              index: 25
+              line: 3
+            }
+          }
+        }
+        left: MemberExpression {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 4
+              index: 21
+              line: 3
+            }
+            start: Object {
+              column: 1
+              index: 18
+              line: 3
+            }
+          }
+          object: ReferenceIdentifier {
+            name: 'a'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 2
+                index: 19
+                line: 3
+              }
+              start: Object {
+                column: 1
+                index: 18
+                line: 3
+              }
+            }
+          }
+          property: StaticMemberProperty {
+            value: Identifier {
+              name: 'b'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 4
+                  index: 21
+                  line: 3
+                }
+                start: Object {
+                  column: 3
+                  index: 20
+                  line: 3
+                }
+              }
+            }
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 4
+                index: 21
+                line: 3
+              }
+              start: Object {
+                column: 3
+                index: 20
+                line: 3
+              }
+            }
+          }
+        }
+      }
+    }
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 14
+          index: 43
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 29
+          line: 4
+        }
+      }
+      expression: AssignmentExpression {
+        operator: '='
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 13
+            index: 42
+            line: 4
+          }
+          start: Object {
+            column: 0
+            index: 29
+            line: 4
+          }
+        }
+        right: ObjectExpression {
+          properties: Array []
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 13
+              index: 42
+              line: 4
+            }
+            start: Object {
+              column: 11
+              index: 40
+              line: 4
+            }
+          }
+        }
+        left: MemberExpression {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 7
+              index: 36
+              line: 4
+            }
+            start: Object {
+              column: 1
+              index: 30
+              line: 4
+            }
+          }
+          object: ReferenceIdentifier {
+            name: 'a'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 2
+                index: 31
+                line: 4
+              }
+              start: Object {
+                column: 1
+                index: 30
+                line: 4
+              }
+            }
+          }
+          property: ComputedMemberProperty {
+            value: StringLiteral {
+              value: 'c'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 6
+                  index: 35
+                  line: 4
+                }
+                start: Object {
+                  column: 3
+                  index: 32
+                  line: 4
+                }
+              }
+            }
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 7
+                index: 36
+                line: 4
+              }
+              start: Object {
+                column: 2
+                index: 31
+                line: 4
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

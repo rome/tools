@@ -13,18 +13,19 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowGenericTypeAnnotation = JSNodeBase & {
-  type: 'FlowGenericTypeAnnotation';
-  id: Identifier | FlowQualifiedTypeIdentifier;
-  typeParameters?: FlowTypeParameterInstantiation;
-};
+export type FlowGenericTypeAnnotation =
+  & JSNodeBase
+  & {
+    type: 'FlowGenericTypeAnnotation';
+    id: Identifier | FlowQualifiedTypeIdentifier;
+    typeParameters?: FlowTypeParameterInstantiation;
+  };
 
-export const flowGenericTypeAnnotation = createBuilder<
-  FlowGenericTypeAnnotation
->('FlowGenericTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {
-    id: true,
-    typeParameters: true,
-  },
-});
+export const flowGenericTypeAnnotation =
+  createBuilder<FlowGenericTypeAnnotation>('FlowGenericTypeAnnotation', {
+    bindingKeys: {},
+    visitorKeys: {
+      id: true,
+      typeParameters: true,
+    },
+  });

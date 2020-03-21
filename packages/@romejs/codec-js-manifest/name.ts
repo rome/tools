@@ -66,13 +66,11 @@ function validateNamePart(
           start: add(offset, i),
         });*/
       normalizedName += char.toLowerCase();
-    } else if (char.match(/[A-Za-z0-9\-_\.]/)) {
+    } else if (char.match(/[A-Za-z0-9\-_.]/)) {
       normalizedName += char;
     } else {
       unexpected({
-        message: `The character <emphasis>${escapeMarkup(
-          char,
-        )}</emphasis> isn't allowed`,
+        message: `The character <emphasis>${escapeMarkup(char)}</emphasis> isn't allowed`,
         start: add(offset, i),
       });
     }

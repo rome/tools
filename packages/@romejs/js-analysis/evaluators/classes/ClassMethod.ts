@@ -12,16 +12,14 @@ import executeFunction from '../../utils/executeFunction';
 
 export default function ClassMethod(node: AnyNode, scope: Scope) {
   node = classMethod.assert(node);
-  if ((node.key.type === 'ComputedPropertyKey') === true) {
+  if (node.key.type === 'ComputedPropertyKey' === true) {
     // TODO
     return undefined;
   }
 
   const classScope = scope.find(ClassScope);
-  const thisContext =
-    node.meta.static === true
-      ? classScope.meta.static
-      : classScope.meta.instance;
+  const thisContext = node.meta.static === true
+    ? classScope.meta.static : classScope.meta.instance;
   const func = executeFunction(node, scope, false, thisContext);
 
   if (node.key.value.type !== 'Identifier') {

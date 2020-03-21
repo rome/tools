@@ -184,7 +184,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/AMDPLPA.json',
       referenceNumber: '128',
-      name: 'AMD\u0027s plpa_map.c License',
+      name: 'AMD\'s plpa_map.c License',
       licenseId: 'AMDPLPA',
       seeAlso: [
         'https://fedoraproject.org/wiki/Licensing/AMD_plpa_map_License',
@@ -429,7 +429,7 @@ export default {
       name: 'BSD 1-Clause License',
       licenseId: 'BSD-1-Clause',
       seeAlso: [
-        'https://svnweb.freebsd.org/base/head/include/ifaddrs.h?revision\u003d326823',
+        'https://svnweb.freebsd.org/base/head/include/ifaddrs.h?revision=326823',
       ],
       isOsiApproved: false,
     },
@@ -521,21 +521,19 @@ export default {
     {
       reference: './BSD-3-Clause-No-Nuclear-License.html',
       isDeprecatedLicenseId: false,
-      detailsUrl:
-        'http://spdx.org/licenses/BSD-3-Clause-No-Nuclear-License.json',
+      detailsUrl: 'http://spdx.org/licenses/BSD-3-Clause-No-Nuclear-License.json',
       referenceNumber: '59',
       name: 'BSD 3-Clause No Nuclear License',
       licenseId: 'BSD-3-Clause-No-Nuclear-License',
       seeAlso: [
-        'http://download.oracle.com/otn-pub/java/licenses/bsd.txt?AuthParam\u003d1467140197_43d516ce1776bd08a58235a7785be1cc',
+        'http://download.oracle.com/otn-pub/java/licenses/bsd.txt?AuthParam=1467140197_43d516ce1776bd08a58235a7785be1cc',
       ],
       isOsiApproved: false,
     },
     {
       reference: './BSD-3-Clause-No-Nuclear-License-2014.html',
       isDeprecatedLicenseId: false,
-      detailsUrl:
-        'http://spdx.org/licenses/BSD-3-Clause-No-Nuclear-License-2014.json',
+      detailsUrl: 'http://spdx.org/licenses/BSD-3-Clause-No-Nuclear-License-2014.json',
       referenceNumber: '331',
       name: 'BSD 3-Clause No Nuclear License 2014',
       licenseId: 'BSD-3-Clause-No-Nuclear-License-2014',
@@ -547,13 +545,12 @@ export default {
     {
       reference: './BSD-3-Clause-No-Nuclear-Warranty.html',
       isDeprecatedLicenseId: false,
-      detailsUrl:
-        'http://spdx.org/licenses/BSD-3-Clause-No-Nuclear-Warranty.json',
+      detailsUrl: 'http://spdx.org/licenses/BSD-3-Clause-No-Nuclear-Warranty.json',
       referenceNumber: '113',
       name: 'BSD 3-Clause No Nuclear Warranty',
       licenseId: 'BSD-3-Clause-No-Nuclear-Warranty',
       seeAlso: [
-        'https://jogamp.org/git/?p\u003dgluegen.git;a\u003dblob_plain;f\u003dLICENSE.txt',
+        'https://jogamp.org/git/?p=gluegen.git;a=blob_plain;f=LICENSE.txt',
       ],
       isOsiApproved: false,
     },
@@ -670,7 +667,7 @@ export default {
       name: 'BitTorrent Open Source License v1.0',
       licenseId: 'BitTorrent-1.0',
       seeAlso: [
-        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/licenses/BitTorrent?r1\u003d1.1\u0026r2\u003d1.1.1.1\u0026diff_format\u003ds',
+        'http://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/licenses/BitTorrent?r1=1.1&r2=1.1.1.1&diff_format=s',
       ],
       isOsiApproved: false,
     },
@@ -821,8 +818,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/CC-BY-NC-ND-1.0.json',
       referenceNumber: '98',
-      name:
-        'Creative Commons Attribution Non Commercial No Derivatives 1.0 Generic',
+      name: 'Creative Commons Attribution Non Commercial No Derivatives 1.0 Generic',
       licenseId: 'CC-BY-NC-ND-1.0',
       seeAlso: ['https://creativecommons.org/licenses/by-nd-nc/1.0/legalcode'],
       isOsiApproved: false,
@@ -832,8 +828,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/CC-BY-NC-ND-2.0.json',
       referenceNumber: '133',
-      name:
-        'Creative Commons Attribution Non Commercial No Derivatives 2.0 Generic',
+      name: 'Creative Commons Attribution Non Commercial No Derivatives 2.0 Generic',
       licenseId: 'CC-BY-NC-ND-2.0',
       seeAlso: ['https://creativecommons.org/licenses/by-nc-nd/2.0/legalcode'],
       isOsiApproved: false,
@@ -843,8 +838,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/CC-BY-NC-ND-2.5.json',
       referenceNumber: '30',
-      name:
-        'Creative Commons Attribution Non Commercial No Derivatives 2.5 Generic',
+      name: 'Creative Commons Attribution Non Commercial No Derivatives 2.5 Generic',
       licenseId: 'CC-BY-NC-ND-2.5',
       seeAlso: ['https://creativecommons.org/licenses/by-nc-nd/2.5/legalcode'],
       isOsiApproved: false,
@@ -854,8 +848,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/CC-BY-NC-ND-3.0.json',
       referenceNumber: '41',
-      name:
-        'Creative Commons Attribution Non Commercial No Derivatives 3.0 Unported',
+      name: 'Creative Commons Attribution Non Commercial No Derivatives 3.0 Unported',
       licenseId: 'CC-BY-NC-ND-3.0',
       seeAlso: ['https://creativecommons.org/licenses/by-nc-nd/3.0/legalcode'],
       isOsiApproved: false,
@@ -865,8 +858,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/CC-BY-NC-ND-4.0.json',
       referenceNumber: '166',
-      name:
-        'Creative Commons Attribution Non Commercial No Derivatives 4.0 International',
+      name: 'Creative Commons Attribution Non Commercial No Derivatives 4.0 International',
       licenseId: 'CC-BY-NC-ND-4.0',
       seeAlso: ['https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode'],
       isOsiApproved: false,
@@ -876,8 +868,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/CC-BY-NC-SA-1.0.json',
       referenceNumber: '116',
-      name:
-        'Creative Commons Attribution Non Commercial Share Alike 1.0 Generic',
+      name: 'Creative Commons Attribution Non Commercial Share Alike 1.0 Generic',
       licenseId: 'CC-BY-NC-SA-1.0',
       seeAlso: ['https://creativecommons.org/licenses/by-nc-sa/1.0/legalcode'],
       isOsiApproved: false,
@@ -887,8 +878,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/CC-BY-NC-SA-2.0.json',
       referenceNumber: '398',
-      name:
-        'Creative Commons Attribution Non Commercial Share Alike 2.0 Generic',
+      name: 'Creative Commons Attribution Non Commercial Share Alike 2.0 Generic',
       licenseId: 'CC-BY-NC-SA-2.0',
       seeAlso: ['https://creativecommons.org/licenses/by-nc-sa/2.0/legalcode'],
       isOsiApproved: false,
@@ -898,8 +888,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/CC-BY-NC-SA-2.5.json',
       referenceNumber: '208',
-      name:
-        'Creative Commons Attribution Non Commercial Share Alike 2.5 Generic',
+      name: 'Creative Commons Attribution Non Commercial Share Alike 2.5 Generic',
       licenseId: 'CC-BY-NC-SA-2.5',
       seeAlso: ['https://creativecommons.org/licenses/by-nc-sa/2.5/legalcode'],
       isOsiApproved: false,
@@ -909,8 +898,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/CC-BY-NC-SA-3.0.json',
       referenceNumber: '349',
-      name:
-        'Creative Commons Attribution Non Commercial Share Alike 3.0 Unported',
+      name: 'Creative Commons Attribution Non Commercial Share Alike 3.0 Unported',
       licenseId: 'CC-BY-NC-SA-3.0',
       seeAlso: ['https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode'],
       isOsiApproved: false,
@@ -920,8 +908,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/CC-BY-NC-SA-4.0.json',
       referenceNumber: '320',
-      name:
-        'Creative Commons Attribution Non Commercial Share Alike 4.0 International',
+      name: 'Creative Commons Attribution Non Commercial Share Alike 4.0 International',
       licenseId: 'CC-BY-NC-SA-4.0',
       seeAlso: ['https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode'],
       isOsiApproved: false,
@@ -1303,7 +1290,7 @@ export default {
       name: 'CrystalStacker License',
       licenseId: 'CrystalStacker',
       seeAlso: [
-        'https://fedoraproject.org/wiki/Licensing:CrystalStacker?rd\u003dLicensing/CrystalStacker',
+        'https://fedoraproject.org/wiki/Licensing:CrystalStacker?rd=Licensing/CrystalStacker',
       ],
       isOsiApproved: false,
     },
@@ -1465,7 +1452,7 @@ export default {
       licenseId: 'EUPL-1.0',
       seeAlso: [
         'http://ec.europa.eu/idabc/en/document/7330.html',
-        'http://ec.europa.eu/idabc/servlets/Doc027f.pdf?id\u003d31096',
+        'http://ec.europa.eu/idabc/servlets/Doc027f.pdf?id=31096',
       ],
       isOsiApproved: false,
     },
@@ -1496,7 +1483,7 @@ export default {
         'https://joinup.ec.europa.eu/page/eupl-text-11-12',
         'https://joinup.ec.europa.eu/sites/default/files/custom-page/attachment/eupl_v1.2_en.pdf',
         'https://joinup.ec.europa.eu/sites/default/files/inline-files/EUPL%20v1_2%20EN(1).txt',
-        'http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri\u003dCELEX:32017D0863',
+        'http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32017D0863',
         'https://opensource.org/licenses/EUPL-1.1',
       ],
       isOsiApproved: true,
@@ -1836,15 +1823,14 @@ export default {
       name: 'GNU General Public License v2.0 w/GCC Runtime Library exception',
       licenseId: 'GPL-2.0-with-GCC-exception',
       seeAlso: [
-        'https://gcc.gnu.org/git/?p\u003dgcc.git;a\u003dblob;f\u003dgcc/libgcc1.c;h\u003d762f5143fc6eed57b6797c82710f3538aa52b40b;hb\u003dcb143a3ce4fb417c68f5fa2691a1b1b1053dfba9#l10',
+        'https://gcc.gnu.org/git/?p=gcc.git;a=blob;f=gcc/libgcc1.c;h=762f5143fc6eed57b6797c82710f3538aa52b40b;hb=cb143a3ce4fb417c68f5fa2691a1b1b1053dfba9#l10',
       ],
       isOsiApproved: false,
     },
     {
       reference: './GPL-2.0-with-autoconf-exception.html',
       isDeprecatedLicenseId: true,
-      detailsUrl:
-        'http://spdx.org/licenses/GPL-2.0-with-autoconf-exception.json',
+      detailsUrl: 'http://spdx.org/licenses/GPL-2.0-with-autoconf-exception.json',
       referenceNumber: '36',
       name: 'GNU General Public License v2.0 w/Autoconf exception',
       licenseId: 'GPL-2.0-with-autoconf-exception',
@@ -1859,15 +1845,14 @@ export default {
       name: 'GNU General Public License v2.0 w/Bison exception',
       licenseId: 'GPL-2.0-with-bison-exception',
       seeAlso: [
-        'http://git.savannah.gnu.org/cgit/bison.git/tree/data/yacc.c?id\u003d193d7c7054ba7197b0789e14965b739162319b5e#n141',
+        'http://git.savannah.gnu.org/cgit/bison.git/tree/data/yacc.c?id=193d7c7054ba7197b0789e14965b739162319b5e#n141',
       ],
       isOsiApproved: false,
     },
     {
       reference: './GPL-2.0-with-classpath-exception.html',
       isDeprecatedLicenseId: true,
-      detailsUrl:
-        'http://spdx.org/licenses/GPL-2.0-with-classpath-exception.json',
+      detailsUrl: 'http://spdx.org/licenses/GPL-2.0-with-classpath-exception.json',
       referenceNumber: '219',
       name: 'GNU General Public License v2.0 w/Classpath exception',
       licenseId: 'GPL-2.0-with-classpath-exception',
@@ -1953,8 +1938,7 @@ export default {
     {
       reference: './GPL-3.0-with-autoconf-exception.html',
       isDeprecatedLicenseId: true,
-      detailsUrl:
-        'http://spdx.org/licenses/GPL-3.0-with-autoconf-exception.json',
+      detailsUrl: 'http://spdx.org/licenses/GPL-3.0-with-autoconf-exception.json',
       referenceNumber: '8',
       name: 'GNU General Public License v3.0 w/Autoconf exception',
       licenseId: 'GPL-3.0-with-autoconf-exception',
@@ -2012,7 +1996,7 @@ export default {
       name: 'Historical Permission Notice and Disclaimer - sell variant',
       licenseId: 'HPND-sell-variant',
       seeAlso: [
-        'https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/net/sunrpc/auth_gss/gss_generic_token.c?h\u003dv4.19',
+        'https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/net/sunrpc/auth_gss/gss_generic_token.c?h=v4.19',
       ],
       isOsiApproved: false,
     },
@@ -2036,7 +2020,7 @@ export default {
       name: 'IBM PowerPC Initialization and Boot Software',
       licenseId: 'IBM-pibs',
       seeAlso: [
-        'http://git.denx.de/?p\u003du-boot.git;a\u003dblob;f\u003darch/powerpc/cpu/ppc4xx/miiphy.c;h\u003d297155fdafa064b955e53e9832de93bfb0cfb85b;hb\u003d9fab4bf4cc077c21e43941866f3f2c196f28670d',
+        'http://git.denx.de/?p=u-boot.git;a=blob;f=arch/powerpc/cpu/ppc4xx/miiphy.c;h=297155fdafa064b955e53e9832de93bfb0cfb85b;hb=9fab4bf4cc077c21e43941866f3f2c196f28670d',
       ],
       isOsiApproved: false,
     },
@@ -2061,7 +2045,7 @@ export default {
       name: 'Independent JPEG Group License',
       licenseId: 'IJG',
       seeAlso: [
-        'http://dev.w3.org/cvsweb/Amaya/libjpeg/Attic/README?rev\u003d1.2',
+        'http://dev.w3.org/cvsweb/Amaya/libjpeg/Attic/README?rev=1.2',
       ],
       isOsiApproved: false,
     },
@@ -2496,7 +2480,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/LiLiQ-P-1.1.json',
       referenceNumber: '79',
-      name: 'Licence Libre du Québec – Permissive version 1.1',
+      name: 'Licence Libre du Qu\xe9bec \u2013 Permissive version 1.1',
       licenseId: 'LiLiQ-P-1.1',
       seeAlso: [
         'https://forge.gouv.qc.ca/licence/fr/liliq-v1-1/',
@@ -2509,7 +2493,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/LiLiQ-R-1.1.json',
       referenceNumber: '290',
-      name: 'Licence Libre du Québec – Réciprocité version 1.1',
+      name: 'Licence Libre du Qu\xe9bec \u2013 R\xe9ciprocit\xe9 version 1.1',
       licenseId: 'LiLiQ-R-1.1',
       seeAlso: [
         'https://www.forge.gouv.qc.ca/participez/licence-logicielle/licence-libre-du-quebec-liliq-en-francais/licence-libre-du-quebec-reciprocite-liliq-r-v1-1/',
@@ -2522,7 +2506,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/LiLiQ-Rplus-1.1.json',
       referenceNumber: '335',
-      name: 'Licence Libre du Québec – Réciprocité forte version 1.1',
+      name: 'Licence Libre du Qu\xe9bec \u2013 R\xe9ciprocit\xe9 forte version 1.1',
       licenseId: 'LiLiQ-Rplus-1.1',
       seeAlso: [
         'https://www.forge.gouv.qc.ca/participez/licence-logicielle/licence-libre-du-quebec-liliq-en-francais/licence-libre-du-quebec-reciprocite-forte-liliq-r-v1-1/',
@@ -2585,7 +2569,7 @@ export default {
       name: 'CMU License',
       licenseId: 'MIT-CMU',
       seeAlso: [
-        'https://fedoraproject.org/wiki/Licensing:MIT?rd\u003dLicensing/MIT#CMU_Style',
+        'https://fedoraproject.org/wiki/Licensing:MIT?rd=Licensing/MIT#CMU_Style',
         'https://github.com/python-pillow/Pillow/blob/fffb426092c8db24a5f4b6df243a8a3c01fb63cd/LICENSE',
       ],
       isOsiApproved: false,
@@ -2810,7 +2794,7 @@ export default {
       name: 'Net Boolean Public License v1',
       licenseId: 'NBPL-1.0',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003d37b4b3f6cc4bf34e1d3dec61e69914b9819d8894',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=37b4b3f6cc4bf34e1d3dec61e69914b9819d8894',
       ],
       isOsiApproved: false,
     },
@@ -3058,7 +3042,7 @@ export default {
       name: 'SIL Open Font License 1.0',
       licenseId: 'OFL-1.0',
       seeAlso: [
-        'http://scripts.sil.org/cms/scripts/page.php?item_id\u003dOFL10_web',
+        'http://scripts.sil.org/cms/scripts/page.php?item_id=OFL10_web',
       ],
       isOsiApproved: false,
     },
@@ -3070,7 +3054,7 @@ export default {
       name: 'SIL Open Font License 1.0 with Reserved Font Name',
       licenseId: 'OFL-1.0-RFN',
       seeAlso: [
-        'http://scripts.sil.org/cms/scripts/page.php?item_id\u003dOFL10_web',
+        'http://scripts.sil.org/cms/scripts/page.php?item_id=OFL10_web',
       ],
       isOsiApproved: false,
     },
@@ -3082,7 +3066,7 @@ export default {
       name: 'SIL Open Font License 1.0 with no Reserved Font Name',
       licenseId: 'OFL-1.0-no-RFN',
       seeAlso: [
-        'http://scripts.sil.org/cms/scripts/page.php?item_id\u003dOFL10_web',
+        'http://scripts.sil.org/cms/scripts/page.php?item_id=OFL10_web',
       ],
       isOsiApproved: false,
     },
@@ -3095,7 +3079,7 @@ export default {
       name: 'SIL Open Font License 1.1',
       licenseId: 'OFL-1.1',
       seeAlso: [
-        'http://scripts.sil.org/cms/scripts/page.php?item_id\u003dOFL_web',
+        'http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web',
         'https://opensource.org/licenses/OFL-1.1',
       ],
       isOsiApproved: true,
@@ -3108,7 +3092,7 @@ export default {
       name: 'SIL Open Font License 1.1 with Reserved Font Name',
       licenseId: 'OFL-1.1-RFN',
       seeAlso: [
-        'http://scripts.sil.org/cms/scripts/page.php?item_id\u003dOFL_web',
+        'http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web',
         'https://opensource.org/licenses/OFL-1.1',
       ],
       isOsiApproved: true,
@@ -3121,7 +3105,7 @@ export default {
       name: 'SIL Open Font License 1.1 with no Reserved Font Name',
       licenseId: 'OFL-1.1-no-RFN',
       seeAlso: [
-        'http://scripts.sil.org/cms/scripts/page.php?item_id\u003dOFL_web',
+        'http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web',
         'https://opensource.org/licenses/OFL-1.1',
       ],
       isOsiApproved: true,
@@ -3193,7 +3177,7 @@ export default {
       name: 'Open LDAP Public License v1.1',
       licenseId: 'OLDAP-1.1',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003d806557a5ad59804ef3a44d5abfbe91d706b0791f',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=806557a5ad59804ef3a44d5abfbe91d706b0791f',
       ],
       isOsiApproved: false,
     },
@@ -3205,7 +3189,7 @@ export default {
       name: 'Open LDAP Public License v1.2',
       licenseId: 'OLDAP-1.2',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003d42b0383c50c299977b5893ee695cf4e486fb0dc7',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=42b0383c50c299977b5893ee695cf4e486fb0dc7',
       ],
       isOsiApproved: false,
     },
@@ -3217,7 +3201,7 @@ export default {
       name: 'Open LDAP Public License v1.3',
       licenseId: 'OLDAP-1.3',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003de5f8117f0ce088d0bd7a8e18ddf37eaa40eb09b1',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=e5f8117f0ce088d0bd7a8e18ddf37eaa40eb09b1',
       ],
       isOsiApproved: false,
     },
@@ -3229,7 +3213,7 @@ export default {
       name: 'Open LDAP Public License v1.4',
       licenseId: 'OLDAP-1.4',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003dc9f95c2f3f2ffb5e0ae55fe7388af75547660941',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=c9f95c2f3f2ffb5e0ae55fe7388af75547660941',
       ],
       isOsiApproved: false,
     },
@@ -3241,7 +3225,7 @@ export default {
       name: 'Open LDAP Public License v2.0 (or possibly 2.0A and 2.0B)',
       licenseId: 'OLDAP-2.0',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003dcbf50f4e1185a21abd4c0a54d3f4341fe28f36ea',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=cbf50f4e1185a21abd4c0a54d3f4341fe28f36ea',
       ],
       isOsiApproved: false,
     },
@@ -3253,7 +3237,7 @@ export default {
       name: 'Open LDAP Public License v2.0.1',
       licenseId: 'OLDAP-2.0.1',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003db6d68acd14e51ca3aab4428bf26522aa74873f0e',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=b6d68acd14e51ca3aab4428bf26522aa74873f0e',
       ],
       isOsiApproved: false,
     },
@@ -3265,7 +3249,7 @@ export default {
       name: 'Open LDAP Public License v2.1',
       licenseId: 'OLDAP-2.1',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003db0d176738e96a0d3b9f85cb51e140a86f21be715',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=b0d176738e96a0d3b9f85cb51e140a86f21be715',
       ],
       isOsiApproved: false,
     },
@@ -3277,7 +3261,7 @@ export default {
       name: 'Open LDAP Public License v2.2',
       licenseId: 'OLDAP-2.2',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003d470b0c18ec67621c85881b2733057fecf4a1acc3',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=470b0c18ec67621c85881b2733057fecf4a1acc3',
       ],
       isOsiApproved: false,
     },
@@ -3289,7 +3273,7 @@ export default {
       name: 'Open LDAP Public License v2.2.1',
       licenseId: 'OLDAP-2.2.1',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003d4bc786f34b50aa301be6f5600f58a980070f481e',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=4bc786f34b50aa301be6f5600f58a980070f481e',
       ],
       isOsiApproved: false,
     },
@@ -3301,7 +3285,7 @@ export default {
       name: 'Open LDAP Public License 2.2.2',
       licenseId: 'OLDAP-2.2.2',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003ddf2cc1e21eb7c160695f5b7cffd6296c151ba188',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=df2cc1e21eb7c160695f5b7cffd6296c151ba188',
       ],
       isOsiApproved: false,
     },
@@ -3314,7 +3298,7 @@ export default {
       name: 'Open LDAP Public License v2.3',
       licenseId: 'OLDAP-2.3',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003dd32cf54a32d581ab475d23c810b0a7fbaf8d63c3',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=d32cf54a32d581ab475d23c810b0a7fbaf8d63c3',
       ],
       isOsiApproved: false,
     },
@@ -3326,7 +3310,7 @@ export default {
       name: 'Open LDAP Public License v2.4',
       licenseId: 'OLDAP-2.4',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003dcd1284c4a91a8a380d904eee68d1583f989ed386',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=cd1284c4a91a8a380d904eee68d1583f989ed386',
       ],
       isOsiApproved: false,
     },
@@ -3338,7 +3322,7 @@ export default {
       name: 'Open LDAP Public License v2.5',
       licenseId: 'OLDAP-2.5',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003d6852b9d90022e8593c98205413380536b1b5a7cf',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=6852b9d90022e8593c98205413380536b1b5a7cf',
       ],
       isOsiApproved: false,
     },
@@ -3350,7 +3334,7 @@ export default {
       name: 'Open LDAP Public License v2.6',
       licenseId: 'OLDAP-2.6',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003d1cae062821881f41b73012ba816434897abf4205',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=1cae062821881f41b73012ba816434897abf4205',
       ],
       isOsiApproved: false,
     },
@@ -3363,7 +3347,7 @@ export default {
       name: 'Open LDAP Public License v2.7',
       licenseId: 'OLDAP-2.7',
       seeAlso: [
-        'http://www.openldap.org/devel/gitweb.cgi?p\u003dopenldap.git;a\u003dblob;f\u003dLICENSE;hb\u003d47c2415c1df81556eeb39be6cad458ef87c534a2',
+        'http://www.openldap.org/devel/gitweb.cgi?p=openldap.git;a=blob;f=LICENSE;hb=47c2415c1df81556eeb39be6cad458ef87c534a2',
       ],
       isOsiApproved: false,
     },
@@ -3492,7 +3476,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/PDDL-1.0.json',
       referenceNumber: '132',
-      name: 'ODC Public Domain Dedication \u0026 License 1.0',
+      name: 'ODC Public Domain Dedication & License 1.0',
       licenseId: 'PDDL-1.0',
       seeAlso: ['http://opendatacommons.org/licenses/pddl/1.0/'],
       isOsiApproved: false,
@@ -4417,7 +4401,7 @@ export default {
       name: 'SQLite Blessing',
       licenseId: 'blessing',
       seeAlso: [
-        'https://www.sqlite.org/src/artifact/e33a4df7e32d742a?ln\u003d4-9',
+        'https://www.sqlite.org/src/artifact/e33a4df7e32d742a?ln=4-9',
         'https://sqlite.org/src/artifact/df5091916dbb40e6',
       ],
       isOsiApproved: false,

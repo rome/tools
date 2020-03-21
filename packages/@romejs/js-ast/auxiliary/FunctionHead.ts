@@ -16,18 +16,20 @@ import {
 } from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type FunctionHead = JSNodeBase & {
-  type: 'FunctionHead';
-  params: Array<AnyParamBindingPattern>;
-  rest?: AnyTargetBindingPattern;
-  thisType?: BindingIdentifier;
-  hasHoistedVars?: boolean;
-  generator?: boolean;
-  async?: boolean;
-  typeParameters?: AnyTypeParameter;
-  returnType?: AnyPrimaryType;
-  predicate?: AnyFlowPredicate;
-};
+export type FunctionHead =
+  & JSNodeBase
+  & {
+    type: 'FunctionHead';
+    params: Array<AnyParamBindingPattern>;
+    rest?: AnyTargetBindingPattern;
+    thisType?: BindingIdentifier;
+    hasHoistedVars?: boolean;
+    generator?: boolean;
+    async?: boolean;
+    typeParameters?: AnyTypeParameter;
+    returnType?: AnyPrimaryType;
+    predicate?: AnyFlowPredicate;
+  };
 
 export const functionHead = createQuickBuilder<FunctionHead, 'params'>(
   'FunctionHead',

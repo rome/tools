@@ -17,9 +17,13 @@ import diff from '@romejs/string-diff';
 import {createErrorFromStructure} from '@romejs/v8';
 import prettyFormat from '@romejs/pretty-format';
 import {Class} from '@romejs/typescript-helpers';
+import {FileReference} from '../common/types/files';
+import {markup} from '@romejs/string-markup';
 
 type AsyncFunc = () => undefined | Promise<void>;
+
 type SyncThrower = () => void;
+
 type ExpectedError = undefined | string | RegExp | Class<Error>;
 
 function removeCRLF(str: string): string {
@@ -76,15 +80,25 @@ function maybeTruncate(str: string, noTruncate: boolean): string {
 
 export default class TestAPI {
   constructor(
-    testName: string,
-    onTimeout: OnTimeout,
-    snapshotManager: SnapshotManager,
-    options: TestRunnerOptions,
+    {
+      testName,
+      onTimeout,
+      file,
+      snapshotManager,
+      options,
+    }: {
+      file: FileReference;
+      testName: string;
+      onTimeout: OnTimeout;
+      snapshotManager: SnapshotManager;
+      options: TestRunnerOptions;
+    },
   ) {
     this.testName = testName;
     this.options = options;
     this.snapshotManager = snapshotManager;
     this.snapshotCounter = 0;
+    this.file = file;
 
     this.teardownEvent = new Event({name: 'TestAPI.teardown'});
 
@@ -92,13 +106,14 @@ export default class TestAPI {
     this.onTimeout = onTimeout;
     this.timeoutMax = 0;
     this.timeoutId = undefined;
-    this.setTimeout(5000);
+    this.setTimeout(5_000);
 
     this.advice = [];
   }
 
   startTime: number;
   options: TestRunnerOptions;
+  file: FileReference;
 
   onTimeout: OnTimeout;
   timeoutId: undefined | NodeJS.Timeout;
@@ -111,10 +126,18 @@ export default class TestAPI {
   snapshotCounter: number;
   snapshotManager: SnapshotManager;
 
-  buildMatchParts(
+  buildMatchAdvice(
     received: unknown,
     expected: unknown,
-    visualMethod?: string,
+    {
+      visualMethod,
+      expectedAlias,
+      receivedAlias,
+    }: {
+      visualMethod?: string;
+      expectedAlias?: string;
+      receivedAlias?: string;
+    } = {},
   ): PartialDiagnosticAdvice {
     let expectedFormat;
     let receivedFormat;
@@ -134,11 +157,9 @@ export default class TestAPI {
       receivedFormat,
       this.options.verboseDiagnostics,
     );
-    const hasTruncated =
-      expectedFormatCode !== expectedFormat ||
-      receivedFormatCode !== receivedFormat;
-    const hasAllTruncated =
-      expectedFormatCode !== expectedFormat &&
+    const hasTruncated = expectedFormatCode !== expectedFormat ||
+    receivedFormatCode !== receivedFormat;
+    const hasAllTruncated = expectedFormatCode !== expectedFormat &&
       receivedFormatCode !== receivedFormat;
 
     const advice: PartialDiagnosticAdvice = [];
@@ -178,16 +199,14 @@ export default class TestAPI {
         advice.push({
           type: 'log',
           category: 'info',
-          message:
-            'Identical except the received uses CRLF newlines, while the expected does not',
+          message: 'Identical except the received uses CRLF newlines, while the expected does not',
         });
       }
       if (receivedFormat === expectedFormatNoCRLF) {
         advice.push({
           type: 'log',
           category: 'info',
-          message:
-            'Identical except the expected uses CRLF newlines, while the received does not',
+          message: 'Identical except the expected uses CRLF newlines, while the received does not',
         });
       }
 
@@ -219,8 +238,8 @@ export default class TestAPI {
       }
 
       // Produce a diff to better visualize differences
-      // TODO what about truncation...?
 
+      // TODO what about truncation...?
       advice.push({
         type: 'log',
         category: 'info',
@@ -229,7 +248,11 @@ export default class TestAPI {
 
       advice.push({
         type: 'diff',
-        diff: diff(receivedFormat, expectedFormat),
+        diff: diff(expectedFormat, receivedFormat),
+        legend: {
+          add: receivedAlias ? receivedAlias : 'What we received',
+          delete: expectedAlias ? expectedAlias : 'What we expected<',
+        },
       });
     }
 
@@ -238,15 +261,13 @@ export default class TestAPI {
       advice.push({
         type: 'log',
         category: 'info',
-        message:
-          'Add the --verbose-diagnostics flag to show the values being compared',
+        message: 'Add the --verbose-diagnostics flag to show the values being compared',
       });
     } else if (hasTruncated) {
       advice.push({
         type: 'log',
         category: 'info',
-        message:
-          'Some values have been truncated for being too long, add the --verbose-diagnostics flag to disable truncation',
+        message: 'Some values have been truncated for being too long, add the --verbose-diagnostics flag to disable truncation',
       });
     }
 
@@ -305,97 +326,78 @@ export default class TestAPI {
   }
 
   fail(
-    message?: string,
-    advice?: PartialDiagnosticAdvice,
+    message: string = 'Test failure triggered by t.fail()',
+    advice: PartialDiagnosticAdvice = [],
     framesToPop: number = 0,
   ) {
-    const actualMessage =
-      message === undefined ? 'Test failure triggered by t.fail()' : message;
-    const error = createErrorFromStructure({
-      message: actualMessage,
+    throw createErrorFromStructure({
+      message,
       advice,
       framesToPop: framesToPop + 1,
     });
-    throw error;
   }
 
   truthy(value: unknown, message: string = 'Expected value to be truthy') {
     if (Boolean(value) === false) {
-      this.fail(
-        message,
-        [
-          {
-            type: 'log',
-            category: 'info',
-            message: `Received`,
-          },
-          {
-            type: 'code',
-            code: prettyFormat(value),
-          },
-        ],
-        1,
-      );
+      this.fail(message, [
+        {
+          type: 'log',
+          category: 'info',
+          message: `Received`,
+        },
+        {
+          type: 'code',
+          code: prettyFormat(value),
+        },
+      ], 1);
     }
   }
 
   falsy(value: unknown, message: string = 'Expected value to be falsy') {
     if (Boolean(value) === true) {
-      this.fail(
-        message,
-        [
-          {
-            type: 'log',
-            category: 'info',
-            message: `Received`,
-          },
-          {
-            type: 'code',
-            code: prettyFormat(value),
-          },
-        ],
-        1,
-      );
+      this.fail(message, [
+        {
+          type: 'log',
+          category: 'info',
+          message: `Received`,
+        },
+        {
+          type: 'code',
+          code: prettyFormat(value),
+        },
+      ], 1);
     }
   }
 
   true(value: unknown, message: string = 'Expected value to be true') {
     if (value !== true) {
-      this.fail(
-        message,
-        [
-          {
-            type: 'log',
-            category: 'info',
-            message: `Received`,
-          },
-          {
-            type: 'code',
-            code: prettyFormat(value),
-          },
-        ],
-        1,
-      );
+      this.fail(message, [
+        {
+          type: 'log',
+          category: 'info',
+          message: `Received`,
+        },
+        {
+          type: 'code',
+          code: prettyFormat(value),
+        },
+      ], 1);
     }
   }
 
   false(value: unknown, message: string = 'Expected value to be false') {
     if (value !== false) {
-      this.fail(
-        message,
-        [
-          {
-            type: 'log',
-            category: 'info',
-            message: `Received`,
-          },
-          {
-            type: 'code',
-            code: prettyFormat(value),
-          },
-        ],
-        1,
-      );
+      this.fail(message, [
+        {
+          type: 'log',
+          category: 'info',
+          message: `Received`,
+        },
+        {
+          type: 'code',
+          code: prettyFormat(value),
+        },
+      ], 1);
     }
   }
 
@@ -405,11 +407,9 @@ export default class TestAPI {
     message: string = 't.is() failed, using Object.is semantics',
   ) {
     if (Object.is(received, expected) !== true) {
-      this.fail(
-        message,
-        this.buildMatchParts(received, expected, 'looksLike'),
-        1,
-      );
+      this.fail(message, this.buildMatchAdvice(received, expected, {
+        visualMethod: 'looksLike',
+      }), 1);
     }
   }
 
@@ -419,11 +419,9 @@ export default class TestAPI {
     message: string = 't.not() failed, using !Object.is() semantics',
   ) {
     if (Object.is(received, expected) === true) {
-      this.fail(
-        message,
-        this.buildMatchParts(received, expected, 'notLooksLike'),
-        1,
-      );
+      this.fail(message, this.buildMatchAdvice(received, expected, {
+        visualMethod: 'notLooksLike',
+      }), 1);
     }
   }
 
@@ -436,7 +434,7 @@ export default class TestAPI {
     const expectedInspect = prettyFormat(expected);
 
     if (actualInspect !== expectedInspect) {
-      this.fail(message, this.buildMatchParts(received, expected), 1);
+      this.fail(message, this.buildMatchAdvice(received, expected), 1);
     }
   }
 
@@ -449,7 +447,7 @@ export default class TestAPI {
     const expectedInspect = prettyFormat(expected);
 
     if (actualInspect === expectedInspect) {
-      this.fail(message, this.buildMatchParts(received, expected), 1);
+      this.fail(message, this.buildMatchAdvice(received, expected), 1);
     }
   }
 
@@ -523,7 +521,7 @@ export default class TestAPI {
   _snapshotNamed(
     name: string,
     expected: unknown,
-    message: string = "Snapshots don't match",
+    message?: string,
     framesToPop?: number,
   ) {
     let language: undefined | string;
@@ -551,21 +549,33 @@ export default class TestAPI {
 
     // Compare the snapshots
     if (formatted !== existingSnapshot) {
-      this.fail(
-        message,
-        [
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Snapshot diff',
-          },
-          {
-            type: 'diff',
-            diff: diff(existingSnapshot, formatted),
-          },
-        ],
-        framesToPop,
+      const advice: PartialDiagnosticAdvice = this.buildMatchAdvice(
+        formatted,
+        existingSnapshot,
+        {
+          receivedAlias: 'What the code gave us',
+          expectedAlias: 'Existing snapshot',
+        },
       );
+
+      if (message === undefined) {
+        message =
+          markup`Snapshot ${name} at <filelink emphasis target="${this.snapshotManager.path.join()}" /> doesn't match`;
+      } else {
+        advice.push({
+          type: 'log',
+          category: 'info',
+          message: `Snapshot can be found at <filelink emphasis target="${this.snapshotManager.path.join()}" />`,
+        });
+      }
+
+      advice.push({
+        type: 'log',
+        category: 'info',
+        message: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
+      });
+
+      this.fail(message, advice, framesToPop);
     }
   }
 }

@@ -10,21 +10,30 @@ import {JSParser} from '../parser';
 // ## Token types
 
 // The assignment of fine-grained, information-carrying type objects
+
 // allows the tokenizer to store the information it has about a
+
 // token in a way that is very cheap for the parser to look up.
 
 // All token type variables start with an underscore, to make them
+
 // easy to recognize.
 
 // The `beforeExpr` property is used to disambiguate between regular
-// expressions and divisions. It is set on all token types that can
-// be followed by an expression (thus, a slash after them would be a
-// regular expression).
-//
-// `isLoop` marks a keyword as starting a loop, which is important
-// to know when parsing a label, in order to allow or disallow
-// continue jumps to that label.
 
+// expressions and divisions. It is set on all token types that can
+
+// be followed by an expression (thus, a slash after them would be a
+
+// regular expression).
+
+//
+
+// `isLoop` marks a keyword as starting a loop, which is important
+
+// to know when parsing a label, in order to allow or disallow
+
+// continue jumps to that label.
 const beforeExpr = true;
 const startsExpr = true;
 const isLoop = true;
@@ -133,17 +142,29 @@ export const types = {
   hash: new TokenType('#'),
 
   // Operators. These carry several kinds of properties to help the
+
   // parser use them properly (the presence of these properties is
+
   // what categorizes them as operators).
+
   //
+
   // `binop`, when present, specifies that this operator is a binary
+
   // operator, and will refer to its precedence.
+
   //
+
   // `prefix` and `postfix` mark the operator as a prefix or postfix
+
   // unary operator.
+
   //
+
   // `isAssign` marks all of `=`, `+=`, `-=` etcetera, which act as
+
   // binary operators with a very low precedence, that should result
+
   // in AssignmentExpression nodes.
 
   eq: new TokenType('=', {beforeExpr, isAssign}),

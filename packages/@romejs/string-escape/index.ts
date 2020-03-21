@@ -8,6 +8,7 @@
 import * as messages from './messages';
 
 export {messages};
+
 export {default as escapeString} from './escapeString';
 export {default as unescapeString} from './unescapeString';
 export * from './constants';

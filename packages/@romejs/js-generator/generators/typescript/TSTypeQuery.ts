@@ -12,5 +12,5 @@ export default function TSTypeQuery(generator: Generator, node: AnyNode) {
   node = tsTypeQuery.assert(node);
   generator.word('typeof');
   generator.space();
-  generator.print(node.exprName);
+  generator.print(node.exprName, node);
 }

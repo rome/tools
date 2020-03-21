@@ -8,9 +8,9 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type EmptyKeywordTypeAnnotation = JSNodeBase & {
-  type: 'EmptyKeywordTypeAnnotation';
-};
+export type EmptyKeywordTypeAnnotation =
+  & JSNodeBase
+  & {type: 'EmptyKeywordTypeAnnotation'};
 
 export const emptyKeywordTypeAnnotation = createBuilder<
   EmptyKeywordTypeAnnotation

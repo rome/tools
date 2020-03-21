@@ -22,7 +22,6 @@ import {getFileHandlerAssert} from '@romejs/core/common/fileHandlers';
 export {RomeDiagnosticsError} from './error';
 
 //
-
 const cacheKeyPartsCache: AbsoluteFilePathMap<string> = new AbsoluteFilePathMap();
 
 async function getCacheKeyPart(
@@ -74,12 +73,13 @@ export async function getCacheKey(filename: string): Promise<string> {
 }
 
 //
-
-export const compile = wrapForErrors(async function(opts: {
-  filename: string;
-  input: string;
-  sourceType: ConstSourceType;
-}): Promise<{
+export const compile = wrapForErrors(async function(
+  opts: {
+    filename: string;
+    input: string;
+    sourceType: ConstSourceType;
+  },
+): Promise<{
   cacheKey: string;
   code: string;
   sourceMap: SourceMap;
@@ -91,8 +91,8 @@ export const compile = wrapForErrors(async function(opts: {
 
   const {handler} = getFileHandlerAssert(path, project.config);
 
-  const sourceType =
-    opts.sourceType === undefined ? handler.sourceType : opts.sourceType;
+  const sourceType = opts.sourceType === undefined
+    ? handler.sourceType : opts.sourceType;
 
   const ast = parseJS({
     input: opts.input,

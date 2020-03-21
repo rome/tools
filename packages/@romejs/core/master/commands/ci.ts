@@ -18,7 +18,7 @@ export default createMasterCommand({
     const {reporter} = req;
 
     reporter.heading('Running lint');
-    const linter = new Linter(req);
+    const linter = new Linter(req, undefined);
     await linter.lint(false);
 
     reporter.heading('Running tests');
@@ -27,6 +27,7 @@ export default createMasterCommand({
       freezeSnapshots: true,
       updateSnapshots: false,
       showAllCoverage: true,
+      syncTests: false,
     });
   },
 });

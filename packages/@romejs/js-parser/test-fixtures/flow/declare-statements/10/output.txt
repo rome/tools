@@ -1,0 +1,204 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 59
+      index: 59
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    FlowDeclareClass {
+      id: BindingIdentifier {
+        name: 'A'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 15
+            index: 15
+            line: 1
+          }
+          start: Object {
+            column: 14
+            index: 14
+            line: 1
+          }
+        }
+      }
+      extends: Array []
+      implements: Array []
+      mixins: Array []
+      typeParameters: undefined
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 59
+          index: 59
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      body: FlowObjectTypeAnnotation {
+        exact: false
+        inexact: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 59
+            index: 59
+            line: 1
+          }
+          start: Object {
+            column: 16
+            index: 16
+            line: 1
+          }
+        }
+        properties: Array [
+          FlowObjectTypeProperty {
+            kind: 'init'
+            key: Identifier {
+              name: 'foo'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 28
+                  index: 28
+                  line: 1
+                }
+                start: Object {
+                  column: 25
+                  index: 25
+                  line: 1
+                }
+              }
+            }
+            value: FlowFunctionTypeAnnotation {
+              params: Array []
+              rest: undefined
+              typeParameters: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 38
+                  index: 38
+                  line: 1
+                }
+                start: Object {
+                  column: 18
+                  index: 18
+                  line: 1
+                }
+              }
+              returnType: NumberKeywordTypeAnnotation {
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 38
+                    index: 38
+                    line: 1
+                  }
+                  start: Object {
+                    column: 32
+                    index: 32
+                    line: 1
+                  }
+                }
+              }
+            }
+            optional: false
+            proto: false
+            static: true
+            variance: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 38
+                index: 38
+                line: 1
+              }
+              start: Object {
+                column: 18
+                index: 18
+                line: 1
+              }
+            }
+          }
+          FlowObjectTypeProperty {
+            kind: 'init'
+            key: Identifier {
+              name: 'x'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 48
+                  index: 48
+                  line: 1
+                }
+                start: Object {
+                  column: 47
+                  index: 47
+                  line: 1
+                }
+              }
+            }
+            value: StringKeywordTypeAnnotation {
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 57
+                  index: 57
+                  line: 1
+                }
+                start: Object {
+                  column: 51
+                  index: 51
+                  line: 1
+                }
+              }
+            }
+            optional: false
+            proto: false
+            static: true
+            variance: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 57
+                index: 57
+                line: 1
+              }
+              start: Object {
+                column: 40
+                index: 40
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

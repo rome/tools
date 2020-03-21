@@ -17,6 +17,7 @@ export type TestRef = {
 };
 
 export type TestWorkerBridgeRunOptions = {
+  id: number;
   file: JSONFileReference;
   projectFolder: string;
   code: string;
@@ -33,31 +34,36 @@ export default class TestWorkerBridge extends Bridge {
     },
   );
 
-  runTest = this.createEvent<TestWorkerBridgeRunOptions, void>({
+  prepareTest = this.createEvent<TestWorkerBridgeRunOptions, void>({
+    name: 'prepareTest',
+    direction: 'server->client',
+  });
+
+  runTest = this.createEvent<number, void>({
     name: 'runTest',
     direction: 'server->client',
   });
 
-  testFound = this.createEvent<{ref: TestRef; isSkipped: boolean}, void>({
-    name: 'onTestFound',
+  testsFound = this.createEvent<Array<{
+    ref: TestRef;
+    isSkipped: boolean;
+  }>, void>({
+    name: 'onTestFounds',
     direction: 'server<-client',
   });
 
-  testStart = this.createEvent<
-    {ref: TestRef; timeout: undefined | number},
-    void
-  >({
+  testStart = this.createEvent<{
+    ref: TestRef;
+    timeout: undefined | number;
+  }, void>({
     name: 'onTestStart',
     direction: 'server<-client',
   });
 
-  testError = this.createEvent<
-    {
-      ref: undefined | TestRef;
-      diagnostic: PartialDiagnostic;
-    },
-    void
-  >({name: 'onTestError', direction: 'server<-client'});
+  testError = this.createEvent<{
+    ref: undefined | TestRef;
+    diagnostic: PartialDiagnostic;
+  }, void>({name: 'onTestError', direction: 'server<-client'});
 
   testSuccess = this.createEvent<{ref: TestRef}, void>({
     name: 'onTestSuccess',

@@ -30,10 +30,8 @@ export default function getNodeReferenceParts(
       } else {
         return add(node.property);
       }
-    } else if (
-      node.type === 'ComputedMemberProperty' &&
-      node.value.type === 'StringLiteral'
-    ) {
+    } else if (node.type === 'ComputedMemberProperty' && node.value.type ===
+    'StringLiteral') {
       return add(node.value);
     } else if (node.type === 'StaticMemberProperty') {
       return add(node.value);

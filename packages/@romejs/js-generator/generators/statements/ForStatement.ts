@@ -15,21 +15,27 @@ export default function ForStatement(generator: Generator, node: AnyNode) {
   generator.space();
   generator.token('(');
 
-  generator.inForStatementInitCounter++;
-  generator.print(node.init, node);
-  generator.inForStatementInitCounter--;
-  generator.token(';');
+  generator.multiline(node, (multiline, node) => {
+    generator.inForStatementInitCounter++;
+    generator.print(node.init, node);
+    generator.inForStatementInitCounter--;
+    generator.token(';');
 
-  if (node.test) {
-    generator.space();
-    generator.print(node.test, node);
-  }
-  generator.token(';');
+    if (node.test) {
+      generator.spaceOrNewline(multiline);
+      generator.print(node.test, node);
+    }
+    generator.token(';');
 
-  if (node.update) {
-    generator.space();
-    generator.print(node.update, node);
-  }
+    if (node.update) {
+      generator.spaceOrNewline(multiline);
+      generator.print(node.update, node);
+    }
+  }, {
+    conditions: ['more-than-one-line'],
+    indent: true,
+    indentTrailingNewline: true,
+  });
 
   generator.token(')');
   generator.printBlock(node);

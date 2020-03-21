@@ -8,11 +8,13 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type ComputedMemberProperty = JSNodeBase & {
-  type: 'ComputedMemberProperty';
-  value: AnyExpression;
-  optional?: boolean;
-};
+export type ComputedMemberProperty =
+  & JSNodeBase
+  & {
+    type: 'ComputedMemberProperty';
+    value: AnyExpression;
+    optional?: boolean;
+  };
 
 export const computedMemberProperty = createQuickBuilder<
   ComputedMemberProperty,

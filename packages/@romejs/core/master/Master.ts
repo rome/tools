@@ -27,7 +27,7 @@ import {
 } from '@romejs/cli-diagnostics';
 import {consume, ConsumePath} from '@romejs/consume';
 import {Event, EventSubscription} from '@romejs/events';
-import MasterRequest from './MasterRequest';
+import MasterRequest, {MasterRequestInvalid} from './MasterRequest';
 import ProjectManager from './project/ProjectManager';
 import WorkerManager from './WorkerManager';
 import Resolver from './fs/Resolver';
@@ -58,7 +58,7 @@ import {
 } from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
 
-const STDOUT_MAX_CHUNK_LENGTH = 100000;
+const STDOUT_MAX_CHUNK_LENGTH = 100_000;
 
 export type MasterClient = {
   id: number;
@@ -87,10 +87,10 @@ export type MasterUnfinishedMarker = {
   facet: string;
 };
 
-export type MasterMarker = MasterUnfinishedMarker & {
-  // End time in milliseconds
-  end: number;
-};
+export type MasterMarker =
+  & MasterUnfinishedMarker
+  & {// End time in milliseconds
+    end: number};
 
 export default class Master {
   constructor(opts: MasterOptions) {
@@ -127,27 +127,21 @@ export default class Master {
       serial: true,
     });
 
-    this.logger = new Logger(
-      'master',
-      () => {
-        return (
-          this.logEvent.hasSubscribers() ||
-          this.connectedClientsListeningForLogs.size > 0
-        );
-      },
-      {
-        streams: [
-          {
-            type: 'all',
-            format: 'none',
-            columns: 0,
-            write: chunk => {
-              this.emitMasterLog(chunk);
-            },
+    this.logger = new Logger('master', () => {
+      return this.logEvent.hasSubscribers() ||
+      this.connectedClientsListeningForLogs.size > 0;
+    }, {
+      streams: [
+        {
+          type: 'all',
+          format: 'none',
+          columns: 0,
+          write: (chunk) => {
+            this.emitMasterLog(chunk);
           },
-        ],
-      },
-    );
+        },
+      ],
+    });
 
     this.connectedReporters = new Reporter({
       wrapperFactory: this.wrapFatal.bind(this),
@@ -163,7 +157,7 @@ export default class Master {
     this.resolver = new Resolver(this);
     this.cache = new Cache(this);
 
-    this.memoryFs.deletedFileEvent.subscribe(path => {
+    this.memoryFs.deletedFileEvent.subscribe((path) => {
       return this.handleFileDelete(path);
     });
 
@@ -227,8 +221,10 @@ export default class Master {
     process.exit();
   }
 
+  // rome-suppress lint/noExplicitAny
   wrapFatal<T extends (...args: Array<any>) => any>(callback: T): T {
-    return ((...args: Array<any>): any => {
+    // rome-suppress lint/noExplicitAny
+    return (((...args: Array<any>): any => {
       try {
         const res = callback(...args);
         if (res instanceof Promise) {
@@ -238,7 +234,7 @@ export default class Master {
       } catch (err) {
         throw this.onFatalError(err);
       }
-    }) as T;
+    }) as T);
   }
 
   async handleDisconnectedDiagnostics(diagnostics: PartialDiagnostics) {
@@ -288,7 +284,7 @@ export default class Master {
       return;
     }
 
-    const teardown = setupGlobalErrorHandlers(err => {
+    const teardown = setupGlobalErrorHandlers((err) => {
       this.onFatalError(err);
     });
 
@@ -321,6 +317,7 @@ export default class Master {
     let profiler: undefined | Profiler;
 
     // If we aren't a dedicated process then we should only expect a single connection
+
     // and when that ends. End the Master.
     if (this.options.dedicated === false) {
       bridge.endEvent.subscribe(() => {
@@ -328,7 +325,7 @@ export default class Master {
       });
     }
 
-    bridge.profilingStart.subscribe(async data => {
+    bridge.profilingStart.subscribe(async (data) => {
       if (profiler !== undefined) {
         throw new Error('Expected no profiler to be running');
       }
@@ -358,7 +355,7 @@ export default class Master {
       return ids;
     });
 
-    bridge.profilingStopWorker.subscribe(async id => {
+    bridge.profilingStopWorker.subscribe(async (id) => {
       const worker = this.workerManager.getWorkerAssert(id);
       return await worker.bridge.profilingStop.call();
     });
@@ -378,7 +375,7 @@ export default class Master {
 
     await this.clientStartEvent.callOptional(client);
 
-    bridge.query.subscribe(async request => {
+    bridge.query.subscribe(async (request) => {
       return await this.handleRequest(client, request);
     });
   }
@@ -430,7 +427,7 @@ export default class Master {
       },
     };
 
-    bridge.setColumns.subscribe(columns => {
+    bridge.setColumns.subscribe((columns) => {
       reporter.setStreamColumns([outStream, errStream], columns);
     });
 
@@ -443,7 +440,7 @@ export default class Master {
       silent: flags.silent,
       markupOptions: {
         cwd: flags.cwd,
-        humanizeFilename: filename => {
+        humanizeFilename: (filename) => {
           const path = createUnknownFilePath(filename);
           if (path.isAbsolute()) {
             const remote = this.projectManager.getRemoteFromLocalPath(
@@ -454,7 +451,7 @@ export default class Master {
             }
           }
         },
-        normalizeFilename: filename => {
+        normalizeFilename: (filename) => {
           const path = this.projectManager.getFilePathFromUid(filename);
           if (path === undefined) {
             return filename;
@@ -466,11 +463,11 @@ export default class Master {
       useRemoteProgressBars: useRemoteReporter,
     });
 
-    reporter.sendRemoteClientMessage.subscribe(msg => {
+    reporter.sendRemoteClientMessage.subscribe((msg) => {
       bridge.reporterRemoteServerMessage.send(msg);
     });
 
-    bridge.reporterRemoteClientMessage.subscribe(msg => {
+    bridge.reporterRemoteClientMessage.subscribe((msg) => {
       reporter.receivedRemoteServerMessage(msg);
     });
 
@@ -489,6 +486,7 @@ export default class Master {
     this.connectedClients.add(client);
 
     // When enableWorkerLogs is called we setup subscriptions to the worker logs
+
     // Logs are never transported from workers to the master unless there is a subscription
     let subscribedWorkers = false;
     bridge.enableWorkerLogs.subscribe(() => {
@@ -509,12 +507,12 @@ export default class Master {
       }
 
       // Listen for logs for any workers that start later
-      this.workerManager.workerStartEvent.subscribe(worker => {
+      this.workerManager.workerStartEvent.subscribe((worker) => {
         bridge.attachEndSubscriptionRemoval(worker.log.subscribe(onLog));
       });
     });
 
-    bridge.updatedListenersEvent.subscribe(listeners => {
+    bridge.updatedListenersEvent.subscribe((listeners) => {
       if (listeners.has('log')) {
         this.connectedClientsListeningForLogs.add(client);
       } else {
@@ -558,10 +556,8 @@ export default class Master {
       requestFlags,
       silent: partialQuery.silent === true || requestFlags.benchmark,
       terminateWhenIdle: partialQuery.terminateWhenIdle === true,
-      commandFlags:
-        partialQuery.commandFlags === undefined
-          ? {}
-          : partialQuery.commandFlags,
+      commandFlags: partialQuery.commandFlags === undefined
+        ? {} : partialQuery.commandFlags,
     };
 
     const {bridge} = client;
@@ -570,7 +566,7 @@ export default class Master {
     // Create a promise for the client dying so we can race it later
     let bridgeEndEvent: undefined | EventSubscription;
     const bridgeEndPromise: Promise<void> = new Promise((resolve, reject) => {
-      bridgeEndEvent = bridge.endEvent.subscribe(err => {
+      bridgeEndEvent = bridge.endEvent.subscribe((err) => {
         reject(err);
       });
     });
@@ -615,6 +611,7 @@ export default class Master {
 
       req.teardown(res);
 
+      // If the query asked for no data then strip all diagnostics and data values
       if (query.noData) {
         if (res.type === 'SUCCESS') {
           return {
@@ -626,6 +623,11 @@ export default class Master {
         } else if (res.type === 'DIAGNOSTICS') {
           return {
             type: 'DIAGNOSTICS',
+            diagnostics: [],
+          };
+        } else if (res.type === 'INVALID_REQUEST') {
+          return {
+            type: 'INVALID_REQUEST',
             diagnostics: [],
           };
         }
@@ -685,8 +687,7 @@ export default class Master {
         `Warmup took <duration emphasis>${warmupTook}</duration>`,
         `<number emphasis>${benchmarkIterations}</number> runs`,
         `<duration emphasis>${benchmarkTook}</duration> total`,
-        `<duration emphasis approx>${benchmarkTook /
-          benchmarkIterations}</duration> per run`,
+        `<duration emphasis approx>${benchmarkTook / benchmarkIterations}</duration> per run`,
       ]);
     });
 
@@ -707,7 +708,7 @@ export default class Master {
     const markers: Array<MasterMarker> = [];
 
     if (query.requestFlags.collectMarkers) {
-      req.markerEvent.subscribe(marker => {
+      req.markerEvent.subscribe((marker) => {
         markers.push(marker);
       });
     }
@@ -716,6 +717,7 @@ export default class Master {
       const defaultCommandFlags: Dict<unknown> = {};
 
       // A type-safe wrapper for retrieving command flags
+
       // TODO perhaps present this as JSON or something if this isn't a request from the CLI?
       const commandFlagsConsumer = consume({
         filePath: createUnknownFilePath('argv'),
@@ -725,9 +727,10 @@ export default class Master {
           // objectPath should only have a depth of 1
           defaultCommandFlags[def.objectPath[0]] = def.default;
         },
+
         objectPath: [],
         context: {
-          category: 'cli-flags',
+          category: 'flags/invalid',
 
           getOriginalValue: () => {
             return undefined;
@@ -747,15 +750,13 @@ export default class Master {
       let promises: Array<Promise<unknown> | undefined> = [bridgeEndPromise];
 
       // Get command
-      const commandOpts:
-        | undefined
-        | MasterCommand<Dict<unknown>> = masterCommands.get(query.commandName);
+      const commandOpts: undefined | MasterCommand<Dict<unknown>> =
+        masterCommands.get(query.commandName);
       if (commandOpts) {
         // Warn about disabled disk caching
-        if (
-          process.env.ROME_CACHE === '0' &&
-          !this.warnedCacheClients.has(bridge)
-        ) {
+        if (process.env.ROME_CACHE === '0' && !this.warnedCacheClients.has(
+          bridge,
+        )) {
           reporter.warn(
             'Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable',
           );
@@ -813,18 +814,27 @@ export default class Master {
           markers,
         };
       } else {
-        return {
-          type: 'DIAGNOSTICS',
-          diagnostics,
-        };
+        if (err instanceof MasterRequestInvalid) {
+          return {
+            type: 'INVALID_REQUEST',
+            diagnostics,
+          };
+        } else {
+          return {
+            type: 'DIAGNOSTICS',
+            diagnostics,
+          };
+        }
       }
     }
   }
 
   async handleRequestError(
     req: MasterRequest,
-    err: Error,
+    rawErr: Error,
   ): Promise<undefined | Diagnostics> {
+    let err = rawErr;
+
     // If we can derive diagnostics from the error then create a diagnostics printer
     const diagnostics = getDiagnosticsFromError(err);
     if (diagnostics !== undefined) {
@@ -841,7 +851,11 @@ export default class Master {
       const printer = err;
       if (req.bridge.alive) {
         await printer.print();
-        printer.footer();
+
+        // Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
+        if (!(rawErr instanceof MasterRequestInvalid)) {
+          printer.footer();
+        }
       }
       return printer.getDiagnostics();
     }
@@ -855,7 +869,7 @@ export default class Master {
       message: 'Error captured and converted into a diagnostic',
     });
     const errorDiag = deriveDiagnosticFromError({
-      category: 'internalError',
+      category: 'internalError/request',
       error: err,
     });
     printer.addDiagnostic({
@@ -865,6 +879,7 @@ export default class Master {
     await printer.print();
 
     // We could probably return printer.getDiagnostics() but we just want to print to the console
+
     // We will still want to send the `error` property
     return;
   }

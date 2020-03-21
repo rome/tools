@@ -9,6 +9,14 @@ import {EventOptions, EventSubscription} from './types';
 
 type Callback<Param, Ret> = (param: Param) => Ret | Promise<Ret>;
 
+function noPromise<Ret>(ret: Ret | Promise<Ret>): Ret {
+  if (ret instanceof Promise) {
+    throw new Error('Subscription returned promise for a callSync');
+  } else {
+    return ret;
+  }
+}
+
 export default class Event<Param, Ret = void> {
   constructor(opts: EventOptions) {
     this.subscriptions = new Set();
@@ -60,6 +68,24 @@ export default class Event<Param, Ret = void> {
     }
   }
 
+  callSync(param: Param): Ret {
+    try {
+      const {rootSubscription, subscriptions} = this;
+      if (rootSubscription === undefined) {
+        throw new Error(`No subscription for event ${this.name}`);
+      }
+
+      const ret = noPromise(rootSubscription(param));
+      for (const callback of subscriptions) {
+        noPromise(callback(param));
+      }
+      return ret;
+    } catch (err) {
+      this.onError(err);
+      throw err;
+    }
+  }
+
   async call(param: Param): Promise<Ret> {
     const {rootSubscription, subscriptions} = this;
     if (rootSubscription === undefined) {
@@ -76,7 +102,7 @@ export default class Event<Param, Ret = void> {
       } else {
         const res = await Promise.all([
           rootSubscription(param),
-          ...Array.from(subscriptions, callback => callback(param)),
+          ...Array.from(subscriptions, (callback) => callback(param)),
         ]);
 
         // Return the root subscription value
@@ -97,13 +123,13 @@ export default class Event<Param, Ret = void> {
         timeoutId = setTimeout(() => {
           timedOut = true;
           listener.unsubscribe();
-          reject(
-            new Error(`Timed out after waiting ${timeout}ms for ${this.name}`),
-          );
+          reject(new Error(
+            `Timed out after waiting ${timeout}ms for ${this.name}`,
+          ));
         }, timeout);
       }
 
-      const listener = this.subscribe(param => {
+      const listener = this.subscribe((param) => {
         if (timedOut) {
           return val;
         }
@@ -135,10 +161,7 @@ export default class Event<Param, Ret = void> {
       throw new Error(`Event ${this.name} only allows a single subscription`);
     }
 
-    if (
-      this.rootSubscription === callback ||
-      this.subscriptions.has(callback)
-    ) {
+    if (this.rootSubscription === callback || this.subscriptions.has(callback)) {
       throw new Error('Cannot double subscribe a callback');
     }
 

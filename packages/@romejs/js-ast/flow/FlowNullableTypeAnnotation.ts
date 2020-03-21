@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyFlowPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowNullableTypeAnnotation = JSNodeBase & {
-  type: 'FlowNullableTypeAnnotation';
-  typeAnnotation: AnyFlowPrimary;
-};
+export type FlowNullableTypeAnnotation =
+  & JSNodeBase
+  & {
+    type: 'FlowNullableTypeAnnotation';
+    typeAnnotation: AnyFlowPrimary;
+  };
 
 export const flowNullableTypeAnnotation = createBuilder<
   FlowNullableTypeAnnotation

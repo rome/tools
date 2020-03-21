@@ -16,16 +16,18 @@ import {
 } from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type ClassHead = JSNodeBase & {
-  type: 'ClassHead';
-  superClass?: AnyExpression;
-  body: Array<AnyClassMember>;
-  typeParameters?: AnyTypeParameter;
-  superTypeParameters?: AnyTypeArguments;
-  implements?:
-    | undefined
-    | Array<FlowClassImplements | TSExpressionWithTypeArguments>;
-};
+export type ClassHead =
+  & JSNodeBase
+  & {
+    type: 'ClassHead';
+    superClass?: AnyExpression;
+    body: Array<AnyClassMember>;
+    typeParameters?: AnyTypeParameter;
+    superTypeParameters?: AnyTypeArguments;
+    implements?:
+      | undefined
+      | Array<FlowClassImplements | TSExpressionWithTypeArguments>;
+  };
 
 export const classHead = createQuickBuilder<ClassHead, 'body'>(
   'ClassHead',

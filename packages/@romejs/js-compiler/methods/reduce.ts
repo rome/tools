@@ -42,12 +42,9 @@ function validateTransformReturn(
 
   // Verify common mistake of forgetting to return something
   if (typeof node === 'undefined') {
-    throw new Error(
-      'Returned `undefined` from transform ' +
-        transformName +
-        '. If you meant to delete this node then use `return' +
-        ' REDUCE_REMOVE`, otherwise if you want to keep it then use `return path.node;`',
-    );
+    throw new Error('Returned `undefined` from transform ' + transformName +
+    '. If you meant to delete this node then use `return' +
+    ' REDUCE_REMOVE`, otherwise if you want to keep it then use `return path.node;`');
   }
 
   // Handle returning an array of nodes
@@ -79,8 +76,11 @@ function shouldBailReduce(
 ): node is Array<AnyNode> | typeof REDUCE_REMOVE {
   if (Array.isArray(node)) {
     // We just return the array of nodes, without transforming them
+
     // reduce() calls higher in the chain will splice this array and do it's
+
     // own transform call so when the transform is performed on the node it's
+
     // in it's correct place in the tree
     return true;
   }
@@ -170,16 +170,19 @@ export default function reduce(
 
     // Reduce the children
     for (const key of visitorKeys) {
+      // rome-suppress lint/noExplicitAny
       const oldVal = (node as any)[key];
 
       if (Array.isArray(oldVal)) {
         let children: Array<AnyNode> = oldVal;
 
         // When removing items from the children array, we decrement this offset and subtract it
+
         // whenever looking up to get the correct position
         let childrenOffset = 0;
 
         // This needs to be calculated beforehand as the length of the array may change when removing
+
         // items
         let length = children.length;
 
@@ -191,6 +194,7 @@ export default function reduce(
           const child = children[correctedIndex];
 
           // An array may be mixed containing [undefined, Node] etc so check that it's actually a valid node
+
           // An example of a property with empty elements is an ArrayExpression with holes
           if (isNodeLike(child)) {
             // Run transforms on this node
@@ -209,15 +213,15 @@ export default function reduce(
               children = children.slice();
 
               // Check if the item is to be deleted
+
               // REDUCE_REMOVE or an empty array are considered equivalent
-              if (
-                newChild === REDUCE_REMOVE ||
-                (Array.isArray(newChild) && newChild.length === 0)
-              ) {
+              if (newChild === REDUCE_REMOVE || Array.isArray(newChild) &&
+                newChild.length === 0) {
                 // Remove the item from the array
                 children.splice(correctedIndex, 1);
 
                 // Since the array now has one less item, change the offset so all
+
                 // future indices will be correct
                 childrenOffset--;
               } else if (Array.isArray(newChild)) {
@@ -225,12 +229,16 @@ export default function reduce(
                 children.splice(correctedIndex, 1, ...newChild);
 
                 // We increase the length of the array so that this loop covers
+
                 // the newly inserted nodes
+
                 // `childrenOffset` is not used here because that's just used to
+
                 // skip elements
                 length += newChild.length;
 
                 // Revisit the current index, this is necessary as there's now a
+
                 // new node at this position
                 i--;
               } else {
@@ -238,12 +246,13 @@ export default function reduce(
                 children[correctedIndex] = newChild;
 
                 // Revisit the current index, the node has changed and some
+
                 // transforms may care about it
                 i--;
               }
 
               // Mutate the original node - funky typing since Flow doesn't understand the mutation
-              node = {...node, [key]: children} as AnyNode;
+              node = ({...node, [key]: children} as AnyNode);
 
               // Create a new node path
               path = path.fork(node);
@@ -284,7 +293,7 @@ export default function reduce(
           }
 
           // Mutate the original object - funky typing since Flow doesn't understand the mutation
-          node = {...node, [key]: newVal} as AnyNode;
+          node = ({...node, [key]: newVal} as AnyNode);
 
           // Create a new node path for it
           path = path.fork(node);

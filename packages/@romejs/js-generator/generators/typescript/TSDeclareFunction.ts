@@ -16,7 +16,9 @@ export default function TSDeclareFunction(generator: Generator, node: AnyNode) {
     generator.space();
   }
 
-  generator.print(node.id);
-  generator.print(node.head);
+  generator.word('function');
+
+  generator.print(node.id, node);
+  generator.print(node.head, node);
   generator.token(';');
 }

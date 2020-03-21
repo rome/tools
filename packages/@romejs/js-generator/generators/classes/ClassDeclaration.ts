@@ -23,20 +23,21 @@ export default function ClassDeclaration(generator: Generator, node: AnyNode) {
   generator.space();
 
   generator.token('{');
+
   generator.printInnerComments(node);
   generator.printInnerComments(node.meta);
+
   if (node.meta.body.length === 0) {
     generator.token('}');
   } else {
-    generator.newline();
+    generator.forceNewline();
 
     generator.indent();
     generator.printStatementList(node.meta.body, node.meta);
     generator.dedent();
 
-    if (!generator.endsWith('\n')) {
-      generator.newline();
-    }
+    generator.buf.removeTrailingNewlines();
+    generator.forceNewline();
 
     generator.rightBrace();
   }

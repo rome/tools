@@ -12,12 +12,9 @@ import CallT from '../../types/CallT';
 export default function CallExpression(node: AnyNode, scope: Scope) {
   node = callExpression.assert(node);
 
-  return new CallT(
-    scope,
-    node,
-    scope.evaluate(node.callee),
-    node.arguments.map(arg => {
+  return new CallT(scope, node, scope.evaluate(node.callee), node.arguments.map(
+    (arg) => {
       return scope.evaluate(arg);
-    }),
-  );
+    },
+  ));
 }

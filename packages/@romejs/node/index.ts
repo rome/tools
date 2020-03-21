@@ -6,8 +6,10 @@
  */
 
 import mod = require('module');
+
 import {AbsoluteFilePath, AbsoluteFilePathMap, CWD_PATH} from '@romejs/path';
 
+// rome-suppress lint/noExplicitAny
 type RequireFunction = (name: string) => any;
 
 const requires: AbsoluteFilePathMap<RequireFunction> = new AbsoluteFilePathMap();
@@ -20,12 +22,12 @@ function getRequire(folder: AbsoluteFilePath = CWD_PATH): RequireFunction {
 
   const filename = folder.join();
   const req = mod.createRequire
-    ? mod.createRequire(filename)
-    : mod.createRequireFromPath(filename);
+    ? mod.createRequire(filename) : mod.createRequireFromPath(filename);
   requires.set(folder, req);
   return req;
 }
 
+// rome-suppress lint/noExplicitAny
 export function requireGlobal(name: string, folder?: AbsoluteFilePath): any {
   return getRequire(folder)(name);
 }

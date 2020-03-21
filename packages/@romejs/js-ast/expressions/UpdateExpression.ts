@@ -8,12 +8,14 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type UpdateExpression = JSNodeBase & {
-  type: 'UpdateExpression';
-  operator: UpdateOperator;
-  argument: AnyExpression;
-  prefix?: boolean;
-};
+export type UpdateExpression =
+  & JSNodeBase
+  & {
+    type: 'UpdateExpression';
+    operator: UpdateOperator;
+    argument: AnyExpression;
+    prefix?: boolean;
+  };
 
 export type UpdateOperator = '++' | '--';
 

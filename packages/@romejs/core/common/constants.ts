@@ -7,6 +7,7 @@
 
 import packageJson from '../package.json';
 import os = require('os');
+
 import {TEMP_PATH, createAbsoluteFilePath} from '@romejs/path';
 
 export const CHILD_ARGS = ['--max-old-space-size=8192'];
@@ -15,7 +16,7 @@ export const CHILD_ARGS = ['--max-old-space-size=8192'];
 export const BIN = createAbsoluteFilePath(process.mainModule.filename);
 export const MAP = BIN.addExtension('.map');
 
-const MEGABYTE = 10000;
+const MEGABYTE = 10_000;
 
 export const MAX_MASTER_BYTES_BEFORE_WORKERS = 0.5 * MEGABYTE;
 
@@ -30,5 +31,4 @@ export const SOCKET_PATH = TEMP_PATH.append(`rome-${VERSION}.sock`);
 
 export const CLI_SOCKET_PATH = TEMP_PATH.append(`rome-wait-${VERSION}.sock`);
 
-export const TEST_FOLDER_NAME = '__rtests__';
 export const MOCKS_FOLDER_NAME = '__rmocks__';

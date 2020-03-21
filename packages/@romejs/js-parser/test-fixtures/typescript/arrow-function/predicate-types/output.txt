@@ -1,0 +1,189 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.ts'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: 'input.ts'
+    end: Object {
+      column: 0
+      index: 31
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 30
+          index: 30
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: ArrowFunctionExpression {
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 29
+            index: 29
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        body: BooleanLiteral {
+          value: true
+          loc: Object {
+            filename: 'input.ts'
+            end: Object {
+              column: 29
+              index: 29
+              line: 1
+            }
+            start: Object {
+              column: 25
+              index: 25
+              line: 1
+            }
+          }
+        }
+        head: FunctionHead {
+          async: false
+          hasHoistedVars: false
+          predicate: undefined
+          rest: undefined
+          thisType: undefined
+          loc: Object {
+            filename: 'input.ts'
+            end: Object {
+              column: 25
+              index: 25
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+          returnType: TSTypePredicate {
+            asserts: false
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 21
+                index: 21
+                line: 1
+              }
+              start: Object {
+                column: 10
+                index: 10
+                line: 1
+              }
+            }
+            typeAnnotation: StringKeywordTypeAnnotation {
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 21
+                  index: 21
+                  line: 1
+                }
+                start: Object {
+                  column: 15
+                  index: 15
+                  line: 1
+                }
+              }
+            }
+            parameterName: Identifier {
+              name: 'x'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 11
+                  index: 11
+                  line: 1
+                }
+                start: Object {
+                  column: 10
+                  index: 10
+                  line: 1
+                }
+              }
+            }
+          }
+          params: Array [
+            BindingIdentifier {
+              name: 'x'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 29
+                  index: 29
+                  line: 1
+                }
+                start: Object {
+                  column: 29
+                  index: 29
+                  line: 1
+                }
+              }
+              meta: PatternMeta {
+                optional: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 29
+                    index: 29
+                    line: 1
+                  }
+                  start: Object {
+                    column: 29
+                    index: 29
+                    line: 1
+                  }
+                }
+                typeAnnotation: AnyKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 7
+                      index: 7
+                      line: 1
+                    }
+                    start: Object {
+                      column: 4
+                      index: 4
+                      line: 1
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

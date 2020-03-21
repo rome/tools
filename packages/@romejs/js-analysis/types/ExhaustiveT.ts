@@ -10,7 +10,7 @@ import {Scope} from '../scopes';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
 import T, {SerialTypeFactory} from './T';
 import {HumanBuilder} from '../Utils';
-import E from './errors/E';
+import E, {ErrorDefinition} from './errors/E';
 import AnyT from './AnyT';
 
 class ENotExhaustive extends E {
@@ -33,12 +33,14 @@ class ENotExhaustive extends E {
 
   static type = 'ENotExhaustive';
 
-  getError() {
-    let message = `Expected only a ${this.utils.humanize(
-      this.only,
-    )} but got ${this.utils.humanize(this.target)}`;
+  getError(): ErrorDefinition {
+    let message =
+      `Expected only a ${this.utils.humanize(this.only)} but got ${this.utils.humanize(
+        this.target,
+      )}`;
     //message += `but allows ${this.extraenous.map(type => this.utils.humanize(type)).join(' | ')}`;
     return {
+      category: 'typeCheck/notExhaustive',
       message,
       lowerTarget: this.target,
     };
@@ -46,12 +48,7 @@ class ENotExhaustive extends E {
 }
 
 export default class ExhaustiveT extends T {
-  constructor(
-    scope: Scope,
-    originNode: undefined | AnyNode,
-    target: T,
-    only: T,
-  ) {
+  constructor(scope: Scope, originNode: undefined | AnyNode, target: T, only: T) {
     super(scope, originNode);
     this.target = target;
     this.only = only;
@@ -75,12 +72,9 @@ export default class ExhaustiveT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new ExhaustiveT(
-      scope,
-      originNode,
-      getType(data.target),
-      getType(data.only),
-    );
+    return new ExhaustiveT(scope, originNode, getType(data.target), getType(
+      data.only,
+    ));
   }
 
   reduce(): T {
@@ -122,8 +116,10 @@ export default class ExhaustiveT extends T {
   }
 
   humanize(builder: HumanBuilder): string {
-    return `exhaustive ${builder.humanize(
-      this.target,
-    )} should only match ${builder.humanize(this.target)}`;
+    return (
+      `exhaustive ${builder.humanize(this.target)} should only match ${builder.humanize(
+        this.target,
+      )}`
+    );
   }
 }

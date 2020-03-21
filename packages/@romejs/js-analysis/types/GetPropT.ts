@@ -48,12 +48,9 @@ export default class GetPropT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new GetPropT(
-      scope,
-      originNode,
-      getType(data.object),
-      getType(data.property),
-    );
+    return new GetPropT(scope, originNode, getType(data.object), getType(
+      data.property,
+    ));
   }
 
   lookup(

@@ -1,0 +1,205 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array ['flow']
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 57
+      line: 3
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ImportDeclaration {
+      importKind: 'type'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 28
+          index: 28
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      source: StringLiteral {
+        value: ''
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 27
+            index: 27
+            line: 1
+          }
+          start: Object {
+            column: 25
+            index: 25
+            line: 1
+          }
+        }
+      }
+      specifiers: Array [
+        ImportSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 17
+              index: 17
+              line: 1
+            }
+            start: Object {
+              column: 14
+              index: 14
+              line: 1
+            }
+          }
+          imported: Identifier {
+            name: 'Foo'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 17
+                index: 17
+                line: 1
+              }
+              start: Object {
+                column: 14
+                index: 14
+                line: 1
+              }
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'Foo'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 17
+                  index: 17
+                  line: 1
+                }
+                start: Object {
+                  column: 14
+                  index: 14
+                  line: 1
+                }
+              }
+            }
+            importKind: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 17
+                index: 17
+                line: 1
+              }
+              start: Object {
+                column: 14
+                index: 14
+                line: 1
+              }
+            }
+          }
+        }
+      ]
+    }
+    ImportDeclaration {
+      importKind: 'typeof'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 27
+          index: 56
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 29
+          line: 2
+        }
+      }
+      source: StringLiteral {
+        value: ''
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 26
+            index: 55
+            line: 2
+          }
+          start: Object {
+            column: 24
+            index: 53
+            line: 2
+          }
+        }
+      }
+      specifiers: Array [
+        ImportDefaultSpecifier {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 18
+              index: 47
+              line: 2
+            }
+            start: Object {
+              column: 0
+              index: 29
+              line: 2
+            }
+          }
+          local: ImportSpecifierLocal {
+            name: BindingIdentifier {
+              name: 'Foo2'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 18
+                  index: 47
+                  line: 2
+                }
+                start: Object {
+                  column: 14
+                  index: 43
+                  line: 2
+                }
+              }
+            }
+            importKind: 'typeof'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 18
+                index: 47
+                line: 2
+              }
+              start: Object {
+                column: 14
+                index: 43
+                line: 2
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

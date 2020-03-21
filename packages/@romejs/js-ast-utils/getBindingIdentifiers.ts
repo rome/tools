@@ -12,9 +12,9 @@ export default function getBindingIdentifiers(
   node: AnyNode | Array<AnyNode>,
 ): Array<BindingIdentifier> {
   const ids: Array<BindingIdentifier> = [];
-  let queue: Array<undefined | AnyNode> = Array.isArray(node)
-    ? [...node]
-    : [node];
+  let queue: Array<undefined | AnyNode> = Array.isArray(node) ? [...node] : [
+    node,
+  ];
 
   while (queue.length) {
     const node = queue.pop();
@@ -33,6 +33,7 @@ export default function getBindingIdentifiers(
     }
 
     for (const key of keys) {
+      // rome-suppress lint/noExplicitAny
       const val = (node as any)[key];
       if (val === undefined) {
         continue;

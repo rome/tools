@@ -17,7 +17,9 @@ export default function JSXElement(generator: Generator, node: AnyNode) {
 
   if (node.attributes.length > 0) {
     generator.space();
-    generator.printJoin(node.attributes, node, {separator: spaceSeparator});
+    generator.printJoin(node.attributes, node, {
+      after: spaceSeparator,
+    });
   }
 
   if (node.selfClosing === true) {
@@ -39,6 +41,10 @@ export default function JSXElement(generator: Generator, node: AnyNode) {
   generator.token('>');
 }
 
-function spaceSeparator(generator: Generator) {
+function spaceSeparator(generator: Generator, isLast: boolean) {
+  if (isLast) {
+    return;
+  }
+
   generator.space();
 }

@@ -62,12 +62,8 @@ export default {
 
       // map exports and imports and correctly
       for (const child of node.body) {
-        if (
-          child.type === 'ImportDeclaration' &&
-          child.importKind !== 'type' &&
-          child.importKind !== 'typeof' &&
-          child.specifiers !== undefined
-        ) {
+        if (child.type === 'ImportDeclaration' && child.importKind !== 'type' &&
+          child.importKind !== 'typeof' && child.specifiers !== undefined) {
           const moduleId = getModuleId(child.source.value, opts);
           if (moduleId === undefined) {
             continue;
@@ -75,20 +71,21 @@ export default {
 
           for (const specifier of child.specifiers) {
             if (specifier.type === 'ImportSpecifier') {
-              mappings.set(
-                specifier.local.name.name,
-                getPrefixedName(specifier.imported.name, moduleId, opts),
-              );
+              mappings.set(specifier.local.name.name, getPrefixedName(
+                specifier.imported.name,
+                moduleId,
+                opts,
+              ));
             } else if (specifier.type === 'ImportNamespaceSpecifier') {
-              mappings.set(
-                specifier.local.name.name,
-                getPrefixedNamespace(moduleId),
-              );
+              mappings.set(specifier.local.name.name, getPrefixedNamespace(
+                moduleId,
+              ));
             } else if (specifier.type === 'ImportDefaultSpecifier') {
-              mappings.set(
-                specifier.local.name.name,
-                getPrefixedName('default', moduleId, opts),
-              );
+              mappings.set(specifier.local.name.name, getPrefixedName(
+                'default',
+                moduleId,
+                opts,
+              ));
             } else {
               throw new Error('unexpected');
             }
@@ -97,6 +94,7 @@ export default {
 
         if (child.type === 'ExportLocalDeclaration') {
           // export const foo = '';
+
           // export function foo() {}
           for (const {name} of getBindingIdentifiers(child)) {
             mappings.set(name, getPrefixedName(name, opts.moduleId, opts));
@@ -110,25 +108,24 @@ export default {
                 continue;
               }
 
-              mappings.set(
-                local,
-                getPrefixedName(specifier.exported.name, opts.moduleId, opts),
-              );
+              mappings.set(local, getPrefixedName(
+                specifier.exported.name,
+                opts.moduleId,
+                opts,
+              ));
             }
           }
         }
 
         if (child.type === 'ExportDefaultDeclaration') {
           const {declaration: decl} = child;
-          if (
-            (decl.type === 'FunctionDeclaration' ||
-              decl.type === 'ClassDeclaration') &&
-            decl.id !== undefined
-          ) {
-            mappings.set(
-              decl.id.name,
-              getPrefixedName('default', opts.moduleId, opts),
-            );
+          if ((decl.type === 'FunctionDeclaration' || decl.type ===
+          'ClassDeclaration') && decl.id !== undefined) {
+            mappings.set(decl.id.name, getPrefixedName(
+              'default',
+              opts.moduleId,
+              opts,
+            ));
           }
         }
       }
@@ -136,31 +133,26 @@ export default {
       const newProgram = program.assert(renameBindings(path, mappings));
 
       // Get new scope with updated bindings. TODO Maybe `renameBindings` should return the path?
-      const newScope = scope
-        .getRootScope()
-        .evaluate(newProgram, undefined, true);
+      const newScope = scope.getRootScope().evaluate(newProgram, undefined, true);
 
       if (opts.moduleAll === true) {
         // Get all the export names
         const exportNames: Map<string, string> = new Map();
         for (const child of newProgram.body) {
           if (child.type === 'ExportDefaultDeclaration') {
-            exportNames.set(
+            exportNames.set('default', getPrefixedName(
               'default',
-              getPrefixedName('default', opts.moduleId, opts),
-            );
+              opts.moduleId,
+              opts,
+            ));
           }
 
-          if (
-            child.type === 'ExportLocalDeclaration' ||
-            child.type === 'ExportExternalDeclaration'
-          ) {
+          if (child.type === 'ExportLocalDeclaration' || child.type ===
+          'ExportExternalDeclaration') {
             const {specifiers} = child;
 
-            if (
-              child.type === 'ExportLocalDeclaration' &&
-              child.declaration !== undefined
-            ) {
+            if (child.type === 'ExportLocalDeclaration' && child.declaration !==
+            undefined) {
               throw new Error(
                 'No export declarations should be here as they have been removed by renameBindings',
               );
@@ -173,10 +165,8 @@ export default {
 
             if (specifiers !== undefined) {
               for (const specifier of specifiers) {
-                if (
-                  specifier.type === 'ExportLocalSpecifier' ||
-                  specifier.type === 'ExportExternalSpecifier'
-                ) {
+                if (specifier.type === 'ExportLocalSpecifier' ||
+                specifier.type === 'ExportExternalSpecifier') {
                   // The local binding has already been rewritten by renameBindings if it existed
                   let local = specifier.local.name;
 
@@ -209,32 +199,28 @@ export default {
             }
 
             if (binding instanceof FunctionBinding) {
-              exportObjProps.push(
-                objectProperty.create({
-                  key: staticPropertyKey.quick(identifier.quick(exported)),
-                  value: referenceIdentifier.quick(local),
-                }),
-              );
+              exportObjProps.push(objectProperty.create({
+                key: staticPropertyKey.quick(identifier.quick(exported)),
+                value: referenceIdentifier.quick(local),
+              }));
               continue;
             }
           }
 
-          exportObjProps.push(
-            objectMethod.create({
-              kind: 'get',
-              key: staticPropertyKey.quick(identifier.quick(exported)),
-              head: functionHead.quick([]),
-              body: blockStatement.create({
-                body: [
-                  returnStatement.create({
-                    argument: referenceIdentifier.create({
-                      name: local,
-                    }),
+          exportObjProps.push(objectMethod.create({
+            kind: 'get',
+            key: staticPropertyKey.quick(identifier.quick(exported)),
+            head: functionHead.quick([]),
+            body: blockStatement.create({
+              body: [
+                returnStatement.create({
+                  argument: referenceIdentifier.create({
+                    name: local,
                   }),
-                ],
-              }),
+                }),
+              ],
             }),
-          );
+          }));
         }
 
         const exportObj = objectExpression.create({properties: exportObjProps});
@@ -243,19 +229,17 @@ export default {
           ...newProgram,
           type: 'Program',
           body: [
-            variableDeclarationStatement.quick(
-              variableDeclaration.create({
-                kind: 'const',
-                declarations: [
-                  variableDeclarator.create({
-                    id: bindingIdentifier.create({
-                      name: getPrefixedNamespace(opts.moduleId),
-                    }),
-                    init: exportObj,
+            variableDeclarationStatement.quick(variableDeclaration.create({
+              kind: 'const',
+              declarations: [
+                variableDeclarator.create({
+                  id: bindingIdentifier.create({
+                    name: getPrefixedNamespace(opts.moduleId),
                   }),
-                ],
-              }),
-            ),
+                  init: exportObj,
+                }),
+              ],
+            })),
             ...newProgram.body,
           ],
         };
@@ -271,10 +255,8 @@ export default {
 
     if (node.type === 'ExportDefaultDeclaration') {
       const {declaration} = node;
-      if (
-        declaration.type === 'FunctionDeclaration' ||
-        declaration.type === 'ClassDeclaration'
-      ) {
+      if (declaration.type === 'FunctionDeclaration' || declaration.type ===
+      'ClassDeclaration') {
         if (declaration.id === undefined) {
           // give it the correct name
           return {
@@ -310,12 +292,13 @@ export default {
       if (specifiers === undefined) {
         if (declaration === undefined) {
           throw new Error(
-            "No specifiers or declaration existed, if there's no specifiers then there should be a declaration",
+            'No specifiers or declaration existed, if there\'s no specifiers then there should be a declaration',
           );
         }
         return declaration;
       } else {
         // check if any of the specifiers reference a global or import
+
         // if so, we need to insert declarations for them
         const nodes: Array<AnyNode> = [];
 
@@ -325,23 +308,21 @@ export default {
 
             // TODO we only really need this declaration for global bindings, `analyze()` could detect the exported import and resolvedImports would just work
             if (binding === undefined || binding instanceof ImportBinding) {
-              nodes.push(
-                variableDeclaration.create({
-                  kind: 'const',
-                  declarations: [
-                    variableDeclarator.create({
-                      id: bindingIdentifier.create({
-                        name: getPrefixedName(
-                          specifier.exported.name,
-                          opts.moduleId,
-                          opts,
-                        ),
-                      }),
-                      init: referenceIdentifier.quick(specifier.local.name),
+              nodes.push(variableDeclaration.create({
+                kind: 'const',
+                declarations: [
+                  variableDeclarator.create({
+                    id: bindingIdentifier.create({
+                      name: getPrefixedName(
+                        specifier.exported.name,
+                        opts.moduleId,
+                        opts,
+                      ),
                     }),
-                  ],
-                }),
-              );
+                    init: referenceIdentifier.quick(specifier.local.name),
+                  }),
+                ],
+              }));
             }
           } else {
             // TODO ???

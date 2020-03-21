@@ -6,18 +6,13 @@
  */
 
 import Generator from '../../Generator';
-import {
-  BindingArrayPattern,
-  bindingArrayPattern,
-  AnyNode,
-} from '@romejs/js-ast';
+import {BindingArrayPattern, bindingArrayPattern, AnyNode} from '@romejs/js-ast';
 import ArrayExpression from '../expressions/ArrayExpression';
+import {printPatternMeta} from '../utils';
 
-export default function BindingArrayPattern(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function BindingArrayPattern(generator: Generator, node: AnyNode) {
   node = bindingArrayPattern.assert(node);
 
   ArrayExpression(generator, node);
+  printPatternMeta(generator, node, node.meta);
 }

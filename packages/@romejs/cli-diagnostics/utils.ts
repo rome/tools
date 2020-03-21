@@ -14,16 +14,16 @@ export function showInvisibles(str: string): string {
   for (const cha of str) {
     switch (cha) {
       case ' ':
-        ret += '·'; // Middle Dot, \u00B7
+        ret += '\xb7'; // Middle Dot, \u00B7
         break;
       case '\r':
-        ret += '␍\r';
+        ret += '\u240d';
         break;
       case '\n':
-        ret += '⏎\n'; // Return Symbol, \u23ce
+        ret += '\u23ce'; // Return Symbol, \u23ce
         break;
       case '\t':
-        ret += '↹'; // Left Arrow To Bar Over Right Arrow To Bar, \u21b9
+        ret += '\u21b9'; // Left Arrow To Bar Over Right Arrow To Bar, \u21b9
         break;
       default:
         ret += cha;

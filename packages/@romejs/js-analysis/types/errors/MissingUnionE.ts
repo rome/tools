@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import E from './E';
+import E, {ErrorDefinition} from './E';
 import T from '../T';
 import {AnyNode} from '@romejs/js-ast';
 
@@ -29,11 +29,12 @@ export default class MissingUnionE extends E {
   union: T;
   missing: Array<T>;
 
-  getError() {
+  getError(): ErrorDefinition {
     return {
-      message: `Missing the conditions ${this.missing
-        .map(type => this.utils.humanize(type))
-        .join(', ')}`,
+      category: 'typeCheck/missingCondition',
+      message: `Missing the conditions ${this.missing.map((type) =>
+        this.utils.humanize(type)
+      ).join(', ')}`,
       lowerTarget: this.target,
     };
   }

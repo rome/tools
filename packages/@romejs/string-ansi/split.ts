@@ -11,10 +11,10 @@ import {pattern} from './regex';
 const startRegex = new RegExp(`^${pattern}`);
 
 function isAnsiStartChar(char: string): boolean {
-  return char === '\u001B' || char === '\u009B';
+  return char === '\x1b' || char === '\x9b';
 }
 
-const HYPERLINK_END = '\u001b]8;;\u0007';
+const HYPERLINK_END = '\x1b]8;;\x07';
 
 function sliceAnsi(input: string, index: number): undefined | string {
   const match = input.slice(index).match(startRegex);
@@ -26,7 +26,7 @@ function sliceAnsi(input: string, index: number): undefined | string {
   const str = match[0];
 
   // Hyperlink, try and find the rest
-  if (str[0] === '\u001b') {
+  if (str[0] === '\x1b') {
     const possibleIndex = input.indexOf(HYPERLINK_END, index + str.length);
     if (possibleIndex > -1) {
       return input.slice(index, possibleIndex + HYPERLINK_END.length);
@@ -85,10 +85,7 @@ export function mapAnsiString(
   return buff;
 }
 
-export function splitAnsiLines(
-  input: string,
-  maxWidth?: number,
-): Array<string> {
+export function splitAnsiLines(input: string, maxWidth?: number): Array<string> {
   const lines: Array<string> = [];
 
   let column = 0;
@@ -118,6 +115,7 @@ export function splitAnsiLines(
     // Don't allow spaces at the beginning of lines
     if (char === ' ' && column === 0) {
       //index++;
+
       //continue;
     }
 

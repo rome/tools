@@ -1,0 +1,61 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.ts'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: 'input.ts'
+    end: Object {
+      column: 0
+      index: 20
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    TSModuleDeclaration {
+      id: StringLiteral {
+        value: 'm'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 18
+            index: 18
+            line: 1
+          }
+          start: Object {
+            column: 15
+            index: 15
+            line: 1
+          }
+        }
+      }
+      body: undefined
+      declare: true
+      global: undefined
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 19
+          index: 19
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+  ]
+}

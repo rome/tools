@@ -7,18 +7,19 @@
 
 import {BaseTokens, ValueToken, SimpleToken} from '@romejs/parser-core';
 
-export type Tokens = BaseTokens & {
-  Text: ValueToken<'Text', string>;
-  Slash: SimpleToken<'Slash'>;
-  Less: SimpleToken<'Less'>;
-  Equals: SimpleToken<'Equals'>;
-  Greater: SimpleToken<'Greater'>;
-  Word: ValueToken<'Word', string>;
-  String: ValueToken<'String', string>;
-};
+export type Tokens =
+  & BaseTokens
+  & {
+    Text: ValueToken<'Text', string>;
+    Slash: SimpleToken<'Slash'>;
+    Less: SimpleToken<'Less'>;
+    Equals: SimpleToken<'Equals'>;
+    Greater: SimpleToken<'Greater'>;
+    Word: ValueToken<'Word', string>;
+    String: ValueToken<'String', string>;
+  };
 
 //
-
 export type TextNode = {
   type: 'Text';
   value: string;

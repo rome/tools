@@ -12,8 +12,7 @@ import ExhaustiveT from '../../types/ExhaustiveT';
 import UnionT from '../../types/UnionT';
 
 export default function IfStatement(node: AnyNode, scope: Scope) {
-  node =
-    node.type === 'ConditionalExpression' ? node : ifStatement.assert(node);
+  node = node.type === 'ConditionalExpression' ? node : ifStatement.assert(node);
 
   const test = scope.evaluate(node.test);
   new ExhaustiveT(scope, node, test, new BooleanT(scope, undefined));
@@ -41,7 +40,6 @@ export default function IfStatement(node: AnyNode, scope: Scope) {
         alternateScope.addBinding(name, opposite);
       }
     }*/
-
     return new UnionT(scope, undefined, [
       consequent,
       alternateScope.evaluate(node.alternate),

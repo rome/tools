@@ -21,7 +21,7 @@ export function normalizeUserVersion(
   } else if (ver.type === 'AbsoluteVersion') {
     return ver;
   } else {
-    throw new Error('Not a valid version: ' + ver.type);
+    throw new Error(`Not a valid version: ${ver.type}`);
   }
 }
 

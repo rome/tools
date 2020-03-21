@@ -25,10 +25,8 @@ export default function FlowFunctionTypeAnnotation(
   generator.token(')');
 
   // this node type is overloaded, not sure why but it makes it EXTREMELY annoying
-  if (
-    parent.type === 'FlowObjectTypeCallProperty' ||
-    parent.type === 'FlowDeclareFunction'
-  ) {
+  if (parent.type === 'FlowObjectTypeCallProperty' || parent.type ===
+  'FlowDeclareFunction') {
     generator.token(':');
   } else {
     generator.space();

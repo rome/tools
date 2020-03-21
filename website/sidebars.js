@@ -9,7 +9,7 @@
 
 module.exports = {
   docs: {
-    Introduction: ['introduction/getting-started'],
+    Introduction: ['introduction/installation', 'introduction/getting-started'],
     Community: ['community/contributing'],
   },
 };

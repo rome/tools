@@ -31,9 +31,7 @@ export type WorkerProjects = Array<{
   config: undefined | ProjectConfigJSON;
 }>;
 
-export type WorkerCompileResult = CompileResult & {
-  cached: boolean;
-};
+export type WorkerCompileResult = CompileResult & {cached: boolean};
 
 export type WorkerPartialManifest = {
   path: string;
@@ -46,18 +44,14 @@ export type WorkerPartialManifests = Array<{
 }>;
 
 // Omit analyze value as the worker will fetch it itself, skips sending over a large payload that it already has in memory
-
-export type WorkerCompilerOptions = {
-  bundle?: WorkerBundleCompileOptions;
-};
+export type WorkerCompilerOptions = {bundle?: WorkerBundleCompileOptions};
 
 export type WorkerBundleCompileOptions = Omit<BundleCompileOptions, 'analyze'>;
 
 //
-
-export type WorkerAnalyzeDependencyResult = AnalyzeDependencyResult & {
-  cached: boolean;
-};
+export type WorkerAnalyzeDependencyResult =
+  & AnalyzeDependencyResult
+  & {cached: boolean};
 
 export type WorkerParseOptions = {
   compact: boolean;
@@ -76,27 +70,26 @@ export type WorkerStatus = {
   uptime: number;
 };
 
-export type PrefetchedModuleSignatures = {
-  [key: string]:
+export type PrefetchedModuleSignatures = {[key: string]:
     | {
-        type: 'USE_CACHED';
-        filename: string;
-      }
+      type: 'USE_CACHED';
+      filename: string;
+    }
     | {
-        type: 'RESOLVED';
-        graph: ModuleSignature;
-      }
+      type: 'RESOLVED';
+      graph: ModuleSignature;
+    }
     | {
-        type: 'OWNED';
-        file: JSONFileReference;
-      }
+      type: 'OWNED';
+      file: JSONFileReference;
+    }
     | {
-        type: 'POINTER';
-        key: string;
-      };
-};
+      type: 'POINTER';
+      key: string;
+    }};
 
 export type WorkerFormatResult = {
+  original: string;
   formatted: string;
   diagnostics: PartialDiagnostics;
 };
@@ -144,21 +137,20 @@ export default class WorkerBridge extends Bridge {
     direction: 'server->client',
   });
 
-  format = this.createEvent<
-    {file: JSONFileReference},
-    undefined | WorkerFormatResult
-  >({
+  format = this.createEvent<{file: JSONFileReference},
+    | undefined
+    | WorkerFormatResult>({
     name: 'format',
     direction: 'server->client',
-  });
+  }
+  );
 
-  moduleSignatureJS = this.createEvent<
-    {file: JSONFileReference},
-    ModuleSignature
-  >({
-    name: 'moduleSignatureJS',
-    direction: 'server->client',
-  });
+  moduleSignatureJS = this.createEvent<{file: JSONFileReference}, ModuleSignature>(
+    {
+      name: 'moduleSignatureJS',
+      direction: 'server->client',
+    },
+  );
 
   analyzeDependencies = this.createEvent<
     {file: JSONFileReference},
@@ -168,31 +160,22 @@ export default class WorkerBridge extends Bridge {
     direction: 'server->client',
   });
 
-  lint = this.createEvent<
-    {
-      file: JSONFileReference;
-      prefetchedModuleSignatures: PrefetchedModuleSignatures;
-      fix: boolean;
-    },
-    WorkerLintResult
-  >({name: 'lint', direction: 'server->client'});
+  lint = this.createEvent<{
+    file: JSONFileReference;
+    prefetchedModuleSignatures: PrefetchedModuleSignatures;
+    fix: boolean;
+  }, WorkerLintResult>({name: 'lint', direction: 'server->client'});
 
-  compileJS = this.createEvent<
-    {
-      file: JSONFileReference;
-      stage: TransformStageName;
-      options: WorkerCompilerOptions;
-    },
-    CompileResult
-  >({name: 'compileJS', direction: 'server->client'});
+  compileJS = this.createEvent<{
+    file: JSONFileReference;
+    stage: TransformStageName;
+    options: WorkerCompilerOptions;
+  }, CompileResult>({name: 'compileJS', direction: 'server->client'});
 
-  parseJS = this.createEvent<
-    {
-      file: JSONFileReference;
-      opts: WorkerParseOptions;
-    },
-    Program
-  >({name: 'parseJS', direction: 'server->client'});
+  parseJS = this.createEvent<{
+    file: JSONFileReference;
+    opts: WorkerParseOptions;
+  }, Program>({name: 'parseJS', direction: 'server->client'});
 
   init() {
     this.addErrorTransport('DiagnosticsError', {
@@ -205,10 +188,12 @@ export default class WorkerBridge extends Bridge {
           diagnostic: err.diagnostics,
         };
       },
+
       hydrate(err, data) {
         return new DiagnosticsError(
           String(err.message),
-          data.diagnostics as any,
+          ( // rome-suppress lint/noExplicitAny
+          data.diagnostics as any),
         );
       },
     });

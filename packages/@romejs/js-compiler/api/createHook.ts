@@ -10,11 +10,7 @@ import {Path, TransformExitResult} from '@romejs/js-compiler';
 export type HookDescriptor<State, CallArg, CallReturn> = {
   name: string;
   initialState: State extends void ? never : State;
-  call?: (
-    path: Path,
-    state: State,
-    arg: CallArg,
-  ) => {
+  call?: (path: Path, state: State, arg: CallArg) => {
     bubble?: boolean;
     value: CallReturn;
     state: State;
@@ -22,10 +18,13 @@ export type HookDescriptor<State, CallArg, CallReturn> = {
   exit?: (path: Path, state: State) => TransformExitResult;
 };
 
+// rome-suppress lint/noExplicitAny
 export type AnyHookDescriptor = HookDescriptor<any, any, any>;
 
 export type HookInstance = {
+  // rome-suppress lint/noExplicitAny
   state: any;
+  // rome-suppress lint/noExplicitAny
   descriptor: HookDescriptor<any, any, any>;
 };
 

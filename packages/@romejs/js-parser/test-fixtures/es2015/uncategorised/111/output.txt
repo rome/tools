@@ -1,0 +1,142 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: true
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 26
+      index: 26
+      line: 1
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    VariableDeclarationStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 26
+          index: 26
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'var'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 26
+            index: 26
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'A'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 5
+                  index: 5
+                  line: 1
+                }
+                start: Object {
+                  column: 4
+                  index: 4
+                  line: 1
+                }
+              }
+            }
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 26
+                index: 26
+                line: 1
+              }
+              start: Object {
+                column: 4
+                index: 4
+                line: 1
+              }
+            }
+            init: ClassExpression {
+              id: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 26
+                  index: 26
+                  line: 1
+                }
+                start: Object {
+                  column: 8
+                  index: 8
+                  line: 1
+                }
+              }
+              meta: ClassHead {
+                body: Array []
+                implements: undefined
+                superTypeParameters: undefined
+                typeParameters: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 26
+                    index: 26
+                    line: 1
+                  }
+                  start: Object {
+                    column: 8
+                    index: 8
+                    line: 1
+                  }
+                }
+                superClass: ReferenceIdentifier {
+                  name: 'B'
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 23
+                      index: 23
+                      line: 1
+                    }
+                    start: Object {
+                      column: 22
+                      index: 22
+                      line: 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

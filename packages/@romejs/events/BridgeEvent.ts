@@ -26,11 +26,10 @@ export type BridgeEventDirection =
   | 'server<-client'
   | 'server<->client';
 
-export type BridgeEventOptions = EventOptions & {
-  direction: BridgeEventDirection;
-};
+export type BridgeEventOptions = EventOptions & {direction: BridgeEventDirection};
 
 function validateDirection(
+  // rome-suppress lint/noExplicitAny
   event: BridgeEvent<any, any>,
   eventDirection: BridgeEventDirection,
   bridgeType: BridgeType,
@@ -57,14 +56,11 @@ export default class BridgeEvent<
 
   bridge: Bridge;
   direction: BridgeEventDirection;
-  requestCallbacks: Map<
-    number,
-    {
-      completed: undefined | (() => void);
-      resolve: (data: Ret) => void;
-      reject: (err: Error) => void;
-    }
-  >;
+  requestCallbacks: Map<number, {
+    completed: undefined | (() => void);
+    resolve: (data: Ret) => void;
+    reject: (err: Error) => void;
+  }>;
 
   clear() {
     super.clear();
@@ -155,13 +151,12 @@ export default class BridgeEvent<
             this.requestCallbacks.delete(id);
 
             // Reject the promise
-            reject(
-              new BridgeError(
-                `Timeout of ${String(timeout)}ms for ${this.name}(${String(
-                  JSON.stringify(param),
-                )}) event exceeded`,
-              ),
-            );
+            reject(new BridgeError(
+              `Timeout of ${String(timeout)}ms for ${this.name}(${String(
+                JSON.stringify(param),
+              )}) event exceeded`,
+              this.bridge,
+            ));
           }, timeout);
 
           // Cancel the timeout if the response returns before the timer

@@ -64,8 +64,8 @@ export default class WebRequest {
     req.setEncoding('utf8');
     let rawBody = '';
 
-    return new Promise(resolve => {
-      req.on('data', chunk => {
+    return new Promise((resolve) => {
+      req.on('data', (chunk) => {
         rawBody += chunk;
       });
 
@@ -88,7 +88,10 @@ export default class WebRequest {
       let diagnostics = getDiagnosticsFromError(err);
       if (diagnostics === undefined) {
         diagnostics = [
-          deriveDiagnosticFromError({category: 'http-server', error: err}),
+          deriveDiagnosticFromError({
+            category: 'internalError/httpServer',
+            error: err,
+          }),
         ];
       }
 
@@ -181,15 +184,11 @@ export default class WebRequest {
   ): Promise<boolean> {
     project;
 
-    const possibleStaticPath = await this.server.pathnameToAbsolutePath(
-      pathname,
-    );
+    const possibleStaticPath = await this.server.pathnameToAbsolutePath(pathname);
 
     // TODO check if it is a file
-    if (
-      possibleStaticPath !== undefined &&
-      (await this.master.memoryFs.existsHard(possibleStaticPath))
-    ) {
+    if (possibleStaticPath !== undefined &&
+      (await this.master.memoryFs.existsHard(possibleStaticPath))) {
       return true;
     }
 
@@ -200,17 +199,13 @@ export default class WebRequest {
     const {res} = this;
     res.writeHead(200, {'Content-Type': 'application/javascript'});
 
-    const bundler = new Bundler(
-      this.masterRequest,
-      this.masterRequest.reporter,
-      {
-        inlineSourceMap: false,
-        cwd: this.masterRequest.client.flags.cwd,
-        resolver: {
-          platform: 'web',
-        },
+    const bundler = new Bundler(this.masterRequest, {
+      inlineSourceMap: false,
+      cwd: this.masterRequest.client.flags.cwd,
+      resolver: {
+        platform: 'web',
       },
-    );
+    });
     const resolved = await this.master.resolver.resolveEntryAssertPath({
       origin: this.masterRequest.client.flags.cwd,
       source: createUnknownFilePath('@romejs-web/frontend'),
@@ -265,13 +260,13 @@ export default class WebRequest {
     const socket = new WebSocketInterface('server', req.socket);
     this.server.deviceWebsockets.add(socket);
 
-    req.socket.on('error', err => {
+    req.socket.on('error', (err) => {
       console.log(err.stack);
     });
 
     this.reporter.success(`Device websocket client connected`);
 
-    socket.completeFrameEvent.subscribe(frame => {
+    socket.completeFrameEvent.subscribe((frame) => {
       const text = frame.payload.toString();
       try {
         const json = JSON.parse(text);
@@ -286,7 +281,7 @@ export default class WebRequest {
       }
     });
 
-    socket.errorEvent.subscribe(err => {
+    socket.errorEvent.subscribe((err) => {
       console.log(err);
     });
 

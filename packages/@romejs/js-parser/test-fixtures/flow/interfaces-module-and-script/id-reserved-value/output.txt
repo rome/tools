@@ -1,0 +1,83 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 20
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    FlowInterfaceDeclaration {
+      id: BindingIdentifier {
+        name: 'switch'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 16
+            index: 16
+            line: 1
+          }
+          start: Object {
+            column: 10
+            index: 10
+            line: 1
+          }
+        }
+      }
+      extends: Array []
+      implements: Array []
+      mixins: Array []
+      typeParameters: undefined
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 19
+          index: 19
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      body: FlowObjectTypeAnnotation {
+        exact: false
+        inexact: undefined
+        properties: Array []
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 19
+            index: 19
+            line: 1
+          }
+          start: Object {
+            column: 17
+            index: 17
+            line: 1
+          }
+        }
+      }
+    }
+  ]
+}

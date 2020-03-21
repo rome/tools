@@ -15,7 +15,6 @@ import {
   DiagnosticAdviceItemFrame,
   DiagnosticAdviceItemInspect,
   DiagnosticAdviceItemDiff,
-  DiagnosticAdviceItemAction,
   DiagnosticAdviceItemStacktrace,
   getDiagnosticHeader,
 } from '@romejs/diagnostics';
@@ -61,9 +60,6 @@ export default function printAdvice(
     case 'stacktrace':
       return printStacktrace(item, opts);
 
-    case 'action':
-      return printAction(item, opts);
-
     case 'inspect':
       return printInspect(item, opts);
   }
@@ -74,9 +70,9 @@ function printInspect(
   opts: AdvicePrintOptions,
 ): boolean {
   const {reporter} = opts;
-  reporter.indent();
-  reporter.inspect(item.data);
-  reporter.dedent();
+  reporter.indent(() => {
+    reporter.inspect(item.data);
+  });
   return false;
 }
 
@@ -90,6 +86,15 @@ function printDiff(
   }
 
   opts.reporter.logAll(escapeMarkup(frame));
+
+  const {legend} = item;
+  if (legend !== undefined) {
+    opts.reporter.spacer();
+    opts.reporter.logAll(`<green>+ ${escapeMarkup(legend.add)}</green>`);
+    opts.reporter.logAll(`<red>- ${escapeMarkup(legend.delete)}</red>`);
+    opts.reporter.spacer();
+  }
+
   return false;
 }
 
@@ -101,7 +106,7 @@ function printList(
     return true;
   } else {
     opts.reporter.list(item.list, {
-      truncate: opts.flags.verboseDiagnostics ? undefined : item.truncate,
+      truncate: opts.flags.verboseDiagnostics ? undefined : 20,
       reverse: item.reverse,
       ordered: item.ordered,
     });
@@ -115,9 +120,9 @@ function printCode(
 ): boolean {
   const {reporter} = opts;
   const {code} = item;
-  reporter.indent();
-  reporter.logAll(escapeMarkup(code));
-  reporter.dedent();
+  reporter.indent(() => {
+    reporter.logAll(escapeMarkup(code));
+  });
   return false;
 }
 
@@ -144,12 +149,12 @@ function printFrame(
     });
   } else if (filename !== undefined) {
     lines = opts.fileSources.get(path);
-  } else if (
-    path.isAbsolute() &&
-    opts.missingFileSources.has(path.assertAbsolute())
-  ) {
+  } else if (path.isAbsolute() && opts.missingFileSources.has(
+    path.assertAbsolute(),
+  )) {
     lines = [formatAnsi.dim('file does not exist')];
   }
+
   if (lines === undefined) {
     lines = [];
   }
@@ -163,26 +168,12 @@ function printFrame(
   return false;
 }
 
-function printAction(
-  item: DiagnosticAdviceItemAction,
-  opts: AdvicePrintOptions,
-): boolean {
-  const {reporter} = opts;
-  reporter.logAll(`<bold>${item.message}</bold>`);
-  reporter.logAll('You have the following choices:');
-  reporter.list(
-    item.buttons.map(button => {
-      return `${button.text}: \`${button.command}\``;
-    }),
-  );
-  return false;
-}
-
 function printStacktrace(
   item: DiagnosticAdviceItemStacktrace,
   opts: AdvicePrintOptions,
 ): boolean {
   // Here we duplicate some of the list logic that is in Reporter
+
   // This is different as we also want to push frames after some of the items
 
   const {diagnostic} = opts;
@@ -193,110 +184,95 @@ function printStacktrace(
   const isFirstPart = diagnostic.advice[0] === item;
   if (!isFirstPart) {
     opts.reporter.info(item.title === undefined ? 'Stack trace' : item.title);
-    opts.reporter.spacer();
+    opts.reporter.forceSpacer();
   }
 
-  opts.reporter.processedList(
-    frames,
-    (frame, display) => {
-      const {
+  opts.reporter.processedList(frames, (frame, display) => {
+    const {
+      filename,
+      object,
+      suffix,
+      property,
+      prefix,
+      line,
+      column,
+      language,
+      sourceText: code,
+    } = frame;
+
+    const logParts = [];
+
+    // Add prefix
+    if (prefix !== undefined) {
+      logParts.push(formatAnsi.dim(escapeMarkup(prefix)));
+    }
+
+    // Build path
+    const objParts = [];
+    if (object !== undefined) {
+      objParts.push(formatAnsi.magenta(escapeMarkup(object)));
+    }
+    if (property !== undefined) {
+      objParts.push(formatAnsi.cyan(escapeMarkup(property)));
+    }
+    if (objParts.length > 0) {
+      logParts.push(objParts.join('.'));
+    }
+
+    // Add suffix
+    if (suffix !== undefined) {
+      logParts.push(formatAnsi.green(escapeMarkup(suffix)));
+    }
+
+    // Add source
+    if (filename !== undefined && line !== undefined && column !== undefined) {
+      const header = getDiagnosticHeader({
         filename,
-        object,
-        suffix,
-        property,
-        prefix,
-        line,
-        column,
-        language,
-        sourceText: code,
-      } = frame;
-
-      const logParts = [];
-
-      // Add prefix
-      if (prefix !== undefined) {
-        logParts.push(formatAnsi.dim(escapeMarkup(prefix)));
-      }
-
-      // Build path
-      const objParts = [];
-      if (object !== undefined) {
-        objParts.push(formatAnsi.magenta(escapeMarkup(object)));
-      }
-      if (property !== undefined) {
-        objParts.push(formatAnsi.cyan(escapeMarkup(property)));
-      }
-      if (objParts.length > 0) {
-        logParts.push(objParts.join('.'));
-      }
-
-      // Add suffix
-      if (suffix !== undefined) {
-        logParts.push(formatAnsi.green(escapeMarkup(suffix)));
-      }
-
-      // Add source
-      if (
-        filename !== undefined &&
-        line !== undefined &&
-        column !== undefined
-      ) {
-        const header = getDiagnosticHeader({
-          filename,
-          start: {
-            index: number0Neg1,
-            line,
-            column,
-          },
-        });
-
-        if (logParts.length === 0) {
-          logParts.push(header);
-        } else {
-          logParts.push('(' + formatAnsi.dim(header) + ')');
-        }
-      }
-
-      display(logParts.join(' '));
-
-      // Push on frame
-      if (
-        shownCodeFrames < 2 &&
-        filename !== undefined &&
-        line !== undefined &&
-        column !== undefined
-      ) {
-        const pos: Position = {
+        start: {
           index: number0Neg1,
           line,
           column,
-        };
+        },
+      });
 
-        const skipped = printFrame(
-          {
-            type: 'frame',
-            language,
-            filename,
-            sourceType: 'module',
-            marker: undefined,
-            mtime: undefined,
-            start: pos,
-            end: pos,
-            sourceText: code,
-          },
-          opts,
-        );
-        if (!skipped) {
-          opts.reporter.spacer();
-          shownCodeFrames++;
-        }
+      if (logParts.length === 0) {
+        logParts.push(header);
+      } else {
+        logParts.push(`(${formatAnsi.dim(header)})`);
       }
-    },
-    {
-      ordered: true,
-      truncate: item.truncate,
-    },
-  );
+    }
+
+    display(logParts.join(' '));
+
+    // Push on frame
+    if (shownCodeFrames < 2 && filename !== undefined && line !== undefined &&
+      column !== undefined) {
+      const pos: Position = {
+        index: number0Neg1,
+        line,
+        column,
+      };
+
+      const skipped = printFrame({
+        type: 'frame',
+        language,
+        filename,
+        sourceType: 'module',
+        marker: undefined,
+        mtime: undefined,
+        start: pos,
+        end: pos,
+        sourceText: code,
+      }, opts);
+      if (!skipped) {
+        opts.reporter.forceSpacer();
+        shownCodeFrames++;
+      }
+    }
+  }, {
+    ordered: true,
+    truncate: opts.flags.verboseDiagnostics ? undefined : 20,
+  });
 
   return false;
 }

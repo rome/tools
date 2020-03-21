@@ -13,10 +13,7 @@ import {
 } from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
 
-export default function AssignmentIdentifier(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function AssignmentIdentifier(generator: Generator, node: AnyNode) {
   node = assignmentIdentifier.assert(node);
 
   Identifier(generator, node);

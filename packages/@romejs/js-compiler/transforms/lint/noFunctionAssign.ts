@@ -13,15 +13,15 @@ export default {
   name: 'noFunctionAssign',
   enter(path: Path): AnyNode {
     const {node, scope} = path;
-    if (
-      node.type === 'AssignmentIdentifier' &&
-      scope.getBinding(node.name) instanceof FunctionBinding
-    ) {
+
+    if (node.type === 'AssignmentIdentifier' &&
+      scope.getBinding(node.name) instanceof FunctionBinding) {
       path.context.addNodeDiagnostic(node, {
         category: 'lint/noFunctionAssign',
         message: 'Reassignment of function declaration',
       });
     }
+
     return node;
   },
 };

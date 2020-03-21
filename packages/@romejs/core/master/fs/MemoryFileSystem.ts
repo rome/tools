@@ -11,8 +11,8 @@ import {
   ManifestDefinition,
   normalizeManifest,
 } from '@romejs/codec-js-manifest';
-import {PathPatterns, matchPathPatterns} from '@romejs/path-match';
-import {ProjectConfig, ROME_CONFIG_FILENAMES} from '@romejs/project';
+import {PathPatterns, matchPathPatterns, parsePathPattern} from '@romejs/path-match';
+import {ProjectConfig, ROME_CONFIG_FILENAMES, ProjectDefinition} from '@romejs/project';
 import {
   DiagnosticsProcessor,
   getDiagnosticsFromError,
@@ -33,19 +33,35 @@ import {
 } from '@romejs/path';
 import {lstat, readFileText, exists, readdir, watch} from '@romejs/fs';
 import crypto = require('crypto');
+
 import fs = require('fs');
+
 import {
   getFileHandler,
   getFileHandlerExtensions,
 } from '../../common/fileHandlers';
-import {
-  TEST_FOLDER_NAME,
-  MOCKS_FOLDER_NAME,
-} from '@romejs/core/common/constants';
+import {ProjectConfigSource} from '../project/ProjectManager';
 
 const DEFAULT_DENYLIST = ['.hg', '.git'];
 
 const PACKAGE_JSON = 'package.json';
+
+const GLOB_IGNORE: PathPatterns = [
+  parsePathPattern({input: 'node_modules'}),
+  parsePathPattern({input: '.git'}),
+  parsePathPattern({input: '.hg'}),
+];
+
+function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
+  // If there are any negate patterns then it'll never include GLOB_IGNORE
+  for (const {negate} of patterns) {
+    if (negate) {
+      return patterns;
+    }
+  }
+
+  return [...GLOB_IGNORE, ...patterns];
+}
 
 // Whenever we're performing an operation on a set of files, always do these first as they may influence how the rest are processed
 const PRIORITY_FILES = new Set(ROME_CONFIG_FILENAMES);
@@ -75,11 +91,21 @@ export type Stats = {
 
 export type WatcherClose = () => void;
 
-export type HasteCollisionCallback = (
-  hasteName: string,
-  existing: string,
-  filename: string,
-) => void;
+export type MemoryFSGlobOptions = {
+  extensions?: Array<string>;
+  overrideIgnore?: PathPatterns;
+  getProjectIgnore?: (project: ProjectDefinition) => {
+    patterns: PathPatterns;
+    source?: ProjectConfigSource;
+  };
+  getProjectEnabled?: (project: ProjectDefinition) => {
+    enabled: boolean;
+    source?: ProjectConfigSource;
+  };
+  test?: (path: AbsoluteFilePath) => boolean;
+};
+
+export type HasteCollisionCallback = (hasteName: string, existing: string, filename: string) => void;
 
 async function createRegularWatcher(
   memoryFs: MemoryFileSystem,
@@ -91,7 +117,7 @@ async function createRegularWatcher(
 
   // Create activity spinners for all connected reporters
   const activity = memoryFs.master.connectedReporters.progress({
-    initDelay: 1000,
+    initDelay: 1_000,
   });
   activity.setTitle(`Adding project ${projectFolder}`);
 
@@ -110,51 +136,46 @@ async function createRegularWatcher(
         return;
       }
 
-      const watcher = watch(
-        folderPath,
-        {recursive: true, persistent: false},
-        (eventType, filename) => {
-          if (filename === null) {
-            // TODO not sure how we want to handle this?
-            return;
-          }
+      const watcher = watch(folderPath, {recursive: true, persistent: false}, (
+        eventType,
+        filename,
+      ) => {
+        if (filename === null) {
+          // TODO not sure how we want to handle this?
+          return;
+        }
 
-          const path = folderPath.resolve(filename);
+        const path = folderPath.resolve(filename);
 
-          memoryFs
-            .stat(path)
-            .then(newStats => {
-              const diagnostics = memoryFs.master.createDisconnectedDiagnosticsProcessor(
-                [
-                  {
-                    category: 'memory-fs',
-                    message: 'Processing fs.watch changes',
-                  },
-                ],
-              );
+        memoryFs.stat(path).then((newStats) => {
+          const diagnostics =
+            memoryFs.master.createDisconnectedDiagnosticsProcessor([
+              {
+                category: 'memory-fs',
+                message: 'Processing fs.watch changes',
+              },
+            ]);
 
-              if (newStats.type === 'file') {
-                memoryFs.handleFileChange(path, newStats, {
-                  diagnostics,
-                  crawl: true,
-                });
-              } else if (newStats.type === 'directory') {
-                memoryFs.addDirectory(path, newStats, {
-                  crawl: true,
-                  diagnostics,
-                  onFoundDirectory,
-                });
-              }
-            })
-            .catch(err => {
-              if (err.code === 'ENOENT') {
-                memoryFs.handleDeletion(path);
-              } else {
-                throw err;
-              }
+          if (newStats.type === 'file') {
+            memoryFs.handleFileChange(path, newStats, {
+              diagnostics,
+              crawl: true,
             });
-        },
-      );
+          } else if (newStats.type === 'directory') {
+            memoryFs.addDirectory(path, newStats, {
+              crawl: true,
+              diagnostics,
+              onFoundDirectory,
+            });
+          }
+        }).catch((err) => {
+          if (err.code === 'ENOENT') {
+            memoryFs.handleDeletion(path);
+          } else {
+            throw err;
+          }
+        });
+      });
       watchers.set(folderPath, watcher);
     }
 
@@ -198,17 +219,15 @@ async function createWatchmanWatcher(
   let timeout;
 
   function queueCallout() {
-    timeout = setTimeout(
-      memoryFs.master.wrapFatal(() => {
+    timeout =
+      setTimeout(memoryFs.master.wrapFatal(() => {
         connectedReporters.warn(
           'Watchman is taking a while to respond. Watchman may have just started and is still crawling the disk.',
         );
 
         // Show an even more aggressive message when watchman takes longer
         queueCallout();
-      }),
-      5000,
-    );
+      }), 5_000);
   }
 
   // Show a message when watchman takes too long
@@ -240,7 +259,9 @@ async function createWatchmanWatcher(
         return;
       }
 
+      // rome-suppress lint/noExplicitAny
       const dirs: Array<[AbsoluteFilePath, any]> = [];
+      // rome-suppress lint/noExplicitAny
       const files: Array<[AbsoluteFilePath, any]> = [];
 
       for (const file of data.files) {
@@ -264,41 +285,33 @@ async function createWatchmanWatcher(
         }
       }
 
-      await Promise.all(
-        dirs.map(async ([path, info]) => {
-          await memoryFs.addDirectory(
-            path,
-            {
-              size: info.size,
-              mtime: info.mtime,
-              type: 'directory',
-            },
-            {diagnostics, crawl: false},
-          );
-        }),
-      );
+      await Promise.all(dirs.map(async ([path, info]) => {
+        await memoryFs.addDirectory(path, {
+          size: info.size,
+          mtime: info.mtime,
+          type: 'directory',
+        }, {diagnostics, crawl: false});
+      }));
 
-      await Promise.all(
-        files.map(async ([path, info]) => {
-          const stats: Stats = {
-            size: info.size,
-            mtime: info.mtime,
-            type: 'file',
-          };
+      await Promise.all(files.map(async ([path, info]) => {
+        const stats: Stats = {
+          size: info.size,
+          mtime: info.mtime,
+          type: 'file',
+        };
 
-          if (memoryFs.files.has(path)) {
-            await memoryFs.handleFileChange(path, stats, {
-              diagnostics,
-              crawl: false,
-            });
-          } else {
-            await memoryFs.addFile(path, stats, {
-              diagnostics,
-              crawl: false,
-            });
-          }
-        }),
-      );
+        if (memoryFs.files.has(path)) {
+          await memoryFs.handleFileChange(path, stats, {
+            diagnostics,
+            crawl: false,
+          });
+        } else {
+          await memoryFs.addFile(path, stats, {
+            diagnostics,
+            crawl: false,
+          });
+        }
+      }));
     }
 
     activity.setText(`Processing results`);
@@ -367,26 +380,21 @@ export default class MemoryFileSystem {
   files: AbsoluteFilePathMap<Stats>;
   manifests: AbsoluteFilePathMap<ManifestDefinition>;
 
-  watchers: Map<
-    string,
-    {
-      path: AbsoluteFilePath;
-      close: WatcherClose;
-    }
-  >;
+  watchers: Map<string, {
+    path: AbsoluteFilePath;
+    close: WatcherClose;
+  }>;
 
-  watchPromises: Map<
-    string,
-    {
-      promise: Promise<WatcherClose>;
-      path: AbsoluteFilePath;
-    }
-  >;
+  watchPromises: Map<string, {
+    promise: Promise<WatcherClose>;
+    path: AbsoluteFilePath;
+  }>;
 
-  changedFileEvent: Event<
-    {path: AbsoluteFilePath; oldStats: undefined | Stats; newStats: Stats},
-    void
-  >;
+  changedFileEvent: Event<{
+    path: AbsoluteFilePath;
+    oldStats: undefined | Stats;
+    newStats: Stats;
+  }, void>;
   deletedFileEvent: Event<AbsoluteFilePath, void>;
 
   init() {}
@@ -402,7 +410,9 @@ export default class MemoryFileSystem {
     watcher.close();
 
     // Go through and clear all files and directories from our internal maps
+
     // NOTE: We deliberately do not call 'deletedFileEvent' as the code that
+
     // calls us will already be cleaning up
     let queue: Array<AbsoluteFilePath> = [dirPath];
     while (queue.length > 0) {
@@ -610,9 +620,7 @@ export default class MemoryFileSystem {
     }
 
     // New watch target
-    logger.info(
-      `[MemoryFileSystem] Adding new project folder ${projectFolder}`,
-    );
+    logger.info(`[MemoryFileSystem] Adding new project folder ${projectFolder}`);
 
     // Remove watchers that are descedents of this folder as this watcher will handle them
     for (const [loc, {close, path}] of this.watchers) {
@@ -724,21 +732,8 @@ export default class MemoryFileSystem {
   }
 
   isInsideHaste(path: AbsoluteFilePath): boolean {
-    const parts = path.getSegments();
-
     if (!this.isInsideProject(path)) {
       return false;
-    }
-
-    // Don't consider files in mocks
-    const project = this.master.projectManager.findProjectExisting(path);
-    if (project !== undefined) {
-      if (
-        parts.includes(TEST_FOLDER_NAME) ||
-        parts.includes(MOCKS_FOLDER_NAME)
-      ) {
-        return false;
-      }
     }
 
     // Check if we're inside a haste package, child files of a haste package shouldn't be added to the haste map
@@ -769,8 +764,7 @@ export default class MemoryFileSystem {
     const basename = path.getBasename();
 
     if (handler.hasteMode === 'ext') {
-      ext = '.' + ext; // we also want to remove the dot suffix from the haste name
-
+      ext = `.${ext}`; // we also want to remove the dot suffix from the haste name
       if (!filename.endsWith(ext)) {
         throw new Error(
           `Expected ${filename} to end with ${ext} as it was returned as the extension name`,
@@ -786,9 +780,7 @@ export default class MemoryFileSystem {
   }
 
   // This is a wrapper around _declareManifest as it can produce diagnostics
-  async declareManifest(
-    opts: DeclareManifestOpts,
-  ): Promise<undefined | string> {
+  async declareManifest(opts: DeclareManifestOpts): Promise<undefined | string> {
     try {
       return await this._declareManifest(opts);
     } catch (err) {
@@ -803,22 +795,21 @@ export default class MemoryFileSystem {
     }
   }
 
-  async _declareManifest({
-    path,
-    hasteName,
-    diagnostics,
-  }: DeclareManifestOpts): Promise<undefined | string> {
+  async _declareManifest(
+    {
+      path,
+      hasteName,
+      diagnostics,
+    }: DeclareManifestOpts,
+  ): Promise<undefined | string> {
     // Fetch the manifest
     const manifestRaw = await readFileText(path);
-    const hash = crypto
-      .createHash('sha256')
-      .update(manifestRaw)
-      .digest('hex');
+    const hash = crypto.createHash('sha256').update(manifestRaw).digest('hex');
 
     const consumer = consumeJSON({
-      path: path,
+      path,
       input: manifestRaw,
-      consumeCategory: 'manifest',
+      consumeDiagnosticCategory: 'parse/manifest',
     });
 
     const {
@@ -836,7 +827,7 @@ export default class MemoryFileSystem {
     const manifestId = this.manifestCounter++;
     const def: ManifestDefinition = {
       id: manifestId,
-      path: path,
+      path,
       folder,
       consumer,
       manifest,
@@ -855,12 +846,7 @@ export default class MemoryFileSystem {
     const {projectManager} = this.master;
     const project = projectManager.findProjectExisting(path);
     if (project !== undefined) {
-      projectManager.declareManifest(
-        project,
-        isProjectPackage,
-        def,
-        diagnostics,
-      );
+      projectManager.declareManifest(project, isProjectPackage, def, diagnostics);
     }
 
     // Tell all workers of our discovery
@@ -875,19 +861,21 @@ export default class MemoryFileSystem {
 
   glob(
     cwd: AbsoluteFilePath,
-    opts: {
-      extensions?: Array<string>;
-      ignore?: PathPatterns;
-      only?: PathPatterns;
-    } = {},
+    opts: MemoryFSGlobOptions = {},
   ): AbsoluteFilePathSet {
-    const {extensions, ignore, only} = opts;
+    const {
+      extensions,
+      getProjectIgnore,
+      getProjectEnabled,
+      test,
+      overrideIgnore = [],
+    } = opts;
 
     const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
-    const ignoreParsed: PathPatterns = ignore === undefined ? [] : ignore;
-
     let crawl: Array<AbsoluteFilePath> = [cwd];
+
+    const ignoresByProject: Map<ProjectDefinition, PathPatterns> = new Map();
 
     while (crawl.length > 0) {
       const path = crawl.pop();
@@ -895,7 +883,25 @@ export default class MemoryFileSystem {
         throw new Error('crawl.length already validated');
       }
 
-      const ignoreMatched = matchPathPatterns(path, ignoreParsed, cwd);
+      const project = this.master.projectManager.assertProjectExisting(path);
+
+      let ignore: PathPatterns = overrideIgnore;
+
+      // Get ignore patterns
+      if (getProjectIgnore !== undefined) {
+        const projectIgnore = ignoresByProject.get(project);
+        if (projectIgnore === undefined) {
+          ignore = concatGlobIgnore([
+            ...ignore,
+            ...getProjectIgnore(project).patterns,
+          ]);
+          ignoresByProject.set(project, ignore);
+        } else {
+          ignore = projectIgnore;
+        }
+      }
+
+      const ignoreMatched = matchPathPatterns(path, ignore, cwd);
 
       // Don't even recurse into explicit matches
       if (ignoreMatched === 'EXPLICIT_MATCH') {
@@ -904,23 +910,35 @@ export default class MemoryFileSystem {
 
       // Add if a matching file
       if (this.files.has(path) && ignoreMatched === 'NO_MATCH') {
-        // Check if any only filter if present
-        if (
-          only !== undefined &&
-          matchPathPatterns(path, only, cwd) === 'NO_MATCH'
-        ) {
+        if (getProjectEnabled !== undefined &&
+          !getProjectEnabled(project).enabled) {
           continue;
         }
 
-        // Remove the prefixed dot
-        const ext = path.getExtensions().slice(1);
-        if (extensions === undefined || extensions.includes(ext)) {
-          paths.add(path);
+        if (test !== undefined && !test(path)) {
+          continue;
         }
+
+        // Check extensions
+        if (extensions !== undefined) {
+          let matchedExt = false;
+          for (const ext of extensions) {
+            matchedExt = path.hasEndExtension(ext);
+            if (matchedExt) {
+              break;
+            }
+          }
+          if (!matchedExt) {
+            continue;
+          }
+        }
+
+        paths.add(path);
         continue;
       }
 
       // Crawl if we're a folder
+
       // NOTE: We still continue crawling on implicit matches
       const listing = this.directoryListings.get(path);
       if (listing !== undefined) {

@@ -13,12 +13,14 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TaggedTemplateExpression = JSNodeBase & {
-  type: 'TaggedTemplateExpression';
-  tag: AnyExpression;
-  quasi: TemplateLiteral;
-  typeArguments?: AnyTypeArguments;
-};
+export type TaggedTemplateExpression =
+  & JSNodeBase
+  & {
+    type: 'TaggedTemplateExpression';
+    tag: AnyExpression;
+    quasi: TemplateLiteral;
+    typeArguments?: AnyTypeArguments;
+  };
 
 export const taggedTemplateExpression = createBuilder<TaggedTemplateExpression>(
   'TaggedTemplateExpression',

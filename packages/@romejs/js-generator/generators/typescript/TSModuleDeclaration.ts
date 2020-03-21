@@ -13,10 +13,7 @@ import {
 } from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
 
-export default function TSModuleDeclaration(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function TSModuleDeclaration(generator: Generator, node: AnyNode) {
   node = tsModuleDeclaration.assert(node);
 
   if (node.declare) {
@@ -25,9 +22,7 @@ export default function TSModuleDeclaration(
   }
 
   if (!node.global) {
-    generator.word(
-      node.id.type === 'BindingIdentifier' ? 'namespace' : 'module',
-    );
+    generator.word(node.id.type === 'BindingIdentifier' ? 'namespace' : 'module');
     generator.space();
   }
   generator.print(node.id, node);

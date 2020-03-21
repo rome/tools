@@ -8,5 +8,5 @@
 import Generator from '../../Generator';
 
 export default function EmptyStatement(generator: Generator) {
-  generator.semicolon(true /* force */);
+  generator.semicolon();
 }

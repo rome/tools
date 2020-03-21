@@ -6,11 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {
-  ReferenceIdentifier,
-  referenceIdentifier,
-  AnyNode,
-} from '@romejs/js-ast';
+import {ReferenceIdentifier, referenceIdentifier, AnyNode} from '@romejs/js-ast';
 
 export default function ReferenceIdentifier(node: AnyNode, scope: Scope) {
   node = referenceIdentifier.assert(node);

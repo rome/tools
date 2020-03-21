@@ -80,7 +80,9 @@ export function getKindWithSpecifiers(
 }
 
 // We use this to have an easy way to identify the actual runtime type of an import
+
 // This is useful as we needs this as Flow allows you to `import type` classes which
+
 // are considered values
 export function getAnalyzeExportValueType(
   scope: Scope,

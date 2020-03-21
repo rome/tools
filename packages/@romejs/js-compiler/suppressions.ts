@@ -7,6 +7,7 @@
 
 import {Program, AnyComment} from '@romejs/js-ast';
 import {DiagnosticSuppressions, PartialDiagnostics} from '@romejs/diagnostics';
+import {markup} from '@romejs/string-markup';
 
 const SUPPRESSION_START = 'rome-suppress';
 const PREFIX_MISTAKES = ['@rome-suppress', 'rome-ignore', '@rome-ignore'];
@@ -24,11 +25,12 @@ function extractSuppressionsFromComment(
     return undefined;
   }
 
+  const suppressedCategories: Set<string> = new Set();
   const diagnostics: PartialDiagnostics = [];
   const suppressions: DiagnosticSuppressions = [];
 
   const lines = comment.value.split('\n');
-  const cleanLines = lines.map(line => {
+  const cleanLines = lines.map((line) => {
     // Trim line and remove leading star
     return line.trim().replace(/\*[\s]/, '');
   });
@@ -38,7 +40,7 @@ function extractSuppressionsFromComment(
       for (const prefix of PREFIX_MISTAKES) {
         if (line.startsWith(prefix)) {
           diagnostics.push({
-            category: 'suppressions',
+            category: 'suppressions/incorrectPrefix',
             message: `Invalid suppression prefix <emphasis>${prefix}</emphasis>`,
             advice: [
               {
@@ -54,11 +56,8 @@ function extractSuppressionsFromComment(
       continue;
     }
 
-    const categories = line
-      .slice(SUPPRESSION_START.length)
-      .trim()
-      .split(' ');
-    const cleanCategories = categories.map(category => category.trim());
+    const categories = line.slice(SUPPRESSION_START.length).trim().split(' ');
+    const cleanCategories = categories.map((category) => category.trim());
 
     for (let category of cleanCategories) {
       if (category === '') {
@@ -72,10 +71,20 @@ function extractSuppressionsFromComment(
         category = category.slice(-1);
       }
 
-      suppressions.push({
-        category,
-        loc,
-      });
+      if (suppressedCategories.has(category)) {
+        diagnostics.push({
+          category: 'suppressions/duplicate',
+          message: markup`Duplicate suppression category <emphasis>${category}</emphasis>`,
+          ...loc,
+        });
+      } else {
+        suppressedCategories.add(category);
+
+        suppressions.push({
+          category,
+          loc,
+        });
+      }
 
       if (shouldBreak) {
         break;

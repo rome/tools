@@ -1,0 +1,125 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.ts'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: 'input.ts'
+    end: Object {
+      column: 0
+      index: 15
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    TypeAliasTypeAnnotation {
+      id: BindingIdentifier {
+        name: 'T'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+          start: Object {
+            column: 5
+            index: 5
+            line: 1
+          }
+        }
+      }
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 14
+          index: 14
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      right: TSTypeReference {
+        typeParameters: undefined
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 13
+            index: 13
+            line: 1
+          }
+          start: Object {
+            column: 12
+            index: 12
+            line: 1
+          }
+        }
+        typeName: ReferenceIdentifier {
+          name: 'U'
+          loc: Object {
+            filename: 'input.ts'
+            end: Object {
+              column: 13
+              index: 13
+              line: 1
+            }
+            start: Object {
+              column: 12
+              index: 12
+              line: 1
+            }
+          }
+        }
+      }
+      typeParameters: TSTypeParameterDeclaration {
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 9
+            index: 9
+            line: 1
+          }
+          start: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+        }
+        params: Array [
+          TSTypeParameter {
+            name: 'U'
+            constraint: undefined
+            default: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 8
+                index: 8
+                line: 1
+              }
+              start: Object {
+                column: 7
+                index: 7
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -8,11 +8,13 @@
 import {JSNodeBase, AnyTSEntityName, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSQualifiedName = JSNodeBase & {
-  type: 'TSQualifiedName';
-  left: AnyTSEntityName;
-  right: Identifier;
-};
+export type TSQualifiedName =
+  & JSNodeBase
+  & {
+    type: 'TSQualifiedName';
+    left: AnyTSEntityName;
+    right: Identifier;
+  };
 
 export const tsQualifiedName = createBuilder<TSQualifiedName>(
   'TSQualifiedName',

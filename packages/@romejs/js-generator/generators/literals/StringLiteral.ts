@@ -15,21 +15,15 @@ export default function StringLiteral(
   node: AnyNode,
   parent: AnyNode,
 ) {
-  node =
-    node.type == 'StringLiteralTypeAnnotation' || node.type === 'Directive'
-      ? node
-      : stringLiteral.assert(node);
+  node = node.type == 'StringLiteralTypeAnnotation' || node.type === 'Directive'
+    ? node : stringLiteral.assert(node);
 
   // JSX Attribute strings have ridiculous alternate semantics, should probably be a distinct AST node
-  const quotes = parent.type === 'JSXAttribute' ? '"' : "'";
-  const value =
-    parent.type === 'JSXAttribute'
-      ? escapeXHTMLEntities(node.value)
-      : node.value;
+  const quotes = parent.type === 'JSXAttribute' ? '"' : '\'';
+  const value = parent.type === 'JSXAttribute'
+    ? escapeXHTMLEntities(node.value) : node.value;
 
-  generator.token(
-    escapeString(value, {
-      quote: quotes,
-    }),
-  );
+  generator.token(escapeString(value, {
+    quote: quotes,
+  }));
 }
