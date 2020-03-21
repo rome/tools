@@ -736,7 +736,8 @@ export const createRegExpParser = createParser((ParserCore) =>
         case '{':
           const start = this.getPosition();
           const unmatchedQuantifier = this.parseQuantifier();
-          if (unmatchedQuantifier !== undefined) { // if quantifier is defined, then syntax error: Nothing to repeat
+          if (unmatchedQuantifier !== undefined) {
+            // if quantifier is defined, then syntax error: Nothing to repeat
             const end = this.getPosition();
             this.addDiagnostic({
               message: 'Nothing to repeat',
@@ -744,7 +745,8 @@ export const createRegExpParser = createParser((ParserCore) =>
               end,
             });
             return;
-          } else { // else quantifier is undefined & eaten tokens were restored
+          } else {
+            // else quantifier is undefined & eaten tokens were restored
             return this.parseCharacter(); // return a '{' token as a RegexpCharacter, parseBodyItem() will handle parsing of subsequent quantifiers
           }
 
