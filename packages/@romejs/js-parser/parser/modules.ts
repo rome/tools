@@ -62,6 +62,7 @@ import {
   parseExportDefaultFunctionDeclaration,
   parseExportDefaultClassDeclaration,
 } from './index';
+import {descriptions} from '@romejs/diagnostics';
 
 export type ParseExportResult =
   | AnyStatement
@@ -157,7 +158,7 @@ export function parseExport(parser: JSParser, start: Position): ParseExportResul
     parser.addDiagnostic({
       start: next.startPos,
       end: next.endPos,
-      message: 'Started with `export async` so we expected to receive an async function but no function keyword was found',
+      description: descriptions.JS_PARSER.EXPORT_ASYNC_NO_FUNCTION_KEYWORD,
     });
     declaration = undefined;
     specifiers = [];
@@ -184,7 +185,7 @@ export function parseExport(parser: JSParser, start: Position): ParseExportResul
       declaration.type !== 'FlowOpaqueType') {
       parser.addDiagnostic({
         loc: declaration.loc,
-        message: 'Invalid export declaration',
+        description: descriptions.JS_PARSER.INVALID_EXPORT_DECLARATION,
       });
       return declaration;
     }
@@ -272,7 +273,7 @@ function parseExportDefaultExpression(
 
   if (parser.match(tt._const) || parser.match(tt._var) || isLetStart(parser)) {
     parser.addDiagnostic({
-      message: 'Only expressions, functions or classes are allowed as the `default` export.',
+      description: descriptions.JS_PARSER.INVALID_EXPORT_DEFAULT,
     });
   }
 
@@ -393,7 +394,7 @@ function parseExportFrom(
 
       parser.addDiagnostic({
         loc: expr.loc,
-        message: 'Import from only allows strings',
+        description: descriptions.JS_PARSER.EXPORT_FROM_NOT_STRING,
       });
 
       source = {
@@ -404,7 +405,7 @@ function parseExportFrom(
     }
   } else if (expect) {
     parser.addDiagnostic({
-      message: 'Expected `from` for an export node',
+      description: descriptions.JS_PARSER.EXPORT_MISSING_FROM,
     });
 
     source = {
@@ -465,7 +466,7 @@ function parseExportNamespace(
 } {
   if (exportKind === 'type') {
     parser.addDiagnostic({
-      message: 'Can\'t have a type export namespacer specifier',
+      description: descriptions.JS_PARSER.EXPORT_TYPE_NAMESPACE,
     });
   }
 
@@ -585,21 +586,7 @@ function checkDuplicateExports(
   if (existing !== undefined) {
     parser.addDiagnostic({
       loc: node.loc,
-      message: name === 'default'
-        ? 'Only one default export allowed per module.' : `\`${name}\` has already been exported. Exported identifiers must be unique.`,
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          message: 'First defined here',
-        },
-        {
-          type: 'frame',
-          filename: existing.filename,
-          start: existing.start,
-          end: existing.end,
-        },
-      ],
+      description: descriptions.JS_PARSER.DUPLICATE_EXPORT(name, existing),
     });
   }
 
@@ -672,7 +659,7 @@ export function parseImport(parser: JSParser, start: Position): ParseImportResul
       source = parseStringLiteral(parser);
     } else {
       parser.addDiagnostic({
-        message: 'import missing a source',
+        description: descriptions.JS_PARSER.IMPORT_MISSING_SOURCE,
       });
 
       source = parser.finishNode(start, {
@@ -754,7 +741,7 @@ function parseImportSpecifiers(
     if (importKind === 'type' && lh.tokenType === tt.star) {
       parser.addDiagnostic({
         start: lh.startPos,
-        message: 'import * is not allowed',
+        description: descriptions.JS_PARSER.IMPORT_TYPE_STAR,
       });
     }
 
@@ -825,7 +812,7 @@ function parseImportSpecifiers(
       // Detect an attempt to deep destructure
       if (parser.eat(tt.colon)) {
         parser.addDiagnostic({
-          message: 'ES2015 named imports do not destructure. Use another statement for destructuring after the import.',
+          description: descriptions.JS_PARSER.DESTRUCTURING_IN_IMPORT,
         });
       }
 
@@ -896,7 +883,7 @@ function parseImportSpecifier(
   if (nodeIsTypeImport && specifierIsTypeImport) {
     parser.addDiagnostic({
       start: firstIdentPos,
-      message: 'The `type` and `typeof` keywords on named imports can only be used on regular `import` statements. It cannot be used with `import type` or `import typeof` statements',
+      description: descriptions.JS_PARSER.IMPORT_KIND_SPECIFIER_ON_IMPORT_DECLARATION_WITH_KIND,
     });
   }
 

@@ -12,22 +12,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noDanglingBackslash'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Dangling backslash in a regular expression'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 12
-        index: 13
-        line: 1
+      description: Object {
+        category: 'lint/noDanglingBackslash'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Dangling backslash in a regular expression'}
       }
-      start: Object {
-        column: 11
-        index: 11
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 12
+          index: 13
+          line: 1
+        }
+        start: Object {
+          column: 11
+          index: 11
+          line: 1
+        }
       }
     }
   ]
@@ -42,22 +46,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noDanglingBackslash'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Dangling backslash in a regular expression'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 14
-        index: 15
-        line: 1
+      description: Object {
+        category: 'lint/noDanglingBackslash'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Dangling backslash in a regular expression'}
       }
-      start: Object {
-        column: 13
-        index: 13
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 14
+          index: 15
+          line: 1
+        }
+        start: Object {
+          column: 13
+          index: 13
+          line: 1
+        }
       }
     }
   ]
@@ -72,60 +80,70 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      advice: undefined
-      category: 'parse/js'
-      filename: 'unknown'
-      message: 'Expecting Unicode escape sequence \\uXXXX'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 17
-        index: 17
-        line: 1
+      description: Object {
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expecting Unicode escape sequence \\uXXXX'}
       }
-      start: Object {
-        column: 17
-        index: 17
-        line: 1
-      }
-    }
-    Object {
-      category: 'lint/noDanglingBackslash'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Dangling backslash in a regular expression'
-      mtime: undefined
-      sourceType: 'module'
-      origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 14
-        index: 15
-        line: 1
-      }
-      start: Object {
-        column: 13
-        index: 13
-        line: 1
+      location: Object {
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 17
+          index: 17
+          line: 1
+        }
+        start: Object {
+          column: 17
+          index: 17
+          line: 1
+        }
       }
     }
     Object {
-      category: 'lint/undeclaredVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Undeclared variable <emphasis>\0</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 18
-        index: 18
-        line: 1
+      description: Object {
+        category: 'lint/noDanglingBackslash'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Dangling backslash in a regular expression'}
       }
-      start: Object {
-        column: 16
-        index: 16
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 14
+          index: 15
+          line: 1
+        }
+        start: Object {
+          column: 13
+          index: 13
+          line: 1
+        }
+      }
+    }
+    Object {
+      origins: Array [Object {category: 'lint'}]
+      description: Object {
+        category: 'lint/undeclaredVariables'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Undeclared variable <emphasis>\0</emphasis>'}
+      }
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 18
+          index: 18
+          line: 1
+        }
+        start: Object {
+          column: 16
+          index: 16
+          line: 1
+        }
       }
     }
   ]
@@ -140,60 +158,70 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      advice: undefined
-      category: 'parse/js'
-      filename: 'unknown'
-      message: 'Expecting Unicode escape sequence \\uXXXX'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 17
-        index: 17
-        line: 1
+      description: Object {
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expecting Unicode escape sequence \\uXXXX'}
       }
-      start: Object {
-        column: 17
-        index: 17
-        line: 1
-      }
-    }
-    Object {
-      category: 'lint/noDanglingBackslash'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Dangling backslash in a regular expression'
-      mtime: undefined
-      sourceType: 'module'
-      origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 14
-        index: 15
-        line: 1
-      }
-      start: Object {
-        column: 13
-        index: 13
-        line: 1
+      location: Object {
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 17
+          index: 17
+          line: 1
+        }
+        start: Object {
+          column: 17
+          index: 17
+          line: 1
+        }
       }
     }
     Object {
-      category: 'lint/undeclaredVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Undeclared variable <emphasis>\0</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 18
-        index: 18
-        line: 1
+      description: Object {
+        category: 'lint/noDanglingBackslash'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Dangling backslash in a regular expression'}
       }
-      start: Object {
-        column: 16
-        index: 16
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 14
+          index: 15
+          line: 1
+        }
+        start: Object {
+          column: 13
+          index: 13
+          line: 1
+        }
+      }
+    }
+    Object {
+      origins: Array [Object {category: 'lint'}]
+      description: Object {
+        category: 'lint/undeclaredVariables'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Undeclared variable <emphasis>\0</emphasis>'}
+      }
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 18
+          index: 18
+          line: 1
+        }
+        start: Object {
+          column: 16
+          index: 16
+          line: 1
+        }
       }
     }
   ]

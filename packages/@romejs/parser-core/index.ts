@@ -19,11 +19,11 @@ import {
   ComplexToken,
 } from './types';
 import {
-  PartialDiagnosticAdvice,
   getDiagnosticsFromError,
   createSingleDiagnosticError,
-  PartialDiagnostic,
+  Diagnostic,
   DiagnosticCategory,
+  DiagnosticDescription,
 } from '@romejs/diagnostics';
 import {
   Number1,
@@ -38,7 +38,8 @@ import {
 } from '@romejs/ob1';
 import {escapeMarkup} from '@romejs/string-markup';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
-import {Class} from '@romejs/typescript-helpers';
+import {Class, OptionalProps} from '@romejs/typescript-helpers';
+import {createBlessedDiagnosticMessage, descriptions} from '@romejs/diagnostics';
 
 export * from './types';
 
@@ -54,12 +55,11 @@ export type ParserOptionsWithRequiredPath =
   & {path: NonNullable<ParserOptions['path']>};
 
 export type ParserUnexpectedOptions = {
-  message?: string;
+  description?: OptionalProps<DiagnosticDescription, 'category'>;
   loc?: SourceLocation;
   start?: Position;
   end?: Position;
   token?: TokenBase;
-  advice?: PartialDiagnosticAdvice;
 };
 
 export type TokenValues<Tokens extends TokensShape> =
@@ -449,9 +449,9 @@ export class ParserCore<Tokens extends TokensShape, State> {
     return pos;
   }
 
-  createDiagnostic(opts: ParserUnexpectedOptions = {}): PartialDiagnostic {
+  createDiagnostic(opts: ParserUnexpectedOptions = {}): Diagnostic {
     const {currentToken} = this;
-    let {message, start, end, loc, token} = opts;
+    let {description: metadata, start, end, loc, token} = opts;
 
     // Allow passing in a TokenBase
     if (token !== undefined) {
@@ -484,35 +484,41 @@ export class ParserCore<Tokens extends TokensShape, State> {
     }
 
     // Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
-    if (message === undefined) {
+    if (metadata === undefined) {
+      let message;
       if (currentToken !== undefined && start !== undefined && start.index ===
       currentToken.start) {
-        message = `Unexpected ${currentToken.type}`;
+        message = createBlessedDiagnosticMessage(
+          `Unexpected ${currentToken.type}`,
+        );
       } else {
         if (this.isEOF(start.index)) {
-          message = 'Unexpected end of file';
+          message = createBlessedDiagnosticMessage('Unexpected end of file');
         } else {
           const char = this.input[get0(start.index)];
-          message =
-            `Unexpected character <emphasis>${escapeMarkup(char)}</emphasis>`;
+          message = createBlessedDiagnosticMessage(
+            `Unexpected character <emphasis>${escapeMarkup(char)}</emphasis>`,
+          );
         }
       }
+      metadata = {message};
     }
 
-    let errMessage = `${message} (${start.line}:${start.column})`;
-    if (this.path !== undefined) {
-      errMessage = `${this.path}: ${errMessage} Input: ${this.input}`;
-    }
+    const metadataWithCategory: DiagnosticDescription = {
+      ...metadata,
+      category: metadata.category === undefined
+        ? this.diagnosticCategory : metadata.category,
+    };
 
     return {
-      message,
-      advice: opts.advice,
-      category: this.diagnosticCategory,
-      sourceText: this.path === undefined ? this.input : undefined,
-      mtime: this.mtime,
-      start,
-      end,
-      filename: this.filename,
+      description: metadataWithCategory,
+      location: {
+        sourceText: this.path === undefined ? this.input : undefined,
+        mtime: this.mtime,
+        start,
+        end,
+        filename: this.filename,
+      },
     };
   }
 
@@ -525,7 +531,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   assertNoSpace() {
     if (this.currentToken.start !== this.prevToken.end) {
       throw this.unexpected({
-        message: 'Expected no space between',
+        description: descriptions.PARSER_CORE.EXPECTED_SPACE,
       });
     }
   }
@@ -554,7 +560,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   // Get the current token and assert that it's of the specified type, the token stream will also be advanced
   expectToken<Type extends keyof Tokens>(
     type: Type,
-    message?: string,
+    _metadata?: DiagnosticDescription,
   ): Tokens[Type] {
     const token = this.getToken();
     if (token.type === type) {
@@ -563,8 +569,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
       return token;
     } else {
       throw this.unexpected({
-        message: message === undefined
-          ? `Expected token ${type} but got ${token.type}` : message,
+        description: _metadata === undefined
+          ? descriptions.PARSER_CORE.EXPECTED_TOKEN(token.type, (type as string)) : _metadata,
       });
     }
   }
@@ -666,7 +672,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   finalize() {
     if (!this.eatToken('EOF')) {
       throw this.unexpected({
-        message: 'Expected end of file',
+        description: descriptions.PARSER_CORE.EXPECTED_EOF,
       });
     }
   }

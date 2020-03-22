@@ -8,6 +8,7 @@
 import {Path} from '@romejs/js-compiler';
 import {TransformExitResult} from '@romejs/js-compiler/types';
 import {AnyNode} from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 function isEmpty(node: AnyNode): boolean {
   if (node.innerComments !== undefined && node.innerComments.length > 0) {
@@ -32,10 +33,10 @@ export default {
 
     if (node.type === 'IfStatement') {
       if (isEmpty(node.consequent)) {
-        context.addNodeDiagnostic(node.consequent, {
-          category: 'lint/emptyBlocks',
-          message: 'Empty block',
-        });
+        context.addNodeDiagnostic(
+          node.consequent,
+          descriptions.LINT.EMPTY_BLOCKS,
+        );
       }
     }
 

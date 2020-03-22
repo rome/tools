@@ -12,5 +12,3 @@ export * from './location';
 export * from './regex';
 
 export * from './whitespace';
-
-export {default as messages} from './messages';

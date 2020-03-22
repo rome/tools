@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticPointer} from '@romejs/diagnostics';
+import {DiagnosticLocation} from '@romejs/diagnostics';
 import {toKebabCase} from '@romejs/string-utils';
 import {ConsumeSourceLocationRequestTarget} from '@romejs/consume';
 import {Number0, coerce0, number1, number0Neg1} from '@romejs/ob1';
@@ -49,7 +49,7 @@ function normalizeFlagValue(val: unknown): unknown {
 export function serializeCLIFlags(
   data: SerializeCLIData,
   cliTarget: SerializeCLITarget,
-): DiagnosticPointer {
+): DiagnosticLocation {
   const {args, flags, defaultFlags} = data;
 
   let code = `$ `;

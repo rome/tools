@@ -86,6 +86,7 @@ import {
   keywordRelationalOperator,
 } from '@romejs/js-parser-utils';
 import {number0, get0, add, inc} from '@romejs/ob1';
+import {descriptions} from '@romejs/diagnostics';
 
 const loopLabel: Label = {kind: 'loop'};
 const switchLabel: Label = {kind: 'switch'};
@@ -289,11 +290,11 @@ export function parseStatement(
       if (context !== undefined) {
         if (parser.inScope('STRICT')) {
           parser.addDiagnostic({
-            message: 'In strict mode code, functions can only be declared at top level or inside a block',
+            description: descriptions.JS_PARSER.ILLEGAL_FUNCTION_IN_STRICT,
           });
         } else if (context !== 'if' && context !== 'label') {
           parser.addDiagnostic({
-            message: 'In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement',
+            description: descriptions.JS_PARSER.ILLEGAL_FUNCTION_IN_NON_STRICT,
           });
         }
       }
@@ -304,7 +305,7 @@ export function parseStatement(
 
       if (context !== undefined && result.head.generator === true) {
         parser.addDiagnostic({
-          message: 'Generators can only be declared at the top level or inside a block',
+          description: descriptions.JS_PARSER.ILLEGAL_GENERATOR_DEFINITION,
           loc: result.loc,
         });
       }
@@ -340,7 +341,7 @@ export function parseStatement(
         ? assertVarKind(String(parser.state.tokenValue)) : kind;
       if (context !== undefined && kind !== 'var') {
         parser.addDiagnostic({
-          message: 'Lexical declaration cannot appear in a single-statement context',
+          description: descriptions.JS_PARSER.LEXICAL_DECLARATION_IN_SINGLE_STATEMENT_CONTEXT,
         });
       }
       return parseVarStatement(parser, start, kind);
@@ -376,7 +377,7 @@ export function parseStatement(
 
         if (!topLevel) {
           parser.addDiagnostic({
-            message: '\'import\' and \'export\' may only appear at the top level',
+            description: descriptions.JS_PARSER.IMPORT_EXPORT_MUST_TOP_LEVEL,
           });
         }
 
@@ -389,7 +390,7 @@ export function parseStatement(
       if (isAsyncFunctionDeclarationStart(parser)) {
         if (context !== undefined) {
           parser.addDiagnostic({
-            message: 'Async functions can only be declared at the top level or inside a block',
+            description: descriptions.JS_PARSER.ILLEGAL_ASYNC_DEFINITION,
           });
         }
 
@@ -462,22 +463,9 @@ export function assertModuleNodeAllowed(parser: JSParser, node: AnyNode): void {
   if (!parser.inModule) {
     parser.addDiagnostic({
       loc: node.loc,
-      message: `<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module`,
-      advice: [
-        // TODO this advice is pointless if you have syntax extensions enabled
-
-        // TODO point to the actual package.json for this file
-        {
-          type: 'log',
-          category: 'info',
-          message: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module',
-        },
-        {
-          type: 'log',
-          category: 'info',
-          message: `Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="${parser.options.manifestPath}" />`,
-        },
-      ],
+      description: descriptions.JS_PARSER.IMPORT_EXPORT_IN_SCRIPT(
+        parser.options.manifestPath,
+      ),
     });
   }
 }
@@ -487,7 +475,6 @@ export function parseBreakContinueStatement(
   start: Position,
   isBreak: boolean,
 ): BreakStatement | ContinueStatement {
-  const keyword = isBreak ? 'break' : 'continue';
   parser.next();
 
   let label;
@@ -519,7 +506,7 @@ export function parseBreakContinueStatement(
   if (i === parser.state.labels.length) {
     parser.addDiagnostic({
       start,
-      message: `Unsyntactic ${keyword}`,
+      description: descriptions.JS_PARSER.UNKNOWN_LABEL(label && label.name),
     });
   }
 
@@ -620,7 +607,7 @@ export function parseForStatement(
     if (awaitAt !== undefined) {
       parser.addDiagnostic({
         start: awaitAt,
-        message: 'Can\'t have an await on a regular for loop',
+        description: descriptions.JS_PARSER.REGULAR_FOR_AWAIT,
       });
     }
 
@@ -647,7 +634,7 @@ export function parseForStatement(
   if (awaitAt !== undefined) {
     parser.addDiagnostic({
       start: awaitAt,
-      message: 'Can\'t have an await on a regular for loop',
+      description: descriptions.JS_PARSER.REGULAR_FOR_AWAIT,
     });
   }
 
@@ -683,7 +670,7 @@ export function parseReturnStatement(
   if (!parser.inScope('FUNCTION') && parser.sourceType !== 'template' &&
     !parser.options.allowReturnOutsideFunction) {
     parser.addDiagnostic({
-      message: '\'return\' outside of function',
+      description: descriptions.JS_PARSER.RETURN_OUTSIDE_FUNCTION,
     });
   }
 
@@ -765,9 +752,10 @@ export function parseSwitchStatement(
           test = parseExpression(parser, 'case test');
         } else {
           if (sawDefault) {
+            // TODO point to other default
             parser.addDiagnostic({
               start: parser.state.lastStartPos,
-              message: 'Multiple default clauses',
+              description: descriptions.JS_PARSER.MULTIPLE_DEFAULT_CASE,
             });
           }
           sawDefault = true;
@@ -785,7 +773,7 @@ export function parseSwitchStatement(
         if (cur === undefined) {
           parser.addDiagnostic({
             loc: stmt.loc,
-            message: 'Statement outside of a case or default block',
+            description: descriptions.JS_PARSER.SWITCH_STATEMENT_OUTSIDE_CASE,
           });
         } else {
           cur.consequent.push(stmt);
@@ -817,7 +805,7 @@ export function parseThrowStatement(
   ))) {
     parser.addDiagnostic({
       start: parser.state.lastEndPos,
-      message: 'Illegal newline after throw',
+      description: descriptions.JS_PARSER.NEWLINE_AFTER_THROW,
     });
   }
 
@@ -868,7 +856,7 @@ export function parseTryStatement(
   if (!handler && !finalizer) {
     parser.addDiagnostic({
       start,
-      message: 'Missing catch or finally clause',
+      description: descriptions.JS_PARSER.TRY_MISSING_FINALLY_OR_CATCH,
     });
   }
 
@@ -921,7 +909,7 @@ export function parseWithStatement(
   if (parser.inScope('STRICT')) {
     parser.addDiagnostic({
       loc: parser.finishLoc(start),
-      message: '\'with\' in strict mode',
+      description: descriptions.JS_PARSER.WITH_IN_STRICT,
     });
   }
 
@@ -951,7 +939,7 @@ export function parseLabeledStatement(
     if (label.name === maybeName) {
       parser.addDiagnostic({
         loc: expr.loc,
-        message: `Label '${maybeName}' is already declared`,
+        description: descriptions.JS_PARSER.DUPLICATE_LABEL(maybeName, label.loc),
       });
     }
   }
@@ -976,6 +964,7 @@ export function parseLabeledStatement(
   parser.state.labels.push({
     name: maybeName,
     kind,
+    loc: parser.getLoc(expr),
     statementStart: parser.state.startPos.index,
   });
 
@@ -996,7 +985,7 @@ export function parseLabeledStatement(
   body.head.generator === true || body.head.async === true)) {
     parser.addDiagnostic({
       loc: body.loc,
-      message: 'Invalid labeled declaration',
+      description: descriptions.JS_PARSER.INVALID_LABEL_DECLARATION,
     });
   }
 
@@ -1109,7 +1098,7 @@ export function parseBlockOrModuleBlockBody(
         if (octalPosition !== undefined) {
           parser.addDiagnostic({
             index: octalPosition,
-            message: 'Octal literal in strict mode',
+            description: descriptions.JS_PARSER.OCTAL_IN_STRICT,
           });
         }
       }
@@ -1174,7 +1163,7 @@ export function parseForIn(
   if (isForIn && isAwait) {
     parser.addDiagnostic({
       start: awaitAt,
-      message: 'Unexpected await for `for-in`',
+      description: descriptions.JS_PARSER.REGULAR_FOR_AWAIT,
     });
   }
 
@@ -1183,7 +1172,7 @@ export function parseForIn(
   init.declarations[0].id.type !== 'BindingIdentifier')) {
     parser.addDiagnostic({
       loc: init.loc,
-      message: `${isForIn ? 'for-in' : 'for-of'} loop variable declaration may not have an initializer`,
+      description: descriptions.JS_PARSER.FOR_IN_OF_WITH_INITIALIZER,
     });
   }
 
@@ -1245,7 +1234,7 @@ export function parseVar(
         // It could be a declaration like `const x: number;`.
         if (!parser.isSyntaxEnabled('ts')) {
           parser.addDiagnostic({
-            message: 'const with no initializer isn\'t allowed',
+            description: descriptions.JS_PARSER.CONST_WITHOUT_INITIALIZER,
             loc: id.loc,
           });
         }
@@ -1256,7 +1245,7 @@ export function parseVar(
         (parser.match(tt._in) || parser.isContextual('of')))) {
         parser.addDiagnostic({
           start: parser.state.lastEndPos,
-          message: 'Complex binding patterns require an initialization value',
+          description: descriptions.JS_PARSER.COMPLEX_BINDING_WITHOUT_INITIALIZER,
         });
       }
     }
@@ -1286,13 +1275,7 @@ export function parseVarHead(
   let definite: undefined | boolean;
   if (id.type === 'BindingIdentifier' && parser.match(tt.bang)) {
     definite = true;
-
-    if (!parser.isSyntaxEnabled('ts')) {
-      parser.addDiagnostic({
-        message: 'TypeScript syntax isn\'t enabled for definite syntax',
-      });
-    }
-
+    parser.expectSyntaxEnabled('ts');
     parser.next();
   }
 
@@ -1536,7 +1519,7 @@ export function parseFunctionParams(
     if (typeParameters !== undefined && (kind === 'get' || kind === 'set')) {
       parser.addDiagnostic({
         loc: typeParameters.loc,
-        message: 'An accessor cannot have type parameters',
+        description: descriptions.JS_PARSER.ACCESSOR_WITH_TYPE_PARAMS,
       });
     }
   }

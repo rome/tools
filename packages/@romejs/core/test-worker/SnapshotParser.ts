@@ -14,6 +14,7 @@ import {
   isEscaped,
 } from '@romejs/parser-core';
 import {add, get0, Number0} from '@romejs/ob1';
+import {descriptions} from '@romejs/diagnostics';
 
 type Tokens =
   & BaseTokens
@@ -110,7 +111,7 @@ export default createParser((ParserCore) =>
               codeOffset = add(codeOffset, 1);
             } else {
               throw this.unexpected({
-                message: 'Newline required after code block',
+                description: descriptions.SNAPSHOTS.MISSING_NEWLINE_AFTER_CODE_BLOCK,
                 start: this.getPositionFromIndex(codeOffset),
               });
             }
@@ -134,13 +135,13 @@ export default createParser((ParserCore) =>
                 }, end);
               } else {
                 throw this.unexpected({
-                  message: 'Newline required before code block end',
+                  description: descriptions.SNAPSHOTS.MISSING_NEWLINE_BEFORE_CODE_BLOCK,
                   start: this.getPositionFromIndex(end),
                 });
               }
             } else {
               throw this.unexpected({
-                message: 'Unclosed code block',
+                description: descriptions.SNAPSHOTS.UNCLOSED_CODE_BLOCK,
                 start: this.getPositionFromIndex(end),
               });
             }

@@ -23,22 +23,25 @@ Program {
   }
   diagnostics: Array [
     Object {
-      advice: Array []
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Unexpected token, expected ","'
-      mtime: undefined
-      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 4
-        index: 4
-        line: 1
+      description: Object {
+        advice: Array []
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ,'}
       }
-      start: Object {
-        column: 3
-        index: 3
-        line: 1
+      location: Object {
+        mtime: undefined
+        sourceType: 'script'
+        end: Object {
+          column: 4
+          index: 4
+          line: 1
+        }
+        start: Object {
+          column: 3
+          index: 3
+          line: 1
+        }
       }
     }
   ]

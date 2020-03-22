@@ -31,12 +31,16 @@ import {
 
 export default function buildMessageCodeFrame(
   allLines: Array<string>,
-  start: Position,
-  end: Position,
+  start: undefined | Position,
+  end: undefined | Position,
   maybeMarkerMessage?: string,
 ): string {
   let markerMessage: string = maybeMarkerMessage === undefined
     ? '' : maybeMarkerMessage;
+
+  if (start === undefined || end === undefined) {
+    return CODE_FRAME_INDENT + markerMessage;
+  }
 
   const startLineIndex = coerce1to0(start.line);
 

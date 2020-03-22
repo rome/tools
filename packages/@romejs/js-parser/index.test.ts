@@ -107,7 +107,7 @@ const promise = createFixtureTests((fixture, t) => {
 
       let matches = false;
       for (const diag of diagnostics) {
-        if (escapeMarkup(diag.message).includes(expectError)) {
+        if (escapeMarkup(diag.description.message.value).includes(expectError)) {
           matches = true;
           break;
         }
@@ -120,7 +120,9 @@ const promise = createFixtureTests((fixture, t) => {
           expectError,
         )}"`;
         if (diagnostics.length === 1) {
-          msg += ` but got "${escapeMarkup(diagnostics[0].message)}"`;
+          msg += ` but got "${escapeMarkup(
+            diagnostics[0].description.message.value,
+          )}"`;
         }
         msg;
         //throw new DiagnosticsError(msg, diagnostics);

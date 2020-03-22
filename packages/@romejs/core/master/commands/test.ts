@@ -6,7 +6,7 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics} from '@romejs/diagnostics';
 import {SourceMap} from '@romejs/codec-source-map';
 import {Consumer} from '@romejs/consume';
 import {createMasterCommand} from '../../commands';
@@ -79,7 +79,7 @@ export default createMasterCommand({
 
     reporter.info(`Bundling test files`);
 
-    let addDiagnostics: PartialDiagnostics = [];
+    let addDiagnostics: Diagnostics = [];
 
     const tests: Map<string, {
       code: string;

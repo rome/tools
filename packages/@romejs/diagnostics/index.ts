@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export * from './normalize';
-
 export * from './errors';
 
 export * from './types';
@@ -21,3 +19,5 @@ export {default as DiagnosticsProcessor} from './DiagnosticsProcessor';
 export * from './constants';
 
 export * from './categories';
+
+export * from './descriptions';

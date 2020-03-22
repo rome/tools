@@ -33,22 +33,26 @@ Object {
   ]
   diagnostics: Array [
     Object {
-      category: 'analyzeDependencies/cjsExportInES'
-      filename: 'unknown'
-      language: 'js'
-      message: 'You cannot use CommonJS exports in an ES module'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'analyzeDependencies'}]
-      end: Object {
-        column: 25
-        index: 26
-        line: 2
+      description: Object {
+        category: 'analyzeDependencies/cjsExportInES'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'You cannot use CommonJS exports in an ES module'}
       }
-      start: Object {
-        column: 6
-        index: 7
-        line: 2
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 25
+          index: 26
+          line: 2
+        }
+        start: Object {
+          column: 6
+          index: 7
+          line: 2
+        }
       }
     }
   ]
@@ -149,32 +153,35 @@ Object {
   syntax: Array []
   diagnostics: Array [
     Object {
-      category: 'parse/js'
-      filename: 'unknown'
-      message: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module'
-      mtime: undefined
-      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 31
-        index: 32
-        line: 2
+      description: Object {
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
+          }
+          log {
+            category: 'info'
+            message: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
+          }
+        ]
       }
-      start: Object {
-        column: 6
-        index: 7
-        line: 2
+      location: Object {
+        mtime: undefined
+        sourceType: 'script'
+        end: Object {
+          column: 31
+          index: 32
+          line: 2
+        }
+        start: Object {
+          column: 6
+          index: 7
+          line: 2
+        }
       }
-      advice: Array [
-        log {
-          category: 'info'
-          message: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
-        }
-        log {
-          category: 'info'
-          message: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
-        }
-      ]
     }
   ]
   exports: Array [

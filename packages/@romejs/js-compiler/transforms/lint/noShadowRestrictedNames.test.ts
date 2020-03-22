@@ -21,7 +21,7 @@ test('no shadow restricted names', async (t) => {
   for (let failingCase of failingCases) {
     const res = await testLint(failingCase);
     if (!res.diagnostics.some((d) =>
-      d.category === 'lint/noShadowRestrictedNames'
+      d.description.category === 'lint/noShadowRestrictedNames'
     )) {
       t.fail(
         `expected "\n${failingCase}\n" to report a lint/noShadowRestrictedNames diagnostic but it didn't`,

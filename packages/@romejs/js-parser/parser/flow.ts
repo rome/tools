@@ -80,6 +80,7 @@ import {
   parseTypeLiteralAnnotation,
 } from './index';
 import {get0} from '@romejs/ob1';
+import {descriptions} from '@romejs/diagnostics';
 
 const primitiveTypes = [
   'any',
@@ -112,7 +113,7 @@ function checkNotUnderscore(parser: JSParser, id: Identifier) {
   if (id.name === '_') {
     parser.addDiagnostic({
       loc: id.loc,
-      message: '`_` is only allowed as a type argument to call or new',
+      description: descriptions.JS_PARSER.FLOW_BAD_UNDERSCORE_NAME,
     });
   }
 }
@@ -198,7 +199,7 @@ function parseFlowPredicate(
   ) - 1) {
     parser.addDiagnostic({
       start: moduloPos,
-      message: 'Spaces between \xb4%\xb4 and \xb4checks\xb4 are not allowed here.',
+      description: descriptions.JS_PARSER.FLOW_SPACE_BETWEEN_PERCENT_CHECKS,
     });
   }
 
@@ -286,7 +287,7 @@ function parseFlowDeclareFunction(
   if (predicate !== undefined && predicate.type === 'FlowInferredPredicate') {
     parser.addDiagnostic({
       loc: predicate.loc,
-      message: 'Predicate function declarations need to declare a predicate expression',
+      description: descriptions.JS_PARSER.FLOW_UNINFERRABLE_PREDICATE_ON_FUNCTION,
     });
   }
 
@@ -336,7 +337,7 @@ export function parseFlowDeclare(
     } else {
       if (insideModule) {
         parser.addDiagnostic({
-          message: '`declare module` cannot be used inside another `declare module`',
+          description: descriptions.JS_PARSER.FLOW_DECLARE_MODULE_IN_DECLARE_MODULE,
         });
       }
       return parseFlowDeclareModule(parser, start);
@@ -360,7 +361,7 @@ export function parseFlowDeclare(
   }
 
   parser.addDiagnostic({
-    message: 'Unknown start to Flow declaration',
+    description: descriptions.JS_PARSER.FLOW_UNKNOWN_DECLARATION_START,
   });
 
   // Fake node
@@ -419,7 +420,7 @@ function parseFlowDeclareModule(
       const lookahead = parser.lookaheadState();
       if (lookahead.tokenValue !== 'type' && lookahead.tokenValue !== 'typeof') {
         parser.addDiagnostic({
-          message: 'Imports within a `declare module` body must always be `import type` or `import typeof`',
+          description: descriptions.JS_PARSER.FLOW_IMPORT_KINDLESS_IN_DECLARE_MODULE,
         });
       }
       parser.next();
@@ -427,7 +428,7 @@ function parseFlowDeclareModule(
     } else {
       if (!parser.expectContextual(
         'declare',
-        'Only declares and type imports are allowed inside declare module',
+        descriptions.JS_PARSER.FLOW_DECLARE_MODULE_INVALID_CHILD,
       )) {
         break;
       }
@@ -447,15 +448,13 @@ function parseFlowDeclareModule(
 
   let kind: undefined | 'commonjs' | 'es';
   let hasModuleExport = false;
-  const errorMessage =
-    'Found both `declare module.exports` and `declare export` in the same module. Modules can only have 1 since they are either an ES module or they are a CommonJS module';
 
   for (const bodyElement of body) {
     if (isEsModuleType(bodyElement)) {
       if (kind === 'commonjs') {
         parser.addDiagnostic({
           loc: bodyElement.loc,
-          message: errorMessage,
+          description: descriptions.JS_PARSER.FLOW_MIXED_DECLARE_EXPORTS,
         });
       }
       kind = 'es';
@@ -463,14 +462,14 @@ function parseFlowDeclareModule(
       if (hasModuleExport) {
         parser.addDiagnostic({
           loc: bodyElement.loc,
-          message: 'Duplicate `declare module.exports` statement',
+          description: descriptions.JS_PARSER.FLOW_DUPLICATE_DECLARE_MODULE_EXPORTS,
         });
       }
 
       if (kind === 'es') {
         parser.addDiagnostic({
           loc: bodyElement.loc,
-          message: errorMessage,
+          description: descriptions.JS_PARSER.FLOW_MIXED_DECLARE_EXPORTS,
         });
       }
 
@@ -518,7 +517,10 @@ function parseExportLocalDeclaration(
       const label = String(parser.state.tokenValue);
       const suggestion = String(exportSuggestions.get(label));
       parser.addDiagnostic({
-        message: `\`declare export ${label}\` is not supported. Use \`${suggestion}\` instead`,
+        description: descriptions.JS_PARSER.FLOW_DECLARE_EXPORT_UNSUPPORTED(
+          label,
+          suggestion,
+        ),
       });
     }
 
@@ -562,7 +564,7 @@ function parseExportLocalDeclaration(
 
   parser.addDiagnostic({
     start,
-    message: 'No valid start for Flow declare export declaration found',
+    description: descriptions.JS_PARSER.FLOW_UNKNOWN_DECLARE_EXPORT_START,
   });
 
   // Fake node
@@ -750,7 +752,7 @@ export function checkReservedType(
   if (primitiveTypes.includes(word)) {
     parser.addDiagnostic({
       loc,
-      message: `Cannot overwrite primitive type ${word}`,
+      description: descriptions.JS_PARSER.FLOW_RESERVED_TYPE(word),
     });
   }
 }
@@ -847,7 +849,7 @@ function parseFlowTypeParameter(
   if (parser.match(tt.eq)) {
     if (!allowDefault) {
       parser.addDiagnostic({
-        message: 'Default type parameters arent allowed here',
+        description: descriptions.JS_PARSER.FLOW_DISALLOW_DEFAULT_TYPE_PARAMETER,
       });
     }
 
@@ -855,7 +857,7 @@ function parseFlowTypeParameter(
     def = parseFlowType(parser);
   } else if (requireDefault) {
     parser.addDiagnostic({
-      message: 'Type parameter declaration needs a default, since a preceding type parameter declaration has a default.',
+      description: descriptions.JS_PARSER.FLOW_DEFAULT_TYPE_PARAMETER_REQUIRED,
     });
   }
 
@@ -1096,7 +1098,7 @@ function parseFlowObjectType(
         if (variance) {
           parser.addDiagnostic({
             loc: variance.loc,
-            message: 'Variance not allowed',
+            description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
           });
         }
 
@@ -1117,7 +1119,7 @@ function parseFlowObjectType(
       if (variance) {
         parser.addDiagnostic({
           loc: variance.loc,
-          message: 'Variance not allowed',
+          description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
         });
       }
 
@@ -1198,7 +1200,7 @@ function parseFlowObjectTypeProperty(
   if (parser.match(tt.ellipsis)) {
     if (!allowSpread) {
       parser.addDiagnostic({
-        message: 'Spread operator cannot appear in class or interface definitions',
+        description: descriptions.JS_PARSER.FLOW_DISALLOWED_SPREAD,
       });
     }
 
@@ -1209,7 +1211,7 @@ function parseFlowObjectTypeProperty(
     if (variance) {
       parser.addDiagnostic({
         loc: variance.loc,
-        message: 'Spread properties cannot have variance',
+        description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
       });
     }
 
@@ -1223,19 +1225,19 @@ function parseFlowObjectTypeProperty(
       }
 
       parser.addDiagnostic({
-        message: 'Explicit inexact syntax is only allowed inside inexact objects',
+        description: descriptions.JS_PARSER.FLOW_INEXACT_SYNTAX_NOT_ALLOWED,
       });
     }
 
     if (parser.match(tt.braceBarR)) {
       parser.addDiagnostic({
-        message: 'Explicit inexact syntax cannot appear inside an explicit exact object type',
+        description: descriptions.JS_PARSER.FLOW_INEXACT_CANNOT_APPEAR_IN_EXPLICIT_EXACT,
       });
     }
 
     if (isInexactToken) {
       parser.addDiagnostic({
-        message: 'Explicit inexact syntax must appear at the end of an inexact object',
+        description: descriptions.JS_PARSER.FLOW_INEXACT_MUST_BE_AT_END,
       });
     }
 
@@ -1258,7 +1260,7 @@ function parseFlowObjectTypeProperty(
       if (variance) {
         parser.addDiagnostic({
           loc: variance.loc,
-          message: 'Type methods can\'t have variance',
+          description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
         });
       }
 
@@ -1655,7 +1657,7 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
   }
 
   parser.addDiagnostic({
-    message: 'Unknown flow primarty type start',
+    description: descriptions.JS_PARSER.FLOW_UNKNOWN_PRIMARY_START,
   });
 
   // Fake node
@@ -1729,7 +1731,7 @@ function parseFlowIntersectionType(parser: JSParser): AnyFlowPrimary {
 function eatUnionBitwise(parser: JSParser) {
   if (parser.match(tt.logicalOR)) {
     parser.addDiagnostic({
-      message: 'Unexpected ||, did you mean just |?',
+      description: descriptions.JS_PARSER.CONFUSED_OR,
     });
     parser.next();
   } else {
@@ -1851,7 +1853,7 @@ export function parseAsyncArrowWithFlowTypeParameters(
   const {returnType, valid, predicate} = parseArrowHead(parser);
   if (!valid) {
     parser.addDiagnostic({
-      message: 'Invalid async arrow with type parameters',
+      description: descriptions.JS_PARSER.FLOW_INVALID_ASYNC_ARROW_WITH_TYPE_PARAMS,
     });
     return undefined;
   }

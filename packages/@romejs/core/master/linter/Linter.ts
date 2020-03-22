@@ -9,16 +9,16 @@ import {MasterRequest} from '@romejs/core';
 import CompilerLinter from './CompilerLinter';
 import {LINTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
 import DependencyGraph from '../dependencies/DependencyGraph';
-import {DiagnosticPointer} from '@romejs/diagnostics';
+import {DiagnosticLocation, descriptions} from '@romejs/diagnostics';
 
 export default class Linter {
-  constructor(req: MasterRequest, fix: undefined | DiagnosticPointer) {
+  constructor(req: MasterRequest, fix: undefined | DiagnosticLocation) {
     this.request = req;
     this.fix = fix;
   }
 
   request: MasterRequest;
-  fix: undefined | DiagnosticPointer;
+  fix: undefined | DiagnosticLocation;
 
   async lint(throwAlways: boolean = true) {
     const {request} = this;
@@ -66,10 +66,8 @@ export default class Linter {
       for (const project of projects) {
         if (!project.config.format.enabled) {
           printer.addDiagnostic({
-            ...fix,
-            category: 'format/disabled',
-            message: 'Format is disabled for this project',
-            // TODO advice and better error message
+            location: fix,
+            description: descriptions.FORMAT.DISABLED,
           });
         }
       }
@@ -80,12 +78,14 @@ export default class Linter {
         let couldFix = false;
         let hasPendingFixes = false;
 
-        for (const {category, fixable} of printer.processor.getPartialDiagnostics()) {
-          if (category === 'lint/pendingFixes') {
+        for (const {
+          description: metadata,
+        } of printer.processor.getDiagnostics()) {
+          if (metadata.category === 'lint/pendingFixes') {
             hasPendingFixes = true;
           }
 
-          if (fixable) {
+          if (metadata.fixable) {
             couldFix = true;
           }
         }
@@ -116,7 +116,9 @@ export default class Linter {
     // For example, we don't want to show analysis or parse errors for transitive dependencies if the user only requested a specific file
     printer.processor.addFilter({
       test: (diag) => {
-        const {filename} = diag;
+        const {
+          location: {filename},
+        } = diag;
         if (filename === undefined) {
           return false;
         }

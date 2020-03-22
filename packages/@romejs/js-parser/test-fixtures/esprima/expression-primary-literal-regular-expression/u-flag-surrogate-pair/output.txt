@@ -23,22 +23,24 @@ Program {
   }
   diagnostics: Array [
     Object {
-      advice: undefined
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Range values reversed. Start char code is greater than end char code'
-      mtime: undefined
-      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 29
-        index: 29
-        line: 1
+      description: Object {
+        category: 'parse/regex'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected character <emphasis>D</emphasis>'}
       }
-      start: Object {
-        column: 16
-        index: 16
-        line: 1
+      location: Object {
+        mtime: undefined
+        sourceType: 'script'
+        end: Object {
+          column: 41
+          index: 41
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 42
+          line: 2
+        }
       }
     }
   ]

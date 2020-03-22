@@ -29,6 +29,7 @@ import {
   AnalyzeDependencyImportFirstUsage,
   AnalyzeModuleType,
 } from '@romejs/core';
+import {descriptions} from '@romejs/diagnostics';
 
 const analyzeCache: Cache<AnalyzeDependencyResult> = new Cache();
 
@@ -230,10 +231,10 @@ export default async function analyzeDependencies(
         });*/}
     } else if (record instanceof CJSExportRecord) {
       if (moduleType === 'es') {
-        context.addNodeDiagnostic(record.node, {
-          category: 'analyzeDependencies/cjsExportInES',
-          message: 'You cannot use CommonJS exports in an ES module',
-        });
+        context.addNodeDiagnostic(
+          record.node,
+          descriptions.ANALYZE_DEPENDENCIES.CJS_EXPORT_IN_ES,
+        );
       }
     }
   }

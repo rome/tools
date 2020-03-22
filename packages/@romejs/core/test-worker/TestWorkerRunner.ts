@@ -7,11 +7,13 @@
 
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
-  PartialDiagnosticAdvice,
-  PartialDiagnostic,
+  DiagnosticAdvice,
+  Diagnostic,
   getDiagnosticsFromError,
   INTERNAL_ERROR_LOG_ADVICE,
   createSingleDiagnosticError,
+  descriptions,
+  createBlessedDiagnosticMessage,
 } from '@romejs/diagnostics';
 import {TestCallback, TestOptions} from '@romejs/test';
 import {
@@ -82,7 +84,7 @@ export default class TestWorkerRunner {
     };
   }
 
-  async emitDiagnostic(diagnostic: PartialDiagnostic) {
+  async emitDiagnostic(diagnostic: Diagnostic) {
     await this.bridge.testError.call({
       ref: undefined,
       diagnostic,
@@ -102,13 +104,19 @@ export default class TestWorkerRunner {
 
     if (res.syntaxError !== undefined) {
       const message =
-        `A bundle was generated that contained a syntax error: ${res.syntaxError.message}`;
+        `A bundle was generated that contained a syntax error: ${res.syntaxError.description.message.value}`;
 
       throw createSingleDiagnosticError({
         ...res.syntaxError,
-        message,
-        filename: this.file.uid,
-        advice: [INTERNAL_ERROR_LOG_ADVICE],
+        description: {
+          ...res.syntaxError.description,
+          message: createBlessedDiagnosticMessage(message),
+          advice: [INTERNAL_ERROR_LOG_ADVICE],
+        },
+        location: {
+          ...res.syntaxError.location,
+          filename: this.file.uid,
+        },
       });
     }
   }
@@ -150,8 +158,8 @@ export default class TestWorkerRunner {
     testName: undefined | string,
     opts: {
       error: Error;
-      firstAdvice: PartialDiagnosticAdvice;
-      lastAdvice: PartialDiagnosticAdvice;
+      firstAdvice: DiagnosticAdvice;
+      lastAdvice: DiagnosticAdvice;
     },
   ) {
     const filename = this.file.real.join();
@@ -166,7 +174,7 @@ export default class TestWorkerRunner {
       };
     }
 
-    let diagnostic: PartialDiagnostic = deriveDiagnosticFromError({
+    let diagnostic: Diagnostic = deriveDiagnosticFromError({
       error: opts.error,
       category: 'tests/failure',
       label: testName,
@@ -213,11 +221,14 @@ export default class TestWorkerRunner {
 
     diagnostic = {
       ...diagnostic,
-      advice: [
-        ...opts.firstAdvice,
-        ...(diagnostic.advice || []),
-        ...opts.lastAdvice,
-      ],
+      description: {
+        ...diagnostic.description,
+        advice: [
+          ...opts.firstAdvice,
+          ...(diagnostic.description.advice || []),
+          ...opts.lastAdvice,
+        ],
+      },
     };
 
     this.bridge.testError.send({
@@ -298,9 +309,10 @@ export default class TestWorkerRunner {
       this.bridge.testError.send({
         ref: undefined,
         diagnostic: {
-          filename: this.file.uid,
-          message: 'No tests declared in this file',
-          category: 'tests/noneDeclared',
+          location: {
+            filename: this.file.uid,
+          },
+          description: descriptions.TESTS.UNDECLARED,
         },
       });
     }

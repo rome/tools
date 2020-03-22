@@ -6,7 +6,7 @@
  */
 
 import {Mappings} from '@romejs/codec-source-map';
-import {PartialDiagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {CompileRequest} from '../types';
 import {Cache} from '@romejs/js-compiler';
 import {generateJS} from '@romejs/js-generator';
@@ -14,7 +14,7 @@ import transform from '../methods/transform';
 
 export type CompileResult = {
   mappings: Mappings;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   suppressions: DiagnosticSuppressions;
   cacheDependencies: Array<string>;
   compiledCode: string;

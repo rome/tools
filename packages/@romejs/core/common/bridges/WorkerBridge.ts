@@ -12,7 +12,7 @@ import {Program, ConstSourceType} from '@romejs/js-ast';
 import {CompileResult, TransformStageName} from '@romejs/js-compiler';
 import {Profile} from '@romejs/v8';
 import {ProfilingStartData} from './MasterBridge';
-import {PartialDiagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {ProjectConfigJSON} from '@romejs/project';
 import {DiagnosticsError} from '@romejs/diagnostics';
 import {Bridge} from '@romejs/events';
@@ -85,11 +85,11 @@ export type PrefetchedModuleSignatures = {[key: string]:
 export type WorkerFormatResult = {
   original: string;
   formatted: string;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
 };
 
 export type WorkerLintResult = {
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   suppressions: DiagnosticSuppressions;
 };
 
@@ -185,8 +185,7 @@ export default class WorkerBridge extends Bridge {
 
       hydrate(err, data) {
         return new DiagnosticsError(
-          String(err.message),
-          ( // rome-suppress lint/noExplicitAny
+          String(err.message),( // rome-suppress lint/noExplicitAny
           data.diagnostics as any),
         );
       },

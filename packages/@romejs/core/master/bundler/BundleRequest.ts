@@ -16,7 +16,7 @@ import {
 import {DependencyOrder} from '../dependencies/DependencyOrderer';
 import {CompileResult, BundleCompileResolvedImports} from '@romejs/js-compiler';
 import {getPrefixedBundleNamespace} from '@romejs/js-compiler';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
+import {DiagnosticsProcessor, descriptions} from '@romejs/diagnostics';
 import {SourceMapGenerator} from '@romejs/codec-source-map';
 import {AbsoluteFilePath} from '@romejs/path';
 import {add} from '@romejs/ob1';
@@ -241,12 +241,11 @@ export default class BundleRequest {
       if (mode === 'legacy') {
         for (const {loc, mtime} of order.firstTopAwaitLocations) {
           this.diagnostics.addDiagnostic({
-            category: 'bundler/topLevelAwait',
-            filename: loc.filename,
-            start: loc.start,
-            end: loc.end,
-            message: 'This module contains a top level await which isn\'t supported in wrapper mode',
-            mtime,
+            description: descriptions.BUNDLER.TOP_LEVEL_AWAIT_IN_LEGACY,
+            location: {
+              ...loc,
+              mtime,
+            },
           });
         }
       }
@@ -334,7 +333,7 @@ export default class BundleRequest {
     }
 
     return {
-      diagnostics: this.diagnostics.getPartialDiagnostics(),
+      diagnostics: this.diagnostics.getDiagnostics(),
       content,
       map: sourceMap.toJSON(),
       cached: this.cached,
@@ -350,7 +349,7 @@ export default class BundleRequest {
     return {
       map: this.sourceMap.toJSON(),
       content: '',
-      diagnostics: this.diagnostics.getPartialDiagnostics(),
+      diagnostics: this.diagnostics.getDiagnostics(),
       cached: false,
       assets: this.assets,
     };

@@ -63,5 +63,3 @@ export function stringifyJSON(
 ): string {
   return stringifyRootConsumer(opts.consumer, opts.comments);
 }
-
-export {default as messages} from './messages';

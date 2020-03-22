@@ -15,7 +15,7 @@ import {
 } from '@romejs/parser-core';
 import {getSPDXLicense, licenseNames} from './index';
 import {isAlpha, isDigit} from '@romejs/parser-core';
-import {buildSuggestionAdvice} from '@romejs/diagnostics';
+import {descriptions} from '@romejs/diagnostics';
 import {inc, Number0, get0} from '@romejs/ob1';
 
 //# Tokens
@@ -124,16 +124,11 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
             this.nextToken();
           } else {
             throw this.unexpected({
-              message: `Missing dash between SPDX license name and version`,
+              description: descriptions.SPDX.VALID_LICENSE_WITH_MISSING_DASH(
+                possibleCorrectLicense,
+              ),
               start: this.getPositionFromIndex(token.start),
               end: this.getPositionFromIndex(nextToken.end),
-              advice: [
-                {
-                  type: 'log',
-                  category: 'info',
-                  message: `Did you mean <emphasis>${possibleCorrectLicense}</emphasis>?`,
-                },
-              ],
             });
           }
         }
@@ -141,10 +136,9 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 
       if (licenseInfo === undefined) {
         throw this.unexpected({
-          message: `Unknown SPDX license <emphasis>${id}</emphasis>`,
+          description: descriptions.SPDX.UNKNOWN_LICENSE(id, licenseNames),
           start: this.getPositionFromIndex(token.start),
           end: this.getPositionFromIndex(token.end),
-          advice: buildSuggestionAdvice(id, licenseNames),
         });
       }
 
@@ -160,7 +154,7 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
           this.nextToken();
         } else {
           throw this.unexpected({
-            message: 'Only a license id can be on the right side of a WITH',
+            description: descriptions.SPDX.WITH_RIGHT_LICENSE_ONLY,
           });
         }
       }
@@ -194,19 +188,18 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
         case 'Or':
         case 'And':
           throw this.unexpected({
-            message: 'Can only use AND/OR in between an expression',
+            description: descriptions.SPDX.OPERATOR_NOT_BETWEEN_EXPRESSION,
           });
 
         case 'Plus':
           throw this.unexpected({
-            message: 'A plus can only come after a license id',
+            description: descriptions.SPDX.PLUS_NOT_AFTER_LICENSE,
           });
 
         case 'ParenClose':
-          throw this.unexpected({message: 'Nothing open to close'});
-
-        case 'EOF':
-          throw this.unexpected({message: 'Unexpected end of file'});
+          throw this.unexpected({
+            description: descriptions.SPDX.UNOPENED_PAREN,
+          });
 
         default:
           throw this.unexpected();

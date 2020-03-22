@@ -7,11 +7,11 @@
 
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
-import {PartialDiagnostic} from '@romejs/diagnostics/types';
+import {Diagnostic} from '@romejs/diagnostics/types';
 
 test('no function reassignment', async (t) => {
-  function checkCategory(diagnostic: PartialDiagnostic): Boolean {
-    return diagnostic.category === 'lint/noFunctionAssign';
+  function checkCategory(diagnostic: Diagnostic): Boolean {
+    return diagnostic.description.category === 'lint/noFunctionAssign';
   }
 
   const validTestCases = [

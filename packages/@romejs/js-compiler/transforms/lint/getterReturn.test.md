@@ -12,22 +12,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/getterReturn'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Expected a \'return\' at end of a getter method but got empty block'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 7
-        index: 70
-        line: 5
+      description: Object {
+        category: 'lint/getterReturn'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected a \'return\' at end of a getter method but got empty block'}
       }
-      start: Object {
-        column: 17
-        index: 32
-        line: 3
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 7
+          index: 70
+          line: 5
+        }
+        start: Object {
+          column: 17
+          index: 32
+          line: 3
+        }
       }
     }
   ]
@@ -42,22 +46,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/getterReturn'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Expected a \'return\' at end of a getter method but got empty block'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 7
-        index: 77
-        line: 6
+      description: Object {
+        category: 'lint/getterReturn'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected a \'return\' at end of a getter method but got empty block'}
       }
-      start: Object {
-        column: 17
-        index: 39
-        line: 4
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 7
+          index: 77
+          line: 6
+        }
+        start: Object {
+          column: 17
+          index: 39
+          line: 4
+        }
       }
     }
   ]
