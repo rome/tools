@@ -60,7 +60,6 @@ After this you have a choice of whether you want to enable linting, formatting a
 ℹ Use arrow keys and space to select or deselect options and then enter to confirm
   ☑ Lint
   ☐ Format
-  ☐ Testing
 ```
 
 Choosing all options results in a config file like this:
@@ -73,9 +72,6 @@ Choosing all options results in a config file like this:
     "enabled": true
   },
   "format": {
-    "enabled": true
-  },
-  "tests": {
     "enabled": true
   }
 }
@@ -90,7 +86,7 @@ If the project already contains a configuration file the `init` command will exi
 ℹ Use `rome config` to update an existing config
 ```
 
-Instead of `init` use the [`config`](#config) command to update your configuration.
+Instead of `init` use the `config` command to update your configuration.
 
 ## `lint`
 
