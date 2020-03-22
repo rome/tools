@@ -19,6 +19,7 @@ import {
   ThisExpression,
 } from '@romejs/js-ast';
 import {isFunctionNode} from '@romejs/js-ast-utils';
+import {descriptions} from '@romejs/diagnostics';
 
 type State = {declarators: Array<VariableDeclarator>};
 
@@ -88,9 +89,7 @@ const hook = createHook<State, Arg, ThisExpression>({
       }
 
       path.context.addNodeDiagnostic(init, {
-        category: 'lint/preferFunctionDeclarations',
-        message: 'Use a function declaration instead of a const function',
-        fixable: true,
+        description: descriptions.LINT.PREFER_FUNCTION_DECLARATIONS,
       });
 
       // Convert arrow function body if necessary

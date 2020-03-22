@@ -8,7 +8,7 @@
 import {Path} from '@romejs/js-compiler';
 import {ObjectProperty, ObjectMethod, SpreadProperty} from '@romejs/js-ast';
 import {TransformExitResult} from '@romejs/js-compiler/types';
-import {markup} from '@romejs/string-markup';
+import {descriptions} from '@romejs/diagnostics';
 
 function extractPropertyKey(
   node: ObjectProperty | ObjectMethod | SpreadProperty,
@@ -45,8 +45,7 @@ export default {
         if (key !== undefined) {
           if (previousKeys.has(key)) {
             path.context.addNodeDiagnostic(prop, {
-              category: 'lint/noDuplicateKeys',
-              message: markup`Duplicate key <emphasis>${key}</emphasis>`,
+              description: descriptions.LINT.NO_DUPLICATE_KEYS(key),
             });
           }
 

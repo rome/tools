@@ -7,6 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {TransformExitResult} from '@romejs/js-compiler/types';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noAsyncPromiseExecutor',
@@ -19,8 +20,7 @@ export default {
     'ArrowFunctionExpression' || node.arguments[0].type === 'FunctionExpression') &&
       node.arguments[0].head.async) {
       context.addNodeDiagnostic(node.arguments[0], {
-        category: 'lint/noAsyncPromiseExecutor',
-        message: 'Promise executor functions should not be async.',
+        description: descriptions.LINT.NO_ASYNC_PROMISE_EXECUTOR,
       });
     }
 

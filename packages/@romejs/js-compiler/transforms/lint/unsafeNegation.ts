@@ -7,6 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {AnyNode, unaryExpression} from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'unsafeNegation',
@@ -17,9 +18,7 @@ export default {
     node.operator === 'instanceof') && node.left.type === 'UnaryExpression' &&
       node.left.operator === '!') {
       path.context.addNodeDiagnostic(node, {
-        fixable: true,
-        category: 'lint/unsafeNegation',
-        message: 'Unsafe usage of negation operator in left side of binary expression',
+        description: descriptions.LINT.UNSAFE_NEGATION,
       });
 
       return unaryExpression.create({

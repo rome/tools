@@ -10,6 +10,7 @@ import {Path, Scope, createHook} from '@romejs/js-compiler';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 import {Dict} from '@romejs/typescript-helpers';
 import {ArgumentsBinding} from '@romejs/js-compiler/scope/bindings';
+import {descriptions} from '@romejs/diagnostics';
 
 type State = {
   usedBindings: Dict<boolean>;
@@ -64,8 +65,7 @@ const provider = createHook<State, undefined, AnyNode>({
 
       if (used === false && binding !== undefined) {
         path.context.addNodeDiagnostic(binding.node, {
-          category: 'lint/unusedVariables',
-          message: `Unused ${binding.kind} <emphasis>${name}</emphasis>`,
+          description: descriptions.LINT.UNUSED_VARIABLES(binding.kind, name),
         });
       }
     }

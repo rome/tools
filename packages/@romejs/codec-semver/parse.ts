@@ -19,9 +19,9 @@ import {
   Tokens,
 } from './types';
 import {TokenValues, ParserOptions} from '@romejs/parser-core';
-import {markup} from '@romejs/string-markup';
 import {createParser, isAlpha, isDigit} from '@romejs/parser-core';
 import {Number0, add, get0} from '@romejs/ob1';
+import {descriptions} from '@romejs/diagnostics';
 
 type ParseMode = 'version' | 'range';
 
@@ -143,7 +143,7 @@ const createSemverParser = createParser((ParserCore) =>
         minor = this.parseVersionNumber();
       } else if (this.mode === 'version') {
         throw this.unexpected({
-          message: 'A minor number is required for a version',
+          description: descriptions.SEMVER.MISSING_MINOR_VERSION,
         });
       }
 
@@ -151,12 +151,14 @@ const createSemverParser = createParser((ParserCore) =>
         patch = this.parseVersionNumber();
       } else if (this.mode === 'version') {
         throw this.unexpected({
-          message: 'A patch number is required for a version',
+          description: descriptions.SEMVER.MISSING_PATCH_VERSION,
         });
       }
 
       if (this.matchToken('Dot')) {
-        throw this.unexpected({message: 'Too many parts for version'});
+        throw this.unexpected({
+          description: descriptions.SEMVER.EXCESSIVE_VERSION_PARTS,
+        });
       }
 
       // The dash is optional in loose mode. eg. 1.2.3pre
@@ -214,7 +216,9 @@ const createSemverParser = createParser((ParserCore) =>
           this.nextToken();
           parts.push('-');
         } else {
-          throw this.unexpected({message: 'Invalid version qualifier part'});
+          throw this.unexpected({
+            description: descriptions.SEMVER.INVALID_QUANTIFIER_PART,
+          });
         }
       } while (this.matchToken('Number') || this.matchToken('Word') ||
       this.matchToken('Dash'));
@@ -249,14 +253,14 @@ const createSemverParser = createParser((ParserCore) =>
       if (this.isWildcardToken(token)) {
         if (this.mode === 'version') {
           throw this.unexpected({
-            message: 'Wildcard aren\'t allowed in a hard version',
+            description: descriptions.SEMVER.WILDCARD_IN_VERSION,
           });
         }
 
         this.nextToken();
       } else {
         throw this.unexpected({
-          message: 'This isn\'t a valid version part, expected a number',
+          description: descriptions.SEMVER.INVALID_VERSION_NUMBER,
         });
       }
 
@@ -289,7 +293,7 @@ const createSemverParser = createParser((ParserCore) =>
       }
 
       throw this.unexpected({
-        message: 'A semver range can only be defined with versions',
+        ...descriptions.SEMVER.INVALID_RANGE,
         start: this.getLoc(node).start,
       });
     }
@@ -347,7 +351,7 @@ const createSemverParser = createParser((ParserCore) =>
         return this.parseWildcard();
       } else {
         throw this.unexpected({
-          message: 'Bare pipes are only allowed in loose mode',
+          description: descriptions.SEMVER.BARE_PIPE_WITHOUT_LOOSE,
         });
       }
     }
@@ -359,7 +363,7 @@ const createSemverParser = createParser((ParserCore) =>
         return this.parseVersion();
       } else {
         throw this.unexpected({
-          message: markup`Unexpected word <emphasis>${token.value}</emphasis>`,
+          description: descriptions.SEMVER.UNEXPECTED_WORD(token.value),
         });
       }
     }
@@ -384,7 +388,9 @@ const createSemverParser = createParser((ParserCore) =>
           return this.parseAtomStartWord(token);
 
         default:
-          throw this.unexpected({message: 'Unknown start of atom'});
+          throw this.unexpected({
+            description: descriptions.SEMVER.UNKNOWN_START,
+          });
       }
     }
 
@@ -443,7 +449,7 @@ const createSemverParser = createParser((ParserCore) =>
       // Verify the return value in version mode
       if (node.type !== 'AbsoluteVersion') {
         throw this.unexpected({
-          message: 'Unexpected value for version',
+          ...descriptions.SEMVER.EXPECTED_VERSION,
           start: this.getLoc(node).start,
         });
       }

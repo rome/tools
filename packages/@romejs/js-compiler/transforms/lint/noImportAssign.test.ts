@@ -25,7 +25,9 @@ test('no import assign', async (t) => {
   ];
   for (let failingCase of failingCases) {
     const res = await testLint(failingCase);
-    if (!res.diagnostics.some((d) => d.category === 'lint/noImportAssign')) {
+    if (!res.diagnostics.some((d) =>
+      d.description.category === 'lint/noImportAssign'
+    )) {
       t.fail(
         `expected "\n${failingCase}\n" to report a lint/noImportAssign diagnostic but it didn't`,
         [

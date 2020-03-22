@@ -8,7 +8,7 @@
 import {Path} from '@romejs/js-compiler';
 import {TransformExitResult} from '@romejs/js-compiler/types';
 import {builtin, es5, es2015, es2017} from '@romejs/js-compiler/scope/globals';
-import {markup} from '@romejs/string-markup';
+import {descriptions} from '@romejs/diagnostics';
 
 const restrictedNames = new Set([...builtin, ...es5, ...es2015, ...es2017]);
 
@@ -21,15 +21,7 @@ export default {
       for (const [name, binding] of scope.getOwnBindings()) {
         if (restrictedNames.has(name)) {
           context.addNodeDiagnostic(binding.node, {
-            category: 'lint/noShadowRestrictedNames',
-            message: markup`Shadowing of global property <emphasis>${name}</emphasis>`,
-            advice: [
-              {
-                type: 'log',
-                category: 'info',
-                message: 'Consider renaming this variable. It\'s easy to confuse the origin of variables when they\'re named after a known global.',
-              },
-            ],
+            description: descriptions.LINT.NO_SHADOW_RESTRICTED_NAMES(name),
           });
         }
       }

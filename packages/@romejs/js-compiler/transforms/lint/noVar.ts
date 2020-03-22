@@ -7,6 +7,7 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noVar',
@@ -15,8 +16,7 @@ export default {
 
     if (declaration.type === 'VariableDeclaration' && declaration.kind === 'var') {
       context.addNodeDiagnostic(declaration, {
-        category: 'lint/noVar',
-        message: 'Variable declarations using `var` are disallowed, use `let` or `const` instead.',
+        description: descriptions.LINT.NO_VAR,
       });
     }
 

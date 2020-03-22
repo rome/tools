@@ -51,6 +51,7 @@ import {
 } from './index';
 import {inc, dec} from '@romejs/ob1';
 import {parseBindingIdentifier, toBindingIdentifier} from './expression';
+import {descriptions} from '@romejs/diagnostics';
 
 export function parseClassExpression(
   parser: JSParser,
@@ -269,7 +270,7 @@ function parseClassMember(
     if (escapePosition !== undefined) {
       parser.addDiagnostic({
         index: escapePosition,
-        message: 'No escapes allowed in static contextual keyword',
+        description: descriptions.JS_PARSER.ESCAPE_SEQUENCE_IN_WORD('static'),
       });
     }
 
@@ -357,7 +358,7 @@ function parseClassMemberWithIsStatic(
     if (isNonstaticConstructor(parser, key, meta)) {
       parser.addDiagnostic({
         loc: key.loc,
-        message: 'Constructor can\'t be a generator',
+        description: descriptions.JS_PARSER.GENERATOR_CLASS_CONSTRUCTOR,
       });
     }
 
@@ -401,7 +402,7 @@ function parseClassMemberWithIsStatic(
       if (state.hadConstructor && !parser.isSyntaxEnabled('ts')) {
         parser.addDiagnostic({
           loc: key.loc,
-          message: 'Duplicate constructor in the same class',
+          description: descriptions.JS_PARSER.DUPLICATE_CLASS_CONSTRUCTOR,
         });
       }
       state.hadConstructor = true;
@@ -465,7 +466,7 @@ function parseClassMemberWithIsStatic(
       if (isNonstaticConstructor(parser, key, meta)) {
         parser.addDiagnostic({
           loc: key.loc,
-          message: 'Constructor can\'t be an async function',
+          description: descriptions.JS_PARSER.ASYNC_CLASS_CONSTRUCTOR,
         });
       }
 
@@ -515,7 +516,7 @@ function parseClassMemberWithIsStatic(
       if (isNonstaticConstructor(parser, key, meta)) {
         parser.addDiagnostic({
           loc: methodKey.loc,
-          message: 'Constructor can\'t have get/set modifier',
+          description: descriptions.JS_PARSER.GET_SET_CLASS_CONSTRUCTOR,
         });
       }
 
@@ -534,7 +535,7 @@ function parseClassMemberWithIsStatic(
   }
 
   parser.addDiagnostic({
-    message: 'Unknown class property start',
+    description: descriptions.JS_PARSER.UNKNOWN_CLASS_PROPERTY_START,
   });
   return undefined;
 }
@@ -563,27 +564,21 @@ function parseClassPropertyMeta(
     key.value.type === 'Identifier' && key.value.name === 'prototype') {
     parser.addDiagnostic({
       loc: key.loc,
-      message: 'Classes may not have static property named prototype',
+      description: descriptions.JS_PARSER.CLASS_STATIC_PROTOTYPE_PROPERTY,
     });
   }
 
   if (key.value.type === 'PrivateName' && key.value.id.name === 'constructor') {
     parser.addDiagnostic({
       loc: key.loc,
-      message: 'Classes may not have a private field named \'#constructor\'',
+      description: descriptions.JS_PARSER.CLASS_PRIVATE_FIELD_NAMED_CONSTRUCTOR,
     });
   }
 
   let optional = false;
   if (parser.match(tt.question)) {
     optional = true;
-
-    if (!parser.isSyntaxEnabled('ts')) {
-      parser.addDiagnostic({
-        message: 'Optional syntax but ts is not enabled',
-      });
-    }
-
+    parser.expectSyntaxEnabled('ts');
     parser.next();
   }
 
@@ -608,7 +603,7 @@ function pushClassProperty(
   if (isNonstaticConstructor(parser, key, meta)) {
     parser.addDiagnostic({
       loc: key.loc,
-      message: 'Classes may not have a non-static field named \'constructor\'',
+      description: descriptions.JS_PARSER.CLASS_PROPERTY_NAME_CONSTRUCTOR,
     });
   }
 
@@ -633,7 +628,7 @@ function parseClassMethod(
   if (key.variance !== undefined) {
     parser.addDiagnostic({
       loc: key.variance.loc,
-      message: 'variance not allowed here',
+      description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
     });
   }
 
@@ -698,7 +693,7 @@ function parseClassPrivateMethod(
   if (variance !== undefined) {
     parser.addDiagnostic({
       loc: variance.loc,
-      message: 'variance not allowed here',
+      description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
     });
   }
 
@@ -769,12 +764,7 @@ function parseClassProperty(
   let definite;
   if (!meta.optional && parser.eat(tt.bang)) {
     definite = true;
-
-    if (!parser.isSyntaxEnabled('ts')) {
-      parser.addDiagnostic({
-        message: 'Definite syntax but ts is not enabled',
-      });
-    }
+    parser.expectSyntaxEnabled('ts');
   }
 
   let typeAnnotation;
@@ -832,7 +822,7 @@ function parseClassId(
       id = parseBindingIdentifier(parser);
     } else if (!optionalId) {
       parser.addDiagnostic({
-        message: 'A class name is required',
+        description: descriptions.JS_PARSER.REQUIRED_CLASS_NAME,
       });
       id = toBindingIdentifier(parser, parser.createUnknownIdentifier(
         'required class name',

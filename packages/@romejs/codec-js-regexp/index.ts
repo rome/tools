@@ -30,7 +30,7 @@ import {
   RegExpAlternation,
   AnyRegExpExpression,
 } from '@romejs/js-ast';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics, descriptions} from '@romejs/diagnostics';
 import {Number0, get0, add} from '@romejs/ob1';
 
 type Operator =
@@ -103,7 +103,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       this.unicode = opts.unicode;
     }
 
-    diagnostics: PartialDiagnostics;
+    diagnostics: Diagnostics;
     unicode: boolean;
 
     addDiagnostic(opts: ParserUnexpectedOptions) {
@@ -372,7 +372,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       }
 
       this.addDiagnostic({
-        message: 'Invalid capture group modifier',
+        ...descriptions.REGEX_PARSER.INVALID_CAPTURE_GROUP_MODIFIER,
         token,
       });
     }
@@ -404,7 +404,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
       if (!this.eatOperator(')')) {
         this.addDiagnostic({
-          message: 'Unclosed group',
+          ...descriptions.REGEX_PARSER.UNCLOSED_GROUP,
           start,
         });
       }
@@ -441,7 +441,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
       if (!this.eatOperator(']')) {
         this.addDiagnostic({
-          message: 'Unclosed character set',
+          ...descriptions.REGEX_PARSER.UNCLOSED_CHAR_SET,
           start,
         });
       }
@@ -567,7 +567,7 @@ export const createRegExpParser = createParser((ParserCore) =>
               getCodePoint(end.value) < getCodePoint(start.value)
           ) {
             this.addDiagnostic({
-              message: 'Range values reversed. Start char code is greater than end char code',
+              ...descriptions.REGEX_PARSER.REVERSED_CHAR_SET_RANGE,
               loc,
             });
             const _end = end;
@@ -725,7 +725,7 @@ export const createRegExpParser = createParser((ParserCore) =>
         case ')':
           this.nextToken();
           this.addDiagnostic({
-            message: 'Unopened group',
+            ...descriptions.REGEX_PARSER.UNOPENED_GROUP,
             token,
           });
           return;
@@ -735,7 +735,7 @@ export const createRegExpParser = createParser((ParserCore) =>
         case '+':
           this.nextToken();
           this.addDiagnostic({
-            message: 'Invalid target for quantifier',
+            ...descriptions.REGEX_PARSER.INVALID_QUANTIFIER_TARGET,
             token,
           });
           return;
@@ -759,7 +759,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       }
 
       this.addDiagnostic({
-        message: 'Unknown regex part',
+        ...descriptions.REGEX_PARSER.UNKNOWN_REGEX_PART,
         token,
       });
     }
@@ -841,7 +841,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
     parse(): {
       expression: AnyRegExpExpression;
-      diagnostics: PartialDiagnostics;
+      diagnostics: Diagnostics;
     } {
       return {
         expression: this.parseExpression(),

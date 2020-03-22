@@ -33,6 +33,7 @@ import {
 } from '@romejs/js-ast';
 import {template} from '@romejs/js-ast-utils';
 import {TransformExitResult} from '@romejs/js-compiler';
+import {descriptions} from '@romejs/diagnostics';
 
 function transformClass(
   node: ClassDeclaration | ClassExpression,
@@ -211,8 +212,7 @@ function transformClass(
   for (const bodyNode of newNode.meta.body) {
     if (bodyNode.type !== 'ClassMethod') {
       context.addNodeDiagnostic(bodyNode, {
-        category: 'compile/classes',
-        message: 'The classes transform doesn\'t know how to transform this',
+        description: descriptions.COMPILER.CLASSES_UNSUPPORTED,
       });
       continue;
     }

@@ -6,9 +6,9 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {markup} from '@romejs/string-markup';
 import {isInTypeAnnotation} from '@romejs/js-ast-utils';
 import {AnyNode} from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 const NODE_VARIABLES = [
   'require',
@@ -55,8 +55,7 @@ export default {
 
       if (!isDefined) {
         path.context.addNodeDiagnostic(node, {
-          category: 'lint/undeclaredVariables',
-          message: markup`Undeclared variable <emphasis>${name}</emphasis>`,
+          description: descriptions.LINT.UNDECLARED_VARIABLES(name),
         });
       }
     }

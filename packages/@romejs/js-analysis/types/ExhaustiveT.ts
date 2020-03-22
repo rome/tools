@@ -13,6 +13,7 @@ import {HumanBuilder} from '../Utils';
 import E, {ErrorDefinition} from './errors/E';
 import AnyT from './AnyT';
 import T from './T';
+import {descriptions} from '@romejs/diagnostics';
 
 class ENotExhaustive extends E {
   constructor(
@@ -35,14 +36,10 @@ class ENotExhaustive extends E {
   static type = 'ENotExhaustive';
 
   getError(): ErrorDefinition {
-    let message =
-      `Expected only a ${this.utils.humanize(this.only)} but got ${this.utils.humanize(
-        this.target,
-      )}`;
-    //message += `but allows ${this.extraenous.map(type => this.utils.humanize(type)).join(' | ')}`;
     return {
-      category: 'typeCheck/notExhaustive',
-      message,
+      description: descriptions.TYPE_CHECK.NOT_EXHAUSTIVE(this.utils.humanize(
+        this.only,
+      ), this.utils.humanize(this.target)),
       lowerTarget: this.target,
     };
   }

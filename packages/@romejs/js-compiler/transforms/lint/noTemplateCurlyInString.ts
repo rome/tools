@@ -6,7 +6,7 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {markup} from '@romejs/string-markup';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noTemplateCurlyInString',
@@ -18,8 +18,7 @@ export default {
 
       if (regex.test(node.value)) {
         context.addNodeDiagnostic(node, {
-          category: 'lint/noTemplateCurlyInString',
-          message: markup`Unexpected template string expression.`,
+          description: descriptions.LINT.NO_TEMPLATE_CURLY_IN_STRING,
         });
       }
     }

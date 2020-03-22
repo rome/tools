@@ -10,7 +10,7 @@ import {createMasterCommand} from '../../commands';
 import Linter from '../linter/Linter';
 import {commandCategories} from '../../commands';
 import {Consumer} from '@romejs/consume';
-import {DiagnosticPointer} from '@romejs/diagnostics';
+import {DiagnosticLocation} from '@romejs/diagnostics';
 
 type Flags = {fix: boolean};
 
@@ -43,7 +43,7 @@ export default createMasterCommand<Flags>({
 
 function initWatchLint(
   req: MasterRequest,
-  fix: undefined | DiagnosticPointer,
+  fix: undefined | DiagnosticLocation,
   reject: (err: Error) => void,
 ) {
   const {master, reporter} = req;
@@ -107,7 +107,7 @@ function initWatchLint(
 
 async function runLint(
   req: MasterRequest,
-  fix: undefined | DiagnosticPointer,
+  fix: undefined | DiagnosticLocation,
 ): Promise<void> {
   const linter = new Linter(req, fix);
   await linter.lint();

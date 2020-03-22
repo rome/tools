@@ -6,7 +6,11 @@
  */
 
 import {Reporter} from '@romejs/cli-reporter';
-import {DiagnosticOrigin, deriveDiagnosticFromError} from '@romejs/diagnostics';
+import {
+  DiagnosticOrigin,
+  deriveDiagnosticFromError,
+  descriptions,
+} from '@romejs/diagnostics';
 import {TestRef} from '../../common/bridges/TestWorkerBridge';
 import {Master, MasterRequest} from '@romejs/core';
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
@@ -464,23 +468,29 @@ export default class TestRunner {
             // If we only have one test to cancel then let's only point the bridge error to this test
             this.ignoreBridgeEndError.add(bridge);
 
-            this.printer.addDiagnostic({
-              ...deriveDiagnosticFromError({
-                label: ref.testName,
-                category: 'tests/failure',
-                filename: ref.filename,
-                error,
-              }),
+            const errDiag = deriveDiagnosticFromError({
+              label: ref.testName,
+              category: 'tests/failure',
+              filename: ref.filename,
+              error,
+            });
 
-              // We don't care about the advice
-              advice: [],
+            this.printer.addDiagnostic({
+              ...errDiag,
+
+              description: {
+                ...errDiag.description,
+                // We don't care about the advice
+                advice: [],
+              },
             });
           } else {
             this.printer.addDiagnostic({
               label: ref.testName,
-              category: 'tests/failure',
-              filename: ref.filename,
-              message: 'Test was cancelled',
+              description: descriptions.TESTS.CANCELLED,
+              location: {
+                filename: ref.filename,
+              },
             });
           }
         }

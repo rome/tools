@@ -8,6 +8,7 @@
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
 import {referenceIdentifier, arrayExpression} from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'sparseArray',
@@ -16,9 +17,7 @@ export default {
 
     if (node.type === 'ArrayExpression' && node.elements.includes(undefined)) {
       path.context.addNodeDiagnostic(node, {
-        fixable: true,
-        category: 'lint/sparseArray',
-        message: 'Your array contains an empty slot',
+        description: descriptions.LINT.SPARSE_ARRAY,
       });
 
       return arrayExpression.quick(node.elements.map((elem) =>

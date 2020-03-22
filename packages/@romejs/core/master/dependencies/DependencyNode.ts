@@ -9,12 +9,7 @@ import DependencyGraph from './DependencyGraph';
 import {BundleCompileResolvedImports} from '@romejs/js-compiler';
 import {ConstImportModuleKind} from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
-import {
-  PartialDiagnostics,
-  PartialDiagnosticAdvice,
-  PartialDiagnostic,
-  buildSuggestionAdvice,
-} from '@romejs/diagnostics';
+import {Diagnostics, Diagnostic, descriptions} from '@romejs/diagnostics';
 import {ProjectDefinition} from '@romejs/project';
 import {DependencyOrder} from './DependencyOrderer';
 import DependencyOrderer from './DependencyOrderer';
@@ -246,60 +241,32 @@ export default class DependencyNode {
   buildDiagnosticForUnknownExport(
     kind: ConstImportModuleKind,
     resolved: ResolvedImportNotFound,
-  ): PartialDiagnostic {
-    const resolvedFileLink = `<filelink emphasis target="${resolved.node.id}" />`;
-
-    const message =
-      `Couldn't find export <emphasis>${resolved.name}</emphasis> in ${resolvedFileLink}`;
-    let advice: PartialDiagnosticAdvice = [];
-
-    if (resolved.node.analyze.exports.length === 0) {
-      advice.push({
-        type: 'log',
-        category: 'info',
-        message: 'This file doesn\'t have any exports',
-      });
-    } else {
-      // Provide suggestion on unknown import
-      const exportedNames = resolved.node.getExportedNames(kind);
-
-      advice =
-        advice.concat(buildSuggestionAdvice(resolved.name, Array.from(
-          exportedNames,
-        ), {
-          formatItem: (name) => {
-            const exportInfo = resolved.node.resolveImport(name, undefined);
-
-            if (exportInfo.type === 'NOT_FOUND') {
-              throw new Error(
-                `mod.resolveImport returned NOT_FOUND for an export ${name} in ${exportInfo.node.path} despite being returned by getExportedNames`,
-              );
-            }
-
-            const {record} = exportInfo;
-
-            const {loc} = record;
-            if (loc !== undefined) {
-              name =
-                `<filelink target="${loc.filename}" line="${loc.start.line}" column="${loc.start.column}">${name}</filelink>`;
-
-              if (exportInfo.node !== resolved.node) {
-                name +=
-                  ` <dim>(from <filelink target="${exportInfo.node.path.join()}" />)</dim>`;
-              }
-            }
-
-            return name;
-          },
-        }));
-    }
-
+  ): Diagnostic {
     return {
-      category: 'bundler/unknownExport',
-      ...resolved.loc,
-      message,
-      advice,
-      mtime: this.getMtime(),
+      description: descriptions.BUNDLER.UNKNOWN_EXPORT(
+        resolved.name,
+        resolved.node.id,
+        Array.from(resolved.node.getExportedNames(kind)),
+        (name: string) => {
+          const exportInfo = resolved.node.resolveImport(name, undefined);
+
+          if (exportInfo.type === 'NOT_FOUND') {
+            throw new Error(
+              `mod.resolveImport returned NOT_FOUND for an export ${name} in ${exportInfo.node.path} despite being returned by getExportedNames`,
+            );
+          }
+
+          return {
+            location: exportInfo.record.loc,
+            source: exportInfo.node !== resolved.node
+              ? exportInfo.node.path.join() : undefined,
+          };
+        },
+      ),
+      location: {
+        ...resolved.loc,
+        mtime: this.getMtime(),
+      },
     };
   }
 
@@ -307,36 +274,28 @@ export default class DependencyNode {
     resolved: ResolvedImportFound,
     node: DependencyNode,
     nameInfo: AnalyzeDependencyName,
-  ): PartialDiagnostic {
+  ): Diagnostic {
     const {name, kind, loc} = nameInfo;
-    const advice: PartialDiagnosticAdvice = [];
-
     const {record} = resolved;
 
-    if (record.loc !== undefined) {
-      advice.push({
-        type: 'log',
-        category: 'info',
-        message: `Export was defined here in <filelink emphasis target="${record.loc.filename}" />`,
-      });
-
-      advice.push({
-        type: 'frame',
-        ...record.loc,
-      });
-    }
-
     return {
-      category: 'bundler/importTypeMismatch',
-      ...loc,
-      message: `The export <emphasis>${name}</emphasis> in <filelink emphasis target="${node.id}" /> was incorrectly imported as a <emphasis>${kind}</emphasis> when it's actually a <emphasis>${record.kind}</emphasis>`,
-      advice,
-      mtime: this.getMtime(),
+      description: descriptions.BUNDLER.IMPORT_TYPE_MISMATCH(
+        name,
+        node.id,
+        kind,
+        record.kind,
+        record.loc,
+      ),
+
+      location: {
+        ...loc,
+        mtime: this.getMtime(),
+      },
     };
   }
 
   resolveImports(): {
-    diagnostics: PartialDiagnostics;
+    diagnostics: Diagnostics;
     resolved: BundleCompileResolvedImports;
   } {
     const {graph} = this;
@@ -346,7 +305,7 @@ export default class DependencyNode {
     const resolvedImports: BundleCompileResolvedImports = {};
 
     // Diagnostics for unknown imports
-    const diagnostics: PartialDiagnostics = [];
+    const diagnostics: Diagnostics = [];
 
     // Go through all of our dependencies and check if they have any external exports to forward
     const allowTypeImportsAsValue = this.analyze.syntax.includes('ts');

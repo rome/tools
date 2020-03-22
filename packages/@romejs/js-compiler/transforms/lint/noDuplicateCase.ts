@@ -7,6 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noDuplicateCase',
@@ -22,8 +23,7 @@ export default {
 
           if (uniqueSwitchCases.has(test.value)) {
             context.addNodeDiagnostic(param, {
-              category: 'lint/noDuplicateCase',
-              message: `Duplicate case <emphasis>${test.value}</emphasis> not allowed.`,
+              description: descriptions.LINT.NO_DUPLICATE_CASE(test.value),
             });
           }
 

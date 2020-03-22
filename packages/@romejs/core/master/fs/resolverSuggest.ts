@@ -15,10 +15,11 @@ import Resolver, {
   ResolverRemoteQuery,
 } from './Resolver';
 import {
-  PartialDiagnosticAdvice,
+  DiagnosticAdvice,
   buildSuggestionAdvice,
   createSingleDiagnosticError,
   DiagnosticCategory,
+  createBlessedDiagnosticMessage,
 } from '@romejs/diagnostics';
 import {orderBySimilarity} from '@romejs/string-utils';
 import {createUnknownFilePath, AbsoluteFilePath} from '@romejs/path';
@@ -55,7 +56,7 @@ export default function resolverSuggest(
 
   const {pointer} = querySource;
 
-  let advice: PartialDiagnosticAdvice = [];
+  let advice: DiagnosticAdvice = [];
 
   if (query.origin.isAbsolute()) {
     const localQuery: ResolverLocalQuery = {
@@ -146,7 +147,7 @@ export default function resolverSuggest(
 
       advice.push({
         type: 'frame',
-        ...origPointer,
+        location: origPointer,
       });
     }
 
@@ -235,10 +236,12 @@ export default function resolverSuggest(
     ` <emphasis>${source}</emphasis> from <filelink emphasis target="${pointer.filename}" />`;
 
   throw createSingleDiagnosticError({
-    ...pointer,
-    category,
-    message,
-    advice,
+    location: pointer,
+    description: {
+      category,
+      message: createBlessedDiagnosticMessage(message),
+      advice,
+    },
   });
 }
 

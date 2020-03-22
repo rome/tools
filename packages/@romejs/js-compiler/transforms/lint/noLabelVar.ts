@@ -7,6 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noLabelVar',
@@ -22,8 +23,7 @@ export default {
 
       if (isDefined) {
         path.context.addNodeDiagnostic(node, {
-          category: 'lint/noLabelVar',
-          message: 'Labels should not be variable names',
+          description: descriptions.LINT.NO_LABEL_VAR,
         });
       }
     }

@@ -7,6 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noDanglingBackslash',
@@ -19,8 +20,7 @@ export default {
         const last = body[body.length - 1];
         if (last && last.type === 'RegExpCharacter' && !last.value) {
           context.addNodeDiagnostic(last, {
-            category: 'lint/noDanglingBackslash',
-            message: 'Dangling backslash in a regular expression',
+            description: descriptions.LINT.NO_DANGLING_BACKSLASH_IN_REGEX,
           });
         }
       }

@@ -6,6 +6,7 @@
  */
 
 import {Path, REDUCE_REMOVE, TransformExitResult} from '@romejs/js-compiler';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noEmptyCharacterClass',
@@ -14,9 +15,7 @@ export default {
 
     if (node.type === 'RegExpCharSet' && node.body.length === 0 && !node.invert) {
       context.addNodeDiagnostic(node, {
-        fixable: true,
-        category: 'lint/noEmptyCharacterClass',
-        message: 'Empty character classes in regular expressions are not allowed',
+        description: descriptions.LINT.NO_EMPTY_CHAR_SET,
       });
       return REDUCE_REMOVE;
     }

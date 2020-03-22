@@ -13,7 +13,7 @@ import {
   AnyHookDescriptor,
   HookDescriptor,
 } from '../api/createHook';
-import {PartialDiagnostic} from '@romejs/diagnostics';
+import {Diagnostic} from '@romejs/diagnostics';
 import reduce from '../methods/reduce';
 import {TransformExitResult} from '../types';
 
@@ -257,7 +257,7 @@ export default class Path {
     );
   }
 
-  addDiagnostic(opts: PartialDiagnostic) {
+  addDiagnostic(opts: Diagnostic) {
     return this.context.addNodeDiagnostic(this.node, opts);
   }
 }

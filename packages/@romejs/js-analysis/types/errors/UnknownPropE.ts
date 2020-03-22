@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {buildSuggestionAdvice} from '@romejs/diagnostics';
+import {descriptions} from '@romejs/diagnostics';
 import {Scope} from '../../scopes';
 import T from '../T';
 import {orderBySimilarity} from '@romejs/string-utils';
@@ -52,12 +52,8 @@ export default class UnknownPropE extends E {
   }
 
   getError(): ErrorDefinition {
-    let message: string = `Property '${this.key}' not found in`;
-
     return {
-      category: 'typeCheck/unknownProperty',
-      message,
-      advice: buildSuggestionAdvice(this.key, this.allProps),
+      description: descriptions.TYPE_CHECK.UNKNOWN_PROP(this.key, this.allProps),
       lowerTarget: this.property,
       upperTarget: this.object,
     };

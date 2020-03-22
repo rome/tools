@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics} from '@romejs/diagnostics';
 import {
   ConstExportModuleKind,
   ConstImportModuleKind,
@@ -74,7 +74,7 @@ export type AnalyzeDependencyImportFirstUsage = Array<
 export type AnalyzeDependencyResult = {
   moduleType: AnalyzeModuleType;
   syntax: Array<ConstProgramSyntax>;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   firstTopAwaitLocation: undefined | SourceLocation;
   importFirstUsage: AnalyzeDependencyImportFirstUsage;
   exports: Array<AnyAnalyzeExport>;

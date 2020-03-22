@@ -14,7 +14,7 @@ import {
   AnyComment,
   ConstProgramSyntax,
 } from '../index';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics} from '@romejs/diagnostics';
 import {createBuilder} from '../utils';
 
 export type Program =
@@ -28,7 +28,7 @@ export type Program =
     mtime: undefined | number;
     corrupt: boolean;
     sourceType: ConstSourceType;
-    diagnostics: PartialDiagnostics;
+    diagnostics: Diagnostics;
     comments: Array<AnyComment>;
     syntax: Array<ConstProgramSyntax>;
     hasHoistedVars: boolean;

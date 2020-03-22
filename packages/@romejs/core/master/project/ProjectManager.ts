@@ -27,8 +27,9 @@ import {
 import {WorkerContainer} from '../WorkerManager';
 import {
   DiagnosticsProcessor,
-  DiagnosticPointer,
+  DiagnosticLocation,
   createSingleDiagnosticError,
+  descriptions,
 } from '@romejs/diagnostics';
 import {matchPathPatterns} from '@romejs/path-match';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
@@ -586,17 +587,11 @@ export default class ProjectManager {
         }
 
         diagnostics.addDiagnostic({
-          category: 'projectManager/nameCollision',
-          filename: def.path.join(),
-          message: `Duplicate package name <emphasis>${name}</emphasis>`,
-          ...def.consumer.get('name').getDiagnosticPointer('inner-value'),
-          advice: [
-            {
-              type: 'log',
-              category: 'info',
-              message: `Defined already by <filelink target="${existingPackage.path}" />`,
-            },
-          ],
+          description: descriptions.PROJECT_MANAGER.DUPLICATE_PACKAGE(
+            name,
+            existingPackage.path.join(),
+          ),
+          location: def.consumer.get('name').getDiagnosticPointer('inner-value'),
         });
         return;
       }
@@ -668,16 +663,13 @@ export default class ProjectManager {
         }
 
         diagnostics.addDiagnostic({
-          category: 'projectManager/nameCollision',
-          filename: hastePath.join(),
-          message: `Found a haste collision for <emphasis>${hasteName}</emphasis>`,
-          advice: [
-            {
-              type: 'log',
-              category: 'info',
-              message: `Defined already by <filelink emphasis target="${existing}" />`,
-            },
-          ],
+          description: descriptions.PROJECT_MANAGER.HASTE_COLLISION(
+            hasteName,
+            existing.join(),
+          ),
+          location: {
+            filename: hastePath.join(),
+          },
         });
         continue;
       }
@@ -727,7 +719,7 @@ export default class ProjectManager {
 
   async assertProject(
     path: AbsoluteFilePath,
-    pointer?: DiagnosticPointer,
+    pointer?: DiagnosticLocation,
   ): Promise<ProjectDefinition> {
     // We won't recurse up and check a parent project if we've already visited it
     const syncProject = this.findProjectExisting(path);
@@ -751,16 +743,8 @@ export default class ProjectManager {
     }
 
     throw createSingleDiagnosticError({
-      ...pointer,
-      category: 'projectManager/missing',
-      message: `Couldn't find a project`,
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          message: 'Run <command>rome init</command> in this folder to initialize a project',
-        },
-      ],
+      location: pointer,
+      description: descriptions.PROJECT_MANAGER.NOT_FOUND,
     });
   }
 
@@ -912,11 +896,12 @@ export default class ProjectManager {
     diagnostics: DiagnosticsProcessor,
   ) {
     diagnostics.addDiagnostic({
-      category: 'projectManager/incorrectConfigFilename',
-      filename: path.join(),
-      message: `Invalid rome config filename, <emphasis>${ROME_CONFIG_FILENAMES.join(
-        ' or ',
-      )}</emphasis> are the only valid filename`,
+      description: descriptions.PROJECT_MANAGER.INCORRECT_CONFIG_FILENAME(
+        ROME_CONFIG_FILENAMES,
+      ),
+      location: {
+        filename: path.join(),
+      },
     });
   }
 }

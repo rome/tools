@@ -26,7 +26,7 @@ test(
     `);
 
     t.truthy(returnTest.diagnostics.find((d) =>
-      d.message === `Unsafe usage of ReturnStatement.`
+      d.description.message.value === `Unsafe usage of ReturnStatement.`
     ));
 
     const breakTest = await testLint(`
@@ -45,7 +45,7 @@ test(
     `);
 
     t.truthy(breakTest.diagnostics.find((d) =>
-      d.message === `Unsafe usage of BreakStatement.`
+      d.description.message.value === `Unsafe usage of BreakStatement.`
     ));
 
     const continueTest = await testLint(`
@@ -63,7 +63,7 @@ test(
     `);
 
     t.truthy(continueTest.diagnostics.find((d) =>
-      d.message === `Unsafe usage of ContinueStatement.`
+      d.description.message.value === `Unsafe usage of ContinueStatement.`
     ));
 
     const throwTest = await testLint(`
@@ -81,7 +81,7 @@ test(
     `);
 
     t.truthy(throwTest.diagnostics.find((d) =>
-      d.message === `Unsafe usage of ThrowStatement.`
+      d.description.message.value === `Unsafe usage of ThrowStatement.`
     ));
   },
 );

@@ -14,6 +14,7 @@ import {
   ForStatement,
   ConditionalExpression,
 } from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 function isBooleanConstructorCall(node: AnyNode) {
   return node.type === 'NewExpression' && node.callee.type ===
@@ -58,8 +59,7 @@ export default {
       '!' || node.type === 'CallExpression' && node.callee.type ===
       'ReferenceIdentifier' && node.callee.name === 'Boolean') {
         context.addNodeDiagnostic(node, {
-          category: 'lint/noExtraBooleanCast',
-          message: `Redundant double negation.`,
+          description: descriptions.LINT.NO_EXTRA_BOOLEAN_CAST,
         });
       }
     }

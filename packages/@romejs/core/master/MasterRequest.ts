@@ -11,13 +11,15 @@ import {
 } from '../common/types/client';
 import {JSONFileReference} from '../common/types/files';
 import {
-  DiagnosticPointer,
+  DiagnosticLocation,
   getDiagnosticsFromError,
   DiagnosticOrigin,
-  PartialDiagnosticAdvice,
+  DiagnosticAdvice,
   createSingleDiagnosticError,
   DiagnosticsError,
   DiagnosticCategory,
+  Diagnostic,
+  createBlessedDiagnosticMessage,
 } from '@romejs/diagnostics';
 import {DiagnosticsPrinterFlags} from '@romejs/cli-diagnostics';
 import {ProjectDefinition} from '@romejs/project';
@@ -199,22 +201,24 @@ export default class MasterRequest {
   throwDiagnosticFlagError(
     message: string,
     target: SerializeCLITarget = {type: 'none'},
-    advice?: PartialDiagnosticAdvice,
+    advice?: DiagnosticAdvice,
   ) {
     const pointer = this.getDiagnosticPointerFromFlags(target);
-    throw new MasterRequestInvalid(message, [
-      {
-        message,
-        filename: 'argv',
+
+    const diag: Diagnostic = {
+      description: {
+        message: createBlessedDiagnosticMessage(message),
         category: target.type === 'arg' || target.type === 'arg-range'
           ? 'args/invalid' : 'flags/invalid',
-        ...pointer,
         advice,
       },
-    ]);
+      location: pointer,
+    };
+
+    throw new MasterRequestInvalid(message, [diag]);
   }
 
-  getDiagnosticPointerForClientCwd(): DiagnosticPointer {
+  getDiagnosticPointerForClientCwd(): DiagnosticLocation {
     const cwd = this.client.flags.cwd.join();
     return {
       sourceText: cwd,
@@ -232,7 +236,7 @@ export default class MasterRequest {
     };
   }
 
-  getDiagnosticPointerFromFlags(target: SerializeCLITarget): DiagnosticPointer {
+  getDiagnosticPointerFromFlags(target: SerializeCLITarget): DiagnosticLocation {
     const {query} = this;
     return serializeCLIFlags({
       prefix: `rome ${query.commandName}`,
@@ -280,7 +284,7 @@ export default class MasterRequest {
       & MemoryFSGlobOptions
       & {
         disabledDiagnosticCategory?: DiagnosticCategory;
-        advice?: PartialDiagnosticAdvice;
+        advice?: DiagnosticAdvice;
         configCategory?: string;
         verb?: string;
         noun?: string;
@@ -297,7 +301,7 @@ export default class MasterRequest {
     const rawArgs = [...this.query.args];
     const resolvedArgs: Array<{
       path: AbsoluteFilePath;
-      pointer: DiagnosticPointer;
+      pointer: DiagnosticLocation;
       project: ProjectDefinition;
     }> = [];
     if (rawArgs.length === 0) {
@@ -353,8 +357,9 @@ export default class MasterRequest {
 
       let category: DiagnosticCategory = 'args/fileNotFound';
 
-      let advice: PartialDiagnosticAdvice = globOpts.advice === undefined
-        ? [] : [...globOpts.advice];
+      let advice: DiagnosticAdvice = globOpts.advice === undefined ? [] : [
+        ...globOpts.advice,
+      ];
 
       // Hint if `path` failed `globOpts.test`
       if (globOpts.getProjectEnabled !== undefined) {
@@ -392,12 +397,10 @@ export default class MasterRequest {
             const disabledPointer = testSource.value.getDiagnosticPointer(
               'value',
             );
-            if (disabledPointer !== undefined) {
-              advice.push({
-                type: 'frame',
-                ...disabledPointer,
-              });
-            }
+            advice.push({
+              type: 'frame',
+              location: disabledPointer,
+            });
           }
         }
       }
@@ -431,28 +434,29 @@ export default class MasterRequest {
               'value',
             );
 
-            if (ignorePointer !== undefined) {
-              advice.push({
-                type: 'log',
-                category: 'info',
-                message: 'Ignore patterns were defined here',
-              });
+            advice.push({
+              type: 'log',
+              category: 'info',
+              message: 'Ignore patterns were defined here',
+            });
 
-              advice.push({
-                type: 'frame',
-                ...ignorePointer,
-              });
-            }
+            advice.push({
+              type: 'frame',
+              location: ignorePointer,
+            });
           }
         }
       }
 
       throw createSingleDiagnosticError({
-        ...pointer,
-        category,
-        message: globOpts.noun === undefined
-          ? 'No files found' : `No files to ${globOpts.noun} found`,
-        advice,
+        location: pointer,
+        description: {
+          category,
+          message: createBlessedDiagnosticMessage(globOpts.noun === undefined
+            ? 'No files found' : `No files to ${globOpts.noun} found`
+          ),
+          advice,
+        },
       });
     }
 

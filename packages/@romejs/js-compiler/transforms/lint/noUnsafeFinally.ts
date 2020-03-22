@@ -7,6 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noUnsafeFinally',
@@ -22,8 +23,7 @@ export default {
           'ContinueStatement' || statement.type === 'BreakStatement' ||
           statement.type === 'ReturnStatement') {
             context.addNodeDiagnostic(statement, {
-              category: 'lint/noUnsafeFinally',
-              message: `Unsafe usage of ${statement.type}.`,
+              description: descriptions.LINT.NO_UNSAFE_FINALLY(statement.type),
             });
           }
         }

@@ -6,7 +6,7 @@
  */
 
 import {CheckProvider} from '../types';
-import {PartialDiagnostics, PartialDiagnosticAdvice} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticAdvice, descriptions} from '@romejs/diagnostics';
 import {Program} from '@romejs/js-ast';
 import Hub from '../Hub';
 import E from '../types/errors/E';
@@ -21,7 +21,7 @@ export default async function check(
     project: TransformProjectDefinition;
     provider: CheckProvider;
   },
-): Promise<PartialDiagnostics> {
+): Promise<Diagnostics> {
   const hub = await buildGraph({
     ast: opts.ast,
     connected: true,
@@ -36,7 +36,7 @@ function isError(t: undefined | T): boolean {
   return t !== undefined && t instanceof E;
 }
 
-function resolveGraph(hub: Hub): PartialDiagnostics {
+function resolveGraph(hub: Hub): Diagnostics {
   const {graph, utils, context} = hub;
 
   // we track caught errors here as if a normal type returns a error in it's reduce() method
@@ -61,20 +61,14 @@ function resolveGraph(hub: Hub): PartialDiagnostics {
         caughtErrors.add(reduced);
       }
 
-      const {
-        category,
-        lowerTarget,
-        upperTarget,
-        advice: rawAdvice,
-        message,
-      } = reduced.getError();
+      let {description, lowerTarget, upperTarget} = reduced.getError();
 
       // ignore errors inside
       if (isError(lowerTarget) || isError(upperTarget)) {
         continue;
       }
 
-      let advice: PartialDiagnosticAdvice = [];
+      let advice: DiagnosticAdvice = [];
 
       if (upperTarget !== undefined) {
         const marker = upperTarget && !(upperTarget instanceof
@@ -90,22 +84,23 @@ function resolveGraph(hub: Hub): PartialDiagnostics {
         } else if (originLoc !== undefined) {
           advice.push({
             type: 'frame',
-            filename: originLoc.filename,
-            start: originLoc.start,
-            end: originLoc.end,
+            location: {
+              filename: originLoc.filename,
+              start: originLoc.start,
+              end: originLoc.end,
+            },
             marker,
           });
         }
       }
 
-      if (rawAdvice !== undefined) {
-        advice = advice.concat(rawAdvice);
-      }
+      description = {
+        ...description,
+        advice: [...advice, ...(description.advice || [])],
+      };
 
       context.addNodeDiagnostic(lowerTarget.originNode, {
-        category,
-        message,
-        advice,
+        description,
         marker: lowerTarget && !(lowerTarget instanceof reduced.constructor)
           ? utils.humanize(lowerTarget) : undefined,
       });
@@ -127,36 +122,11 @@ function resolveGraph(hub: Hub): PartialDiagnostics {
           continue;
         }
 
-        const advice: PartialDiagnosticAdvice = [
-          {
-            type: 'log',
-            category: 'error',
-            message: `This type is incompatible with expected type of`,
-          },
-        ];
-
-        const {originLoc} = upper;
-        if (originLoc === undefined) {
-          advice.push({
-            type: 'log',
-            category: 'info',
-            message: utils.humanize(upper),
-          });
-        } else {
-          advice.push({
-            type: 'frame',
-            filename: originLoc.filename,
-            start: originLoc.start,
-            end: originLoc.end,
-            marker: utils.humanize(upper),
-          });
-        }
-
         context.addNodeDiagnostic(compatibility.lower.originNode, {
-          category: 'typeCheck/incompatible',
-          message: 'Type incompatibility found',
+          description: descriptions.TYPE_CHECK.INCOMPATIBILITY(utils.humanize(
+            upper,
+          ), upper.originLoc),
           marker: utils.humanize(compatibility.lower),
-          advice,
         });
       }
     }

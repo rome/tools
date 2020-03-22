@@ -8,10 +8,9 @@
 import {MasterRequest} from '@romejs/core';
 import {createMasterCommand} from '../../commands';
 import {commandCategories} from '../../commands';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
+import {DiagnosticsProcessor, descriptions} from '@romejs/diagnostics';
 import {FORMATTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
 import {Consumer} from '@romejs/consume';
-import stringDiff from '@romejs/string-diff';
 
 type Flags = {write: boolean};
 
@@ -88,21 +87,14 @@ export default createMasterCommand({
         }
 
         if (!flags.write && res.formatted !== res.original) {
-          // TODO abstract this and the pendingFixes diagnostic in WorkerAPI
           diagnosticsProcessor.addDiagnostic({
-            category: 'lint/pendingFixes',
-            filename: path.join(),
-            message: 'Pending fixes',
-            advice: [
-              {
-                type: 'diff',
-                diff: stringDiff(res.original, res.formatted),
-              },
-              {
-                type: 'code',
-                code: res.formatted,
-              },
-            ],
+            description: descriptions.LINT.PENDING_FIXES(
+              res.original,
+              res.formatted,
+            ),
+            location: {
+              filename: path.join(),
+            },
           });
         } else {
           //await writeFile(path, res.formatted);

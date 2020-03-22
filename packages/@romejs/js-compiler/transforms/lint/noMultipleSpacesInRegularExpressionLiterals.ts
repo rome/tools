@@ -15,6 +15,7 @@ import {
 } from '@romejs/js-ast';
 import {Path, Context} from '@romejs/js-compiler';
 import {extractSourceLocationRangeFromNodes} from '@romejs/parser-core';
+import {descriptions} from '@romejs/diagnostics';
 
 function isSpaceChar(
   node: undefined | AnyRegExpBodyItem,
@@ -49,16 +50,9 @@ function checkRegex(
     }
 
     context.addLocDiagnostic(extractSourceLocationRangeFromNodes(spaceNodes), {
-      fixable: true,
-      category: 'lint/noMultipleSpacesInRegularExpressionLiterals',
-      message: 'Unclear multiple spaces in regular expression',
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          message: `It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {${spaceNodes.length}}/`,
-        },
-      ],
+      description: descriptions.LINT.NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(
+        spaceNodes.length,
+      ),
     });
 
     const quantifiedSpace: RegExpQuantified = regExpQuantified.create({

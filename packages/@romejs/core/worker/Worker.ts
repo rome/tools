@@ -22,7 +22,7 @@ import {Reporter} from '@romejs/cli-reporter';
 import setupGlobalErrorHandlers from '../common/utils/setupGlobalErrorHandlers';
 import {UserConfig, loadUserConfig} from '../common/userConfig';
 import {hydrateJSONProjectConfig} from '@romejs/project';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics} from '@romejs/diagnostics';
 import {
   createUnknownFilePath,
   AbsoluteFilePath,
@@ -267,7 +267,7 @@ export default class Worker {
     };
   }
 
-  populateDiagnosticsMtime(diagnostics: PartialDiagnostics): PartialDiagnostics {
+  populateDiagnosticsMtime(diagnostics: Diagnostics): Diagnostics {
     return diagnostics;
   }
 

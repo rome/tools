@@ -7,7 +7,7 @@
 
 import {AnyNode, RegExpGroupCapture} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
-import {PartialDiagnosticAdvice} from '@romejs/diagnostics';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noDuplicateGroupNamesInRegularExpressions',
@@ -40,34 +40,11 @@ export default {
 
         const firstUsage = usages[0];
 
-        const duplicateAdvice: PartialDiagnosticAdvice = usages.slice(1).map((
-          node,
-        ) => {
-          if (node.loc === undefined) {
-            return {
-              type: 'log',
-              category: 'warn',
-              message: 'Unable to find location',
-            };
-          } else {
-            return {
-              type: 'frame',
-              ...node.loc,
-            };
-          }
-        });
-
         context.addNodeDiagnostic(firstUsage, {
-          category: 'lint/noDuplicateGroupNamesInRegularExpressions',
-          message: `Duplicate group name <emphasis>${name}</emphasis> in regular expression`,
-          advice: [
-            {
-              type: 'log',
-              category: 'info',
-              message: 'Defined again here',
-            },
-            ...duplicateAdvice,
-          ],
+          description: descriptions.LINT.DUPLICATE_REGEX_GROUP_NAME(
+            name,
+            usages.slice(1).map((node) => node.loc),
+          ),
         });
       }
     }

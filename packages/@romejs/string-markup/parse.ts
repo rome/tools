@@ -21,6 +21,7 @@ import {
   TagName,
 } from './types';
 import {inc, Number0, add, get0} from '@romejs/ob1';
+import {descriptions} from '@romejs/diagnostics';
 
 const globalAttributes: Array<string> = ['emphasis', 'dim'];
 
@@ -147,7 +148,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 
           if (unclosed) {
             throw this.unexpected({
-              message: 'Unclosed string',
+              description: descriptions.STRING_MARKUP.UNCLOSED_STRING,
               start: this.getPositionFromIndex(stringValueEnd),
             });
           }
@@ -202,7 +203,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
       const allowedAttributes = tags.get(rawName);
       if (allowedAttributes === undefined) {
         throw this.unexpected({
-          message: `Unknown tag name <emphasis>${rawName}</emphasis>`,
+          description: descriptions.STRING_MARKUP.UNKNOWN_TAG_NAME(rawName),
           start: this.getPositionFromIndex(nameToken.start),
         });
       }
@@ -223,7 +224,10 @@ const createStringMarkupParser = createParser((ParserCore) =>
 
           if (!allowedAttributes.includes(key) && !globalAttributes.includes(key)) {
             throw this.unexpected({
-              message: `${key} is not a valid attribute name for <${tagName}>`,
+              description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
+                tagName,
+                key,
+              ),
             });
           }
 
@@ -250,7 +254,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
           selfClosing = true;
         } else {
           throw this.unexpected({
-            message: 'Expected attribute name',
+            description: descriptions.STRING_MARKUP.EXPECTED_ATTRIBUTE_NAME,
           });
         }
       }
@@ -266,7 +270,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 
         if (this.matchToken('EOF')) {
           throw this.unexpected({
-            message: `Unclosed ${tagName} tag`,
+            description: descriptions.STRING_MARKUP.UNCLOSED_TAG(tagName),
           });
         } else {
           this.expectToken('Less');
@@ -276,14 +280,17 @@ const createStringMarkupParser = createParser((ParserCore) =>
           if (name.type === 'Word') {
             if (name.value !== tagName) {
               throw this.unexpected({
-                message: `Expected to close ${tagName} but found ${name.value}`,
+                description: descriptions.STRING_MARKUP.INCORRECT_CLOSING_TAG_NAME(
+                  tagName,
+                  name.value,
+                ),
               });
             }
 
             this.nextToken();
           } else {
             throw this.unexpected({
-              message: 'Expected closing tag name',
+              description: descriptions.STRING_MARKUP.EXPECTED_CLOSING_TAG_NAME,
             });
           }
 
@@ -312,7 +319,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
         return this.parseTag();
       } else {
         throw this.unexpected({
-          message: 'Unknown child start',
+          description: descriptions.STRING_MARKUP.UNKNOWN_START,
         });
       }
     }
