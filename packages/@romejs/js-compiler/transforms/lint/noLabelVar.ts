@@ -22,9 +22,7 @@ export default {
       );
 
       if (isDefined) {
-        path.context.addNodeDiagnostic(node, {
-          description: descriptions.LINT.NO_LABEL_VAR,
-        });
+        path.context.addNodeDiagnostic(node, descriptions.LINT.NO_LABEL_VAR);
       }
     }
 

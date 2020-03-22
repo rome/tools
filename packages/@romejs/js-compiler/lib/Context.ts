@@ -21,7 +21,7 @@ import {
   Diagnostic,
   Diagnostics,
   DiagnosticOrigin,
-  DiagnosticLocation,
+  DiagnosticDescription,
 } from '@romejs/diagnostics';
 import Record from './Record';
 import {RootScope} from '../scope/Scope';
@@ -37,9 +37,7 @@ export type ContextArg = {
 };
 
 // We only want a Context to create diagnostics that belong to itself
-type ContextDiagnostic =
-  & Omit<Diagnostic, 'location'>
-  & {location?: Omit<DiagnosticLocation, 'filename' | 'mtime'>};
+type ContextDiagnostic = Omit<Diagnostic, 'location' | 'description'>;
 
 export default class Context {
   constructor(arg: ContextArg) {
@@ -117,7 +115,11 @@ export default class Context {
     this.diagnostics = [...this.diagnostics, ...diagnostics];
   }
 
-  addLocDiagnostic(loc: undefined | SourceLocation, diag: ContextDiagnostic) {
+  addLocDiagnostic(
+    loc: undefined | SourceLocation,
+    description: DiagnosticDescription,
+    diag: ContextDiagnostic = {},
+  ) {
     let origins: Array<DiagnosticOrigin> = [];
     if (this.origin !== undefined) {
       origins.push(this.origin);
@@ -132,17 +134,14 @@ export default class Context {
       );
     }
 
-    const location: DiagnosticLocation = diag.location === undefined
-      ? {} : diag.location;
-
     this.diagnostics.push({
       ...diag,
+      description,
       location: {
-        ...location,
         mtime: this.mtime,
         filename: this.filename,
-        start: loc === undefined ? location.start : loc.start,
-        end: loc === undefined ? location.end : loc.end,
+        start: loc === undefined ? undefined : loc.start,
+        end: loc === undefined ? undefined : loc.end,
         language: 'js',
         sourceType: this.sourceType,
       },
@@ -152,17 +151,24 @@ export default class Context {
 
   addNodeDiagnostic(
     node: undefined | {loc?: SourceLocation},
-    diag: ContextDiagnostic,
+    description: DiagnosticDescription,
+    diag: ContextDiagnostic = {},
   ) {
-    return this.addLocDiagnostic(node === undefined ? undefined : node.loc, diag);
+    return this.addLocDiagnostic(
+      node === undefined ? undefined : node.loc,
+      description,
+      diag,
+    );
   }
 
   addNodesRangeDiagnostic(
     nodes: Array<{loc?: SourceLocation}>,
-    diag: ContextDiagnostic,
+    description: DiagnosticDescription,
+    diag: ContextDiagnostic = {},
   ) {
     return this.addLocDiagnostic(
       extractSourceLocationRangeFromNodes(nodes),
+      description,
       diag,
     );
   }

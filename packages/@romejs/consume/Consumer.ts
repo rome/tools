@@ -189,7 +189,7 @@ export default class Consumer {
     }
   }
 
-  getDiagnosticPointer(
+  getDiagnosticLocation(
     target: ConsumeSourceLocationRequestTarget = 'all',
   ): DiagnosticLocation {
     const {getDiagnosticPointer} = this.context;
@@ -205,9 +205,9 @@ export default class Consumer {
   }
 
   getLocation(target?: ConsumeSourceLocationRequestTarget): SourceLocation {
-    const pointer = this.getDiagnosticPointer(target);
-    if (pointer === undefined || pointer.start === undefined || pointer.end ===
-    undefined) {
+    const location = this.getDiagnosticLocation(target);
+    if (location === undefined || location.start === undefined ||
+    location.end === undefined) {
       return {
         filename: this.filename,
         start: UNKNOWN_POSITION,
@@ -215,9 +215,9 @@ export default class Consumer {
       };
     } else {
       return {
-        filename: pointer.filename,
-        start: pointer.start,
-        end: pointer.end,
+        filename: location.filename,
+        start: location.start,
+        end: location.end,
       };
     }
   }
@@ -276,7 +276,7 @@ export default class Consumer {
   }
 
   wasInSource() {
-    return this.getDiagnosticPointer() !== undefined;
+    return this.getDiagnosticLocation() !== undefined;
   }
 
   generateUnexpectedMessage(msg: string, opts: UnexpectedConsumerOptions): string {
@@ -305,11 +305,10 @@ export default class Consumer {
 
   unexpected(msg: string, opts: UnexpectedConsumerOptions = {}): DiagnosticsError {
     const {target = 'value'} = opts;
-    let loc: undefined | DiagnosticLocation = opts.loc;
 
     const {filename} = this;
-    let pointer = this.getDiagnosticPointer(target);
-    const fromSource = pointer !== undefined;
+    let location = this.getDiagnosticLocation(target);
+    const fromSource = location !== undefined;
 
     msg = this.generateUnexpectedMessage(msg, opts);
 
@@ -328,9 +327,9 @@ export default class Consumer {
       // Go up the consumer tree and take the position from the first consumer found in the source
       let consumer: undefined | Consumer = this;
       do {
-        const possiblePointer = consumer.getDiagnosticPointer(target);
-        if (possiblePointer !== undefined) {
-          pointer = possiblePointer;
+        const possibleLocation = consumer.getDiagnosticLocation(target);
+        if (possibleLocation !== undefined) {
+          location = possibleLocation;
           break;
         }
         consumer = consumer.parent;
@@ -355,16 +354,12 @@ export default class Consumer {
       }
     }
 
-    if (pointer === undefined) {
-      throw new Error(msg);
+    if (opts.loc !== undefined) {
+      location = opts.loc;
     }
 
-    if (loc === undefined) {
-      loc = {
-        filename: pointer.filename,
-        start: pointer.start,
-        end: pointer.end,
-      };
+    if (location === undefined) {
+      throw new Error(msg);
     }
 
     const diagnostic: Diagnostic = {
@@ -375,11 +370,8 @@ export default class Consumer {
         advice,
       },
       location: {
-        ...loc,
+        ...location,
         filename: this.filename,
-        language: pointer.language,
-        mtime: pointer.mtime,
-        sourceText: pointer.sourceText,
       },
     };
 

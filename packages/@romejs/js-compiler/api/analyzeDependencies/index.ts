@@ -231,9 +231,10 @@ export default async function analyzeDependencies(
         });*/}
     } else if (record instanceof CJSExportRecord) {
       if (moduleType === 'es') {
-        context.addNodeDiagnostic(record.node, {
-          description: descriptions.ANALYZE_DEPENDENCIES.CJS_EXPORT_IN_ES,
-        });
+        context.addNodeDiagnostic(
+          record.node,
+          descriptions.ANALYZE_DEPENDENCIES.CJS_EXPORT_IN_ES,
+        );
       }
     }
   }

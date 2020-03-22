@@ -58,9 +58,7 @@ export default {
         node.argument.type === 'UnaryExpression' && node.argument.operator ===
       '!' || node.type === 'CallExpression' && node.callee.type ===
       'ReferenceIdentifier' && node.callee.name === 'Boolean') {
-        context.addNodeDiagnostic(node, {
-          description: descriptions.LINT.NO_EXTRA_BOOLEAN_CAST,
-        });
+        context.addNodeDiagnostic(node, descriptions.LINT.NO_EXTRA_BOOLEAN_CAST);
       }
     }
 

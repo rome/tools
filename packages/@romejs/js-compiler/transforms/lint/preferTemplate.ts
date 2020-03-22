@@ -17,9 +17,7 @@ export default {
     if (node.type === 'BinaryExpression' && node.operator === '+' &&
       (node.left.type === 'StringLiteral' && !node.left.value.includes('`') ||
       node.right.type === 'StringLiteral' && !node.right.value.includes('`'))) {
-      path.context.addNodeDiagnostic(node, {
-        description: descriptions.LINT.PREFER_TEMPLATE,
-      });
+      path.context.addNodeDiagnostic(node, descriptions.LINT.PREFER_TEMPLATE);
     }
 
     return node;

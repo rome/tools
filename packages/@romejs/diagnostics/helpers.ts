@@ -100,9 +100,9 @@ export function buildSuggestionAdvice(
 }
 
 export function buildDuplicateLocationAdvice(
-  pointers: Array<undefined | DiagnosticLocation>,
+  locations: Array<undefined | DiagnosticLocation>,
 ): DiagnosticAdvice {
-  const locationAdvice: DiagnosticAdvice = pointers.map((location) => {
+  const locationAdvice: DiagnosticAdvice = locations.map((location) => {
     if (location === undefined) {
       return {
         type: 'log',

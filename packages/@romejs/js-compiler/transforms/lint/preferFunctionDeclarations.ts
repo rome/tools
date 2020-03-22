@@ -88,9 +88,10 @@ const hook = createHook<State, Arg, ThisExpression>({
         throw new Error('Invalid declarator put into state');
       }
 
-      path.context.addNodeDiagnostic(init, {
-        description: descriptions.LINT.PREFER_FUNCTION_DECLARATIONS,
-      });
+      path.context.addNodeDiagnostic(
+        init,
+        descriptions.LINT.PREFER_FUNCTION_DECLARATIONS,
+      );
 
       // Convert arrow function body if necessary
       const body = init.body.type === 'BlockStatement'

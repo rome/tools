@@ -64,9 +64,10 @@ const provider = createHook<State, undefined, AnyNode>({
       const binding = path.scope.getBinding(name);
 
       if (used === false && binding !== undefined) {
-        path.context.addNodeDiagnostic(binding.node, {
-          description: descriptions.LINT.UNUSED_VARIABLES(binding.kind, name),
-        });
+        path.context.addNodeDiagnostic(
+          binding.node,
+          descriptions.LINT.UNUSED_VARIABLES(binding.kind, name),
+        );
       }
     }
 

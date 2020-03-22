@@ -211,9 +211,10 @@ function transformClass(
   let constructorMethod = undefined;
   for (const bodyNode of newNode.meta.body) {
     if (bodyNode.type !== 'ClassMethod') {
-      context.addNodeDiagnostic(bodyNode, {
-        description: descriptions.COMPILER.CLASSES_UNSUPPORTED,
-      });
+      context.addNodeDiagnostic(
+        bodyNode,
+        descriptions.COMPILER.CLASSES_UNSUPPORTED,
+      );
       continue;
     }
 

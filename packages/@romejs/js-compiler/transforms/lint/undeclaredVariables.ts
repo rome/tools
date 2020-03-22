@@ -54,9 +54,10 @@ export default {
       NODE_VARIABLES.includes(name);
 
       if (!isDefined) {
-        path.context.addNodeDiagnostic(node, {
-          description: descriptions.LINT.UNDECLARED_VARIABLES(name),
-        });
+        path.context.addNodeDiagnostic(
+          node,
+          descriptions.LINT.UNDECLARED_VARIABLES(name),
+        );
       }
     }
 

@@ -303,8 +303,8 @@ export default class Bundler {
       const isBinShorthand = typeof binConsumer.asUnknown() === 'string';
 
       for (const [binName, relative] of manifest.bin) {
-        const pointer =
-          (isBinShorthand ? binConsumer : binConsumer.get(binName)).getDiagnosticPointer(
+        const location =
+          (isBinShorthand ? binConsumer : binConsumer.get(binName)).getDiagnosticLocation(
             'inner-value',
           );
 
@@ -313,7 +313,7 @@ export default class Bundler {
           origin: manifestDef.folder,
           source: createUnknownFilePath(relative).toExplicitRelative(),
         }, {
-          pointer,
+          location,
         });
 
         const res = await createBundle(absolute.path, {

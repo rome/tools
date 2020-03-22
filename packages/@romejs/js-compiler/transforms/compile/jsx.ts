@@ -271,9 +271,7 @@ export default {
 
       if (jsxNamespacedName.is(node.name)) {
         // TODO better handle this
-        context.addNodeDiagnostic(type, {
-          description: descriptions.COMPILER.JSX_NOT_XML,
-        });
+        context.addNodeDiagnostic(type, descriptions.COMPILER.JSX_NOT_XML);
       }
 
       let attribs: AnyExpression;

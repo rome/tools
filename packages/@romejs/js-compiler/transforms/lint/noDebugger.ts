@@ -15,10 +15,7 @@ export default {
     const {node} = path;
 
     if (node.type === 'DebuggerStatement') {
-      path.context.addNodeDiagnostic(node, {
-        description: descriptions.LINT.NO_DEBUGGER,
-      });
-
+      path.context.addNodeDiagnostic(node, descriptions.LINT.NO_DEBUGGER);
       return REDUCE_REMOVE;
     }
 

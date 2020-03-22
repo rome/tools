@@ -44,9 +44,10 @@ export default {
 
         if (key !== undefined) {
           if (previousKeys.has(key)) {
-            path.context.addNodeDiagnostic(prop, {
-              description: descriptions.LINT.NO_DUPLICATE_KEYS(key),
-            });
+            path.context.addNodeDiagnostic(
+              prop,
+              descriptions.LINT.NO_DUPLICATE_KEYS(key),
+            );
           }
 
           previousKeys.add(key);

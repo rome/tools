@@ -14,9 +14,7 @@ export default {
     const {context, node} = path;
 
     if (node.type === 'RegExpCharSet' && node.body.length === 0 && !node.invert) {
-      context.addNodeDiagnostic(node, {
-        description: descriptions.LINT.NO_EMPTY_CHAR_SET,
-      });
+      context.addNodeDiagnostic(node, descriptions.LINT.NO_EMPTY_CHAR_SET);
       return REDUCE_REMOVE;
     }
 

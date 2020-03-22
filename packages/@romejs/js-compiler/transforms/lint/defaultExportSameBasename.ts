@@ -64,14 +64,15 @@ export default {
           if (basename !== id.name) {
             const correctFilename = id.name + context.path.getExtensions();
 
-            context.addNodeDiagnostic(id, {
-              description: descriptions.LINT.DEFAULT_EXPORT_SAME_BASENAME({
+            context.addNodeDiagnostic(
+              id,
+              descriptions.LINT.DEFAULT_EXPORT_SAME_BASENAME({
                 defaultName: id.name,
                 defaultType: type,
                 actualFilename: basename,
                 correctFilename,
               }),
-            });
+            );
 
             return renameBindings(path, new Map([[id.name, basename]]));
           }

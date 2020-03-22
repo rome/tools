@@ -311,7 +311,7 @@ export default class DependencyGraph {
           origin,
           source: createUnknownFilePath(source),
         }, dep.loc === undefined ? undefined : {
-          pointer: {
+          location: {
             sourceText: undefined,
             ...dep.loc,
             language: 'js',

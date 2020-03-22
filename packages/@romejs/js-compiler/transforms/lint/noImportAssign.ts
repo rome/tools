@@ -32,9 +32,7 @@ export default {
       const binding = scope.getBinding(node.name);
       if (binding !== undefined && binding.kind === 'import') path.context.addNodeDiagnostic(
         node,
-        {
-          description: descriptions.LINT.NO_IMPORT_ASSIGN(node.name),
-        },
+        descriptions.LINT.NO_IMPORT_ASSIGN(node.name),
       );
     }
 

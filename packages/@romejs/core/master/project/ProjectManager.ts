@@ -591,7 +591,7 @@ export default class ProjectManager {
             name,
             existingPackage.path.join(),
           ),
-          location: def.consumer.get('name').getDiagnosticPointer('inner-value'),
+          location: def.consumer.get('name').getDiagnosticLocation('inner-value'),
         });
         return;
       }
@@ -719,7 +719,7 @@ export default class ProjectManager {
 
   async assertProject(
     path: AbsoluteFilePath,
-    pointer?: DiagnosticLocation,
+    location?: DiagnosticLocation,
   ): Promise<ProjectDefinition> {
     // We won't recurse up and check a parent project if we've already visited it
     const syncProject = this.findProjectExisting(path);
@@ -736,14 +736,14 @@ export default class ProjectManager {
       return project;
     }
 
-    if (pointer === undefined) {
+    if (location === undefined) {
       throw new Error(
         `Couldn't find a project. Checked ${ROME_CONFIG_FILENAMES.join(' or ')} for ${path.join()}`,
       );
     }
 
     throw createSingleDiagnosticError({
-      location: pointer,
+      location,
       description: descriptions.PROJECT_MANAGER.NOT_FOUND,
     });
   }

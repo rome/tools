@@ -21,9 +21,10 @@ export default {
       for (const param of node.params) {
         for (const {name} of getBindingIdentifiers(param)) {
           if (uniqueIdentifiers.has(name)) {
-            context.addNodeDiagnostic(param, {
-              description: descriptions.LINT.NO_DUPE_ARGS(name),
-            });
+            context.addNodeDiagnostic(
+              param,
+              descriptions.LINT.NO_DUPE_ARGS(name),
+            );
           }
 
           uniqueIdentifiers.add(name);

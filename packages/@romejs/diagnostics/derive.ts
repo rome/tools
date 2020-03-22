@@ -90,11 +90,11 @@ export function deriveRootAdviceFromDiagnostic(
   header: string;
 } {
   const advice: DiagnosticAdvice = [];
-  const {description: metadata, location: pointer} = diag;
+  const {description: metadata, location} = diag;
 
   let header = getDiagnosticHeader({
-    start: pointer.start,
-    filename: pointer.filename,
+    start: location.start,
+    filename: location.filename,
   });
 
   if (diag.label !== undefined) {
@@ -132,7 +132,7 @@ export function deriveRootAdviceFromDiagnostic(
   });
 
   if (opts.skipFrame === false) {
-    if (pointer.start !== undefined && pointer.end !== undefined) {
+    if (location.start !== undefined && location.end !== undefined) {
       advice.push({
         type: 'frame',
         location: diag.location,

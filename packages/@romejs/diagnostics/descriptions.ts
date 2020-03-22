@@ -396,12 +396,12 @@ export const descriptions = createMessages({
 
     DUPLICATE_REGEX_GROUP_NAME: (
       name: string,
-      pointers: Array<undefined | DiagnosticLocation>,
+      locations: Array<undefined | DiagnosticLocation>,
     ) =>
       ({
         category: 'lint/noDuplicateGroupNamesInRegularExpressions',
         message: `Duplicate group name <emphasis>${name}</emphasis> in regular expression`,
-        advice: buildDuplicateLocationAdvice(pointers),
+        advice: buildDuplicateLocationAdvice(locations),
       }),
 
     DEFAULT_EXPORT_SAME_BASENAME: (

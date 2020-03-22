@@ -19,9 +19,10 @@ export default {
       node.arguments.length > 0 && (node.arguments[0].type ===
     'ArrowFunctionExpression' || node.arguments[0].type === 'FunctionExpression') &&
       node.arguments[0].head.async) {
-      context.addNodeDiagnostic(node.arguments[0], {
-        description: descriptions.LINT.NO_ASYNC_PROMISE_EXECUTOR,
-      });
+      context.addNodeDiagnostic(
+        node.arguments[0],
+        descriptions.LINT.NO_ASYNC_PROMISE_EXECUTOR,
+      );
     }
 
     return node;

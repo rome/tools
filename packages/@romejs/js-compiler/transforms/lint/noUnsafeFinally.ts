@@ -22,9 +22,10 @@ export default {
           if (statement.type === 'ThrowStatement' || statement.type ===
           'ContinueStatement' || statement.type === 'BreakStatement' ||
           statement.type === 'ReturnStatement') {
-            context.addNodeDiagnostic(statement, {
-              description: descriptions.LINT.NO_UNSAFE_FINALLY(statement.type),
-            });
+            context.addNodeDiagnostic(
+              statement,
+              descriptions.LINT.NO_UNSAFE_FINALLY(statement.type),
+            );
           }
         }
       }

@@ -40,12 +40,13 @@ export default {
 
         const firstUsage = usages[0];
 
-        context.addNodeDiagnostic(firstUsage, {
-          description: descriptions.LINT.DUPLICATE_REGEX_GROUP_NAME(
+        context.addNodeDiagnostic(
+          firstUsage,
+          descriptions.LINT.DUPLICATE_REGEX_GROUP_NAME(
             name,
             usages.slice(1).map((node) => node.loc),
           ),
-        });
+        );
       }
     }
     return node;

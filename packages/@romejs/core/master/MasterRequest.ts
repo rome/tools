@@ -124,10 +124,10 @@ export default class MasterRequest {
   }
 
   async assertClientCwdProject(): Promise<ProjectDefinition> {
-    const pointer = this.getDiagnosticPointerForClientCwd();
+    const location = this.getDiagnosticPointerForClientCwd();
     return this.master.projectManager.assertProject(
       this.client.flags.cwd,
-      pointer,
+      location,
     );
   }
 
@@ -203,7 +203,7 @@ export default class MasterRequest {
     target: SerializeCLITarget = {type: 'none'},
     advice?: DiagnosticAdvice,
   ) {
-    const pointer = this.getDiagnosticPointerFromFlags(target);
+    const location = this.getDiagnosticPointerFromFlags(target);
 
     const diag: Diagnostic = {
       description: {
@@ -212,7 +212,7 @@ export default class MasterRequest {
           ? 'args/invalid' : 'flags/invalid',
         advice,
       },
-      location: pointer,
+      location,
     };
 
     throw new MasterRequestInvalid(message, [diag]);
@@ -301,15 +301,15 @@ export default class MasterRequest {
     const rawArgs = [...this.query.args];
     const resolvedArgs: Array<{
       path: AbsoluteFilePath;
-      pointer: DiagnosticLocation;
+      location: DiagnosticLocation;
       project: ProjectDefinition;
     }> = [];
     if (rawArgs.length === 0) {
-      const pointer = this.getDiagnosticPointerForClientCwd();
+      const location = this.getDiagnosticPointerForClientCwd();
       const project = await this.assertClientCwdProject();
       resolvedArgs.push({
         path: project.folder,
-        pointer,
+        location,
         project,
       });
       projects.add(project);
@@ -317,7 +317,7 @@ export default class MasterRequest {
       for (let i = 0; i < rawArgs.length; i++) {
         const arg = rawArgs[i];
 
-        const pointer = this.getDiagnosticPointerFromFlags({
+        const location = this.getDiagnosticPointerFromFlags({
           type: 'arg',
           key: i,
         });
@@ -327,7 +327,7 @@ export default class MasterRequest {
           source: createUnknownFilePath(arg),
           requestedType: 'folder',
         }, {
-          pointer,
+          location,
         });
 
         const project = this.master.projectManager.assertProjectExisting(
@@ -338,14 +338,14 @@ export default class MasterRequest {
         resolvedArgs.push({
           project,
           path: resolved.path,
-          pointer,
+          location,
         });
       }
     }
 
     // Build up files
     const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-    for (const {path, pointer, project} of resolvedArgs) {
+    for (const {path, location, project} of resolvedArgs) {
       const matches = master.memoryFs.glob(path, globOpts);
 
       if (matches.size > 0) {
@@ -394,7 +394,7 @@ export default class MasterRequest {
               message: `${explanationPrefix} as it's explicitly disabled in this project config`,
             });
 
-            const disabledPointer = testSource.value.getDiagnosticPointer(
+            const disabledPointer = testSource.value.getDiagnosticLocation(
               'value',
             );
             advice.push({
@@ -430,7 +430,7 @@ export default class MasterRequest {
           });
 
           if (ignore.source !== undefined && ignore.source.value !== undefined) {
-            const ignorePointer = ignore.source.value.getDiagnosticPointer(
+            const ignorePointer = ignore.source.value.getDiagnosticLocation(
               'value',
             );
 
@@ -449,7 +449,7 @@ export default class MasterRequest {
       }
 
       throw createSingleDiagnosticError({
-        location: pointer,
+        location,
         description: {
           category,
           message: createBlessedDiagnosticMessage(globOpts.noun === undefined

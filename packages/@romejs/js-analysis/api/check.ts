@@ -99,8 +99,7 @@ function resolveGraph(hub: Hub): Diagnostics {
         advice: [...advice, ...(description.advice || [])],
       };
 
-      context.addNodeDiagnostic(lowerTarget.originNode, {
-        description,
+      context.addNodeDiagnostic(lowerTarget.originNode, description, {
         marker: lowerTarget && !(lowerTarget instanceof reduced.constructor)
           ? utils.humanize(lowerTarget) : undefined,
       });
@@ -122,12 +121,16 @@ function resolveGraph(hub: Hub): Diagnostics {
           continue;
         }
 
-        context.addNodeDiagnostic(compatibility.lower.originNode, {
-          description: descriptions.TYPE_CHECK.INCOMPATIBILITY(utils.humanize(
-            upper,
-          ), upper.originLoc),
-          marker: utils.humanize(compatibility.lower),
-        });
+        context.addNodeDiagnostic(
+          compatibility.lower.originNode,
+          descriptions.TYPE_CHECK.INCOMPATIBILITY(
+            utils.humanize(upper),
+            upper.originLoc,
+          ),
+          {
+            marker: utils.humanize(compatibility.lower),
+          },
+        );
       }
     }
   }

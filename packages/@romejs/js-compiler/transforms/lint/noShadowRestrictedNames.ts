@@ -20,9 +20,10 @@ export default {
     if (scope.node === node) {
       for (const [name, binding] of scope.getOwnBindings()) {
         if (restrictedNames.has(name)) {
-          context.addNodeDiagnostic(binding.node, {
-            description: descriptions.LINT.NO_SHADOW_RESTRICTED_NAMES(name),
-          });
+          context.addNodeDiagnostic(
+            binding.node,
+            descriptions.LINT.NO_SHADOW_RESTRICTED_NAMES(name),
+          );
         }
       }
     }

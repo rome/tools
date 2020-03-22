@@ -104,7 +104,7 @@ export type ResolverQuerySource =
   | undefined
   | {
     source?: string;
-    pointer?: DiagnosticLocation;
+    location?: DiagnosticLocation;
   };
 
 type ResolverQueryResponseFoundType =
@@ -199,12 +199,12 @@ function attachExportAliasIfUnresolved(
     return res;
   }
 
-  const pointer = alias.key.getDiagnosticPointer('value');
+  const location = alias.key.getDiagnosticLocation('value');
 
   return {
     ...res,
-    source: pointer === undefined ? undefined : {
-      pointer,
+    source: location === undefined ? undefined : {
+      location,
       source: alias.value.join(),
     },
   };

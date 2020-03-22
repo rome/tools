@@ -19,9 +19,10 @@ export default {
       node.kind === 'get') {
       for (const record of getCompletionRecords(node.body)) {
         if (record.type === 'INVALID') {
-          path.context.addNodeDiagnostic(record.node, {
-            description: descriptions.LINT.GETTER_RETURN(record.description),
-          });
+          path.context.addNodeDiagnostic(
+            record.node,
+            descriptions.LINT.GETTER_RETURN(record.description),
+          );
         }
       }
     }

@@ -13,7 +13,6 @@ import {
   AnyHookDescriptor,
   HookDescriptor,
 } from '../api/createHook';
-import {Diagnostic} from '@romejs/diagnostics';
 import reduce from '../methods/reduce';
 import {TransformExitResult} from '../types';
 
@@ -255,9 +254,5 @@ export default class Path {
       this.context,
       {...this.getPathOptions(), ...opts},
     );
-  }
-
-  addDiagnostic(opts: Diagnostic) {
-    return this.context.addNodeDiagnostic(this.node, opts);
   }
 }

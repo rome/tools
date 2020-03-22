@@ -15,9 +15,7 @@ export default {
     const {context, node: declaration} = path;
 
     if (declaration.type === 'VariableDeclaration' && declaration.kind === 'var') {
-      context.addNodeDiagnostic(declaration, {
-        description: descriptions.LINT.NO_VAR,
-      });
+      context.addNodeDiagnostic(declaration, descriptions.LINT.NO_VAR);
     }
 
     return declaration;

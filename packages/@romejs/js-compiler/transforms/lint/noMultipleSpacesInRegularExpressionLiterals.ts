@@ -14,7 +14,6 @@ import {
   regExpQuantified,
 } from '@romejs/js-ast';
 import {Path, Context} from '@romejs/js-compiler';
-import {extractSourceLocationRangeFromNodes} from '@romejs/parser-core';
 import {descriptions} from '@romejs/diagnostics';
 
 function isSpaceChar(
@@ -49,11 +48,10 @@ function checkRegex(
       }
     }
 
-    context.addLocDiagnostic(extractSourceLocationRangeFromNodes(spaceNodes), {
-      description: descriptions.LINT.NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(
-        spaceNodes.length,
-      ),
-    });
+    context.addNodesRangeDiagnostic(
+      spaceNodes,
+      descriptions.LINT.NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(spaceNodes.length),
+    );
 
     const quantifiedSpace: RegExpQuantified = regExpQuantified.create({
       min: spaceNodes.length,

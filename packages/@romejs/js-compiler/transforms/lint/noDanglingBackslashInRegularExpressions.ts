@@ -19,9 +19,10 @@ export default {
       if (body) {
         const last = body[body.length - 1];
         if (last && last.type === 'RegExpCharacter' && !last.value) {
-          context.addNodeDiagnostic(last, {
-            description: descriptions.LINT.NO_DANGLING_BACKSLASH_IN_REGEX,
-          });
+          context.addNodeDiagnostic(
+            last,
+            descriptions.LINT.NO_DANGLING_BACKSLASH_IN_REGEX,
+          );
         }
       }
     }

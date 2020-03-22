@@ -16,9 +16,7 @@ export default {
     const {node} = path;
 
     if (node.type === 'ArrayExpression' && node.elements.includes(undefined)) {
-      path.context.addNodeDiagnostic(node, {
-        description: descriptions.LINT.SPARSE_ARRAY,
-      });
+      path.context.addNodeDiagnostic(node, descriptions.LINT.SPARSE_ARRAY);
 
       return arrayExpression.quick(node.elements.map((elem) =>
         elem === undefined

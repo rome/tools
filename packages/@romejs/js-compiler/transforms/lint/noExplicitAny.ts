@@ -15,9 +15,7 @@ export default {
     const {context, node} = path;
 
     if (node.type === 'AnyKeywordTypeAnnotation') {
-      context.addNodeDiagnostic(node, {
-        description: descriptions.LINT.NO_EXPLICIT_ANY,
-      });
+      context.addNodeDiagnostic(node, descriptions.LINT.NO_EXPLICIT_ANY);
     }
 
     return node;

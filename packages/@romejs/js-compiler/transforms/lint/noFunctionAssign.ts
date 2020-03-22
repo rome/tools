@@ -17,9 +17,7 @@ export default {
 
     if (node.type === 'AssignmentIdentifier' &&
       scope.getBinding(node.name) instanceof FunctionBinding) {
-      path.context.addNodeDiagnostic(node, {
-        description: descriptions.LINT.NO_FUNCTION_ASSIGN,
-      });
+      path.context.addNodeDiagnostic(node, descriptions.LINT.NO_FUNCTION_ASSIGN);
     }
 
     return node;

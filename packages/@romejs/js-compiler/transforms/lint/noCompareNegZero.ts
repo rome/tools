@@ -24,9 +24,10 @@ export default {
     if (node.type === 'BinaryExpression' && OPERATORS_TO_CHECK.includes(
       node.operator,
     ) && (isNegZero(node.left) || isNegZero(node.right))) {
-      path.context.addNodeDiagnostic(node, {
-        description: descriptions.LINT.NO_COMPARE_NEG_ZERO(node.operator),
-      });
+      path.context.addNodeDiagnostic(
+        node,
+        descriptions.LINT.NO_COMPARE_NEG_ZERO(node.operator),
+      );
       if (node.operator === '===') {
         return template.expression`Object.is(${node.left}, ${node.right})`;
       }

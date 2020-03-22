@@ -17,9 +17,10 @@ export default {
       const regex = /\$\{[^}]+\}/u;
 
       if (regex.test(node.value)) {
-        context.addNodeDiagnostic(node, {
-          description: descriptions.LINT.NO_TEMPLATE_CURLY_IN_STRING,
-        });
+        context.addNodeDiagnostic(
+          node,
+          descriptions.LINT.NO_TEMPLATE_CURLY_IN_STRING,
+        );
       }
     }
 

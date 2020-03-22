@@ -22,9 +22,10 @@ export default {
           const {test} = param;
 
           if (uniqueSwitchCases.has(test.value)) {
-            context.addNodeDiagnostic(param, {
-              description: descriptions.LINT.NO_DUPLICATE_CASE(test.value),
-            });
+            context.addNodeDiagnostic(
+              param,
+              descriptions.LINT.NO_DUPLICATE_CASE(test.value),
+            );
           }
 
           uniqueSwitchCases.add(test.value);
