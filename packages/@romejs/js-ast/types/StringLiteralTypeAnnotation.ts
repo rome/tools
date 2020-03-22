@@ -8,10 +8,12 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type StringLiteralTypeAnnotation = JSNodeBase & {
-  type: 'StringLiteralTypeAnnotation';
-  value: string;
-};
+export type StringLiteralTypeAnnotation =
+  & JSNodeBase
+  & {
+    type: 'StringLiteralTypeAnnotation';
+    value: string;
+  };
 
 export const stringLiteralTypeAnnotation = createBuilder<
   StringLiteralTypeAnnotation

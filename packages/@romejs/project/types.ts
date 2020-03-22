@@ -24,10 +24,8 @@ export type ProjectDefinition = {
   folder: AbsoluteFilePath;
   meta: ProjectConfigMeta;
   config: ProjectConfig;
-
   packages: Map<string, ManifestDefinition>;
   manifests: Map<number, ManifestDefinition>;
-
   hasteMap: Map<string, AbsoluteFilePath>;
   children: Set<ProjectDefinition>;
   parent: undefined | ProjectDefinition;
@@ -36,100 +34,76 @@ export type ProjectDefinition = {
 // Project config objects to categorize settings
 export type ProjectConfigObjects = {
   cache: {};
-
   resolver: {};
-
   compiler: {};
-
-  bundler: {
-    mode: BundlerMode;
-  };
-
+  bundler: {mode: BundlerMode};
   haste: {
     enabled: boolean;
     ignore: PathPatterns;
   };
-
   lint: {
     enabled: boolean;
     globals: Array<string>;
     ignore: PathPatterns;
   };
-
   typeCheck: {
     enabled: boolean;
     libs: AbsoluteFilePathSet;
   };
-
   format: {
     enabled: boolean;
+    ignore: PathPatterns;
   };
-
   tests: {
     enabled: boolean;
     ignore: PathPatterns;
   };
-
-  develop: {
-    serveStatic: boolean;
-  };
-
-  vsc: {
-    root: AbsoluteFilePath;
-  };
-
+  develop: {serveStatic: boolean};
+  vsc: {root: AbsoluteFilePath};
   files: {
     assetExtensions: Array<string>;
     watchman: boolean;
     maxSize: number;
     vendorPath: AbsoluteFilePath;
   };
-
-  dependencies: {
-    enabled: boolean;
-  };
-
+  dependencies: {enabled: boolean};
   targets: Map<string, ProjectConfigTarget>;
 };
 
-export type ProjectConfigTarget = {
-  constraints: Array<string>;
-};
+export type ProjectConfigTarget = {constraints: Array<string>};
 
 // This is a project config that contains only things that can be JSON serializable
+
 // This is used to transport and reserialize projects in workers
-export type ProjectConfigJSON = ProjectConfigJSONObjectReducer<
-  ProjectConfigBase
-> &
-  {
-    [ObjectKey in keyof ProjectConfigObjects]: ProjectConfigJSONPropertyReducer<
-      ProjectConfigObjects[ObjectKey]
-    >;
-  };
+export type ProjectConfigJSON =
+  & ProjectConfigJSONObjectReducer<ProjectConfigBase>
+  & { [ObjectKey in keyof ProjectConfigObjects]: ProjectConfigJSONPropertyReducer<
+    ProjectConfigObjects[ObjectKey]
+  > };
 
 // Weird way to get the value type from a map
+
+// rome-suppress lint/noExplicitAny
 type MapValue<T extends Map<string, any>> = NonNullable<ReturnType<T['get']>>;
 
 // Turn any file paths into strings
+
 // Turn maps into objects
+
 // TODO maybe add path patterns
 type ProjectConfigJSONPropertyReducer<Type> = Type extends AbsoluteFilePath
   ? string
   : Type extends Array<AbsoluteFilePath>
-  ? Array<string>
-  : Type extends AbsoluteFilePathSet
-  ? Array<string>
-  : Type extends Map<string, any>
-  ? Dict<MapValue<Type>>
-  : Type extends Dict<any>
-  ? ProjectConfigJSONObjectReducer<Type>
-  : Type;
+    ? Array<string>
+    : Type extends AbsoluteFilePathSet
+      ? Array<string> // rome-suppress lint/noExplicitAny
+      : Type extends Map<string, any>
+        ? Dict<MapValue<Type>> // rome-suppress lint/noExplicitAny
+        : Type extends Dict<any> ? ProjectConfigJSONObjectReducer<Type> : Type;
 
-type ProjectConfigJSONObjectReducer<Object> = {
-  [PropertyKey in keyof Object]: ProjectConfigJSONPropertyReducer<
-    Object[PropertyKey]
-  >;
-};
+type ProjectConfigJSONObjectReducer<Object> = { [PropertyKey in keyof Object]: ProjectConfigJSONPropertyReducer<
+  Object[PropertyKey]
+> };
 
 // Base of a project config without any objects
 type ProjectConfigBase = {
@@ -139,16 +113,16 @@ type ProjectConfigBase = {
 };
 
 // Data structure we pass around when normalizing and merging project configs
-export type PartialProjectConfig = Partial<ProjectConfigBase> &
-  {
-    [Key in keyof ProjectConfigObjects]: PartialProjectValue<
-      ProjectConfigObjects[Key]
-    >;
-  };
+export type PartialProjectConfig =
+  & Partial<ProjectConfigBase>
+  & { [Key in keyof ProjectConfigObjects]: PartialProjectValue<
+    ProjectConfigObjects[Key]
+  > };
 
-type PartialProjectValue<Type> = Type extends Map<string, any>
-  ? Type
-  : Partial<Type>;
+// rome-suppress lint/noExplicitAny
+type PartialProjectValue<Type> = Type extends Map<string, any> ? Type : Partial<
+  Type
+>;
 
 export type ProjectConfigMeta = {
   projectFolder: undefined | AbsoluteFilePath;
@@ -160,10 +134,10 @@ export type ProjectConfigMeta = {
   consumersChain: Array<Consumer>;
 };
 
-export type ProjectConfigMetaHard = RequiredProps<
-  ProjectConfigMeta,
-  'consumer' | 'projectFolder' | 'configPath'
->;
+export type ProjectConfigMetaHard = RequiredProps<ProjectConfigMeta,
+  | 'consumer'
+  | 'projectFolder'
+  | 'configPath'>;
 
 // Final project config
 export type ProjectConfig = ProjectConfigBase & ProjectConfigObjects;
@@ -209,6 +183,7 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
 
   format: {
     enabled: false,
+    ignore: [],
   },
 
   haste: {
@@ -235,7 +210,7 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
     vendorPath: TEMP_PATH.append(`rome-remote`),
     assetExtensions: [],
     watchman: false,
-    maxSize: 4e7, // 40 megabytes
+    maxSize: 40_000_000, // 40 megabytes
   },
 
   targets: new Map(),

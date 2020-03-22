@@ -16,16 +16,18 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXAttribute = JSNodeBase & {
-  type: 'JSXAttribute';
-  name: JSXIdentifier | JSXNamespacedName;
-  value?:
-    | undefined
-    | JSXElement
-    | JSXFragment
-    | StringLiteral
-    | JSXExpressionContainer;
-};
+export type JSXAttribute =
+  & JSNodeBase
+  & {
+    type: 'JSXAttribute';
+    name: JSXIdentifier | JSXNamespacedName;
+    value?:
+      | undefined
+      | JSXElement
+      | JSXFragment
+      | StringLiteral
+      | JSXExpressionContainer;
+  };
 
 export const jsxAttribute = createBuilder<JSXAttribute>('JSXAttribute', {
   bindingKeys: {},

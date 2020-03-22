@@ -10,17 +10,31 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSConditionalType(generator: Generator, node: AnyNode) {
   node = tsConditionalType.assert(node);
-  generator.print(node.checkType);
-  generator.space();
-  generator.word('extends');
-  generator.space();
-  generator.print(node.extendsType);
-  generator.space();
-  generator.token('?');
-  generator.space();
-  generator.print(node.trueType);
-  generator.space();
-  generator.token(':');
-  generator.space();
-  generator.print(node.falseType);
+
+  generator.multiline(node, (multiline, node) => {
+    generator.print(node.checkType, node);
+    generator.space();
+    generator.word('extends');
+    generator.space();
+    generator.print(node.extendsType, node);
+
+    if (multiline) {
+      generator.newline();
+      generator.indent();
+    } else {
+      generator.space();
+    }
+
+    generator.token('?');
+    generator.space();
+    generator.print(node.trueType, node);
+    generator.spaceOrNewline(multiline);
+    generator.token(':');
+    generator.space();
+    generator.print(node.falseType, node);
+
+    if (multiline) {
+      generator.dedent();
+    }
+  });
 }

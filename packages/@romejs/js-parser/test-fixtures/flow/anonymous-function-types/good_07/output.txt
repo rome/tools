@@ -1,0 +1,205 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 37
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    TypeAliasTypeAnnotation {
+      id: BindingIdentifier {
+        name: 'A'
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 6
+            index: 6
+            line: 1
+          }
+          start: Object {
+            column: 5
+            index: 5
+            line: 1
+          }
+        }
+      }
+      typeParameters: undefined
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 36
+          index: 36
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      right: FlowFunctionTypeAnnotation {
+        rest: undefined
+        typeParameters: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 36
+            index: 36
+            line: 1
+          }
+          start: Object {
+            column: 9
+            index: 9
+            line: 1
+          }
+        }
+        returnType: VoidKeywordTypeAnnotation {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 36
+              index: 36
+              line: 1
+            }
+            start: Object {
+              column: 32
+              index: 32
+              line: 1
+            }
+          }
+        }
+        params: Array [
+          FlowFunctionTypeParam {
+            name: Identifier {
+              name: 'x'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 11
+                  index: 11
+                  line: 1
+                }
+                start: Object {
+                  column: 10
+                  index: 10
+                  line: 1
+                }
+              }
+            }
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 19
+                index: 19
+                line: 1
+              }
+              start: Object {
+                column: 10
+                index: 10
+                line: 1
+              }
+            }
+            meta: PatternMeta {
+              optional: false
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 19
+                  index: 19
+                  line: 1
+                }
+                start: Object {
+                  column: 10
+                  index: 10
+                  line: 1
+                }
+              }
+              typeAnnotation: StringKeywordTypeAnnotation {
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 19
+                    index: 19
+                    line: 1
+                  }
+                  start: Object {
+                    column: 13
+                    index: 13
+                    line: 1
+                  }
+                }
+              }
+            }
+          }
+          FlowFunctionTypeParam {
+            name: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 27
+                index: 27
+                line: 1
+              }
+              start: Object {
+                column: 21
+                index: 21
+                line: 1
+              }
+            }
+            meta: PatternMeta {
+              optional: false
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 27
+                  index: 27
+                  line: 1
+                }
+                start: Object {
+                  column: 21
+                  index: 21
+                  line: 1
+                }
+              }
+              typeAnnotation: NumberKeywordTypeAnnotation {
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 27
+                    index: 27
+                    line: 1
+                  }
+                  start: Object {
+                    column: 21
+                    index: 21
+                    line: 1
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -11,12 +11,12 @@ import {
   optionalCallExpression,
   AnyNode,
 } from '@romejs/js-ast';
+import CallExpression from './CallExpression';
 
 export default function OptionalCallExpression(
   generator: Generator,
   node: AnyNode,
 ) {
   node = optionalCallExpression.assert(node);
-
-  throw new Error('unimplemented');
+  CallExpression(generator, node);
 }

@@ -5,13 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export type Platform =
-  | 'ios'
-  | 'android'
-  | 'mobile'
-  | 'electron'
-  | 'web'
-  | 'node';
+export type Platform = 'ios' | 'android' | 'mobile' | 'electron' | 'web' | 'node';
 
 export const PLATFORMS: Array<Platform> = [
   'ios',

@@ -1,0 +1,46 @@
+Program {
+  body: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 80
+      line: 8
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentBlock {
+      value: ' flow-include\ntype Foo = {\n  foo: number,\n  bar: boolean,\n  baz: string\n};\n'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 2
+          index: 79
+          line: 7
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+  ]
+}

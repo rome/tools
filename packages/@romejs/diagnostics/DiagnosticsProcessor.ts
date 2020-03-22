@@ -20,6 +20,7 @@ import {naturalCompare} from '@romejs/string-utils';
 import {DiagnosticsError} from './errors';
 import {normalizeDiagnostics} from './normalize';
 import {add} from '@romejs/ob1';
+import {DiagnosticCategoryPrefix} from './categories';
 
 type UniquePart =
   | 'filename'
@@ -48,11 +49,12 @@ export default class DiagnosticsProcessor {
   constructor(options: CollectorOptions) {
     this.diagnostics = [];
     this.filters = [];
+    this.allowedUnusedSuppressionPrefixes = new Set();
+    this.usedSuppressions = new Set();
     this.suppressions = new Set();
     this.options = options;
     this.includedKeys = new Set();
-    this.unique =
-      options.unique === undefined ? DEFAULT_UNIQUE : options.unique;
+    this.unique = options.unique === undefined ? DEFAULT_UNIQUE : options.unique;
     this.throwAfter = undefined;
   }
 
@@ -72,6 +74,8 @@ export default class DiagnosticsProcessor {
   includedKeys: Set<string>;
   diagnostics: PartialDiagnostics;
   filters: Array<DiagnosticFilterWithTest>;
+  allowedUnusedSuppressionPrefixes: Set<string>;
+  usedSuppressions: Set<DiagnosticSuppression>;
   suppressions: Set<DiagnosticSuppression>;
   options: CollectorOptions;
   throwAfter: undefined | number;
@@ -93,6 +97,10 @@ export default class DiagnosticsProcessor {
     return this.diagnostics.length > 0;
   }
 
+  addAllowedUnusedSuppressionPrefix(prefix: DiagnosticCategoryPrefix) {
+    this.allowedUnusedSuppressionPrefixes.add(prefix);
+  }
+
   addSuppressions(suppressions: DiagnosticSuppressions) {
     for (const suppression of suppressions) {
       this.suppressions.add(suppression);
@@ -110,13 +118,10 @@ export default class DiagnosticsProcessor {
   doesMatchFilter(diag: PartialDiagnostic): boolean {
     for (const suppression of this.suppressions) {
       const targetLine = add(suppression.loc.end.line, 1);
-      if (
-        diag.filename !== undefined &&
-        diag.start !== undefined &&
-        diag.filename === suppression.loc.filename &&
-        diag.start.line === targetLine
-      ) {
-        this.suppressions.delete(suppression);
+      if (diag.filename !== undefined && diag.start !== undefined &&
+        diag.filename === suppression.loc.filename && diag.start.line ===
+      targetLine) {
+        this.usedSuppressions.add(suppression);
         return true;
       }
     }
@@ -135,19 +140,14 @@ export default class DiagnosticsProcessor {
       }
 
       if (filter.start !== undefined && diag.start !== undefined) {
-        if (
-          filter.start.line !== diag.start.line ||
-          filter.start.column !== diag.start.column
-        ) {
+        if (filter.start.line !== diag.start.line || filter.start.column !==
+        diag.start.column) {
           continue;
         }
       }
 
-      if (
-        filter.line !== undefined &&
-        diag.start !== undefined &&
-        diag.start.line !== filter.line
-      ) {
+      if (filter.line !== undefined && diag.start !== undefined &&
+        diag.start.line !== filter.line) {
         continue;
       }
 
@@ -215,8 +215,8 @@ export default class DiagnosticsProcessor {
     const added: PartialDiagnostics = [];
 
     // Add origins to diagnostics
-    const origins: Array<DiagnosticOrigin> =
-      this.options.origins === undefined ? [] : [...this.options.origins];
+    const origins: Array<DiagnosticOrigin> = this.options.origins === undefined
+      ? [] : [...this.options.origins];
     if (origin !== undefined) {
       origins.push(origin);
     }
@@ -266,10 +266,19 @@ export default class DiagnosticsProcessor {
 
     // Add errors for remaining suppressions
     for (const suppression of this.suppressions) {
+      if (this.usedSuppressions.has(suppression)) {
+        continue;
+      }
+
+      const [categoryPrefix] = suppression.category.split('/');
+      if (this.allowedUnusedSuppressionPrefixes.has(categoryPrefix)) {
+        continue;
+      }
+
       diagnostics.push({
         ...suppression.loc,
         message: 'Did not hide any error',
-        category: 'suppressions',
+        category: 'suppressions/unused',
       });
     }
 
@@ -284,6 +293,7 @@ export default class DiagnosticsProcessor {
     markupOptions: MarkupFormatOptions = {},
   ): Diagnostics {
     // Sort files by filename to ensure they're always in the same order
+
     // TODO also sort by line/column
     return this.getCompleteDiagnostics(markupOptions).sort((a, b) => {
       if (a.filename === undefined || b.filename === undefined) {

@@ -20,11 +20,13 @@ import {Dict} from '@romejs/typescript-helpers';
 
 const exportsCache: WeakMap<Program, ModuleSignature> = new WeakMap();
 
-export default async function getModuleSignature(opts: {
-  ast: Program;
-  project: TransformProjectDefinition;
-  provider: CheckProvider;
-}): Promise<ModuleSignature> {
+export default async function getModuleSignature(
+  opts: {
+    ast: Program;
+    project: TransformProjectDefinition;
+    provider: CheckProvider;
+  },
+): Promise<ModuleSignature> {
   const {ast, provider} = opts;
   const {filename} = ast;
 

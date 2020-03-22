@@ -33,6 +33,7 @@ import {toCamelCase} from '@romejs/string-utils';
 import {PathPatterns, parsePathPattern} from '@romejs/path-match';
 
 export * from './types';
+
 export * from './convert';
 
 const TYPO_KEYS: Map<string, string> = new Map([
@@ -65,19 +66,13 @@ function normalizeString(consumer: Consumer, key: string): MString {
   }
 }
 
-function normalizePathPatterns(
-  consumer: Consumer,
-  loose: boolean,
-): PathPatterns {
-  return normalizeStringArray(consumer, loose).map(str =>
-    parsePathPattern({input: str}),
+function normalizePathPatterns(consumer: Consumer, loose: boolean): PathPatterns {
+  return normalizeStringArray(consumer, loose).map((str) =>
+    parsePathPattern({input: str})
   );
 }
 
-function normalizeStringArray(
-  consumer: Consumer,
-  loose: boolean,
-): Array<string> {
+function normalizeStringArray(consumer: Consumer, loose: boolean): Array<string> {
   if (consumer.exists()) {
     // When we are loose and expect an array but got a string, consider it to be a single element
     if (loose) {
@@ -93,7 +88,7 @@ function normalizeStringArray(
       }
     }
 
-    return consumer.asArray().map(item => item.asString());
+    return consumer.asArray().map((item) => item.asString());
   } else {
     return [];
   }
@@ -156,9 +151,7 @@ function normalizeBin(
   return normalizeStringMap(consumer, 'bin', loose);
 }
 
-function extractLicenseFromObjectConsumer(
-  consumer: Consumer,
-): [string, Consumer] {
+function extractLicenseFromObjectConsumer(consumer: Consumer): [string, Consumer] {
   const prop = consumer.get('type');
   const value = prop.asString();
   return [value, prop];
@@ -191,9 +184,9 @@ function normalizeLicense(
   // Support some legacy ways of specifying licenses: https://docs.npmjs.com/files/package.json#license
   const raw = licenseProp.asUnknown();
   if (loose && Array.isArray(raw)) {
-    const licenseIds = licenseProp
-      .asArray()
-      .map(consumer => extractLicenseFromObjectConsumer(consumer)[0]);
+    const licenseIds = licenseProp.asArray().map((consumer) =>
+      extractLicenseFromObjectConsumer(consumer)[0]
+    );
     licenseId = `(${licenseIds.join(' OR ')})`;
   } else if (loose && typeof raw === 'object') {
     [licenseId, licenseProp] = extractLicenseFromObjectConsumer(licenseProp);
@@ -212,17 +205,14 @@ function normalizeLicense(
   }
 
   // Parse as a SPDX expression
-  return tryParseWithOptionalOffsetPosition(
-    {
-      loose,
-      path: consumer.path,
-      input: licenseId,
-    },
-    {
-      getOffsetPosition: () => licenseProp.getLocation('inner-value').start,
-      parse: opts => parseSPDXLicense(opts),
-    },
-  );
+  return tryParseWithOptionalOffsetPosition({
+    loose,
+    path: consumer.path,
+    input: licenseId,
+  }, {
+    getOffsetPosition: () => licenseProp.getLocation('inner-value').start,
+    parse: (opts) => parseSPDXLicense(opts),
+  });
 }
 
 function normalizeVersion(
@@ -241,19 +231,16 @@ function normalizeVersion(
     return undefined;
   }
 
-  const ast = tryParseWithOptionalOffsetPosition(
-    {
-      path: consumer.path,
-      input: rawVersion,
-      // Some node_modules have bogus versions, like being prefixed with a v like:
-      // https://github.com/itinance/react-native-fs/commit/6232d4e392d5b52cca0792fdfe5903b7fb6b1c5c#diff-b9cfc7f2cdf78a7f4b91a753d10865a2R3
-      loose,
-    },
-    {
-      getOffsetPosition: () => prop.getLocation('inner-value').start,
-      parse: opts => parseSemverVersion(opts),
-    },
-  );
+  const ast = tryParseWithOptionalOffsetPosition({
+    path: consumer.path,
+    input: rawVersion,
+    // Some node_modules have bogus versions, like being prefixed with a v like:
+    // https://github.com/itinance/react-native-fs/commit/6232d4e392d5b52cca0792fdfe5903b7fb6b1c5c#diff-b9cfc7f2cdf78a7f4b91a753d10865a2R3
+    loose,
+  }, {
+    getOffsetPosition: () => prop.getLocation('inner-value').start,
+    parse: (opts) => parseSemverVersion(opts),
+  });
   return ast;
 }
 
@@ -262,7 +249,7 @@ function normalizePerson(consumer: Consumer, loose: boolean): ManifestPerson {
     // Parse the string. Format: name (url) <email>
     const str = consumer.asString();
 
-    const nameMatch = str.match(/^([^\(<]+)/);
+    const nameMatch = str.match(/^([^(<]+)/);
     let name: string | undefined;
     if (nameMatch) {
       name = nameMatch[0].trim();
@@ -281,7 +268,7 @@ function normalizePerson(consumer: Consumer, loose: boolean): ManifestPerson {
       person.email = emailMatch[1];
     }
 
-    const urlMatch = str.match(/\(([^\)]+)\)/);
+    const urlMatch = str.match(/\(([^)]+)\)/);
     if (urlMatch) {
       person.url = urlMatch[1];
     }
@@ -306,9 +293,9 @@ function normalizePerson(consumer: Consumer, loose: boolean): ManifestPerson {
 
     if (loose && github === undefined) {
       // Some rando packages use this
-      github =
-        consumer.get('githubUsername').asStringOrVoid() ||
-        consumer.get('github-username').asStringOrVoid();
+      github = consumer.get('githubUsername').asStringOrVoid() || consumer.get(
+        'github-username',
+      ).asStringOrVoid();
     }
 
     const person: ManifestPerson = {
@@ -527,10 +514,11 @@ function normalizeRootName(consumer: Consumer, loose: boolean): MString {
       prop.unexpected(message, {
         advice,
         at,
-        loc:
-          start === undefined
-            ? undefined
-            : prop.getLocationRange(start, end, 'inner-value'),
+        loc: start === undefined ? undefined : prop.getLocationRange(
+          start,
+          end,
+          'inner-value',
+        ),
       });
     },
   });
@@ -547,8 +535,8 @@ const INCORRECT_DEPENDENCIES_SUFFIXES = [
 function checkDependencyKeyTypo(key: string, prop: Consumer) {
   for (const depPrefixKey of DEPENDENCIES_KEYS) {
     // Ignore if the key is a valid dependency key
-    const depKey =
-      depPrefixKey === '' ? 'dependencies' : `${depPrefixKey}Dependencies`;
+    const depKey = depPrefixKey === ''
+      ? 'dependencies' : `${depPrefixKey}Dependencies`;
     if (key === depKey) {
       return;
     }
@@ -584,7 +572,7 @@ export async function normalizeManifest(
 }> {
   const loose = path.getSegments().includes('node_modules');
 
-  const {result: manifest, diagnostics} = await consumer.capture(consumer => {
+  const {result: manifest, diagnostics} = await consumer.capture((consumer) => {
     // FIXME: There's this ridiculous node module that includes it's tests... which deliberately includes an invalid package.json
     if (path.join().includes('resolve/test/resolver/invalid_main')) {
       consumer.setValue({});
@@ -631,11 +619,7 @@ export async function normalizeManifest(
 
       // Dependency fields
       dependencies: normalizeDependencies(consumer, 'dependencies', loose),
-      devDependencies: normalizeDependencies(
-        consumer,
-        'devDependencies',
-        loose,
-      ),
+      devDependencies: normalizeDependencies(consumer, 'devDependencies', loose),
       optionalDependencies: normalizeDependencies(
         consumer,
         'optionalDependencies',
@@ -654,9 +638,10 @@ export async function normalizeManifest(
       ],
 
       // People fields
-      author: consumer.has('author')
-        ? normalizePerson(consumer.get('author'), loose)
-        : undefined,
+      author: consumer.has('author') ? normalizePerson(
+        consumer.get('author'),
+        loose,
+      ) : undefined,
       contributors: normalizePeople(consumer.get('contributors'), loose),
       maintainers: normalizePeople(consumer.get('maintainers'), loose),
 

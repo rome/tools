@@ -100,7 +100,7 @@ export default class DependencyGraph {
 
   watch(callback?: (opts: {path: AbsoluteFilePath}) => void) {
     const watchSubscription = this.master.fileChangeEvent.subscribe(
-      async path => {
+      async (path) => {
         if (this.nodes.has(path)) {
           this.nodes.delete(path);
         } else {
@@ -157,12 +157,9 @@ export default class DependencyGraph {
   }
 
   addNode(filename: AbsoluteFilePath, res: WorkerAnalyzeDependencyResult) {
-    const module = new DependencyNode(
-      this,
-      this.master.projectManager.getUid(filename),
+    const module = new DependencyNode(this, this.master.projectManager.getUid(
       filename,
-      res,
-    );
+    ), filename, res);
     this.nodes.set(filename, module);
     return module;
   }
@@ -175,51 +172,39 @@ export default class DependencyGraph {
     return mod;
   }
 
-  async seed({
-    paths,
-    diagnosticsProcessor,
-    analyzeProgress,
-    validate = false,
-  }: {
-    paths: Array<AbsoluteFilePath>;
-    diagnosticsProcessor: DiagnosticsProcessor;
-    analyzeProgress?: ReporterProgress;
-    validate?: boolean;
-  }): Promise<void> {
-    const workerQueue: DependencyGraphWorkerQueue = new WorkerQueue(
-      this.master,
-    );
+  async seed(
+    {
+      paths,
+      diagnosticsProcessor,
+      analyzeProgress,
+      validate = false,
+    }: {
+      paths: Array<AbsoluteFilePath>;
+      diagnosticsProcessor: DiagnosticsProcessor;
+      analyzeProgress?: ReporterProgress;
+      validate?: boolean;
+    },
+  ): Promise<void> {
+    const workerQueue: DependencyGraphWorkerQueue = new WorkerQueue(this.master);
 
     workerQueue.addCallback(async (path, item) => {
-      await this.resolve(
-        path,
-        {
-          workerQueue,
-          all: item.all,
-          async: item.async,
-          ancestry: item.ancestry,
-        },
-        diagnosticsProcessor,
-        analyzeProgress,
-      );
+      await this.resolve(path, {
+        workerQueue,
+        all: item.all,
+        async: item.async,
+        ancestry: item.ancestry,
+      }, diagnosticsProcessor, analyzeProgress);
     });
 
     // Add initial queue items
-    const roots: Array<DependencyNode> = await Promise.all(
-      paths.map(path =>
-        this.resolve(
-          path,
-          {
-            workerQueue,
-            all: true,
-            async: false,
-            ancestry: [],
-          },
-          diagnosticsProcessor,
-          analyzeProgress,
-        ),
-      ),
-    );
+    const roots: Array<DependencyNode> = await Promise.all(paths.map((path) =>
+      this.resolve(path, {
+        workerQueue,
+        all: true,
+        async: false,
+        ancestry: [],
+      }, diagnosticsProcessor, analyzeProgress)
+    ));
 
     await workerQueue.spin();
 
@@ -259,6 +244,7 @@ export default class DependencyGraph {
       ancestry: Array<string>;
       workerQueue: DependencyGraphWorkerQueue;
     },
+
     diagnosticsProcessor: DiagnosticsProcessor,
     analyzeProgress?: ReporterProgress,
   ): Promise<DependencyNode> {
@@ -291,9 +277,8 @@ export default class DependencyGraph {
       analyzeProgress.pushText(progressText);
     }
 
-    const res: WorkerAnalyzeDependencyResult = await this.request.requestWorkerAnalyzeDependencies(
-      path,
-    );
+    const res: WorkerAnalyzeDependencyResult =
+      await this.request.requestWorkerAnalyzeDependencies(path);
 
     const node = this.addNode(path, res);
     node.setAll(all);
@@ -311,46 +296,36 @@ export default class DependencyGraph {
     const origin = remote === undefined ? path : remote.getParent();
 
     // Resolve full locations
-    await Promise.all(
-      dependencies.map(async dep => {
-        const {source, optional} = dep;
-        if (this.isExternal(source)) {
-          return;
-        }
+    await Promise.all(dependencies.map(async (dep) => {
+      const {source, optional} = dep;
+      if (this.isExternal(source)) {
+        return;
+      }
 
-        const {diagnostics} = await catchDiagnostics(
-          {
-            category: 'DependencyGraph',
-            message: 'Caught by resolve',
+      const {diagnostics} = await catchDiagnostics({
+        category: 'DependencyGraph',
+        message: 'Caught by resolve',
+      }, async () => {
+        const resolved = await master.resolver.resolveAssert({
+          ...this.resolverOpts,
+          origin,
+          source: createUnknownFilePath(source),
+        }, dep.loc === undefined ? undefined : {
+          pointer: {
+            sourceText: undefined,
+            ...dep.loc,
+            language: 'js',
+            mtime: undefined,
           },
-          async () => {
-            const resolved = await master.resolver.resolveAssert(
-              {
-                ...this.resolverOpts,
-                origin,
-                source: createUnknownFilePath(source),
-              },
-              dep.loc === undefined
-                ? undefined
-                : {
-                    pointer: {
-                      sourceText: undefined,
-                      ...dep.loc,
-                      language: 'js',
-                      mtime: undefined,
-                    },
-                  },
-            );
+        });
 
-            node.addDependency(source, resolved.path, dep);
-          },
-        );
+        node.addDependency(source, resolved.path, dep);
+      });
 
-        if (diagnostics !== undefined && !optional) {
-          diagnosticsProcessor.addDiagnostics(diagnostics);
-        }
-      }),
-    );
+      if (diagnostics !== undefined && !optional) {
+        diagnosticsProcessor.addDiagnostics(diagnostics);
+      }
+    }));
 
     // Queue our dependencies...
     const subAncestry = [...ancestry, filename];

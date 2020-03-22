@@ -7,11 +7,7 @@
 
 import Scope from '../Scope';
 import {ImportBindingMeta, ImportBinding} from '@romejs/js-compiler';
-import {
-  ImportDeclaration,
-  AnyNode,
-  ConstImportModuleKind,
-} from '@romejs/js-ast';
+import {ImportDeclaration, AnyNode, ConstImportModuleKind} from '@romejs/js-ast';
 
 export default {
   creator: false,
@@ -21,8 +17,8 @@ export default {
 
     if (specifiers !== undefined) {
       for (const specifier of specifiers) {
-        let kind: ConstImportModuleKind =
-          specifier.local.importKind || node.importKind || 'value';
+        let kind: ConstImportModuleKind = specifier.local.importKind ||
+        node.importKind || 'value';
         let meta: undefined | ImportBindingMeta;
 
         if (specifier.type === 'ImportNamespaceSpecifier') {
@@ -51,16 +47,11 @@ export default {
           return undefined;
         }
 
-        scope.addBinding(
-          new ImportBinding(
-            {
-              node: specifier.local.name,
-              name: specifier.local.name.name,
-              scope,
-            },
-            meta,
-          ),
-        );
+        scope.addBinding(new ImportBinding({
+          node: specifier.local.name,
+          name: specifier.local.name.name,
+          scope,
+        }, meta));
       }
     }
   },

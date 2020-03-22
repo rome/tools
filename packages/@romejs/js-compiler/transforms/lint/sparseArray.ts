@@ -16,16 +16,15 @@ export default {
 
     if (node.type === 'ArrayExpression' && node.elements.includes(undefined)) {
       path.context.addNodeDiagnostic(node, {
+        fixable: true,
         category: 'lint/sparseArray',
         message: 'Your array contains an empty slot',
       });
-      return arrayExpression.quick(
-        node.elements.map(elem =>
-          elem === undefined
-            ? referenceIdentifier.create({name: 'undefined'})
-            : elem,
-        ),
-      );
+
+      return arrayExpression.quick(node.elements.map((elem) =>
+        elem === undefined
+          ? referenceIdentifier.create({name: 'undefined'}) : elem
+      ));
     }
 
     return node;

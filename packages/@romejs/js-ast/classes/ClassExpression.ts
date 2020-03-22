@@ -8,11 +8,13 @@
 import {JSNodeBase, ClassHead, BindingIdentifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type ClassExpression = JSNodeBase & {
-  type: 'ClassExpression';
-  id?: BindingIdentifier;
-  meta: ClassHead;
-};
+export type ClassExpression =
+  & JSNodeBase
+  & {
+    type: 'ClassExpression';
+    id?: BindingIdentifier;
+    meta: ClassHead;
+  };
 
 export const classExpression = createBuilder<ClassExpression>(
   'ClassExpression',

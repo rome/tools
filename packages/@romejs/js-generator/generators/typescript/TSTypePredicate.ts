@@ -11,17 +11,17 @@ import {Generator} from '@romejs/js-generator';
 export default function TSTypePredicate(generator: Generator, node: AnyNode) {
   node = tsTypePredicate.assert(node);
 
-  //if (node.asserts) {
-  //  generator.word("asserts");
-  //  generator.space();
-  //}
+  if (node.asserts) {
+    generator.word('asserts');
+    generator.space();
+  }
 
-  generator.print(node.parameterName);
+  generator.print(node.parameterName, node);
 
   if (node.typeAnnotation) {
     generator.space();
     generator.word('is');
     generator.space();
-    generator.print(node.typeAnnotation);
+    generator.print(node.typeAnnotation, node);
   }
 }

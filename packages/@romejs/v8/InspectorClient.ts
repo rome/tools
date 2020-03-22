@@ -35,13 +35,10 @@ export default class InspectorClient {
 
   alive: boolean;
   id: number;
-  callbacks: Map<
-    number,
-    {
-      resolve: (params: Consumer) => void;
-      reject: (err: Error) => void;
-    }
-  >;
+  callbacks: Map<number, {
+    resolve: (params: Consumer) => void;
+    reject: (err: Error) => void;
+  }>;
   subscriptions: Map<string, Set<InspectorSubscription>>;
   socket: WebSocketInterface;
 
@@ -52,7 +49,7 @@ export default class InspectorClient {
   init() {
     const {socket} = this;
 
-    socket.errorEvent.subscribe(err => {
+    socket.errorEvent.subscribe((err) => {
       this.alive = false;
       for (const [, {reject}] of this.callbacks) {
         reject(err);
@@ -69,7 +66,7 @@ export default class InspectorClient {
       this.callbacks.clear();
     });
 
-    socket.completeFrameEvent.subscribe(frame => {
+    socket.completeFrameEvent.subscribe((frame) => {
       const json = frame.payload.toString();
       const data = consumeJSON({
         input: json,
@@ -81,10 +78,7 @@ export default class InspectorClient {
         const handler = this.callbacks.get(id);
         if (handler !== undefined) {
           if (data.has('error')) {
-            const errorMessage = data
-              .get('error')
-              .get('message')
-              .asString();
+            const errorMessage = data.get('error').get('message').asString();
             handler.reject(new Error(errorMessage));
           } else {
             handler.resolve(data.get('result'));
@@ -127,7 +121,7 @@ export default class InspectorClient {
   }
 
   async wait(method: string): Promise<Consumer> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.assertAlive();
       this.subscribe(method, {
         once: true,

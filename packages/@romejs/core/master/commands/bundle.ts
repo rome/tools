@@ -10,13 +10,23 @@ import {createMasterCommand} from '../../commands';
 import Bundler from '../bundler/Bundler';
 import {commandCategories} from '../../commands';
 import {createDirectory, writeFile} from '@romejs/fs';
+import {Consumer} from '@romejs/consume';
 
-export default createMasterCommand({
+type Flags = {quiet: boolean};
+
+export default createMasterCommand<Flags>({
   category: commandCategories.SOURCE_CODE,
   description: 'build a standalone js bundle for a package',
 
+  defineFlags(consumer: Consumer): Flags {
+    return {
+      quiet: consumer.get('quiet').asBoolean(false),
+    };
+  },
+
   async default(
     req: MasterRequest,
+    commandFlags: Flags,
   ): Promise<{
     content: string;
     map: string;
@@ -46,10 +56,14 @@ export default createMasterCommand({
       await writeFile(file, content);
     }
 
-    reporter.success(
-      `Saved the following files to <filelink target="${dir.join()}" />`,
-    );
-    reporter.list(savedList);
+    if (commandFlags.quiet) {
+      reporter.success(`Saved to <filelink target="${dir.join()}" />`);
+    } else {
+      reporter.success(
+        `Saved the following files to <filelink target="${dir.join()}" />`,
+      );
+      reporter.list(savedList);
+    }
 
     return {
       content: entry.js.content,

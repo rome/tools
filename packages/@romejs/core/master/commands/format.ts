@@ -8,22 +8,54 @@
 import {MasterRequest} from '@romejs/core';
 import {createMasterCommand} from '../../commands';
 import {commandCategories} from '../../commands';
-import {AbsoluteFilePathSet} from '@romejs/path';
 import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import {FORMATTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
-import Linter from '../linter/Linter';
+import {Consumer} from '@romejs/consume';
+import stringDiff from '@romejs/string-diff';
+
+type Flags = {write: boolean};
 
 export default createMasterCommand({
   category: commandCategories.INTERNAL,
-  description: '',
+  description: 'TODO',
 
-  async default(req: MasterRequest): Promise<void> {
-    const {reporter} = req;
+  defineFlags(consumer: Consumer): Flags {
+    return {
+      write: consumer.get('write').asBoolean(false),
+    };
+  },
 
-    const paths: AbsoluteFilePathSet = await Linter.getFilesFromArgs(
-      req,
-      FORMATTABLE_EXTENSIONS,
-    );
+  async default(req: MasterRequest, flags: Flags): Promise<void> {
+    const {reporter, master} = req;
+
+    const {paths} = await req.getFilesFromArgs({
+      getProjectIgnore: (project) =>
+        ({
+          patterns: project.config.format.ignore,
+          source: master.projectManager.findProjectConfigConsumer(project, (
+            consumer,
+          ) =>
+            consumer.has('format') && consumer.get('format').has('ignore')
+              ? consumer.get('format').get('ignore') : undefined
+          ),
+        }),
+      getProjectEnabled: (project) =>
+        ({
+          enabled: project.config.format.enabled,
+          source: master.projectManager.findProjectConfigConsumer(project, (
+            consumer,
+          ) =>
+            consumer.has('format')
+              ? consumer.get('format').get('enabled') : undefined
+          ),
+        }),
+      noun: 'formatting',
+      verb: 'linting',
+      configCategory: 'format',
+      extensions: FORMATTABLE_EXTENSIONS,
+      disabledDiagnosticCategory: 'format/disabled',
+    });
+
     if (paths.size === 0) {
       reporter.warn('No files formatted');
       return;
@@ -40,31 +72,54 @@ export default createMasterCommand({
     const diagnosticsProcessor = new DiagnosticsProcessor({});
 
     // TODO probably add the same logic in CompilerLinter if the project config disables formatting
+    await Promise.all(pathsByWorker.map(async (paths) => {
+      for (const path of paths) {
+        progress.setText(`<filelink target="${path.join()}" />`);
+        progress.tick();
 
-    await Promise.all(
-      pathsByWorker.map(async paths => {
-        for (const path of paths) {
-          progress.setText(`<filelink target="${path.join()}" />`);
-          progress.tick();
+        const res = await req.requestWorkerFormat(path);
+        if (res === undefined) {
+          continue;
+        }
 
-          const res = await req.requestWorkerFormat(path);
-          if (res === undefined) {
-            continue;
-          }
+        if (res.diagnostics.length > 0) {
+          diagnosticsProcessor.addDiagnostics(res.diagnostics);
+          continue;
+        }
 
-          if (res.diagnostics.length > 0) {
-            diagnosticsProcessor.addDiagnostics(res.diagnostics);
-            continue;
-          }
-
+        if (!flags.write && res.formatted !== res.original) {
+          // TODO abstract this and the pendingFixes diagnostic in WorkerAPI
+          diagnosticsProcessor.addDiagnostic({
+            category: 'lint/pendingFixes',
+            filename: path.join(),
+            message: 'Pending fixes',
+            advice: [
+              {
+                type: 'diff',
+                diff: stringDiff(res.original, res.formatted),
+              },
+              {
+                type: 'code',
+                code: res.formatted,
+              },
+            ],
+          });
+        } else {
           //await writeFile(path, res.formatted);
         }
-      }),
-    );
+      }
+    }));
 
     diagnosticsProcessor.maybeThrowDiagnosticsError();
-    reporter.success(
-      `<number>${paths.size}</number> files formatted successfully`,
-    );
+
+    if (flags.write) {
+      reporter.success(
+        `<number emphasis>${paths.size}</number> files formatted successfully`,
+      );
+    } else {
+      reporter.success(
+        `<number emphasis>${paths.size}</number> files formatted correctly`,
+      );
+    }
   },
 });

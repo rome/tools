@@ -8,10 +8,12 @@
 import {JSNodeBase, AnyFlowPrimary, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type IntersectionTypeAnnotation = JSNodeBase & {
-  type: 'IntersectionTypeAnnotation';
-  types: Array<AnyFlowPrimary | AnyTSPrimary>;
-};
+export type IntersectionTypeAnnotation =
+  & JSNodeBase
+  & {
+    type: 'IntersectionTypeAnnotation';
+    types: Array<AnyFlowPrimary | AnyTSPrimary>;
+  };
 
 export const intersectionTypeAnnotation = createBuilder<
   IntersectionTypeAnnotation

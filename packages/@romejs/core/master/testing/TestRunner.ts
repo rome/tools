@@ -6,27 +6,28 @@
  */
 
 import {Reporter} from '@romejs/cli-reporter';
-import {DiagnosticOrigin} from '@romejs/diagnostics';
+import {DiagnosticOrigin, deriveDiagnosticFromError} from '@romejs/diagnostics';
 import {TestRef} from '../../common/bridges/TestWorkerBridge';
 import {Master, MasterRequest} from '@romejs/core';
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import {createClient} from '@romejs/codec-websocket';
 import {humanizeNumber} from '@romejs/string-utils';
-import {createBridgeFromChildProcess} from '@romejs/events';
+import {createBridgeFromChildProcess, Bridge} from '@romejs/events';
 import {
   InspectorClientCloseError,
   InspectorClient,
   CoverageCollector,
   sourceMapManager,
+  NativeStructuredError,
+  StructuredError,
 } from '@romejs/v8';
-import {deriveDiagnosticFromError} from '@romejs/diagnostics';
 import {TestWorkerBridge} from '@romejs/core';
 import fork from '../../common/utils/fork';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
 import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
 import {urlToFilename} from '@romejs/v8';
 import {coerce0to1} from '@romejs/ob1';
-import {createErrorFromStructure, ErrorFrame} from '@romejs/v8';
+import {ErrorFrame} from '@romejs/v8';
 import {BridgeError} from '@romejs/events';
 import {
   TestRunnerConstructorOptions,
@@ -38,6 +39,20 @@ import {
   CoverageFolder,
 } from './types';
 import {percentInsideCoverageFolder, formatPercent, sortMapKeys} from './utils';
+import {escapeMarkup} from '@romejs/string-markup';
+
+class BridgeStructuredError extends NativeStructuredError {
+  constructor(struct: Partial<StructuredError>, bridge: Bridge) {
+    super(struct);
+    this.bridge = bridge;
+  }
+
+  bridge: Bridge;
+}
+
+function getProgressTestRefText(ref: TestRef) {
+  return `<filelink target="${ref.filename}" />: ${escapeMarkup(ref.testName)}`;
+}
 
 export default class TestRunner {
   constructor(opts: TestRunnerConstructorOptions) {
@@ -47,6 +62,8 @@ export default class TestRunner {
     this.cwd = opts.request.client.flags.cwd;
     this.request = opts.request;
     this.options = opts.options;
+
+    this.ignoreBridgeEndError = new Set();
 
     this.sourcesQueue = Array.from(opts.sources.entries());
 
@@ -59,6 +76,7 @@ export default class TestRunner {
     };
 
     this.runningTests = new Map();
+    this.testFileCounter = 0;
 
     this.printer = opts.request.createDiagnosticsPrinter({
       category: 'test',
@@ -77,14 +95,13 @@ export default class TestRunner {
   cwd: AbsoluteFilePath;
   printer: DiagnosticsPrinter;
   sourcesQueue: Array<[string, TestSource]>;
+  testFileCounter: number;
+  ignoreBridgeEndError: Set<Bridge>;
 
-  runningTests: Map<
-    string,
-    {
-      ref: TestRef;
-      timeout: undefined | NodeJS.Timeout;
-    }
-  >;
+  runningTests: Map<string, {
+    ref: TestRef;
+    timeout: undefined | NodeJS.Timeout;
+  }>;
 
   progress: {
     total: number;
@@ -121,23 +138,25 @@ export default class TestRunner {
       this.coverageCollector.addSourceMap(filename, code, sourceMap);
 
       // Source map locations will always be resolved in the worker, but this is in case we need to resolve them in master in the case of an unresponsive worker
+
       // TODO remove this after test has ran
-      const removeSourceMap = sourceMapManager.addSourceMap(
-        filename,
-        sourceMap,
-      );
+      const removeSourceMap = sourceMapManager.addSourceMap(filename, sourceMap);
+
+      const id = this.testFileCounter;
+      this.testFileCounter++;
 
       try {
-        await bridge.runTest.call({
+        await bridge.prepareTest.call({
+          id,
           options: opts,
-          projectFolder: req.master.projectManager
-            .assertProjectExisting(path)
-            .folder.join(),
+          projectFolder: req.master.projectManager.assertProjectExisting(path).folder.join(),
           file: req.master.projectManager.getTransportFileReference(path),
           cwd: flags.cwd.join(),
           code,
           sourceMap,
         });
+
+        await bridge.runTest.call(id);
       } finally {
         removeSourceMap();
       }
@@ -148,10 +167,13 @@ export default class TestRunner {
     try {
       await nextTest();
     } catch (err) {
-      if (err instanceof BridgeError) {
-        // When a worker dies, we automatically mark all it's currently running tests as failed
-        // However, it will cause all the pending messages to throw an error which will bubble up here
-        // We can safely ignore these since we've already handled it
+      if (err instanceof BridgeError || err instanceof BridgeStructuredError) {
+        if (!this.ignoreBridgeEndError.has(err.bridge)) {
+          this.printer.addDiagnostic(deriveDiagnosticFromError({
+            category: 'tests/timeout',
+            error: err,
+          }));
+        }
       } else {
         throw err;
       }
@@ -159,9 +181,7 @@ export default class TestRunner {
       if (inspector !== undefined) {
         if (opts.coverage) {
           if (inspector.alive) {
-            const profile = await inspector.call(
-              'Profiler.takePreciseCoverage',
-            );
+            const profile = await inspector.call('Profiler.takePreciseCoverage');
             this.coverageCollector.addCoverage(profile.get('result').asAny());
 
             // Not really necessary but let's clean up anyway for completeness
@@ -189,21 +209,19 @@ export default class TestRunner {
       throw new Error('stdout or stderr was undefined for a spawned Worker');
     }
 
-    stdout.on('data', chunk => {
+    stdout.on('data', (chunk) => {
       process.stdout.write(chunk);
     });
 
     // Suppress any debugger logs
-    stderr.on('data', chunk => {
+    stderr.on('data', (chunk) => {
       const str = chunk.toString();
 
       if (str.startsWith('Debugger listening on ws://')) {
         return;
       }
 
-      if (
-        str.startsWith('For help, see: https://nodejs.org/en/docs/inspector')
-      ) {
+      if (str.startsWith('For help, see: https://nodejs.org/en/docs/inspector')) {
         return;
       }
 
@@ -223,9 +241,7 @@ export default class TestRunner {
 
     let inspector;
     if (inspectorUrl !== undefined) {
-      const locInspector = new InspectorClient(
-        await createClient(inspectorUrl),
-      );
+      const locInspector = new InspectorClient(await createClient(inspectorUrl));
       inspector = locInspector;
       await locInspector.call('Debugger.enable');
 
@@ -246,7 +262,7 @@ export default class TestRunner {
 
     // Every 5 seconds, ping the worker and wait a max of 5 seconds, if we receive no response then consider the worker dead
     for (const container of containers) {
-      container.bridge.monitorHeartbeat(5000, async () => {
+      container.bridge.monitorHeartbeat(5_000, async () => {
         this.handleWorkerTimeout('10 seconds', container);
       });
     }
@@ -256,13 +272,15 @@ export default class TestRunner {
 
   async init() {
     this.workers = await this.setupWorkers();
-    this.setupProgress();
+    const teardown = this.setupProgress();
 
     const workerContainers: TestWorkerContainers = this.getWorkers();
 
-    await Promise.all(
-      workerContainers.map(container => this.runWorker(container)),
-    );
+    await Promise.all(workerContainers.map((container) =>
+      this.runWorker(container)
+    ));
+
+    teardown();
 
     this.printTestResults();
   }
@@ -273,28 +291,24 @@ export default class TestRunner {
   ): Promise<void> {
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
-        container.bridge.end(
+        resolve(container.bridge.end(
           `Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but we timed out again trying to fetch it...`,
-        );
-        resolve();
-      }, 3000);
+        ));
+      }, 3_000);
 
-      this._handleWorkerTimeout(duration, container)
-        .then(() => {
-          clearTimeout(timeout);
-          resolve();
-        })
-        .catch(err => {
-          clearTimeout(timeout);
-          if (err instanceof InspectorClientCloseError) {
-            container.bridge.end(
-              `Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but the inspector connection closed abruptly`,
-            );
-            resolve();
-          } else {
-            reject(err);
-          }
-        });
+      this._handleWorkerTimeout(duration, container).then(() => {
+        clearTimeout(timeout);
+        resolve();
+      }).catch((err) => {
+        clearTimeout(timeout);
+        if (err instanceof InspectorClientCloseError) {
+          return container.bridge.end(
+            `Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but the inspector connection closed abruptly`,
+          );
+        } else {
+          reject(err);
+        }
+      });
     });
   }
 
@@ -315,26 +329,20 @@ export default class TestRunner {
 
     const frames: Array<ErrorFrame> = [];
 
-    const callFrames = params
-      .get('callFrames')
-      .asArray()
-      .slice(0, 20);
+    const callFrames = params.get('callFrames').asArray().slice(0, 20);
     for (const callFrame of callFrames) {
       const loc = callFrame.get('location');
 
-      const resolved = sourceMapManager.resolveLocation(
-        urlToFilename(callFrame.get('url').asString()),
-        coerce0to1(loc.get('lineNumber').asZeroIndexedNumber()),
-        loc.get('columnNumber').asZeroIndexedNumber(),
-      );
+      const resolved = sourceMapManager.resolveLocation(urlToFilename(
+        callFrame.get('url').asString(),
+      ), coerce0to1(loc.get('lineNumber').asZeroIndexedNumber()), loc.get(
+        'columnNumber',
+      ).asZeroIndexedNumber());
 
-      const name = callFrame
-        .get('scopeChain')
-        .asArray()[0]
-        .get('name')
-        .asString('')
-        .split('$')
-        .pop();
+      const name =
+        callFrame.get('scopeChain').asArray()[0].get('name').asString('').split(
+          '$',
+        ).pop();
 
       frames.push({
         resolvedLocation: resolved.found,
@@ -352,12 +360,17 @@ export default class TestRunner {
       });
     }
 
-    bridge.endWithError(
-      createErrorFromStructure({
-        message: `Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
-        frames,
-      }),
-    );
+    bridge.endWithError(new BridgeStructuredError({
+      message: `Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
+      frames,
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          message: `You can find the specific test that caused this by running <command>rome test --sync-tests</command>`,
+        },
+      ],
+    }, bridge));
   }
 
   getWorkers(): TestWorkerContainers {
@@ -381,10 +394,11 @@ export default class TestRunner {
 
     let timeout = undefined;
     if (timeoutMs !== undefined) {
-      timeout = setTimeout(() => {
-        // TODO This will kill the whole worker, maybe it's possible to just terminate the current test? Throw an error, see if the next test was ran, or else terminate completely
-        this.handleWorkerTimeout(`${String(timeoutMs)}ms`, container);
-      }, timeoutMs);
+      timeout =
+        setTimeout(() => {
+          // TODO This will kill the whole worker, maybe it's possible to just terminate the current test? Throw an error, see if the next test was ran, or else terminate completely
+          this.handleWorkerTimeout(`${String(timeoutMs)}ms`, container);
+        }, timeoutMs);
     }
 
     this.runningTests.set(this.refToKey(ref), {
@@ -417,8 +431,13 @@ export default class TestRunner {
     this.progress.finished++;
   }
 
-  setupProgress() {
+  setupProgress(): () => void {
     const workers = this.getWorkers();
+
+    const progress = this.request.reporter.progress({
+      persistent: true,
+    });
+    progress.setTitle('Running tests');
 
     for (let i = 0; i < workers.length; i++) {
       const container = workers[i];
@@ -426,64 +445,91 @@ export default class TestRunner {
 
       const ourRunningTests: Set<string> = new Set();
 
-      bridge.endEvent.subscribe(error => {
-        // Fail all currently running tests
+      bridge.endEvent.subscribe((error) => {
+        // Cancel all currently running tests
+
+        const cancelTests: Array<TestRef> = [];
+
         for (const key of ourRunningTests) {
           const test = this.runningTests.get(key);
-          if (test === undefined) {
-            // Test has already finished
-            continue;
+          if (test !== undefined) {
+            cancelTests.push(test.ref);
           }
+        }
 
-          const {ref} = test;
+        for (const ref of cancelTests) {
           this.onTestFinished(ref);
-          this.printer.addDiagnostic(
-            deriveDiagnosticFromError({
-              error,
-              category: ref.testName,
+
+          if (cancelTests.length === 1) {
+            // If we only have one test to cancel then let's only point the bridge error to this test
+            this.ignoreBridgeEndError.add(bridge);
+
+            this.printer.addDiagnostic({
+              ...deriveDiagnosticFromError({
+                label: ref.testName,
+                category: 'tests/failure',
+                filename: ref.filename,
+                error,
+              }),
+
+              // We don't care about the advice
+              advice: [],
+            });
+          } else {
+            this.printer.addDiagnostic({
+              label: ref.testName,
+              category: 'tests/failure',
               filename: ref.filename,
-            }),
-            {
-              category: 'test',
-              message:
-                'Worker died and this diagnostic was automatically generated to fail a test',
-            },
-          );
+              message: 'Test was cancelled',
+            });
+          }
         }
       });
 
-      bridge.testFound.subscribe(data => {
-        this.onTestFound(data.ref, data.isSkipped);
+      bridge.testsFound.subscribe((tests) => {
+        for (const {ref, isSkipped} of tests) {
+          this.onTestFound(ref, isSkipped);
+        }
+        progress.setTotal(this.progress.total);
       });
 
-      bridge.testStart.subscribe(data => {
+      bridge.testStart.subscribe((data) => {
         ourRunningTests.add(this.refToKey(data.ref));
         this.onTestStart(container, data.ref, data.timeout);
+        progress.pushText(getProgressTestRefText(data.ref));
       });
 
-      bridge.testError.subscribe(data => {
+      bridge.testError.subscribe((data) => {
         let origin: DiagnosticOrigin = {
-          category: 'test',
-          message:
-            'Generated from a test worker without being attached to a test',
+          category: 'test/error',
+          message: 'Generated from a test worker without being attached to a test',
         };
 
         const {ref} = data;
         if (ref !== undefined) {
-          const uid = this.master.projectManager.getUid(
-            createAbsoluteFilePath(ref.filename),
-          );
-          origin.message = `Generated from the file <filelink target="${uid}" /> and test name "${ref.testName}"`;
+          const uid = this.master.projectManager.getUid(createAbsoluteFilePath(
+            ref.filename,
+          ));
+          origin.message =
+            `Generated from the file <filelink target="${uid}" /> and test name "${ref.testName}"`;
           this.onTestFinished(ref);
+          progress.popText(getProgressTestRefText(ref));
+          progress.tick();
         }
 
         this.printer.addDiagnostic(data.diagnostic, origin);
       });
 
-      bridge.testSuccess.subscribe(data => {
+      bridge.testSuccess.subscribe((data) => {
         this.onTestFinished(data.ref);
+        progress.popText(getProgressTestRefText(data.ref));
+        progress.tick();
       });
     }
+
+    return function() {
+      progress.end();
+    };
   }
 
   printCoverageReport() {
@@ -564,16 +610,15 @@ export default class TestRunner {
       const newRoot = root.folders.values().next().value;
       root = {
         ...newRoot,
-        name:
-          root.name !== undefined && newRoot.name !== undefined
-            ? `${root.name}/${newRoot.name}`
-            : newRoot.name,
+        name: root.name !== undefined && newRoot.name !== undefined
+          ? `${root.name}/${newRoot.name}` : newRoot.name,
       };
     }
 
     const rows: Array<Array<string>> = [];
 
     // If there's more than 15 files to show, and we don't have the explicit showAllCoverage flag
+
     // then truncate the output
     const showAllCoverage = this.options.showAllCoverage || totalFiles < 15;
 
@@ -643,9 +688,7 @@ export default class TestRunner {
   printTestSuccess() {
     this.printCoverageReport();
     this.reporter.success(
-      `All <emphasis>${humanizeNumber(
-        this.progress.total,
-      )}</emphasis> tests passed!`,
+      `All <emphasis>${humanizeNumber(this.progress.total)}</emphasis> tests passed!`,
     );
   }
 

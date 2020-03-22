@@ -8,11 +8,13 @@
 import {JSNodeBase, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type MetaProperty = JSNodeBase & {
-  type: 'MetaProperty';
-  meta: Identifier;
-  property: Identifier;
-};
+export type MetaProperty =
+  & JSNodeBase
+  & {
+    type: 'MetaProperty';
+    meta: Identifier;
+    property: Identifier;
+  };
 
 export const metaProperty = createBuilder<MetaProperty>('MetaProperty', {
   bindingKeys: {},

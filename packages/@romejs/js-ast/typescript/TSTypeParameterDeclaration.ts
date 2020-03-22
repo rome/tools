@@ -8,10 +8,12 @@
 import {JSNodeBase, TSTypeParameter} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTypeParameterDeclaration = JSNodeBase & {
-  type: 'TSTypeParameterDeclaration';
-  params: Array<TSTypeParameter>;
-};
+export type TSTypeParameterDeclaration =
+  & JSNodeBase
+  & {
+    type: 'TSTypeParameterDeclaration';
+    params: Array<TSTypeParameter>;
+  };
 
 export const tsTypeParameterDeclaration = createBuilder<
   TSTypeParameterDeclaration

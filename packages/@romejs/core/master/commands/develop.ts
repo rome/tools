@@ -11,11 +11,9 @@ import {WebServer} from '../web/index';
 import {createMasterCommand} from '../../commands';
 import {commandCategories} from '../../commands';
 
-type Flags = {
-  port: number;
-};
+type Flags = {port: number};
 
-const DEFAULT_PORT = 8081;
+const DEFAULT_PORT = 8_081;
 
 export default createMasterCommand({
   category: commandCategories.SOURCE_CODE,

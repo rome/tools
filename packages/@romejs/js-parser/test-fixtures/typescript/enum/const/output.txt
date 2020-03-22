@@ -1,0 +1,60 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.ts'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: 'input.ts'
+    end: Object {
+      column: 0
+      index: 16
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    TSEnumDeclaration {
+      id: BindingIdentifier {
+        name: 'E'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 12
+            index: 12
+            line: 1
+          }
+          start: Object {
+            column: 11
+            index: 11
+            line: 1
+          }
+        }
+      }
+      const: true
+      members: Array []
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 15
+          index: 15
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+  ]
+}

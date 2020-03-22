@@ -43,12 +43,14 @@ export type FixtureFile = {
   content: Buffer;
 };
 
-async function _getFixtures(opts: {
-  name: undefined | string;
-  dir: AbsoluteFilePath;
-  parts: Array<string>;
-  options: Consumer;
-}): Promise<Array<Fixture>> {
+async function _getFixtures(
+  opts: {
+    name: undefined | string;
+    dir: AbsoluteFilePath;
+    parts: Array<string>;
+    options: Consumer;
+  },
+): Promise<Array<Fixture>> {
   const {name, dir, parts, options: inheritOptions} = opts;
 
   // Check if directory even exists
@@ -71,13 +73,11 @@ async function _getFixtures(opts: {
   }
 
   // Merge options
-  const options: Consumer =
-    ownOptions === undefined
-      ? inheritOptions
-      : consumeUnknown({
-          ...inheritOptions.asUnknownObject(),
-          ...ownOptions.asUnknownObject(),
-        });
+  const options: Consumer = ownOptions === undefined
+    ? inheritOptions : consumeUnknown({
+      ...inheritOptions.asUnknownObject(),
+      ...ownOptions.asUnknownObject(),
+    }, 'tests/fixtureOptions');
 
   // An array of folders names that lead to this fixture
   const ownParts = name === undefined ? parts : [...parts, name];
@@ -98,14 +98,12 @@ async function _getFixtures(opts: {
     let fixtures: Array<Fixture> = [];
 
     for (const path of folders) {
-      fixtures = fixtures.concat(
-        await _getFixtures({
-          name: path.getBasename(),
-          dir: path,
-          parts: ownParts,
-          options,
-        }),
-      );
+      fixtures = fixtures.concat(await _getFixtures({
+        name: path.getBasename(),
+        dir: path,
+        parts: ownParts,
+        options,
+      }));
     }
 
     return fixtures;
@@ -135,9 +133,9 @@ async function _getFixtures(opts: {
 export async function getFixtures(dir: string): Promise<Array<Fixture>> {
   return _getFixtures({
     name: undefined,
-    dir: createAbsoluteFilePath(dir).append('__rfixtures__'),
+    dir: createAbsoluteFilePath(dir).append('test-fixtures'),
     parts: [],
-    options: consumeUnknown({}),
+    options: consumeUnknown({}, 'tests/fixtureOptions'),
   });
 }
 
@@ -146,7 +144,7 @@ export async function createFixtureTests(
   dir: string = dirname,
 ): Promise<void> {
   for (const fixture of await getFixtures(dir)) {
-    test(fixture.name, {}, async t => {
+    test(fixture.name, {}, async (t) => {
       t.addToAdvice({
         type: 'log',
         category: 'info',
@@ -166,10 +164,8 @@ export async function createFixtureTests(
 
       t.addToAdvice({
         type: 'list',
-        list: Array.from(
-          fixture.files,
-          ([basename, info]) =>
-            `<filelink target="${info.absolute}">${basename}</filelink>`,
+        list: Array.from(fixture.files, ([basename, info]) =>
+          `<filelink target="${info.absolute}">${basename}</filelink>`
         ),
       });
 

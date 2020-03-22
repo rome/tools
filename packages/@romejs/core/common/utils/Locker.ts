@@ -64,7 +64,7 @@ export default class Locker<Key> {
     if (existingLock === undefined) {
       return this.getNewLock(key);
     } else {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         existingLock.addResolve(resolve);
       });
     }

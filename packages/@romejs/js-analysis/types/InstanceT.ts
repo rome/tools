@@ -46,7 +46,7 @@ export default class InstanceT extends ObjT {
   serialize(addType: SerialTypeFactory): HydrateData {
     return {
       target: addType(this.target),
-      params: this.typeParameters.map(type => addType(type)),
+      params: this.typeParameters.map((type) => addType(type)),
     };
   }
 
@@ -56,12 +56,9 @@ export default class InstanceT extends ObjT {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new InstanceT(
-      scope,
-      originNode,
-      getType(data.target),
-      Array(data.params).map(id => getType(id)),
-    );
+    return new InstanceT(scope, originNode, getType(data.target), Array(
+      data.params,
+    ).map((id) => getType(id)));
   }
 
   humanize(builder: HumanBuilder): string {
@@ -70,16 +67,16 @@ export default class InstanceT extends ObjT {
     if (typeParams.length === 0) {
       return name;
     } else {
-      return `${name}<${typeParams
-        .map(param => builder.humanize(param))
-        .join(', ')}>`;
+      return `${name}<${typeParams.map((param) => builder.humanize(param)).join(
+        ', ',
+      )}>`;
     }
   }
 
   compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
-    return (
-      otherType instanceof InstanceT &&
-      this.utils.checkCompability(this.target, otherType.target)
+    return otherType instanceof InstanceT && this.utils.checkCompability(
+      this.target,
+      otherType.target,
     );
   }
 }

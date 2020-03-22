@@ -21,11 +21,8 @@ export default function ClassHead(generator: Generator, node: AnyNode) {
     generator.print(node.superTypeParameters, node);
   }
 
-  if (
-    node.implements !== undefined &&
-    node.implements.length > 0 &&
-    generator.options.typeAnnotations
-  ) {
+  if (node.implements !== undefined && node.implements.length > 0 &&
+    generator.options.typeAnnotations) {
     generator.space();
     generator.word('implements');
     generator.space();

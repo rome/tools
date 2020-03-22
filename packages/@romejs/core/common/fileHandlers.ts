@@ -55,10 +55,7 @@ export function getFileHandler(
   let handler = DEFAULT_HANDLERS.get(ext);
 
   // Allow setting custom assert extensions in the project config
-  if (
-    handler === undefined &&
-    projectConfig.files.assetExtensions.includes(ext)
-  ) {
+  if (handler === undefined && projectConfig.files.assetExtensions.includes(ext)) {
     handler = assetHandler;
   }
 
@@ -78,9 +75,12 @@ export function getFileHandlerAssert(
   }
 }
 
-export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
-  prefetchedModuleSignatures: PrefetchedModuleSignatures;
-};
+export type ExtensionLintInfo =
+  & ExtensionHandlerMethodInfo
+  & {
+    prefetchedModuleSignatures: PrefetchedModuleSignatures;
+    format: boolean;
+  };
 
 export type ExtensionLintResult = {
   sourceText: string;
@@ -98,29 +98,27 @@ export type ExtensionHandlerMethodInfo = {
 export type ExtensionHandler = {
   sourceType?: ConstSourceType;
   syntax?: Array<ConstProgramSyntax>;
-
   hasteMode?: 'ext' | 'noext';
   isAsset?: boolean;
   canHaveScale?: boolean;
-
   lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
   format?: (info: ExtensionHandlerMethodInfo) => Promise<ExtensionLintResult>;
-  toJavaScript?: (
-    opts: ExtensionHandlerMethodInfo,
-  ) => Promise<{
+  toJavaScript?: (opts: ExtensionHandlerMethodInfo) => Promise<{
     generated: boolean;
     sourceText: string;
   }>;
-  analyzeDependencies?: (
-    opts: ExtensionHandlerMethodInfo,
-  ) => Promise<AnalyzeDependencyResult>;
+  analyzeDependencies?: (opts: ExtensionHandlerMethodInfo) => Promise<
+    AnalyzeDependencyResult
+  >;
 };
 
 const textHandler: ExtensionHandler = {
   sourceType: 'module',
 
   // Mock a single default export
+
   // We could always just pass this through to analyzeDependencies and get the same result due to the toJavaScript call below,
+
   // but the return value is predictable so we inline it
   async analyzeDependencies() {
     return {
@@ -160,6 +158,7 @@ const assetHandler: ExtensionHandler = {
 
   async toJavaScript() {
     // This exists just so analyzeDependencies has something to look at
+
     // When bundling we'll have custom logic in the compiler to handle assets and inject the correct string
     return {
       generated: true,
@@ -185,24 +184,26 @@ const jsonHandler: ExtensionHandler = {
     let formatted: string = sourceText;
 
     if (project.config.format.enabled) {
-      if (sourceText.length > 50000) {
+      if (sourceText.length > 50_000) {
         // Fast path for big JSON files
         parseJSON({
-          path: path,
+          path,
           input: sourceText,
         });
       } else {
         const {consumer, comments, hasExtensions} = consumeJSONExtra({
           input: sourceText,
-          path: path,
+          path,
         });
 
         if (hasExtensions) {
           formatted = stringifyJSON({consumer, comments});
         } else {
-          formatted = String(
-            JSON.stringify(consumer.asUnknown(), undefined, '  '),
-          );
+          formatted = String(JSON.stringify(
+            consumer.asUnknown(),
+            undefined,
+            '  ',
+          ));
         }
       }
     }
@@ -236,10 +237,15 @@ const jsonHandler: ExtensionHandler = {
 };
 
 // These are extensions that be implicitly tried when a file is referenced
+
 // This is mostly for compatibility with Node.js projects. This list should not
+
 // be extended. Explicit extensions are required in the browser for as modules and
+
 // should be required everywhere.
+
 // TypeScript is unfortunately included here as it produces an error if you use an
+
 // import source with ".ts"
 export const IMPLICIT_JS_EXTENSIONS = ['js', 'json', 'ts', 'tsx'];
 
@@ -298,43 +304,39 @@ function buildJSHandler(
       };
     },
 
-    async format(
-      info: ExtensionHandlerMethodInfo,
-    ): Promise<ExtensionLintResult> {
+    async format(info: ExtensionHandlerMethodInfo): Promise<ExtensionLintResult> {
       const {file: ref, worker} = info;
 
-      const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
-        ref,
-      );
+      const {ast, sourceText, generated}: ParseResult = await worker.parseJS(ref);
 
       const res = generateJS(ast, {
         typeAnnotations: true,
+        format: 'pretty',
       });
 
-      const extractedSuppressions = compiler.extractSuppressionsFromProgram(
-        ast,
-      );
+      const extractedSuppressions = compiler.extractSuppressionsFromProgram(ast);
 
-      return worker.api.interceptAndAddGeneratedToDiagnostics(
-        {
-          formatted: res.getCode(),
-          sourceText,
-          suppressions: extractedSuppressions.suppressions,
-          diagnostics: [
-            ...ast.diagnostics,
-            ...extractedSuppressions.diagnostics,
-          ],
-        },
-        generated,
-      );
+      return worker.api.interceptAndAddGeneratedToDiagnostics({
+        formatted: res.buf.getCode(),
+        sourceText,
+        suppressions: extractedSuppressions.suppressions,
+        diagnostics: [
+          ...ast.diagnostics,
+          ...extractedSuppressions.diagnostics,
+        ],
+      }, generated);
     },
 
     async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {
-      const {file: ref, project, prefetchedModuleSignatures, worker} = info;
+      const {
+        file: ref,
+        project,
+        format,
+        prefetchedModuleSignatures,
+        worker,
+      } = info;
 
-      const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
-        ref,
-      );
+      const {ast, sourceText, generated}: ParseResult = await worker.parseJS(ref);
 
       worker.logger.info(`Linting: `, ref.real);
 
@@ -344,6 +346,7 @@ function buildJSHandler(
         ast,
         project,
         sourceText,
+        format,
       });
 
       // Extract lint diagnostics
@@ -370,15 +373,12 @@ function buildJSHandler(
         diagnostics = [...diagnostics, ...typeDiagnostics];
       }
 
-      return worker.api.interceptAndAddGeneratedToDiagnostics(
-        {
-          suppressions: res.suppressions,
-          diagnostics,
-          sourceText,
-          formatted: res.src,
-        },
-        generated,
-      );
+      return worker.api.interceptAndAddGeneratedToDiagnostics({
+        suppressions: res.suppressions,
+        diagnostics,
+        sourceText,
+        formatted: res.src,
+      }, generated);
     },
   };
 }

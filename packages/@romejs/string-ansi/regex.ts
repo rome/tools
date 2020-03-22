@@ -12,4 +12,4 @@ export const pattern = [
 
 export const regex = new RegExp(pattern, 'g');
 
-export const colorRegex = /\u001b\[[3-9][0-9]m/g;
+export const colorRegex = /u001b\[[3-9][0-9]m/g;

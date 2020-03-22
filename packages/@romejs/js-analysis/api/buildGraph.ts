@@ -12,12 +12,14 @@ import {Program} from '@romejs/js-ast';
 import Hub from '../Hub';
 import {TransformProjectDefinition} from '@romejs/js-compiler';
 
-export default async function buildGraph(opts: {
-  ast: Program;
-  project: TransformProjectDefinition;
-  connected: boolean;
-  provider: CheckProvider;
-}): Promise<Hub> {
+export default async function buildGraph(
+  opts: {
+    ast: Program;
+    project: TransformProjectDefinition;
+    connected: boolean;
+    provider: CheckProvider;
+  },
+): Promise<Hub> {
   const {ast, connected, project, provider} = opts;
 
   const hub = new Hub(ast, project);
@@ -76,17 +78,15 @@ export default async function buildGraph(opts: {
 
     // seed graphs
     const seedCache: Set<string> = new Set();
-    await Promise.all(
-      evaluator.imports.map(({source, relative}) => {
-        const cacheKey = `${source}:${relative}`;
-        if (seedCache.has(cacheKey)) {
-          return undefined;
-        }
+    await Promise.all(evaluator.imports.map(({source, relative}) => {
+      const cacheKey = `${source}:${relative}`;
+      if (seedCache.has(cacheKey)) {
+        return undefined;
+      }
 
-        seedCache.add(cacheKey);
-        return getModuleSignature(source, relative);
-      }),
-    );
+      seedCache.add(cacheKey);
+      return getModuleSignature(source, relative);
+    }));
 
     // link imports
     for (const {source, importedName, relative, type} of evaluator.imports) {

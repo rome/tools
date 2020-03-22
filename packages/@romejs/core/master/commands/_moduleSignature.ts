@@ -19,13 +19,10 @@ export default createMasterCommand({
     const {args} = req.query;
     req.expectArgumentLength(1);
 
-    const filename = await master.resolver.resolveEntryAssertPath(
-      {
-        ...req.getResolverOptionsFromFlags(),
-        source: createUnknownFilePath(args[0]),
-      },
-      {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
-    );
+    const filename = await master.resolver.resolveEntryAssertPath({
+      ...req.getResolverOptionsFromFlags(),
+      source: createUnknownFilePath(args[0]),
+    }, {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
     reporter.inspect(await req.requestWorkerModuleSignature(filename));
   },
 });

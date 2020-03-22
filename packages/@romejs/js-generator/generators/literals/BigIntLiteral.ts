@@ -11,5 +11,5 @@ import {BigIntLiteral, bigIntLiteral, AnyNode} from '@romejs/js-ast';
 export default function BigIntLiteral(generator: Generator, node: AnyNode) {
   node = bigIntLiteral.assert(node);
 
-  generator.word(node.value + 'n');
+  generator.word(`${node.value}n`);
 }

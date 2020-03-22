@@ -11,13 +11,12 @@ import {
   assignmentObjectPatternProperty,
   AnyNode,
 } from '@romejs/js-ast';
-import ObjectPatternProperty from './BindingObjectPatternProperty';
+import ObjectProperty from '../objects/ObjectProperty';
 
 export default function AssignmentObjectPatternProperty(
   generator: Generator,
   node: AnyNode,
 ) {
   node = assignmentObjectPatternProperty.assert(node);
-
-  ObjectPatternProperty(generator, node);
+  ObjectProperty(generator, node);
 }

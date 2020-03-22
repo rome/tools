@@ -9,13 +9,10 @@ import {Bridge} from '@romejs/events';
 import {WebMasterRequest, WebMasterClient} from '../../master/web';
 
 export default class WebBridge extends Bridge {
-  requests = this.createEvent<
-    {
-      requests: Array<WebMasterRequest>;
-      clients: Array<WebMasterClient>;
-    },
-    void
-  >({
+  requests = this.createEvent<{
+    requests: Array<WebMasterRequest>;
+    clients: Array<WebMasterClient>;
+  }, void>({
     name: 'WebBridge.requests',
     direction: 'server->client',
   });

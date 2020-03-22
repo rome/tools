@@ -18,7 +18,7 @@ export default function TSAssignmentAsExpression(
 ) {
   node = tsAssignmentAsExpression.assert(node);
 
-  generator.print(node.expression);
+  generator.print(node.expression, node);
 
   if (generator.options.typeAnnotations) {
     generator.word('as');

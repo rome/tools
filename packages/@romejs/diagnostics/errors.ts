@@ -22,14 +22,12 @@ export class DiagnosticsError extends Error {
     }
 
     message += '\n';
-    message += stripAnsi(
-      printDiagnosticsToString(diagnostics, {
-        origins: [],
-      }),
-    );
-    message += stripAnsi(
-      diagnostics.map(diag => `- ${diag.message}`).join('\n'),
-    );
+    message += stripAnsi(printDiagnosticsToString(diagnostics, {
+      origins: [],
+    }));
+    message += stripAnsi(diagnostics.map((diag) => `- ${diag.message}`).join(
+      '\n',
+    ));
 
     super(escapeMarkup(message));
     this.diagnostics = diagnostics;

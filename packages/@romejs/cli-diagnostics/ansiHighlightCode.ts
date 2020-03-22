@@ -14,7 +14,7 @@ import {tokenizeJSON} from '@romejs/codec-json';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 
 // 100KB
-const FILE_SIZE_MAX = 100000;
+const FILE_SIZE_MAX = 100_000;
 
 export type AnsiHighlightOptions = {
   path: UnknownFilePath;
@@ -30,9 +30,8 @@ export default function ansiHighlightCode(opts: AnsiHighlightOptions): string {
 
   if (opts.language === 'js') {
     // js-parser does not accept an "unknown" sourceType
-    return ansiHighlightJS(
-      opts.input,
-      opts.sourceType === 'unknown' ? 'script' : opts.sourceType,
+    return ansiHighlightJS(opts.input, opts.sourceType === 'unknown'
+      ? 'script' : opts.sourceType
     );
   }
 
@@ -43,7 +42,10 @@ export default function ansiHighlightCode(opts: AnsiHighlightOptions): string {
   return opts.input;
 }
 
-function reduce<Token extends {start: Number0; end: Number0}>(
+function reduce<Token extends {
+  start: Number0;
+  end: Number0;
+}>(
   input: string,
   tokens: Array<Token>,
   callback: (token: Token, line: string) => string,
@@ -63,7 +65,7 @@ function reduce<Token extends {start: Number0; end: Number0}>(
     // We need to break up the token text into lines, so that we can easily split the highlighted newlines and have the ansi codes be unbroken
     const lines = value.split('\n');
 
-    const values: Array<string> = lines.map(line => {
+    const values: Array<string> = lines.map((line) => {
       return callback(token, line);
     });
 

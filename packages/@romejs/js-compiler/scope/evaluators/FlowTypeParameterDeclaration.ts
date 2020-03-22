@@ -14,17 +14,11 @@ export default {
   creator: false,
   build(node: FlowTypeParameterDeclaration, parent: AnyNode, scope: Scope) {
     for (const id of getBindingIdentifiers(node)) {
-      scope.addBinding(
-        new TypeBinding(
-          {
-            node: id,
-            name: id.name,
-            scope,
-          },
-          node,
-          'parameter',
-        ),
-      );
+      scope.addBinding(new TypeBinding({
+        node: id,
+        name: id.name,
+        scope,
+      }, node, 'parameter'));
     }
   },
 };

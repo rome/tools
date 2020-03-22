@@ -1,0 +1,248 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 42
+      line: 2
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 41
+          index: 41
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      expression: MemberExpression {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 41
+            index: 41
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        property: StaticMemberProperty {
+          value: Identifier {
+            name: 'milkyway'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 41
+                index: 41
+                line: 1
+              }
+              start: Object {
+                column: 33
+                index: 33
+                line: 1
+              }
+            }
+          }
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 41
+              index: 41
+              line: 1
+            }
+            start: Object {
+              column: 33
+              index: 33
+              line: 1
+            }
+          }
+        }
+        object: CallExpression {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 32
+              index: 32
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+          arguments: Array [
+            NumericLiteral {
+              value: 14
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 24
+                  index: 24
+                  line: 1
+                }
+                start: Object {
+                  column: 22
+                  index: 22
+                  line: 1
+                }
+              }
+            }
+            NumericLiteral {
+              value: 3
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 27
+                  index: 27
+                  line: 1
+                }
+                start: Object {
+                  column: 26
+                  index: 26
+                  line: 1
+                }
+              }
+            }
+            NumericLiteral {
+              value: 77
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 31
+                  index: 31
+                  line: 1
+                }
+                start: Object {
+                  column: 29
+                  index: 29
+                  line: 1
+                }
+              }
+            }
+          ]
+          callee: MemberExpression {
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 21
+                index: 21
+                line: 1
+              }
+              start: Object {
+                column: 0
+                index: 0
+                line: 1
+              }
+            }
+            property: StaticMemberProperty {
+              value: Identifier {
+                name: 'galaxies'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 21
+                    index: 21
+                    line: 1
+                  }
+                  start: Object {
+                    column: 13
+                    index: 13
+                    line: 1
+                  }
+                }
+              }
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 21
+                  index: 21
+                  line: 1
+                }
+                start: Object {
+                  column: 13
+                  index: 13
+                  line: 1
+                }
+              }
+            }
+            object: CallExpression {
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 12
+                  index: 12
+                  line: 1
+                }
+                start: Object {
+                  column: 0
+                  index: 0
+                  line: 1
+                }
+              }
+              callee: ReferenceIdentifier {
+                name: 'universe'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 8
+                    index: 8
+                    line: 1
+                  }
+                  start: Object {
+                    column: 0
+                    index: 0
+                    line: 1
+                  }
+                }
+              }
+              arguments: Array [
+                NumericLiteral {
+                  value: 42
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 11
+                      index: 11
+                      line: 1
+                    }
+                    start: Object {
+                      column: 9
+                      index: 9
+                      line: 1
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

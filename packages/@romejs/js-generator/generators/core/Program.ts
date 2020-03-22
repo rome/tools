@@ -10,12 +10,12 @@ import {Program, program, AnyNode} from '@romejs/js-ast';
 
 export default function Program(generator: Generator, node: AnyNode) {
   node = program.assert(node);
-  program.assert(node);
+
   generator.printInnerComments(node, false);
   generator.printStatementList(node.directives, node);
 
   if (node.directives && node.directives.length) {
-    generator.newline();
+    generator.forceNewline();
   }
 
   generator.printStatementList(node.body, node);

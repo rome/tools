@@ -42,9 +42,9 @@ export default class ObjT extends T {
     }
 
     return {
-      calls: this.calls.map(type => addType(type)),
+      calls: this.calls.map((type) => addType(type)),
       proto: this.proto === undefined ? undefined : addType(this.proto),
-      props: this.props.map(type => addType(type)),
+      props: this.props.map((type) => addType(type)),
     };
   }
 
@@ -55,9 +55,9 @@ export default class ObjT extends T {
     getType: HydrateTypeFactory,
   ): T {
     return new ObjT(scope, originNode, {
-      props: Array(data.props).map(id => getType(id)),
+      props: Array(data.props).map((id) => getType(id)),
       proto: data.proto === undefined ? undefined : getType(data.proto),
-      calls: Array(data.calls).map(id => getType(id)),
+      calls: Array(data.calls).map((id) => getType(id)),
     });
   }
 
@@ -110,11 +110,11 @@ export default class ObjT extends T {
     } else {
       return [
         '{',
-        ...this.props.map(prop => {
+        ...this.props.map((prop) => {
           const val = builder.humanize(prop);
           let lines = val.split('\n');
-          lines = lines.map(line => '  ' + line);
-          return lines.join('\n') + ',';
+          lines = lines.map((line) => `  ${line}`);
+          return `${lines.join('\n')},`;
         }),
         '}',
       ].join('\n');

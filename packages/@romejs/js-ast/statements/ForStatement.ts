@@ -13,13 +13,15 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type ForStatement = JSNodeBase & {
-  type: 'ForStatement';
-  init?: VariableDeclaration | AnyExpression;
-  test?: AnyExpression;
-  update?: AnyExpression;
-  body: AnyStatement;
-};
+export type ForStatement =
+  & JSNodeBase
+  & {
+    type: 'ForStatement';
+    init?: VariableDeclaration | AnyExpression;
+    test?: AnyExpression;
+    update?: AnyExpression;
+    body: AnyStatement;
+  };
 
 export const forStatement = createBuilder<ForStatement>('ForStatement', {
   bindingKeys: {},

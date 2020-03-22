@@ -16,9 +16,7 @@ type StatusResult = {
     uptime: number;
   };
   workers: Array<StatusWorkerResult>;
-  projects: Array<{
-    id: number;
-  }>;
+  projects: Array<{id: number}>;
 };
 
 type StatusWorkerResult = {
@@ -35,22 +33,20 @@ export default createMasterCommand({
   description: 'dump memory and process info of master and workers',
 
   async default({master}: MasterRequest): Promise<StatusResult> {
-    const workers = await Promise.all(
-      master.workerManager.getWorkers().map(
-        async (worker): Promise<StatusWorkerResult> => {
-          const workerStatus: WorkerStatus = await worker.bridge.status.call();
+    const workers = await Promise.all(master.workerManager.getWorkers().map(
+      async (worker): Promise<StatusWorkerResult> => {
+        const workerStatus: WorkerStatus = await worker.bridge.status.call();
 
-          return {
-            astCacheSize: workerStatus.astCacheSize,
-            heapTotal: workerStatus.memoryUsage.heapTotal,
-            pid: workerStatus.pid,
-            uptime: workerStatus.uptime,
-            ownedBytes: worker.byteCount,
-            ownedFileCount: worker.fileCount,
-          };
-        },
-      ),
-    );
+        return {
+          astCacheSize: workerStatus.astCacheSize,
+          heapTotal: workerStatus.memoryUsage.heapTotal,
+          pid: workerStatus.pid,
+          uptime: workerStatus.uptime,
+          ownedBytes: worker.byteCount,
+          ownedFileCount: worker.fileCount,
+        };
+      },
+    ));
 
     const {heapTotal} = process.memoryUsage();
     return {
@@ -60,7 +56,7 @@ export default createMasterCommand({
         uptime: process.uptime(),
       },
       workers,
-      projects: master.projectManager.getProjects().map(project => {
+      projects: master.projectManager.getProjects().map((project) => {
         return {
           id: project.id,
         };

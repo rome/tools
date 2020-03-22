@@ -17,11 +17,12 @@ export {
   readDiagnosticsFileLocal,
 } from './DiagnosticsPrinter';
 export {DiagnosticsPrinter};
+
 export * from './constants';
+
 export * from './types';
 
 // Simple wrappers around DiagnosticsPrinter
-
 export async function printDiagnostics(
   diagnostics: PartialDiagnostics,
   opts: DiagnosticsPrinterOptions,

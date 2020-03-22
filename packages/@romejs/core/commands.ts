@@ -16,23 +16,30 @@ export type MasterCommand<T> = {
   description: string;
   overrideClientFlags?: Partial<ClientFlags>;
   overrideRequestFlags?: Partial<ClientRequestFlags>;
+  usage?: string;
+  examples?: Array<{
+    description: string;
+    command: string;
+  }>;
   defineFlags?: (c: Consumer) => T;
-  default: (
-    req: MasterRequest,
-    commandFlags: T,
-  ) => undefined | Promise<JSONPropertyValue>;
+  default: (req: MasterRequest, commandFlags: T) =>
+    | undefined
+    | Promise<JSONPropertyValue>;
 };
 
 export type LocalCommand<T> = {
   category: string;
   description: string;
+  usage?: string;
+  examples?: Array<{
+    description: string;
+    command: string;
+  }>;
   callback: (api: ClientRequest, commandFlags: T) => Promise<boolean>;
   defineFlags?: (c: Consumer) => T;
 };
 
-export function createMasterCommand<T>(
-  cmd: MasterCommand<T>,
-): MasterCommand<T> {
+export function createMasterCommand<T>(cmd: MasterCommand<T>): MasterCommand<T> {
   return cmd;
 }
 

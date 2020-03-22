@@ -13,12 +13,14 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type BindingArrayPattern = JSNodeBase & {
-  type: 'BindingArrayPattern';
-  meta?: PatternMeta;
-  elements: Array<undefined | AnyParamBindingPattern>;
-  rest: undefined | AnyTargetBindingPattern;
-};
+export type BindingArrayPattern =
+  & JSNodeBase
+  & {
+    type: 'BindingArrayPattern';
+    meta?: PatternMeta;
+    elements: Array<undefined | AnyParamBindingPattern>;
+    rest: undefined | AnyTargetBindingPattern;
+  };
 
 export const bindingArrayPattern = createBuilder<BindingArrayPattern>(
   'BindingArrayPattern',

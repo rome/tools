@@ -46,12 +46,12 @@ export default class FunctionT extends ObjT {
 
   serialize(addType: SerialTypeFactory): HydrateData {
     return {
-      params: this.params.map(type => addType(type)),
+      params: this.params.map((type) => addType(type)),
       rest: this.rest ? addType(this.rest) : undefined,
       returns: addType(this.returns),
       proto: this.proto === undefined ? undefined : addType(this.proto),
       body: this.body === undefined ? undefined : addType(this.body),
-      props: this.props.map(type => addType(type)),
+      props: this.props.map((type) => addType(type)),
     };
   }
 
@@ -62,19 +62,21 @@ export default class FunctionT extends ObjT {
     getType: HydrateTypeFactory,
   ): T {
     return new FunctionT(scope, originNode, {
-      params: Array(data.params).map(id => getType(id)),
+      params: Array(data.params).map((id) => getType(id)),
       rest: data.rest === undefined ? undefined : getType(data.rest),
       returns: getType(data.returns),
-      props: Array(data.props).map(id => getType(id)),
+      props: Array(data.props).map((id) => getType(id)),
       proto: data.proto === undefined ? undefined : getType(data.proto),
       body: data.body === undefined ? undefined : getType(data.body),
     });
   }
 
   humanize(builder: HumanBuilder): string {
-    return `(${this.params
-      .map(param => builder.humanize(param))
-      .join(', ')}) => ${builder.humanize(this.returns)}`;
+    return (
+      `(${this.params.map((param) => builder.humanize(param)).join(', ')}) => ${builder.humanize(
+        this.returns,
+      )}`
+    );
   }
 
   reduce(): T {

@@ -10,7 +10,5 @@ import {AnyNode, FlowTypeCastExpression, TSAsExpression} from '@romejs/js-ast';
 export default function isTypeExpressionWrapperNode(
   node: AnyNode,
 ): node is FlowTypeCastExpression | TSAsExpression {
-  return (
-    node.type === 'FlowTypeCastExpression' || node.type === 'TSAsExpression'
-  );
+  return node.type === 'FlowTypeCastExpression' || node.type === 'TSAsExpression';
 }

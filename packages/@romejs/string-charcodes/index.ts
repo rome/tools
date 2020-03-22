@@ -106,9 +106,9 @@ export const verticalBar = 124; //  '|'
 export const rightCurlyBrace = 125; //  '}'
 export const tilde = 126; //  '~'
 export const nonBreakingSpace = 160;
-export const oghamSpaceMark = 5760; // ' '
-export const lineSeparator = 8232;
-export const paragraphSeparator = 8233;
+export const oghamSpaceMark = 5_760; // ' '
+export const lineSeparator = 8_232;
+export const paragraphSeparator = 8_233;
 
 export function isDigit(code: number): boolean {
   return code >= digit0 && code <= digit9;

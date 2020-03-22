@@ -10,10 +10,10 @@ import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
 import fs = require('fs');
 
 // This file contains some wrappers around Node's fs module. Except here we support passing in AbsoluteFilePath instances.
+
 // NOTE We don't bother using Node's built-in fs promise functions at all. They already contain a level of indirection to callbacks.
 
 // Helpers
-
 type DataCallback<Data> = (err: null | Error, data: Data) => void;
 
 function promisifyData<Data>(
@@ -38,7 +38,7 @@ function promisifyVoid(
   factory: (path: string, callback: VoidCallback) => void,
 ): Promise<void> {
   return new Promise((resolve, reject) => {
-    factory(path.join(), err => {
+    factory(path.join(), (err) => {
       if (err === null) {
         resolve();
       } else {
@@ -49,26 +49,25 @@ function promisifyVoid(
 }
 
 // watch
-
 export function watch(
   path: AbsoluteFilePath,
   options:
     | {
-        encoding?: BufferEncoding | null;
-        persistent?: boolean;
-        recursive?: boolean;
-      }
+      encoding?: BufferEncoding | null;
+      persistent?: boolean;
+      recursive?: boolean;
+    }
     | undefined,
+
   listener?: (event: string, filename: null | string) => void,
 ) {
   return fs.watch(path.join(), options, listener);
 }
 
 // readFile
-
 export function readFile(path: AbsoluteFilePath): Promise<Buffer> {
   return promisifyData(path, (filename, callback) =>
-    fs.readFile(filename, callback),
+    fs.readFile(filename, callback)
   );
 }
 
@@ -77,7 +76,6 @@ export function readFileSync(path: AbsoluteFilePath): Buffer {
 }
 
 // readFileText
-
 export async function readFileText(path: AbsoluteFilePath): Promise<string> {
   return (await readFile(path)).toString();
 }
@@ -87,13 +85,12 @@ export function readFileTextSync(path: AbsoluteFilePath): string {
 }
 
 // writeFile
-
 export function writeFile(
   path: AbsoluteFilePath,
   content: string | Buffer,
 ): Promise<void> {
   return promisifyVoid(path, (filename, callback) =>
-    fs.writeFile(filename, content, callback),
+    fs.writeFile(filename, content, callback)
   );
 }
 
@@ -105,16 +102,13 @@ export function writeFileSync(
 }
 
 // readdir
-
 function createReaddirReturn(
   folder: AbsoluteFilePath,
   files: Array<string>,
 ): AbsoluteFilePathSet {
-  return new AbsoluteFilePathSet(
-    files.map(basename => {
-      return folder.append(basename);
-    }),
-  );
+  return new AbsoluteFilePathSet(files.map((basename) => {
+    return folder.append(basename);
+  }));
 }
 
 export function readdir(path: AbsoluteFilePath): Promise<AbsoluteFilePathSet> {
@@ -128,15 +122,16 @@ export function readdir(path: AbsoluteFilePath): Promise<AbsoluteFilePathSet> {
     });
   });
 }
+
 export function readdirSync(path: AbsoluteFilePath): AbsoluteFilePathSet {
   return createReaddirReturn(path, fs.readdirSync(path.join()));
 }
 
 // lstat
-
 export function lstat(path: AbsoluteFilePath): Promise<fs.Stats> {
-  return promisifyData(path, (filename, callback) =>
-    fs.lstat(filename, callback),
+  return promisifyData(
+    path,
+    (filename, callback) => fs.lstat(filename, callback),
   );
 }
 
@@ -145,10 +140,9 @@ export function lstatSync(path: AbsoluteFilePath): fs.Stats {
 }
 
 // exists
-
 export function exists(path: AbsoluteFilePath): Promise<boolean> {
-  return new Promise(resolve => {
-    fs.exists(path.join(), exists => {
+  return new Promise((resolve) => {
+    fs.exists(path.join(), (exists) => {
       resolve(exists);
     });
   });
@@ -159,16 +153,15 @@ export function existsSync(path: AbsoluteFilePath): boolean {
 }
 
 // unlink
-
 export function unlink(path: AbsoluteFilePath): Promise<void> {
   return promisifyVoid(path, (filename, callback) =>
-    fs.unlink(filename, err => {
+    fs.unlink(filename, (err) => {
       if (err != null && err.code !== 'ENOENT') {
         callback(err);
       } else {
         callback(null);
       }
-    }),
+    })
   );
 }
 
@@ -183,13 +176,12 @@ export function unlinkSync(path: AbsoluteFilePath): void {
 }
 
 // createDirectory
-
 export function createDirectory(
   path: AbsoluteFilePath,
   opts: CreateDirectoryOptions = {},
 ): Promise<void> {
   return promisifyVoid(path, (filename, callback) =>
-    fs.mkdir(filename, {recursive: opts.recursive}, callback),
+    fs.mkdir(filename, {recursive: opts.recursive}, callback)
   );
 }
 
@@ -200,6 +192,4 @@ export function createDirectorySync(
   fs.mkdirSync(path.join(), {recursive: opts.recursive});
 }
 
-type CreateDirectoryOptions = {
-  recursive?: boolean;
-};
+type CreateDirectoryOptions = {recursive?: boolean};

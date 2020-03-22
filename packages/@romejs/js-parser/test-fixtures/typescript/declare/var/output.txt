@@ -1,0 +1,190 @@
+Program {
+  comments: Array []
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.ts'
+  hasHoistedVars: true
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array ['ts']
+  loc: Object {
+    filename: 'input.ts'
+    end: Object {
+      column: 0
+      index: 35
+      line: 3
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  body: Array [
+    VariableDeclarationStatement {
+      declare: true
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 14
+          index: 14
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'var'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 14
+            index: 14
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'x'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 13
+                  index: 13
+                  line: 1
+                }
+                start: Object {
+                  column: 12
+                  index: 12
+                  line: 1
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 13
+                index: 13
+                line: 1
+              }
+              start: Object {
+                column: 12
+                index: 12
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+    }
+    VariableDeclarationStatement {
+      declare: true
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 19
+          index: 34
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 15
+          line: 2
+        }
+      }
+      declaration: VariableDeclaration {
+        kind: 'var'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 19
+            index: 34
+            line: 2
+          }
+          start: Object {
+            column: 0
+            index: 15
+            line: 2
+          }
+        }
+        declarations: Array [
+          VariableDeclarator {
+            id: BindingIdentifier {
+              name: 'x'
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 18
+                  index: 33
+                  line: 2
+                }
+                start: Object {
+                  column: 12
+                  index: 27
+                  line: 2
+                }
+              }
+              meta: PatternMeta {
+                definite: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 18
+                    index: 33
+                    line: 2
+                  }
+                  start: Object {
+                    column: 12
+                    index: 27
+                    line: 2
+                  }
+                }
+                typeAnnotation: AnyKeywordTypeAnnotation {
+                  loc: Object {
+                    filename: 'input.ts'
+                    end: Object {
+                      column: 18
+                      index: 33
+                      line: 2
+                    }
+                    start: Object {
+                      column: 15
+                      index: 30
+                      line: 2
+                    }
+                  }
+                }
+              }
+            }
+            init: undefined
+            loc: Object {
+              filename: 'input.ts'
+              end: Object {
+                column: 18
+                index: 33
+                line: 2
+              }
+              start: Object {
+                column: 12
+                index: 27
+                line: 2
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

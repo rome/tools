@@ -14,7 +14,9 @@ export default function IfStatement(generator: Generator, node: AnyNode) {
   generator.word('if');
   generator.space();
   generator.token('(');
-  generator.print(node.test, node);
+  generator.multiline(node.test, (multiline, test) => {
+    generator.print(test, node);
+  }, {indent: true, indentTrailingNewline: true});
   generator.token(')');
   generator.space();
 
@@ -24,7 +26,7 @@ export default function IfStatement(generator: Generator, node: AnyNode) {
   }
   if (needsBlock) {
     generator.token('{');
-    generator.newline();
+    generator.forceNewline();
     generator.indent();
   }
 
@@ -32,30 +34,31 @@ export default function IfStatement(generator: Generator, node: AnyNode) {
 
   if (needsBlock) {
     generator.dedent();
-    generator.newline();
+    generator.forceNewline();
     generator.token('}');
   }
 
   if (node.alternate) {
-    if (generator.endsWith('}')) {
+    if (generator.buf.endsWith('}')) {
       generator.space();
     }
     generator.word('else');
     generator.space();
     generator.print(node.alternate, node);
   }
+
+  generator.forceNewline();
 }
 
 // Recursively get the last statement.
 function getLastStatement(statement: AnyNode): AnyNode {
   if (
-    (statement.type === 'WithStatement' ||
-      statement.type === 'WhileStatement' ||
-      statement.type === 'DoWhileStatement' ||
-      statement.type === 'ForOfStatement' ||
-      statement.type === 'ForInStatement' ||
-      statement.type === 'ForStatement') &&
-    isStatement(statement.body)
+    (statement.type === 'WithStatement' || statement.type === 'WhileStatement' ||
+    statement.type === 'DoWhileStatement' ||
+    statement.type === 'ForOfStatement' ||
+    statement.type === 'ForInStatement' ||
+    statement.type === 'ForStatement') &&
+      isStatement(statement.body)
   ) {
     return getLastStatement(statement.body);
   } else {

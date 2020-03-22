@@ -18,10 +18,32 @@ export default function IntersectionTypeAnnotation(
 ) {
   node = intersectionTypeAnnotation.assert(node);
 
-  generator.printJoin(node.types, node, {separator: andSeparator});
+  generator.multiline(node, (multiline, node) => {
+    if (multiline) {
+      andNewlineSeparator(generator, false);
+    }
+
+    generator.printJoin(node.types, node, {
+      after: multiline ? andNewlineSeparator : andSpaceSeparator,
+    });
+  }, {conditions: ['more-than-one-line'], indent: true});
 }
 
-function andSeparator(generator: Generator) {
+function andNewlineSeparator(generator: Generator, isLast: boolean) {
+  if (isLast) {
+    return;
+  }
+
+  generator.newline();
+  generator.token('&');
+  generator.space();
+}
+
+function andSpaceSeparator(generator: Generator, isLast: boolean) {
+  if (isLast) {
+    return;
+  }
+
   generator.space();
   generator.token('&');
   generator.space();

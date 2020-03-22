@@ -10,8 +10,16 @@ import {Number1, Number0} from '@romejs/ob1';
 export type Mappings = Array<Mapping>;
 
 export type Mapping = {
-  generated: {line: Number1; column: Number0};
-  original: undefined | {line: Number1; column: Number0};
+  generated: {
+    line: Number1;
+    column: Number0;
+  };
+  original:
+    | undefined
+    | {
+      line: Number1;
+      column: Number0;
+    };
   source: undefined | string;
   name: undefined | string;
 };

@@ -7,7 +7,7 @@
 
 import {formatAnsi} from '@romejs/string-ansi';
 
-export const GUTTER = ' │ ';
+export const GUTTER = ' \u2502 ';
 export const CODE_FRAME_INDENT = '  ';
 export const CODE_FRAME_SELECTED_INDENT = `${formatAnsi.red('>')} `;
 export const FILENAME_INDENT = '  ';

@@ -12,10 +12,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function ExportAllDeclaration(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function ExportAllDeclaration(generator: Generator, node: AnyNode) {
   node = exportAllDeclaration.assert(node);
 
   generator.word('export');

@@ -11,10 +11,11 @@ import {Reporter} from '@romejs/cli-reporter';
 import {RemoteReporterClientMessage, ReporterStream} from './types';
 
 type BoldRanges = Array<[number, number]>;
+
 type SplitBar = Array<[number, string]>;
 
 // 30 columns a second
-const BOUNCER_INTERVAL = 1000 / 30;
+const BOUNCER_INTERVAL = 1_000 / 30;
 const BOUNCER_WIDTH = 20;
 
 export type ProgressOptions = {
@@ -22,13 +23,15 @@ export type ProgressOptions = {
   initDelay?: number;
   elapsed?: boolean;
   eta?: boolean;
+  persistent?: boolean;
 };
 
-const DEFAULT_PROGRESS_OPTIONS = {
+const DEFAULT_PROGRESS_OPTIONS: ProgressOptions = {
   name: undefined,
   initDelay: undefined,
   elapsed: true,
   eta: true,
+  persistent: false,
 };
 
 export default class Progress {
@@ -233,7 +236,8 @@ export default class Progress {
     }
 
     // Progress complete
-    if (this.total !== undefined && this.current >= this.total) {
+    if (this.total !== undefined && this.current >= this.total &&
+      !this.opts.persistent) {
       this.end();
     }
   }
@@ -300,12 +304,9 @@ export default class Progress {
       return;
     }
 
-    this.renderTimer = setTimeout(
-      this.reporter.wrapCallback(() => {
-        this.render();
-      }),
-      delay,
-    );
+    this.renderTimer = setTimeout(this.reporter.wrapCallback(() => {
+      this.render();
+    }), delay);
   }
 
   endBouncer() {
@@ -334,15 +335,17 @@ export default class Progress {
   }
 
   // Ensure that we update the progress bar after a certain amount of ticks
+
   // This allows us to use the progress bar for sync work where the event loop is always blocked
   isRenderDue(): boolean {
-    const isDue: boolean =
-      this.current > this.lastRenderCurrent + this.renderEvery;
+    const isDue: boolean = this.current > this.lastRenderCurrent +
+    this.renderEvery;
     if (isDue) {
       // We also make sure that we never force update more often than once a second
+
       // This is to ensure that the progress bar isn't negatively effecting performance
       const timeSinceLastRender: number = Date.now() - this.lastRenderTime;
-      return timeSinceLastRender > 1000;
+      return timeSinceLastRender > 1_000;
     } else {
       return false;
     }
@@ -387,11 +390,7 @@ export default class Progress {
     return fullBar;
   }
 
-  buildProgressBar(
-    stream: ReporterStream,
-    bar: SplitBar,
-    total: number,
-  ): string {
+  buildProgressBar(stream: ReporterStream, bar: SplitBar, total: number): string {
     const ratio = Math.min(Math.max(this.current / total, 0), 1);
 
     const completeLength = Math.round(stream.columns * ratio);
@@ -450,10 +449,7 @@ export default class Progress {
 
       // ETA eg: 1m5s
       if (this.opts.eta) {
-        if (
-          this.approximateETA !== undefined &&
-          elapsed < this.approximateETA
-        ) {
+        if (this.approximateETA !== undefined && elapsed < this.approximateETA) {
           // Approximate ETA
           const left = elapsed - this.approximateETA;
           suffix += `eta ~${humanizeTime(left)} `;
@@ -465,7 +461,7 @@ export default class Progress {
           const eta = itemsLeft * averagePerItem;
           suffix += `eta ${humanizeTime(eta)} `;
         } else {
-          const ops = Math.round(1000 / averagePerItem);
+          const ops = Math.round(1_000 / averagePerItem);
           suffix += `${humanizeNumber(ops)} op/s `;
         }
       }
@@ -492,7 +488,7 @@ export default class Progress {
     prefix = prefix.slice(0, width - spacerLength - suffix.length);
 
     // The full raw bar without any coloring
-    const raw = ' ' + prefix + spacer + ' ' + suffix;
+    const raw = ` ${prefix}${spacer} ${suffix}`;
 
     // Make sure the counter is bold
     boldRanges.push([raw.length - suffix.length, raw.length - 1]);

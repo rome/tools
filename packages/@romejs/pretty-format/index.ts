@@ -69,37 +69,42 @@ export default function prettyFormat(
   }
 
   switch (typeof obj) {
-    case 'symbol': {
-      const val = maybeEscapeMarkup(formatSymbol(obj), opts);
-      return opts.color ? formatAnsi.green(val) : val;
-    }
+    case 'symbol':
+      {
+        const val = maybeEscapeMarkup(formatSymbol(obj), opts);
+        return opts.color ? formatAnsi.green(val) : val;
+      }
 
-    case 'string': {
-      const val = maybeEscapeMarkup(formatString(obj), opts);
-      return opts.color ? formatAnsi.green(val) : val;
-    }
+    case 'string':
+      {
+        const val = maybeEscapeMarkup(formatString(obj), opts);
+        return opts.color ? formatAnsi.green(val) : val;
+      }
 
     case 'bigint':
-    case 'number': {
-      const val = formatNumber(obj);
-      return opts.color ? formatAnsi.yellow(val) : val;
-    }
+    case 'number':
+      {
+        const val = formatNumber(obj);
+        return opts.color ? formatAnsi.yellow(val) : val;
+      }
 
-    case 'boolean': {
-      const val = formatBoolean(obj);
-      return opts.color ? formatAnsi.yellow(val) : val;
-    }
+    case 'boolean':
+      {
+        const val = formatBoolean(obj);
+        return opts.color ? formatAnsi.yellow(val) : val;
+      }
 
-    case 'undefined': {
-      const val = formatUndefined();
-      return opts.color ? formatAnsi.brightBlack(val) : val;
-    }
+    case 'undefined':
+      {
+        const val = formatUndefined();
+        return opts.color ? formatAnsi.brightBlack(val) : val;
+      }
 
     case 'function':
       return formatFunction(obj, opts);
 
     case 'object':
-      return formatObjectish(obj as Objectish, opts);
+      return formatObjectish((obj as Objectish), opts);
 
     default:
       throw new Error('Unknown type');
@@ -130,7 +135,7 @@ function formatSymbol(val: Symbol): string {
 
 function formatString(val: string): string {
   return escapeString(val, {
-    quote: "'",
+    quote: '\'',
   });
 }
 
@@ -149,7 +154,7 @@ export function formatNumber(val: bigint | number): string {
   } else if (Object.is(val, +Infinity)) {
     return 'Infinity';
   } else {
-    throw new Error("Don't know how to format this number");
+    throw new Error('Don\'t know how to format this number');
   }
 }
 
@@ -166,8 +171,7 @@ function formatBoolean(val: boolean): string {
 }
 
 function formatFunction(val: Function, opts: FormatOptions): string {
-  const name =
-    val.name === '' ? 'anonymous' : maybeEscapeMarkup(val.name, opts);
+  const name = val.name === '' ? 'anonymous' : maybeEscapeMarkup(val.name, opts);
   let label = `Function ${name}`;
 
   if (isNativeFunction(val)) {
@@ -178,7 +182,8 @@ function formatFunction(val: Function, opts: FormatOptions): string {
     return label;
   }
 
-  return formatObject(label, val as any, opts, []);
+  // rome-suppress lint/noExplicitAny
+  return formatObject(label, (val as any), opts, []);
 }
 
 function getExtraObjectProps(
@@ -193,10 +198,8 @@ function getExtraObjectProps(
 
   if (obj instanceof Map) {
     for (const [key, val] of obj) {
-      const formattedKey =
-        typeof key === 'string'
-          ? formatKey(key, opts)
-          : prettyFormat(key, opts);
+      const formattedKey = typeof key === 'string'
+        ? formatKey(key, opts) : prettyFormat(key, opts);
       props.push(`${formattedKey} => ${prettyFormat(val, opts)}`);
     }
   } else if (isIterable(obj)) {
@@ -222,6 +225,7 @@ function formatKey(rawKey: string, opts: FormatOptions): string {
 }
 
 // These are object keys that should always go at the top and ignore any alphabetization
+
 // This is fairly arbitrary but should include generic identifier keys
 export const PRIORITIZE_KEYS = ['id', 'type', 'kind', 'key', 'name', 'value'];
 
@@ -231,9 +235,7 @@ type KeyInfo = {
 };
 
 function sortKeys(obj: Objectish): Array<KeyInfo> {
-  const sortedKeys: Set<string> = new Set(
-    Object.keys(obj).sort(naturalCompare),
-  );
+  const sortedKeys: Set<string> = new Set(Object.keys(obj).sort(naturalCompare));
 
   const priorityKeys: Array<KeyInfo> = [];
   const otherKeys: Array<KeyInfo> = [];

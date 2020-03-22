@@ -24,13 +24,10 @@ export default function ClassExpression(node: AnyNode, scope: Scope) {
   const classId = new OpenT(scope, node);
 
   //
-  const bodyScope = new ClassScope(
-    {parentScope: scope},
-    {
-      instance: classInstance,
-      static: classId,
-    },
-  );
+  const bodyScope = new ClassScope({parentScope: scope}, {
+    instance: classInstance,
+    static: classId,
+  });
 
   if (node.id !== undefined) {
     bodyScope.addBinding(node.id.name, classId);
@@ -48,10 +45,7 @@ export default function ClassExpression(node: AnyNode, scope: Scope) {
     if (bodyNode.type === 'ClassMethod' && bodyNode.kind === 'constructor') {
       _constructor = type;
     } else {
-      if (
-        bodyNode.type !== 'TSIndexSignature' &&
-        bodyNode.meta.static === true
-      ) {
+      if (bodyNode.type !== 'TSIndexSignature' && bodyNode.meta.static === true) {
         statics.push(type);
       } else {
         instances.push(type);
@@ -66,8 +60,7 @@ export default function ClassExpression(node: AnyNode, scope: Scope) {
     instances,
     statics,
     extends: node.meta.superClass
-      ? scope.evaluate(node.meta.superClass)
-      : undefined,
+      ? scope.evaluate(node.meta.superClass) : undefined,
   });
   if (node.id) {
     type.setHuman(node.id.name);

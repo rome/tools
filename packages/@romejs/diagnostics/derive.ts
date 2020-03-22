@@ -19,6 +19,7 @@ import {
   ErrorFrames,
   getSourceLocationFromErrorFrame,
 } from '@romejs/v8';
+import {DiagnosticCategory} from './categories';
 
 function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
   if (Array.isArray(val)) {
@@ -30,8 +31,7 @@ function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
 
 export function mergeDiagnostics(
   rootDiag: PartialDiagnostic,
-  ...diags: Array<PartialDiagnostic>
-): PartialDiagnostic {
+...diags: Array<PartialDiagnostic>): PartialDiagnostic {
   let mergedAdvice: PartialDiagnosticAdvice = [
     ...normalizeArray(rootDiag.advice),
   ];
@@ -50,10 +50,12 @@ export function mergeDiagnostics(
   };
 }
 
-export function getDiagnosticHeader(opts: {
-  filename: undefined | string;
-  start: undefined | Position;
-}): string {
+export function getDiagnosticHeader(
+  opts: {
+    filename: undefined | string;
+    start: undefined | Position;
+  },
+): string {
   const {start, filename} = opts;
 
   if (filename === undefined) {
@@ -64,7 +66,9 @@ export function getDiagnosticHeader(opts: {
     return `<filelink target="${filename}" />`;
   }
 
-  return `<filelink target="${filename}" line="${start.line}" column="${start.column}" />`;
+  return (
+    `<filelink target="${filename}" line="${start.line}" column="${start.column}" />`
+  );
 }
 
 export function deriveRootAdviceFromDiagnostic(
@@ -89,8 +93,16 @@ export function deriveRootAdviceFromDiagnostic(
     filename: diag.filename,
   });
 
-  if (diag.category !== undefined) {
-    header += ` <emphasis>${diag.category}</emphasis>`;
+  if (diag.label !== undefined) {
+    header += ` <emphasis>${diag.label}</emphasis>`;
+
+    if (diag.category !== undefined) {
+      header += ` <dim>${diag.category}</dim>`;
+    }
+  } else {
+    if (diag.category !== undefined) {
+      header += ` <emphasis>${diag.category}</emphasis>`;
+    }
   }
 
   if (diag.fixable === true) {
@@ -141,7 +153,8 @@ export function deriveRootAdviceFromDiagnostic(
 
 type DeriveErrorDiagnosticOpts = {
   error: unknown;
-  category: string;
+  category: DiagnosticCategory;
+  label?: string;
   filename?: string;
   cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
 };
@@ -182,6 +195,7 @@ export function deriveDiagnosticFromError(
     end: targetLoc === undefined ? undefined : targetLoc.end,
     sourceText: targetCode,
     category: opts.category,
+    label: opts.label,
     message,
     advice,
   };
@@ -222,7 +236,7 @@ export function getErrorStackAdvice(
       message: escapeMarkup(cleanStack),
     });
   } else {
-    const adviceFrames = frames.map(frame => {
+    const adviceFrames = frames.map((frame) => {
       const {
         typeName,
         functionName,
@@ -287,7 +301,7 @@ export function addOriginsToDiagnostics(
   origins: Array<DiagnosticOrigin>,
   diagnostics: PartialDiagnostics,
 ): PartialDiagnostics {
-  return diagnostics.map(diag => {
+  return diagnostics.map((diag) => {
     return addOriginsToDiagnostic(origins, diag);
   });
 }
@@ -296,8 +310,10 @@ export function addOriginsToDiagnostic(
   origins: Array<DiagnosticOrigin>,
   diag: PartialDiagnostic,
 ): PartialDiagnostic {
-  const newOrigins =
-    diag.origins === undefined ? origins : [...origins, ...diag.origins];
+  const newOrigins = diag.origins === undefined ? origins : [
+    ...origins,
+    ...diag.origins,
+  ];
   return {
     ...diag,
     origins: newOrigins,

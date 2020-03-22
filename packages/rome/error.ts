@@ -29,9 +29,11 @@ export function throwDiagnostics(diagnostics: PartialDiagnostics) {
   }
 
   // We do not want to expose the `diagnostics`
-  const err = new RomeDiagnosticsError(
-    printDiagnosticsToString(diagnostics, {}, 'none'),
-  );
+  const err = new RomeDiagnosticsError(printDiagnosticsToString(
+    diagnostics,
+    {},
+    'none',
+  ));
   err.getHTML = () => printDiagnosticsToString(diagnostics, {}, 'none');
   err.getAnsi = () => printDiagnosticsToString(diagnostics, {}, 'ansi');
   throw err;

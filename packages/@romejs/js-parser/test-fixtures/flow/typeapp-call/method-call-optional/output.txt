@@ -1,0 +1,228 @@
+Program {
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.js'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'module'
+  syntax: Array [
+    'jsx'
+    'flow'
+  ]
+  loc: Object {
+    filename: 'input.js'
+    end: Object {
+      column: 0
+      index: 21
+      line: 3
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentLine {
+      value: ' @flow'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 8
+          index: 8
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+  ]
+  body: Array [
+    ExpressionStatement {
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 11
+          index: 20
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 9
+          line: 2
+        }
+      }
+      leadingComments: Array [
+        CommentLine {
+          value: ' @flow'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 8
+              index: 8
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
+      ]
+      expression: CallExpression {
+        leadingComments: undefined
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 10
+            index: 19
+            line: 2
+          }
+          start: Object {
+            column: 0
+            index: 9
+            line: 2
+          }
+        }
+        arguments: Array [
+          ReferenceIdentifier {
+            name: 'e'
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 9
+                index: 18
+                line: 2
+              }
+              start: Object {
+                column: 8
+                index: 17
+                line: 2
+              }
+            }
+          }
+        ]
+        typeArguments: FlowTypeParameterInstantiation {
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 7
+              index: 16
+              line: 2
+            }
+            start: Object {
+              column: 4
+              index: 13
+              line: 2
+            }
+          }
+          params: Array [
+            FlowGenericTypeAnnotation {
+              id: Identifier {
+                name: 'T'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 6
+                    index: 15
+                    line: 2
+                  }
+                  start: Object {
+                    column: 5
+                    index: 14
+                    line: 2
+                  }
+                }
+              }
+              typeParameters: undefined
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 6
+                  index: 15
+                  line: 2
+                }
+                start: Object {
+                  column: 5
+                  index: 14
+                  line: 2
+                }
+              }
+            }
+          ]
+        }
+        callee: MemberExpression {
+          leadingComments: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 4
+              index: 13
+              line: 2
+            }
+            start: Object {
+              column: 0
+              index: 9
+              line: 2
+            }
+          }
+          object: ReferenceIdentifier {
+            name: 'o'
+            leadingComments: undefined
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 1
+                index: 10
+                line: 2
+              }
+              start: Object {
+                column: 0
+                index: 9
+                line: 2
+              }
+            }
+          }
+          property: StaticMemberProperty {
+            value: Identifier {
+              name: 'm'
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 4
+                  index: 13
+                  line: 2
+                }
+                start: Object {
+                  column: 3
+                  index: 12
+                  line: 2
+                }
+              }
+            }
+            optional: true
+            loc: Object {
+              filename: 'input.js'
+              end: Object {
+                column: 4
+                index: 13
+                line: 2
+              }
+              start: Object {
+                column: 3
+                index: 12
+                line: 2
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

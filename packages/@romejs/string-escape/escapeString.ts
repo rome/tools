@@ -48,8 +48,8 @@ function escapeChar(
     case '"':
       return '\\"';
 
-    case "'":
-      return "\\'";
+    case '\'':
+      return '\\\'';
 
     case '\b':
       return '\\b';
@@ -79,12 +79,13 @@ function escapeChar(
   return undefined;
 }
 
-type QuoteChar = '"' | "'" | '`';
+type QuoteChar = '' | '"' | '\'' | '`';
 
 type EscapeStringOptions = {
   quote?: QuoteChar;
   json?: boolean;
   ignoreWhitespaceEscapes?: boolean;
+  unicodeOnly?: boolean;
 };
 
 export default function escapeString(
@@ -94,31 +95,33 @@ export default function escapeString(
   let index = -1;
   let result = '';
 
-  const quote: QuoteChar = opts.quote === undefined ? DOUBLE_QUOTE : opts.quote;
-  const isJSON: boolean = opts.json === undefined ? false : opts.json;
-  const ignoreEscapes: boolean =
-    opts.ignoreWhitespaceEscapes === undefined ? false : true;
+  const {
+    ignoreWhitespaceEscapes = false,
+    quote = '',
+    json = false,
+    unicodeOnly = false,
+  } = opts;
 
   // Loop over each code unit in the string and escape it
   while (++index < str.length) {
     const char = str[index];
 
     // Handle surrogate pairs in non-JSON mode
-    if (isJSON === false) {
+    if (!json) {
       const charCode = str.charCodeAt(index);
-      const isHighSurrogate = charCode >= 0xd800 && charCode <= 0xdbff;
+      const isHighSurrogate = charCode >= 55_296 && charCode <= 56_319;
       const hasNextCodePoint = str.length > index + 1;
       const isSurrogatePairStart = isHighSurrogate && hasNextCodePoint;
 
       if (isSurrogatePairStart) {
         const nextCharCode = str.charCodeAt(index + 1);
-        const isLowSurrogate = nextCharCode >= 0xdc00 && nextCharCode <= 0xdfff;
+        const isLowSurrogate = nextCharCode >= 56_320 && nextCharCode <= 57_343;
         if (isLowSurrogate) {
           // https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
           const codePoint =
-            (charCode - 0xd800) * 0x400 + nextCharCode - 0xdc00 + 0x10000;
+            (charCode - 55_296) * 1_024 + nextCharCode - 56_320 + 65_536;
           const hex = codePoint.toString(16);
-          result += '\\u{' + hex + '}';
+          result += `\\u{${hex}}`;
           index++;
           continue;
         }
@@ -128,6 +131,7 @@ export default function escapeString(
     //
     if (PRINTABLE_ASCII.test(char)) {
       // It’s a printable ASCII character that is not `"`, `'` or `\`,
+
       // so don’t escape it.
       result += char;
       continue;
@@ -141,7 +145,7 @@ export default function escapeString(
 
     // Escape single quotes
     if (char == SINGLE_QUOTE) {
-      result += quote == char ? "\\'" : char;
+      result += quote == char ? '\\\'' : char;
       continue;
     }
 
@@ -152,27 +156,29 @@ export default function escapeString(
     }
 
     // Null escape
-    if (char == '\0' && !isJSON && !isDigit(str[index + 1])) {
+    if (char == '\0' && !json && !isDigit(str[index + 1])) {
       result += '\\0';
       continue;
     }
 
     // Simple escapes
-    const replacement = escapeChar(char, ignoreEscapes);
-    if (replacement !== undefined) {
-      result += replacement;
-      continue;
+    if (!unicodeOnly) {
+      const replacement = escapeChar(char, ignoreWhitespaceEscapes);
+      if (replacement !== undefined) {
+        result += replacement;
+        continue;
+      }
     }
 
     // Unicode escape
     const hex = char.charCodeAt(0).toString(16);
-    const isLonghand = isJSON || hex.length > 2;
+    const isLonghand = json || hex.length > 2;
     const modifier = isLonghand ? 'u' : 'x';
-    const code = ('0000' + hex).slice(isLonghand ? -4 : -2);
-    const escaped = '\\' + modifier + code;
+    const code = `0000${hex}`.slice(isLonghand ? -4 : -2);
+    const escaped = `\\${modifier}${code}`;
     result += escaped;
     continue;
   }
 
-  return quote + result + quote;
+  return `${quote}${result}${quote}`;
 }

@@ -8,11 +8,13 @@
 import {JSNodeBase, AnyTSPrimary, TSOptionalType} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTupleType = JSNodeBase & {
-  type: 'TSTupleType';
-  elementTypes: Array<AnyTSPrimary | TSOptionalType>;
-  rest?: AnyTSPrimary;
-};
+export type TSTupleType =
+  & JSNodeBase
+  & {
+    type: 'TSTupleType';
+    elementTypes: Array<AnyTSPrimary | TSOptionalType>;
+    rest?: AnyTSPrimary;
+  };
 
 export const tsTupleType = createBuilder<TSTupleType>('TSTupleType', {
   bindingKeys: {},

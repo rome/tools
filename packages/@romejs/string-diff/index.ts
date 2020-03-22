@@ -31,6 +31,7 @@
  */
 
 export type Diff = [-1 | 0 | 1, string];
+
 export type Diffs = Array<Diff>;
 
 type HalfMatch = undefined | [string, string, string, string, string];
@@ -101,6 +102,7 @@ export function groupDiffByLines(rawDiffs: Diffs): Array<Diffs> {
 
 export default function stringDiff(text1: string, text2: string) {
   // only pass fix_unicode=true at the top level, not when main is
+
   // recursively invoked
   return main(text1, text2, true);
 }
@@ -113,11 +115,7 @@ export default function stringDiff(text1: string, text2: string) {
  * @param {Int|Object} [cursor_pos] Edit position in text1 or object with more info
  * @return {Array} Array of diff tuples.
  */
-function main(
-  text1: string,
-  text2: string,
-  fixUnicode: boolean = false,
-): Diffs {
+function main(text1: string, text2: string, fixUnicode: boolean = false): Diffs {
   // Check for equality
   if (text1 === text2) {
     if (text1) {
@@ -191,6 +189,7 @@ function compute(text1: string, text2: string): Diffs {
 
   if (shorttext.length === 1) {
     // Single character string.
+
     // After the previous speedup, the character can't be an equality.
     return [
       [DIFF_DELETE, text1],
@@ -236,6 +235,7 @@ function bisect(text1: string, text2: string): Diffs {
   let v1 = new Array(v_length);
   let v2 = new Array(v_length);
   // Setting all elements to -1 is faster in Chrome & Firefox than mixing
+
   // integers and undefined.
   for (let x = 0; x < v_length; x++) {
     v1[x] = -1;
@@ -245,9 +245,11 @@ function bisect(text1: string, text2: string): Diffs {
   v2[v_offset + 1] = 0;
   let delta = text1_length - text2_length;
   // If the total number of characters is odd, then the front path will collide
+
   // with the reverse path.
   let front = delta % 2 !== 0;
   // Offsets for start and end of k loop.
+
   // Prevents mapping of space beyond the grid.
   let k1start = 0;
   let k1end = 0;
@@ -258,17 +260,14 @@ function bisect(text1: string, text2: string): Diffs {
     for (let k1 = -d + k1start; k1 <= d - k1end; k1 += 2) {
       let k1_offset = v_offset + k1;
       let x1;
-      if (k1 === -d || (k1 !== d && v1[k1_offset - 1] < v1[k1_offset + 1])) {
+      if (k1 === -d || k1 !== d && v1[k1_offset - 1] < v1[k1_offset + 1]) {
         x1 = v1[k1_offset + 1];
       } else {
         x1 = v1[k1_offset - 1] + 1;
       }
       let y1 = x1 - k1;
-      while (
-        x1 < text1_length &&
-        y1 < text2_length &&
-        text1.charAt(x1) === text2.charAt(y1)
-      ) {
+      while (x1 < text1_length && y1 < text2_length && text1.charAt(x1) ===
+      text2.charAt(y1)) {
         x1++;
         y1++;
       }
@@ -296,18 +295,15 @@ function bisect(text1: string, text2: string): Diffs {
     for (let k2 = -d + k2start; k2 <= d - k2end; k2 += 2) {
       let k2_offset = v_offset + k2;
       let x2: number;
-      if (k2 === -d || (k2 !== d && v2[k2_offset - 1] < v2[k2_offset + 1])) {
+      if (k2 === -d || k2 !== d && v2[k2_offset - 1] < v2[k2_offset + 1]) {
         x2 = v2[k2_offset + 1];
       } else {
         x2 = v2[k2_offset - 1] + 1;
       }
       let y2 = x2 - k2;
-      while (
-        x2 < text1_length &&
-        y2 < text2_length &&
-        text1.charAt(text1_length - x2 - 1) ===
-          text2.charAt(text2_length - y2 - 1)
-      ) {
+      while (x2 < text1_length && y2 < text2_length && text1.charAt(
+        text1_length - x2 - 1,
+      ) === text2.charAt(text2_length - y2 - 1)) {
         x2++;
         y2++;
       }
@@ -334,6 +330,7 @@ function bisect(text1: string, text2: string): Diffs {
     }
   }
   // Diff took too long and hit the deadline or
+
   // number of diffs equals number of characters, no commonality at all.
   return [
     [DIFF_DELETE, text1],
@@ -350,12 +347,7 @@ function bisect(text1: string, text2: string): Diffs {
  * @param {number} y Index of split point in text2.
  * @return {Array} Array of diff tuples.
  */
-function bisectSplit(
-  text1: string,
-  text2: string,
-  x: number,
-  y: number,
-): Diffs {
+function bisectSplit(text1: string, text2: string, x: number, y: number): Diffs {
   let text1a = text1.substring(0, x);
   let text2a = text2.substring(0, y);
   let text1b = text1.substring(x);
@@ -380,17 +372,19 @@ function commonPrefix(text1: string, text2: string): number {
   if (!text1 || !text2 || text1.charAt(0) !== text2.charAt(0)) {
     return 0;
   }
+
   // Binary search.
+
   // Performance analysis: http://neil.fraser.name/news/2007/10/09/
   let pointermin = 0;
   let pointermax = Math.min(text1.length, text2.length);
   let pointermid = pointermax;
   let pointerstart = 0;
   while (pointermin < pointermid) {
-    if (
-      text1.substring(pointerstart, pointermid) ==
-      text2.substring(pointerstart, pointermid)
-    ) {
+    if (text1.substring(pointerstart, pointermid) == text2.substring(
+      pointerstart,
+      pointermid,
+    )) {
       pointermin = pointermid;
       pointerstart = pointermin;
     } else {
@@ -419,16 +413,15 @@ function commonSuffix(text1: string, text2: string): number {
   }
 
   // Binary search.
+
   // Performance analysis: http://neil.fraser.name/news/2007/10/09/
   let pointermin = 0;
   let pointermax = Math.min(text1.length, text2.length);
   let pointermid = pointermax;
   let pointerend = 0;
   while (pointermin < pointermid) {
-    if (
-      text1.substring(text1.length - pointermid, text1.length - pointerend) ==
-      text2.substring(text2.length - pointermid, text2.length - pointerend)
-    ) {
+    if (text1.substring(text1.length - pointermid, text1.length - pointerend) ==
+    text2.substring(text2.length - pointermid, text2.length - pointerend)) {
       pointermin = pointermid;
       pointerend = pointermin;
     } else {
@@ -535,9 +528,8 @@ function halfMatchI(
       shorttext.substring(0, j),
     );
     if (best_common.length < suffixLength + prefixLength) {
-      best_common =
-        shorttext.substring(j - suffixLength, j) +
-        shorttext.substring(j, j + prefixLength);
+      best_common = shorttext.substring(j - suffixLength, j) +
+      shorttext.substring(j, j + prefixLength);
       best_longtext_a = longtext.substring(0, i - suffixLength);
       best_longtext_b = longtext.substring(i + prefixLength);
       best_shorttext_a = shorttext.substring(0, j - suffixLength);
@@ -592,19 +584,27 @@ function cleanupMerge(diffs: Diffs, fix_unicode: boolean) {
         let previous_equality = pointer - count_insert - count_delete - 1;
         if (fix_unicode) {
           // prevent splitting of unicode surrogate pairs.  when fix_unicode is true,
+
           // we assume that the old and new text in the diff are complete and correct
+
           // unicode-encoded JS strings, but the tuple boundaries may fall between
+
           // surrogate pairs.  we fix this by shaving off stray surrogates from the end
+
           // of the previous equality and the beginning of this equality.  this may create
+
           // empty equalities or a common prefix or suffix.  for example, if AB and AC are
+
           // emojis, `[[0, 'A'], [-1, 'BA'], [0, 'C']]` would turn into deleting 'ABAC' and
+
           // inserting 'AC', and then the common suffix 'AC' will be eliminated.  in this
+
           // particular case, both equalities go away, we absorb any previous inequalities,
+
           // and we keep scanning for the next equality before rewriting the tuples.
-          if (
-            previous_equality >= 0 &&
-            ends_with_pair_start(diffs[previous_equality][1])
-          ) {
+          if (previous_equality >= 0 && ends_with_pair_start(
+            diffs[previous_equality][1],
+          )) {
             let stray = diffs[previous_equality][1].slice(-1);
             diffs[previous_equality][1] = diffs[previous_equality][1].slice(
               0,
@@ -663,22 +663,19 @@ function cleanupMerge(diffs: Diffs, fix_unicode: boolean) {
               text_insert = text_insert.substring(commonlength);
               text_delete = text_delete.substring(commonlength);
             }
+
             // Factor out any common suffixes.
             commonlength = commonSuffix(text_insert, text_delete);
             if (commonlength !== 0) {
-              diffs[pointer][1] =
-                text_insert.substring(text_insert.length - commonlength) +
-                diffs[pointer][1];
-              text_insert = text_insert.substring(
-                0,
-                text_insert.length - commonlength,
-              );
-              text_delete = text_delete.substring(
-                0,
-                text_delete.length - commonlength,
-              );
+              diffs[pointer][1] = text_insert.substring(text_insert.length -
+              commonlength) + diffs[pointer][1];
+              text_insert = text_insert.substring(0, text_insert.length -
+              commonlength);
+              text_delete = text_delete.substring(0, text_delete.length -
+              commonlength);
             }
           }
+
           // Delete the offending records and add the merged ones.
           let n = count_insert + count_delete;
           if (text_delete.length === 0 && text_insert.length === 0) {
@@ -691,12 +688,10 @@ function cleanupMerge(diffs: Diffs, fix_unicode: boolean) {
             diffs.splice(pointer - n, n, [DIFF_DELETE, text_delete]);
             pointer = pointer - n + 1;
           } else {
-            diffs.splice(
-              pointer - n,
-              n,
-              [DIFF_DELETE, text_delete],
-              [DIFF_INSERT, text_insert],
-            );
+            diffs.splice(pointer - n, n, [DIFF_DELETE, text_delete], [
+              DIFF_INSERT,
+              text_insert,
+            ]);
             pointer = pointer - n + 2;
           }
         }
@@ -719,41 +714,35 @@ function cleanupMerge(diffs: Diffs, fix_unicode: boolean) {
   }
 
   // Second pass: look for single edits surrounded on both sides by equalities
+
   // which can be shifted sideways to eliminate an equality.
+
   // e.g: A<ins>BA</ins>C -> <ins>AB</ins>AC
   let changes = false;
   pointer = 1;
   // Intentionally ignore the first and last element (don't need checking).
+
   while (pointer < diffs.length - 1) {
-    if (
-      diffs[pointer - 1][0] === DIFF_EQUAL &&
-      diffs[pointer + 1][0] === DIFF_EQUAL
-    ) {
+    if (diffs[pointer - 1][0] === DIFF_EQUAL && diffs[pointer + 1][0] ===
+    DIFF_EQUAL) {
       // This is a single edit surrounded by equalities.
-      if (
-        diffs[pointer][1].substring(
-          diffs[pointer][1].length - diffs[pointer - 1][1].length,
-        ) === diffs[pointer - 1][1]
-      ) {
+      if (diffs[pointer][1].substring(diffs[pointer][1].length - diffs[pointer -
+      1][1].length) === diffs[pointer - 1][1]) {
         // Shift the edit over the previous equality.
-        diffs[pointer][1] =
-          diffs[pointer - 1][1] +
-          diffs[pointer][1].substring(
-            0,
-            diffs[pointer][1].length - diffs[pointer - 1][1].length,
-          );
+        diffs[pointer][1] = diffs[pointer - 1][1] + diffs[pointer][1].substring(
+          0,
+          diffs[pointer][1].length - diffs[pointer - 1][1].length,
+        );
         diffs[pointer + 1][1] = diffs[pointer - 1][1] + diffs[pointer + 1][1];
         diffs.splice(pointer - 1, 1);
         changes = true;
-      } else if (
-        diffs[pointer][1].substring(0, diffs[pointer + 1][1].length) ==
-        diffs[pointer + 1][1]
-      ) {
+      } else if (diffs[pointer][1].substring(0, diffs[pointer + 1][1].length) ==
+      diffs[pointer + 1][1]) {
         // Shift the edit over the next equality.
         diffs[pointer - 1][1] += diffs[pointer + 1][1];
-        diffs[pointer][1] =
-          diffs[pointer][1].substring(diffs[pointer + 1][1].length) +
-          diffs[pointer + 1][1];
+        diffs[pointer][1] = diffs[pointer][1].substring(
+          diffs[pointer + 1][1].length,
+        ) + diffs[pointer + 1][1];
         diffs.splice(pointer + 1, 1);
         changes = true;
       }
@@ -767,11 +756,11 @@ function cleanupMerge(diffs: Diffs, fix_unicode: boolean) {
 }
 
 function is_surrogate_pair_start(charCode: number): boolean {
-  return charCode >= 0xd800 && charCode <= 0xdbff;
+  return charCode >= 55_296 && charCode <= 56_319;
 }
 
 function is_surrogate_pair_end(charCode: number): boolean {
-  return charCode >= 0xdc00 && charCode <= 0xdfff;
+  return charCode >= 56_320 && charCode <= 57_343;
 }
 
 function starts_with_pair_end(str: string): boolean {

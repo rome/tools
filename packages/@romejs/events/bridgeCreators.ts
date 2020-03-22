@@ -13,9 +13,10 @@ import Bridge from './Bridge';
 import {Socket} from 'net';
 import {Class} from '@romejs/typescript-helpers';
 
-const SOCKET_LENGTH = /^(\d+)\:/;
+const SOCKET_LENGTH = /^(\d+):/;
 
 // JSON.stringify but throw on bad data types
+
 // Most likely slower... But safer and our data structures are usually fairly shallow
 function stringify(obj: unknown): string {
   return JSON.stringify(obj, (key, value) => {
@@ -36,9 +37,9 @@ function stringify(obj: unknown): string {
     }
 
     throw new Error(
-      `Illegal data type not allowed in JSON: ${prettyFormat(
-        value,
-      )} in ${prettyFormat(obj)}`,
+      `Illegal data type not allowed in JSON: ${prettyFormat(value)} in ${prettyFormat(
+        obj,
+      )}`,
     );
   });
 }
@@ -61,12 +62,12 @@ export function createBridgeFromWebSocketInterface<B extends Bridge>(
     socket.end();
   });
 
-  inf.completeFrameEvent.subscribe(frame => {
+  inf.completeFrameEvent.subscribe((frame) => {
     const json = frame.payload.toString();
     bridge.handleJSONMessage(json);
   });
 
-  socket.on('error', err => {
+  socket.on('error', (err) => {
     bridge.endWithError(err);
   });
 
@@ -156,12 +157,12 @@ export function createBridgeFromSocket<B extends Bridge>(
     }
   }
 
-  socket.on('data', chunk => {
+  socket.on('data', (chunk) => {
     buff += chunk;
     checkForPossibleMessage();
   });
 
-  socket.on('error', err => {
+  socket.on('error', (err) => {
     bridge.endWithError(err);
   });
 
@@ -203,12 +204,12 @@ export function createBridgeFromChildProcess<B extends Bridge>(
     proc.kill();
   });
 
-  proc.on('error', err => {
+  proc.on('error', (err) => {
     bridge.endWithError(err);
   });
 
-  proc.on('message', msg => {
-    bridge.handleMessage(msg as BridgeMessage);
+  proc.on('message', (msg) => {
+    bridge.handleMessage((msg as BridgeMessage));
   });
 
   // Catch process dying and reject any requests in flight
@@ -234,7 +235,7 @@ export function createBridgeFromParentProcess<B extends Bridge>(
     },
   });
 
-  process.on('message', data => {
+  process.on('message', (data) => {
     bridge.handleMessage(data);
   });
 

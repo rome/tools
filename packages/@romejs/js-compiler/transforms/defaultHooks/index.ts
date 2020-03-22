@@ -19,11 +19,12 @@ import {
   variableDeclarationStatement,
 } from '@romejs/js-ast';
 
-type VariableInjectorState = {
-  bindings: Array<[string, undefined | AnyExpression]>;
-};
+type VariableInjectorState = {bindings: Array<[string, undefined | AnyExpression]>};
 
-type VariableInjectorArgs = {name?: string; init?: AnyExpression};
+type VariableInjectorArgs = {
+  name?: string;
+  init?: AnyExpression;
+};
 
 export const bindingInjector = createHook<
   VariableInjectorState,
@@ -36,11 +37,7 @@ export const bindingInjector = createHook<
     bindings: [],
   },
 
-  call(
-    path: Path,
-    state: VariableInjectorState,
-    opts: VariableInjectorArgs = {},
-  ) {
+  call(path: Path, state: VariableInjectorState, opts: VariableInjectorArgs = {}) {
     const name = opts.name === undefined ? path.scope.generateUid() : opts.name;
 
     const ref = referenceIdentifier.quick(name);
@@ -71,17 +68,15 @@ export const bindingInjector = createHook<
     return {
       ...node,
       body: [
-        variableDeclarationStatement.quick(
-          variableDeclaration.create({
-            kind: 'var',
-            declarations: bindings.map(([name, init]) => {
-              return variableDeclarator.create({
-                id: bindingIdentifier.quick(name),
-                init,
-              });
-            }),
+        variableDeclarationStatement.quick(variableDeclaration.create({
+          kind: 'var',
+          declarations: bindings.map(([name, init]) => {
+            return variableDeclarator.create({
+              id: bindingIdentifier.quick(name),
+              init,
+            });
           }),
-        ),
+        })),
 
         ...node.body,
       ],

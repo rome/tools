@@ -12,17 +12,26 @@ import {Position} from '@romejs/parser-core';
 import {get1} from '@romejs/ob1';
 import {NEWLINE} from '@romejs/js-parser-utils';
 
+type BuildSuggestionAdviceOptions = {
+  minRating?: number;
+  ignoreCase?: boolean;
+  formatItem?: (item: string) => string;
+};
+
 export function buildSuggestionAdvice(
   value: string,
   items: Array<string>,
-  minRating: number = 0.8,
-  formatItem?: (item: string) => string,
+  {minRating = 0.5, ignoreCase, formatItem}: BuildSuggestionAdviceOptions = {},
 ): PartialDiagnosticAdvice {
   const advice: PartialDiagnosticAdvice = [];
 
-  const ratings = orderBySimilarity(value, items, minRating);
+  const ratings = orderBySimilarity(value, items, {
+    minRating,
+    formatItem,
+    ignoreCase,
+  });
 
-  const strings = ratings.map(item => {
+  const strings = ratings.map((item) => {
     const {target} = item;
     if (formatItem === undefined) {
       return target;
@@ -72,16 +81,14 @@ export function buildSuggestionAdvice(
       advice.push({
         type: 'list',
         list: strings,
-        truncate: 20,
+        truncate: true,
       });
     }
   }
 
   // TODO check if ANY of the suggestions match
-  if (
-    topRatingRaw !== value &&
-    topRatingRaw.toLowerCase() === value.toLowerCase()
-  ) {
+  if (topRatingRaw !== value && topRatingRaw.toLowerCase() ===
+  value.toLowerCase()) {
     advice.push({
       type: 'log',
       category: 'warn',

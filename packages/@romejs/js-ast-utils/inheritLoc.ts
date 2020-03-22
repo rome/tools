@@ -31,6 +31,7 @@ export default function inheritLoc(
   }
 
   // If this location has no identifierName and we're an Identifier then inherit it
+
   // TODO maybe handle other identifier types? JSXIdentifier etc?
   if (node.type === 'Identifier') {
     return {

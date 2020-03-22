@@ -20,15 +20,24 @@ import {toKebabCase, toCamelCase} from '@romejs/string-utils';
 import {DiagnosticsError} from '@romejs/diagnostics';
 import {createUnknownFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
-import {escapeMarkup} from '@romejs/string-markup';
+import {markup} from '@romejs/string-markup';
+
+export type Examples = Array<{
+  description: string;
+  command: string;
+}>;
 
 type CommandOptions<T extends Dict<unknown>> = {
   name: string;
   category?: string;
   description?: string;
+  usage?: string;
+  examples?: Examples;
   defineFlags?: (consumer: Consumer) => T;
   callback: (flags: T) => void | Promise<void>;
 };
+
+type AnyCommandOptions = CommandOptions<Dict<unknown>>;
 
 type ArgDeclaration = {
   definition: ConsumePropertyDefinition;
@@ -38,12 +47,12 @@ type ArgDeclaration = {
 
 type DefinedCommand = {
   flags: Dict<unknown>;
-  command: CommandOptions<Dict<unknown>>;
+  command: AnyCommandOptions;
 };
 
 export type ParserOptions<T> = {
-  examples?: Array<string>;
-  programName?: string;
+  examples?: Examples;
+  programName: string;
   usage?: string;
   description?: string;
   version?: string;
@@ -55,11 +64,7 @@ function splitCommandName(cmd: string): Array<string> {
 }
 
 export default class Parser<T> {
-  constructor(
-    reporter: Reporter,
-    opts: ParserOptions<T>,
-    rawArgs: Array<string>,
-  ) {
+  constructor(reporter: Reporter, opts: ParserOptions<T>, rawArgs: Array<string>) {
     this.reporter = reporter;
     this.opts = opts;
 
@@ -72,7 +77,7 @@ export default class Parser<T> {
     this.consumeRawArgs(rawArgs);
 
     this.commands = new Map();
-    this.ranCommand = false;
+    this.ranCommand = undefined;
     this.currentCommand = undefined;
 
     if (opts.version !== undefined) {
@@ -116,8 +121,8 @@ export default class Parser<T> {
   defaultFlags: Map<string, unknown>;
   declaredFlags: Map<string, ArgDeclaration>;
 
-  ranCommand: boolean;
-  commands: Map<string, CommandOptions<Dict<unknown>>>;
+  ranCommand: undefined | string;
+  commands: Map<string, AnyCommandOptions>;
   args: Array<string>;
 
   currentCommand: undefined | string;
@@ -183,7 +188,7 @@ export default class Parser<T> {
       filePath: createUnknownFilePath('argv'),
       value: flags,
 
-      onDefinition: def => {
+      onDefinition: (def) => {
         const key = def.objectPath.join('.');
 
         // Detect root object
@@ -200,7 +205,7 @@ export default class Parser<T> {
       },
 
       context: {
-        category: 'cli-flags',
+        category: 'flags/invalid',
         getOriginalValue: (keys: ConsumePath) => {
           return flags[keys[0]];
         },
@@ -208,30 +213,23 @@ export default class Parser<T> {
           keys: ConsumePath,
           target: ConsumeSourceLocationRequestTarget,
         ) => {
-          let prefixParts = [];
-
           const {programName} = this.opts;
-          if (programName !== undefined) {
-            prefixParts.push(programName);
-          }
+          const prefixParts = [programName];
           if (this.currentCommand !== undefined) {
             prefixParts.push(this.currentCommand);
           }
 
-          return serializeCLIFlags(
-            {
-              prefix: prefixParts.join(' '),
-              args: this.args,
-              defaultFlags,
-              flags,
-              shorthandFlags: this.shorthandFlags,
-            },
-            {
-              type: 'flag',
-              key: String(keys[0]),
-              target,
-            },
-          );
+          return serializeCLIFlags({
+            prefix: prefixParts.join(' '),
+            args: this.args,
+            defaultFlags,
+            flags,
+            shorthandFlags: this.shorthandFlags,
+          }, {
+            type: 'flag',
+            key: String(keys[0]),
+            target,
+          });
         },
       },
     });
@@ -243,8 +241,8 @@ export default class Parser<T> {
 
   declareArgument(decl: ArgDeclaration) {
     // Commands may have colliding flags, this is only a problem in help mode, so make it unique
-    const key =
-      decl.command === undefined ? decl.name : `${decl.command}.${decl.name}`;
+    const key = decl.command === undefined
+      ? decl.name : `${decl.command}.${decl.name}`;
 
     // Ensure it hasn't been declared more than once
     if (this.declaredFlags.has(key)) {
@@ -279,12 +277,6 @@ export default class Parser<T> {
   }
 
   async init(): Promise<T> {
-    // Show help for --help
-    if (this.helpMode) {
-      await this.showHelp();
-      process.exit(1);
-    }
-
     // Show help for --version
     if (this.flags.has('version')) {
       this.reporter.logAll(String(this.opts.version));
@@ -292,16 +284,13 @@ export default class Parser<T> {
     }
 
     // We've parsed arguments like `--foo bar` as `{foo: 'bar}`
+
     // However, --foo may be a boolean flag, so `bar` needs to be correctly added to args
     for (const [key, value] of this.flags) {
       const declared = this.declaredFlags.get(key);
 
-      if (
-        declared !== undefined &&
-        declared.definition.type === 'boolean' &&
-        value !== true &&
-        value !== false
-      ) {
+      if (declared !== undefined && declared.definition.type === 'boolean' &&
+        value !== true && value !== false) {
         // This isn't necessarily the correct position... Probably doesn't matter?
         this.args.push(value);
 
@@ -314,11 +303,11 @@ export default class Parser<T> {
 
     let definedCommand: undefined | DefinedCommand;
 
-    const {diagnostics, result} = await consumer.capture(async consumer => {
+    const {diagnostics, result} = await consumer.capture(async (consumer) => {
       for (const shorthandName of this.shorthandFlags) {
-        consumer
-          .get(shorthandName)
-          .unexpected(`Shorthand flags are not supported`);
+        consumer.get(shorthandName).unexpected(
+          `Shorthand flags are not supported`,
+        );
       }
 
       const result = this.opts.defineFlags(consumer);
@@ -342,8 +331,16 @@ export default class Parser<T> {
       throw new DiagnosticsError('CLI flag parsing diagnostics', diagnostics);
     }
 
+    // Show help for --help
+    if (this.helpMode) {
+      await this.showHelp(definedCommand === undefined
+        ? undefined : definedCommand.command.name
+      );
+      process.exit(1);
+    }
+
     if (definedCommand !== undefined) {
-      this.ranCommand = true;
+      this.ranCommand = definedCommand.command.name;
       await definedCommand.command.callback(definedCommand.flags);
     }
 
@@ -383,6 +380,7 @@ export default class Parser<T> {
       // Add input specifier unless a boolean
       if (def.type !== 'boolean') {
         // TODO some way to customize this
+
         // Property metadata in the consumer is a fine place but we want this to be non-CLI specific
         let inputName = undefined;
 
@@ -402,10 +400,8 @@ export default class Parser<T> {
         argColumnLength = argCol.length;
       }
 
-      const descCol: string =
-        metadata === undefined || metadata.description === undefined
-          ? 'no description found'
-          : metadata.description;
+      const descCol: string = metadata === undefined || metadata.description ===
+      undefined ? 'no description found' : metadata.description;
 
       optionOutput.push({
         argName,
@@ -420,81 +416,72 @@ export default class Parser<T> {
     // Output options
     for (const {arg, description} of optionOutput) {
       lines.push(
-        `  <brightBlack>${rightPad(
-          escapeMarkup(arg),
-          argColumnLength,
-          ' ',
-        )}</brightBlack>  ${escapeMarkup(description)}`,
+        markup`<brightBlack>${rightPad(arg, argColumnLength, ' ')}</brightBlack>  ${description}`,
       );
     }
 
     return lines;
   }
 
-  showCommandsHelp(heading: string, rawCommandNames: Array<string>) {
-    if (rawCommandNames.length === 0) {
-      return undefined;
+  showUsageHelp(description?: string, usage: string = '[flags]', prefix?: string) {
+    const {reporter} = this;
+    const {programName} = this.opts;
+
+    reporter.section(`Usage`, () => {
+      if (description !== undefined) {
+        reporter.logAll(description);
+        reporter.forceSpacer();
+      }
+
+      const commandParts = [programName];
+      if (prefix !== undefined) {
+        commandParts.push(prefix);
+      }
+      commandParts.push(usage);
+
+      const command = commandParts.join(' ');
+      reporter.command(command);
+    });
+  }
+
+  showFocusedCommandHelp(commandName: string) {
+    const command = this.commands.get(commandName);
+    if (command === undefined) {
+      throw new Error(`Unknown command ${commandName}`);
     }
 
     const {reporter} = this;
-    reporter.spacer();
-    reporter.logAll(`<emphasis>${heading}</emphasis>`);
-    reporter.spacer();
+    const {name, usage, description, examples} = command;
 
-    // Build output
-    const commandNames: Array<string> = rawCommandNames.sort();
-    const cmdOutput: Array<[string, string, Array<string>]> = [];
-    let nameColumnLength: number = 0;
-    for (const cmd of commandNames) {
-      const opts = this.commands.get(cmd);
-      if (opts === undefined) {
-        throw new Error('Expected command options');
+    reporter.forceSpacer();
+    this.showUsageHelp(description, usage, name);
+    this.showHelpExamples(examples, name);
+
+    // Find arguments that belong to this command
+    const argKeys = [];
+    for (const [key, decl] of this.declaredFlags) {
+      if (decl.command === name) {
+        argKeys.push(key);
       }
-
-      if (cmd[0] === '_') {
-        continue;
-      }
-
-      // Set arg col length if we'll be longer
-      if (nameColumnLength < cmd.length) {
-        nameColumnLength = cmd.length;
-      }
-
-      // Find arguments that belong to this command
-      const argKeys = [];
-      for (const [key, decl] of this.declaredFlags) {
-        if (decl.command === cmd) {
-          argKeys.push(key);
-        }
-      }
-
-      const desc =
-        opts.description === undefined
-          ? 'no description available'
-          : opts.description;
-      const optLines = this.buildOptionsHelp(argKeys);
-      cmdOutput.push([cmd, desc, optLines]);
     }
 
-    for (const [nameCol, descCol, optLines] of cmdOutput) {
-      reporter.logAll(
-        `  <brightBlack>${rightPad(
-          nameCol,
-          nameColumnLength,
-          ' ',
-        )}</brightBlack>  ${descCol}`,
-      );
-
-      reporter.indent();
-      for (const line of optLines) {
-        reporter.logAll(line);
-      }
-      reporter.dedent();
+    const optLines = this.buildOptionsHelp(argKeys);
+    if (optLines.length > 0) {
+      reporter.section('Command Flags', () => {
+        for (const line of optLines) {
+          reporter.logAll(line);
+        }
+      });
     }
   }
 
-  async showHelp() {
-    const {description, usage, programName, examples} = this.opts;
+  async showHelp(commandName: undefined | string = this.ranCommand) {
+    if (commandName !== undefined) {
+      this.showFocusedCommandHelp(commandName);
+      return;
+    }
+
+    const {description, usage, examples, programName} = this.opts;
 
     const consumer = this.getFlagsConsumer();
     await this.opts.defineFlags(consumer);
@@ -503,90 +490,108 @@ export default class Parser<T> {
       await this.defineCommandFlags(key, consumer);
     }
 
+    this.showUsageHelp(description, usage);
+
     const {reporter} = this;
-    reporter.indent();
-
-    reporter.spacer();
-    reporter.logAll(
-      `<emphasis>Usage:</emphasis> ${programName} ${
-        usage === undefined ? '[flags]' : usage
-      }`,
-    );
-    reporter.spacer();
-
-    if (description !== undefined) {
-      reporter.logAll(description);
-      reporter.spacer();
-    }
-
-    reporter.logAll('<emphasis>Options</emphasis>');
-    reporter.spacer();
-
-    // Show options not attached to any commands
-    const lonerArgKeys = [];
-    for (const [key, decl] of this.declaredFlags) {
-      if (decl.command === undefined) {
-        lonerArgKeys.push(key);
+    reporter.section('Global Flags', () => {
+      // Show options not attached to any commands
+      const lonerArgKeys = [];
+      for (const [key, decl] of this.declaredFlags) {
+        if (decl.command === undefined) {
+          lonerArgKeys.push(key);
+        }
       }
-    }
-    for (const line of this.buildOptionsHelp(lonerArgKeys)) {
-      reporter.logAll(line);
-    }
+
+      for (const line of this.buildOptionsHelp(lonerArgKeys)) {
+        reporter.logAll(line);
+      }
+    });
 
     // Sort commands into their appropriate categories for output
-    const commandNames = new Set(this.commands.keys());
-    const commandsByCategory: Map<string, Array<string>> = new Map();
-    for (const name of commandNames) {
-      const command = this.commands.get(name);
-      if (command === undefined) {
-        throw new Error('Expected command');
-      }
-
-      const {category} = command;
-      if (category === undefined) {
+    const commandsByCategory: Map<undefined | string, Array<AnyCommandOptions>> =
+      new Map();
+    const categoryNames: Set<string | undefined> = new Set();
+    for (const [name, command] of this.commands) {
+      if (name[0] === '_') {
         continue;
       }
 
-      let categoryNames = commandsByCategory.get(category);
-      if (categoryNames === undefined) {
-        categoryNames = [];
-        commandsByCategory.set(category, categoryNames);
+      const {category} = command;
+      let commandsForCategory = commandsByCategory.get(category);
+      if (commandsForCategory === undefined) {
+        commandsForCategory = [];
+        commandsByCategory.set(category, commandsForCategory);
       }
-      categoryNames.push(name);
-
-      commandNames.delete(name);
+      commandsForCategory.push(command);
+      categoryNames.add(category);
     }
 
-    // Display commands by category
-    const categoryNames = Array.from(commandsByCategory.keys()).sort();
-    for (const category of categoryNames) {
-      const commandNames = commandsByCategory.get(category);
-      if (commandNames === undefined) {
-        throw new Error('Expected command names');
+    reporter.section('Commands', () => {
+      const sortedCategoryNames: Array<string | undefined> = Array.from(
+        categoryNames,
+      ).sort();
+
+      // Always make sure categoryless commands are displayed first
+      if (sortedCategoryNames.includes(undefined)) {
+        sortedCategoryNames.splice(sortedCategoryNames.indexOf(undefined), 1);
+        sortedCategoryNames.unshift(undefined);
       }
-      this.showCommandsHelp(`${category} Commands`, commandNames);
+
+      for (const category of sortedCategoryNames) {
+        const commands = commandsByCategory.get(category);
+        if (commands === undefined) {
+          throw new Error('Impossible. Should always be populated.');
+        }
+
+        if (category !== undefined) {
+          reporter.logAll(`<emphasis>${category} Commands</emphasis>`);
+        }
+
+        // Sort by name
+        commands.sort((a, b) => a.name.localeCompare(b.name));
+
+        reporter.list(commands.map((cmd) => {
+          return `<emphasis>${cmd.name}</emphasis> ${cmd.description ===
+          undefined ? '' : cmd.description}`;
+        }));
+        reporter.spacer();
+      }
+
+      reporter.info('To view help for a specific command run');
+      reporter.command(`${programName} command_name --help`);
+    });
+
+    this.showHelpExamples(examples);
+  }
+
+  showHelpExamples(examples?: Examples, prefix?: string) {
+    const {programName} = this.opts;
+    const {reporter} = this;
+
+    if (examples === undefined) {
+      return;
     }
 
-    // Display rest of the commands
-    this.showCommandsHelp(
-      commandsByCategory.size > 0 ? 'Other Commands' : 'Commands',
-      Array.from(commandNames),
-    );
+    reporter.section('Examples', () => {
+      for (const {description, command} of examples) {
+        const commandParts = [];
+        if (programName !== undefined) {
+          commandParts.push(programName);
+        }
+        if (prefix !== undefined) {
+          commandParts.push(prefix);
+        }
+        commandParts.push(command);
 
-    // Output examples
-    if (examples !== undefined) {
-      reporter.spacer();
-      reporter.logAll('<emphasis>Examples:</emphasis>');
-      reporter.spacer();
+        const builtCommand = commandParts.join(' ');
 
-      reporter.indent();
-      for (const cmd of examples) {
-        reporter.command(cmd);
+        reporter.spacer();
+        if (description !== undefined) {
+          reporter.logAll(description);
+        }
+        reporter.command(builtCommand);
       }
-      reporter.dedent();
-    }
-
-    reporter.spacer();
+    });
   }
 
   commandRequired() {
@@ -600,20 +605,19 @@ export default class Parser<T> {
       );
     } else {
       // TODO command name is not sanitized for markup
+
       // TODO produce a diagnostic instead
       this.reporter.error(
-        `Unknown command <emphasis>${this.args.join(
-          ' ',
-        )}</emphasis>. Run --help to see available commands.`,
+        `Unknown command <emphasis>${this.args.join(' ')}</emphasis>. Run --help to see available commands.`,
       );
     }
 
     process.exit(1);
   }
 
-  addCommand(opts: CommandOptions<Dict<unknown>>) {
+  addCommand(opts: AnyCommandOptions) {
     if (this.currentCommand !== undefined) {
-      throw new Error("Nested commands aren't allowed");
+      throw new Error('Nested commands aren\'t allowed');
     }
 
     this.commands.set(opts.name, opts);
@@ -637,7 +641,10 @@ export default class Parser<T> {
 
     this.currentCommand = undefined;
 
-    return {flags, command: opts};
+    return {
+      flags,
+      command: opts,
+    };
   }
 }
 
@@ -652,6 +659,10 @@ export class ParserInterface<T> {
     return this.parser.init();
   }
 
+  showHelp(): Promise<void> {
+    return this.parser.showHelp();
+  }
+
   getArgs(): Array<string> {
     return this.parser.args;
   }
@@ -660,7 +671,7 @@ export class ParserInterface<T> {
     this.parser.commandRequired();
   }
 
-  command(opts: CommandOptions<Dict<unknown>>) {
+  command(opts: AnyCommandOptions) {
     this.parser.addCommand(opts);
   }
 }

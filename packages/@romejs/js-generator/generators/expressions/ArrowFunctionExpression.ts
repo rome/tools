@@ -8,7 +8,6 @@
 import Generator from '../../Generator';
 import {
   ArrowFunctionExpression,
-  AnyBindingPattern,
   arrowFunctionExpression,
   AnyNode,
 } from '@romejs/js-ast';
@@ -24,53 +23,27 @@ export default function ArrowFunctionExpression(
     generator.space();
   }
 
-  const firstParam = node.head.params[0];
-
-  if (
-    node.head.params.length === 1 &&
-    firstParam !== undefined &&
-    firstParam.type === 'BindingIdentifier' &&
-    node.head.rest === undefined &&
-    !hasTypes(generator, node, firstParam)
-  ) {
-    generator.print(firstParam, node);
-  } else {
-    generator.print(node.head, node);
-  }
+  generator.print(node.head, node);
 
   generator.space();
   generator.token('=>');
   generator.space();
 
-  generator.print(node.body, node);
-}
-
-function hasTypes(
-  generator: Generator,
-  node: ArrowFunctionExpression,
-  param: AnyBindingPattern,
-): boolean {
-  if (generator.options.typeAnnotations) {
-    if (
-      node.head.typeParameters !== undefined ||
-      node.head.returnType !== undefined
-    ) {
-      return true;
-    }
-
-    if (param.meta !== undefined) {
-      if (
-        param.meta.typeAnnotation !== undefined ||
-        param.meta.optional === true
-      ) {
-        return true;
-      }
-    }
-
-    return (
-      param.trailingComments !== undefined && param.trailingComments.length > 0
-    );
+  const {body} = node;
+  if (body.type === 'BlockStatement') {
+    generator.print(body, node);
   } else {
-    return false;
+    generator.multiline(node, (multiline) => {
+      if (multiline) {
+        generator.newline();
+        generator.indent();
+      }
+
+      generator.print(body, node);
+
+      if (multiline) {
+        generator.dedent();
+      }
+    }, {conditions: ['more-than-one-line']});
   }
 }

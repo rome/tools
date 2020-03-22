@@ -12,10 +12,7 @@ import {
   numericLiteralTypeAnnotation,
 } from '@romejs/js-ast';
 
-export default function NumericLiteralTypeAnnotation(
-  node: AnyNode,
-  scope: Scope,
-) {
+export default function NumericLiteralTypeAnnotation(node: AnyNode, scope: Scope) {
   node = numericLiteralTypeAnnotation.assert(node);
   scope;
   throw new Error('unimplemented');

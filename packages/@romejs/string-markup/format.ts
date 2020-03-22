@@ -15,16 +15,13 @@ import {
 import {formatAnsi} from '@romejs/string-ansi';
 import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
 
-type FormatReduceCallback = (
-  name: TagName,
-  attributes: TagAttributes,
-  value: string,
-) => string;
+type FormatReduceCallback = (name: TagName, attributes: TagAttributes, value: string) => string;
 
 export type MarkupFormatFilenameNormalizer = (filename: string) => string;
-export type MarkupFormatFilenameHumanizer = (
-  filename: string,
-) => undefined | string;
+
+export type MarkupFormatFilenameHumanizer = (filename: string) =>
+  | undefined
+  | string;
 
 export type MarkupFormatOptions = {
   normalizeFilename?: MarkupFormatFilenameNormalizer;
@@ -52,11 +49,10 @@ function formatReduceFromChildren(
     } else if (child.type === 'Tag') {
       const {attributes} = child;
 
-      let res = callback(
-        child.name,
-        attributes,
-        formatReduceFromChildren(child.children, callback),
-      );
+      let res = callback(child.name, attributes, formatReduceFromChildren(
+        child.children,
+        callback,
+      ));
 
       // Support some concise formatting
       if (attributes.get('emphasis') === 'true') {
@@ -151,25 +147,27 @@ export function markupToAnsi(
 ): string {
   return formatReduceFromInput(input, (tag, attributes, value) => {
     switch (tag) {
-      case 'hyperlink': {
-        let text = value;
-        let hyperlink = attributes.get('target');
+      case 'hyperlink':
+        {
+          let text = value;
+          let hyperlink = attributes.get('target');
 
-        if (hyperlink === undefined) {
-          hyperlink = text;
+          if (hyperlink === undefined) {
+            hyperlink = text;
+          }
+
+          if (text === '') {
+            text = hyperlink;
+          }
+
+          return formatAnsi.hyperlink(text, hyperlink);
         }
 
-        if (text === '') {
-          text = hyperlink;
+      case 'filelink':
+        {
+          const {text, href} = formatFileLink(attributes, value, opts);
+          return formatAnsi.hyperlink(text, href);
         }
-
-        return formatAnsi.hyperlink(text, hyperlink);
-      }
-
-      case 'filelink': {
-        const {text, href} = formatFileLink(attributes, value, opts);
-        return formatAnsi.hyperlink(text, href);
-      }
 
       case 'inverse':
         return formatAnsi.inverse(` ${value} `);

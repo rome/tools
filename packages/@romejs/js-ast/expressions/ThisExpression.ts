@@ -8,9 +8,7 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type ThisExpression = JSNodeBase & {
-  type: 'ThisExpression';
-};
+export type ThisExpression = JSNodeBase & {type: 'ThisExpression'};
 
 export const thisExpression = createBuilder<ThisExpression>('ThisExpression', {
   bindingKeys: {},

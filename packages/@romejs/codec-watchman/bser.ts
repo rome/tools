@@ -10,7 +10,9 @@ import {isPlainObject, Dict} from '@romejs/typescript-helpers';
 import os = require('os');
 
 // BSER uses the local endianness to reduce byte swapping overheads
+
 // (the protocol is expressly local IPC only).  We need to tell node
+
 // to use the native endianness when reading various native values.
 const isBigEndian = os.endianness() == 'BE';
 
@@ -23,7 +25,7 @@ function nextPow2(size: number): number {
 
 // Expandable buffer that we can provide a size hint for
 export class Accumulator {
-  constructor(initsize: number = 8192) {
+  constructor(initsize: number = 8_192) {
     this.buffer = Buffer.alloc(nextPow2(initsize));
     this.readOffset = 0;
     this.writeOffset = 0;
@@ -66,9 +68,8 @@ export class Accumulator {
     }
 
     // Allocate a replacement and copy it in
-    const buf = Buffer.alloc(
-      nextPow2(this.buffer.length + size - this.writeAvail()),
-    );
+    const buf = Buffer.alloc(nextPow2(this.buffer.length + size -
+    this.writeAvail()));
     this.buffer.copy(buf);
     this.buffer = buf;
   }
@@ -90,18 +91,14 @@ export class Accumulator {
   assertReadableSize(size: number) {
     if (this.readAvail() < size) {
       throw new Error(
-        'wanted to read ' + size + ' bytes but only have ' + this.readAvail(),
+        `wanted to read ${size} bytes but only have ${this.readAvail()}`,
       );
     }
   }
 
   peekString(size: number): string {
     this.assertReadableSize(size);
-    return this.buffer.toString(
-      'utf-8',
-      this.readOffset,
-      this.readOffset + size,
-    );
+    return this.buffer.toString('utf-8', this.readOffset, this.readOffset + size);
   }
 
   readString(size: number): string {
@@ -119,19 +116,21 @@ export class Accumulator {
 
       case 2:
         return isBigEndian
-          ? this.buffer.readInt16BE(this.readOffset)
-          : this.buffer.readInt16LE(this.readOffset);
+          ? this.buffer.readInt16BE(this.readOffset) : this.buffer.readInt16LE(
+            this.readOffset,
+          );
 
       case 4:
         return isBigEndian
-          ? this.buffer.readInt32BE(this.readOffset)
-          : this.buffer.readInt32LE(this.readOffset);
+          ? this.buffer.readInt32BE(this.readOffset) : this.buffer.readInt32LE(
+            this.readOffset,
+          );
 
       case 8:
-        throw new Error("64-bit numbers aren't supported");
+        throw new Error('64-bit numbers aren\'t supported');
 
       default:
-        throw new Error('invalid integer size ' + size);
+        throw new Error(`invalid integer size ${size}`);
     }
   }
 
@@ -144,8 +143,9 @@ export class Accumulator {
   peekDouble(): number {
     this.assertReadableSize(8);
     return isBigEndian
-      ? this.buffer.readDoubleBE(this.readOffset)
-      : this.buffer.readDoubleLE(this.readOffset);
+      ? this.buffer.readDoubleBE(this.readOffset) : this.buffer.readDoubleLE(
+        this.readOffset,
+      );
   }
 
   readDouble(): number {
@@ -159,11 +159,10 @@ export class Accumulator {
       this.assertReadableSize(size);
     } else if (size < 0 && this.readOffset + size < 0) {
       throw new Error(
-        'advance with negative offset ' +
-          size +
-          ' would seek off the start of the buffer',
+        `advance with negative offset ${size} would seek off the start of the buffer`,
       );
     }
+
     this.readOffset += size;
   }
 
@@ -197,7 +196,7 @@ export class Accumulator {
         break;
 
       default:
-        throw new Error('unsupported integer size ' + size);
+        throw new Error(`unsupported integer size ${size}`);
     }
     this.writeOffset += size;
   }
@@ -213,26 +212,25 @@ export class Accumulator {
   }
 }
 
-const BSER_ARRAY = 0x00;
-const BSER_OBJECT = 0x01;
-const BSER_STRING = 0x02;
-const BSER_INT8 = 0x03;
-const BSER_INT16 = 0x04;
-const BSER_INT32 = 0x05;
-const BSER_INT64 = 0x06;
-const BSER_REAL = 0x07;
-const BSER_TRUE = 0x08;
-const BSER_FALSE = 0x09;
-const BSER_NULL = 0x0a;
-const BSER_TEMPLATE = 0x0b;
-const BSER_SKIP = 0x0c;
+const BSER_ARRAY = 0;
+const BSER_OBJECT = 1;
+const BSER_STRING = 2;
+const BSER_INT8 = 3;
+const BSER_INT16 = 4;
+const BSER_INT32 = 5;
+const BSER_INT64 = 6;
+const BSER_REAL = 7;
+const BSER_TRUE = 8;
+const BSER_FALSE = 9;
+const BSER_NULL = 10;
+const BSER_TEMPLATE = 11;
+const BSER_SKIP = 12;
 
 const ST_NEED_PDU = 0; // Need to read and decode PDU length
 const ST_FILL_PDU = 1; // Know the length, need to read whole content
-
 const MAX_INT8 = 127;
-const MAX_INT16 = 32767;
-const MAX_INT32 = 2147483647;
+const MAX_INT16 = 32_767;
+const MAX_INT32 = 2_147_483_647;
 
 export class BunserBuf {
   constructor() {
@@ -270,8 +268,11 @@ export class BunserBuf {
     }
 
     // Arrange to decode later.  This allows the consuming
+
     // application to make progress with other work in the
+
     // case that we have a lot of subscription updates coming
+
     // in from a large tree.
     this.processLater();
   }
@@ -287,18 +288,26 @@ export class BunserBuf {
   }
 
   // Do something with the buffer to advance our state.
+
   // If we're running synchronously we'll return either
+
   // the value we've decoded or undefined if we don't
+
   // yet have enought data.
+
   // If we're running asynchronously, we'll emit the value
+
   // when it becomes ready and schedule another invocation
+
   // of process on the next tick if we still have data we
+
   // can process.
   process(synchronous: boolean) {
     if (this.state == ST_NEED_PDU) {
       if (this.acc.readAvail() < 2) {
         return;
       }
+
       // Validate BSER header
       this.expectCode(0);
       this.expectCode(1);
@@ -308,6 +317,7 @@ export class BunserBuf {
         this.acc.readAdvance(-2);
         return;
       }
+
       // Ensure that we have a big enough buffer to read the rest of the PDU
       this.acc.reserve(this.pduLen);
       this.state = ST_FILL_PDU;
@@ -337,11 +347,10 @@ export class BunserBuf {
     const bufferLength = this.acc.buffer.length;
     const readableLength = this.acc.readAvail();
     const readOffset = this.acc.readOffset;
-    const buffer = JSON.stringify(
-      this.acc.buffer
-        .slice(this.acc.readOffset, this.acc.readOffset + 32)
-        .toJSON(),
-    );
+    const buffer = JSON.stringify(this.acc.buffer.slice(
+      this.acc.readOffset,
+      this.acc.readOffset + 32,
+    ).toJSON());
 
     throw new Error(
       `${reason} in Buffer of length ${bufferLength}, ${readableLength} readable at offset ${readOffset} buffer: ${buffer}`,
@@ -351,7 +360,7 @@ export class BunserBuf {
   expectCode(expected: number) {
     const code = this.acc.readInt(1);
     if (code != expected) {
-      this.raise('Expected bser opcode ' + expected + ' but got ' + code);
+      this.raise(`Expected bser opcode ${expected} but got ${code}`);
     }
   }
 
@@ -393,7 +402,7 @@ export class BunserBuf {
         return this.decodeTemplate();
 
       default:
-        this.raise('Unhandled bser opcode ' + code);
+        this.raise(`Unhandled bser opcode ${code}`);
     }
   }
 
@@ -446,7 +455,9 @@ export class BunserBuf {
   }
 
   // This is unusual compared to the other decode functions in that
+
   // we may not have enough data available to satisfy the read, and
+
   // we don't want to throw.
   decodePDUInt(): false | number {
     if (this.acc.canRead(1)) {
@@ -481,7 +492,7 @@ export class BunserBuf {
         break;
 
       default:
-        throw this.raise('invalid bser int encoding ' + code);
+        throw this.raise(`invalid bser int encoding ${code}`);
     }
 
     return size;
@@ -598,7 +609,7 @@ function dumpUnknown(buf: Accumulator, val: unknown) {
       return;
 
     case 'bigint':
-      throw new Error("bigint isn't supported yet");
+      throw new Error('bigint isn\'t supported yet');
 
     case 'string':
       buf.writeByte(BSER_STRING);
@@ -628,7 +639,6 @@ export function dumpToBuffer(val: unknown): Buffer {
   // Reserve room for an int32 to hold our PDU length
   buf.writeByte(BSER_INT32);
   buf.writeInt(0, 4); // We'll come back and fill this in at the end
-
   dumpUnknown(buf, val);
 
   // Compute PDU length

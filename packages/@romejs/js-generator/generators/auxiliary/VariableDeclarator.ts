@@ -8,22 +8,18 @@
 import Generator from '../../Generator';
 import {VariableDeclarator, variableDeclarator, AnyNode} from '@romejs/js-ast';
 
-export default function VariableDeclarator(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function VariableDeclarator(generator: Generator, node: AnyNode) {
   node = variableDeclarator.assert(node);
 
-  const {id} = node;
-  generator.print(id, node);
-  if (id.meta !== undefined) {
-    generator.print(id.meta.typeAnnotation, id.meta);
-  }
+  generator.print(node.id, node);
 
   if (node.init) {
     generator.space();
     generator.token('=');
     generator.space();
-    generator.print(node.init, node);
+
+    generator.multiline(node, (multiline, node) => {
+      generator.print(node.init, node);
+    }, {indent: true});
   }
 }

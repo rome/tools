@@ -19,7 +19,12 @@ import MappingList from './MappingList';
 import {Number1, Number0, get1, get0, number0, number1, inc} from '@romejs/ob1';
 
 export default class SourceMapGenerator {
-  constructor(args: {file?: string; sourceRoot?: string}) {
+  constructor(
+    args: {
+      file?: string;
+      sourceRoot?: string;
+    },
+  ) {
     this.file = args.file;
     this.sourceRoot = args.sourceRoot;
 
@@ -146,9 +151,9 @@ export default class SourceMapGenerator {
         next += ',';
       }
 
-      next += base64.encodeVLQ(
-        get0(mapping.generated.column) - get0(previousGeneratedColumn),
-      );
+      next += base64.encodeVLQ(get0(mapping.generated.column) - get0(
+        previousGeneratedColumn,
+      ));
       previousGeneratedColumn = mapping.generated.column;
 
       if (mapping.source !== undefined) {
@@ -157,14 +162,14 @@ export default class SourceMapGenerator {
         previousSource = sourceIdx;
 
         if (mapping.original) {
-          next += base64.encodeVLQ(
-            get1(mapping.original.line) - get1(previousOriginalLine),
-          );
+          next += base64.encodeVLQ(get1(mapping.original.line) - get1(
+            previousOriginalLine,
+          ));
           previousOriginalLine = mapping.original.line;
 
-          next += base64.encodeVLQ(
-            get0(mapping.original.column) - get0(previousOriginalColumn),
-          );
+          next += base64.encodeVLQ(get0(mapping.original.column) - get0(
+            previousOriginalColumn,
+          ));
           previousOriginalColumn = mapping.original.column;
 
           if (mapping.name !== undefined) {
@@ -173,10 +178,11 @@ export default class SourceMapGenerator {
             previousName = nameIdx;
           }
         }
+
         // TODO: else, assert mapping.name is undefined since it can't be encoded without an original position
       }
-      // TODO: else, assert mapping.original is undefined since it can't be encoded without a source
 
+      // TODO: else, assert mapping.original is undefined since it can't be encoded without a source
       result += next;
     }
 
@@ -187,7 +193,7 @@ export default class SourceMapGenerator {
     sources: Array<string>,
     sourceRoot: undefined | string,
   ): Array<string> {
-    return sources.map(source => {
+    return sources.map((source) => {
       if (sourceRoot !== undefined) {
         source = toRelativeUrl(sourceRoot, source);
       }
@@ -223,7 +229,8 @@ export default class SourceMapGenerator {
   toComment(): string {
     const jsonMap = this.toString();
     const base64Map = new Buffer(jsonMap).toString('base64');
-    const comment = `//# sourceMappingURL=data:application/json;charset=utf-8;base64,${base64Map}`;
+    const comment =
+      `//# sourceMappingURL=data:application/json;charset=utf-8;base64,${base64Map}`;
     return comment;
   }
 

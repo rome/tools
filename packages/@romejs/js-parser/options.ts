@@ -16,11 +16,11 @@ type UserOptionsBase = {
   manifestPath?: undefined | string;
 };
 
-export type JSParserUserOptions = ParserOptionsWithRequiredPath &
-  UserOptionsBase;
+export type JSParserUserOptions = ParserOptionsWithRequiredPath & UserOptionsBase;
 
-export type JSParserOptions = ParserOptionsWithRequiredPath &
-  Required<UserOptionsBase>;
+export type JSParserOptions =
+  & ParserOptionsWithRequiredPath
+  & Required<UserOptionsBase>;
 
 const DEFAULT_USER_OPTIONS: Required<UserOptionsBase> = {
   // I want to kill this option very badly
@@ -30,6 +30,7 @@ const DEFAULT_USER_OPTIONS: Required<UserOptionsBase> = {
   sourceType: 'script',
 
   // Whether we should be tracking tokens when parsing this file
+
   // NOTE: This is memory-intensive
   tokens: false,
 
