@@ -676,11 +676,13 @@ export function filterSpread<T extends AnyNode>(
   for (let i = 0; i < elems.length; i++) {
     const elem = elems[i];
     if (elem.type === 'SpreadElement') {
+      parser.addDiagnostic({
+        description: descriptions.JS_PARSER.UNEXPECTED_SPREAD,
+      });
+
       elems[i] = toReferenceIdentifier(parser, parser.createUnknownIdentifier(
         'spread substitute',
       ));
-
-      throw new Error('Is this even ever possible?');
     }
   }
   // @ts-ignore Technically wrong but we removed all SpreadElement

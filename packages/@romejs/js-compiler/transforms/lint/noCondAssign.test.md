@@ -12,22 +12,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noCondAssign'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Cannot assign variable in loop condition'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 5
-        index: 61
-        line: 3
+      description: Object {
+        category: 'lint/noCondAssign'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Cannot assign variable in loop condition'}
       }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 5
+          index: 61
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
       }
     }
   ]
@@ -42,22 +46,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noCondAssign'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Cannot assign variable in loop condition'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 5
-        index: 48
-        line: 3
+      description: Object {
+        category: 'lint/noCondAssign'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Cannot assign variable in loop condition'}
       }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 5
+          index: 48
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
       }
     }
   ]
@@ -72,59 +80,68 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'parse/js'
-      filename: 'unknown'
-      message: 'Unclosed while test'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 6
-        index: 6
-        line: 1
-      }
-      start: Object {
-        column: 6
-        index: 6
-        line: 1
-      }
-      advice: Array [
-        log {
-          category: 'info'
-          message: 'We expected to find the closing character <emphasis>)</emphasis> here'
+      location: Object {
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 6
+          index: 6
+          line: 1
         }
-        frame {
-          filename: 'unknown'
-          end: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-          start: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
+        start: Object {
+          column: 6
+          index: 6
+          line: 1
         }
-      ]
+      }
+      description: Object {
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unclosed while test'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'We expected to find the closing character <emphasis>)</emphasis> here'
+          }
+          frame {
+            location: Object {
+              filename: 'unknown'
+              end: Object {
+                column: 19
+                index: 19
+                line: 1
+              }
+              start: Object {
+                column: 19
+                index: 19
+                line: 1
+              }
+            }
+          }
+        ]
+      }
     }
     Object {
-      category: 'lint/noCondAssign'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Cannot assign variable in loop condition'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 5
-        index: 51
-        line: 3
+      description: Object {
+        category: 'lint/noCondAssign'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Cannot assign variable in loop condition'}
       }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 5
+          index: 51
+          line: 3
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
       }
     }
   ]
@@ -139,22 +156,24 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      advice: undefined
-      category: 'parse/js'
-      filename: 'unknown'
-      message: 'Unterminated string constant'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 23
-        index: 28
-        line: 2
+      description: Object {
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unterminated string constant'}
       }
-      start: Object {
-        column: 23
-        index: 28
-        line: 2
+      location: Object {
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 23
+          index: 28
+          line: 2
+        }
+        start: Object {
+          column: 23
+          index: 28
+          line: 2
+        }
       }
     }
   ]

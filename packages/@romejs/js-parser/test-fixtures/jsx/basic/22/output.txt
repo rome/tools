@@ -43,32 +43,35 @@ Program {
   ]
   diagnostics: Array [
     Object {
-      category: 'parse/js'
-      filename: 'input.mjs'
-      message: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module'
-      mtime: undefined
-      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 35
-        index: 51
-        line: 2
+      description: Object {
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
+          }
+          log {
+            category: 'info'
+            message: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
+          }
+        ]
       }
-      start: Object {
-        column: 0
-        index: 16
-        line: 2
+      location: Object {
+        mtime: undefined
+        sourceType: 'script'
+        end: Object {
+          column: 35
+          index: 51
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 16
+          line: 2
+        }
       }
-      advice: Array [
-        log {
-          category: 'info'
-          message: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
-        }
-        log {
-          category: 'info'
-          message: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
-        }
-      ]
     }
   ]
   body: Array [

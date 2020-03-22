@@ -7,23 +7,27 @@
 ```javascript
 Array [
   Object {
-    category: 'lint/noDebugger'
-    filename: 'unknown'
-    fixable: true
-    language: 'js'
-    message: 'Unexpected \'debugger\' statement'
-    mtime: undefined
-    sourceType: 'module'
     origins: Array [Object {category: 'lint'}]
-    end: Object {
-      column: 9
-      index: 9
-      line: 1
+    description: Object {
+      category: 'lint/noDebugger'
+      fixable: true
+      message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected \'debugger\' statement'}
     }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
+    location: Object {
+      filename: 'unknown'
+      language: 'js'
+      mtime: undefined
+      sourceType: 'module'
+      end: Object {
+        column: 9
+        index: 9
+        line: 1
+      }
+      start: Object {
+        column: 0
+        index: 0
+        line: 1
+      }
     }
   }
 ]

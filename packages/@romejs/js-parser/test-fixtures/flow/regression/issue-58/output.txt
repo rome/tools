@@ -25,22 +25,24 @@ Program {
   }
   diagnostics: Array [
     Object {
-      advice: undefined
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Missing conditional expression consequent separator'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 16
-        index: 54
-        line: 2
+      description: Object {
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Missing conditional expression consequent separator'}
       }
-      start: Object {
-        column: 16
-        index: 54
-        line: 2
+      location: Object {
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 16
+          index: 54
+          line: 2
+        }
+        start: Object {
+          column: 16
+          index: 54
+          line: 2
+        }
       }
     }
   ]

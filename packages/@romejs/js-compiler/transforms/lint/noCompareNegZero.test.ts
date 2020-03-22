@@ -14,29 +14,8 @@ test('disallows comparing negative zero', async (t) => {
   const sourceTextB = '(1 >= 0)';
 
   const res1 = await testLint(sourceTextA);
-  t.looksLike(res1.diagnostics, [
-    {
-      category: 'lint/noCompareNegZero',
-      filename: 'unknown',
-      fixable: true,
-      language: 'js',
-      message: 'Do not use the \'>=\' operator to compare against -0',
-      mtime: undefined,
-      sourceType: 'module',
-      origins: [{category: 'lint'}],
-      end: {
-        column: 8,
-        index: 8,
-        line: 1,
-      },
-      start: {
-        column: 1,
-        index: 1,
-        line: 1,
-      },
-    },
-  ]);
+  t.snapshot(res1);
 
   const res2 = await testLint(sourceTextB);
-  t.looksLike(res2.diagnostics, []);
+  t.snapshot(res2);
 });

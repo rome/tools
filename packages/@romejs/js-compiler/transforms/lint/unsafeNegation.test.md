@@ -10,23 +10,27 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/unsafeNegation'
-      filename: 'unknown'
-      fixable: true
-      language: 'js'
-      message: 'Unsafe usage of negation operator in left side of binary expression'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 11
-        index: 11
-        line: 1
+      description: Object {
+        category: 'lint/unsafeNegation'
+        fixable: true
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unsafe usage of negation operator in left side of binary expression'}
       }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 11
+          index: 11
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
       }
     }
   ]

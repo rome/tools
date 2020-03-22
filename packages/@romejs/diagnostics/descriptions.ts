@@ -928,6 +928,7 @@ export const descriptions = createMessages({
     CONST_WITHOUT_INITIALIZER: 'A constant must have an initializer',
     COMPLEX_BINDING_WITHOUT_INITIALIZER: 'Complex binding patterns require an initialization value',
     ACCESSOR_WITH_TYPE_PARAMS: 'An accessor cannot have type parameters',
+    UNEXPECTED_SPREAD: 'Unexpected spread',
 
     DUPLICATE_LABEL: (label: string, loc: undefined | SourceLocation) =>
       ({

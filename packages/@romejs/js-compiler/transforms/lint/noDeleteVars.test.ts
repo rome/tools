@@ -14,17 +14,5 @@ test('no delete vars', async (t) => {
     delete foo;
     `, false, 'script');
 
-  t.looksLike(res.diagnostics, [
-    {
-      category: 'lint/noDeleteVars',
-      message: 'Variables should not be deleted.',
-      mtime: undefined,
-      filename: 'unknown',
-      start: {index: 29, line: 3, column: 4},
-      end: {index: 39, line: 3, column: 14},
-      language: 'js',
-      sourceType: 'script',
-      origins: [{category: 'lint'}],
-    },
-  ]);
+  t.snapshot(res);
 });
