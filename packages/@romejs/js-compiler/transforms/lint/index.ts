@@ -14,7 +14,6 @@ import getterReturn from './getterReturn';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
-import noDanglingBackslashInRegularExpressions from './noDanglingBackslashInRegularExpressions';
 import noDebugger from './noDebugger';
 import noDeleteVars from './noDeleteVars';
 import noDupeArgs from './noDupeArgs';
@@ -47,7 +46,6 @@ export const lintTransforms = [
   noAsyncPromiseExecutor,
   noCompareNegZero,
   noCondAssign,
-  noDanglingBackslashInRegularExpressions,
   noDebugger,
   noDeleteVars,
   noDupeArgs,
