@@ -43,16 +43,8 @@
   line-height: var(--ifm-line-height-base);
 }
 
-.getStarted {
-  --focusColor: #000000;
-}
-
-:global(html[data-theme='dark']) .getStarted {
-  --focusColor: #FFFFFF;
-}
-
 .getStarted:focus {
-  box-shadow: 0 0 0 2px var(--focusColor);
+  box-shadow: 0 0 0 2px var(--ifm-color-content);
 }
 
 @media screen and (max-width: 966px) {
