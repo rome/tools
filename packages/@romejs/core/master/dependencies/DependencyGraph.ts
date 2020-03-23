@@ -134,10 +134,10 @@ export default class DependencyGraph {
     const stats: BundleBuddyStats = [];
 
     for (const node of this.nodes.values()) {
-      const source = node.id;
+      const source = node.uid;
 
       for (const absoluteTarget of node.relativeToAbsolutePath.values()) {
-        const target = this.getNode(absoluteTarget).id;
+        const target = this.getNode(absoluteTarget).uid;
         stats.push({
           target,
           source,
@@ -146,7 +146,7 @@ export default class DependencyGraph {
     }
 
     for (const absoluteEntry of entries) {
-      const source = this.getNode(absoluteEntry).id;
+      const source = this.getNode(absoluteEntry).uid;
       stats.push({
         source,
         target: undefined,
@@ -157,9 +157,11 @@ export default class DependencyGraph {
   }
 
   addNode(filename: AbsoluteFilePath, res: WorkerAnalyzeDependencyResult) {
-    const module = new DependencyNode(this, this.master.projectManager.getUid(
-      filename,
-    ), filename, res);
+    const module = new DependencyNode(
+      this,
+      this.master.projectManager.getFileReference(filename),
+      res,
+    );
     this.nodes.set(filename, module);
     return module;
   }
