@@ -743,7 +743,7 @@ export const descriptions = createMessages({
     UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL: (
       name: string,
       source: string,
-      location: DiagnosticLocation,
+      location: SourceLocation,
     ) =>
       ({
         message: markup`Couldn't find export <emphasis>${name}</emphasis> in <filelink emphasis target="${source}" />`,
@@ -752,7 +752,7 @@ export const descriptions = createMessages({
           {
             type: 'log',
             category: 'info',
-            message: 'However we found a matching local variable in this module. Did you forget to export it?',
+            message: markup`However we found a matching local variable in <filelink emphasis target="${location.filename}" />. Did you forget to export it?`,
           },
           {
             type: 'frame',
