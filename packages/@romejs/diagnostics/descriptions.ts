@@ -739,6 +739,27 @@ export const descriptions = createMessages({
           },
         }),
       }),
+
+    UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL: (
+      name: string,
+      source: string,
+      location: SourceLocation,
+    ) =>
+      ({
+        message: markup`Couldn't find export <emphasis>${name}</emphasis> in <filelink emphasis target="${source}" />`,
+        category: 'bundler/unknownExport',
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: markup`However we found a matching local variable in <filelink emphasis target="${location.filename}" />. Did you forget to export it?`,
+          },
+          {
+            type: 'frame',
+            location,
+          },
+        ],
+      }),
   },
 
   SPDX: {

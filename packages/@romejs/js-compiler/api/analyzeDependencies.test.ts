@@ -165,3 +165,10 @@ test('disallow mix of es and cjs exports', async (t) => {
       exports.bar = 'foo';
     `, 'script'));
 });
+
+test('defines topLevelLocalBindings', async (t) => {
+  t.snapshot(await testAnalyzeDeps(`
+    import {bar} from 'foo';
+    const foo = 'bar';
+  `, 'module'));
+});

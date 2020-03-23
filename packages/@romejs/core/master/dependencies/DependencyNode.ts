@@ -9,7 +9,12 @@ import DependencyGraph from './DependencyGraph';
 import {BundleCompileResolvedImports} from '@romejs/js-compiler';
 import {ConstImportModuleKind} from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
-import {Diagnostics, Diagnostic, descriptions} from '@romejs/diagnostics';
+import {
+  Diagnostics,
+  Diagnostic,
+  descriptions,
+  DiagnosticLocation,
+} from '@romejs/diagnostics';
 import {ProjectDefinition} from '@romejs/project';
 import {DependencyOrder} from './DependencyOrderer';
 import DependencyOrderer from './DependencyOrderer';
@@ -22,6 +27,7 @@ import {
   AnalyzeDependencyName,
   AnalyzeExportLocal,
 } from '@romejs/core';
+import {FileReference} from '@romejs/core/common/types/files';
 
 type ResolvedImportFound = {
   type: 'FOUND';
@@ -69,15 +75,15 @@ type DependencyNodeDependency = {
 export default class DependencyNode {
   constructor(
     graph: DependencyGraph,
-    id: string,
-    path: AbsoluteFilePath,
+    ref: FileReference,
     res: WorkerAnalyzeDependencyResult,
   ) {
     this.graph = graph;
 
-    this.project = graph.master.projectManager.assertProjectExisting(path);
-    this.path = path;
-    this.id = id;
+    this.project = graph.master.projectManager.assertProjectExisting(ref.real);
+    this.uid = ref.uid;
+    this.path = ref.real;
+    this.ref = ref;
     this.type = res.moduleType;
 
     this.usedAsync = false;
@@ -87,7 +93,7 @@ export default class DependencyNode {
 
     this.analyze = res;
 
-    const {handler} = getFileHandler(path, this.project.config);
+    const {handler} = getFileHandler(ref.real, this.project.config);
     this.handler = handler;
   }
 
@@ -98,7 +104,8 @@ export default class DependencyNode {
   type: AnalyzeModuleType;
   project: ProjectDefinition;
   path: AbsoluteFilePath;
-  id: string;
+  uid: string;
+  ref: FileReference;
   all: boolean;
   usedAsync: boolean;
   handler: undefined | ExtensionHandler;
@@ -196,6 +203,24 @@ export default class DependencyNode {
     return orderer.order(this.path);
   }
 
+  // Get a list of all DependencyNodes where exports could be resolved. eg. `export *`
+  getExportedModules(chain: Set<DependencyNode> = new Set()): Set<DependencyNode> {
+    if (chain.has(this)) {
+      return new Set();
+    } else {
+      chain.add(this);
+    }
+
+    for (const exp of this.analyze.exports) {
+      if (exp.type === 'externalAll') {
+        const node = this.getNodeFromRelativeDependency(exp.source);
+        node.getExportedModules(chain);
+      }
+    }
+
+    return chain;
+  }
+
   getExportedNames(
     kind: ConstImportModuleKind,
     seen: Set<DependencyNode> = new Set(),
@@ -242,10 +267,39 @@ export default class DependencyNode {
     kind: ConstImportModuleKind,
     resolved: ResolvedImportNotFound,
   ): Diagnostic {
+    const location: DiagnosticLocation = {
+      ...resolved.loc,
+      mtime: this.getMtime(),
+    };
+
+    const expectedName = resolved.name;
+    const fromSource = resolved.node.uid;
+
+    // Check if there was a matching local in any of the exported modules
+    for (const mod of resolved.node.getExportedModules()) {
+      // We use an object as a hash map so need to check for pollution
+      if (Object.prototype.hasOwnProperty.call(
+        mod.analyze.topLevelLocalBindings,
+        expectedName,
+      )) {
+        const localLoc = mod.analyze.topLevelLocalBindings[expectedName];
+        if (localLoc !== undefined) {
+          return {
+            description: descriptions.BUNDLER.UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL(
+              expectedName,
+              fromSource,
+              localLoc,
+            ),
+            location,
+          };
+        }
+      }
+    }
+
     return {
       description: descriptions.BUNDLER.UNKNOWN_EXPORT(
-        resolved.name,
-        resolved.node.id,
+        expectedName,
+        fromSource,
         Array.from(resolved.node.getExportedNames(kind)),
         (name: string) => {
           const exportInfo = resolved.node.resolveImport(name, undefined);
@@ -258,15 +312,12 @@ export default class DependencyNode {
 
           return {
             location: exportInfo.record.loc,
-            source: exportInfo.node !== resolved.node
-              ? exportInfo.node.path.join() : undefined,
+            source: exportInfo.node === resolved.node
+              ? undefined : exportInfo.node.path.join(),
           };
         },
       ),
-      location: {
-        ...resolved.loc,
-        mtime: this.getMtime(),
-      },
+      location,
     };
   }
 
@@ -281,7 +332,7 @@ export default class DependencyNode {
     return {
       description: descriptions.BUNDLER.IMPORT_TYPE_MISMATCH(
         name,
-        node.id,
+        node.uid,
         kind,
         record.kind,
         record.loc,
@@ -347,9 +398,9 @@ export default class DependencyNode {
         }
 
         // If the resolved target isn't the same as the file then forward it
-        if (resolved.node.id !== mod.id) {
-          resolvedImports[`${mod.id}:${name}`] = {
-            id: resolved.node.id,
+        if (resolved.node.uid !== mod.uid) {
+          resolvedImports[`${mod.uid}:${name}`] = {
+            id: resolved.node.uid,
             name: resolved.record.name,
           };
         }
