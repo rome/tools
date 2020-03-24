@@ -15,19 +15,6 @@ test('no template curly in string', async (t) => {
 
     // mark consts as used
     console.log(user, helloUser)
-    `);
-
-  t.looksLike(res.diagnostics, [
-    {
-      category: 'lint/noTemplateCurlyInString',
-      filename: 'unknown',
-      language: 'js',
-      message: 'Unexpected template string expression.',
-      mtime: undefined,
-      sourceType: 'module',
-      origins: [{category: 'lint'}],
-      end: {column: 39, index: 69, line: 3},
-      start: {column: 22, index: 52, line: 3},
-    },
-  ]);
+  `);
+  t.snapshot(res);
 });

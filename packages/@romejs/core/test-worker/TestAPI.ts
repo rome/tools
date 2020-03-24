@@ -5,10 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  PartialDiagnosticAdvice,
-  PartialDiagnosticAdviceItem,
-} from '@romejs/diagnostics';
+import {DiagnosticAdvice, DiagnosticAdviceItem} from '@romejs/diagnostics';
 import SnapshotManager from './SnapshotManager';
 import {TestRunnerOptions} from '../master/testing/types';
 import {getErrorStackAdvice} from '@romejs/diagnostics';
@@ -120,7 +117,7 @@ export default class TestAPI {
   timeoutStart: undefined | number;
   timeoutMax: undefined | number;
 
-  advice: PartialDiagnosticAdvice;
+  advice: DiagnosticAdvice;
   teardownEvent: Event<void, void>;
   testName: string;
   snapshotCounter: number;
@@ -138,7 +135,7 @@ export default class TestAPI {
       expectedAlias?: string;
       receivedAlias?: string;
     } = {},
-  ): PartialDiagnosticAdvice {
+  ): DiagnosticAdvice {
     let expectedFormat;
     let receivedFormat;
     if (typeof received === 'string' && typeof expected === 'string') {
@@ -162,7 +159,7 @@ export default class TestAPI {
     const hasAllTruncated = expectedFormatCode !== expectedFormat &&
       receivedFormatCode !== receivedFormat;
 
-    const advice: PartialDiagnosticAdvice = [];
+    const advice: DiagnosticAdvice = [];
 
     if (expectedFormat === receivedFormat) {
       // Better error message when both values are visually identical
@@ -274,7 +271,7 @@ export default class TestAPI {
     return advice;
   }
 
-  addToAdvice(item: PartialDiagnosticAdviceItem) {
+  addToAdvice(item: DiagnosticAdviceItem) {
     this.advice.push(item);
   }
 
@@ -327,7 +324,7 @@ export default class TestAPI {
 
   fail(
     message: string = 'Test failure triggered by t.fail()',
-    advice: PartialDiagnosticAdvice = [],
+    advice: DiagnosticAdvice = [],
     framesToPop: number = 0,
   ) {
     throw createErrorFromStructure({
@@ -549,7 +546,7 @@ export default class TestAPI {
 
     // Compare the snapshots
     if (formatted !== existingSnapshot) {
-      const advice: PartialDiagnosticAdvice = this.buildMatchAdvice(
+      const advice: DiagnosticAdvice = this.buildMatchAdvice(
         formatted,
         existingSnapshot,
         {

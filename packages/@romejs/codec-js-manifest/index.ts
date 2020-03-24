@@ -23,7 +23,7 @@ import {
 } from './types';
 import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
 import {normalizeName} from './name';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics} from '@romejs/diagnostics';
 import {
   AbsoluteFilePath,
   createRelativeFilePath,
@@ -568,7 +568,7 @@ export async function normalizeManifest(
   consumer: Consumer,
 ): Promise<{
   manifest: Manifest;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
 }> {
   const loose = path.getSegments().includes('node_modules');
 

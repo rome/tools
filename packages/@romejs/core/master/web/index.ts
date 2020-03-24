@@ -259,11 +259,11 @@ export class WebServer {
       throw new Error('Pathname is attempting to escalate out of cwd');
     }
 
-    const pathPointer = url.path.getDiagnosticPointer();
+    const pathPointer = url.path.getDiagnosticLocation();
     const path = await this.master.resolver.resolveEntryAssertPath({
       origin: this.masterRequest.client.flags.cwd,
       source: absolute,
-    }, pathPointer === undefined ? undefined : {pointer: pathPointer});
+    }, pathPointer === undefined ? undefined : {location: pathPointer});
 
     const platform = url.query.get('platform').asStringSetOrVoid(PLATFORMS);
     const cacheKey = JSON.stringify({

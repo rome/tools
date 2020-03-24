@@ -7,6 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'preferTemplate',
@@ -16,10 +17,7 @@ export default {
     if (node.type === 'BinaryExpression' && node.operator === '+' &&
       (node.left.type === 'StringLiteral' && !node.left.value.includes('`') ||
       node.right.type === 'StringLiteral' && !node.right.value.includes('`'))) {
-      path.context.addNodeDiagnostic(node, {
-        category: 'lint/preferTemplate',
-        message: 'You\'re using string concatenation when template literals are preferred',
-      });
+      path.context.addNodeDiagnostic(node, descriptions.LINT.PREFER_TEMPLATE);
     }
 
     return node;

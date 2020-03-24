@@ -31,8 +31,8 @@ export function tokenizeJS(
   // If we have any diagnostics, then mark anything from the first as invalid
   if (diagnostics.length > 0) {
     const firstDiag = diagnostics[0];
-    const invalidStart = firstDiag.start;
-    const invalidEnd = firstDiag.end;
+    const invalidStart = firstDiag.location.start;
+    const invalidEnd = firstDiag.location.end;
     if (invalidStart === undefined || invalidEnd === undefined) {
       throw new Error('All parser diagnostics are expected to have a start/end');
     }

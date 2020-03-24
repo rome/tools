@@ -12,23 +12,27 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noEmptyCharacterClass'
-      filename: 'unknown'
-      fixable: true
-      language: 'js'
-      message: 'Empty character classes in regular expressions are not allowed'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 16
-        index: 16
-        line: 1
+      description: Object {
+        category: 'lint/noEmptyCharacterClass'
+        fixable: true
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Empty character classes in regular expressions are not allowed'}
       }
-      start: Object {
-        column: 15
-        index: 15
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 16
+          index: 16
+          line: 1
+        }
+        start: Object {
+          column: 15
+          index: 15
+          line: 1
+        }
       }
     }
   ]
@@ -43,23 +47,27 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noEmptyCharacterClass'
-      filename: 'unknown'
-      fixable: true
-      language: 'js'
-      message: 'Empty character classes in regular expressions are not allowed'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 16
-        index: 16
-        line: 1
+      description: Object {
+        category: 'lint/noEmptyCharacterClass'
+        fixable: true
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Empty character classes in regular expressions are not allowed'}
       }
-      start: Object {
-        column: 14
-        index: 14
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 16
+          index: 16
+          line: 1
+        }
+        start: Object {
+          column: 14
+          index: 14
+          line: 1
+        }
       }
     }
   ]
@@ -74,23 +82,27 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noEmptyCharacterClass'
-      filename: 'unknown'
-      fixable: true
-      language: 'js'
-      message: 'Empty character classes in regular expressions are not allowed'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 33
-        index: 33
-        line: 1
+      description: Object {
+        category: 'lint/noEmptyCharacterClass'
+        fixable: true
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Empty character classes in regular expressions are not allowed'}
       }
-      start: Object {
-        column: 32
-        index: 32
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 33
+          index: 33
+          line: 1
+        }
+        start: Object {
+          column: 32
+          index: 32
+          line: 1
+        }
       }
     }
   ]
@@ -105,23 +117,27 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noEmptyCharacterClass'
-      filename: 'unknown'
-      fixable: true
-      language: 'js'
-      message: 'Empty character classes in regular expressions are not allowed'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 13
-        index: 13
-        line: 1
+      description: Object {
+        category: 'lint/noEmptyCharacterClass'
+        fixable: true
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Empty character classes in regular expressions are not allowed'}
       }
-      start: Object {
-        column: 11
-        index: 11
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 13
+          index: 13
+          line: 1
+        }
+        start: Object {
+          column: 11
+          index: 11
+          line: 1
+        }
       }
     }
   ]
@@ -136,23 +152,27 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noEmptyCharacterClass'
-      filename: 'unknown'
-      fixable: true
-      language: 'js'
-      message: 'Empty character classes in regular expressions are not allowed'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 14
-        index: 14
-        line: 1
+      description: Object {
+        category: 'lint/noEmptyCharacterClass'
+        fixable: true
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Empty character classes in regular expressions are not allowed'}
       }
-      start: Object {
-        column: 13
-        index: 13
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 14
+          index: 14
+          line: 1
+        }
+        start: Object {
+          column: 13
+          index: 13
+          line: 1
+        }
       }
     }
   ]
@@ -167,23 +187,27 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noEmptyCharacterClass'
-      filename: 'unknown'
-      fixable: true
-      language: 'js'
-      message: 'Empty character classes in regular expressions are not allowed'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 21
-        index: 21
-        line: 1
+      description: Object {
+        category: 'lint/noEmptyCharacterClass'
+        fixable: true
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Empty character classes in regular expressions are not allowed'}
       }
-      start: Object {
-        column: 20
-        index: 20
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 21
+          index: 21
+          line: 1
+        }
+        start: Object {
+          column: 20
+          index: 20
+          line: 1
+        }
       }
     }
   ]

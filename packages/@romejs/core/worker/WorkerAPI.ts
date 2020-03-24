@@ -7,7 +7,7 @@
 
 import {Worker, FileReference} from '@romejs/core';
 import {Program} from '@romejs/js-ast';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics, descriptions} from '@romejs/diagnostics';
 import {
   TransformStageName,
   CompileResult,
@@ -26,7 +26,6 @@ import {compile} from '@romejs/js-compiler';
 import {catchDiagnostics} from '@romejs/diagnostics';
 import * as jsAnalysis from '@romejs/js-analysis';
 import {program} from '@romejs/js-ast';
-import diff from '@romejs/string-diff';
 import {getFileHandlerAssert, ExtensionLintResult} from '../common/fileHandlers';
 import {
   AnalyzeDependencyResult,
@@ -43,25 +42,27 @@ export default class WorkerAPI {
   worker: Worker;
   logger: Logger;
 
-  interceptAndAddGeneratedToDiagnostics<
-    T extends {diagnostics: PartialDiagnostics}
-  >(
+  interceptAndAddGeneratedToDiagnostics<T extends {diagnostics: Diagnostics}>(
     val: T,
     generated: boolean,
   ): T {
     if (generated) {
       const diagnostics = val.diagnostics.map((diag) => {
-        const diagAdvice = diag.advice === undefined ? [] : diag.advice;
+        const diagAdvice = diag.description.advice === undefined
+          ? [] : diag.description.advice;
         return {
           ...diag,
-          advice: [
-            ...diagAdvice,
-            {
-              type: 'log',
-              category: 'warn',
-              message: 'This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect',
-            },
-          ],
+          metadata: {
+            ...diag.description,
+            advice: [
+              ...diagAdvice,
+              {
+                type: 'log',
+                category: 'warn',
+                message: 'This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect',
+              },
+            ],
+          },
         };
       });
 
@@ -287,19 +288,10 @@ export default class WorkerAPI {
       diagnostics: [
         ...diagnostics,
         {
-          category: 'lint/pendingFixes',
-          filename: ref.uid,
-          message: 'Pending fixes',
-          advice: [
-            {
-              type: 'diff',
-              diff: diff(raw, formatted),
-              legend: {
-                add: 'Code to be added',
-                delete: 'Code to be removed',
-              },
-            },
-          ],
+          location: {
+            filename: ref.uid,
+          },
+          description: descriptions.LINT.PENDING_FIXES(raw, formatted),
         },
       ],
     };

@@ -15,10 +15,11 @@ import Resolver, {
   ResolverRemoteQuery,
 } from './Resolver';
 import {
-  PartialDiagnosticAdvice,
+  DiagnosticAdvice,
   buildSuggestionAdvice,
   createSingleDiagnosticError,
   DiagnosticCategory,
+  createBlessedDiagnosticMessage,
 } from '@romejs/diagnostics';
 import {orderBySimilarity} from '@romejs/string-utils';
 import {createUnknownFilePath, AbsoluteFilePath} from '@romejs/path';
@@ -48,14 +49,14 @@ export default function resolverSuggest(
   // Use the querySource returned by the resolution which will be the one that actually triggered this error, otherwise use the query source provided to us
   const querySource = resolved.source === undefined
     ? origQuerySource : resolved.source;
-  if (querySource === undefined || querySource.pointer === undefined) {
+  if (querySource === undefined || querySource.location === undefined) {
     // TODO do something about the `advice` on some `resolved` that may contain metadata?
     throw new Error(errMsg);
   }
 
-  const {pointer} = querySource;
+  const {location} = querySource;
 
-  let advice: PartialDiagnosticAdvice = [];
+  let advice: DiagnosticAdvice = [];
 
   if (query.origin.isAbsolute()) {
     const localQuery: ResolverLocalQuery = {
@@ -133,7 +134,7 @@ export default function resolverSuggest(
 
     // Hint on any indirection
     if (
-      origQuerySource !== undefined && origQuerySource.pointer !== undefined &&
+      origQuerySource !== undefined && origQuerySource.location !== undefined &&
         resolved.source !== undefined
     ) {
       advice.push({
@@ -142,11 +143,11 @@ export default function resolverSuggest(
         message: `Found while resolving <emphasis>${query.source}</emphasis> from <filelink emphasis target="${query.origin}" />`,
       });
 
-      const origPointer = origQuerySource.pointer;
+      const origPointer = origQuerySource.location;
 
       advice.push({
         type: 'frame',
-        ...origPointer,
+        location: origPointer,
       });
     }
 
@@ -232,13 +233,15 @@ export default function resolverSuggest(
   }
 
   message +=
-    ` <emphasis>${source}</emphasis> from <filelink emphasis target="${pointer.filename}" />`;
+    ` <emphasis>${source}</emphasis> from <filelink emphasis target="${location.filename}" />`;
 
   throw createSingleDiagnosticError({
-    ...pointer,
-    category,
-    message,
-    advice,
+    location,
+    description: {
+      category,
+      message: createBlessedDiagnosticMessage(message),
+      advice,
+    },
   });
 }
 

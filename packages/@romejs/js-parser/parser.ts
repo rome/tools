@@ -21,9 +21,10 @@ import {
 } from '@romejs/parser-core';
 import {JSParserOptions} from './options';
 import {
-  PartialDiagnosticAdvice,
-  PartialDiagnostics,
+  Diagnostics,
   DiagnosticFilter,
+  DiagnosticDescription,
+  descriptions,
 } from '@romejs/diagnostics';
 import {State} from './tokenizer/state';
 import ParserBranchFinder from './ParserBranchFinder';
@@ -34,7 +35,7 @@ import {lineBreak} from '@romejs/js-parser-utils';
 import {parseTopLevel} from './parser/index';
 import {createInitialState} from './tokenizer/state';
 import {sub, Number0, number0} from '@romejs/ob1';
-import {Dict} from '@romejs/typescript-helpers';
+import {Dict, OptionalProps} from '@romejs/typescript-helpers';
 import {attachComments} from './parser/comments';
 
 const TOKEN_MISTAKES: Dict<string> = {
@@ -258,19 +259,21 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
       };
     }
 
-    assertNoSpace(message: string = 'Unexpected space'): void {
+    assertNoSpace(
+      _metadata: Omit<DiagnosticDescription, 'category'> = descriptions.JS_PARSER.UNEXPECTED_SPACE,
+    ): void {
       const {state} = this;
 
       if (state.startPos.index > state.lastEndPos.index) {
         this.addDiagnostic({
           start: state.lastEndPos,
           end: state.lastEndPos,
-          message,
+          description: _metadata,
         });
       }
     }
 
-    getDiagnostics(): PartialDiagnostics {
+    getDiagnostics(): Diagnostics {
       const collector = new DiagnosticsProcessor({
         origins: [
           {
@@ -292,7 +295,7 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
       this.state.diagnosticFilters.push(diag);
     }
 
-    addCompleteDiagnostic(diags: PartialDiagnostics) {
+    addCompleteDiagnostic(diags: Diagnostics) {
       this.state.diagnostics = [...this.state.diagnostics, ...diags];
     }
 
@@ -329,13 +332,12 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
     }
 
     addDiagnostic(
-      diag: {
-        message: string;
+      opts: {
+        description: Omit<DiagnosticDescription, 'category'>;
         start?: Position;
         end?: Position;
         loc?: SourceLocation;
         index?: Number0;
-        advice?: PartialDiagnosticAdvice;
       },
     ) {
       if (this.isLookahead) {
@@ -356,16 +358,16 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
         //return;
       }
 
-      let {start, end} = diag;
+      let {start, end} = opts;
 
-      if (diag.index !== undefined) {
-        start = this.getPositionFromIndex(diag.index);
+      if (opts.index !== undefined) {
+        start = this.getPositionFromIndex(opts.index);
         end = start;
       }
 
-      if (diag.loc !== undefined) {
-        start = diag.loc.start;
-        end = diag.loc.end;
+      if (opts.loc !== undefined) {
+        start = opts.loc.start;
+        end = opts.loc.end;
       }
 
       // If we weren't given a start then default to the provided end, or the current token start
@@ -383,14 +385,16 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
       }
 
       this.state.diagnostics.push({
-        filename: this.filename,
-        sourceType: this.sourceType,
-        mtime: this.mtime,
-        message: diag.message,
-        advice: diag.advice,
-        start,
-        end,
-        category: 'parse/js',
+        description: {
+          category: 'parse/js',
+          ...opts.description,
+        },
+        location: {
+          sourceType: this.sourceType,
+          mtime: this.mtime,
+          start,
+          end,
+        },
       });
     }
 
@@ -405,7 +409,7 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
     expectSyntaxEnabled(syntax: ConstProgramSyntax) {
       if (!this.isSyntaxEnabled(syntax)) {
         this.addDiagnostic({
-          message: `Expected ${syntax} to be enabled`,
+          description: descriptions.JS_PARSER.EXPECTED_ENABLE_SYNTAX(syntax),
         });
       }
     }
@@ -419,7 +423,7 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
         return true;
       } else {
         this.addDiagnostic({
-          message: 'Expected relational operator',
+          description: descriptions.JS_PARSER.EXPECTED_RELATIONAL_OPERATOR,
         });
         return false;
       }
@@ -434,7 +438,7 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
       if (index !== undefined) {
         this.addDiagnostic({
           index,
-          message: `${name} can't contain a unicode escape`,
+          description: descriptions.JS_PARSER.ESCAPE_SEQUENCE_IN_WORD(name),
         });
       }
     }
@@ -474,13 +478,15 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
     // Asserts that following token is given contextual keyword.
     expectContextual(
       name: string,
-      message: string = `Expected keyword ${name}`,
+      _metadata: OptionalProps<DiagnosticDescription, 'category'> = descriptions.JS_PARSER.EXPECTED_KEYWORD(
+        name,
+      ),
     ): boolean {
       if (this.eatContextual(name)) {
         return true;
       } else {
         this.addDiagnostic({
-          message,
+          description: _metadata,
         });
         return false;
       }
@@ -509,7 +515,7 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
     semicolon(): void {
       if (!this.isLineTerminator()) {
         this.addDiagnostic({
-          message: 'Expected a semicolon or a line terminator',
+          description: descriptions.JS_PARSER.EXPECTED_SEMI_OR_LINE_TERMINATOR,
         });
       }
     }
@@ -545,50 +551,25 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
 
     expectClosing(context: OpeningContext) {
       if (this.match(context.close)) {
-        if (this.state.indentLevel !== context.indent) {
-          this.state.possibleIncorrectOpenParens.push(context);
-        }
         this.next();
         return true;
       } else {
         const currPos = this.getPosition();
 
-        const advice: PartialDiagnosticAdvice = [
-          {
-            type: 'log',
-            category: 'info',
-            message: `We expected to find the closing character <emphasis>${context.close.label}</emphasis> here`,
-          },
-          {
-            type: 'frame',
-            filename: this.filename,
-            start: currPos,
-            end: currPos,
-          },
-        ];
-
-        const possibleThief = this.state.possibleIncorrectOpenParens.shift();
-        if (possibleThief !== undefined) {
-          advice.push({
-            type: 'log',
-            category: 'info',
-            message: `We found this ${possibleThief.name} that looks suspicious. It could be the real culprit that's unclosed.`,
-          });
-
-          advice.push({
-            type: 'frame',
-            filename: this.filename,
-            start: possibleThief.start,
-            end: possibleThief.start,
-          });
-        }
-
         this.addDiagnostic({
-          message: `Unclosed ${context.name}`,
+          description: descriptions.JS_PARSER.EXPECTED_CLOSING(
+            context.name,
+            context.close.label,
+            {
+              filename: this.filename,
+              start: currPos,
+              end: currPos,
+            },
+          ),
           start: context.start,
           end: context.start,
-          advice,
         });
+
         return false;
       }
     }
@@ -597,27 +578,24 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
 
     // instead of a message string.
     unexpectedToken(pos?: Position, tokenType?: TokenType) {
-      const advice: PartialDiagnosticAdvice = [];
-      let message = 'Unexpected token'; // + new Error().stack;
+      let expectedToken: undefined | string;
+      let possibleShiftMistake: boolean = false;
+
       if (tokenType !== undefined) {
-        message += `, expected "${tokenType.label}"`;
+        expectedToken = tokenType.label;
 
         const possibleMistake = TOKEN_MISTAKES[tokenType.label];
-        if (possibleMistake !== undefined && possibleMistake ===
-        this.state.tokenType.label) {
-          advice.push({
-            type: 'log',
-            category: 'info',
-            message: `Did you accidently hold shift?`,
-          });
-        }
+        possibleShiftMistake = possibleMistake !== undefined &&
+          possibleMistake === this.state.tokenType.label;
       }
 
       this.addDiagnostic({
-        message,
+        description: descriptions.JS_PARSER.UNEXPECTED_TOKEN(
+          expectedToken,
+          possibleShiftMistake,
+        ),
         start: pos === undefined ? this.state.startPos : pos,
         end: pos === undefined ? this.state.endPos : pos,
-        advice,
       });
     }
 

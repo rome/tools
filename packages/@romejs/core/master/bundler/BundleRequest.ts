@@ -16,7 +16,7 @@ import {
 import {DependencyOrder} from '../dependencies/DependencyOrderer';
 import {CompileResult, BundleCompileResolvedImports} from '@romejs/js-compiler';
 import {getPrefixedBundleNamespace} from '@romejs/js-compiler';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
+import {DiagnosticsProcessor, descriptions} from '@romejs/diagnostics';
 import {SourceMapGenerator} from '@romejs/codec-source-map';
 import {AbsoluteFilePath} from '@romejs/path';
 import {add} from '@romejs/ob1';
@@ -101,6 +101,7 @@ export default class BundleRequest {
         paths: [this.resolvedEntry],
         diagnosticsProcessor: this.diagnostics,
         analyzeProgress,
+        validate: true,
       });
     } finally {
       analyzeProgress.end();
@@ -142,7 +143,7 @@ export default class BundleRequest {
     // Build a map of relative module sources to module id
     const relativeSourcesToModuleId: Dict<string> = {};
     for (const [relative, absolute] of mod.relativeToAbsolutePath) {
-      const moduleId = graph.getNode(absolute).id;
+      const moduleId = graph.getNode(absolute).uid;
       relativeSourcesToModuleId[relative] = moduleId;
     }
 
@@ -168,7 +169,7 @@ export default class BundleRequest {
     const opts: WorkerBundleCompileOptions = {
       mode: this.mode,
       moduleAll: mod.all,
-      moduleId: mod.id,
+      moduleId: mod.uid,
       relativeSourcesToModuleId,
       resolvedImports,
       assetPath,
@@ -241,12 +242,11 @@ export default class BundleRequest {
       if (mode === 'legacy') {
         for (const {loc, mtime} of order.firstTopAwaitLocations) {
           this.diagnostics.addDiagnostic({
-            category: 'bundler/topLevelAwait',
-            filename: loc.filename,
-            start: loc.start,
-            end: loc.end,
-            message: 'This module contains a top level await which isn\'t supported in wrapper mode',
-            mtime,
+            description: descriptions.BUNDLER.TOP_LEVEL_AWAIT_IN_LEGACY,
+            location: {
+              ...loc,
+              mtime,
+            },
           });
         }
       }
@@ -285,7 +285,7 @@ export default class BundleRequest {
 
       declaredCJS.add(module);
 
-      push(`  var ${getPrefixedBundleNamespace(module.id)} = {};`);
+      push(`  var ${getPrefixedBundleNamespace(module.uid)} = {};`);
     }
 
     // Add on files
@@ -304,12 +304,12 @@ export default class BundleRequest {
 
       // Only do this in modern mode, the module id will already be in the wrapper otherwise
       if (mode === 'modern') {
-        push(`  // ${module.id}`);
+        push(`  // ${module.uid}`);
       }
 
       declareCJS(module);
 
-      addMappings(module.id, compileResult.sourceText, compileResult.mappings);
+      addMappings(module.uid, compileResult.sourceText, compileResult.mappings);
       push(compileResult.compiledCode);
       push('');
     }
@@ -317,9 +317,9 @@ export default class BundleRequest {
     // push on initial entry require
     const entryModule = graph.getNode(resolvedEntry);
     if (mode === 'modern') {
-      push(`  return ${getPrefixedBundleNamespace(entryModule.id)};`);
+      push(`  return ${getPrefixedBundleNamespace(entryModule.uid)};`);
     } else {
-      push(`  return Rome.requireNamespace("${entryModule.id}");`);
+      push(`  return Rome.requireNamespace("${entryModule.uid}");`);
     }
 
     // push footer
@@ -334,7 +334,7 @@ export default class BundleRequest {
     }
 
     return {
-      diagnostics: this.diagnostics.getPartialDiagnostics(),
+      diagnostics: this.diagnostics.getDiagnostics(),
       content,
       map: sourceMap.toJSON(),
       cached: this.cached,
@@ -350,7 +350,7 @@ export default class BundleRequest {
     return {
       map: this.sourceMap.toJSON(),
       content: '',
-      diagnostics: this.diagnostics.getPartialDiagnostics(),
+      diagnostics: this.diagnostics.getDiagnostics(),
       cached: false,
       assets: this.assets,
     };

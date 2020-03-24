@@ -7,6 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noCondAssign',
@@ -16,10 +17,7 @@ export default {
     if ((node.type === 'IfStatement' || node.type === 'ForStatement' ||
     node.type === 'WhileStatement' || node.type === 'DoWhileStatement') &&
       node.test && node.test.type === 'AssignmentExpression') {
-      path.context.addNodeDiagnostic(node, {
-        category: 'lint/noCondAssign',
-        message: 'Cannot assign variable in loop condition',
-      });
+      path.context.addNodeDiagnostic(node, descriptions.LINT.NO_COND_ASSIGN);
     }
 
     return node;

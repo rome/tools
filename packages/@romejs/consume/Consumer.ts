@@ -6,14 +6,16 @@
  */
 
 import {
-  PartialDiagnosticAdvice,
-  PartialDiagnostics,
-  PartialDiagnostic,
+  DiagnosticAdvice,
+  Diagnostics,
+  Diagnostic,
   DiagnosticsError,
-  DiagnosticPointer,
+  DiagnosticLocation,
   getDiagnosticsFromError,
   DiagnosticCategory,
   buildSuggestionAdvice,
+  createBlessedDiagnosticMessage,
+  createSingleDiagnosticError,
 } from '@romejs/diagnostics';
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
@@ -58,7 +60,7 @@ type UnexpectedConsumerOptions = {
   category?: DiagnosticCategory;
   loc?: SourceLocation;
   target?: ConsumeSourceLocationRequestTarget;
-  advice?: PartialDiagnosticAdvice;
+  advice?: DiagnosticAdvice;
   at?: 'suffix' | 'prefix' | 'none';
   atParent?: boolean;
 };
@@ -137,9 +139,9 @@ export default class Consumer {
   ): Promise<{
     result: T;
     definitions: Array<ConsumePropertyDefinition>;
-    diagnostics: PartialDiagnostics;
+    diagnostics: Diagnostics;
   }> {
-    let diagnostics: PartialDiagnostics = [];
+    let diagnostics: Diagnostics = [];
     const definitions: Array<ConsumePropertyDefinition> = [];
 
     const consumer = this.clone({
@@ -187,12 +189,12 @@ export default class Consumer {
     }
   }
 
-  getDiagnosticPointer(
+  getDiagnosticLocation(
     target: ConsumeSourceLocationRequestTarget = 'all',
-  ): undefined | DiagnosticPointer {
+  ): DiagnosticLocation {
     const {getDiagnosticPointer} = this.context;
     if (getDiagnosticPointer === undefined) {
-      return undefined;
+      return {};
     }
 
     const {forceDiagnosticTarget} = this;
@@ -203,8 +205,9 @@ export default class Consumer {
   }
 
   getLocation(target?: ConsumeSourceLocationRequestTarget): SourceLocation {
-    const pointer = this.getDiagnosticPointer(target);
-    if (pointer === undefined) {
+    const location = this.getDiagnosticLocation(target);
+    if (location === undefined || location.start === undefined ||
+    location.end === undefined) {
       return {
         filename: this.filename,
         start: UNKNOWN_POSITION,
@@ -212,9 +215,9 @@ export default class Consumer {
       };
     } else {
       return {
-        filename: pointer.filename,
-        start: pointer.start,
-        end: pointer.end,
+        filename: location.filename,
+        start: location.start,
+        end: location.end,
       };
     }
   }
@@ -273,7 +276,7 @@ export default class Consumer {
   }
 
   wasInSource() {
-    return this.getDiagnosticPointer() !== undefined;
+    return this.getDiagnosticLocation() !== undefined;
   }
 
   generateUnexpectedMessage(msg: string, opts: UnexpectedConsumerOptions): string {
@@ -302,15 +305,14 @@ export default class Consumer {
 
   unexpected(msg: string, opts: UnexpectedConsumerOptions = {}): DiagnosticsError {
     const {target = 'value'} = opts;
-    let {loc} = opts;
 
     const {filename} = this;
-    let pointer = this.getDiagnosticPointer(target);
-    const fromSource = pointer !== undefined;
+    let location = this.getDiagnosticLocation(target);
+    const fromSource = location !== undefined;
 
     msg = this.generateUnexpectedMessage(msg, opts);
 
-    const advice: PartialDiagnosticAdvice = [...(opts.advice || [])];
+    const advice: DiagnosticAdvice = [...(opts.advice || [])];
 
     // Make the errors more descriptive
     if (fromSource) {
@@ -325,9 +327,9 @@ export default class Consumer {
       // Go up the consumer tree and take the position from the first consumer found in the source
       let consumer: undefined | Consumer = this;
       do {
-        const possiblePointer = consumer.getDiagnosticPointer(target);
-        if (possiblePointer !== undefined) {
-          pointer = possiblePointer;
+        const possibleLocation = consumer.getDiagnosticLocation(target);
+        if (possibleLocation !== undefined) {
+          location = possibleLocation;
           break;
         }
         consumer = consumer.parent;
@@ -352,33 +354,28 @@ export default class Consumer {
       }
     }
 
-    if (pointer === undefined) {
+    if (opts.loc !== undefined) {
+      location = opts.loc;
+    }
+
+    if (location === undefined) {
       throw new Error(msg);
     }
 
-    if (loc === undefined) {
-      loc = {
-        filename: pointer.filename,
-        start: pointer.start,
-        end: pointer.end,
-      };
-    }
-
-    const diagnostic: PartialDiagnostic = {
-      category: opts.category === undefined
-        ? this.context.category : opts.category,
-      filename: this.filename,
-      message: msg,
-      ...loc,
-      language: pointer.language,
-      mtime: pointer.mtime,
-      sourceText: pointer.sourceText,
-      advice,
+    const diagnostic: Diagnostic = {
+      description: {
+        category: opts.category === undefined
+          ? this.context.category : opts.category,
+        message: createBlessedDiagnosticMessage(msg),
+        advice,
+      },
+      location: {
+        ...location,
+        filename: this.filename,
+      },
     };
 
-    const errMsg =
-      `Error occurred while consuming at ${loc.filename} (${loc.start.line}:${loc.start.column}): ${msg}`;
-    const err = new DiagnosticsError(errMsg, [diagnostic]);
+    const err = createSingleDiagnosticError(diagnostic);
 
     if (this.handleUnexpected === undefined) {
       throw err;

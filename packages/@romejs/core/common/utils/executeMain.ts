@@ -13,9 +13,10 @@ import internalModule = require('module');
 import vm = require('vm');
 
 import {
-  PartialDiagnostic,
+  Diagnostic,
   truncateSourceText,
   INTERNAL_ERROR_LOG_ADVICE,
+  descriptions,
 } from '@romejs/diagnostics';
 import {AbsoluteFilePath} from '@romejs/path';
 import {Position} from '@romejs/parser-core';
@@ -30,7 +31,7 @@ type ExecuteMainOptions = {
 
 export default async function executeMain(
   opts: ExecuteMainOptions,
-): Promise<{syntaxError: undefined | PartialDiagnostic}> {
+): Promise<{syntaxError: undefined | Diagnostic}> {
   const {path, code, sourceMap, globals} = opts;
 
   const filename = path.join();
@@ -83,14 +84,17 @@ export default async function executeMain(
         line: coerce1(line),
       };
 
-      const syntaxError: PartialDiagnostic = {
-        message: err.message,
-        category: 'v8/syntaxError',
-        start: pos,
-        end: pos,
-        filename,
-        sourceText: truncateSourceText(code, pos, pos),
-        advice: [INTERNAL_ERROR_LOG_ADVICE],
+      const syntaxError: Diagnostic = {
+        description: {
+          ...descriptions.V8.SYNTAX_ERROR(err.message),
+          advice: [INTERNAL_ERROR_LOG_ADVICE],
+        },
+        location: {
+          start: pos,
+          end: pos,
+          filename,
+          sourceText: truncateSourceText(code, pos, pos),
+        },
       };
       return {syntaxError};
     }

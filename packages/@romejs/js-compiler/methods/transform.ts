@@ -6,7 +6,7 @@
  */
 
 import {Program} from '@romejs/js-ast';
-import {PartialDiagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {TransformRequest, TransformVisitors} from '../types';
 import {program} from '@romejs/js-ast';
 import {stageTransforms, stageOrder, hookVisitors} from '../transforms/index';
@@ -17,7 +17,7 @@ import {extractSuppressionsFromProgram} from '../suppressions';
 type TransformResult = {
   ast: Program;
   suppressions: DiagnosticSuppressions;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   cacheDependencies: Array<string>;
 };
 
@@ -44,7 +44,7 @@ export default async function transform(
     return cached;
   }
 
-  let prevStageDiagnostics: PartialDiagnostics = [];
+  let prevStageDiagnostics: Diagnostics = [];
   let prevStageCacheDeps: Array<string> = [];
 
   // Run the previous stage

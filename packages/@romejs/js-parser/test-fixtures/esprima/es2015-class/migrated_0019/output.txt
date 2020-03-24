@@ -23,22 +23,24 @@ Program {
   }
   diagnostics: Array [
     Object {
-      advice: undefined
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Duplicate constructor in the same class'
-      mtime: undefined
-      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 42
-        index: 42
-        line: 1
+      description: Object {
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate constructor in the same class'}
       }
-      start: Object {
-        column: 27
-        index: 27
-        line: 1
+      location: Object {
+        mtime: undefined
+        sourceType: 'script'
+        end: Object {
+          column: 42
+          index: 42
+          line: 1
+        }
+        start: Object {
+          column: 27
+          index: 27
+          line: 1
+        }
       }
     }
   ]

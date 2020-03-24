@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics} from '@romejs/diagnostics';
 import {SourceMap} from '@romejs/codec-source-map';
 import {AbsoluteFilePath} from '@romejs/path';
 import {ResolverOptions} from '../../master/fs/Resolver';
@@ -22,7 +22,7 @@ export const BUNDLER_MODES: Array<BundlerMode> = ['modern', 'legacy'];
 
 export type BundleRequestResult = {
   cached: boolean;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   content: string;
   map: SourceMap;
   assets: Map<string, Buffer>;

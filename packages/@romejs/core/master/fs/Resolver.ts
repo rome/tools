@@ -20,7 +20,7 @@ import {
   RelativeFilePath,
   createFilePathFromSegments,
 } from '@romejs/path';
-import {DiagnosticPointer, PartialDiagnosticAdvice} from '@romejs/diagnostics';
+import {DiagnosticLocation, DiagnosticAdvice} from '@romejs/diagnostics';
 import {IMPLICIT_JS_EXTENSIONS} from '../../common/fileHandlers';
 import {writeFile} from '@romejs/fs';
 import https = require('https');
@@ -104,7 +104,7 @@ export type ResolverQuerySource =
   | undefined
   | {
     source?: string;
-    pointer?: DiagnosticPointer;
+    location?: DiagnosticLocation;
   };
 
 type ResolverQueryResponseFoundType =
@@ -132,13 +132,13 @@ export type ResolverQueryResponseMissing = {
 export type ResolverQueryResponseUnsupported = {
   type: 'UNSUPPORTED';
   source: undefined | ResolverQuerySource;
-  advice: PartialDiagnosticAdvice;
+  advice: DiagnosticAdvice;
 };
 
 export type ResolverQueryResponseFetchError = {
   type: 'FETCH_ERROR';
   source: undefined | ResolverQuerySource;
-  advice: PartialDiagnosticAdvice;
+  advice: DiagnosticAdvice;
 };
 
 type FilenameVariant = {
@@ -199,12 +199,12 @@ function attachExportAliasIfUnresolved(
     return res;
   }
 
-  const pointer = alias.key.getDiagnosticPointer('value');
+  const location = alias.key.getDiagnosticLocation('value');
 
   return {
     ...res,
-    source: pointer === undefined ? undefined : {
-      pointer,
+    source: location === undefined ? undefined : {
+      location,
       source: alias.value.join(),
     },
   };

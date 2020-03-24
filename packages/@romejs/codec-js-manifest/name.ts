@@ -7,13 +7,13 @@
 
 import {number0, Number0, coerce0, inc, add} from '@romejs/ob1';
 import {escapeMarkup} from '@romejs/string-markup';
-import {PartialDiagnosticAdvice} from '@romejs/diagnostics';
+import {DiagnosticAdvice} from '@romejs/diagnostics';
 
 type NormalizeNameUnexpected = (opts: {
   message: string;
   start?: Number0;
   end?: Number0;
-  advice?: PartialDiagnosticAdvice;
+  advice?: DiagnosticAdvice;
   at?: 'prefix';
 }) => void;
 

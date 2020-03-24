@@ -12,7 +12,6 @@ import {
 } from '@romejs/core';
 import {
   Diagnostics,
-  PartialDiagnostics,
   INTERNAL_ERROR_LOG_ADVICE,
   DiagnosticOrigin,
 } from '@romejs/diagnostics';
@@ -240,7 +239,7 @@ export default class Master {
     }) as T);
   }
 
-  async handleDisconnectedDiagnostics(diagnostics: PartialDiagnostics) {
+  async handleDisconnectedDiagnostics(diagnostics: Diagnostics) {
     this.connectedReporters.error(
       'Generated diagnostics without a current request',
     );
@@ -269,7 +268,7 @@ export default class Master {
     origins: Array<DiagnosticOrigin>,
   ): DiagnosticsProcessor {
     return new DiagnosticsProcessor({
-      onDiagnostics: (diagnostics: PartialDiagnostics) => {
+      onDiagnostics: (diagnostics: Diagnostics) => {
         this.handleDisconnectedDiagnostics(diagnostics);
       },
       origins: [
@@ -877,7 +876,13 @@ export default class Master {
     });
     printer.addDiagnostic({
       ...errorDiag,
-      advice: [...(errorDiag.advice || []), INTERNAL_ERROR_LOG_ADVICE],
+      description: {
+        ...errorDiag.description,
+        advice: [
+          ...(errorDiag.description.advice || []),
+          INTERNAL_ERROR_LOG_ADVICE,
+        ],
+      },
     });
     await printer.print();
 

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnosticAdvice} from './types';
+import {DiagnosticAdvice, DiagnosticLocation} from './types';
 import {orderBySimilarity} from '@romejs/string-utils';
 import diff from '@romejs/string-diff';
 import {Position} from '@romejs/parser-core';
@@ -22,8 +22,8 @@ export function buildSuggestionAdvice(
   value: string,
   items: Array<string>,
   {minRating = 0.5, ignoreCase, formatItem}: BuildSuggestionAdviceOptions = {},
-): PartialDiagnosticAdvice {
-  const advice: PartialDiagnosticAdvice = [];
+): DiagnosticAdvice {
+  const advice: DiagnosticAdvice = [];
 
   const ratings = orderBySimilarity(value, items, {
     minRating,
@@ -97,6 +97,34 @@ export function buildSuggestionAdvice(
   }
 
   return advice;
+}
+
+export function buildDuplicateLocationAdvice(
+  locations: Array<undefined | DiagnosticLocation>,
+): DiagnosticAdvice {
+  const locationAdvice: DiagnosticAdvice = locations.map((location) => {
+    if (location === undefined) {
+      return {
+        type: 'log',
+        category: 'warn',
+        message: 'Unable to find location',
+      };
+    } else {
+      return {
+        type: 'frame',
+        location,
+      };
+    }
+  });
+
+  return [
+    {
+      type: 'log',
+      category: 'info',
+      message: 'Defined already here',
+    },
+    ...locationAdvice,
+  ];
 }
 
 // Sometimes we'll have big blobs of JS in a diagnostic when we'll only show a snippet. This method pads it out then truncates the rest for efficient transmission. We will have crappy ANSI formatting in the console and elsewhere but for places where we need to truncate we probably don't care (generated code).

@@ -7,20 +7,18 @@
 
 import {
   Diagnostics,
-  PartialDiagnostics,
-  PartialDiagnostic,
+  Diagnostic,
   DiagnosticFilterWithTest,
   DiagnosticOrigin,
   DiagnosticSuppressions,
   DiagnosticSuppression,
 } from './types';
-import {MarkupFormatOptions} from '@romejs/string-markup';
 import {addOriginsToDiagnostics} from './derive';
 import {naturalCompare} from '@romejs/string-utils';
 import {DiagnosticsError} from './errors';
-import {normalizeDiagnostics} from './normalize';
 import {add} from '@romejs/ob1';
 import {DiagnosticCategoryPrefix} from './categories';
+import {descriptions} from './descriptions';
 
 type UniquePart =
   | 'filename'
@@ -37,7 +35,7 @@ export type CollectorOptions = {
   filters?: Array<DiagnosticFilterWithTest>;
   unique?: UniqueRules;
   max?: number;
-  onDiagnostics?: (diags: PartialDiagnostics) => void;
+  onDiagnostics?: (diags: Diagnostics) => void;
   origins?: Array<DiagnosticOrigin>;
 };
 
@@ -72,7 +70,7 @@ export default class DiagnosticsProcessor {
 
   unique: UniqueRules;
   includedKeys: Set<string>;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   filters: Array<DiagnosticFilterWithTest>;
   allowedUnusedSuppressionPrefixes: Set<string>;
   usedSuppressions: Set<DiagnosticSuppression>;
@@ -88,7 +86,7 @@ export default class DiagnosticsProcessor {
     if (this.hasDiagnostics()) {
       throw new DiagnosticsError(
         'Thrown by DiagnosticsProcessor',
-        this.getPartialDiagnostics(),
+        this.getDiagnostics(),
       );
     }
   }
@@ -115,39 +113,42 @@ export default class DiagnosticsProcessor {
     this.filters.push(filter);
   }
 
-  doesMatchFilter(diag: PartialDiagnostic): boolean {
+  doesMatchFilter(diag: Diagnostic): boolean {
     for (const suppression of this.suppressions) {
       const targetLine = add(suppression.loc.end.line, 1);
-      if (diag.filename !== undefined && diag.start !== undefined &&
-        diag.filename === suppression.loc.filename && diag.start.line ===
-      targetLine) {
+      if (diag.location.filename !== undefined && diag.location.start !==
+      undefined && diag.location.filename === suppression.loc.filename &&
+        diag.location.start.line === targetLine) {
         this.usedSuppressions.add(suppression);
         return true;
       }
     }
 
     for (const filter of this.filters) {
-      if (filter.message !== undefined && filter.message !== diag.message) {
+      if (filter.message !== undefined && filter.message !==
+      diag.description.message.value) {
         continue;
       }
 
-      if (filter.filename !== undefined && filter.filename !== diag.filename) {
+      if (filter.filename !== undefined && filter.filename !==
+      diag.location.filename) {
         continue;
       }
 
-      if (filter.category !== undefined && filter.category !== diag.category) {
+      if (filter.category !== undefined && filter.category !==
+      diag.description.category) {
         continue;
       }
 
-      if (filter.start !== undefined && diag.start !== undefined) {
-        if (filter.start.line !== diag.start.line || filter.start.column !==
-        diag.start.column) {
+      if (filter.start !== undefined && diag.location.start !== undefined) {
+        if (filter.start.line !== diag.location.start.line ||
+        filter.start.column !== diag.location.start.column) {
           continue;
         }
       }
 
-      if (filter.line !== undefined && diag.start !== undefined &&
-        diag.start.line !== filter.line) {
+      if (filter.line !== undefined && diag.location.start !== undefined &&
+        diag.location.start.line !== filter.line) {
         continue;
       }
 
@@ -161,9 +162,9 @@ export default class DiagnosticsProcessor {
     return false;
   }
 
-  buildDedupeKeys(diag: PartialDiagnostic): Array<string> {
+  buildDedupeKeys(diag: Diagnostic): Array<string> {
     // We don't do anything with `end` in this method, it's fairly meaningless for deduping errors
-    let {start} = diag;
+    let {start} = diag.location;
 
     const keys: Array<string> = [];
 
@@ -171,15 +172,15 @@ export default class DiagnosticsProcessor {
       const parts = [];
 
       if (rule.includes('category')) {
-        parts.push(`category:${diag.category}`);
+        parts.push(`category:${diag.description.category}`);
       }
 
       if (rule.includes('filename')) {
-        parts.push(`filename:${String(diag.filename)}`);
+        parts.push(`filename:${String(diag.location.filename)}`);
       }
 
       if (rule.includes('message')) {
-        parts.push(`message:${diag.message}`);
+        parts.push(`message:${diag.description.message}`);
       }
 
       if (start !== undefined) {
@@ -199,20 +200,17 @@ export default class DiagnosticsProcessor {
     return keys;
   }
 
-  addDiagnostic(diag: PartialDiagnostic, origin?: DiagnosticOrigin): boolean {
+  addDiagnostic(diag: Diagnostic, origin?: DiagnosticOrigin): boolean {
     return this.addDiagnostics([diag], origin).length > 0;
   }
 
-  addDiagnostics(
-    diags: PartialDiagnostics,
-    origin?: DiagnosticOrigin,
-  ): PartialDiagnostics {
+  addDiagnostics(diags: Diagnostics, origin?: DiagnosticOrigin): Diagnostics {
     if (diags.length === 0) {
       return diags;
     }
 
     const {max} = this.options;
-    const added: PartialDiagnostics = [];
+    const added: Diagnostics = [];
 
     // Add origins to diagnostics
     const origins: Array<DiagnosticOrigin> = this.options.origins === undefined
@@ -261,8 +259,8 @@ export default class DiagnosticsProcessor {
     return added;
   }
 
-  getPartialDiagnostics(): PartialDiagnostics {
-    const diagnostics: PartialDiagnostics = [...this.diagnostics];
+  getDiagnostics(): Diagnostics {
+    const diagnostics: Diagnostics = [...this.diagnostics];
 
     // Add errors for remaining suppressions
     for (const suppression of this.suppressions) {
@@ -276,30 +274,23 @@ export default class DiagnosticsProcessor {
       }
 
       diagnostics.push({
-        ...suppression.loc,
-        message: 'Did not hide any error',
-        category: 'suppressions/unused',
+        location: suppression.loc,
+        description: descriptions.SUPPRESSIONS.UNUSED,
       });
     }
 
     return diagnostics;
   }
 
-  getCompleteDiagnostics(markupOptions: MarkupFormatOptions = {}): Diagnostics {
-    return normalizeDiagnostics(this.getPartialDiagnostics(), markupOptions);
-  }
-
-  getCompleteSortedDiagnostics(
-    markupOptions: MarkupFormatOptions = {},
-  ): Diagnostics {
+  getSortedDiagnostics(): Diagnostics {
     // Sort files by filename to ensure they're always in the same order
 
     // TODO also sort by line/column
-    return this.getCompleteDiagnostics(markupOptions).sort((a, b) => {
-      if (a.filename === undefined || b.filename === undefined) {
+    return this.getDiagnostics().sort((a, b) => {
+      if (a.location.filename === undefined || b.location.filename === undefined) {
         return 0;
       } else {
-        return naturalCompare(a.filename, b.filename);
+        return naturalCompare(a.location.filename, b.location.filename);
       }
     });
   }

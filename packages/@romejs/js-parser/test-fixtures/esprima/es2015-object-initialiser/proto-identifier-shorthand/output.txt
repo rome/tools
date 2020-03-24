@@ -23,22 +23,24 @@ Program {
   }
   diagnostics: Array [
     Object {
-      advice: undefined
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Redefinition of __proto__ property'
-      mtime: undefined
-      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 29
-        index: 29
-        line: 1
+      description: Object {
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Redefinition of __proto__ property'}
       }
-      start: Object {
-        column: 20
-        index: 20
-        line: 1
+      location: Object {
+        mtime: undefined
+        sourceType: 'script'
+        end: Object {
+          column: 29
+          index: 29
+          line: 1
+        }
+        start: Object {
+          column: 20
+          index: 20
+          line: 1
+        }
       }
     }
   ]

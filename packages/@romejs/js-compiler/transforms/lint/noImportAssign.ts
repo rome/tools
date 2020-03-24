@@ -7,7 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
-import {markup} from '@romejs/string-markup';
+import {descriptions} from '@romejs/diagnostics';
 
 function isAssignment(path: Path) {
   switch (path.parentPath.node.type) {
@@ -29,13 +29,10 @@ export default {
     if (node.type === 'AssignmentIdentifier' && isAssignment(path) ||
     node.type === 'ReferenceIdentifier' && path.parentPath.node.type ===
     'UpdateExpression') {
-      let binding = scope.getBinding(node.name);
+      const binding = scope.getBinding(node.name);
       if (binding !== undefined && binding.kind === 'import') path.context.addNodeDiagnostic(
         node,
-        {
-          category: 'lint/noImportAssign',
-          message: markup`<emphasis>${node.name}</emphasis> is read-only`,
-        },
+        descriptions.LINT.NO_IMPORT_ASSIGN(node.name),
       );
     }
 

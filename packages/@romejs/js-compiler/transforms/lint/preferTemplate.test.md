@@ -12,22 +12,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/preferTemplate'
-      filename: 'unknown'
-      language: 'js'
-      message: 'You\'re using string concatenation when template literals are preferred'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 42
-        index: 42
-        line: 1
+      description: Object {
+        category: 'lint/preferTemplate'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'You\'re using string concatenation when template literals are preferred'}
       }
-      start: Object {
-        column: 31
-        index: 31
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 42
+          index: 42
+          line: 1
+        }
+        start: Object {
+          column: 31
+          index: 31
+          line: 1
+        }
       }
     }
   ]
@@ -42,22 +46,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/preferTemplate'
-      filename: 'unknown'
-      language: 'js'
-      message: 'You\'re using string concatenation when template literals are preferred'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 27
-        index: 27
-        line: 1
+      description: Object {
+        category: 'lint/preferTemplate'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'You\'re using string concatenation when template literals are preferred'}
       }
-      start: Object {
-        column: 12
-        index: 12
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 27
+          index: 27
+          line: 1
+        }
+        start: Object {
+          column: 12
+          index: 12
+          line: 1
+        }
       }
     }
   ]

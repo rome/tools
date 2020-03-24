@@ -120,6 +120,7 @@ import {
 import {number0, number0Neg1, Number0, get0, inc} from '@romejs/ob1';
 import {splitFunctionParams} from './statement';
 import {createRegExpParser} from '@romejs/codec-js-regexp';
+import {descriptions} from '@romejs/diagnostics';
 
 // Check if property name clashes with already added.
 
@@ -151,7 +152,7 @@ export function checkPropClash(
   if (name === '__proto__') {
     if (props.has('proto')) {
       parser.addDiagnostic({
-        message: 'Redefinition of __proto__ property',
+        description: descriptions.JS_PARSER.PROTO_PROP_REDEFINITION,
         loc: key.loc,
       });
     } else {
@@ -299,7 +300,7 @@ export function parseMaybeAssign<T extends AnyNode = AnyExpression>(
       } else {
         parser.addDiagnostic({
           loc: typeParameters.loc,
-          message: 'Expected an arrow function after this type parameter declaration',
+          description: descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_TYPE_PARAMS,
         });
         return toReferenceIdentifier(parser, parser.createUnknownIdentifier(
           'type params without arrow function',
@@ -497,7 +498,7 @@ export function parseConditional(
 
   if (!parser.eat(tt.colon)) {
     parser.addDiagnostic({
-      message: 'Missing conditional expression consequent separator',
+      description: descriptions.JS_PARSER.MISSING_CONDITIONAL_SEPARATOR,
     });
   }
 
@@ -627,7 +628,7 @@ export function parseExpressionOp(
         !parser.isParenthesized(left)) {
         parser.addDiagnostic({
           loc: left.argument.loc,
-          message: 'Illegal expression. Wrap left hand side or entire exponentiation in parentheses.',
+          description: descriptions.JS_PARSER.WRAP_EXPONENTIATION,
         });
       }
 
@@ -711,13 +712,13 @@ export function parseMaybeUnary(
       if (argument.type === 'ReferenceIdentifier') {
         parser.addDiagnostic({
           loc: argument.loc,
-          message: 'Deleting local variable in strict mode',
+          description: descriptions.JS_PARSER.DELETE_LOCAL_VARIABLE_IN_STRICT,
         });
       } else if (argument.type === 'MemberExpression' &&
         argument.property.value.type === 'PrivateName') {
         parser.addDiagnostic({
           loc: argument.property.loc,
-          message: 'Deleting a private field is not allowed',
+          description: descriptions.JS_PARSER.DELETE_PRIVATE_FIELD,
         });
       }
     }
@@ -1133,7 +1134,7 @@ export function parseTaggedTemplateExpression(
 ): TaggedTemplateExpression {
   if (state.optionalChainMember) {
     parser.addDiagnostic({
-      message: 'Tagged Template Literals are not allowed in optionalChain',
+      description: descriptions.JS_PARSER.TAGGED_TEMPLATE_IN_OPTIONAL_CHAIN,
     });
   }
 
@@ -1151,14 +1152,14 @@ export function checkYieldAwaitInDefaultParams(parser: JSParser) {
   parser.state.yieldPos < parser.state.awaitPos)) {
     parser.addDiagnostic({
       index: parser.state.yieldPos,
-      message: 'Yield cannot be used as name inside a generator function',
+      description: descriptions.JS_PARSER.YIELD_IN_GENERATOR_PARAMS,
     });
   }
 
   if (get0(parser.state.awaitPos) > 0) {
     parser.addDiagnostic({
       index: parser.state.awaitPos,
-      message: 'Await cannot be used as name inside an async function',
+      description: descriptions.JS_PARSER.AWAIT_IN_ASYNC_PARAMS,
     });
   }
 }
@@ -1243,7 +1244,7 @@ export function parseCallExpressionArguments(
         funcParams.push(elt);
       } else {
         parser.addDiagnostic({
-          message: 'Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword.',
+          description: descriptions.JS_PARSER.CONFUSING_CALL_ARGUMENT,
           loc: elt.loc,
         });
       }
@@ -1259,7 +1260,7 @@ export function parseCallExpressionArguments(
 
   if (forceAsyncArrow && !shouldParseAsyncArrow(parser)) {
     parser.addDiagnostic({
-      message: 'Expected arrow because we are a possible async arrow and type annotated parameters were present',
+      description: descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_ASYNC_TYPE_PARAMS,
     });
   }
 
@@ -1268,7 +1269,7 @@ export function parseCallExpressionArguments(
     shouldParseAsyncArrow(parser)) {
     parser.addDiagnostic({
       start: innerParenStart,
-      message: 'Inner paren inside of an async arrow function params',
+      description: descriptions.JS_PARSER.PARENTHESIZED_FUNCTION_PARAMS,
     });
   }
 
@@ -1523,7 +1524,9 @@ export function parseExpressionAtom(
       {
         const start = parser.getPosition();
         parser.addDiagnostic({
-          message: `Unknown start to an ${context}`,
+          description: descriptions.JS_PARSER.UNKNOWN_EXPRESSION_ATOM_START(
+            context,
+          ),
         });
         parser.next();
         return toReferenceIdentifier(parser, parser.createUnknownIdentifier(
@@ -1550,7 +1553,7 @@ export function parseMaybePrivateName(parser: JSParser): PrivateName | Identifie
   if (isPrivate) {
     const start = parser.getPosition();
     parser.next();
-    parser.assertNoSpace('Unexpected space between # and identifier');
+    parser.assertNoSpace(descriptions.JS_PARSER.SPACE_BETWEEN_PRIVATE_HASH);
     const id = parseIdentifier(parser, true);
     return parser.finishNode(start, {
       type: 'PrivateName',
@@ -1611,7 +1614,10 @@ export function parseMetaProperty(
   } else {
     parser.addDiagnostic({
       loc: property.loc,
-      message: `The only valid meta property for ${meta.name} is ${meta.name}.${propertyName}`,
+      description: descriptions.JS_PARSER.INVALID_META_PROPERTY(
+        meta.name,
+        propertyName,
+      ),
     });
   }
 
@@ -1631,7 +1637,7 @@ export function parseImportMetaProperty(parser: JSParser): MetaProperty {
   if (!parser.inModule) {
     parser.addDiagnostic({
       loc: node.loc,
-      message: `import.meta may appear only with 'sourceType: "module"'`,
+      description: descriptions.JS_PARSER.IMPORT_META_OUTSIDE_MODULE,
     });
   }
 
@@ -1742,7 +1748,7 @@ export function parseParenAndDistinguishExpression(
         if (parser.isParenthesized(param)) {
           parser.addDiagnostic({
             loc: param.loc,
-            message: 'Function parameters can\'t be parenthesized',
+            description: descriptions.JS_PARSER.PARENTHESIZED_FUNCTION_PARAMS,
           });
         }
       }
@@ -1774,7 +1780,7 @@ export function parseParenAndDistinguishExpression(
     parser.addDiagnostic({
       start: innerStart,
       end: innerEnd,
-      message: 'Parenthesized expression didnt contain anything',
+      description: descriptions.JS_PARSER.EMPTY_PARENTHESIZED_EXPRESSION,
     });
 
     exprList.push(toReferenceIdentifier(parser, parser.createUnknownIdentifier(
@@ -1936,7 +1942,7 @@ export function parseNew(parser: JSParser): NewExpression | MetaProperty {
     )) {
       parser.addDiagnostic({
         loc: metaProp.loc,
-        message: 'new.target can only be used in functions or class properties',
+        description: descriptions.JS_PARSER.NEW_TARGET_OUTSIDE_CLASS,
       });
     }
 
@@ -1948,7 +1954,7 @@ export function parseNew(parser: JSParser): NewExpression | MetaProperty {
   if (callee.type === 'ImportCall') {
     parser.addDiagnostic({
       loc: callee.loc,
-      message: 'Cannot use new with import(...)',
+      description: descriptions.JS_PARSER.SUPER_OUTSIDE_METHOD,
     });
   }
 
@@ -1957,26 +1963,13 @@ export function parseNew(parser: JSParser): NewExpression | MetaProperty {
     const memberLoc = parser.getLoc(optionalMember);
 
     parser.addDiagnostic({
-      message: 'constructors in/after an Optional Chain are not allowed',
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          message: 'Optional chain member responsible',
-        },
-        {
-          type: 'frame',
-          filename: parser.filename,
-          start: memberLoc.start,
-          end: memberLoc.end,
-        },
-      ],
+      description: descriptions.JS_PARSER.NEW_IN_OPTIONAL_CHAIN(memberLoc),
     });
   }
 
   if (parser.eat(tt.questionDot)) {
     parser.addDiagnostic({
-      message: 'constructors in/after an Optional Chain are not allowed',
+      description: descriptions.JS_PARSER.NEW_IN_OPTIONAL_CHAIN(),
     });
   }
 
@@ -2005,7 +1998,7 @@ export function parseNew(parser: JSParser): NewExpression | MetaProperty {
     args = toReferencedList(parser, args);
   } else if (parser.isSyntaxEnabled('ts') && typeArguments !== undefined) {
     parser.addDiagnostic({
-      message: 'In TypeScript, a new expression with type arguments must have parens',
+      description: descriptions.JS_PARSER.NEW_WITH_TYPESCRIPT_TYPE_ARGUMENTS_NO_PARENS,
     });
   }
 
@@ -2050,7 +2043,7 @@ export function parseTemplateElement(
     } else {
       parser.addDiagnostic({
         index: parser.state.invalidTemplateEscapePosition,
-        message: 'Invalid escape sequence in template',
+        description: descriptions.JS_PARSER.INVALID_TEMPLATE_ESCAPE,
       });
     }
   }
@@ -2174,7 +2167,7 @@ export function parseObjectExpression(
       } else {
         if (parser.hasPrecedingLineBreak()) {
           parser.addDiagnostic({
-            message: 'There shouldn\'t be any newlines between async and the rest of the function',
+            description: descriptions.JS_PARSER.ASYNC_OBJECT_METHOD_LINE_BREAK,
           });
         }
 
@@ -2262,7 +2255,7 @@ export function parseObjectPattern(
       if (firstRestLocation !== undefined) {
         parser.addDiagnostic({
           loc: argument.loc,
-          message: 'Cannot have multiple rest elements when destructuring',
+          description: descriptions.JS_PARSER.MULTIPLE_DESTRUCTURING_RESTS,
         });
       }
 
@@ -2273,7 +2266,7 @@ export function parseObjectPattern(
       if (parser.match(tt.comma) && parser.lookaheadState().tokenType ===
       tt.braceR) {
         parser.addDiagnostic({
-          message: 'A trailing comma is not permitted after the rest element',
+          description: descriptions.JS_PARSER.TRAILING_COMMA_AFTER_REST,
         });
         parser.eat(tt.comma);
         break;
@@ -2304,7 +2297,7 @@ export function parseObjectPattern(
 
     if (prop.type !== 'BindingObjectPatternProperty') {
       parser.addDiagnostic({
-        message: 'Invalid property node for object pattern',
+        description: descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROP,
         loc: prop.loc,
       });
       continue;
@@ -2365,19 +2358,19 @@ export function checkGetterSetterParamCount(
     if (head.rest !== undefined || head.params.length !== 0) {
       parser.addDiagnostic({
         loc: method.loc,
-        message: 'getter should have no parameters',
+        description: descriptions.JS_PARSER.GETTER_WITH_PARAMS,
       });
     }
   } else if (kind === 'set') {
     if (head.rest !== undefined) {
       parser.addDiagnostic({
         loc: head.rest.loc,
-        message: 'setter function argument must not be a rest parameter',
+        description: descriptions.JS_PARSER.SETTER_WITH_REST,
       });
     } else if (head.params.length !== 1) {
       parser.addDiagnostic({
         loc: method.loc,
-        message: 'setter should have exactly one param',
+        description: descriptions.JS_PARSER.SETTER_NOT_ONE_PARAM,
       });
     }
   }
@@ -2406,7 +2399,7 @@ export function parseObjectMethod(
   if (isAsync || isGenerator || parser.match(tt.parenL)) {
     if (isPattern) {
       parser.addDiagnostic({
-        message: 'Object methods aren\'t allowed in object patterns',
+        description: descriptions.JS_PARSER.OBJECT_METHOD_IN_PATTERN,
       });
     }
 
@@ -2435,13 +2428,13 @@ export function parseObjectMethod(
   if (isGetterOrSetterMethod(parser, key, key.value, isPattern)) {
     if (isAsync) {
       parser.addDiagnostic({
-        message: 'An object setter/getter can\'t be async',
+        description: descriptions.JS_PARSER.ASYNC_GETTER_SETTER,
       });
     }
 
     if (isGenerator) {
       parser.addDiagnostic({
-        message: 'An object setter/getter can\'t be a generator',
+        description: descriptions.JS_PARSER.GENERATOR_GETTER_SETTER,
       });
     }
 
@@ -2573,7 +2566,7 @@ export function parseObjectPropertyValue(
   if (key.variance !== undefined) {
     parser.addDiagnostic({
       loc: key.variance.loc,
-      message: 'variance not allowed here',
+      description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
     });
   }
 
@@ -2609,7 +2602,7 @@ export function parseObjectPropertyValue(
     'BindingObjectPatternProperty') {
       parser.addDiagnostic({
         loc: typeParameters.loc,
-        message: 'Object property cannot have type parameters',
+        description: descriptions.JS_PARSER.OBJECT_PROPERTY_WITH_TYPE_PARAMETERS,
       });
       return node;
     }
@@ -2777,7 +2770,7 @@ export function parseArrowExpression(
   if (parser.state.yieldInPossibleArrowParameters) {
     parser.addDiagnostic({
       start: parser.state.yieldInPossibleArrowParameters,
-      message: 'Yield cannot be used as name inside a generator function',
+      description: descriptions.JS_PARSER.YIELD_NAME_IN_GENERATOR,
     });
   }
 
@@ -3008,7 +3001,7 @@ export function checkFunctionNameAndParams(
     if (firstDirective !== undefined && firstDirective.value === 'use strict') {
       parser.addDiagnostic({
         loc: firstDirective.loc,
-        message: 'Illegal \'use strict\' directive in function with non-simple parameter list',
+        description: descriptions.JS_PARSER.STRICT_DIRECTIVE_IN_NON_SIMPLE_PARAMS,
       });
     }
   }
@@ -3041,7 +3034,7 @@ export function checkFunctionNameAndParams(
       if (_isStrictBody && param.type !== 'BindingIdentifier') {
         parser.addDiagnostic({
           loc: param.loc,
-          message: 'Non-simple parameter in strict mode',
+          description: descriptions.JS_PARSER.NON_SIMPLE_PARAM_IN_EXPLICIT_STRICT_FUNCTION,
         });
       }
       checkLVal(parser, param, true, clashes, 'function parameter list');
@@ -3287,7 +3280,7 @@ export function parseIdentifierName(
     }
   } else {
     parser.addDiagnostic({
-      message: 'Expected an identifier here',
+      description: descriptions.JS_PARSER.EXPECTED_IDENTIFIER,
     });
     name = '';
   }
@@ -3320,28 +3313,28 @@ export function checkReservedWord(
   if (parser.inScope('GENERATOR') && word === 'yield') {
     parser.addDiagnostic({
       loc,
-      message: 'Can not use \'yield\' as identifier inside a generator',
+      description: descriptions.JS_PARSER.YIELD_NAME_IN_GENERATOR,
     });
   }
 
   if (parser.inScope('ASYNC') && word === 'await') {
     parser.addDiagnostic({
       loc,
-      message: 'Can not use keyword \'await\' outside an async function',
+      description: descriptions.JS_PARSER.AWAIT_NAME_IN_ASYNC,
     });
   }
 
   if (parser.inScope('CLASS_PROPERTY') && word === 'arguments') {
     parser.addDiagnostic({
       loc,
-      message: '\'arguments\' is not allowed in class field initializer',
+      description: descriptions.JS_PARSER.ARGUMENTS_IN_CLASS_FIELD,
     });
   }
 
   if (checkKeywords && isKeyword(word)) {
     parser.addDiagnostic({
       loc,
-      message: `Unexpected keyword '${word}'`,
+      description: descriptions.JS_PARSER.UNEXPECTED_KEYWORD(word),
     });
   }
 
@@ -3360,12 +3353,12 @@ export function checkReservedWord(
     if (!parser.inScope('ASYNC') && word === 'await') {
       parser.addDiagnostic({
         loc,
-        message: 'Can not use keyword \'await\' outside an async function',
+        description: descriptions.JS_PARSER.AWAIT_OUTSIDE_ASYNC,
       });
     } else {
       parser.addDiagnostic({
         loc,
-        message: `${word} is a reserved word`,
+        description: descriptions.JS_PARSER.RESERVED_WORD(word),
       });
     }
   }
@@ -3379,7 +3372,7 @@ export function parseAwait(parser: JSParser): AwaitExpression {
 
   if (!parser.inScope('ASYNC')) {
     parser.addDiagnostic({
-      message: 'Can\'t use await outside of an async function',
+      description: descriptions.JS_PARSER.AWAIT_OUTSIDE_ASYNC,
     });
   }
 
@@ -3388,14 +3381,14 @@ export function parseAwait(parser: JSParser): AwaitExpression {
 
   if (parser.inScope('PARAMETERS')) {
     parser.addDiagnostic({
-      message: 'await is not allowed in async function parameters',
+      description: descriptions.JS_PARSER.AWAIT_IN_ASYNC_PARAMS,
     });
   }
 
   if (parser.eat(tt.star)) {
     parser.addDiagnostic({
       start,
-      message: 'await* has been removed from the async functions proposal. Use Promise.all() instead.',
+      description: descriptions.JS_PARSER.AWAIT_STAR,
     });
   }
 
@@ -3414,7 +3407,7 @@ export function parseYield(parser: JSParser, noIn?: boolean): YieldExpression {
   if (parser.inScope('PARAMETERS')) {
     parser.addDiagnostic({
       start,
-      message: 'yield is not allowed in generator parameters',
+      description: descriptions.JS_PARSER.YIELD_IN_GENERATOR_PARAMS,
     });
   }
 
@@ -3539,7 +3532,7 @@ function parseImportCall(parser: JSParser): ImportCall {
 
   if (parser.match(tt.parenR)) {
     parser.addDiagnostic({
-      message: 'import() requires exactly one argument',
+      description: descriptions.JS_PARSER.IMPORT_EXACT_ARGUMENTS,
     });
 
     argument = toReferenceIdentifier(parser, parser.createUnknownIdentifier(
@@ -3561,14 +3554,14 @@ function parseImportCall(parser: JSParser): ImportCall {
     parser.addDiagnostic({
       start: parser.state.lastStartPos,
       end: parser.state.lastEndPos,
-      message: 'Trailing comma is disallowed inside import(...) arguments',
+      description: descriptions.JS_PARSER.IMPORT_TRAILING_COMMA,
     });
   }
 
   if (argument.type === 'SpreadElement') {
     parser.addDiagnostic({
       loc: argument.loc,
-      message: 'Spread is not allowed in import()',
+      description: descriptions.JS_PARSER.IMPORT_SPREAD,
     });
   }
 
@@ -3587,7 +3580,7 @@ function parseSuper(parser: JSParser): Super {
   if (!parser.inScope('METHOD') && !parser.inScope('CLASS_PROPERTY') &&
     parser.sourceType !== 'template') {
     parser.addDiagnostic({
-      message: 'super is only allowed in object methods and classes',
+      description: descriptions.JS_PARSER.SUPER_OUTSIDE_METHOD,
     });
   }
 
@@ -3598,7 +3591,7 @@ function parseSuper(parser: JSParser): Super {
     tt.dot,
   )) {
     parser.addDiagnostic({
-      message: 'Invalid super suffix operator',
+      description: descriptions.JS_PARSER.INVALID_SUPER_SUFFIX,
     });
   }
 
@@ -3610,14 +3603,7 @@ function parseSuper(parser: JSParser): Super {
     ) !== 'derived') && parser.sourceType !== 'template') {
     parser.addDiagnostic({
       loc,
-      message: 'super() is only valid inside a class constructor of a subclass',
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          message: 'Maybe a typo in the method name (\'constructor\') or not extending another class?',
-        },
-      ],
+      description: descriptions.JS_PARSER.SUPER_CALL_OUTSIDE_CONSTRUCTOR,
     });
   }
 

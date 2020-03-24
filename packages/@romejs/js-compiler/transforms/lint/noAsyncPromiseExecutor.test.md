@@ -12,22 +12,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noAsyncPromiseExecutor'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Promise executor functions should not be async.'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 35
-        index: 35
-        line: 1
+      description: Object {
+        category: 'lint/noAsyncPromiseExecutor'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Promise executor functions should not be async.'}
       }
-      start: Object {
-        column: 12
-        index: 12
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 35
+          index: 35
+          line: 1
+        }
+        start: Object {
+          column: 12
+          index: 12
+          line: 1
+        }
       }
     }
   ]
@@ -42,22 +46,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noAsyncPromiseExecutor'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Promise executor functions should not be async.'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 26
-        index: 26
-        line: 1
+      description: Object {
+        category: 'lint/noAsyncPromiseExecutor'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Promise executor functions should not be async.'}
       }
-      start: Object {
-        column: 12
-        index: 12
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 26
+          index: 26
+          line: 1
+        }
+        start: Object {
+          column: 12
+          index: 12
+          line: 1
+        }
       }
     }
   ]
@@ -72,22 +80,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noAsyncPromiseExecutor'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Promise executor functions should not be async.'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 30
-        index: 30
-        line: 1
+      description: Object {
+        category: 'lint/noAsyncPromiseExecutor'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Promise executor functions should not be async.'}
       }
-      start: Object {
-        column: 16
-        index: 16
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 30
+          index: 30
+          line: 1
+        }
+        start: Object {
+          column: 16
+          index: 16
+          line: 1
+        }
       }
     }
   ]

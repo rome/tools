@@ -12,30 +12,34 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/noMultipleSpacesInRegularExpressionLiterals'
-      filename: 'unknown'
-      fixable: true
-      language: 'js'
-      message: 'Unclear multiple spaces in regular expression'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 5
-        index: 5
-        line: 1
+      description: Object {
+        category: 'lint/noMultipleSpacesInRegularExpressionLiterals'
+        fixable: true
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unclear multiple spaces in regular expression'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'It\'s hard to visually count the amount of spaces, it\'s clearer if you use a quantifier instead. eg / {3}/'
+          }
+        ]
       }
-      start: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-      advice: Array [
-        log {
-          category: 'info'
-          message: 'It\'s hard to visually count the amount of spaces, it\'s clearer if you use a quantifier instead. eg / {3}/'
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 5
+          index: 5
+          line: 1
         }
-      ]
+        start: Object {
+          column: 4
+          index: 4
+          line: 1
+        }
+      }
     }
   ]
 }

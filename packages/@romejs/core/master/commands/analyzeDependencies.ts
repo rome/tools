@@ -42,7 +42,7 @@ export default createMasterCommand({
     const filename = await master.resolver.resolveEntryAssertPath({
       ...req.getResolverOptionsFromFlags(),
       source: createUnknownFilePath(args[0]),
-    }, {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
+    }, {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
 
     let res = await req.requestWorkerAnalyzeDependencies(filename);
 

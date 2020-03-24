@@ -6,7 +6,7 @@
  */
 
 import {AnyNode} from '@romejs/js-ast';
-import {buildSuggestionAdvice} from '@romejs/diagnostics';
+import {descriptions} from '@romejs/diagnostics';
 import {Scope} from '../../scopes';
 import E, {ErrorDefinition} from './E';
 
@@ -22,9 +22,10 @@ export default class UndeclaredVarE extends E {
   getError(): ErrorDefinition {
     const possibleNames = this.scope.getBindingNames();
     return {
-      category: 'typeCheck/undeclaredVariable',
-      message: `Undeclared variable '${this.name}'`,
-      advice: buildSuggestionAdvice(this.name, possibleNames),
+      description: descriptions.TYPE_CHECK.UNDECLARED_VARIABLE(
+        this.name,
+        possibleNames,
+      ),
       lowerTarget: this,
     };
   }

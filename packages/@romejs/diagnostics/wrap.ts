@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics, DiagnosticOrigin} from './types';
+import {Diagnostics, DiagnosticOrigin} from './types';
 import {addOriginsToDiagnostics} from './derive';
 import {getDiagnosticsFromError} from './errors';
 
@@ -16,7 +16,7 @@ type WrapResult<T> =
   }
   | {
     readonly value: undefined;
-    readonly diagnostics: PartialDiagnostics;
+    readonly diagnostics: Diagnostics;
   };
 
 export async function catchDiagnostics<T>(

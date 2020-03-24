@@ -9,6 +9,7 @@ import {AnyNode} from '@romejs/js-ast';
 import {Scope} from '../../scopes';
 import E, {ErrorDefinition} from './E';
 import T from '../T';
+import {descriptions} from '@romejs/diagnostics';
 
 export default class NotCallableE extends E {
   constructor(scope: Scope, originNode: undefined | AnyNode, callee: T) {
@@ -21,8 +22,7 @@ export default class NotCallableE extends E {
 
   getError(): ErrorDefinition {
     return {
-      category: 'typeCheck/uncallable',
-      message: `This type isn't callable`,
+      description: descriptions.TYPE_CHECK.NOT_CALLABLE,
       lowerTarget: this.callee,
     };
   }

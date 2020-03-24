@@ -16,6 +16,7 @@ import {toCamelCase} from '@romejs/string-utils';
 import {UnknownFilePath} from '@romejs/path';
 import {renameBindings} from '@romejs/js-ast-utils';
 import {TransformExitResult} from '@romejs/js-compiler/types';
+import {descriptions} from '@romejs/diagnostics';
 
 function isValidDeclaration(
   node: AnyNode,
@@ -63,30 +64,15 @@ export default {
           if (basename !== id.name) {
             const correctFilename = id.name + context.path.getExtensions();
 
-            let adviceMessage = '';
-
-            if (id.name === '*default*') {
-              adviceMessage += 'The';
-            } else {
-              adviceMessage +=
-                `Filename should be <emphasis>${correctFilename}</emphasis> or the`;
-            }
-
-            adviceMessage +=
-              ` ${type} name should be <emphasis>${basename}</emphasis>`;
-
-            context.addNodeDiagnostic(id, {
-              fixable: true,
-              category: 'lint/defaultExportSameBasename',
-              message: `Filename and the name of a default ${type} should match`,
-              advice: [
-                {
-                  type: 'log',
-                  category: 'info',
-                  message: adviceMessage,
-                },
-              ],
-            });
+            context.addNodeDiagnostic(
+              id,
+              descriptions.LINT.DEFAULT_EXPORT_SAME_BASENAME({
+                defaultName: id.name,
+                defaultType: type,
+                actualFilename: basename,
+                correctFilename,
+              }),
+            );
 
             return renameBindings(path, new Map([[id.name, basename]]));
           }
