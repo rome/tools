@@ -1024,17 +1024,19 @@ export function readRegexp(parser: JSParser): void {
   bumpIndex(parser);
 
   const rawMods = readWord1(parser);
-
   if (parser.state.escapePosition !== undefined) {
     parser.addDiagnostic({
       index: parser.state.escapePosition,
       message: 'Regular expression flags can\'t contain unicode escapes',
     });
   }
-
-  const mods = validateRegexFlags(rawMods, (msg, index) => {
+  const mods = validateRegexFlags(rawMods, getIndex(parser), (
+    msg,
+    flagPosition,
+    parserIndex,
+  ) => {
     parser.addDiagnostic({
-      index: add(start, index),
+      index: add(parserIndex - rawMods.length, flagPosition),
       message: msg,
     });
   });

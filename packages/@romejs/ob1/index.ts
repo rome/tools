@@ -29,6 +29,7 @@ export function add(a: number, b: Number0): Number0;
 export function add(a: Number1, b: Number0): Number1;
 export function add(a: Number0, b: Number1): Number1;
 export function add(a: Number0, b: Number0): Number0;
+export function add(a: number, b: number): Number0;
 export function add(a: number | AnyNumber, b: number | AnyNumber): AnyNumber {
   // @ts-ignore
   return a + b;
