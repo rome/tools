@@ -6,8 +6,8 @@
  */
 
 import {
-  DiagnosticPointer,
-  PartialDiagnostic,
+  DiagnosticLocation,
+  Diagnostic,
   DiagnosticCategory,
 } from '@romejs/diagnostics';
 import Consumer from './Consumer';
@@ -28,9 +28,7 @@ export type ConsumeSourceLocationRequestTarget =
 
 export type ConsumeContext = {
   category: DiagnosticCategory;
-  getDiagnosticPointer?: (keys: ConsumePath, target: ConsumeSourceLocationRequestTarget) =>
-    | undefined
-    | DiagnosticPointer;
+  getDiagnosticPointer?: (keys: ConsumePath, target: ConsumeSourceLocationRequestTarget) => DiagnosticLocation;
   getOriginalValue?: (path: ConsumePath) => unknown;
 };
 
@@ -68,7 +66,7 @@ export type ConsumePropertyDefinition =
 
 export type ConsumerOnDefinition = (definition: ConsumePropertyDefinition) => void;
 
-export type ConsumerHandleUnexpected = (diagnostic: PartialDiagnostic) => void;
+export type ConsumerHandleUnexpected = (diagnostic: Diagnostic) => void;
 
 export type ConsumerOptions = {
   handleUnexpectedDiagnostic?: ConsumerHandleUnexpected;

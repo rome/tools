@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticPointer, DiagnosticCategory} from '@romejs/diagnostics';
+import {
+  DiagnosticLocation,
+  DiagnosticCategory,
+  descriptions,
+} from '@romejs/diagnostics';
 import {
   JSONParserResult,
   JSONParserOptions,
@@ -22,7 +26,6 @@ import {
   ConsumeSourceLocationRequestTarget,
 } from '@romejs/consume';
 import {unescapeString} from '@romejs/string-escape';
-import messages from './messages';
 import {
   isAlpha,
   isDigit,
@@ -184,7 +187,7 @@ export default createParser((ParserCore) =>
         if (this.input[get0(endIndex) - 2] !== '*' ||
         this.input[get0(endIndex) - 1] !== '/') {
           throw this.unexpected({
-            message: messages.UNCLOSED_BLOCK_COMMENT(),
+            description: descriptions.JSON.UNCLOSED_BLOCK_COMMENT,
             start: this.getPositionFromIndex(endIndex),
           });
         }
@@ -201,7 +204,7 @@ export default createParser((ParserCore) =>
           const end = add(add(index, value.length), 2);
           if (input[get0(end) - 1] !== '"') {
             throw this.unexpected({
-              message: messages.UNCLOSED_STRING(),
+              description: descriptions.JSON.UNCLOSED_STRING,
               start: this.getPositionFromIndex(end),
             });
           }
@@ -212,16 +215,16 @@ export default createParser((ParserCore) =>
 
             if (char === '\n') {
               throw this.unexpected({
-                message: messages.STRING_NEWLINES_IN_JSON(),
+                description: descriptions.JSON.STRING_NEWLINES_IN_JSON,
                 start: this.getPositionFromIndex(add(index, strIndex)),
               });
             }
           }
 
           // Unescape the string
-          const unescaped = unescapeString(value, (message, strIndex) => {
+          const unescaped = unescapeString(value, (metadata, strIndex) => {
             throw this.unexpected({
-              message,
+              description: metadata,
               start: this.getPositionFromIndex(add(index, strIndex)),
             });
           });
@@ -230,13 +233,13 @@ export default createParser((ParserCore) =>
 
         case '\'':
           throw this.unexpected({
-            message: messages.SINGLE_QUOTE_USAGE(),
+            description: descriptions.JSON.SINGLE_QUOTE_USAGE,
             start: this.getPositionFromIndex(index),
           });
 
         case '/':
           throw this.unexpected({
-            message: messages.REGEX_IN_JSON(),
+            description: descriptions.JSON.REGEX_IN_JSON,
             start: this.getPositionFromIndex(index),
           });
 
@@ -316,7 +319,7 @@ export default createParser((ParserCore) =>
         // Throw a meainingful error for redundant commas
         if (this.matchToken('Comma')) {
           throw this.unexpected({
-            message: messages.REDUNDANT_COMMA(),
+            description: descriptions.JSON.REDUNDANT_COMMA,
           });
         }
 
@@ -428,7 +431,7 @@ export default createParser((ParserCore) =>
           // Don't allow separators in JSON
           if (!this.hasExtensions) {
             throw this.unexpected({
-              message: messages.NUMERIC_SEPARATORS_IN_JSON(),
+              description: descriptions.JSON.NUMERIC_SEPARATORS_IN_JSON,
               start: this.getPositionFromIndex(inc(index)),
             });
           }
@@ -462,7 +465,9 @@ export default createParser((ParserCore) =>
 
         // Comments aren't allowed in regular JSON
         if (!this.hasExtensions) {
-          throw this.unexpected({message: messages.COMMENTS_IN_JSON()});
+          throw this.unexpected({
+            description: descriptions.JSON.COMMENTS_IN_JSON,
+          });
         }
 
         this.nextToken();
@@ -488,7 +493,7 @@ export default createParser((ParserCore) =>
 
         if (this.matchToken('Comma')) {
           throw this.unexpected({
-            message: messages.REDUNDANT_COMMA(),
+            description: descriptions.JSON.REDUNDANT_COMMA,
           });
         }
 
@@ -526,7 +531,7 @@ export default createParser((ParserCore) =>
         // Have a meaningful error message when an object is incorrectly using brackets: ["foo": "bar"]
         if (this.matchToken('Colon')) {
           throw this.unexpected({
-            message: messages.MISTAKEN_ARRAY_IDENTITY(),
+            description: descriptions.JSON.MISTAKEN_ARRAY_IDENTITY,
           });
         }
       } while (this.eatPropertySeparator());
@@ -568,7 +573,9 @@ export default createParser((ParserCore) =>
         // Make sure this isn't a trailing comma
         const lookahead = this.lookaheadToken();
         if (lookahead.type === 'BraceClose' || lookahead.type === 'BracketClose') {
-          throw this.unexpected({message: messages.TRAILING_COMMA_IN_JSON()});
+          throw this.unexpected({
+            description: descriptions.JSON.TRAILING_COMMA_IN_JSON,
+          });
         }
 
         this.nextToken();
@@ -591,7 +598,9 @@ export default createParser((ParserCore) =>
           return null;
 
         case 'undefined':
-          throw this.unexpected({message: messages.UNDEFINED_IN_JSON()});
+          throw this.unexpected({
+            description: descriptions.JSON.UNDEFINED_IN_JSON,
+          });
       }
 
       if (isStart && this.matchToken('Colon')) {
@@ -599,13 +608,13 @@ export default createParser((ParserCore) =>
           return this.parseObject(start, token.value);
         } else {
           throw this.unexpected({
-            message: messages.IMPLICIT_OBJECT_IN_JSON(),
+            description: descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
           });
         }
       }
 
       throw this.unexpected({
-        message: messages.UNKNOWN_WORD_IN_JSON(token.value),
+        description: descriptions.JSON.UNKNOWN_WORD_IN_JSON(token.value),
       });
     }
 
@@ -650,7 +659,7 @@ export default createParser((ParserCore) =>
       const nextToken2 = this.getToken();
       if (nextToken2.type === 'Word' && nextToken2.value === 'n') {
         throw this.unexpected({
-          message: messages.BIGINT_IN_JSON(),
+          description: descriptions.JSON.BIGINT_IN_JSON,
         });
       }
 
@@ -676,7 +685,7 @@ export default createParser((ParserCore) =>
             return token.value;
           } else {
             throw this.unexpected({
-              message: messages.PROPERTY_KEY_UNQUOTED_IN_JSON(),
+              description: descriptions.JSON.PROPERTY_KEY_UNQUOTED_IN_JSON,
             });
           }
 
@@ -694,7 +703,7 @@ export default createParser((ParserCore) =>
           return this.parseObject(start, token.value);
         } else {
           throw this.unexpected({
-            message: messages.IMPLICIT_OBJECT_IN_JSON(),
+            description: descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
           });
         }
       } else {
@@ -734,7 +743,9 @@ export default createParser((ParserCore) =>
           // If we're in RJSON mode then an empty input is an implicit object
           return {};
         } else {
-          throw this.unexpected({message: messages.EMPTY_INPUT_IN_JSON()});
+          throw this.unexpected({
+            description: descriptions.JSON.EMPTY_INPUT_IN_JSON,
+          });
         }
       } else {
         return this.parseExpression(true);
@@ -814,10 +825,12 @@ export default createParser((ParserCore) =>
         getDiagnosticPointer: (
           keys: ConsumePath,
           target: ConsumeSourceLocationRequestTarget,
-        ): undefined | DiagnosticPointer => {
+        ): DiagnosticLocation => {
           const info = this.getPathInfo(keys);
           if (info === undefined) {
-            return;
+            return {
+              filename: this.filename,
+            };
           }
 
           let start = info.keyStart;

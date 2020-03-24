@@ -10,23 +10,27 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/sparseArray'
-      filename: 'unknown'
-      fixable: true
-      language: 'js'
-      message: 'Your array contains an empty slot'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 6
-        index: 6
-        line: 1
+      description: Object {
+        category: 'lint/sparseArray'
+        fixable: true
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Your array contains an empty slot'}
       }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 6
+          index: 6
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
       }
     }
   ]

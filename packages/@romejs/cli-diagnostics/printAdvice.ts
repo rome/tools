@@ -9,13 +9,13 @@ import {Reporter} from '@romejs/cli-reporter';
 import {
   Diagnostic,
   DiagnosticAdviceItem,
-  DiagnosticAdviceItemLog,
-  DiagnosticAdviceItemList,
-  DiagnosticAdviceItemCode,
-  DiagnosticAdviceItemFrame,
-  DiagnosticAdviceItemInspect,
-  DiagnosticAdviceItemDiff,
-  DiagnosticAdviceItemStacktrace,
+  DiagnosticAdviceLog,
+  DiagnosticAdviceList,
+  DiagnosticAdviceCode,
+  DiagnosticAdviceFrame,
+  DiagnosticAdviceInspect,
+  DiagnosticAdviceDiff,
+  DiagnosticAdviceStacktrace,
 } from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
 import {toLines} from './utils';
@@ -27,9 +27,11 @@ import {formatAnsi} from '@romejs/string-ansi';
 import {DiagnosticsPrinterFlags} from './types';
 import {number0Neg1} from '@romejs/ob1';
 import {DiagnosticsPrinterFileSources} from './DiagnosticsPrinter';
-import {createUnknownFilePath, AbsoluteFilePathSet} from '@romejs/path';
+import {AbsoluteFilePathSet} from '@romejs/path';
+import DiagnosticsPrinter from './DiagnosticsPrinter';
 
 type AdvicePrintOptions = {
+  printer: DiagnosticsPrinter;
   flags: DiagnosticsPrinterFlags;
   missingFileSources: AbsoluteFilePathSet;
   fileSources: DiagnosticsPrinterFileSources;
@@ -66,7 +68,7 @@ export default function printAdvice(
 }
 
 function printInspect(
-  item: DiagnosticAdviceItemInspect,
+  item: DiagnosticAdviceInspect,
   opts: AdvicePrintOptions,
 ): boolean {
   const {reporter} = opts;
@@ -76,10 +78,7 @@ function printInspect(
   return false;
 }
 
-function printDiff(
-  item: DiagnosticAdviceItemDiff,
-  opts: AdvicePrintOptions,
-): boolean {
+function printDiff(item: DiagnosticAdviceDiff, opts: AdvicePrintOptions): boolean {
   const frame = buildPatchCodeFrame(item.diff);
   if (frame === '') {
     return true;
@@ -98,10 +97,7 @@ function printDiff(
   return false;
 }
 
-function printList(
-  item: DiagnosticAdviceItemList,
-  opts: AdvicePrintOptions,
-): boolean {
+function printList(item: DiagnosticAdviceList, opts: AdvicePrintOptions): boolean {
   if (item.list.length === 0) {
     return true;
   } else {
@@ -114,10 +110,7 @@ function printList(
   }
 }
 
-function printCode(
-  item: DiagnosticAdviceItemCode,
-  opts: AdvicePrintOptions,
-): boolean {
+function printCode(item: DiagnosticAdviceCode, opts: AdvicePrintOptions): boolean {
   const {reporter} = opts;
   const {code} = item;
   reporter.indent(() => {
@@ -127,12 +120,13 @@ function printCode(
 }
 
 function printFrame(
-  item: DiagnosticAdviceItemFrame,
+  item: DiagnosticAdviceFrame,
   opts: AdvicePrintOptions,
 ): boolean {
   const {reporter} = opts;
-  const {start, end, filename, sourceText, marker} = item;
-  const path = createUnknownFilePath(filename);
+  const {marker} = item;
+  const {start, end, filename, sourceText} = item.location;
+  const path = opts.printer.createFilePath(filename);
 
   let cleanMarker: string = '';
   if (marker !== undefined) {
@@ -144,8 +138,8 @@ function printFrame(
     lines = toLines({
       path,
       input: sourceText,
-      sourceType: item.sourceType,
-      language: item.language,
+      sourceType: item.location.sourceType,
+      language: item.location.language,
     });
   } else if (filename !== undefined) {
     lines = opts.fileSources.get(path);
@@ -169,7 +163,7 @@ function printFrame(
 }
 
 function printStacktrace(
-  item: DiagnosticAdviceItemStacktrace,
+  item: DiagnosticAdviceStacktrace,
   opts: AdvicePrintOptions,
 ): boolean {
   // Here we duplicate some of the list logic that is in Reporter
@@ -181,7 +175,8 @@ function printStacktrace(
 
   let shownCodeFrames = 0;
 
-  const isFirstPart = diagnostic.advice[0] === item;
+  const isFirstPart = diagnostic.description.advice !== undefined &&
+    diagnostic.description.advice[0] === item;
   if (!isFirstPart) {
     opts.reporter.info(item.title === undefined ? 'Stack trace' : item.title);
     opts.reporter.forceSpacer();
@@ -255,14 +250,16 @@ function printStacktrace(
 
       const skipped = printFrame({
         type: 'frame',
-        language,
-        filename,
-        sourceType: 'module',
         marker: undefined,
-        mtime: undefined,
-        start: pos,
-        end: pos,
-        sourceText: code,
+        location: {
+          language,
+          filename,
+          sourceType: 'module',
+          mtime: undefined,
+          start: pos,
+          end: pos,
+          sourceText: code,
+        },
       }, opts);
       if (!skipped) {
         opts.reporter.forceSpacer();
@@ -277,10 +274,7 @@ function printStacktrace(
   return false;
 }
 
-function printLog(
-  item: DiagnosticAdviceItemLog,
-  opts: AdvicePrintOptions,
-): boolean {
+function printLog(item: DiagnosticAdviceLog, opts: AdvicePrintOptions): boolean {
   const {reporter} = opts;
   const {message, category} = item;
 
@@ -307,7 +301,7 @@ function printLog(
     }
   }
 
-  return item.compact;
+  return item.compact === true;
 }
 
 function cleanMessage(msg: string): string {

@@ -6,7 +6,7 @@
  */
 
 import {Position, SourceLocation} from '@romejs/parser-core';
-import {PartialDiagnosticAdvice} from '@romejs/diagnostics';
+import {DiagnosticAdvice} from '@romejs/diagnostics';
 import {ErrorFrames, ErrorFrame} from './types';
 import {isPlainObject} from '@romejs/typescript-helpers';
 import {number1, number0, number0Neg1} from '@romejs/ob1';
@@ -22,7 +22,7 @@ export type StructuredError = {
   message: string;
   stack: undefined | string;
   frames: ErrorFrames;
-  advice: PartialDiagnosticAdvice;
+  advice: DiagnosticAdvice;
   framesToPop: number;
 };
 
@@ -38,7 +38,7 @@ export class NativeStructuredError extends Error {
   }
 
   [ERROR_FRAMES_PROP]: undefined | ErrorFrames;
-  [ERROR_ADVICE_PROP]: undefined | PartialDiagnosticAdvice;
+  [ERROR_ADVICE_PROP]: undefined | DiagnosticAdvice;
   [ERROR_POP_FRAMES_PROP]: undefined | number;
 }
 
@@ -51,7 +51,7 @@ export function getErrorStructure(err: unknown): StructuredError {
   let message = 'Unknown message';
   let stack = undefined;
   let frames: ErrorFrames = [];
-  let advice: PartialDiagnosticAdvice = [];
+  let advice: DiagnosticAdvice = [];
   let framesToPop = 0;
   let looksLikeValidError = false;
 

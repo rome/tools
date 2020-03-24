@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import messages from './messages';
+import {descriptions, DiagnosticDescription} from '@romejs/diagnostics';
 
 const VALID_REGEX_FLAGS: Array<string> = 'gmsiyu'.split('');
 
@@ -13,7 +13,7 @@ const VALID_REGEX_FLAGS: Array<string> = 'gmsiyu'.split('');
 export function validateRegexFlags(
   flags: string,
   parserIndex: number,
-  onUnexpected: (message: string, index: number, parserIndex: number) => void,
+  onUnexpected: (metadata: Omit<DiagnosticDescription, 'category'>, index: number, parserIndex: number) => void,
 ): Set<string> {
   const foundFlags: Set<string> = new Set();
   for (let i = 0; i < flags.length; i++) {
@@ -21,12 +21,12 @@ export function validateRegexFlags(
 
     if (VALID_REGEX_FLAGS.includes(flag)) {
       if (foundFlags.has(flag)) {
-        onUnexpected(messages.DUPLICATE_REGEX_FLAG(), i, parserIndex);
+        onUnexpected(descriptions.REGEX_PARSER.DUPLICATE_FLAG, i, parserIndex);
       } else {
         foundFlags.add(flag);
       }
     } else {
-      onUnexpected(messages.INVALID_REGEX_FLAG(), i, parserIndex);
+      onUnexpected(descriptions.REGEX_PARSER.INVALID_FLAG, i, parserIndex);
     }
   }
 

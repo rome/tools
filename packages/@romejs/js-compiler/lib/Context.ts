@@ -18,9 +18,10 @@ import {
   CompilerOptions,
 } from '@romejs/js-compiler';
 import {
-  PartialDiagnostic,
-  PartialDiagnostics,
+  Diagnostic,
+  Diagnostics,
   DiagnosticOrigin,
+  DiagnosticDescription,
 } from '@romejs/diagnostics';
 import Record from './Record';
 import {RootScope} from '../scope/Scope';
@@ -36,7 +37,7 @@ export type ContextArg = {
 };
 
 // We only want a Context to create diagnostics that belong to itself
-type ContextPartialDiagnostic = Omit<PartialDiagnostic, 'filename' | 'mtime'>;
+type ContextDiagnostic = Omit<Diagnostic, 'location' | 'description'>;
 
 export default class Context {
   constructor(arg: ContextArg) {
@@ -60,7 +61,7 @@ export default class Context {
   sourceType: ConstSourceType;
   cacheDependencies: Set<string>;
   records: Array<Record>;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
 
   rootScope: undefined | RootScope;
 
@@ -110,13 +111,14 @@ export default class Context {
     this.records.push(record);
   }
 
-  addDiagnostics(diagnostics: PartialDiagnostics) {
+  addDiagnostics(diagnostics: Diagnostics) {
     this.diagnostics = [...this.diagnostics, ...diagnostics];
   }
 
   addLocDiagnostic(
     loc: undefined | SourceLocation,
-    diag: ContextPartialDiagnostic,
+    description: DiagnosticDescription,
+    diag: ContextDiagnostic = {},
   ) {
     let origins: Array<DiagnosticOrigin> = [];
     if (this.origin !== undefined) {
@@ -134,29 +136,39 @@ export default class Context {
 
     this.diagnostics.push({
       ...diag,
-      mtime: this.mtime,
-      filename: this.filename,
-      start: loc === undefined ? diag.start : loc.start,
-      end: loc === undefined ? diag.end : loc.end,
-      language: 'js',
-      sourceType: this.sourceType,
+      description,
+      location: {
+        mtime: this.mtime,
+        filename: this.filename,
+        start: loc === undefined ? undefined : loc.start,
+        end: loc === undefined ? undefined : loc.end,
+        language: 'js',
+        sourceType: this.sourceType,
+      },
       origins,
     });
   }
 
   addNodeDiagnostic(
     node: undefined | {loc?: SourceLocation},
-    diag: ContextPartialDiagnostic,
+    description: DiagnosticDescription,
+    diag: ContextDiagnostic = {},
   ) {
-    return this.addLocDiagnostic(node === undefined ? undefined : node.loc, diag);
+    return this.addLocDiagnostic(
+      node === undefined ? undefined : node.loc,
+      description,
+      diag,
+    );
   }
 
   addNodesRangeDiagnostic(
     nodes: Array<{loc?: SourceLocation}>,
-    diag: ContextPartialDiagnostic,
+    description: DiagnosticDescription,
+    diag: ContextDiagnostic = {},
   ) {
     return this.addLocDiagnostic(
       extractSourceLocationRangeFromNodes(nodes),
+      description,
       diag,
     );
   }

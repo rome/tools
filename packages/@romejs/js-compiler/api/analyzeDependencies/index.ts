@@ -28,7 +28,9 @@ import {
   AnalyzeDependencyName,
   AnalyzeDependencyImportFirstUsage,
   AnalyzeModuleType,
+  AnalyzeDependencyTopLevelLocalBindings,
 } from '@romejs/core';
+import {descriptions} from '@romejs/diagnostics';
 
 const analyzeCache: Cache<AnalyzeDependencyResult> = new Cache();
 
@@ -230,10 +232,10 @@ export default async function analyzeDependencies(
         });*/}
     } else if (record instanceof CJSExportRecord) {
       if (moduleType === 'es') {
-        context.addNodeDiagnostic(record.node, {
-          category: 'analyzeDependencies/cjsExportInES',
-          message: 'You cannot use CommonJS exports in an ES module',
-        });
+        context.addNodeDiagnostic(
+          record.node,
+          descriptions.ANALYZE_DEPENDENCIES.CJS_EXPORT_IN_ES,
+        );
       }
     }
   }
@@ -249,7 +251,15 @@ export default async function analyzeDependencies(
     });
   }
 
+  const topLevelLocalBindings: AnalyzeDependencyTopLevelLocalBindings = {};
+
+  // Get all top level bindings
+  for (const [name, binding] of context.getRootScope().evaluate(ast).getOwnBindings()) {
+    topLevelLocalBindings[name] = binding.node.loc;
+  }
+
   const res: AnalyzeDependencyResult = {
+    topLevelLocalBindings,
     moduleType,
     firstTopAwaitLocation,
     exports,

@@ -11,27 +11,4 @@ import {testLint} from '../../api/lint.test';
 test('undeclared variable', async (t) => {
   const res = await testLint('foobar;');
   t.snapshot(res);
-
-  // Redundant because of the snapshot above, but this is what we actually care about
-  t.looksLike(res.diagnostics, [
-    {
-      category: 'lint/undeclaredVariables',
-      filename: 'unknown',
-      language: 'js',
-      message: 'Undeclared variable <emphasis>foobar</emphasis>',
-      mtime: undefined,
-      sourceType: 'module',
-      origins: [{category: 'lint'}],
-      end: {
-        column: 6,
-        index: 6,
-        line: 1,
-      },
-      start: {
-        column: 0,
-        index: 0,
-        line: 1,
-      },
-    },
-  ]);
 });

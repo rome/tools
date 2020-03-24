@@ -6,7 +6,8 @@
  */
 
 import '@romejs/core';
-import {parseJSON, messages} from '@romejs/codec-json';
+import {descriptions} from '@romejs/diagnostics';
+import {parseJSON} from '@romejs/codec-json';
 import test from '@romejs/test';
 import {ParserOptions} from '@romejs/parser-core';
 import {createUnknownFilePath} from '@romejs/path';
@@ -88,7 +89,7 @@ test('comments', (t) => {
   // ensure closed block comment
   t.throws(() => {
     parseExtJSON({input: 'true /* unclosed comment'});
-  }, messages.UNCLOSED_BLOCK_COMMENT());
+  }, descriptions.JSON.UNCLOSED_BLOCK_COMMENT.message.value);
 });
 
 test('numbers', (t) => {
@@ -111,15 +112,15 @@ test('strings', (t) => {
 
   t.throws(() => {
     parseExtJSON({input: '"foo'});
-  }, messages.UNCLOSED_STRING());
+  }, descriptions.JSON.UNCLOSED_STRING.message.value);
 
   t.throws(() => {
     parseExtJSON({input: '"foo\n"'});
-  }, messages.UNCLOSED_STRING());
+  }, descriptions.JSON.UNCLOSED_STRING.message.value);
 
   t.throws(() => {
     parseExtJSON({input: '\'foo\''});
-  }, messages.SINGLE_QUOTE_USAGE());
+  }, descriptions.JSON.SINGLE_QUOTE_USAGE.message.value);
 
   // TODO escMessage.INVALID_HEX_DIGIT_FOR_ESCAPE
 
@@ -140,7 +141,7 @@ test('null', (t) => {
 test('undefined', (t) => {
   t.throws(() => {
     t.is(parseExtJSON({input: 'undefined'}), undefined);
-  }, messages.UNDEFINED_IN_JSON());
+  }, descriptions.JSON.UNDEFINED_IN_JSON.message.value);
 });
 
 test('arrays', (t) => {
@@ -150,19 +151,19 @@ test('arrays', (t) => {
 
   t.throws(() => {
     parseExtJSON({input: '[,]'});
-  }, messages.REDUNDANT_COMMA());
+  }, descriptions.JSON.REDUNDANT_COMMA.message.value);
 
   t.throws(() => {
     parseExtJSON({input: '[1,,]'});
-  }, messages.REDUNDANT_COMMA());
+  }, descriptions.JSON.REDUNDANT_COMMA.message.value);
 
   t.throws(() => {
     parseExtJSON({input: '[1, /*comment*/,]'});
-  }, messages.REDUNDANT_COMMA());
+  }, descriptions.JSON.REDUNDANT_COMMA.message.value);
 
   t.throws(() => {
     parseExtJSON({input: '["foo": "bar"]'});
-  }, messages.MISTAKEN_ARRAY_IDENTITY());
+  }, descriptions.JSON.MISTAKEN_ARRAY_IDENTITY.message.value);
 });
 
 test('objects', (t) => {
@@ -175,35 +176,35 @@ test('objects', (t) => {
 
   t.throws(() => {
     parseExtJSON({input: '{,}'});
-  }, messages.REDUNDANT_COMMA());
+  }, descriptions.JSON.REDUNDANT_COMMA.message.value);
 
   t.throws(() => {
     parseExtJSON({input: '{"foo": "bar",,}'});
-  }, messages.REDUNDANT_COMMA());
+  }, descriptions.JSON.REDUNDANT_COMMA.message.value);
 
   t.throws(() => {
     parseExtJSON({input: '{"foo": "bar", /*comment*/,}'});
-  }, messages.REDUNDANT_COMMA());
+  }, descriptions.JSON.REDUNDANT_COMMA.message.value);
 });
 
 test('regular JSON', (t) => {
   t.throws(() => {
     parseJSON({input: '{foo: "bar"}'});
-  }, messages.PROPERTY_KEY_UNQUOTED_IN_JSON());
+  }, descriptions.JSON.PROPERTY_KEY_UNQUOTED_IN_JSON.message.value);
 
   t.throws(() => {
     parseJSON({input: '// foobar\ntrue'});
-  }, messages.COMMENTS_IN_JSON());
+  }, descriptions.JSON.COMMENTS_IN_JSON.message.value);
 
   t.throws(() => {
     parseJSON({input: '/* foobar */\ntrue'});
-  }, messages.COMMENTS_IN_JSON());
+  }, descriptions.JSON.COMMENTS_IN_JSON.message.value);
 
   t.throws(() => {
     parseJSON({input: '{"foo": "bar",}'});
-  }, messages.TRAILING_COMMA_IN_JSON());
+  }, descriptions.JSON.TRAILING_COMMA_IN_JSON.message.value);
 
   t.throws(() => {
     parseJSON({input: '["foo",]'});
-  }, messages.TRAILING_COMMA_IN_JSON());
+  }, descriptions.JSON.TRAILING_COMMA_IN_JSON.message.value);
 });

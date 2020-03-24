@@ -41,7 +41,7 @@ import {
   parseTSAccessModifier,
   hasTSModifier,
 } from './index';
-import {PartialDiagnosticAdvice} from '@romejs/diagnostics';
+import {descriptions} from '@romejs/diagnostics';
 import {get0} from '@romejs/ob1';
 import {
   parseBindingIdentifier,
@@ -133,7 +133,7 @@ export function toAssignmentPattern(
             } else {
               parser.addDiagnostic({
                 loc: arg.loc,
-                message: 'Invalid rest operator\'s argument',
+                description: descriptions.JS_PARSER.INVALID_OBJECT_REST_ARGUMENT,
               });
             }
             continue;
@@ -169,7 +169,7 @@ export function toAssignmentPattern(
         if (node.operator !== '=') {
           parser.addDiagnostic({
             loc: parser.getLoc(node.left),
-            message: 'Only \'=\' operator can be used for specifying default value.',
+            description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_PATTERN_OPERATOR,
           });
         }
 
@@ -184,11 +184,11 @@ export function toAssignmentPattern(
 
     default:
       {
-        const message =
-          `Invalid left-hand side in ${contextDescription} ${node.type}`;
         parser.addDiagnostic({
           loc: node.loc,
-          message,
+          description: descriptions.JS_PARSER.INVALID_LEFT_HAND_SIDE(
+            contextDescription,
+          ),
         });
         return toAssignmentIdentifier(parser, parser.createUnknownIdentifier(
           contextDescription,
@@ -217,7 +217,7 @@ export function toTargetAssignmentPattern(
     default:
       parser.addDiagnostic({
         loc: node.loc,
-        message: 'Not a valid assignment target',
+        description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_TARGET,
       });
       return {
         type: 'AssignmentIdentifier',
@@ -276,7 +276,7 @@ export function toBindingPattern(
   if (binding.type === 'MemberExpression') {
     parser.addDiagnostic({
       loc: node.loc,
-      message: 'Binding member expression',
+      description: descriptions.JS_PARSER.BINDING_MEMBER_EXPRESSION,
     });
 
     return {
@@ -375,12 +375,9 @@ export function toAssignmentObjectProperty(
   switch (prop.type) {
     case 'ObjectMethod':
       {
-        const error = prop.kind === 'get' || prop.kind === 'set'
-          ? 'Object pattern can\'t contain getter or setter' : 'Object pattern can\'t contain methods';
-
         parser.addDiagnostic({
           loc: prop.key.loc,
-          message: error,
+          description: descriptions.JS_PARSER.OBJECT_PATTERN_CANNOT_CONTAIN_METHODS,
         });
 
         const fakeProp: AssignmentObjectPatternProperty = {
@@ -419,7 +416,7 @@ export function toAssignmentObjectProperty(
     default:
       parser.addDiagnostic({
         loc: prop.loc,
-        message: 'Not a valid assignment object pattern property',
+        description: descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROPERTY,
       });
       return {
         type: 'AssignmentObjectPatternProperty',
@@ -499,7 +496,7 @@ export function toAssignableList(
     if (expr.type === 'TSAsExpression' || expr.type === 'TSTypeAssertion') {
       parser.addDiagnostic({
         loc: expr.loc,
-        message: 'Unexpected type cast in parameter position',
+        description: descriptions.JS_PARSER.TS_UNEXPECTED_CAST_IN_PARAMETER_POSITION,
       });
     }
   }
@@ -629,21 +626,21 @@ export function toReferencedItem(
   if (parser.isSyntaxEnabled('ts')) {
     parser.addDiagnostic({
       loc: expr.loc,
-      message: 'Flow type cast expressions aren\'t allowed in TypeScript',
+      description: descriptions.JS_PARSER.FLOW_TYPE_CAST_IN_TS,
     });
   }
 
   if (!parser.isParenthesized(expr) && (multiple || !isParenthesizedExpr)) {
     parser.addDiagnostic({
       loc: expr.loc,
-      message: 'The type cast expression is expected to be wrapped with parentheses',
+      description: descriptions.JS_PARSER.TYPE_CAST_EXPECTED_PARENS,
     });
   }
 
   if (expr.optional) {
     parser.addDiagnostic({
       loc: expr.loc,
-      message: 'Type cast expressions cannot be optional. Did you mean for this to be a function parameter?',
+      description: descriptions.JS_PARSER.TYPE_CAST_CANNOT_BE_OPTIONAL,
     });
   }
 
@@ -652,7 +649,7 @@ export function toReferencedItem(
   if (typeAnnotation === undefined) {
     parser.addDiagnostic({
       loc: expr.loc,
-      message: 'Type cast expression has no type annotation. Did you mean for this to be a function parameter?',
+      description: descriptions.JS_PARSER.TYPE_CAST_WITHOUT_ANNOTATION,
     });
     return expression;
   }
@@ -680,8 +677,7 @@ export function filterSpread<T extends AnyNode>(
     const elem = elems[i];
     if (elem.type === 'SpreadElement') {
       parser.addDiagnostic({
-        message: 'Is this even ever possible?',
-        loc: elem.loc,
+        description: descriptions.JS_PARSER.UNEXPECTED_SPREAD,
       });
 
       elems[i] = toReferenceIdentifier(parser, parser.createUnknownIdentifier(
@@ -806,7 +802,9 @@ export function parseBindingList(
     } else {
       if (!parser.eat(tt.comma)) {
         parser.addDiagnostic({
-          message: `Expected a comma to separate items in ${openContext.name}`,
+          description: descriptions.JS_PARSER.EXPECTED_COMMA_SEPARATOR(
+            openContext.name,
+          ),
         });
         break;
       }
@@ -873,7 +871,7 @@ export function parseBindingListItem(
   if (accessibility !== undefined || readonly) {
     if (!parser.isSyntaxEnabled('ts')) {
       parser.addDiagnostic({
-        message: 'Accessibility and readonly syntax found but TS is not enabled',
+        description: descriptions.JS_PARSER.TS_DISABLED_BUT_ACCESSIBILITY_OR_READONLY,
       });
     }
 
@@ -881,7 +879,7 @@ export function parseBindingListItem(
     'BindingAssignmentPattern') {
       parser.addDiagnostic({
         start,
-        message: 'A parameter property may not be declared using a binding pattern.',
+        description: descriptions.JS_PARSER.TS_PARAMETER_PROPERTY_BINDING_PATTERN,
       });
     }
 
@@ -910,7 +908,7 @@ export function parseBindingListItemTypes(
     if (param.type !== 'BindingIdentifier') {
       parser.addDiagnostic({
         loc: param.loc,
-        message: 'A binding pattern parameter cannot be optional in an implementation signature.',
+        description: descriptions.JS_PARSER.TYPE_BINDING_PARAMETER_OPTIONAL,
       });
     }
 
@@ -961,7 +959,7 @@ export function parseMaybeDefault(
     ).start.index) {
     parser.addDiagnostic({
       loc: target.meta.typeAnnotation.loc,
-      message: 'Type annotations must come before default assignments, e.g. instead of `age = 25: number` use `age: number = 25`',
+      description: descriptions.JS_PARSER.TYPE_ANNOTATION_AFTER_ASSIGNMENT,
     });
   }
 
@@ -994,25 +992,11 @@ export function checkLVal(
   // Verify that nodes aren't parenthesized
   if (parser.isParenthesized(expr) &&
     !ALLOWED_PARENTHESIZED_LVAL_TYPES.includes(expr.type)) {
-    let adviceMsg;
-    if (expr.type === 'BindingObjectPattern') {
-      adviceMsg = 'Did you use `({a}) = 0` instead of `({a} = 0)`?';
-    } else if (expr.type === 'BindingArrayPattern') {
-      adviceMsg = 'Did you use `([a]) = 0` instead of `([a] = 0)`?';
-    }
-
-    const advice: PartialDiagnosticAdvice = [];
-    if (adviceMsg !== undefined) {
-      advice.push({
-        type: 'log',
-        category: 'info',
-        message: adviceMsg,
-      });
-    }
-
     parser.addDiagnostic({
-      message: 'Invalid parenthesized binding',
-      advice,
+      description: descriptions.JS_PARSER.INVALID_PARENTEHSIZED_LVAL(
+        expr.type === 'BindingObjectPattern' ? 'object' : expr.type ===
+        'BindingArrayPattern' ? 'array' : undefined,
+      ),
       loc: expr.loc,
     });
   }
@@ -1049,7 +1033,7 @@ export function checkLVal(
       )) {
         parser.addDiagnostic({
           loc: expr.loc,
-          message: `${expr.name} is a reserved word`,
+          description: descriptions.JS_PARSER.RESERVED_WORD(expr.name),
         });
       }
 
@@ -1059,23 +1043,12 @@ export function checkLVal(
         if (clash === undefined) {
           checkClashes.set(expr.name, expr);
         } else {
-          const loc = parser.getLoc(clash);
           parser.addDiagnostic({
+            description: descriptions.JS_PARSER.ARGUMENT_CLASH_IN_STRICT(
+              expr.name,
+              expr.loc,
+            ),
             loc: expr.loc,
-            message: 'Argument name clash in strict mode',
-            advice: [
-              {
-                type: 'log',
-                category: 'info',
-                message: 'Collides with this existing definition',
-              },
-              {
-                type: 'frame',
-                filename: parser.filename,
-                start: loc.start,
-                end: loc.end,
-              },
-            ],
           });
         }
       }
@@ -1144,7 +1117,7 @@ export function checkToRestConversion(
   if (VALID_REST_ARGUMENT_TYPES.includes(node.argument.type) === false) {
     parser.addDiagnostic({
       loc: node.argument.loc,
-      message: 'Invalid rest operator\'s argument',
+      description: descriptions.JS_PARSER.REST_INVALID_ARGUMENT,
     });
   }
 }
@@ -1166,7 +1139,7 @@ export function raiseRestNotLast(
   parser.addDiagnostic({
     start,
     loc,
-    message: `The rest element has to be the last element when destructuring`,
+    description: descriptions.JS_PARSER.DESTRUCTURING_REST_ELEMENT_NOT_LAST,
   });
 }
 

@@ -6,27 +6,31 @@
 
 ```javascript
 Object {
-  diagnostics: Array [
-    Object {
-      category: 'suppressions/duplicate'
-      filename: 'unknown'
-      message: 'Duplicate suppression category <emphasis>foo</emphasis>'
-      end: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-  ]
   suppressions: Array [
     Object {
       category: 'foo'
       loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+  ]
+  diagnostics: Array [
+    Object {
+      description: Object {
+        category: 'suppressions/duplicate'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate suppression category <emphasis>foo</emphasis>'}
+      }
+      location: Object {
         filename: 'unknown'
         end: Object {
           column: 0
@@ -295,25 +299,29 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'suppressions/incorrectPrefix'
-      filename: 'unknown'
-      message: 'Invalid suppression prefix <emphasis>rome-ignore</emphasis>'
-      end: Object {
-        column: 0
-        index: 0
-        line: 1
+      description: Object {
+        category: 'suppressions/incorrectPrefix'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid suppression prefix <emphasis>rome-ignore</emphasis>'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Did you mean <emphasis>rome-suppress</emphasis>?'
+          }
+        ]
       }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-      advice: Array [
-        log {
-          category: 'info'
-          message: 'Did you mean <emphasis>rome-suppress</emphasis>?'
+      location: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 0
+          index: 0
+          line: 1
         }
-      ]
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
     }
   ]
 }

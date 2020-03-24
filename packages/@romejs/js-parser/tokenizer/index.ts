@@ -32,7 +32,7 @@ import {validateRegexFlags} from '@romejs/js-parser-utils';
 import {addComment} from '../parser/index';
 import {UNICODE_MISTAKES, ASCII_NAMES} from './unicodeMistakes';
 import * as charCodes from '@romejs/string-charcodes';
-import {PartialDiagnosticAdvice} from '@romejs/diagnostics';
+import {descriptions} from '@romejs/diagnostics';
 import {
   coerce0,
   add,
@@ -314,7 +314,7 @@ function pushComment(
   if (opts.text.includes('@flow') || opts.text.includes('@noflow')) {
     if (parser.syntax.has('ts')) {
       parser.addDiagnostic({
-        message: 'Cannot have a @flow annotation comment when TypeScript syntax has been enabled',
+        description: descriptions.JS_PARSER.FLOW_ANNOTATION_WITH_TYPESCRIPT_ENABLED,
       });
     } else {
       parser.syntax.add('flow');
@@ -353,7 +353,7 @@ function skipBlockComment(parser: JSParser): void {
   if (endIndex === number0Neg1) {
     parser.addDiagnostic({
       end: parser.getPositionFromIndex(sub(parser.state.index, 2)),
-      message: 'Unterminated comment',
+      description: descriptions.JS_PARSER.UNTERMINATED_BLOCK_COMMENT,
     });
     return undefined;
   }
@@ -734,23 +734,11 @@ function readToken_numberSign(parser: JSParser): void {
     return undefined;
   }
 
-  // Check if there's a ! after this, in that case it's a confused hashbang
-  let advice: undefined | PartialDiagnosticAdvice;
-  if (parser.input[getIndex(parser) + 1] === '!') {
-    advice =
-      [
-        {
-          type: 'log',
-          category: 'info',
-          message: 'Did you want to write a hashbang? A hashbang can only be the first thing in a file.',
-        },
-      ];
-  }
-
   // TODO make this a diagnostic, and advance to the next line if suspected hashbang
   parser.addDiagnostic({
-    message: `Unexpected character '#'`,
-    advice,
+    description: descriptions.JS_PARSER.UNEXPECTED_HASH(parser.input[getIndex(
+      parser,
+    ) + 1] === '!'),
   });
   bumpIndex(parser);
   nextToken(parser);
@@ -944,15 +932,12 @@ function getTokenFromCode(parser: JSParser, code: number): void {
     }
 
     parser.addDiagnostic({
-      message: `Unexpected Unicode character '<emphasis>${char}</emphasis>' (<emphasis>${unicodeName}</emphasis>)`,
-
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          message: `Did you mean '<emphasis>${equivalentChar}</emphasis>' (<emphasis>${equivalentName}</emphasis>)? Both characters look the same, but are not.`,
-        },
-      ],
+      description: descriptions.JS_PARSER.UNEXPECTED_UNICODE_CHARACTER(
+        char,
+        unicodeName,
+        equivalentChar,
+        equivalentName,
+      ),
     });
 
     // Read the token as the equivalent character
@@ -961,7 +946,9 @@ function getTokenFromCode(parser: JSParser, code: number): void {
   }
 
   parser.addDiagnostic({
-    message: `Unexpected character '${codePointToString(code)}'`,
+    description: descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(
+      codePointToString(code),
+    ),
   });
 
   // Skip unknown characters
@@ -985,7 +972,7 @@ export function readRegexp(parser: JSParser): void {
     if (parser.state.index >= parser.length) {
       parser.addDiagnostic({
         end: parser.getPositionFromIndex(parser.state.index),
-        message: 'Unterminated regular expression',
+        description: descriptions.JS_PARSER.UNTERMINATED_REGEX,
       });
       break;
     }
@@ -995,7 +982,7 @@ export function readRegexp(parser: JSParser): void {
     if (lineBreak.test(ch)) {
       parser.addDiagnostic({
         end: parser.getPositionFromIndex(parser.state.index),
-        message: 'Unterminated regular expression',
+        description: descriptions.JS_PARSER.UNTERMINATED_REGEX,
       });
       break;
     }
@@ -1027,17 +1014,17 @@ export function readRegexp(parser: JSParser): void {
   if (parser.state.escapePosition !== undefined) {
     parser.addDiagnostic({
       index: parser.state.escapePosition,
-      message: 'Regular expression flags can\'t contain unicode escapes',
+      description: descriptions.JS_PARSER.UNICODE_ESCAPE_IN_REGEX_FLAGS,
     });
   }
   const mods = validateRegexFlags(rawMods, getIndex(parser), (
-    msg,
+    metadata,
+    parserIndex
     flagPosition,
-    parserIndex,
   ) => {
     parser.addDiagnostic({
       index: add(parserIndex - rawMods.length, flagPosition),
-      message: msg,
+      description: metadata,
     });
   });
 
@@ -1080,14 +1067,14 @@ function readInt(
     if (code === charCodes.underscore) {
       if (allowedSiblings.indexOf(next) === -1) {
         parser.addDiagnostic({
-          message: 'Invalid or unexpected token',
+          description: descriptions.JS_PARSER.INVALID_INT_TOKEN,
         });
       }
 
       if (forbiddenSiblings.indexOf(prev) > -1 ||
       forbiddenSiblings.indexOf(next) > -1 || Number.isNaN(next)) {
         parser.addDiagnostic({
-          message: 'Invalid or unexpected token',
+          description: descriptions.JS_PARSER.INVALID_INT_TOKEN,
         });
       }
 
@@ -1131,7 +1118,7 @@ function readRadixNumber(parser: JSParser, radix: number): void {
   if (val === undefined) {
     parser.addDiagnostic({
       index: add(start, 2),
-      message: `Expected number in radix ${radix}`,
+      description: descriptions.JS_PARSER.EXPECTED_NUMBER_IN_RADIX(radix),
     });
   }
 
@@ -1143,7 +1130,7 @@ function readRadixNumber(parser: JSParser, radix: number): void {
   if (isIdentifierStart(fullCharCodeAtPos(parser))) {
     parser.addDiagnostic({
       index: parser.state.index,
-      message: 'Identifier directly after number',
+      description: descriptions.JS_PARSER.IDENTIFIER_AFTER_NUMBER,
     });
   }
 
@@ -1168,7 +1155,7 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
   if (!startsWithDot && readInt(parser, 10) === undefined) {
     parser.addDiagnostic({
       index: parser.state.index,
-      message: 'Invalid number',
+      description: descriptions.JS_PARSER.INVALID_NUMBER,
     });
   }
 
@@ -1178,7 +1165,7 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
     if (parser.inScope('STRICT')) {
       parser.addDiagnostic({
         index: parser.state.index,
-        message: 'Legacy octal literals are not allowed in strict mode',
+        description: descriptions.JS_PARSER.LEGACY_OCTAL_IN_STRICT_MODE,
       });
     }
 
@@ -1206,7 +1193,7 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
     if (readInt(parser, 10) === undefined) {
       parser.addDiagnostic({
         index: parser.state.index,
-        message: 'Invalid number',
+        description: descriptions.JS_PARSER.INVALID_NUMBER,
       });
     }
 
@@ -1219,14 +1206,14 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
     if (isFloat) {
       parser.addDiagnostic({
         index: parser.state.index,
-        message: 'A bigint can\'t have a decimal',
+        description: descriptions.JS_PARSER.DECIMAL_BIGINT,
       });
     }
 
     if (isOctal) {
       parser.addDiagnostic({
         index: parser.state.index,
-        message: 'A bigint can\'t be an octal',
+        description: descriptions.JS_PARSER.OCTAL_BIGINT,
       });
     }
 
@@ -1237,7 +1224,7 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
   if (isIdentifierStart(parser.input.codePointAt(getIndex(parser)))) {
     parser.addDiagnostic({
       index: parser.state.index,
-      message: 'Identifier directly after number',
+      description: descriptions.JS_PARSER.IDENTIFIER_AFTER_NUMBER,
     });
   }
 
@@ -1277,7 +1264,7 @@ function readCodePoint(
       if (throwOnInvalid) {
         parser.addDiagnostic({
           index: codePos,
-          message: 'Code point out of bounds',
+          description: descriptions.JS_PARSER.OUT_OF_BOUND_CODE_POINT,
         });
       } else {
         parser.state.invalidTemplateEscapePosition = sub(codePos, 2);
@@ -1298,7 +1285,7 @@ function readString(parser: JSParser, quote: number): void {
     if (parser.state.index >= parser.length) {
       parser.addDiagnostic({
         end: parser.getPositionFromIndex(parser.state.index),
-        message: 'Unterminated string constant',
+        description: descriptions.JS_PARSER.UNTERMINATED_STRING,
       });
       break;
     }
@@ -1320,7 +1307,7 @@ function readString(parser: JSParser, quote: number): void {
       if (isNewLine(ch)) {
         parser.addDiagnostic({
           end: parser.getPositionFromIndex(parser.state.index),
-          message: 'Unterminated string constant',
+          description: descriptions.JS_PARSER.UNTERMINATED_STRING,
         });
       }
       bumpIndex(parser);
@@ -1342,7 +1329,7 @@ export function readTemplateToken(parser: JSParser): void {
     if (parser.state.index >= parser.length) {
       parser.addDiagnostic({
         end: parser.getPositionFromIndex(parser.state.index),
-        message: 'Unterminated template',
+        description: descriptions.JS_PARSER.UNTERMINATED_TEMPLATE,
       });
       break;
     }
@@ -1484,7 +1471,7 @@ function readEscapedChar(
           } else if (parser.inScope('STRICT')) {
             parser.addDiagnostic({
               index: codePos,
-              message: 'Octal literal in strict mode',
+              description: descriptions.JS_PARSER.OCTAL_IN_STRICT_MODE,
             });
           } else if (!parser.state.containsOctal) {
             // These properties are only used to throw an error for an octal which occurs
@@ -1516,7 +1503,7 @@ function readHexChar(
     if (throwOnInvalid) {
       parser.addDiagnostic({
         index: start,
-        message: 'Bad character escape sequence',
+        description: descriptions.JS_PARSER.BAD_HEX_ESCAPE,
       });
       return 0;
     }
@@ -1560,7 +1547,7 @@ function readWord1(parser: JSParser): string {
       charCodes.lowercaseU) {
         parser.addDiagnostic({
           index: parser.state.index,
-          message: 'Expecting Unicode escape sequence \\uXXXX',
+          description: descriptions.JS_PARSER.EXPECTED_UNICODE_ESCAPE,
         });
       }
 
@@ -1575,7 +1562,7 @@ function readWord1(parser: JSParser): string {
       if (isValid(esc) === false) {
         parser.addDiagnostic({
           index: parser.state.index,
-          message: 'Invalid Unicode escape',
+          description: descriptions.JS_PARSER.INVALID_UNICODE_ESCAPE,
         });
       }
 
@@ -1603,13 +1590,13 @@ function readWord(parser: JSParser): void {
   if (type.keyword !== undefined && parser.state.escapePosition !== undefined) {
     parser.addDiagnostic({
       index: parser.state.escapePosition,
-      message: `Escape sequence in keyword ${word}`,
+      description: descriptions.JS_PARSER.ESCAPE_SEQUENCE_IN_KEYWORD(word),
     });
   }
 
   if (parser.state.isIterator && (!isIterator(word) || !parser.inScope('TYPE'))) {
     parser.addDiagnostic({
-      message: `Invalid identifier ${word}`,
+      description: descriptions.JS_PARSER.INVALID_IDENTIFIER_NAME(word),
     });
   }
 
@@ -1766,7 +1753,7 @@ function readToken_jsxString(parser: JSParser, quote: number): void {
     if (parser.state.index >= parser.length) {
       parser.addDiagnostic({
         end: parser.getPositionFromIndex(parser.state.index),
-        message: 'Unterminated string constant',
+        description: descriptions.JS_PARSER.UNTERMINATED_JSX_STRING,
       });
       break;
     }

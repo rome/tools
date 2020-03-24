@@ -85,6 +85,7 @@ export type DiagnosticCategory =
   | 'tests/unhandledRejection'
   | 'tests/fixtureOptions'
   | 'tests/failure'
+  | 'tests/cancelled'
   | 'typeCheck/incompatible'
   | 'typeCheck/uncallable'
   | 'typeCheck/undeclaredVariable'

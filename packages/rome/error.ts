@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics, getDiagnosticsFromError} from '@romejs/diagnostics';
+import {Diagnostics, getDiagnosticsFromError} from '@romejs/diagnostics';
 import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
 
 export class RomeDiagnosticsError extends Error {
@@ -23,7 +23,7 @@ export class RomeDiagnosticsError extends Error {
   }
 }
 
-export function throwDiagnostics(diagnostics: PartialDiagnostics) {
+export function throwDiagnostics(diagnostics: Diagnostics) {
   if (diagnostics.length === 0) {
     return;
   }

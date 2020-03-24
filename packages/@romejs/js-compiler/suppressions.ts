@@ -6,15 +6,18 @@
  */
 
 import {Program, AnyComment} from '@romejs/js-ast';
-import {DiagnosticSuppressions, PartialDiagnostics} from '@romejs/diagnostics';
-import {markup} from '@romejs/string-markup';
+import {
+  DiagnosticSuppressions,
+  Diagnostics,
+  descriptions,
+} from '@romejs/diagnostics';
 
 const SUPPRESSION_START = 'rome-suppress';
 const PREFIX_MISTAKES = ['@rome-suppress', 'rome-ignore', '@rome-ignore'];
 
 type ExtractedSuppressions = {
   suppressions: DiagnosticSuppressions;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
 };
 
 function extractSuppressionsFromComment(
@@ -26,7 +29,7 @@ function extractSuppressionsFromComment(
   }
 
   const suppressedCategories: Set<string> = new Set();
-  const diagnostics: PartialDiagnostics = [];
+  const diagnostics: Diagnostics = [];
   const suppressions: DiagnosticSuppressions = [];
 
   const lines = comment.value.split('\n');
@@ -40,16 +43,11 @@ function extractSuppressionsFromComment(
       for (const prefix of PREFIX_MISTAKES) {
         if (line.startsWith(prefix)) {
           diagnostics.push({
-            category: 'suppressions/incorrectPrefix',
-            message: `Invalid suppression prefix <emphasis>${prefix}</emphasis>`,
-            advice: [
-              {
-                type: 'log',
-                category: 'info',
-                message: `Did you mean <emphasis>${SUPPRESSION_START}</emphasis>?`,
-              },
-            ],
-            ...loc,
+            description: descriptions.SUPPRESSIONS.PREFIX_TYPO(
+              prefix,
+              SUPPRESSION_START,
+            ),
+            location: loc,
           });
         }
       }
@@ -73,9 +71,8 @@ function extractSuppressionsFromComment(
 
       if (suppressedCategories.has(category)) {
         diagnostics.push({
-          category: 'suppressions/duplicate',
-          message: markup`Duplicate suppression category <emphasis>${category}</emphasis>`,
-          ...loc,
+          description: descriptions.SUPPRESSIONS.DUPLICATE(category),
+          location: loc,
         });
       } else {
         suppressedCategories.add(category);
@@ -102,7 +99,7 @@ function extractSuppressionsFromComment(
 export function extractSuppressionsFromComments(
   comments: Array<AnyComment>,
 ): ExtractedSuppressions {
-  let diagnostics: PartialDiagnostics = [];
+  let diagnostics: Diagnostics = [];
   let suppressions: DiagnosticSuppressions = [];
 
   for (const comment of comments) {

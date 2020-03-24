@@ -41,7 +41,7 @@ export default createMasterCommand({
     };
 
     const resolved = await master.resolver.resolveEntryAssert(query, {
-      pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key}),
+      location: req.getDiagnosticPointerFromFlags({type: 'arg', key}),
     });
     const filename = resolved.ref.real.join();
     reporter.logAll(filename);

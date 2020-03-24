@@ -6,7 +6,7 @@
  */
 
 import {CoverageFile} from '@romejs/v8';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics} from '@romejs/diagnostics';
 import {SourceMap} from '@romejs/codec-source-map';
 import {AbsoluteFilePath} from '@romejs/path';
 import {MasterRequest} from '@romejs/core';
@@ -25,7 +25,7 @@ export type TestSources = Map<string, TestSource>;
 export type TestRunnerConstructorOptions = {
   sources: TestSources;
   request: MasterRequest;
-  addDiagnostics: PartialDiagnostics;
+  addDiagnostics: Diagnostics;
   options: TestRunnerOptions;
 };
 

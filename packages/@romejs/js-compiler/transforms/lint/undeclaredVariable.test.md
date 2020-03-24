@@ -10,22 +10,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/undeclaredVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Undeclared variable <emphasis>foobar</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 6
-        index: 6
-        line: 1
+      description: Object {
+        category: 'lint/undeclaredVariables'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Undeclared variable <emphasis>foobar</emphasis>'}
       }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 6
+          index: 6
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
       }
     }
   ]

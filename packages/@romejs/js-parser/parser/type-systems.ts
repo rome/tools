@@ -54,6 +54,7 @@ import {
   toTargetAssignmentPattern,
 } from './index';
 import {PatternMeta} from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 export function isTypeSystemEnabled(parser: JSParser): boolean {
   return parser.isSyntaxEnabled('flow') || parser.isSyntaxEnabled('ts');
@@ -103,7 +104,7 @@ export function parseTypeLiteralAnnotation(
 
           if (!parser.match(tt.num)) {
             parser.addDiagnostic({
-              message: `Unexpected token, expected "number"`,
+              description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
             });
             parser.next();
             return parser.finishNode(start, {
@@ -120,13 +121,13 @@ export function parseTypeLiteralAnnotation(
           });
         } else {
           parser.addDiagnostic({
-            message: 'Numeric literal type annotations cannot stand with a +, omit it instead',
+            description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_PLUS,
           });
           parser.next();
 
           if (!parser.match(tt.num)) {
             parser.addDiagnostic({
-              message: `Unexpected token, expected "number"`,
+              description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
             });
             parser.next();
             return parser.finishNode(start, {
@@ -199,19 +200,7 @@ export function addFlowOrTSDiagnostic(
 
   parser.addDiagnostic({
     start,
-    message: `A ${label} is only valid inside of a TypeScript or Flow file`,
-    advice: [
-      {
-        type: 'log',
-        category: 'info',
-        message: 'Did you mean <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
-      },
-      {
-        type: 'log',
-        category: 'info',
-        message: 'Did you mean <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
-      },
-    ],
+    description: descriptions.JS_PARSER.FLOW_OR_TEST_REQUIRED(label),
   });
 }
 
@@ -226,14 +215,7 @@ export function addFlowDiagnostic(
 
   parser.addDiagnostic({
     start,
-    message: `A ${label} is only valid inside of a Flow file`,
-    advice: [
-      {
-        type: 'log',
-        category: 'info',
-        message: 'To enable <emphasis>Flow</emphasis> support, add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
-      },
-    ],
+    description: descriptions.JS_PARSER.FLOW_REQUIRED(label),
   });
 }
 
@@ -244,14 +226,7 @@ export function addTSDiagnostic(parser: JSParser, label: string, start: Position
 
   parser.addDiagnostic({
     start,
-    message: `A ${label} is only valid inside of a TypeScript file`,
-    advice: [
-      {
-        type: 'log',
-        category: 'info',
-        message: 'To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
-      },
-    ],
+    description: descriptions.JS_PARSER.TS_REQUIRED(label),
   });
 }
 

@@ -42,6 +42,7 @@ import {
 } from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 import {template, isValidIdentifierName, inheritLoc} from '@romejs/js-ast-utils';
+import {descriptions} from '@romejs/diagnostics';
 
 function convertJSXIdentifier(
   path: Path,
@@ -270,10 +271,7 @@ export default {
 
       if (jsxNamespacedName.is(node.name)) {
         // TODO better handle this
-        context.addNodeDiagnostic(type, {
-          category: 'compile/jsx',
-          message: 'JSX is not XML',
-        });
+        context.addNodeDiagnostic(type, descriptions.COMPILER.JSX_NOT_XML);
       }
 
       let attribs: AnyExpression;

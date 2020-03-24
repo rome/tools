@@ -11,13 +11,15 @@ import {
 } from '../common/types/client';
 import {JSONFileReference} from '../common/types/files';
 import {
-  DiagnosticPointer,
+  DiagnosticLocation,
   getDiagnosticsFromError,
   DiagnosticOrigin,
-  PartialDiagnosticAdvice,
+  DiagnosticAdvice,
   createSingleDiagnosticError,
   DiagnosticsError,
   DiagnosticCategory,
+  Diagnostic,
+  createBlessedDiagnosticMessage,
 } from '@romejs/diagnostics';
 import {DiagnosticsPrinterFlags} from '@romejs/cli-diagnostics';
 import {ProjectDefinition} from '@romejs/project';
@@ -122,10 +124,10 @@ export default class MasterRequest {
   }
 
   async assertClientCwdProject(): Promise<ProjectDefinition> {
-    const pointer = this.getDiagnosticPointerForClientCwd();
+    const location = this.getDiagnosticPointerForClientCwd();
     return this.master.projectManager.assertProject(
       this.client.flags.cwd,
-      pointer,
+      location,
     );
   }
 
@@ -199,22 +201,24 @@ export default class MasterRequest {
   throwDiagnosticFlagError(
     message: string,
     target: SerializeCLITarget = {type: 'none'},
-    advice?: PartialDiagnosticAdvice,
+    advice?: DiagnosticAdvice,
   ) {
-    const pointer = this.getDiagnosticPointerFromFlags(target);
-    throw new MasterRequestInvalid(message, [
-      {
-        message,
-        filename: 'argv',
+    const location = this.getDiagnosticPointerFromFlags(target);
+
+    const diag: Diagnostic = {
+      description: {
+        message: createBlessedDiagnosticMessage(message),
         category: target.type === 'arg' || target.type === 'arg-range'
           ? 'args/invalid' : 'flags/invalid',
-        ...pointer,
         advice,
       },
-    ]);
+      location,
+    };
+
+    throw new MasterRequestInvalid(message, [diag]);
   }
 
-  getDiagnosticPointerForClientCwd(): DiagnosticPointer {
+  getDiagnosticPointerForClientCwd(): DiagnosticLocation {
     const cwd = this.client.flags.cwd.join();
     return {
       sourceText: cwd,
@@ -232,7 +236,7 @@ export default class MasterRequest {
     };
   }
 
-  getDiagnosticPointerFromFlags(target: SerializeCLITarget): DiagnosticPointer {
+  getDiagnosticPointerFromFlags(target: SerializeCLITarget): DiagnosticLocation {
     const {query} = this;
     return serializeCLIFlags({
       prefix: `rome ${query.commandName}`,
@@ -280,7 +284,7 @@ export default class MasterRequest {
       & MemoryFSGlobOptions
       & {
         disabledDiagnosticCategory?: DiagnosticCategory;
-        advice?: PartialDiagnosticAdvice;
+        advice?: DiagnosticAdvice;
         configCategory?: string;
         verb?: string;
         noun?: string;
@@ -297,15 +301,15 @@ export default class MasterRequest {
     const rawArgs = [...this.query.args];
     const resolvedArgs: Array<{
       path: AbsoluteFilePath;
-      pointer: DiagnosticPointer;
+      location: DiagnosticLocation;
       project: ProjectDefinition;
     }> = [];
     if (rawArgs.length === 0) {
-      const pointer = this.getDiagnosticPointerForClientCwd();
+      const location = this.getDiagnosticPointerForClientCwd();
       const project = await this.assertClientCwdProject();
       resolvedArgs.push({
         path: project.folder,
-        pointer,
+        location,
         project,
       });
       projects.add(project);
@@ -313,7 +317,7 @@ export default class MasterRequest {
       for (let i = 0; i < rawArgs.length; i++) {
         const arg = rawArgs[i];
 
-        const pointer = this.getDiagnosticPointerFromFlags({
+        const location = this.getDiagnosticPointerFromFlags({
           type: 'arg',
           key: i,
         });
@@ -323,7 +327,7 @@ export default class MasterRequest {
           source: createUnknownFilePath(arg),
           requestedType: 'folder',
         }, {
-          pointer,
+          location,
         });
 
         const project = this.master.projectManager.assertProjectExisting(
@@ -334,14 +338,14 @@ export default class MasterRequest {
         resolvedArgs.push({
           project,
           path: resolved.path,
-          pointer,
+          location,
         });
       }
     }
 
     // Build up files
     const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-    for (const {path, pointer, project} of resolvedArgs) {
+    for (const {path, location, project} of resolvedArgs) {
       const matches = master.memoryFs.glob(path, globOpts);
 
       if (matches.size > 0) {
@@ -353,8 +357,9 @@ export default class MasterRequest {
 
       let category: DiagnosticCategory = 'args/fileNotFound';
 
-      let advice: PartialDiagnosticAdvice = globOpts.advice === undefined
-        ? [] : [...globOpts.advice];
+      let advice: DiagnosticAdvice = globOpts.advice === undefined ? [] : [
+        ...globOpts.advice,
+      ];
 
       // Hint if `path` failed `globOpts.test`
       if (globOpts.getProjectEnabled !== undefined) {
@@ -389,15 +394,13 @@ export default class MasterRequest {
               message: `${explanationPrefix} as it's explicitly disabled in this project config`,
             });
 
-            const disabledPointer = testSource.value.getDiagnosticPointer(
+            const disabledPointer = testSource.value.getDiagnosticLocation(
               'value',
             );
-            if (disabledPointer !== undefined) {
-              advice.push({
-                type: 'frame',
-                ...disabledPointer,
-              });
-            }
+            advice.push({
+              type: 'frame',
+              location: disabledPointer,
+            });
           }
         }
       }
@@ -427,32 +430,33 @@ export default class MasterRequest {
           });
 
           if (ignore.source !== undefined && ignore.source.value !== undefined) {
-            const ignorePointer = ignore.source.value.getDiagnosticPointer(
+            const ignorePointer = ignore.source.value.getDiagnosticLocation(
               'value',
             );
 
-            if (ignorePointer !== undefined) {
-              advice.push({
-                type: 'log',
-                category: 'info',
-                message: 'Ignore patterns were defined here',
-              });
+            advice.push({
+              type: 'log',
+              category: 'info',
+              message: 'Ignore patterns were defined here',
+            });
 
-              advice.push({
-                type: 'frame',
-                ...ignorePointer,
-              });
-            }
+            advice.push({
+              type: 'frame',
+              location: ignorePointer,
+            });
           }
         }
       }
 
       throw createSingleDiagnosticError({
-        ...pointer,
-        category,
-        message: globOpts.noun === undefined
-          ? 'No files found' : `No files to ${globOpts.noun} found`,
-        advice,
+        location,
+        description: {
+          category,
+          message: createBlessedDiagnosticMessage(globOpts.noun === undefined
+            ? 'No files found' : `No files to ${globOpts.noun} found`
+          ),
+          advice,
+        },
       });
     }
 

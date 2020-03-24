@@ -19,8 +19,8 @@ const FILE_SIZE_MAX = 100_000;
 export type AnsiHighlightOptions = {
   path: UnknownFilePath;
   input: string;
-  sourceType: DiagnosticSourceType;
-  language: DiagnosticLanguage;
+  sourceType: undefined | DiagnosticSourceType;
+  language: undefined | DiagnosticLanguage;
 };
 
 export default function ansiHighlightCode(opts: AnsiHighlightOptions): string {
@@ -30,9 +30,8 @@ export default function ansiHighlightCode(opts: AnsiHighlightOptions): string {
 
   if (opts.language === 'js') {
     // js-parser does not accept an "unknown" sourceType
-    return ansiHighlightJS(opts.input, opts.sourceType === 'unknown'
-      ? 'script' : opts.sourceType
-    );
+    return ansiHighlightJS(opts.input, opts.sourceType === undefined ||
+    opts.sourceType === 'unknown' ? 'script' : opts.sourceType);
   }
 
   if (opts.language === 'json') {

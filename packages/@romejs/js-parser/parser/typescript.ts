@@ -91,6 +91,7 @@ import {
   TemplateLiteralTypeAnnotation,
   TSOptionalType,
 } from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 type ParsingContext =
   | 'EnumMembers'
@@ -296,7 +297,7 @@ function parseTSImportType(parser: JSParser): TSImportType {
 
   if (!parser.match(tt.string)) {
     parser.addDiagnostic({
-      message: 'Argument in a type import must be a string literal',
+      description: descriptions.JS_PARSER.TS_IMPORT_ARG_NOT_STRING,
     });
   }
 
@@ -473,7 +474,7 @@ export function tsCheckLiteralForConstantContext(parser: JSParser, node: AnyNode
     default:
       parser.addDiagnostic({
         loc: node.loc,
-        message: 'Only literal values are allowed in constant contexts',
+        description: descriptions.JS_PARSER.TS_CONSTANT_NOT_LITERAL,
       });
   }
 }
@@ -534,7 +535,7 @@ function parseTSBindingListForSignature(
     } else {
       parser.addDiagnostic({
         loc: pattern.loc,
-        message: `Name in a signature must be an Identifier, ObjectPattern or ArrayPattern, instead got ${pattern.type}`,
+        description: descriptions.JS_PARSER.TS_INVALID_SIGNATURE_BINDING_NODE,
       });
     }
   }
@@ -828,7 +829,7 @@ function parseTSTupleType(parser: JSParser): TSTupleType {
     } else if (seenOptionalElement && !isRest) {
       parser.addDiagnostic({
         loc: type.loc,
-        message: 'A required element cannot follow an optional element.',
+        description: descriptions.JS_PARSER.TS_REQUIRED_FOLLOWS_OPTIONAL,
       });
     }
 
@@ -949,7 +950,7 @@ function parseTSTemplateLiteralType(
   if (templateNode.expressions.length > 0) {
     parser.addDiagnostic({
       loc: parser.getLoc(templateNode.expressions[0]),
-      message: 'Template literal types cannot have any substitution',
+      description: descriptions.JS_PARSER.TS_TEMPLATE_LITERAL_WITH_SUBSTITUION,
     });
   }
 
@@ -1030,7 +1031,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
   }
 
   parser.addDiagnostic({
-    message: 'Unknown TS non array type start',
+    description: descriptions.JS_PARSER.TS_UNKNOWN_NON_ARRAY_START,
   });
   parser.next();
 
@@ -1100,7 +1101,7 @@ function tsCheckTypeAnnotationForReadOnly(parser: JSParser, node: AnyTSPrimary) 
     default:
       parser.addDiagnostic({
         loc: node.loc,
-        message: '\'readonly\' type modifier is only permitted on array and tuple literal types.',
+        description: descriptions.JS_PARSER.TS_INVALID_READONLY_MODIFIER,
       });
       break;
   }
@@ -1431,10 +1432,10 @@ export function parseTSHeritageClause(
     parseTSExpressionWithTypeArguments,
   );
 
-  if (!delimitedList.length) {
+  if (delimitedList.length === 0) {
     parser.addDiagnostic({
       start: originalStart,
-      message: `'${descriptor}' list cannot be empty.`,
+      description: descriptions.JS_PARSER.TS_EMPTY_LIST(descriptor),
     });
   }
 
@@ -1709,7 +1710,7 @@ function parseTSExternalModuleReference(
     expression = parseStringLiteral(parser);
   } else {
     parser.addDiagnostic({
-      message: 'Invalid TS external module reference expression',
+      description: descriptions.JS_PARSER.TS_EXTERNAL_MODULE_REFERENCE_ARG_NOT_STRING,
     });
 
     // Skip as much of the next expression as we can
@@ -1839,7 +1840,7 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
   }
 
   parser.addDiagnostic({
-    message: 'Unknown typescript declare start',
+    description: descriptions.JS_PARSER.TS_UNKNOWN_DECLARE_START,
   });
 
   // Fake node
