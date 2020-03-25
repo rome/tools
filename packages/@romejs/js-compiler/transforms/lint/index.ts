@@ -36,6 +36,7 @@ import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
 import noDuplicateGroupNamesInRegularExpressions from './noDuplicateGroupNamesInRegularExpressions';
+import noReferenceToNonExistingGroup from './noReferenceToNonExistingGroup';
 
 // Add transforms in alphabetical order.
 export const lintTransforms = [
@@ -59,6 +60,7 @@ export const lintTransforms = [
   noFunctionAssign,
   noImportAssign,
   noLabelVar,
+  noReferenceToNonExistingGroup,
   noShadowRestrictedNames,
   noTemplateCurlyInString,
   noUnsafeFinally,

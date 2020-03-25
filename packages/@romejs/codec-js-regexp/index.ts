@@ -65,6 +65,13 @@ type Tokens =
       | 'S'
       | 'w'
       | 'W'>;
+    NumericBackReferenceCharacter: ComplexToken<
+      'NumericBackReferenceCharacter',
+      {
+        value: number;
+        escaped: boolean;
+      }
+    >;
   };
 
 type GroupModifiers =
@@ -82,6 +89,11 @@ type RegExpParserOptions = ParserOptions & {unicode: boolean};
 
 function isHex(str: string): boolean {
   return !/[^0-9a-fA-F]/.test(str);
+}
+
+function isOct(str: string): boolean {
+  const OCT_REGEX = /^[0-7]+$/;
+  return OCT_REGEX.test(str);
 }
 
 function getCodePoint(char: string): number {
@@ -214,7 +226,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
           case 'x':
             {
-              const possibleHex = input.slice(get0(index) + 1, 2);
+              const possibleHex = input.slice(get0(index) + 1, get0(index) + 2);
 
               // \xhh
               if (possibleHex.length === 2 && isHex(possibleHex)) {
@@ -261,7 +273,46 @@ export const createRegExpParser = createParser((ParserCore) =>
           default:
             // TODO dangling backslash
 
-            // TODO backreference
+            let char = nextChar;
+            let backReference = '';
+            let nextIndex: Number0 = add(index, 1);
+            while (isDigit(char)) {
+              backReference += char;
+              // stop at max octal ascii in case of octal escape
+              if (parseInt(backReference) > 377) {
+                backReference = backReference.slice(0, backReference.length - 1);
+                break;
+              }
+              nextIndex = add(nextIndex, 1);
+              char = input[get0(nextIndex)];
+            }
+
+            if (backReference !== '') {
+              const referenceValue = parseInt(backReference, 10);
+              // back reference allowed are 1 - 99
+              if (referenceValue >= 1 && referenceValue <= 99) {
+                return this.finishComplexToken(
+                  'NumericBackReferenceCharacter',
+                  {
+                    value: parseInt(backReference, 10),
+                    escaped: true,
+                  },
+                  nextIndex,
+                );
+              } else {
+                backReference = backReference.slice(0, backReference.length - 1);
+                nextIndex = add(nextIndex, -1);
+                return this.finishComplexToken(
+                  'NumericBackReferenceCharacter',
+                  {
+                    value: parseInt(backReference, 10),
+                    escaped: true,
+                  },
+                  nextIndex,
+                );
+              }
+            }
+
             return this.finishComplexToken('Character', {
               value: nextChar,
               escaped: true,
@@ -477,6 +528,35 @@ export const createRegExpParser = createParser((ParserCore) =>
         this.nextToken();
         return {
           type: 'RegExpCharacter',
+          value: token.value,
+          loc: this.finishLocFromToken(token),
+        };
+      }
+
+      if (token.type === 'NumericBackReferenceCharacter') {
+        this.nextToken();
+        const value = token.value;
+        // \8 \9 are treated escape char
+        if (value === 8 || value === 9) {
+          return {
+            type: 'RegExpCharacter',
+            value: String(value),
+            loc: this.finishLocFromToken(token),
+          };
+        }
+
+        // octal escapes
+        if (isOct(String(value))) {
+          const octal = parseInt(String(value), 8);
+          return {
+            type: 'RegExpCharacter',
+            value: String.fromCharCode(octal),
+            loc: this.finishLocFromToken(token),
+          };
+        }
+
+        return {
+          type: 'RegExpNumericBackReference',
           value: token.value,
           loc: this.finishLocFromToken(token),
         };
@@ -755,6 +835,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
         case 'EscapedCharacter':
         case 'Character':
+        case 'NumericBackReferenceCharacter':
           return this.parseCharacter();
       }
 
