@@ -226,7 +226,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
           case 'x':
             {
-              const possibleHex = input.slice(get0(index) + 1, get0(index) + 2);
+              const possibleHex = input.slice(get0(index) + 1, 2);
 
               // \xhh
               if (possibleHex.length === 2 && isHex(possibleHex)) {
@@ -536,7 +536,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       if (token.type === 'NumericBackReferenceCharacter') {
         this.nextToken();
         const value = token.value;
-        // \8 \9 are treated escape char
+        // \8 \9 are treated as escape char
         if (value === 8 || value === 9) {
           return {
             type: 'RegExpCharacter',
