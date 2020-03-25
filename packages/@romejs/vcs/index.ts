@@ -9,7 +9,7 @@ import {AbsoluteFilePath} from '@romejs/path';
 import {exists} from '@romejs/fs';
 import child_process = require('child_process');
 
-const TIMEOUT = 10000;
+const TIMEOUT = 10_000;
 
 async function exec(command: string, args: Array<string>): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -17,22 +17,18 @@ async function exec(command: string, args: Array<string>): Promise<string> {
     let stderr = '';
     let stdout = '';
 
-    proc.stdout.on('data', data => {
+    proc.stdout.on('data', (data) => {
       stdout += data;
     });
 
-    proc.stderr.on('data', data => {
+    proc.stderr.on('data', (data) => {
       stderr += data;
     });
 
     function error(message: string) {
-      reject(
-        new Error(
-          `Error while running ${command} ${args.join(
-            ' ',
-          )}: ${message}. stderr: ${stderr}`,
-        ),
-      );
+      reject(new Error(
+        `Error while running ${command} ${args.join(' ')}: ${message}. stderr: ${stderr}`,
+      ));
     }
 
     proc.on('error', (err: NodeJS.ErrnoException) => {
@@ -43,7 +39,7 @@ async function exec(command: string, args: Array<string>): Promise<string> {
       }
     });
 
-    proc.on('close', code => {
+    proc.on('close', (code) => {
       if (code === 0) {
         resolve(stdout);
       } else {
@@ -56,9 +52,11 @@ async function exec(command: string, args: Array<string>): Promise<string> {
 export class VCSClient {
   constructor(root: AbsoluteFilePath) {
     this.root = root;
+    this.trunkBranch = 'unknown';
   }
 
   root: AbsoluteFilePath;
+  trunkBranch: string;
 
   getModifiedFiles(branch: string): Promise<Array<string>> {
     throw new Error('unimplemented');
@@ -66,6 +64,11 @@ export class VCSClient {
 }
 
 class GitVCSClient extends VCSClient {
+  constructor(root: AbsoluteFilePath) {
+    super(root);
+    this.trunkBranch = 'master';
+  }
+
   async getModifiedFiles(branch: string): Promise<Array<string>> {
     const out = await exec('git', ['diff', '--name-status', branch]);
     const lines = out.trim().split('\n');
