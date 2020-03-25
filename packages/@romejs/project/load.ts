@@ -77,9 +77,9 @@ export function loadCompleteProjectConfig(
   // Produce a defaultConfig with some folder specific values
   const defaultConfig: ProjectConfig = {
     ...DEFAULT_PROJECT_CONFIG,
-    vsc: {
+    vcs: {
+      ...DEFAULT_PROJECT_CONFIG.vcs,
       root: projectFolder,
-      ...DEFAULT_PROJECT_CONFIG.vsc,
     },
   };
 
@@ -96,7 +96,7 @@ export function loadCompleteProjectConfig(
 
   // Infer VCS ignore files as lint ignore rules
   for (const filename of IGNORE_FILENAMES) {
-    const possiblePath = config.vsc.root.append(filename);
+    const possiblePath = config.vcs.root.append(filename);
     meta.configDependencies.add(possiblePath);
 
     if (existsSync(possiblePath)) {
@@ -133,12 +133,12 @@ export function loadCompleteProjectConfig(
 
   // Set fs.watchman=true when the file .watchmanconfig is present and no fs.watchman config was set
   if (partial.files.watchman === undefined) {
-    // Try the project and vsc.root folder for a .watchmanconfig
+    // Try the project and vcs.root folder for a .watchmanconfig
 
-    // We do the Set magic to only visit the projectFolder once if it is also the vsc.root
+    // We do the Set magic to only visit the projectFolder once if it is also the vcs.root
     for (const dir of new AbsoluteFilePathSet([
       projectFolder,
-      config.vsc.root,
+      config.vcs.root,
     ])) {
       const watchmanConfigPath = dir.append(WATCHMAN_CONFIG_FILENAME);
       meta.configDependencies.add(watchmanConfigPath);
@@ -203,7 +203,7 @@ export function normalizeProjectConfig(
     format: {},
     tests: {},
     files: {},
-    vsc: {},
+    vcs: {},
     dependencies: {},
     targets: new Map(),
   };
@@ -364,10 +364,10 @@ export function normalizeProjectConfig(
     }
   }
 
-  const vsc = consumer.get('vsc');
-  if (categoryExists(vsc)) {
-    if (vsc.has('root')) {
-      config.vsc.root = projectFolder.resolve(vsc.get('root').asString());
+  const vcs = consumer.get('vcs');
+  if (categoryExists(vcs)) {
+    if (vcs.has('root')) {
+      config.vcs.root = projectFolder.resolve(vcs.get('root').asString());
     }
   }
 
@@ -574,9 +574,9 @@ function mergePartialConfig<
       ...a.files,
       ...b.files,
     },
-    vsc: {
-      ...a.vsc,
-      ...b.vsc,
+    vcs: {
+      ...a.vcs,
+      ...b.vcs,
     },
     targets: new Map([...a.targets.entries(), ...b.targets.entries()]),
   };
