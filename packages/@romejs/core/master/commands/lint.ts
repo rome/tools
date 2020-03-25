@@ -13,7 +13,7 @@ import {Consumer} from '@romejs/consume';
 
 type Flags = {
   fix: boolean;
-  changes: undefined | string;
+  changed: undefined | string;
 };
 
 export default createMasterCommand<Flags>({
@@ -23,7 +23,7 @@ export default createMasterCommand<Flags>({
   defineFlags(consumer: Consumer): Flags {
     return {
       fix: consumer.get('fix').asBoolean(false),
-      changes: consumer.get('changes').asStringOrVoid(),
+      changed: consumer.get('changed').asStringOrVoid(),
     };
   },
 
@@ -38,21 +38,20 @@ export default createMasterCommand<Flags>({
 
     // Look up arguments manually in vsc if we were passed a changes branch
     let args;
-    if (flags.changes !== undefined) {
+    if (flags.changed !== undefined) {
       // No arguments expected when using this flag
       req.expectArgumentLength(0);
 
       const client = await req.master.projectManager.getVCSClient(
         await req.assertClientCwdProject(),
       );
-      args = await client.getModifiedFiles(flags.changes);
+      const target = flags.changed === '' ? client.trunkBranch : flags.changed;
+      args = await client.getModifiedFiles(target);
 
       if (args.length === 0) {
-        reporter.warn(
-          `No files changed from <emphasis>${flags.changes}</emphasis>`,
-        );
+        reporter.warn(`No files changed from <emphasis>${target}</emphasis>`);
       } else {
-        reporter.info(`Files changed from <emphasis>${flags.changes}</emphasis>`);
+        reporter.info(`Files changed from <emphasis>${target}</emphasis>`);
         reporter.list(args.map((arg) => `<filelink target="${arg}" />`));
         reporter.hr();
       }
