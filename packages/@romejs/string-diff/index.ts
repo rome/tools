@@ -477,7 +477,10 @@ function halfMatch(text1: string, text2: string): undefined | HalfMatch {
   }
 
   // A half-match was found, sort out the return data.
-  let text1_a, text1_b, text2_a, text2_b;
+  let text1_a;
+  let text1_b;
+  let text2_a;
+  let text2_b;
   if (text1.length > text2.length) {
     text1_a = hm[0];
     text1_b = hm[1];
