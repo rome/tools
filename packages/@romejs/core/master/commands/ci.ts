@@ -19,7 +19,7 @@ export default createMasterCommand({
     const {reporter} = req;
 
     reporter.heading('Running lint');
-    const linter = new Linter(req, undefined);
+    const linter = new Linter(req, {});
     await linter.lint(false);
 
     reporter.heading('Running tests');
