@@ -40,7 +40,6 @@ import {
   getFileHandler,
   getFileHandlerExtensions,
 } from '../../common/fileHandlers';
-import {ProjectConfigSource} from '../project/ProjectManager';
 
 const DEFAULT_DENYLIST = ['.hg', '.git'];
 
@@ -94,14 +93,8 @@ export type WatcherClose = () => void;
 export type MemoryFSGlobOptions = {
   extensions?: Array<string>;
   overrideIgnore?: PathPatterns;
-  getProjectIgnore?: (project: ProjectDefinition) => {
-    patterns: PathPatterns;
-    source?: ProjectConfigSource;
-  };
-  getProjectEnabled?: (project: ProjectDefinition) => {
-    enabled: boolean;
-    source?: ProjectConfigSource;
-  };
+  getProjectIgnore?: (project: ProjectDefinition) => PathPatterns;
+  getProjectEnabled?: (project: ProjectDefinition) => boolean;
   test?: (path: AbsoluteFilePath) => boolean;
 };
 
@@ -891,10 +884,7 @@ export default class MemoryFileSystem {
       if (getProjectIgnore !== undefined) {
         const projectIgnore = ignoresByProject.get(project);
         if (projectIgnore === undefined) {
-          ignore = concatGlobIgnore([
-            ...ignore,
-            ...getProjectIgnore(project).patterns,
-          ]);
+          ignore = concatGlobIgnore([...ignore, ...getProjectIgnore(project)]);
           ignoresByProject.set(project, ignore);
         } else {
           ignore = projectIgnore;
@@ -910,8 +900,7 @@ export default class MemoryFileSystem {
 
       // Add if a matching file
       if (this.files.has(path) && ignoreMatched === 'NO_MATCH') {
-        if (getProjectEnabled !== undefined &&
-          !getProjectEnabled(project).enabled) {
+        if (getProjectEnabled !== undefined && !getProjectEnabled(project)) {
           continue;
         }
 

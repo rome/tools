@@ -25,29 +25,9 @@ export default createMasterCommand({
   },
 
   async default(req: MasterRequest, flags: Flags): Promise<void> {
-    const {reporter, master} = req;
+    const {reporter} = req;
 
     const {paths} = await req.getFilesFromArgs({
-      getProjectIgnore: (project) =>
-        ({
-          patterns: project.config.format.ignore,
-          source: master.projectManager.findProjectConfigConsumer(project, (
-            consumer,
-          ) =>
-            consumer.has('format') && consumer.get('format').has('ignore')
-              ? consumer.get('format').get('ignore') : undefined
-          ),
-        }),
-      getProjectEnabled: (project) =>
-        ({
-          enabled: project.config.format.enabled,
-          source: master.projectManager.findProjectConfigConsumer(project, (
-            consumer,
-          ) =>
-            consumer.has('format')
-              ? consumer.get('format').get('enabled') : undefined
-          ),
-        }),
       noun: 'formatting',
       verb: 'linting',
       configCategory: 'format',

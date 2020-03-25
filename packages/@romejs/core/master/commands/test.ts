@@ -34,29 +34,9 @@ export default createMasterCommand({
   },
 
   async default(req: MasterRequest, commandFlags: Flags): Promise<void> {
-    const {reporter, master} = req;
+    const {reporter} = req;
 
     const {paths} = await req.getFilesFromArgs({
-      getProjectIgnore: (project) =>
-        ({
-          patterns: project.config.tests.ignore,
-          source: master.projectManager.findProjectConfigConsumer(project, (
-            consumer,
-          ) =>
-            consumer.has('tests') && consumer.get('tests').has('ignore')
-              ? consumer.get('tests').get('ignore') : undefined
-          ),
-        }),
-      getProjectEnabled: (project) =>
-        ({
-          enabled: project.config.tests.enabled,
-          source: master.projectManager.findProjectConfigConsumer(project, (
-            consumer,
-          ) =>
-            consumer.has('tests')
-              ? consumer.get('tests').get('enabled') : undefined
-          ),
-        }),
       test: (path) => path.hasExtension('test'),
       noun: 'test',
       verb: 'testing',
