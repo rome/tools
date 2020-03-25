@@ -16,6 +16,7 @@ import {
   DiagnosticAdviceInspect,
   DiagnosticAdviceDiff,
   DiagnosticAdviceStacktrace,
+  DiagnosticAdviceCommand,
 } from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
 import {toLines} from './utils';
@@ -56,6 +57,9 @@ export default function printAdvice(
     case 'code':
       return printCode(item, opts);
 
+    case 'command':
+      return printCommand(item, opts);
+
     case 'frame':
       return printFrame(item, opts);
 
@@ -65,6 +69,14 @@ export default function printAdvice(
     case 'inspect':
       return printInspect(item, opts);
   }
+}
+
+function printCommand(
+  item: DiagnosticAdviceCommand,
+  opts: AdvicePrintOptions,
+): boolean {
+  opts.reporter.command(item.command);
+  return false;
 }
 
 function printInspect(
