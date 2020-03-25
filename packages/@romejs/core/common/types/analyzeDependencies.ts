@@ -12,6 +12,7 @@ import {
   ConstProgramSyntax,
 } from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
+import {Dict} from '@romejs/typescript-helpers';
 
 export type AnalyzeModuleType = 'es' | 'cjs' | 'unknown';
 
@@ -71,7 +72,12 @@ export type AnalyzeDependencyImportFirstUsage = Array<
   AnalyzeDependencyImportUsageItem
 >;
 
+export type AnalyzeDependencyTopLevelLocalBindings = Dict<
+  | undefined
+  | SourceLocation>;
+
 export type AnalyzeDependencyResult = {
+  topLevelLocalBindings: AnalyzeDependencyTopLevelLocalBindings;
   moduleType: AnalyzeModuleType;
   syntax: Array<ConstProgramSyntax>;
   diagnostics: Diagnostics;
@@ -82,6 +88,7 @@ export type AnalyzeDependencyResult = {
 };
 
 export const UNKNOWN_ANALYZE_DEPENDENCIES_RESULT: AnalyzeDependencyResult = {
+  topLevelLocalBindings: {},
   moduleType: 'unknown',
   syntax: [],
   diagnostics: [],

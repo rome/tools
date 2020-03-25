@@ -101,6 +101,7 @@ export default class BundleRequest {
         paths: [this.resolvedEntry],
         diagnosticsProcessor: this.diagnostics,
         analyzeProgress,
+        validate: true,
       });
     } finally {
       analyzeProgress.end();
@@ -142,7 +143,7 @@ export default class BundleRequest {
     // Build a map of relative module sources to module id
     const relativeSourcesToModuleId: Dict<string> = {};
     for (const [relative, absolute] of mod.relativeToAbsolutePath) {
-      const moduleId = graph.getNode(absolute).id;
+      const moduleId = graph.getNode(absolute).uid;
       relativeSourcesToModuleId[relative] = moduleId;
     }
 
@@ -168,7 +169,7 @@ export default class BundleRequest {
     const opts: WorkerBundleCompileOptions = {
       mode: this.mode,
       moduleAll: mod.all,
-      moduleId: mod.id,
+      moduleId: mod.uid,
       relativeSourcesToModuleId,
       resolvedImports,
       assetPath,
@@ -284,7 +285,7 @@ export default class BundleRequest {
 
       declaredCJS.add(module);
 
-      push(`  var ${getPrefixedBundleNamespace(module.id)} = {};`);
+      push(`  var ${getPrefixedBundleNamespace(module.uid)} = {};`);
     }
 
     // Add on files
@@ -303,12 +304,12 @@ export default class BundleRequest {
 
       // Only do this in modern mode, the module id will already be in the wrapper otherwise
       if (mode === 'modern') {
-        push(`  // ${module.id}`);
+        push(`  // ${module.uid}`);
       }
 
       declareCJS(module);
 
-      addMappings(module.id, compileResult.sourceText, compileResult.mappings);
+      addMappings(module.uid, compileResult.sourceText, compileResult.mappings);
       push(compileResult.compiledCode);
       push('');
     }
@@ -316,9 +317,9 @@ export default class BundleRequest {
     // push on initial entry require
     const entryModule = graph.getNode(resolvedEntry);
     if (mode === 'modern') {
-      push(`  return ${getPrefixedBundleNamespace(entryModule.id)};`);
+      push(`  return ${getPrefixedBundleNamespace(entryModule.uid)};`);
     } else {
-      push(`  return Rome.requireNamespace("${entryModule.id}");`);
+      push(`  return Rome.requireNamespace("${entryModule.uid}");`);
     }
 
     // push footer
