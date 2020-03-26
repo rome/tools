@@ -59,7 +59,7 @@ export type ProjectConfigObjects = {
     ignore: PathPatterns;
   };
   develop: {serveStatic: boolean};
-  vsc: {root: AbsoluteFilePath};
+  vcs: {root: AbsoluteFilePath};
   files: {
     assetExtensions: Array<string>;
     watchman: boolean;
@@ -69,6 +69,11 @@ export type ProjectConfigObjects = {
   dependencies: {enabled: boolean};
   targets: Map<string, ProjectConfigTarget>;
 };
+
+export type ProjectConfigCategoriesWithIgnoreAndEnabled =
+  | 'tests'
+  | 'format'
+  | 'lint';
 
 export type ProjectConfigTarget = {constraints: Array<string>};
 
@@ -202,7 +207,7 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
     ignore: [],
   },
 
-  vsc: {
+  vcs: {
     root: createAbsoluteFilePath('/'),
   },
 

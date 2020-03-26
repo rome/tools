@@ -11,18 +11,23 @@ import {LINTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
 import DependencyGraph from '../dependencies/DependencyGraph';
 import {DiagnosticLocation, descriptions} from '@romejs/diagnostics';
 
+export type LinterOptions = {
+  fixLocation?: DiagnosticLocation;
+  args?: Array<string>;
+};
+
 export default class Linter {
-  constructor(req: MasterRequest, fix: undefined | DiagnosticLocation) {
+  constructor(req: MasterRequest, opts: LinterOptions) {
     this.request = req;
-    this.fix = fix;
+    this.options = opts;
   }
 
   request: MasterRequest;
-  fix: undefined | DiagnosticLocation;
+  options: LinterOptions;
 
   async lint(throwAlways: boolean = true) {
-    const {request} = this;
-    const {reporter, master} = request;
+    const {request, options} = this;
+    const {reporter} = request;
 
     const printer = request.createDiagnosticsPrinter({
       category: 'lint',
@@ -32,26 +37,7 @@ export default class Linter {
     printer.processor.addAllowedUnusedSuppressionPrefix('bundler');
 
     const {paths, projects} = await request.getFilesFromArgs({
-      getProjectIgnore: (project) =>
-        ({
-          patterns: project.config.lint.ignore,
-          source: master.projectManager.findProjectConfigConsumer(project, (
-            consumer,
-          ) =>
-            consumer.has('lint') && consumer.get('lint').has('ignore')
-              ? consumer.get('lint').get('ignore') : undefined
-          ),
-        }),
-      getProjectEnabled: (project) =>
-        ({
-          enabled: project.config.lint.enabled,
-          source: master.projectManager.findProjectConfigConsumer(project, (
-            consumer,
-          ) =>
-            consumer.has('lint')
-              ? consumer.get('lint').get('enabled') : undefined
-          ),
-        }),
+      args: options.args,
       noun: 'lint',
       verb: 'linting',
       configCategory: 'lint',
@@ -59,14 +45,14 @@ export default class Linter {
       disabledDiagnosticCategory: 'lint/disabled',
     });
 
-    const {fix} = this;
-    const shouldFix = fix !== undefined;
+    const {fixLocation} = options;
+    const shouldFix = fixLocation !== undefined;
 
-    if (fix !== undefined) {
+    if (fixLocation !== undefined) {
       for (const project of projects) {
         if (!project.config.format.enabled) {
           printer.addDiagnostic({
-            location: fix,
+            location: fixLocation,
             description: descriptions.FORMAT.DISABLED,
           });
         }

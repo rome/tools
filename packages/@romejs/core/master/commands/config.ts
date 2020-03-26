@@ -8,7 +8,8 @@
 import {MasterRequest} from '@romejs/core';
 import {createMasterCommand} from '../../commands';
 import {commandCategories} from '../../commands';
-import {modifyProjectConfig} from '@romejs/project';
+import {modifyProjectConfig, assertHardMeta} from '@romejs/project';
+import {createUnknownFilePath} from '@romejs/path';
 
 export default createMasterCommand({
   category: commandCategories.PROJECT_MANAGEMENT,
@@ -34,9 +35,9 @@ export default createMasterCommand({
     const project = await req.assertClientCwdProject();
 
     let keyParts: string;
-    let value: unknown;
+    let value: boolean | string;
 
-    const [action] = req.query.args;
+    const [action, ...restArgs] = req.query.args;
     switch (action) {
       case 'enable':
         {
@@ -72,10 +73,25 @@ export default createMasterCommand({
           break;
         }
 
+      case 'set-directory':
+        {
+          req.expectArgumentLength(3);
+          [keyParts, value] = restArgs;
+
+          // If the value is an absolute path, then make it relative to the project folder
+          const path = createUnknownFilePath(value);
+          if (path.isAbsolute()) {
+            value =
+              assertHardMeta(project.meta).projectFolder.relative(path).join();
+          }
+
+          break;
+        }
+
       case 'set':
         {
           req.expectArgumentLength(3);
-          [keyParts, value] = req.query.args;
+          [keyParts, value] = restArgs;
           break;
         }
 

@@ -7,12 +7,14 @@
 
 import {MasterRequest} from '@romejs/core';
 import {createMasterCommand} from '../../commands';
-import Linter from '../linter/Linter';
+import Linter, {LinterOptions} from '../linter/Linter';
 import {commandCategories} from '../../commands';
 import {Consumer} from '@romejs/consume';
-import {DiagnosticLocation} from '@romejs/diagnostics';
 
-type Flags = {fix: boolean};
+type Flags = {
+  fix: boolean;
+  changed: undefined | string;
+};
 
 export default createMasterCommand<Flags>({
   category: commandCategories.CODE_QUALITY,
@@ -21,21 +23,50 @@ export default createMasterCommand<Flags>({
   defineFlags(consumer: Consumer): Flags {
     return {
       fix: consumer.get('fix').asBoolean(false),
+      changed: consumer.get('changed').asStringOrVoid(),
     };
   },
 
   async default(req: MasterRequest, flags: Flags): Promise<void> {
-    const fix = flags.fix === false
+    const {reporter} = req;
+
+    const fixLocation = flags.fix === false
       ? undefined : req.getDiagnosticPointerFromFlags({
         type: 'flag',
         key: 'fix',
       });
 
+    // Look up arguments manually in vsc if we were passed a changes branch
+    let args;
+    if (flags.changed !== undefined) {
+      // No arguments expected when using this flag
+      req.expectArgumentLength(0);
+
+      const client = await req.master.projectManager.getVCSClient(
+        await req.assertClientCwdProject(),
+      );
+      const target = flags.changed === '' ? client.trunkBranch : flags.changed;
+      args = await client.getModifiedFiles(target);
+
+      if (args.length === 0) {
+        reporter.warn(`No files changed from <emphasis>${target}</emphasis>`);
+      } else {
+        reporter.info(`Files changed from <emphasis>${target}</emphasis>`);
+        reporter.list(args.map((arg) => `<filelink target="${arg}" />`));
+        reporter.hr();
+      }
+    }
+
+    const opts: LinterOptions = {
+      fixLocation,
+      args,
+    };
+
     return new Promise((resolve, reject) => {
       if (req.query.requestFlags.watch) {
-        initWatchLint(req, fix, reject);
+        initWatchLint(req, opts, reject);
       } else {
-        resolve(runLint(req, fix));
+        resolve(runLint(req, opts));
       }
     });
   },
@@ -43,7 +74,7 @@ export default createMasterCommand<Flags>({
 
 function initWatchLint(
   req: MasterRequest,
-  fix: undefined | DiagnosticLocation,
+  opts: LinterOptions,
   reject: (err: Error) => void,
 ) {
   const {master, reporter} = req;
@@ -71,7 +102,7 @@ function initWatchLint(
     running = true;
     reporter.clear();
 
-    runLint(req, fix).then(() => {
+    runLint(req, opts).then(() => {
       running = false;
 
       if (runAgainAfterComplete) {
@@ -105,10 +136,7 @@ function initWatchLint(
   runWatchLint();
 }
 
-async function runLint(
-  req: MasterRequest,
-  fix: undefined | DiagnosticLocation,
-): Promise<void> {
-  const linter = new Linter(req, fix);
+async function runLint(req: MasterRequest, opts: LinterOptions): Promise<void> {
+  const linter = new Linter(req, opts);
   await linter.lint();
 }

@@ -40,7 +40,6 @@ import {
   getFileHandler,
   getFileHandlerExtensions,
 } from '../../common/fileHandlers';
-import {ProjectConfigSource} from '../project/ProjectManager';
 
 const DEFAULT_DENYLIST = ['.hg', '.git'];
 
@@ -61,6 +60,27 @@ function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
   }
 
   return [...GLOB_IGNORE, ...patterns];
+}
+
+function isValidManifest(path: AbsoluteFilePath): boolean {
+  if (path.getBasename() !== 'package.json') {
+    return false;
+  }
+
+  // If a manifest is in node_modules, then make sure we're directly inside a folder in node_modules
+  const segments = path.getSegments();
+
+  // - 1 is package.json
+
+  // - 2 is the module folder
+
+  // - 3 should be node_modules
+  if (segments.includes('node_modules') && segments[segments.length - 3] !==
+  'node_modules') {
+    return false;
+  }
+
+  return true;
 }
 
 // Whenever we're performing an operation on a set of files, always do these first as they may influence how the rest are processed
@@ -94,14 +114,8 @@ export type WatcherClose = () => void;
 export type MemoryFSGlobOptions = {
   extensions?: Array<string>;
   overrideIgnore?: PathPatterns;
-  getProjectIgnore?: (project: ProjectDefinition) => {
-    patterns: PathPatterns;
-    source?: ProjectConfigSource;
-  };
-  getProjectEnabled?: (project: ProjectDefinition) => {
-    enabled: boolean;
-    source?: ProjectConfigSource;
-  };
+  getProjectIgnore?: (project: ProjectDefinition) => PathPatterns;
+  getProjectEnabled?: (project: ProjectDefinition) => boolean;
   test?: (path: AbsoluteFilePath) => boolean;
 };
 
@@ -891,10 +905,7 @@ export default class MemoryFileSystem {
       if (getProjectIgnore !== undefined) {
         const projectIgnore = ignoresByProject.get(project);
         if (projectIgnore === undefined) {
-          ignore = concatGlobIgnore([
-            ...ignore,
-            ...getProjectIgnore(project).patterns,
-          ]);
+          ignore = concatGlobIgnore([...ignore, ...getProjectIgnore(project)]);
           ignoresByProject.set(project, ignore);
         } else {
           ignore = projectIgnore;
@@ -910,8 +921,7 @@ export default class MemoryFileSystem {
 
       // Add if a matching file
       if (this.files.has(path) && ignoreMatched === 'NO_MATCH') {
-        if (getProjectEnabled !== undefined &&
-          !getProjectEnabled(project).enabled) {
+        if (getProjectEnabled !== undefined && !getProjectEnabled(project)) {
           continue;
         }
 
@@ -1110,7 +1120,7 @@ export default class MemoryFileSystem {
     }
 
     // If this is a package.json then declare this module and setup the correct haste variables
-    if (basename === 'package.json') {
+    if (isValidManifest(path)) {
       hasteName = await this.declareManifest({
         diagnostics: opts.diagnostics,
         dirname,

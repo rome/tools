@@ -337,6 +337,7 @@ export const createRegExpParser = createParser((ParserCore) =>
         case '^':
         case '.':
         case '?':
+        case '{':
         case '}':
         case '+':
         case '|':
@@ -717,12 +718,14 @@ export const createRegExpParser = createParser((ParserCore) =>
 
             const endToken = this.getToken();
             if (endToken.type === 'Operator' && endToken.value === '}') {
+              this.nextToken();
               return {
                 min,
                 max,
               };
             }
           } else if (nextToken.type === 'Operator' && nextToken.value === '}') {
+            this.nextToken();
             return {
               min,
               max: min,

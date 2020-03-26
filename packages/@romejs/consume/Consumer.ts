@@ -145,7 +145,11 @@ export default class Consumer {
     const definitions: Array<ConsumePropertyDefinition> = [];
 
     const consumer = this.clone({
-      onDefinition(def) {
+      onDefinition: (def, consumer) => {
+        if (this.onDefinition !== undefined) {
+          this.onDefinition(def, consumer);
+        }
+
         definitions.push(def);
       },
 
@@ -156,6 +160,16 @@ export default class Consumer {
 
     const result = await callback(consumer);
     return {result, definitions, diagnostics};
+  }
+
+  async captureDiagnostics<T>(
+    callback: (consumer: Consumer) => Promise<T> | T,
+  ): Promise<T> {
+    const {result, diagnostics} = await this.capture(callback);
+    if (result === undefined || diagnostics.length > 0) {
+      throw new DiagnosticsError('Captured diagnostics', diagnostics);
+    }
+    return result;
   }
 
   handleThrownDiagnostics(callback: () => void) {
@@ -185,7 +199,7 @@ export default class Consumer {
         ...def,
         objectPath: this.keyPath,
         metadata: this.propertyMetadata,
-      } as ConsumePropertyDefinition));
+      } as ConsumePropertyDefinition), this);
     }
   }
 
@@ -782,7 +796,7 @@ export default class Consumer {
     });
 
     if (this.exists()) {
-      return this.asString(def);
+      return this._asString(def);
     } else {
       return undefined;
     }

@@ -231,7 +231,7 @@ function parseSemver(
 }
 
 //# FILE
-const FILE_PREFIX_REGEX = /^\.\{1,2\}\//;
+const FILE_PREFIX_REGEX = /^\.{1,2}\//;
 
 type FilePattern = {
   type: 'file';

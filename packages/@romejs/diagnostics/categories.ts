@@ -71,6 +71,7 @@ export type DiagnosticCategory =
   | 'projectManager/nameCollision'
   | 'projectManager/missing'
   | 'projectManager/incorrectConfigFilename'
+  | 'projectManager/vscMissing'
   | 'resolver/notFound'
   | 'resolver/unsupported'
   | 'resolver/fetchFailed'
