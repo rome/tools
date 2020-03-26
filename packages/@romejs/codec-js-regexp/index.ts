@@ -304,6 +304,7 @@ export const createRegExpParser = createParser((ParserCore) =>
                   escaped: true,
                 }, nextIndex);
               }
+
               // back reference allowed are 1 - 99
               if (referenceValue >= 1 && referenceValue <= 99) {
                 return this.finishComplexToken(
@@ -317,14 +318,10 @@ export const createRegExpParser = createParser((ParserCore) =>
               } else {
                 backReference = backReference.slice(0, backReference.length - 1);
                 nextIndex = add(nextIndex, -1);
-                return this.finishComplexToken(
-                  'Character',
-                  {
-                    value: backReference,
-                    escaped: true,
-                  },
-                  nextIndex,
-                );
+                return this.finishComplexToken('Character', {
+                  value: backReference,
+                  escaped: true,
+                }, nextIndex);
               }
             }
 
