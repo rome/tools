@@ -226,7 +226,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
           case 'x':
             {
-              const possibleHex = input.slice(get0(index) + 1, 2);
+              const possibleHex = input.slice(get0(index) + 1, get0(index) + 3);
 
               // \xhh
               if (possibleHex.length === 2 && isHex(possibleHex)) {
