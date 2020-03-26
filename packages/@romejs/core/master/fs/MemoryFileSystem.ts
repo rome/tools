@@ -62,6 +62,27 @@ function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
   return [...GLOB_IGNORE, ...patterns];
 }
 
+function isValidManifest(path: AbsoluteFilePath): boolean {
+  if (path.getBasename() !== 'package.json') {
+    return false;
+  }
+
+  // If a manifest is in node_modules, then make sure we're directly inside a folder in node_modules
+  const segments = path.getSegments();
+
+  // - 1 is package.json
+
+  // - 2 is the module folder
+
+  // - 3 should be node_modules
+  if (segments.includes('node_modules') && segments[segments.length - 3] !==
+  'node_modules') {
+    return false;
+  }
+
+  return true;
+}
+
 // Whenever we're performing an operation on a set of files, always do these first as they may influence how the rest are processed
 const PRIORITY_FILES = new Set(ROME_CONFIG_FILENAMES);
 
@@ -1099,7 +1120,7 @@ export default class MemoryFileSystem {
     }
 
     // If this is a package.json then declare this module and setup the correct haste variables
-    if (basename === 'package.json') {
+    if (isValidManifest(path)) {
       hasteName = await this.declareManifest({
         diagnostics: opts.diagnostics,
         dirname,
