@@ -289,6 +289,21 @@ export const createRegExpParser = createParser((ParserCore) =>
 
             if (backReference !== '') {
               const referenceValue = parseInt(backReference, 10);
+              // \8 \9 are treated as escape char
+              if (referenceValue === 8 || referenceValue === 9) {
+                return this.finishComplexToken('Character', {
+                  value: nextChar,
+                  escaped: true,
+                }, nextIndex);
+              }
+
+              if (isOct(String(referenceValue))) {
+                const octal = parseInt(backReference, 8);
+                return this.finishComplexToken('Character', {
+                  value: String.fromCharCode(octal),
+                  escaped: true,
+                }, nextIndex);
+              }
               // back reference allowed are 1 - 99
               if (referenceValue >= 1 && referenceValue <= 99) {
                 return this.finishComplexToken(
@@ -303,9 +318,9 @@ export const createRegExpParser = createParser((ParserCore) =>
                 backReference = backReference.slice(0, backReference.length - 1);
                 nextIndex = add(nextIndex, -1);
                 return this.finishComplexToken(
-                  'NumericBackReferenceCharacter',
+                  'Character',
                   {
-                    value: parseInt(backReference, 10),
+                    value: backReference,
                     escaped: true,
                   },
                   nextIndex,
@@ -535,25 +550,6 @@ export const createRegExpParser = createParser((ParserCore) =>
 
       if (token.type === 'NumericBackReferenceCharacter') {
         this.nextToken();
-        const value = token.value;
-        // \8 \9 are treated as escape char
-        if (value === 8 || value === 9) {
-          return {
-            type: 'RegExpCharacter',
-            value: String(value),
-            loc: this.finishLocFromToken(token),
-          };
-        }
-
-        // octal escapes
-        if (isOct(String(value))) {
-          const octal = parseInt(String(value), 8);
-          return {
-            type: 'RegExpCharacter',
-            value: String.fromCharCode(octal),
-            loc: this.finishLocFromToken(token),
-          };
-        }
 
         return {
           type: 'RegExpNumericBackReference',
