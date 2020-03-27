@@ -863,6 +863,7 @@ export default class ProjectManager {
       for (const configFilename of ROME_CONFIG_FILENAMES) {
         // Check in root
         const configPath = dir.append(configFilename);
+
         const hasProject = await this.master.memoryFs.existsHard(configPath);
         if (hasProject) {
           return this.queueAddProject(dir, configPath);

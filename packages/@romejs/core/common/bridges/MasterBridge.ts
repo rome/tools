@@ -154,4 +154,9 @@ export default class MasterBridge extends Bridge {
     name: 'profile.stopWorker',
     direction: 'server<-client',
   });
+
+  lspBuffer = this.createEvent<string, void>({
+    name: 'lspBuffer',
+    direction: 'server<->client',
+  });
 }

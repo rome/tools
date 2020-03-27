@@ -430,7 +430,7 @@ export default class MasterRequest {
       }
 
       // Hint if all files were ignored
-      if (configCategory !== undefined) {
+      if (configCategory !== undefined && !ignoreProjectIgnore) {
         const {paths: withoutIgnore} = await this.getFilesFromArgs({
           ...opts,
           ignoreProjectIgnore: true,

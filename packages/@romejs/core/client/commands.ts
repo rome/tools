@@ -253,3 +253,37 @@ localCommands.set('status', {
     }
   },
 });
+
+localCommands.set('lsp', {
+  description: 'connect to an lsp',
+  category: commandCategories.PROJECT_MANAGEMENT,
+  defineFlags(consumer) {
+    // vscode-languageclient adds these on
+    consumer.get('stdio').asBooleanOrVoid();
+    consumer.get('clientProcessId').asStringOrVoid();
+    return {};
+  },
+
+  async callback(req: ClientRequest) {
+    // Better API
+    req.client.setClientName('lsp');
+    req.client.flags.silent = true;
+
+    const stdin = req.client.reporter.getStdin();
+    req.client.reporter.teardown();
+
+    const bridge = await req.client.findOrStartMaster();
+
+    bridge.lspBuffer.subscribe((chunk) => {
+      req.client.derivedReporterStreams.stdout.write(chunk);
+    });
+
+    stdin.on('data', (chunk) => {
+      bridge.lspBuffer.call(chunk.toString());
+    });
+
+    await new Promise(() => {});
+
+    return true;
+  },
+});

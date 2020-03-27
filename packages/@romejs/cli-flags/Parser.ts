@@ -155,6 +155,15 @@ export default class Parser<T> {
           continue;
         }
 
+        // Allow for arguments to be passed as --foo=bar
+        const equalsIndex = name.indexOf('=');
+        if (equalsIndex !== -1) {
+          const cleanName = name.slice(0, equalsIndex);
+          const value = name.slice(equalsIndex + 1);
+          this.flags.set(cleanName, value);
+          continue;
+        }
+
         // If the next argument is a flag or we're at the end of the args then just set it to `true`
         if (rawArgs.length === 0 || this.looksLikeFlag(rawArgs[0])) {
           this.flags.set(name, true);

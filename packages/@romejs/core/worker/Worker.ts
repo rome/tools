@@ -319,18 +319,27 @@ export default class Worker {
       sourceType = 'module';
     }
 
-    const cacheEnabled = opts.cache !== false;
+    const cacheEnabled = opts.cache !== false && ref.sourceText === undefined;
+
     if (cacheEnabled) {
       // Update the lastAccessed of the ast cache and return it, it will be evicted on
 
       // any file change
       const cachedResult: undefined | ParseResult = this.astCache.get(path);
-      if (cachedResult && cachedResult.ast.sourceType === sourceType) {
-        this.astCache.set(path, {
-          ...cachedResult,
-          lastAccessed: Date.now(),
-        });
-        return cachedResult;
+      if (cachedResult !== undefined) {
+        let useCached = true;
+
+        if (cachedResult.ast.sourceType !== sourceType) {
+          useCached = false;
+        }
+
+        if (useCached) {
+          this.astCache.set(path, {
+            ...cachedResult,
+            lastAccessed: Date.now(),
+          });
+          return cachedResult;
+        }
       }
     }
 

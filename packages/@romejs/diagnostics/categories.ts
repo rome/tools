@@ -56,6 +56,7 @@ export type DiagnosticCategory =
   | 'lint/undeclaredVariables'
   | 'lint/unsafeNegation'
   | 'lint/unusedVariables'
+  | 'lsp/parse'
   | 'parse/url/query'
   | 'parse/url'
   | 'parse/js'
