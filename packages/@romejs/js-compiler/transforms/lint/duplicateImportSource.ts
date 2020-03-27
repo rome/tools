@@ -43,7 +43,6 @@ export default {
       // Defer fixing unless it's totally necessary since there's additional overhead
       if (shouldFix) {
         const skipImports: Set<ImportDeclaration> = new Set();
-
         const newBody: Array<AnyStatement> = [];
 
         for (let i = 0; i < node.body.length; i++) {
@@ -55,8 +54,11 @@ export default {
               continue;
             }
 
-            let specifiers = bodyNode.specifiers === undefined
-              ? [] : bodyNode.specifiers;
+            let {
+              namedSpecifiers,
+              defaultSpecifier,
+              namespaceSpecifier,
+            } = bodyNode;
 
             // Find and concat all duplicate imports
             for (let x = i + 1; x < node.body.length; x++) {
@@ -66,23 +68,32 @@ export default {
                 bodyNode.source.value === possibleDuplicateNode.source.value &&
                 bodyNode.importKind === possibleDuplicateNode.importKind) {
                 skipImports.add(possibleDuplicateNode);
-                if (possibleDuplicateNode.specifiers !== undefined) {
-                  specifiers = [
-                    ...specifiers,
-                    ...possibleDuplicateNode.specifiers,
-                  ];
+                namedSpecifiers = [
+                  ...namedSpecifiers,
+                  ...possibleDuplicateNode.namedSpecifiers,
+                ];
+
+                // We do not currently handle renaming duplicate namespace and default bindings
+                if (defaultSpecifier === undefined) {
+                  defaultSpecifier = possibleDuplicateNode.defaultSpecifier;
+                }
+                if (namespaceSpecifier === undefined) {
+                  namespaceSpecifier = possibleDuplicateNode.namespaceSpecifier;
                 }
               }
             }
 
             newBody.push({
               ...bodyNode,
-              specifiers,
+              defaultSpecifier,
+              namespaceSpecifier,
+              namedSpecifiers,
             });
           } else {
             newBody.push(bodyNode);
           }
         }
+
         return {
           ...node,
           body: newBody,

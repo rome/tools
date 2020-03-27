@@ -77,7 +77,9 @@ Program {
   ]
   body: Array [
     ImportDeclaration {
+      defaultSpecifier: undefined
       importKind: undefined
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.mjs'
         end: Object {
@@ -125,7 +127,7 @@ Program {
           }
         }
       ]
-      specifiers: Array [
+      namedSpecifiers: Array [
         ImportSpecifier {
           leadingComments: undefined
           loc: Object {

@@ -16,15 +16,17 @@ import {
 import {createBuilder} from '../utils';
 
 export type AnyImportSpecifier =
-  | ImportSpecifier
   | ImportDefaultSpecifier
-  | ImportNamespaceSpecifier;
+  | ImportNamespaceSpecifier
+  | ImportSpecifier;
 
 export type ImportDeclaration =
   & JSNodeBase
   & {
     type: 'ImportDeclaration';
-    specifiers?: Array<AnyImportSpecifier>;
+    defaultSpecifier?: ImportDefaultSpecifier;
+    namespaceSpecifier?: ImportNamespaceSpecifier;
+    namedSpecifiers: Array<ImportSpecifier>;
     source: StringLiteral;
     importKind?: ConstImportModuleKind;
   };
@@ -32,9 +34,15 @@ export type ImportDeclaration =
 export const importDeclaration = createBuilder<ImportDeclaration>(
   'ImportDeclaration',
   {
-    bindingKeys: {},
+    bindingKeys: {
+      defaultSpecifier: true,
+      namespaceSpecifier: true,
+      namedSpecifiers: true,
+    },
     visitorKeys: {
-      specifiers: true,
+      defaultSpecifier: true,
+      namespaceSpecifier: true,
+      namedSpecifiers: true,
       source: true,
     },
   },

@@ -112,6 +112,109 @@ Object {
         ]
       }
     }
+    Object {
+      origins: Array [Object {category: 'lint'}]
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 16
+          index: 16
+          line: 1
+        }
+        start: Object {
+          column: 1
+          index: 1
+          line: 1
+        }
+      }
+      description: Object {
+        category: 'lint/noDuplicateGroupNamesInRegularExpressions'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate group name <emphasis>month</emphasis> in regular expression'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Defined already here'
+          }
+          frame {
+            location: Object {
+              filename: 'unknown'
+              end: Object {
+                column: 47
+                index: 47
+                line: 1
+              }
+              start: Object {
+                column: 32
+                index: 32
+                line: 1
+              }
+            }
+          }
+          frame {
+            location: Object {
+              filename: 'unknown'
+              end: Object {
+                column: 99
+                index: 99
+                line: 1
+              }
+              start: Object {
+                column: 85
+                index: 85
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+    }
+    Object {
+      origins: Array [Object {category: 'lint'}]
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 31
+          index: 31
+          line: 1
+        }
+        start: Object {
+          column: 17
+          index: 17
+          line: 1
+        }
+      }
+      description: Object {
+        category: 'lint/noDuplicateGroupNamesInRegularExpressions'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate group name <emphasis>year</emphasis> in regular expression'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Defined already here'
+          }
+          frame {
+            location: Object {
+              filename: 'unknown'
+              end: Object {
+                column: 62
+                index: 62
+                line: 1
+              }
+              start: Object {
+                column: 48
+                index: 48
+                line: 1
+              }
+            }
+          }
+        ]
+      }
+    }
   ]
 }
 ```

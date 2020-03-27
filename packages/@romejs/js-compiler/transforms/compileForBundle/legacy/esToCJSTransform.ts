@@ -15,7 +15,11 @@ import {
   ExportLocalDeclaration,
   ExportExternalDeclaration,
 } from '@romejs/js-ast';
-import {template, getBindingIdentifiers} from '@romejs/js-ast-utils';
+import {
+  template,
+  getBindingIdentifiers,
+  getImportSpecifiers,
+} from '@romejs/js-ast-utils';
 import {getOptions, getModuleId} from '../_utils';
 import {Path, FunctionBinding} from '@romejs/js-compiler';
 
@@ -47,8 +51,8 @@ export default {
           value: moduleId,
         });
 
-        const {specifiers} = bodyNode;
-        if (specifiers === undefined || specifiers.length === 0) {
+        const specifiers = getImportSpecifiers(bodyNode);
+        if (specifiers.length === 0) {
           topBody.push(template.statement`Rome.requireNamespace(${source});`);
         } else {
           for (const specifier of specifiers) {

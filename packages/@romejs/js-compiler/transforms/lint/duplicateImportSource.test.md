@@ -10,89 +10,103 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'parse/js'
-      filename: 'unknown'
-      message: 'A type annotation is only valid inside of a TypeScript or Flow file'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 18
-        index: 149
-        line: 6
+      description: Object {
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'A type annotation is only valid inside of a TypeScript or Flow file'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Did you mean <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>'
+          }
+          log {
+            category: 'info'
+            message: 'Did you mean <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file'
+          }
+        ]
       }
-      start: Object {
-        column: 18
-        index: 149
-        line: 6
+      location: Object {
+        filename: 'unknown'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 18
+          index: 149
+          line: 6
+        }
+        start: Object {
+          column: 18
+          index: 149
+          line: 6
+        }
       }
-      advice: Array [
-        log {
-          category: 'info'
-          message: 'Did you mean <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>'
-        }
-        log {
-          category: 'info'
-          message: 'Did you mean <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file'
-        }
-      ]
     }
     Object {
-      category: 'lint/duplicateImportSource'
-      filename: 'unknown'
-      fixable: true
-      language: 'js'
-      message: 'This module has already been imported'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 39
-        index: 78
-        line: 3
-      }
-      start: Object {
-        column: 4
-        index: 43
-        line: 3
-      }
-      advice: Array [
-        log {
-          category: 'info'
-          message: 'Previously imported here'
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 39
+          index: 78
+          line: 3
         }
-        frame {
-          filename: 'unknown'
-          end: Object {
-            column: 37
-            index: 38
-            line: 2
-          }
-          start: Object {
-            column: 4
-            index: 5
-            line: 2
-          }
+        start: Object {
+          column: 4
+          index: 43
+          line: 3
         }
-      ]
+      }
+      description: Object {
+        category: 'lint/duplicateImportSource'
+        fixable: true
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'This module has already been imported'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Previously imported here'
+          }
+          frame {
+            location: Object {
+              filename: 'unknown'
+              end: Object {
+                column: 37
+                index: 38
+                line: 2
+              }
+              start: Object {
+                column: 4
+                index: 5
+                line: 2
+              }
+            }
+          }
+        ]
+      }
     }
     Object {
-      category: 'lint/unusedVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Unused import <emphasis>fooType</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 24
-        index: 103
-        line: 4
+      description: Object {
+        category: 'lint/unusedVariables'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused import <emphasis>fooType</emphasis>'}
       }
-      start: Object {
-        column: 17
-        index: 96
-        line: 4
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 24
+          index: 103
+          line: 4
+        }
+        start: Object {
+          column: 17
+          index: 96
+          line: 4
+        }
       }
     }
   ]

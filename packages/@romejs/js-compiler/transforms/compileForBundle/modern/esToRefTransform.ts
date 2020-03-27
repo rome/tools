@@ -24,6 +24,7 @@ import {
   getBindingIdentifiers,
   renameBindings,
   template,
+  getImportSpecifiers,
 } from '@romejs/js-ast-utils';
 import {
   AnyNode,
@@ -63,13 +64,13 @@ export default {
       // map exports and imports and correctly
       for (const child of node.body) {
         if (child.type === 'ImportDeclaration' && child.importKind !== 'type' &&
-          child.importKind !== 'typeof' && child.specifiers !== undefined) {
+          child.importKind !== 'typeof') {
           const moduleId = getModuleId(child.source.value, opts);
           if (moduleId === undefined) {
             continue;
           }
 
-          for (const specifier of child.specifiers) {
+          for (const specifier of getImportSpecifiers(child)) {
             if (specifier.type === 'ImportSpecifier') {
               mappings.set(specifier.local.name.name, getPrefixedName(
                 specifier.imported.name,
