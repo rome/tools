@@ -336,15 +336,14 @@ export default class Parser<T> {
     const consumer = this.getFlagsConsumer();
 
     let definedCommand: undefined | DefinedCommand;
-    
-    // help command
+
     if (this.helpMode) {
       await this.showHelp(definedCommand === undefined
         ? undefined : definedCommand.command.name
       );
       process.exit(1);
     }
-
+    
     const rootFlags = await consumer.captureDiagnostics(async (consumer) => {
       for (const shorthandName of this.shorthandFlags) {
         consumer.get(shorthandName).unexpected(
@@ -364,10 +363,9 @@ export default class Parser<T> {
       }
 
       consumer.enforceUsedProperties('flag', false);
-      this.currentCommand = undefined;
-
       return rootFlags;
     });
+
 
     if (definedCommand !== undefined) {
       this.ranCommand = definedCommand.command.name;
