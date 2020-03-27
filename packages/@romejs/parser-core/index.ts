@@ -24,6 +24,9 @@ import {
   Diagnostic,
   DiagnosticCategory,
   DiagnosticDescription,
+
+  createBlessedDiagnosticMessage,
+  descriptions,
 } from '@romejs/diagnostics';
 import {
   Number1,
@@ -39,7 +42,6 @@ import {
 import {escapeMarkup} from '@romejs/string-markup';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 import {Class, OptionalProps} from '@romejs/typescript-helpers';
-import {createBlessedDiagnosticMessage, descriptions} from '@romejs/diagnostics';
 
 export * from './types';
 

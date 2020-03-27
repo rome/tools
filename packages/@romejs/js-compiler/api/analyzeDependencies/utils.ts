@@ -14,9 +14,14 @@ import {
   ReferenceIdentifier,
 } from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
-import {Path, Scope, ClassBinding} from '@romejs/js-compiler';
+import {
+  Path,
+  Scope,
+  ClassBinding,
+  FunctionBinding,
+  TypeBinding,
+} from '@romejs/js-compiler';
 import {AnalyzeExportValueType} from '@romejs/core';
-import {FunctionBinding, TypeBinding} from '@romejs/js-compiler';
 
 export function isOptional(path: Path): boolean {
   for (const {node} of path.ancestryPaths) {

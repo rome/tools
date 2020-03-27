@@ -5,10 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Program} from '@romejs/js-ast';
+import {Program, program} from '@romejs/js-ast';
 import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {TransformRequest, TransformVisitors} from '../types';
-import {program} from '@romejs/js-ast';
 import {stageTransforms, stageOrder, hookVisitors} from '../transforms/index';
 import {Cache} from '@romejs/js-compiler';
 import Context from '../lib/Context';

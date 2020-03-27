@@ -8,8 +8,14 @@
 import {Label, LabelKind} from '../tokenizer/state';
 import {types as tt} from '../tokenizer/types';
 import {Position, SourceLocation} from '@romejs/parser-core';
-import {IndexTracker} from '@romejs/js-parser-utils';
-import {skipWhiteSpace, lineBreak} from '@romejs/js-parser-utils';
+import {
+  IndexTracker,
+  skipWhiteSpace,
+  lineBreak,
+  isIdentifierChar,
+  isIdentifierStart,
+  keywordRelationalOperator,
+} from '@romejs/js-parser-utils';
 import {JSParser, OpeningContext} from '../parser';
 import {
   VariableDeclarationKind,
@@ -80,11 +86,6 @@ import {
   toTargetAssignmentPattern,
   parseClassDeclaration,
 } from './index';
-import {
-  isIdentifierChar,
-  isIdentifierStart,
-  keywordRelationalOperator,
-} from '@romejs/js-parser-utils';
 import {number0, get0, add, inc} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 

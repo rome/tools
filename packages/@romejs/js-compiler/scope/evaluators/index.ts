@@ -33,7 +33,6 @@ import CatchClause from './CatchClause';
 import Program from './Program';
 import ForStatement from './ForStatement';
 import ForOfStatement from './ForOfStatement';
-import ForInStatement from './ForOfStatement';
 import VariableDeclarationStatement from './VariableDeclarationStatement';
 import TSInterfaceDeclaration from './TSInterfaceDeclaration';
 import TSDeclareFunction from './TSDeclareFunction';
@@ -78,7 +77,7 @@ evaluators.set('CatchClause', CatchClause);
 evaluators.set('Program', Program);
 evaluators.set('ForStatement', ForStatement);
 evaluators.set('ForOfStatement', ForOfStatement);
-evaluators.set('ForInStatement', ForInStatement);
+evaluators.set('ForInStatement', ForOfStatement);
 evaluators.set('TSInterfaceDeclaration', TSInterfaceDeclaration);
 
 export default evaluators;

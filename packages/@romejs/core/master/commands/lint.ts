@@ -6,9 +6,9 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand} from '../../commands';
+import {createMasterCommand, commandCategories} from '../../commands';
 import Linter, {LinterOptions} from '../linter/Linter';
-import {commandCategories} from '../../commands';
+
 import {Consumer} from '@romejs/consume';
 
 type Flags = {

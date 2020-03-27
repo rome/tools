@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {GeneratorOptions} from './Generator';
+import Generator, {GeneratorOptions} from './Generator';
 import {AnyNode, MOCK_PARENT} from '@romejs/js-ast';
-import Generator from './Generator';
 
 export {GeneratorOptions, Generator};
 

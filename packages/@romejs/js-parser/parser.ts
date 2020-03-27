@@ -25,15 +25,14 @@ import {
   DiagnosticFilter,
   DiagnosticDescription,
   descriptions,
+  DiagnosticsProcessor,
 } from '@romejs/diagnostics';
-import {State} from './tokenizer/state';
 import ParserBranchFinder from './ParserBranchFinder';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import {Token, nextToken} from './tokenizer/index';
 import {types as tt, TokenType} from './tokenizer/types';
 import {lineBreak} from '@romejs/js-parser-utils';
 import {parseTopLevel} from './parser/index';
-import {createInitialState} from './tokenizer/state';
+import {createInitialState, State} from './tokenizer/state';
 import {sub, Number0, number0} from '@romejs/ob1';
 import {Dict, OptionalProps} from '@romejs/typescript-helpers';
 import {attachComments} from './parser/comments';

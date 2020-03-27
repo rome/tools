@@ -6,21 +6,19 @@
  */
 
 import {
-  AnyNode,
-  functionHead,
-  referenceIdentifier,
-  bindingIdentifier,
-  staticPropertyKey,
-  variableDeclarationStatement,
-  ExportExternalDeclaration,
-} from '@romejs/js-ast';
-import {Path, REDUCE_REMOVE} from '@romejs/js-compiler';
-import {ObjectProperties} from '@romejs/js-ast';
+  TransformExitResult,
+  Path,
+  REDUCE_REMOVE,
+  ImportBinding,
+  FunctionBinding,
+  TypeBinding,
+} from '@romejs/js-compiler';
 import {
   getPrefixedName,
   getPrefixedNamespace,
   getPrivateName,
   getModuleId,
+  getOptions,
 } from '../_utils';
 import {
   getBindingIdentifiers,
@@ -28,6 +26,14 @@ import {
   template,
 } from '@romejs/js-ast-utils';
 import {
+  AnyNode,
+  functionHead,
+  referenceIdentifier,
+  bindingIdentifier,
+  staticPropertyKey,
+  variableDeclarationStatement,
+  ExportExternalDeclaration,
+  ObjectProperties,
   program,
   blockStatement,
   objectExpression,
@@ -38,9 +44,6 @@ import {
   variableDeclaration,
   variableDeclarator,
 } from '@romejs/js-ast';
-import {ImportBinding, FunctionBinding, TypeBinding} from '@romejs/js-compiler';
-import {getOptions} from '../_utils';
-import {TransformExitResult} from '@romejs/js-compiler';
 
 export default {
   name: 'esToRefTransform',

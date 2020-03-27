@@ -7,11 +7,10 @@
 
 import {JSONObject} from '@romejs/codec-json';
 import T from './types/T';
-import {AnyNode} from '@romejs/js-ast';
+import {AnyNode, assertNodeTypeSet} from '@romejs/js-ast';
 import {ModuleSignature} from './index';
 import ImportT from './types/ImportT';
 import Intrinsics from './Intrinsics';
-import {assertNodeTypeSet} from '@romejs/js-ast';
 import Graph from './Graph';
 import Hub from './Hub';
 import {Scope} from './scopes';

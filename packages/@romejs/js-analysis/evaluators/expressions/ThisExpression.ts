@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {ThisScope} from '../../scopes';
+import {Scope, ThisScope} from '../../scopes';
 import {ThisExpression, thisExpression, AnyNode} from '@romejs/js-ast';
 import OpenT from '../../types/OpenT';
 

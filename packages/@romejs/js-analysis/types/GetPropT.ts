@@ -8,7 +8,7 @@
 import {AnyNode} from '@romejs/js-ast';
 import {Scope} from '../scopes';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
-import {SerialTypeFactory} from './T';
+import T, {SerialTypeFactory} from './T';
 import ObjPropT from './ObjPropT';
 import UnknownPropE from './errors/UnknownPropE';
 import ObjIndexPropT from './ObjIndexPropT';
@@ -17,7 +17,6 @@ import UnknownT from './UnknownT';
 import AnyT from './AnyT';
 import ObjT from './ObjT';
 import E from './errors/E';
-import T from './T';
 
 export default class GetPropT extends T {
   constructor(

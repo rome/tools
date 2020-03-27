@@ -12,8 +12,7 @@
 // See https://github.com/mozilla/sweet.js/wiki/design
 
 import {JSParser} from '../parser';
-import {isBraceBlock, getCurContext} from './index';
-import {readTemplateToken} from './index';
+import {isBraceBlock, getCurContext, readTemplateToken} from './index';
 import {lineBreak} from '@romejs/js-parser-utils';
 import {types as tt} from './types';
 import {Dict} from '@romejs/typescript-helpers';

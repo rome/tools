@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from '@romejs/js-compiler';
-import {REDUCE_REMOVE} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
+import {REDUCE_REMOVE, Path, TransformExitResult} from '@romejs/js-compiler';
 
 export default {
   name: 'noDebugger',

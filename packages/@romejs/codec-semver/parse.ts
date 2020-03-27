@@ -18,8 +18,14 @@ import {
   LogicalAndNode,
   Tokens,
 } from './types';
-import {TokenValues, ParserOptions} from '@romejs/parser-core';
-import {createParser, isAlpha, isDigit} from '@romejs/parser-core';
+import {
+  TokenValues,
+  ParserOptions,
+  createParser,
+  isAlpha,
+  isDigit,
+} from '@romejs/parser-core';
+
 import {Number0, add, get0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 

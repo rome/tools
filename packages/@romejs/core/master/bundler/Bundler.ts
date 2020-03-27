@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Master} from '@romejs/core';
+import {Master, MasterRequest} from '@romejs/core';
 import {Reporter} from '@romejs/cli-reporter';
 import {
   BundlerConfig,
@@ -14,7 +14,6 @@ import {
   BundlerMode,
   BundleResultBundle,
 } from '../../common/types/bundler';
-import {MasterRequest} from '@romejs/core';
 import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import DependencyGraph from '../dependencies/DependencyGraph';
 import BundleRequest, {BundleOptions} from './BundleRequest';
