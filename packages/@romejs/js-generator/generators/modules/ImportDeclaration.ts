@@ -20,28 +20,29 @@ export default function ImportDeclaration(generator: Generator, node: AnyNode) {
   }
 
   generator.multiline(node, (multiline, node) => {
-    let {specifiers} = node;
-    if (specifiers !== undefined && specifiers.length > 0) {
-      specifiers = [...specifiers];
+    const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
 
-      // Print "special" specifiers first
-      while (specifiers.length > 0) {
-        const first = specifiers[0];
-        if (first.type === 'ImportDefaultSpecifier' || first.type ===
-        'ImportNamespaceSpecifier') {
-          generator.print(specifiers.shift(), node);
-          if (specifiers.length) {
-            generator.token(',');
-            generator.space();
-          }
-        } else {
-          break;
+    if (namedSpecifiers.length > 0 || namespaceSpecifier !== undefined ||
+    defaultSpecifier !== undefined) {
+      if (defaultSpecifier !== undefined) {
+        generator.print(node.defaultSpecifier, node);
+        if (namedSpecifiers.length > 0 || namespaceSpecifier !== undefined) {
+          generator.token(',');
+          generator.space();
         }
       }
 
-      if (specifiers.length > 0) {
+      if (namespaceSpecifier !== undefined) {
+        generator.print(namespaceSpecifier, node);
+        if (namedSpecifiers.length > 0) {
+          generator.token(',');
+          generator.space();
+        }
+      }
+
+      if (namedSpecifiers.length > 0) {
         generator.token('{');
-        generator.printCommaList(specifiers, node, {
+        generator.printCommaList(namedSpecifiers, node, {
           multiline,
           trailing: true,
         });

@@ -8,10 +8,9 @@
 import Master from '../Master';
 import {SourceLocation} from '@romejs/parser-core';
 import {BundleBuddyStats} from '../../common/types/bundler';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
+import {catchDiagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
 import {ResolverOptions} from '../fs/Resolver';
 import WorkerQueue from '../WorkerQueue';
-import {catchDiagnostics} from '@romejs/diagnostics';
 import DependencyNode from './DependencyNode';
 import {ReporterProgress} from '@romejs/cli-reporter';
 import Locker from '../../common/utils/Locker';

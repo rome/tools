@@ -6,7 +6,6 @@
  */
 
 import {Reporter} from '@romejs/cli-reporter';
-import {naturalCompare} from '@romejs/string-utils';
 import {rightPad} from '@romejs/string-ansi';
 import {serializeCLIFlags} from './serializeCLIFlags';
 import {
@@ -16,7 +15,7 @@ import {
   ConsumePropertyDefinition,
   ConsumeSourceLocationRequestTarget,
 } from '@romejs/consume';
-import {toKebabCase, toCamelCase} from '@romejs/string-utils';
+import {toKebabCase, toCamelCase, naturalCompare} from '@romejs/string-utils';
 import {createUnknownFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
 import {markup} from '@romejs/string-markup';

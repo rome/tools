@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ParserInterface, ParserOptions} from './Parser';
+import Parser, {ParserInterface, ParserOptions} from './Parser';
 import {Reporter} from '@romejs/cli-reporter';
-import Parser from './Parser';
 
 export {ParserInterface as FlagParser};
 

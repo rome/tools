@@ -5,9 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, FunctionExpression} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
-import {functionExpression, blockStatement, stringLiteral} from '@romejs/js-ast';
+import {
+  functionExpression,
+  blockStatement,
+  stringLiteral,
+  AnyNode,
+  FunctionExpression,
+} from '@romejs/js-ast';
 import {template} from '@romejs/js-ast-utils';
 import {getOptions} from '../_utils';
 

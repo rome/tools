@@ -7,8 +7,7 @@
 
 import {consumeUnknown, Consumer} from '@romejs/consume';
 import ClientRequest from './ClientRequest';
-import {LocalCommand} from '../commands';
-import {commandCategories} from '../commands';
+import {LocalCommand, commandCategories} from '../commands';
 import executeMain from '../common/utils/executeMain';
 import {createSingleDiagnosticError} from '@romejs/diagnostics';
 import {createAbsoluteFilePath} from '@romejs/path';

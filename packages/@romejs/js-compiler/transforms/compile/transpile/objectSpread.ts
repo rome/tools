@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
+import {Path, TransformExitResult} from '@romejs/js-compiler';
 import {
   AnyNode,
   AnyObjectMember,
@@ -27,7 +27,6 @@ import {
   CallExpression,
 } from '@romejs/js-ast';
 import {template} from '@romejs/js-ast-utils';
-import {TransformExitResult} from '@romejs/js-compiler';
 
 function hasSpreadProperty(props: Array<AnyNode>): boolean {
   for (const prop of props) {

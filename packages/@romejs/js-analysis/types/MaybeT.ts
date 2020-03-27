@@ -7,12 +7,11 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
-import {SerialTypeFactory, TypeCompatibilityReturn} from './T';
+import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
 import {HumanBuilder} from '../Utils';
 import {Scope} from '../scopes';
 import VoidT from './VoidT';
 import NullT from './NullT';
-import T from './T';
 
 export default class MaybeT extends T {
   constructor(scope: Scope, originNode: undefined | AnyNode, parent: T) {

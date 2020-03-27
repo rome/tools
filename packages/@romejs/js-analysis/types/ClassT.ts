@@ -7,14 +7,13 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {Scope} from '../scopes';
-import {SerialTypeFactory} from './T';
+import T, {SerialTypeFactory} from './T';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
 import StringLiteralT from './StringLiteralT';
 import GetPropT from './GetPropT';
 import ObjPropT from './ObjPropT';
 import OpenT from './OpenT';
 import ObjT from './ObjT';
-import T from './T';
 
 export default class ClassT extends ObjT {
   constructor(

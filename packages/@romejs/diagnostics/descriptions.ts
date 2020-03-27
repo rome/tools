@@ -154,6 +154,7 @@ export const descriptions = createMessages({
     UNCLOSED_CHAR_SET: 'Unclosed character set',
     DUPLICATE_FLAG: 'Duplicate regular expression flag',
     INVALID_FLAG: 'Invalid regular expression flag',
+    NO_TARGET_QUANTIFIER: 'Nothing to repeat',
   },
 
   // @romejs/codec-json
@@ -216,6 +217,24 @@ export const descriptions = createMessages({
           {
             type: 'code',
             code: formatted,
+          },
+        ],
+      }),
+
+    DUPLICATE_IMPORT_SOURCE: (seenLocation: DiagnosticLocation) =>
+      ({
+        fixable: true,
+        category: 'lint/duplicateImportSource',
+        message: 'This module has already been imported',
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: 'Previously imported here',
+          },
+          {
+            type: 'frame',
+            location: seenLocation,
           },
         ],
       }),
@@ -365,11 +384,6 @@ export const descriptions = createMessages({
       fixable: true,
       category: 'lint/noDebugger',
       message: 'Unexpected \'debugger\' statement',
-    },
-
-    NO_DANGLING_BACKSLASH_IN_REGEX: {
-      category: 'lint/noDanglingBackslash',
-      message: 'Dangling backslash in a regular expression',
     },
 
     NO_COND_ASSIGN: {

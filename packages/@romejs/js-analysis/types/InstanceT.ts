@@ -6,14 +6,13 @@
  */
 
 import {AnyNode} from '@romejs/js-ast';
-import {SerialTypeFactory, TypeCompatibilityReturn} from './T';
+import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
 import {Scope} from '../scopes';
 import {HumanBuilder} from '../Utils';
 import StringLiteralT from './StringLiteralT';
 import GetPropT from './GetPropT';
 import ObjT from './ObjT';
-import T from './T';
 
 export default class InstanceT extends ObjT {
   constructor(

@@ -6,8 +6,16 @@
  */
 
 import Master from '../Master';
-import {Manifest, ManifestDefinition} from '@romejs/codec-js-manifest';
-import {PathPatterns, parsePathPattern} from '@romejs/path-match';
+import {
+  Manifest,
+  ManifestDefinition,
+  normalizeManifest,
+} from '@romejs/codec-js-manifest';
+import {
+  PathPatterns,
+  matchPathPatterns,
+  parsePathPattern,
+} from '@romejs/path-match';
 import {
   ProjectConfig,
   ROME_CONFIG_FILENAMES,
@@ -18,13 +26,13 @@ import {
   getDiagnosticsFromError,
 } from '@romejs/diagnostics';
 import {Reporter} from '@romejs/cli-reporter';
-import {createWatchmanClient} from '@romejs/codec-watchman';
+import {
+  createWatchmanClient,
+  WatchmanSubscriptionValue,
+} from '@romejs/codec-watchman';
 import {Event} from '@romejs/events';
 import {consumeJSON} from '@romejs/codec-json';
-import {normalizeManifest} from '@romejs/codec-js-manifest';
 import {humanizeNumber} from '@romejs/string-utils';
-import {matchPathPatterns} from '@romejs/path-match';
-import {WatchmanSubscriptionValue} from '@romejs/codec-watchman';
 import {WorkerPartialManifest} from '../../common/bridges/WorkerBridge';
 import {
   AbsoluteFilePath,

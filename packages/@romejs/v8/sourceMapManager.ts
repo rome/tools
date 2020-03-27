@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SourceMap} from '@romejs/codec-source-map';
+import {SourceMap, SourceMapConsumer} from '@romejs/codec-source-map';
 import {ErrorFrame} from '@romejs/v8';
-import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {coerce1, coerce1to0, Number1, Number0} from '@romejs/ob1';
 import {
   getErrorStructure,

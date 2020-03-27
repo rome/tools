@@ -6,13 +6,13 @@
  */
 
 import {ConstExportModuleKind, ConstImportModuleKind} from '@romejs/js-ast';
-import {Path} from '@romejs/js-compiler';
+import {Path, ImportBinding} from '@romejs/js-compiler';
 import {AnalyzeDependencyName} from '@romejs/core';
-import {ImportBinding} from '@romejs/js-compiler';
 import {
   isFunctionNode,
   isInTypeAnnotation,
   getBindingIdentifiers,
+  getImportSpecifiers,
 } from '@romejs/js-ast-utils';
 import {
   ImportRecord,
@@ -202,34 +202,31 @@ export default {
       const specifierKinds: Array<ConstImportModuleKind> = [];
       const names: Array<AnalyzeDependencyName> = [];
 
-      const {specifiers} = node;
-      if (specifiers !== undefined) {
-        for (const specifier of specifiers) {
-          if (specifier.type === 'ImportNamespaceSpecifier') {
-            hasNamespaceSpecifier = true;
-            break;
-          }
+      for (const specifier of getImportSpecifiers(node)) {
+        if (specifier.type === 'ImportNamespaceSpecifier') {
+          hasNamespaceSpecifier = true;
+          break;
+        }
 
-          const kind: ConstImportModuleKind = getImportKind(
-            specifier.local.importKind || node.importKind,
-          );
-          specifierKinds.push(kind);
+        const kind: ConstImportModuleKind = getImportKind(
+          specifier.local.importKind || node.importKind,
+        );
+        specifierKinds.push(kind);
 
-          if (specifier.type === 'ImportDefaultSpecifier') {
-            names.push({
-              kind,
-              loc: specifier.loc,
-              name: 'default',
-            });
-          }
+        if (specifier.type === 'ImportDefaultSpecifier') {
+          names.push({
+            kind,
+            loc: specifier.loc,
+            name: 'default',
+          });
+        }
 
-          if (specifier.type === 'ImportSpecifier') {
-            names.push({
-              kind,
-              loc: specifier.loc,
-              name: specifier.imported.name,
-            });
-          }
+        if (specifier.type === 'ImportSpecifier') {
+          names.push({
+            kind,
+            loc: specifier.loc,
+            name: specifier.imported.name,
+          });
         }
       }
 

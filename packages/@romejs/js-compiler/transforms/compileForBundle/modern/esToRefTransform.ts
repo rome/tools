@@ -6,6 +6,27 @@
  */
 
 import {
+  TransformExitResult,
+  Path,
+  REDUCE_REMOVE,
+  ImportBinding,
+  FunctionBinding,
+  TypeBinding,
+} from '@romejs/js-compiler';
+import {
+  getPrefixedName,
+  getPrefixedNamespace,
+  getPrivateName,
+  getModuleId,
+  getOptions,
+} from '../_utils';
+import {
+  getBindingIdentifiers,
+  renameBindings,
+  template,
+  getImportSpecifiers,
+} from '@romejs/js-ast-utils';
+import {
   AnyNode,
   functionHead,
   referenceIdentifier,
@@ -13,21 +34,7 @@ import {
   staticPropertyKey,
   variableDeclarationStatement,
   ExportExternalDeclaration,
-} from '@romejs/js-ast';
-import {Path, REDUCE_REMOVE} from '@romejs/js-compiler';
-import {ObjectProperties} from '@romejs/js-ast';
-import {
-  getPrefixedName,
-  getPrefixedNamespace,
-  getPrivateName,
-  getModuleId,
-} from '../_utils';
-import {
-  getBindingIdentifiers,
-  renameBindings,
-  template,
-} from '@romejs/js-ast-utils';
-import {
+  ObjectProperties,
   program,
   blockStatement,
   objectExpression,
@@ -38,9 +45,6 @@ import {
   variableDeclaration,
   variableDeclarator,
 } from '@romejs/js-ast';
-import {ImportBinding, FunctionBinding, TypeBinding} from '@romejs/js-compiler';
-import {getOptions} from '../_utils';
-import {TransformExitResult} from '@romejs/js-compiler';
 
 export default {
   name: 'esToRefTransform',
@@ -60,13 +64,13 @@ export default {
       // map exports and imports and correctly
       for (const child of node.body) {
         if (child.type === 'ImportDeclaration' && child.importKind !== 'type' &&
-          child.importKind !== 'typeof' && child.specifiers !== undefined) {
+          child.importKind !== 'typeof') {
           const moduleId = getModuleId(child.source.value, opts);
           if (moduleId === undefined) {
             continue;
           }
 
-          for (const specifier of child.specifiers) {
+          for (const specifier of getImportSpecifiers(child)) {
             if (specifier.type === 'ImportSpecifier') {
               mappings.set(specifier.local.name.name, getPrefixedName(
                 specifier.imported.name,

@@ -12,6 +12,11 @@ import {
   DiagnosticLanguage,
   DiagnosticSourceType,
   DiagnosticAdvice,
+
+  DiagnosticsProcessor,
+
+  deriveRootAdviceFromDiagnostic,
+  getDiagnosticHeader,
 } from '@romejs/diagnostics';
 import {Reporter} from '@romejs/cli-reporter';
 import {
@@ -20,11 +25,7 @@ import {
   DiagnosticsFileReader,
   DiagnosticsFileReaderStats,
 } from './types';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
-import {
-  deriveRootAdviceFromDiagnostic,
-  getDiagnosticHeader,
-} from '@romejs/diagnostics';
+
 import {humanizeMarkupFilename} from '@romejs/string-markup';
 import {toLines} from './utils';
 import printAdvice from './printAdvice';

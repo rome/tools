@@ -25,7 +25,6 @@ import {
   AnyNode,
   ConstImportModuleKind,
   BindingIdentifier,
-  AnyImportSpecifier,
   ImportSpecifier,
   ImportDefaultSpecifier,
   ImportNamespaceSpecifier,
@@ -644,16 +643,22 @@ export function parseImport(parser: JSParser, start: Position): ParseImportResul
     return parseTSImportEqualsDeclaration(parser, start);
   }
 
-  let specifiers: undefined | Array<AnyImportSpecifier>;
+  let namedSpecifiers: Array<ImportSpecifier> = [];
+  let namespaceSpecifier: undefined | ImportNamespaceSpecifier;
+  let defaultSpecifier: undefined | ImportDefaultSpecifier;
   let source: StringLiteral;
   let importKind: undefined | ConstImportModuleKind;
 
   // import '...'
   if (parser.match(tt.string)) {
-    specifiers = [];
     source = parseStringLiteral(parser);
   } else {
-    ({specifiers, importKind} = parseImportSpecifiers(parser, start));
+    ({
+      namedSpecifiers,
+      namespaceSpecifier,
+      defaultSpecifier,
+      importKind,
+    } = parseImportSpecifiers(parser, start));
 
     if (parser.expectContextual('from') && parser.match(tt.string)) {
       source = parseStringLiteral(parser);
@@ -672,7 +677,9 @@ export function parseImport(parser: JSParser, start: Position): ParseImportResul
   parser.semicolon();
   return parser.finishNode(start, {
     type: 'ImportDeclaration',
-    specifiers,
+    namedSpecifiers,
+    namespaceSpecifier,
+    defaultSpecifier,
     source,
     importKind,
   });
@@ -716,10 +723,9 @@ function parseImportSpecifiers(
   parser: JSParser,
   start: Position,
 ): {
-  specifiers: Array<
-    | ImportSpecifier
-    | ImportDefaultSpecifier
-    | ImportNamespaceSpecifier>;
+  namedSpecifiers: Array<ImportSpecifier>;
+  namespaceSpecifier: undefined | ImportNamespaceSpecifier;
+  defaultSpecifier: undefined | ImportDefaultSpecifier;
   importKind: undefined | ConstImportModuleKind;
 } {
   let importKind: undefined | ConstImportModuleKind = undefined;
@@ -751,10 +757,9 @@ function parseImportSpecifiers(
     }
   }
 
-  const specifiers: Array<
-    | ImportSpecifier
-    | ImportDefaultSpecifier
-    | ImportNamespaceSpecifier> = [];
+  let namedSpecifiers: Array<ImportSpecifier> = [];
+  let namespaceSpecifier: undefined | ImportNamespaceSpecifier;
+  let defaultSpecifier: undefined | ImportDefaultSpecifier;
 
   let first = true;
 
@@ -766,13 +771,18 @@ function parseImportSpecifiers(
       'default import specifier',
     );
 
-    specifiers.push(parser.finishNode(start, {
+    defaultSpecifier = parser.finishNode(start, {
       type: 'ImportDefaultSpecifier',
       local: meta,
-    }));
+    });
 
     if (!parser.eat(tt.comma)) {
-      return {specifiers, importKind};
+      return {
+        namedSpecifiers,
+        namespaceSpecifier,
+        defaultSpecifier,
+        importKind,
+      };
     }
   }
 
@@ -786,12 +796,12 @@ function parseImportSpecifiers(
       'import namespace specifier',
     );
 
-    specifiers.push(parser.finishNode(start, {
+    namespaceSpecifier = parser.finishNode(start, {
       type: 'ImportNamespaceSpecifier',
       local: meta,
-    }));
+    });
 
-    return {specifiers, importKind};
+    return {namedSpecifiers, namespaceSpecifier, defaultSpecifier, importKind};
   }
 
   const openContext = parser.expectOpening(
@@ -823,10 +833,10 @@ function parseImportSpecifiers(
       }
     }
 
-    specifiers.push(parseImportSpecifier(parser, importKind));
+    namedSpecifiers.push(parseImportSpecifier(parser, importKind));
   }
 
-  return {specifiers, importKind};
+  return {namedSpecifiers, namespaceSpecifier, defaultSpecifier, importKind};
 }
 
 function parseImportSpecifier(

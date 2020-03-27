@@ -7,11 +7,10 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
-import {SerialTypeFactory, TypeCompatibilityReturn} from './T';
+import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
 import {Scope} from '../scopes';
 import {HumanBuilder} from '../Utils';
 import ObjPropT from './ObjPropT';
-import T from './T';
 
 export default class ObjT extends T {
   constructor(

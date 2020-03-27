@@ -6,12 +6,13 @@
  */
 
 import {Worker, FileReference} from '@romejs/core';
-import {Program} from '@romejs/js-ast';
-import {Diagnostics, descriptions} from '@romejs/diagnostics';
+import {Program, program} from '@romejs/js-ast';
+import {Diagnostics, descriptions, catchDiagnostics} from '@romejs/diagnostics';
 import {
   TransformStageName,
   CompileResult,
   CompilerOptions,
+  compile,
 } from '@romejs/js-compiler';
 import {
   PrefetchedModuleSignatures,
@@ -22,10 +23,7 @@ import {
 } from '../common/bridges/WorkerBridge';
 import Logger from '../common/utils/Logger';
 import {removeLoc} from '@romejs/js-ast-utils';
-import {compile} from '@romejs/js-compiler';
-import {catchDiagnostics} from '@romejs/diagnostics';
 import * as jsAnalysis from '@romejs/js-analysis';
-import {program} from '@romejs/js-ast';
 import {getFileHandlerAssert, ExtensionLintResult} from '../common/fileHandlers';
 import {
   AnalyzeDependencyResult,

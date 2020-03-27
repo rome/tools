@@ -6,8 +6,12 @@
  */
 
 import {AnyNode, MOCK_PARENT} from '@romejs/js-ast';
-import {Scope} from '@romejs/js-compiler';
-import {Context, TransformVisitor, TransformVisitors} from '@romejs/js-compiler';
+import {
+  Scope,
+  Context,
+  TransformVisitor,
+  TransformVisitors,
+} from '@romejs/js-compiler';
 import {
   HookInstance,
   AnyHookDescriptor,
