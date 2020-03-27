@@ -24,6 +24,12 @@ Then, navigate into it and build `rome`:
 cd rome; ./scripts/build-release dist
 ```
 
+On Windows 10 build `rome` using the following command using PowerShell 7:
+
+```powershell
+cd rome && node scripts/build-release dist
+```
+
 Now, install `rome` globally:
 
 ```
