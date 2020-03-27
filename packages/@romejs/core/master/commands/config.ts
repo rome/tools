@@ -6,8 +6,8 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand} from '../../commands';
-import {commandCategories} from '../../commands';
+import {createMasterCommand, commandCategories} from '../../commands';
+
 import {modifyProjectConfig, assertHardMeta} from '@romejs/project';
 import {createUnknownFilePath} from '@romejs/path';
 

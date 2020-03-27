@@ -16,8 +16,7 @@ import {
   DiagnosticLocation,
 } from '@romejs/diagnostics';
 import {ProjectDefinition} from '@romejs/project';
-import {DependencyOrder} from './DependencyOrderer';
-import DependencyOrderer from './DependencyOrderer';
+import DependencyOrderer, {DependencyOrder} from './DependencyOrderer';
 import {WorkerAnalyzeDependencyResult} from '../../common/bridges/WorkerBridge';
 import {AbsoluteFilePath, AbsoluteFilePathMap} from '@romejs/path';
 import {getFileHandler, ExtensionHandler} from '../../common/fileHandlers';

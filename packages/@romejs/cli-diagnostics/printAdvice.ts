@@ -17,19 +17,20 @@ import {
   DiagnosticAdviceDiff,
   DiagnosticAdviceStacktrace,
   DiagnosticAdviceCommand,
+  getDiagnosticHeader,
 } from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
 import {toLines} from './utils';
-import {getDiagnosticHeader} from '@romejs/diagnostics';
 import buildPatchCodeFrame from './buildPatchCodeFrame';
 import buildMessageCodeFrame from './buildMessageCodeFrame';
 import {escapeMarkup} from '@romejs/string-markup';
 import {formatAnsi} from '@romejs/string-ansi';
 import {DiagnosticsPrinterFlags} from './types';
 import {number0Neg1} from '@romejs/ob1';
-import {DiagnosticsPrinterFileSources} from './DiagnosticsPrinter';
+import DiagnosticsPrinter, {
+  DiagnosticsPrinterFileSources,
+} from './DiagnosticsPrinter';
 import {AbsoluteFilePathSet} from '@romejs/path';
-import DiagnosticsPrinter from './DiagnosticsPrinter';
 
 type AdvicePrintOptions = {
   printer: DiagnosticsPrinter;

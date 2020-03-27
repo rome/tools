@@ -21,7 +21,10 @@ import {
   Diagnostic,
   createBlessedDiagnosticMessage,
 } from '@romejs/diagnostics';
-import {DiagnosticsPrinterFlags} from '@romejs/cli-diagnostics';
+import {
+  DiagnosticsPrinterFlags,
+  DiagnosticsPrinter,
+} from '@romejs/cli-diagnostics';
 import {
   ProjectDefinition,
   ProjectConfigCategoriesWithIgnoreAndEnabled,
@@ -40,7 +43,6 @@ import Master, {
 import {Reporter} from '@romejs/cli-reporter';
 import {Event} from '@romejs/events';
 import {serializeCLIFlags, SerializeCLITarget} from '@romejs/cli-flags';
-import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import {Program} from '@romejs/js-ast';
 import {TransformStageName} from '@romejs/js-compiler';
 import WorkerBridge, {

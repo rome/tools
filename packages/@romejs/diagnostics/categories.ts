@@ -25,6 +25,7 @@ export type DiagnosticCategory =
   | 'internalError/request'
   | 'internalError/httpServer'
   | 'lint/disabled'
+  | 'lint/duplicateImportSource'
   | 'lint/pendingFixes'
   | 'lint/defaultExportSameBasename'
   | 'lint/noMultipleSpacesInRegularExpressionLiterals'

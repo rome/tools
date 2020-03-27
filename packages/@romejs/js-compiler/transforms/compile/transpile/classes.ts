@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Context, Path} from '@romejs/js-compiler';
+import {Context, Path, TransformExitResult} from '@romejs/js-compiler';
 import {
   AnyNode,
   functionHead,
@@ -17,8 +17,6 @@ import {
   FunctionDeclaration,
   ClassDeclaration,
   ClassExpression,
-} from '@romejs/js-ast';
-import {
   classMethod,
   callExpression,
   thisExpression,
@@ -32,7 +30,6 @@ import {
   identifier,
 } from '@romejs/js-ast';
 import {template} from '@romejs/js-ast-utils';
-import {TransformExitResult} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
 
 function transformClass(

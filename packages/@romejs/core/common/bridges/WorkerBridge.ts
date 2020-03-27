@@ -5,16 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BundleCompileOptions} from '@romejs/js-compiler';
 import {ModuleSignature} from '@romejs/js-analysis';
 import {Manifest} from '@romejs/codec-js-manifest';
 import {Program, ConstSourceType} from '@romejs/js-ast';
-import {CompileResult, TransformStageName} from '@romejs/js-compiler';
+import {
+  BundleCompileOptions,
+  CompileResult,
+  TransformStageName,
+} from '@romejs/js-compiler';
 import {Profile} from '@romejs/v8';
 import {ProfilingStartData} from './MasterBridge';
-import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {
+  Diagnostics,
+  DiagnosticSuppressions,
+  DiagnosticsError,
+} from '@romejs/diagnostics';
 import {ProjectConfigJSON} from '@romejs/project';
-import {DiagnosticsError} from '@romejs/diagnostics';
 import {Bridge} from '@romejs/events';
 import {JSONFileReference} from '../types/files';
 import {AnalyzeDependencyResult} from '../types/analyzeDependencies';

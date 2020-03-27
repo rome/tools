@@ -6,9 +6,8 @@
  */
 
 import {AnyFunction} from '@romejs/js-ast';
-import {Scope} from '../scopes';
+import {Scope, FunctionScope} from '../scopes';
 import T from '../types/T';
-import {FunctionScope} from '../scopes';
 import executeAtom from './executeAtom';
 import FunctionT from '../types/FunctionT';
 import MaybeT from '../types/MaybeT';

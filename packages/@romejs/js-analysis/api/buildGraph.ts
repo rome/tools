@@ -5,10 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyStatement} from '@romejs/js-ast';
+import {AnyStatement, Program} from '@romejs/js-ast';
 import {CheckProvider} from '../types';
 import {ModuleSignatureManager} from '../Evaluator';
-import {Program} from '@romejs/js-ast';
 import Hub from '../Hub';
 import {TransformProjectDefinition} from '@romejs/js-compiler';
 

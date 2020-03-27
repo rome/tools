@@ -8,8 +8,7 @@
 import {MasterRequest} from '@romejs/core';
 import {Consumer} from '@romejs/consume';
 import {WebServer} from '../web/index';
-import {createMasterCommand} from '../../commands';
-import {commandCategories} from '../../commands';
+import {commandCategories, createMasterCommand} from '../../commands';
 
 type Flags = {port: number};
 

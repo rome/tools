@@ -7,17 +7,20 @@
 
 import Bundler from './Bundler';
 import DependencyNode from '../dependencies/DependencyNode';
-import {Mappings} from '@romejs/codec-source-map';
+import {Mappings, SourceMapGenerator} from '@romejs/codec-source-map';
 import {BundleRequestResult, BundlerMode} from '../../common/types/bundler';
 import {
   WorkerBundleCompileOptions,
   WorkerCompileResult,
 } from '../../common/bridges/WorkerBridge';
 import {DependencyOrder} from '../dependencies/DependencyOrderer';
-import {CompileResult, BundleCompileResolvedImports} from '@romejs/js-compiler';
-import {getPrefixedBundleNamespace} from '@romejs/js-compiler';
+import {
+  CompileResult,
+  BundleCompileResolvedImports,
+  getPrefixedBundleNamespace,
+} from '@romejs/js-compiler';
+
 import {DiagnosticsProcessor, descriptions} from '@romejs/diagnostics';
-import {SourceMapGenerator} from '@romejs/codec-source-map';
 import {AbsoluteFilePath} from '@romejs/path';
 import {add} from '@romejs/ob1';
 import {readFile} from '@romejs/fs';

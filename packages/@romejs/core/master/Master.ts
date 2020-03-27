@@ -14,6 +14,9 @@ import {
   Diagnostics,
   INTERNAL_ERROR_LOG_ADVICE,
   DiagnosticOrigin,
+  getDiagnosticsFromError,
+  deriveDiagnosticFromError,
+  DiagnosticsProcessor,
 } from '@romejs/diagnostics';
 import {MasterCommand} from '../commands';
 import {
@@ -24,11 +27,6 @@ import {
 import {consume, ConsumePath} from '@romejs/consume';
 import {Event, EventSubscription} from '@romejs/events';
 import MasterRequest, {MasterRequestInvalid} from './MasterRequest';
-import {
-  getDiagnosticsFromError,
-  deriveDiagnosticFromError,
-} from '@romejs/diagnostics';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import ProjectManager from './project/ProjectManager';
 import WorkerManager from './WorkerManager';
 import Resolver from './fs/Resolver';
@@ -37,13 +35,12 @@ import Logger from '../common/utils/Logger';
 import MemoryFileSystem from './fs/MemoryFileSystem';
 import Cache from './Cache';
 import {masterCommands} from './commands/index';
-import {Reporter} from '@romejs/cli-reporter';
+import {Reporter, ReporterStream} from '@romejs/cli-reporter';
 import {Profiler} from '@romejs/v8';
 import {
   ProfilingStartData,
   PartialMasterQueryRequest,
 } from '../common/bridges/MasterBridge';
-import {ReporterStream} from '@romejs/cli-reporter';
 import {
   ClientFlags,
   DEFAULT_CLIENT_REQUEST_FLAGS,

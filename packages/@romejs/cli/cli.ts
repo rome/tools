@@ -9,8 +9,6 @@ import {
   ClientFlags,
   ClientRequestFlags,
   DEFAULT_CLIENT_REQUEST_FLAGS,
-} from '@romejs/core';
-import {
   Client,
   PLATFORMS,
   DEFAULT_CLIENT_FLAGS,

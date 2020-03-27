@@ -5,18 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterQueryResponse} from '@romejs/core';
-import {Event} from '@romejs/events';
-import {ClientFlags, ClientFlagsJSON} from '../common/types/client';
-import {ClientRequestType} from './ClientRequest';
-import {Reporter} from '@romejs/cli-reporter';
-import {DEFAULT_CLIENT_FLAGS} from '../common/types/client';
-import ClientRequest from './ClientRequest';
+import {
+  ClientFlags,
+  ClientFlagsJSON,
+  DEFAULT_CLIENT_FLAGS,
+} from '../common/types/client';
+import ClientRequest, {ClientRequestType} from './ClientRequest';
 import Master from '../master/Master';
-import {MasterBridge, SOCKET_PATH, CLI_SOCKET_PATH} from '@romejs/core';
+import {
+  MasterBridge,
+  MasterQueryResponse,
+  SOCKET_PATH,
+  CLI_SOCKET_PATH,
+} from '@romejs/core';
 import fork from '../common/utils/fork';
-import {createBridgeFromLocal, createBridgeFromSocket} from '@romejs/events';
-import {ReporterDerivedStreams} from '@romejs/cli-reporter';
+import {
+  Event,
+  createBridgeFromLocal,
+  createBridgeFromSocket,
+} from '@romejs/events';
+import {Reporter, ReporterDerivedStreams} from '@romejs/cli-reporter';
 import prettyFormat from '@romejs/pretty-format';
 import {VERSION} from '../common/constants';
 import {TarWriter} from '@romejs/codec-tar';

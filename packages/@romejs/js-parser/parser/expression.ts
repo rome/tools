@@ -7,11 +7,12 @@
 
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {JSParser, OpeningContext} from '../parser';
-import {IndexTracker, createIndexTracker} from '@romejs/js-parser-utils';
 import {RegExpTokenValue, readRegexp, finishToken} from '../tokenizer/index';
 import * as charCodes from '@romejs/string-charcodes';
 import {types as tt} from '../tokenizer/types';
 import {
+  IndexTracker,
+  createIndexTracker,
   isKeyword,
   isReservedWord,
   isStrictBindReservedWord,

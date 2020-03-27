@@ -12,9 +12,10 @@ import {
   ForOfStatement,
   ForStatement,
   WhileStatement,
+  AnyNode,
+  AnyComment,
 } from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
-import {AnyNode, AnyComment} from '@romejs/js-ast';
 import generatorFunctions from './generators/index';
 import * as n from './node/index';
 import Buffer, {BufferSnapshot} from './Buffer';

@@ -6,8 +6,11 @@
  */
 
 import {Consumer} from '@romejs/consume';
-import {SemverRangeNode, stringifySemver} from '@romejs/codec-semver';
-import {parseSemverRange} from '@romejs/codec-semver';
+import {
+  SemverRangeNode,
+  stringifySemver,
+  parseSemverRange,
+} from '@romejs/codec-semver';
 import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
 import {createUnknownFilePath, UnknownFilePath} from '@romejs/path';
 import {normalizeName} from './name';

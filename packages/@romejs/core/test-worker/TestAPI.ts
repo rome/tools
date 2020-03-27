@@ -5,10 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticAdvice, DiagnosticAdviceItem} from '@romejs/diagnostics';
+import {
+  DiagnosticAdvice,
+  DiagnosticAdviceItem,
+  getErrorStackAdvice,
+} from '@romejs/diagnostics';
 import SnapshotManager from './SnapshotManager';
 import {TestRunnerOptions} from '../master/testing/types';
-import {getErrorStackAdvice} from '@romejs/diagnostics';
 import {Event} from '@romejs/events';
 import diff from '@romejs/string-diff';
 import {createErrorFromStructure} from '@romejs/v8';

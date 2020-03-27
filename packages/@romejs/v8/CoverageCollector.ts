@@ -12,10 +12,9 @@ import {
   CoverageLocationRange,
   CoverageRangeWithMetadata,
 } from '@romejs/v8';
-import {SourceMap} from '@romejs/codec-source-map';
+import {SourceMap, SourceMapConsumer} from '@romejs/codec-source-map';
 import {Position} from '@romejs/parser-core';
 import {urlToFilename} from './utils';
-import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {
   Number1,
   number1,

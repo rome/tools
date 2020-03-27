@@ -5,10 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 import {template} from '@romejs/js-ast-utils';
-import {stringLiteral} from '@romejs/js-ast';
+import {AnyNode, stringLiteral} from '@romejs/js-ast';
 import {getOptions, getModuleId} from '../_utils';
 
 export default {
