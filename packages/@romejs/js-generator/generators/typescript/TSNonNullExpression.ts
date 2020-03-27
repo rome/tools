@@ -11,5 +11,7 @@ import {Generator} from '@romejs/js-generator';
 export default function TSNonNullExpression(generator: Generator, node: AnyNode) {
   node = tsNonNullExpression.assert(node);
   generator.print(node.expression, node);
-  generator.token('!');
+  if (generator.options.typeAnnotations) {
+    generator.token('!');
+  }
 }

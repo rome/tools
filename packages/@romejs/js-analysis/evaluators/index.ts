@@ -503,6 +503,9 @@ evaluators.set('RegExpNonWordBoundaryCharacter', RegExpNonWordBoundaryCharacter)
 import RegExpNonWordCharacter from './regex/RegExpNonWordCharacter';
 evaluators.set('RegExpNonWordCharacter', RegExpNonWordCharacter);
 
+import RegExpNumericBackReference from './regex/RegExpNumericBackReference';
+evaluators.set('RegExpNumericBackReference', RegExpNumericBackReference);
+
 import RegExpQuantified from './regex/RegExpQuantified';
 evaluators.set('RegExpQuantified', RegExpQuantified);
 

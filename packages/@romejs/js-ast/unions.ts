@@ -354,6 +354,7 @@ export type AnyRegExpEscapedCharacter =
   | n.RegExpNonDigitCharacter
   | n.RegExpWordBoundaryCharacter
   | n.RegExpNonWordBoundaryCharacter
+  | n.RegExpNumericBackReference
   | n.RegExpWhiteSpaceCharacter
   | n.RegExpNonWhiteSpaceCharacter
   | n.RegExpWordCharacter
@@ -546,6 +547,7 @@ export type AnyNode =
   | n.RegExpNonWhiteSpaceCharacter
   | n.RegExpNonWordBoundaryCharacter
   | n.RegExpNonWordCharacter
+  | n.RegExpNumericBackReference
   | n.RegExpQuantified
   | n.RegExpStartCharacter
   | n.RegExpSubExpression

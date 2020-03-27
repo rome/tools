@@ -10,9 +10,11 @@ import {Generator} from '@romejs/js-generator';
 
 export default function TSTypeAssertion(generator: Generator, node: AnyNode) {
   node = tsTypeAssertion.assert(node);
-  generator.token('<');
-  generator.print(node.typeAnnotation, node);
-  generator.token('>');
-  generator.space();
+  if (generator.options.typeAnnotations) {
+    generator.token('<');
+    generator.print(node.typeAnnotation, node);
+    generator.token('>');
+    generator.space();
+  }
   generator.print(node.expression, node);
 }

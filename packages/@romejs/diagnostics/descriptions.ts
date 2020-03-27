@@ -249,6 +249,12 @@ export const descriptions = createMessages({
       message: 'Your array contains an empty slot',
     },
 
+    SINGLE_VAR_DECLARATOR: {
+      fixable: true,
+      category: 'lint/singleVarDeclarator',
+      message: 'Declare each variable separately',
+    },
+
     PREFER_FUNCTION_DECLARATIONS: {
       category: 'lint/preferFunctionDeclarations',
       message: 'Use a function declaration instead of a const function',
@@ -402,6 +408,12 @@ export const descriptions = createMessages({
         category: 'lint/noDuplicateGroupNamesInRegularExpressions',
         message: `Duplicate group name <emphasis>${name}</emphasis> in regular expression`,
         advice: buildDuplicateLocationAdvice(locations),
+      }),
+
+    NO_REFERENCE_TO_NON_EXISTING_GROUP: (name: string) =>
+      ({
+        category: 'lint/noReferenceToNonExistingGroup',
+        message: `Reference to non-existent group <emphasis>"${name}"</emphasis>`,
       }),
 
     DEFAULT_EXPORT_SAME_BASENAME: (
