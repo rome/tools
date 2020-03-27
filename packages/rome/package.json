@@ -9,5 +9,8 @@
   ],
   "bin": {
     "rome": "bin/rome.ts"
+  },
+  "scripts": {
+    "postinstall": "echo \"Thanks for using Rome! This space reserved for future sustainability announcements. See https://github.com/romejs/rome/pulls/X for context.\""
   }
 }
