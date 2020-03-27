@@ -66,7 +66,12 @@ function cleanUidParts(parts: Array<string>): string {
       sharedPrefix += part[i];
     }
 
-    uid += part.slice(sharedPrefix.length);
+    const partWithoutExtension = part.split('.')[0];
+    if (sharedPrefix === partWithoutExtension) {
+      uid += part;
+    } else {
+      uid += part.slice(sharedPrefix.length);
+    }
 
     lastPart = part;
   }
