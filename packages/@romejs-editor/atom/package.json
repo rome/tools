@@ -1,8 +1,8 @@
 {
-  "name": "rome-atom",
+  "name": "@romejs-editor/vscode",
   "main": "./lib/main",
   "version": "0.6.2",
-  "description": "Rome atom extension",
+  "description": "Rome LSP Atom extension",
   "license": "MIT",
   "engines": {
     "atom": ">=1.21.0"
@@ -24,10 +24,10 @@
   },
   "providedServices": {
     "formatter": {
-    "versions": {
-      "1.0.0": "provideFormatter"
-    }
-  },
+      "versions": {
+        "1.0.0": "provideFormatter"
+      }
+    },
     "autocomplete.provider": {
       "versions": {
         "2.0.0": "provideAutocomplete"

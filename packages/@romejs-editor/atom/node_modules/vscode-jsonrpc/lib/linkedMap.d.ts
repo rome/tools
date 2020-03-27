@@ -1,0 +1,29 @@
+export declare namespace Touch {
+    const None: 0;
+    const First: 1;
+    const Last: 2;
+}
+export declare type Touch = 0 | 1 | 2;
+export declare class LinkedMap<K, V> {
+    private _map;
+    private _head;
+    private _tail;
+    private _size;
+    constructor();
+    clear(): void;
+    isEmpty(): boolean;
+    readonly size: number;
+    has(key: K): boolean;
+    get(key: K): V | undefined;
+    set(key: K, value: V, touch?: Touch): void;
+    delete(key: K): boolean;
+    shift(): V | undefined;
+    forEach(callbackfn: (value: V, key: K, map: LinkedMap<K, V>) => void, thisArg?: any): void;
+    forEachReverse(callbackfn: (value: V, key: K, map: LinkedMap<K, V>) => void, thisArg?: any): void;
+    values(): V[];
+    keys(): K[];
+    private addItemFirst(item);
+    private addItemLast(item);
+    private removeItem(item);
+    private touch(item, touch);
+}

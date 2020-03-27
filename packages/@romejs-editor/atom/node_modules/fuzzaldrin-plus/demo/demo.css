@@ -1,0 +1,123 @@
+
+* {
+    box-sizing: border-box;
+}
+
+h1, h2, p, form, label {
+    text-align: center;
+}
+
+h1, h2 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+#sourcetxt {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    max-width: 700px;
+    height: 250px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    max-width: 700px;
+}
+
+.typeahead {
+    width: 90%;
+    max-width: 700px;
+    margin: auto;
+    display: block;
+    padding-bottom: 30px;
+    position: relative;
+}
+
+.typeahead input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 700px;
+    padding: 10px;
+    opacity: 1;
+    background: none 0% 0% / auto repeat scroll padding-box border-box rgb(255, 255, 255);
+}
+
+.twitter-typeahead {
+    width: 100%;
+}
+
+.twitter-typeahead .tt-query,
+.twitter-typeahead .tt-hint {
+    margin-bottom: 0;
+}
+
+.typeahead ul, .typeahead li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+.tt-menu, .ui-menu {
+    width: 100%;
+    max-width: 700px;
+    margin-top: 2px;
+    padding: 5px 0;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+
+}
+
+.tt-suggestion, .ui-menu-item {
+    display: block;
+    padding: 6px 20px;
+}
+
+.ui-helper-hidden-accessible {
+    display: none;
+}
+
+.typeahead-footer {
+    border-top: 1px solid #eee;
+    margin-top: 10px;
+    padding: 20px;
+}
+
+.title {
+    color: #222;
+}
+
+.title strong {
+    color: #000;
+}
+
+.author {
+    color: #666
+}
+
+.author strong {
+    color: #444
+}
+
+.score {
+    color: #888;
+}
+
+td {
+    vertical-align: top;
+    text-align: left;
+}
