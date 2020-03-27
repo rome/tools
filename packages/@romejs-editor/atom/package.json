@@ -1,0 +1,62 @@
+{
+  "name": "rome-atom",
+  "main": "./lib/main",
+  "version": "0.6.2",
+  "description": "Rome atom extension",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.21.0"
+  },
+  "dependencies": {
+    "atom-languageclient": "^0.8.3"
+  },
+  "consumedServices": {
+    "linter-indie": {
+      "versions": {
+        "2.0.0": "consumeLinterV2"
+      }
+    },
+    "datatip": {
+      "versions": {
+        "0.1.0": "consumeDatatip"
+      }
+    }
+  },
+  "providedServices": {
+    "formatter": {
+    "versions": {
+      "1.0.0": "provideFormatter"
+    }
+  },
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "provideAutocomplete"
+      }
+    },
+    "code-format.range": {
+      "versions": {
+        "0.1.0": "provideCodeFormat"
+      }
+    },
+    "code-highlight": {
+      "versions": {
+        "0.1.0": "provideCodeHighlight"
+      }
+    },
+    "definitions": {
+      "versions": {
+        "0.1.0": "provideDefinitions"
+      }
+    },
+    "find-references": {
+      "versions": {
+        "0.1.0": "provideFindReferences"
+      }
+    },
+    "outline-view": {
+      "versions": {
+        "0.1.0": "provideOutlines"
+      }
+    }
+  }
+}
