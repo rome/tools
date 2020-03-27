@@ -249,6 +249,12 @@ export const descriptions = createMessages({
       message: 'Your array contains an empty slot',
     },
 
+    SINGLE_VAR_DECLARATOR: {
+      fixable: true,
+      category: 'lint/singleVarDeclarator',
+      message: 'Declare each variable separately',
+    },
+
     PREFER_FUNCTION_DECLARATIONS: {
       category: 'lint/preferFunctionDeclarations',
       message: 'Use a function declaration instead of a const function',

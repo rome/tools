@@ -967,7 +967,8 @@ function finishOp(parser: JSParser, type: TokenTypes, size: number): void {
 
 export function readRegexp(parser: JSParser): void {
   const start = parser.state.index;
-  let escaped, inClass;
+  let escaped;
+  let inClass;
   for (;;) {
     if (parser.state.index >= parser.length) {
       parser.addDiagnostic({
