@@ -82,6 +82,7 @@ Object {
     Object {
       origins: Array [Object {category: 'js-parser'}]
       location: Object {
+        filename: 'unknown'
         mtime: undefined
         sourceType: 'module'
         end: Object {
@@ -162,6 +163,7 @@ Object {
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unterminated string constant'}
       }
       location: Object {
+        filename: 'unknown'
         mtime: undefined
         sourceType: 'module'
         end: Object {
