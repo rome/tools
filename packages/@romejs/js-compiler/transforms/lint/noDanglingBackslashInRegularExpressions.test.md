@@ -86,6 +86,7 @@ Object {
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expecting Unicode escape sequence \\uXXXX'}
       }
       location: Object {
+        filename: 'unknown'
         mtime: undefined
         sourceType: 'module'
         end: Object {
@@ -164,6 +165,7 @@ Object {
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expecting Unicode escape sequence \\uXXXX'}
       }
       location: Object {
+        filename: 'unknown'
         mtime: undefined
         sourceType: 'module'
         end: Object {

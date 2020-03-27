@@ -816,6 +816,7 @@ export const createRegExpParser = createParser((ParserCore) =>
           });
           return;
 
+        case '{':
         case ']':
         case '}':
           return this.parseCharacter();

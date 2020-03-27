@@ -12,10 +12,12 @@ export default function CatchClause(generator: Generator, node: AnyNode) {
   node = catchClause.assert(node);
   catchClause.assert(node);
   generator.word('catch');
-  generator.space();
-  generator.token('(');
-  generator.print(node.param, node);
-  generator.token(')');
+  if (node.param) {
+    generator.space();
+    generator.token('(');
+    generator.print(node.param, node);
+    generator.token(')');
+  }
   generator.space();
   generator.print(node.body, node);
 }
