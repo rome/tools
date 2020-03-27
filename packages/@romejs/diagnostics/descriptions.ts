@@ -154,6 +154,7 @@ export const descriptions = createMessages({
     UNCLOSED_CHAR_SET: 'Unclosed character set',
     DUPLICATE_FLAG: 'Duplicate regular expression flag',
     INVALID_FLAG: 'Invalid regular expression flag',
+    NO_TARGET_QUANTIFIER: 'Nothing to repeat',
   },
 
   // @romejs/codec-json
