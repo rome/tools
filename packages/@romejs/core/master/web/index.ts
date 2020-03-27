@@ -19,7 +19,7 @@ import {
 } from '../../common/bridges/MasterBridge';
 import {ReporterStream} from '@romejs/cli-reporter';
 import {MasterMarker} from '../Master';
-import {ClientFlags} from '../../common/types/client';
+import {ClientFlagsJSON} from '../../common/types/client';
 import WebRequest, {stripBundleSuffix} from './WebRequest';
 import {BundlerConfig} from '../../common/types/bundler';
 import {AbsoluteFilePath} from '@romejs/path';
@@ -36,7 +36,7 @@ export type WebMasterClient =
   & WebMasterTime
   & {
     id: number;
-    flags: ClientFlags;
+    flags: ClientFlagsJSON;
     stdoutAnsi: string;
     stdoutHTML: string;
   };
@@ -80,7 +80,10 @@ export class WebServer {
 
       const data: WebMasterClient = {
         id: client.id,
-        flags: client.flags,
+        flags: {
+          ...client.flags,
+          cwd: client.flags.cwd.join(),
+        },
         startTime: Date.now(),
         endTime: undefined,
         stdoutAnsi: '',

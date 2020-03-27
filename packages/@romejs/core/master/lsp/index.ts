@@ -16,7 +16,7 @@ import {
 import Master, {MasterClient} from '../Master';
 import {createAbsoluteFilePath} from '@romejs/path';
 import {Diagnostics} from '@romejs/diagnostics';
-import {Position, UNKNOWN_POSITION} from '@romejs/parser-core';
+import {Position} from '@romejs/parser-core';
 import {coerce1to0, get0} from '@romejs/ob1';
 import {stripMarkupTags} from '@romejs/string-markup';
 
@@ -69,9 +69,7 @@ function convertPositionToLSP(pos: undefined | Position): LSPPosition {
   }
 }
 
-function convertDiagnosticsToLSP(
-  diagnostics: Diagnostics,
-): Array<LSPDiagnostic> {
+function convertDiagnosticsToLSP(diagnostics: Diagnostics): Array<LSPDiagnostic> {
   const lspDiagnostics: Array<LSPDiagnostic> = [];
 
   for (const {description, location} of diagnostics) {
@@ -128,9 +126,9 @@ export class LSPConnection {
 
     switch (req.method) {
       case 'initialize':
-        await this.master.projectManager.assertProject(
-          createAbsoluteFilePath(params.get('rootUri').asString()),
-        );
+        await this.master.projectManager.assertProject(createAbsoluteFilePath(
+          params.get('rootUri').asString(),
+        ));
         return {
           capabilities: {
             textDocumentSync: 1,
@@ -142,15 +140,13 @@ export class LSPConnection {
         };
 
       case 'textDocument/formatting':
-        const uri = params
-          .get('textDocument')
-          .get('uri')
-          .asString();
+        const uri = params.get('textDocument').get('uri').asString();
         const res = await this.master.handleRequest(this.client, {
           command: 'format',
           args: [uri],
           silent: true,
         });
+        res;
     }
 
     return {};
@@ -161,10 +157,7 @@ export class LSPConnection {
 
     switch (notif.method) {
       case 'textDocument/didOpen':
-        const uri = params
-          .get('textDocument')
-          .get('uri')
-          .asString();
+        const uri = params.get('textDocument').get('uri').asString();
         const res = await this.master.handleRequest(this.client, {
           command: 'lint',
           args: [uri],
@@ -208,7 +201,7 @@ export class LSPConnection {
         const res: LSPResponseMessage = {
           id: req.id,
           error: {
-            code: -32603,
+            code: -32_603,
             message: err.message,
           },
         };
