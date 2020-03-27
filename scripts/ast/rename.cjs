@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+require('../_setup.cjs');
+
 const path = require('path');
 const fs = require('fs');
 
