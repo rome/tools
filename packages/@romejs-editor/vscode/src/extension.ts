@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ExtensionContext} from 'vscode';
-
 import {
   LanguageClient,
   LanguageClientOptions,
@@ -16,7 +14,7 @@ import {
 
 let client: LanguageClient;
 
-export function activate(context: ExtensionContext) {
+export function activate() {
   let serverOptions: ServerOptions = {
     module: '/tmp/rome-dev/index.js',
     args: ['lsp'],

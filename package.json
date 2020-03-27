@@ -48,7 +48,8 @@
         "lib/modules.js",
         "prelude.ts",
         "website",
-        "@romejs-web"
+        "@romejs-web",
+        "out"
       ]
     }
   }

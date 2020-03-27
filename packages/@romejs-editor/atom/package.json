@@ -1,5 +1,5 @@
 {
-  "name": "@romejs-editor/vscode",
+  "name": "@romejs-editor/atom",
   "main": "./lib/main",
   "version": "0.6.2",
   "description": "Rome LSP Atom extension",
