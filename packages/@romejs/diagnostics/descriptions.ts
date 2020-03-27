@@ -404,6 +404,12 @@ export const descriptions = createMessages({
         advice: buildDuplicateLocationAdvice(locations),
       }),
 
+    NO_REFERENCE_TO_NON_EXISTING_GROUP: (name: string) =>
+      ({
+        category: 'lint/noReferenceToNonExistingGroup',
+        message: `Reference to non-existent group <emphasis>"${name}"</emphasis>`,
+      }),
+
     DEFAULT_EXPORT_SAME_BASENAME: (
       {defaultName, defaultType, actualFilename, correctFilename}: {
         defaultName: string;

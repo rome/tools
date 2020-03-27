@@ -497,6 +497,9 @@ generators.set('RegExpNonWordBoundaryCharacter', RegExpNonWordBoundaryCharacter)
 import RegExpNonWordCharacter from './regex/RegExpNonWordCharacter';
 generators.set('RegExpNonWordCharacter', RegExpNonWordCharacter);
 
+import RegExpNumericBackReference from './regex/RegExpNumericBackReference';
+generators.set('RegExpNumericBackReference', RegExpNumericBackReference);
+
 import RegExpQuantified from './regex/RegExpQuantified';
 generators.set('RegExpQuantified', RegExpQuantified);
 

@@ -335,6 +335,8 @@ export * from './regex/RegExpNonWordBoundaryCharacter';
 
 export * from './regex/RegExpNonWordCharacter';
 
+export * from './regex/RegExpNumericBackReference';
+
 export * from './regex/RegExpQuantified';
 
 export * from './regex/RegExpStartCharacter';
