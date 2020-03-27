@@ -52,3 +52,5 @@ export type ClientFlags = {
   silent: boolean;
   verbose: boolean;
 };
+
+export type ClientFlagsJSON = Omit<ClientFlags, 'cwd'> & {cwd: string};
