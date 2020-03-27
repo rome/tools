@@ -59,6 +59,7 @@ import {
   createUnknownFilePath,
 } from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
+import {LSPConnection} from './lsp/index';
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;
 
@@ -375,11 +376,19 @@ export default class Master {
       return;
     }
 
-    await this.clientStartEvent.callOptional(client);
+    const connection = new LSPConnection(this, client, (chunk) => {
+      bridge.lspBuffer.send(chunk);
+    });
+
+    bridge.lspBuffer.subscribe((chunk) => {
+      connection.append(chunk);
+    });
 
     bridge.query.subscribe(async (request) => {
       return await this.handleRequest(client, request);
     });
+
+    await this.clientStartEvent.callOptional(client);
   }
 
   async createClient(bridge: MasterBridge): Promise<MasterClient> {
@@ -474,8 +483,10 @@ export default class Master {
     });
 
     // Add reporter to connected set, important logs may be output to these
-    this.connectedReporters.addStream(errStream);
-    this.connectedReporters.addStream(outStream);
+    if (!flags.silent) {
+      this.connectedReporters.addStream(errStream);
+      this.connectedReporters.addStream(outStream);
+    }
 
     const client: MasterClient = {
       id: this.clientIdCounter++,
@@ -584,7 +595,6 @@ export default class Master {
       });
     }
 
-    // Create master request wrapper which is just a bucket of objects
     const req = new MasterRequest({
       client,
       query,

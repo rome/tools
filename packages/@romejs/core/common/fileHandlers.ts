@@ -138,7 +138,8 @@ const textHandler: ExtensionHandler = {
   },
 
   async toJavaScript({file}) {
-    const src = await readFileText(file.real);
+    const src = file.sourceText === undefined
+      ? await readFileText(file.real) : file.sourceText;
     const serial = JSON.stringify(src);
     return {
       sourceText: `export default ${serial};`,
@@ -217,7 +218,8 @@ const jsonHandler: ExtensionHandler = {
   },
 
   async toJavaScript({file}) {
-    const src = await readFileText(file.real);
+    const src = file.sourceText === undefined
+      ? await readFileText(file.real) : file.sourceText;
 
     // Parse the JSON to make sure it's valid
     const obj = parseJSON({
@@ -299,7 +301,8 @@ function buildJSHandler(
 
     async toJavaScript({file}) {
       return {
-        sourceText: await readFileText(file.real),
+        sourceText: file.sourceText === undefined
+          ? await readFileText(file.real) : file.sourceText,
         generated: false,
       };
     },

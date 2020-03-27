@@ -46,7 +46,7 @@ type ClientOptions = {
   stdout?: stream.Writable;
   stderr?: stream.Writable;
   stdin?: NodeJS.ReadStream;
-  flags: Partial<Omit<ClientFlags, 'clientName'>> & {clientName: string};
+  flags: Partial<Omit<ClientFlags, 'clientName'>>;
 };
 
 export type ClientProfileOptions = {
@@ -115,6 +115,14 @@ export default class Client {
 
   requestResponseEvent: Event<ClientRequestResponseResult, void>;
   endEvent: Event<void, void>;
+
+  setClientName(name: string) {
+    if (this.bridgeStatus !== undefined) {
+      throw new Error('Already connected to bridge. Cannot change client name');
+    }
+
+    this.flags.clientName = name;
+  }
 
   getClientJSONFlags(): ClientFlagsJSON {
     return {
@@ -520,8 +528,16 @@ export default class Client {
       proc.kill();
     }
 
-    console.log('ughhh???');
     return undefined;
+  }
+
+  async connectToDaemon(): Promise<undefined | MasterBridge> {
+    const bridge = await this.tryConnectToExistingDaemon();
+    if (bridge !== undefined) {
+      return bridge;
+    }
+
+    return await this.startDaemon();
   }
 
   async tryConnectToNewDaemon(): Promise<undefined | MasterBridge> {
