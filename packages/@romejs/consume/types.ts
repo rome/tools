@@ -64,7 +64,7 @@ export type ConsumePropertyDefinition =
   | ConsumePropertyPrimitiveDefinition
   | ConsumePropertyNumberRangeDefinition;
 
-export type ConsumerOnDefinition = (definition: ConsumePropertyDefinition) => void;
+export type ConsumerOnDefinition = (definition: ConsumePropertyDefinition, consumer: Consumer) => void;
 
 export type ConsumerHandleUnexpected = (diagnostic: Diagnostic) => void;
 

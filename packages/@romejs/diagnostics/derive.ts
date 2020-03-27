@@ -192,7 +192,7 @@ export function deriveDiagnosticFromError(
   return {
     description: {
       category: opts.category,
-      message: createBlessedDiagnosticMessage(message),
+      message: createBlessedDiagnosticMessage(escapeMarkup(message)),
       advice,
     },
     location: {

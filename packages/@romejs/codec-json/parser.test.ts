@@ -122,11 +122,17 @@ test('strings', (t) => {
     parseExtJSON({input: '\'foo\''});
   }, descriptions.JSON.SINGLE_QUOTE_USAGE.message.value);
 
-  // TODO escMessage.INVALID_HEX_DIGIT_FOR_ESCAPE
+  t.throws(() => {
+    parseExtJSON({input: '"\\u000Z"'});
+  }, descriptions.STRING_ESCAPE.INVALID_HEX_DIGIT_FOR_ESCAPE.message.value);
 
-  // TODO escMessage.INVALID_STRING_CHARACTER
+  t.throws(() => {
+    parseExtJSON({input: '"\t"'});
+  }, descriptions.STRING_ESCAPE.INVALID_STRING_CHARACTER.message.value);
 
-  // TODO escMessage.NOT_ENOUGH_CODE_POINTS
+  t.throws(() => {
+    parseExtJSON({input: '"\\u123"'});
+  }, descriptions.STRING_ESCAPE.NOT_ENOUGH_CODE_POINTS.message.value);
 });
 
 test('booleans', (t) => {

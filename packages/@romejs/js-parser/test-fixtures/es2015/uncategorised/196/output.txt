@@ -29,6 +29,7 @@ Program {
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected character <emphasis>u</emphasis>'}
       }
       location: Object {
+        filename: 'input.js'
         mtime: undefined
         sourceType: 'script'
         end: Object {

@@ -7,7 +7,7 @@
 
 import {MasterQueryResponse} from '@romejs/core';
 import {Event} from '@romejs/events';
-import {ClientFlags} from '../common/types/client';
+import {ClientFlags, ClientFlagsJSON} from '../common/types/client';
 import {ClientRequestType} from './ClientRequest';
 import {Reporter} from '@romejs/cli-reporter';
 import {DEFAULT_CLIENT_FLAGS} from '../common/types/client';
@@ -21,10 +21,7 @@ import prettyFormat from '@romejs/pretty-format';
 import {VERSION} from '../common/constants';
 import {TarWriter} from '@romejs/codec-tar';
 import {Trace, Profiler, Profile, TraceEvent} from '@romejs/v8';
-import {
-  PartialMasterQueryRequest,
-  MasterBridgeJSONFlags,
-} from '../common/bridges/MasterBridge';
+import {PartialMasterQueryRequest} from '../common/bridges/MasterBridge';
 import {loadUserConfig, UserConfig} from '../common/userConfig';
 import stream = require('stream');
 
@@ -119,7 +116,7 @@ export default class Client {
   requestResponseEvent: Event<ClientRequestResponseResult, void>;
   endEvent: Event<void, void>;
 
-  getBridgeJSONFlags(): MasterBridgeJSONFlags {
+  getClientJSONFlags(): ClientFlagsJSON {
     return {
       ...this.flags,
       cwd: this.flags.cwd.join(),
@@ -305,7 +302,7 @@ export default class Client {
 
       // Add client flags
       writer.append({name: 'clientFlags.json'}, stringify(
-        this.getBridgeJSONFlags(),
+        this.getClientJSONFlags(),
       ));
 
       function stringify(val: JSONValue): string {
@@ -408,7 +405,7 @@ export default class Client {
         hasClearScreen: this.reporter.hasClearScreen,
         columns: stdout.columns,
         useRemoteReporter: true,
-        flags: this.getBridgeJSONFlags(),
+        flags: this.getClientJSONFlags(),
       }),
 
       bridge.handshake(),

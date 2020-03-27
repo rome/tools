@@ -49,6 +49,7 @@ import {
 import {createDirectory, readFileText} from '@romejs/fs';
 import {Consumer} from '@romejs/consume';
 import {consumeJSON} from '@romejs/codec-json';
+import {VCSClient, getVCSClient} from '@romejs/vcs';
 
 function cleanUidParts(parts: Array<string>): string {
   let uid = '';
@@ -477,18 +478,45 @@ export default class ProjectManager {
 
   findProjectConfigConsumer(
     def: ProjectDefinition,
-    test: (consumer: Consumer) => undefined | Consumer,
+    test: (consumer: Consumer) => undefined | false | Consumer,
   ): ProjectConfigSource {
     const meta = assertHardMeta(def.meta);
 
     for (const consumer of meta.consumersChain) {
       const value = test(consumer);
-      if (value !== undefined && value.exists()) {
+      if (value !== undefined && value !== false && value.exists()) {
         return {value, consumer: meta.consumer};
       }
     }
 
     return {value: undefined, consumer: meta.consumer};
+  }
+
+  async getVCSClient(project: ProjectDefinition): Promise<VCSClient> {
+    const client = await getVCSClient(project.config.vcs.root);
+
+    if (client === undefined) {
+      const {
+        value: rootConfigConsumer,
+        consumer,
+      } = this.findProjectConfigConsumer(project, (consumer) =>
+        consumer.has('vsc') && consumer.get('vsc').get('root')
+      );
+
+      const rootConfigLocation: undefined | DiagnosticLocation =
+        rootConfigConsumer === undefined
+          ? undefined : rootConfigConsumer.getDiagnosticLocation();
+
+      const location: DiagnosticLocation = rootConfigLocation === undefined
+        ? consumer.getDiagnosticLocation() : rootConfigLocation;
+
+      throw createSingleDiagnosticError({
+        description: descriptions.PROJECT_MANAGER.NO_VCS(rootConfigLocation),
+        location,
+      });
+    } else {
+      return client;
+    }
   }
 
   async addProject(

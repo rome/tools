@@ -59,6 +59,7 @@ Program {
         ]
       }
       location: Object {
+        filename: 'input.mjs'
         mtime: undefined
         sourceType: 'script'
         end: Object {

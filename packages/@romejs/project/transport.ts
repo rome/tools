@@ -18,9 +18,9 @@ export function serializeJSONProjectConfig(
 
   return {
     ...config,
-    vsc: {
-      ...config.vsc,
-      root: config.vsc.root.join(),
+    vcs: {
+      ...config.vcs,
+      root: config.vcs.root.join(),
     },
     typeCheck: {
       ...config.typeCheck,
@@ -43,9 +43,9 @@ export function hydrateJSONProjectConfig(
       ...config.files,
       vendorPath: createAbsoluteFilePath(config.files.vendorPath),
     },
-    vsc: {
-      ...config.vsc,
-      root: createAbsoluteFilePath(config.vsc.root),
+    vcs: {
+      ...config.vcs,
+      root: createAbsoluteFilePath(config.vcs.root),
     },
     typeCheck: {
       ...config.typeCheck,

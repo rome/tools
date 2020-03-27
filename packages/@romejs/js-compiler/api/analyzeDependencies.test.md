@@ -283,6 +283,7 @@ Object {
         ]
       }
       location: Object {
+        filename: 'unknown'
         mtime: undefined
         sourceType: 'script'
         end: Object {

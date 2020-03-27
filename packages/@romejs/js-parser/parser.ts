@@ -390,6 +390,7 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
           ...opts.description,
         },
         location: {
+          filename: this.filename,
           sourceType: this.sourceType,
           mtime: this.mtime,
           start,

@@ -22,7 +22,10 @@ import {
   createBlessedDiagnosticMessage,
 } from '@romejs/diagnostics';
 import {DiagnosticsPrinterFlags} from '@romejs/cli-diagnostics';
-import {ProjectDefinition} from '@romejs/project';
+import {
+  ProjectDefinition,
+  ProjectConfigCategoriesWithIgnoreAndEnabled,
+} from '@romejs/project';
 import {ResolverOptions} from './fs/Resolver';
 import {BundlerConfig} from '../common/types/bundler';
 import MasterBridge, {
@@ -168,7 +171,11 @@ export default class MasterRequest {
 
     if (min === max) {
       if (args.length !== min) {
-        message = `Expected exactly <number emphasis>${min}</number> arguments`;
+        if (min === 0) {
+          message = `Expected no arguments`;
+        } else {
+          message = `Expected exactly <number emphasis>${min}</number> arguments`;
+        }
       }
     } else {
       if (args.length < min) {
@@ -280,14 +287,16 @@ export default class MasterRequest {
   }
 
   async getFilesFromArgs(
-    globOpts:
-      & MemoryFSGlobOptions
+    opts:
+      & Omit<MemoryFSGlobOptions, 'getProjectIgnore' | 'getProjectEnabled'>
       & {
+        ignoreProjectIgnore?: boolean;
         disabledDiagnosticCategory?: DiagnosticCategory;
         advice?: DiagnosticAdvice;
-        configCategory?: string;
+        configCategory?: ProjectConfigCategoriesWithIgnoreAndEnabled;
         verb?: string;
         noun?: string;
+        args?: Array<string>;
       } = {},
   ): Promise<{
     projects: Set<ProjectDefinition>;
@@ -297,14 +306,15 @@ export default class MasterRequest {
     const {flags} = this.client;
     const projects: Set<ProjectDefinition> = new Set();
 
-    // Build up args, defaulting to the current project dir if none passed
-    const rawArgs = [...this.query.args];
+    const rawArgs = opts.args === undefined ? this.query.args : opts.args;
     const resolvedArgs: Array<{
       path: AbsoluteFilePath;
       location: DiagnosticLocation;
       project: ProjectDefinition;
     }> = [];
-    if (rawArgs.length === 0) {
+
+    // If args was explicitly provided then don't assume empty args is the project root
+    if (rawArgs.length === 0 && opts.args === undefined) {
       const location = this.getDiagnosticPointerForClientCwd();
       const project = await this.assertClientCwdProject();
       resolvedArgs.push({
@@ -343,10 +353,22 @@ export default class MasterRequest {
       }
     }
 
+    const {configCategory, ignoreProjectIgnore} = opts;
+
+    const extendedGlobOpts: MemoryFSGlobOptions = {...opts};
+
+    if (configCategory !== undefined) {
+      extendedGlobOpts.getProjectEnabled = (project) =>
+        project.config[configCategory].enabled;
+
+      extendedGlobOpts.getProjectIgnore = (project) =>
+        ignoreProjectIgnore ? [] : project.config[configCategory].ignore;
+    }
+
     // Build up files
     const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
     for (const {path, location, project} of resolvedArgs) {
-      const matches = master.memoryFs.glob(path, globOpts);
+      const matches = master.memoryFs.glob(path, extendedGlobOpts);
 
       if (matches.size > 0) {
         for (const path of matches) {
@@ -357,61 +379,61 @@ export default class MasterRequest {
 
       let category: DiagnosticCategory = 'args/fileNotFound';
 
-      let advice: DiagnosticAdvice = globOpts.advice === undefined ? [] : [
-        ...globOpts.advice,
+      let advice: DiagnosticAdvice = opts.advice === undefined ? [] : [
+        ...opts.advice,
       ];
 
       // Hint if `path` failed `globOpts.test`
-      if (globOpts.getProjectEnabled !== undefined) {
-        const test = globOpts.getProjectEnabled(project);
+      if (configCategory !== undefined && !project.config[configCategory].enabled) {
+        const enabledSource = master.projectManager.findProjectConfigConsumer(
+          project,
+          (consumer) =>
+            consumer.has(configCategory) && consumer.get(configCategory).get(
+              'enabled',
+            ),
+        );
 
-        if (!test.enabled && test.source !== undefined) {
-          const testSource = test.source;
+        const explanationPrefix = opts.verb === undefined
+          ? 'Files excluded' : `Files excluded from ${opts.verb}`;
 
-          const explanationPrefix = globOpts.verb === undefined
-            ? 'Files excluded' : `Files excluded from ${globOpts.verb}`;
+        if (opts.disabledDiagnosticCategory !== undefined) {
+          category = opts.disabledDiagnosticCategory;
+        }
 
-          if (globOpts.disabledDiagnosticCategory !== undefined) {
-            category = globOpts.disabledDiagnosticCategory;
+        if (enabledSource.value === undefined) {
+          let explanation =
+            `${explanationPrefix} as it's not enabled for this project`;
+          if (configCategory !== undefined) {
+            explanation +=
+              `. Run <command>rome config enable-category ${configCategory}</command> to enable it.`;
           }
+          advice.push({
+            type: 'log',
+            category: 'info',
+            message: explanation,
+          });
+        } else {
+          advice.push({
+            type: 'log',
+            category: 'info',
+            message: `${explanationPrefix} as it's explicitly disabled in this project config`,
+          });
 
-          if (testSource.value === undefined) {
-            let explanation =
-              `${explanationPrefix} as it's not enabled for this project`;
-            if (globOpts.configCategory !== undefined) {
-              explanation +=
-                `. Run <command>rome config enable-category ${globOpts.configCategory}</command> to enable it.`;
-            }
-            advice.push({
-              type: 'log',
-              category: 'info',
-              message: explanation,
-            });
-          } else {
-            advice.push({
-              type: 'log',
-              category: 'info',
-              message: `${explanationPrefix} as it's explicitly disabled in this project config`,
-            });
-
-            const disabledPointer = testSource.value.getDiagnosticLocation(
-              'value',
-            );
-            advice.push({
-              type: 'frame',
-              location: disabledPointer,
-            });
-          }
+          const disabledPointer = enabledSource.value.getDiagnosticLocation(
+            'value',
+          );
+          advice.push({
+            type: 'frame',
+            location: disabledPointer,
+          });
         }
       }
 
       // Hint if all files were ignored
-      if (globOpts.getProjectIgnore !== undefined) {
-        const ignore = globOpts.getProjectIgnore(project);
-
+      if (configCategory !== undefined) {
         const {paths: withoutIgnore} = await this.getFilesFromArgs({
-          ...globOpts,
-          getProjectIgnore: undefined,
+          ...opts,
+          ignoreProjectIgnore: true,
         });
 
         if (withoutIgnore.size > 0) {
@@ -429,8 +451,16 @@ export default class MasterRequest {
             truncate: true,
           });
 
-          if (ignore.source !== undefined && ignore.source.value !== undefined) {
-            const ignorePointer = ignore.source.value.getDiagnosticLocation(
+          const ignoreSource = master.projectManager.findProjectConfigConsumer(
+            project,
+            (consumer) =>
+              consumer.has(configCategory) && consumer.get(configCategory).get(
+                'ignore',
+              ),
+          );
+
+          if (ignoreSource.value !== undefined) {
+            const ignorePointer = ignoreSource.value.getDiagnosticLocation(
               'value',
             );
 
@@ -452,8 +482,8 @@ export default class MasterRequest {
         location,
         description: {
           category,
-          message: createBlessedDiagnosticMessage(globOpts.noun === undefined
-            ? 'No files found' : `No files to ${globOpts.noun} found`
+          message: createBlessedDiagnosticMessage(opts.noun === undefined
+            ? 'No files found' : `No files to ${opts.noun} found`
           ),
           advice,
         },

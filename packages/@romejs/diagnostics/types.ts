@@ -87,7 +87,13 @@ export type DiagnosticAdviceItem =
   | DiagnosticAdviceCode
   | DiagnosticAdviceFrame
   | DiagnosticAdviceDiff
-  | DiagnosticAdviceStacktrace;
+  | DiagnosticAdviceStacktrace
+  | DiagnosticAdviceCommand;
+
+export type DiagnosticAdviceCommand = {
+  type: 'command';
+  command: string;
+};
 
 export type DiagnosticAdviceLog = {
   type: 'log';

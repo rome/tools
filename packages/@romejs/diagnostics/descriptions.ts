@@ -410,6 +410,12 @@ export const descriptions = createMessages({
         advice: buildDuplicateLocationAdvice(locations),
       }),
 
+    NO_REFERENCE_TO_NON_EXISTING_GROUP: (name: string) =>
+      ({
+        category: 'lint/noReferenceToNonExistingGroup',
+        message: `Reference to non-existent group <emphasis>"${name}"</emphasis>`,
+      }),
+
     DEFAULT_EXPORT_SAME_BASENAME: (
       {defaultName, defaultType, actualFilename, correctFilename}: {
         defaultName: string;
@@ -446,6 +452,33 @@ export const descriptions = createMessages({
   },
 
   PROJECT_MANAGER: {
+    NO_VCS: (rootConfigLocation: undefined | DiagnosticLocation) =>
+      ({
+        category: 'projectManager/vscMissing',
+        message: 'Can\'t find any version control for this project',
+        advice: rootConfigLocation === undefined ? [
+          {
+            type: 'log',
+            category: 'info',
+            message: 'Version control root was set to the project root as it was not configured. To configure a different folder run',
+          },
+          {
+            type: 'command',
+            command: 'rome config set-directory vcs.root DIRECTORY_HERE',
+          },
+        ] : [
+          {
+            type: 'log',
+            category: 'info',
+            message: 'Version control root was set here',
+          },
+          {
+            type: 'frame',
+            location: rootConfigLocation,
+          },
+        ],
+      }),
+
     DUPLICATE_PACKAGE: (packageName: string, existing: string) =>
       ({
         category: 'projectManager/nameCollision',
