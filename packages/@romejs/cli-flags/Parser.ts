@@ -328,6 +328,7 @@ export default class Parser<T> {
   async init(): Promise<T> {
     // Show help for --version
     if (this.flags.has('version')) {
+      console.log(this.flags);
       this.reporter.logAll(String(this.opts.version));
       process.exit(0);
     }
@@ -335,6 +336,14 @@ export default class Parser<T> {
     const consumer = this.getFlagsConsumer();
 
     let definedCommand: undefined | DefinedCommand;
+    
+    // help command
+    if (this.helpMode) {
+      await this.showHelp(definedCommand === undefined
+        ? undefined : definedCommand.command.name
+      );
+      process.exit(1);
+    }
 
     const rootFlags = await consumer.captureDiagnostics(async (consumer) => {
       for (const shorthandName of this.shorthandFlags) {
@@ -359,14 +368,6 @@ export default class Parser<T> {
 
       return rootFlags;
     });
-
-    // Show help for --help
-    if (this.helpMode) {
-      await this.showHelp(definedCommand === undefined
-        ? undefined : definedCommand.command.name
-      );
-      process.exit(1);
-    }
 
     if (definedCommand !== undefined) {
       this.ranCommand = definedCommand.command.name;
