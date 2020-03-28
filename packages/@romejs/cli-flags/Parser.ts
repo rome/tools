@@ -328,7 +328,6 @@ export default class Parser<T> {
   async init(): Promise<T> {
     // Show help for --version
     if (this.flags.has('version')) {
-      console.log(this.flags);
       this.reporter.logAll(String(this.opts.version));
       process.exit(0);
     }
@@ -343,7 +342,7 @@ export default class Parser<T> {
       );
       process.exit(1);
     }
-    
+
     const rootFlags = await consumer.captureDiagnostics(async (consumer) => {
       for (const shorthandName of this.shorthandFlags) {
         consumer.get(shorthandName).unexpected(
@@ -365,7 +364,6 @@ export default class Parser<T> {
       consumer.enforceUsedProperties('flag', false);
       return rootFlags;
     });
-
 
     if (definedCommand !== undefined) {
       this.ranCommand = definedCommand.command.name;
