@@ -863,6 +863,7 @@ export const descriptions = createMessages({
     INVALID_INT_TOKEN: 'Invalid or unexpected int token',
     UNICODE_ESCAPE_IN_REGEX_FLAGS: 'Regular expression flags can\'t contain unicode escapes',
     UNTERMINATED_REGEX: 'Unterminated regular expression',
+    DANGLING_BACKSLASH_IN_REGEX: 'Dangling backslash in a regular expression',
     EXPECTED_RELATIONAL_OPERATOR: 'Expected relational operator',
     UNEXPECTED_SPACE: 'Unexpected space',
     EXPECTED_SEMI_OR_LINE_TERMINATOR: 'Expected a semicolon or a line terminator',

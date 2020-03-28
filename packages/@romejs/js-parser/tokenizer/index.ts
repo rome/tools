@@ -977,6 +977,16 @@ export function readRegexp(parser: JSParser): void {
 
     const ch = parser.input.charAt(getIndex(parser));
     if (lineBreak.test(ch)) {
+      if(parser.input.charAt(getIndex(parser) - 2) === String.fromCharCode(charCodes.backslash) 
+      || parser.input.charAt(getIndex(parser) - 3) === String.fromCharCode(charCodes.backslash)) {
+        const line = parser.input.slice(0, getIndex(parser));
+        const backslashIndex = line.lastIndexOf(String.fromCharCode(charCodes.backslash));
+        parser.addDiagnostic({
+          end: parser.getPositionFromIndex(coerce0(backslashIndex)),
+          description: descriptions.JS_PARSER.DANGLING_BACKSLASH_IN_REGEX,
+        });
+        break;
+      }
       parser.addDiagnostic({
         end: parser.getPositionFromIndex(parser.state.index),
         description: descriptions.JS_PARSER.UNTERMINATED_REGEX,
