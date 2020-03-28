@@ -362,6 +362,7 @@ export default class Parser<T> {
       }
 
       consumer.enforceUsedProperties('flag', false);
+      this.currentCommand = undefined;
       return rootFlags;
     });
 
