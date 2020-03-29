@@ -15,8 +15,8 @@
     "@types/react-dom": "^16.8.5",
     "typescript": "^3.7.0"
   },
+  "romeLSPBin": "./scripts/vendor-rome",
   "scripts": {
-    "rome": "./scripts/vendor-rome",
     "dev-rome": "./scripts/dev-rome",
     "test": "./scripts/dev-rome test",
     "lint": "./scripts/dev-rome lint",
