@@ -427,6 +427,32 @@ export default class MasterRequest {
     let pendingEvictPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
     let pendingEvictProjects: Set<ProjectDefinition> = new Set();
     let timeout: undefined | NodeJS.Timeout;
+    let changesWhileRunningCallback = false;
+    let runningCallback = false;
+
+    async function flush() {
+      if (pendingEvictPaths.size === 0) {
+        return;
+      }
+
+      timeout = undefined;
+
+      const result: MasterRequestGetFilesResult = {
+        paths: pendingEvictPaths,
+        projects: pendingEvictProjects,
+      };
+      pendingEvictPaths = new AbsoluteFilePathSet();
+      pendingEvictProjects = new Set();
+
+      runningCallback = true;
+      await callback(result, false);
+      runningCallback = false;
+
+      if (changesWhileRunningCallback) {
+        changesWhileRunningCallback = false;
+        flush();
+      }
+    }
 
     const onChange = (path: AbsoluteFilePath) => {
       let matches = false;
@@ -448,16 +474,10 @@ export default class MasterRequest {
       pendingEvictPaths.add(path);
 
       // Buffer up evicted paths
-      if (timeout === undefined) {
-        timeout = setTimeout(() => {
-          timeout = undefined;
-          callback(
-            {paths: pendingEvictPaths, projects: pendingEvictProjects},
-            false,
-          );
-          pendingEvictPaths = new AbsoluteFilePathSet();
-          pendingEvictProjects = new Set();
-        }, 100);
+      if (runningCallback) {
+        changesWhileRunningCallback = true;
+      } else if (timeout === undefined) {
+        timeout = setTimeout(flush, 100);
       }
     };
 
