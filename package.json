@@ -49,7 +49,8 @@
         "prelude.ts",
         "website",
         "@romejs-web",
-        "out"
+        "out",
+        "vscode/node_modules"
       ]
     }
   }

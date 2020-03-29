@@ -11,6 +11,7 @@ import {
   ServerOptions,
   TransportKind,
 } from 'vscode-languageclient';
+// rome-suppress resolver/notFound
 import * as vscode from 'vscode';
 import path = require('path');
 
@@ -73,8 +74,13 @@ async function tryManifest(root: string): Promise<undefined | string> {
 }
 
 async function getRomeLocation(): Promise<undefined | string> {
+  const {workspaceFolders} = vscode.workspace;
+  if (workspaceFolders === undefined) {
+    return;
+  }
+
   // Find relative to workspace folders
-  for (const {uri} of vscode.workspace.workspaceFolders) {
+  for (const {uri} of workspaceFolders) {
     if (uri.scheme === 'file') {
       const manifest = await tryManifest(uri.path);
       if (manifest !== undefined) {
@@ -122,6 +128,10 @@ export async function activate() {
         });
       });
     });
+  }
+
+  if (romePath === undefined) {
+    throw new Error('Should have been defined');
   }
 
   log(`Discovered Rome path ${romePath}`);
