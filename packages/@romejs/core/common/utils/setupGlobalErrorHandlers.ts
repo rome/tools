@@ -18,10 +18,10 @@ export default function setupGlobalErrorHandlers(
     reason: unknown,
     promise: Promise<unknown>,
   ) => {
-    console.log(reason, promise);
     promise.then(() => {
       throw new Error('Promise is rejected so should never hit this condition');
     }).catch((err) => {
+      console.error(err);
       callback(err);
     });
   };

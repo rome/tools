@@ -82,14 +82,13 @@ function formatFileLink(
 
   // Normalize filename
   let filename = attributes.get('target') || '';
-  let origFilename = filename;
   if (opts.normalizeFilename !== undefined) {
     filename = opts.normalizeFilename(filename);
   }
 
   // Default text to a humanized version of the filename
   if (text === '') {
-    text = humanizeMarkupFilename([filename, origFilename], opts);
+    text = humanizeMarkupFilename(filename, opts);
 
     const line = attributes.get('line');
     if (line !== undefined) {
@@ -114,6 +113,34 @@ function formatApprox(attributes: TagAttributes, value: string) {
   }
 }
 
+function formatGrammarNumber(attributes: TagAttributes, value: string) {
+  const num = Number(value);
+
+  const none = attributes.get('none');
+  if (none !== undefined && num === 0) {
+    return none;
+  }
+
+  const singular = attributes.get('singular');
+  if (singular !== undefined && num === 1) {
+    return singular;
+  }
+
+  const plural = attributes.get('plural');
+  if (plural !== undefined) {
+    return plural;
+  }
+
+  return '';
+}
+
+function formatNumber(attributes: TagAttributes, value: string) {
+  const num = Number(value);
+  const human = humanizeNumber(num);
+  const humanWithApprox = formatApprox(attributes, human);
+  return humanWithApprox;
+}
+
 export function stripMarkupTags(
   input: string,
   opts: MarkupFormatOptions = {},
@@ -124,7 +151,10 @@ export function stripMarkupTags(
         return formatFileLink(attributes, value, opts).text;
 
       case 'number':
-        return formatApprox(attributes, value);
+        return formatNumber(attributes, value);
+
+      case 'grammarNumber':
+        return formatGrammarNumber(attributes, value);
 
       case 'duration':
         return formatApprox(attributes, humanizeTime(Number(value), true));
@@ -185,7 +215,10 @@ export function markupToAnsi(
         return formatApprox(attributes, humanizeTime(Number(value), true));
 
       case 'number':
-        return formatApprox(attributes, humanizeNumber(Number(value)));
+        return formatNumber(attributes, value);
+
+      case 'grammarNumber':
+        return formatGrammarNumber(attributes, value);
 
       case 'italic':
         return formatAnsi.italic(value);
@@ -299,26 +332,15 @@ export function markupToAnsi(
 }
 
 export function humanizeMarkupFilename(
-  filenames: Array<string>,
+  filename: string,
   opts: MarkupFormatOptions = {},
 ): string {
   if (opts.humanizeFilename !== undefined) {
-    const override = opts.humanizeFilename(filenames[0]);
+    const override = opts.humanizeFilename(filename);
     if (override !== undefined) {
       return override;
     }
   }
 
-  if (filenames.length === 0) {
-    return 'unknown';
-  }
-
-  const names: Array<string> = [];
-
-  for (const filename of filenames) {
-    names.push(createUnknownFilePath(filename).format(opts.cwd));
-  }
-
-  // Get the shortest name
-  return names.sort((a, b) => a.length - b.length)[0];
+  return createUnknownFilePath(filename).format(opts.cwd);
 }

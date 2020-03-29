@@ -13,13 +13,13 @@ import {JSONFileReference} from '../common/types/files';
 import {
   DiagnosticLocation,
   getDiagnosticsFromError,
-  DiagnosticOrigin,
   DiagnosticAdvice,
   createSingleDiagnosticError,
   DiagnosticsError,
   DiagnosticCategory,
   Diagnostic,
   createBlessedDiagnosticMessage,
+  DiagnosticsProcessor,
 } from '@romejs/diagnostics';
 import {
   DiagnosticsPrinterFlags,
@@ -41,7 +41,7 @@ import Master, {
   MasterUnfinishedMarker,
 } from './Master';
 import {Reporter} from '@romejs/cli-reporter';
-import {Event} from '@romejs/events';
+import {Event, EventSubscription, mergeEventSubscriptions} from '@romejs/events';
 import {serializeCLIFlags, SerializeCLITarget} from '@romejs/cli-flags';
 import {Program} from '@romejs/js-ast';
 import {TransformStageName} from '@romejs/js-compiler';
@@ -69,11 +69,9 @@ import {number1, number0, coerce0} from '@romejs/ob1';
 import {MemoryFSGlobOptions} from './fs/MemoryFileSystem';
 
 type MasterRequestOptions = {
+  master: Master;
   client: MasterClient;
   query: MasterQueryRequest;
-  master: Master;
-  bridge: MasterBridge;
-  reporter: Reporter;
 };
 
 let requestIdCounter = 0;
@@ -83,14 +81,37 @@ type NormalizedCommandFlags = {
   defaultFlags: Dict<unknown>;
 };
 
+type ResolvedArgs = Array<{
+  path: AbsoluteFilePath;
+  location: DiagnosticLocation;
+  project: ProjectDefinition;
+}>;
+
+export type MasterRequestGetFilesOptions =
+  & Omit<MemoryFSGlobOptions, 'getProjectIgnore' | 'getProjectEnabled'>
+  & {
+    ignoreProjectIgnore?: boolean;
+    disabledDiagnosticCategory?: DiagnosticCategory;
+    advice?: DiagnosticAdvice;
+    configCategory?: ProjectConfigCategoriesWithIgnoreAndEnabled;
+    verb?: string;
+    noun?: string;
+    args?: Array<string>;
+  };
+
+export type MasterRequestGetFilesResult = {
+  projects: Set<ProjectDefinition>;
+  paths: AbsoluteFilePathSet;
+};
+
 export class MasterRequestInvalid extends DiagnosticsError {}
 
 export default class MasterRequest {
   constructor(opts: MasterRequestOptions) {
     this.query = opts.query;
     this.master = opts.master;
-    this.bridge = opts.bridge;
-    this.reporter = opts.reporter;
+    this.bridge = opts.client.bridge;
+    this.reporter = opts.client.reporter;
     this.markerEvent = new Event({
       name: 'MasterRequest.marker',
       onError: this.master.onFatalErrorBound,
@@ -102,6 +123,7 @@ export default class MasterRequest {
     });
     this.client = opts.client;
     this.id = requestIdCounter++;
+    this.markers = [];
 
     this.normalizedCommandFlags = {
       flags: {},
@@ -116,16 +138,61 @@ export default class MasterRequest {
   reporter: Reporter;
   id: number;
   markerEvent: Event<MasterMarker, void>;
-  endEvent: Event<MasterQueryResponse, void>;
+  endEvent: Event<undefined | MasterQueryResponse, void>;
   normalizedCommandFlags: NormalizedCommandFlags;
+  markers: Array<MasterMarker>;
+
+  async init() {
+    if (this.query.requestFlags.collectMarkers) {
+      this.markerEvent.subscribe((marker) => {
+        this.markers.push(marker);
+      });
+    }
+
+    await this.master.handleRequestStart(this);
+  }
+
+  teardown(res: undefined | MasterQueryResponse): undefined | MasterQueryResponse {
+    if (res !== undefined) {
+      // If the query asked for no data then strip all diagnostics and data values
+      if (this.query.noData) {
+        if (res.type === 'SUCCESS') {
+          res = {
+            type: 'SUCCESS',
+            hasData: res.data !== undefined,
+            data: undefined,
+            markers: [],
+          };
+        } else if (res.type === 'DIAGNOSTICS') {
+          res = {
+            type: 'DIAGNOSTICS',
+            diagnostics: [],
+          };
+        } else if (res.type === 'INVALID_REQUEST') {
+          res = {
+            type: 'INVALID_REQUEST',
+            diagnostics: [],
+          };
+        }
+      }
+
+      // Add on markers
+      if (res.type === 'SUCCESS') {
+        res = {
+          ...res,
+          markers: this.markers,
+        };
+      }
+    }
+
+    this.reporter.teardown();
+    this.endEvent.send(res);
+    this.master.handleRequestEnd(this);
+    return res;
+  }
 
   setNormalizedCommandFlags(normalized: NormalizedCommandFlags) {
     this.normalizedCommandFlags = normalized;
-  }
-
-  teardown(response: MasterQueryResponse) {
-    this.reporter.teardown();
-    this.endEvent.send(response);
   }
 
   async assertClientCwdProject(): Promise<ProjectDefinition> {
@@ -136,15 +203,16 @@ export default class MasterRequest {
     );
   }
 
-  createDiagnosticsPrinter(origin: DiagnosticOrigin): DiagnosticsPrinter {
+  createDiagnosticsPrinter(
+    processor: DiagnosticsProcessor = new DiagnosticsProcessor(),
+  ): DiagnosticsPrinter {
+    processor.unshiftOrigin({
+      category: 'master',
+      message: `${this.query.commandName} command was dispatched`,
+    });
+
     return new DiagnosticsPrinter({
-      origins: [
-        {
-          category: 'master',
-          message: `${this.query.commandName} command was dispatched`,
-        },
-        origin,
-      ],
+      processor,
       reporter: this.reporter,
       cwd: this.client.flags.cwd,
       flags: this.getDiagnosticsPrinterFlags(),
@@ -288,35 +356,18 @@ export default class MasterRequest {
     };
   }
 
-  async getFilesFromArgs(
-    opts:
-      & Omit<MemoryFSGlobOptions, 'getProjectIgnore' | 'getProjectEnabled'>
-      & {
-        ignoreProjectIgnore?: boolean;
-        disabledDiagnosticCategory?: DiagnosticCategory;
-        advice?: DiagnosticAdvice;
-        configCategory?: ProjectConfigCategoriesWithIgnoreAndEnabled;
-        verb?: string;
-        noun?: string;
-        args?: Array<string>;
-      } = {},
+  async resolveFilesFromArgs(
+    overrideArgs?: Array<string>,
   ): Promise<{
     projects: Set<ProjectDefinition>;
-    paths: AbsoluteFilePathSet;
+    resolvedArgs: ResolvedArgs;
   }> {
-    const {master} = this;
-    const {flags} = this.client;
     const projects: Set<ProjectDefinition> = new Set();
-
-    const rawArgs = opts.args === undefined ? this.query.args : opts.args;
-    const resolvedArgs: Array<{
-      path: AbsoluteFilePath;
-      location: DiagnosticLocation;
-      project: ProjectDefinition;
-    }> = [];
+    const rawArgs = overrideArgs === undefined ? this.query.args : overrideArgs;
+    const resolvedArgs: ResolvedArgs = [];
 
     // If args was explicitly provided then don't assume empty args is the project root
-    if (rawArgs.length === 0 && opts.args === undefined) {
+    if (rawArgs.length === 0 && overrideArgs === undefined) {
       const location = this.getDiagnosticPointerForClientCwd();
       const project = await this.assertClientCwdProject();
       resolvedArgs.push({
@@ -335,7 +386,7 @@ export default class MasterRequest {
         });
 
         const resolved = await this.master.resolver.resolveEntryAssert({
-          origin: flags.cwd,
+          origin: this.client.flags.cwd,
           source: createUnknownFilePath(arg),
           requestedType: 'folder',
         }, {
@@ -355,7 +406,96 @@ export default class MasterRequest {
       }
     }
 
+    return {
+      resolvedArgs,
+      projects,
+    };
+  }
+
+  async watchFilesFromArgs(
+    opts: MasterRequestGetFilesOptions,
+    callback: (result: MasterRequestGetFilesResult, initial: boolean) => Promise<
+      void
+    >,
+  ): Promise<EventSubscription> {
+    // Everything needs to be relative to this
+    const {resolvedArgs} = await this.resolveFilesFromArgs();
+
+    const initial = await this.getFilesFromArgs(opts);
+    await callback(initial, true);
+
+    let pendingEvictPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+    let pendingEvictProjects: Set<ProjectDefinition> = new Set();
+    let timeout: undefined | NodeJS.Timeout;
+    let changesWhileRunningCallback = false;
+    let runningCallback = false;
+
+    async function flush() {
+      if (pendingEvictPaths.size === 0) {
+        return;
+      }
+
+      timeout = undefined;
+
+      const result: MasterRequestGetFilesResult = {
+        paths: pendingEvictPaths,
+        projects: pendingEvictProjects,
+      };
+      pendingEvictPaths = new AbsoluteFilePathSet();
+      pendingEvictProjects = new Set();
+
+      runningCallback = true;
+      await callback(result, false);
+      runningCallback = false;
+
+      if (changesWhileRunningCallback) {
+        changesWhileRunningCallback = false;
+        flush();
+      }
+    }
+
+    const onChange = (path: AbsoluteFilePath) => {
+      let matches = false;
+      for (const arg of resolvedArgs) {
+        if (arg.path.equal(path) || path.isRelativeTo(arg.path)) {
+          matches = true;
+          break;
+        }
+      }
+      if (!matches) {
+        return;
+      }
+
+      const project = this.master.projectManager.findProjectExisting(path);
+      if (project !== undefined) {
+        pendingEvictProjects.add(project);
+      }
+
+      pendingEvictPaths.add(path);
+
+      // Buffer up evicted paths
+      if (runningCallback) {
+        changesWhileRunningCallback = true;
+      } else if (timeout === undefined) {
+        timeout = setTimeout(flush, 100);
+      }
+    };
+
+    // Subscribe to evictions and file changes. This can cause double emits but we dedupe them with AbsoluteFilePathSet. An updated buffer dispatches a fileChangeEvent but NOT an evictEvent. An evictEvent is dispatched for all files in a project when the project config is changed but does NOT dispatch evictEvent.
+    const evictSubscription = this.master.fileAllocator.evictEvent.subscribe(
+      onChange,
+    );
+    const fileChangeEvent = this.master.fileChangeEvent.subscribe(onChange);
+
+    return mergeEventSubscriptions([evictSubscription, fileChangeEvent]);
+  }
+
+  async getFilesFromArgs(
+    opts: MasterRequestGetFilesOptions = {},
+  ): Promise<MasterRequestGetFilesResult> {
+    const {master} = this;
     const {configCategory, ignoreProjectIgnore} = opts;
+    const {projects, resolvedArgs} = await this.resolveFilesFromArgs(opts.args);
 
     const extendedGlobOpts: MemoryFSGlobOptions = {...opts};
 
@@ -572,36 +712,44 @@ export default class MasterRequest {
     }
   }
 
+  async requestWorkerUpdateBuffer(
+    path: AbsoluteFilePath,
+    content: string,
+  ): Promise<void> {
+    await this.wrapRequestDiagnostic('updateBuffer', path, (bridge, file) =>
+      bridge.updateBuffer.call({file, content})
+    );
+    this.master.fileChangeEvent.send(path);
+  }
+
   async requestWorkerParse(
-    filename: AbsoluteFilePath,
+    path: AbsoluteFilePath,
     opts: WorkerParseOptions,
   ): Promise<Program> {
-    return this.wrapRequestDiagnostic('parse', filename, (bridge, file) =>
+    return this.wrapRequestDiagnostic('parse', path, (bridge, file) =>
       bridge.parseJS.call({file, opts})
     );
   }
 
   async requestWorkerLint(
-    filename: AbsoluteFilePath,
+    path: AbsoluteFilePath,
     fix: boolean,
   ): Promise<WorkerLintResult> {
     const {cache} = this.master;
-    const cacheEntry = await cache.get(filename);
+    const cacheEntry = await cache.get(path);
     if (cacheEntry.lint !== undefined) {
       return cacheEntry.lint;
     }
 
     const prefetchedModuleSignatures = await this.maybePrefetchModuleSignatures(
-      filename,
+      path,
     );
 
-    const res = await this.wrapRequestDiagnostic(
-      'lint',
-      filename,
-      (bridge, file) => bridge.lint.call({file, fix, prefetchedModuleSignatures}),
+    const res = await this.wrapRequestDiagnostic('lint', path, (bridge, file) =>
+      bridge.lint.call({file, fix, prefetchedModuleSignatures})
     );
 
-    await cache.update(filename, {
+    await cache.update(path, {
       lint: res,
     });
 
@@ -698,32 +846,32 @@ export default class MasterRequest {
   }
 
   async requestWorkerModuleSignature(
-    filename: AbsoluteFilePath,
+    path: AbsoluteFilePath,
   ): Promise<ModuleSignature> {
     const {cache} = this.master;
 
-    const cacheEntry = await cache.get(filename);
+    const cacheEntry = await cache.get(path);
     if (cacheEntry.moduleSignature !== undefined) {
       return cacheEntry.moduleSignature;
     }
 
-    const res = await this.wrapRequestDiagnostic('moduleSignature', filename, (
+    const res = await this.wrapRequestDiagnostic('moduleSignature', path, (
       bridge,
       file,
     ) => bridge.moduleSignatureJS.call({file}));
-    await cache.update(filename, {
+    await cache.update(path, {
       moduleSignature: res,
     });
     return res;
   }
 
   async maybePrefetchModuleSignatures(
-    filename: AbsoluteFilePath,
+    path: AbsoluteFilePath,
   ): Promise<PrefetchedModuleSignatures> {
     const {projectManager} = this.master;
 
     const prefetchedModuleSignatures: PrefetchedModuleSignatures = {};
-    const project = await projectManager.assertProject(filename);
+    const project = await projectManager.assertProject(path);
     if (project.config.typeCheck.enabled === false) {
       return prefetchedModuleSignatures;
     }

@@ -153,8 +153,13 @@ export default class MasterBridge extends Bridge {
     direction: 'server<-client',
   });
 
-  lspBuffer = this.createEvent<string, void>({
-    name: 'lspBuffer',
-    direction: 'server<->client',
+  lspFromClientBuffer = this.createEvent<string, void>({
+    name: 'lspFromClientBuffer',
+    direction: 'server<-client',
+  });
+
+  lspFromServerBuffer = this.createEvent<string, void>({
+    name: 'lspFromServerBuffer',
+    direction: 'server->client',
   });
 }

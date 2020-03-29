@@ -1498,9 +1498,7 @@ function flowIdentToTypeAnnotation(
 }
 
 // The parsing of types roughly parallels the parsing of expressions, and
-
 // primary types are kind of like primary expressions...they're the
-
 // primitives with which other types are constructed.
 function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
   const start = parser.getPosition();

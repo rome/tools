@@ -10,6 +10,7 @@ import {
   DiagnosticOrigin,
   deriveDiagnosticFromError,
   descriptions,
+  DiagnosticsProcessor,
 } from '@romejs/diagnostics';
 import {TestRef} from '../../common/bridges/TestWorkerBridge';
 import {Master, MasterRequest, TestWorkerBridge} from '@romejs/core';
@@ -80,10 +81,16 @@ export default class TestRunner {
     this.runningTests = new Map();
     this.testFileCounter = 0;
 
-    this.printer = opts.request.createDiagnosticsPrinter({
-      category: 'test',
-      message: 'Run initiated',
-    });
+    this.printer = opts.request.createDiagnosticsPrinter(
+      new DiagnosticsProcessor({
+        origins: [
+          {
+            category: 'test',
+            message: 'Run initiated',
+          },
+        ],
+      }),
+    );
     this.printer.addDiagnostics(opts.addDiagnostics);
   }
 
@@ -438,8 +445,8 @@ export default class TestRunner {
 
     const progress = this.request.reporter.progress({
       persistent: true,
+      title: 'Running tests',
     });
-    progress.setTitle('Running tests');
 
     for (let i = 0; i < workers.length; i++) {
       const container = workers[i];

@@ -8,31 +8,18 @@
 import {JSParser} from '../parser';
 
 // ## Token types
-
 // The assignment of fine-grained, information-carrying type objects
-
 // allows the tokenizer to store the information it has about a
-
 // token in a way that is very cheap for the parser to look up.
-
 // All token type variables start with an underscore, to make them
-
 // easy to recognize.
-
 // The `beforeExpr` property is used to disambiguate between regular
-
 // expressions and divisions. It is set on all token types that can
-
 // be followed by an expression (thus, a slash after them would be a
-
 // regular expression).
-
 //
-
 // `isLoop` marks a keyword as starting a loop, which is important
-
 // to know when parsing a label, in order to allow or disallow
-
 // continue jumps to that label.
 const beforeExpr = true;
 const startsExpr = true;

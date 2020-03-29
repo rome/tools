@@ -22,9 +22,7 @@ import {isIdentifierish} from '@romejs/js-ast-utils';
 
 // TODO: Remove this. This contains React for the following reason:
 //   A user may write: import * as React from 'react';
-
 //   We will remove the namespace and have only the used specifiers
-
 //   But the JSX plugin inserts `React.createElement`. Oh no.
 const IGNORED_NAMES = ['React', 'react'];
 

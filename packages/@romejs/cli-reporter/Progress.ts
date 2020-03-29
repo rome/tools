@@ -8,7 +8,12 @@
 import {formatAnsi, escapes} from '@romejs/string-ansi';
 import {humanizeNumber, humanizeTime} from '@romejs/string-utils';
 import {Reporter} from '@romejs/cli-reporter';
-import {RemoteReporterClientMessage, ReporterStream} from './types';
+import {
+  RemoteReporterClientMessage,
+  ReporterStream,
+  ReporterProgressOptions,
+} from './types';
+import ProgressBase from './ProgressBase';
 
 type BoldRanges = Array<[number, number]>;
 
@@ -18,56 +23,23 @@ type SplitBar = Array<[number, string]>;
 const BOUNCER_INTERVAL = 1_000 / 30;
 const BOUNCER_WIDTH = 20;
 
-export type ProgressOptions = {
-  name?: string;
-  initDelay?: number;
-  elapsed?: boolean;
-  eta?: boolean;
-  persistent?: boolean;
-};
-
-const DEFAULT_PROGRESS_OPTIONS: ProgressOptions = {
-  name: undefined,
-  initDelay: undefined,
-  elapsed: true,
-  eta: true,
-  persistent: false,
-};
-
-export default class Progress {
+export default class Progress extends ProgressBase {
   constructor(
     reporter: Reporter,
-    opts: Partial<ProgressOptions> = {},
+    opts: ReporterProgressOptions = {},
     onEnd?: () => void,
   ) {
-    this.reporter = reporter;
-    this.opts = {
-      ...DEFAULT_PROGRESS_OPTIONS,
-      ...opts,
-    };
-
-    this.textStack = [];
-    this.text = undefined;
-    this.title = undefined;
-
-    this.pausedStart = undefined;
-    this.pausedElapsed = 0;
+    super(reporter, opts);
 
     this.startTime = Date.now();
     this.lastRenderTime = Date.now();
     this.lastRenderCurrent = 0;
 
     this.closed = false;
-    this.current = 0;
-    this.approximateTotal = false;
-    this.total = undefined;
-    this.approximateETA = undefined;
     this.onEnd = onEnd;
 
     this.delay = 60;
     this.renderEvery = 0;
-
-    this.paused = false;
 
     this.streamToBouncerStart = new Map();
     this.startBouncer();
@@ -76,9 +48,6 @@ export default class Progress {
     this.initName(opts.name);
   }
 
-  reporter: Reporter;
-  opts: ProgressOptions;
-
   closed: boolean;
   delay: number;
   renderTimer: undefined | NodeJS.Timeout;
@@ -86,22 +55,11 @@ export default class Progress {
   streamToBouncerStart: Map<ReporterStream, number>;
   bouncerTimer: undefined | NodeJS.Timeout;
 
-  pausedStart: undefined | number;
-  pausedElapsed: number;
-
   onEnd: undefined | (() => void);
   renderEvery: number;
-  text: undefined | string;
-  title: undefined | string;
   startTime: number;
   lastRenderCurrent: number;
   lastRenderTime: number;
-  approximateETA: undefined | number;
-  current: number;
-  total: undefined | number;
-  approximateTotal: boolean;
-  textStack: Array<string>;
-  paused: boolean;
 
   initName(name: undefined | string) {
     if (name === undefined) {
@@ -118,9 +76,6 @@ export default class Progress {
 
       case 'PROGRESS_SET_TOTAL':
         return this.setTotal(msg.total, msg.approximate);
-
-      case 'PROGRESS_SET_TITLE':
-        return this.setTitle(msg.title);
 
       case 'PROGRESS_SET_TEXT':
         return this.setText(msg.text);
@@ -146,27 +101,6 @@ export default class Progress {
       case 'PROGRESS_PAUSE':
         return this.pause();
     }
-  }
-
-  resume() {
-    if (!this.paused || this.pausedStart === undefined) {
-      return;
-    }
-
-    this.pausedElapsed += Date.now() - this.pausedStart;
-    this.pausedStart = undefined;
-    this.paused = false;
-    this.render();
-  }
-
-  pause() {
-    if (this.paused) {
-      return;
-    }
-
-    this.pausedStart = Date.now();
-    this.paused = true;
-    this.render();
   }
 
   getElapsedTime(): number {
@@ -224,39 +158,17 @@ export default class Progress {
       return;
     }
 
-    this.current = current;
-
-    // Schedule render
-    if (this.renderTimer === undefined) {
-      this.queueRender();
-    }
+    super.setCurrent(current);
 
     if (this.isRenderDue()) {
       this.render();
     }
-
-    // Progress complete
-    if (this.total !== undefined && this.current >= this.total &&
-      !this.opts.persistent) {
-      this.end();
-    }
-  }
-
-  setApproximateETA(duration: number) {
-    this.approximateETA = duration;
   }
 
   setTotal(total: number, approximate: boolean = false) {
-    this.total = total;
-    this.approximateTotal = approximate;
+    super.setTotal(total, approximate);
     this.renderEvery = Math.round(total / 100);
     this.endBouncer();
-    this.queueRender();
-  }
-
-  setTitle(title: string) {
-    this.title = this.reporter.stripMarkup(title);
-    this.queueRender();
   }
 
   setText(text: string) {
@@ -264,33 +176,7 @@ export default class Progress {
       return;
     }
 
-    this.text = this.reporter.stripMarkup(text);
-    this.queueRender();
-  }
-
-  pushText(text: string) {
-    this.setText(text);
-    this.textStack.push(text);
-  }
-
-  popText(text: string) {
-    // Find
-    const {textStack} = this;
-    const index = textStack.indexOf(text);
-    if (index === -1) {
-      throw new Error(`No pushed text: ${text}`);
-    }
-
-    // Remove
-    textStack.splice(index, 1);
-
-    // Set last
-    const last: undefined | string = textStack[textStack.length - 1];
-    this.setText(last === undefined ? '' : last);
-  }
-
-  tick() {
-    this.setCurrent(this.current + 1);
+    super.setText(text);
   }
 
   queueRender(delay: number = this.delay) {

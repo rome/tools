@@ -105,8 +105,8 @@ type DeclareManifestOpts = {
 type CrawlOptions = {
   diagnostics: DiagnosticsProcessor;
   crawl: boolean;
-  onFoundDirectory?: (filename: AbsoluteFilePath) => void;
-  tick?: (filename: AbsoluteFilePath) => void;
+  onFoundDirectory?: (path: AbsoluteFilePath) => void;
+  tick?: (path: AbsoluteFilePath) => void;
 };
 
 export type StatsType = 'unknown' | 'directory' | 'file';
@@ -140,8 +140,8 @@ async function createRegularWatcher(
   // Create activity spinners for all connected reporters
   const activity = memoryFs.master.connectedReporters.progress({
     initDelay: 1_000,
+    title: `Adding project ${projectFolder}`,
   });
-  activity.setTitle(`Adding project ${projectFolder}`);
 
   const watchers: AbsoluteFilePathMap<fs.FSWatcher> = new AbsoluteFilePathMap();
 
@@ -235,8 +235,9 @@ async function createWatchmanWatcher(
   const projectFolder = projectFolderPath.join();
   const {connectedReporters} = memoryFs.master;
 
-  const activity = connectedReporters.progress();
-  activity.setTitle(`Adding project ${projectFolder} with watchman`);
+  const activity = connectedReporters.progress({
+    title: `Adding project ${projectFolder} with watchman`,
+  });
 
   let timeout;
 
@@ -470,12 +471,12 @@ export default class MemoryFileSystem {
     }
   }
 
-  isDirectory(filename: AbsoluteFilePath): boolean {
-    return this.directories.has(filename);
+  isDirectory(path: AbsoluteFilePath): boolean {
+    return this.directories.has(path);
   }
 
-  isFile(filename: AbsoluteFilePath): boolean {
-    return this.files.has(filename);
+  isFile(path: AbsoluteFilePath): boolean {
+    return this.files.has(path);
   }
 
   getFiles(): Array<Stats> {
@@ -597,6 +598,23 @@ export default class MemoryFileSystem {
     return changed;
   }
 
+  async waitIfInitializingWatch(projectFolderPath: AbsoluteFilePath) {
+    // Defer if we're initializing a parent folder
+    for (const {promise, path} of this.watchPromises.values()) {
+      if (projectFolderPath.isRelativeTo(path)) {
+        await promise;
+        return undefined;
+      }
+    }
+
+    // Wait if we're initializing descendents
+    for (const {path, promise} of this.watchPromises.values()) {
+      if (path.isRelativeTo(projectFolderPath)) {
+        await promise;
+      }
+    }
+  }
+
   async watch(
     projectFolderPath: AbsoluteFilePath,
     projectConfig: ProjectConfig,
@@ -626,20 +644,8 @@ export default class MemoryFileSystem {
       }
     }
 
-    // Defer if we're initializing a parent folder
-    for (const {promise, path} of this.watchPromises.values()) {
-      if (projectFolderPath.isRelativeTo(path)) {
-        await promise;
-        return undefined;
-      }
-    }
-
-    // Wait if we're initializing descendents
-    for (const {path, promise} of this.watchPromises.values()) {
-      if (path.isRelativeTo(projectFolderPath)) {
-        await promise;
-      }
-    }
+    // Wait for other initializations
+    await this.waitIfInitializingWatch(projectFolderPath);
 
     // New watch target
     logger.info(`[MemoryFileSystem] Adding new project folder ${projectFolder}`);
@@ -706,25 +712,23 @@ export default class MemoryFileSystem {
     };
   }
 
-  getMtime(filename: AbsoluteFilePath) {
-    const stats = this.getFileStats(filename);
+  getMtime(path: AbsoluteFilePath) {
+    const stats = this.getFileStats(path);
     if (stats === undefined) {
-      throw new Error(
-        `File ${filename.join()} not in database, cannot get mtime`,
-      );
+      throw new Error(`File ${path.join()} not in database, cannot get mtime`);
     } else {
       return stats.mtime;
     }
   }
 
-  getFileStats(filename: AbsoluteFilePath): undefined | Stats {
-    return this.files.get(filename);
+  getFileStats(path: AbsoluteFilePath): undefined | Stats {
+    return this.files.get(path);
   }
 
-  getFileStatsAssert(filename: AbsoluteFilePath): Stats {
-    const stats = this.getFileStats(filename);
+  getFileStatsAssert(path: AbsoluteFilePath): Stats {
+    const stats = this.getFileStats(path);
     if (stats === undefined) {
-      throw new Error(`Expected file stats for ${filename}`);
+      throw new Error(`Expected file stats for ${path}`);
     }
     return stats;
   }
@@ -1001,8 +1005,8 @@ export default class MemoryFileSystem {
     return count;
   }
 
-  hasStatsChanged(filename: AbsoluteFilePath, newStats: Stats): boolean {
-    const oldStats = this.directories.get(filename) || this.files.get(filename);
+  hasStatsChanged(path: AbsoluteFilePath, newStats: Stats): boolean {
+    const oldStats = this.directories.get(path) || this.files.get(path);
     return oldStats === undefined || newStats.mtime !== oldStats.mtime;
   }
 

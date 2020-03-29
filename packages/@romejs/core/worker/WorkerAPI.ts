@@ -172,8 +172,9 @@ export default class WorkerAPI {
 
     return project.config.format.enabled && matchPathPatterns(
       ref.real,
-      project.config.format.ignore,
-    ) === 'NO_MATCH';
+      project.config.lint.ignore,
+    ) === 'NO_MATCH' &&
+      matchPathPatterns(ref.real, project.config.format.ignore) === 'NO_MATCH';
   }
 
   async _format(ref: FileReference): Promise<undefined | ExtensionLintResult> {
@@ -213,6 +214,7 @@ export default class WorkerAPI {
     const {lint} = handler;
     if (lint === undefined && handler.format === undefined) {
       return {
+        fixed: false,
         diagnostics: [],
         suppressions: [],
       };
@@ -239,6 +241,7 @@ export default class WorkerAPI {
     // These are fatal diagnostics
     if (res.diagnostics !== undefined) {
       return {
+        fixed: false,
         suppressions: [],
         diagnostics: res.diagnostics,
       };
@@ -247,6 +250,7 @@ export default class WorkerAPI {
     // `format` could have return undefined
     if (res.value === undefined) {
       return {
+        fixed: false,
         diagnostics: [],
         suppressions: [],
       };
@@ -269,12 +273,16 @@ export default class WorkerAPI {
       await this.worker.writeFile(ref.real, formatted);
 
       // Relint this file without fixing it, we do this to prevent false positive error messages
-      return this.lint(ref, prefetchedModuleSignatures, false);
+      return {
+        ...(await this.lint(ref, prefetchedModuleSignatures, false)),
+        fixed: true,
+      };
     }
 
     // If there's no pending fix then no need for diagnostics
     if (!needsFix) {
       return {
+        fixed: false,
         diagnostics,
         suppressions,
       };
@@ -282,6 +290,7 @@ export default class WorkerAPI {
 
     // Add pending autofix diagnostic
     return {
+      fixed: false,
       suppressions,
       diagnostics: [
         ...diagnostics,

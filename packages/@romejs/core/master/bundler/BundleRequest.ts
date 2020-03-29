@@ -96,8 +96,8 @@ export default class BundleRequest {
 
     const analyzeProgress = reporter.progress({
       name: `bundler:analyze:${this.resolvedEntryUid}`,
+      title: 'Analyzing',
     });
-    analyzeProgress.setTitle('Analyzing');
     this.diagnostics.setThrowAfter(100);
     try {
       await graph.seed({
@@ -120,9 +120,9 @@ export default class BundleRequest {
 
     const compilingSpinner = reporter.progress({
       name: `bundler:compile:${this.resolvedEntryUid}`,
+      title: 'Compiling',
     });
     compilingSpinner.setTotal(paths.length);
-    compilingSpinner.setTitle('Compiling');
 
     const groupedPaths = await master.fileAllocator.groupPathsByWorker(paths);
     await Promise.all(groupedPaths.map(async (paths) => {

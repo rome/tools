@@ -294,9 +294,16 @@ export default class WorkerManager {
     const {logger, memoryFs, fileAllocator} = this.master;
 
     // Get stats first
-    const stats = memoryFs.getFileStats(path);
+    let stats = memoryFs.getFileStats(path);
     if (stats === undefined) {
-      throw new Error(`The file ${path.join()} doesn't exist`);
+      // Give memoryFs a chance to finish initializing if it's in a pending project
+      await this.master.memoryFs.waitIfInitializingWatch(path);
+
+      stats = memoryFs.getFileStats(path);
+      if (stats === undefined) {
+        console.error(Array.from(memoryFs.files.keys(), (path) => path.join()));
+        throw new Error(`The file ${path.join()} doesn't exist`);
+      }
     }
 
     // Verify that this file doesn't exceed any size limit

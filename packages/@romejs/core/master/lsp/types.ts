@@ -1,10 +1,12 @@
+import {Number0} from '@romejs/ob1';
+import {JSONPropertyValue} from '@romejs/codec-json';
+
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
 export type LSPRequestMessage = {
   /**
    * The request id.
@@ -32,7 +34,7 @@ export type LSPResponseMessage = {
    * The result of a request. This member is REQUIRED on success.
    * This member MUST NOT exist if there was an error invoking the method.
    */
-  result?: unknown;
+  result?: JSONPropertyValue;
 
   /**
    * The error object in case a request fails.
@@ -55,7 +57,7 @@ export type LSPResponseError = {
    * A primitive or structured value that contains additional
    * information about the error. Can be omitted.
    */
-  data?: unknown;
+  data?: JSONPropertyValue;
 };
 
 export type LSPNotificationMessage = {
@@ -67,7 +69,7 @@ export type LSPNotificationMessage = {
   /**
    * The notification's params.
    */
-  params?: unknown;
+  params?: JSONPropertyValue;
 };
 
 export type LSPErrorCodes = {
@@ -91,7 +93,7 @@ export type LSPPosition = {
   /**
    * Line position in a document (zero-based).
    */
-  line: number;
+  line: Number0;
 
   /**
    * Character offset on a line in a document (zero-based). Assuming that the line is
@@ -101,7 +103,7 @@ export type LSPPosition = {
    * If the character value is greater than the line length it defaults back to the
    * line length.
    */
-  character: number;
+  character: Number0;
 };
 
 export type LSPRange = {

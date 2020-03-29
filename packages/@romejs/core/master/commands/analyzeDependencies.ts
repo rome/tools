@@ -76,6 +76,9 @@ export default createMasterCommand({
 
               case 'externalAll':
                 return removeLoc(exp);
+
+              case 'externalNamespace':
+                return removeLoc(exp);
             }
           }),
           dependencies: res.dependencies.map((dep) => {

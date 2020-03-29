@@ -56,9 +56,9 @@ export class ConstBinding extends Binding {
   constructor(
     opts: BindingOpts,
     value: undefined | AnyNode,
-    defaultKind?: string,
+    kind: string = 'constant',
   ) {
-    super(opts, defaultKind);
+    super(opts, kind);
     this.value = value;
   }
 

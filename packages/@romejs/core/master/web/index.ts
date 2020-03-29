@@ -283,13 +283,7 @@ export class WebServer {
       });
 
     const bundler = new Bundler(this.masterRequest, bundlerConfig);
-
-    bundler.graph.watch(async () => {
-      // TODO HMR
-    });
-
     this.bundlerCache.set(cacheKey, bundler);
-
     return {bundler, path};
   }
 }

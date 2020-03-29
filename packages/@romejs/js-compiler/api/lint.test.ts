@@ -6,7 +6,6 @@
  */
 
 // TODO: Shift file into packages/@romejs/js-compiler/transforms/lint/__rtests__
-
 // after all open linting PRs have been merged.
 
 import test from '@romejs/test';

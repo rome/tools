@@ -13,7 +13,7 @@ import {JSONPropertyValue} from '@romejs/codec-json';
 import {DiagnosticCategory} from './categories';
 
 export type DiagnosticFilter = {
-  category?: string;
+  category?: DiagnosticCategory;
   message?: string;
   filename?: string;
   start?: Position;
@@ -33,14 +33,15 @@ export type DiagnosticFilterWithTest =
   & DiagnosticFilter
   & {test?: (diagnostic: Diagnostic) => boolean};
 
-export type DiagnosticLocation =
-  & Partial<SourceLocation>
-  & {
-    sourceText?: string;
-    mtime?: number;
-    language?: DiagnosticLanguage;
-    sourceType?: DiagnosticSourceType;
-  };
+export type DiagnosticLocation = {
+  sourceText?: string;
+  mtime?: number;
+  language?: DiagnosticLanguage;
+  sourceType?: DiagnosticSourceType;
+  filename?: string;
+  start?: Position;
+  end?: Position;
+};
 
 export type DiagnosticOrigin = {
   category: string;
