@@ -105,52 +105,59 @@ export default {
       const specifiersKinds: Array<ConstImportModuleKind> = [];
       const exportedNames: Array<AnalyzeDependencyName> = [];
 
-      const {specifiers} = node;
-      if (specifiers !== undefined) {
-        for (const specifier of specifiers) {
-          switch (specifier.type) {
-            case 'ExportExternalSpecifier':
-              {
-                const kind = getImportKind(specifier.exportKind ||
-                node.exportKind);
-                specifiersKinds.push(kind);
+      const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
 
-                exportedNames.push({
-                  name: specifier.local.name,
-                  kind,
-                  loc: specifier.loc,
-                });
-
-                context.record(new ExportRecord({
-                  type: 'external',
-                  kind,
-                  loc: specifier.loc,
-                  imported: specifier.local.name,
-                  exported: specifier.exported.name,
-                  source: source.value,
-                }));
-                break;
-              }
-
-            case 'ExportNamespaceSpecifier':
-              throw new Error('unimplemented');
-
-            case 'ExportDefaultSpecifier':
-              throw new Error('unimplemented');
-          }
-        }
-
-        context.record(new ImportRecord({
-          type: 'es',
-          async: false,
-          kind: getKindWithSpecifiers(node.exportKind, specifiersKinds),
-          names: exportedNames,
-          loc: source.loc,
+      if (defaultSpecifier !== undefined) {
+        context.record(new ExportRecord({
+          type: 'external',
+          kind: 'value',
+          loc: defaultSpecifier.loc,
+          imported: 'default',
+          exported: defaultSpecifier.exported.name,
           source: source.value,
-          optional: isOptional(path),
-          all: false,
         }));
       }
+
+      if (namespaceSpecifier !== undefined) {
+        context.record(new ExportRecord({
+          type: 'externalNamespace',
+          kind: 'value',
+          loc: namespaceSpecifier.loc,
+          exported: namespaceSpecifier.exported.name,
+          source: source.value,
+        }));
+      }
+
+      for (const specifier of namedSpecifiers) {
+        const kind = getImportKind(specifier.exportKind || node.exportKind);
+        specifiersKinds.push(kind);
+
+        exportedNames.push({
+          name: specifier.local.name,
+          kind,
+          loc: specifier.loc,
+        });
+
+        context.record(new ExportRecord({
+          type: 'external',
+          kind,
+          loc: specifier.loc,
+          imported: specifier.local.name,
+          exported: specifier.exported.name,
+          source: source.value,
+        }));
+      }
+
+      context.record(new ImportRecord({
+        type: 'es',
+        async: false,
+        kind: getKindWithSpecifiers(node.exportKind, specifiersKinds),
+        names: exportedNames,
+        loc: source.loc,
+        source: source.value,
+        optional: isOptional(path),
+        all: false,
+      }));
     }
 
     // TS: import A = require('B');

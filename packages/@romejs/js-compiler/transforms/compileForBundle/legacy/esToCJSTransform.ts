@@ -12,8 +12,6 @@ import {
   program,
   stringLiteral,
   ClassExpression,
-  ExportLocalDeclaration,
-  ExportExternalDeclaration,
 } from '@romejs/js-ast';
 import {
   template,
@@ -83,24 +81,35 @@ export default {
         continue;
       }
 
-      if (bodyNode.type === 'ExportLocalDeclaration' || bodyNode.type ===
-      'ExportExternalDeclaration') {
-        // Ignore typed exports
+      if (bodyNode.type === 'ExportExternalDeclaration') {
         if (bodyNode.exportKind === 'type') {
           continue;
         }
 
-        let declaration: undefined | ExportLocalDeclaration['declaration'];
-        let source: undefined | ExportExternalDeclaration['source'];
-        const {specifiers} = bodyNode;
+        const {source} = bodyNode;
 
-        if (bodyNode.type === 'ExportExternalDeclaration') {
-          source = bodyNode.source;
+        // TODO defaultSpecifier and namespaceSpecifier
+        for (const specifier of bodyNode.namedSpecifiers) {
+          topBody.push(
+            template.statement`Object.defineProperty(exports, ${stringLiteral.create(
+              {
+                value: specifier.exported.name,
+              },
+            )}, {
+                get: function() {
+                  return Rome.requireNamespace(${source}).${specifier.local};
+                },
+              })`,
+          );
+        }
+      }
+
+      if (bodyNode.type === 'ExportLocalDeclaration') {
+        if (bodyNode.exportKind === 'type') {
+          continue;
         }
 
-        if (bodyNode.type === 'ExportLocalDeclaration') {
-          declaration = bodyNode.declaration;
-        }
+        const {declaration, specifiers} = bodyNode;
 
         if (declaration !== undefined) {
           // Hoist function declarations
@@ -137,45 +146,19 @@ export default {
 
         if (specifiers !== undefined) {
           for (const specifier of specifiers) {
-            if (specifier.type === 'ExportDefaultSpecifier') {
-              // TODO only allowed for `source`
-            }
+            const binding = path.scope.getBinding(specifier.local.name);
 
-            if (specifier.type === 'ExportNamespaceSpecifier') {
-              // TODO only allowed for `source`
-            }
-
-            // TODO skip type exports
-            if (specifier.type === 'ExportLocalSpecifier' || specifier.type ===
-            'ExportExternalSpecifier') {
-              if (source === undefined) {
-                const binding = path.scope.getBinding(specifier.local.name);
-
-                if (binding instanceof FunctionBinding) {
-                  topBody.push(
-                    template.statement`exports.${specifier.exported} = ${specifier.local};`,
-                  );
-                } else {
-                  topBody.push(
-                    template.statement`exports.${specifier.exported} = undefined;`,
-                  );
-                  bottomBody.push(
-                    template.statement`exports.${specifier.exported} = ${specifier.local};`,
-                  );
-                }
-              } else {
-                topBody.push(
-                  template.statement`Object.defineProperty(exports, ${stringLiteral.create(
-                    {
-                      value: specifier.exported.name,
-                    },
-                  )}, {
-                    get: function() {
-                      return Rome.requireNamespace(${source}).${specifier.local};
-                    },
-                  })`,
-                );
-              }
+            if (binding instanceof FunctionBinding) {
+              topBody.push(
+                template.statement`exports.${specifier.exported} = ${specifier.local};`,
+              );
+            } else {
+              topBody.push(
+                template.statement`exports.${specifier.exported} = undefined;`,
+              );
+              bottomBody.push(
+                template.statement`exports.${specifier.exported} = ${specifier.local};`,
+              );
             }
           }
         }
