@@ -251,7 +251,7 @@ export const createRegExpParser = createParser((ParserCore) =>
                 index,
                 nextChar,
               );
-              if (octalValue && isOct(octalValue.toString())) {
+              if (octalValue !== undefined && isOct(octalValue.toString())) {
                 const octal = parseInt(octalValue.toString(), 8);
                 return this.finishComplexToken('Character', {
                   value: String.fromCharCode(octal),
@@ -316,7 +316,7 @@ export const createRegExpParser = createParser((ParserCore) =>
               index,
               nextChar,
             );
-            if (referenceValue) {
+            if (referenceValue !== undefined) {
               let backReference = referenceValue.toString();
               // \8 \9 are treated as escape char
               if (referenceValue === 8 || referenceValue === 9) {
