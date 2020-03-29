@@ -95,16 +95,19 @@ export default class Client {
 
     this.reporter = new Reporter({
       stdin: opts.stdin,
-      silent: this.flags.silent === true || opts.stdout === undefined ||
-      opts.stderr === undefined,
       verbose: this.flags.verbose === true,
       markupOptions: {
         cwd: this.flags.cwd,
       },
     });
 
+    // Suppress stdout when silent is set
+    const isSilent = this.flags.silent === true || opts.stdout === undefined ||
+    opts.stderr === undefined;
+    const stdout = isSilent ? undefined : opts.stdout;
+
     this.derivedReporterStreams = this.reporter.attachStdoutStreams(
-      opts.stdout,
+      stdout,
       opts.stderr,
     );
 
@@ -545,15 +548,6 @@ export default class Client {
     }
 
     return undefined;
-  }
-
-  async connectToDaemon(): Promise<undefined | MasterBridge> {
-    const bridge = await this.tryConnectToExistingDaemon();
-    if (bridge !== undefined) {
-      return bridge;
-    }
-
-    return await this.startDaemon();
   }
 
   async tryConnectToExistingDaemon(): Promise<undefined | MasterBridge> {

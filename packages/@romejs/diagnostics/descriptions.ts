@@ -722,7 +722,9 @@ export const descriptions = createMessages({
         ],
       };
     },
+  },
 
+  RESOLVER: {
     IMPORT_TYPE_MISMATCH: (
       exportName: string,
       source: string,
@@ -731,7 +733,7 @@ export const descriptions = createMessages({
       exportLoc: undefined | SourceLocation,
     ) =>
       ({
-        category: 'bundler/importTypeMismatch',
+        category: 'resolver/importTypeMismatch',
         message: `The export <emphasis>${exportName}</emphasis> in <filelink emphasis target="${source}" /> was incorrectly imported as a <emphasis>${importedAsKing}</emphasis> when it's actually a <emphasis>${actualKind}</emphasis>`,
         advice: exportLoc &&
           [
@@ -759,7 +761,7 @@ export const descriptions = createMessages({
     ) =>
       ({
         message: `Couldn't find export <emphasis>${name}</emphasis> in <filelink emphasis target="${source}" />`,
-        category: 'bundler/unknownExport',
+        category: 'resolver/unknownExport',
         advice: exportedNames.length === 0 ? [
           {
             type: 'log',
@@ -796,7 +798,7 @@ export const descriptions = createMessages({
     ) =>
       ({
         message: markup`Couldn't find export <emphasis>${name}</emphasis> in <filelink emphasis target="${source}" />`,
-        category: 'bundler/unknownExport',
+        category: 'resolver/unknownExport',
         advice: [
           {
             type: 'log',

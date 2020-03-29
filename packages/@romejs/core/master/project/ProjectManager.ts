@@ -196,7 +196,13 @@ export default class ProjectManager {
     return this.uidToFilename.get(uid);
   }
 
-  getFilePathFromUidOrAbsolute(uid: string): undefined | AbsoluteFilePath {
+  getFilePathFromUidOrAbsolute(
+    uid: undefined | string,
+  ): undefined | AbsoluteFilePath {
+    if (uid === undefined) {
+      return;
+    }
+
     const uidToPath = this.getFilePathFromUid(uid);
     if (uidToPath !== undefined) {
       return uidToPath;

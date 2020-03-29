@@ -54,7 +54,6 @@ export type ReporterOptions = {
   markupOptions?: MarkupFormatOptions;
   disabled?: boolean;
   verbose?: boolean;
-  silent?: boolean;
   useRemoteProgressBars?: boolean;
   startTime?: number;
   wrapperFactory?: WrapperFactory;
@@ -104,6 +103,10 @@ type Stdout =
     columns?: number;
   };
 
+function getStreamFormat(stdout: undefined | Stdout): ReporterStream['format'] {
+  return stdout !== undefined && stdout.isTTY === true ? 'ansi' : 'none';
+}
+
 export default class Reporter {
   constructor(opts: ReporterOptions = {}) {
     this.programName = opts.programName === undefined ? 'rome' : opts.programName;
@@ -112,7 +115,6 @@ export default class Reporter {
     this.noProgress = process.env.CI === '1';
     this.isVerbose = Boolean(opts.verbose);
 
-    this.silent = opts.silent === true;
     this.startTime = opts.startTime === undefined ? Date.now() : opts.startTime;
     this.hasClearScreen = opts.hasClearScreen === undefined
       ? true : opts.hasClearScreen;
@@ -153,17 +155,9 @@ export default class Reporter {
 
   static DEFAULT_COLUMNS = 100;
 
-  attachStdoutStreams(
-    stdout?: Stdout,
-    stderr?: Stdout,
-    format?: ReporterStream['format'],
-  ): ReporterDerivedStreams {
+  attachStdoutStreams(stdout?: Stdout, stderr?: Stdout): ReporterDerivedStreams {
     const columns = stdout === undefined || stdout.columns === undefined
       ? Reporter.DEFAULT_COLUMNS : stdout.columns;
-
-    if (format === undefined) {
-      format = stdout !== undefined && stdout.isTTY === true ? 'ansi' : 'none';
-    }
 
     const columnsUpdated: Event<number, void> = new Event({
       name: 'columnsUpdated',
@@ -171,7 +165,7 @@ export default class Reporter {
 
     const outStream: ReporterStream = {
       type: 'out',
-      format,
+      format: getStreamFormat(stdout),
       columns,
       write(chunk) {
         if (stdout !== undefined) {
@@ -183,8 +177,9 @@ export default class Reporter {
     };
 
     const errStream: ReporterStream = {
-      ...outStream,
       type: 'error',
+      format: getStreamFormat(stderr),
+      columns,
       write(chunk) {
         if (stderr !== undefined) {
           stderr.write(chunk);
@@ -238,7 +233,6 @@ export default class Reporter {
   markupOptions: MarkupFormatOptions;
 
   isRemote: boolean;
-  silent: boolean;
   noProgress: boolean;
   isVerbose: boolean;
   hasSpacer: boolean;
@@ -353,10 +347,6 @@ export default class Reporter {
   }
 
   addStream(stream: ReporterStream) {
-    if (this.silent) {
-      return;
-    }
-
     this.streams.add(stream);
 
     if (stream.type === 'error' || stream.type === 'all') {

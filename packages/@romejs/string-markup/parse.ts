@@ -27,7 +27,8 @@ const globalAttributes: Array<string> = ['emphasis', 'dim'];
 
 const tags: Map<string, Array<string>> = new Map();
 tags.set('emphasis', []);
-tags.set('number', ['approx']);
+tags.set('number', ['approx', 'pluralSuffix', 'singularSuffix']);
+tags.set('grammarNumber', ['plural', 'singular', 'none']);
 tags.set('hyperlink', ['target']);
 tags.set('filelink', ['target', 'column', 'line']);
 tags.set('inverse', []);

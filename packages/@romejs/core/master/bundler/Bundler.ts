@@ -156,7 +156,7 @@ export default class Bundler {
     progress.setTotal(entries.length);
 
     const silentReporter = this.reporter.fork({
-      silent: true,
+      streams: [],
     });
 
     const promises: Set<Promise<void>> = new Set();

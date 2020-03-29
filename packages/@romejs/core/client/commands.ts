@@ -272,7 +272,7 @@ localCommands.set('lsp', {
     const stdin = req.client.reporter.getStdin();
     req.client.reporter.teardown();
 
-    const bridge = await req.client.connectToDaemon();
+    const bridge = await req.client.findOrStartMaster();
     if (bridge === undefined) {
       return false;
     }

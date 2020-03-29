@@ -297,7 +297,7 @@ export default class DependencyNode {
         const localLoc = mod.analyze.topLevelLocalBindings[expectedName];
         if (localLoc !== undefined) {
           return {
-            description: descriptions.BUNDLER.UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL(
+            description: descriptions.RESOLVER.UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL(
               expectedName,
               fromSource,
               localLoc,
@@ -309,7 +309,7 @@ export default class DependencyNode {
     }
 
     return {
-      description: descriptions.BUNDLER.UNKNOWN_EXPORT(
+      description: descriptions.RESOLVER.UNKNOWN_EXPORT(
         expectedName,
         fromSource,
         Array.from(resolved.node.getExportedNames(kind)),
@@ -342,7 +342,7 @@ export default class DependencyNode {
     const {record} = resolved;
 
     return {
-      description: descriptions.BUNDLER.IMPORT_TYPE_MISMATCH(
+      description: descriptions.RESOLVER.IMPORT_TYPE_MISMATCH(
         name,
         node.uid,
         kind,

@@ -212,7 +212,7 @@ export default class DiagnosticsPrinter extends Error {
     // If focus is enabled, check if we should ignore this message
     if (filename !== undefined && start !== undefined && end !== undefined) {
       const niceFilename = humanizeMarkupFilename(
-        [filename],
+        filename,
         this.reporter.markupOptions,
       );
       const focusId = getDiagnosticHeader({

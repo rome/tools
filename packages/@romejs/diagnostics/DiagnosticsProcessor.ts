@@ -164,7 +164,7 @@ export default class DiagnosticsProcessor {
         continue;
       }
 
-      if (filter.test !== undefined && !filter.test(diag)) {
+      if (filter.test !== undefined && filter.test(diag)) {
         continue;
       }
 

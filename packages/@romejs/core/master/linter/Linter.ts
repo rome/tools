@@ -38,16 +38,19 @@ type ProgressFactory = (opts: ReporterProgressOptions) => ReporterProgress;
 type WatchEvents = {
   onRunStart: () => void;
   createProgress: ProgressFactory;
-  onChanges: (result: WatchResults, initial: boolean) => void;
+  onChanges: (result: WatchResults, initial: boolean, runner: LintRunner) => void;
 };
 
 type WatchResults = {
+  runner: LintRunner;
+  evictedPaths: AbsoluteFilePathSet;
   changes: LintWatchChanges;
   fixedCount: number;
+  totalCount: number;
 };
 
 type LintRunOptions = {
-  changedPaths: AbsoluteFilePathSet;
+  evictedPaths: AbsoluteFilePathSet;
   processor: DiagnosticsProcessor;
 };
 
@@ -61,14 +64,16 @@ function createDiagnosticsPrinter(
 
   printer.onBeforeFooterPrint((reporter, isError) => {
     if (fixedCount > 0) {
-      reporter.success(`<number emphasis>${totalCount}</number> files fixed`);
+      reporter.success(
+        `<number emphasis>${fixedCount}</number> <grammarNumber plural="files" singular="file">${fixedCount}</grammarNumber> fixed`,
+      );
     }
 
     if (isError) {
       let couldFix = false;
       let hasPendingFixes = false;
 
-      for (const {description} of printer.processor.getDiagnostics()) {
+      for (const {description} of processor.getDiagnostics()) {
         if (description.category === 'lint/pendingFixes') {
           hasPendingFixes = true;
         }
@@ -90,10 +95,10 @@ function createDiagnosticsPrinter(
     } else {
       if (totalCount === 0) {
         reporter.warn('No files linted');
-      } else if (totalCount === 1) {
-        reporter.info(`<emphasis>1</emphasis> file linted`);
       } else {
-        reporter.info(`<number emphasis>${totalCount}</number> files linted`);
+        reporter.info(
+          `<number emphasis>${totalCount}</number> <grammarNumber plural="files" singular="file">${totalCount}</grammarNumber> linted`,
+        );
       }
     }
   });
@@ -136,7 +141,7 @@ class LintRunner {
 
   async runLint(
     {
-      changedPaths,
+      evictedPaths: changedPaths,
       processor,
     }: LintRunOptions,
   ): Promise<{fixedCount: number}> {
@@ -178,7 +183,7 @@ class LintRunner {
 
   async runGraph(
     {
-      changedPaths,
+      evictedPaths,
       processor,
     }: LintRunOptions,
   ): Promise<AbsoluteFilePathSet> {
@@ -187,7 +192,7 @@ class LintRunner {
     const validateDependencyPaths: AbsoluteFilePathSet =
       new AbsoluteFilePathSet();
 
-    for (const path of changedPaths) {
+    for (const path of evictedPaths) {
       validateDependencyPaths.add(path);
 
       // Will be undefined if this is the first time initializing it in the graph
@@ -220,7 +225,7 @@ class LintRunner {
   }
 
   computeChanges(
-    {changedPaths, processor}: LintRunOptions,
+    {evictedPaths: changedPaths, processor}: LintRunOptions,
     validateDependencyPaths: AbsoluteFilePathSet,
   ): LintWatchChanges {
     const {master} = this;
@@ -283,7 +288,13 @@ class LintRunner {
     const {fixedCount} = await this.runLint(opts);
     const validateDependencyPaths = await this.runGraph(opts);
     const changes = await this.computeChanges(opts, validateDependencyPaths);
-    return {changes, fixedCount};
+    return {
+      evictedPaths: opts.evictedPaths,
+      changes,
+      fixedCount,
+      totalCount: validateDependencyPaths.size,
+      runner: this,
+    };
   }
 }
 
@@ -307,7 +318,10 @@ export default class Linter {
     };
   }
 
-  createDiagnosticsProcessor(): DiagnosticsProcessor {
+  createDiagnosticsProcessor(
+    evictedPaths: AbsoluteFilePathSet,
+    runner: LintRunner,
+  ): DiagnosticsProcessor {
     const processor = new DiagnosticsProcessor({
       origins: [
         {
@@ -318,6 +332,20 @@ export default class Linter {
     });
 
     processor.addAllowedUnusedSuppressionPrefix('bundler');
+
+    // Only display files that aren't absolute, are in the changed paths, or have had previous compiler diagnostics
+
+    // This hides errors that have been lint ignored but may have been produced by dependency analysis
+    processor.addFilter({
+      test: (diag) => {
+        const absolute =
+          this.request.master.projectManager.getFilePathFromUidOrAbsolute(
+            diag.location.filename,
+          );
+        return absolute === undefined || evictedPaths.has(absolute) ||
+        runner.compilerDiagnosticsCache.has(absolute);
+      },
+    });
 
     return processor;
   }
@@ -339,10 +367,10 @@ export default class Linter {
     });
 
     return this.request.watchFilesFromArgs(this.getFileArgOptions(), async (
-      {paths: changedPaths, projects},
+      {paths: evictedPaths, projects},
       initial,
     ) => {
-      const processor = this.createDiagnosticsProcessor();
+      const processor = this.createDiagnosticsProcessor(evictedPaths, runner);
 
       if (fixLocation !== undefined) {
         for (const project of projects) {
@@ -355,8 +383,8 @@ export default class Linter {
         }
       }
 
-      const result = await runner.run({changedPaths, processor});
-      events.onChanges(result, initial);
+      const result = await runner.run({evictedPaths, processor});
+      events.onChanges(result, initial, runner);
     });
   }
 
@@ -379,11 +407,11 @@ export default class Linter {
         return reporter.progress();
       },
 
-      onChanges: ({changes, fixedCount}) => {
+      onChanges: ({evictedPaths, changes, totalCount, fixedCount, runner}) => {
         printer = createDiagnosticsPrinter(
           request,
-          this.createDiagnosticsProcessor(),
-          changes.length,
+          this.createDiagnosticsProcessor(evictedPaths, runner),
+          totalCount,
           fixedCount,
         );
 

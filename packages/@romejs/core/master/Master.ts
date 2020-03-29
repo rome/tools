@@ -437,7 +437,6 @@ export default class Master {
       wrapperFactory: this.wrapFatal.bind(this),
       streams: [outStream, errStream],
       verbose: flags.verbose,
-      silent: flags.silent,
       markupOptions: {
         cwd: flags.cwd,
         humanizeFilename: (filename) => {
@@ -473,9 +472,9 @@ export default class Master {
 
     // Add reporter to connected set, important logs may be output to these
     if (!flags.silent) {
-      this.connectedReporters.addStream(errStream);
       this.connectedReporters.addStream(outStream);
     }
+    this.connectedReporters.addStream(errStream);
 
     const client: MasterClient = {
       id: this.clientIdCounter++,
