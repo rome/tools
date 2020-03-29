@@ -333,6 +333,8 @@ export default class BundleRequest {
     if (inlineSourceMap === true) {
       const sourceMapComment = sourceMap.toComment();
       content += sourceMapComment;
+    } else {
+      content += `//# sourceMappingURL=${this.sourceMap.file}.map`;
     }
 
     return {
