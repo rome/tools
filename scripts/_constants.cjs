@@ -6,7 +6,9 @@
  */
 
 const path = require('path');
+const os = require('os');
 
+exports.devFolder = path.join(os.tmpdir(), 'rome-dev');
 exports.root = path.join(__dirname, '..');
 exports.packages = path.join(exports.root, 'packages', '@romejs');
 exports.generatorsFolder = path.join(
