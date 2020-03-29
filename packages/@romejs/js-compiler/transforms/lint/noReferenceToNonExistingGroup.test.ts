@@ -26,6 +26,7 @@ test('Dangling backslash in regex', async (t) => {
     String.raw`let foo = /([abc]+)=\78/;foo;`,
     String.raw`let foo = /([abc]+)=\99/;foo;`,
     String.raw`let foo = /(([abc])\19)+=\28/;foo;`,
+    String.raw`let foo = /([abc]+)=\199/;foo;`,
   ];
 
   for (const validTestCase of validTestCases) {

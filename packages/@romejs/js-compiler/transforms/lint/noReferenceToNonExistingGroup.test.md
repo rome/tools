@@ -196,3 +196,37 @@ Object {
   ]
 }
 ```
+
+### `5`
+
+```javascript
+Object {
+  src: 'let foo = /([abc]+)=\\199/;foo;'
+  suppressions: Array []
+  diagnostics: Array [
+    Object {
+      origins: Array [Object {category: 'lint'}]
+      description: Object {
+        category: 'lint/noReferenceToNonExistingGroup'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Reference to non-existent group <emphasis>"19"</emphasis>'}
+      }
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 23
+          index: 23
+          line: 1
+        }
+        start: Object {
+          column: 20
+          index: 20
+          line: 1
+        }
+      }
+    }
+  ]
+}
+```
