@@ -107,8 +107,14 @@ function getCodePoint(char: string): number {
   throw new Error('Input was not 1 character long');
 }
 
-function readOctalCode(input: string, index: Number0, nextChar: string): {octalValue: number | undefined, end: Number0} {
-
+function readOctalCode(
+  input: string,
+  index: Number0,
+  nextChar: string,
+): {
+  octalValue: number | undefined;
+  end: Number0;
+} {
   let char = nextChar;
   let octal = '';
   let nextIndex: Number0 = add(index, 1);
@@ -238,20 +244,25 @@ export const createRegExpParser = createParser((ParserCore) =>
               escaped: true,
             }, end);
 
-          case '0': {
-            const { octalValue, end: octalEnd } = readOctalCode(input, index, nextChar);
-            if (octalValue && isOct(octalValue.toString())) {
-              const octal = parseInt(octalValue.toString(), 8);
+          case '0':
+            {
+              const {octalValue, end: octalEnd} = readOctalCode(
+                input,
+                index,
+                nextChar,
+              );
+              if (octalValue && isOct(octalValue.toString())) {
+                const octal = parseInt(octalValue.toString(), 8);
+                return this.finishComplexToken('Character', {
+                  value: String.fromCharCode(octal),
+                  escaped: true,
+                }, octalEnd);
+              }
               return this.finishComplexToken('Character', {
-                value: String.fromCharCode(octal),
+                value: String.fromCharCode(0),
                 escaped: true,
-              }, octalEnd);
+              }, end);
             }
-            return this.finishComplexToken('Character', {
-              value: String.fromCharCode(0),
-              escaped: true,
-            }, end);
-          }
 
           case 'x':
             {
@@ -300,8 +311,11 @@ export const createRegExpParser = createParser((ParserCore) =>
 
           // Redundant escaping
           default:
-
-            let { octalValue: referenceValue, end: referenceEnd } = readOctalCode(input, index, nextChar);
+            let {octalValue: referenceValue, end: referenceEnd} = readOctalCode(
+              input,
+              index,
+              nextChar,
+            );
             if (referenceValue) {
               let backReference = referenceValue.toString();
               // \8 \9 are treated as escape char
