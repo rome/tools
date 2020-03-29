@@ -105,7 +105,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
   getBasename(): string {
     const {segments} = this;
     const offset = this.isExplicitFolder() ? 2 : 1;
-    return segments[segments.length - offset];
+    return segments[segments.length - offset] || '';
   }
 
   getExtensionlessBasename(): string {
@@ -648,7 +648,10 @@ function parsePathSegments(segments: PathSegments): ParsedPath {
 
     switch (absoluteTarget) {
       case 'file':
-        return parsePathSegments(segments.slice(2));
+        // Automatically normalize a file scheme into an absolute path
+        return parsePathSegments(segments.slice(2).map((segment) =>
+          decodeURIComponent(segment)
+        ));
 
       default:
         const absoluteSegments = segments.slice(0, 3);

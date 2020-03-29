@@ -100,7 +100,7 @@ export function groupDiffByLines(rawDiffs: Diffs): Array<Diffs> {
   return diffsByLine;
 }
 
-export default function stringDiff(text1: string, text2: string) {
+export default function stringDiff(text1: string, text2: string): Diffs {
   // only pass fix_unicode=true at the top level, not when main is
 
   // recursively invoked

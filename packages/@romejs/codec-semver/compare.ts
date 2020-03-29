@@ -8,9 +8,7 @@
 import {AbsoluteVersionNode, VersionNode} from './types';
 
 // -1: Lesser
-
 // 0: Equal
-
 // 1: Greater
 type CompareRet = -1 | 0 | 1;
 

@@ -7,6 +7,7 @@
 
 import prettyFormat from '@romejs/pretty-format';
 import {escapeMarkup} from '@romejs/string-markup';
+import {ReporterProgress} from './types';
 
 const formatOpts = {
   maxDepth: 5,
@@ -29,4 +30,70 @@ export function interpolate(msg: string, args: Array<unknown>): string {
   }
 
   return interpolated;
+}
+
+export function mergeProgresses(
+  progresses: Array<ReporterProgress>,
+): ReporterProgress {
+  if (progresses.length === 1) {
+    return progresses[0];
+  }
+
+  return {
+    render: () => {
+      for (const progress of progresses) {
+        progress.render();
+      }
+    },
+    setCurrent: (current: number) => {
+      for (const progress of progresses) {
+        progress.setCurrent(current);
+      }
+    },
+    setTotal: (total: number, approximate?: boolean) => {
+      for (const progress of progresses) {
+        progress.setTotal(total, approximate);
+      }
+    },
+    setText: (text: string) => {
+      for (const progress of progresses) {
+        progress.setText(text);
+      }
+    },
+    pushText: (text: string) => {
+      for (const progress of progresses) {
+        progress.pushText(text);
+      }
+    },
+    popText: (text: string) => {
+      for (const progress of progresses) {
+        progress.popText(text);
+      }
+    },
+    setApproximateETA: (duration: number) => {
+      for (const progress of progresses) {
+        progress.setApproximateETA(duration);
+      }
+    },
+    tick: () => {
+      for (const progress of progresses) {
+        progress.tick();
+      }
+    },
+    end: () => {
+      for (const progress of progresses) {
+        progress.end();
+      }
+    },
+    pause: () => {
+      for (const progress of progresses) {
+        progress.pause();
+      }
+    },
+    resume: () => {
+      for (const progress of progresses) {
+        progress.resume();
+      }
+    },
+  };
 }

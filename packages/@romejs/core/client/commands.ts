@@ -264,24 +264,30 @@ localCommands.set('lsp', {
   },
 
   async callback(req: ClientRequest) {
-    // Better API
-    req.client.setClientName('lsp');
-    req.client.flags.silent = true;
+    req.client.setFlags({
+      clientName: 'lsp',
+      silent: true,
+    });
 
     const stdin = req.client.reporter.getStdin();
     req.client.reporter.teardown();
 
     const bridge = await req.client.findOrStartMaster();
+    if (bridge === undefined) {
+      return false;
+    }
 
-    bridge.lspBuffer.subscribe((chunk) => {
+    bridge.lspFromServerBuffer.subscribe((chunk) => {
       req.client.derivedReporterStreams.stdout.write(chunk);
     });
 
     stdin.on('data', (chunk) => {
-      bridge.lspBuffer.call(chunk.toString());
+      bridge.lspFromClientBuffer.call(chunk.toString());
     });
 
-    await new Promise(() => {});
+    await req.client.query({
+      command: 'lsp',
+    }, 'master');
 
     return true;
   },

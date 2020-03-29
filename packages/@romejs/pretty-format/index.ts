@@ -224,7 +224,6 @@ function formatKey(rawKey: string, opts: FormatOptions): string {
 }
 
 // These are object keys that should always go at the top and ignore any alphabetization
-
 // This is fairly arbitrary but should include generic identifier keys
 export const PRIORITIZE_KEYS = ['id', 'type', 'kind', 'key', 'name', 'value'];
 

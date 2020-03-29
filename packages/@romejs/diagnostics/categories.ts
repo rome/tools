@@ -6,17 +6,13 @@
  */
 
 // Rather than having a generic `string` type, we use string literals so there's one place where
-
 // all category names are defined. This allows the naming scheme to be more easily reviewed and
-
 // made consistent.
 export type DiagnosticCategory =
   | 'analyzeDependencies/cjsExportInES'
   | 'args/fileNotFound'
   | 'args/invalid'
-  | 'bundler/importTypeMismatch'
   | 'bundler/topLevelAwait'
-  | 'bundler/unknownExport'
   | 'bundler/moduleCycle'
   | 'compile/jsx'
   | 'compile/classes'
@@ -77,6 +73,8 @@ export type DiagnosticCategory =
   | 'resolver/notFound'
   | 'resolver/unsupported'
   | 'resolver/fetchFailed'
+  | 'resolver/importTypeMismatch'
+  | 'resolver/unknownExport'
   | 'suppressions/unused'
   | 'suppressions/incorrectPrefix'
   | 'suppressions/duplicate'
@@ -110,6 +108,7 @@ export type DiagnosticCategoryPrefix =
   | 'lsp'
   | 'parse'
   | 'projectManager'
+  | 'resolver'
   | 'tests'
   | 'typeCheck'
   | 'v8';

@@ -25,10 +25,11 @@ import {Diagnostics} from '@romejs/diagnostics';
 import {
   createUnknownFilePath,
   AbsoluteFilePath,
+  AbsoluteFilePathMap,
   UnknownFilePathMap,
   createAbsoluteFilePath,
 } from '@romejs/path';
-import {lstat, writeFile} from '@romejs/fs';
+import {lstat, writeFile, readFileText} from '@romejs/fs';
 import {
   FileReference,
   convertTransportFileReference,
@@ -57,8 +58,9 @@ export default class Worker {
     this.userConfig = loadUserConfig();
     this.partialManifests = new Map();
     this.projects = new Map();
-    this.astCache = new UnknownFilePathMap();
+    this.astCache = new AbsoluteFilePathMap();
     this.moduleSignatureCache = new UnknownFilePathMap();
+    this.buffers = new AbsoluteFilePathMap();
 
     this.logger = new Logger('worker', () => opts.bridge.log.hasSubscribers(), {
       streams: [
@@ -92,8 +94,9 @@ export default class Worker {
 
   partialManifests: Map<number, WorkerPartialManifest>;
   projects: Map<number, TransformProjectDefinition>;
-  astCache: UnknownFilePathMap<ParseResult>;
+  astCache: AbsoluteFilePathMap<ParseResult>;
   moduleSignatureCache: UnknownFilePathMap<ModuleSignature>;
+  buffers: AbsoluteFilePathMap<string>;
 
   getPartialManifest(id: number): WorkerPartialManifest {
     const manifest = this.partialManifests.get(id);
@@ -197,6 +200,22 @@ export default class Worker {
         uptime: process.uptime(),
       };
     });
+
+    bridge.updateBuffer.subscribe((payload) => {
+      return this.updateBuffer(
+        convertTransportFileReference(payload.file),
+        payload.content,
+      );
+    });
+  }
+
+  async updateBuffer(ref: FileReference, content: string) {
+    const path = ref.real;
+    this.buffers.set(path, content);
+
+    // Now outdated
+    this.astCache.delete(path);
+    this.moduleSignatureCache.delete(path);
   }
 
   async getTypeCheckProvider(
@@ -270,6 +289,15 @@ export default class Worker {
     return diagnostics;
   }
 
+  async readFile(path: AbsoluteFilePath): Promise<string> {
+    const buffer = this.buffers.get(path);
+    if (buffer === undefined) {
+      return await readFileText(path);
+    } else {
+      return buffer;
+    }
+  }
+
   async parseJS(
     ref: FileReference,
     opts: {
@@ -318,7 +346,7 @@ export default class Worker {
       sourceType = 'module';
     }
 
-    const cacheEnabled = opts.cache !== false && ref.sourceText === undefined;
+    const cacheEnabled = opts.cache !== false;
 
     if (cacheEnabled) {
       // Update the lastAccessed of the ast cache and return it, it will be evicted on
@@ -392,17 +420,17 @@ export default class Worker {
     return config;
   }
 
-  async writeFile(filename: AbsoluteFilePath, content: string): Promise<void> {
+  async writeFile(path: AbsoluteFilePath, content: string): Promise<void> {
     // Write the file out
-    await writeFile(filename, content);
+    await writeFile(path, content);
 
     // We just wrote the file but the server watcher hasn't had time to notify us
-    this.evict(filename);
+    this.evict(path);
   }
 
-  evict(filename: AbsoluteFilePath) {
-    this.astCache.delete(filename);
-    this.moduleSignatureCache.delete(filename);
+  evict(path: AbsoluteFilePath) {
+    this.astCache.delete(path);
+    this.moduleSignatureCache.delete(path);
   }
 
   updateManifests(manifests: WorkerPartialManifests) {

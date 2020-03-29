@@ -12,9 +12,7 @@ import {
   DiagnosticLanguage,
   DiagnosticSourceType,
   DiagnosticAdvice,
-
   DiagnosticsProcessor,
-
   deriveRootAdviceFromDiagnostic,
   getDiagnosticHeader,
 } from '@romejs/diagnostics';
@@ -129,10 +127,8 @@ export default class DiagnosticsPrinter extends Error {
     this.readFile = opts.readFile === undefined
       ? readDiagnosticsFileLocal : opts.readFile;
     this.cwd = cwd === undefined ? createAbsoluteFilePath(process.cwd()) : cwd;
-    this.processor = new DiagnosticsProcessor({
-      filters: opts.filters,
-      origins: opts.origins,
-    });
+    this.processor = opts.processor === undefined
+      ? new DiagnosticsProcessor() : opts.processor;
 
     this.displayedCount = 0;
     this.problemCount = 0;
@@ -216,7 +212,7 @@ export default class DiagnosticsPrinter extends Error {
     // If focus is enabled, check if we should ignore this message
     if (filename !== undefined && start !== undefined && end !== undefined) {
       const niceFilename = humanizeMarkupFilename(
-        [filename],
+        filename,
         this.reporter.markupOptions,
       );
       const focusId = getDiagnosticHeader({

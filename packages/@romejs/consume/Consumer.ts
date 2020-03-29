@@ -510,7 +510,7 @@ export default class Consumer {
   }
 
   has(key: string): boolean {
-    return this.get(key).asUnknown() !== undefined;
+    return this.get(key).asUnknown() != null;
   }
 
   setProperty(key: string, value: unknown): Consumer {
@@ -617,7 +617,7 @@ export default class Consumer {
 
   //
   exists() {
-    return this.value !== undefined;
+    return this.value != null;
   }
 
   isObject(): boolean {

@@ -95,6 +95,7 @@ export type WorkerFormatResult = {
 };
 
 export type WorkerLintResult = {
+  fixed: boolean;
   diagnostics: Diagnostics;
   suppressions: DiagnosticSuppressions;
 };
@@ -176,6 +177,14 @@ export default class WorkerBridge extends Bridge {
     file: JSONFileReference;
     opts: WorkerParseOptions;
   }, Program>({name: 'parseJS', direction: 'server->client'});
+
+  updateBuffer = this.createEvent<{
+    file: JSONFileReference;
+    content: string;
+  }, void>({
+    name: 'updateBuffer',
+    direction: 'server->client',
+  });
 
   init() {
     this.addErrorTransport('DiagnosticsError', {

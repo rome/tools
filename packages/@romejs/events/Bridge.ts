@@ -62,9 +62,12 @@ export default class Bridge {
       name: 'Bridge.heartbeat',
       direction: 'server<->client',
     });
-    this.heartbeatEvent.subscribe(() => {
-      return undefined;
-    });
+
+    if (this.type !== 'server&client') {
+      this.heartbeatEvent.subscribe(() => {
+        return undefined;
+      });
+    }
 
     this.clear();
     this.init();
@@ -104,6 +107,11 @@ export default class Bridge {
   }
 
   monitorHeartbeat(timeout: number, onExceeded: () => undefined | Promise<void>) {
+    if (this.type === 'server&client') {
+      // No point in monitoring this since we're the same process
+      return;
+    }
+
     this.heartbeatTimeout = setTimeout(async () => {
       try {
         await this.heartbeatEvent.call(undefined, {timeout});

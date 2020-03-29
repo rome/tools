@@ -107,6 +107,34 @@ function getCodePoint(char: string): number {
   throw new Error('Input was not 1 character long');
 }
 
+function readOctalCode(
+  input: string,
+  index: Number0,
+  nextChar: string,
+): {
+  octalValue: number | undefined;
+  end: Number0;
+} {
+  let char = nextChar;
+  let octal = '';
+  let nextIndex: Number0 = add(index, 1);
+  while (isDigit(char)) {
+    octal += char;
+    // stop at max octal ascii in case of octal escape
+    if (parseInt(octal) > 377) {
+      octal = octal.slice(0, octal.length - 1);
+      break;
+    }
+    nextIndex = add(nextIndex, 1);
+    char = input[get0(nextIndex)];
+  }
+  if (octal === '') {
+    return {octalValue: undefined, end: nextIndex};
+  }
+  const octalValue = parseInt(octal, 10);
+  return {octalValue, end: nextIndex};
+}
+
 export const createRegExpParser = createParser((ParserCore) =>
   class RegExpParser extends ParserCore<Tokens, void> {
     constructor(opts: RegExpParserOptions) {
@@ -217,12 +245,24 @@ export const createRegExpParser = createParser((ParserCore) =>
             }, end);
 
           case '0':
-            // TODO octal
-
-            return this.finishComplexToken('Character', {
-              value: String.fromCharCode(0),
-              escaped: true,
-            }, end);
+            {
+              const {octalValue, end: octalEnd} = readOctalCode(
+                input,
+                index,
+                nextChar,
+              );
+              if (octalValue !== undefined && isOct(octalValue.toString())) {
+                const octal = parseInt(octalValue.toString(), 8);
+                return this.finishComplexToken('Character', {
+                  value: String.fromCharCode(octal),
+                  escaped: true,
+                }, octalEnd);
+              }
+              return this.finishComplexToken('Character', {
+                value: String.fromCharCode(0),
+                escaped: true,
+              }, end);
+            }
 
           case 'x':
             {
@@ -271,38 +311,27 @@ export const createRegExpParser = createParser((ParserCore) =>
 
           // Redundant escaping
           default:
-            // TODO dangling backslash
-
-            let char = nextChar;
-            let backReference = '';
-            let nextIndex: Number0 = add(index, 1);
-            while (isDigit(char)) {
-              backReference += char;
-              // stop at max octal ascii in case of octal escape
-              if (parseInt(backReference) > 377) {
-                backReference = backReference.slice(0, backReference.length - 1);
-                break;
-              }
-              nextIndex = add(nextIndex, 1);
-              char = input[get0(nextIndex)];
-            }
-
-            if (backReference !== '') {
-              const referenceValue = parseInt(backReference, 10);
+            let {octalValue: referenceValue, end: referenceEnd} = readOctalCode(
+              input,
+              index,
+              nextChar,
+            );
+            if (referenceValue !== undefined) {
+              let backReference = referenceValue.toString();
               // \8 \9 are treated as escape char
               if (referenceValue === 8 || referenceValue === 9) {
                 return this.finishComplexToken('Character', {
-                  value: nextChar,
+                  value: backReference,
                   escaped: true,
-                }, nextIndex);
+                }, referenceEnd);
               }
 
-              if (isOct(String(referenceValue))) {
+              if (isOct(backReference)) {
                 const octal = parseInt(backReference, 8);
                 return this.finishComplexToken('Character', {
                   value: String.fromCharCode(octal),
                   escaped: true,
-                }, nextIndex);
+                }, referenceEnd);
               }
 
               // back reference allowed are 1 - 99
@@ -313,15 +342,26 @@ export const createRegExpParser = createParser((ParserCore) =>
                     value: parseInt(backReference, 10),
                     escaped: true,
                   },
-                  nextIndex,
+                  referenceEnd,
                 );
               } else {
                 backReference = backReference.slice(0, backReference.length - 1);
-                nextIndex = add(nextIndex, -1);
-                return this.finishComplexToken('Character', {
-                  value: backReference,
-                  escaped: true,
-                }, nextIndex);
+                referenceEnd = add(referenceEnd, -1);
+                if (isOct(backReference)) {
+                  return this.finishComplexToken('Character', {
+                    value: String.fromCharCode(parseInt(backReference, 8)),
+                    escaped: true,
+                  }, referenceEnd);
+                } else {
+                  return this.finishComplexToken(
+                    'NumericBackReferenceCharacter',
+                    {
+                      value: parseInt(backReference, 10),
+                      escaped: true,
+                    },
+                    referenceEnd,
+                  );
+                }
               }
             }
 

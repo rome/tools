@@ -46,7 +46,6 @@ main().catch((err) => {
   } else {
     const reporter = Reporter.fromProcess();
     printDiagnosticsSync(diags, {
-      origins: [],
       reporter,
     });
   }

@@ -39,6 +39,8 @@ import {
   URLFilePath,
   AbsoluteFilePathMap,
   UnknownFilePathMap,
+  createAbsoluteFilePath,
+  AbsoluteFilePathSet,
 } from '@romejs/path';
 import {JSONFileReference, FileReference} from '../../common/types/files';
 import {
@@ -197,6 +199,51 @@ export default class ProjectManager {
 
   getFilePathFromUid(uid: string): undefined | AbsoluteFilePath {
     return this.uidToFilename.get(uid);
+  }
+
+  getFilePathFromUidOrAbsolute(
+    uid: undefined | string,
+  ): undefined | AbsoluteFilePath {
+    if (uid === undefined) {
+      return;
+    }
+
+    const uidToPath = this.getFilePathFromUid(uid);
+    if (uidToPath !== undefined) {
+      return uidToPath;
+    }
+
+    const path = createAbsoluteFilePath(uid);
+    if (path.isAbsolute()) {
+      return path.assertAbsolute();
+    }
+  }
+
+  normalizeFilenamesToFilePaths(
+    filenames: Iterable<undefined | string>,
+  ): {
+    absolutes: AbsoluteFilePathSet;
+    others: Set<undefined | string>;
+  } {
+    const others: Set<undefined | string> = new Set();
+    const absolutes = new AbsoluteFilePathSet();
+
+    for (const filename of filenames) {
+      if (filename === undefined) {
+        others.add(undefined);
+        continue;
+      }
+
+      const absolute = this.getFilePathFromUidOrAbsolute(filename);
+      if (absolute === undefined) {
+        // Relative path
+        others.add(filename);
+      } else {
+        absolutes.add(absolute);
+      }
+    }
+
+    return {absolutes, others};
   }
 
   setUid(path: AbsoluteFilePath, uid: string) {
@@ -791,8 +838,8 @@ export default class ProjectManager {
     }
   }
 
-  getHierarchyFromFilename(filename: AbsoluteFilePath): Array<ProjectDefinition> {
-    const project = this.findProjectExisting(filename);
+  getHierarchyFromFilename(path: AbsoluteFilePath): Array<ProjectDefinition> {
+    const project = this.findProjectExisting(path);
     if (project === undefined) {
       return [];
     } else {

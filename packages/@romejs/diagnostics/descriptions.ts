@@ -214,10 +214,6 @@ export const descriptions = createMessages({
             type: 'diff',
             diff: stringDiff(original, formatted),
           },
-          {
-            type: 'code',
-            code: formatted,
-          },
         ],
       }),
 
@@ -726,7 +722,9 @@ export const descriptions = createMessages({
         ],
       };
     },
+  },
 
+  RESOLVER: {
     IMPORT_TYPE_MISMATCH: (
       exportName: string,
       source: string,
@@ -735,7 +733,7 @@ export const descriptions = createMessages({
       exportLoc: undefined | SourceLocation,
     ) =>
       ({
-        category: 'bundler/importTypeMismatch',
+        category: 'resolver/importTypeMismatch',
         message: `The export <emphasis>${exportName}</emphasis> in <filelink emphasis target="${source}" /> was incorrectly imported as a <emphasis>${importedAsKing}</emphasis> when it's actually a <emphasis>${actualKind}</emphasis>`,
         advice: exportLoc &&
           [
@@ -763,7 +761,7 @@ export const descriptions = createMessages({
     ) =>
       ({
         message: `Couldn't find export <emphasis>${name}</emphasis> in <filelink emphasis target="${source}" />`,
-        category: 'bundler/unknownExport',
+        category: 'resolver/unknownExport',
         advice: exportedNames.length === 0 ? [
           {
             type: 'log',
@@ -800,7 +798,7 @@ export const descriptions = createMessages({
     ) =>
       ({
         message: markup`Couldn't find export <emphasis>${name}</emphasis> in <filelink emphasis target="${source}" />`,
-        category: 'bundler/unknownExport',
+        category: 'resolver/unknownExport',
         advice: [
           {
             type: 'log',
@@ -863,6 +861,7 @@ export const descriptions = createMessages({
     INVALID_INT_TOKEN: 'Invalid or unexpected int token',
     UNICODE_ESCAPE_IN_REGEX_FLAGS: 'Regular expression flags can\'t contain unicode escapes',
     UNTERMINATED_REGEX: 'Unterminated regular expression',
+    DANGLING_BACKSLASH_IN_REGEX: 'Dangling backslash in a regular expression',
     EXPECTED_RELATIONAL_OPERATOR: 'Expected relational operator',
     UNEXPECTED_SPACE: 'Unexpected space',
     EXPECTED_SEMI_OR_LINE_TERMINATOR: 'Expected a semicolon or a line terminator',

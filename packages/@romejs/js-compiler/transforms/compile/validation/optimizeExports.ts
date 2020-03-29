@@ -36,7 +36,7 @@ export default {
           if (binding !== undefined && binding instanceof ImportBinding &&
             binding.meta.type === 'name') {
             nodes.push(exportExternalDeclaration.create({
-              specifiers: [
+              namedSpecifiers: [
                 exportExternalSpecifier.create({
                   local: identifier.quick(binding.meta.imported),
                   exported: specifier.exported,

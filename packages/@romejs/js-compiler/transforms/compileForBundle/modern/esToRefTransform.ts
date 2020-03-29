@@ -33,7 +33,6 @@ import {
   bindingIdentifier,
   staticPropertyKey,
   variableDeclarationStatement,
-  ExportExternalDeclaration,
   ObjectProperties,
   program,
   blockStatement,
@@ -148,43 +147,35 @@ export default {
             ));
           }
 
-          if (child.type === 'ExportLocalDeclaration' || child.type ===
-          'ExportExternalDeclaration') {
-            const {specifiers} = child;
+          if (child.type === 'ExportExternalDeclaration') {
+            // TODO defaultSpecifier and namespaceSpecifier
+            const {source} = child;
 
-            if (child.type === 'ExportLocalDeclaration' && child.declaration !==
-            undefined) {
+            for (const specifier of child.namedSpecifiers) {
+              // If this is an external export then use the correct name
+              const moduleId = getModuleId(source.value, opts);
+              if (moduleId === undefined) {
+                continue;
+              }
+
+              const local = getPrefixedName(specifier.local.name, moduleId, opts);
+
+              exportNames.set(specifier.exported.name, local);
+            }
+          }
+
+          if (child.type === 'ExportLocalDeclaration') {
+            if (child.declaration !== undefined) {
               throw new Error(
                 'No export declarations should be here as they have been removed by renameBindings',
               );
             }
 
-            let source: undefined | ExportExternalDeclaration['source'];
-            if (child.type === 'ExportExternalDeclaration') {
-              source = child.source;
-            }
-
+            const {specifiers} = child;
             if (specifiers !== undefined) {
               for (const specifier of specifiers) {
-                if (specifier.type === 'ExportLocalSpecifier' ||
-                specifier.type === 'ExportExternalSpecifier') {
-                  // The local binding has already been rewritten by renameBindings if it existed
-                  let local = specifier.local.name;
-
-                  // If this is an external export then use the correct name
-                  if (source !== undefined) {
-                    const moduleId = getModuleId(source.value, opts);
-                    if (moduleId === undefined) {
-                      continue;
-                    }
-
-                    local = getPrefixedName(local, moduleId, opts);
-                  }
-
-                  exportNames.set(specifier.exported.name, local);
-                } else {
-                  // TODO ???
-                }
+                // The local binding has already been rewritten by renameBindings if it existed
+                exportNames.set(specifier.exported.name, specifier.local.name);
               }
             }
           }

@@ -16,7 +16,6 @@ import {Class} from '@romejs/typescript-helpers';
 const SOCKET_LENGTH = /^(\d+):/;
 
 // JSON.stringify but throw on bad data types
-
 // Most likely slower... But safer and our data structures are usually fairly shallow
 function stringify(obj: unknown): string {
   return JSON.stringify(obj, (key, value) => {

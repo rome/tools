@@ -20,7 +20,6 @@ import assertSingleOrMultipleNodes from './assertSingleOrMultipleNodes';
 import {AnyVariableIdentifier} from '@romejs/js-ast/unions';
 
 // This methods allows either passing in Bindings that could be present within deep scopes,
-
 // or local names for the scope in the passed Path
 export default function renameBindings(
   path: Path,

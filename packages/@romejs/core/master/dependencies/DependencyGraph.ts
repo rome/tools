@@ -97,30 +97,6 @@ export default class DependencyGraph {
   locker: Locker<string>;
   closeEvent: Event<void, void>;
 
-  watch(callback?: (opts: {path: AbsoluteFilePath}) => void) {
-    const watchSubscription = this.master.fileChangeEvent.subscribe(
-      async (path) => {
-        if (this.nodes.has(path)) {
-          this.nodes.delete(path);
-        } else {
-          return;
-        }
-
-        const diagnosticsProcessor = new DiagnosticsProcessor({origins: []});
-        await this.seed({paths: [path], diagnosticsProcessor});
-        diagnosticsProcessor.maybeThrowDiagnosticsError();
-
-        if (callback !== undefined) {
-          callback({path});
-        }
-      },
-    );
-
-    this.closeEvent.subscribe(() => {
-      watchSubscription.unsubscribe();
-    });
-  }
-
   close() {
     this.closeEvent.send();
   }
@@ -155,18 +131,26 @@ export default class DependencyGraph {
     return stats;
   }
 
-  addNode(filename: AbsoluteFilePath, res: WorkerAnalyzeDependencyResult) {
+  deleteNode(path: AbsoluteFilePath) {
+    this.nodes.delete(path);
+  }
+
+  addNode(path: AbsoluteFilePath, res: WorkerAnalyzeDependencyResult) {
     const module = new DependencyNode(
       this,
-      this.master.projectManager.getFileReference(filename),
+      this.master.projectManager.getFileReference(path),
       res,
     );
-    this.nodes.set(filename, module);
+    this.nodes.set(path, module);
     return module;
   }
 
+  maybeGetNode(path: AbsoluteFilePath): undefined | DependencyNode {
+    return this.nodes.get(path);
+  }
+
   getNode(path: AbsoluteFilePath): DependencyNode {
-    const mod = this.nodes.get(path);
+    const mod = this.maybeGetNode(path);
     if (mod === undefined) {
       throw new Error(`No module found for ${path.join()}`);
     }
@@ -220,9 +204,14 @@ export default class DependencyGraph {
     }
   }
 
-  validate(node: DependencyNode, diagnosticsProcessor: DiagnosticsProcessor) {
+  validate(
+    node: DependencyNode,
+    diagnosticsProcessor: DiagnosticsProcessor,
+  ): boolean {
     const resolvedImports = node.resolveImports();
-    diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics);
+    return (
+      diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics).length > 0
+    );
   }
 
   validateTransitive(
