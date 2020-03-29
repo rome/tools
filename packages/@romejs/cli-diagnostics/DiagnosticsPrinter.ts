@@ -12,9 +12,7 @@ import {
   DiagnosticLanguage,
   DiagnosticSourceType,
   DiagnosticAdvice,
-
   DiagnosticsProcessor,
-
   deriveRootAdviceFromDiagnostic,
   getDiagnosticHeader,
 } from '@romejs/diagnostics';
@@ -129,10 +127,8 @@ export default class DiagnosticsPrinter extends Error {
     this.readFile = opts.readFile === undefined
       ? readDiagnosticsFileLocal : opts.readFile;
     this.cwd = cwd === undefined ? createAbsoluteFilePath(process.cwd()) : cwd;
-    this.processor = new DiagnosticsProcessor({
-      filters: opts.filters,
-      origins: opts.origins,
-    });
+    this.processor = opts.processor === undefined
+      ? new DiagnosticsProcessor() : opts.processor;
 
     this.displayedCount = 0;
     this.problemCount = 0;

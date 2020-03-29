@@ -137,8 +137,8 @@ export default class Bundler {
     );
     const analyzeProgress = this.reporter.progress({
       name: `bundler:analyze:${entryUids.join(',')}`,
+      title: 'Analyzing',
     });
-    analyzeProgress.setTitle('Analyzing');
     processor.setThrowAfter(100);
     await this.graph.seed({
       paths: entries,
@@ -152,8 +152,7 @@ export default class Bundler {
     // Now actually bundle them
     const map: Map<AbsoluteFilePath, BundleResult> = new Map();
 
-    const progress = this.reporter.progress();
-    progress.setTitle('Bundling');
+    const progress = this.reporter.progress({title: 'Bundling'});
     progress.setTotal(entries.length);
 
     const silentReporter = this.reporter.fork({

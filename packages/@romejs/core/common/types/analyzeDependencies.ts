@@ -35,6 +35,13 @@ export type AnalyzeExportLocal = {
 export type AnyAnalyzeExport =
   | AnalyzeExportLocal
   | {
+    type: 'externalNamespace';
+    kind: ConstImportModuleKind;
+    loc?: SourceLocation;
+    exported: string;
+    source: string;
+  }
+  | {
     type: 'external';
     kind: ConstImportModuleKind;
     loc?: SourceLocation;

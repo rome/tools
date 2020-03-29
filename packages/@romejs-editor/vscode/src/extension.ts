@@ -13,7 +13,9 @@ import {
 } from 'vscode-languageclient';
 import * as vscode from 'vscode';
 import path = require('path');
+
 import fs = require('fs');
+
 import os = require('os');
 
 let client: LanguageClient;
@@ -79,10 +81,7 @@ async function getRomeLocation(): Promise<undefined | string> {
         return manifest;
       }
 
-      const nodeModules = await tryChain(
-        uri.path,
-        `node_modules/rome/index.js`,
-      );
+      const nodeModules = await tryChain(uri.path, `node_modules/rome/index.js`);
       if (nodeModules !== undefined) {
         return nodeModules;
       }
@@ -112,9 +111,9 @@ export async function activate() {
       'No Rome path found. Waiting for workspace folder changes before trying again',
     );
 
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       const event = vscode.workspace.onDidChangeWorkspaceFolders(() => {
-        getRomeLocation().then(filename => {
+        getRomeLocation().then((filename) => {
           if (filename !== undefined) {
             romePath = filename;
             event.dispose();

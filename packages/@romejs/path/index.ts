@@ -105,7 +105,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
   getBasename(): string {
     const {segments} = this;
     const offset = this.isExplicitFolder() ? 2 : 1;
-    return segments[segments.length - offset];
+    return segments[segments.length - offset] || '';
   }
 
   getExtensionlessBasename(): string {

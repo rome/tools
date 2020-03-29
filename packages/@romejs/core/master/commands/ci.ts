@@ -7,8 +7,8 @@
 
 import {commandCategories, createMasterCommand} from '../../commands';
 import {MasterRequest} from '@romejs/core';
-import Linter from '../linter/Linter';
 import test from './test';
+import lint from './lint';
 
 export default createMasterCommand({
   category: commandCategories.CODE_QUALITY,
@@ -18,8 +18,10 @@ export default createMasterCommand({
     const {reporter} = req;
 
     reporter.heading('Running lint');
-    const linter = new Linter(req, {});
-    await linter.lint(false);
+    await lint.default(req, {
+      fix: false,
+      changed: undefined,
+    });
 
     reporter.heading('Running tests');
     await test.default(req, {

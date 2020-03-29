@@ -25,6 +25,7 @@ import {
   AnalyzeDependency,
   AnalyzeDependencyName,
   AnalyzeExportLocal,
+  AnyAnalyzeExport,
 } from '@romejs/core';
 import {FileReference} from '@romejs/core/common/types/files';
 
@@ -44,12 +45,13 @@ type ResolvedImportNotFound = {
 type ResolvedImport = ResolvedImportFound | ResolvedImportNotFound;
 
 function equalKind(
-  producer: AnalyzeExportLocal,
+  producer: AnyAnalyzeExport,
   consumerKind: ConstImportModuleKind,
 ): boolean {
   // Allow importing functions and classes as `type` and `typeof`
-  if ((producer.valueType === 'class' || producer.valueType === 'function') &&
-    (consumerKind === 'type' || consumerKind === 'typeof')) {
+  if (producer.type === 'local' && (producer.valueType === 'class' ||
+  producer.valueType === 'function') && (consumerKind === 'type' ||
+  consumerKind === 'typeof')) {
     return true;
   }
 
@@ -211,9 +213,10 @@ export default class DependencyNode {
     }
 
     for (const exp of this.analyze.exports) {
-      if (exp.type === 'externalAll') {
-        const node = this.getNodeFromRelativeDependency(exp.source);
-        node.getExportedModules(chain);
+      if (exp.type === 'externalAll' && this.relativeToAbsolutePath.has(
+        exp.source,
+      )) {
+        this.getNodeFromRelativeDependency(exp.source).getExportedModules(chain);
       }
     }
 
@@ -233,29 +236,39 @@ export default class DependencyNode {
     let names: Set<string> = new Set();
 
     for (const exp of this.analyze.exports) {
-      if (exp.type === 'local' && equalKind(exp, kind)) {
-        names.add(exp.name);
+      if (!equalKind(exp, kind)) {
+        continue;
       }
 
-      if (exp.type === 'external') {
-        const resolved =
-          this.getNodeFromRelativeDependency(exp.source).resolveImport(
-            exp.imported,
-            exp.loc,
-          );
-        if (resolved.type === 'FOUND' && equalKind(resolved.record, kind)) {
+      switch (exp.type) {
+        case 'local':
+          names.add(exp.name);
+          break;
+
+        case 'external':
+          const resolved =
+            this.getNodeFromRelativeDependency(exp.source).resolveImport(
+              exp.imported,
+              exp.loc,
+            );
+          if (resolved.type === 'FOUND' && equalKind(resolved.record, kind)) {
+            names.add(exp.exported);
+          }
+          break;
+
+        case 'externalNamespace':
           names.add(exp.exported);
-        }
-      }
+          break;
 
-      if (exp.type === 'externalAll') {
-        names = new Set([
-          ...names,
-          ...this.getNodeFromRelativeDependency(exp.source).getExportedNames(
-            kind,
-            seen,
-          ),
-        ]);
+        case 'externalAll':
+          names = new Set([
+            ...names,
+            ...this.getNodeFromRelativeDependency(exp.source).getExportedNames(
+              kind,
+              seen,
+            ),
+          ]);
+          break;
       }
     }
 
@@ -349,7 +362,6 @@ export default class DependencyNode {
     resolved: BundleCompileResolvedImports;
   } {
     const {graph} = this;
-    const deps = this.relativeToAbsolutePath;
 
     // Build up a map of any forwarded imports
     const resolvedImports: BundleCompileResolvedImports = {};
@@ -359,7 +371,7 @@ export default class DependencyNode {
 
     // Go through all of our dependencies and check if they have any external exports to forward
     const allowTypeImportsAsValue = this.analyze.syntax.includes('ts');
-    for (const absolute of deps.values()) {
+    for (const absolute of this.relativeToAbsolutePath.values()) {
       const mod = graph.getNode(absolute);
 
       // We can't follow CJS names

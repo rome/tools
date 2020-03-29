@@ -124,12 +124,15 @@ export default class Client {
   requestResponseEvent: Event<ClientRequestResponseResult, void>;
   endEvent: Event<void, void>;
 
-  setClientName(name: string) {
+  setFlags(flags: Partial<ClientFlags>) {
     if (this.bridgeStatus !== undefined) {
-      throw new Error('Already connected to bridge. Cannot change client name');
+      throw new Error('Already connected to bridge. Cannot change client flags.');
     }
 
-    this.flags.clientName = name;
+    this.flags = {
+      ...this.flags,
+      ...flags,
+    };
   }
 
   getClientJSONFlags(): ClientFlagsJSON {
@@ -224,9 +227,8 @@ export default class Client {
       }
 
       // Fetch profiles
-      const progress = this.reporter.progress();
+      const progress = this.reporter.progress({title: 'Fetching profiles'});
       progress.setTotal(fetchers.length);
-      progress.setTitle('Fetching profiles');
       for (const [text, callback] of fetchers) {
         progress.setText(text);
         const profile = await callback();
@@ -494,7 +496,13 @@ export default class Client {
 
       const socketServer = net.createServer(() => {
         cleanup();
-        resolve(this.tryConnectToNewDaemon());
+
+        resolve(this.tryConnectToExistingDaemon().then((bridge) => {
+          if (bridge !== undefined) {
+            this.reporter.success(`Started daemon!`);
+          }
+          return bridge;
+        }));
       });
 
       function listen() {
@@ -546,14 +554,6 @@ export default class Client {
     }
 
     return await this.startDaemon();
-  }
-
-  async tryConnectToNewDaemon(): Promise<undefined | MasterBridge> {
-    const bridge = await this.tryConnectToExistingDaemon();
-    if (bridge !== undefined) {
-      this.reporter.success(`Started daemon!`);
-      return bridge;
-    }
   }
 
   async tryConnectToExistingDaemon(): Promise<undefined | MasterBridge> {

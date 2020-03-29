@@ -5,20 +5,42 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {consumeUnknown} from '@romejs/consume';
+import {consumeUnknown, Consumer} from '@romejs/consume';
 import {
-  LSPNotificationMessage,
-  LSPRequestMessage,
   LSPResponseMessage,
   LSPDiagnostic,
   LSPPosition,
+  LSPTextEdit,
 } from './types';
 import Master, {MasterClient} from '../Master';
-import {createAbsoluteFilePath} from '@romejs/path';
-import {Diagnostics} from '@romejs/diagnostics';
+import {
+  createAbsoluteFilePath,
+  AbsoluteFilePath,
+  AbsoluteFilePathMap,
+  AbsoluteFilePathSet,
+} from '@romejs/path';
+import {Diagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
-import {coerce1to0, get0} from '@romejs/ob1';
+import {coerce1to0, number0, Number0, inc} from '@romejs/ob1';
 import {stripMarkupTags} from '@romejs/string-markup';
+import {
+  PartialMasterQueryRequest,
+  MasterQueryResponse,
+} from '@romejs/core/common/bridges/MasterBridge';
+import Linter from '../linter/Linter';
+import MasterRequest from '../MasterRequest';
+import {DEFAULT_CLIENT_REQUEST_FLAGS} from '@romejs/core/common/types/client';
+import stringDiff, {
+  Diffs,
+  constants as diffConstants,
+} from '@romejs/string-diff';
+import {JSONObject, JSONPropertyValue} from '@romejs/codec-json';
+import {
+  ReporterProgress,
+  ReporterProgressBase,
+  Reporter,
+  ReporterProgressOptions,
+} from '@romejs/cli-reporter';
 
 type Status = 'IDLE' | 'WAITING_FOR_HEADERS_END' | 'WAITING_FOR_RESPONSE_END';
 
@@ -58,13 +80,13 @@ function parseHeaders(buffer: string): Headers {
 function convertPositionToLSP(pos: undefined | Position): LSPPosition {
   if (pos === undefined) {
     return {
-      line: 0,
-      character: 0,
+      line: number0,
+      character: number0,
     };
   } else {
     return {
-      line: get0(coerce1to0(pos.line)),
-      character: get0(pos.column),
+      line: coerce1to0(pos.line),
+      character: pos.column,
     };
   }
 }
@@ -88,51 +110,306 @@ function convertDiagnosticsToLSP(diagnostics: Diagnostics): Array<LSPDiagnostic>
   return lspDiagnostics;
 }
 
-type Writer = (chunk: string) => void;
+function getPathFromTextDocument(consumer: Consumer): AbsoluteFilePath {
+  return createAbsoluteFilePath(consumer.get('uri').asString());
+}
 
-export class LSPConnection {
-  constructor(master: Master, client: MasterClient, write: Writer) {
+function diffTextEdits(original: string, desired: string): Array<LSPTextEdit> {
+  const edits: Array<LSPTextEdit> = [];
+
+  const diffs: Diffs = stringDiff(original, desired);
+
+  let currLine: Number0 = number0;
+  let currChar: Number0 = number0;
+
+  function advance(str: string) {
+    for (const char of str) {
+      if (char === '\n') {
+        currLine = inc(currLine);
+        currChar = number0;
+      } else {
+        currChar = inc(currChar);
+      }
+    }
+  }
+
+  function getPosition(): LSPPosition {
+    return {
+      line: currLine,
+      character: currChar,
+    };
+  }
+
+  for (const [type, text] of diffs) {
+    switch (type) {
+      case diffConstants.ADD:
+        const pos = getPosition();
+        edits.push({
+          range: {
+            start: pos,
+            end: pos,
+          },
+          newText: text,
+        });
+        break;
+
+      case diffConstants.DELETE:
+        const start: LSPPosition = getPosition();
+        advance(text);
+        const end: LSPPosition = getPosition();
+        edits.push({
+          range: {
+            start,
+            end,
+          },
+          newText: '',
+        });
+        break;
+
+      case diffConstants.EQUAL:
+        advance(text);
+        break;
+    }
+  }
+
+  return edits;
+}
+
+let progressTokenCounter = 0;
+
+class LSPProgress extends ReporterProgressBase {
+  constructor(
+    server: LSPServer,
+    reporter: Reporter,
+    opts?: ReporterProgressOptions,
+  ) {
+    super(reporter, opts);
+    this.server = server;
+    this.token = progressTokenCounter++;
+
+    server.write({
+      type: '$/progress',
+      params: {
+        token: this.token,
+        value: {
+          kind: 'begin',
+          cancellable: false,
+          title: this.title,
+          percentage: 0,
+        },
+      },
+    });
+  }
+
+  token: number;
+  server: LSPServer;
+
+  render() {
+    const percentage = this.total === undefined ? 0 : 100 / this.total *
+    this.current;
+
+    this.server.write({
+      type: '$/progress',
+      params: {
+        token: this.token,
+        value: {
+          kind: 'report',
+          cancellable: false,
+          message: this.text,
+          percentage,
+        },
+      },
+    });
+  }
+
+  end() {
+    this.server.write({
+      type: '$/progress',
+      params: {
+        token: this.token,
+        value: {
+          kind: 'end',
+        },
+      },
+    });
+  }
+}
+
+export class LSPServer {
+  constructor(request: MasterRequest) {
     this.status = 'IDLE';
     this.buffer = '';
     this.nextHeaders = undefined;
-    this._write = write;
-    this.master = master;
-    this.client = client;
+
+    this.request = request;
+    this.master = request.master;
+    this.client = request.client;
+
+    this.lintSessionsPending = new AbsoluteFilePathSet();
+    this.lintSessions = new AbsoluteFilePathMap();
+
+    request.endEvent.subscribe(() => {
+      this.shutdown();
+    });
   }
 
+  request: MasterRequest;
   client: MasterClient;
   master: Master;
-  _write: Writer;
   nextHeaders: undefined | Headers;
   status: Status;
   buffer: string;
+  lintSessionsPending: AbsoluteFilePathSet;
+  lintSessions: AbsoluteFilePathMap<MasterRequest>;
 
-  write(res: unknown) {
+  write(res: JSONObject) {
     const json = JSON.stringify(res);
     const out = `Content-Length: ${String(json.length)}${HEADERS_END}${json}`;
-    this._write(out);
+    console.error('WRITE', out);
+    this.client.bridge.lspFromServerBuffer.send(out);
   }
 
-  getNextHeaders(): Headers {
-    const {nextHeaders} = this;
-    if (nextHeaders === undefined) {
-      throw new Error('Expected headers due to our status');
+  createFakeMasterRequest(
+    commandName: string,
+    args: Array<string> = [],
+  ): MasterRequest {
+    return new MasterRequest({
+      client: this.client,
+      master: this.master,
+      query: {
+        requestFlags: DEFAULT_CLIENT_REQUEST_FLAGS,
+        commandFlags: {},
+        args,
+        commandName,
+        silent: true,
+        noData: false,
+        terminateWhenIdle: false,
+      },
+    });
+  }
+
+  unwatchProject(path: AbsoluteFilePath) {
+    // TODO maybe unset all buffers?
+    const req = this.lintSessions.get(path);
+    if (req !== undefined) {
+      req.teardown({
+        type: 'SUCCESS',
+        hasData: false,
+        data: undefined,
+        markers: [],
+      });
+      this.lintSessions.delete(path);
     }
-    return nextHeaders;
   }
 
-  async handleRequest(req: LSPRequestMessage): Promise<unknown> {
-    const params = consumeUnknown(req.params, 'lsp/parse');
+  createProgress(opts?: ReporterProgressOptions): ReporterProgress {
+    return new LSPProgress(this, this.request.reporter, opts);
+  }
 
-    switch (req.method) {
+  async watchProject(path: AbsoluteFilePath) {
+    if (this.lintSessions.has(path) || this.lintSessionsPending.has(path)) {
+      return;
+    }
+
+    this.lintSessionsPending.add(path);
+
+    const project = await this.master.projectManager.findProject(path);
+
+    if (project === undefined) {
+      // Not a Rome project
+      this.lintSessionsPending.delete(path);
+      return;
+    }
+
+    const req = this.createFakeMasterRequest('lsp_project', [path.join()]);
+    await req.init();
+
+    const linter = new Linter(req, {});
+
+    const subscription = await linter.watch({
+      onRunStart: () => {},
+      createProgress: () => {
+        return this.createProgress();
+      },
+      onChanges: ({changes}) => {
+        for (const {ref, diagnostics} of changes) {
+          if (ref === undefined) {
+            // Cannot display diagnostics without a reference
+            continue;
+          }
+
+          // We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
+          const processor = new DiagnosticsProcessor();
+          processor.addFilter({
+            category: 'lint/pendingFixes',
+          });
+          processor.addDiagnostics(diagnostics);
+
+          this.write({
+            method: 'textDocument/publishDiagnostics',
+            params: {
+              uri: `file://${ref.real.join()}`,
+              diagnostics: convertDiagnosticsToLSP(processor.getDiagnostics()),
+            },
+          });
+        }
+      },
+    });
+
+    req.endEvent.subscribe(() => {
+      subscription.unsubscribe();
+    });
+
+    this.lintSessions.set(path, req);
+    this.lintSessionsPending.delete(path);
+  }
+
+  shutdown() {
+    for (const path of this.lintSessions.keys()) {
+      this.unwatchProject(path);
+    }
+    this.lintSessions.clear();
+  }
+
+  async sendClientRequest(
+    req: PartialMasterQueryRequest,
+  ): Promise<MasterQueryResponse> {
+    return this.master.handleRequest(this.client, {
+      silent: true,
+      ...req,
+    });
+  }
+
+  async handleRequest(
+    method: string,
+    params: Consumer,
+  ): Promise<JSONPropertyValue> {
+    switch (method) {
       case 'initialize':
-        await this.master.projectManager.assertProject(createAbsoluteFilePath(
-          params.get('rootUri').asString(),
-        ));
+        const rootUri = params.get('rootUri');
+        if (rootUri.exists()) {
+          this.watchProject(createAbsoluteFilePath(rootUri.asString()));
+        }
+
+        const workspaceFolders = params.get('workspaceFolders');
+        if (workspaceFolders.exists()) {
+          for (const elem of workspaceFolders.asArray()) {
+            this.watchProject(getPathFromTextDocument(elem));
+          }
+        }
+
         return {
           capabilities: {
-            textDocumentSync: 1,
+            textDocumentSync: {
+              openClose: true,
+              // This sends over the full text on change. We should make this incremental later
+              change: 1,
+            },
             documentFormattingProvider: true,
+            workspaceFolders: {
+              supported: true,
+              changeNotifications: true,
+            },
           },
           serverInfo: {
             name: 'rome',
@@ -140,38 +417,47 @@ export class LSPConnection {
         };
 
       case 'textDocument/formatting':
-        const uri = params.get('textDocument').get('uri').asString();
-        const res = await this.master.handleRequest(this.client, {
-          command: 'format',
-          args: [uri],
-          silent: true,
-        });
-        res;
+        const path = getPathFromTextDocument(params.get('textDocument'));
+
+        const project = this.master.projectManager.findProjectExisting(path);
+        if (project === undefined) {
+          // Not in a Rome project
+          return null;
+        }
+
+        const res = await this.request.requestWorkerFormat(path);
+        if (res === undefined) {
+          // Not a file we support formatting
+          return null;
+        }
+
+        return diffTextEdits(res.original, res.formatted);
+
+      case 'shutdown':
+        this.shutdown();
+        break;
     }
 
-    return {};
+    return null;
   }
 
-  async handleNotification(notif: LSPNotificationMessage): Promise<void> {
-    const params = consumeUnknown(notif.params, 'lsp/parse');
-
-    switch (notif.method) {
-      case 'textDocument/didOpen':
-        const uri = params.get('textDocument').get('uri').asString();
-        const res = await this.master.handleRequest(this.client, {
-          command: 'lint',
-          args: [uri],
-          silent: true,
-        });
-        if (res.type === 'DIAGNOSTICS') {
-          this.write({
-            method: 'textDocument/publishDiagnostics',
-            params: {
-              uri,
-              diagnostics: convertDiagnosticsToLSP(res.diagnostics),
-            },
-          });
+  async handleNotification(method: string, params: Consumer): Promise<void> {
+    switch (method) {
+      case 'workspace/didChangeWorkspaceFolders':
+        for (const elem of params.get('added').asArray()) {
+          this.watchProject(getPathFromTextDocument(elem));
         }
+        for (const elem of params.get('removed').asArray()) {
+          this.unwatchProject(getPathFromTextDocument(elem));
+        }
+        break;
+
+      case 'textDocument/didChange':
+        const path = getPathFromTextDocument(params.get('textDocument'));
+        const content =
+          params.get('contentChanges').asArray()[0].get('text').asString();
+        await this.request.requestWorkerUpdateBuffer(path, content);
+        break;
     }
   }
 
@@ -179,27 +465,26 @@ export class LSPConnection {
     const data = JSON.parse(content);
     const consumer = consumeUnknown(data, 'lsp/parse');
 
-    const notif: LSPNotificationMessage = {
-      method: consumer.get('method').asString(),
-      params: consumer.get('params').asUnknown(),
-    };
+    if (!consumer.has('method')) {
+      console.error(data);
+      return;
+    }
+
+    const method: string = consumer.get('method').asString();
+    const params = consumer.get('params');
 
     if (consumer.has('id')) {
-      const req: LSPRequestMessage = {
-        // id can also be a string?
-        id: consumer.get('id').asNumber(),
-        ...notif,
-      };
+      const id = consumer.get('id').asNumber();
 
       try {
         const res: LSPResponseMessage = {
-          id: req.id,
-          result: await this.handleRequest(req),
+          id,
+          result: await this.handleRequest(method, params),
         };
         this.write(res);
       } catch (err) {
         const res: LSPResponseMessage = {
-          id: req.id,
+          id,
           error: {
             code: -32_603,
             message: err.message,
@@ -208,7 +493,7 @@ export class LSPConnection {
         this.write(res);
       }
     } else {
-      await this.handleNotification(notif);
+      await this.handleNotification(method, params);
     }
   }
 
@@ -236,7 +521,10 @@ export class LSPConnection {
         break;
 
       case 'WAITING_FOR_RESPONSE_END':
-        const headers = this.getNextHeaders();
+        const headers = this.nextHeaders;
+        if (headers === undefined) {
+          throw new Error('Expected headers due to our status');
+        }
         if (this.buffer.length >= headers.length) {
           const content = this.buffer.slice(0, headers.length);
           this.onMessage(headers, content);

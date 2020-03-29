@@ -23,7 +23,6 @@ import {
   AnalyzeDependencyResult,
   UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
 } from './types/analyzeDependencies';
-import {readFileText} from '@romejs/fs';
 import {generateJS} from '@romejs/js-generator';
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
@@ -136,9 +135,8 @@ const textHandler: ExtensionHandler = {
     };
   },
 
-  async toJavaScript({file}) {
-    const src = file.sourceText === undefined
-      ? await readFileText(file.real) : file.sourceText;
+  async toJavaScript({file, worker}) {
+    const src = await worker.readFile(file.real);
     const serial = JSON.stringify(src);
     return {
       sourceText: `export default ${serial};`,
@@ -174,11 +172,11 @@ const jsonHandler: ExtensionHandler = {
   hasteMode: 'noext',
 
   async format(info: ExtensionHandlerMethodInfo): Promise<ExtensionLintResult> {
-    const {file: ref, project} = info;
-    const {uid} = ref;
+    const {file, project, worker} = info;
+    const {uid} = file;
 
-    const real = createAbsoluteFilePath(ref.real);
-    const sourceText = await readFileText(real);
+    const real = createAbsoluteFilePath(file.real);
+    const sourceText = await worker.readFile(real);
     const path = createUnknownFilePath(uid);
 
     let formatted: string = sourceText;
@@ -216,9 +214,8 @@ const jsonHandler: ExtensionHandler = {
     };
   },
 
-  async toJavaScript({file}) {
-    const src = file.sourceText === undefined
-      ? await readFileText(file.real) : file.sourceText;
+  async toJavaScript({file, worker}) {
+    const src = await worker.readFile(file.real);
 
     // Parse the JSON to make sure it's valid
     const obj = parseJSON({
@@ -298,10 +295,9 @@ function buildJSHandler(
       );
     },
 
-    async toJavaScript({file}) {
+    async toJavaScript({file, worker}) {
       return {
-        sourceText: file.sourceText === undefined
-          ? await readFileText(file.real) : file.sourceText,
+        sourceText: await worker.readFile(file.real),
         generated: false,
       };
     },

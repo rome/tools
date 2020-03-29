@@ -44,7 +44,7 @@ const DEFAULT_UNIQUE: UniqueRules = [
 ];
 
 export default class DiagnosticsProcessor {
-  constructor(options: CollectorOptions) {
+  constructor(options: CollectorOptions = {}) {
     this.diagnostics = [];
     this.filters = [];
     this.allowedUnusedSuppressionPrefixes = new Set();
@@ -54,7 +54,21 @@ export default class DiagnosticsProcessor {
     this.includedKeys = new Set();
     this.unique = options.unique === undefined ? DEFAULT_UNIQUE : options.unique;
     this.throwAfter = undefined;
+    this.cachedDiagnostics = undefined;
+    this.origins = options.origins === undefined ? [] : [...options.origins];
   }
+
+  unique: UniqueRules;
+  includedKeys: Set<string>;
+  diagnostics: Diagnostics;
+  filters: Array<DiagnosticFilterWithTest>;
+  allowedUnusedSuppressionPrefixes: Set<string>;
+  usedSuppressions: Set<DiagnosticSuppression>;
+  suppressions: Set<DiagnosticSuppression>;
+  options: CollectorOptions;
+  throwAfter: undefined | number;
+  cachedDiagnostics: undefined | Diagnostics;
+  origins: Array<DiagnosticOrigin>;
 
   static createImmediateThrower(
     origins: Array<DiagnosticOrigin>,
@@ -68,15 +82,9 @@ export default class DiagnosticsProcessor {
     return diagnostics;
   }
 
-  unique: UniqueRules;
-  includedKeys: Set<string>;
-  diagnostics: Diagnostics;
-  filters: Array<DiagnosticFilterWithTest>;
-  allowedUnusedSuppressionPrefixes: Set<string>;
-  usedSuppressions: Set<DiagnosticSuppression>;
-  suppressions: Set<DiagnosticSuppression>;
-  options: CollectorOptions;
-  throwAfter: undefined | number;
+  unshiftOrigin(origin: DiagnosticOrigin) {
+    this.origins.unshift(origin);
+  }
 
   setThrowAfter(num: undefined | number) {
     this.throwAfter = num;
@@ -92,24 +100,28 @@ export default class DiagnosticsProcessor {
   }
 
   hasDiagnostics(): boolean {
-    return this.diagnostics.length > 0;
+    return this.getDiagnostics().length > 0;
   }
 
   addAllowedUnusedSuppressionPrefix(prefix: DiagnosticCategoryPrefix) {
+    this.cachedDiagnostics = undefined;
     this.allowedUnusedSuppressionPrefixes.add(prefix);
   }
 
   addSuppressions(suppressions: DiagnosticSuppressions) {
+    this.cachedDiagnostics = undefined;
     for (const suppression of suppressions) {
       this.suppressions.add(suppression);
     }
   }
 
   addFilters(filters: Array<DiagnosticFilterWithTest>) {
+    this.cachedDiagnostics = undefined;
     this.filters = this.filters.concat(filters);
   }
 
   addFilter(filter: DiagnosticFilterWithTest) {
+    this.cachedDiagnostics = undefined;
     this.filters.push(filter);
   }
 
@@ -209,12 +221,13 @@ export default class DiagnosticsProcessor {
       return diags;
     }
 
+    this.cachedDiagnostics = undefined;
+
     const {max} = this.options;
     const added: Diagnostics = [];
 
     // Add origins to diagnostics
-    const origins: Array<DiagnosticOrigin> = this.options.origins === undefined
-      ? [] : [...this.options.origins];
+    const origins: Array<DiagnosticOrigin> = [...this.origins];
     if (origin !== undefined) {
       origins.push(origin);
     }
@@ -259,7 +272,22 @@ export default class DiagnosticsProcessor {
     return added;
   }
 
+  getDiagnosticFilenames(): Set<undefined | string> {
+    return new Set(this.getDiagnostics().map((diag) => diag.location.filename));
+  }
+
+  getDiagnosticsForFile(filename: undefined | string): Diagnostics {
+    return this.getDiagnostics().filter((diag) =>
+      diag.location.filename === filename
+    );
+  }
+
   getDiagnostics(): Diagnostics {
+    const {cachedDiagnostics} = this;
+    if (cachedDiagnostics !== undefined) {
+      return cachedDiagnostics;
+    }
+
     const diagnostics: Diagnostics = [...this.diagnostics];
 
     // Add errors for remaining suppressions
@@ -278,6 +306,8 @@ export default class DiagnosticsProcessor {
         description: descriptions.SUPPRESSIONS.UNUSED,
       });
     }
+
+    this.cachedDiagnostics = diagnostics;
 
     return diagnostics;
   }

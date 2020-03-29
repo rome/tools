@@ -18,3 +18,5 @@ export {default as BridgeError} from './BridgeError';
 export * from './bridgeCreators';
 
 export * from './types';
+
+export * from './utils';

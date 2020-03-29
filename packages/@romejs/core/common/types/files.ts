@@ -13,7 +13,6 @@ export type FileReference = {
   uid: string;
   real: AbsoluteFilePath;
   remote: boolean;
-  sourceText?: string;
 };
 
 export type JSONFileReference = Omit<FileReference, 'real'> & {real: string};

@@ -11,14 +11,15 @@ import {
   stripMarkupTags,
 } from '@romejs/string-markup';
 import {
-  ProgressShape,
+  ReporterProgress,
   RemoteReporterClientMessage,
   RemoteReporterReceiveMessage as RemoteReporterServerMessage,
   ReporterStream,
   ReporterDerivedStreams,
+  ReporterProgressOptions,
 } from './types';
 import {humanizeNumber, removeSuffix} from '@romejs/string-utils';
-import Progress, {ProgressOptions} from './Progress';
+import Progress from './Progress';
 import {interpolate} from './util';
 import {
   formatAnsi,
@@ -1227,7 +1228,7 @@ export default class Reporter {
     this.processedList(items, (str, display) => display(str), opts);
   }
 
-  progress(opts?: Partial<ProgressOptions>): ProgressShape {
+  progress(opts?: ReporterProgressOptions): ReporterProgress {
     if (this.isRemote) {
       return this.progressRemote(opts);
     } else {
@@ -1235,7 +1236,7 @@ export default class Reporter {
     }
   }
 
-  progressLocal(opts?: Partial<ProgressOptions>, onEnd?: () => void): Progress {
+  progressLocal(opts?: ReporterProgressOptions, onEnd?: () => void): Progress {
     const bar = new Progress(this, opts, () => {
       this.activeElements.delete(bar);
       if (onEnd !== undefined) {
@@ -1246,7 +1247,7 @@ export default class Reporter {
     return bar;
   }
 
-  progressRemote(opts?: Partial<ProgressOptions>): ProgressShape {
+  progressRemote(opts?: ReporterProgressOptions): ReporterProgress {
     const id: string = `${process.pid}:${remoteProgressIdCounter++}`;
 
     this.sendRemoteClientMessage.send({
@@ -1269,7 +1270,7 @@ export default class Reporter {
       closed = true;
     };
 
-    const progress: ProgressShape = {
+    const progress: ReporterProgress = {
       render() {
         // Don't do anything
 
@@ -1289,14 +1290,6 @@ export default class Reporter {
           type: 'PROGRESS_SET_TOTAL',
           total,
           approximate,
-          id,
-        });
-      },
-
-      setTitle: (title: string) => {
-        dispatch({
-          type: 'PROGRESS_SET_TITLE',
-          title,
           id,
         });
       },

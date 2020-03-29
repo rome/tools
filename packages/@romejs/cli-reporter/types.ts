@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ProgressOptions} from './Progress';
 import {Event} from '@romejs/events';
 
 export type Package = {
@@ -27,11 +26,19 @@ export type ReporterDerivedStreams = {
   stderr: ReporterStream;
 };
 
-export type ProgressShape = {
+export type ReporterProgressOptions = {
+  name?: string;
+  title?: string;
+  initDelay?: number;
+  elapsed?: boolean;
+  eta?: boolean;
+  persistent?: boolean;
+};
+
+export type ReporterProgress = {
   render: () => void;
   setCurrent: (current: number) => void;
   setTotal: (total: number, approximate?: boolean) => void;
-  setTitle: (title: string) => void;
   setText: (text: string) => void;
   pushText: (text: string) => void;
   popText: (text: string) => void;
@@ -51,7 +58,7 @@ export type RemoteReporterClientMessage =
   | {
     type: 'PROGRESS_CREATE';
     id: string;
-    opts: undefined | Partial<ProgressOptions>;
+    opts: undefined | ReporterProgressOptions;
   }
   | {
     type: 'PROGRESS_SET_CURRENT';
@@ -68,11 +75,6 @@ export type RemoteReporterClientMessage =
     total: number;
     id: string;
     approximate: boolean;
-  }
-  | {
-    type: 'PROGRESS_SET_TITLE';
-    title: string;
-    id: string;
   }
   | {
     type: 'PROGRESS_SET_TEXT';

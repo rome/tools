@@ -214,10 +214,6 @@ export const descriptions = createMessages({
             type: 'diff',
             diff: stringDiff(original, formatted),
           },
-          {
-            type: 'code',
-            code: formatted,
-          },
         ],
       }),
 

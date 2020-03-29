@@ -9,6 +9,7 @@ import {WebBridge, Master, MasterRequest} from '@romejs/core';
 import {
   getDiagnosticsFromError,
   deriveDiagnosticFromError,
+  DiagnosticsProcessor,
 } from '@romejs/diagnostics';
 import {removeSuffix, removePrefix} from '@romejs/string-utils';
 import Bundler from '../bundler/Bundler';
@@ -97,9 +98,15 @@ export default class WebRequest {
 
       //this.request.reporter.clear();
       try {
-        const printer = this.masterRequest.createDiagnosticsPrinter({
-          category: 'WebRequest',
-        });
+        const printer = this.masterRequest.createDiagnosticsPrinter(
+          new DiagnosticsProcessor({
+            origins: [
+              {
+                category: 'WebRequest',
+              },
+            ],
+          }),
+        );
         printer.addDiagnostics(diagnostics);
         await printer.print();
       } catch (err) {
