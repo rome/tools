@@ -57,25 +57,15 @@ export function encode(number: number): string {
 }
 
 // A single base 64 digit can contain 6 bits of data. For the base 64 variable
-
 // length quantities we use in the source map spec, the first bit is the sign,
-
 // the next four bits are the actual value, and the 6th bit is the
-
 // continuation bit. The continuation bit tells us whether there are more
-
 // digits in this value following this digit.
-
 //
-
 //   Continuation
-
 //   |    Sign
-
 //   |    |
-
 //   V    V
-
 //   101011
 const VLQ_BASE_SHIFT = 5;
 

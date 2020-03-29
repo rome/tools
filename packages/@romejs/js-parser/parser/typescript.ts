@@ -479,7 +479,6 @@ export function tsCheckLiteralForConstantContext(parser: JSParser, node: AnyNode
 }
 
 // Note: In TypeScript implementation we must provide `yieldContext` and `awaitContext`,
-
 // but here it's always false, because parser.is only used for types.
 function parseTSSignatureDeclarationMeta(
   parser: JSParser,

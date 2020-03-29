@@ -46,7 +46,6 @@ const HEX_NUMBER = /^[\da-fA-F]+$/;
 const DECIMAL_NUMBER = /^\d+$/;
 
 // The following character codes are forbidden from 'being
-
 // an immediate sibling of NumericLiteralSeparator _
 const forbiddenNumericSeparatorSiblings = {
   decBinOct: [
@@ -113,9 +112,7 @@ const allowedNumericSeparatorSiblings = {
 };
 
 // Object type used to represent tokens. Note that normally, tokens
-
 // simply exist as properties on the parser object. This is only
-
 // used for the onToken callback and the external tokenizer.
 export type Token = {
   type: TokenTypes;
@@ -156,7 +153,6 @@ function codePointToString(code: number): string {
 }
 
 // Toggle strict mode. Re-reads the next number or string to please
-
 // pedantic tests (`"use strict"; 010;` should fail).
 export function setStrict(parser: JSParser, isStrict: boolean): void {
   parser.pushScope('STRICT', isStrict);
@@ -180,7 +176,6 @@ export function getCurContext(parser: JSParser): TokContext {
 }
 
 // Read a single token, updating the parser object's token-related
-
 // properties.
 export function nextToken(parser: JSParser): void {
   const curContext = getCurContext(parser);
@@ -399,7 +394,6 @@ export function skipLineComment(parser: JSParser, startSkip: number): AnyComment
 }
 
 // Called at the start of the parse and after every token. Skips
-
 // whitespace and comments, and.
 function skipSpace(parser: JSParser): void {
   loop: while (parser.state.index < parser.length) {
@@ -471,11 +465,8 @@ function skipSpace(parser: JSParser): void {
 }
 
 // Called at the end of every token. Sets `end`, `val`, and
-
 // maintains `context` and `exprAllowed`, and skips the space after
-
 // the token, so that the next one's `start` will point at the
-
 // right position.
 export function finishToken(
   parser: JSParser,
@@ -1024,9 +1015,7 @@ export function readRegexp(parser: JSParser): void {
 }
 
 // Read an integer in the given radix. Return null if zero digits
-
 // were read, the integer value otherwise. When `len` is given, this
-
 // will return `null` unless the integer has exactly `len` digits.
 function readInt(
   parser: JSParser,
@@ -1509,13 +1498,9 @@ function readHexChar(
 }
 
 // Read an identifier, and return it as a string. Sets `parser.state.escapePosition`
-
 // to an index if the word contained a '\u' escape.
-
 //
-
 // Incrementally adds only escaped chars, adding other chunks as-is
-
 // as a micro-optimization.
 function readWord1(parser: JSParser): string {
   parser.state.escapePosition = undefined;
@@ -1571,7 +1556,6 @@ function readWord1(parser: JSParser): string {
 }
 
 // Read an identifier or keyword token. Will check for reserved
-
 // words when necessary.
 function readWord(parser: JSParser): void {
   const word = readWord1(parser);
@@ -1814,15 +1798,10 @@ function readToken_jsxEntity(parser: JSParser): string {
 }
 
 // Read a JSX identifier (valid tag or attribute name).
-
 //
-
 // Optimized version since JSX identifiers can't contain
-
 // escape characters and so can be read as single slice.
-
 // Also assumes that first character was already checked
-
 // by isIdentifierStart in readToken.
 function readToken_jsxWord(parser: JSParser): void {
   let ch;

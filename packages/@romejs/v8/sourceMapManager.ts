@@ -238,7 +238,6 @@ export function addSourceMap(filename: string, map: SourceMap) {
 }
 
 // Add a source map factory. We jump through some hoops to return a function to remove the source map.
-
 // We make sure not to remove the source map if it's been subsequently added by another call.
 export function addSourceMapFactory(
   filename: string,

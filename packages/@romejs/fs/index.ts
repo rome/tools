@@ -10,7 +10,6 @@ import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
 import fs = require('fs');
 
 // This file contains some wrappers around Node's fs module. Except here we support passing in AbsoluteFilePath instances.
-
 // NOTE We don't bother using Node's built-in fs promise functions at all. They already contain a level of indirection to callbacks.
 
 // Helpers

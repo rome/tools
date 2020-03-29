@@ -6,9 +6,7 @@
  */
 
 // In this file, all methods are synchronous. This is pretty gross since the rest of Rome is async everything.
-
 // This is required so we can integrate the project config code in third-party integrations with sync architectures.
-
 // Project configs are initialized very infrequently anyway so we can live with the extremely minor perf hit.
 
 import {Consumer} from '@romejs/consume';

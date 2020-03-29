@@ -8,7 +8,6 @@
 import {
   MemberExpression,
   TSInferType,
-
   AnyNode,
   FlowNullableTypeAnnotation,
   UpdateExpression,
@@ -361,7 +360,6 @@ parens.set('FlowFunctionTypeAnnotation', function FlowFunctionTypeAnnotation(
 });
 
 // Walk up the print stack to deterimine if our node can come first
-
 // in statement.
 function isFirstInStatement(
   printStack: Array<AnyNode>,

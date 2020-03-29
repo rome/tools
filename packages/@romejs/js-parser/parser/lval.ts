@@ -569,7 +569,6 @@ export function toFunctionParamsBindingList(
 }
 
 // this is a list of nodes, from 'something like a call expression, we need to filter the
-
 // type casts that we've found that are illegal in this context
 export function toReferencedList(
   parser: JSParser,
@@ -980,7 +979,6 @@ const ALLOWED_PARENTHESIZED_LVAL_TYPES = [
 ];
 
 // Verify that a node is an lval — something that can be assigned
-
 // to.
 export function checkLVal(
   parser: JSParser,

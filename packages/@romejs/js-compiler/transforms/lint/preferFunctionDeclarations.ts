@@ -29,7 +29,6 @@ type Arg = {
 };
 
 // This hook is created with a list of initial VariableDeclarators that contain functions we want to convert
-
 // We then remove any ArrowFunctionExpression VariableDeclarators that contain a valid ThisExpression
 const hook = createHook<State, Arg, ThisExpression>({
   name: 'preferFunctionDeclarationsHook',

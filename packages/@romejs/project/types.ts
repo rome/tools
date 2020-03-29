@@ -78,7 +78,6 @@ export type ProjectConfigCategoriesWithIgnoreAndEnabled =
 export type ProjectConfigTarget = {constraints: Array<string>};
 
 // This is a project config that contains only things that can be JSON serializable
-
 // This is used to transport and reserialize projects in workers
 export type ProjectConfigJSON =
   & ProjectConfigJSONObjectReducer<ProjectConfigBase>
@@ -87,14 +86,11 @@ export type ProjectConfigJSON =
   > };
 
 // Weird way to get the value type from a map
-
 // rome-suppress lint/noExplicitAny
 type MapValue<T extends Map<string, any>> = NonNullable<ReturnType<T['get']>>;
 
 // Turn any file paths into strings
-
 // Turn maps into objects
-
 // TODO maybe add path patterns
 type ProjectConfigJSONPropertyReducer<Type> = Type extends AbsoluteFilePath
   ? string

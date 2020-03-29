@@ -232,11 +232,8 @@ type StatementContext =
 //
 
 // If expecting a statement and finding a slash operator, parse a
-
 // regular expression literal. This is to handle cases like
-
 // `if (foo) /blah/.exec(foo)`, where looking at the previous token
-
 // does not help.
 export function parseStatement(
   parser: JSParser,
@@ -551,19 +548,6 @@ export function parseDoStatement(
   });
 }
 
-// Disambiguating between a `for` and a `for`/`in` or `for`/`of`
-
-// loop is non-trivial. Basically, we have to parse the init `var`
-
-// statement or expression, disallowing the `in` operator (see
-
-// the second parameter to `parseExpression`), and then check
-
-// whether the next token is `in` or `of`. When there is no init
-
-// part (semicolon immediately after the opening parentheses), it
-
-// is a regular `for` loop.
 export function parseForStatement(
   parser: JSParser,
   start: Position,

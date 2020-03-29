@@ -101,7 +101,6 @@ function parseJSXNamespacedName(
 }
 
 // Parses element name in any form - namespaced, member
-
 // or single identifier.
 function parseJSXElementName(parser: JSParser): JSXElement['name'] {
   const start = parser.getPosition();
@@ -168,9 +167,7 @@ function parseJSXAttributeValue(
 }
 
 // JSXEmptyExpression is unique type since it doesn't actually parse anything,
-
 // and so it should start at the end of last read token (left brace) and finish
-
 // at the beginning of the next one (right brace).
 function parseJSXEmptyExpression(parser: JSParser): JSXEmptyExpression {
   return parser.finishNode(parser.state.lastEndPos, {
@@ -335,7 +332,6 @@ function recoverFromUnclosedJSX(parser: JSParser) {
 }
 
 // Parses entire JSX element, including it"s opening tag
-
 // (starting after "<"), attributes, contents and closing tag.
 function parseJSXElementAt(
   parser: JSParser,

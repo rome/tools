@@ -10,9 +10,7 @@ import {isPlainObject, Dict} from '@romejs/typescript-helpers';
 import os = require('os');
 
 // BSER uses the local endianness to reduce byte swapping overheads
-
 // (the protocol is expressly local IPC only).  We need to tell node
-
 // to use the native endianness when reading various native values.
 const isBigEndian = os.endianness() == 'BE';
 

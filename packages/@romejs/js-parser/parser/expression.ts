@@ -123,13 +123,6 @@ import {splitFunctionParams} from './statement';
 import {createRegExpParser} from '@romejs/codec-js-regexp';
 import {descriptions} from '@romejs/diagnostics';
 
-// Check if property name clashes with already added.
-
-// Object/class getters and setters are not allowed to clash —
-
-// either with each other or with an init property — and in
-
-// strict mode, init properties are also not allowed to be repeated.
 export function checkPropClash(
   parser: JSParser,
   prop: AnyObjectMember | BindingObjectPatternProperty,
@@ -162,29 +155,6 @@ export function checkPropClash(
   }
 }
 
-// ### Expression parsing
-
-// These nest, from the most general expression type at the top to
-
-// 'atomic', nondivisible expression types at the bottom. Most of
-
-// the functions will simply let the function (s) below them parse,
-
-// and, *if* the syntactic construct they handle is present, wrap
-
-// the AST node that the inner parser gave them in another node.
-
-// Parse a full expression. The optional arguments are used to
-
-// forbid the `in` operator (in for loops initialization expressions)
-
-// and provide reference for storing '=' operator inside shorthand
-
-// property assignment in contexts where both object expression
-
-// and object pattern might appear (so it's possible to raise
-
-// delayed syntax error at correct position).
 export function parseExpression(
   parser: JSParser,
   context: ExpressionContext,
@@ -214,29 +184,6 @@ export function parseExpression(
   return expr;
 }
 
-// Parse an assignment expression. This includes applications of
-
-// operators like `+=`.
-
-// We need to support type parameter declarations for arrow functions. This
-
-// is tricky. There are three situations we need to handle
-
-//
-
-// 1. This is either JSX or an arrow function. We'll try JSX first. If that
-
-//    fails, we'll try an arrow function. If that fails, we'll throw the JSX
-
-//    error.
-
-// 2. This is an arrow function. We'll parse the type parameter declaration,
-
-//    parse the rest, make sure the rest is an arrow function, and go from
-
-//    there
-
-// 3. This is neither. Just call the super method
 export function parseMaybeAssign<T extends AnyNode = AnyExpression>(
   parser: JSParser,
   context: ExpressionContext,
@@ -580,15 +527,6 @@ export function parseExpressionOps(
   return parseExpressionOp(parser, context, expr, startPos, -1, noIn);
 }
 
-// Parse binary operators with the operator precedence parsing
-
-// algorithm. `left` is the left-hand side of the operator.
-
-// `minPrec` provides context that allows the function to stop and
-
-// defer further parser to one of its callers when it encounters an
-
-// operator that has a lower precedence than the set it is parsing.
 export function parseExpressionOp(
   parser: JSParser,
   context: ExpressionContext,
@@ -1385,13 +1323,6 @@ type ExpressionContext =
   | 'jsx attribute spread'
   | 'jsx text';
 
-// Parse an atomic expression — either a single token that is an
-
-// expression, an expression started by a keyword like `function` or
-
-// `new`, or an expression wrapped in punctuation like `()`, `[]`,
-
-// or `{}`.
 export function parseExpressionAtom(
   parser: JSParser,
   context: ExpressionContext,
@@ -1922,15 +1853,6 @@ export function parseParenItem(
   return node;
 }
 
-// New's precedence is slightly tricky. It must allow its argument to
-
-// be a `[]` or dot subscript expression, but not a call — at least,
-
-// not without wrapping it in parentheses. Thus, it uses the noCalls
-
-// argument to parseSubscripts to prevent it from 'consuming the
-
-// argument list.
 export function parseNew(parser: JSParser): NewExpression | MetaProperty {
   const start = parser.getPosition();
   const meta = parseIdentifier(parser, true);
@@ -2338,7 +2260,6 @@ export function isGetterOrSetterMethod(
 }
 
 // get methods aren't allowed to have any parameters
-
 // set methods must have exactly 1 parameter
 export function checkGetterSetterParamCount(
   parser: JSParser,
@@ -2751,9 +2672,6 @@ function createFunctionHead(
   };
 }
 
-// Parse arrow function expression.
-
-// If the parameters are provided, they will be converted to an assignable list.
 export function parseArrowExpression(
   parser: JSParser,
   start: Position,
@@ -3062,15 +2980,6 @@ function isSimpleParamList(
   return true;
 }
 
-// Parses a comma-separated list of expressions, and returns them as
-
-// an array. `close` is the token type that ends the list, and
-
-// `allowEmpty` can be turned on to allow subsequent commas with
-
-// nothing in between them to be parsed as `null` (which is needed
-
-// for array literals).
 export function parseExpressionList(
   parser: JSParser,
   context: ExpressionContext,
@@ -3166,9 +3075,7 @@ export function parseCallArgument(
 }
 
 // Parse the next token as an identifier. If `liberal` is true (used
-
 // when parsing properties), it will also convert keywords into
-
 // identifiers.
 export function parseIdentifier(parser: JSParser, liberal?: boolean): Identifier {
   const start = parser.getPosition();

@@ -6,9 +6,7 @@
  */
 
 // Rather than having a generic `string` type, we use string literals so there's one place where
-
 // all category names are defined. This allows the naming scheme to be more easily reviewed and
-
 // made consistent.
 export type DiagnosticCategory =
   | 'analyzeDependencies/cjsExportInES'
