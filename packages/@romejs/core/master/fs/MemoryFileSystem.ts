@@ -598,6 +598,23 @@ export default class MemoryFileSystem {
     return changed;
   }
 
+  async waitIfInitializingWatch(projectFolderPath: AbsoluteFilePath) {
+    // Defer if we're initializing a parent folder
+    for (const {promise, path} of this.watchPromises.values()) {
+      if (projectFolderPath.isRelativeTo(path)) {
+        await promise;
+        return undefined;
+      }
+    }
+
+    // Wait if we're initializing descendents
+    for (const {path, promise} of this.watchPromises.values()) {
+      if (path.isRelativeTo(projectFolderPath)) {
+        await promise;
+      }
+    }
+  }
+
   async watch(
     projectFolderPath: AbsoluteFilePath,
     projectConfig: ProjectConfig,
@@ -627,20 +644,8 @@ export default class MemoryFileSystem {
       }
     }
 
-    // Defer if we're initializing a parent folder
-    for (const {promise, path} of this.watchPromises.values()) {
-      if (projectFolderPath.isRelativeTo(path)) {
-        await promise;
-        return undefined;
-      }
-    }
-
-    // Wait if we're initializing descendents
-    for (const {path, promise} of this.watchPromises.values()) {
-      if (path.isRelativeTo(projectFolderPath)) {
-        await promise;
-      }
-    }
+    // Wait for other initializations
+    await this.waitIfInitializingWatch(projectFolderPath);
 
     // New watch target
     logger.info(`[MemoryFileSystem] Adding new project folder ${projectFolder}`);

@@ -21,6 +21,8 @@ import {AbsoluteFilePathSet, AbsoluteFilePathMap} from '@romejs/path';
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import DependencyGraph from '../dependencies/DependencyGraph';
 import {ReporterProgressOptions, ReporterProgress} from '@romejs/cli-reporter';
+import DependencyNode from '../dependencies/DependencyNode';
+import {areAnalyzeDependencyResultsEqual} from '@romejs/js-compiler';
 
 type LintWatchChanges = Array<{
   filename: undefined | string;
@@ -126,7 +128,10 @@ class LintRunner {
     this.fix = fix;
     this.events = events;
     this.compilerDiagnosticsCache = new AbsoluteFilePathMap();
+    this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
   }
+
+  hadDependencyValidationErrors: AbsoluteFilePathMap<boolean>;
 
   compilerDiagnosticsCache: AbsoluteFilePathMap<{
     diagnostics: Diagnostics;
@@ -189,68 +194,111 @@ class LintRunner {
   ): Promise<AbsoluteFilePathSet> {
     const {graph} = this;
 
-    const validateDependencyPaths: AbsoluteFilePathSet =
-      new AbsoluteFilePathSet();
-
+    // Get all the current dependency nodes for the evicted files, and invalidate their nodes
+    const oldEvictedNodes: AbsoluteFilePathMap<DependencyNode> =
+      new AbsoluteFilePathMap();
     for (const path of evictedPaths) {
-      validateDependencyPaths.add(path);
-
-      // Will be undefined if this is the first time initializing it in the graph
       const node = graph.maybeGetNode(path);
       if (node !== undefined) {
-        for (const depNode of node.getDependents()) {
-          validateDependencyPaths.add(depNode.path);
-        }
+        oldEvictedNodes.set(path, node);
+        graph.deleteNode(path);
       }
     }
 
-    for (const path of validateDependencyPaths) {
-      graph.deleteNode(path);
-    }
-
-    const progress = this.events.createProgress({title: 'Analyzing'});
-
+    // Refresh only the evicted paths
+    const progress = this.events.createProgress({
+      title: 'Analyzing changed files',
+    });
     await graph.seed({
-      paths: Array.from(validateDependencyPaths),
+      paths: Array.from(evictedPaths),
       diagnosticsProcessor: processor,
       validate: false,
       analyzeProgress: progress,
     });
 
-    for (const path of validateDependencyPaths) {
-      graph.validate(graph.getNode(path), processor);
+    // Maintain a list of all the dependencies we revalidated
+    const validatedDependencyPaths: AbsoluteFilePathSet =
+      new AbsoluteFilePathSet();
+
+    // Maintain a list of all the dependents that need to be revalidated
+    const validatedDependencyPathDependents: AbsoluteFilePathSet =
+      new AbsoluteFilePathSet();
+
+    // Build a list of dependents to recheck
+    for (const path of evictedPaths) {
+      validatedDependencyPaths.add(path);
+
+      const newNode = graph.getNode(path);
+
+      // Get the previous node and see if the exports have actually changed
+      const oldNode = oldEvictedNodes.get(path);
+      const sameShape = oldNode !== undefined &&
+        areAnalyzeDependencyResultsEqual(oldNode.analyze, newNode.analyze);
+
+      for (const depNode of newNode.getDependents()) {
+        // If the old node has the same shape as the new one, only revalidate the dependent if it had dependency errors
+        if (sameShape &&
+          this.hadDependencyValidationErrors.get(depNode.path) === false) {
+          continue;
+        }
+
+        validatedDependencyPaths.add(depNode.path);
+        validatedDependencyPathDependents.add(depNode.path);
+      }
     }
 
-    return validateDependencyPaths;
+    // Revalidate dependents
+    if (validatedDependencyPathDependents.size > 0) {
+      const progress = this.events.createProgress({
+        title: 'Analyzing dependents',
+      });
+
+      await graph.seed({
+        paths: Array.from(validatedDependencyPaths),
+        diagnosticsProcessor: processor,
+        validate: false,
+        analyzeProgress: progress,
+      });
+    }
+
+    // Validate connections
+    for (const path of validatedDependencyPaths) {
+      const hasValidationErrors = graph.validate(graph.getNode(path), processor);
+      this.hadDependencyValidationErrors.set(path, hasValidationErrors);
+    }
+
+    return validatedDependencyPaths;
   }
 
   computeChanges(
-    {evictedPaths: changedPaths, processor}: LintRunOptions,
-    validateDependencyPaths: AbsoluteFilePathSet,
+    {evictedPaths, processor}: LintRunOptions,
+    validatedDependencyPaths: AbsoluteFilePathSet,
   ): LintWatchChanges {
     const {master} = this;
     const changes: LintWatchChanges = [];
 
     const updatedPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet([
-      ...validateDependencyPaths,
+      ...validatedDependencyPaths,
     ]);
+
+    const diagnosticsByFilename = processor.getDiagnosticsByFilename();
 
     // In case we pushed on any diagnostics that aren't from the input paths, try to resolve them
     const includedFilenamesInDiagnostics =
       master.projectManager.normalizeFilenamesToFilePaths(
-        processor.getDiagnosticFilenames(),
+        diagnosticsByFilename.keys(),
       );
     for (const path of includedFilenamesInDiagnostics.absolutes) {
       updatedPaths.add(path);
     }
 
     // If we validated the diagnostics of the dependents, then we need to also push their previous compiler diagnostics
-    for (const path of validateDependencyPaths) {
-      if (!changedPaths.has(path)) {
+    for (const path of validatedDependencyPaths) {
+      if (!evictedPaths.has(path)) {
         const compilerDiagnostics = this.compilerDiagnosticsCache.get(path);
         if (compilerDiagnostics !== undefined) {
-          processor.addDiagnostics(compilerDiagnostics.diagnostics);
           processor.addSuppressions(compilerDiagnostics.suppressions);
+          processor.addDiagnostics(compilerDiagnostics.diagnostics);
         }
       }
     }
@@ -258,7 +306,10 @@ class LintRunner {
     // We can't just use getDiagnosticFilenames as we need to produce empty arrays for removed diagnostics
     for (const path of updatedPaths) {
       const ref = this.request.master.projectManager.getFileReference(path);
-      const diagnostics = processor.getDiagnosticsForFile(ref.uid);
+      const diagnostics: Diagnostics = [
+        ...(diagnosticsByFilename.get(ref.uid) || []),
+        ...(diagnosticsByFilename.get(ref.real.join()) || []),
+      ];
 
       changes.push({
         filename: ref.uid,
@@ -276,7 +327,7 @@ class LintRunner {
       changes.push({
         filename,
         ref: undefined,
-        diagnostics: processor.getDiagnosticsForFile(filename),
+        diagnostics: diagnosticsByFilename.get(filename) || [],
       });
     }
 
@@ -286,13 +337,13 @@ class LintRunner {
   async run(opts: LintRunOptions): Promise<WatchResults> {
     this.events.onRunStart();
     const {fixedCount} = await this.runLint(opts);
-    const validateDependencyPaths = await this.runGraph(opts);
-    const changes = await this.computeChanges(opts, validateDependencyPaths);
+    const validatedDependencyPaths = await this.runGraph(opts);
+    const changes = await this.computeChanges(opts, validatedDependencyPaths);
     return {
       evictedPaths: opts.evictedPaths,
       changes,
       fixedCount,
-      totalCount: validateDependencyPaths.size,
+      totalCount: validatedDependencyPaths.size,
       runner: this,
     };
   }

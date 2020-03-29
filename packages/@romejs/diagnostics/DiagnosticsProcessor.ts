@@ -16,7 +16,7 @@ import {
 import {addOriginsToDiagnostics} from './derive';
 import {naturalCompare} from '@romejs/string-utils';
 import {DiagnosticsError} from './errors';
-import {add} from '@romejs/ob1';
+import {add, get0} from '@romejs/ob1';
 import {DiagnosticCategoryPrefix} from './categories';
 import {descriptions} from './descriptions';
 
@@ -43,19 +43,22 @@ const DEFAULT_UNIQUE: UniqueRules = [
   ['category', 'filename', 'message', 'start.line', 'start.column'],
 ];
 
+type DiagnosticsByFilename = Map<undefined | string, Diagnostics>;
+
 export default class DiagnosticsProcessor {
   constructor(options: CollectorOptions = {}) {
-    this.diagnostics = [];
     this.filters = [];
-    this.allowedUnusedSuppressionPrefixes = new Set();
-    this.usedSuppressions = new Set();
-    this.suppressions = new Set();
     this.options = options;
     this.includedKeys = new Set();
     this.unique = options.unique === undefined ? DEFAULT_UNIQUE : options.unique;
     this.throwAfter = undefined;
-    this.cachedDiagnostics = undefined;
     this.origins = options.origins === undefined ? [] : [...options.origins];
+    this.allowedUnusedSuppressionPrefixes = new Set();
+    this.usedSuppressions = new Set();
+    this.suppressions = new Set();
+
+    this.diagnostics = [];
+    this.cachedDiagnostics = undefined;
   }
 
   unique: UniqueRules;
@@ -67,8 +70,9 @@ export default class DiagnosticsProcessor {
   suppressions: Set<DiagnosticSuppression>;
   options: CollectorOptions;
   throwAfter: undefined | number;
-  cachedDiagnostics: undefined | Diagnostics;
   origins: Array<DiagnosticOrigin>;
+
+  cachedDiagnostics: undefined | Diagnostics;
 
   static createImmediateThrower(
     origins: Array<DiagnosticOrigin>,
@@ -272,14 +276,21 @@ export default class DiagnosticsProcessor {
     return added;
   }
 
-  getDiagnosticFilenames(): Set<undefined | string> {
-    return new Set(this.getDiagnostics().map((diag) => diag.location.filename));
-  }
+  getDiagnosticsByFilename(): DiagnosticsByFilename {
+    const byFilename: DiagnosticsByFilename = new Map();
 
-  getDiagnosticsForFile(filename: undefined | string): Diagnostics {
-    return this.getDiagnostics().filter((diag) =>
-      diag.location.filename === filename
-    );
+    for (const diag of this.getDiagnostics()) {
+      const {filename} = diag.location;
+
+      let filenameDiagnostics = byFilename.get(filename);
+      if (filenameDiagnostics === undefined) {
+        filenameDiagnostics = [];
+        byFilename.set(filename, filenameDiagnostics);
+      }
+      filenameDiagnostics.push(diag);
+    }
+
+    return byFilename;
   }
 
   getDiagnostics(): Diagnostics {
@@ -313,20 +324,41 @@ export default class DiagnosticsProcessor {
   }
 
   getSortedDiagnostics(): Diagnostics {
-    // Sort files by filename to ensure they're always in the same order
+    const diagnosticsByFilename = this.getDiagnosticsByFilename();
 
-    // TODO also sort by line/column
-    return this.getDiagnostics().sort((a, b) => {
-      if (a.location.filename === undefined || b.location.filename === undefined) {
+    // Get all filenames and sort them
+    const filenames: Array<undefined | string> = Array.from(
+      diagnosticsByFilename.keys(),
+    ).sort((a, b) => {
+      if (a === undefined || b === undefined) {
         return 0;
       } else {
-        return naturalCompare(a.location.filename, b.location.filename);
+        return naturalCompare(a, b);
       }
     });
-  }
 
-  clear() {
-    this.includedKeys = new Set();
-    this.diagnostics = [];
+    let sortedDiagnostics: Diagnostics = [];
+
+    for (const filename of filenames) {
+      const fileDiagnostics = diagnosticsByFilename.get(filename);
+      if (fileDiagnostics === undefined) {
+        throw new Error('We use keys() so should be present');
+      }
+
+      // Sort all file diagnostics by location start index
+      const sortedFileDiagnostics = fileDiagnostics.sort((a, b) => {
+        const aStart = a.location.start;
+        const bStart = b.location.start;
+        if (aStart === undefined || bStart === undefined) {
+          return 0;
+        } else {
+          return get0(aStart.index) - get0(bStart.index);
+        }
+      });
+
+      sortedDiagnostics = [...sortedDiagnostics, ...sortedFileDiagnostics];
+    }
+
+    return sortedDiagnostics;
   }
 }
