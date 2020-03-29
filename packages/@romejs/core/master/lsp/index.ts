@@ -11,6 +11,8 @@ import {
   LSPDiagnostic,
   LSPPosition,
   LSPTextEdit,
+  LSPDiagnosticRelatedInformation,
+  LSPRange,
 } from './types';
 import Master, {MasterClient} from '../Master';
 import {
@@ -19,7 +21,11 @@ import {
   AbsoluteFilePathMap,
   AbsoluteFilePathSet,
 } from '@romejs/path';
-import {Diagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
+import {
+  Diagnostics,
+  DiagnosticsProcessor,
+  DiagnosticLocation,
+} from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
 import {coerce1to0, number0, Number0, inc} from '@romejs/ob1';
 import {stripMarkupTags} from '@romejs/string-markup';
@@ -91,19 +97,54 @@ function convertPositionToLSP(pos: undefined | Position): LSPPosition {
   }
 }
 
-function convertDiagnosticsToLSP(diagnostics: Diagnostics): Array<LSPDiagnostic> {
+function convertDiagnosticLocationToLSPRange(
+  location: DiagnosticLocation,
+): LSPRange {
+  return {
+    start: convertPositionToLSP(location.start),
+    end: convertPositionToLSP(location.end),
+  };
+}
+
+function convertDiagnosticsToLSP(
+  diagnostics: Diagnostics,
+  master: Master,
+): Array<LSPDiagnostic> {
   const lspDiagnostics: Array<LSPDiagnostic> = [];
 
   for (const {description, location} of diagnostics) {
+    // Infer relatedInformation from log messages followed by frames
+    let relatedInformation: Array<LSPDiagnosticRelatedInformation> = [];
+    const {advice} = description;
+    if (advice !== undefined) {
+      for (let i = 0; i < advice.length; i++) {
+        const item = advice[i];
+        const nextItem = advice[i + 1];
+        if (item.type === 'log' && nextItem !== undefined && nextItem.type ===
+        'frame') {
+          const abs = master.projectManager.getFilePathFromUidOrAbsolute(
+            nextItem.location.filename,
+          );
+          if (abs !== undefined) {
+            relatedInformation.push({
+              message: stripMarkupTags(item.message),
+              location: {
+                uri: `file://${abs.join()}`,
+                range: convertDiagnosticLocationToLSPRange(nextItem.location),
+              },
+            });
+          }
+        }
+      }
+    }
+
     lspDiagnostics.push({
       severity: 1,
-      range: {
-        start: convertPositionToLSP(location.start),
-        end: convertPositionToLSP(location.end),
-      },
+      range: convertDiagnosticLocationToLSPRange(location),
       message: stripMarkupTags(description.message.value),
       code: description.category,
       source: 'rome',
+      relatedInformation,
     });
   }
 
@@ -186,6 +227,7 @@ class LSPProgress extends ReporterProgressBase {
     super(reporter, opts);
     this.server = server;
     this.token = progressTokenCounter++;
+    this.lastRenderKey = '';
 
     server.write({
       type: '$/progress',
@@ -201,13 +243,21 @@ class LSPProgress extends ReporterProgressBase {
     });
   }
 
+  lastRenderKey: string;
   token: number;
   server: LSPServer;
 
   render() {
-    const percentage = this.total === undefined ? 0 : 100 / this.total *
-    this.current;
+    const total = this.total === undefined ? 0 : this.total;
+    const percentage = Math.floor(100 / total * this.current);
 
+    // Make sure we don't send pointless duplicate messages
+    const renderKey = `percent:${percentage},text:${this.text}`;
+    if (this.lastRenderKey === renderKey) {
+      return;
+    }
+
+    this.lastRenderKey = renderKey;
     this.server.write({
       type: '$/progress',
       params: {
@@ -349,7 +399,10 @@ export class LSPServer {
             method: 'textDocument/publishDiagnostics',
             params: {
               uri: `file://${ref.real.join()}`,
-              diagnostics: convertDiagnosticsToLSP(processor.getDiagnostics()),
+              diagnostics: convertDiagnosticsToLSP(
+                processor.getDiagnostics(),
+                this.master,
+              ),
             },
           });
         }
