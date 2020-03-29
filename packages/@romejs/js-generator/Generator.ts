@@ -477,8 +477,13 @@ export default class Generator {
 
     const lines = n.getLinesBetween(node, comment);
 
-    // BlockComment already has a newline
-    if (lines.length >= 1 && (comment.type !== 'CommentLine' || trailing)) {
+    // Will always have at least one newline
+    if (node.type === 'CommentLine' || comment.type === 'CommentLine' &&
+      !trailing) {
+      lines.shift();
+    }
+
+    if (lines.length >= 1) {
       this.inferredNewline(lines[0]);
     }
 
