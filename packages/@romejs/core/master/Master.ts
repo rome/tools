@@ -56,7 +56,7 @@ import {
   createUnknownFilePath,
 } from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
-import {LSPServer} from './lsp/index';
+import LSPServer from './lsp/LSPServer';
 import MasterReporter from './MasterReporter';
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;

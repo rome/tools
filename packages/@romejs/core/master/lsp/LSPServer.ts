@@ -285,7 +285,7 @@ class LSPProgress extends ReporterProgressBase {
   }
 }
 
-export class LSPServer {
+export default class LSPServer {
   constructor(request: MasterRequest) {
     this.status = 'IDLE';
     this.buffer = '';
@@ -315,7 +315,6 @@ export class LSPServer {
   write(res: JSONObject) {
     const json = JSON.stringify(res);
     const out = `Content-Length: ${String(json.length)}${HEADERS_END}${json}`;
-    console.error('WRITE', out);
     this.client.bridge.lspFromServerBuffer.send(out);
   }
 
@@ -514,12 +513,29 @@ export class LSPServer {
     }
   }
 
+  normalizeMessage(content: string): undefined | Consumer {
+    try {
+      const data = JSON.parse(content);
+      const consumer = consumeUnknown(data, 'lsp/parse');
+      return consumer;
+    } catch (err) {
+      if (err instanceof SyntaxError) {
+        console.error('JSON parse error', content);
+        return undefined;
+      } else {
+        throw err;
+      }
+    }
+  }
+
   async onMessage(headers: Headers, content: string) {
-    const data = JSON.parse(content);
-    const consumer = consumeUnknown(data, 'lsp/parse');
+    const consumer = this.normalizeMessage(content);
+    if (consumer === undefined) {
+      return;
+    }
 
     if (!consumer.has('method')) {
-      console.error(data);
+      console.error('NO METHOD', content);
       return;
     }
 

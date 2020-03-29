@@ -22,6 +22,7 @@ import analyzeDependencies from './analyzeDependencies';
 import parse from './parse';
 import bundle from './bundle';
 import format from './format';
+import lsp from './lsp';
 
 // Code Quality
 import lint from './lint';
@@ -54,4 +55,5 @@ masterCommands.set('publish', publish);
 masterCommands.set('ci', ci);
 masterCommands.set('develop', develop);
 masterCommands.set('format', format);
+masterCommands.set('lsp', lsp);
 masterCommands.set('_noop', noop);
