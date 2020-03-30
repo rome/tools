@@ -16,9 +16,10 @@ import {
 import {addOriginsToDiagnostics} from './derive';
 import {naturalCompare} from '@romejs/string-utils';
 import {DiagnosticsError} from './errors';
-import {add, get0} from '@romejs/ob1';
+import {get0} from '@romejs/ob1';
 import {DiagnosticCategoryPrefix} from './categories';
 import {descriptions} from './descriptions';
+import {matchesSuppression} from '@romejs/js-compiler';
 
 type UniquePart =
   | 'filename'
@@ -131,12 +132,7 @@ export default class DiagnosticsProcessor {
 
   doesMatchFilter(diag: Diagnostic): boolean {
     for (const suppression of this.suppressions) {
-      const targetLine = suppression.type === 'current'
-        ? suppression.loc.end.line : add(suppression.loc.end.line, 1);
-
-      if (diag.location.filename !== undefined && diag.location.start !==
-      undefined && diag.location.filename === suppression.loc.filename &&
-        diag.location.start.line === targetLine) {
+      if (matchesSuppression(diag.location, suppression)) {
         this.usedSuppressions.add(suppression);
         return true;
       }

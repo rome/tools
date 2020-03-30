@@ -17,15 +17,20 @@ export default {
     if (node.type === 'BinaryExpression' && (node.operator === 'in' ||
     node.operator === 'instanceof') && node.left.type === 'UnaryExpression' &&
       node.left.operator === '!') {
-      path.context.addNodeDiagnostic(node, descriptions.LINT.UNSAFE_NEGATION);
+      const {suppressed} = path.context.addNodeDiagnostic(
+        node,
+        descriptions.LINT.UNSAFE_NEGATION,
+      );
 
-      return unaryExpression.create({
-        operator: node.left.operator,
-        argument: {
-          ...node,
-          left: node.left.argument,
-        },
-      });
+      if (!suppressed) {
+        return unaryExpression.create({
+          operator: node.left.operator,
+          argument: {
+            ...node,
+            left: node.left.argument,
+          },
+        });
+      }
     }
 
     return node;

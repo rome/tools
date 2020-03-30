@@ -29,6 +29,7 @@ export default {
   name: 'noReferenceToNonExistingGroup',
   enter(path: Path): AnyNode {
     const {node, context} = path;
+
     if (node.type === 'RegExpNumericBackReference') {
       const allCaptureGroups = findCaptureGroups(path);
       if (allCaptureGroups === undefined) {
@@ -49,6 +50,7 @@ export default {
         }
       }
     }
+
     return node;
   },
 };

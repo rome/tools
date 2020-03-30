@@ -87,6 +87,7 @@ const hook = createHook<State, Arg, ThisExpression>({
         throw new Error('Invalid declarator put into state');
       }
 
+      // TODO if this is suppressed then don't transform
       path.context.addNodeDiagnostic(
         init,
         descriptions.LINT.PREFER_FUNCTION_DECLARATIONS,
@@ -131,7 +132,6 @@ export default {
     }
 
     // If we have a `this` inside of an arrow function attached as a variable declarator then we should consider
-
     // it valid
     if (node.type === 'ThisExpression') {
       // Try to find the arrow function owner, or stop if we get to another function

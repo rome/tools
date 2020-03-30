@@ -11,7 +11,6 @@ import {lintTransforms} from '../transforms/lint/index';
 import {program} from '@romejs/js-ast';
 import {Cache, Context} from '@romejs/js-compiler';
 import {generateJS} from '@romejs/js-generator';
-import {extractSuppressionsFromProgram} from '../suppressions';
 
 export type LintResult = {
   diagnostics: Diagnostics;
@@ -73,15 +72,9 @@ export default async function lint(req: FormatRequest): Promise<LintResult> {
   });
   program.assert(context.reduce(ast, lintTransforms, {frozen: true}));
 
-  const extractedSuppressions = extractSuppressionsFromProgram(ast);
-
   const result: LintResult = {
-    suppressions: extractedSuppressions.suppressions,
-    diagnostics: [
-      ...ast.diagnostics,
-      ...context.diagnostics,
-      ...extractedSuppressions.diagnostics,
-    ],
+    suppressions: context.suppressions,
+    diagnostics: [...ast.diagnostics, ...context.diagnostics],
     src: formattedCode,
   };
   lintCache.set(query, result);

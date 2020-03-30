@@ -32,6 +32,7 @@ export default {
             seenSources.set(sourceKey, bodyNode.loc);
           } else {
             shouldFix = true;
+            // TODO skip if suppressed
             path.context.addNodeDiagnostic(
               bodyNode,
               descriptions.LINT.DUPLICATE_IMPORT_SOURCE(seenLoc),

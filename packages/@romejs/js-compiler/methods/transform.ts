@@ -11,7 +11,6 @@ import {TransformRequest, TransformVisitors} from '../types';
 import {stageTransforms, stageOrder, hookVisitors} from '../transforms/index';
 import {Cache} from '@romejs/js-compiler';
 import Context from '../lib/Context';
-import {extractSuppressionsFromProgram} from '../suppressions';
 
 type TransformResult = {
   ast: Program;
@@ -73,15 +72,9 @@ export default async function transform(
 
   const compiledAst = program.assert(context.reduce(ast, visitors));
 
-  const extractedSuppressions = extractSuppressionsFromProgram(ast);
-
   const res: TransformResult = {
-    suppressions: extractedSuppressions.suppressions,
-    diagnostics: [
-      ...prevStageDiagnostics,
-      ...context.diagnostics,
-      ...extractedSuppressions.diagnostics,
-    ],
+    suppressions: context.suppressions,
+    diagnostics: [...prevStageDiagnostics, ...context.diagnostics],
     cacheDependencies: [
       ...prevStageCacheDeps,
       ...context.getCacheDependencies(),

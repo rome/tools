@@ -22,25 +22,35 @@ export default {
     const {node, context} = path;
 
     if (node.type === 'TSArrayType') {
-      context.addNodeDiagnostic(node, descriptions.LINT.NO_SHORTHAND_ARRAY_TYPE);
+      const {suppressed} = context.addNodeDiagnostic(
+        node,
+        descriptions.LINT.NO_SHORTHAND_ARRAY_TYPE,
+      );
 
-      return tsTypeReference.create({
-        typeName: referenceIdentifier.quick('Array'),
-        typeParameters: tsTypeParameterInstantiation.create({
-          params: [node.elementType],
-        }),
-      });
+      if (!suppressed) {
+        return tsTypeReference.create({
+          typeName: referenceIdentifier.quick('Array'),
+          typeParameters: tsTypeParameterInstantiation.create({
+            params: [node.elementType],
+          }),
+        });
+      }
     }
 
     if (node.type === 'FlowArrayTypeAnnotation') {
-      context.addNodeDiagnostic(node, descriptions.LINT.NO_SHORTHAND_ARRAY_TYPE);
+      const {suppressed} = context.addNodeDiagnostic(
+        node,
+        descriptions.LINT.NO_SHORTHAND_ARRAY_TYPE,
+      );
 
-      return flowGenericTypeAnnotation.create({
-        id: referenceIdentifier.quick('Array'),
-        typeParameters: flowTypeParameterInstantiation.create({
-          params: [node.elementType],
-        }),
-      });
+      if (!suppressed) {
+        return flowGenericTypeAnnotation.create({
+          id: referenceIdentifier.quick('Array'),
+          typeParameters: flowTypeParameterInstantiation.create({
+            params: [node.elementType],
+          }),
+        });
+      }
     }
 
     return node;

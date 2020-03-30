@@ -22,12 +22,18 @@ import {
   Diagnostics,
   DiagnosticOrigin,
   DiagnosticDescription,
+  DiagnosticSuppressions,
+  DiagnosticCategory,
 } from '@romejs/diagnostics';
 import Record from './Record';
 import {RootScope} from '../scope/Scope';
 import reduce from '../methods/reduce';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 import {TransformProjectDefinition} from '../types';
+import {
+  extractSuppressionsFromProgram,
+  matchesSuppression,
+} from '../suppressions';
 
 export type ContextArg = {
   ast: Program;
@@ -36,6 +42,8 @@ export type ContextArg = {
   origin?: DiagnosticOrigin;
 };
 
+type AddDiagnosticResult = {suppressed: boolean};
+
 // We only want a Context to create diagnostics that belong to itself
 type ContextDiagnostic = Omit<Diagnostic, 'location' | 'description'>;
 
@@ -43,7 +51,6 @@ export default class Context {
   constructor(arg: ContextArg) {
     const {ast, project, options = {}, origin} = arg;
 
-    this.diagnostics = [];
     this.records = [];
 
     this.path = createUnknownFilePath(ast.filename);
@@ -56,12 +63,17 @@ export default class Context {
     this.cacheDependencies = new Set();
     this.sourceType = ast.sourceType;
     this.rootScope = new RootScope(this, ast);
+
+    const {suppressions, diagnostics} = extractSuppressionsFromProgram(ast);
+    this.suppressions = suppressions;
+    this.diagnostics = diagnostics;
   }
 
   sourceType: ConstSourceType;
   cacheDependencies: Set<string>;
   records: Array<Record>;
   diagnostics: Diagnostics;
+  suppressions: DiagnosticSuppressions;
 
   rootScope: undefined | RootScope;
 
@@ -81,6 +93,37 @@ export default class Context {
         return visitor;
       }
     }));
+  }
+
+  hasNodeSuppression(
+    node: undefined | {loc?: SourceLocation},
+    category: DiagnosticCategory,
+  ): boolean {
+    if (node === undefined) {
+      return false;
+    }
+
+    return this.hasLocSuppression(node.loc, category);
+  }
+
+  hasLocSuppression(
+    loc: undefined | SourceLocation,
+    category: DiagnosticCategory,
+  ): boolean {
+    if (loc === undefined) {
+      return false;
+    }
+
+    for (const suppression of this.suppressions) {
+      if (suppression.category === category && matchesSuppression(
+        loc,
+        suppression,
+      )) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   getRootScope(): RootScope {
@@ -119,7 +162,7 @@ export default class Context {
     loc: undefined | SourceLocation,
     description: DiagnosticDescription,
     diag: ContextDiagnostic = {},
-  ) {
+  ): AddDiagnosticResult {
     let origins: Array<DiagnosticOrigin> = [];
     if (this.origin !== undefined) {
       origins.push(this.origin);
@@ -147,13 +190,17 @@ export default class Context {
       },
       origins,
     });
+
+    return {
+      suppressed: this.hasLocSuppression(loc, description.category),
+    };
   }
 
   addNodeDiagnostic(
     node: undefined | {loc?: SourceLocation},
     description: DiagnosticDescription,
     diag: ContextDiagnostic = {},
-  ) {
+  ): AddDiagnosticResult {
     return this.addLocDiagnostic(
       node === undefined ? undefined : node.loc,
       description,
@@ -165,7 +212,7 @@ export default class Context {
     nodes: Array<{loc?: SourceLocation}>,
     description: DiagnosticDescription,
     diag: ContextDiagnostic = {},
-  ) {
+  ): AddDiagnosticResult {
     return this.addLocDiagnostic(
       extractSourceLocationRangeFromNodes(nodes),
       description,

@@ -21,24 +21,26 @@ export default {
 
     if (node.type === 'VariableDeclarationStatement' &&
       node.declaration.declarations.length > 1) {
-      path.context.addNodeDiagnostic(
+      const {suppressed} = path.context.addNodeDiagnostic(
         node,
         descriptions.LINT.SINGLE_VAR_DECLARATOR,
       );
 
-      const nodes: Array<VariableDeclarationStatement> = [];
-      const {kind} = node.declaration;
+      if (!suppressed) {
+        const nodes: Array<VariableDeclarationStatement> = [];
+        const {kind} = node.declaration;
 
-      for (const declarator of node.declaration.declarations) {
-        nodes.push(variableDeclarationStatement.quick(
-          variableDeclaration.create({
-            kind,
-            declarations: [declarator],
-          }),
-        ));
+        for (const declarator of node.declaration.declarations) {
+          nodes.push(variableDeclarationStatement.quick(
+            variableDeclaration.create({
+              kind,
+              declarations: [declarator],
+            }),
+          ));
+        }
+
+        return nodes;
       }
-
-      return nodes;
     }
 
     return node;
