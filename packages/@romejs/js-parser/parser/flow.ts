@@ -43,6 +43,7 @@ import {
   FlowObjectTypeInternalSlot,
   FlowObjectTypePropertyKey,
   FlowObjectTypePropertyKind,
+  ReferenceIdentifier,
   FlowObjectTypeSpreadProperty,
   FlowFunctionTypeAnnotation,
   FlowFunctionTypeParam,
@@ -81,6 +82,7 @@ import {
 } from './index';
 import {get0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
+import {parseReferenceIdentifier} from './expression';
 
 const primitiveTypes = [
   'any',
@@ -166,7 +168,7 @@ export function parseFlowTypeParameterInstantiationCallOrNew(
 function parseFlowTypeOrImplicitInstantiation(parser: JSParser): AnyFlowPrimary {
   if (parser.state.tokenType === tt.name && parser.state.tokenValue === '_') {
     const startPos = parser.state.startPos;
-    const node = parseIdentifier(parser);
+    const node = parseReferenceIdentifier(parser);
     return parseFlowGenericType(parser, startPos, node);
   } else {
     return parseFlowType(parser);
@@ -1305,10 +1307,10 @@ function flowObjectTypeSemicolon(parser: JSParser): void {
 function parseFlowQualifiedTypeIdentifier(
   parser: JSParser,
   start: Position = parser.getPosition(),
-  id?: Identifier,
-): Identifier | FlowQualifiedTypeIdentifier {
-  let node: Identifier | FlowQualifiedTypeIdentifier = id === undefined
-    ? parseIdentifier(parser) : id;
+  id?: ReferenceIdentifier,
+): ReferenceIdentifier | FlowQualifiedTypeIdentifier {
+  let node: ReferenceIdentifier | FlowQualifiedTypeIdentifier = id === undefined
+    ? parseReferenceIdentifier(parser) : id;
 
   while (parser.eat(tt.dot)) {
     const id = parseIdentifier(parser);
@@ -1325,7 +1327,7 @@ function parseFlowQualifiedTypeIdentifier(
 function parseFlowGenericType(
   parser: JSParser,
   start: Position,
-  _id: Identifier,
+  _id: ReferenceIdentifier,
 ): FlowGenericTypeAnnotation | FlowGenericTypeAnnotation {
   let typeParameters = undefined;
   const id = parseFlowQualifiedTypeIdentifier(parser, start, _id);
@@ -1493,7 +1495,10 @@ function flowIdentToTypeAnnotation(
 
     default:
       checkNotUnderscore(parser, id);
-      return parseFlowGenericType(parser, start, id);
+      return parseFlowGenericType(parser, start, toReferenceIdentifier(
+        parser,
+        id,
+      ));
   }
 }
 

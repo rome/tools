@@ -26,6 +26,7 @@ import {
   coerce0to1,
   number1Neg1,
 } from '@romejs/ob1';
+import {stripMarkupTags} from '@romejs/string-markup';
 
 export default function buildMessageCodeFrame(
   sourceText: string,
@@ -154,9 +155,11 @@ export default function buildMessageCodeFrame(
   CODE_FRAME_INDENT.length;
 
   // If what the marker is highlighting equals the marker message then it's redundant so don't show the message
-  if (markerMessage !== '' && start.line === end.line) {
+  if (markerMessage !== '') {
     const text = sourceText.slice(get0(start.index), get0(end.index));
-    if (cleanEquivalentString(text) === cleanEquivalentString(markerMessage)) {
+    if (cleanEquivalentString(text) === cleanEquivalentString(stripMarkupTags(
+      markerMessage,
+    ))) {
       markerMessage = '';
     }
   }
