@@ -19,5 +19,12 @@
   },
   "dependencies": {
     "vscode-languageclient": "^5.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebookexperimental/rome.git"
+  },
+  "bugs": {
+    "url": "https://github.com/facebookexperimental/rome/issues"
   }
 }
