@@ -9,7 +9,7 @@ import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
 test('no setter return', async (t) => {
-  const badClass = await testLint(`
+  t.snapshot(await testLint(`
     class p {
       set name(value) {
         if (!value) {
@@ -18,11 +18,9 @@ test('no setter return', async (t) => {
       }
     }
     console.log(new p());
-  `);
+  `));
 
-  t.snapshot(badClass);
-
-  const badStaticClass = await testLint(`
+  t.snapshot(await testLint(`
     class p {
       static set name(value) {
         if (!value) {
@@ -31,11 +29,9 @@ test('no setter return', async (t) => {
       }
     }
     console.log(p);
-  `);
+  `));
 
-  t.snapshot(badStaticClass);
-
-  const badObject = await testLint(`
+  t.snapshot(await testLint(`
     let p = {
       set name(value) {
         if (!value) {
@@ -44,11 +40,9 @@ test('no setter return', async (t) => {
       }
     };
     console.log(p);
-  `);
+  `));
 
-  t.snapshot(badObject);
-
-  const blankReturn = await testLint(`
+  t.snapshot(await testLint(`
     class p {
       set name(value) {
         if (!value) {
@@ -57,7 +51,5 @@ test('no setter return', async (t) => {
       }
     };
     console.log(p);
-  `);
-
-  t.snapshot(blankReturn);
+  `));
 });
