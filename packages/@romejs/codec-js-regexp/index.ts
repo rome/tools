@@ -146,11 +146,11 @@ export const createRegExpParser = createParser((ParserCore) =>
     diagnostics: Diagnostics;
     unicode: boolean;
 
-    addDiagnostic(opts: ParserUnexpectedOptions) {
+    addDiagnostic(opts: ParserUnexpectedOptions): void {
       this.diagnostics.push(this.createDiagnostic(opts));
     }
 
-    unexpected() {
+    unexpected(): never {
       throw new Error('No throwing');
     }
 
