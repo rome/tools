@@ -12,11 +12,14 @@ import {
   FlowQualifiedTypeIdentifier,
   FlowGenericTypeAnnotation,
   flowGenericTypeAnnotation,
+  Identifier,
 } from '@romejs/js-ast';
 import GenericT from '../../types/GenericT';
 
-function getName(node: ReferenceIdentifier | FlowQualifiedTypeIdentifier): string {
-  if (node.type === 'ReferenceIdentifier') {
+function getName(
+  node: Identifier | ReferenceIdentifier | FlowQualifiedTypeIdentifier,
+): string {
+  if (node.type === 'Identifier' || node.type === 'ReferenceIdentifier') {
     return node.name;
   } else {
     return `${getName(node.id)}.${getName(node.qualification)}`;
