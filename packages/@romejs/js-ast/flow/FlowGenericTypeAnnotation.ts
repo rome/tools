@@ -7,7 +7,7 @@
 
 import {
   JSNodeBase,
-  Identifier,
+  ReferenceIdentifier,
   FlowQualifiedTypeIdentifier,
   FlowTypeParameterInstantiation,
 } from '../index';
@@ -17,7 +17,7 @@ export type FlowGenericTypeAnnotation =
   & JSNodeBase
   & {
     type: 'FlowGenericTypeAnnotation';
-    id: Identifier | FlowQualifiedTypeIdentifier;
+    id: ReferenceIdentifier | FlowQualifiedTypeIdentifier;
     typeParameters?: FlowTypeParameterInstantiation;
   };
 

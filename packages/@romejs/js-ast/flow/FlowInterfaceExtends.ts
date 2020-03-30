@@ -7,7 +7,7 @@
 
 import {
   JSNodeBase,
-  Identifier,
+  ReferenceIdentifier,
   FlowTypeParameterInstantiation,
   FlowQualifiedTypeIdentifier,
 } from '../index';
@@ -17,7 +17,7 @@ export type FlowInterfaceExtends =
   & JSNodeBase
   & {
     type: 'FlowInterfaceExtends';
-    id: Identifier | FlowQualifiedTypeIdentifier;
+    id: ReferenceIdentifier | FlowQualifiedTypeIdentifier;
     typeParameters?: FlowTypeParameterInstantiation;
   };
 
