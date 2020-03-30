@@ -44,6 +44,7 @@ export type DiagnosticCategory =
   | 'lint/noImportAssign'
   | 'lint/noLabelVar'
   | 'lint/noReferenceToNonExistingGroup'
+  | 'lint/noSetterReturn'
   | 'lint/noShadowRestrictedNames'
   | 'lint/noShorthandArrayType'
   | 'lint/noTemplateCurlyInString'
