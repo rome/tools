@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {formatAnsi} from '@romejs/string-ansi';
 import {tokenizeJS} from '@romejs/js-parser';
 import {get0, Number0} from '@romejs/ob1';
 import {DiagnosticLanguage, DiagnosticSourceType} from '@romejs/diagnostics';
 import {ConstSourceType} from '@romejs/js-ast';
 import {tokenizeJSON} from '@romejs/codec-json';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
+import {escapeMarkup, markupTag} from '@romejs/string-markup';
 
 // 100KB
 const FILE_SIZE_MAX = 100_000;
@@ -23,9 +23,9 @@ export type AnsiHighlightOptions = {
   language: undefined | DiagnosticLanguage;
 };
 
-export default function ansiHighlightCode(opts: AnsiHighlightOptions): string {
+export default function highlightCode(opts: AnsiHighlightOptions): string {
   if (opts.input.length > FILE_SIZE_MAX) {
-    return opts.input;
+    return escapeMarkup(opts.input);
   }
 
   if (opts.language === 'js') {
@@ -38,7 +38,7 @@ export default function ansiHighlightCode(opts: AnsiHighlightOptions): string {
     return ansiHighlightJSON(opts.path, opts.input);
   }
 
-  return opts.input;
+  return escapeMarkup(opts.input);
 }
 
 function reduce<Token extends {
@@ -65,7 +65,7 @@ function reduce<Token extends {
     const lines = value.split('\n');
 
     const values: Array<string> = lines.map((line) => {
-      return callback(token, line);
+      return callback(token, escapeMarkup(line));
     });
 
     buff += values.join('\n');
@@ -75,7 +75,7 @@ function reduce<Token extends {
 }
 
 function invalidHighlight(line: string): string {
-  return formatAnsi.bold(formatAnsi.bgRed(line));
+  return markupTag('emphasis', markupTag('bgRed', line));
 }
 
 function ansiHighlightJSON(path: UnknownFilePath, input: string): string {
@@ -85,34 +85,34 @@ function ansiHighlightJSON(path: UnknownFilePath, input: string): string {
     path,
   });
 
-  return reduce(input, tokens, (token, line) => {
+  return reduce(input, tokens, (token, value) => {
     // Try to keep the highlighting in line with JS where possible
     switch (token.type) {
       case 'BlockComment':
       case 'LineComment':
-        return formatAnsi.brightBlack(line);
+        return markupTag('brightBlack', value);
 
       case 'String':
-        return formatAnsi.green(line);
+        return markupTag('green', value);
 
       case 'Number':
-        return formatAnsi.magenta(line);
+        return markupTag('magenta', value);
 
       case 'Word':
         switch (token.value) {
           case 'true':
           case 'false':
           case 'null':
-            return formatAnsi.cyan(line);
+            return markupTag('cyan', value);
 
           default:
-            return line;
+            return value;
         }
 
       case 'Comma':
       case 'Colon':
       case 'Dot':
-        return formatAnsi.yellow(line);
+        return markupTag('yellow', value);
 
       case 'BracketOpen':
       case 'BracketClose':
@@ -120,10 +120,10 @@ function ansiHighlightJSON(path: UnknownFilePath, input: string): string {
       case 'BraceClose':
       case 'Minus':
       case 'Plus':
-        return line;
+        return value;
 
       case 'Invalid':
-        return invalidHighlight(line);
+        return invalidHighlight(value);
 
       // Will never be hit
       case 'EOF':
@@ -140,7 +140,7 @@ function ansiHighlightJS(input: string, sourceType: ConstSourceType): string {
     path: createUnknownFilePath('unknown'),
   });
 
-  return reduce(input, tokens, (token, line) => {
+  return reduce(input, tokens, (token, value) => {
     const {type} = token;
 
     switch (type.label) {
@@ -179,25 +179,25 @@ function ansiHighlightJS(input: string, sourceType: ConstSourceType): string {
       case 'typeof':
       case 'void':
       case 'delete':
-        return formatAnsi.cyan(line);
+        return markupTag('cyan', value);
 
       case 'num':
       case 'bigint':
-        return formatAnsi.magenta(line);
+        return markupTag('magenta', value);
 
       case 'regexp':
-        return formatAnsi.magenta(line);
+        return markupTag('magenta', value);
 
       case 'string':
       case 'template':
       case '`':
-        return formatAnsi.green(line);
+        return markupTag('green', value);
 
       case 'invalid':
-        return invalidHighlight(line);
+        return invalidHighlight(value);
 
       case 'comment':
-        return formatAnsi.brightBlack(line);
+        return markupTag('brightBlack', value);
 
       case ',':
       case ';':
@@ -207,7 +207,7 @@ function ansiHighlightJS(input: string, sourceType: ConstSourceType): string {
       case '.':
       case '?':
       case '?.':
-        return formatAnsi.yellow(line);
+        return markupTag('yellow', value);
 
       case '[':
       case ']':
@@ -217,7 +217,7 @@ function ansiHighlightJS(input: string, sourceType: ConstSourceType): string {
       case '|}':
       case '(':
       case ')':
-        return line;
+        return value;
 
       case '=>':
       case '...':
@@ -248,7 +248,7 @@ function ansiHighlightJS(input: string, sourceType: ConstSourceType): string {
       case 'jsxTagEnd':
       case 'name':
       case 'eof':
-        return line;
+        return value;
     }
   });
 }

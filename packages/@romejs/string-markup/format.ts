@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Children, TagAttributes, TagName} from './types';
+import {Children, TagAttributes, MarkupTagName} from './types';
 import {parseMarkup} from './parse';
 import {
   humanizeNumber,
   humanizeTime,
   humanizeFileSize,
 } from '@romejs/string-utils';
-import {formatAnsi} from '@romejs/string-ansi';
+import {formatAnsi, ansiPad} from './ansi';
 import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
 
-type FormatReduceCallback = (name: TagName, attributes: TagAttributes, value: string) => string;
+type FormatReduceCallback = (name: MarkupTagName, attributes: TagAttributes, value: string) => string;
 
 export type MarkupFormatFilenameNormalizer = (filename: string) => string;
 
@@ -141,6 +141,13 @@ function formatNumber(attributes: TagAttributes, value: string) {
   return humanWithApprox;
 }
 
+function formatPad(attributes: TagAttributes, value: string) {
+  const left = attributes.get('dir') !== 'right';
+  const count = Number(attributes.get('count') || 0);
+  const char = attributes.get('char');
+  return ansiPad(left ? 'left' : 'right', value, count, char);
+}
+
 export function stripMarkupTags(
   input: string,
   opts: MarkupFormatOptions = {},
@@ -161,6 +168,9 @@ export function stripMarkupTags(
 
       case 'filesize':
         return humanizeFileSize(Number(value));
+
+      case 'pad':
+        return formatPad(attributes, value);
 
       case 'command':
         return `\`${value}\``;
@@ -192,6 +202,9 @@ export function markupToAnsi(
 
           return formatAnsi.hyperlink(text, hyperlink);
         }
+
+      case 'pad':
+        return formatPad(attributes, value);
 
       case 'filelink':
         {

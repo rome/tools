@@ -22,7 +22,10 @@ export type DiagnosticFilter = {
 
 export type DiagnosticFilters = Array<DiagnosticFilter>;
 
+export type DiagnosticSuppressionType = 'current' | 'next';
+
 export type DiagnosticSuppression = {
+  type: DiagnosticSuppressionType;
   category: string;
   loc: SourceLocation;
 };

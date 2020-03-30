@@ -78,6 +78,7 @@ export type DiagnosticCategory =
   | 'suppressions/unused'
   | 'suppressions/incorrectPrefix'
   | 'suppressions/duplicate'
+  | 'suppressions/missingSpace'
   | 'tests/disabled'
   | 'tests/noneDeclared'
   | 'tests/timeout'

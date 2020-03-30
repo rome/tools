@@ -29,7 +29,7 @@ export type TagAttributes = Map<string, string>;
 
 export type TagNode = {
   type: 'Tag';
-  name: TagName;
+  name: MarkupTagName;
   attributes: TagAttributes;
   children: Children;
 };
@@ -38,7 +38,8 @@ export type ChildNode = TextNode | TagNode;
 
 export type Children = Array<ChildNode>;
 
-export type TagName =
+export type MarkupTagName =
+  | 'pad'
   | 'grammarNumber'
   | 'command'
   | 'inverse'

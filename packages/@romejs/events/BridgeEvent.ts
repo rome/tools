@@ -29,7 +29,7 @@ export type BridgeEventDirection =
 export type BridgeEventOptions = EventOptions & {direction: BridgeEventDirection};
 
 function validateDirection(
-  // rome-suppress lint/noExplicitAny
+  // rome-suppress-next-line lint/noExplicitAny
   event: BridgeEvent<any, any>,
   invalidDirections: Array<[BridgeEventDirection, BridgeType]>,
   verb: string,

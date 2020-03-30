@@ -36,7 +36,7 @@ import noop from './noop';
 
 //
 import {MasterCommand} from '../../commands';
-// rome-suppress lint/noExplicitAny
+// rome-suppress-next-line lint/noExplicitAny
 export const masterCommands: Map<string, MasterCommand<any>> = new Map();
 masterCommands.set('_moduleSignature', moduleSignature);
 masterCommands.set('evict', evict);

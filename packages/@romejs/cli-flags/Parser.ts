@@ -6,7 +6,6 @@
  */
 
 import {Reporter} from '@romejs/cli-reporter';
-import {rightPad} from '@romejs/string-ansi';
 import {serializeCLIFlags} from './serializeCLIFlags';
 import {
   consume,
@@ -445,7 +444,7 @@ export default class Parser<T> {
     // Output options
     for (const {arg, description} of optionOutput) {
       lines.push(
-        markup`<brightBlack>${rightPad(arg, argColumnLength, ' ')}</brightBlack>  ${description}`,
+        markup`<brightBlack><pad count="${argColumnLength}" dir="right">${arg}</brightBlack>  ${description}`,
       );
     }
 

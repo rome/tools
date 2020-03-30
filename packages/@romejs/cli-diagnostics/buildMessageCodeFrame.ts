@@ -14,9 +14,7 @@ import {
   HALF_MAX_CODE_FRAME_LINES,
 } from './constants';
 import {Position} from '@romejs/parser-core';
-import {escapeMarkup} from '@romejs/string-markup';
 import {cleanEquivalentString} from './utils';
-import {leftPad, formatAnsi, stripAnsi} from '@romejs/string-ansi';
 import {
   sub,
   get0,
@@ -30,14 +28,12 @@ import {
 } from '@romejs/ob1';
 
 export default function buildMessageCodeFrame(
+  sourceText: string,
   allLines: Array<string>,
   start: undefined | Position,
   end: undefined | Position,
-  maybeMarkerMessage?: string,
+  markerMessage: string,
 ): string {
-  let markerMessage: string = maybeMarkerMessage === undefined
-    ? '' : maybeMarkerMessage;
-
   if (start === undefined || end === undefined) {
     return CODE_FRAME_INDENT + markerMessage;
   }
@@ -114,7 +110,7 @@ export default function buildMessageCodeFrame(
 
     formattedLines.push({
       gutter,
-      line: escapeMarkup(line),
+      line,
       lineIndex: i,
     });
   }
@@ -159,17 +155,15 @@ export default function buildMessageCodeFrame(
 
   // If what the marker is highlighting equals the marker message then it's redundant so don't show the message
   if (markerMessage !== '' && start.line === end.line) {
-    const markerLine = stripAnsi(allLines[get0(coerce1to0(start.line))]);
-    const text = markerLine.slice(get0(start.column), get0(end.column));
+    const text = sourceText.slice(get0(start.index), get0(end.index));
     if (cleanEquivalentString(text) === cleanEquivalentString(markerMessage)) {
       markerMessage = '';
     }
   }
 
   const pointerLength: number = Math.max(get0(markerSize), 1);
-  const pointer: string = formatAnsi.red(formatAnsi.bold('^'.repeat(
-    pointerLength,
-  )));
+  const pointer: string =
+    `<red><emphasis>${'^'.repeat(pointerLength)}</emphasis></red>`;
   const pointerIndent: string = ' '.repeat(get0(markerOffset));
 
   // If the marker is just pointing to the first character and we have no message, no point showing it
@@ -178,7 +172,7 @@ export default function buildMessageCodeFrame(
 
   // Output no gutter with a soft indent if this is true
   if (noGutter) {
-    const result = [...allLines].map((line) => escapeMarkup(line));
+    const result = [...allLines];
     if (!noMarkerLine) {
       result.push(`${pointerIndent}${pointer} ${markerMessage}`);
     }
@@ -188,14 +182,12 @@ export default function buildMessageCodeFrame(
   // Build marker
   const markerGutterIndent: string = ' '.repeat(maxGutterLength - GUTTER.length);
   const markerLine: string =
-    `${markerGutterIndent}${formatAnsi.bold(GUTTER)}${pointerIndent}${pointer} ${markerMessage}`;
+    `${markerGutterIndent}<emphasis>${GUTTER}</emphasis>${pointerIndent}${pointer} ${markerMessage}`;
 
   // Build up the line we display when source lines are omitted
-  const omittedDots = '...';
-  const omittedLine = leftPad(
-    formatAnsi.bold(omittedDots) + GUTTER,
-    maxGutterLength,
-  );
+  const omittedLine =
+    `<pad count="${String(maxGutterLength)}"><emphasis>...</emphasis></pad>` +
+    GUTTER;
 
   // Build the frame
   const result = [];
@@ -210,7 +202,10 @@ export default function buildMessageCodeFrame(
     if (noGutter) {
       result.push(line);
     } else {
-      result.push(formatAnsi.bold(leftPad(gutter, maxGutterLength)) + line);
+      result.push(
+        `<emphasis><pad count="${String(maxGutterLength)}">${gutter}</pad></emphasis>` +
+        line,
+      );
     }
     if (lineIndex === endLineIndex && !noMarkerLine) {
       result.push(markerLine);

@@ -14,12 +14,12 @@ import {
   DiagnosticLocation,
   getDiagnosticsFromError,
   DiagnosticAdvice,
-  createSingleDiagnosticError,
   DiagnosticsError,
   DiagnosticCategory,
   Diagnostic,
   createBlessedDiagnosticMessage,
   DiagnosticsProcessor,
+  Diagnostics,
 } from '@romejs/diagnostics';
 import {
   DiagnosticsPrinterFlags,
@@ -81,15 +81,18 @@ type NormalizedCommandFlags = {
   defaultFlags: Dict<unknown>;
 };
 
-type ResolvedArgs = Array<{
+type ResolvedArg = {
   path: AbsoluteFilePath;
   location: DiagnosticLocation;
   project: ProjectDefinition;
-}>;
+};
+
+type ResolvedArgs = Array<ResolvedArg>;
 
 export type MasterRequestGetFilesOptions =
   & Omit<MemoryFSGlobOptions, 'getProjectIgnore' | 'getProjectEnabled'>
   & {
+    ignoreArgumentMisses?: boolean;
     ignoreProjectIgnore?: boolean;
     disabledDiagnosticCategory?: DiagnosticCategory;
     advice?: DiagnosticAdvice;
@@ -507,129 +510,153 @@ export default class MasterRequest {
         ignoreProjectIgnore ? [] : project.config[configCategory].ignore;
     }
 
-    // Build up files
-    const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-    for (const {path, location, project} of resolvedArgs) {
-      const matches = master.memoryFs.glob(path, extendedGlobOpts);
+    // Resolved arguments that resulted in no files
+    const noArgMatches: Set<ResolvedArg> = new Set();
 
-      if (matches.size > 0) {
+    // Match files
+    const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+    for (const arg of resolvedArgs) {
+      const matches = master.memoryFs.glob(arg.path, extendedGlobOpts);
+
+      if (matches.size === 0) {
+        if (!opts.ignoreArgumentMisses) {
+          noArgMatches.add(arg);
+        }
+      } else {
         for (const path of matches) {
           paths.add(path);
         }
-        continue;
       }
+    }
 
-      let category: DiagnosticCategory = 'args/fileNotFound';
+    if (noArgMatches.size > 0) {
+      const diagnostics: Diagnostics = [];
 
-      let advice: DiagnosticAdvice = opts.advice === undefined ? [] : [
-        ...opts.advice,
-      ];
+      for (const {path, project, location} of noArgMatches) {
+        let category: DiagnosticCategory = 'args/fileNotFound';
 
-      // Hint if `path` failed `globOpts.test`
-      if (configCategory !== undefined && !project.config[configCategory].enabled) {
-        const enabledSource = master.projectManager.findProjectConfigConsumer(
-          project,
-          (consumer) =>
-            consumer.has(configCategory) && consumer.get(configCategory).get(
-              'enabled',
-            ),
-        );
+        let advice: DiagnosticAdvice = opts.advice === undefined ? [] : [
+          ...opts.advice,
+        ];
 
-        const explanationPrefix = opts.verb === undefined
-          ? 'Files excluded' : `Files excluded from ${opts.verb}`;
-
-        if (opts.disabledDiagnosticCategory !== undefined) {
-          category = opts.disabledDiagnosticCategory;
-        }
-
-        if (enabledSource.value === undefined) {
-          let explanation =
-            `${explanationPrefix} as it's not enabled for this project`;
-          if (configCategory !== undefined) {
-            explanation +=
-              `. Run <command>rome config enable-category ${configCategory}</command> to enable it.`;
-          }
-          advice.push({
-            type: 'log',
-            category: 'info',
-            message: explanation,
-          });
-        } else {
-          advice.push({
-            type: 'log',
-            category: 'info',
-            message: `${explanationPrefix} as it's explicitly disabled in this project config`,
-          });
-
-          const disabledPointer = enabledSource.value.getDiagnosticLocation(
-            'value',
-          );
-          advice.push({
-            type: 'frame',
-            location: disabledPointer,
-          });
-        }
-      }
-
-      // Hint if all files were ignored
-      if (configCategory !== undefined && !ignoreProjectIgnore) {
-        const {paths: withoutIgnore} = await this.getFilesFromArgs({
-          ...opts,
-          ignoreProjectIgnore: true,
-        });
-
-        if (withoutIgnore.size > 0) {
-          advice.push({
-            type: 'log',
-            category: 'info',
-            message: 'The following files were ignored',
-          });
-
-          advice.push({
-            type: 'list',
-            list: Array.from(withoutIgnore, (path) =>
-              `<filelink target="${path.join()}" />`
-            ),
-            truncate: true,
-          });
-
-          const ignoreSource = master.projectManager.findProjectConfigConsumer(
+        // Hint if `path` failed `globOpts.test`
+        if (configCategory !== undefined &&
+          !project.config[configCategory].enabled) {
+          const enabledSource = master.projectManager.findProjectConfigConsumer(
             project,
             (consumer) =>
               consumer.has(configCategory) && consumer.get(configCategory).get(
-                'ignore',
+                'enabled',
               ),
           );
 
-          if (ignoreSource.value !== undefined) {
-            const ignorePointer = ignoreSource.value.getDiagnosticLocation(
-              'value',
-            );
+          const explanationPrefix = opts.verb === undefined
+            ? 'Files excluded' : `Files excluded from ${opts.verb}`;
 
+          if (opts.disabledDiagnosticCategory !== undefined) {
+            category = opts.disabledDiagnosticCategory;
+          }
+
+          if (enabledSource.value === undefined) {
+            let explanation =
+              `${explanationPrefix} as it's not enabled for this project`;
+            if (configCategory !== undefined) {
+              explanation +=
+                `. Run <command>rome config enable-category ${configCategory}</command> to enable it.`;
+            }
             advice.push({
               type: 'log',
               category: 'info',
-              message: 'Ignore patterns were defined here',
+              message: explanation,
+            });
+          } else {
+            advice.push({
+              type: 'log',
+              category: 'info',
+              message: `${explanationPrefix} as it's explicitly disabled in this project config`,
             });
 
+            const disabledPointer = enabledSource.value.getDiagnosticLocation(
+              'value',
+            );
             advice.push({
               type: 'frame',
-              location: ignorePointer,
+              location: disabledPointer,
             });
           }
         }
+
+        // Hint if all files were ignored
+        if (configCategory !== undefined && !ignoreProjectIgnore) {
+          const {paths: withoutIgnore} = await this.getFilesFromArgs({
+            ...opts,
+            ignoreProjectIgnore: true,
+          });
+
+          // Remove paths that we already successfully found
+          for (const path of paths) {
+            withoutIgnore.delete(path);
+          }
+
+          if (withoutIgnore.size > 0) {
+            advice.push({
+              type: 'log',
+              category: 'info',
+              message: 'The following files were ignored',
+            });
+
+            advice.push({
+              type: 'list',
+              list: Array.from(withoutIgnore, (path) =>
+                `<filelink target="${path.join()}" />`
+              ),
+              truncate: true,
+            });
+
+            const ignoreSource =
+              master.projectManager.findProjectConfigConsumer(
+                project,
+                (consumer) =>
+                  consumer.has(configCategory) &&
+                    consumer.get(configCategory).get('ignore'),
+              );
+
+            if (ignoreSource.value !== undefined) {
+              const ignorePointer = ignoreSource.value.getDiagnosticLocation(
+                'value',
+              );
+
+              advice.push({
+                type: 'log',
+                category: 'info',
+                message: 'Ignore patterns were defined here',
+              });
+
+              advice.push({
+                type: 'frame',
+                location: ignorePointer,
+              });
+            }
+          }
+        }
+
+        diagnostics.push({
+          location,
+          description: {
+            category,
+            message: createBlessedDiagnosticMessage(opts.noun === undefined
+              ? 'No files found' : `No files to ${opts.noun} found`
+            ),
+            advice,
+          },
+          marker: `<filelink target="${path.join()}" />`,
+        });
       }
 
-      throw createSingleDiagnosticError({
-        location,
-        description: {
-          category,
-          message: createBlessedDiagnosticMessage(opts.noun === undefined
-            ? 'No files found' : `No files to ${opts.noun} found`
-          ),
-          advice,
-        },
-      });
+      throw new DiagnosticsError(
+        'MasterRequest.getFilesFromArgs: Some arguments did not resolve to any files',
+        diagnostics,
+      );
     }
 
     return {paths, projects};

@@ -24,10 +24,10 @@ import {
   DiagnosticsFileReaderStats,
 } from './types';
 
-import {humanizeMarkupFilename} from '@romejs/string-markup';
+import {humanizeMarkupFilename, formatAnsi} from '@romejs/string-markup';
 import {toLines} from './utils';
 import printAdvice from './printAdvice';
-import {formatAnsi} from '@romejs/string-ansi';
+
 import successBanner from './banners/success.json';
 import errorBanner from './banners/error.json';
 import {
@@ -111,7 +111,10 @@ type ReferenceFileDependency = {
 
 type FileDependency = ChangeFileDependency | ReferenceFileDependency;
 
-export type DiagnosticsPrinterFileSources = UnknownFilePathMap<Array<string>>;
+export type DiagnosticsPrinterFileSources = UnknownFilePathMap<{
+  sourceText: string;
+  lines: Array<string>;
+}>;
 
 export type DiagnosticsPrinterFileMtimes = UnknownFilePathMap<number>;
 
@@ -135,6 +138,7 @@ export default class DiagnosticsPrinter extends Error {
     this.filteredCount = 0;
     this.truncatedCount = 0;
 
+    this.hasTruncatedDiagnostics = false;
     this.missingFileSources = new AbsoluteFilePathSet();
     this.fileSources = new UnknownFilePathMap();
     this.fileMtimes = new UnknownFilePathMap();
@@ -148,6 +152,7 @@ export default class DiagnosticsPrinter extends Error {
   cwd: AbsoluteFilePath;
   readFile: DiagnosticsFileReader;
 
+  hasTruncatedDiagnostics: boolean;
   missingFileSources: AbsoluteFilePathSet;
   fileSources: DiagnosticsPrinterFileSources;
   fileMtimes: DiagnosticsPrinterFileMtimes;
@@ -257,12 +262,15 @@ export default class DiagnosticsPrinter extends Error {
     this.fileMtimes.set(info.path, stats.mtime);
 
     if (info.type === 'reference') {
-      this.fileSources.set(info.path, toLines({
-        path: info.path,
-        input: stats.content,
-        sourceType: info.sourceType,
-        language: info.language,
-      }));
+      this.fileSources.set(info.path, {
+        sourceText: stats.content,
+        lines: toLines({
+          path: info.path,
+          input: stats.content,
+          sourceType: info.sourceType,
+          language: info.language,
+        }),
+      });
     }
   }
 
@@ -478,7 +486,7 @@ export default class DiagnosticsPrinter extends Error {
 
       // Print advice
       for (const item of advice) {
-        const noSpacer = printAdvice(item, {
+        const res = printAdvice(item, {
           printer: this,
           flags: this.flags,
           missingFileSources: this.missingFileSources,
@@ -486,8 +494,11 @@ export default class DiagnosticsPrinter extends Error {
           diagnostic: diag,
           reporter,
         });
-        if (!noSpacer) {
+        if (res.printed) {
           reporter.spacer();
+        }
+        if (res.truncated) {
+          this.hasTruncatedDiagnostics = true;
         }
       }
 
@@ -542,6 +553,12 @@ export default class DiagnosticsPrinter extends Error {
 
     if (isError) {
       reporter.hr();
+    }
+
+    if (this.hasTruncatedDiagnostics) {
+      reporter.warn(
+        'Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.',
+      );
     }
 
     for (const handler of this.beforeFooterPrint) {
@@ -603,7 +620,7 @@ export default class DiagnosticsPrinter extends Error {
     }
 
     if (filteredCount > 0) {
-      str += formatAnsi.brightBlack(` (${filteredCount} filtered)`);
+      str += `<brightBlack> (${filteredCount} filtered)</brightBlack>`;
     }
 
     reporter.error(str);

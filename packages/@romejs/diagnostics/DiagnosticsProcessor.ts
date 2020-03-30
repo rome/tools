@@ -131,7 +131,9 @@ export default class DiagnosticsProcessor {
 
   doesMatchFilter(diag: Diagnostic): boolean {
     for (const suppression of this.suppressions) {
-      const targetLine = add(suppression.loc.end.line, 1);
+      const targetLine = suppression.type === 'current'
+        ? suppression.loc.end.line : add(suppression.loc.end.line, 1);
+
       if (diag.location.filename !== undefined && diag.location.start !==
       undefined && diag.location.filename === suppression.loc.filename &&
         diag.location.start.line === targetLine) {

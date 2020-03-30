@@ -65,7 +65,7 @@ function isClassExtendsClause(node: AnyNode, parent: AnyNode): boolean {
   );
 }
 
-const parens: Map<AnyNode['type'], // rome-suppress lint/noExplicitAny
+const parens: Map<AnyNode['type'], // rome-suppress-next-line lint/noExplicitAny
 (node: any, parent: AnyNode, printStack: Array<AnyNode>) => boolean> = new Map();
 export default parens;
 

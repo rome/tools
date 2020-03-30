@@ -204,7 +204,7 @@ export class WebServer {
       if (typeof arg === 'string') {
         return escapeMarkup(arg);
       } else {
-        return prettyFormat(arg, {escapeMarkup: true, color: true});
+        return prettyFormat(arg, {markup: true});
       }
     }).join(' ');
 

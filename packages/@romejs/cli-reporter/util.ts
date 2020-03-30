@@ -6,11 +6,11 @@
  */
 
 import prettyFormat from '@romejs/pretty-format';
-import {escapeMarkup} from '@romejs/string-markup';
 import {ReporterProgress} from './types';
 
 const formatOpts = {
   maxDepth: 5,
+  markup: true,
 };
 
 export function interpolate(msg: string, args: Array<unknown>): string {
@@ -25,7 +25,7 @@ export function interpolate(msg: string, args: Array<unknown>): string {
   if (argIndex < args.length) {
     interpolated += ' ';
     interpolated += args.slice(argIndex).map((arg) =>
-      escapeMarkup(prettyFormat(arg, formatOpts))
+      prettyFormat(arg, formatOpts)
     ).join(' ');
   }
 

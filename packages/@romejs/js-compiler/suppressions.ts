@@ -10,10 +10,21 @@ import {
   DiagnosticSuppressions,
   Diagnostics,
   descriptions,
+  DiagnosticSuppressionType,
 } from '@romejs/diagnostics';
+import {Dict} from '@romejs/typescript-helpers';
 
-const SUPPRESSION_START = 'rome-suppress';
-const PREFIX_MISTAKES = ['@rome-suppress', 'rome-ignore', '@rome-ignore'];
+const SUPPRESSION_NEXT_LINE_START = 'rome-suppress-next-line';
+const SUPPRESSION_CURRENT_LINE_START = 'rome-suppress-current-line';
+
+const SUPPRESSION_PREFIX_MISTAKES: Dict<string> = {
+  'rome-suppress': SUPPRESSION_NEXT_LINE_START,
+  '@rome-suppress': SUPPRESSION_NEXT_LINE_START,
+  'rome-ignore': SUPPRESSION_NEXT_LINE_START,
+  '@rome-ignore': SUPPRESSION_NEXT_LINE_START,
+  '@rome-suppression-next-line': SUPPRESSION_NEXT_LINE_START,
+  '@rome-suppression-current-line': SUPPRESSION_CURRENT_LINE_START,
+};
 
 type ExtractedSuppressions = {
   suppressions: DiagnosticSuppressions;
@@ -39,13 +50,26 @@ function extractSuppressionsFromComment(
   });
 
   for (const line of cleanLines) {
-    if (!line.startsWith(SUPPRESSION_START)) {
-      for (const prefix of PREFIX_MISTAKES) {
+    // Find suppression start
+    let suppressionType: undefined | DiagnosticSuppressionType;
+    let matchedPrefix: undefined | string;
+    if (line.startsWith(SUPPRESSION_CURRENT_LINE_START)) {
+      matchedPrefix = SUPPRESSION_CURRENT_LINE_START;
+      suppressionType = 'current';
+    }
+    if (line.startsWith(SUPPRESSION_NEXT_LINE_START)) {
+      matchedPrefix = SUPPRESSION_NEXT_LINE_START;
+      suppressionType = 'next';
+    }
+
+    if (suppressionType === undefined || matchedPrefix === undefined) {
+      for (const prefix in SUPPRESSION_PREFIX_MISTAKES) {
+        const suggestion = SUPPRESSION_PREFIX_MISTAKES[prefix];
         if (line.startsWith(prefix)) {
           diagnostics.push({
             description: descriptions.SUPPRESSIONS.PREFIX_TYPO(
               prefix,
-              SUPPRESSION_START,
+              suggestion,
             ),
             location: loc,
           });
@@ -54,7 +78,16 @@ function extractSuppressionsFromComment(
       continue;
     }
 
-    const categories = line.slice(SUPPRESSION_START.length).trim().split(' ');
+    const lineWithoutPrefix = line.slice(matchedPrefix.length);
+    if (lineWithoutPrefix[0] !== ' ') {
+      diagnostics.push({
+        description: descriptions.SUPPRESSIONS.MISSING_SPACE,
+        location: loc,
+      });
+      continue;
+    }
+
+    const categories = lineWithoutPrefix.trim().split(' ');
     const cleanCategories = categories.map((category) => category.trim());
 
     for (let category of cleanCategories) {
@@ -78,6 +111,7 @@ function extractSuppressionsFromComment(
         suppressedCategories.add(category);
 
         suppressions.push({
+          type: suppressionType,
           category,
           loc,
         });

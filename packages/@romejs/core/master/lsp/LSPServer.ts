@@ -36,10 +36,7 @@ import {
 import Linter from '../linter/Linter';
 import MasterRequest from '../MasterRequest';
 import {DEFAULT_CLIENT_REQUEST_FLAGS} from '@romejs/core/common/types/client';
-import stringDiff, {
-  Diffs,
-  constants as diffConstants,
-} from '@romejs/string-diff';
+import stringDiff, {Diffs, diffConstants} from '@romejs/string-diff';
 import {JSONObject, JSONPropertyValue} from '@romejs/codec-json';
 import {
   ReporterProgress,

@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {stripAnsi} from './format';
-import {pattern} from './regex';
+import {stripAnsi, pattern} from './ansi';
 
 const startRegex = new RegExp(`^${pattern}`);
 
@@ -115,7 +114,6 @@ export function splitAnsiLines(input: string, maxWidth?: number): Array<string> 
     // Don't allow spaces at the beginning of lines
     if (char === ' ' && column === 0) {
       //index++;
-
       //continue;
     }
 
@@ -154,4 +152,23 @@ export function splitAnsiLines(input: string, maxWidth?: number): Array<string> 
   }
 
   return lines;
+}
+
+export function lineWrapAnsi(
+  str: string,
+  allowedWidth: number,
+  indent: number,
+): string {
+  if (stripAnsi(str).length < allowedWidth) {
+    return str;
+  }
+
+  const lines = splitAnsiLines(str, allowedWidth);
+  let wrapped = String(lines.shift());
+
+  for (const line of lines) {
+    wrapped += `\n${' '.repeat(indent)}${line}`;
+  }
+
+  return wrapped;
 }

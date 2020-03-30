@@ -5,8 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {isTagChar} from './parse';
+import {isTagStartChar} from './parse';
 import {coerce0} from '@romejs/ob1';
+import {Dict} from '@romejs/typescript-helpers';
+import {MarkupTagName} from './types';
+import {isEscaped} from '@romejs/parser-core';
 
 // A tagged template literal helper that will escape all interpolated strings, ensuring only markup works
 export function markup(
@@ -49,12 +52,39 @@ export function escapeMarkup(input: string): string {
   let escaped = '';
   for (let i = 0; i < input.length; i++) {
     const char = input[i];
+    const isLast = i == input.length - 1;
 
-    if (isTagChar(coerce0(i), input)) {
+    // Escape all <
+    if (isTagStartChar(coerce0(i), input)) {
       escaped += '\\<';
     } else {
+      // If this is the final character and we're a slash that is not escaped, ignore it.
+      // We could have a tag after the end of this string that would be broken.
+      if (isLast && char === '\\' && !isEscaped(coerce0(i - 1), input)) {
+        continue;
+      }
+
       escaped += char;
     }
   }
   return escaped;
+}
+
+export function markupTag(
+  tagName: MarkupTagName,
+  text: string,
+  attrs?: Dict<string | number>,
+): string {
+  let ret = `<${tagName}`;
+
+  if (attrs !== undefined) {
+    for (const key in attrs) {
+      const value = attrs[key];
+      ret += markup` ${key}="${String(value)}"`;
+    }
+  }
+
+  ret += `>${text}</${tagName}>`;
+
+  return ret;
 }

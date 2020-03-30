@@ -44,7 +44,7 @@ type HalfMatch = undefined | [string, string, string, string, string];
 const DIFF_DELETE: -1 = -1;
 const DIFF_INSERT: 1 = 1;
 const DIFF_EQUAL: 0 = 0;
-export const constants = {
+export const diffConstants = {
   DELETE: DIFF_DELETE,
   EQUAL: DIFF_EQUAL,
   ADD: DIFF_INSERT,

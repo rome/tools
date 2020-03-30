@@ -31,7 +31,7 @@ import {commandCategories} from '@romejs/core/commands';
 import {writeFile} from '@romejs/fs';
 import fs = require('fs');
 
-import {stripAnsi} from '@romejs/string-ansi';
+import {stripAnsi} from '@romejs/string-markup';
 import {Dict} from '@romejs/typescript-helpers';
 
 type CLIFlags = {

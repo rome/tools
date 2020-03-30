@@ -48,7 +48,7 @@ const removeLocTransform: TransformVisitors = [
 
         // Also remove any `undefined` properties
 
-        // rome-suppress lint/noExplicitAny
+        // rome-suppress-next-line lint/noExplicitAny
         const escaped: any = newNode;
         for (const key in newNode) {
           if (escaped[key] === undefined) {

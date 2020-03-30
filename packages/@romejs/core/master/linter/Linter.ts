@@ -454,8 +454,8 @@ export default class Linter {
         }
       },
 
-      createProgress: () => {
-        return reporter.progress();
+      createProgress: (opts) => {
+        return reporter.progress(opts);
       },
 
       onChanges: ({evictedPaths, changes, totalCount, fixedCount, runner}) => {

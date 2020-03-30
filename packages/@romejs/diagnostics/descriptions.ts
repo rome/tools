@@ -30,7 +30,7 @@ export function createBlessedDiagnosticMessage(
   };
 }
 
-// rome-suppress lint/AEciilnnoptxy;
+// rome-suppress-next-line lint/AEciilnnoptxy;
 type InputMessagesFactory = (...params: Array<any>) => DiagnosticMetadataString;
 
 type InputMessagesCategory = {[key: string]:
@@ -66,11 +66,11 @@ type OutputMessages<Input extends InputMessages> = { [Key in keyof Input]: Outpu
 function createMessages<Input extends InputMessages>(
   messages: Input,
 ): OutputMessages<Input> {
-  // rome-suppress lint/noExplicitAny
+  // rome-suppress-next-line lint/noExplicitAny
   const out: OutputMessages<Input> = ({} as any);
 
   for (const categoryName in messages) {
-    // rome-suppress lint/noExplicitAny
+    // rome-suppress-next-line lint/noExplicitAny
     const category: OutputMessagesCategory<any> = {};
     out[categoryName] = category;
 
@@ -83,7 +83,7 @@ function createMessages<Input extends InputMessages>(
           message: createBlessedDiagnosticMessage(value),
         };
       } else if (typeof value === 'function') {
-        // rome-suppress lint/noExplicitAny
+        // rome-suppress-next-line lint/noExplicitAny
         const callback: InputMessagesFactory = (value as any);
 
         category[key] = function(...params) {
@@ -94,7 +94,7 @@ function createMessages<Input extends InputMessages>(
           };
         };
       } else {
-        // rome-suppress lint/noExplicitAny
+        // rome-suppress-next-line lint/noExplicitAny
         const {message, ...obj} = (value as any);
         category[key] = {
           ...obj,
@@ -583,9 +583,16 @@ export const descriptions = createMessages({
         message: markup`Expected to close ${expected} but found ${got}`,
       }),
 
-    UNCLOSED_TAG: (tagName: string) =>
+    UNCLOSED_TAG: (tagName: string, openLocation: DiagnosticLocation) =>
       ({
         message: markup`Unclosed ${tagName} tag`,
+        advice: [
+          {type: 'log', category: 'info', message: 'Tag started here'},
+          {
+            type: 'frame',
+            location: openLocation,
+          },
+        ],
       }),
 
     INVALID_ATTRIBUTE_NAME_FOR_TAG: (tagName: string, attributeName: string) =>
@@ -621,6 +628,11 @@ export const descriptions = createMessages({
     UNUSED: {
       message: 'Unused suppression. Did not hide any errors.',
       category: 'suppressions/unused',
+    },
+
+    MISSING_SPACE: {
+      category: 'suppressions/missingSpace',
+      message: 'Missing space between prefix and suppression categories',
     },
 
     PREFIX_TYPO: (prefix: string, suggestion: string) =>

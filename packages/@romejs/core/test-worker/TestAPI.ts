@@ -26,10 +26,6 @@ type SyncThrower = () => void;
 
 type ExpectedError = undefined | string | RegExp | Class<Error>;
 
-function removeCRLF(str: string): string {
-  return str.replace(/\r/g, '');
-}
-
 function formatExpectedError(expected: ExpectedError): string {
   if (typeof expected === 'string') {
     return JSON.stringify(expected);
@@ -67,16 +63,6 @@ function matchExpectedError(error: Error, expected: ExpectedError): boolean {
 }
 
 export type OnTimeout = (time: number) => void;
-
-const TRUNCATION_MATCH_LIMIT = 500;
-
-function maybeTruncate(str: string, noTruncate: boolean): string {
-  if (noTruncate || str.length < TRUNCATION_MATCH_LIMIT) {
-    return str;
-  } else {
-    return `${str.slice(0, TRUNCATION_MATCH_LIMIT)}...`;
-  }
-}
 
 export default class TestAPI {
   constructor(
@@ -149,19 +135,6 @@ export default class TestAPI {
       receivedFormat = prettyFormat(received);
     }
 
-    const expectedFormatCode = maybeTruncate(
-      expectedFormat,
-      this.options.verboseDiagnostics,
-    );
-    const receivedFormatCode = maybeTruncate(
-      receivedFormat,
-      this.options.verboseDiagnostics,
-    );
-    const hasTruncated = expectedFormatCode !== expectedFormat ||
-    receivedFormatCode !== receivedFormat;
-    const hasAllTruncated = expectedFormatCode !== expectedFormat &&
-      receivedFormatCode !== receivedFormat;
-
     const advice: DiagnosticAdvice = [];
 
     if (expectedFormat === receivedFormat) {
@@ -174,7 +147,7 @@ export default class TestAPI {
 
       advice.push({
         type: 'code',
-        code: expectedFormatCode,
+        code: expectedFormat,
       });
 
       if (visualMethod !== undefined) {
@@ -185,65 +158,32 @@ export default class TestAPI {
         });
       }
     } else {
-      if (expectedFormat.trim() === receivedFormat.trim()) {
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: 'Only difference is leading and trailing whitespace',
-        });
-      }
-
-      const expectedFormatNoCRLF = removeCRLF(expectedFormat);
-      const receivedFormatNoCRLF = removeCRLF(receivedFormat);
-      if (expectedFormat === receivedFormatNoCRLF) {
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: 'Identical except the received uses CRLF newlines, while the expected does not',
-        });
-      }
-      if (receivedFormat === expectedFormatNoCRLF) {
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: 'Identical except the expected uses CRLF newlines, while the received does not',
-        });
-      }
-
-      if (!hasAllTruncated) {
-        // TODO detect newlines
-
-        // If there was no truncation then display the full code of both values
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: `Expected to receive`,
-        });
-
-        advice.push({
-          type: 'code',
-          code: expectedFormatCode,
-        });
-
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: `But got`,
-        });
-
-        advice.push({
-          type: 'code',
-          code: receivedFormatCode,
-        });
-      }
-
-      // Produce a diff to better visualize differences
-
-      // TODO what about truncation...?
       advice.push({
         type: 'log',
         category: 'info',
-        message: `Diff`,
+        message: `Expected to receive`,
+      });
+
+      advice.push({
+        type: 'code',
+        code: expectedFormat,
+      });
+
+      advice.push({
+        type: 'log',
+        category: 'info',
+        message: `But got`,
+      });
+
+      advice.push({
+        type: 'code',
+        code: receivedFormat,
+      });
+
+      advice.push({
+        type: 'log',
+        category: 'info',
+        message: 'Diff',
       });
 
       advice.push({
@@ -251,23 +191,8 @@ export default class TestAPI {
         diff: diff(expectedFormat, receivedFormat),
         legend: {
           add: receivedAlias ? receivedAlias : 'What we received',
-          delete: expectedAlias ? expectedAlias : 'What we expected<',
+          delete: expectedAlias ? expectedAlias : 'What we expected',
         },
-      });
-    }
-
-    // If there was truncation then warn
-    if (hasAllTruncated) {
-      advice.push({
-        type: 'log',
-        category: 'info',
-        message: 'Add the --verbose-diagnostics flag to show the values being compared',
-      });
-    } else if (hasTruncated) {
-      advice.push({
-        type: 'log',
-        category: 'info',
-        message: 'Some values have been truncated for being too long, add the --verbose-diagnostics flag to disable truncation',
       });
     }
 

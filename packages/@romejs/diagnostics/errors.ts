@@ -6,8 +6,7 @@
  */
 
 import {Diagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
-import {escapeMarkup} from '@romejs/string-markup';
-import {stripAnsi} from '@romejs/string-ansi';
+import {escapeMarkup, stripAnsi} from '@romejs/string-markup';
 import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
 import {Diagnostic, DiagnosticSuppressions} from './types';
 

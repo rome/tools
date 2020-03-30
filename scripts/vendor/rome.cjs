@@ -52120,7 +52120,7 @@ function ___R$project$rome$$romejs$js$generator$index_ts$generateJS(
   }
 
   // project-rome/@romejs/js-compiler/suppressions.ts
-const ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$SUPPRESSION_START = 'rome-suppress';
+const ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$SUPPRESSION_START = 'rome-suppress-next-line';
   const ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$PREFIX_MISTAKES = ['@rome-suppress', 'rome-ignore', '@rome-ignore'];
 
   function ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$extractSuppressionsFromComment(

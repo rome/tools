@@ -9,6 +9,10 @@ import {
   MarkupFormatOptions,
   markupToAnsi,
   stripMarkupTags,
+  markupTag,
+  ansiEscapes,
+  stripAnsi,
+  lineWrapAnsi,
 } from '@romejs/string-markup';
 import {
   ReporterProgress,
@@ -21,14 +25,7 @@ import {
 import {humanizeNumber, removeSuffix} from '@romejs/string-utils';
 import Progress from './Progress';
 import {interpolate} from './util';
-import {
-  formatAnsi,
-  rightPad,
-  escapes,
-  hasAnsiColor,
-  stripAnsi,
-  splitAnsiLines,
-} from '@romejs/string-ansi';
+
 import prettyFormat from '@romejs/pretty-format';
 import stream = require('stream');
 
@@ -36,13 +33,15 @@ import {CWD_PATH} from '@romejs/path';
 import {Event} from '@romejs/events';
 import readline = require('readline');
 
+import {MarkupTagName} from '@romejs/string-markup/types';
+
 type ListOptions = {
   reverse?: boolean;
   truncate?: number;
   ordered?: boolean;
 };
 
-// rome-suppress lint/noExplicitAny
+// rome-suppress-next-line lint/noExplicitAny
 type WrapperFactory = <T extends (...args: Array<any>) => any>(callback: T) => T;
 
 export type ReporterOptions = {
@@ -70,7 +69,7 @@ export type LogCategoryOptions =
   & LogOptions
   & {
     prefix: string;
-    format: (str: string) => string;
+    markupTag: MarkupTagName;
     suffix?: string;
   };
 
@@ -300,8 +299,7 @@ export default class Reporter {
     }
   }
 
-  getMessagePrefix(stream: ReporterStream): string {
-    stream;
+  getMessagePrefix(): string {
     return '';
   }
 
@@ -310,7 +308,7 @@ export default class Reporter {
       ? tty : opts.nonTTY;
 
     if (opts.noPrefix !== true) {
-      msg = this.getMessagePrefix(stream) + msg;
+      msg = this.getMessagePrefix() + msg;
     }
 
     // Don't indent if there is no indent, or the message is empty
@@ -418,8 +416,8 @@ export default class Reporter {
         const normalized = line === '' ? def : line;
 
         // Replace initial prompt
-        this.writeAll(escapes.cursorUp());
-        this.writeAll(escapes.eraseLine);
+        this.writeAll(ansiEscapes.cursorUp());
+        this.writeAll(ansiEscapes.eraseLine);
 
         let prompt = origPrompt;
         prompt += ': ';
@@ -573,14 +571,14 @@ export default class Reporter {
 
     const cleanup = () => {
       for (let i = 0; i < optionCount; i++) {
-        this.writeAll(escapes.eraseLine);
+        this.writeAll(ansiEscapes.eraseLine);
 
         // Don't move above the top line
         if (i !== optionCount - 1) {
-          this.writeAll(escapes.cursorUp());
+          this.writeAll(ansiEscapes.cursorUp());
         }
       }
-      this.writeAll(escapes.cursorTo(0));
+      this.writeAll(ansiEscapes.cursorTo(0));
     };
 
     let onkeypress = undefined;
@@ -602,12 +600,12 @@ export default class Reporter {
         cleanup();
 
         // Remove initial help message
-        this.writeAll(escapes.cursorUp());
-        this.writeAll(escapes.eraseLine);
+        this.writeAll(ansiEscapes.cursorUp());
+        this.writeAll(ansiEscapes.eraseLine);
 
         // Remove initial log message
-        this.writeAll(escapes.cursorUp());
-        this.writeAll(escapes.eraseLine);
+        this.writeAll(ansiEscapes.cursorUp());
+        this.writeAll(ansiEscapes.eraseLine);
 
         prompt += ': ';
         if (selectedOptions.size > 0) {
@@ -794,7 +792,7 @@ export default class Reporter {
   table(head: Array<string>, rawBody: Array<Array<string | number>>) {
     // Format the head, just treat it like another row
     head = head.map((field: string): string =>
-      formatAnsi.bold(formatAnsi.underline(field))
+      markupTag('emphasis', markupTag('underline', field))
     );
 
     // Humanize all number fields
@@ -837,15 +835,13 @@ export default class Reporter {
   }
 
   inspect(value: unknown) {
-    for (const stream of this.getStreams(false)) {
-      let formatted = value;
+    let formatted = value;
 
-      if (typeof formatted !== 'number' && typeof formatted !== 'string') {
-        formatted = prettyFormat(formatted, {color: stream.format === 'ansi'});
-      }
-
-      this.logOneNoMarkup(stream, String(formatted));
+    if (typeof formatted !== 'number' && typeof formatted !== 'string') {
+      formatted = prettyFormat(formatted, {markup: true});
     }
+
+    this.logAll(String(formatted));
   }
 
   //# ESCAPE HATCHES
@@ -856,8 +852,8 @@ export default class Reporter {
   }
 
   clearLineSpecific(stream: ReporterStream) {
-    stream.write(escapes.eraseLine);
-    stream.write(escapes.cursorTo(0));
+    stream.write(ansiEscapes.eraseLine);
+    stream.write(ansiEscapes.cursorTo(0));
   }
 
   writeAll(msg: string, opts: LogOptions = {}) {
@@ -889,7 +885,7 @@ export default class Reporter {
   clear() {
     for (const stream of this.getStreams(false)) {
       if (stream.format === 'ansi') {
-        stream.write(escapes.clearScreen);
+        stream.write(ansiEscapes.clearScreen);
       }
     }
     this.hasClearScreen = true;
@@ -957,9 +953,9 @@ export default class Reporter {
       if (clear && this.hasClearScreen) {
         for (const stream of this.getStreams(false)) {
           if (stream.format === 'ansi') {
-            stream.write(escapes.cursorTo(0));
-            stream.write(escapes.cursorUp());
-            stream.write(escapes.eraseLine);
+            stream.write(ansiEscapes.cursorTo(0));
+            stream.write(ansiEscapes.cursorUp());
+            stream.write(ansiEscapes.eraseLine);
           }
         }
       }
@@ -1017,12 +1013,6 @@ export default class Reporter {
     }
   }
 
-  logAllNoMarkup(msg: string, opts: LogOptions = {}) {
-    for (const stream of this.getStreams(opts.stderr)) {
-      this.logOneNoMarkup(stream, msg, opts);
-    }
-  }
-
   logOne(stream: ReporterStream, tty: string, opts: LogOptions = {}) {
     const msg = stream.format !== 'none' || opts.nonTTY === undefined
       ? tty : opts.nonTTY;
@@ -1042,48 +1032,41 @@ export default class Reporter {
     this.writeSpecific(stream, msg, opts);
   }
 
-  logAllWithCategory(msg: string, args: Array<unknown>, opts: LogCategoryOptions) {
+  logAllWithCategory(
+    rawInner: string,
+    args: Array<unknown>,
+    opts: LogCategoryOptions,
+  ) {
+    const prefix = markupTag('emphasis', markupTag(
+      opts.markupTag,
+      this.getMessagePrefix() + opts.prefix,
+    ));
+    const inner = markupTag(opts.markupTag, rawInner);
+    const suffix = opts.suffix === undefined ? '' : markupTag(
+      'emphasis',
+      markupTag(opts.markupTag, opts.suffix),
+    );
+
     for (const stream of this.getStreams(opts.stderr)) {
-      const prefix = this.getMessagePrefix(stream) + opts.prefix;
+      const prefixMarkup = this.markupify(stream, prefix);
+      const innerMarkup = this.markupify(stream, inner);
+      const suffixMarkup = this.markupify(stream, suffix);
 
       // Format with string-markup, we only do the first message rather than the interpolated string so you can pass in any data and not have to worry about escaping it
-      const msgMarkup = this.markupify(stream, msg);
+      const formatted = prefixMarkup + innerMarkup + suffixMarkup;
 
-      // Interpolated and line wrapped string
-      let inner = interpolate(msgMarkup, args);
+      // Interpolate %s
+      const interpolated = interpolate(formatted, args);
 
-      // Word wrap - we don't use getColumns() here as we don't want to line wrap for a non-tty
+      // Line wrap
+      let wrapped = interpolated;
       if (stream.format === 'ansi') {
-        const width = stream.columns;
-        const allowedWidth = width - prefix.length - INDENT.length *
-        this.indentLevel;
-        if (stripAnsi(inner).length > allowedWidth) {
-          const lines = splitAnsiLines(inner, allowedWidth);
-          inner = String(lines.shift());
-
-          for (const line of lines) {
-            inner += `\n${' '.repeat(prefix.length)}${line}`;
-          }
-        }
+        const allowedWidth = stream.columns - INDENT.length * this.indentLevel;
+        const indent = stripAnsi(prefixMarkup).length;
+        wrapped = lineWrapAnsi(interpolated, allowedWidth, indent);
       }
 
-      // If the message contains any color then we shouldn't format it, so consider it outside the prefix (which will always be colored)
-      let outer = '';
-      if (hasAnsiColor(inner)) {
-        outer = inner;
-        inner = prefix;
-      }
-
-      // Build the TTY and non-TTY variants
-      let tty = formatAnsi.bold(opts.format(prefix)) + opts.format(inner) + outer;
-      let nonTTY = prefix + inner + outer;
-      if (opts.suffix !== undefined) {
-        tty += opts.format(formatAnsi.bold(opts.suffix));
-        nonTTY += opts.suffix;
-      }
-
-      this.logOneNoMarkup(stream, tty, {
-        nonTTY,
+      this.logOneNoMarkup(stream, wrapped, {
         // No prefix as we added it ourselves at the beginning, this is so the indentation is correct when line wrapped
         noPrefix: true,
         ...opts,
@@ -1094,13 +1077,13 @@ export default class Reporter {
   success(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
       prefix: '\u2714 ',
-      format: formatAnsi.green,
+      markupTag: 'green',
     });
   }
 
   error(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
-      format: formatAnsi.red,
+      markupTag: 'red',
       prefix: '\u2716 ',
       stderr: true,
     });
@@ -1113,7 +1096,7 @@ export default class Reporter {
   info(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
       prefix: '\u2139 ',
-      format: formatAnsi.blue,
+      markupTag: 'blue',
     });
   }
 
@@ -1121,7 +1104,7 @@ export default class Reporter {
     this.logAllWithCategory(msg, args, {
       prefix: '\u26a0 ',
       suffix: ' \u26a0',
-      format: formatAnsi.yellow,
+      markupTag: 'yellow',
       stderr: true,
     });
   }
@@ -1135,16 +1118,14 @@ export default class Reporter {
   verboseForce(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
       prefix: '\u26a1 ',
-      format: formatAnsi.brightBlack,
+      markupTag: 'brightBlack',
     });
   }
 
   command(command: string) {
-    for (const stream of this.getStreams(false)) {
-      this.logOneNoMarkup(stream, formatAnsi.dim(`$ ${command}`), {
-        nonTTY: `$ ${command}`,
-      });
-    }
+    this.logAll(`<dim>$ ${command}</dim>`, {
+      nonTTY: `$ ${command}`,
+    });
   }
 
   //# LISTS
@@ -1193,7 +1174,8 @@ export default class Reporter {
 
       for (const [index, item] of tuples) {
         callback(item, (str) => {
-          const num: string = rightPad(`${humanizeNumber(index + 1)}.`, numLen);
+          const num: string =
+            `<pad count="${numLen}" dir="right">${humanizeNumber(index + 1)}.</pad>`;
           this.logAll(`${indent}<dim>${num}</dim> ${str}`);
         });
       }
@@ -1263,7 +1245,6 @@ export default class Reporter {
     const progress: ReporterProgress = {
       render() {
         // Don't do anything
-
         // This is called when columns have updated and we want to force a rerender
       },
 

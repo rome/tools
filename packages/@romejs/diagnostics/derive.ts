@@ -12,7 +12,7 @@ import {
   DiagnosticOrigin,
 } from './types';
 import {Position} from '@romejs/parser-core';
-import {escapeMarkup} from '@romejs/string-markup';
+import {escapeMarkup, markup} from '@romejs/string-markup';
 import {
   getErrorStructure,
   ErrorFrames,
@@ -66,11 +66,11 @@ export function getDiagnosticHeader(
   }
 
   if (start === undefined) {
-    return `<filelink target="${filename}" />`;
+    return markup`<filelink target="${filename}" />`;
   }
 
   return (
-    `<filelink target="${filename}" line="${start.line}" column="${start.column}" />`
+    markup`<filelink target="${filename}" line="${start.line}" column="${start.column}" />`
   );
 }
 

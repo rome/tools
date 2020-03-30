@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter, ReporterStream, ReporterOptions} from '@romejs/cli-reporter';
+import {Reporter, ReporterOptions} from '@romejs/cli-reporter';
 
 export default class Logger extends Reporter {
   constructor(name: string, isEnabled: () => boolean, opts: ReporterOptions) {
@@ -19,11 +19,7 @@ export default class Logger extends Reporter {
 
   _loggerName: string;
 
-  getMessagePrefix(stream: ReporterStream) {
-    if (stream.format === 'none') {
-      return `[${this._loggerName} ${process.pid}] `;
-    } else {
-      return `<dim>[${this._loggerName} ${process.pid}]</dim> `;
-    }
+  getMessagePrefix() {
+    return `<dim>[${this._loggerName} ${process.pid}]</dim> `;
   }
 }

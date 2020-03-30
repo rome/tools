@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {formatAnsi, escapes} from '@romejs/string-ansi';
 import {humanizeNumber, humanizeTime} from '@romejs/string-utils';
 import {Reporter} from '@romejs/cli-reporter';
 import {
@@ -14,6 +13,7 @@ import {
   ReporterProgressOptions,
 } from './types';
 import ProgressBase from './ProgressBase';
+import {markupTag, ansiEscapes} from '@romejs/string-markup';
 
 type BoldRanges = Array<[number, number]>;
 
@@ -250,7 +250,7 @@ export default class Progress extends ProgressBase {
   splitCharacters(str: string, boldRanges: BoldRanges): SplitBar {
     return str.split('').map((char, i) => {
       if (this.isBoldCharacter(i, boldRanges)) {
-        return [i, formatAnsi.bold(char)];
+        return [i, markupTag('emphasis', char)];
       } else {
         return [i, char];
       }
@@ -265,9 +265,9 @@ export default class Progress extends ProgressBase {
 
       if (isBounce) {
         if (this.paused) {
-          fullBar += formatAnsi.inverse(char);
+          fullBar += markupTag('inverse', char);
         } else {
-          fullBar += formatAnsi.white(formatAnsi.bgYellow(char));
+          fullBar += markupTag('white', markupTag('bgYellow', char));
         }
       } else {
         fullBar += char;
@@ -284,9 +284,9 @@ export default class Progress extends ProgressBase {
     for (const [i, char] of bar) {
       if (i < completeLength) {
         if (this.paused) {
-          fullBar += formatAnsi.inverse(char);
+          fullBar += markupTag('inverse', char);
         } else {
-          fullBar += formatAnsi.white(formatAnsi.bgGreen(char));
+          fullBar += markupTag('white', markupTag('bgGreen', char));
         }
       } else {
         fullBar += char;
@@ -401,8 +401,8 @@ export default class Progress extends ProgressBase {
 
     for (const stream of this.reporter.getStreams(false)) {
       if (stream.format === 'ansi') {
-        stream.write(escapes.cursorTo(0));
-        stream.write(this.buildBar(stream));
+        stream.write(ansiEscapes.cursorTo(0));
+        stream.write(this.reporter.markupify(stream, this.buildBar(stream)));
       }
     }
   }

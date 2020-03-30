@@ -15,7 +15,7 @@ import {Dict} from '@romejs/typescript-helpers';
 import {writeFile, exists} from '@romejs/fs';
 import {VERSION} from '../common/constants';
 
-// rome-suppress lint/noExplicitAny
+// rome-suppress-next-line lint/noExplicitAny
 export const localCommands: Map<string, LocalCommand<any>> = new Map();
 
 type InitFlags = {defaults: boolean};

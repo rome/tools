@@ -11,6 +11,7 @@ import {
   isAlpha,
   isEscaped,
   TokenValues,
+  Position,
 } from '@romejs/parser-core';
 import {
   Tokens,
@@ -18,7 +19,7 @@ import {
   TagNode,
   ChildNode,
   Children,
-  TagName,
+  MarkupTagName,
 } from './types';
 import {inc, Number0, add, get0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
@@ -26,6 +27,7 @@ import {descriptions} from '@romejs/diagnostics';
 const globalAttributes: Array<string> = ['emphasis', 'dim'];
 
 const tags: Map<string, Array<string>> = new Map();
+tags.set('pad', ['dir', 'char', 'count']);
 tags.set('emphasis', []);
 tags.set('number', ['approx', 'pluralSuffix', 'singularSuffix']);
 tags.set('grammarNumber', ['plural', 'singular', 'none']);
@@ -82,13 +84,12 @@ function isStringValueChar(char: string, index: Number0, input: string): boolean
 }
 
 function isTextChar(char: string, index: Number0, input: string): boolean {
-  return !isTagChar(index, input);
+  return !isTagStartChar(index, input);
 }
 
-export function isTagChar(index: Number0, input: string): boolean {
+export function isTagStartChar(index: Number0, input: string): boolean {
   const i = get0(index);
-  return input[i] === '<' && !isEscaped(index, input) &&
-    (isAlpha(input[i + 1]) || input[i + 1] === '/');
+  return input[i] === '<' && !isEscaped(index, input);
 }
 
 type State = {inTagHead: boolean};
@@ -171,7 +172,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
         }
       }
 
-      if (isTagChar(index, input)) {
+      if (isTagStartChar(index, input)) {
         return {
           state: {
             inTagHead: true,
@@ -186,7 +187,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
         state,
         token: {
           type: 'Text',
-          value: normalizeTextValue(value),
+          value: unescapeTextValue(value),
           start: index,
           end,
         },
@@ -197,7 +198,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
       return this.matchToken('Less') && this.lookahead().token.type === 'Slash';
     }
 
-    parseTag(): TagNode {
+    parseTag(headStart: Position): TagNode {
       const nameToken = this.expectToken('Word');
       const rawName = nameToken.value;
 
@@ -209,8 +210,8 @@ const createStringMarkupParser = createParser((ParserCore) =>
         });
       }
 
-      // rome-suppress lint/noExplicitAny
-      const tagName: TagName = (rawName as any);
+      // rome-suppress-next-line lint/noExplicitAny
+      const tagName: MarkupTagName = (rawName as any);
       const attributes: TagAttributes = new Map();
       const children: Children = [];
       let selfClosing = false;
@@ -262,6 +263,8 @@ const createStringMarkupParser = createParser((ParserCore) =>
 
       this.expectToken('Greater');
 
+      const headEnd = this.getPosition();
+
       // Verify closing tag
       if (!selfClosing) {
         while ( // Build children
@@ -271,7 +274,10 @@ const createStringMarkupParser = createParser((ParserCore) =>
 
         if (this.matchToken('EOF')) {
           throw this.unexpected({
-            description: descriptions.STRING_MARKUP.UNCLOSED_TAG(tagName),
+            description: descriptions.STRING_MARKUP.UNCLOSED_TAG(
+              tagName,
+              this.finishLocAt(headStart, headEnd),
+            ),
           });
         } else {
           this.expectToken('Less');
@@ -308,6 +314,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
     }
 
     parseChild(): ChildNode {
+      const start = this.getPosition();
       const token = this.getToken();
       this.nextToken();
 
@@ -317,7 +324,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
           value: token.value,
         };
       } else if (token.type === 'Less') {
-        return this.parseTag();
+        return this.parseTag(start);
       } else {
         throw this.unexpected({
           description: descriptions.STRING_MARKUP.UNKNOWN_START,
@@ -343,6 +350,23 @@ export function parseMarkup(input: string) {
   }
 }
 
-function normalizeTextValue(str: string): string {
-  return str.replace(/\\<([a-zA-Z\/])/g, '<$1');
+function unescapeTextValue(str: string): string {
+  let unescaped = '';
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+
+    if (char === '\\') {
+      const nextChar = str[i + 1];
+      if (nextChar === '<') {
+        i++;
+        unescaped += '<';
+        continue;
+      }
+    }
+
+    unescaped += char;
+  }
+
+  return unescaped;
 }
