@@ -281,6 +281,12 @@ export const descriptions = createMessages({
       message: 'Variable declarations using `var` are disallowed, use `let` or `const` instead.',
     },
 
+    NO_SHORTHAND_ARRAY_TYPE: {
+      fixable: true,
+      category: 'lint/noShorthandArrayType',
+      message: 'Use Array<T> instead of shorthand T[]',
+    },
+
     NO_UNSAFE_FINALLY: (type: string) =>
       ({
         category: 'lint/noUnsafeFinally',
