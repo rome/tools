@@ -63,12 +63,12 @@ export default class DependencyOrderer {
     }
   }
 
-  addFile(path: AbsoluteFilePath, ancestry: Array<string>) {
+  addFile(path: AbsoluteFilePath, ancestry: Array<string>): void {
     const node = this.graph.getNode(path);
 
     if (this.visitedNodes.has(node)) {
       this.handleAlreadyVisitedFile(node, path, ancestry);
-      return undefined;
+      return;
     }
 
     this.visitedNodes.add(node);
@@ -130,11 +130,11 @@ export default class DependencyOrderer {
     node: DependencyNode,
     dep: DependencyNode,
     imp: AnalyzeDependencyImportUsageItem,
-  ) {
+  ): void {
     const path = this.possibleCyclePaths.get(dep);
     if (!path) {
       // idk??
-      return undefined;
+      return;
     }
 
     const target = path[path.length - 1];

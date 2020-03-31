@@ -505,6 +505,7 @@ export default class MemoryFileSystem {
         return def;
       }
     }
+    return undefined;
   }
 
   getPartialManifest(def: ManifestDefinition): WorkerPartialManifest {
@@ -514,7 +515,7 @@ export default class MemoryFileSystem {
     };
   }
 
-  addFileToDirectoryListing(path: AbsoluteFilePath) {
+  addFileToDirectoryListing(path: AbsoluteFilePath): void {
     const dirname = path.getParent();
     let listing = this.directoryListings.get(dirname);
     if (listing === undefined) {
@@ -524,7 +525,7 @@ export default class MemoryFileSystem {
     listing.set(path, path);
   }
 
-  handleDeletion(path: AbsoluteFilePath) {
+  handleDeletion(path: AbsoluteFilePath): void {
     // If a folder then evict all children
     const folderInfo = this.directories.get(path);
     if (folderInfo !== undefined) {
@@ -561,10 +562,10 @@ export default class MemoryFileSystem {
     this.deletedFileEvent.send(path);
   }
 
-  handleDeletedHaste(path: AbsoluteFilePath) {
+  handleDeletedHaste(path: AbsoluteFilePath): void {
     const hasteName = this.getHasteName(path);
     if (hasteName === undefined) {
-      return undefined;
+      return;
     }
 
     const projects = this.master.projectManager.getHierarchyFromFilename(path);
@@ -576,7 +577,7 @@ export default class MemoryFileSystem {
     }
   }
 
-  handleDeletedManifest(path: AbsoluteFilePath) {
+  handleDeletedManifest(path: AbsoluteFilePath): void {
     const folder = path.getParent();
     const def = this.manifests.get(folder);
     if (def !== undefined) {
@@ -598,12 +599,14 @@ export default class MemoryFileSystem {
     return changed;
   }
 
-  async waitIfInitializingWatch(projectFolderPath: AbsoluteFilePath) {
+  async waitIfInitializingWatch(
+    projectFolderPath: AbsoluteFilePath,
+  ): Promise<void> {
     // Defer if we're initializing a parent folder
     for (const {promise, path} of this.watchPromises.values()) {
       if (projectFolderPath.isRelativeTo(path)) {
         await promise;
-        return undefined;
+        return;
       }
     }
 

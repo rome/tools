@@ -58,7 +58,7 @@ tt.parenR.updateContext = tt.braceR.updateContext =
   function(parser) {
     if (parser.state.context.length === 1) {
       parser.state.exprAllowed = true;
-      return undefined;
+      return;
     }
 
     let out = parser.state.context.pop();

@@ -211,6 +211,8 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
       branch.add(fn, {maxNewDiagnostics: 0});
       if (branch.hasBranch()) {
         return branch.pickOptional();
+      } else {
+        return undefined;
       }
     }
 
@@ -338,9 +340,9 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
         loc?: SourceLocation;
         index?: Number0;
       },
-    ) {
+    ): void {
       if (this.isLookahead) {
-        return undefined;
+        return;
       }
 
       let maxDiagnostics = this.getLastScope('MAX_NEW_DIAGNOSTICS');

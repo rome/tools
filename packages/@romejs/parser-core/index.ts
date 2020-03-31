@@ -237,6 +237,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
     const token = this.tokenize(index, input);
     if (token !== undefined) {
       return {token, state};
+    } else {
+      return undefined;
     }
   }
 
@@ -542,6 +544,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
   eatToken(type: keyof Tokens): undefined | TokenValues<Tokens> {
     if (this.matchToken(type)) {
       return this.nextToken();
+    } else {
+      return undefined;
     }
   }
 

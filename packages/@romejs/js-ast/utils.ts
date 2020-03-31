@@ -124,6 +124,8 @@ class Builder<Node extends AnyNode> {
   normalize(node: undefined | AnyNode): undefined | Node {
     if (this.is(node)) {
       return node;
+    } else {
+      return undefined;
     }
   }
 

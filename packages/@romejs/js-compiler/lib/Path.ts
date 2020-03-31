@@ -157,6 +157,7 @@ export default class Path {
         }
       }
     }
+    return undefined;
   }
 
   findAncestry(callback: (path: Path) => boolean): undefined | Path {
@@ -165,6 +166,7 @@ export default class Path {
         return path;
       }
     }
+    return undefined;
   }
 
   getChildPath(key: string): Path {
