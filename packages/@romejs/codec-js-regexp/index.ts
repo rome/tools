@@ -458,7 +458,8 @@ export const createRegExpParser = createParser((ParserCore) =>
                 }
 
                 if (targetToken.type === 'Character' && targetToken.value === '>') {
-                  // Skip through all the name tokens
+                  // Skip through all the name tokens including >
+                  skipCount++;
 
                   // This is kinda a hacky solution, and slower than it could be
                   for (let i = 0; i < skipCount; i++) {
