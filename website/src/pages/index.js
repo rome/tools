@@ -88,7 +88,7 @@ function Home() {
               <div className="col col--10 col--offset-1">
                 {[
                   {
-                    title: <>Everything in One</>,
+                    title: <>All Roads Lead to Rome</>,
                     imageUrl: useBaseUrl('img/undraw_mind_map_cwng.svg'),
                     imageAlt: 'Abstract Syntax Tree',
                     description: (
