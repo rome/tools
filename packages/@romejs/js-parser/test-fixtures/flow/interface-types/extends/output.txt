@@ -73,7 +73,7 @@ Program {
         }
         extends: Array [
           FlowInterfaceExtends {
-            id: Identifier {
+            id: ReferenceIdentifier {
               name: 'X'
               loc: Object {
                 filename: 'input.js'
