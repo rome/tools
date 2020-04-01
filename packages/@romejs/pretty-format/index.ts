@@ -65,35 +65,35 @@ export default function prettyFormat(
 
   switch (typeof obj) {
     case 'symbol':
-      {
-        const val = maybeEscapeMarkup(formatSymbol(obj), opts);
-        return opts.markup ? markupTag('green', val) : val;
-      }
+    {
+      const val = maybeEscapeMarkup(formatSymbol(obj), opts);
+      return opts.markup ? markupTag('green', val) : val;
+    }
 
     case 'string':
-      {
-        const val = maybeEscapeMarkup(formatString(obj), opts);
-        return opts.markup ? markupTag('green', val) : val;
-      }
+    {
+      const val = maybeEscapeMarkup(formatString(obj), opts);
+      return opts.markup ? markupTag('green', val) : val;
+    }
 
     case 'bigint':
     case 'number':
-      {
-        const val = formatNumber(obj);
-        return opts.markup ? markupTag('yellow', val) : val;
-      }
+    {
+      const val = formatNumber(obj);
+      return opts.markup ? markupTag('yellow', val) : val;
+    }
 
     case 'boolean':
-      {
-        const val = formatBoolean(obj);
-        return opts.markup ? markupTag('yellow', val) : val;
-      }
+    {
+      const val = formatBoolean(obj);
+      return opts.markup ? markupTag('yellow', val) : val;
+    }
 
     case 'undefined':
-      {
-        const val = formatUndefined();
-        return opts.markup ? markupTag('brightBlack', val) : val;
-      }
+    {
+      const val = formatUndefined();
+      return opts.markup ? markupTag('brightBlack', val) : val;
+    }
 
     case 'function':
       return formatFunction(obj, opts);
@@ -130,7 +130,7 @@ function formatSymbol(val: Symbol): string {
 
 function formatString(val: string): string {
   return escapeString(val, {
-    quote: '\'',
+    quote: "'",
   });
 }
 
@@ -149,7 +149,7 @@ export function formatNumber(val: bigint | number): string {
   } else if (Object.is(val, +Infinity)) {
     return 'Infinity';
   } else {
-    throw new Error('Don\'t know how to format this number');
+    throw new Error("Don't know how to format this number");
   }
 }
 
@@ -181,10 +181,7 @@ function formatFunction(val: Function, opts: FormatOptions): string {
   return formatObject(label, (val as any), opts, []);
 }
 
-function getExtraObjectProps(
-  obj: Objectish,
-  opts: FormatOptions,
-): {
+function getExtraObjectProps(obj: Objectish, opts: FormatOptions): {
   props: Array<string>;
   ignoreKeys: UnknownObject;
 } {
@@ -194,7 +191,8 @@ function getExtraObjectProps(
   if (obj instanceof Map) {
     for (const [key, val] of obj) {
       const formattedKey = typeof key === 'string'
-        ? formatKey(key, opts) : prettyFormat(key, opts);
+        ? formatKey(key, opts)
+        : prettyFormat(key, opts);
       props.push(`${formattedKey} => ${prettyFormat(val, opts)}`);
     }
   } else if (isIterable(obj)) {

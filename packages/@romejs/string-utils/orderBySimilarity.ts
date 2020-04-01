@@ -5,7 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-function getMap<Key, Value>(
+function getMap<
+  Key,
+  Value
+>(
   map: Map<Key, NonNullable<Value>>,
   key: Key,
   defaultValue?: NonNullable<Value>,
@@ -14,7 +17,7 @@ function getMap<Key, Value>(
 
   if (existing === undefined) {
     if (defaultValue === undefined) {
-      throw new Error('Key didn\'t exist and no defaultValue passed');
+      throw new Error("Key didn't exist and no defaultValue passed");
     }
 
     map.set(key, defaultValue);
@@ -60,7 +63,9 @@ export function compareTwoStrings(aStr: string, bStr: string): number {
   for (let i = 0; i < a.length - 1; i++) {
     const bigram = a.substring(i, i + 2);
 
-    const count = firstBigrams.has(bigram) ? getMap(firstBigrams, bigram) + 1 : 1;
+    const count = firstBigrams.has(bigram)
+      ? getMap(firstBigrams, bigram) + 1
+      : 1;
     if (count === undefined) {
       throw new Error('Already used has() above');
     }

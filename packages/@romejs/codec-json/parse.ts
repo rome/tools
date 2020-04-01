@@ -109,8 +109,11 @@ type PathInfo = {
   valueEnd: Position;
 };
 
-export default createParser((ParserCore) =>
-  class JSONParser extends ParserCore<Tokens, void> {
+export default createParser(
+  (ParserCore) => class JSONParser extends ParserCore<
+    Tokens,
+    void
+  > {
     constructor(opts: JSONParserOptions) {
       super(opts, 'parse/json');
       this.options = opts;
@@ -123,7 +126,7 @@ export default createParser((ParserCore) =>
       this.paths = new Map();
       this.pathToComments = new Map();
       this.consumeDiagnosticCategory = opts.consumeDiagnosticCategory ===
-      undefined ? 'parse/json' : opts.consumeDiagnosticCategory;
+        undefined ? 'parse/json' : opts.consumeDiagnosticCategory;
     }
 
     pathToComments: PathToComments;
@@ -184,7 +187,9 @@ export default createParser((ParserCore) =>
 
         // Ensure the comment is closed
         if (this.input[get0(endIndex) - 2] !== '*' ||
-        this.input[get0(endIndex) - 1] !== '/') {
+              this.input[get0(endIndex) -
+                1] !==
+              '/') {
           throw this.unexpected({
             description: descriptions.JSON.UNCLOSED_BLOCK_COMMENT,
             start: this.getPositionFromIndex(endIndex),
@@ -230,7 +235,7 @@ export default createParser((ParserCore) =>
 
           return this.finishValueToken('String', unescaped, end);
 
-        case '\'':
+        case "'":
           throw this.unexpected({
             description: descriptions.JSON.SINGLE_QUOTE_USAGE,
             start: this.getPositionFromIndex(index),
@@ -330,7 +335,8 @@ export default createParser((ParserCore) =>
         }
 
         const keyStart = isFirstProp && firstKeyStart !== undefined
-          ? firstKeyStart : this.getPosition();
+          ? firstKeyStart
+          : this.getPosition();
 
         // Parse the property key
         let key;
@@ -635,7 +641,8 @@ export default createParser((ParserCore) =>
       // Scientific notation
       const nextToken = this.getToken();
       if (nextToken.type === 'Word' && (nextToken.value === 'e' ||
-      nextToken.value === 'E')) {
+            nextToken.value ===
+            'E')) {
         value += 'e';
 
         // Operator
@@ -798,8 +805,8 @@ export default createParser((ParserCore) =>
 
       if (expectSyntaxError) {
         throw new Error(
-          'JSON.parse failed but our custom JSON parser was successful... That doesn\'t smell right',
-        );
+            "JSON.parse failed but our custom JSON parser was successful... That doesn't smell right",
+          );
       }
 
       return res;
@@ -889,5 +896,5 @@ export default createParser((ParserCore) =>
         context,
       };
     }
-  }
+  },
 );

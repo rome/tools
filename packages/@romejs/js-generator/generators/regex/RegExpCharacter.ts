@@ -84,12 +84,10 @@ export default function RegExpCharacter(
 
     default:
       return [
-        verbatim(
-          escapeString(node.value, {
-            json: true,
-            unicodeOnly: true,
-          }),
-        ),
+        verbatim(escapeString(node.value, {
+          json: true,
+          unicodeOnly: true,
+        })),
       ];
   }
 }

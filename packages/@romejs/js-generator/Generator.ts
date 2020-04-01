@@ -96,20 +96,15 @@ function checkTrailingCommentsSameLine(
   let hasNextTrailingCommentOnSameLine = false;
 
   // Lots of refinements...
-  if (
-    nextNode !== undefined &&
-    node.loc !== undefined &&
-    nextNode.loc !== undefined &&
-    nextNode.leadingComments !== undefined
-  ) {
+  if (nextNode !== undefined && node.loc !== undefined && nextNode.loc !==
+      undefined && nextNode.leadingComments !== undefined) {
     const firstNextNodeLeadingComments = nextNode.leadingComments[0];
-    if (
-      firstNextNodeLeadingComments !== undefined &&
-      firstNextNodeLeadingComments.loc !== undefined
-    ) {
+    if (firstNextNodeLeadingComments !== undefined &&
+          firstNextNodeLeadingComments.loc !==
+          undefined) {
       nextNode = firstNextNodeLeadingComments;
-      hasNextTrailingCommentOnSameLine =
-        node.loc.end.line === firstNextNodeLeadingComments.loc.start.line;
+      hasNextTrailingCommentOnSameLine = node.loc.end.line ===
+        firstNextNodeLeadingComments.loc.start.line;
     }
   }
 
@@ -144,11 +139,8 @@ export default class Generator {
       return [];
     }
 
-    if (
-      this.options.typeAnnotations === false &&
-      isTypeNode(node) &&
-      !isTypeExpressionWrapperNode(node)
-    ) {
+    if (this.options.typeAnnotations === false && isTypeNode(node) &&
+        !isTypeExpressionWrapperNode(node)) {
       return [];
     }
 
@@ -180,7 +172,8 @@ export default class Generator {
         ...this.printComments(leadingComments),
         ...this.maybeCommentNewlines(
           node,
-          leadingComments[leadingComments.length - 1],
+          leadingComments[leadingComments.length -
+            1],
           false,
         ),
       ];
@@ -195,9 +188,11 @@ export default class Generator {
     // If there's an empty line between the node and it's trailing comments then keep it
     const trailingComments = this.getComments(false, node);
     if (trailingComments !== undefined) {
-      tokens = tokens.concat(
-        this.maybeCommentNewlines(node, trailingComments[0], true),
-      );
+      tokens = tokens.concat(this.maybeCommentNewlines(
+        node,
+        trailingComments[0],
+        true,
+      ));
     }
     tokens = tokens.concat(this.printComments(trailingComments));
 
@@ -213,8 +208,9 @@ export default class Generator {
   ): GroupToken {
     const groups: GroupToken['groups'] = [];
 
-    let forceBroken =
-      opts.broken.force || (opts.breakOnNewline && n.isMultiLine(parent));
+    let forceBroken = opts.broken.force || opts.breakOnNewline && n.isMultiLine(
+      parent,
+    );
 
     if (nodes !== undefined) {
       for (let i = 0; i < nodes.length; i++) {
@@ -231,18 +227,11 @@ export default class Generator {
           } = checkTrailingCommentsSameLine(node, nodes[i + 1]);
 
           const afterBroken: Tokens = [];
-          if (
-            !isLastNode &&
-            opts.newline &&
-            !hasNextTrailingCommentOnSameLine
-          ) {
+          if (!isLastNode && opts.newline && !hasNextTrailingCommentOnSameLine) {
             afterBroken.push(newline);
           }
 
-          const newlines = this.maybeInsertExtraStatementNewlines(
-            node,
-            nextNode,
-          );
+          const newlines = this.maybeInsertExtraStatementNewlines(node, nextNode);
 
           groups.push({
             tokens: this.print(node, parent),
@@ -318,9 +307,10 @@ export default class Generator {
         tokens.push(newline);
       }
 
-      tokens = tokens.concat(
-        this.maybeInsertExtraStatementNewlines(node, nextNode),
-      );
+      tokens = tokens.concat(this.maybeInsertExtraStatementNewlines(
+        node,
+        nextNode,
+      ));
     }
 
     if (shouldIndent) {
@@ -399,10 +389,8 @@ export default class Generator {
       if (lineWrap) {
         for (const char of str) {
           if (char === '\n') {
-            if (
-              lastUnbrokenGroup !== undefined &&
-              lastUnbrokenGroup.breakOnNewline
-            ) {
+            if (lastUnbrokenGroup !== undefined &&
+                lastUnbrokenGroup.breakOnNewline) {
               throw new BreakGroupError(lastUnbrokenGroup);
             }
             state.column = 0;
@@ -455,10 +443,8 @@ export default class Generator {
     }
 
     function resetUnbrokenGroup(ourUnbrokenGroup: undefined | GroupSnapshot) {
-      if (
-        ourUnbrokenGroup !== undefined &&
-        lastUnbrokenGroup === ourUnbrokenGroup
-      ) {
+      if (ourUnbrokenGroup !== undefined && lastUnbrokenGroup ===
+          ourUnbrokenGroup) {
         lastUnbrokenGroup = ourUnbrokenGroup.lastUnbrokenGroup;
       }
     }
@@ -489,8 +475,8 @@ export default class Generator {
     }
 
     function newline() {
-      // Remove all trailing spaces
-      while (trim(' '));
+      while ( // Remove all trailing spaces
+      trim(' ')) ;
       push('\n');
     }
 
@@ -565,15 +551,16 @@ export default class Generator {
             }
             break;
 
-          case 'Number': {
+          case 'Number':
+          {
             const str = token.value;
             push(str);
 
-            state.endsWithInteger =
-              Number.isInteger(Number(str)) &&
-              !NON_DECIMAL_LITERAL.test(str) &&
-              !SCIENTIFIC_NOTATION.test(str) &&
-              !ZERO_DECIMAL_INTEGER.test(str) &&
+            state.endsWithInteger = Number.isInteger(Number(str)) &&
+                  !NON_DECIMAL_LITERAL.test(str) && !SCIENTIFIC_NOTATION.test(
+                  str,
+                ) &&
+                !ZERO_DECIMAL_INTEGER.test(str) &&
               str[str.length - 1] !== '.';
             break;
           }
@@ -585,19 +572,17 @@ export default class Generator {
             push(token.value);
             break;
 
-          case 'Operator': {
+          case 'Operator':
+          {
             const str = token.value;
 
             // Space is mandatory to avoid outputting <!--
             // http://javascript.spec.whatwg.org/#comment-syntax
-            if (
-              (str === '--' && state.lastBuff.endsWith('!')) ||
-              // Need spaces for operators of the same kind to avoid: `a+++b`
-              (str[0] === '+' && state.lastBuff.endsWith('+')) ||
-              (str[0] === '-' && state.lastBuff.endsWith('-')) ||
-              // Needs spaces to avoid changing '34' to '34.', which would still be a valid number.
-              (str[0] === '.' && state.endsWithInteger)
-            ) {
+            if (str === '--' && state.lastBuff.endsWith('!') || // Need spaces for operators of the same kind to avoid: `a+++b`
+                str[0] === '+' && state.lastBuff.endsWith('+') ||
+                  str[0] === '-' &&
+                  state.lastBuff.endsWith('-') || // Needs spaces to avoid changing '34' to '34.', which would still be a valid number.
+              str[0] === '.' && state.endsWithInteger) {
               push(' ');
             }
 
@@ -606,7 +591,8 @@ export default class Generator {
           }
 
           // A Group defines a boundary where we can break
-          case 'Group': {
+          case 'Group':
+          {
             const {breakOnNewline, groups, priority, broken, unbroken} = token;
 
             const isBroken = broken.force || brokenGroups.has(token);
@@ -660,10 +646,8 @@ export default class Generator {
                 print(isBroken ? group.afterBroken : group.afterUnbroken);
               }
             } catch (err) {
-              if (
-                err instanceof BreakGroupError &&
-                err.unbrokenGroup === ourUnbrokenGroup
-              ) {
+              if (err instanceof BreakGroupError && err.unbrokenGroup ===
+                  ourUnbrokenGroup) {
                 restoreSnapshot(token, ourUnbrokenGroup);
                 return;
               } else {
@@ -698,11 +682,9 @@ export default class Generator {
               let firstGroup: undefined | LinkedGroupsToken | GroupToken;
               // Get the first unbroken group
               for (const tok of token.tokens) {
-                if (
-                  (tok.type === 'LinkedGroups' || tok.type === 'Group') &&
-                  !brokenGroups.has(tok) &&
-                  (tok.type !== 'Group' || !tok.broken.force)
-                ) {
+                if ((tok.type === 'LinkedGroups' || tok.type === 'Group') &&
+                    !brokenGroups.has(tok) && (tok.type !== 'Group' ||
+                    !tok.broken.force)) {
                   firstGroup = tok;
                   break;
                 }
@@ -715,10 +697,8 @@ export default class Generator {
                 try {
                   print(token.tokens);
                 } catch (err) {
-                  if (
-                    err instanceof BreakGroupError &&
-                    err.unbrokenGroup === snapshot
-                  ) {
+                  if (err instanceof BreakGroupError && err.unbrokenGroup ===
+                      snapshot) {
                     brokenGroups.add(firstGroup);
                     restoreSnapshot(token, snapshot);
                     return;
@@ -782,9 +762,11 @@ export default class Generator {
 
       const nextComment = comments[i + 1];
       if (nextComment !== undefined) {
-        tokens = tokens.concat(
-          this.maybeCommentNewlines(comment, nextComment, true),
-        );
+        tokens = tokens.concat(this.maybeCommentNewlines(
+          comment,
+          nextComment,
+          true,
+        ));
       }
     }
 
@@ -815,10 +797,9 @@ export default class Generator {
       return true;
     }
 
-    if (
-      comment.loc !== undefined &&
-      this.printedCommentStarts.has(comment.loc.start.index)
-    ) {
+    if (comment.loc !== undefined && this.printedCommentStarts.has(
+        comment.loc.start.index,
+      )) {
       return true;
     }
 
@@ -853,10 +834,8 @@ export default class Generator {
     const lines = n.getLinesBetween(node, comment);
 
     // Will always have at least one newline
-    if (
-      node.type === 'CommentLine' ||
-      (comment.type === 'CommentLine' && !trailing)
-    ) {
+    if (node.type === 'CommentLine' || comment.type === 'CommentLine' &&
+        !trailing) {
       lines.shift();
     }
 

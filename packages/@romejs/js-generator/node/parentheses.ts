@@ -28,7 +28,12 @@ import {
   FlowFunctionTypeAnnotation,
   OptionalCallExpression,
 } from '@romejs/js-ast';
-import {isFor, isUnaryLike, isConditional, isBinary} from '@romejs/js-ast-utils';
+import {
+  isFor,
+  isUnaryLike,
+  isConditional,
+  isBinary,
+} from '@romejs/js-ast-utils';
 
 const PRECEDENCE = {
   '||': 0,
@@ -59,10 +64,8 @@ const PRECEDENCE = {
 };
 
 function isClassExtendsClause(node: AnyNode, parent: AnyNode): boolean {
-  return (
-    (parent.type === 'ClassDeclaration' || parent.type === 'ClassExpression') &&
-      parent.meta.superClass === node
-  );
+  return (parent.type === 'ClassDeclaration' || parent.type ===
+    'ClassExpression') && parent.meta.superClass === node;
 }
 
 const parens: Map<AnyNode['type'], // rome-suppress-next-line lint/noExplicitAny
@@ -90,7 +93,9 @@ parens.set('MemberExpression', function UpdateExpression(
 ): boolean {
   if (node.property.optional) {
     return parent.type === 'CallExpression' && parent.callee === node ||
-    parent.type === 'MemberExpression' && parent.object === node;
+          parent.type ===
+          'MemberExpression' &&
+        parent.object === node;
   } else {
     return false;
   }
@@ -101,11 +106,10 @@ parens.set('UpdateExpression', function UpdateExpression(
   parent: AnyNode,
 ): boolean {
   return (// (foo++).test(), (foo++)[0]
-    parent.type === 'MemberExpression' && parent.object === node || // (foo++)()
-    parent.type === 'CallExpression' && parent.callee === node ||
-    // new (foo++)()
-    parent.type === 'NewExpression' && parent.callee === node ||
-    isClassExtendsClause(node, parent)
+      parent.type === 'MemberExpression' && parent.object === node || // (foo++)()
+      parent.type === 'CallExpression' && parent.callee === node || // new (foo++)()
+      parent.type === 'NewExpression' && parent.callee === node ||
+      isClassExtendsClause(node, parent)
   );
 });
 
@@ -130,7 +134,8 @@ function LogicalExpression(
   parent: AnyNode,
 ): boolean {
   if (node.operator === '**' && parent.type === 'BinaryExpression' &&
-    parent.operator === '**') {
+        parent.operator ===
+        '**') {
     return parent.left === node;
   }
 
@@ -139,9 +144,10 @@ function LogicalExpression(
   }
 
   if ((parent.type === 'CallExpression' || parent.type === 'NewExpression') &&
-    parent.callee === node || isUnaryLike(parent) || parent.type ===
-  'MemberExpression' && parent.object === node || parent.type ===
-  'AwaitExpression') {
+        parent.callee ===
+        node || isUnaryLike(parent) || parent.type === 'MemberExpression' &&
+        parent.object ===
+        node || parent.type === 'AwaitExpression') {
     return true;
   }
 
@@ -153,8 +159,8 @@ function LogicalExpression(
     const nodePos = PRECEDENCE[nodeOp];
 
     if ( // Logical expressions with the same precedence don't need parens.
-    parentPos === nodePos && parent.right === node && parent.type !==
-    'LogicalExpression' || parentPos > nodePos) {
+      parentPos === nodePos && parent.right === node && parent.type !==
+        'LogicalExpression' || parentPos > nodePos) {
       return true;
     }
   }
@@ -188,7 +194,7 @@ parens.set('BinaryExpression', function BinaryExpression(
 
   // for ((1 in []);;);
   return node.operator === 'in' && (parent.type === 'VariableDeclarator' ||
-  isFor(parent)) || LogicalExpression(node, parent);
+    isFor(parent)) || LogicalExpression(node, parent);
 });
 
 parens.set('SequenceExpression', function SequenceExpression(
@@ -197,17 +203,21 @@ parens.set('SequenceExpression', function SequenceExpression(
 ): boolean {
   if ( // Although parentheses wouldn"t hurt around sequence
 
-  // expressions in the head of for loops, traditional style
+    // expressions in the head of for loops, traditional style
 
-  // dictates that e.g. i++, j++ should not be wrapped with
+    // dictates that e.g. i++, j++ should not be wrapped with
 
-  // parentheses.
-  parent.type === 'ForStatement' || parent.type === 'ThrowStatement' ||
-  parent.type === 'ReturnStatement' || parent.type === 'IfStatement' &&
-    parent.test === node || parent.type === 'WhileStatement' && parent.test ===
-  node || parent.type === 'ForInStatement' && parent.right === node ||
-  parent.type === 'SwitchStatement' && parent.discriminant === node ||
-  parent.type === 'ExpressionStatement' && parent.expression === node) {
+    // parentheses.
+        parent.type === 'ForStatement' || parent.type === 'ThrowStatement' ||
+          parent.type ===
+          'ReturnStatement' || parent.type === 'IfStatement' && parent.test ===
+        node || parent.type === 'WhileStatement' && parent.test === node ||
+          parent.type ===
+          'ForInStatement' &&
+        parent.right === node || parent.type === 'SwitchStatement' &&
+        parent.discriminant ===
+        node || parent.type === 'ExpressionStatement' && parent.expression ===
+      node) {
     return false;
   }
 
@@ -219,11 +229,14 @@ parens.set('SequenceExpression', function SequenceExpression(
 
 function YieldExpression(node: YieldExpression, parent: AnyNode): boolean {
   return isBinary(parent) || isUnaryLike(parent) || parent.type ===
-  'MemberExpression' || parent.type === 'CallExpression' && parent.callee ===
-  node || parent.type === 'NewExpression' && parent.callee === node ||
-  parent.type === 'AwaitExpression' && node.type === 'YieldExpression' ||
-  parent.type === 'ConditionalExpression' && node === parent.test ||
-  isClassExtendsClause(node, parent);
+        'MemberExpression' || parent.type === 'CallExpression' &&
+          parent.callee ===
+          node || parent.type === 'NewExpression' && parent.callee === node ||
+          parent.type ===
+          'AwaitExpression' &&
+        node.type === 'YieldExpression' ||
+      parent.type === 'ConditionalExpression' &&
+      node === parent.test || isClassExtendsClause(node, parent);
 }
 
 parens.set('YieldExpression', YieldExpression);
@@ -234,7 +247,9 @@ parens.set('OptionalCallExpression', function OptionalCallExpression(
   parent: AnyNode,
 ): boolean {
   return parent.type === 'CallExpression' && parent.callee === node ||
-  parent.type === 'MemberExpression' && parent.object === node;
+        parent.type ===
+        'MemberExpression' &&
+      parent.object === node;
 });
 
 parens.set('ClassExpression', function ClassExpression(
@@ -257,10 +272,13 @@ function UnaryExpression(
   parent: AnyNode,
 ): boolean {
   return parent.type === 'MemberExpression' && parent.object === node ||
-  parent.type === 'CallExpression' && parent.callee === node || parent.type ===
-  'NewExpression' && parent.callee === node ||
-  parent.type === 'BinaryExpression' && parent.operator === '**' &&
-    parent.left === node || isClassExtendsClause(node, parent);
+        parent.type ===
+        'CallExpression' &&
+      parent.callee === node || parent.type === 'NewExpression' &&
+      parent.callee ===
+      node || parent.type === 'BinaryExpression' && parent.operator === '**' &&
+      parent.left ===
+      node || isClassExtendsClause(node, parent);
 }
 
 parens.set('UnaryExpression', UnaryExpression);
@@ -290,12 +308,14 @@ function ConditionalExpression(
   parent: AnyNode,
 ): boolean {
   if (isUnaryLike(parent) || isBinary(parent) || parent.type ===
-  'ConditionalExpression' && parent.test === node || parent.type ===
-  'AwaitExpression' || parent.type === 'MemberExpression' && parent.object ===
-  node && parent.property.optional ||
-  parent.type === 'OptionalCallExpression' && parent.callee === node ||
-  parent.type === 'TaggedTemplateExpression' || parent.type === 'TSTypeAssertion' ||
-  parent.type === 'TSAsExpression') {
+        'ConditionalExpression' && parent.test === node || parent.type ===
+        'AwaitExpression' || parent.type === 'MemberExpression' &&
+          parent.object ===
+          node && parent.property.optional || parent.type ===
+        'OptionalCallExpression' && parent.callee === node || parent.type ===
+        'TaggedTemplateExpression' || parent.type === 'TSTypeAssertion' ||
+        parent.type ===
+        'TSAsExpression') {
     return true;
   }
 
@@ -317,10 +337,11 @@ parens.set('AssignmentExpression', function AssignmentExpression(
 
 function UnionTypeAnnotation(node: UnionTypeAnnotation, parent: AnyNode) {
   return parent.type === 'FlowArrayTypeAnnotation' || parent.type ===
-  'FlowNullableTypeAnnotation' || parent.type === 'IntersectionTypeAnnotation' ||
-  parent.type === 'UnionTypeAnnotation' ||
-  parent.type === 'TSArrayType' ||
-  parent.type === 'TSOptionalType';
+        'FlowNullableTypeAnnotation' || parent.type ===
+        'IntersectionTypeAnnotation' ||
+      parent.type === 'UnionTypeAnnotation' || parent.type === 'TSArrayType' ||
+      parent.type ===
+      'TSOptionalType';
 }
 
 parens.set('UnionTypeAnnotation', UnionTypeAnnotation);
@@ -341,14 +362,15 @@ parens.set('FlowFunctionTypeAnnotation', function FlowFunctionTypeAnnotation(
   // Check if we are the return type of an arrow
   for (const printNode of printStack) {
     if (printNode.type === 'ArrowFunctionExpression' &&
-      printNode.head.returnType === node) {
+          printNode.head.returnType ===
+          node) {
       return true;
     }
   }
 
   // ((a: () => A) => (a: A) => A)
   if (node.returnType !== undefined && node.returnType.type ===
-  'FlowFunctionTypeAnnotation') {
+      'FlowFunctionTypeAnnotation') {
     return true;
   }
 
@@ -371,19 +393,24 @@ function isFirstInStatement(
   let parent = printStack[i];
   while (i > 0) {
     if (parent.type === 'ExpressionStatement' && parent.expression === node ||
-    parent.type === 'TaggedTemplateExpression' || considerDefaultExports &&
-      parent.type === 'ExportDefaultDeclaration' && parent.declaration === node ||
-    considerArrow && parent.type === 'ArrowFunctionExpression' &&
-      parent.body === node) {
+            parent.type ===
+            'TaggedTemplateExpression' || considerDefaultExports &&
+            parent.type ===
+            'ExportDefaultDeclaration' && parent.declaration === node ||
+            considerArrow &&
+            parent.type === 'ArrowFunctionExpression' &&
+          parent.body === node) {
       return true;
     }
 
     if (parent.type === 'CallExpression' && parent.callee === node ||
-    parent.type === 'SequenceExpression' && parent.expressions[0] === node ||
-    parent.type === 'MemberExpression' && parent.object === node ||
-    isConditional(parent) && parent.test === node || isBinary(parent) &&
-      parent.left === node || parent.type === 'AssignmentExpression' &&
-      parent.left === node) {
+              parent.type ===
+              'SequenceExpression' &&
+            parent.expressions[0] === node ||
+          parent.type === 'MemberExpression' &&
+          parent.object === node || isConditional(parent) && parent.test ===
+        node || isBinary(parent) && parent.left === node || parent.type ===
+        'AssignmentExpression' && parent.left === node) {
       node = parent;
       i--;
       parent = printStack[i];

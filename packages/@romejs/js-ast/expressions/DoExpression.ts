@@ -8,12 +8,10 @@
 import {JSNodeBase, BlockStatement} from '../index';
 import {createBuilder} from '../utils';
 
-export type DoExpression =
-  & JSNodeBase
-  & {
-    type: 'DoExpression';
-    body: BlockStatement;
-  };
+export type DoExpression = JSNodeBase & {
+  type: 'DoExpression';
+  body: BlockStatement;
+};
 
 export const doExpression = createBuilder<DoExpression>('DoExpression', {
   bindingKeys: {},

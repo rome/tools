@@ -18,10 +18,7 @@ import {
 import {IfStatement, ifStatement, AnyNode} from '@romejs/js-ast';
 import {isStatement} from '@romejs/js-ast-utils';
 
-export default function IfStatement(
-  generator: Generator,
-  node: AnyNode,
-): Tokens {
+export default function IfStatement(generator: Generator, node: AnyNode): Tokens {
   node = ifStatement.assert(node);
 
   let tokens: Tokens = [
@@ -65,15 +62,12 @@ export default function IfStatement(
 
 // Recursively get the last statement.
 function getLastStatement(statement: AnyNode): AnyNode {
-  if (
-    (statement.type === 'WithStatement' ||
-      statement.type === 'WhileStatement' ||
-      statement.type === 'DoWhileStatement' ||
-      statement.type === 'ForOfStatement' ||
-      statement.type === 'ForInStatement' ||
-      statement.type === 'ForStatement') &&
-    isStatement(statement.body)
-  ) {
+  if ((statement.type === 'WithStatement' || statement.type === 'WhileStatement' ||
+              statement.type === 'DoWhileStatement' ||
+            statement.type === 'ForOfStatement' ||
+          statement.type === 'ForInStatement' ||
+        statement.type === 'ForStatement') &&
+      isStatement(statement.body)) {
     return getLastStatement(statement.body);
   } else {
     return statement;

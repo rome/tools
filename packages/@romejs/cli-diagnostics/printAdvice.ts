@@ -143,19 +143,19 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
   const receivedNoCRLF = removeCRLF(received);
   if (expected === receivedNoCRLF) {
     return {
-      type: 'log',
-      category: 'info',
-      message: 'Identical except the received uses CRLF newlines, while the expected does not',
-    };
+        type: 'log',
+        category: 'info',
+        message: 'Identical except the received uses CRLF newlines, while the expected does not',
+      };
   }
 
   const expectedNoCRLF = removeCRLF(expected);
   if (received === expectedNoCRLF) {
     return {
-      type: 'log',
-      category: 'info',
-      message: 'Identical except the expected uses CRLF newlines, while the received does not',
-    };
+        type: 'log',
+        category: 'info',
+        message: 'Identical except the expected uses CRLF newlines, while the received does not',
+      };
   }
 }
 
@@ -220,7 +220,7 @@ function printCode(
   let code = item.code.slice(0, RAW_CODE_MAX_LENGTH);
 
   if (truncated) {
-    code +=
+      code +=
       `\n<dim><number>${item.code.length - RAW_CODE_MAX_LENGTH}</number> more characters truncated</dim>`;
   }
 
@@ -264,8 +264,8 @@ function printFrame(
       sourceText = source.sourceText;
     }
   } else if (path.isAbsolute() && opts.missingFileSources.has(
-    path.assertAbsolute(),
-  )) {
+      path.assertAbsolute(),
+    )) {
     lines = ['<dim>File does not exist</dim>'];
   }
 
@@ -296,7 +296,8 @@ function printStacktrace(
   let shownCodeFrames = 0;
 
   const isFirstPart = diagnostic.description.advice !== undefined &&
-    diagnostic.description.advice[0] === item;
+      diagnostic.description.advice[0] ===
+      item;
   if (!isFirstPart) {
     opts.reporter.info(item.title === undefined ? 'Stack trace' : item.title);
     opts.reporter.forceSpacer();
@@ -361,7 +362,8 @@ function printStacktrace(
 
     // Push on frame
     if (shownCodeFrames < 2 && filename !== undefined && line !== undefined &&
-      column !== undefined) {
+          column !==
+          undefined) {
       const pos: Position = {
         index: number0Neg1,
         line,

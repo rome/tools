@@ -125,8 +125,8 @@ export class Scope {
 
   getBindingNames(): Array<string> {
     const names: Set<string> = new Set(this.parentScope
-      ? this.parentScope.getBindingNames() : []
-    );
+      ? this.parentScope.getBindingNames()
+      : []);
 
     for (const [name] of this.bindings) {
       names.add(name);

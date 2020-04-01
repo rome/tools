@@ -109,8 +109,8 @@ function parseJSXElementName(parser: JSParser): JSXElement['name'] {
 
   let node: JSXElement['name'];
   if (namespacedName.type === 'JSXIdentifier' && !isHTMLTagName(
-    namespacedName.name,
-  )) {
+      namespacedName.name,
+    )) {
     node = {
       ...namespacedName,
       type: 'JSXReferenceIdentifier',
@@ -154,15 +154,15 @@ function parseJSXAttributeValue(
       return parseStringLiteral(parser);
 
     default:
-      {
-        parser.addDiagnostic({
-          description: descriptions.JS_PARSER.JSX_INVALID_ATTRIBUTE_VALUE,
-        });
-        return parser.finishNode(parser.getPosition(), {
-          type: 'StringLiteral',
-          value: '?',
-        });
-      }
+    {
+      parser.addDiagnostic({
+        description: descriptions.JS_PARSER.JSX_INVALID_ATTRIBUTE_VALUE,
+      });
+      return parser.finishNode(parser.getPosition(), {
+        type: 'StringLiteral',
+        value: '?',
+      });
+    }
   }
 }
 
@@ -348,21 +348,21 @@ function parseJSXElementAt(
     contents: while (true) {
       switch (parser.state.tokenType) {
         case tt.jsxTagStart:
-          {
-            const start = parser.getPosition();
-            parser.next();
-            if (parser.eat(tt.slash)) {
-              closingName = parseJSXClosingElementAt(parser);
-              closingNameLoc = {
-                filename: parser.filename,
-                start,
-                end: parser.getPosition(),
-              };
-              break contents;
-            }
-            children.push(parseJSXElementAt(parser, start));
-            break;
+        {
+          const start = parser.getPosition();
+          parser.next();
+          if (parser.eat(tt.slash)) {
+            closingName = parseJSXClosingElementAt(parser);
+            closingNameLoc = {
+              filename: parser.filename,
+              start,
+              end: parser.getPosition(),
+            };
+            break contents;
           }
+          children.push(parseJSXElementAt(parser, start));
+          break;
+        }
 
         case tt.jsxText:
           children.push(parseJSXText(parser));
@@ -431,8 +431,8 @@ function parseJSXElementAt(
     // Validate element names: Element open, element close
     if (openingDef.name !== undefined && closingName !== undefined) {
       if (getQualifiedJSXName(closingName) !== getQualifiedJSXName(
-        openingDef.name,
-      )) {
+          openingDef.name,
+        )) {
         parser.addDiagnostic({
           loc: openingDef.loc,
           description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_TAG(

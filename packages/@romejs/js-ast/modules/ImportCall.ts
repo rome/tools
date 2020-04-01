@@ -8,12 +8,10 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type ImportCall =
-  & JSNodeBase
-  & {
-    type: 'ImportCall';
-    argument: AnyExpression;
-  };
+export type ImportCall = JSNodeBase & {
+  type: 'ImportCall';
+  argument: AnyExpression;
+};
 
 export const importCall = createBuilder<ImportCall>('ImportCall', {
   bindingKeys: {},

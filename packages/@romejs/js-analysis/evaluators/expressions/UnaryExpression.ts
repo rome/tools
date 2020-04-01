@@ -22,19 +22,23 @@ export default function UnaryExpression(node: AnyNode, scope: Scope) {
     case '!':
       return new BooleanT(scope, node);
 
+
     // numbers
     case '+':
     case '-':
     case '~':
       return new NumericT(scope, node);
 
+
     // strings
     case 'typeof':
       return new TypeofT(scope, node, argType);
 
+
     // void
     case 'void':
       return new VoidT(scope, node);
+
 
     // empty!
     case 'throw':

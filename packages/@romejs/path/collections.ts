@@ -74,7 +74,7 @@ class FilePathMap<FilePath extends UnknownFilePath, Value> {
   }
 
   set(path: FilePath, value: Value) {
-    const uniq = path.getUnique() as FilePath;
+    const uniq = (path.getUnique() as FilePath);
     const joined = uniq.join();
     this.joinedToValue.set(joined, value);
     this.joinedToPath.set(joined, uniq);

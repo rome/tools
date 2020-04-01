@@ -23,7 +23,7 @@ export default function RegExpCharSet(
 
   return [
     ...tokens,
-    ...flatten(node.body.map(item => generator.print(item, node))),
+    ...flatten(node.body.map((item) => generator.print(item, node))),
     verbatim(']'),
   ];
 }

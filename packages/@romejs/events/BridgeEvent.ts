@@ -26,7 +26,9 @@ export type BridgeEventDirection =
   | 'server<-client'
   | 'server<->client';
 
-export type BridgeEventOptions = EventOptions & {direction: BridgeEventDirection};
+export type BridgeEventOptions = EventOptions & {
+  direction: BridgeEventDirection;
+};
 
 function validateDirection(
   // rome-suppress-next-line lint/noExplicitAny
@@ -39,8 +41,8 @@ function validateDirection(
   for (const [eventDirection, bridgeType] of invalidDirections) {
     if (event.direction === eventDirection && event.bridge.type === bridgeType) {
       throw new Error(
-        `The ${eventDirection} event "${event.name}" cannot be ${verb} by a ${bridgeType} bridge`,
-      );
+          `The ${eventDirection} event "${event.name}" cannot be ${verb} by a ${bridgeType} bridge`,
+        );
     }
   }
 }

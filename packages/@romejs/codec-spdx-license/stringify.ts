@@ -18,15 +18,15 @@ export default function stringify(node: ExpressionNode): string {
       return `${stringify(node.left)} AND ${stringify(node.right)}`;
 
     case 'License':
-      {
-        let str = node.id;
-        if (node.plus) {
-          str += '+';
-        }
-        if (node.exception !== undefined) {
-          str += ` WITH ${node.exception}`;
-        }
-        return str;
+    {
+      let str = node.id;
+      if (node.plus) {
+        str += '+';
       }
+      if (node.exception !== undefined) {
+        str += ` WITH ${node.exception}`;
+      }
+      return str;
+    }
   }
 }

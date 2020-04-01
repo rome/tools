@@ -14,7 +14,7 @@ import {AnyComment, AnyNode} from '@romejs/js-ast';
 import {Token} from '..';
 import {Number1, number1, number0, Number0, number0Neg1} from '@romejs/ob1';
 
-type Scopes = {[K in ScopeType]?: Array<unknown>};
+type Scopes = { [K in ScopeType]?: Array<unknown> };
 
 export type State = {
   diagnostics: Diagnostics;

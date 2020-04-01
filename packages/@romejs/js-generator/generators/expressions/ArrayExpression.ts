@@ -13,11 +13,8 @@ export default function ArrayExpression(
   generator: Generator,
   _node: AnyNode,
 ): Tokens {
-  const node =
-    _node.type === 'BindingArrayPattern' ||
-    _node.type === 'AssignmentArrayPattern'
-      ? _node
-      : arrayExpression.assert(_node);
+  const node = _node.type === 'BindingArrayPattern' || _node.type ===
+    'AssignmentArrayPattern' ? _node : arrayExpression.assert(_node);
 
   const elems = node.elements;
 
@@ -30,11 +27,8 @@ export default function ArrayExpression(
     }),
   ];
 
-  if (
-    (node.type === 'BindingArrayPattern' ||
-      node.type === 'AssignmentArrayPattern') &&
-    node.rest !== undefined
-  ) {
+  if ((node.type === 'BindingArrayPattern' || node.type ===
+      'AssignmentArrayPattern') && node.rest !== undefined) {
     if (elems.length > 0) {
       tokens.push(operator(','));
       tokens.push(space);

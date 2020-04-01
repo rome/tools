@@ -159,13 +159,13 @@ export default class Cache {
 
   async update(
     path: AbsoluteFilePath,
-    partialEntryCallback:
-      | Partial<CacheEntry>
-      | ((entry: CacheEntry) => Partial<CacheEntry>),
+    partialEntryCallback: Partial<CacheEntry> | ((
+      entry: CacheEntry,
+    ) => Partial<CacheEntry>),
   ) {
     const currEntry = await this.get(path);
     const partialEntry: Partial<CacheEntry> = typeof partialEntryCallback ===
-    'function' ? partialEntryCallback(currEntry) : partialEntryCallback;
+      'function' ? partialEntryCallback(currEntry) : partialEntryCallback;
 
     const entry: CacheEntry = {
       ...currEntry,

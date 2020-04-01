@@ -18,32 +18,37 @@ const SOCKET_LENGTH = /^(\d+):/;
 // JSON.stringify but throw on bad data types
 // Most likely slower... But safer and our data structures are usually fairly shallow
 function stringify(obj: unknown): string {
-  return JSON.stringify(obj, (key, value) => {
-    const type = typeof value;
+  return JSON.stringify(
+      obj,
+      (key, value) => {
+        const type = typeof value;
 
-    if (value === undefined || value === null) {
-      return value;
-    }
+        if (value === undefined || value === null) {
+          return value;
+        }
 
-    // Primitives
-    if (type === 'string' || type === 'number' || type === 'boolean') {
-      return value;
-    }
+        // Primitives
+        if (type === 'string' || type === 'number' || type === 'boolean') {
+          return value;
+        }
 
-    // Arrays and plain objects
-    if (Array.isArray(value) || value.constructor === Object) {
-      return value;
-    }
+        // Arrays and plain objects
+        if (Array.isArray(value) || value.constructor === Object) {
+          return value;
+        }
 
-    throw new Error(
-      `Illegal data type not allowed in JSON: ${prettyFormat(value)} in ${prettyFormat(
-        obj,
-      )}`,
+        throw new Error(
+            `Illegal data type not allowed in JSON: ${prettyFormat(value)} in ${prettyFormat(
+              obj,
+            )}`,
+          );
+      },
     );
-  });
 }
 
-export function createBridgeFromWebSocketInterface<B extends Bridge>(
+export function createBridgeFromWebSocketInterface<
+  B extends Bridge
+>(
   CustomBridge: Class<B>,
   inf: WebSocketInterface,
   opts: BridgeCreatorOptions,
@@ -77,11 +82,9 @@ export function createBridgeFromWebSocketInterface<B extends Bridge>(
   return bridge;
 }
 
-export function createBridgeFromBrowserWebSocket<B extends Bridge>(
-  CustomBridge: Class<B>,
-  socket: WebSocket,
-  opts: BridgeCreatorOptions,
-): B {
+export function createBridgeFromBrowserWebSocket<
+  B extends Bridge
+>(CustomBridge: Class<B>, socket: WebSocket, opts: BridgeCreatorOptions): B {
   const bridge = new CustomBridge({
     ...opts,
     sendMessage: (data: BridgeMessage) => {
@@ -104,11 +107,9 @@ export function createBridgeFromBrowserWebSocket<B extends Bridge>(
   return bridge;
 }
 
-export function createBridgeFromSocket<B extends Bridge>(
-  CustomBridge: Class<B>,
-  socket: Socket,
-  opts: BridgeCreatorOptions,
-): B {
+export function createBridgeFromSocket<
+  B extends Bridge
+>(CustomBridge: Class<B>, socket: Socket, opts: BridgeCreatorOptions): B {
   const bridge = new CustomBridge({
     ...opts,
     sendMessage: (data: BridgeMessage) => {
@@ -172,10 +173,9 @@ export function createBridgeFromSocket<B extends Bridge>(
   return bridge;
 }
 
-export function createBridgeFromLocal<B extends Bridge>(
-  CustomBridge: Class<B>,
-  opts: Omit<BridgeCreatorOptions, 'type'>,
-): B {
+export function createBridgeFromLocal<
+  B extends Bridge
+>(CustomBridge: Class<B>, opts: Omit<BridgeCreatorOptions, 'type'>): B {
   const bridge = new CustomBridge({
     ...opts,
     type: 'server&client',
@@ -187,11 +187,9 @@ export function createBridgeFromLocal<B extends Bridge>(
   return bridge;
 }
 
-export function createBridgeFromChildProcess<B extends Bridge>(
-  CustomBridge: Class<B>,
-  proc: ChildProcess,
-  opts: BridgeCreatorOptions,
-): B {
+export function createBridgeFromChildProcess<
+  B extends Bridge
+>(CustomBridge: Class<B>, proc: ChildProcess, opts: BridgeCreatorOptions): B {
   const bridge = new CustomBridge({
     ...opts,
     sendMessage: (data: BridgeMessage) => {
@@ -219,10 +217,9 @@ export function createBridgeFromChildProcess<B extends Bridge>(
   return bridge;
 }
 
-export function createBridgeFromParentProcess<B extends Bridge>(
-  CustomBridge: Class<B>,
-  opts: BridgeCreatorOptions,
-): B {
+export function createBridgeFromParentProcess<
+  B extends Bridge
+>(CustomBridge: Class<B>, opts: BridgeCreatorOptions): B {
   const bridge = new CustomBridge({
     ...opts,
     sendMessage: (data: BridgeMessage) => {

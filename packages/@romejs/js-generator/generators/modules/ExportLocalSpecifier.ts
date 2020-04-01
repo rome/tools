@@ -17,10 +17,9 @@ export default function ExportLocalSpecifier(
   generator: Generator,
   node: AnyNode,
 ): Tokens {
-  node =
-    node.type === 'ExportExternalSpecifier'
-      ? node
-      : exportLocalSpecifier.assert(node);
+  node = node.type === 'ExportExternalSpecifier'
+    ? node
+    : exportLocalSpecifier.assert(node);
 
   const tokens = generator.print(node.local, node);
 

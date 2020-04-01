@@ -13,10 +13,7 @@ import {
 } from '@romejs/js-ast';
 import {word, space} from '@romejs/js-generator/tokens';
 
-export default function VariableDeclaration(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function VariableDeclaration(generator: Generator, node: AnyNode) {
   node = variableDeclaration.assert(node);
 
   return [

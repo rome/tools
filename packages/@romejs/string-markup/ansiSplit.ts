@@ -84,10 +84,7 @@ export function mapAnsiString(
   return buff;
 }
 
-export function splitAnsiLines(
-  input: string,
-  maxWidth?: number,
-): Array<string> {
+export function splitAnsiLines(input: string, maxWidth?: number): Array<string> {
   const lines: Array<string> = [];
 
   let column = 0;

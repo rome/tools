@@ -17,11 +17,8 @@ export default function FlowInterfaceExtends(
   generator: Generator,
   node: AnyNode,
 ): Tokens {
-  node =
-    node.type === 'FlowGenericTypeAnnotation' ||
-    node.type === 'FlowClassImplements'
-      ? node
-      : flowInterfaceExtends.assert(node);
+  node = node.type === 'FlowGenericTypeAnnotation' || node.type ===
+    'FlowClassImplements' ? node : flowInterfaceExtends.assert(node);
 
   return [
     ...generator.print(node.id, node),

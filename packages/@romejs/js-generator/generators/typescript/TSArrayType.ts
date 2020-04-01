@@ -9,10 +9,7 @@ import {TSArrayType, tsArrayType, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
 import {Tokens, operator} from '../../tokens';
 
-export default function TSArrayType(
-  generator: Generator,
-  node: AnyNode,
-): Tokens {
+export default function TSArrayType(generator: Generator, node: AnyNode): Tokens {
   node = tsArrayType.assert(node);
 
   return [...generator.print(node.elementType, node), operator('[]')];

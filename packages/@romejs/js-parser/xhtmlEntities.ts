@@ -10,7 +10,7 @@ import {Dict} from '@romejs/typescript-helpers';
 export const xhtmlEntityNameToChar: Dict<string> = {
   quot: '"',
   amp: '&',
-  apos: '\'',
+  apos: "'",
   lt: '<',
   gt: '>',
   nbsp: '\xa0',

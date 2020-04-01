@@ -15,11 +15,9 @@ export default function UnaryExpression(
 ): Tokens {
   node = unaryExpression.assert(node);
 
-  if (
-    node.operator === 'void' ||
-    node.operator === 'delete' ||
-    node.operator === 'typeof'
-  ) {
+  if (node.operator === 'void' || node.operator === 'delete' ||
+        node.operator ===
+        'typeof') {
     return [
       word(node.operator),
       space,

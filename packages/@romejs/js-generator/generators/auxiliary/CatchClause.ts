@@ -10,10 +10,7 @@ import {Tokens} from '../../tokens';
 import {CatchClause, catchClause, AnyNode} from '@romejs/js-ast';
 import {word, space, operator} from '@romejs/js-generator/tokens';
 
-export default function CatchClause(
-  generator: Generator,
-  node: AnyNode,
-): Tokens {
+export default function CatchClause(generator: Generator, node: AnyNode): Tokens {
   node = catchClause.assert(node);
 
   return [

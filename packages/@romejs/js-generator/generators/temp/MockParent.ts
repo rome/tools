@@ -9,10 +9,7 @@ import Generator from '../../Generator';
 import {Tokens} from '../../tokens';
 import {MockParent, mockParent, AnyNode} from '@romejs/js-ast';
 
-export default function MockParent(
-  generator: Generator,
-  node: AnyNode,
-): Tokens {
+export default function MockParent(generator: Generator, node: AnyNode): Tokens {
   node = mockParent.assert(node);
   mockParent.assert(node);
   throw new Error('unimplemented');

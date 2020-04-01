@@ -50,7 +50,10 @@ function compareMain(
   ) || compareIdentifiers(version.patch, range.patch);
 }
 
-function comparePre(version: AbsoluteVersionNode, range: VersionNode): CompareRet {
+function comparePre(
+  version: AbsoluteVersionNode,
+  range: VersionNode,
+): CompareRet {
   // NOT having a prerelease is > having one
   if (version.prerelease.length > 0 && range.prerelease.length === 0) {
     return -1;

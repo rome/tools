@@ -8,12 +8,10 @@
 import {JSNodeBase, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type BreakStatement =
-  & JSNodeBase
-  & {
-    type: 'BreakStatement';
-    label?: Identifier;
-  };
+export type BreakStatement = JSNodeBase & {
+  type: 'BreakStatement';
+  label?: Identifier;
+};
 
 export const breakStatement = createBuilder<BreakStatement>('BreakStatement', {
   bindingKeys: {},

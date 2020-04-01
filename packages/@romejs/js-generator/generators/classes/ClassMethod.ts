@@ -10,10 +10,7 @@ import {Tokens, space, word} from '../../tokens';
 import {ClassMethod, classMethod, AnyNode} from '@romejs/js-ast';
 import {printMethod} from '../utils';
 
-export default function ClassMethod(
-  generator: Generator,
-  node: AnyNode,
-): Tokens {
+export default function ClassMethod(generator: Generator, node: AnyNode): Tokens {
   node = classMethod.assert(node);
 
   let tokens: Tokens = [];

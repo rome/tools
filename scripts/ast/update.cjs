@@ -93,10 +93,8 @@ readIndexFile(path.join(astFolder, 'index.ts'), [
 readIndexFile(path.join(generatorsFolder, 'index.ts'), [
   {
     iterator({category, nodeType}) {
-      return (
-        `import ${nodeType} from './${category}/${nodeType}';\n` +
-        `generators.set('${nodeType}', ${nodeType});\n\n`
-      );
+      return `import ${nodeType} from './${category}/${nodeType}';\n` +
+        `generators.set('${nodeType}', ${nodeType});\n\n`;
     },
   },
 ]);
@@ -105,10 +103,8 @@ readIndexFile(path.join(generatorsFolder, 'index.ts'), [
 readIndexFile(path.join(analysisFolder, 'index.ts'), [
   {
     iterator({category, nodeType}) {
-      return (
-        `import ${nodeType} from './${category}/${nodeType}';\n` +
-        `evaluators.set('${nodeType}', ${nodeType});\n\n`
-      );
+      return `import ${nodeType} from './${category}/${nodeType}';\n` +
+        `evaluators.set('${nodeType}', ${nodeType});\n\n`;
     },
   },
 ]);

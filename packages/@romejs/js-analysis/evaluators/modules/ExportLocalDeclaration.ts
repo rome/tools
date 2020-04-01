@@ -69,7 +69,7 @@ export default function ExportLocalDeclaration(
   if (specifiers !== undefined) {
     for (const specifier of specifiers) {
       if (specifier.type === 'ExportLocalSpecifier' || specifier.type ===
-      'ExportExternalSpecifier') {
+          'ExportExternalSpecifier') {
         let type;
         if (source === undefined) {
           type = scope.evaluate(specifier.local);

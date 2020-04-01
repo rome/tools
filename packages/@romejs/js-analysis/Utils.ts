@@ -119,9 +119,9 @@ export default class Utils {
       data.set('evaluator', originEvaluator);
     }
 
-    const dataStr = Array.from(data.keys()).map((key) =>
-      `${key}: ${String(data.get(key))}`
-    ).join(', ');
+    const dataStr = Array.from(data.keys()).map((key) => `${key}: ${String(
+      data.get(key),
+    )}`).join(', ');
 
     let info = `${t.getConstructor().type}<`;
     if (safe === false) {
@@ -166,8 +166,8 @@ export default class Utils {
     // Simple check for call stack limits
     if (this.compatibilityDepth > MAX_DEPTH) {
       throw new Error(
-        `Max depth exceeded when checking compatibility of ${lower.inspect()} to ${upper.inspect()}`,
-      );
+          `Max depth exceeded when checking compatibility of ${lower.inspect()} to ${upper.inspect()}`,
+        );
     }
 
     const cached = lower.compatibilityCache.get(upper);
@@ -257,8 +257,8 @@ export default class Utils {
 
       if (reduced.getConstructor().type === 'OpenT') {
         throw new Error(
-          `The reduce() method for ${this.inspect(type, true)} returned an OpenT. This should never be possible. It likely forgot to return utils.reduce() on it.`,
-        );
+            `The reduce() method for ${this.inspect(type, true)} returned an OpenT. This should never be possible. It likely forgot to return utils.reduce() on it.`,
+          );
       }
 
       if (this.debug === false) {
@@ -271,9 +271,7 @@ export default class Utils {
     }
   }
 
-  reduceCatch(
-    type: T,
-  ): {
+  reduceCatch(type: T): {
     final: T;
     involved: Set<T>;
   } {

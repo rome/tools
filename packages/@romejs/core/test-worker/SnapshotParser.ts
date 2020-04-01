@@ -16,39 +16,31 @@ import {
 import {add, get0, Number0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 
-type Tokens =
-  & BaseTokens
-  & {
-    Hashes: ValueToken<'Hashes', number>;
-    CodeBlock: ValueToken<'CodeBlock', {
-      text: string;
-      language: undefined | string;
-    }>;
-    TextLine: ValueToken<'TextLine', string>;
-  };
-
-type HeadingNode =
-  & NodeBase
-  & {
-    type: 'Heading';
+type Tokens = BaseTokens & {
+  Hashes: ValueToken<'Hashes', number>;
+  CodeBlock: ValueToken<'CodeBlock', {
     text: string;
-    level: number;
-  };
-
-type CodeBlockNode =
-  & NodeBase
-  & {
-    type: 'CodeBlock';
     language: undefined | string;
-    text: string;
-  };
+  }>;
+  TextLine: ValueToken<'TextLine', string>;
+};
 
-type TextLineNode =
-  & NodeBase
-  & {
-    type: 'TextLine';
-    text: string;
-  };
+type HeadingNode = NodeBase & {
+  type: 'Heading';
+  text: string;
+  level: number;
+};
+
+type CodeBlockNode = NodeBase & {
+  type: 'CodeBlock';
+  language: undefined | string;
+  text: string;
+};
+
+type TextLineNode = NodeBase & {
+  type: 'TextLine';
+  text: string;
+};
 
 type Node = HeadingNode | CodeBlockNode | TextLineNode;
 
@@ -74,8 +66,8 @@ function unescapeTicks(code: string): string {
   return code;
 }
 
-export default createParser((ParserCore) =>
-  class SnapshotParser extends ParserCore<Tokens, void> {
+export default createParser(
+  (ParserCore) => class SnapshotParser extends ParserCore<Tokens, void> {
     constructor(opts: ParserOptions) {
       super(opts, 'parse/snapshots');
       this.ignoreWhitespaceTokens = true;
@@ -110,10 +102,12 @@ export default createParser((ParserCore) =>
               // Skip leading newline
               codeOffset = add(codeOffset, 1);
             } else {
-              throw this.unexpected({
-                description: descriptions.SNAPSHOTS.MISSING_NEWLINE_AFTER_CODE_BLOCK,
-                start: this.getPositionFromIndex(codeOffset),
-              });
+              throw this.unexpected(
+                  {
+                    description: descriptions.SNAPSHOTS.MISSING_NEWLINE_AFTER_CODE_BLOCK,
+                    start: this.getPositionFromIndex(codeOffset),
+                  },
+                );
             }
 
             let [code] = this.readInputFrom(codeOffset, isInCodeBlock);
@@ -134,10 +128,12 @@ export default createParser((ParserCore) =>
                   text: unescapeTicks(code),
                 }, end);
               } else {
-                throw this.unexpected({
-                  description: descriptions.SNAPSHOTS.MISSING_NEWLINE_BEFORE_CODE_BLOCK,
-                  start: this.getPositionFromIndex(end),
-                });
+                throw this.unexpected(
+                    {
+                      description: descriptions.SNAPSHOTS.MISSING_NEWLINE_BEFORE_CODE_BLOCK,
+                      start: this.getPositionFromIndex(end),
+                    },
+                  );
               }
             } else {
               throw this.unexpected({
@@ -197,5 +193,5 @@ export default createParser((ParserCore) =>
 
       return nodes;
     }
-  }
+  },
 );

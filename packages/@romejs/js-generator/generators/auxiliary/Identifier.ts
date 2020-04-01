@@ -10,16 +10,11 @@ import {Tokens} from '../../tokens';
 import {AnyNode, Identifier, identifier} from '@romejs/js-ast';
 import {word} from '@romejs/js-generator/tokens';
 
-export default function Identifier(
-  generator: Generator,
-  node: AnyNode,
-): Tokens {
-  node =
-    node.type === 'ReferenceIdentifier' ||
-    node.type === 'BindingIdentifier' ||
-    node.type === 'AssignmentIdentifier'
-      ? node
-      : identifier.assert(node);
+export default function Identifier(generator: Generator, node: AnyNode): Tokens {
+  node = node.type === 'ReferenceIdentifier' || node.type ===
+    'BindingIdentifier' || node.type === 'AssignmentIdentifier'
+    ? node
+    : identifier.assert(node);
 
   return [word(node.name)];
 }

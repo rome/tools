@@ -14,12 +14,10 @@ export type Mapping = {
     line: Number1;
     column: Number0;
   };
-  original:
-    | undefined
-    | {
-      line: Number1;
-      column: Number0;
-    };
+  original: undefined | {
+    line: Number1;
+    column: Number0;
+  };
   source: undefined | string;
   name: undefined | string;
 };

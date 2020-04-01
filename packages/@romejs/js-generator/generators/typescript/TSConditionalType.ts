@@ -23,20 +23,17 @@ export default function TSConditionalType(
     ...generator.print(node.extendsType, node),
     space,
 
-    group(
-      [
-        [operator('?'), space, ...generator.print(node.trueType, node)],
-        [operator(':'), space, ...generator.print(node.falseType, node)],
-      ],
-      {
-        priority: true,
-        broken: {
-          separator: [newline],
-        },
-        unbroken: {
-          separator: [space],
-        },
+    group([
+      [operator('?'), space, ...generator.print(node.trueType, node)],
+      [operator(':'), space, ...generator.print(node.falseType, node)],
+    ], {
+      priority: true,
+      broken: {
+        separator: [newline],
       },
-    ),
+      unbroken: {
+        separator: [space],
+      },
+    }),
   ];
 }

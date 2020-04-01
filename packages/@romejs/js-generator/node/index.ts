@@ -21,8 +21,8 @@ function isOrHasCallExpression(node: AnyNode): boolean {
   }
 
   if (node.type === 'MemberExpression') {
-    return (
-      isOrHasCallExpression(node.object) || isOrHasCallExpression(node.property)
+    return isOrHasCallExpression(node.object) || isOrHasCallExpression(
+      node.property,
     );
   }
 
@@ -53,10 +53,7 @@ function orderLoc(
 }
 
 export function hasExtraLineBetween(node: AnyNode): boolean {
-  if (
-    node.type === 'ExportLocalDeclaration' &&
-    node.declaration !== undefined
-  ) {
+  if (node.type === 'ExportLocalDeclaration' && node.declaration !== undefined) {
     return hasExtraLineBetween(node.declaration);
   }
 
@@ -75,12 +72,9 @@ export function getLinesBetween(
   aNode: undefined | AnyNode,
   bNode: undefined | AnyNode,
 ): Array<number> {
-  if (
-    aNode !== undefined &&
-    bNode !== undefined &&
-    aNode.loc !== undefined &&
-    bNode.loc !== undefined
-  ) {
+  if (aNode !== undefined && bNode !== undefined && aNode.loc !== undefined &&
+        bNode.loc !==
+        undefined) {
     const [a, b] = orderLoc(aNode.loc, bNode.loc);
     const lines: Array<number> = [];
     for (let line = get1(a.end.line); line < get1(b.start.line); line++) {

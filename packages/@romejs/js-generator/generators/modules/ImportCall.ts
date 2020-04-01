@@ -9,10 +9,7 @@ import Generator from '../../Generator';
 import {Tokens, word, operator} from '../../tokens';
 import {ImportCall, importCall, AnyNode} from '@romejs/js-ast';
 
-export default function ImportCall(
-  generator: Generator,
-  node: AnyNode,
-): Tokens {
+export default function ImportCall(generator: Generator, node: AnyNode): Tokens {
   node = importCall.assert(node);
 
   return [

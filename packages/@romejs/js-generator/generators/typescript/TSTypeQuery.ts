@@ -9,10 +9,7 @@ import {TSTypeQuery, tsTypeQuery, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
 import {Tokens, word, space} from '../../tokens';
 
-export default function TSTypeQuery(
-  generator: Generator,
-  node: AnyNode,
-): Tokens {
+export default function TSTypeQuery(generator: Generator, node: AnyNode): Tokens {
   node = tsTypeQuery.assert(node);
 
   return [word('typeof'), space, ...generator.print(node.exprName, node)];

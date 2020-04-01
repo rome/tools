@@ -16,10 +16,7 @@ import {
   Tokens,
 } from '@romejs/js-generator/tokens';
 
-export default function SwitchCase(
-  generator: Generator,
-  node: AnyNode,
-): Tokens {
+export default function SwitchCase(generator: Generator, node: AnyNode): Tokens {
   node = switchCase.assert(node);
 
   let tokens: Tokens = [];

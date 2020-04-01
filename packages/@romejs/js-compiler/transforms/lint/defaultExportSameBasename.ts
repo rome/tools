@@ -21,9 +21,7 @@ import {descriptions} from '@romejs/diagnostics';
 function isValidDeclaration(
   node: AnyNode,
 ): node is FunctionDeclaration | ClassDeclaration {
-  return (
-    node.type === 'FunctionDeclaration' || node.type === 'ClassDeclaration'
-  );
+  return node.type === 'FunctionDeclaration' || node.type === 'ClassDeclaration';
 }
 
 function filenameToId(path: UnknownFilePath, capitalize: boolean): string {
@@ -51,17 +49,17 @@ export default {
         }
       }
 
-      if (
-        defaultExport !== undefined &&
-        isValidDeclaration(defaultExport.declaration)
-      ) {
+      if (defaultExport !== undefined && isValidDeclaration(
+          defaultExport.declaration,
+        )) {
         const {declaration} = defaultExport;
 
         // Get the export default id
         const id = declaration.id;
         if (id !== undefined && context.path !== undefined) {
-          const type =
-            declaration.type === 'FunctionDeclaration' ? 'function' : 'class';
+          const type = declaration.type === 'FunctionDeclaration'
+            ? 'function'
+            : 'class';
           const basename = filenameToId(context.path, type === 'class');
 
           if (basename !== id.name) {

@@ -13,8 +13,9 @@ export default function FlowOpaqueType(
   generator: Generator,
   node: AnyNode,
 ): Tokens {
-  node =
-    node.type === 'FlowDeclareOpaqueType' ? node : flowOpaqueType.assert(node);
+  node = node.type === 'FlowDeclareOpaqueType'
+    ? node
+    : flowOpaqueType.assert(node);
 
   let tokens: Tokens = [
     word('opaque'),

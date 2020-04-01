@@ -64,14 +64,11 @@ export type GroupToken = {
     before?: Tokens;
     after?: Tokens;
   };
-  groups: Array<
-    | Tokens
-    | {
-        tokens: Tokens;
-        afterBroken?: Tokens;
-        afterUnbroken?: Tokens;
-      }
-  >;
+  groups: Array<Tokens | {
+    tokens: Tokens;
+    afterBroken?: Tokens;
+    afterUnbroken?: Tokens;
+  }>;
 };
 
 export type LinkedGroupsToken = {

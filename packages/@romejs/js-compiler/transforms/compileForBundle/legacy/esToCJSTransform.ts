@@ -123,18 +123,19 @@ export default {
 
           // Handle type declarations (these have no runtime ordering implications)
           if (declaration.type === 'TSModuleDeclaration' || declaration.type ===
-          'TSEnumDeclaration' || declaration.type === 'FlowInterfaceDeclaration' ||
-          declaration.type === 'TypeAliasTypeAnnotation' ||
-          declaration.type === 'TSInterfaceDeclaration' ||
-          declaration.type === 'TSDeclareFunction' ||
-          declaration.type === 'FlowOpaqueType') {
+              'TSEnumDeclaration' || declaration.type ===
+              'FlowInterfaceDeclaration' || declaration.type ===
+              'TypeAliasTypeAnnotation' || declaration.type ===
+              'TSInterfaceDeclaration' || declaration.type ===
+              'TSDeclareFunction' || declaration.type === 'FlowOpaqueType') {
             bottomBody.push(declaration);
             continue;
           }
 
           // Handle variables and classes
           if (declaration.type === 'VariableDeclarationStatement' ||
-          declaration.type === 'ClassDeclaration') {
+                declaration.type ===
+                'ClassDeclaration') {
             bottomBody.push(declaration);
 
             for (const id of getBindingIdentifiers(declaration)) {
@@ -208,7 +209,7 @@ export default {
 
         // Handle type declarations (these have no runtime ordering implications)
         if (declaration.type === 'FlowDeclareOpaqueType' || declaration.type ===
-        'TSInterfaceDeclaration' || declaration.type === 'TSDeclareFunction') {
+            'TSInterfaceDeclaration' || declaration.type === 'TSDeclareFunction') {
           // Maybe we should keep them? Not sure what they would desugar to
           continue;
         }

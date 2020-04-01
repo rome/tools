@@ -18,5 +18,5 @@ export default function RegExpSubExpression(
   node: AnyNode,
 ): Tokens {
   node = regExpSubExpression.assert(node);
-  return flatten(node.body.map(item => generator.print(item, node)));
+  return flatten(node.body.map((item) => generator.print(item, node)));
 }

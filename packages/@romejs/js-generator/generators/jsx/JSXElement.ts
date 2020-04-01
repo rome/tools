@@ -9,10 +9,7 @@ import Generator from '../../Generator';
 import {Tokens, space, indent, flatten, operator} from '../../tokens';
 import {JSXElement, jsxElement, AnyNode} from '@romejs/js-ast';
 
-export default function JSXElement(
-  generator: Generator,
-  node: AnyNode,
-): Tokens {
+export default function JSXElement(generator: Generator, node: AnyNode): Tokens {
   node = jsxElement.assert(node);
 
   let tokens: Tokens = [
@@ -39,13 +36,15 @@ export default function JSXElement(
     return [...tokens, space, operator('/>')];
   } else {
     return [
-      ...tokens,
-      operator('>'),
-      indent(flatten(node.children.map(child => generator.print(child, node)))),
+        ...tokens,
+        operator('>'),
+        indent(flatten(
+          node.children.map((child) => generator.print(child, node)),
+        )),
 
-      operator('</'),
-      ...generator.print(node.name, node),
-      operator('>'),
-    ];
+        operator('</'),
+        ...generator.print(node.name, node),
+        operator('>'),
+      ];
   }
 }

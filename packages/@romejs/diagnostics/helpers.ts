@@ -54,11 +54,13 @@ export function buildSuggestionAdvice(
 
   // If there's only 2 suggestions then just say "Did you mean A or B?" rather than printing the list
   if (strings.length === 1) {
-    advice.push({
-      type: 'log',
-      category: 'info',
-      message: `Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
-    });
+    advice.push(
+      {
+        type: 'log',
+        category: 'info',
+        message: `Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
+      },
+    );
   } else {
     advice.push({
       type: 'log',
@@ -88,7 +90,7 @@ export function buildSuggestionAdvice(
 
   // TODO check if ANY of the suggestions match
   if (topRatingRaw !== value && topRatingRaw.toLowerCase() ===
-  value.toLowerCase()) {
+      value.toLowerCase()) {
     advice.push({
       type: 'log',
       category: 'warn',

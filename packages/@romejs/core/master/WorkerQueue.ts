@@ -16,9 +16,10 @@ type WorkerQueueItem<M> = {
   queue: Queue<M>;
 };
 
-type Callback<M> = (path: AbsoluteFilePath, metadata: M) =>
-  | undefined
-  | Promise<void>;
+type Callback<M> = (
+  path: AbsoluteFilePath,
+  metadata: M,
+) => undefined | Promise<void>;
 
 export default class WorkerQueue<M> {
   constructor(master: Master) {

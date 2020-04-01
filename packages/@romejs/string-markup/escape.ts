@@ -12,8 +12,7 @@ import {isEscaped} from '@romejs/parser-core';
 
 // A tagged template literal helper that will escape all interpolated strings, ensuring only markup works
 export function markup(
-  strs: TemplateStringsArray,
-  ...values: Array<unknown>
+  strs: TemplateStringsArray,...values: Array<unknown>
 ): string {
   let out = '';
 

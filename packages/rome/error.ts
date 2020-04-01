@@ -39,9 +39,10 @@ export function throwDiagnostics(diagnostics: Diagnostics) {
   throw err;
 }
 
-export function wrapForErrors<T, Args extends Array<unknown>>(
-  callback: (...args: Args) => Promise<T>,
-): (...args: Args) => Promise<T> {
+export function wrapForErrors<
+  T,
+  Args extends Array<unknown>
+>(callback: (...args: Args) => Promise<T>): (...args: Args) => Promise<T> {
   return async function(...args: Args): Promise<T> {
     try {
       return await callback(...args);

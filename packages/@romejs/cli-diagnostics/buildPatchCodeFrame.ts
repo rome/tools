@@ -16,18 +16,16 @@ import {Diffs, diffConstants, groupDiffByLines} from '@romejs/string-diff';
 import {markupTag, escapeMarkup} from '@romejs/string-markup';
 
 function formatDiffLine(diffs: Diffs) {
-  return diffs
-    .map(([type, text]) => {
-      if (type === diffConstants.DELETE) {
-        return markupTag('red', escapeMarkup(showInvisibles(text)));
-      } else if (type === diffConstants.ADD) {
-        return markupTag('green', escapeMarkup(showInvisibles(text)));
-      } else {
-        // type === diffConstants.EQUAL
-        return escapeMarkup(text);
-      }
-    })
-    .join('');
+  return diffs.map(([type, text]) => {
+    if (type === diffConstants.DELETE) {
+      return markupTag('red', escapeMarkup(showInvisibles(text)));
+    } else if (type === diffConstants.ADD) {
+      return markupTag('green', escapeMarkup(showInvisibles(text)));
+    } else {
+      // type === diffConstants.EQUAL
+      return escapeMarkup(text);
+    }
+  }).join('');
 }
 
 const DELETE_MARKER = markupTag('red', '-');
@@ -57,11 +55,8 @@ export default function buildPatchCodeFrame(
     }
 
     if (hasChange) {
-      for (
-        let start = i - CODE_FRAME_CONTEXT_LINES;
-        start < i + CODE_FRAME_CONTEXT_LINES;
-        start++
-      ) {
+      for (let start = i - CODE_FRAME_CONTEXT_LINES; start < i +
+        CODE_FRAME_CONTEXT_LINES; start++) {
         shownLines.add(start);
 
         if (start > lastVisibleLine) {
@@ -81,9 +76,7 @@ export default function buildPatchCodeFrame(
   let truncated = false;
   let lastDisplayedLine = -1;
 
-  const skippedLine = `<emphasis>${CODE_FRAME_INDENT}${'.'.repeat(
-    lineLength,
-  )}${GUTTER}</emphasis>`;
+  const skippedLine = `<emphasis>${CODE_FRAME_INDENT}${'.'.repeat(lineLength)}${GUTTER}</emphasis>`;
 
   // Build the actual frame
   for (let i = 0; i < diffsByLine.length; i++) {
@@ -139,9 +132,7 @@ export default function buildPatchCodeFrame(
     const gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad count="${String(
       lineLength,
     )}">${String(lineNo)}</pad>${GUTTER}</emphasis>`;
-    const gutterNoLine = `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(
-      lineLength,
-    )}${GUTTER}</emphasis>`;
+    const gutterNoLine = `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(lineLength)}${GUTTER}</emphasis>`;
 
     if (hasAddition) {
       frame.push(`${gutterWithLine}${ADD_MARKER} ${formatDiffLine(addition)}`);
@@ -162,8 +153,7 @@ export default function buildPatchCodeFrame(
 
   if (truncated) {
     frame.push(
-      `${skippedLine} <dim><number>${displayedLines -
-        MAX_PATCH_LINES}</number> more lines truncated</dim>`,
+      `${skippedLine} <dim><number>${displayedLines - MAX_PATCH_LINES}</number> more lines truncated</dim>`,
     );
   }
 

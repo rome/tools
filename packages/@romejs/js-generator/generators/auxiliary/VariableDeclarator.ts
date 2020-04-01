@@ -9,10 +9,7 @@ import Generator from '../../Generator';
 import {VariableDeclarator, variableDeclarator, AnyNode} from '@romejs/js-ast';
 import {operator, space} from '@romejs/js-generator/tokens';
 
-export default function VariableDeclarator(
-  generator: Generator,
-  node: AnyNode,
-) {
+export default function VariableDeclarator(generator: Generator, node: AnyNode) {
   node = variableDeclarator.assert(node);
 
   if (node.init) {

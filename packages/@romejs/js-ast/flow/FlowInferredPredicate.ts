@@ -8,7 +8,9 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowInferredPredicate = JSNodeBase & {type: 'FlowInferredPredicate'};
+export type FlowInferredPredicate =
+  & JSNodeBase
+  & {type: 'FlowInferredPredicate'};
 
 export const flowInferredPredicate = createBuilder<FlowInferredPredicate>(
   'FlowInferredPredicate',

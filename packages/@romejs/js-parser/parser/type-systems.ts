@@ -67,78 +67,78 @@ export function parseTypeLiteralAnnotation(
 
   switch (parser.state.tokenType) {
     case tt.string:
-      {
-        const value = String(parser.state.tokenValue);
-        parser.next();
-        return parser.finishNode(start, {
-          type: 'StringLiteralTypeAnnotation',
-          value,
-        });
-      }
+    {
+      const value = String(parser.state.tokenValue);
+      parser.next();
+      return parser.finishNode(start, {
+        type: 'StringLiteralTypeAnnotation',
+        value,
+      });
+    }
 
     case tt.num:
-      {
+    {
+      const value = Number(parser.state.tokenValue);
+      parser.next();
+      return parser.finishNode(start, {
+        type: 'NumericLiteralTypeAnnotation',
+        value,
+      });
+    }
+
+    case tt._true:
+    case tt._false:
+    {
+      const value = parser.match(tt._true);
+      parser.next();
+      return parser.finishNode(start, {
+        type: 'BooleanLiteralTypeAnnotation',
+        value,
+      });
+    }
+
+    case tt.plusMin:
+    {
+      if (parser.state.tokenValue === '-') {
+        parser.next();
+
+        if (!parser.match(tt.num)) {
+          parser.addDiagnostic({
+            description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
+          });
+          parser.next();
+          return parser.finishNode(start, {
+            type: 'NumericLiteralTypeAnnotation',
+            value: 0,
+          });
+        }
+
         const value = Number(parser.state.tokenValue);
         parser.next();
         return parser.finishNode(start, {
           type: 'NumericLiteralTypeAnnotation',
-          value,
+          value: -value,
         });
-      }
-
-    case tt._true:
-    case tt._false:
-      {
-        const value = parser.match(tt._true);
+      } else {
+        parser.addDiagnostic({
+          description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_PLUS,
+        });
         parser.next();
-        return parser.finishNode(start, {
-          type: 'BooleanLiteralTypeAnnotation',
-          value,
-        });
-      }
 
-    case tt.plusMin:
-      {
-        if (parser.state.tokenValue === '-') {
-          parser.next();
-
-          if (!parser.match(tt.num)) {
-            parser.addDiagnostic({
-              description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
-            });
-            parser.next();
-            return parser.finishNode(start, {
-              type: 'NumericLiteralTypeAnnotation',
-              value: 0,
-            });
-          }
-
-          const value = Number(parser.state.tokenValue);
+        if (!parser.match(tt.num)) {
+          parser.addDiagnostic({
+            description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
+          });
           parser.next();
           return parser.finishNode(start, {
             type: 'NumericLiteralTypeAnnotation',
-            value: -value,
+            value: 0,
           });
-        } else {
-          parser.addDiagnostic({
-            description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_PLUS,
-          });
-          parser.next();
-
-          if (!parser.match(tt.num)) {
-            parser.addDiagnostic({
-              description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
-            });
-            parser.next();
-            return parser.finishNode(start, {
-              type: 'NumericLiteralTypeAnnotation',
-              value: 0,
-            });
-          }
-
-          return parseTypeLiteralAnnotation(parser);
         }
+
+        return parseTypeLiteralAnnotation(parser);
       }
+    }
 
     default:
       throw new Error(
@@ -147,7 +147,10 @@ export function parseTypeLiteralAnnotation(
   }
 }
 
-function parseFlowOrTS<F, TS>(
+function parseFlowOrTS<
+  F,
+  TS
+>(
   parser: JSParser,
   label: string,
   flow: (parser: JSParser) => F,
@@ -219,7 +222,11 @@ export function addFlowDiagnostic(
   });
 }
 
-export function addTSDiagnostic(parser: JSParser, label: string, start: Position) {
+export function addTSDiagnostic(
+  parser: JSParser,
+  label: string,
+  start: Position,
+) {
   if (parser.isSyntaxEnabled('ts')) {
     return;
   }
@@ -242,8 +249,11 @@ export function parseClassImplements(
 }
 
 export function parsePrimaryTypeAnnotation(parser: JSParser): AnyPrimaryType {
-  return parseFlowOrTS(parser, 'type annotation', parseFlowTypeAnnotation, () =>
-    parseTSTypeAnnotation(parser, true)
+  return parseFlowOrTS(
+    parser,
+    'type annotation',
+    parseFlowTypeAnnotation,
+    () => parseTSTypeAnnotation(parser, true),
   );
 }
 
@@ -256,19 +266,20 @@ export function parseInterface(
     start,
   });
 
-  return parseFlowOrTS(parser, 'interface', () =>
-    parseFlowInterface(parser, start), () =>
-    parseTSInterfaceDeclaration(parser, start)
-  );
+  return parseFlowOrTS(parser, 'interface', () => parseFlowInterface(
+    parser,
+    start,
+  ), () => parseTSInterfaceDeclaration(parser, start));
 }
 
 export function parseDeclare(
   parser: JSParser,
   start: Position,
 ): TSDeclareNode | AnyFlowDeclare {
-  return parseFlowOrTS(parser, 'type declaration', () =>
-    parseFlowDeclare(parser, start), () => parseTSDeclare(parser, start)
-  );
+  return parseFlowOrTS(parser, 'type declaration', () => parseFlowDeclare(
+    parser,
+    start,
+  ), () => parseTSDeclare(parser, start));
 }
 
 export type TypeAnnotationAndPredicate = [undefined | AnyPrimaryType,
@@ -292,9 +303,11 @@ export function parseTypeAlias(
   parser: JSParser,
   start: Position,
 ): TypeAliasTypeAnnotation | TypeAliasTypeAnnotation {
-  return parseFlowOrTS(parser, 'type alias', () =>
-    parseFlowTypeAliasTypeAnnotation(parser, start), () =>
-    parseTSTypeAliasTypeAnnotation(parser, start)
+  return parseFlowOrTS(
+    parser,
+    'type alias',
+    () => parseFlowTypeAliasTypeAnnotation(parser, start),
+    () => parseTSTypeAliasTypeAnnotation(parser, start),
   );
 }
 
@@ -302,8 +315,11 @@ export function parseTypeParameters(
   parser: JSParser,
   allowDefault: boolean = false,
 ): AnyTypeParameter {
-  return parseFlowOrTS(parser, 'type parameters', () =>
-    parseFlowTypeParameterDeclaration(parser, allowDefault), parseTSTypeParameters
+  return parseFlowOrTS(
+    parser,
+    'type parameters',
+    () => parseFlowTypeParameterDeclaration(parser, allowDefault),
+    parseTSTypeParameters,
   );
 }
 
@@ -371,10 +387,10 @@ export function parseTypeExpressionStatement(
   switch (expr.name) {
     case 'declare':
       if (parser.match(tt._class) || parser.match(tt.name) || parser.match(
-        tt._function,
-      ) || parser.match(tt._const) || parser.match(tt._var) || parser.match(
-        tt._export,
-      )) {
+          tt._function,
+        ) || parser.match(tt._const) || parser.match(tt._var) || parser.match(
+          tt._export,
+        )) {
         return parseDeclare(parser, start);
       } else {
         break;
@@ -402,14 +418,14 @@ export function parseTypeExpressionStatement(
       }
 
     case 'enum':
-      {
-        if (parser.match(tt.name)) {
-          addTSDiagnostic(parser, 'enum declaration', start);
-          return parseTSEnumDeclaration(parser, start, /* isConst */false);
-        } else {
-          break;
-        }
+    {
+      if (parser.match(tt.name)) {
+        addTSDiagnostic(parser, 'enum declaration', start);
+        return parseTSEnumDeclaration(parser, start, /* isConst */false);
+      } else {
+        break;
       }
+    }
 
     case 'module':
       if (parser.match(tt.string)) {
@@ -429,6 +445,7 @@ export function parseTypeExpressionStatement(
 
       addTSDiagnostic(parser, 'module or namespace declaration', start);
       return parseTSModuleOrNamespaceDeclaration(parser, start);
+
 
     // TODO abstract this into typescript.js
     case 'global':

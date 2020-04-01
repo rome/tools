@@ -28,9 +28,9 @@ export default function TSModuleDeclaration(
   }
 
   if (!node.global) {
-    tokens.push(
-      word(node.id.type === 'BindingIdentifier' ? 'namespace' : 'module'),
-    );
+    tokens.push(word(node.id.type === 'BindingIdentifier'
+      ? 'namespace'
+      : 'module'));
     tokens.push(space);
   }
 

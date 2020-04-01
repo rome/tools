@@ -8,12 +8,10 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type SequenceExpression =
-  & JSNodeBase
-  & {
-    type: 'SequenceExpression';
-    expressions: Array<AnyExpression>;
-  };
+export type SequenceExpression = JSNodeBase & {
+  type: 'SequenceExpression';
+  expressions: Array<AnyExpression>;
+};
 
 export const sequenceExpression = createBuilder<SequenceExpression>(
   'SequenceExpression',

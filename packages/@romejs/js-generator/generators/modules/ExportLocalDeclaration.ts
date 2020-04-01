@@ -27,14 +27,10 @@ export default function ExportLocalDeclaration(
   return [word('export'), space, ..._ExportDeclaration(generator, node)];
 }
 
-export function _ExportDeclaration(
-  generator: Generator,
-  node: AnyNode,
-): Tokens {
-  node =
-    node.type === 'ExportDefaultDeclaration'
-      ? node
-      : exportLocalDeclaration.assert(node);
+export function _ExportDeclaration(generator: Generator, node: AnyNode): Tokens {
+  node = node.type === 'ExportDefaultDeclaration'
+    ? node
+    : exportLocalDeclaration.assert(node);
 
   if (node.declaration) {
     const declar = node.declaration;

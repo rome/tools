@@ -9,10 +9,7 @@ import {TSTupleType, tsTupleType, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
 import {Tokens, operator} from '../../tokens';
 
-export default function TSTupleType(
-  generator: Generator,
-  node: AnyNode,
-): Tokens {
+export default function TSTupleType(generator: Generator, node: AnyNode): Tokens {
   node = tsTupleType.assert(node);
 
   return [

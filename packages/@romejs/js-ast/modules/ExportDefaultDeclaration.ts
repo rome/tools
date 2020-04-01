@@ -16,20 +16,18 @@ import {
 import {createBuilder} from '../utils';
 import {TSDeclareFunction} from '../typescript/TSDeclareFunction';
 
-export type ExportDefaultDeclaration =
-  & JSNodeBase
-  & {
-    type: 'ExportDefaultDeclaration';
-    declaration:
-      | FunctionDeclaration
-      | ClassDeclaration
-      | FlowDeclareOpaqueType
-      | TSInterfaceDeclaration
-      | TSDeclareFunction
-      | AnyExpression;
-    exportKind?: undefined;
-    declare?: boolean;
-  };
+export type ExportDefaultDeclaration = JSNodeBase & {
+  type: 'ExportDefaultDeclaration';
+  declaration:
+    | FunctionDeclaration
+    | ClassDeclaration
+    | FlowDeclareOpaqueType
+    | TSInterfaceDeclaration
+    | TSDeclareFunction
+    | AnyExpression;
+  exportKind?: undefined;
+  declare?: boolean;
+};
 
 export const exportDefaultDeclaration = createBuilder<ExportDefaultDeclaration>(
   'ExportDefaultDeclaration',

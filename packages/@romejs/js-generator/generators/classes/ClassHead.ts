@@ -25,11 +25,8 @@ export default function ClassHead(generator: Generator, node: AnyNode): Tokens {
     ];
   }
 
-  if (
-    node.implements !== undefined &&
-    node.implements.length > 0 &&
-    generator.options.typeAnnotations
-  ) {
+  if (node.implements !== undefined && node.implements.length > 0 &&
+      generator.options.typeAnnotations) {
     tokens = [
       ...tokens,
       space,

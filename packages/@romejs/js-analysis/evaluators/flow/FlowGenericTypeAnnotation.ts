@@ -15,7 +15,9 @@ import {
 } from '@romejs/js-ast';
 import GenericT from '../../types/GenericT';
 
-function getName(node: ReferenceIdentifier | FlowQualifiedTypeIdentifier): string {
+function getName(
+  node: ReferenceIdentifier | FlowQualifiedTypeIdentifier,
+): string {
   if (node.type === 'ReferenceIdentifier') {
     return node.name;
   } else {

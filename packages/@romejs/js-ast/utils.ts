@@ -43,10 +43,9 @@ export function assertNodeTypeSet(names: Map<string, unknown>, desc: string) {
   }
 }
 
-type JustNodeKeysProp<K, V> = V extends
-  | NodeBase
-  | Array<NodeBase>
-  | Array<undefined | NodeBase> ? K : never;
+type JustNodeKeysProp<K, V> = V extends NodeBase | Array<NodeBase> | Array<
+  | undefined
+  | NodeBase> ? K : never;
 
 type JustNodeKeys<T> = ExcludeCoreNodeKeys<{ [K in keyof T]: JustNodeKeysProp<
   K,
@@ -90,10 +89,9 @@ export function createQuickBuilder<
   return new QuickBuilder(type, opts.visitorKeys, quickKey);
 }
 
-export function createBuilder<Node extends AnyNode>(
-  type: string,
-  opts: CreateBuilderOptions<Node>,
-): Builder<Node> {
+export function createBuilder<
+  Node extends AnyNode
+>(type: string, opts: CreateBuilderOptions<Node>): Builder<Node> {
   declareBuilder(type, opts);
 
   return new Builder(type, opts.visitorKeys);
@@ -144,7 +142,11 @@ class Builder<Node extends AnyNode> {
 }
 
 class QuickBuilder<Node extends AnyNode, Arg> extends Builder<Node> {
-  constructor(type: string, visitorKeys: VisitorKeys<Node>, quickKey: keyof Node) {
+  constructor(
+    type: string,
+    visitorKeys: VisitorKeys<Node>,
+    quickKey: keyof Node,
+  ) {
     super(type, visitorKeys);
     this.quickKey = quickKey;
   }

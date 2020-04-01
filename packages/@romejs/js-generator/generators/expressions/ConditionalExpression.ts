@@ -22,22 +22,19 @@ export default function ConditionalExpression(
   return [
     ...generator.print(node.test, node),
     space,
-    group(
-      [
-        [operator('?'), space, ...generator.print(node.consequent, node)],
-        [operator(':'), space, ...generator.print(node.alternate, node)],
-      ],
-      {
-        priority: true,
-        broken: {
-          before: [newline],
-          indentNewline: false,
-          separator: [newline],
-        },
-        unbroken: {
-          separator: [space],
-        },
+    group([
+      [operator('?'), space, ...generator.print(node.consequent, node)],
+      [operator(':'), space, ...generator.print(node.alternate, node)],
+    ], {
+      priority: true,
+      broken: {
+        before: [newline],
+        indentNewline: false,
+        separator: [newline],
       },
-    ),
+      unbroken: {
+        separator: [space],
+      },
+    }),
   ];
 }

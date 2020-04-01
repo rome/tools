@@ -13,7 +13,7 @@ export default function CallExpression(
   generator: Generator,
   node: AnyNode,
 ): Tokens {
-  node =
+    node =
     node.type === 'OptionalCallExpression' || node.type === 'NewExpression'
       ? node
       : callExpression.assert(node);
