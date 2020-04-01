@@ -39,7 +39,7 @@ Object {
       origins: Array [Object {category: 'lint'}]
       description: Object {
         category: 'lint/unusedVariables'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused variable <emphasis>foo</emphasis>'}
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused constant <emphasis>foo</emphasis>'}
       }
       location: Object {
         filename: 'unknown'
@@ -97,7 +97,7 @@ Object {
       origins: Array [Object {category: 'lint'}]
       description: Object {
         category: 'lint/unusedVariables'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused variable <emphasis>foo</emphasis>'}
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused constant <emphasis>foo</emphasis>'}
       }
       location: Object {
         filename: 'unknown'
@@ -131,7 +131,7 @@ Object {
       origins: Array [Object {category: 'lint'}]
       description: Object {
         category: 'lint/unusedVariables'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused variable <emphasis>foo</emphasis>'}
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused constant <emphasis>foo</emphasis>'}
       }
       location: Object {
         filename: 'unknown'
@@ -212,7 +212,7 @@ Object {
       origins: Array [Object {category: 'lint'}]
       description: Object {
         category: 'lint/unusedVariables'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused variable <emphasis>foo</emphasis>'}
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused constant <emphasis>foo</emphasis>'}
       }
       location: Object {
         filename: 'unknown'
@@ -246,7 +246,7 @@ Object {
       origins: Array [Object {category: 'lint'}]
       description: Object {
         category: 'lint/unusedVariables'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused variable <emphasis>foo</emphasis>'}
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused constant <emphasis>foo</emphasis>'}
       }
       location: Object {
         filename: 'unknown'

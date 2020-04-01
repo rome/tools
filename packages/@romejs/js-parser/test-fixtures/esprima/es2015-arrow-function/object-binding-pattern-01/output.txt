@@ -283,7 +283,7 @@ Program {
               }
             }
             typeAnnotation: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
@@ -378,7 +378,7 @@ Program {
               }
               types: Array [
                 FlowGenericTypeAnnotation {
-                  id: Identifier {
+                  id: ReferenceIdentifier {
                     name: 'd'
                     loc: Object {
                       filename: 'input.js'
