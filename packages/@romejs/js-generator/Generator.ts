@@ -361,7 +361,7 @@ export default class Generator {
         continue;
       }
       if (i === str.length) {
-        return undefined;
+        return;
       }
 
       const cha = str[i];
@@ -371,6 +371,8 @@ export default class Generator {
         indent();
         terminatorState.printed = true;
       }
+
+      return;
     }
 
     function push(str: string) {
