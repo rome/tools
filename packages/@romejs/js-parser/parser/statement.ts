@@ -312,8 +312,7 @@ export function parseStatement(
 
       return result;
 
-    case tt._class:
-    {
+    case tt._class: {
       if (context !== undefined) {
         parser.unexpectedToken();
       }
@@ -362,8 +361,7 @@ export function parseStatement(
       return parseEmptyStatement(parser, start);
 
     case tt._export:
-    case tt._import:
-    {
+    case tt._import: {
       const nextToken = parser.lookaheadState();
       if (nextToken.tokenType === tt.parenL || nextToken.tokenType === tt.dot) {
         break;

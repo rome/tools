@@ -9,10 +9,7 @@ import Builder from '../../Builder';
 import {Tokens, newline, indent, operator} from '../../tokens';
 import {BlockStatement, blockStatement, AnyNode} from '@romejs/js-ast';
 
-export default function BlockStatement(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
+export default function BlockStatement(builder: Builder, node: AnyNode): Tokens {
   node = blockStatement.assert(node);
 
   let tokens: Tokens = [
@@ -20,9 +17,9 @@ export default function BlockStatement(
     indent(builder.tokenizeInnerComments(node)),
   ];
 
-  const hasDirectives: boolean = Boolean(
-    node.directives && node.directives.length > 0,
-  );
+  const hasDirectives: boolean = Boolean(node.directives &&
+      node.directives.length >
+      0);
 
   if (node.body.length > 0 || hasDirectives) {
     tokens = [

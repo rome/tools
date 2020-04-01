@@ -10,10 +10,7 @@ import {Builder} from '@romejs/js-formatter';
 import {Tokens} from '../../tokens';
 import {printMethod} from '../utils';
 
-export default function TSDeclareMethod(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
+export default function TSDeclareMethod(builder: Builder, node: AnyNode): Tokens {
   node = tsDeclareMethod.assert(node);
 
   return [

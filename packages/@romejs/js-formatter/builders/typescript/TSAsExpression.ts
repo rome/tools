@@ -9,10 +9,7 @@ import {TSAsExpression, tsAsExpression, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, space, word} from '../../tokens';
 
-export default function TSAsExpression(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
+export default function TSAsExpression(builder: Builder, node: AnyNode): Tokens {
   node = tsAsExpression.assert(node);
 
   if (builder.options.typeAnnotations) {

@@ -9,10 +9,7 @@ import {TSTypeAssertion, tsTypeAssertion, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, operator, space} from '../../tokens';
 
-export default function TSTypeAssertion(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
+export default function TSTypeAssertion(builder: Builder, node: AnyNode): Tokens {
   node = tsTypeAssertion.assert(node);
 
   if (builder.options.typeAnnotations) {

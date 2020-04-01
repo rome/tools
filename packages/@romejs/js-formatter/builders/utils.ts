@@ -54,54 +54,49 @@ export function buildForXStatementBuilder(op: 'of' | 'in'): BuilderMethod {
 
 export function buildYieldAwaitBuilder(keyword: string): BuilderMethod {
   return function(builder: Builder, node: AnyNode): Tokens {
-    node =
-      node.type === 'YieldExpression' ? node : awaitExpression.assert(node);
+      node = node.type === 'YieldExpression'
+        ? node
+        : awaitExpression.assert(node);
 
-    const tokens: Tokens = [word(keyword)];
+      const tokens: Tokens = [word(keyword)];
 
-    if (node.type === 'YieldExpression' && node.delegate === true) {
-      tokens.push(operator('*'));
-    }
+      if (node.type === 'YieldExpression' && node.delegate === true) {
+        tokens.push(operator('*'));
+      }
 
-    if (node.argument) {
-      return [
-        ...tokens,
-        space,
-        terminatorless(builder.tokenize(node.argument, node)),
-      ];
-    } else {
-      return tokens;
-    }
-  };
+      if (node.argument) {
+        return [
+          ...tokens,
+          space,
+          terminatorless(builder.tokenize(node.argument, node)),
+        ];
+      } else {
+        return tokens;
+      }
+    };
 }
 
 export function buildLabelStatementBuilder(prefix: string): BuilderMethod {
   return function(builder: Builder, node: AnyNode): Tokens {
-    node =
-      node.type === 'ContinueStatement' ||
-      node.type === 'ReturnStatement' ||
-      node.type === 'BreakStatement'
-        ? node
-        : throwStatement.assert(node);
+      node =
+        node.type === 'ContinueStatement' || node.type === 'ReturnStatement' ||
+        node.type === 'BreakStatement' ? node : throwStatement.assert(node);
 
     let tokens: Tokens = [word(prefix)];
 
-    if (
-      (node.type === 'ContinueStatement' || node.type === 'BreakStatement') &&
-      node.label !== undefined
-    ) {
+    if ((node.type === 'ContinueStatement' || node.type === 'BreakStatement') &&
+        node.label !== undefined) {
       tokens.push(space);
       tokens = tokens.concat(builder.tokenize(node.label, node));
     }
 
-    if (
-      (node.type === 'ThrowStatement' || node.type === 'ReturnStatement') &&
-      node.argument !== undefined
-    ) {
+    if ((node.type === 'ThrowStatement' || node.type === 'ReturnStatement') &&
+          node.argument !==
+          undefined) {
       tokens.push(space);
-      tokens.push(
-        breakGroup([[terminatorless(builder.tokenize(node.argument, node))]]),
-      );
+      tokens.push(breakGroup([
+        [terminatorless(builder.tokenize(node.argument, node))],
+      ]));
     }
 
     tokens.push(operator(';'));

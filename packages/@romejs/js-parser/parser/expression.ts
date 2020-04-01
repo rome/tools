@@ -1373,15 +1373,13 @@ export function parseExpressionAtom(
     case tt._import:
       return parseImportOrMetaProperty(parser);
 
-    case tt._this:
-    {
+    case tt._this: {
       const start = parser.getPosition();
       parser.next();
       return parser.finishNode(start, {type: 'ThisExpression'});
     }
 
-    case tt.name:
-    {
+    case tt.name: {
       const start = parser.getPosition();
       const containsEsc = parser.state.escapePosition !== undefined;
       const id = parseIdentifier(parser);
@@ -1454,8 +1452,7 @@ export function parseExpressionAtom(
     case tt._function:
       return parseFunctionExpressionOrMetaProperty(parser);
 
-    case tt._class:
-    {
+    case tt._class: {
       const start = parser.getPosition();
       return parseClassExpression(parser, start);
     }
@@ -1466,8 +1463,7 @@ export function parseExpressionAtom(
     case tt.backQuote:
       return parseTemplate(parser, false);
 
-    default:
-    {
+    default: {
       const start = parser.getPosition();
       parser.addDiagnostic({
         description: descriptions.JS_PARSER.UNKNOWN_EXPRESSION_ATOM_START(

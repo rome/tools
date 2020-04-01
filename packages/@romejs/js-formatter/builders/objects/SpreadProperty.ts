@@ -9,10 +9,7 @@ import Builder from '../../Builder';
 import {Tokens, operator} from '../../tokens';
 import {SpreadProperty, spreadProperty, AnyNode} from '@romejs/js-ast';
 
-export default function SpreadProperty(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
+export default function SpreadProperty(builder: Builder, node: AnyNode): Tokens {
   node = spreadProperty.assert(node);
 
   return [operator('...'), ...builder.tokenize(node.argument, node)];

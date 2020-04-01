@@ -13,10 +13,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function ArrowFunctionExpression(
-  builder: Builder,
-  node: AnyNode,
-) {
+export default function ArrowFunctionExpression(builder: Builder, node: AnyNode) {
   node = arrowFunctionExpression.assert(node);
 
   const tokens: Tokens = [];

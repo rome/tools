@@ -1567,8 +1567,7 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
       }
       break;
 
-    case tt.parenL:
-    {
+    case tt.parenL: {
       const openContext = parser.expectOpening(
         tt.parenL,
         tt.parenR,

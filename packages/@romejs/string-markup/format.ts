@@ -191,8 +191,7 @@ export function markupToAnsi(
 ): string {
   return formatReduceFromInput(input, (tag, attributes, value) => {
     switch (tag) {
-      case 'hyperlink':
-      {
+      case 'hyperlink': {
         let text = value;
         let hyperlink = attributes.get('target');
 
@@ -210,8 +209,7 @@ export function markupToAnsi(
       case 'pad':
         return formatPad(attributes, value);
 
-      case 'filelink':
-      {
+      case 'filelink': {
         const {text, href} = formatFileLink(attributes, value, opts);
         return formatAnsi.hyperlink(text, href);
       }

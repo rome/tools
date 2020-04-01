@@ -23,19 +23,16 @@ export default function AssignmentExpression(
   _node: AnyNode,
   parent: AnyNode,
 ): Tokens {
-  const node: OurNode =
-    _node.type === 'BinaryExpression' || _node.type === 'LogicalExpression'
-      ? _node
-      : assignmentExpression.assert(_node);
+  const node: OurNode = _node.type === 'BinaryExpression' || _node.type ===
+    'LogicalExpression' ? _node : assignmentExpression.assert(_node);
 
   let tokens: Tokens = [];
 
   // Somewhere inside a for statement `init` node but doesn't usually
   // needs a paren except for `in` expressions: `for (a in b ? a : b;;)`
-  const needsExtraParens =
-    builder.inForStatementInitCounter > 0 &&
-    node.operator === 'in' &&
-    !n.needsParens(node, parent, []);
+  const needsExtraParens = builder.inForStatementInitCounter > 0 &&
+      node.operator ===
+      'in' && !n.needsParens(node, parent, []);
 
   if (needsExtraParens) {
     tokens.push(operator('('));

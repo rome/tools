@@ -25,11 +25,8 @@ export default function ClassHead(builder: Builder, node: AnyNode): Tokens {
     ];
   }
 
-  if (
-    node.implements !== undefined &&
-    node.implements.length > 0 &&
-    builder.options.typeAnnotations
-  ) {
+  if (node.implements !== undefined && node.implements.length > 0 &&
+      builder.options.typeAnnotations) {
     tokens = [
       ...tokens,
       space,

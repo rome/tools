@@ -18,8 +18,7 @@ export default function LogicalExpression(node: AnyNode, scope: Scope) {
   node = logicalExpression.assert(node);
 
   switch (node.operator) {
-    case '||':
-    {
+    case '||': {
       const left = scope.refine().evaluate(node.left);
       const right = scope.refine().evaluate(node.right);
 
@@ -46,8 +45,7 @@ export default function LogicalExpression(node: AnyNode, scope: Scope) {
       return new UnionT(refinedScope, node, [left, right]);
     }
 
-    case '&&':
-    {
+    case '&&': {
       const left = scope.evaluate(node.left);
       const right = left.scope.evaluate(node.right);
       return new UnionT(right.scope, node, [left, right]);

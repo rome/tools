@@ -9,10 +9,7 @@ import Builder from '../../Builder';
 import {Tokens, word, operator, space} from '../../tokens';
 import {WhileStatement, whileStatement, AnyNode} from '@romejs/js-ast';
 
-export default function WhileStatement(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
+export default function WhileStatement(builder: Builder, node: AnyNode): Tokens {
   node = whileStatement.assert(node);
 
   return [

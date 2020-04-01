@@ -66,8 +66,7 @@ export function parseTypeLiteralAnnotation(
   const start = parser.getPosition();
 
   switch (parser.state.tokenType) {
-    case tt.string:
-    {
+    case tt.string: {
       const value = String(parser.state.tokenValue);
       parser.next();
       return parser.finishNode(start, {
@@ -76,8 +75,7 @@ export function parseTypeLiteralAnnotation(
       });
     }
 
-    case tt.num:
-    {
+    case tt.num: {
       const value = Number(parser.state.tokenValue);
       parser.next();
       return parser.finishNode(start, {
@@ -87,8 +85,7 @@ export function parseTypeLiteralAnnotation(
     }
 
     case tt._true:
-    case tt._false:
-    {
+    case tt._false: {
       const value = parser.match(tt._true);
       parser.next();
       return parser.finishNode(start, {
@@ -97,8 +94,7 @@ export function parseTypeLiteralAnnotation(
       });
     }
 
-    case tt.plusMin:
-    {
+    case tt.plusMin: {
       if (parser.state.tokenValue === '-') {
         parser.next();
 
@@ -421,8 +417,7 @@ export function parseTypeExpressionStatement(
         break;
       }
 
-    case 'enum':
-    {
+    case 'enum': {
       if (parser.match(tt.name)) {
         addTSDiagnostic(parser, 'enum declaration', start);
         return parseTSEnumDeclaration(parser, start, /* isConst */false);

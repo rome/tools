@@ -28,10 +28,9 @@ export default function ExportLocalDeclaration(
 }
 
 export function _ExportDeclaration(builder: Builder, node: AnyNode): Tokens {
-  node =
-    node.type === 'ExportDefaultDeclaration'
-      ? node
-      : exportLocalDeclaration.assert(node);
+  node = node.type === 'ExportDefaultDeclaration'
+    ? node
+    : exportLocalDeclaration.assert(node);
 
   if (node.declaration) {
     const declar = node.declaration;

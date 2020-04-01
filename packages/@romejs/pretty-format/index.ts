@@ -64,33 +64,28 @@ export default function prettyFormat(
   }
 
   switch (typeof obj) {
-    case 'symbol':
-    {
+    case 'symbol': {
       const val = maybeEscapeMarkup(formatSymbol(obj), opts);
       return opts.markup ? markupTag('green', val) : val;
     }
 
-    case 'string':
-    {
+    case 'string': {
       const val = maybeEscapeMarkup(formatString(obj), opts);
       return opts.markup ? markupTag('green', val) : val;
     }
 
     case 'bigint':
-    case 'number':
-    {
+    case 'number': {
       const val = formatNumber(obj);
       return opts.markup ? markupTag('yellow', val) : val;
     }
 
-    case 'boolean':
-    {
+    case 'boolean': {
       const val = formatBoolean(obj);
       return opts.markup ? markupTag('yellow', val) : val;
     }
 
-    case 'undefined':
-    {
+    case 'undefined': {
       const val = formatUndefined();
       return opts.markup ? markupTag('brightBlack', val) : val;
     }

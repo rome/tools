@@ -9,10 +9,7 @@ import Builder from '../../Builder';
 import {Tokens, word, space, operator} from '../../tokens';
 import {SwitchStatement, switchStatement, AnyNode} from '@romejs/js-ast';
 
-export default function SwitchStatement(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
+export default function SwitchStatement(builder: Builder, node: AnyNode): Tokens {
   node = switchStatement.assert(node);
 
   return [

@@ -39,7 +39,7 @@ export default function JSXElement(builder: Builder, node: AnyNode): Tokens {
       ...tokens,
       operator('>'),
       indent(
-        flatten(node.children.map(child => builder.tokenize(child, node))),
+        flatten(node.children.map((child) => builder.tokenize(child, node))),
       ),
 
       operator('</'),

@@ -9,10 +9,7 @@ import Builder from '../../Builder';
 import {TemplateLiteral, templateLiteral, AnyNode} from '@romejs/js-ast';
 import {Tokens} from '@romejs/js-formatter/tokens';
 
-export default function TemplateLiteral(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
+export default function TemplateLiteral(builder: Builder, node: AnyNode): Tokens {
   node = templateLiteral.assert(node);
 
   let tokens: Tokens = [];

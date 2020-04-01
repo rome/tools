@@ -40,24 +40,21 @@ export default createMasterCommand(
 
       const [action, ...restArgs] = req.query.args;
       switch (action) {
-        case 'enable':
-        {
+        case 'enable': {
           req.expectArgumentLength(2);
           keyParts = req.query.args[1];
           value = true;
           break;
         }
 
-        case 'disable':
-        {
+        case 'disable': {
           req.expectArgumentLength(2);
           keyParts = req.query.args[1];
           value = false;
           break;
         }
 
-        case 'enable-category':
-        {
+        case 'enable-category': {
           req.expectArgumentLength(2);
           const category = req.query.args[1];
           keyParts = `${category}.enabled`;
@@ -65,8 +62,7 @@ export default createMasterCommand(
           break;
         }
 
-        case 'disable-category':
-        {
+        case 'disable-category': {
           req.expectArgumentLength(2);
           const category = req.query.args[1];
           keyParts = `${category}.enabled`;
@@ -74,8 +70,7 @@ export default createMasterCommand(
           break;
         }
 
-        case 'set-directory':
-        {
+        case 'set-directory': {
           req.expectArgumentLength(3);
           [keyParts, value] = restArgs;
 
@@ -89,8 +84,7 @@ export default createMasterCommand(
           break;
         }
 
-        case 'set':
-        {
+        case 'set': {
           req.expectArgumentLength(3);
           [keyParts, value] = restArgs;
           break;

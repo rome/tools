@@ -9,10 +9,7 @@ import {TSTypePredicate, tsTypePredicate, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, space, word} from '../../tokens';
 
-export default function TSTypePredicate(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
+export default function TSTypePredicate(builder: Builder, node: AnyNode): Tokens {
   node = tsTypePredicate.assert(node);
 
   let tokens: Tokens = [];

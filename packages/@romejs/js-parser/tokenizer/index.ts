@@ -832,8 +832,7 @@ function getTokenFromCode(parser: JSParser, code: number): void {
       readToken_question(parser);
       return undefined;
 
-    case charCodes.atSign:
-    {
+    case charCodes.atSign: {
       // The token @@ is the start of a Flow iterator name
       const next = parser.input.charCodeAt(getIndex(parser) + 1);
       if (next === charCodes.atSign) {
@@ -1427,14 +1426,12 @@ function readEscapedChar(
     case charCodes.lowercaseR:
       return '\r';
 
-    case charCodes.lowercaseX:
-    {
+    case charCodes.lowercaseX: {
       const code = readHexChar(parser, 2, throwOnInvalid);
       return code === undefined ? undefined : String.fromCharCode(code);
     }
 
-    case charCodes.lowercaseU:
-    {
+    case charCodes.lowercaseU: {
       const code = readCodePoint(parser, throwOnInvalid);
       return code === undefined ? undefined : codePointToString(code);
     }

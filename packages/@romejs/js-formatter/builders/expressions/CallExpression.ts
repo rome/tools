@@ -9,11 +9,8 @@ import Builder from '../../Builder';
 import {Tokens, operator} from '../../tokens';
 import {CallExpression, callExpression, AnyNode} from '@romejs/js-ast';
 
-export default function CallExpression(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node =
+export default function CallExpression(builder: Builder, node: AnyNode): Tokens {
+    node =
     node.type === 'OptionalCallExpression' || node.type === 'NewExpression'
       ? node
       : callExpression.assert(node);

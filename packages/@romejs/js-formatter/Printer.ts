@@ -147,10 +147,8 @@ export default class Printer {
 
       for (const char of str) {
         if (char === '\n') {
-          if (
-            lastUnbrokenGroup !== undefined &&
-            lastUnbrokenGroup.breakOnNewline
-          ) {
+          if (lastUnbrokenGroup !== undefined &&
+              lastUnbrokenGroup.breakOnNewline) {
             throw new BreakGroupError(lastUnbrokenGroup);
           }
           this.state.column = number0;
@@ -160,10 +158,8 @@ export default class Printer {
         }
       }
 
-      if (
-        lastUnbrokenGroup !== undefined &&
-        get0(this.state.column) > MAX_LINE_LENGTH
-      ) {
+      if (lastUnbrokenGroup !== undefined && get0(this.state.column) >
+          MAX_LINE_LENGTH) {
         throw new BreakGroupError(lastUnbrokenGroup);
       }
     }
@@ -214,10 +210,8 @@ export default class Printer {
   }
 
   resetUnbrokenGroup(ourUnbrokenGroup: undefined | GroupSnapshot) {
-    if (
-      ourUnbrokenGroup !== undefined &&
-      this.lastUnbrokenGroup === ourUnbrokenGroup
-    ) {
+    if (ourUnbrokenGroup !== undefined && this.lastUnbrokenGroup ===
+        ourUnbrokenGroup) {
       this.lastUnbrokenGroup = ourUnbrokenGroup.lastUnbrokenGroup;
     }
   }
@@ -251,10 +245,8 @@ export default class Printer {
   }
 
   newline() {
-    while (
-      // Remove all trailing spaces
-      this.trim(' ')
-    );
+    while ( // Remove all trailing spaces
+    this.trim(' ')) ;
     this.push('\n');
   }
 
@@ -324,12 +316,9 @@ export default class Printer {
     const str = token.value;
     this.push(str);
 
-    this.state.endsWithInteger =
-      Number.isInteger(Number(str)) &&
-      !NON_DECIMAL_LITERAL.test(str) &&
-      !SCIENTIFIC_NOTATION.test(str) &&
-      !ZERO_DECIMAL_INTEGER.test(str) &&
-      str[str.length - 1] !== '.';
+    this.state.endsWithInteger = Number.isInteger(Number(str)) &&
+        !NON_DECIMAL_LITERAL.test(str) && !SCIENTIFIC_NOTATION.test(str) &&
+      !ZERO_DECIMAL_INTEGER.test(str) && str[str.length - 1] !== '.';
   }
 
   printWordToken(token: WordToken) {
@@ -344,12 +333,10 @@ export default class Printer {
 
     // Space is mandatory to avoid outputting <!--
     // http://javascript.spec.whatwg.org/#comment-syntax
-    if (
-      (str === '--' && this.state.lastBuff.endsWith('!')) || // Need spaces for operators of the same kind to avoid: `a+++b`
-      (str[0] === '+' && this.state.lastBuff.endsWith('+')) ||
-      (str[0] === '-' && this.state.lastBuff.endsWith('-')) || // Needs spaces to avoid changing '34' to '34.', which would still be a valid number.
-      (str[0] === '.' && this.state.endsWithInteger)
-    ) {
+    if (str === '--' && this.state.lastBuff.endsWith('!') || // Need spaces for operators of the same kind to avoid: `a+++b`
+      str[0] === '+' && this.state.lastBuff.endsWith('+') || str[0] === '-' &&
+        this.state.lastBuff.endsWith('-') || // Needs spaces to avoid changing '34' to '34.', which would still be a valid number.
+      str[0] === '.' && this.state.endsWithInteger) {
       this.push(' ');
     }
 
@@ -423,10 +410,8 @@ export default class Printer {
         this.print(isBroken ? group.afterBroken : group.afterUnbroken);
       }
     } catch (err) {
-      if (
-        err instanceof BreakGroupError &&
-        err.unbrokenGroup === ourUnbrokenGroup
-      ) {
+      if (err instanceof BreakGroupError && err.unbrokenGroup ===
+          ourUnbrokenGroup) {
         this.restoreSnapshot(token, ourUnbrokenGroup);
         return {abort: true};
       } else {
@@ -465,10 +450,8 @@ export default class Printer {
       let firstGroup: undefined | LinkedGroupsToken | GroupToken;
       // Get the first unbroken group
       for (const tok of token.tokens) {
-        if (
-          (tok.type === 'LinkedGroups' || tok.type === 'Group') &&
-          !this.isGroupBroken(tok)
-        ) {
+        if ((tok.type === 'LinkedGroups' || tok.type === 'Group') &&
+            !this.isGroupBroken(tok)) {
           firstGroup = tok;
           break;
         }
@@ -485,10 +468,7 @@ export default class Printer {
         try {
           this.print(token.tokens);
         } catch (err) {
-          if (
-            err instanceof BreakGroupError &&
-            err.unbrokenGroup === snapshot
-          ) {
+          if (err instanceof BreakGroupError && err.unbrokenGroup === snapshot) {
             this.brokenGroups.add(firstGroup);
             this.restoreSnapshot(token, snapshot);
             return {abort: true};

@@ -13,11 +13,8 @@ export default function ObjectExpression(
   builder: Builder,
   _node: AnyNode,
 ): Tokens {
-  const node =
-    _node.type === 'BindingObjectPattern' ||
-    _node.type === 'AssignmentObjectPattern'
-      ? _node
-      : objectExpression.assert(_node);
+  const node = _node.type === 'BindingObjectPattern' || _node.type ===
+    'AssignmentObjectPattern' ? _node : objectExpression.assert(_node);
 
   const props = node.properties;
 
@@ -30,11 +27,8 @@ export default function ObjectExpression(
     }),
   ];
 
-  if (
-    (node.type === 'BindingObjectPattern' ||
-      node.type === 'AssignmentObjectPattern') &&
-    node.rest !== undefined
-  ) {
+  if ((node.type === 'BindingObjectPattern' || node.type ===
+      'AssignmentObjectPattern') && node.rest !== undefined) {
     if (props.length > 0) {
       tokens = [...tokens, operator(','), space];
     }

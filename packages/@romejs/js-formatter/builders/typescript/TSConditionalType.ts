@@ -23,20 +23,17 @@ export default function TSConditionalType(
     ...builder.tokenize(node.extendsType, node),
     space,
 
-    group(
-      [
-        [operator('?'), space, ...builder.tokenize(node.trueType, node)],
-        [operator(':'), space, ...builder.tokenize(node.falseType, node)],
-      ],
-      {
-        priority: true,
-        broken: {
-          separator: [newline],
-        },
-        unbroken: {
-          separator: [space],
-        },
+    group([
+      [operator('?'), space, ...builder.tokenize(node.trueType, node)],
+      [operator(':'), space, ...builder.tokenize(node.falseType, node)],
+    ], {
+      priority: true,
+      broken: {
+        separator: [newline],
       },
-    ),
+      unbroken: {
+        separator: [space],
+      },
+    }),
   ];
 }

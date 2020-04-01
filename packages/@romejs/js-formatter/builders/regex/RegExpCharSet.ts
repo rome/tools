@@ -20,7 +20,7 @@ export default function RegExpCharSet(builder: Builder, node: AnyNode): Tokens {
 
   return [
     ...tokens,
-    ...flatten(node.body.map(item => builder.tokenize(item, node))),
+    ...flatten(node.body.map((item) => builder.tokenize(item, node))),
     verbatim(']'),
   ];
 }

@@ -9,17 +9,12 @@ import Builder from '../../Builder';
 import {Tokens, space, word, operator} from '../../tokens';
 import {UnaryExpression, unaryExpression, AnyNode} from '@romejs/js-ast';
 
-export default function UnaryExpression(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
+export default function UnaryExpression(builder: Builder, node: AnyNode): Tokens {
   node = unaryExpression.assert(node);
 
-  if (
-    node.operator === 'void' ||
-    node.operator === 'delete' ||
-    node.operator === 'typeof'
-  ) {
+  if (node.operator === 'void' || node.operator === 'delete' ||
+        node.operator ===
+        'typeof') {
     return [
       word(node.operator),
       space,

@@ -232,8 +232,7 @@ export const createRegExpParser = createParser(
               escaped: true,
             }, end);
 
-          case '0':
-          {
+          case '0': {
             const {octalValue, end: octalEnd} = readOctalCode(
               input,
               index,
@@ -252,8 +251,7 @@ export const createRegExpParser = createParser(
             }, end);
           }
 
-          case 'x':
-          {
+          case 'x': {
             const possibleHex = input.slice(get0(index) + 1, get0(index) + 3);
 
             // \xhh
@@ -272,8 +270,7 @@ export const createRegExpParser = createParser(
             }, end);
           }
 
-          case 'u':
-          {
+          case 'u': {
             // Get the next 4 characters after \u
             const possibleHex = input.slice(get0(index) + 2, get0(index) + 6);
 

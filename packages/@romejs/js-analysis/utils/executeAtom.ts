@@ -28,8 +28,7 @@ export default function executeAtom(
       }
       break;
 
-    case 'BindingObjectPatternProperty':
-    {
+    case 'BindingObjectPatternProperty': {
       const {key} = leftNode;
       if (key.type === 'ComputedPropertyKey' || key.value.type !== 'Identifier') {
         throw new Error('unimplemented');

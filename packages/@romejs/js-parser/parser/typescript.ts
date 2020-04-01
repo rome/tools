@@ -974,8 +974,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
   switch (parser.state.tokenType) {
     case tt.name:
     case tt._void:
-    case tt._null:
-    {
+    case tt._null: {
       let type:
         | undefined
         | AnyTSKeywordTypeAnnotation['type']
@@ -1006,8 +1005,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
     case tt.plusMin:
       return parseTypeLiteralAnnotation(parser);
 
-    case tt._this:
-    {
+    case tt._this: {
       const thisKeyword = parseTSThisTypeNode(parser);
       if (parser.isContextual('is') && !parser.hasPrecedingLineBreak()) {
         return parseTSThisTypePredicate(parser, thisKeyword);
@@ -1822,8 +1820,7 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
         ...parseVarStatement(parser, start, kind),
       };
 
-    case tt.name:
-    {
+    case tt.name: {
       const value = String(parser.state.tokenValue);
 
       if (value === 'global') {

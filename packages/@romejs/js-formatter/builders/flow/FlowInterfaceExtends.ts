@@ -17,11 +17,8 @@ export default function FlowInterfaceExtends(
   builder: Builder,
   node: AnyNode,
 ): Tokens {
-  node =
-    node.type === 'FlowGenericTypeAnnotation' ||
-    node.type === 'FlowClassImplements'
-      ? node
-      : flowInterfaceExtends.assert(node);
+  node = node.type === 'FlowGenericTypeAnnotation' || node.type ===
+    'FlowClassImplements' ? node : flowInterfaceExtends.assert(node);
 
   return [
     ...builder.tokenize(node.id, node),

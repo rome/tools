@@ -153,8 +153,7 @@ function parseJSXAttributeValue(
     case tt.string:
       return parseStringLiteral(parser);
 
-    default:
-    {
+    default: {
       parser.addDiagnostic({
         description: descriptions.JS_PARSER.JSX_INVALID_ATTRIBUTE_VALUE,
       });
@@ -347,8 +346,7 @@ function parseJSXElementAt(
   if (openingDef.selfClosing === false) {
     contents: while (true) {
       switch (parser.state.tokenType) {
-        case tt.jsxTagStart:
-        {
+        case tt.jsxTagStart: {
           const start = parser.getPosition();
           parser.next();
           if (parser.eat(tt.slash)) {

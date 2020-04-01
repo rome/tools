@@ -350,8 +350,7 @@ export default class Resolver {
 
       switch (protocol) {
         case 'http':
-        case 'https':
-        {
+        case 'https': {
           let projectConfig = DEFAULT_PROJECT_CONFIG;
 
           if (origin.isAbsolute()) {

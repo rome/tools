@@ -9,10 +9,7 @@ import {TSTypeOperator, tsTypeOperator, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, operator, space} from '../../tokens';
 
-export default function TSTypeOperator(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
+export default function TSTypeOperator(builder: Builder, node: AnyNode): Tokens {
   node = tsTypeOperator.assert(node);
 
   return [

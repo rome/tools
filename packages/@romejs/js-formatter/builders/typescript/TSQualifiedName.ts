@@ -9,10 +9,7 @@ import {TSQualifiedName, tsQualifiedName, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, operator} from '../../tokens';
 
-export default function TSQualifiedName(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
+export default function TSQualifiedName(builder: Builder, node: AnyNode): Tokens {
   node = tsQualifiedName.assert(node);
 
   return [

@@ -17,19 +17,16 @@ export default function FlowInterfaceDeclaration(
   builder: Builder,
   node: AnyNode,
 ): Tokens {
-  node =
-    node.type === 'FlowDeclareInterface'
-      ? node
-      : flowInterfaceDeclaration.assert(node);
+  node = node.type === 'FlowDeclareInterface'
+    ? node
+    : flowInterfaceDeclaration.assert(node);
 
   return [word('interface'), space, ..._interfaceish(builder, node)];
 }
 
 export function _interfaceish(builder: Builder, node: AnyNode): Tokens {
-  node =
-    node.type === 'FlowDeclareInterface' || node.type === 'FlowDeclareClass'
-      ? node
-      : flowInterfaceDeclaration.assert(node);
+  node = node.type === 'FlowDeclareInterface' || node.type ===
+    'FlowDeclareClass' ? node : flowInterfaceDeclaration.assert(node);
 
   let tokens: Tokens = [
     ...builder.tokenize(node.id, node),

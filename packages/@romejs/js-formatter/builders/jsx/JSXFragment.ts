@@ -13,8 +13,10 @@ export default function JSXFragment(builder: Builder, node: AnyNode): Tokens {
   node = jsxFragment.assert(node);
 
   return [
-    operator('<>'),
-    indent(flatten(node.children.map(child => builder.tokenize(child, node)))),
-    operator('</>'),
-  ];
+      operator('<>'),
+      indent(
+        flatten(node.children.map((child) => builder.tokenize(child, node))),
+      ),
+      operator('</>'),
+    ];
 }

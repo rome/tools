@@ -29,11 +29,9 @@ export default function ImportDeclaration(
 
   const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
 
-  if (
-    namedSpecifiers.length > 0 ||
-    namespaceSpecifier !== undefined ||
-    defaultSpecifier !== undefined
-  ) {
+  if (namedSpecifiers.length > 0 || namespaceSpecifier !== undefined ||
+        defaultSpecifier !==
+        undefined) {
     tokens = [
       ...tokens,
       ...printModuleSpecifiers(builder, node),

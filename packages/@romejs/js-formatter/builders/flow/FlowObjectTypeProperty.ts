@@ -13,10 +13,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function FlowObjectTypeProperty(
-  builder: Builder,
-  node: AnyNode,
-) {
+export default function FlowObjectTypeProperty(builder: Builder, node: AnyNode) {
   node = flowObjectTypeProperty.assert(node);
 
   let tokens: Tokens = [];

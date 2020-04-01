@@ -35,8 +35,7 @@ type UrlWithHash = {
 
 export function stringifyDependencyPattern(pattern: DependencyPattern): string {
   switch (pattern.type) {
-    case 'hosted-git':
-    {
+    case 'hosted-git': {
       let str = `${pattern.host}:${pattern.user}/${pattern.repo}`;
       if (pattern.commitish !== undefined) {
         str += `#${pattern.commitish}`;
@@ -61,8 +60,7 @@ export function stringifyDependencyPattern(pattern: DependencyPattern): string {
         return `${pattern.url}#${pattern.hash}`;
       }
 
-    case 'npm':
-    {
+    case 'npm': {
       let str = `${NPM_PREFIX}${pattern.name}`;
       if (pattern.range !== undefined) {
         str += `@${stringifySemver(pattern.range)}`;

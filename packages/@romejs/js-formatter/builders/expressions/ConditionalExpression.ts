@@ -22,22 +22,19 @@ export default function ConditionalExpression(
   return [
     ...builder.tokenize(node.test, node),
     space,
-    group(
-      [
-        [operator('?'), space, ...builder.tokenize(node.consequent, node)],
-        [operator(':'), space, ...builder.tokenize(node.alternate, node)],
-      ],
-      {
-        priority: true,
-        broken: {
-          before: [newline],
-          indentNewline: false,
-          separator: [newline],
-        },
-        unbroken: {
-          separator: [space],
-        },
+    group([
+      [operator('?'), space, ...builder.tokenize(node.consequent, node)],
+      [operator(':'), space, ...builder.tokenize(node.alternate, node)],
+    ], {
+      priority: true,
+      broken: {
+        before: [newline],
+        indentNewline: false,
+        separator: [newline],
       },
-    ),
+      unbroken: {
+        separator: [space],
+      },
+    }),
   ];
 }

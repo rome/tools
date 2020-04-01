@@ -9,10 +9,7 @@ import {TSFunctionType, tsFunctionType, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, operator, space, linkedGroups} from '../../tokens';
 
-export default function TSFunctionType(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
+export default function TSFunctionType(builder: Builder, node: AnyNode): Tokens {
   node = tsFunctionType.assert(node);
 
   return [

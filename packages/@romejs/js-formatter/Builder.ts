@@ -55,20 +55,15 @@ function checkTrailingCommentsSameLine(
   let hasNextTrailingCommentOnSameLine = false;
 
   // Lots of refinements...
-  if (
-    nextNode !== undefined &&
-    node.loc !== undefined &&
-    nextNode.loc !== undefined &&
-    nextNode.leadingComments !== undefined
-  ) {
+  if (nextNode !== undefined && node.loc !== undefined && nextNode.loc !==
+      undefined && nextNode.leadingComments !== undefined) {
     const firstNextNodeLeadingComments = nextNode.leadingComments[0];
-    if (
-      firstNextNodeLeadingComments !== undefined &&
-      firstNextNodeLeadingComments.loc !== undefined
-    ) {
+    if (firstNextNodeLeadingComments !== undefined &&
+          firstNextNodeLeadingComments.loc !==
+          undefined) {
       nextNode = firstNextNodeLeadingComments;
-      hasNextTrailingCommentOnSameLine =
-        node.loc.end.line === firstNextNodeLeadingComments.loc.start.line;
+      hasNextTrailingCommentOnSameLine = node.loc.end.line ===
+        firstNextNodeLeadingComments.loc.start.line;
     }
   }
 
@@ -95,11 +90,8 @@ export default class Builder {
       return [];
     }
 
-    if (
-      this.options.typeAnnotations === false &&
-      isTypeNode(node) &&
-      !isTypeExpressionWrapperNode(node)
-    ) {
+    if (this.options.typeAnnotations === false && isTypeNode(node) &&
+        !isTypeExpressionWrapperNode(node)) {
       return [];
     }
 
@@ -131,7 +123,8 @@ export default class Builder {
         ...this.tokenizeComments(leadingComments),
         ...this.maybeCommentNewlines(
           node,
-          leadingComments[leadingComments.length - 1],
+          leadingComments[leadingComments.length -
+            1],
           false,
         ),
       ];
@@ -146,9 +139,11 @@ export default class Builder {
     // If there's an empty line between the node and it's trailing comments then keep it
     const trailingComments = this.getComments(false, node);
     if (trailingComments !== undefined) {
-      tokens = tokens.concat(
-        this.maybeCommentNewlines(node, trailingComments[0], true),
-      );
+      tokens = tokens.concat(this.maybeCommentNewlines(
+        node,
+        trailingComments[0],
+        true,
+      ));
     }
     tokens = tokens.concat(this.tokenizeComments(trailingComments));
 
@@ -164,8 +159,9 @@ export default class Builder {
   ): GroupToken {
     const groups: GroupToken['groups'] = [];
 
-    let forceBroken =
-      opts.broken.force || (opts.breakOnNewline && n.isMultiLine(parent));
+    let forceBroken = opts.broken.force || opts.breakOnNewline && n.isMultiLine(
+      parent,
+    );
 
     if (nodes !== undefined) {
       for (let i = 0; i < nodes.length; i++) {
@@ -182,18 +178,11 @@ export default class Builder {
           } = checkTrailingCommentsSameLine(node, nodes[i + 1]);
 
           const afterBroken: Tokens = [];
-          if (
-            !isLastNode &&
-            opts.newline &&
-            !hasNextTrailingCommentOnSameLine
-          ) {
+          if (!isLastNode && opts.newline && !hasNextTrailingCommentOnSameLine) {
             afterBroken.push(newline);
           }
 
-          const newlines = this.maybeInsertExtraStatementNewlines(
-            node,
-            nextNode,
-          );
+          const newlines = this.maybeInsertExtraStatementNewlines(node, nextNode);
 
           groups.push({
             tokens: this.tokenize(node, parent),
@@ -269,9 +258,10 @@ export default class Builder {
         tokens.push(newline);
       }
 
-      tokens = tokens.concat(
-        this.maybeInsertExtraStatementNewlines(node, nextNode),
-      );
+      tokens = tokens.concat(this.maybeInsertExtraStatementNewlines(
+        node,
+        nextNode,
+      ));
     }
 
     if (shouldIndent) {
@@ -317,9 +307,11 @@ export default class Builder {
 
       const nextComment = comments[i + 1];
       if (nextComment !== undefined) {
-        tokens = tokens.concat(
-          this.maybeCommentNewlines(comment, nextComment, true),
-        );
+        tokens = tokens.concat(this.maybeCommentNewlines(
+          comment,
+          nextComment,
+          true,
+        ));
       }
     }
 
@@ -350,10 +342,9 @@ export default class Builder {
       return true;
     }
 
-    if (
-      comment.loc !== undefined &&
-      this.printedCommentStarts.has(comment.loc.start.index)
-    ) {
+    if (comment.loc !== undefined && this.printedCommentStarts.has(
+        comment.loc.start.index,
+      )) {
       return true;
     }
 
@@ -388,10 +379,8 @@ export default class Builder {
     const lines = n.getLinesBetween(node, comment);
 
     // Will always have at least one newline
-    if (
-      node.type === 'CommentLine' ||
-      (comment.type === 'CommentLine' && !trailing)
-    ) {
+    if (node.type === 'CommentLine' || comment.type === 'CommentLine' &&
+        !trailing) {
       lines.shift();
     }
 

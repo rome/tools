@@ -9,12 +9,10 @@ import Builder from '../../Builder';
 import {Tokens, word, operator, space} from '../../tokens';
 import {FlowOpaqueType, flowOpaqueType, AnyNode} from '@romejs/js-ast';
 
-export default function FlowOpaqueType(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node =
-    node.type === 'FlowDeclareOpaqueType' ? node : flowOpaqueType.assert(node);
+export default function FlowOpaqueType(builder: Builder, node: AnyNode): Tokens {
+  node = node.type === 'FlowDeclareOpaqueType'
+    ? node
+    : flowOpaqueType.assert(node);
 
   let tokens: Tokens = [
     word('opaque'),

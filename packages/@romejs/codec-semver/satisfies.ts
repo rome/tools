@@ -54,8 +54,7 @@ function compareOp(
     case '<=':
       return compare(version, range) <= 0;
 
-    case '^':
-    {
+    case '^': {
       // Make sure that the version isn't less than the range
       if (compareOp('>=', version, range) === false) {
         return false;
@@ -85,8 +84,7 @@ function compareOp(
     }
 
     case '~>':
-    case '~':
-    {
+    case '~': {
       // Make sure that the version isn't less than the range
       if (compareOp('>=', version, range) === false) {
         return false;

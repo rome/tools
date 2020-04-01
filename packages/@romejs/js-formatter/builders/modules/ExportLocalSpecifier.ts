@@ -17,10 +17,9 @@ export default function ExportLocalSpecifier(
   builder: Builder,
   node: AnyNode,
 ): Tokens {
-  node =
-    node.type === 'ExportExternalSpecifier'
-      ? node
-      : exportLocalSpecifier.assert(node);
+  node = node.type === 'ExportExternalSpecifier'
+    ? node
+    : exportLocalSpecifier.assert(node);
 
   const tokens = builder.tokenize(node.local, node);
 

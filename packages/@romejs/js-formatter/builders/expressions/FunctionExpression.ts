@@ -13,10 +13,9 @@ export default function FunctionExpression(
   builder: Builder,
   node: AnyNode,
 ): Tokens {
-  node =
-    node.type === 'FunctionDeclaration'
-      ? node
-      : functionExpression.assert(node);
+  node = node.type === 'FunctionDeclaration'
+    ? node
+    : functionExpression.assert(node);
 
   let tokens: Tokens = [];
 

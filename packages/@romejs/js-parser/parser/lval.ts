@@ -119,8 +119,7 @@ export function toAssignmentPattern(
         ),
       };
 
-    case 'ObjectExpression':
-    {
+    case 'ObjectExpression': {
       const props = [];
       let rest: undefined | AssignmentIdentifier;
       for (let index = 0; index < node.properties.length; index++) {
@@ -152,8 +151,7 @@ export function toAssignmentPattern(
       };
     }
 
-    case 'ArrayExpression':
-    {
+    case 'ArrayExpression': {
       const {list: elements, rest} = toAssignableList(
         parser,
         node.elements,
@@ -167,8 +165,7 @@ export function toAssignmentPattern(
       };
     }
 
-    case 'AssignmentExpression':
-    {
+    case 'AssignmentExpression': {
       if (node.operator !== '=') {
         parser.addDiagnostic(
           {
@@ -187,8 +184,7 @@ export function toAssignmentPattern(
       };
     }
 
-    default:
-    {
+    default: {
       parser.addDiagnostic({
         loc: node.loc,
         description: descriptions.JS_PARSER.INVALID_LEFT_HAND_SIDE(
@@ -292,8 +288,7 @@ export function toBindingPattern(
   }
 
   switch (binding.type) {
-    case 'AssignmentObjectPattern':
-    {
+    case 'AssignmentObjectPattern': {
       const newNode: BindingObjectPattern = {
         ...binding,
         type: 'BindingObjectPattern',
@@ -319,8 +314,7 @@ export function toBindingPattern(
       return newNode;
     }
 
-    case 'AssignmentAssignmentPattern':
-    {
+    case 'AssignmentAssignmentPattern': {
       const newNode: BindingAssignmentPattern = {
         ...binding,
         type: 'BindingAssignmentPattern',
@@ -329,8 +323,7 @@ export function toBindingPattern(
       return newNode;
     }
 
-    case 'AssignmentArrayPattern':
-    {
+    case 'AssignmentArrayPattern': {
       const newNode: BindingArrayPattern = {
         ...binding,
         type: 'BindingArrayPattern',
@@ -344,8 +337,7 @@ export function toBindingPattern(
       return newNode;
     }
 
-    case 'AssignmentIdentifier':
-    {
+    case 'AssignmentIdentifier': {
       const newNode: BindingIdentifier = {
         ...binding,
         type: 'BindingIdentifier',
@@ -353,8 +345,7 @@ export function toBindingPattern(
       return newNode;
     }
 
-    case 'AssignmentObjectPatternProperty':
-    {
+    case 'AssignmentObjectPatternProperty': {
       const newNode: BindingObjectPatternProperty = {
         ...binding,
         type: 'BindingObjectPatternProperty',
@@ -373,8 +364,7 @@ export function toAssignmentObjectProperty(
   prop: AnyNode,
 ): AssignmentObjectPatternProperty {
   switch (prop.type) {
-    case 'ObjectMethod':
-    {
+    case 'ObjectMethod': {
       parser.addDiagnostic(
         {
           loc: prop.key.loc,
