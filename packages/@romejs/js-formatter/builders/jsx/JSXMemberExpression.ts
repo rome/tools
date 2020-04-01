@@ -20,8 +20,8 @@ export default function JSXMemberExpression(
   node = jsxMemberExpression.assert(node);
 
   return [
-    ...builder.print(node.object, node),
+    ...builder.tokenize(node.object, node),
     operator('.'),
-    ...builder.print(node.property, node),
+    ...builder.tokenize(node.property, node),
   ];
 }

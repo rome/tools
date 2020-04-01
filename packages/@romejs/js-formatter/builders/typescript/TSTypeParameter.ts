@@ -9,7 +9,10 @@ import {TSTypeParameter, tsTypeParameter, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, space, word, operator} from '../../tokens';
 
-export default function TSTypeParameter(builder: Builder, node: AnyNode): Tokens {
+export default function TSTypeParameter(
+  builder: Builder,
+  node: AnyNode,
+): Tokens {
   node = tsTypeParameter.assert(node);
 
   let tokens: Tokens = [word(node.name)];
@@ -20,7 +23,7 @@ export default function TSTypeParameter(builder: Builder, node: AnyNode): Tokens
       space,
       word('extends'),
       space,
-      ...builder.print(node.constraint, node),
+      ...builder.tokenize(node.constraint, node),
     ];
   }
 
@@ -30,7 +33,7 @@ export default function TSTypeParameter(builder: Builder, node: AnyNode): Tokens
       space,
       operator('='),
       space,
-      ...builder.print(node.default, node),
+      ...builder.tokenize(node.default, node),
     ];
   }
 

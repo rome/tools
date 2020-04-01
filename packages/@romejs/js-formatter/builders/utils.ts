@@ -40,63 +40,68 @@ export function buildForXStatementBuilder(op: 'of' | 'in'): BuilderMethod {
     return [
       ...tokens,
       operator('('),
-      ...builder.print(node.left, node),
+      ...builder.tokenize(node.left, node),
       space,
       word(op),
       space,
-      ...builder.print(node.right, node),
+      ...builder.tokenize(node.right, node),
       operator(')'),
       space,
-      ...builder.print(node.body, node),
+      ...builder.tokenize(node.body, node),
     ];
   };
 }
 
 export function buildYieldAwaitBuilder(keyword: string): BuilderMethod {
   return function(builder: Builder, node: AnyNode): Tokens {
-      node = node.type === 'YieldExpression'
-        ? node
-        : awaitExpression.assert(node);
+    node =
+      node.type === 'YieldExpression' ? node : awaitExpression.assert(node);
 
-      const tokens: Tokens = [word(keyword)];
+    const tokens: Tokens = [word(keyword)];
 
-      if (node.type === 'YieldExpression' && node.delegate === true) {
-        tokens.push(operator('*'));
-      }
+    if (node.type === 'YieldExpression' && node.delegate === true) {
+      tokens.push(operator('*'));
+    }
 
-      if (node.argument) {
-        return [
-          ...tokens,
-          space,
-          terminatorless(builder.print(node.argument, node)),
-        ];
-      } else {
-        return tokens;
-      }
-    };
+    if (node.argument) {
+      return [
+        ...tokens,
+        space,
+        terminatorless(builder.tokenize(node.argument, node)),
+      ];
+    } else {
+      return tokens;
+    }
+  };
 }
 
 export function buildLabelStatementBuilder(prefix: string): BuilderMethod {
   return function(builder: Builder, node: AnyNode): Tokens {
-      node =
-        node.type === 'ContinueStatement' || node.type === 'ReturnStatement' ||
-        node.type === 'BreakStatement' ? node : throwStatement.assert(node);
+    node =
+      node.type === 'ContinueStatement' ||
+      node.type === 'ReturnStatement' ||
+      node.type === 'BreakStatement'
+        ? node
+        : throwStatement.assert(node);
 
     let tokens: Tokens = [word(prefix)];
 
-    if ((node.type === 'ContinueStatement' || node.type === 'BreakStatement') &&
-        node.label !== undefined) {
+    if (
+      (node.type === 'ContinueStatement' || node.type === 'BreakStatement') &&
+      node.label !== undefined
+    ) {
       tokens.push(space);
-      tokens = tokens.concat(builder.print(node.label, node));
+      tokens = tokens.concat(builder.tokenize(node.label, node));
     }
 
-    if ((node.type === 'ThrowStatement' || node.type === 'ReturnStatement') &&
-          node.argument !==
-          undefined) {
+    if (
+      (node.type === 'ThrowStatement' || node.type === 'ReturnStatement') &&
+      node.argument !== undefined
+    ) {
       tokens.push(space);
-      tokens.push(breakGroup([
-        [terminatorless(builder.print(node.argument, node))],
-      ]));
+      tokens.push(
+        breakGroup([[terminatorless(builder.tokenize(node.argument, node))]]),
+      );
     }
 
     tokens.push(operator(';'));
@@ -128,15 +133,15 @@ export function printMethod(
   }
 
   if (node.type === 'TSDeclareMethod') {
-    return [...tokens, ...builder.print(node.head, node)];
+    return [...tokens, ...builder.tokenize(node.head, node)];
   }
 
   return [
     ...tokens,
-    ...builder.print(node.key, node),
-    ...builder.print(node.head, node),
+    ...builder.tokenize(node.key, node),
+    ...builder.tokenize(node.head, node),
     space,
-    ...builder.print(node.body, node),
+    ...builder.tokenize(node.body, node),
   ];
 }
 
@@ -146,12 +151,12 @@ export function printBindingPatternParams(
   params: Array<AnyBindingPattern>,
   rest: undefined | AnyBindingPattern,
 ): Tokens {
-  const group = builder.printCommaList(params, node, {
+  const group = builder.tokenizeCommaList(params, node, {
     trailing: rest === undefined,
   });
 
   if (rest !== undefined) {
-    group.groups.push([operator('...'), ...builder.print(rest, node)]);
+    group.groups.push([operator('...'), ...builder.tokenize(rest, node)]);
   }
 
   return [group];
@@ -164,7 +169,7 @@ export function printTSBraced(
 ): Tokens {
   return [
     operator('{'),
-    builder.printJoin(members, node, {
+    builder.tokenizeJoin(members, node, {
       breakOnNewline: true,
       newline: true,
       priority: true,
@@ -189,7 +194,7 @@ export function printPatternMeta(
       tokens.push(operator('?'));
     }
 
-    return [...tokens, ...builder.printTypeColon(meta.typeAnnotation, node)];
+    return [...tokens, ...builder.tokenizeTypeColon(meta.typeAnnotation, node)];
   } else {
     return [];
   }

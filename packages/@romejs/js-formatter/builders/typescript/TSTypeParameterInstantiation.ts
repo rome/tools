@@ -21,7 +21,7 @@ export default function TSTypeParameterInstantiation(
 
   return [
     operator('<'),
-    builder.printCommaList(node.params, node),
+    builder.tokenizeCommaList(node.params, node),
     operator('>'),
   ];
 }

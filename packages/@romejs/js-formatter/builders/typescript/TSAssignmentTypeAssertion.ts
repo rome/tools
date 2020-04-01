@@ -21,9 +21,9 @@ export default function TSAssignmentTypeAssertion(
 
   return [
     operator('<'),
-    ...builder.print(node.typeAnnotation, node),
+    ...builder.tokenize(node.typeAnnotation, node),
     operator('>'),
     space,
-    ...builder.print(node.expression, node),
+    ...builder.tokenize(node.expression, node),
   ];
 }

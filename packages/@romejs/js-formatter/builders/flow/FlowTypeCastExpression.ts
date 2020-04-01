@@ -22,11 +22,11 @@ export default function FlowTypeCastExpression(
   if (builder.options.typeAnnotations) {
     return [
       operator('('),
-      ...builder.print(node.expression, node),
-      ...builder.printTypeColon(node.typeAnnotation, node),
+      ...builder.tokenize(node.expression, node),
+      ...builder.tokenizeTypeColon(node.typeAnnotation, node),
       operator(')'),
     ];
   } else {
-    return builder.print(node.expression, node);
+    return builder.tokenize(node.expression, node);
   }
 }

@@ -32,10 +32,10 @@ export default function FlowDeclareVariable(
 
   const {id} = node;
 
-  tokens = tokens.concat(builder.print(id, node));
+  tokens = tokens.concat(builder.tokenize(id, node));
 
   if (id.meta !== undefined) {
-    tokens = tokens.concat(builder.print(id.meta.typeAnnotation, node));
+    tokens = tokens.concat(builder.tokenize(id.meta.typeAnnotation, node));
   }
 
   tokens.push(operator(';'));

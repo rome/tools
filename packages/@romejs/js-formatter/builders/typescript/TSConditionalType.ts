@@ -16,24 +16,27 @@ export default function TSConditionalType(
   node = tsConditionalType.assert(node);
 
   return [
-    ...builder.print(node.checkType, node),
+    ...builder.tokenize(node.checkType, node),
     space,
     word('extends'),
     space,
-    ...builder.print(node.extendsType, node),
+    ...builder.tokenize(node.extendsType, node),
     space,
 
-    group([
-      [operator('?'), space, ...builder.print(node.trueType, node)],
-      [operator(':'), space, ...builder.print(node.falseType, node)],
-    ], {
-      priority: true,
-      broken: {
-        separator: [newline],
+    group(
+      [
+        [operator('?'), space, ...builder.tokenize(node.trueType, node)],
+        [operator(':'), space, ...builder.tokenize(node.falseType, node)],
+      ],
+      {
+        priority: true,
+        broken: {
+          separator: [newline],
+        },
+        unbroken: {
+          separator: [space],
+        },
       },
-      unbroken: {
-        separator: [space],
-      },
-    }),
+    ),
   ];
 }

@@ -19,5 +19,5 @@ export default function FlowNullableTypeAnnotation(
 ): Tokens {
   node = flowNullableTypeAnnotation.assert(node);
 
-  return [operator('?'), ...builder.print(node.typeAnnotation, node)];
+  return [operator('?'), ...builder.tokenize(node.typeAnnotation, node)];
 }

@@ -9,10 +9,13 @@ import {TSTypeReference, tsTypeReference, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens} from '../../tokens';
 
-export default function TSTypeReference(builder: Builder, node: AnyNode): Tokens {
+export default function TSTypeReference(
+  builder: Builder,
+  node: AnyNode,
+): Tokens {
   node = tsTypeReference.assert(node);
   return [
-    ...builder.print(node.typeName, node),
-    ...builder.print(node.typeParameters, node),
+    ...builder.tokenize(node.typeName, node),
+    ...builder.tokenize(node.typeParameters, node),
   ];
 }

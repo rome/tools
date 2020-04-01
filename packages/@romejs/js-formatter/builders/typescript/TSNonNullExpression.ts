@@ -20,8 +20,8 @@ export default function TSNonNullExpression(
   node = tsNonNullExpression.assert(node);
 
   if (builder.options.typeAnnotations) {
-    return [...builder.print(node.expression, node), operator('!')];
+    return [...builder.tokenize(node.expression, node), operator('!')];
   } else {
-    return builder.print(node.expression, node);
+    return builder.tokenize(node.expression, node);
   }
 }

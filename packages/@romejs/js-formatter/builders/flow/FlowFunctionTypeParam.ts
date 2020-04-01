@@ -17,7 +17,7 @@ export default function FlowFunctionTypeParam(builder: Builder, node: AnyNode) {
   node = flowFunctionTypeParam.assert(node);
 
   if (node.name) {
-    const tokens: Tokens = builder.print(node.name, node);
+    const tokens: Tokens = builder.tokenize(node.name, node);
 
     if (node.meta.optional === true) {
       tokens.push(operator('?'));
@@ -27,9 +27,9 @@ export default function FlowFunctionTypeParam(builder: Builder, node: AnyNode) {
       ...tokens,
       operator(':'),
       space,
-      ...builder.print(node.meta.typeAnnotation, node),
+      ...builder.tokenize(node.meta.typeAnnotation, node),
     ];
   } else {
-    return builder.print(node.meta.typeAnnotation, node);
+    return builder.tokenize(node.meta.typeAnnotation, node);
   }
 }

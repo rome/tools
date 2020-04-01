@@ -26,7 +26,7 @@ export default function ExportAllDeclaration(
     space,
     word('from'),
     space,
-    ...builder.print(node.source, node),
+    ...builder.tokenize(node.source, node),
     operator(';'),
   ];
 }

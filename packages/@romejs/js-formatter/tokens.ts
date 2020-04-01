@@ -5,41 +5,41 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-type WordToken = {
+export type WordToken = {
   type: 'Word';
   value: string;
 };
 
-type NumberToken = {
+export type NumberToken = {
   type: 'Number';
   value: string;
 };
 
-type SpaceToken = {
+export type SpaceToken = {
   type: 'Space';
   optional: boolean;
 };
 
-type NewlineToken = {
+export type NewlineToken = {
   type: 'Newline';
 };
 
-type DerivedNewlineToken = {
+export type DerivedNewlineToken = {
   type: 'DerivedNewline';
   id: number;
 };
 
-type OperatorToken = {
+export type OperatorToken = {
   type: 'Operator';
   value: string;
 };
 
-type VerbatimToken = {
+export type VerbatimToken = {
   type: 'Verbatim';
   value: string;
 };
 
-type IndentToken = {
+export type IndentToken = {
   type: 'Indent';
   tokens: Tokens;
 };
@@ -64,11 +64,14 @@ export type GroupToken = {
     before?: Tokens;
     after?: Tokens;
   };
-  groups: Array<Tokens | {
-    tokens: Tokens;
-    afterBroken?: Tokens;
-    afterUnbroken?: Tokens;
-  }>;
+  groups: Array<
+    | Tokens
+    | {
+        tokens: Tokens;
+        afterBroken?: Tokens;
+        afterUnbroken?: Tokens;
+      }
+  >;
 };
 
 export type LinkedGroupsToken = {

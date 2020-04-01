@@ -25,7 +25,7 @@ export default function TSPropertySignature(
     tokens = [word('readonly'), space];
   }
 
-  tokens = [...tokens, ...builder.print(node.key, node)];
+  tokens = [...tokens, ...builder.tokenize(node.key, node)];
 
   if (node.optional) {
     tokens.push(operator('?'));
@@ -35,7 +35,7 @@ export default function TSPropertySignature(
     ...tokens,
     operator(':'),
     space,
-    ...builder.print(node.typeAnnotation, node),
+    ...builder.tokenize(node.typeAnnotation, node),
     operator(';'),
   ];
 }

@@ -24,6 +24,6 @@ export default function ImportNamespaceSpecifier(
     space,
     word('as'),
     space,
-    ...builder.print(node.local.name, node),
+    ...builder.tokenize(node.local.name, node),
   ];
 }

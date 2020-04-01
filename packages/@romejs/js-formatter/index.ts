@@ -6,7 +6,8 @@
  */
 
 import Builder, {BuilderOptions} from './Builder';
-import {AnyNode} from '@romejs/js-ast';
+import {AnyNode, MOCK_PARENT} from '@romejs/js-ast';
+import Printer from './Printer';
 
 export {BuilderOptions, Builder};
 
@@ -14,6 +15,10 @@ export function formatJS(
   ast: AnyNode,
   opts: BuilderOptions,
   code: string = '',
-): Builder {
-  return new Builder(opts, ast, code);
+): Printer {
+  const builder = new Builder(opts);
+  const tokens = builder.tokenize(ast, MOCK_PARENT);
+  const printer = new Printer(opts);
+  printer.print(tokens);
+  return printer;
 }

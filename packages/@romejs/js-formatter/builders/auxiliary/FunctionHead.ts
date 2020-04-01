@@ -28,7 +28,7 @@ export default function FunctionHead(builder: Builder, node: AnyNode): Tokens {
 
   if (typeAnnotations) {
     if (node.returnType) {
-      tokens = tokens.concat(builder.printTypeColon(node.returnType, node));
+      tokens = tokens.concat(builder.tokenizeTypeColon(node.returnType, node));
     }
 
     if (node.predicate) {
@@ -36,9 +36,9 @@ export default function FunctionHead(builder: Builder, node: AnyNode): Tokens {
         tokens.push(operator(':'));
       }
       tokens.push(space);
-      tokens = tokens.concat(builder.print(node.predicate, node));
+      tokens = tokens.concat(builder.tokenize(node.predicate, node));
     }
   }
 
-  return [...builder.print(node.typeParameters, node), linkedGroups(tokens)];
+  return [...builder.tokenize(node.typeParameters, node), linkedGroups(tokens)];
 }

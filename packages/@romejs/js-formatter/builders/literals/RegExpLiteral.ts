@@ -41,7 +41,7 @@ export default function RegExpLiteral(builder: Builder, node: AnyNode): Tokens {
 
   return [
     operator('/'),
-    ...builder.print(node.expression, node),
+    ...builder.tokenize(node.expression, node),
     operator(`/${flags.join('')}`),
   ];
 }

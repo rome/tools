@@ -21,7 +21,7 @@ export default function FlowTupleTypeAnnotation(
 
   return [
     operator('['),
-    builder.printCommaList(node.types, node),
+    builder.tokenizeCommaList(node.types, node),
     operator(']'),
   ];
 }

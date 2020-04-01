@@ -20,10 +20,10 @@ export default function BindingAssignmentPattern(
   node = bindingAssignmentPattern.assert(node);
 
   return [
-    ...builder.print(node.left, node),
+    ...builder.tokenize(node.left, node),
     space,
     operator('='),
     space,
-    ...builder.print(node.right, node),
+    ...builder.tokenize(node.right, node),
   ];
 }

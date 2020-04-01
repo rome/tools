@@ -18,17 +18,17 @@ export default function ClassDeclaration(
   let tokens: Tokens = [word('class')];
 
   if (node.id) {
-    tokens = [...tokens, space, ...builder.print(node.id, node)];
+    tokens = [...tokens, space, ...builder.tokenize(node.id, node)];
   }
 
   return [
     ...tokens,
-    ...builder.print(node.meta, node),
+    ...builder.tokenize(node.meta, node),
     space,
     operator('{'),
-    ...builder.printInnerComments(node),
-    ...builder.printInnerComments(node.meta),
-    ...builder.printStatementList(node.meta.body, node.meta, true),
+    ...builder.tokenizeInnerComments(node),
+    ...builder.tokenizeInnerComments(node.meta),
+    ...builder.tokenizeStatementList(node.meta.body, node.meta, true),
     operator('}'),
   ];
 }

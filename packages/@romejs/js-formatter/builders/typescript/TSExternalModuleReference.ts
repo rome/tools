@@ -21,7 +21,7 @@ export default function TSExternalModuleReference(
 
   return [
     operator('require('),
-    ...builder.print(node.expression, node),
+    ...builder.tokenize(node.expression, node),
     operator(')'),
   ];
 }

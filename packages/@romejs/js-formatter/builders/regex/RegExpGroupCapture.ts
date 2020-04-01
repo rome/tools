@@ -23,5 +23,5 @@ export default function RegExpGroupCapture(
     tokens.push(verbatim('>'));
   }
 
-  return [...tokens, ...builder.print(node.expression, node), verbatim(')')];
+  return [...tokens, ...builder.tokenize(node.expression, node), verbatim(')')];
 }

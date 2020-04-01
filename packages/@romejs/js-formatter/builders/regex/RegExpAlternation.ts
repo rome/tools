@@ -16,8 +16,8 @@ export default function RegExpAlternation(
   node = regExpAlternation.assert(node);
 
   return [
-    ...builder.print(node.left, node),
+    ...builder.tokenize(node.left, node),
     verbatim('|'),
-    ...builder.print(node.right, node),
+    ...builder.tokenize(node.right, node),
   ];
 }

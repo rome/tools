@@ -9,7 +9,10 @@ import Builder from '../../Builder';
 import {Tokens, word, space} from '../../tokens';
 import {ImportSpecifier, importSpecifier, AnyNode} from '@romejs/js-ast';
 
-export default function ImportSpecifier(builder: Builder, node: AnyNode): Tokens {
+export default function ImportSpecifier(
+  builder: Builder,
+  node: AnyNode,
+): Tokens {
   node = importSpecifier.assert(node);
 
   let tokens: Tokens = [];
@@ -18,7 +21,7 @@ export default function ImportSpecifier(builder: Builder, node: AnyNode): Tokens
     tokens = [word(node.local.importKind), space];
   }
 
-  tokens = [...tokens, ...builder.print(node.imported, node)];
+  tokens = [...tokens, ...builder.tokenize(node.imported, node)];
 
   if (node.local.name.name !== node.imported.name) {
     tokens = [
@@ -26,7 +29,7 @@ export default function ImportSpecifier(builder: Builder, node: AnyNode): Tokens
       space,
       word('as'),
       space,
-      ...builder.print(node.local.name, node),
+      ...builder.tokenize(node.local.name, node),
     ];
   }
 

@@ -19,5 +19,5 @@ export default function FlowTypeofTypeAnnotation(
 ): Tokens {
   node = flowTypeofTypeAnnotation.assert(node);
 
-  return [word('typeof'), space, ...builder.print(node.argument, node)];
+  return [word('typeof'), space, ...builder.tokenize(node.argument, node)];
 }

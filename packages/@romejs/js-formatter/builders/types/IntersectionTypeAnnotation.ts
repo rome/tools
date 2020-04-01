@@ -20,7 +20,7 @@ export default function IntersectionTypeAnnotation(
   node = intersectionTypeAnnotation.assert(node);
 
   return [
-    builder.printJoin(node.types, node, {
+    builder.tokenizeJoin(node.types, node, {
       newline: false,
       broken: {
         indentNewline: false,

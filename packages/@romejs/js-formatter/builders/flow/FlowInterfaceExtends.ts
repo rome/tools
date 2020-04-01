@@ -17,11 +17,14 @@ export default function FlowInterfaceExtends(
   builder: Builder,
   node: AnyNode,
 ): Tokens {
-  node = node.type === 'FlowGenericTypeAnnotation' || node.type ===
-    'FlowClassImplements' ? node : flowInterfaceExtends.assert(node);
+  node =
+    node.type === 'FlowGenericTypeAnnotation' ||
+    node.type === 'FlowClassImplements'
+      ? node
+      : flowInterfaceExtends.assert(node);
 
   return [
-    ...builder.print(node.id, node),
-    ...builder.print(node.typeParameters, node),
+    ...builder.tokenize(node.id, node),
+    ...builder.tokenize(node.typeParameters, node),
   ];
 }

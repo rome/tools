@@ -18,5 +18,5 @@ export default function ComputedPropertyKey(
   node: AnyNode,
 ): Tokens {
   node = computedPropertyKey.assert(node);
-  return [operator('['), ...builder.print(node.value, node), operator(']')];
+  return [operator('['), ...builder.tokenize(node.value, node), operator(']')];
 }

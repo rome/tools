@@ -29,9 +29,11 @@ export default function ImportDeclaration(
 
   const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
 
-  if (namedSpecifiers.length > 0 || namespaceSpecifier !== undefined ||
-        defaultSpecifier !==
-        undefined) {
+  if (
+    namedSpecifiers.length > 0 ||
+    namespaceSpecifier !== undefined ||
+    defaultSpecifier !== undefined
+  ) {
     tokens = [
       ...tokens,
       ...printModuleSpecifiers(builder, node),
@@ -44,7 +46,7 @@ export default function ImportDeclaration(
   return [
     linkedGroups([
       ...tokens,
-      ...builder.print(node.source, node),
+      ...builder.tokenize(node.source, node),
       operator(';'),
     ]),
   ];
@@ -59,7 +61,7 @@ export function printModuleSpecifiers(
   let tokens: Tokens = [];
 
   if (defaultSpecifier !== undefined) {
-    tokens = builder.print(node.defaultSpecifier, node);
+    tokens = builder.tokenize(node.defaultSpecifier, node);
 
     if (namedSpecifiers.length > 0 || namespaceSpecifier !== undefined) {
       tokens = [...tokens, operator(','), space];
@@ -67,7 +69,7 @@ export function printModuleSpecifiers(
   }
 
   if (namespaceSpecifier !== undefined) {
-    tokens = [...tokens, ...builder.print(namespaceSpecifier, node)];
+    tokens = [...tokens, ...builder.tokenize(namespaceSpecifier, node)];
 
     if (namedSpecifiers.length > 0) {
       tokens = [...tokens, operator(','), space];
@@ -81,7 +83,7 @@ export function printModuleSpecifiers(
       ...tokens,
 
       operator('{'),
-      builder.printCommaList(namedSpecifiers, node, {
+      builder.tokenizeCommaList(namedSpecifiers, node, {
         trailing: true,
       }),
       operator('}'),

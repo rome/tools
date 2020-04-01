@@ -19,5 +19,5 @@ export default function ExpressionStatement(
 ): Tokens {
   node = expressionStatement.assert(node);
 
-  return [...builder.print(node.expression, node), operator(';')];
+  return [...builder.tokenize(node.expression, node), operator(';')];
 }

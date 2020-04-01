@@ -15,10 +15,13 @@ export default function FlowTypeParameter(
 ): Tokens {
   node = flowTypeParameter.assert(node);
 
-  let tokens: Tokens = [...builder.print(node.variance, node), word(node.name)];
+  let tokens: Tokens = [
+    ...builder.tokenize(node.variance, node),
+    word(node.name),
+  ];
 
   if (node.bound) {
-    tokens = [...tokens, ...builder.print(node.bound, node)];
+    tokens = [...tokens, ...builder.tokenize(node.bound, node)];
   }
 
   if (node.default) {
@@ -27,7 +30,7 @@ export default function FlowTypeParameter(
       space,
       operator('='),
       space,
-      ...builder.print(node.default, node),
+      ...builder.tokenize(node.default, node),
     ];
   } else {
     return tokens;

@@ -18,7 +18,7 @@ export default function JSXSpreadAttribute(
   return [
     operator('{'),
     operator('...'),
-    ...builder.print(node.argument, node),
+    ...builder.tokenize(node.argument, node),
     operator('}'),
   ];
 }

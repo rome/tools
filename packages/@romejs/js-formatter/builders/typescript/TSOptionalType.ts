@@ -9,8 +9,11 @@ import {TSOptionalType, tsOptionalType, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, operator} from '../../tokens';
 
-export default function TSOptionalType(builder: Builder, node: AnyNode): Tokens {
+export default function TSOptionalType(
+  builder: Builder,
+  node: AnyNode,
+): Tokens {
   node = tsOptionalType.assert(node);
 
-  return [...builder.print(node.typeAnnotation, node), operator('?')];
+  return [...builder.tokenize(node.typeAnnotation, node), operator('?')];
 }

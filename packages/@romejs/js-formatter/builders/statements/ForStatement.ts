@@ -17,19 +17,24 @@ export default function ForStatement(builder: Builder, node: AnyNode): Tokens {
     word('for'),
     space,
     operator('('),
-    ...builder.print(node.init, node),
+    ...builder.tokenize(node.init, node),
     operator(';'),
   ];
   builder.inForStatementInitCounter--;
 
   if (node.test) {
-    tokens = [...tokens, space, ...builder.print(node.test, node)];
+    tokens = [...tokens, space, ...builder.tokenize(node.test, node)];
   }
   tokens.push(operator(';'));
 
   if (node.update) {
-    tokens = [...tokens, space, ...builder.print(node.update, node)];
+    tokens = [...tokens, space, ...builder.tokenize(node.update, node)];
   }
 
-  return [...tokens, operator(')'), space, ...builder.print(node.body, node)];
+  return [
+    ...tokens,
+    operator(')'),
+    space,
+    ...builder.tokenize(node.body, node),
+  ];
 }

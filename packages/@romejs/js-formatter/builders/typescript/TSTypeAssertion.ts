@@ -9,18 +9,21 @@ import {TSTypeAssertion, tsTypeAssertion, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, operator, space} from '../../tokens';
 
-export default function TSTypeAssertion(builder: Builder, node: AnyNode): Tokens {
+export default function TSTypeAssertion(
+  builder: Builder,
+  node: AnyNode,
+): Tokens {
   node = tsTypeAssertion.assert(node);
 
   if (builder.options.typeAnnotations) {
     return [
       operator('<'),
-      ...builder.print(node.typeAnnotation, node),
+      ...builder.tokenize(node.typeAnnotation, node),
       operator('>'),
       space,
-      ...builder.print(node.expression, node),
+      ...builder.tokenize(node.expression, node),
     ];
   } else {
-    return builder.print(node.expression, node);
+    return builder.tokenize(node.expression, node);
   }
 }

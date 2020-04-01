@@ -9,15 +9,18 @@ import Builder from '../../Builder';
 import {Tokens, operator} from '../../tokens';
 import {CallExpression, callExpression, AnyNode} from '@romejs/js-ast';
 
-export default function CallExpression(builder: Builder, node: AnyNode): Tokens {
-    node =
+export default function CallExpression(
+  builder: Builder,
+  node: AnyNode,
+): Tokens {
+  node =
     node.type === 'OptionalCallExpression' || node.type === 'NewExpression'
       ? node
       : callExpression.assert(node);
 
   const tokens: Tokens = [
-    ...builder.print(node.callee, node),
-    ...builder.print(node.typeArguments, node),
+    ...builder.tokenize(node.callee, node),
+    ...builder.tokenize(node.typeArguments, node),
   ];
 
   if (node.type === 'OptionalCallExpression') {
@@ -27,7 +30,7 @@ export default function CallExpression(builder: Builder, node: AnyNode): Tokens 
   return [
     ...tokens,
     operator('('),
-    builder.printCommaList(node.arguments, node, {
+    builder.tokenizeCommaList(node.arguments, node, {
       trailing: true,
     }),
     operator(')'),

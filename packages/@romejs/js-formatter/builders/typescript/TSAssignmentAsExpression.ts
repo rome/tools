@@ -21,11 +21,11 @@ export default function TSAssignmentAsExpression(
 
   if (builder.options.typeAnnotations) {
     return [
-      ...builder.print(node.expression, node),
+      ...builder.tokenize(node.expression, node),
       word('as'),
-      ...builder.print(node.typeAnnotation, node),
+      ...builder.tokenize(node.typeAnnotation, node),
     ];
   } else {
-    return builder.print(node.expression, node);
+    return builder.tokenize(node.expression, node);
   }
 }

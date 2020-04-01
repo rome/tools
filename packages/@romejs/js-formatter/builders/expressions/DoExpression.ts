@@ -12,5 +12,5 @@ import {DoExpression, doExpression, AnyNode} from '@romejs/js-ast';
 export default function DoExpression(builder: Builder, node: AnyNode): Tokens {
   node = doExpression.assert(node);
 
-  return [word('do'), space, ...builder.print(node.body, node)];
+  return [word('do'), space, ...builder.tokenize(node.body, node)];
 }

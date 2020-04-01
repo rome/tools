@@ -20,7 +20,7 @@ export default function TSExpressionWithTypeArguments(
   node = tsExpressionWithTypeArguments.assert(node);
 
   return [
-    ...builder.print(node.expression, node),
-    ...builder.print(node.typeParameters, node),
+    ...builder.tokenize(node.expression, node),
+    ...builder.tokenize(node.typeParameters, node),
   ];
 }

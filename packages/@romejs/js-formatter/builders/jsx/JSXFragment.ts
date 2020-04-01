@@ -14,7 +14,7 @@ export default function JSXFragment(builder: Builder, node: AnyNode): Tokens {
 
   return [
     operator('<>'),
-    indent(flatten(node.children.map((child) => builder.print(child, node)))),
+    indent(flatten(node.children.map(child => builder.tokenize(child, node)))),
     operator('</>'),
   ];
 }

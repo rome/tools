@@ -9,18 +9,21 @@ import Builder from '../../Builder';
 import {Tokens, word, space, operator} from '../../tokens';
 import {SwitchStatement, switchStatement, AnyNode} from '@romejs/js-ast';
 
-export default function SwitchStatement(builder: Builder, node: AnyNode): Tokens {
+export default function SwitchStatement(
+  builder: Builder,
+  node: AnyNode,
+): Tokens {
   node = switchStatement.assert(node);
 
   return [
     word('switch'),
     space,
     operator('('),
-    ...builder.print(node.discriminant, node),
+    ...builder.tokenize(node.discriminant, node),
     operator(')'),
     space,
     operator('{'),
-    ...builder.printStatementList(node.cases, node, true),
+    ...builder.tokenizeStatementList(node.cases, node, true),
     operator('}'),
   ];
 }

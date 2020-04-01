@@ -16,5 +16,5 @@ import {operator} from '@romejs/js-formatter/tokens';
 export default function StaticMemberProperty(builder: Builder, node: AnyNode) {
   node = staticMemberProperty.assert(node);
 
-  return [operator('.'), ...builder.print(node.value, node)];
+  return [operator('.'), ...builder.tokenize(node.value, node)];
 }

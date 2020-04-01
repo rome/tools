@@ -24,11 +24,11 @@ export default function TSIndexSignature(
   return [
     ...tokens,
     operator('['),
-    ...builder.print(node.key, node),
+    ...builder.tokenize(node.key, node),
     operator(']'),
     operator(':'),
     space,
-    ...builder.print(node.typeAnnotation, node),
+    ...builder.tokenize(node.typeAnnotation, node),
     operator(';'),
   ];
 }

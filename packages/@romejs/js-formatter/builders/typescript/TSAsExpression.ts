@@ -9,18 +9,21 @@ import {TSAsExpression, tsAsExpression, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, space, word} from '../../tokens';
 
-export default function TSAsExpression(builder: Builder, node: AnyNode): Tokens {
+export default function TSAsExpression(
+  builder: Builder,
+  node: AnyNode,
+): Tokens {
   node = tsAsExpression.assert(node);
 
   if (builder.options.typeAnnotations) {
     return [
-      ...builder.print(node.expression, node),
+      ...builder.tokenize(node.expression, node),
       space,
       word('as'),
       space,
-      ...builder.print(node.typeAnnotation, node),
+      ...builder.tokenize(node.typeAnnotation, node),
     ];
   } else {
-    return builder.print(node.expression, node);
+    return builder.tokenize(node.expression, node);
   }
 }

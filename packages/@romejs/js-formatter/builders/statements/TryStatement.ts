@@ -15,9 +15,9 @@ export default function TryStatement(builder: Builder, node: AnyNode): Tokens {
   const tokens: Tokens = [
     word('try'),
     space,
-    ...builder.print(node.block, node),
+    ...builder.tokenize(node.block, node),
     space,
-    ...builder.print(node.handler, node),
+    ...builder.tokenize(node.handler, node),
   ];
 
   if (node.finalizer) {
@@ -26,7 +26,7 @@ export default function TryStatement(builder: Builder, node: AnyNode): Tokens {
       space,
       word('finally'),
       space,
-      ...builder.print(node.finalizer, node),
+      ...builder.tokenize(node.finalizer, node),
     ];
   } else {
     return tokens;

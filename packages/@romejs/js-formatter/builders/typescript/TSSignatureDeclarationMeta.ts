@@ -21,7 +21,7 @@ export default function TSSignatureDeclarationMeta(
   node = tsSignatureDeclarationMeta.assert(node);
 
   return [
-    ...builder.print(node.typeParameters, node),
+    ...builder.tokenize(node.typeParameters, node),
     operator('('),
     ...printBindingPatternParams(builder, node, node.parameters, node.rest),
     operator(')'),

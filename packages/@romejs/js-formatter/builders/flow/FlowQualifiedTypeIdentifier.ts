@@ -20,8 +20,8 @@ export default function FlowQualifiedTypeIdentifier(
   node = flowQualifiedTypeIdentifier.assert(node);
 
   return [
-    ...builder.print(node.qualification, node),
+    ...builder.tokenize(node.qualification, node),
     operator('.'),
-    ...builder.print(node.id, node),
+    ...builder.tokenize(node.id, node),
   ];
 }

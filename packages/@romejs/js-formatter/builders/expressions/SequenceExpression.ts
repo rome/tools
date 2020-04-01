@@ -14,5 +14,5 @@ export default function SequenceExpression(
   node: AnyNode,
 ): Tokens {
   node = sequenceExpression.assert(node);
-  return [builder.printCommaList(node.expressions, node)];
+  return [builder.tokenizeCommaList(node.expressions, node)];
 }

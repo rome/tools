@@ -16,9 +16,9 @@ export default function LabeledStatement(
   node = labeledStatement.assert(node);
 
   return [
-    ...builder.print(node.label, node),
+    ...builder.tokenize(node.label, node),
     operator(':'),
     space,
-    ...builder.print(node.body, node),
+    ...builder.tokenize(node.body, node),
   ];
 }

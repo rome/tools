@@ -30,7 +30,7 @@ export default function TSEnumDeclaration(
     ...tokens,
     word('enum'),
     space,
-    ...builder.print(node.id, node),
+    ...builder.tokenize(node.id, node),
     space,
     ...printTSBraced(builder, node, node.members),
   ];

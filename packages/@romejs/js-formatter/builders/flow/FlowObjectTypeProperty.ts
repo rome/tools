@@ -13,7 +13,10 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function FlowObjectTypeProperty(builder: Builder, node: AnyNode) {
+export default function FlowObjectTypeProperty(
+  builder: Builder,
+  node: AnyNode,
+) {
   node = flowObjectTypeProperty.assert(node);
 
   let tokens: Tokens = [];
@@ -25,13 +28,18 @@ export default function FlowObjectTypeProperty(builder: Builder, node: AnyNode) 
 
   tokens = [
     ...tokens,
-    ...builder.print(node.variance, node),
-    ...builder.print(node.key, node),
+    ...builder.tokenize(node.variance, node),
+    ...builder.tokenize(node.key, node),
   ];
 
   if (node.optional === true) {
     tokens.push(operator('?'));
   }
 
-  return [...tokens, operator(':'), space, ...builder.print(node.value, node)];
+  return [
+    ...tokens,
+    operator(':'),
+    space,
+    ...builder.tokenize(node.value, node),
+  ];
 }

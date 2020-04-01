@@ -17,11 +17,12 @@ export default function ExportLocalSpecifier(
   builder: Builder,
   node: AnyNode,
 ): Tokens {
-  node = node.type === 'ExportExternalSpecifier'
-    ? node
-    : exportLocalSpecifier.assert(node);
+  node =
+    node.type === 'ExportExternalSpecifier'
+      ? node
+      : exportLocalSpecifier.assert(node);
 
-  const tokens = builder.print(node.local, node);
+  const tokens = builder.tokenize(node.local, node);
 
   if (node.local.name === node.exported.name) {
     return tokens;
@@ -31,7 +32,7 @@ export default function ExportLocalSpecifier(
       space,
       word('as'),
       space,
-      ...builder.print(node.exported, node),
+      ...builder.tokenize(node.exported, node),
     ];
   }
 }

@@ -21,20 +21,22 @@ export default function FlowFunctionTypeAnnotation(
   node = flowFunctionTypeAnnotation.assert(node);
 
   let tokens: Tokens = [
-    ...builder.print(node.typeParameters, node),
+    ...builder.tokenize(node.typeParameters, node),
     operator('('),
-    builder.printCommaList(node.params, node),
+    builder.tokenizeCommaList(node.params, node),
     operator(')'),
   ];
 
   // this node type is overloaded, not sure why but it makes it EXTREMELY annoying
-  if (parent.type === 'FlowObjectTypeCallProperty' || parent.type ===
-      'FlowDeclareFunction') {
+  if (
+    parent.type === 'FlowObjectTypeCallProperty' ||
+    parent.type === 'FlowDeclareFunction'
+  ) {
     tokens.push(operator(':'));
   } else {
     tokens.push(space);
     tokens.push(operator('=>'));
   }
 
-  return [...tokens, space, ...builder.print(node.returnType, node)];
+  return [...tokens, space, ...builder.tokenize(node.returnType, node)];
 }

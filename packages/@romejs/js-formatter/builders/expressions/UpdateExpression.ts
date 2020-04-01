@@ -16,8 +16,8 @@ export default function UpdateExpression(
   node = updateExpression.assert(node);
 
   if (node.prefix === true) {
-    return [operator(node.operator), ...builder.print(node.argument, node)];
+    return [operator(node.operator), ...builder.tokenize(node.argument, node)];
   } else {
-    return [...builder.print(node.argument, node), operator(node.operator)];
+    return [...builder.tokenize(node.argument, node), operator(node.operator)];
   }
 }

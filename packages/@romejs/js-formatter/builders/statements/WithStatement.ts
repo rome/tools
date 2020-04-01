@@ -16,8 +16,8 @@ export default function WithStatement(builder: Builder, node: AnyNode): Tokens {
     word('with'),
     space,
     operator('('),
-    ...builder.print(node.object, node),
+    ...builder.tokenize(node.object, node),
     operator(')'),
-    ...builder.print(node.body, node),
+    ...builder.tokenize(node.body, node),
   ];
 }

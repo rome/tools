@@ -22,12 +22,12 @@ export default function TypeAliasTypeAnnotation(
   return [
     word('type'),
     space,
-    ...builder.print(node.id, node),
-    ...builder.print(node.typeParameters, node),
+    ...builder.tokenize(node.id, node),
+    ...builder.tokenize(node.typeParameters, node),
     space,
     operator('='),
     space,
-    ...builder.print(node.right, node),
+    ...builder.tokenize(node.right, node),
     operator(';'),
   ];
 }

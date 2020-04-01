@@ -9,13 +9,16 @@ import Builder from '../../Builder';
 import {Tokens, operator} from '../../tokens';
 import {JSXSpreadChild, jsxSpreadChild, AnyNode} from '@romejs/js-ast';
 
-export default function JSXSpreadChild(builder: Builder, node: AnyNode): Tokens {
+export default function JSXSpreadChild(
+  builder: Builder,
+  node: AnyNode,
+): Tokens {
   node = jsxSpreadChild.assert(node);
 
   return [
     operator('{'),
     operator('...'),
-    ...builder.print(node.expression, node),
+    ...builder.tokenize(node.expression, node),
     operator('}'),
   ];
 }

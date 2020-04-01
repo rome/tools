@@ -20,21 +20,24 @@ export default function ConditionalExpression(
   node = conditionalExpression.assert(node);
 
   return [
-    ...builder.print(node.test, node),
+    ...builder.tokenize(node.test, node),
     space,
-    group([
-      [operator('?'), space, ...builder.print(node.consequent, node)],
-      [operator(':'), space, ...builder.print(node.alternate, node)],
-    ], {
-      priority: true,
-      broken: {
-        before: [newline],
-        indentNewline: false,
-        separator: [newline],
+    group(
+      [
+        [operator('?'), space, ...builder.tokenize(node.consequent, node)],
+        [operator(':'), space, ...builder.tokenize(node.alternate, node)],
+      ],
+      {
+        priority: true,
+        broken: {
+          before: [newline],
+          indentNewline: false,
+          separator: [newline],
+        },
+        unbroken: {
+          separator: [space],
+        },
       },
-      unbroken: {
-        separator: [space],
-      },
-    }),
+    ),
   ];
 }

@@ -15,16 +15,20 @@ export default function TSImportType(builder: Builder, node: AnyNode): Tokens {
   let tokens: Tokens = [
     word('import'),
     operator('('),
-    ...builder.print(node.argument, node),
+    ...builder.tokenize(node.argument, node),
     operator(')'),
   ];
 
   if (node.qualifier) {
-    tokens = [...tokens, operator('.'), ...builder.print(node.qualifier, node)];
+    tokens = [
+      ...tokens,
+      operator('.'),
+      ...builder.tokenize(node.qualifier, node),
+    ];
   }
 
   if (node.typeParameters) {
-    tokens = [...tokens, ...builder.print(node.typeParameters, node)];
+    tokens = [...tokens, ...builder.tokenize(node.typeParameters, node)];
   }
 
   return tokens;

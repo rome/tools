@@ -20,9 +20,9 @@ export default function TSIndexedAccessType(
   node = tsIndexedAccessType.assert(node);
 
   return [
-    ...builder.print(node.objectType, node),
+    ...builder.tokenize(node.objectType, node),
     operator('['),
-    ...builder.print(node.indexType, node),
+    ...builder.tokenize(node.indexType, node),
     operator(']'),
   ];
 }

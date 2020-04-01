@@ -16,7 +16,7 @@ export default function MemberExpression(
   node = memberExpression.assert(node);
 
   return [
-    ...builder.print(node.object, node),
-    ...builder.print(node.property, node),
+    ...builder.tokenize(node.object, node),
+    ...builder.tokenize(node.property, node),
   ];
 }

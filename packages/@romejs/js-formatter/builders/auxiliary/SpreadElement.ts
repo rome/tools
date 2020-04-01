@@ -12,5 +12,5 @@ import {operator, Tokens} from '@romejs/js-formatter/tokens';
 export default function SpreadElement(builder: Builder, node: AnyNode): Tokens {
   node = spreadElement.assert(node);
 
-  return [operator('...'), ...builder.print(node.argument, node)];
+  return [operator('...'), ...builder.tokenize(node.argument, node)];
 }

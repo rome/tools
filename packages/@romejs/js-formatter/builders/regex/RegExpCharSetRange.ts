@@ -16,8 +16,8 @@ export default function RegExpCharSetRange(
   node = regExpCharSetRange.assert(node);
 
   return [
-    ...builder.print(node.start, node),
+    ...builder.tokenize(node.start, node),
     verbatim('-'),
-    ...builder.print(node.end, node),
+    ...builder.tokenize(node.end, node),
   ];
 }

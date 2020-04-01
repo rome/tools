@@ -12,5 +12,5 @@ import {operator} from '@romejs/js-formatter/tokens';
 export default function PrivateName(builder: Builder, node: AnyNode) {
   node = privateName.assert(node);
 
-  return [operator('#'), ...builder.print(node.id, node)];
+  return [operator('#'), ...builder.tokenize(node.id, node)];
 }

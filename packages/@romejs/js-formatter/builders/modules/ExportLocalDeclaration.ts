@@ -28,13 +28,14 @@ export default function ExportLocalDeclaration(
 }
 
 export function _ExportDeclaration(builder: Builder, node: AnyNode): Tokens {
-  node = node.type === 'ExportDefaultDeclaration'
-    ? node
-    : exportLocalDeclaration.assert(node);
+  node =
+    node.type === 'ExportDefaultDeclaration'
+      ? node
+      : exportLocalDeclaration.assert(node);
 
   if (node.declaration) {
     const declar = node.declaration;
-    const tokens = builder.print(declar, node);
+    const tokens = builder.tokenize(declar, node);
     if (!isDeclaration(declar)) {
       tokens.push(operator(';'));
     }
@@ -58,7 +59,7 @@ export function _ExportDeclaration(builder: Builder, node: AnyNode): Tokens {
     return [
       ...tokens,
       operator('{'),
-      builder.printCommaList(specifiers, node, {
+      builder.tokenizeCommaList(specifiers, node, {
         trailing: true,
       }),
       operator('}'),

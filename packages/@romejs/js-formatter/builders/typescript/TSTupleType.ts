@@ -14,7 +14,7 @@ export default function TSTupleType(builder: Builder, node: AnyNode): Tokens {
 
   return [
     operator('['),
-    builder.printCommaList(node.elementTypes, node),
+    builder.tokenizeCommaList(node.elementTypes, node),
     operator(']'),
   ];
 }

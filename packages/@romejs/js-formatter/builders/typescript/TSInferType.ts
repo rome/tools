@@ -12,5 +12,9 @@ import {Tokens, operator, space} from '../../tokens';
 export default function TSInferType(builder: Builder, node: AnyNode): Tokens {
   node = tsInferType.assert(node);
 
-  return [operator('infer'), space, ...builder.print(node.typeParameter, node)];
+  return [
+    operator('infer'),
+    space,
+    ...builder.tokenize(node.typeParameter, node),
+  ];
 }

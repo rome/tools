@@ -16,8 +16,8 @@ export default function TSMethodSignature(
   node = tsMethodSignature.assert(node);
 
   return [
-    ...builder.print(node.key, node),
-    ...builder.print(node.meta, node),
+    ...builder.tokenize(node.key, node),
+    ...builder.tokenize(node.meta, node),
     operator(';'),
   ];
 }

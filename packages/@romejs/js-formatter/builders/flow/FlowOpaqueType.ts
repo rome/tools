@@ -9,18 +9,20 @@ import Builder from '../../Builder';
 import {Tokens, word, operator, space} from '../../tokens';
 import {FlowOpaqueType, flowOpaqueType, AnyNode} from '@romejs/js-ast';
 
-export default function FlowOpaqueType(builder: Builder, node: AnyNode): Tokens {
-  node = node.type === 'FlowDeclareOpaqueType'
-    ? node
-    : flowOpaqueType.assert(node);
+export default function FlowOpaqueType(
+  builder: Builder,
+  node: AnyNode,
+): Tokens {
+  node =
+    node.type === 'FlowDeclareOpaqueType' ? node : flowOpaqueType.assert(node);
 
   let tokens: Tokens = [
     word('opaque'),
     space,
     word('type'),
     space,
-    ...builder.print(node.id, node),
-    ...builder.print(node.typeParameters, node),
+    ...builder.tokenize(node.id, node),
+    ...builder.tokenize(node.typeParameters, node),
   ];
 
   if (node.supertype) {
@@ -28,7 +30,7 @@ export default function FlowOpaqueType(builder: Builder, node: AnyNode): Tokens 
       ...tokens,
       operator(':'),
       space,
-      ...builder.print(node.supertype, node),
+      ...builder.tokenize(node.supertype, node),
     ];
   }
 
@@ -38,7 +40,7 @@ export default function FlowOpaqueType(builder: Builder, node: AnyNode): Tokens 
       space,
       operator('='),
       space,
-      ...builder.print(node.impltype, node),
+      ...builder.tokenize(node.impltype, node),
     ];
   }
 

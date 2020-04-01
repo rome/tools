@@ -19,7 +19,7 @@ export default function VariableDeclaration(builder: Builder, node: AnyNode) {
   return [
     word(node.kind),
     space,
-    builder.printCommaList(node.declarations, node, {
+    builder.tokenizeCommaList(node.declarations, node, {
       indent: false,
     }),
   ];

@@ -14,13 +14,13 @@ export default function VariableDeclarator(builder: Builder, node: AnyNode) {
 
   if (node.init) {
     return [
-      ...builder.print(node.id, node),
+      ...builder.tokenize(node.id, node),
       space,
       operator('='),
       space,
-      ...builder.print(node.init, node),
+      ...builder.tokenize(node.init, node),
     ];
   } else {
-    return builder.print(node.id, node);
+    return builder.tokenize(node.id, node);
   }
 }

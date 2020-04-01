@@ -19,5 +19,5 @@ export default function FlowObjectTypeSpreadProperty(
 ): Tokens {
   node = flowObjectTypeSpreadProperty.assert(node);
 
-  return [operator('...'), ...builder.print(node.argument, node)];
+  return [operator('...'), ...builder.tokenize(node.argument, node)];
 }

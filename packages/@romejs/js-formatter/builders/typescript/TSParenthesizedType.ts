@@ -21,7 +21,7 @@ export default function TSParenthesizedType(
 
   return [
     operator('('),
-    ...builder.print(node.typeAnnotation, node),
+    ...builder.tokenize(node.typeAnnotation, node),
     operator(')'),
   ];
 }

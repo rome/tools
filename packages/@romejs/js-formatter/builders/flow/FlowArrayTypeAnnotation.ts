@@ -20,7 +20,7 @@ export default function FlowArrayTypeAnnotation(
   node = flowArrayTypeAnnotation.assert(node);
 
   return [
-    ...builder.print(node.elementType, node),
+    ...builder.tokenize(node.elementType, node),
     operator('['),
     operator(']'),
   ];

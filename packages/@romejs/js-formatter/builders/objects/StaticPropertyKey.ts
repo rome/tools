@@ -14,5 +14,5 @@ export default function StaticPropertyKey(
   node: AnyNode,
 ): Tokens {
   node = staticPropertyKey.assert(node);
-  return builder.print(node.value, node);
+  return builder.tokenize(node.value, node);
 }

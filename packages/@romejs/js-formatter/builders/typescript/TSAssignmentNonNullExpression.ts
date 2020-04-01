@@ -19,5 +19,5 @@ export default function TSAssignmentNonNullExpression(
 ): Tokens {
   node = tsAssignmentNonNullExpression.assert(node);
 
-  return [...builder.print(node.expression, node), operator('!')];
+  return [...builder.tokenize(node.expression, node), operator('!')];
 }

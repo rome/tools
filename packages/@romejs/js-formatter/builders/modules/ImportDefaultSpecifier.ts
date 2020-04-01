@@ -18,5 +18,5 @@ export default function ImportDefaultSpecifier(
   node: AnyNode,
 ): Tokens {
   node = importDefaultSpecifier.assert(node);
-  return builder.print(node.local.name, node);
+  return builder.tokenize(node.local.name, node);
 }

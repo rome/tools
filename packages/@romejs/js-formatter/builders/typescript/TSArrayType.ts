@@ -12,5 +12,5 @@ import {Tokens, operator} from '../../tokens';
 export default function TSArrayType(builder: Builder, node: AnyNode): Tokens {
   node = tsArrayType.assert(node);
 
-  return [...builder.print(node.elementType, node), operator('[]')];
+  return [...builder.tokenize(node.elementType, node), operator('[]')];
 }

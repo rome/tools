@@ -10,12 +10,15 @@ import {Builder} from '@romejs/js-formatter';
 import {Tokens} from '../../tokens';
 import {printMethod} from '../utils';
 
-export default function TSDeclareMethod(builder: Builder, node: AnyNode): Tokens {
+export default function TSDeclareMethod(
+  builder: Builder,
+  node: AnyNode,
+): Tokens {
   node = tsDeclareMethod.assert(node);
 
   return [
-    ...builder.print(node.meta, node),
-    ...builder.print(node.key, node),
+    ...builder.tokenize(node.meta, node),
+    ...builder.tokenize(node.key, node),
     ...printMethod(builder, node),
   ];
 }

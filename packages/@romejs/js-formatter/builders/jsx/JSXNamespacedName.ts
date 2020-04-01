@@ -16,8 +16,8 @@ export default function JSXNamespacedName(
   node = jsxNamespacedName.assert(node);
 
   return [
-    ...builder.print(node.namespace, node),
+    ...builder.tokenize(node.namespace, node),
     operator(':'),
-    ...builder.print(node.name, node),
+    ...builder.tokenize(node.name, node),
   ];
 }

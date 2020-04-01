@@ -20,8 +20,8 @@ export default function FlowObjectTypeCallProperty(
   node = flowObjectTypeCallProperty.assert(node);
 
   if (node.static === true) {
-    return [word('static'), space, ...builder.print(node.value, node)];
+    return [word('static'), space, ...builder.tokenize(node.value, node)];
   } else {
-    return builder.print(node.value, node);
+    return builder.tokenize(node.value, node);
   }
 }

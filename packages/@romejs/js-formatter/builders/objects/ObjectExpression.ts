@@ -13,27 +13,33 @@ export default function ObjectExpression(
   builder: Builder,
   _node: AnyNode,
 ): Tokens {
-  const node = _node.type === 'BindingObjectPattern' || _node.type ===
-    'AssignmentObjectPattern' ? _node : objectExpression.assert(_node);
+  const node =
+    _node.type === 'BindingObjectPattern' ||
+    _node.type === 'AssignmentObjectPattern'
+      ? _node
+      : objectExpression.assert(_node);
 
   const props = node.properties;
 
   let tokens: Tokens = [
     operator('{'),
-    ...builder.printInnerComments(node),
-    builder.printCommaList(props, node, {
+    ...builder.tokenizeInnerComments(node),
+    builder.tokenizeCommaList(props, node, {
       trailing: true,
       breakOnNewline: true,
     }),
   ];
 
-  if ((node.type === 'BindingObjectPattern' || node.type ===
-      'AssignmentObjectPattern') && node.rest !== undefined) {
+  if (
+    (node.type === 'BindingObjectPattern' ||
+      node.type === 'AssignmentObjectPattern') &&
+    node.rest !== undefined
+  ) {
     if (props.length > 0) {
       tokens = [...tokens, operator(','), space];
     }
 
-    tokens = [...tokens, operator('...'), ...builder.print(node.rest, node)];
+    tokens = [...tokens, operator('...'), ...builder.tokenize(node.rest, node)];
   }
 
   tokens.push(operator('}'));

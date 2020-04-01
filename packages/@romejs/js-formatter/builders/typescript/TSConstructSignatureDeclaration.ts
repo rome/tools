@@ -19,14 +19,18 @@ export default function TSConstructSignatureDeclaration(
 ) {
   node = tsConstructSignatureDeclaration.assert(node);
 
-  let tokens: Tokens = [word('new'), space, ...builder.print(node.meta, node)];
+  let tokens: Tokens = [
+    word('new'),
+    space,
+    ...builder.tokenize(node.meta, node),
+  ];
 
   if (node.typeAnnotation !== undefined) {
     tokens = [
       ...tokens,
       operator(':'),
       space,
-      ...builder.print(node.typeAnnotation, node),
+      ...builder.tokenize(node.typeAnnotation, node),
     ];
   }
 

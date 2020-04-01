@@ -19,5 +19,5 @@ export default function FlowDeclaredPredicate(
 ): Tokens {
   node = flowDeclaredPredicate.assert(node);
 
-  return [operator('%checks'), space, ...builder.print(node.value, node)];
+  return [operator('%checks'), space, ...builder.tokenize(node.value, node)];
 }

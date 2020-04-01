@@ -9,7 +9,10 @@ import Builder from '../../Builder';
 import {TemplateLiteral, templateLiteral, AnyNode} from '@romejs/js-ast';
 import {Tokens} from '@romejs/js-formatter/tokens';
 
-export default function TemplateLiteral(builder: Builder, node: AnyNode): Tokens {
+export default function TemplateLiteral(
+  builder: Builder,
+  node: AnyNode,
+): Tokens {
   node = templateLiteral.assert(node);
 
   let tokens: Tokens = [];
@@ -17,10 +20,10 @@ export default function TemplateLiteral(builder: Builder, node: AnyNode): Tokens
   const quasis = node.quasis;
 
   for (let i = 0; i < quasis.length; i++) {
-    tokens = tokens.concat(builder.print(quasis[i], node));
+    tokens = tokens.concat(builder.tokenize(quasis[i], node));
 
     if (i + 1 < quasis.length) {
-      tokens = tokens.concat(builder.print(node.expressions[i], node));
+      tokens = tokens.concat(builder.tokenize(node.expressions[i], node));
     }
   }
 

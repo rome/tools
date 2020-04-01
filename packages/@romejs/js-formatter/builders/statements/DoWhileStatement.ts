@@ -18,12 +18,12 @@ export default function DoWhileStatement(
   return [
     word('do'),
     space,
-    ...builder.print(node.body, node),
+    ...builder.tokenize(node.body, node),
     space,
     word('while'),
     space,
     operator('('),
-    ...builder.print(node.test, node),
+    ...builder.tokenize(node.test, node),
     operator(')'),
     operator(';'),
   ];

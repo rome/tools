@@ -18,9 +18,9 @@ export default function ClassProperty(builder: Builder, node: AnyNode): Tokens {
   }
 
   const tokens: Tokens = [
-    ...builder.print(node.meta, node),
-    ...builder.print(node.key, node),
-    ...builder.printTypeColon(node.typeAnnotation, node),
+    ...builder.tokenize(node.meta, node),
+    ...builder.tokenize(node.key, node),
+    ...builder.tokenizeTypeColon(node.typeAnnotation, node),
   ];
 
   if (node.value) {
@@ -29,7 +29,7 @@ export default function ClassProperty(builder: Builder, node: AnyNode): Tokens {
       space,
       operator('='),
       space,
-      ...builder.print(node.value, node),
+      ...builder.tokenize(node.value, node),
       operator(';'),
     ];
   } else {

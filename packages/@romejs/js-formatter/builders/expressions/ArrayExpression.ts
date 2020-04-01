@@ -13,28 +13,34 @@ export default function ArrayExpression(
   builder: Builder,
   _node: AnyNode,
 ): Tokens {
-  const node = _node.type === 'BindingArrayPattern' || _node.type ===
-    'AssignmentArrayPattern' ? _node : arrayExpression.assert(_node);
+  const node =
+    _node.type === 'BindingArrayPattern' ||
+    _node.type === 'AssignmentArrayPattern'
+      ? _node
+      : arrayExpression.assert(_node);
 
   const elems = node.elements;
 
   let tokens: Tokens = [
     operator('['),
-    ...builder.printInnerComments(node),
-    builder.printCommaList(elems, node, {
+    ...builder.tokenizeInnerComments(node),
+    builder.tokenizeCommaList(elems, node, {
       trailing: true,
       breakOnNewline: true,
     }),
   ];
 
-  if ((node.type === 'BindingArrayPattern' || node.type ===
-      'AssignmentArrayPattern') && node.rest !== undefined) {
+  if (
+    (node.type === 'BindingArrayPattern' ||
+      node.type === 'AssignmentArrayPattern') &&
+    node.rest !== undefined
+  ) {
     if (elems.length > 0) {
       tokens.push(operator(','));
       tokens.push(space);
     }
 
-    tokens = [...tokens, operator('...'), ...builder.print(node.rest, node)];
+    tokens = [...tokens, operator('...'), ...builder.tokenize(node.rest, node)];
   }
 
   tokens.push(operator(']'));

@@ -21,7 +21,7 @@ export default function JSXExpressionContainer(
 
   return [
     operator('{'),
-    ...builder.print(node.expression, node),
+    ...builder.tokenize(node.expression, node),
     operator('}'),
   ];
 }

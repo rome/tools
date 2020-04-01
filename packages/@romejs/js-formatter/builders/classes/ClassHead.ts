@@ -12,7 +12,7 @@ import {ClassHead, classHead, AnyNode} from '@romejs/js-ast';
 export default function ClassHead(builder: Builder, node: AnyNode): Tokens {
   node = classHead.assert(node);
 
-  let tokens: Tokens = builder.print(node.typeParameters, node);
+  let tokens: Tokens = builder.tokenize(node.typeParameters, node);
 
   if (node.superClass) {
     tokens = [
@@ -20,19 +20,22 @@ export default function ClassHead(builder: Builder, node: AnyNode): Tokens {
       space,
       word('extends'),
       space,
-      ...builder.print(node.superClass, node),
-      ...builder.print(node.superTypeParameters, node),
+      ...builder.tokenize(node.superClass, node),
+      ...builder.tokenize(node.superTypeParameters, node),
     ];
   }
 
-  if (node.implements !== undefined && node.implements.length > 0 &&
-      builder.options.typeAnnotations) {
+  if (
+    node.implements !== undefined &&
+    node.implements.length > 0 &&
+    builder.options.typeAnnotations
+  ) {
     tokens = [
       ...tokens,
       space,
       word('implements'),
       space,
-      builder.printCommaList(node.implements, node),
+      builder.tokenizeCommaList(node.implements, node),
     ];
   }
 

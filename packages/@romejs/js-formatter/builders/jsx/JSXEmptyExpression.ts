@@ -14,5 +14,5 @@ export default function JSXEmptyExpression(
   node: AnyNode,
 ): Tokens {
   node = jsxEmptyExpression.assert(node);
-  return builder.printInnerComments(node);
+  return builder.tokenizeInnerComments(node);
 }

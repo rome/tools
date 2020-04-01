@@ -25,6 +25,6 @@ export default function FlowDeclareModuleExports(
     word('module'),
     operator('.'),
     word('exports'),
-    ...builder.printTypeColon(node.typeAnnotation, node),
+    ...builder.tokenizeTypeColon(node.typeAnnotation, node),
   ];
 }

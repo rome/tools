@@ -15,7 +15,7 @@ export default function RegExpQuantified(
 ): Tokens {
   node = regExpQuantified.assert(node);
 
-  const tokens: Tokens = builder.print(node.target, node);
+  const tokens: Tokens = builder.tokenize(node.target, node);
 
   if (node.min === 0 && node.max === 1) {
     tokens.push(verbatim('?'));

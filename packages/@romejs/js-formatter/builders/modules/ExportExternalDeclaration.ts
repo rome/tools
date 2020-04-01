@@ -34,7 +34,7 @@ export default function ExportExternalDeclaration(
       space,
       word('from'),
       space,
-      ...builder.print(node.source, node),
+      ...builder.tokenize(node.source, node),
       operator(';'),
     ]),
   ];

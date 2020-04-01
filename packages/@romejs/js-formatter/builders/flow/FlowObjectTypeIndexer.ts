@@ -22,19 +22,19 @@ export default function FlowObjectTypeIndexer(builder: Builder, node: AnyNode) {
     tokens.push(space);
   }
 
-  tokens = [...tokens, ...builder.print(node.variance, node), operator('[')];
+  tokens = [...tokens, ...builder.tokenize(node.variance, node), operator('[')];
 
   if (node.id !== undefined) {
-    tokens = [...tokens, ...builder.print(node.id, node), operator(':')];
+    tokens = [...tokens, ...builder.tokenize(node.id, node), operator(':')];
   }
 
   return [
     ...tokens,
     space,
-    ...builder.print(node.key, node),
+    ...builder.tokenize(node.key, node),
     operator(']'),
     operator(':'),
     space,
-    ...builder.print(node.value, node),
+    ...builder.tokenize(node.value, node),
   ];
 }

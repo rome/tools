@@ -28,13 +28,13 @@ export default function TSModuleDeclaration(
   }
 
   if (!node.global) {
-    tokens.push(word(node.id.type === 'BindingIdentifier'
-      ? 'namespace'
-      : 'module'));
+    tokens.push(
+      word(node.id.type === 'BindingIdentifier' ? 'namespace' : 'module'),
+    );
     tokens.push(space);
   }
 
-  tokens = [...tokens, ...builder.print(node.id, node)];
+  tokens = [...tokens, ...builder.tokenize(node.id, node)];
 
   if (!node.body) {
     operator(';');
@@ -43,9 +43,9 @@ export default function TSModuleDeclaration(
 
   let body: undefined | TSModuleBlock | TSModuleDeclaration = node.body;
   while (body !== undefined && body.type === 'TSModuleDeclaration') {
-    tokens = [...tokens, operator('.'), ...builder.print(body.id, body)];
+    tokens = [...tokens, operator('.'), ...builder.tokenize(body.id, body)];
     body = body.body;
   }
 
-  return [...tokens, space, ...builder.print(body, node)];
+  return [...tokens, space, ...builder.tokenize(body, node)];
 }

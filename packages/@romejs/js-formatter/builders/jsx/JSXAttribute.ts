@@ -12,10 +12,10 @@ import {JSXAttribute, jsxAttribute, AnyNode} from '@romejs/js-ast';
 export default function JSXAttribute(builder: Builder, node: AnyNode): Tokens {
   node = jsxAttribute.assert(node);
 
-  const tokens: Tokens = builder.print(node.name, node);
+  const tokens: Tokens = builder.tokenize(node.name, node);
 
   if (node.value) {
-    return [...tokens, operator('='), ...builder.print(node.value, node)];
+    return [...tokens, operator('='), ...builder.tokenize(node.value, node)];
   } else {
     return tokens;
   }

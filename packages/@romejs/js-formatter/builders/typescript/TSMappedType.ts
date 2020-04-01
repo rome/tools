@@ -31,7 +31,7 @@ export default function TSMappedType(builder: Builder, node: AnyNode): Tokens {
     space,
     word('in'),
     space,
-    ...builder.print(typeParameter.constraint, typeParameter),
+    ...builder.tokenize(typeParameter.constraint, typeParameter),
     operator(']'),
   ];
 
@@ -47,7 +47,7 @@ export default function TSMappedType(builder: Builder, node: AnyNode): Tokens {
     ...tokens,
     operator(':'),
     space,
-    ...builder.print(node.typeAnnotation, node),
+    ...builder.tokenize(node.typeAnnotation, node),
     space,
     operator('}'),
   ];

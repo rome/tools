@@ -24,6 +24,6 @@ export default function ExportNamespaceSpecifier(
     space,
     word('as'),
     space,
-    ...builder.print(node.exported, node),
+    ...builder.tokenize(node.exported, node),
   ];
 }

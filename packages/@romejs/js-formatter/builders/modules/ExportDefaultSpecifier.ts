@@ -18,5 +18,5 @@ export default function ExportDefaultSpecifier(
   node: AnyNode,
 ): Tokens {
   node = exportDefaultSpecifier.assert(node);
-  return builder.print(node.exported, node);
+  return builder.tokenize(node.exported, node);
 }

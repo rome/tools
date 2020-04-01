@@ -29,5 +29,9 @@ export default function VariableDeclarationStatement(
     tokens.push(word('declare'));
   }
 
-  return [...tokens, ...builder.print(node.declaration, node), operator(';')];
+  return [
+    ...tokens,
+    ...builder.tokenize(node.declaration, node),
+    operator(';'),
+  ];
 }

@@ -13,8 +13,8 @@ export default function MetaProperty(builder: Builder, node: AnyNode): Tokens {
   node = metaProperty.assert(node);
 
   return [
-    ...builder.print(node.meta, node),
+    ...builder.tokenize(node.meta, node),
     operator('.'),
-    ...builder.print(node.property, node),
+    ...builder.tokenize(node.property, node),
   ];
 }

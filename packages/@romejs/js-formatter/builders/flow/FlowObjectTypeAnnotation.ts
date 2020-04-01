@@ -21,7 +21,7 @@ export default function FlowObjectTypeAnnotation(
 
   return [
     operator(node.exact ? '{|' : '{'),
-    builder.printCommaList(node.properties, node),
+    builder.tokenizeCommaList(node.properties, node),
     operator(node.exact ? '|}' : '}'),
   ];
 }

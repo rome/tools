@@ -26,6 +26,6 @@ export default function TSNamespaceExportDeclaration(
     space,
     word('namespace'),
     space,
-    ...builder.print(node.id, node),
+    ...builder.tokenize(node.id, node),
   ];
 }

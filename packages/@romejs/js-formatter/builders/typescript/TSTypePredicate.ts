@@ -9,7 +9,10 @@ import {TSTypePredicate, tsTypePredicate, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, space, word} from '../../tokens';
 
-export default function TSTypePredicate(builder: Builder, node: AnyNode): Tokens {
+export default function TSTypePredicate(
+  builder: Builder,
+  node: AnyNode,
+): Tokens {
   node = tsTypePredicate.assert(node);
 
   let tokens: Tokens = [];
@@ -18,7 +21,7 @@ export default function TSTypePredicate(builder: Builder, node: AnyNode): Tokens
     tokens = [word('asserts'), space];
   }
 
-  tokens = [...tokens, ...builder.print(node.parameterName, node)];
+  tokens = [...tokens, ...builder.tokenize(node.parameterName, node)];
 
   if (node.typeAnnotation) {
     return [
@@ -26,7 +29,7 @@ export default function TSTypePredicate(builder: Builder, node: AnyNode): Tokens
       space,
       word('is'),
       space,
-      ...builder.print(node.typeAnnotation, node),
+      ...builder.tokenize(node.typeAnnotation, node),
     ];
   } else {
     return tokens;

@@ -25,7 +25,7 @@ export default function IfStatement(builder: Builder, node: AnyNode): Tokens {
     word('if'),
     space,
     operator('('),
-    breakGroup([builder.print(node.test, node)], true),
+    breakGroup([builder.tokenize(node.test, node)], true),
     operator(')'),
     space,
   ];
@@ -39,12 +39,12 @@ export default function IfStatement(builder: Builder, node: AnyNode): Tokens {
       ...tokens,
       operator('{'),
       newline,
-      indent(builder.print(node.consequent, node)),
+      indent(builder.tokenize(node.consequent, node)),
       newline,
       operator('}'),
     ];
   } else {
-    tokens = [...tokens, ...builder.print(node.consequent, node)];
+    tokens = [...tokens, ...builder.tokenize(node.consequent, node)];
   }
 
   if (node.alternate) {
@@ -53,7 +53,7 @@ export default function IfStatement(builder: Builder, node: AnyNode): Tokens {
       space,
       word('else'),
       space,
-      ...builder.print(node.alternate, node),
+      ...builder.tokenize(node.alternate, node),
     ];
   }
 
@@ -62,12 +62,15 @@ export default function IfStatement(builder: Builder, node: AnyNode): Tokens {
 
 // Recursively get the last statement.
 function getLastStatement(statement: AnyNode): AnyNode {
-  if ((statement.type === 'WithStatement' || statement.type === 'WhileStatement' ||
-              statement.type === 'DoWhileStatement' ||
-            statement.type === 'ForOfStatement' ||
-          statement.type === 'ForInStatement' ||
-        statement.type === 'ForStatement') &&
-      isStatement(statement.body)) {
+  if (
+    (statement.type === 'WithStatement' ||
+      statement.type === 'WhileStatement' ||
+      statement.type === 'DoWhileStatement' ||
+      statement.type === 'ForOfStatement' ||
+      statement.type === 'ForInStatement' ||
+      statement.type === 'ForStatement') &&
+    isStatement(statement.body)
+  ) {
     return getLastStatement(statement.body);
   } else {
     return statement;

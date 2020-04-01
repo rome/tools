@@ -24,8 +24,8 @@ export default function TSDeclareFunction(
   return [
     ...tokens,
     word('function'),
-    ...builder.print(node.id, node),
-    ...builder.print(node.head, node),
+    ...builder.tokenize(node.id, node),
+    ...builder.tokenize(node.head, node),
     operator(';'),
   ];
 }

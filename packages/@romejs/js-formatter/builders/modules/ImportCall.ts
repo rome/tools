@@ -15,7 +15,7 @@ export default function ImportCall(builder: Builder, node: AnyNode): Tokens {
   return [
     word('import'),
     operator('('),
-    ...builder.print(node.argument, node),
+    ...builder.tokenize(node.argument, node),
     operator(')'),
   ];
 }

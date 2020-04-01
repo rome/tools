@@ -14,15 +14,15 @@ export default function JSXElement(builder: Builder, node: AnyNode): Tokens {
 
   let tokens: Tokens = [
     operator('<'),
-    ...builder.print(node.name, node),
-    ...builder.print(node.typeArguments, node),
+    ...builder.tokenize(node.name, node),
+    ...builder.tokenize(node.typeArguments, node),
   ];
 
   if (node.attributes.length > 0) {
     tokens = [
       ...tokens,
       space,
-      builder.printJoin(node.attributes, node, {
+      builder.tokenizeJoin(node.attributes, node, {
         newline: true,
         broken: {},
         unbroken: {
@@ -38,10 +38,12 @@ export default function JSXElement(builder: Builder, node: AnyNode): Tokens {
     return [
       ...tokens,
       operator('>'),
-      indent(flatten(node.children.map((child) => builder.print(child, node)))),
+      indent(
+        flatten(node.children.map(child => builder.tokenize(child, node))),
+      ),
 
       operator('</'),
-      ...builder.print(node.name, node),
+      ...builder.tokenize(node.name, node),
       operator('>'),
     ];
   }

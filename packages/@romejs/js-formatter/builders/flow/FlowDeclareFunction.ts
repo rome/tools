@@ -29,7 +29,7 @@ export default function FlowDeclareFunction(
     ...tokens,
     word('function'),
     space,
-    ...builder.print(node.id, node),
+    ...builder.tokenize(node.id, node),
     operator(';'),
   ];
 }

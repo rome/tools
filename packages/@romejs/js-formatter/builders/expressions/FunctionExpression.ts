@@ -13,9 +13,10 @@ export default function FunctionExpression(
   builder: Builder,
   node: AnyNode,
 ): Tokens {
-  node = node.type === 'FunctionDeclaration'
-    ? node
-    : functionExpression.assert(node);
+  node =
+    node.type === 'FunctionDeclaration'
+      ? node
+      : functionExpression.assert(node);
 
   let tokens: Tokens = [];
 
@@ -31,12 +32,12 @@ export default function FunctionExpression(
   }
 
   if (node.id) {
-    tokens = [...tokens, space, ...builder.print(node.id, node)];
+    tokens = [...tokens, space, ...builder.tokenize(node.id, node)];
   }
 
   return [
     ...tokens,
-    linkedGroups([...builder.print(node.head, node), space]),
-    ...builder.print(node.body, node),
+    linkedGroups([...builder.tokenize(node.head, node), space]),
+    ...builder.tokenize(node.body, node),
   ];
 }

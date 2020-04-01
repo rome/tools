@@ -29,11 +29,11 @@ export default function TSImportEqualsDeclaration(
     ...tokens,
     word('import'),
     space,
-    ...builder.print(node.id, node),
+    ...builder.tokenize(node.id, node),
     space,
     operator('='),
     space,
-    ...builder.print(node.moduleReference, node),
+    ...builder.tokenize(node.moduleReference, node),
     operator(';'),
   ];
 }

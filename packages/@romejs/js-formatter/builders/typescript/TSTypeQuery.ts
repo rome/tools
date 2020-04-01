@@ -12,5 +12,5 @@ import {Tokens, word, space} from '../../tokens';
 export default function TSTypeQuery(builder: Builder, node: AnyNode): Tokens {
   node = tsTypeQuery.assert(node);
 
-  return [word('typeof'), space, ...builder.print(node.exprName, node)];
+  return [word('typeof'), space, ...builder.tokenize(node.exprName, node)];
 }

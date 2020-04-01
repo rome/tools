@@ -17,20 +17,23 @@ export default function FlowInterfaceDeclaration(
   builder: Builder,
   node: AnyNode,
 ): Tokens {
-  node = node.type === 'FlowDeclareInterface'
-    ? node
-    : flowInterfaceDeclaration.assert(node);
+  node =
+    node.type === 'FlowDeclareInterface'
+      ? node
+      : flowInterfaceDeclaration.assert(node);
 
   return [word('interface'), space, ..._interfaceish(builder, node)];
 }
 
 export function _interfaceish(builder: Builder, node: AnyNode): Tokens {
-  node = node.type === 'FlowDeclareInterface' || node.type ===
-    'FlowDeclareClass' ? node : flowInterfaceDeclaration.assert(node);
+  node =
+    node.type === 'FlowDeclareInterface' || node.type === 'FlowDeclareClass'
+      ? node
+      : flowInterfaceDeclaration.assert(node);
 
   let tokens: Tokens = [
-    ...builder.print(node.id, node),
-    ...builder.print(node.typeParameters, node),
+    ...builder.tokenize(node.id, node),
+    ...builder.tokenize(node.typeParameters, node),
   ];
 
   if (node.extends.length > 0) {
@@ -39,7 +42,7 @@ export function _interfaceish(builder: Builder, node: AnyNode): Tokens {
       space,
       word('extends'),
       space,
-      builder.printCommaList(node.extends, node),
+      builder.tokenizeCommaList(node.extends, node),
     ];
   }
 
@@ -49,9 +52,9 @@ export function _interfaceish(builder: Builder, node: AnyNode): Tokens {
       space,
       word('mixins'),
       space,
-      builder.printCommaList(node.mixins, node),
+      builder.tokenizeCommaList(node.mixins, node),
     ];
   }
 
-  return [...tokens, space, ...builder.print(node.body, node)];
+  return [...tokens, space, ...builder.tokenize(node.body, node)];
 }

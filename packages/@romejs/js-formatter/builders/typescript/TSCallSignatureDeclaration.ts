@@ -19,14 +19,14 @@ export default function TSCallSignatureDeclaration(
 ): Tokens {
   node = tsCallSignatureDeclaration.assert(node);
 
-  let tokens: Tokens = builder.print(node.meta, node);
+  let tokens: Tokens = builder.tokenize(node.meta, node);
 
   if (node.typeAnnotation !== undefined) {
     tokens = [
       ...tokens,
       operator(':'),
       space,
-      ...builder.print(node.typeAnnotation, node),
+      ...builder.tokenize(node.typeAnnotation, node),
     ];
   }
 

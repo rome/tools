@@ -29,8 +29,8 @@ export default function TSInterfaceDeclaration(
     ...tokens,
     word('interface'),
     space,
-    ...builder.print(node.id, node),
-    ...builder.print(node.typeParameters, node),
+    ...builder.tokenize(node.id, node),
+    ...builder.tokenize(node.typeParameters, node),
   ];
 
   if (node.extends) {
@@ -39,9 +39,9 @@ export default function TSInterfaceDeclaration(
       space,
       word('extends'),
       space,
-      builder.printCommaList(node.extends, node),
+      builder.tokenizeCommaList(node.extends, node),
     ];
   }
 
-  return [...tokens, space, ...builder.print(node.body, node)];
+  return [...tokens, space, ...builder.tokenize(node.body, node)];
 }

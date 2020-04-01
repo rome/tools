@@ -19,5 +19,8 @@ export default function TaggedTemplateExpression(
 ): Tokens {
   node = taggedTemplateExpression.assert(node);
 
-  return [...builder.print(node.tag, node), ...builder.print(node.quasi, node)];
+  return [
+    ...builder.tokenize(node.tag, node),
+    ...builder.tokenize(node.quasi, node),
+  ];
 }

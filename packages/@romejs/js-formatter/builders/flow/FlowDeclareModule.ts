@@ -20,8 +20,8 @@ export default function FlowDeclareModule(
     space,
     word('module'),
     space,
-    ...builder.print(node.id, node),
+    ...builder.tokenize(node.id, node),
     space,
-    ...builder.print(node.body, node),
+    ...builder.tokenize(node.body, node),
   ];
 }

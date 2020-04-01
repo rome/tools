@@ -12,7 +12,7 @@ import {Tokens, space, operator} from '../../tokens';
 export default function TSEnumMember(builder: Builder, node: AnyNode): Tokens {
   node = tsEnumMember.assert(node);
 
-  let tokens: Tokens = builder.print(node.id, node);
+  let tokens: Tokens = builder.tokenize(node.id, node);
 
   if (node.initializer) {
     tokens = [
@@ -20,7 +20,7 @@ export default function TSEnumMember(builder: Builder, node: AnyNode): Tokens {
       space,
       operator('='),
       space,
-      ...builder.print(node.initializer, node),
+      ...builder.tokenize(node.initializer, node),
     ];
   }
 

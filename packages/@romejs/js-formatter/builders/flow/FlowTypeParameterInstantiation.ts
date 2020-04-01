@@ -17,13 +17,14 @@ export default function FlowTypeParameterInstantiation(
   builder: Builder,
   node: AnyNode,
 ): Tokens {
-  node = node.type === 'FlowTypeParameterDeclaration'
-    ? node
-    : flowTypeParameterInstantiation.assert(node);
+  node =
+    node.type === 'FlowTypeParameterDeclaration'
+      ? node
+      : flowTypeParameterInstantiation.assert(node);
 
   return [
     operator('<'),
-    builder.printCommaList(node.params, node),
+    builder.tokenizeCommaList(node.params, node),
     operator('>'),
   ];
 }

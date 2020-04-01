@@ -25,7 +25,7 @@ export default function SwitchCase(builder: Builder, node: AnyNode): Tokens {
     tokens = [
       word('case'),
       space,
-      ...builder.print(node.test, node),
+      ...builder.tokenize(node.test, node),
       operator(':'),
     ];
   } else {
@@ -36,9 +36,9 @@ export default function SwitchCase(builder: Builder, node: AnyNode): Tokens {
 
   const {consequent} = node;
   if (consequent.length === 1 && consequent[0].type === 'BlockStatement') {
-    tokens = tokens.concat(builder.print(consequent[0], node));
+    tokens = tokens.concat(builder.tokenize(consequent[0], node));
   } else if (consequent.length > 0) {
-    tokens.push(indent(builder.printStatementList(consequent, node)));
+    tokens.push(indent(builder.tokenizeStatementList(consequent, node)));
   }
 
   return tokens;

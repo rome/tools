@@ -20,7 +20,7 @@ export default function TSExportAssignment(
     space,
     operator('='),
     space,
-    ...builder.print(node.expression, node),
+    ...builder.tokenize(node.expression, node),
     operator(';'),
   ];
 }

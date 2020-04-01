@@ -13,16 +13,16 @@ export default function ClassPrivateProperty(builder: Builder, node: AnyNode) {
   node = classPrivateProperty.assert(node);
 
   let tokens: Tokens = [
-    ...builder.print(node.meta, node),
-    ...builder.print(node.key, node),
-    ...builder.printTypeColon(node.typeAnnotation, node),
+    ...builder.tokenize(node.meta, node),
+    ...builder.tokenize(node.key, node),
+    ...builder.tokenizeTypeColon(node.typeAnnotation, node),
   ];
 
   if (node.value) {
     tokens.push(space);
     tokens.push(operator('='));
     tokens.push(space);
-    tokens = tokens.concat(builder.print(node.value, node));
+    tokens = tokens.concat(builder.tokenize(node.value, node));
   }
 
   tokens.push(operator(';'));

@@ -17,9 +17,9 @@ export default function CatchClause(builder: Builder, node: AnyNode): Tokens {
     word('catch'),
     space,
     operator('('),
-    ...builder.print(node.param, node),
+    ...builder.tokenize(node.param, node),
     operator(')'),
     space,
-    ...builder.print(node.body, node),
+    ...builder.tokenize(node.body, node),
   ];
 }

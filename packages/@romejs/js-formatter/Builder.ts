@@ -5,19 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  assertNodeTypeSet,
-  AnyNode,
-  MOCK_PARENT,
-  AnyComment,
-} from '@romejs/js-ast';
+import {assertNodeTypeSet, AnyNode, AnyComment} from '@romejs/js-ast';
 import builderFunctions from './builders/index';
 import * as n from './node/index';
 import {isTypeNode, isTypeExpressionWrapperNode} from '@romejs/js-ast-utils';
-import {SourceMap, Mappings} from '@romejs/codec-source-map';
+import {SourceMap} from '@romejs/codec-source-map';
 import {
   Tokens,
-  Token,
   GroupToken,
   operator,
   space,
@@ -25,7 +19,6 @@ import {
   derivedNewline,
   indent,
   comment,
-  LinkedGroupsToken,
 } from './tokens';
 import {Number0} from '@romejs/ob1';
 
@@ -51,40 +44,6 @@ type PrintJoinOptions = Omit<GroupToken, 'type' | 'groups'> & {
   newline: boolean;
 };
 
-type TerminatorState = {printed: boolean};
-
-type State = {
-  lastToken: Token;
-  lastBuff: string;
-  indentString: string;
-  indentLevel: number;
-  endsWithSpace: boolean;
-  endsWithInteger: boolean;
-  endsWithNewline: boolean;
-  column: number;
-  terminator?: TerminatorState;
-};
-
-type GroupSnapshot = {
-  priority: boolean;
-  state: State;
-  buffIndex: number;
-  tokens: Tokens;
-  tokensIndex: number;
-  lastUnbrokenGroup: undefined | GroupSnapshot;
-  derivedNewlinesIndex: number;
-  breakOnNewline: boolean;
-};
-
-class BreakGroupError extends Error {
-  constructor(unbrokenGroup: GroupSnapshot) {
-    super('Expected to be caught somewhere');
-    this.unbrokenGroup = unbrokenGroup;
-  }
-
-  unbrokenGroup: GroupSnapshot;
-}
-
 function checkTrailingCommentsSameLine(
   node: AnyNode,
   nextNode: undefined | AnyNode,
@@ -96,51 +55,51 @@ function checkTrailingCommentsSameLine(
   let hasNextTrailingCommentOnSameLine = false;
 
   // Lots of refinements...
-  if (nextNode !== undefined && node.loc !== undefined && nextNode.loc !==
-      undefined && nextNode.leadingComments !== undefined) {
+  if (
+    nextNode !== undefined &&
+    node.loc !== undefined &&
+    nextNode.loc !== undefined &&
+    nextNode.leadingComments !== undefined
+  ) {
     const firstNextNodeLeadingComments = nextNode.leadingComments[0];
-    if (firstNextNodeLeadingComments !== undefined &&
-          firstNextNodeLeadingComments.loc !==
-          undefined) {
+    if (
+      firstNextNodeLeadingComments !== undefined &&
+      firstNextNodeLeadingComments.loc !== undefined
+    ) {
       nextNode = firstNextNodeLeadingComments;
-      hasNextTrailingCommentOnSameLine = node.loc.end.line ===
-        firstNextNodeLeadingComments.loc.start.line;
+      hasNextTrailingCommentOnSameLine =
+        node.loc.end.line === firstNextNodeLeadingComments.loc.start.line;
     }
   }
 
   return {nextNode, hasNextTrailingCommentOnSameLine};
 }
 
-const MAX_LINE_LENGTH = 80;
-
-const SCIENTIFIC_NOTATION = /e/i;
-const ZERO_DECIMAL_INTEGER = /\.0+$/;
-const NON_DECIMAL_LITERAL = /^0[box]/;
-
 export default class Builder {
-  constructor(opts: BuilderOptions, ast: AnyNode, code: string) {
+  constructor(opts: BuilderOptions) {
     this.options = opts;
     this.inForStatementInitCounter = 0;
     this.printStack = [];
     this.printedCommentStarts = new Set();
     this.printedComments = new Set();
-    this.tokens = this.print(ast, MOCK_PARENT);
   }
 
-  tokens: Tokens;
   options: BuilderOptions;
   printStack: Array<AnyNode>;
   inForStatementInitCounter: number;
   printedCommentStarts: Set<Number0>;
   printedComments: Set<AnyComment>;
 
-  print(node: undefined | AnyNode, parent: AnyNode): Tokens {
+  tokenize(node: undefined | AnyNode, parent: AnyNode): Tokens {
     if (node === undefined) {
       return [];
     }
 
-    if (this.options.typeAnnotations === false && isTypeNode(node) &&
-        !isTypeExpressionWrapperNode(node)) {
+    if (
+      this.options.typeAnnotations === false &&
+      isTypeNode(node) &&
+      !isTypeExpressionWrapperNode(node)
+    ) {
       return [];
     }
 
@@ -169,11 +128,10 @@ export default class Builder {
     if (leadingComments !== undefined) {
       tokens = [
         ...tokens,
-        ...this.printComments(leadingComments),
+        ...this.tokenizeComments(leadingComments),
         ...this.maybeCommentNewlines(
           node,
-          leadingComments[leadingComments.length -
-            1],
+          leadingComments[leadingComments.length - 1],
           false,
         ),
       ];
@@ -188,29 +146,26 @@ export default class Builder {
     // If there's an empty line between the node and it's trailing comments then keep it
     const trailingComments = this.getComments(false, node);
     if (trailingComments !== undefined) {
-      tokens = tokens.concat(this.maybeCommentNewlines(
-        node,
-        trailingComments[0],
-        true,
-      ));
+      tokens = tokens.concat(
+        this.maybeCommentNewlines(node, trailingComments[0], true),
+      );
     }
-    tokens = tokens.concat(this.printComments(trailingComments));
+    tokens = tokens.concat(this.tokenizeComments(trailingComments));
 
     this.printStack.pop();
 
     return tokens;
   }
 
-  printJoin(
+  tokenizeJoin(
     nodes: undefined | Array<undefined | AnyNode>,
     parent: AnyNode,
     opts: PrintJoinOptions,
   ): GroupToken {
     const groups: GroupToken['groups'] = [];
 
-    let forceBroken = opts.broken.force || opts.breakOnNewline && n.isMultiLine(
-      parent,
-    );
+    let forceBroken =
+      opts.broken.force || (opts.breakOnNewline && n.isMultiLine(parent));
 
     if (nodes !== undefined) {
       for (let i = 0; i < nodes.length; i++) {
@@ -227,14 +182,21 @@ export default class Builder {
           } = checkTrailingCommentsSameLine(node, nodes[i + 1]);
 
           const afterBroken: Tokens = [];
-          if (!isLastNode && opts.newline && !hasNextTrailingCommentOnSameLine) {
+          if (
+            !isLastNode &&
+            opts.newline &&
+            !hasNextTrailingCommentOnSameLine
+          ) {
             afterBroken.push(newline);
           }
 
-          const newlines = this.maybeInsertExtraStatementNewlines(node, nextNode);
+          const newlines = this.maybeInsertExtraStatementNewlines(
+            node,
+            nextNode,
+          );
 
           groups.push({
-            tokens: this.print(node, parent),
+            tokens: this.tokenize(node, parent),
             afterBroken: [...afterBroken, ...newlines],
             afterUnbroken: newlines,
           });
@@ -253,7 +215,7 @@ export default class Builder {
     };
   }
 
-  printCommaList(
+  tokenizeCommaList(
     items: undefined | Array<undefined | AnyNode>,
     parent: AnyNode,
     opts: {
@@ -264,7 +226,7 @@ export default class Builder {
       indent?: boolean;
     } = {},
   ): GroupToken {
-    return this.printJoin(items, parent, {
+    return this.tokenizeJoin(items, parent, {
       breakOnNewline: opts.breakOnNewline,
       newline: true,
       broken: {
@@ -280,7 +242,7 @@ export default class Builder {
     });
   }
 
-  printStatementList(
+  tokenizeStatementList(
     nodes: undefined | Array<undefined | AnyNode>,
     parent: AnyNode,
     shouldIndent: boolean = false,
@@ -296,7 +258,7 @@ export default class Builder {
         continue;
       }
 
-      tokens = [...tokens, ...this.print(node, parent)];
+      tokens = [...tokens, ...this.tokenize(node, parent)];
 
       const {
         nextNode,
@@ -307,10 +269,9 @@ export default class Builder {
         tokens.push(newline);
       }
 
-      tokens = tokens.concat(this.maybeInsertExtraStatementNewlines(
-        node,
-        nextNode,
-      ));
+      tokens = tokens.concat(
+        this.maybeInsertExtraStatementNewlines(node, nextNode),
+      );
     }
 
     if (shouldIndent) {
@@ -320,423 +281,15 @@ export default class Builder {
     return tokens;
   }
 
-  printTypeColon(node: undefined | AnyNode, parent: AnyNode): Tokens {
+  tokenizeTypeColon(node: undefined | AnyNode, parent: AnyNode): Tokens {
     if (node === undefined) {
       return [];
     } else {
-      return [operator(':'), space, ...this.print(node, parent)];
+      return [operator(':'), space, ...this.tokenize(node, parent)];
     }
   }
 
-  getCode(): string {
-    const compact = this.options.format === 'compact';
-    const lineWrap = this.options.format === 'pretty';
-
-    let derivedNewlines: Array<number> = [];
-    let buff: Array<string> = [];
-    let lastUnbrokenGroup: undefined | GroupSnapshot;
-    const brokenGroups: Set<LinkedGroupsToken | GroupToken> = new Set();
-
-    let state: State = {
-      lastToken: space,
-      lastBuff: '',
-      indentString: '',
-      indentLevel: 0,
-      endsWithSpace: false,
-      endsWithInteger: false,
-      endsWithNewline: true,
-      column: 0,
-    };
-
-    function maybeAddTerminatorlessParen(str: string) {
-      const terminatorState = state.terminator;
-      if (!terminatorState) {
-        return;
-      }
-
-      state.terminator = undefined;
-
-      let i;
-      for (i = 0; i < str.length && str[i] === ' '; i++) {
-        continue;
-      }
-      if (i === str.length) {
-        return;
-      }
-
-      const cha = str[i];
-      if (cha === '\n' || cha === '/') {
-        // We're going to break this terminator expression so we need to add a parentheses
-        push('(');
-        indent();
-        terminatorState.printed = true;
-      }
-
-      return;
-    }
-
-    function push(str: string) {
-      if (str === '') {
-        return;
-      }
-
-      maybeAddTerminatorlessParen(str);
-
-      // Only output indentation if we aren't compact
-      if (!compact && str !== '\n' && state.endsWithNewline) {
-        str = state.indentString + str;
-      }
-
-      // Determine if we need to line wrap. We skip this when we aren't in pretty mode for better performance.
-      if (lineWrap) {
-        for (const char of str) {
-          if (char === '\n') {
-            if (lastUnbrokenGroup !== undefined &&
-                lastUnbrokenGroup.breakOnNewline) {
-              throw new BreakGroupError(lastUnbrokenGroup);
-            }
-            state.column = 0;
-          } else {
-            state.column++;
-          }
-        }
-
-        if (lastUnbrokenGroup !== undefined && state.column > MAX_LINE_LENGTH) {
-          throw new BreakGroupError(lastUnbrokenGroup);
-        }
-      }
-
-      state.endsWithNewline = str[str.length - 1] === '\n';
-      state.endsWithInteger = false;
-      state.endsWithSpace = str[str.length - 1] === ' ';
-      state.lastBuff = str;
-      buff.push(str);
-    }
-
-    function createStateSnapshot(
-      priority: boolean,
-      tokens: Tokens,
-      i: number,
-      breakOnNewline: boolean = false,
-    ): GroupSnapshot {
-      return {
-        priority,
-        tokens,
-        tokensIndex: i,
-        buffIndex: buff.length,
-        state: {...state},
-        lastUnbrokenGroup,
-        derivedNewlinesIndex: derivedNewlines.length,
-        breakOnNewline,
-      };
-    }
-
-    function restoreSnapshot(
-      token: LinkedGroupsToken | GroupToken,
-      snapshot: GroupSnapshot,
-    ) {
-      brokenGroups.add(token);
-
-      lastUnbrokenGroup = snapshot.lastUnbrokenGroup;
-      state = snapshot.state;
-      buff = buff.slice(0, snapshot.buffIndex);
-      derivedNewlines = derivedNewlines.slice(0, snapshot.derivedNewlinesIndex);
-      print(snapshot.tokens, snapshot.tokensIndex);
-    }
-
-    function resetUnbrokenGroup(ourUnbrokenGroup: undefined | GroupSnapshot) {
-      if (ourUnbrokenGroup !== undefined && lastUnbrokenGroup ===
-          ourUnbrokenGroup) {
-        lastUnbrokenGroup = ourUnbrokenGroup.lastUnbrokenGroup;
-      }
-    }
-
-    function trim(str: string): boolean {
-      if (buff[buff.length - 1] === str) {
-        buff.pop();
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-    function canOverwriteLastUnbrokenGroup(): boolean {
-      if (lastUnbrokenGroup === undefined) {
-        return true;
-      }
-
-      if (lastUnbrokenGroup.priority) {
-        return false;
-      }
-
-      if (lastUnbrokenGroup.breakOnNewline) {
-        return false;
-      }
-
-      return true;
-    }
-
-    function newline() {
-      while ( // Remove all trailing spaces
-      trim(' ')) ;
-      push('\n');
-    }
-
-    function updateIndentString() {
-      state.indentString = '  '.repeat(state.indentLevel);
-    }
-
-    function indent() {
-      state.indentLevel++;
-      updateIndentString();
-    }
-
-    function dedent() {
-      state.indentLevel--;
-      updateIndentString();
-    }
-
-    function print(tokens: undefined | Tokens, i: number = 0) {
-      if (tokens === undefined) {
-        return;
-      }
-
-      for (; i < tokens.length; i++) {
-        const token: Token = tokens[i];
-
-        switch (token.type) {
-          case 'Terminatorless':
-            const terminatorState: TerminatorState = {
-              printed: false,
-            };
-            state.terminator = terminatorState;
-            print(token.tokens);
-            if (terminatorState.printed) {
-              dedent();
-              newline();
-              push(')');
-            }
-            break;
-
-          case 'Indent':
-            indent();
-            print(token.tokens);
-            dedent();
-            break;
-
-          case 'DerivedNewline':
-            if (!compact && !derivedNewlines.includes(token.id)) {
-              newline();
-              derivedNewlines.push(token.id);
-            }
-            break;
-
-          case 'Newline':
-            if (!state.endsWithNewline && !compact) {
-              newline();
-            }
-            break;
-
-          case 'Space':
-            if (!state.endsWithSpace) {
-              push(' ');
-            }
-            break;
-
-          case 'Comment':
-            if (!compact) {
-              // There might actually be comments we want to keep. TODO add some heuristics, licenses etc.
-              if (!state.endsWithSpace && !state.endsWithNewline) {
-                push(' ');
-              }
-              push(token.value);
-            }
-            break;
-
-          case 'Number':
-          {
-            const str = token.value;
-            push(str);
-
-            state.endsWithInteger = Number.isInteger(Number(str)) &&
-                  !NON_DECIMAL_LITERAL.test(str) && !SCIENTIFIC_NOTATION.test(
-                  str,
-                ) &&
-                !ZERO_DECIMAL_INTEGER.test(str) &&
-              str[str.length - 1] !== '.';
-            break;
-          }
-
-          case 'Word':
-            if (state.lastToken.type === 'Word') {
-              push(' ');
-            }
-            push(token.value);
-            break;
-
-          case 'Operator':
-          {
-            const str = token.value;
-
-            // Space is mandatory to avoid outputting <!--
-            // http://javascript.spec.whatwg.org/#comment-syntax
-            if (str === '--' && state.lastBuff.endsWith('!') || // Need spaces for operators of the same kind to avoid: `a+++b`
-                str[0] === '+' && state.lastBuff.endsWith('+') ||
-                  str[0] === '-' &&
-                  state.lastBuff.endsWith('-') || // Needs spaces to avoid changing '34' to '34.', which would still be a valid number.
-              str[0] === '.' && state.endsWithInteger) {
-              push(' ');
-            }
-
-            push(str);
-            break;
-          }
-
-          // A Group defines a boundary where we can break
-          case 'Group':
-          {
-            const {breakOnNewline, groups, priority, broken, unbroken} = token;
-
-            const isBroken = broken.force || brokenGroups.has(token);
-
-            let ourUnbrokenGroup: undefined | GroupSnapshot;
-
-            // If the last broken group was a linked group then it's in charge of us, so don't catch anything
-            if (!isBroken && canOverwriteLastUnbrokenGroup()) {
-              ourUnbrokenGroup = createStateSnapshot(
-                priority === true,
-                tokens,
-                i,
-                breakOnNewline,
-              );
-              lastUnbrokenGroup = ourUnbrokenGroup;
-            }
-
-            const shouldIndent = isBroken && broken.indent !== false;
-
-            if (isBroken) {
-              print(broken.before);
-            }
-
-            if (shouldIndent) {
-              indent();
-              if (broken.indentNewline !== false) {
-                newline();
-              }
-            }
-
-            try {
-              for (let i = 0; i < groups.length; i++) {
-                if (i === 0) {
-                  print(isBroken ? broken.leading : unbroken.leading);
-                }
-
-                let group = groups[i];
-                if (Array.isArray(group)) {
-                  group = {tokens: group};
-                }
-
-                print(group.tokens);
-
-                const isLastNode = i === groups.length - 1;
-                if (isLastNode) {
-                  print(isBroken ? broken.trailing : unbroken.trailing);
-                } else {
-                  print(isBroken ? broken.separator : unbroken.separator);
-                }
-
-                print(isBroken ? group.afterBroken : group.afterUnbroken);
-              }
-            } catch (err) {
-              if (err instanceof BreakGroupError && err.unbrokenGroup ===
-                  ourUnbrokenGroup) {
-                restoreSnapshot(token, ourUnbrokenGroup);
-                return;
-              } else {
-                throw err;
-              }
-            }
-
-            resetUnbrokenGroup(ourUnbrokenGroup);
-
-            if (shouldIndent) {
-              if (broken.indentNewline !== false) {
-                newline();
-              }
-              dedent();
-            }
-
-            if (!isBroken && unbroken.trim !== undefined) {
-              trim(unbroken.trim);
-            }
-
-            if (isBroken) {
-              print(broken.after);
-            }
-
-            break;
-          }
-
-          // Any group catchers inside a LinkedGroups will be deactivated. When the LinkedGroup is triggered it goes through the direct
-          // group descendents and breaks each group in order.
-          case 'LinkedGroups':
-            if (lineWrap && canOverwriteLastUnbrokenGroup()) {
-              let firstGroup: undefined | LinkedGroupsToken | GroupToken;
-              // Get the first unbroken group
-              for (const tok of token.tokens) {
-                if ((tok.type === 'LinkedGroups' || tok.type === 'Group') &&
-                    !brokenGroups.has(tok) && (tok.type !== 'Group' ||
-                    !tok.broken.force)) {
-                  firstGroup = tok;
-                  break;
-                }
-              }
-
-              if (firstGroup !== undefined) {
-                const snapshot = createStateSnapshot(true, tokens, i);
-                lastUnbrokenGroup = snapshot;
-
-                try {
-                  print(token.tokens);
-                } catch (err) {
-                  if (err instanceof BreakGroupError && err.unbrokenGroup ===
-                      snapshot) {
-                    brokenGroups.add(firstGroup);
-                    restoreSnapshot(token, snapshot);
-                    return;
-                  } else {
-                    throw err;
-                  }
-                }
-
-                resetUnbrokenGroup(snapshot);
-
-                break;
-              }
-            }
-
-            print(token.tokens);
-            break;
-
-          case 'Verbatim':
-            push(token.value);
-            break;
-        }
-
-        state.lastToken = token;
-      }
-    }
-
-    print(this.tokens);
-
-    return buff.join('');
-  }
-
-  getMappings(): Mappings {
-    return [];
-  }
-
-  printInnerComments(node: AnyNode): Tokens {
+  tokenizeInnerComments(node: AnyNode): Tokens {
     const {innerComments} = node;
     if (innerComments === undefined) {
       return [];
@@ -748,10 +301,10 @@ export default class Builder {
       tokens.push(newline);
     }
 
-    return [...tokens, ...this.printComments(innerComments)];
+    return [...tokens, ...this.tokenizeComments(innerComments)];
   }
 
-  printComments(comments: undefined | Array<AnyComment>): Tokens {
+  tokenizeComments(comments: undefined | Array<AnyComment>): Tokens {
     if (!comments || !comments.length) {
       return [];
     }
@@ -760,15 +313,13 @@ export default class Builder {
 
     for (let i = 0; i < comments.length; i++) {
       const comment = comments[i];
-      tokens = tokens.concat(this.printComment(comment));
+      tokens = tokens.concat(this.tokenizeComment(comment));
 
       const nextComment = comments[i + 1];
       if (nextComment !== undefined) {
-        tokens = tokens.concat(this.maybeCommentNewlines(
-          comment,
-          nextComment,
-          true,
-        ));
+        tokens = tokens.concat(
+          this.maybeCommentNewlines(comment, nextComment, true),
+        );
       }
     }
 
@@ -786,11 +337,11 @@ export default class Builder {
     }
 
     return comments.filter((comment: AnyComment) => {
-      return !this.hasPrintedComment(comment);
+      return !this.hasTokenizedComment(comment);
     });
   }
 
-  hasPrintedComment(comment: undefined | AnyComment): boolean {
+  hasTokenizedComment(comment: undefined | AnyComment): boolean {
     if (!comment) {
       return true;
     }
@@ -799,17 +350,18 @@ export default class Builder {
       return true;
     }
 
-    if (comment.loc !== undefined && this.printedCommentStarts.has(
-        comment.loc.start.index,
-      )) {
+    if (
+      comment.loc !== undefined &&
+      this.printedCommentStarts.has(comment.loc.start.index)
+    ) {
       return true;
     }
 
     return false;
   }
 
-  printComment(node: AnyComment): Tokens {
-    if (this.hasPrintedComment(node)) {
+  tokenizeComment(node: AnyComment): Tokens {
+    if (this.hasTokenizedComment(node)) {
       return [];
     }
 
@@ -836,8 +388,10 @@ export default class Builder {
     const lines = n.getLinesBetween(node, comment);
 
     // Will always have at least one newline
-    if (node.type === 'CommentLine' || comment.type === 'CommentLine' &&
-        !trailing) {
+    if (
+      node.type === 'CommentLine' ||
+      (comment.type === 'CommentLine' && !trailing)
+    ) {
       lines.shift();
     }
 

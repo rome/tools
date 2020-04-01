@@ -20,5 +20,5 @@ export default function ComputedMemberProperty(
 ): Tokens {
   node = computedMemberProperty.assert(node);
 
-  return [operator('['), ...builder.print(node.value, node), operator(']')];
+  return [operator('['), ...builder.tokenize(node.value, node), operator(']')];
 }
