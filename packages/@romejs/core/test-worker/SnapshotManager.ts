@@ -246,6 +246,7 @@ export default class SnapshotManager {
         return entry.value;
       }
     }
+    return undefined;
   }
 
   set({

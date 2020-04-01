@@ -234,6 +234,8 @@ export class WebServer {
     // This check makes sure that files outside of the project directory cannot be served
     if (possibleStaticPath.isRelativeTo(project.folder)) {
       return possibleStaticPath;
+    } else {
+      return undefined;
     }
   }
 

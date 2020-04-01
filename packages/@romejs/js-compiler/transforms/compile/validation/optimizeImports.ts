@@ -28,7 +28,7 @@ const IGNORED_NAMES = ['React', 'react'];
 
 function getName(node: AnyNode): undefined | string {
   if (node.type !== 'MemberExpression' && node.type !== 'JSXMemberExpression') {
-    return;
+    return undefined;
   }
 
   const {property} = node;
@@ -42,6 +42,8 @@ function getName(node: AnyNode): undefined | string {
       return property.name;
     }
   }
+
+  return undefined;
 }
 
 export default {

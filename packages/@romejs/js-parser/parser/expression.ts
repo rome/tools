@@ -998,6 +998,8 @@ export function parseExpressionSubscript(
           typeArguments,
         );
       }
+
+      return undefined;
     });
 
     if (possibleCallExpression !== undefined) {
@@ -1792,12 +1794,14 @@ export function parseArrowHead(parser: JSParser): {
 
       if (parser.canInsertSemicolon()) {
         // No semicolon insertion expected
-        return;
+        return undefined;
       }
 
       if (parser.eat(tt.arrow)) {
         return res;
       }
+
+      return undefined;
     });
 
     if (branch.hasBranch()) {
@@ -1964,6 +1968,8 @@ function getFirstOptionalChainMember(
       return getFirstOptionalChainMember(node.object);
     }
   }
+
+  return undefined;
 }
 
 // Parse template expression.
@@ -2409,6 +2415,8 @@ export function parseObjectMethod(parser: JSParser, {
     checkGetterSetterParamCount(parser, method, method.kind);
     return method;
   }
+
+  return undefined;
 }
 
 export function parseObjectProperty(
@@ -2477,6 +2485,8 @@ export function parseObjectProperty(
       value: toReferenceIdentifier(parser, parser.cloneNode(key.value)),
     });
   }
+
+  return undefined;
 }
 
 type ParseObjectPropValueOpts = {

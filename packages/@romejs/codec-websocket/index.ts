@@ -112,7 +112,7 @@ export class WebSocketInterface {
     this.socket.write(buildFrame(frameOpts, this.type === 'client'));
   }
 
-  completeFrame(frame: Frame) {
+  completeFrame(frame: Frame): void {
     // If we have an unfinished frame then only allow continuations
     const {unfinishedFrame} = this;
     if (unfinishedFrame !== undefined) {
@@ -130,7 +130,7 @@ export class WebSocketInterface {
           this.unfinishedFrame = undefined;
           this.completeFrame(unfinishedFrame);
         }
-        return undefined;
+        return;
       } else {
         // Silently ignore the previous frame...
         this.unfinishedFrame = undefined;
@@ -188,12 +188,12 @@ export class WebSocketInterface {
     }
   }
 
-  addBuffer(buff: Buffer) {
+  addBuffer(buff: Buffer): void {
     // Check if we're still waiting for the rest of a payload
     const {incompleteFrame} = this;
     if (incompleteFrame !== undefined) {
       this.addBufferToIncompleteFrame(incompleteFrame, buff);
-      return undefined;
+      return;
     }
 
     const frame = parseFrame(buff);
@@ -247,7 +247,7 @@ export async function createClient(rawUrl: string): Promise<WebSocketInterface> 
                   `Digest mismatch ${digest} !== ${res.headers['sec-websocket-accept']}`,
                 ),
               );
-              return undefined;
+              return;
             }
 
             const client = new WebSocketInterface('client', socket);

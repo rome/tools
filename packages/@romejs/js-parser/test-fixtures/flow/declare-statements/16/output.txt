@@ -139,7 +139,7 @@ Program {
                   line: 1
                 }
               }
-              qualification: Identifier {
+              qualification: ReferenceIdentifier {
                 name: 'C'
                 loc: Object {
                   filename: 'input.js'

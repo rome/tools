@@ -47,7 +47,7 @@ export default {
       }
 
       if (meta === undefined) {
-        return undefined;
+        return;
       }
 
       scope.addBinding(new ImportBinding({

@@ -63,6 +63,7 @@ export class Scope {
       }
       scope = scope.parentScope;
     }
+    return undefined;
   }
 
   getBindingAssert(name: string): T {
@@ -172,6 +173,8 @@ export class Scope {
 
       scope = scope.parentScope;
     } while (scope !== undefined);
+
+    return undefined;
   }
 
   refine(): Scope {

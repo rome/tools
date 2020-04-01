@@ -139,7 +139,7 @@ export default class TestRunner {
 
     const nextTest = async () => {
       if (sourcesQueue.length === 0) {
-        return undefined;
+        return;
       }
 
       const item = sourcesQueue.pop();
@@ -576,7 +576,7 @@ export default class TestRunner {
     // Fetch coverage entries
     const files = this.coverageCollector.generate();
     if (files.length === 0) {
-      return undefined;
+      return;
     }
 
     reporter.heading('Code coverage');
@@ -674,7 +674,7 @@ export default class TestRunner {
 
       // Don't ever show anything deeper than a single level when showAllCoverage is off
       if (!showAllCoverage && depth > 0) {
-        return undefined;
+        return;
       }
 
       const fileIndent = ' '.repeat(depth + 1);

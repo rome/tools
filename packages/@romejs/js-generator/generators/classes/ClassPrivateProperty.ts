@@ -5,8 +5,30 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Tokens} from '../../tokens';
+import Generator from '../../Generator';
+import {AnyNode, classPrivateProperty} from '@romejs/js-ast';
+import {Tokens, operator, space} from '@romejs/js-generator/tokens';
 
-export default function ClassPrivateProperty(): Tokens {
-  throw new Error('unimplemented');
+export default function ClassPrivateProperty(
+  generator: Generator,
+  node: AnyNode,
+) {
+  node = classPrivateProperty.assert(node);
+
+  let tokens: Tokens = [
+    ...generator.print(node.meta, node),
+    ...generator.print(node.key, node),
+    ...generator.printTypeColon(node.typeAnnotation, node),
+  ];
+
+  if (node.value) {
+    tokens.push(space);
+    tokens.push(operator('='));
+    tokens.push(space);
+    tokens = tokens.concat(generator.print(node.value, node));
+  }
+
+  tokens.push(operator(';'));
+
+  return tokens;
 }

@@ -223,20 +223,20 @@ function getExportsAlias({
   platform?: Platform;
 }): undefined | ExportAlias {
   if (typeof manifest.exports === 'boolean') {
-    return;
+    return undefined;
   }
 
   if (platform === undefined) {
-    return;
+    return undefined;
   }
 
   if (!relative.isRelative()) {
-    return;
+    return undefined;
   }
 
   const aliases = manifest.exports.get(relative.assertRelative());
   if (aliases === undefined) {
-    return;
+    return undefined;
   }
 
   const alias = aliases.get(platform);
@@ -256,6 +256,7 @@ function getExportsAlias({
   }
 
   // TODO check for folder aliases
+  return undefined;
 }
 
 function getPreferredMainKey(
@@ -278,6 +279,8 @@ function getPreferredMainKey(
       value: createRelativeFilePath(manifest.main),
     };
   }
+
+  return undefined;
 }
 
 export default class Resolver {
@@ -633,7 +636,7 @@ export default class Resolver {
     // Find the project
     const project = this.master.projectManager.findProjectExisting(query.origin);
     if (project === undefined) {
-      return;
+      return undefined;
     }
 
     // Find the package
@@ -645,6 +648,8 @@ export default class Resolver {
         return pkg;
       }
     }
+
+    return undefined;
   }
 
   resolvePackage(

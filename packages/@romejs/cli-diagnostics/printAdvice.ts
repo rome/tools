@@ -157,6 +157,8 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
         message: 'Identical except the expected uses CRLF newlines, while the received does not',
       };
   }
+
+  return undefined;
 }
 
 function printDiff(

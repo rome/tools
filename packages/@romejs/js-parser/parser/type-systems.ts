@@ -329,6 +329,8 @@ export function maybeParseTypeParameters(
 ): undefined | AnyTypeParameter {
   if (parser.isRelational('<')) {
     return parseTypeParameters(parser, allowDefault);
+  } else {
+    return undefined;
   }
 }
 
@@ -355,6 +357,8 @@ export function maybeParseTypeArguments(
 ): undefined | AnyTypeArguments {
   if (parser.isRelational('<')) {
     return parseTypeArguments(parser);
+  } else {
+    return undefined;
   }
 }
 
@@ -465,6 +469,8 @@ export function parseTypeExpressionStatement(
         });
       }
   }
+
+  return undefined;
 }
 
 export function ambiguousTypeCastToParameter(

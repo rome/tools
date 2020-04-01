@@ -69,7 +69,7 @@ type Tokens = BaseTokens & {
   }>;
 };
 
-type GroupModifiers = undefined | {
+type GroupModifiers = {
   type: 'NON_CAPTURE';
   kind: RegExpGroupNonCapture['kind'];
 } | {
@@ -134,11 +134,11 @@ export const createRegExpParser = createParser(
     diagnostics: Diagnostics;
     unicode: boolean;
 
-    addDiagnostic(opts: ParserUnexpectedOptions) {
+    addDiagnostic(opts: ParserUnexpectedOptions): void {
       this.diagnostics.push(this.createDiagnostic(opts));
     }
 
-    unexpected() {
+    unexpected(): never {
       throw new Error('No throwing');
     }
 
@@ -299,11 +299,10 @@ export const createRegExpParser = createParser(
 
           // Redundant escaping
           default:
-            let {octalValue: referenceValue, end: referenceEnd} = readOctalCode(
-              input,
-              index,
-              nextChar,
-            );
+            let {
+              octalValue: referenceValue,
+              end: referenceEnd,
+            } = readOctalCode(input, index, nextChar);
             if (referenceValue !== undefined) {
               let backReference = referenceValue.toString();
               // \8 \9 are treated as escape char
@@ -383,7 +382,7 @@ export const createRegExpParser = createParser(
       });
     }
 
-    getGroupModifiers(): GroupModifiers {
+    getGroupModifiers(): undefined | GroupModifiers {
       const token = this.getToken();
 
       if (token.type === 'Character') {
@@ -468,6 +467,8 @@ export const createRegExpParser = createParser(
         ...descriptions.REGEX_PARSER.INVALID_CAPTURE_GROUP_MODIFIER,
         token,
       });
+
+      return undefined;
     }
 
     matchOperator(op: string): boolean {
@@ -488,7 +489,7 @@ export const createRegExpParser = createParser(
       const start = this.getPosition();
       this.nextToken();
 
-      let modifiers: GroupModifiers;
+      let modifiers: undefined | GroupModifiers;
       if (this.eatOperator('?')) {
         modifiers = this.getGroupModifiers();
       }
@@ -761,6 +762,8 @@ export const createRegExpParser = createParser(
 
         this.restore(snapshot);
       }
+
+      return undefined;
     }
 
     parseBodyItem(): undefined | AnyRegExpBodyItem {
@@ -864,6 +867,9 @@ export const createRegExpParser = createParser(
         case ']':
         case '}':
           return this.parseCharacter();
+
+        default:
+          return undefined;
       }
     }
 
@@ -884,6 +890,8 @@ export const createRegExpParser = createParser(
         ...descriptions.REGEX_PARSER.UNKNOWN_REGEX_PART,
         token,
       });
+
+      return undefined;
     }
 
     parseExpression(

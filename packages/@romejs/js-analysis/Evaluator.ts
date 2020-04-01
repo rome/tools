@@ -162,7 +162,7 @@ export class ModuleSignatureManager {
     }
   }
 
-  link(importedName: string, type: ImportT) {
+  link(importedName: string, type: ImportT): void {
     const graph = this.graph;
 
     // Get type id for this export
@@ -175,7 +175,7 @@ export class ModuleSignatureManager {
         source: graph.filename,
       });
       error.shouldMatch(type);
-      return undefined;
+      return;
     }
 
     // Retrieve the open type

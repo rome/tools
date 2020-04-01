@@ -98,6 +98,8 @@ const createSPDXLicenseParser = createParser(
           return this.finishValueToken('Word', value, end);
         }
       }
+
+      return undefined;
     }
 
     parseLicense(token: Tokens['Word']): LicenseNode {

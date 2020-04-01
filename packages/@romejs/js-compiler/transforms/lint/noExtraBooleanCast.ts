@@ -45,6 +45,8 @@ function getNode(path: Path): undefined | AnyNode {
   if (isInBooleanContext(node) || isConditionalStatement(node)) {
     return node.test;
   }
+
+  return undefined;
 }
 
 export default {

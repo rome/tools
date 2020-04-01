@@ -18,7 +18,7 @@ export default function getRequireSource(
   allowStaticMember: boolean = false,
 ): undefined | string {
   if (node === undefined) {
-    return;
+    return undefined;
   }
 
   if (allowStaticMember && node.type === 'MemberExpression' &&
@@ -28,14 +28,14 @@ export default function getRequireSource(
   }
 
   if (node.type !== 'CallExpression') {
-    return;
+    return undefined;
   }
 
   const {arguments: args, callee} = node;
 
   const [firstArg] = args;
   if (args.length !== 1 || firstArg.type !== 'StringLiteral') {
-    return;
+    return undefined;
   }
 
   const validRequireCallee = callee.type === 'ReferenceIdentifier' &&
@@ -52,4 +52,6 @@ export default function getRequireSource(
   if (validRequireCallee || validRomeRequreCallee) {
     return firstArg.value;
   }
+
+  return undefined;
 }

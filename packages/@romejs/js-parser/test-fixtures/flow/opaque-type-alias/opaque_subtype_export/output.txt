@@ -74,7 +74,7 @@ Program {
           }
         }
         impltype: FlowGenericTypeAnnotation {
-          id: Identifier {
+          id: ReferenceIdentifier {
             name: 'Container'
             loc: Object {
               filename: 'input.js'
@@ -119,7 +119,7 @@ Program {
             }
             params: Array [
               FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'S'
                   loc: Object {
                     filename: 'input.js'
@@ -154,7 +154,7 @@ Program {
           }
         }
         supertype: FlowGenericTypeAnnotation {
-          id: Identifier {
+          id: ReferenceIdentifier {
             name: 'Box'
             loc: Object {
               filename: 'input.js'
@@ -199,7 +199,7 @@ Program {
             }
             params: Array [
               FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'T'
                   loc: Object {
                     filename: 'input.js'

@@ -148,6 +148,8 @@ export function parsePossibleInterpreterDirective(
       value: comment.value,
       loc: comment.loc,
     };
+  } else {
+    return undefined;
   }
 }
 
@@ -712,7 +714,7 @@ export function parseSwitchStatement(
 
     function pushCase() {
       if (cur === undefined) {
-        return undefined;
+        return;
       }
 
       cases.push(parser.finishNode(cur.start, {
@@ -1305,6 +1307,8 @@ function parseFunctionId(
 ): undefined | BindingIdentifier {
   if (requiredStatementId || parser.match(tt.name)) {
     return parseBindingIdentifier(parser);
+  } else {
+    return undefined;
   }
 }
 

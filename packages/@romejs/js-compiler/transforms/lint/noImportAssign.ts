@@ -9,7 +9,7 @@ import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 
-function isAssignment(path: Path) {
+function isAssignment(path: Path): boolean {
   switch (path.parentPath.node.type) {
     case 'AssignmentExpression':
     case 'AssignmentArrayPattern':
@@ -18,6 +18,9 @@ function isAssignment(path: Path) {
     case 'AssignmentObjectPattern':
     case 'ForInStatement':
       return true;
+
+    default:
+      return false;
   }
 }
 

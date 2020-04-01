@@ -212,6 +212,8 @@ const createJSParser = createParser(
       branch.add(fn, {maxNewDiagnostics: 0});
       if (branch.hasBranch()) {
         return branch.pickOptional();
+      } else {
+        return undefined;
       }
     }
 
@@ -338,9 +340,9 @@ const createJSParser = createParser(
       end?: Position;
       loc?: SourceLocation;
       index?: Number0;
-    }) {
+    }): void {
       if (this.isLookahead) {
-        return undefined;
+        return;
       }
 
       let maxDiagnostics = this.getLastScope('MAX_NEW_DIAGNOSTICS');
@@ -602,13 +604,13 @@ const createJSParser = createParser(
       });
     }
 
-    unexpected() {
+    unexpected(): never {
       throw new Error(
           'js-parser should never throw an exception, use addDiagnostic or unexpectedToken instead',
         );
     }
 
-    tokenize() {
+    tokenize(): never {
       throw new Error('js-parser does not use the parser-core tokenizer');
     }
 

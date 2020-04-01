@@ -93,11 +93,11 @@ export default class BridgeEvent<
   dispatchResponse(
     id: number,
     data: BridgeSuccessResponseMessage | BridgeErrorResponseMessage,
-  ) {
+  ): void {
     const callbacks = this.requestCallbacks.get(id);
     if (!callbacks) {
       // ???
-      return undefined;
+      return;
     }
 
     this.requestCallbacks.delete(id);
@@ -120,17 +120,17 @@ export default class BridgeEvent<
     return this.bridge.listeners.has(this.name);
   }
 
-  validateCanSend() {
+  validateCanSend(): void {
     validateDirection(this, [
       ['server<-client', 'client'],
       ['server->client', 'server'],
     ], 'called');
   }
 
-  send(param: Param) {
+  send(param: Param): void {
     if (!this.hasSubscribers()) {
       // No point in sending over a subscription that doesn't have a listener
-      return undefined;
+      return;
     }
 
     this.validateCanSend();

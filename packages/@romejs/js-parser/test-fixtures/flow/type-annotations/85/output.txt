@@ -102,7 +102,7 @@ Program {
                     }
                   }
                   elementType: FlowGenericTypeAnnotation {
-                    id: Identifier {
+                    id: ReferenceIdentifier {
                       name: 'Promise'
                       loc: Object {
                         filename: 'input.js'

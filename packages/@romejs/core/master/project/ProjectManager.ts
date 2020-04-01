@@ -200,7 +200,7 @@ export default class ProjectManager {
     uid: undefined | string,
   ): undefined | AbsoluteFilePath {
     if (uid === undefined) {
-      return;
+      return undefined;
     }
 
     const uidToPath = this.getFilePathFromUid(uid);
@@ -212,6 +212,8 @@ export default class ProjectManager {
     if (path.isAbsolute()) {
       return path.assertAbsolute();
     }
+
+    return undefined;
   }
 
   normalizeFilenamesToFilePaths(filenames: Iterable<undefined | string>): {

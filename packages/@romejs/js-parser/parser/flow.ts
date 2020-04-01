@@ -1846,6 +1846,8 @@ export function parseFlowVariance(parser: JSParser): undefined | FlowVariance {
       type: 'FlowVariance',
       kind,
     });
+  } else {
+    return undefined;
   }
 }
 

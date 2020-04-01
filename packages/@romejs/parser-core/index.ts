@@ -24,7 +24,7 @@ import {
   Diagnostic,
   DiagnosticCategory,
   DiagnosticDescription,
-
+  DiagnosticsError,
   createBlessedDiagnosticMessage,
   descriptions,
 } from '@romejs/diagnostics';
@@ -230,6 +230,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
     const token = this.tokenize(index, input);
     if (token !== undefined) {
       return {token, state};
+    } else {
+      return undefined;
     }
   }
 
@@ -335,7 +337,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   // Get the end position of the current token
-  getLastEndPosition() {
+  getLastEndPosition(): Position {
     return this.getPositionFromIndex(this.prevToken.end);
   }
 
@@ -511,12 +513,12 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   // Return an error to indicate a parser error, this must be thrown at the callsite for refinement
-  unexpected(opts: ParserUnexpectedOptions = {}) {
-    throw createSingleDiagnosticError(this.createDiagnostic(opts));
+  unexpected(opts: ParserUnexpectedOptions = {}): DiagnosticsError {
+    return createSingleDiagnosticError(this.createDiagnostic(opts));
   }
 
   //# Token utility methods
-  assertNoSpace() {
+  assertNoSpace(): void {
     if (this.currentToken.start !== this.prevToken.end) {
       throw this.unexpected({
         description: descriptions.PARSER_CORE.EXPECTED_SPACE,
@@ -528,6 +530,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
   eatToken(type: keyof Tokens): undefined | TokenValues<Tokens> {
     if (this.matchToken(type)) {
       return this.nextToken();
+    } else {
+      return undefined;
     }
   }
 
@@ -663,7 +667,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     };
   }
 
-  finalize() {
+  finalize(): void {
     if (!this.eatToken('EOF')) {
       throw this.unexpected({
         description: descriptions.PARSER_CORE.EXPECTED_EOF,
