@@ -11,10 +11,8 @@ import {testLint} from '../../api/lint.test';
 test('no explicit any', async (t) => {
   const validTestCases = [
     'const age: number = 17;age;',
-    'const ages: number[] = [17];ages;',
     'const ages: Array<number> = [17];ages;',
     'function greet(): string {};greet();',
-    'function greet(): string[] {};greet()',
     'function greet(): Array<string> {};greet();',
     'function greet(): Array<Array<string>> {};greet();',
     'function greet(param: Array<string>): string { return param; };greet();',

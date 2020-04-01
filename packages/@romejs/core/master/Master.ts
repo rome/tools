@@ -247,7 +247,7 @@ export default class Master {
       readFile: this.readDiagnosticsPrinterFile.bind(this),
     });
     printer.addDiagnostics(diagnostics);
-    await printer.print();
+    printer.print();
   }
 
   readDiagnosticsPrinterFile(
@@ -774,7 +774,7 @@ export default class Master {
         throw new Error(`Unknown command ${String(query.commandName)}`);
       }
     } catch (err) {
-      let diagnostics: undefined | Diagnostics = await this.handleRequestError(
+      let diagnostics: undefined | Diagnostics = this.handleRequestError(
         req,
         err,
       );
@@ -812,10 +812,7 @@ export default class Master {
     }
   }
 
-  async handleRequestError(
-    req: MasterRequest,
-    rawErr: Error,
-  ): Promise<undefined | Diagnostics> {
+  handleRequestError(req: MasterRequest, rawErr: Error): undefined | Diagnostics {
     let err = rawErr;
 
     // If we can derive diagnostics from the error then create a diagnostics printer
@@ -837,7 +834,7 @@ export default class Master {
     if (err instanceof DiagnosticsPrinter) {
       const printer = err;
       if (req.bridge.alive) {
-        await printer.print();
+        printer.print();
 
         // Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
         if (!(rawErr instanceof MasterRequestInvalid)) {
@@ -848,7 +845,7 @@ export default class Master {
     }
 
     if (!req.bridge.alive) {
-      return;
+      return undefined;
     }
 
     const printer = req.createDiagnosticsPrinter(new DiagnosticsProcessor({
@@ -873,11 +870,11 @@ export default class Master {
         ],
       },
     });
-    await printer.print();
+    printer.print();
 
     // We could probably return printer.getDiagnostics() but we just want to print to the console
 
     // We will still want to send the `error` property
-    return;
+    return undefined;
   }
 }

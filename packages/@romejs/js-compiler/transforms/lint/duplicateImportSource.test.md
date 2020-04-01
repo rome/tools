@@ -86,29 +86,6 @@ Object {
         ]
       }
     }
-    Object {
-      origins: Array [Object {category: 'lint'}]
-      description: Object {
-        category: 'lint/unusedVariables'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused import <emphasis>fooType</emphasis>'}
-      }
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 24
-          index: 103
-          line: 4
-        }
-        start: Object {
-          column: 17
-          index: 96
-          line: 4
-        }
-      }
-    }
   ]
 }
 ```

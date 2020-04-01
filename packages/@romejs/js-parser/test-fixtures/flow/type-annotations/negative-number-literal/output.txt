@@ -220,7 +220,7 @@ Program {
                   }
                 }
                 typeAnnotation: FlowGenericTypeAnnotation {
-                  id: Identifier {
+                  id: ReferenceIdentifier {
                     name: 'DirectionVector'
                     loc: Object {
                       filename: 'input.js'
