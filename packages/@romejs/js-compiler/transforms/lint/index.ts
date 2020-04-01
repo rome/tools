@@ -10,6 +10,7 @@ import defaultExportSameBasename from './defaultExportSameBasename';
 import duplicateImportSource from './duplicateImportSource';
 import emptyBlocks from './emptyBlocks';
 import getterReturn from './getterReturn';
+import noArguments from './noArguments';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
@@ -46,6 +47,7 @@ export const lintTransforms = [
   duplicateImportSource,
   emptyBlocks,
   getterReturn,
+  noArguments,
   noAsyncPromiseExecutor,
   noCompareNegZero,
   noCondAssign,

@@ -416,6 +416,11 @@ export const descriptions = createMessages({
       message: 'Empty block',
     },
 
+    NO_ARGUMENTS: {
+      category: 'lint/noArguments',
+      message: 'Use the rest parameters instead of \'arguments\'',
+    },
+
     DUPLICATE_REGEX_GROUP_NAME: (
       name: string,
       locations: Array<undefined | DiagnosticLocation>,
