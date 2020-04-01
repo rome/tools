@@ -17,7 +17,6 @@ async function runChildCommand(
 ): Promise<void> {
   try {
     await fn();
-    throw new Error('Expected a printer');
   } catch (err) {
     if (err instanceof DiagnosticsPrinter) {
       // If the command raises diagnostics, it is safe to throw the printer.
