@@ -356,8 +356,12 @@ export default class Printer {
     this.push(str);
   }
 
-  isGroupBroken(token: GroupToken): boolean {
-    return token.broken.force || this.brokenGroups.has(token);
+  isGroupBroken(token: LinkedGroupsToken | GroupToken): boolean {
+    if (token.type === 'Group' && token.broken.force) {
+      return true;
+    }
+
+    return this.brokenGroups.has(token);
   }
 
   // A Group defines a boundary where we can break
@@ -462,8 +466,8 @@ export default class Printer {
       // Get the first unbroken group
       for (const tok of token.tokens) {
         if (
-          tok.type === 'LinkedGroups' ||
-          (tok.type === 'Group' && !this.isGroupBroken(tok))
+          (tok.type === 'LinkedGroups' || tok.type === 'Group') &&
+          !this.isGroupBroken(tok)
         ) {
           firstGroup = tok;
           break;
