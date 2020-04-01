@@ -601,13 +601,13 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
       });
     }
 
-    unexpected() {
+    unexpected(): never {
       throw new Error(
         'js-parser should never throw an exception, use addDiagnostic or unexpectedToken instead',
       );
     }
 
-    tokenize() {
+    tokenize(): never {
       throw new Error('js-parser does not use the parser-core tokenizer');
     }
 
