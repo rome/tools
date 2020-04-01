@@ -175,12 +175,17 @@ export default class Printer {
     this.buff.push(str);
   }
 
-  createStateSnapshot(
-    priority: boolean,
-    tokens: Tokens,
-    index: number,
-    breakOnNewline: boolean = false,
-  ): GroupSnapshot {
+  createStateSnapshot({
+    priority = false,
+    tokens,
+    index,
+    breakOnNewline = false,
+  }: {
+    priority?: boolean;
+    tokens: Tokens;
+    index: number;
+    breakOnNewline?: boolean;
+  }): GroupSnapshot {
     return {
       priority,
       tokens,
@@ -351,22 +356,30 @@ export default class Printer {
     this.push(str);
   }
 
+  isGroupBroken(token: GroupToken): boolean {
+    return token.broken.force || this.brokenGroups.has(token);
+  }
+
   // A Group defines a boundary where we can break
-  printGroupToken(token: GroupToken, tokens: Tokens, index: number) {
+  printGroupToken(
+    token: GroupToken,
+    tokens: Tokens,
+    index: number,
+  ): {abort: boolean} {
     const {breakOnNewline, groups, priority, broken, unbroken} = token;
 
-    const isBroken = broken.force || this.brokenGroups.has(token);
+    const isBroken = this.isGroupBroken(token);
 
     let ourUnbrokenGroup: undefined | GroupSnapshot;
 
     // If the last broken group was a linked group then it's in charge of us, so don't catch anything
     if (!isBroken && this.canOverwriteLastUnbrokenGroup()) {
-      ourUnbrokenGroup = this.createStateSnapshot(
-        priority === true,
+      ourUnbrokenGroup = this.createStateSnapshot({
+        priority,
         tokens,
         index,
         breakOnNewline,
-      );
+      });
       this.lastUnbrokenGroup = ourUnbrokenGroup;
     }
 
@@ -411,7 +424,7 @@ export default class Printer {
         err.unbrokenGroup === ourUnbrokenGroup
       ) {
         this.restoreSnapshot(token, ourUnbrokenGroup);
-        return;
+        return {abort: true};
       } else {
         throw err;
       }
@@ -433,6 +446,8 @@ export default class Printer {
     if (isBroken) {
       this.print(broken.after);
     }
+
+    return {abort: false};
   }
 
   // Any group catchers inside a LinkedGroups will be deactivated. When the LinkedGroup is triggered it goes through the direct
@@ -441,15 +456,14 @@ export default class Printer {
     token: LinkedGroupsToken,
     tokens: Tokens,
     index: number,
-  ) {
+  ): {abort: boolean} {
     if (this.lineWrap && this.canOverwriteLastUnbrokenGroup()) {
       let firstGroup: undefined | LinkedGroupsToken | GroupToken;
       // Get the first unbroken group
       for (const tok of token.tokens) {
         if (
-          (tok.type === 'LinkedGroups' || tok.type === 'Group') &&
-          !this.brokenGroups.has(tok) &&
-          (tok.type !== 'Group' || !tok.broken.force)
+          tok.type === 'LinkedGroups' ||
+          (tok.type === 'Group' && !this.isGroupBroken(tok))
         ) {
           firstGroup = tok;
           break;
@@ -457,7 +471,11 @@ export default class Printer {
       }
 
       if (firstGroup !== undefined) {
-        const snapshot = this.createStateSnapshot(true, tokens, index);
+        const snapshot = this.createStateSnapshot({
+          priority: true,
+          tokens,
+          index,
+        });
         this.lastUnbrokenGroup = snapshot;
 
         try {
@@ -469,19 +487,19 @@ export default class Printer {
           ) {
             this.brokenGroups.add(firstGroup);
             this.restoreSnapshot(token, snapshot);
-            return;
+            return {abort: true};
           } else {
             throw err;
           }
         }
 
         this.resetUnbrokenGroup(snapshot);
-
-        return;
+        return {abort: false};
       }
     }
 
     this.print(token.tokens);
+    return {abort: false};
   }
 
   printVerbatimToken(token: VerbatimToken) {
@@ -492,6 +510,8 @@ export default class Printer {
     if (tokens === undefined) {
       return;
     }
+
+    let abort = false;
 
     for (; i < tokens.length; i++) {
       const token: Token = tokens[i];
@@ -534,16 +554,20 @@ export default class Printer {
           break;
 
         case 'Group':
-          this.printGroupToken(token, tokens, i);
+          ({abort} = this.printGroupToken(token, tokens, i));
           break;
 
         case 'LinkedGroups':
-          this.printLinkedGroupsToken(token, tokens, i);
+          ({abort} = this.printLinkedGroupsToken(token, tokens, i));
           break;
 
         case 'Verbatim':
           this.printVerbatimToken(token);
           break;
+      }
+
+      if (abort) {
+        return;
       }
 
       this.state.lastToken = token;
