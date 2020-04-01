@@ -32,12 +32,12 @@ export default function SwitchCase(builder: Builder, node: AnyNode): Tokens {
     tokens = [word('default'), operator(':')];
   }
 
-  tokens.push(newline);
-
   const {consequent} = node;
   if (consequent.length === 1 && consequent[0].type === 'BlockStatement') {
+    tokens.push(space);
     tokens = tokens.concat(builder.tokenize(consequent[0], node));
   } else if (consequent.length > 0) {
+    tokens.push(newline);
     tokens.push(indent(builder.tokenizeStatementList(consequent, node)));
   }
 
