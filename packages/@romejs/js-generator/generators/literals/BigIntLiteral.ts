@@ -6,10 +6,14 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {BigIntLiteral, bigIntLiteral, AnyNode} from '@romejs/js-ast';
+import {word} from '@romejs/js-generator/tokens';
 
-export default function BigIntLiteral(generator: Generator, node: AnyNode) {
+export default function BigIntLiteral(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = bigIntLiteral.assert(node);
-
-  generator.word(`${node.value}n`);
+  return [word(`${node.value}n`)];
 }

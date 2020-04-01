@@ -7,21 +7,32 @@
 
 import {TSImportType, tsImportType, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, word, operator} from '../../tokens';
 
-export default function TSImportType(generator: Generator, node: AnyNode) {
+export default function TSImportType(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsImportType.assert(node);
 
-  generator.word('import');
-  generator.token('(');
-  generator.print(node.argument, node);
-  generator.token(')');
+  let tokens: Tokens = [
+    word('import'),
+    operator('('),
+    ...generator.print(node.argument, node),
+    operator(')'),
+  ];
 
   if (node.qualifier) {
-    generator.token('.');
-    generator.print(node.qualifier, node);
+    tokens = [
+      ...tokens,
+      operator('.'),
+      ...generator.print(node.qualifier, node),
+    ];
   }
 
   if (node.typeParameters) {
-    generator.print(node.typeParameters, node);
+    tokens = [...tokens, ...generator.print(node.typeParameters, node)];
   }
+
+  return tokens;
 }

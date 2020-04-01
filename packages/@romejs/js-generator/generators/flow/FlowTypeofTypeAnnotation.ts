@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, space} from '../../tokens';
 import {
   FlowTypeofTypeAnnotation,
   flowTypeofTypeAnnotation,
@@ -15,10 +16,8 @@ import {
 export default function FlowTypeofTypeAnnotation(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = flowTypeofTypeAnnotation.assert(node);
 
-  generator.word('typeof');
-  generator.space();
-  generator.print(node.argument, node);
+  return [word('typeof'), space, ...generator.print(node.argument, node)];
 }

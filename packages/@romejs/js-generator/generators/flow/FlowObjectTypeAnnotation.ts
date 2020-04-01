@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {
   FlowObjectTypeAnnotation,
   flowObjectTypeAnnotation,
@@ -15,20 +16,12 @@ import {
 export default function FlowObjectTypeAnnotation(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = flowObjectTypeAnnotation.assert(node);
 
-  if (node.exact === true) {
-    generator.token('{|');
-  } else {
-    generator.token('{');
-  }
-
-  generator.printCommaList(node.properties, node);
-
-  if (node.exact === true) {
-    generator.token('|}');
-  } else {
-    generator.token('}');
-  }
+  return [
+    operator(node.exact ? '{|' : '{'),
+    generator.printCommaList(node.properties, node),
+    operator(node.exact ? '|}' : '}'),
+  ];
 }

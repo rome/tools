@@ -6,14 +6,17 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   ImportSpecifierLocal,
   importSpecifierLocal,
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function ImportSpecifierLocal(generator: Generator, node: AnyNode) {
+export default function ImportSpecifierLocal(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = importSpecifierLocal.assert(node);
-
   throw new Error('unimplemented');
 }

@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   TaggedTemplateExpression,
   taggedTemplateExpression,
@@ -15,9 +16,11 @@ import {
 export default function TaggedTemplateExpression(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = taggedTemplateExpression.assert(node);
 
-  generator.print(node.tag, node);
-  generator.print(node.quasi, node);
+  return [
+    ...generator.print(node.tag, node),
+    ...generator.print(node.quasi, node),
+  ];
 }

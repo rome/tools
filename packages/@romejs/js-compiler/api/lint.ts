@@ -51,15 +51,21 @@ export default async function lint(req: FormatRequest): Promise<LintResult> {
         category: 'lint',
       },
     });
-    const newAst = program.assert(context.reduce(ast, lintTransforms, {
-      frozen: false,
-    }));
+    const newAst = program.assert(
+      context.reduce(ast, lintTransforms, {
+        frozen: false,
+      }),
+    );
 
-    const generator = generateJS(newAst, {
-      typeAnnotations: true,
-      format: 'pretty',
-    }, sourceText);
-    formattedCode = generator.buf.getCode();
+    const generator = generateJS(
+      newAst,
+      {
+        typeAnnotations: true,
+        format: 'pretty',
+      },
+      sourceText,
+    );
+    formattedCode = generator.getCode();
   }
 
   // Run lints (could be with the autofixed AST)

@@ -6,21 +6,24 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, space} from '../../tokens';
 import {
   ExportDefaultDeclaration,
   exportDefaultDeclaration,
   AnyNode,
 } from '@romejs/js-ast';
 import {_ExportDeclaration} from './ExportLocalDeclaration';
+
 export default function ExportDefaultDeclaration(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = exportDefaultDeclaration.assert(node);
 
-  generator.word('export');
-  generator.space();
-  generator.word('default');
-  generator.space();
-  _ExportDeclaration(generator, node);
+  return [
+    word('export'),
+    word('default'),
+    space,
+    ..._ExportDeclaration(generator, node),
+  ];
 }

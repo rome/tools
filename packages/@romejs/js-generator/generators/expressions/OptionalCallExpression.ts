@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   OptionalCallExpression,
   optionalCallExpression,
@@ -16,7 +17,7 @@ import CallExpression from './CallExpression';
 export default function OptionalCallExpression(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = optionalCallExpression.assert(node);
-  CallExpression(generator, node);
+  return CallExpression(generator, node);
 }

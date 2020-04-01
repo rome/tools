@@ -6,10 +6,18 @@
  */
 
 import Generator from '../../Generator';
-import {FlowClassImplements, flowClassImplements, AnyNode} from '@romejs/js-ast';
+import {Tokens} from '../../tokens';
+import {
+  FlowClassImplements,
+  flowClassImplements,
+  AnyNode,
+} from '@romejs/js-ast';
 import FlowInterfaceExtends from './FlowInterfaceExtends';
 
-export default function FlowClassImplements(generator: Generator, node: AnyNode) {
+export default function FlowClassImplements(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = flowClassImplements.assert(node);
-  FlowInterfaceExtends(generator, node);
+  return FlowInterfaceExtends(generator, node);
 }

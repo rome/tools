@@ -6,22 +6,24 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, space, operator} from '../../tokens';
 import {SwitchStatement, switchStatement, AnyNode} from '@romejs/js-ast';
 
-export default function SwitchStatement(generator: Generator, node: AnyNode) {
+export default function SwitchStatement(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = switchStatement.assert(node);
 
-  generator.word('switch');
-  generator.space();
-  generator.token('(');
-  generator.print(node.discriminant, node);
-  generator.token(')');
-  generator.space();
-  generator.token('{');
-
-  generator.printStatementList(node.cases, node, {
-    indent: true,
-  });
-
-  generator.token('}');
+  return [
+    word('switch'),
+    space,
+    operator('('),
+    ...generator.print(node.discriminant, node),
+    operator(')'),
+    space,
+    operator('{'),
+    ...generator.printStatementList(node.cases, node, true),
+    operator('}'),
+  ];
 }

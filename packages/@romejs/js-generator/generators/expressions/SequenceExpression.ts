@@ -6,10 +6,13 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {SequenceExpression, sequenceExpression, AnyNode} from '@romejs/js-ast';
 
-export default function SequenceExpression(generator: Generator, node: AnyNode) {
+export default function SequenceExpression(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = sequenceExpression.assert(node);
-
-  generator.printCommaList(node.expressions, node);
+  return [generator.printCommaList(node.expressions, node)];
 }

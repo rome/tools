@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {
   FlowObjectTypeSpreadProperty,
   flowObjectTypeSpreadProperty,
@@ -15,9 +16,8 @@ import {
 export default function FlowObjectTypeSpreadProperty(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = flowObjectTypeSpreadProperty.assert(node);
 
-  generator.token('...');
-  generator.print(node.argument, node);
+  return [operator('...'), ...generator.print(node.argument, node)];
 }

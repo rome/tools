@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, space, operator} from '../../tokens';
 import {
   FlowObjectTypeProperty,
   flowObjectTypeProperty,
@@ -18,16 +19,27 @@ export default function FlowObjectTypeProperty(
 ) {
   node = flowObjectTypeProperty.assert(node);
 
+  let tokens: Tokens = [];
+
   if (node.static === true) {
-    generator.word('static');
-    generator.space();
+    tokens.push(word('static'));
+    tokens.push(space);
   }
-  generator.print(node.variance, node);
-  generator.print(node.key, node);
+
+  tokens = [
+    ...tokens,
+    ...generator.print(node.variance, node),
+    ...generator.print(node.key, node),
+  ];
+
   if (node.optional === true) {
-    generator.token('?');
+    tokens.push(operator('?'));
   }
-  generator.token(':');
-  generator.space();
-  generator.print(node.value, node);
+
+  return [
+    ...tokens,
+    operator(':'),
+    space,
+    ...generator.print(node.value, node),
+  ];
 }

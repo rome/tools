@@ -6,21 +6,27 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, space, operator} from '../../tokens';
 import {
   ExportAllDeclaration,
   exportAllDeclaration,
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function ExportAllDeclaration(generator: Generator, node: AnyNode) {
+export default function ExportAllDeclaration(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = exportAllDeclaration.assert(node);
 
-  generator.word('export');
-  generator.space();
-  generator.token('*');
-  generator.space();
-  generator.word('from');
-  generator.space();
-  generator.print(node.source, node);
-  generator.semicolon();
+  return [
+    word('export'),
+    space,
+    operator('*'),
+    space,
+    word('from'),
+    space,
+    ...generator.print(node.source, node),
+    operator(';'),
+  ];
 }

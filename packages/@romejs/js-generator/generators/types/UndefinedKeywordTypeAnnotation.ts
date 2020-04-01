@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UndefinedKeywordTypeAnnotation} from '@romejs/js-ast';
-import {Generator} from '@romejs/js-generator';
+import {Tokens, word} from '../../tokens';
 
-export default function UndefinedKeywordTypeAnnotation(generator: Generator) {
-  generator.word('undefined');
+export default function UndefinedKeywordTypeAnnotation(): Tokens {
+  return [word('undefined')];
 }

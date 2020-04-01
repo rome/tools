@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {LogicalExpression, logicalExpression, AnyNode} from '@romejs/js-ast';
 import AssignmentExpression from './AssignmentExpression';
 
@@ -13,8 +14,7 @@ export default function LogicalExpression(
   generator: Generator,
   node: AnyNode,
   parent: AnyNode,
-) {
+): Tokens {
   node = logicalExpression.assert(node);
-
-  AssignmentExpression(generator, node, parent);
+  return AssignmentExpression(generator, node, parent);
 }

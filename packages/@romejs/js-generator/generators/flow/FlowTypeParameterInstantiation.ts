@@ -6,22 +6,25 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {
   FlowTypeParameterInstantiation,
   flowTypeParameterInstantiation,
-  AnyFlowPrimary,
-  FlowTypeParameter,
   AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowTypeParameterInstantiation(
   generator: Generator,
   node: AnyNode,
-) {
-  node = node.type === 'FlowTypeParameterDeclaration'
-    ? node : flowTypeParameterInstantiation.assert(node);
+): Tokens {
+  node =
+    node.type === 'FlowTypeParameterDeclaration'
+      ? node
+      : flowTypeParameterInstantiation.assert(node);
 
-  generator.token('<');
-  generator.printCommaList<AnyFlowPrimary | FlowTypeParameter>(node.params, node);
-  generator.token('>');
+  return [
+    operator('<'),
+    generator.printCommaList(node.params, node),
+    operator('>'),
+  ];
 }

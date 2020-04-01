@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {
   JSXExpressionContainer,
   jsxExpressionContainer,
@@ -15,10 +16,12 @@ import {
 export default function JSXExpressionContainer(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = jsxExpressionContainer.assert(node);
 
-  generator.token('{');
-  generator.print(node.expression, node);
-  generator.token('}');
+  return [
+    operator('{'),
+    ...generator.print(node.expression, node),
+    operator('}'),
+  ];
 }

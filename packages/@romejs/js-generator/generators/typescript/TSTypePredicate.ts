@@ -7,21 +7,31 @@
 
 import {TSTypePredicate, tsTypePredicate, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, space, word} from '../../tokens';
 
-export default function TSTypePredicate(generator: Generator, node: AnyNode) {
+export default function TSTypePredicate(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsTypePredicate.assert(node);
 
+  let tokens: Tokens = [];
+
   if (node.asserts) {
-    generator.word('asserts');
-    generator.space();
+    tokens = [word('asserts'), space];
   }
 
-  generator.print(node.parameterName, node);
+  tokens = [...tokens, ...generator.print(node.parameterName, node)];
 
   if (node.typeAnnotation) {
-    generator.space();
-    generator.word('is');
-    generator.space();
-    generator.print(node.typeAnnotation, node);
+    return [
+      ...tokens,
+      space,
+      word('is'),
+      space,
+      ...generator.print(node.typeAnnotation, node),
+    ];
+  } else {
+    return tokens;
   }
 }

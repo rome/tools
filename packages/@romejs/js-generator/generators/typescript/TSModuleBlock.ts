@@ -7,9 +7,13 @@
 
 import {TSModuleBlock, tsModuleBlock, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens} from '../../tokens';
 import {printTSBraced} from '../utils';
 
-export default function TSModuleBlock(generator: Generator, node: AnyNode) {
+export default function TSModuleBlock(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsModuleBlock.assert(node);
-  printTSBraced(generator, node, node.body);
+  return printTSBraced(generator, node, node.body);
 }

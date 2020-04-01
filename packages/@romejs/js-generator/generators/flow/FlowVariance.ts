@@ -6,14 +6,13 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {FlowVariance, flowVariance, AnyNode} from '@romejs/js-ast';
 
-export default function FlowVariance(generator: Generator, node: AnyNode) {
+export default function FlowVariance(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = flowVariance.assert(node);
-  flowVariance.assert(node);
-  if (node.kind === 'plus') {
-    generator.token('+');
-  } else if (node.kind === 'minus') {
-    generator.token('-');
-  }
+  return [operator(node.kind === 'plus' ? '+' : '-')];
 }

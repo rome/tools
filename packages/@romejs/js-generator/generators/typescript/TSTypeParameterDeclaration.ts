@@ -11,13 +11,17 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator} from '../../tokens';
 
 export default function TSTypeParameterDeclaration(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = tsTypeParameterDeclaration.assert(node);
-  generator.token('<');
-  generator.printCommaList(node.params, node);
-  generator.token('>');
+
+  return [
+    operator('<'),
+    generator.printCommaList(node.params, node),
+    operator('>'),
+  ];
 }

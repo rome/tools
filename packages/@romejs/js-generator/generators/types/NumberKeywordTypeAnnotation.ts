@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
+import {Tokens, word} from '../../tokens';
 
-export default function NumberKeywordTypeAnnotation(generator: Generator) {
-  generator.word('number');
+export default function NumberKeywordTypeAnnotation(): Tokens {
+  return [word('number')];
 }

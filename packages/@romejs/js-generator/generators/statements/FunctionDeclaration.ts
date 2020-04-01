@@ -6,11 +6,18 @@
  */
 
 import Generator from '../../Generator';
-import {FunctionDeclaration, functionDeclaration, AnyNode} from '@romejs/js-ast';
+import {Tokens} from '../../tokens';
+import {
+  FunctionDeclaration,
+  functionDeclaration,
+  AnyNode,
+} from '@romejs/js-ast';
 import FunctionExpression from '../expressions/FunctionExpression';
 
-export default function FunctionDeclaration(generator: Generator, node: AnyNode) {
+export default function FunctionDeclaration(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = functionDeclaration.assert(node);
-
-  FunctionExpression(generator, node);
+  return FunctionExpression(generator, node);
 }

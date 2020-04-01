@@ -11,21 +11,23 @@ import {
   variableDeclarationStatement,
   AnyNode,
 } from '@romejs/js-ast';
+import {Tokens, operator, word} from '@romejs/js-generator/tokens';
 
 export default function VariableDeclarationStatement(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = variableDeclarationStatement.assert(node);
 
   if (node.declare === true && !generator.options.typeAnnotations) {
-    return;
+    return [];
   }
+
+  let tokens: Tokens = [];
 
   if (node.declare) {
-    generator.word('declare');
+    tokens.push(word('declare'));
   }
 
-  generator.print(node.declaration, node);
-  generator.semicolon();
+  return [...tokens, ...generator.print(node.declaration, node), operator(';')];
 }

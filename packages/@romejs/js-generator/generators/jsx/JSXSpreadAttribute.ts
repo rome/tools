@@ -6,13 +6,19 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {JSXSpreadAttribute, jsxSpreadAttribute, AnyNode} from '@romejs/js-ast';
 
-export default function JSXSpreadAttribute(generator: Generator, node: AnyNode) {
+export default function JSXSpreadAttribute(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = jsxSpreadAttribute.assert(node);
 
-  generator.token('{');
-  generator.token('...');
-  generator.print(node.argument, node);
-  generator.token('}');
+  return [
+    operator('{'),
+    operator('...'),
+    ...generator.print(node.argument, node),
+    operator('}'),
+  ];
 }

@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   AssignmentObjectPattern,
   assignmentObjectPattern,
@@ -16,8 +17,7 @@ import ObjectExpression from '../objects/ObjectExpression';
 export default function AssignmentObjectPattern(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = assignmentObjectPattern.assert(node);
-
-  ObjectExpression(generator, node);
+  return ObjectExpression(generator, node);
 }

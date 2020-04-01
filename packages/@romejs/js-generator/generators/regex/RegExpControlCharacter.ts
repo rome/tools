@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   AnyNode,
   RegExpControlCharacter,
@@ -15,7 +16,7 @@ import {
 export default function RegExpControlCharacter(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = regExpControlCharacter.assert(node);
   throw new Error('unimplemented');
 }

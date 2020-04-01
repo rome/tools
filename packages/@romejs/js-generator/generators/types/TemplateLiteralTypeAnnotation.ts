@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   TemplateLiteralTypeAnnotation,
   templateLiteralTypeAnnotation,
@@ -15,9 +16,7 @@ import {
 export default function TemplateLiteralTypeAnnotation(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = templateLiteralTypeAnnotation.assert(node);
-
-  templateLiteralTypeAnnotation.assert(node);
   throw new Error('unimplemented');
 }

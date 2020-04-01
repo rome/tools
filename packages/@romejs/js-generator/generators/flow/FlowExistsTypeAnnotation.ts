@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
+import {operator, Tokens} from '../../tokens';
 
-export default function FlowExistsTypeAnnotation(generator: Generator) {
-  generator.token('*');
+export default function FlowExistsTypeAnnotation(): Tokens {
+  return [operator('*')];
 }

@@ -6,29 +6,44 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, operator, space} from '../../tokens';
 import {FlowOpaqueType, flowOpaqueType, AnyNode} from '@romejs/js-ast';
 
-export default function FlowOpaqueType(generator: Generator, node: AnyNode) {
-  node = node.type === 'FlowDeclareOpaqueType' ? node : flowOpaqueType.assert(
-    node,
-  );
+export default function FlowOpaqueType(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
+  node =
+    node.type === 'FlowDeclareOpaqueType' ? node : flowOpaqueType.assert(node);
 
-  generator.word('opaque');
-  generator.space();
-  generator.word('type');
-  generator.space();
-  generator.print(node.id, node);
-  generator.print(node.typeParameters, node);
+  let tokens: Tokens = [
+    word('opaque'),
+    space,
+    word('type'),
+    space,
+    ...generator.print(node.id, node),
+    ...generator.print(node.typeParameters, node),
+  ];
+
   if (node.supertype) {
-    generator.token(':');
-    generator.space();
-    generator.print(node.supertype, node);
+    tokens = [
+      ...tokens,
+      operator(':'),
+      space,
+      ...generator.print(node.supertype, node),
+    ];
   }
+
   if (node.impltype) {
-    generator.space();
-    generator.token('=');
-    generator.space();
-    generator.print(node.impltype, node);
+    tokens = [
+      ...tokens,
+      space,
+      operator('='),
+      space,
+      ...generator.print(node.impltype, node),
+    ];
   }
-  generator.semicolon();
+
+  tokens.push(operator(';'));
+  return tokens;
 }

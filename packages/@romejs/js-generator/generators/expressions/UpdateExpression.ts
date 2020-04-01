@@ -6,16 +6,18 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {UpdateExpression, updateExpression, AnyNode} from '@romejs/js-ast';
 
-export default function UpdateExpression(generator: Generator, node: AnyNode) {
+export default function UpdateExpression(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = updateExpression.assert(node);
 
   if (node.prefix === true) {
-    generator.token(node.operator);
-    generator.print(node.argument, node);
+    return [operator(node.operator), ...generator.print(node.argument, node)];
   } else {
-    generator.print(node.argument, node);
-    generator.token(node.operator);
+    return [...generator.print(node.argument, node), operator(node.operator)];
   }
 }

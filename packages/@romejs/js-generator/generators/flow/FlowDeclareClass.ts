@@ -6,20 +6,22 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, space} from '../../tokens';
 import {FlowDeclareClass, flowDeclareClass, AnyNode} from '@romejs/js-ast';
 import {_interfaceish} from './FlowInterfaceDeclaration';
+
 export default function FlowDeclareClass(
   generator: Generator,
   node: AnyNode,
   parent: AnyNode,
-) {
+): Tokens {
   node = flowDeclareClass.assert(node);
 
+  const tokens: Tokens = [];
   if (parent.type !== 'ExportLocalDeclaration') {
-    generator.word('declare');
-    generator.space();
+    tokens.push(word('declare'));
+    tokens.push(space);
   }
-  generator.word('class');
-  generator.space();
-  _interfaceish(generator, node);
+
+  return [...tokens, word('class'), space, ..._interfaceish(generator, node)];
 }

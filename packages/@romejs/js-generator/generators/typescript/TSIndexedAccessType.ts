@@ -5,13 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSIndexedAccessType, tsIndexedAccessType, AnyNode} from '@romejs/js-ast';
+import {
+  TSIndexedAccessType,
+  tsIndexedAccessType,
+  AnyNode,
+} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator} from '../../tokens';
 
-export default function TSIndexedAccessType(generator: Generator, node: AnyNode) {
+export default function TSIndexedAccessType(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsIndexedAccessType.assert(node);
-  generator.print(node.objectType, node);
-  generator.token('[');
-  generator.print(node.indexType, node);
-  generator.token(']');
+
+  return [
+    ...generator.print(node.objectType, node),
+    operator('['),
+    ...generator.print(node.indexType, node),
+    operator(']'),
+  ];
 }

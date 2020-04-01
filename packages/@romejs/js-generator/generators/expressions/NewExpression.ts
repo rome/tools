@@ -6,12 +6,15 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word} from '../../tokens';
 import {NewExpression, newExpression, AnyNode} from '@romejs/js-ast';
 import CallExpression from './CallExpression';
 
-export default function NewExpression(generator: Generator, node: AnyNode) {
+export default function NewExpression(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = newExpression.assert(node);
 
-  generator.word('new');
-  CallExpression(generator, node);
+  return [word('new'), ...CallExpression(generator, node)];
 }

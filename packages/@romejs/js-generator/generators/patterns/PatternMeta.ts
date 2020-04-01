@@ -6,9 +6,13 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {PatternMeta, patternMeta, AnyNode} from '@romejs/js-ast';
 
-export default function PatternMeta(generator: Generator, node: AnyNode) {
+export default function PatternMeta(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = patternMeta.assert(node);
   patternMeta.assert(node);
   throw new Error('unimplemented');

@@ -7,17 +7,25 @@
 
 import Generator from '../../Generator';
 import {TemplateLiteral, templateLiteral, AnyNode} from '@romejs/js-ast';
+import {Tokens} from '@romejs/js-generator/tokens';
 
-export default function TemplateLiteral(generator: Generator, node: AnyNode) {
+export default function TemplateLiteral(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = templateLiteral.assert(node);
+
+  let tokens: Tokens = [];
 
   const quasis = node.quasis;
 
   for (let i = 0; i < quasis.length; i++) {
-    generator.print(quasis[i], node);
+    tokens = tokens.concat(generator.print(quasis[i], node));
 
     if (i + 1 < quasis.length) {
-      generator.print(node.expressions[i], node);
+      tokens = tokens.concat(generator.print(node.expressions[i], node));
     }
   }
+
+  return tokens;
 }

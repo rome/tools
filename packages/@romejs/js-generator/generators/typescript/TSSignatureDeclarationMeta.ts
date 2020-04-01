@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {
   TSSignatureDeclarationMeta,
   tsSignatureDeclarationMeta,
@@ -16,12 +17,13 @@ import {printBindingPatternParams} from '../utils';
 export default function TSSignatureDeclarationMeta(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = tsSignatureDeclarationMeta.assert(node);
 
-  generator.print(node.typeParameters, node);
-  generator.token('(');
-  printBindingPatternParams(generator, node, node.parameters, node.rest);
-  generator.token(')');
-  generator.space();
+  return [
+    ...generator.print(node.typeParameters, node),
+    operator('('),
+    ...printBindingPatternParams(generator, node, node.parameters, node.rest),
+    operator(')'),
+  ];
 }

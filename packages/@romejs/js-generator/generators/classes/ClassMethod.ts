@@ -6,17 +6,21 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, word} from '../../tokens';
 import {ClassMethod, classMethod, AnyNode} from '@romejs/js-ast';
 import {printMethod} from '../utils';
 
-export default function ClassMethod(generator: Generator, node: AnyNode) {
+export default function ClassMethod(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = classMethod.assert(node);
 
+  let tokens: Tokens = [];
+
   if (node.meta.static === true) {
-    generator.word('static');
-    generator.space();
+    tokens = [word('static'), space];
   }
 
-  printMethod(generator, node);
-  generator.forceNewline();
+  return [...tokens, ...printMethod(generator, node)];
 }

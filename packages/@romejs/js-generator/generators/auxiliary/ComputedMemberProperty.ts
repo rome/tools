@@ -6,19 +6,19 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   ComputedMemberProperty,
   computedMemberProperty,
   AnyNode,
 } from '@romejs/js-ast';
+import {operator} from '@romejs/js-generator/tokens';
 
 export default function ComputedMemberProperty(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = computedMemberProperty.assert(node);
 
-  generator.token('[');
-  generator.print(node.value, node);
-  generator.token(']');
+  return [operator('['), ...generator.print(node.value, node), operator(']')];
 }

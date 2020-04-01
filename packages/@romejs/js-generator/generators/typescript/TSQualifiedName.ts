@@ -7,10 +7,17 @@
 
 import {TSQualifiedName, tsQualifiedName, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator} from '../../tokens';
 
-export default function TSQualifiedName(generator: Generator, node: AnyNode) {
+export default function TSQualifiedName(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsQualifiedName.assert(node);
-  generator.print(node.left, node);
-  generator.token('.');
-  generator.print(node.right, node);
+
+  return [
+    ...generator.print(node.left, node),
+    operator('.'),
+    ...generator.print(node.right, node),
+  ];
 }

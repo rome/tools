@@ -6,36 +6,33 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {CallExpression, callExpression, AnyNode} from '@romejs/js-ast';
 
-export default function CallExpression(generator: Generator, node: AnyNode) {
-  node = node.type === 'OptionalCallExpression' || node.type === 'NewExpression'
-    ? node : callExpression.assert(node);
+export default function CallExpression(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
+  node =
+    node.type === 'OptionalCallExpression' || node.type === 'NewExpression'
+      ? node
+      : callExpression.assert(node);
 
-  generator.multiline(node, (multiline, node) => {
-    generator.print(node.callee, node);
-    generator.print(node.typeArguments, node);
+  const tokens: Tokens = [
+    ...generator.print(node.callee, node),
+    ...generator.print(node.typeArguments, node),
+  ];
 
-    const startLine = generator.buf.position.line;
-    const startIndent = generator.currentLineIndentLevel;
+  if (node.type === 'OptionalCallExpression') {
+    tokens.push(operator('?'));
+  }
 
-    if (node.type === 'OptionalCallExpression') {
-      generator.token('?');
-    }
-
-    generator.token('(');
+  return [
+    ...tokens,
+    operator('('),
     generator.printCommaList(node.arguments, node, {
-      multiline,
       trailing: true,
-    });
-
-    // TODO add newline if we've added a line and are on a different indentation level
-    const endLine = generator.buf.position.line;
-    const endIndent = generator.currentLineIndentLevel;
-    if (startLine !== endLine && startIndent !== endIndent) {
-      generator.newline();
-    }
-
-    generator.token(')');
-  });
+    }),
+    operator(')'),
+  ];
 }

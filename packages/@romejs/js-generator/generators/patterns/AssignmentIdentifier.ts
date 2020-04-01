@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   AssignmentIdentifier,
   assignmentIdentifier,
@@ -13,8 +14,10 @@ import {
 } from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
 
-export default function AssignmentIdentifier(generator: Generator, node: AnyNode) {
+export default function AssignmentIdentifier(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = assignmentIdentifier.assert(node);
-
-  Identifier(generator, node);
+  return Identifier(generator, node);
 }

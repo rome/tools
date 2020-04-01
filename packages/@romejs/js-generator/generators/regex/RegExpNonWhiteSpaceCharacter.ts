@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
-import {RegExpNonWhiteSpaceCharacter} from '@romejs/js-ast';
+import {Tokens, verbatim} from '../../tokens';
 
-export default function RegExpNonWhiteSpaceCharacter(generator: Generator) {
-  generator.append('\\S');
+export default function RegExpNonWhiteSpaceCharacter(): Tokens {
+  return [verbatim('\\S')];
 }

@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, linkedGroups, operator, space, word} from '../../tokens';
 import {
   AnyNode,
   ExportExternalDeclaration,
@@ -16,24 +17,25 @@ import {printModuleSpecifiers} from './ImportDeclaration';
 export default function ExportExternalDeclaration(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = exportExternalDeclaration.assert(node);
 
-  generator.word('export');
-  generator.space();
+  const tokens: Tokens = [word('export'), space];
 
   if (node.exportKind === 'type') {
-    generator.word('type');
-    generator.space();
+    tokens.push(word('type'));
+    tokens.push(space);
   }
 
-  generator.multiline(node, (multiline, node) => {
-    printModuleSpecifiers(generator, node, multiline);
-    generator.space();
-    generator.word('from');
-    generator.space();
-    generator.print(node.source, node);
-
-    generator.semicolon();
-  });
+  return [
+    linkedGroups([
+      ...tokens,
+      ...printModuleSpecifiers(generator, node),
+      space,
+      word('from'),
+      space,
+      ...generator.print(node.source, node),
+      operator(';'),
+    ]),
+  ];
 }

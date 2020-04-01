@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   ExportDefaultSpecifier,
   exportDefaultSpecifier,
@@ -15,8 +16,7 @@ import {
 export default function ExportDefaultSpecifier(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = exportDefaultSpecifier.assert(node);
-
-  generator.print(node.exported, node);
+  return generator.print(node.exported, node);
 }

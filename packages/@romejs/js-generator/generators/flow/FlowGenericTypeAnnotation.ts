@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   FlowGenericTypeAnnotation,
   flowGenericTypeAnnotation,
@@ -16,8 +17,7 @@ import FlowInterfaceExtends from './FlowInterfaceExtends';
 export default function FlowGenericTypeAnnotation(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = flowGenericTypeAnnotation.assert(node);
-
-  FlowInterfaceExtends(generator, node);
+  return FlowInterfaceExtends(generator, node);
 }

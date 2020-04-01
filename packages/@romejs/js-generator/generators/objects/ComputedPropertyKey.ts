@@ -6,12 +6,17 @@
  */
 
 import Generator from '../../Generator';
-import {ComputedPropertyKey, computedPropertyKey, AnyNode} from '@romejs/js-ast';
+import {Tokens, operator} from '../../tokens';
+import {
+  ComputedPropertyKey,
+  computedPropertyKey,
+  AnyNode,
+} from '@romejs/js-ast';
 
-export default function ComputedPropertyKey(generator: Generator, node: AnyNode) {
+export default function ComputedPropertyKey(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = computedPropertyKey.assert(node);
-
-  generator.token('[');
-  generator.print(node.value, node);
-  generator.token(']');
+  return [operator('['), ...generator.print(node.value, node), operator(']')];
 }

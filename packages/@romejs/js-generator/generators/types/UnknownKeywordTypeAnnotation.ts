@@ -6,8 +6,8 @@
  */
 
 import {UnknownKeywordTypeAnnotation} from '@romejs/js-ast';
-import {Generator} from '@romejs/js-generator';
+import {Tokens, word} from '../../tokens';
 
-export default function UnknownKeywordTypeAnnotation(generator: Generator) {
-  generator.word('unknown');
+export default function UnknownKeywordTypeAnnotation(): Tokens {
+  return [word('unknown')];
 }

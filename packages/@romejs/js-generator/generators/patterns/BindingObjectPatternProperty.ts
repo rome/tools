@@ -6,13 +6,14 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {bindingObjectPatternProperty, AnyNode} from '@romejs/js-ast';
 import ObjectProperty from '../objects/ObjectProperty';
 
 export default function BindingObjectPatternProperty(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = bindingObjectPatternProperty.assert(node);
-  ObjectProperty(generator, node);
+  return ObjectProperty(generator, node);
 }

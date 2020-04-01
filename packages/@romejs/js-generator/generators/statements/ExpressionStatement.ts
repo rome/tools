@@ -6,11 +6,18 @@
  */
 
 import Generator from '../../Generator';
-import {ExpressionStatement, expressionStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, operator} from '../../tokens';
+import {
+  ExpressionStatement,
+  expressionStatement,
+  AnyNode,
+} from '@romejs/js-ast';
 
-export default function ExpressionStatement(generator: Generator, node: AnyNode) {
+export default function ExpressionStatement(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = expressionStatement.assert(node);
 
-  generator.print(node.expression, node);
-  generator.semicolon();
+  return [...generator.print(node.expression, node), operator(';')];
 }

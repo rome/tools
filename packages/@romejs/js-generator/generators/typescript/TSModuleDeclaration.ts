@@ -12,33 +12,40 @@ import {
   TSModuleBlock,
 } from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator, space, word} from '../../tokens';
 
-export default function TSModuleDeclaration(generator: Generator, node: AnyNode) {
+export default function TSModuleDeclaration(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsModuleDeclaration.assert(node);
 
+  let tokens: Tokens = [];
+
   if (node.declare) {
-    generator.word('declare');
-    generator.space();
+    tokens.push(word('declare'));
+    tokens.push(space);
   }
 
   if (!node.global) {
-    generator.word(node.id.type === 'BindingIdentifier' ? 'namespace' : 'module');
-    generator.space();
+    tokens.push(
+      word(node.id.type === 'BindingIdentifier' ? 'namespace' : 'module'),
+    );
+    tokens.push(space);
   }
-  generator.print(node.id, node);
+
+  tokens = [...tokens, ...generator.print(node.id, node)];
 
   if (!node.body) {
-    generator.token(';');
-    return;
+    operator(';');
+    return tokens;
   }
 
   let body: undefined | TSModuleBlock | TSModuleDeclaration = node.body;
   while (body !== undefined && body.type === 'TSModuleDeclaration') {
-    generator.token('.');
-    generator.print(body.id, body);
+    tokens = [...tokens, operator('.'), ...generator.print(body.id, body)];
     body = body.body;
   }
 
-  generator.space();
-  generator.print(body, node);
+  return [...tokens, space, ...generator.print(body, node)];
 }

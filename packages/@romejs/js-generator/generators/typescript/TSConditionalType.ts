@@ -7,34 +7,36 @@
 
 import {TSConditionalType, tsConditionalType, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, group, space, word, operator, newline} from '../../tokens';
 
-export default function TSConditionalType(generator: Generator, node: AnyNode) {
+export default function TSConditionalType(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsConditionalType.assert(node);
 
-  generator.multiline(node, (multiline, node) => {
-    generator.print(node.checkType, node);
-    generator.space();
-    generator.word('extends');
-    generator.space();
-    generator.print(node.extendsType, node);
+  return [
+    ...generator.print(node.checkType, node),
+    space,
+    word('extends'),
+    space,
+    ...generator.print(node.extendsType, node),
+    space,
 
-    if (multiline) {
-      generator.newline();
-      generator.indent();
-    } else {
-      generator.space();
-    }
-
-    generator.token('?');
-    generator.space();
-    generator.print(node.trueType, node);
-    generator.spaceOrNewline(multiline);
-    generator.token(':');
-    generator.space();
-    generator.print(node.falseType, node);
-
-    if (multiline) {
-      generator.dedent();
-    }
-  });
+    group(
+      [
+        [operator('?'), space, ...generator.print(node.trueType, node)],
+        [operator(':'), space, ...generator.print(node.falseType, node)],
+      ],
+      {
+        priority: true,
+        broken: {
+          separator: [newline],
+        },
+        unbroken: {
+          separator: [space],
+        },
+      },
+    ),
+  ];
 }

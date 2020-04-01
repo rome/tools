@@ -6,21 +6,33 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, word} from '../../tokens';
 import {
   ExportLocalSpecifier,
   exportLocalSpecifier,
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function ExportLocalSpecifier(generator: Generator, node: AnyNode) {
-  node = node.type === 'ExportExternalSpecifier'
-    ? node : exportLocalSpecifier.assert(node);
+export default function ExportLocalSpecifier(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
+  node =
+    node.type === 'ExportExternalSpecifier'
+      ? node
+      : exportLocalSpecifier.assert(node);
 
-  generator.print(node.local, node);
-  if (node.exported && node.local.name !== node.exported.name) {
-    generator.space();
-    generator.word('as');
-    generator.space();
-    generator.print(node.exported, node);
+  const tokens = generator.print(node.local, node);
+
+  if (node.local.name === node.exported.name) {
+    return tokens;
+  } else {
+    return [
+      ...tokens,
+      space,
+      word('as'),
+      space,
+      ...generator.print(node.exported, node),
+    ];
   }
 }

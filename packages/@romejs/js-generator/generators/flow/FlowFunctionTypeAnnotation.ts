@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator, space} from '../../tokens';
 import {
   FlowFunctionTypeAnnotation,
   flowFunctionTypeAnnotation,
@@ -16,23 +17,26 @@ export default function FlowFunctionTypeAnnotation(
   generator: Generator,
   node: AnyNode,
   parent: AnyNode,
-) {
+): Tokens {
   node = flowFunctionTypeAnnotation.assert(node);
 
-  generator.print(node.typeParameters, node);
-  generator.token('(');
-  generator.printCommaList(node.params, node);
-  generator.token(')');
+  let tokens: Tokens = [
+    ...generator.print(node.typeParameters, node),
+    operator('('),
+    generator.printCommaList(node.params, node),
+    operator(')'),
+  ];
 
   // this node type is overloaded, not sure why but it makes it EXTREMELY annoying
-  if (parent.type === 'FlowObjectTypeCallProperty' || parent.type ===
-  'FlowDeclareFunction') {
-    generator.token(':');
+  if (
+    parent.type === 'FlowObjectTypeCallProperty' ||
+    parent.type === 'FlowDeclareFunction'
+  ) {
+    tokens.push(operator(':'));
   } else {
-    generator.space();
-    generator.token('=>');
+    tokens.push(space);
+    tokens.push(operator('=>'));
   }
 
-  generator.space();
-  generator.print(node.returnType, node);
+  return [...tokens, space, ...generator.print(node.returnType, node)];
 }

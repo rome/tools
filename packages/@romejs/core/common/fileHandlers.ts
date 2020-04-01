@@ -53,7 +53,10 @@ export function getFileHandler(
   let handler = DEFAULT_HANDLERS.get(ext);
 
   // Allow setting custom assert extensions in the project config
-  if (handler === undefined && projectConfig.files.assetExtensions.includes(ext)) {
+  if (
+    handler === undefined &&
+    projectConfig.files.assetExtensions.includes(ext)
+  ) {
     handler = assetHandler;
   }
 
@@ -73,12 +76,10 @@ export function getFileHandlerAssert(
   }
 }
 
-export type ExtensionLintInfo =
-  & ExtensionHandlerMethodInfo
-  & {
-    prefetchedModuleSignatures: PrefetchedModuleSignatures;
-    format: boolean;
-  };
+export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
+  prefetchedModuleSignatures: PrefetchedModuleSignatures;
+  format: boolean;
+};
 
 export type ExtensionLintResult = {
   sourceText: string;
@@ -101,13 +102,15 @@ export type ExtensionHandler = {
   canHaveScale?: boolean;
   lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
   format?: (info: ExtensionHandlerMethodInfo) => Promise<ExtensionLintResult>;
-  toJavaScript?: (opts: ExtensionHandlerMethodInfo) => Promise<{
+  toJavaScript?: (
+    opts: ExtensionHandlerMethodInfo,
+  ) => Promise<{
     generated: boolean;
     sourceText: string;
   }>;
-  analyzeDependencies?: (opts: ExtensionHandlerMethodInfo) => Promise<
-    AnalyzeDependencyResult
-  >;
+  analyzeDependencies?: (
+    opts: ExtensionHandlerMethodInfo,
+  ) => Promise<AnalyzeDependencyResult>;
 };
 
 const textHandler: ExtensionHandler = {
@@ -197,11 +200,9 @@ const jsonHandler: ExtensionHandler = {
         if (hasExtensions) {
           formatted = stringifyJSON({consumer, comments});
         } else {
-          formatted = String(JSON.stringify(
-            consumer.asUnknown(),
-            undefined,
-            '  ',
-          ));
+          formatted = String(
+            JSON.stringify(consumer.asUnknown(), undefined, '  '),
+          );
         }
       }
     }
@@ -297,22 +298,29 @@ function buildJSHandler(
       };
     },
 
-    async format(info: ExtensionHandlerMethodInfo): Promise<ExtensionLintResult> {
+    async format(
+      info: ExtensionHandlerMethodInfo,
+    ): Promise<ExtensionLintResult> {
       const {file: ref, worker} = info;
 
-      const {ast, sourceText, generated}: ParseResult = await worker.parseJS(ref);
+      const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
+        ref,
+      );
 
       const res = generateJS(ast, {
         typeAnnotations: true,
         format: 'pretty',
       });
 
-      return worker.api.interceptAndAddGeneratedToDiagnostics({
-        formatted: res.buf.getCode(),
-        sourceText,
-        suppressions: [],
-        diagnostics: ast.diagnostics,
-      }, generated);
+      return worker.api.interceptAndAddGeneratedToDiagnostics(
+        {
+          formatted: res.getCode(),
+          sourceText,
+          suppressions: [],
+          diagnostics: ast.diagnostics,
+        },
+        generated,
+      );
     },
 
     async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {
@@ -324,7 +332,9 @@ function buildJSHandler(
         worker,
       } = info;
 
-      const {ast, sourceText, generated}: ParseResult = await worker.parseJS(ref);
+      const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
+        ref,
+      );
 
       worker.logger.info(`Linting: `, ref.real);
 
@@ -361,12 +371,15 @@ function buildJSHandler(
         diagnostics = [...diagnostics, ...typeDiagnostics];
       }
 
-      return worker.api.interceptAndAddGeneratedToDiagnostics({
-        suppressions: res.suppressions,
-        diagnostics,
-        sourceText,
-        formatted: res.src,
-      }, generated);
+      return worker.api.interceptAndAddGeneratedToDiagnostics(
+        {
+          suppressions: res.suppressions,
+          diagnostics,
+          sourceText,
+          formatted: res.src,
+        },
+        generated,
+      );
     },
   };
 }

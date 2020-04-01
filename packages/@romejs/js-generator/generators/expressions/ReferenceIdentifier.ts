@@ -6,10 +6,18 @@
  */
 
 import Generator from '../../Generator';
-import {ReferenceIdentifier, referenceIdentifier, AnyNode} from '@romejs/js-ast';
+import {Tokens} from '../../tokens';
+import {
+  ReferenceIdentifier,
+  referenceIdentifier,
+  AnyNode,
+} from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
 
-export default function ReferenceIdentifier(generator: Generator, node: AnyNode) {
+export default function ReferenceIdentifier(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = referenceIdentifier.assert(node);
-  Identifier(generator, node);
+  return Identifier(generator, node);
 }

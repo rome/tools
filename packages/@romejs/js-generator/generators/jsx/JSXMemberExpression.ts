@@ -6,12 +6,22 @@
  */
 
 import Generator from '../../Generator';
-import {JSXMemberExpression, jsxMemberExpression, AnyNode} from '@romejs/js-ast';
+import {Tokens, operator} from '../../tokens';
+import {
+  JSXMemberExpression,
+  jsxMemberExpression,
+  AnyNode,
+} from '@romejs/js-ast';
 
-export default function JSXMemberExpression(generator: Generator, node: AnyNode) {
+export default function JSXMemberExpression(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = jsxMemberExpression.assert(node);
 
-  generator.print(node.object, node);
-  generator.token('.');
-  generator.print(node.property, node);
+  return [
+    ...generator.print(node.object, node),
+    operator('.'),
+    ...generator.print(node.property, node),
+  ];
 }

@@ -7,15 +7,23 @@
 
 import {TSAsExpression, tsAsExpression, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, space, word} from '../../tokens';
 
-export default function TSAsExpression(generator: Generator, node: AnyNode) {
+export default function TSAsExpression(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsAsExpression.assert(node);
 
-  generator.print(node.expression, node);
-
   if (generator.options.typeAnnotations) {
-    generator.space();
-    generator.word('as');
-    generator.print(node.typeAnnotation, node);
+    return [
+      ...generator.print(node.expression, node),
+      space,
+      word('as'),
+      space,
+      ...generator.print(node.typeAnnotation, node),
+    ];
+  } else {
+    return generator.print(node.expression, node);
   }
 }

@@ -6,11 +6,18 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, verbatim} from '../../tokens';
 import {AnyNode, RegExpAlternation, regExpAlternation} from '@romejs/js-ast';
 
-export default function RegExpAlternation(generator: Generator, node: AnyNode) {
+export default function RegExpAlternation(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = regExpAlternation.assert(node);
-  generator.print(node.left, node);
-  generator.token('|');
-  generator.print(node.right, node);
+
+  return [
+    ...generator.print(node.left, node),
+    verbatim('|'),
+    ...generator.print(node.right, node),
+  ];
 }

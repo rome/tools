@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {
   FlowArrayTypeAnnotation,
   flowArrayTypeAnnotation,
@@ -15,10 +16,12 @@ import {
 export default function FlowArrayTypeAnnotation(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = flowArrayTypeAnnotation.assert(node);
 
-  generator.print(node.elementType, node);
-  generator.token('[');
-  generator.token(']');
+  return [
+    ...generator.print(node.elementType, node),
+    operator('['),
+    operator(']'),
+  ];
 }

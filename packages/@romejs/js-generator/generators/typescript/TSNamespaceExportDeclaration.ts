@@ -11,17 +11,21 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, word, space} from '../../tokens';
 
 export default function TSNamespaceExportDeclaration(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = tsNamespaceExportDeclaration.assert(node);
-  generator.word('export');
-  generator.space();
-  generator.word('as');
-  generator.space();
-  generator.word('namespace');
-  generator.space();
-  generator.print(node.id, node);
+
+  return [
+    word('export'),
+    space,
+    word('as'),
+    space,
+    word('namespace'),
+    space,
+    ...generator.print(node.id, node),
+  ];
 }

@@ -6,13 +6,19 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator, space} from '../../tokens';
 import {LabeledStatement, labeledStatement, AnyNode} from '@romejs/js-ast';
 
-export default function LabeledStatement(generator: Generator, node: AnyNode) {
+export default function LabeledStatement(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = labeledStatement.assert(node);
 
-  generator.print(node.label, node);
-  generator.token(':');
-  generator.space();
-  generator.print(node.body, node);
+  return [
+    ...generator.print(node.label, node),
+    operator(':'),
+    space,
+    ...generator.print(node.body, node),
+  ];
 }

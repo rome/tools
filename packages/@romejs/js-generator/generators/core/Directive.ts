@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {operator} from '../../tokens';
 import {AnyNode} from '@romejs/js-ast';
 import StringLiteral from '../literals/StringLiteral';
 
@@ -14,6 +15,5 @@ export default function Directive(
   node: AnyNode,
   parent: AnyNode,
 ) {
-  StringLiteral(generator, node, parent);
-  generator.semicolon();
+  return [...StringLiteral(generator, node, parent), operator(';')];
 }

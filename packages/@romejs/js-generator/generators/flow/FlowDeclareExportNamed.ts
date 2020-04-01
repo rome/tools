@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   FlowDeclareExportNamed,
   flowDeclareExportNamed,
@@ -15,7 +16,7 @@ import {
 export default function FlowDeclareExportNamed(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = flowDeclareExportNamed.assert(node);
 
   flowDeclareExportNamed.assert(node);

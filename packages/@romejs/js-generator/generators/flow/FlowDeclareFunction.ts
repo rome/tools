@@ -6,7 +6,12 @@
  */
 
 import Generator from '../../Generator';
-import {FlowDeclareFunction, flowDeclareFunction, AnyNode} from '@romejs/js-ast';
+import {Tokens, space, operator, word} from '../../tokens';
+import {
+  FlowDeclareFunction,
+  flowDeclareFunction,
+  AnyNode,
+} from '@romejs/js-ast';
 
 export default function FlowDeclareFunction(
   generator: Generator,
@@ -15,12 +20,16 @@ export default function FlowDeclareFunction(
 ) {
   node = flowDeclareFunction.assert(node);
 
+  let tokens: Tokens = [];
   if (parent.type !== 'ExportLocalDeclaration') {
-    generator.word('declare');
-    generator.space();
+    tokens = [word('declare'), space];
   }
-  generator.word('function');
-  generator.space();
-  generator.print(node.id, node);
-  generator.semicolon();
+
+  return [
+    ...tokens,
+    word('function'),
+    space,
+    ...generator.print(node.id, node),
+    operator(';'),
+  ];
 }

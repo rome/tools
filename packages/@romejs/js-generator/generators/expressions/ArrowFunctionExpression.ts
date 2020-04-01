@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator, word, space} from '../../tokens';
 import {
   ArrowFunctionExpression,
   arrowFunctionExpression,
@@ -18,32 +19,19 @@ export default function ArrowFunctionExpression(
 ) {
   node = arrowFunctionExpression.assert(node);
 
+  const tokens: Tokens = [];
+
   if (node.head.async === true) {
-    generator.word('async');
-    generator.space();
+    tokens.push(word('async'));
+    tokens.push(space);
   }
 
-  generator.print(node.head, node);
-
-  generator.space();
-  generator.token('=>');
-  generator.space();
-
-  const {body} = node;
-  if (body.type === 'BlockStatement') {
-    generator.print(body, node);
-  } else {
-    generator.multiline(node, (multiline) => {
-      if (multiline) {
-        generator.newline();
-        generator.indent();
-      }
-
-      generator.print(body, node);
-
-      if (multiline) {
-        generator.dedent();
-      }
-    }, {conditions: ['more-than-one-line']});
-  }
+  return [
+    ...tokens,
+    ...generator.print(node.head, node),
+    space,
+    operator('=>'),
+    space,
+    ...generator.print(node.body, node),
+  ];
 }

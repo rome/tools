@@ -6,17 +6,22 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, verbatim} from '../../tokens';
 import {AnyNode, RegExpGroupCapture, regExpGroupCapture} from '@romejs/js-ast';
 
-export default function RegExpGroupCapture(generator: Generator, node: AnyNode) {
+export default function RegExpGroupCapture(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = regExpGroupCapture.assert(node);
 
-  generator.append('(');
+  const tokens: Tokens = [verbatim('(')];
+
   if (node.name !== undefined) {
-    generator.append('?<');
-    generator.append(node.name);
-    generator.append('>');
+    tokens.push(verbatim('?<'));
+    tokens.push(verbatim(node.name));
+    tokens.push(verbatim('>'));
   }
-  generator.print(node.expression, node);
-  generator.append(')');
+
+  return [...tokens, ...generator.print(node.expression, node), verbatim(')')];
 }

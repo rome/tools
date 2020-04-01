@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   JSXReferenceIdentifier,
   jsxReferenceIdentifier,
@@ -15,8 +16,7 @@ import {
 export default function JSXReferenceIdentifier(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = jsxReferenceIdentifier.assert(node);
-
   throw new Error('unimplemented');
 }

@@ -6,11 +6,14 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {SpreadProperty, spreadProperty, AnyNode} from '@romejs/js-ast';
 
-export default function SpreadProperty(generator: Generator, node: AnyNode) {
+export default function SpreadProperty(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = spreadProperty.assert(node);
 
-  generator.token('...');
-  generator.print(node.argument, node);
+  return [operator('...'), ...generator.print(node.argument, node)];
 }

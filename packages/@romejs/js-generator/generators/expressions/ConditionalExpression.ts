@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator, space, group, newline} from '../../tokens';
 import {
   ConditionalExpression,
   conditionalExpression,
@@ -15,29 +16,28 @@ import {
 export default function ConditionalExpression(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = conditionalExpression.assert(node);
 
-  generator.multiline(node, (multiline, node) => {
-    generator.print(node.test, node);
-
-    if (multiline) {
-      generator.newline();
-      generator.indent();
-    } else {
-      generator.space();
-    }
-
-    generator.token('?');
-    generator.space();
-    generator.print(node.consequent, node);
-    generator.space();
-    generator.token(':');
-    generator.space();
-    generator.print(node.alternate, node);
-
-    if (multiline) {
-      generator.dedent();
-    }
-  });
+  return [
+    ...generator.print(node.test, node),
+    space,
+    group(
+      [
+        [operator('?'), space, ...generator.print(node.consequent, node)],
+        [operator(':'), space, ...generator.print(node.alternate, node)],
+      ],
+      {
+        priority: true,
+        broken: {
+          before: [newline],
+          indentNewline: false,
+          separator: [newline],
+        },
+        unbroken: {
+          separator: [space],
+        },
+      },
+    ),
+  ];
 }

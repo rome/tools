@@ -6,10 +6,14 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {classExpression, AnyNode} from '@romejs/js-ast';
 import ClassDeclaration from './ClassDeclaration';
 
-export default function ClassExpression(generator: Generator, node: AnyNode) {
+export default function ClassExpression(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = classExpression.assert(node);
-  ClassDeclaration(generator, node);
+  return ClassDeclaration(generator, node);
 }

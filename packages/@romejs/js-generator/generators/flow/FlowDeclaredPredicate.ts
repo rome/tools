@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator, space} from '../../tokens';
 import {
   FlowDeclaredPredicate,
   flowDeclaredPredicate,
@@ -15,10 +16,8 @@ import {
 export default function FlowDeclaredPredicate(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = flowDeclaredPredicate.assert(node);
 
-  generator.token('%checks');
-  generator.space();
-  generator.print(node.value, node);
+  return [operator('%checks'), space, ...generator.print(node.value, node)];
 }

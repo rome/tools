@@ -7,10 +7,17 @@
 
 import {TSMethodSignature, tsMethodSignature, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator} from '../../tokens';
 
-export default function TSMethodSignature(generator: Generator, node: AnyNode) {
+export default function TSMethodSignature(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsMethodSignature.assert(node);
-  generator.print(node.key, node);
-  generator.print(node.meta, node);
-  generator.token(';');
+
+  return [
+    ...generator.print(node.key, node),
+    ...generator.print(node.meta, node),
+    operator(';'),
+  ];
 }

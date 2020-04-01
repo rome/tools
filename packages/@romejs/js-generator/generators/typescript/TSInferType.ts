@@ -7,10 +7,17 @@
 
 import {TSInferType, tsInferType, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator, space} from '../../tokens';
 
-export default function TSInferType(generator: Generator, node: AnyNode) {
+export default function TSInferType(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsInferType.assert(node);
-  generator.token('infer');
-  generator.space();
-  generator.print(node.typeParameter, node);
+
+  return [
+    operator('infer'),
+    space,
+    ...generator.print(node.typeParameter, node),
+  ];
 }

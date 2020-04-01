@@ -6,22 +6,33 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, word, operator} from '../../tokens';
 import {FlowTypeParameter, flowTypeParameter, AnyNode} from '@romejs/js-ast';
 
-export default function FlowTypeParameter(generator: Generator, node: AnyNode) {
+export default function FlowTypeParameter(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = flowTypeParameter.assert(node);
 
-  generator.print(node.variance, node);
-  generator.word(node.name);
+  let tokens: Tokens = [
+    ...generator.print(node.variance, node),
+    word(node.name),
+  ];
 
   if (node.bound) {
-    generator.print(node.bound, node);
+    tokens = [...tokens, ...generator.print(node.bound, node)];
   }
 
   if (node.default) {
-    generator.space();
-    generator.token('=');
-    generator.space();
-    generator.print(node.default, node);
+    return [
+      ...tokens,
+      space,
+      operator('='),
+      space,
+      ...generator.print(node.default, node),
+    ];
+  } else {
+    return tokens;
   }
 }

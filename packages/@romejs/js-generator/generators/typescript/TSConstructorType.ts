@@ -7,8 +7,12 @@
 
 import {TSConstructorType, tsConstructorType, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens} from '../../tokens';
 
-export default function TSConstructorType(generator: Generator, node: AnyNode) {
+export default function TSConstructorType(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsConstructorType.assert(node);
 
   throw new Error('unimplemented');

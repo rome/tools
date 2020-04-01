@@ -6,11 +6,17 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {MemberExpression, memberExpression, AnyNode} from '@romejs/js-ast';
 
-export default function MemberExpression(generator: Generator, node: AnyNode) {
+export default function MemberExpression(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = memberExpression.assert(node);
 
-  generator.print(node.object, node);
-  generator.print(node.property, node);
+  return [
+    ...generator.print(node.object, node),
+    ...generator.print(node.property, node),
+  ];
 }

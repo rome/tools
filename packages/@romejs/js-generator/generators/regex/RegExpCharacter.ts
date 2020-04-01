@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, verbatim} from '../../tokens';
 import {AnyNode, RegExpCharacter, regExpCharacter} from '@romejs/js-ast';
 import {escapeString} from '@romejs/string-escape';
 
@@ -13,7 +14,7 @@ export default function RegExpCharacter(
   generator: Generator,
   node: AnyNode,
   parent: AnyNode,
-) {
+): Tokens {
   node = regExpCharacter.assert(node);
 
   const isInCharSet = parent.type === 'RegExpCharSet';
@@ -32,38 +33,36 @@ export default function RegExpCharacter(
       case '(':
       case ')':
       case '|':
-        generator.append(node.value);
-        return;
+        return [verbatim(node.value)];
 
       case '-':
-        generator.append('\\-');
-        return;
+        return [verbatim('\\-')];
     }
   }
 
   switch (node.value) {
     case '\t':
-      generator.append('\\t');
+      return [verbatim('\\t')];
       break;
 
     case '\n':
-      generator.append('\\n');
+      return [verbatim('\\n')];
       break;
 
     case '\r':
-      generator.append('\\r');
+      return [verbatim('\\r')];
       break;
 
     case '\x0b':
-      generator.append('\\v');
+      return [verbatim('\\v')];
       break;
 
     case '\f':
-      generator.append('\\f');
+      return [verbatim('\\f')];
       break;
 
     case '\b':
-      generator.append('\\b');
+      return [verbatim('\\b')];
       break;
 
     case '/':
@@ -81,13 +80,16 @@ export default function RegExpCharacter(
     case '(':
     case ')':
     case '|':
-      generator.append(`\\${node.value}`);
-      break;
+      return [verbatim(`\\${node.value}`)];
 
     default:
-      generator.append(escapeString(node.value, {
-        json: true,
-        unicodeOnly: true,
-      }));
+      return [
+        verbatim(
+          escapeString(node.value, {
+            json: true,
+            unicodeOnly: true,
+          }),
+        ),
+      ];
   }
 }

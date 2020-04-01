@@ -5,26 +5,37 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSPropertySignature, tsPropertySignature, AnyNode} from '@romejs/js-ast';
+import {
+  TSPropertySignature,
+  tsPropertySignature,
+  AnyNode,
+} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, word, operator, space} from '../../tokens';
 
-export default function TSPropertySignature(generator: Generator, node: AnyNode) {
+export default function TSPropertySignature(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsPropertySignature.assert(node);
 
+  let tokens: Tokens = [];
+
   if (node.readonly) {
-    generator.word('readonly');
-    generator.space();
+    tokens = [word('readonly'), space];
   }
 
-  generator.print(node.key, node);
+  tokens = [...tokens, ...generator.print(node.key, node)];
 
   if (node.optional) {
-    generator.token('?');
+    tokens.push(operator('?'));
   }
 
-  generator.token(':');
-  generator.space();
-
-  generator.print(node.typeAnnotation, node);
-  generator.token(';');
+  return [
+    ...tokens,
+    operator(':'),
+    space,
+    ...generator.print(node.typeAnnotation, node),
+    operator(';'),
+  ];
 }

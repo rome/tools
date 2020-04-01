@@ -6,12 +6,20 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {AnyNode, Identifier, identifier} from '@romejs/js-ast';
+import {word} from '@romejs/js-generator/tokens';
 
-export default function Identifier(generator: Generator, node: AnyNode) {
+export default function Identifier(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node =
-    node.type === 'ReferenceIdentifier' || node.type === 'BindingIdentifier' ||
-    node.type === 'AssignmentIdentifier' ? node : identifier.assert(node);
+    node.type === 'ReferenceIdentifier' ||
+    node.type === 'BindingIdentifier' ||
+    node.type === 'AssignmentIdentifier'
+      ? node
+      : identifier.assert(node);
 
-  generator.word(node.name);
+  return [word(node.name)];
 }

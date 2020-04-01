@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word} from '../../tokens';
 import {
   TSAssignmentAsExpression,
   tsAssignmentAsExpression,
@@ -15,13 +16,16 @@ import {
 export default function TSAssignmentAsExpression(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = tsAssignmentAsExpression.assert(node);
 
-  generator.print(node.expression, node);
-
   if (generator.options.typeAnnotations) {
-    generator.word('as');
-    generator.print(node.typeAnnotation, node);
+    return [
+      ...generator.print(node.expression, node),
+      word('as'),
+      ...generator.print(node.typeAnnotation, node),
+    ];
+  } else {
+    return generator.print(node.expression, node);
   }
 }

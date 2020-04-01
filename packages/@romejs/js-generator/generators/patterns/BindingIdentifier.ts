@@ -6,18 +6,24 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {BindingIdentifier, bindingIdentifier, AnyNode} from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
 import {printPatternMeta} from '../utils';
 
-export default function BindingIdentifier(generator: Generator, node: AnyNode) {
+export default function BindingIdentifier(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = bindingIdentifier.assert(node);
 
   if (node.name[0] === '*') {
     // Internal name
-    return;
+    return [];
   }
 
-  Identifier(generator, node);
-  printPatternMeta(generator, node, node.meta);
+  return [
+    ...Identifier(generator, node),
+    ...printPatternMeta(generator, node, node.meta),
+  ];
 }

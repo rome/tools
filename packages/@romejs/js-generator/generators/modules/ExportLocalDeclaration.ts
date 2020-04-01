@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator, space, word} from '../../tokens';
 import {
   ExportLocalDeclaration,
   exportLocalDeclaration,
@@ -16,35 +17,41 @@ import {isDeclaration} from '@romejs/js-ast-utils';
 export default function ExportLocalDeclaration(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = exportLocalDeclaration.assert(node);
 
   if (node.exportKind === 'type' && !generator.options.typeAnnotations) {
-    return;
+    return [];
   }
-  generator.word('export');
-  generator.space();
-  _ExportDeclaration(generator, node);
+
+  return [word('export'), space, ..._ExportDeclaration(generator, node)];
 }
 
-export function _ExportDeclaration(generator: Generator, node: AnyNode) {
-  node = node.type === 'ExportDefaultDeclaration'
-    ? node : exportLocalDeclaration.assert(node);
+export function _ExportDeclaration(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
+  node =
+    node.type === 'ExportDefaultDeclaration'
+      ? node
+      : exportLocalDeclaration.assert(node);
 
   if (node.declaration) {
     const declar = node.declaration;
-    generator.print(declar, node);
+    const tokens = generator.print(declar, node);
     if (!isDeclaration(declar)) {
-      generator.semicolon();
+      tokens.push(operator(';'));
     }
+    return tokens;
   } else {
     if (node.type !== 'ExportLocalDeclaration') {
       throw new Error('Expected  ExportLocalDeclaration');
     }
 
+    let tokens: Tokens = [];
+
     if (node.exportKind === 'type') {
-      generator.word('type');
-      generator.space();
+      tokens = [word('type'), space];
     }
 
     const {specifiers} = node;
@@ -52,18 +59,14 @@ export function _ExportDeclaration(generator: Generator, node: AnyNode) {
       throw new Error('Expected specifiers since there was no declaration');
     }
 
-    generator.multiline(node, (multiline, node) => {
-      generator.token('{');
-
-      if (specifiers.length > 0) {
-        generator.printCommaList(specifiers, node, {
-          multiline,
-          trailing: true,
-        });
-      }
-      generator.token('}');
-
-      generator.semicolon();
-    });
+    return [
+      ...tokens,
+      operator('{'),
+      generator.printCommaList(specifiers, node, {
+        trailing: true,
+      }),
+      operator('}'),
+      operator(';'),
+    ];
   }
 }

@@ -6,39 +6,29 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, operator, word} from '../../tokens';
 import {ClassDeclaration, classDeclaration, AnyNode} from '@romejs/js-ast';
 
-export default function ClassDeclaration(generator: Generator, node: AnyNode) {
+export default function ClassDeclaration(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = node.type === 'ClassExpression' ? node : classDeclaration.assert(node);
 
-  generator.word('class');
+  let tokens: Tokens = [word('class')];
 
   if (node.id) {
-    generator.space();
-    generator.print(node.id, node);
+    tokens = [...tokens, space, ...generator.print(node.id, node)];
   }
 
-  generator.print(node.meta, node);
-
-  generator.space();
-
-  generator.token('{');
-
-  generator.printInnerComments(node);
-  generator.printInnerComments(node.meta);
-
-  if (node.meta.body.length === 0) {
-    generator.token('}');
-  } else {
-    generator.forceNewline();
-
-    generator.indent();
-    generator.printStatementList(node.meta.body, node.meta);
-    generator.dedent();
-
-    generator.buf.removeTrailingNewlines();
-    generator.forceNewline();
-
-    generator.rightBrace();
-  }
+  return [
+    ...tokens,
+    ...generator.print(node.meta, node),
+    space,
+    operator('{'),
+    ...generator.printInnerComments(node),
+    ...generator.printInnerComments(node.meta),
+    ...generator.printStatementList(node.meta.body, node.meta, true),
+    operator('}'),
+  ];
 }

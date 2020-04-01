@@ -42,7 +42,9 @@ export class NativeStructuredError extends Error {
   [ERROR_POP_FRAMES_PROP]: undefined | number;
 }
 
-export function createErrorFromStructure(struct: Partial<StructuredError>): Error {
+export function createErrorFromStructure(
+  struct: Partial<StructuredError>,
+): Error {
   return new NativeStructuredError(struct);
 }
 
@@ -55,11 +57,13 @@ export function getErrorStructure(err: unknown): StructuredError {
   let framesToPop = 0;
   let looksLikeValidError = false;
 
-  if (isPlainObject<{
-    [ERROR_ADVICE_PROP]: unknown;
-    [ERROR_POP_FRAMES_PROP]: unknown;
-    [ERROR_FRAMES_PROP]: unknown;
-  }>(err)) {
+  if (
+    isPlainObject<{
+      [ERROR_ADVICE_PROP]: unknown;
+      [ERROR_POP_FRAMES_PROP]: unknown;
+      [ERROR_FRAMES_PROP]: unknown;
+    }>(err)
+  ) {
     if (typeof err.name === 'string') {
       looksLikeValidError = true;
       name = err.name;

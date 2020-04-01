@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
+import {Tokens, word} from '../../tokens';
 
-export default function VoidKeywordTypeAnnotation(generator: Generator) {
-  generator.word('void');
+export default function VoidKeywordTypeAnnotation(): Tokens {
+  return [word('void')];
 }

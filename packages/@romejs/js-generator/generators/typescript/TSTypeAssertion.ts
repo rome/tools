@@ -7,14 +7,23 @@
 
 import {TSTypeAssertion, tsTypeAssertion, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator, space} from '../../tokens';
 
-export default function TSTypeAssertion(generator: Generator, node: AnyNode) {
+export default function TSTypeAssertion(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsTypeAssertion.assert(node);
+
   if (generator.options.typeAnnotations) {
-    generator.token('<');
-    generator.print(node.typeAnnotation, node);
-    generator.token('>');
-    generator.space();
+    return [
+      operator('<'),
+      ...generator.print(node.typeAnnotation, node),
+      operator('>'),
+      space,
+      ...generator.print(node.expression, node),
+    ];
+  } else {
+    return generator.print(node.expression, node);
   }
-  generator.print(node.expression, node);
 }

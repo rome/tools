@@ -6,10 +6,14 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {printMethod} from '../utils';
 import {ObjectMethod, objectMethod, AnyNode} from '@romejs/js-ast';
 
-export default function ObjectMethod(generator: Generator, node: AnyNode) {
+export default function ObjectMethod(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = objectMethod.assert(node);
-  printMethod(generator, node);
+  return printMethod(generator, node);
 }

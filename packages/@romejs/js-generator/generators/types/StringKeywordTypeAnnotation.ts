@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
+import {Tokens, word} from '../../tokens';
 
-export default function StringKeywordTypeAnnotation(generator: Generator) {
-  generator.word('string');
+export default function StringKeywordTypeAnnotation(): Tokens {
+  return [word('string')];
 }

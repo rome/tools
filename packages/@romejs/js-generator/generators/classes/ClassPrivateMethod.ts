@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export default function ClassPrivateMethod() {
+import {Tokens} from '../../tokens';
+
+export default function ClassPrivateMethod(): Tokens {
   throw new Error('unimplemented');
 }

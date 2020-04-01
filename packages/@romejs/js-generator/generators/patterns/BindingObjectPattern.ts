@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   BindingObjectPattern,
   bindingObjectPattern,
@@ -14,9 +15,14 @@ import {
 import ObjectExpression from '../objects/ObjectExpression';
 import {printPatternMeta} from '../utils';
 
-export default function BindingObjectPattern(generator: Generator, node: AnyNode) {
+export default function BindingObjectPattern(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = bindingObjectPattern.assert(node);
 
-  ObjectExpression(generator, node);
-  printPatternMeta(generator, node, node.meta);
+  return [
+    ...ObjectExpression(generator, node),
+    ...printPatternMeta(generator, node, node.meta),
+  ];
 }

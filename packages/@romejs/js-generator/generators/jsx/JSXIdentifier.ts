@@ -6,10 +6,13 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word} from '../../tokens';
 import {JSXIdentifier, jsxIdentifier, AnyNode} from '@romejs/js-ast';
 
-export default function JSXIdentifier(generator: Generator, node: AnyNode) {
+export default function JSXIdentifier(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = jsxIdentifier.assert(node);
-
-  generator.word(node.name);
+  return [word(node.name)];
 }

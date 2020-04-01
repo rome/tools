@@ -14,7 +14,7 @@ import {AnyComment, AnyNode} from '@romejs/js-ast';
 import {Token} from '..';
 import {Number1, number1, number0, Number0, number0Neg1} from '@romejs/ob1';
 
-type Scopes = { [K in ScopeType]?: Array<unknown> };
+type Scopes = {[K in ScopeType]?: Array<unknown>};
 
 export type State = {
   diagnostics: Diagnostics;
@@ -30,24 +30,16 @@ export type State = {
   potentialArrowAt: Number0;
 
   // Used to signify the start of an expression which looks like a
-
   // typed arrow function, but it isn't
-
   // e.g. a ? (b) : c => d
-
   //          ^
   noArrowAt: Array<Number0>;
 
   // Used to signify the start of an expression whose params, if it looks like
-
   // an arrow function, shouldn't be converted to assignable nodes.
-
   // This is used to defer the validation of typed arrow functions inside
-
   // conditional expressions.
-
   // e.g. a ? (b) : c => d
-
   //          ^
   noArrowParamsConversionAt: Array<Number0>;
 
@@ -56,9 +48,7 @@ export type State = {
   noAnonFunctionType: boolean;
 
   // A comma after "...a" is only allowed in spread, but not in rest.
-
   // Since we parse destructuring patterns as array/object literals
-
   // and then convert them, we need to track it.
   commaAfterSpreadAt: Number0;
 
@@ -73,9 +63,7 @@ export type State = {
   labels: Array<Label>;
 
   // The first yield expression inside parenthesized expressions and arrow
-
   // function parameters. It is used to disallow yield in arrow function
-
   // parameters.
   yieldInPossibleArrowParameters: undefined | Position;
 
@@ -108,17 +96,13 @@ export type State = {
   lastStartPos: Position;
 
   // The context stack is used to superficially track syntactic
-
   // context to predict whether a regular expression is allowed in a
-
   // given position.
   context: Array<TokContext>;
   exprAllowed: boolean;
 
   // Used to signal to callers of `readWord1` whether the word
-
   // contained any escape sequences. This is needed because words with
-
   // escape sequences must not be interpreted as keywords.
   escapePosition: undefined | Number0;
 
@@ -127,7 +111,6 @@ export type State = {
   octalPosition: undefined | Number0;
 
   // Names of exports store. `default` is stored as a name for both
-
   // `export default foo;` and `export { foo as default };`.
   exportedIdentifiers: Map<string, SourceLocation>;
   invalidTemplateEscapePosition: undefined | Number0;

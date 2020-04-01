@@ -6,27 +6,36 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, operator} from '../../tokens';
 import {ClassProperty, classProperty, AnyNode} from '@romejs/js-ast';
 
-export default function ClassProperty(generator: Generator, node: AnyNode) {
+export default function ClassProperty(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = classProperty.assert(node);
 
   if (node.value === undefined && !generator.options.typeAnnotations) {
     // A ClassProperty with no value is a type annotation
-    return;
+    return [];
   }
 
-  generator.print(node.meta, node);
-
-  generator.print(node.key, node);
-  generator.printTypeColon(node.typeAnnotation, node);
+  const tokens: Tokens = [
+    ...generator.print(node.meta, node),
+    ...generator.print(node.key, node),
+    ...generator.printTypeColon(node.typeAnnotation, node),
+  ];
 
   if (node.value) {
-    generator.space();
-    generator.token('=');
-    generator.space();
-    generator.print(node.value, node);
+    return [
+      ...tokens,
+      space,
+      operator('='),
+      space,
+      ...generator.print(node.value, node),
+      operator(';'),
+    ];
+  } else {
+    return [...tokens, operator(';')];
   }
-
-  generator.semicolon();
 }

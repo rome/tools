@@ -6,13 +6,19 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {JSXSpreadChild, jsxSpreadChild, AnyNode} from '@romejs/js-ast';
 
-export default function JSXSpreadChild(generator: Generator, node: AnyNode) {
+export default function JSXSpreadChild(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = jsxSpreadChild.assert(node);
 
-  generator.token('{');
-  generator.token('...');
-  generator.print(node.expression, node);
-  generator.token('}');
+  return [
+    operator('{'),
+    operator('...'),
+    ...generator.print(node.expression, node),
+    operator('}'),
+  ];
 }

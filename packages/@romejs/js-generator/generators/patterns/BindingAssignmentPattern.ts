@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, operator} from '../../tokens';
 import {
   BindingAssignmentPattern,
   bindingAssignmentPattern,
@@ -15,12 +16,14 @@ import {
 export default function BindingAssignmentPattern(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = bindingAssignmentPattern.assert(node);
 
-  generator.print(node.left, node);
-  generator.space();
-  generator.token('=');
-  generator.space();
-  generator.print(node.right, node);
+  return [
+    ...generator.print(node.left, node),
+    space,
+    operator('='),
+    space,
+    ...generator.print(node.right, node),
+  ];
 }

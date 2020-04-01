@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, verbatim} from '../../tokens';
 import {
   AnyNode,
   RegExpGroupNonCapture,
@@ -18,29 +19,28 @@ export default function RegExpGroupNonCapture(
 ) {
   node = regExpGroupNonCapture.assert(node);
 
-  generator.append('(?');
+  const tokens: Tokens = [verbatim('(?')];
 
   switch (node.kind) {
     case 'positive-lookahead':
-      generator.append('=');
+      tokens.push(verbatim('='));
       break;
 
     case 'negative-lookahead':
-      generator.append('!');
+      tokens.push(verbatim('!'));
       break;
 
     case 'positive-lookbehind':
-      generator.append('<!');
+      tokens.push(verbatim('<!'));
       break;
 
     case 'negative-lookbehind':
-      generator.append('<=');
+      tokens.push(verbatim('<='));
       break;
 
     default:
-      generator.append(':');
+      tokens.push(verbatim(':'));
   }
 
-  generator.print(node.expression, node);
-  generator.append(')');
+  return [...tokens, ...generator.print(node.expression, node), verbatim(')')];
 }

@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {
   FlowQualifiedTypeIdentifier,
   flowQualifiedTypeIdentifier,
@@ -15,10 +16,12 @@ import {
 export default function FlowQualifiedTypeIdentifier(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = flowQualifiedTypeIdentifier.assert(node);
 
-  generator.print(node.qualification, node);
-  generator.token('.');
-  generator.print(node.id, node);
+  return [
+    ...generator.print(node.qualification, node),
+    operator('.'),
+    ...generator.print(node.id, node),
+  ];
 }

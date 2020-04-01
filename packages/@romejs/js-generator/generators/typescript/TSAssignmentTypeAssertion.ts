@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator, space} from '../../tokens';
 import {
   TSAssignmentTypeAssertion,
   tsAssignmentTypeAssertion,
@@ -15,11 +16,14 @@ import {
 export default function TSAssignmentTypeAssertion(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = tsAssignmentTypeAssertion.assert(node);
-  generator.token('<');
-  generator.print(node.typeAnnotation, node);
-  generator.token('>');
-  generator.space();
-  generator.print(node.expression, node);
+
+  return [
+    operator('<'),
+    ...generator.print(node.typeAnnotation, node),
+    operator('>'),
+    space,
+    ...generator.print(node.expression, node),
+  ];
 }

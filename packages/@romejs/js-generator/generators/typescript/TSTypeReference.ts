@@ -7,9 +7,15 @@
 
 import {TSTypeReference, tsTypeReference, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens} from '../../tokens';
 
-export default function TSTypeReference(generator: Generator, node: AnyNode) {
+export default function TSTypeReference(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsTypeReference.assert(node);
-  generator.print(node.typeName, node);
-  generator.print(node.typeParameters, node);
+  return [
+    ...generator.print(node.typeName, node),
+    ...generator.print(node.typeParameters, node),
+  ];
 }

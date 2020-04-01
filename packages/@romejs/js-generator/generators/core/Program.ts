@@ -7,16 +7,20 @@
 
 import Generator from '../../Generator';
 import {Program, program, AnyNode} from '@romejs/js-ast';
+import {Tokens, newline} from '@romejs/js-generator/tokens';
 
-export default function Program(generator: Generator, node: AnyNode) {
+export default function Program(generator: Generator, node: AnyNode): Tokens {
   node = program.assert(node);
 
-  generator.printInnerComments(node, false);
-  generator.printStatementList(node.directives, node);
+  const tokens: Tokens = generator.printStatementList(node.directives, node);
 
   if (node.directives && node.directives.length) {
-    generator.forceNewline();
+    tokens.push(newline);
   }
 
-  generator.printStatementList(node.body, node);
+  return [
+    ...tokens,
+    ...generator.printInnerComments(node),
+    ...generator.printStatementList(node.body, node),
+  ];
 }

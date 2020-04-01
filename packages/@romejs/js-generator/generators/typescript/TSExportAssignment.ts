@@ -7,13 +7,20 @@
 
 import {TSExportAssignment, tsExportAssignment, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, space, operator, word} from '../../tokens';
 
-export default function TSExportAssignment(generator: Generator, node: AnyNode) {
+export default function TSExportAssignment(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsExportAssignment.assert(node);
-  generator.word('export');
-  generator.space();
-  generator.token('=');
-  generator.space();
-  generator.print(node.expression, node);
-  generator.token(';');
+
+  return [
+    word('export'),
+    space,
+    operator('='),
+    space,
+    ...generator.print(node.expression, node),
+    operator(';'),
+  ];
 }

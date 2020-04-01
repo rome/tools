@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator, space} from '../../tokens';
 import {
   FlowFunctionTypeParam,
   flowFunctionTypeParam,
@@ -19,12 +20,19 @@ export default function FlowFunctionTypeParam(
   node = flowFunctionTypeParam.assert(node);
 
   if (node.name) {
-    generator.print(node.name, node);
+    const tokens: Tokens = generator.print(node.name, node);
+
     if (node.meta.optional === true) {
-      generator.token('?');
+      tokens.push(operator('?'));
     }
-    generator.token(':');
-    generator.space();
+
+    return [
+      ...tokens,
+      operator(':'),
+      space,
+      ...generator.print(node.meta.typeAnnotation, node),
+    ];
+  } else {
+    return generator.print(node.meta.typeAnnotation, node);
   }
-  generator.print(node.meta.typeAnnotation, node);
 }

@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   AssignmentAssignmentPattern,
   assignmentAssignmentPattern,
@@ -15,7 +16,7 @@ import {
 export default function AssignmentAssignmentPattern(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = assignmentAssignmentPattern.assert(node);
 
   throw new Error('unimplemented');

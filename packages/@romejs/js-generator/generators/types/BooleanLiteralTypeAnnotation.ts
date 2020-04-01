@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word} from '../../tokens';
 import {
   BooleanLiteralTypeAnnotation,
   booleanLiteralTypeAnnotation,
@@ -15,7 +16,7 @@ import {
 export default function BooleanLiteralTypeAnnotation(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = booleanLiteralTypeAnnotation.assert(node);
-  generator.word(node.value ? 'true' : 'false');
+  return [word(node.value ? 'true' : 'false')];
 }

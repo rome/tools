@@ -7,10 +7,17 @@
 
 import {TSTupleType, tsTupleType, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator} from '../../tokens';
 
-export default function TSTupleType(generator: Generator, node: AnyNode) {
+export default function TSTupleType(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsTupleType.assert(node);
-  generator.token('[');
-  generator.printCommaList(node.elementTypes, node);
-  generator.token(']');
+
+  return [
+    operator('['),
+    generator.printCommaList(node.elementTypes, node),
+    operator(']'),
+  ];
 }

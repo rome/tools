@@ -6,39 +6,44 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, operator} from '../../tokens';
 import {ArrayExpression, arrayExpression, AnyNode} from '@romejs/js-ast';
 
-export default function ArrayExpression(generator: Generator, _node: AnyNode) {
-  const node = _node.type === 'BindingArrayPattern' || _node.type ===
-  'AssignmentArrayPattern' ? _node : arrayExpression.assert(_node);
+export default function ArrayExpression(
+  generator: Generator,
+  _node: AnyNode,
+): Tokens {
+  const node =
+    _node.type === 'BindingArrayPattern' ||
+    _node.type === 'AssignmentArrayPattern'
+      ? _node
+      : arrayExpression.assert(_node);
 
-  generator.multiline(node, (multiline, node) => {
-    const elems = node.elements;
+  const elems = node.elements;
 
-    generator.token('[');
-    generator.printInnerComments(node);
-
-    generator.printCommaList<NonNullable<typeof elems[number]>>(elems, node, {
-      multiline,
+  let tokens: Tokens = [
+    operator('['),
+    ...generator.printInnerComments(node),
+    generator.printCommaList(elems, node, {
       trailing: true,
-    });
+      breakOnNewline: true,
+    }),
+  ];
 
-    if ((node.type === 'BindingArrayPattern' || node.type ===
-    'AssignmentArrayPattern') && node.rest !== undefined) {
-      if (elems.length > 0) {
-        generator.token(',');
-        generator.spaceOrNewline(multiline);
-      }
-
-      generator.token('...');
-      generator.print(node.rest, node);
+  if (
+    (node.type === 'BindingArrayPattern' ||
+      node.type === 'AssignmentArrayPattern') &&
+    node.rest !== undefined
+  ) {
+    if (elems.length > 0) {
+      tokens.push(operator(','));
+      tokens.push(space);
     }
 
-    if (multiline) {
-      generator.buf.removeTrailingNewlines();
-      generator.forceNewline();
-    }
+    tokens = [...tokens, operator('...'), ...generator.print(node.rest, node)];
+  }
 
-    generator.token(']');
-  }, {conditions: ['more-than-one-line', 'source-had-multiline']});
+  tokens.push(operator(']'));
+
+  return tokens;
 }

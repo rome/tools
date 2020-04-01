@@ -6,19 +6,25 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, space, operator} from '../../tokens';
 import {DoWhileStatement, doWhileStatement, AnyNode} from '@romejs/js-ast';
 
-export default function DoWhileStatement(generator: Generator, node: AnyNode) {
+export default function DoWhileStatement(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = doWhileStatement.assert(node);
 
-  generator.word('do');
-  generator.space();
-  generator.print(node.body, node);
-  generator.space();
-  generator.word('while');
-  generator.space();
-  generator.token('(');
-  generator.print(node.test, node);
-  generator.token(')');
-  generator.semicolon();
+  return [
+    word('do'),
+    space,
+    ...generator.print(node.body, node),
+    space,
+    word('while'),
+    space,
+    operator('('),
+    ...generator.print(node.test, node),
+    operator(')'),
+    operator(';'),
+  ];
 }

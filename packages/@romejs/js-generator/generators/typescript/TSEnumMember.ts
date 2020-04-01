@@ -7,18 +7,25 @@
 
 import {TSEnumMember, tsEnumMember, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, space, operator} from '../../tokens';
 
-export default function TSEnumMember(generator: Generator, node: AnyNode) {
+export default function TSEnumMember(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsEnumMember.assert(node);
 
-  generator.print(node.id, node);
+  let tokens: Tokens = generator.print(node.id, node);
 
   if (node.initializer) {
-    generator.space();
-    generator.token('=');
-    generator.space();
-    generator.print(node.initializer, node);
+    tokens = [
+      ...tokens,
+      space,
+      operator('='),
+      space,
+      ...generator.print(node.initializer, node),
+    ];
   }
 
-  generator.token(',');
+  return [...tokens, operator(',')];
 }

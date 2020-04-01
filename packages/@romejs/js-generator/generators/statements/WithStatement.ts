@@ -6,15 +6,21 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, space, operator} from '../../tokens';
 import {WithStatement, withStatement, AnyNode} from '@romejs/js-ast';
 
-export default function WithStatement(generator: Generator, node: AnyNode) {
+export default function WithStatement(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = withStatement.assert(node);
 
-  generator.word('with');
-  generator.space();
-  generator.token('(');
-  generator.print(node.object, node);
-  generator.token(')');
-  generator.printBlock(node);
+  return [
+    word('with'),
+    space,
+    operator('('),
+    ...generator.print(node.object, node),
+    operator(')'),
+    ...generator.print(node.body, node),
+  ];
 }

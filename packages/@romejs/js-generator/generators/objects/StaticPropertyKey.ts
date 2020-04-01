@@ -6,10 +6,13 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {StaticPropertyKey, staticPropertyKey, AnyNode} from '@romejs/js-ast';
 
-export default function StaticPropertyKey(generator: Generator, node: AnyNode) {
+export default function StaticPropertyKey(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = staticPropertyKey.assert(node);
-
-  generator.print(node.value, node);
+  return generator.print(node.value, node);
 }

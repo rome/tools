@@ -7,7 +7,7 @@
 
 import {AnyNode, AnyDeclaration} from '@romejs/js-ast';
 import parens from './parentheses';
-import {get1, get0, Number1, coerce1} from '@romejs/ob1';
+import {get1, get0} from '@romejs/ob1';
 import {isDeclaration} from '@romejs/js-ast-utils';
 import {SourceLocation} from '@romejs/parser-core';
 
@@ -21,8 +21,8 @@ function isOrHasCallExpression(node: AnyNode): boolean {
   }
 
   if (node.type === 'MemberExpression') {
-    return isOrHasCallExpression(node.object) || isOrHasCallExpression(
-      node.property,
+    return (
+      isOrHasCallExpression(node.object) || isOrHasCallExpression(node.property)
     );
   }
 
@@ -53,7 +53,10 @@ function orderLoc(
 }
 
 export function hasExtraLineBetween(node: AnyNode): boolean {
-  if (node.type === 'ExportLocalDeclaration' && node.declaration !== undefined) {
+  if (
+    node.type === 'ExportLocalDeclaration' &&
+    node.declaration !== undefined
+  ) {
     return hasExtraLineBetween(node.declaration);
   }
 
@@ -71,13 +74,17 @@ export function hasExtraLineBetween(node: AnyNode): boolean {
 export function getLinesBetween(
   aNode: undefined | AnyNode,
   bNode: undefined | AnyNode,
-): Array<Number1> {
-  if (aNode !== undefined && bNode !== undefined && aNode.loc !== undefined &&
-    bNode.loc !== undefined) {
+): Array<number> {
+  if (
+    aNode !== undefined &&
+    bNode !== undefined &&
+    aNode.loc !== undefined &&
+    bNode.loc !== undefined
+  ) {
     const [a, b] = orderLoc(aNode.loc, bNode.loc);
-    const lines: Array<Number1> = [];
+    const lines: Array<number> = [];
     for (let line = get1(a.end.line); line < get1(b.start.line); line++) {
-      lines.push(coerce1(line));
+      lines.push(line);
     }
     return lines;
   } else {

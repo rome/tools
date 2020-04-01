@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
+import {Tokens, verbatim} from '../../tokens';
 import {RegExpAnyCharacter} from '@romejs/js-ast';
 
-export default function RegExpAnyCharacter(generator: Generator) {
-  generator.append('.');
+export default function RegExpAnyCharacter(): Tokens {
+  return [verbatim('.')];
 }

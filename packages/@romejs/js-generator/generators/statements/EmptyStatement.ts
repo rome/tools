@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 
-export default function EmptyStatement(generator: Generator) {
-  generator.semicolon();
+export default function EmptyStatement(): Tokens {
+  return [operator(';')];
 }

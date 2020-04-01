@@ -7,9 +7,13 @@
 
 import {TSTypeLiteral, tsTypeLiteral, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens} from '../../tokens';
 import {printTSBraced} from '../utils';
 
-export default function TSTypeLiteral(generator: Generator, node: AnyNode) {
+export default function TSTypeLiteral(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsTypeLiteral.assert(node);
-  printTSBraced(generator, node, node.members);
+  return printTSBraced(generator, node, node.members);
 }

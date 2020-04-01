@@ -6,21 +6,32 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, word} from '../../tokens';
 import {TryStatement, tryStatement, AnyNode} from '@romejs/js-ast';
 
-export default function TryStatement(generator: Generator, node: AnyNode) {
+export default function TryStatement(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tryStatement.assert(node);
-  tryStatement.assert(node);
-  generator.word('try');
-  generator.space();
-  generator.print(node.block, node);
-  generator.space();
-  generator.print(node.handler, node);
+
+  const tokens: Tokens = [
+    word('try'),
+    space,
+    ...generator.print(node.block, node),
+    space,
+    ...generator.print(node.handler, node),
+  ];
 
   if (node.finalizer) {
-    generator.space();
-    generator.word('finally');
-    generator.space();
-    generator.print(node.finalizer, node);
+    return [
+      ...tokens,
+      space,
+      word('finally'),
+      space,
+      ...generator.print(node.finalizer, node),
+    ];
+  } else {
+    return tokens;
   }
 }

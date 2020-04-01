@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export default function FlowInterfaceTypeAnnotation() {
+import {Tokens} from '../../tokens';
+
+export default function FlowInterfaceTypeAnnotation(): Tokens {
   throw new Error('unimplemented');
 }

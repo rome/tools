@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator, word, breakGroup, space} from '../../tokens';
 import {
   AnyNode,
   AssignmentExpression,
@@ -17,59 +18,45 @@ import * as n from '../../node/index';
 
 type OurNode = AssignmentExpression | BinaryExpression | LogicalExpression;
 
-const INDENT_OPERATORS: Set<OurNode['operator']> = new Set([
-  '&&',
-  '=',
-  '-=',
-  '+=',
-  '/=',
-  '*=',
-]);
-
 export default function AssignmentExpression(
   generator: Generator,
   _node: AnyNode,
   parent: AnyNode,
-) {
-  const node: OurNode = _node.type === 'BinaryExpression' || _node.type ===
-  'LogicalExpression' ? _node : assignmentExpression.assert(_node);
+): Tokens {
+  const node: OurNode =
+    _node.type === 'BinaryExpression' || _node.type === 'LogicalExpression'
+      ? _node
+      : assignmentExpression.assert(_node);
+
+  let tokens: Tokens = [];
 
   // Somewhere inside a for statement `init` node but doesn't usually
-
   // needs a paren except for `in` expressions: `for (a in b ? a : b;;)`
-  const needsExtraParens = generator.inForStatementInitCounter > 0 &&
-    node.operator === 'in' && !n.needsParens(node, parent, []);
+  const needsExtraParens =
+    generator.inForStatementInitCounter > 0 &&
+    node.operator === 'in' &&
+    !n.needsParens(node, parent, []);
 
   if (needsExtraParens) {
-    generator.token('(');
+    tokens.push(operator('('));
   }
 
-  generator.multiline(node, (multiline, node) => {
-    const shouldIndent = multiline && INDENT_OPERATORS.has(node.operator);
+  const left = generator.print(node.left, node);
 
-    generator.print(node.left, node);
+  let sep;
+  if (node.operator === 'in' || node.operator === 'instanceof') {
+    sep = word(node.operator);
+  } else {
+    sep = operator(node.operator);
+  }
 
-    generator.space();
-    if (node.operator === 'in' || node.operator === 'instanceof') {
-      generator.word(node.operator);
-    } else {
-      generator.token(node.operator);
-    }
+  const right = generator.print(node.right, node);
 
-    generator.spaceOrNewline(multiline);
-
-    if (shouldIndent) {
-      generator.indent();
-    }
-
-    generator.print(node.right, node);
-
-    if (shouldIndent) {
-      generator.dedent();
-    }
-  }, {conditions: ['any-line-exceeds']});
+  tokens.push(breakGroup([[...left, space, sep], right]));
 
   if (needsExtraParens) {
-    generator.token(')');
+    tokens.push(operator(')'));
   }
+
+  return tokens;
 }

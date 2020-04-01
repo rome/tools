@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, space, operator} from '../../tokens';
 import {
   TypeAliasTypeAnnotation,
   typeAliasTypeAnnotation,
@@ -15,16 +16,18 @@ import {
 export default function TypeAliasTypeAnnotation(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = typeAliasTypeAnnotation.assert(node);
 
-  generator.word('type');
-  generator.space();
-  generator.print(node.id, node);
-  generator.print(node.typeParameters, node);
-  generator.space();
-  generator.token('=');
-  generator.space();
-  generator.print(node.right, node);
-  generator.semicolon();
+  return [
+    word('type'),
+    space,
+    ...generator.print(node.id, node),
+    ...generator.print(node.typeParameters, node),
+    space,
+    operator('='),
+    space,
+    ...generator.print(node.right, node),
+    operator(';'),
+  ];
 }

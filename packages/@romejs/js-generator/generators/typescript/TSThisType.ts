@@ -6,8 +6,8 @@
  */
 
 import {TSThisType} from '@romejs/js-ast';
-import {Generator} from '@romejs/js-generator';
+import {Tokens, word} from '../../tokens';
 
-export default function TSThisType(generator: Generator) {
-  generator.word('this');
+export default function TSThisType(): Tokens {
+  return [word('this')];
 }

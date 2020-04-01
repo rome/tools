@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
+import {Tokens, word} from '../../tokens';
 
-export default function Super(generator: Generator) {
-  generator.word('super');
+export default function Super(): Tokens {
+  return [word('super')];
 }

@@ -11,11 +11,12 @@ import {
   ambiguousFlowTypeCastExpression,
 } from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens} from '../../tokens';
 
 export default function AmbiguousFlowTypeCastExpression(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = ambiguousFlowTypeCastExpression.assert(node);
   throw new Error('unimplemented');
 }

@@ -6,12 +6,14 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, space} from '../../tokens';
 import {DoExpression, doExpression, AnyNode} from '@romejs/js-ast';
 
-export default function DoExpression(generator: Generator, node: AnyNode) {
+export default function DoExpression(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = doExpression.assert(node);
-  doExpression.assert(node);
-  generator.word('do');
-  generator.space();
-  generator.print(node.body, node);
+
+  return [word('do'), space, ...generator.print(node.body, node)];
 }

@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   AssignmentObjectPatternProperty,
   assignmentObjectPatternProperty,
@@ -16,7 +17,7 @@ import ObjectProperty from '../objects/ObjectProperty';
 export default function AssignmentObjectPatternProperty(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = assignmentObjectPatternProperty.assert(node);
-  ObjectProperty(generator, node);
+  return ObjectProperty(generator, node);
 }

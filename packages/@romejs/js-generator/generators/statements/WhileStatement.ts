@@ -6,15 +6,22 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, operator, space} from '../../tokens';
 import {WhileStatement, whileStatement, AnyNode} from '@romejs/js-ast';
 
-export default function WhileStatement(generator: Generator, node: AnyNode) {
+export default function WhileStatement(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = whileStatement.assert(node);
 
-  generator.word('while');
-  generator.space();
-  generator.token('(');
-  generator.print(node.test, node);
-  generator.token(')');
-  generator.printBlock(node);
+  return [
+    word('while'),
+    space,
+    operator('('),
+    ...generator.print(node.test, node),
+    operator(')'),
+    space,
+    ...generator.print(node.body, node),
+  ];
 }

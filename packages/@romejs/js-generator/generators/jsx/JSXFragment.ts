@@ -6,18 +6,18 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, indent, operator, flatten} from '../../tokens';
 import {JSXFragment, jsxFragment, AnyNode} from '@romejs/js-ast';
 
-export default function JSXFragment(generator: Generator, node: AnyNode) {
+export default function JSXFragment(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = jsxFragment.assert(node);
-  jsxFragment.assert(node);
-  generator.token('<>');
-  generator.indent();
 
-  for (const child of node.children) {
-    generator.print(child, node);
-  }
-
-  generator.dedent();
-  generator.token('</>');
+  return [
+    operator('<>'),
+    indent(flatten(node.children.map(child => generator.print(child, node)))),
+    operator('</>'),
+  ];
 }

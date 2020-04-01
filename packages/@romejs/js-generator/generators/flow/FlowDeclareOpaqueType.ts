@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, space} from '../../tokens';
 import {
   FlowDeclareOpaqueType,
   flowDeclareOpaqueType,
@@ -17,12 +18,12 @@ export default function FlowDeclareOpaqueType(
   generator: Generator,
   node: AnyNode,
   parent: AnyNode,
-) {
+): Tokens {
   node = flowDeclareOpaqueType.assert(node);
 
-  if (parent.type !== 'ExportLocalDeclaration') {
-    generator.word('declare');
-    generator.space();
+  if (parent.type === 'ExportLocalDeclaration') {
+    return FlowOpaqueType(generator, node);
+  } else {
+    return [word('declare'), space, ...FlowOpaqueType(generator, node)];
   }
-  FlowOpaqueType(generator, node);
 }

@@ -6,40 +6,42 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, operator} from '../../tokens';
 import {ObjectExpression, objectExpression, AnyNode} from '@romejs/js-ast';
 
-export default function ObjectExpression(generator: Generator, _node: AnyNode) {
-  const node = _node.type === 'BindingObjectPattern' || _node.type ===
-  'AssignmentObjectPattern' ? _node : objectExpression.assert(_node);
+export default function ObjectExpression(
+  generator: Generator,
+  _node: AnyNode,
+): Tokens {
+  const node =
+    _node.type === 'BindingObjectPattern' ||
+    _node.type === 'AssignmentObjectPattern'
+      ? _node
+      : objectExpression.assert(_node);
 
-  generator.multiline(node, (multiline, node) => {
-    const props = node.properties;
+  const props = node.properties;
 
-    generator.token('{');
-    generator.printInnerComments(node);
-    generator.printCommaList<typeof props[number]>(props, node, {
-      multiline,
+  let tokens: Tokens = [
+    operator('{'),
+    ...generator.printInnerComments(node),
+    generator.printCommaList(props, node, {
       trailing: true,
-    });
+      breakOnNewline: true,
+    }),
+  ];
 
-    if ((node.type === 'BindingObjectPattern' || node.type ===
-    'AssignmentObjectPattern') && node.rest !== undefined) {
-      if (props.length > 0) {
-        if (!multiline) {
-          generator.token(',');
-        }
-        generator.spaceOrNewline(multiline);
-      }
-
-      generator.token('...');
-      generator.print(node.rest, node);
+  if (
+    (node.type === 'BindingObjectPattern' ||
+      node.type === 'AssignmentObjectPattern') &&
+    node.rest !== undefined
+  ) {
+    if (props.length > 0) {
+      tokens = [...tokens, operator(','), space];
     }
 
-    if (multiline) {
-      generator.buf.removeTrailingNewlines();
-      generator.forceNewline();
-    }
+    tokens = [...tokens, operator('...'), ...generator.print(node.rest, node)];
+  }
 
-    generator.token('}');
-  }, {conditions: ['more-than-one-line', 'source-had-multiline']});
+  tokens.push(operator('}'));
+  return tokens;
 }

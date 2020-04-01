@@ -6,26 +6,34 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word} from '../../tokens';
 import {ClassPropertyMeta, classPropertyMeta, AnyNode} from '@romejs/js-ast';
 
-export default function ClassPropertyMeta(generator: Generator, node: AnyNode) {
+export default function ClassPropertyMeta(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = classPropertyMeta.assert(node);
+
+  let tokens: Tokens = [];
 
   if (!generator.options.typeAnnotations) {
     if (node.accessibility) {
-      generator.word(node.accessibility);
+      tokens.push(word(node.accessibility));
     }
 
     if (node.readonly) {
-      generator.word('readonly');
+      tokens.push(word('readonly'));
     }
 
     if (node.abstract) {
-      generator.word('abstract');
+      tokens.push(word('abstract'));
     }
   }
 
   if (node.static) {
-    generator.word('static');
+    tokens.push(word('static'));
   }
+
+  return tokens;
 }

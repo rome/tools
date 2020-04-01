@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {
   FlowTupleTypeAnnotation,
   flowTupleTypeAnnotation,
@@ -15,10 +16,12 @@ import {
 export default function FlowTupleTypeAnnotation(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = flowTupleTypeAnnotation.assert(node);
 
-  generator.token('[');
-  generator.printCommaList(node.types, node);
-  generator.token(']');
+  return [
+    operator('['),
+    generator.printCommaList(node.types, node),
+    operator(']'),
+  ];
 }

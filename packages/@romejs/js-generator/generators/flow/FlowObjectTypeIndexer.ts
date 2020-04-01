@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, operator, space} from '../../tokens';
 import {
   FlowObjectTypeIndexer,
   flowObjectTypeIndexer,
@@ -18,23 +19,25 @@ export default function FlowObjectTypeIndexer(
 ) {
   node = flowObjectTypeIndexer.assert(node);
 
+  let tokens: Tokens = [];
   if (node.static === true) {
-    generator.word('static');
-    generator.space();
+    tokens.push(word('static'));
+    tokens.push(space);
   }
 
-  generator.print(node.variance, node);
-  generator.token('[');
+  tokens = [...tokens, ...generator.print(node.variance, node), operator('[')];
 
   if (node.id !== undefined) {
-    generator.print(node.id, node);
-    generator.token(':');
+    tokens = [...tokens, ...generator.print(node.id, node), operator(':')];
   }
 
-  generator.space();
-  generator.print(node.key, node);
-  generator.token(']');
-  generator.token(':');
-  generator.space();
-  generator.print(node.value, node);
+  return [
+    ...tokens,
+    space,
+    ...generator.print(node.key, node),
+    operator(']'),
+    operator(':'),
+    space,
+    ...generator.print(node.value, node),
+  ];
 }

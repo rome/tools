@@ -6,9 +6,14 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {RegExpLiteral, regExpLiteral, AnyNode} from '@romejs/js-ast';
+import {operator} from '@romejs/js-generator/tokens';
 
-export default function RegExpLiteral(generator: Generator, node: AnyNode) {
+export default function RegExpLiteral(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = regExpLiteral.assert(node);
 
   const flags: Array<string> = [];
@@ -37,7 +42,9 @@ export default function RegExpLiteral(generator: Generator, node: AnyNode) {
     flags.push('u');
   }
 
-  generator.token(`/`);
-  generator.print(node.expression, node);
-  generator.token(`/${flags.join('')}`);
+  return [
+    operator('/'),
+    ...generator.print(node.expression, node),
+    operator(`/${flags.join('')}`),
+  ];
 }

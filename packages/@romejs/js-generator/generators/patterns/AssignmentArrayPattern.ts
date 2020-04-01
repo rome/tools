@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   AssignmentArrayPattern,
   assignmentArrayPattern,
@@ -16,8 +17,7 @@ import ArrayExpression from '../expressions/ArrayExpression';
 export default function AssignmentArrayPattern(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = assignmentArrayPattern.assert(node);
-
-  ArrayExpression(generator, node);
+  return ArrayExpression(generator, node);
 }

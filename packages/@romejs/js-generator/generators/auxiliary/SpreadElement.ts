@@ -7,10 +7,13 @@
 
 import Generator from '../../Generator';
 import {SpreadElement, spreadElement, AnyNode} from '@romejs/js-ast';
+import {operator, Tokens} from '@romejs/js-generator/tokens';
 
-export default function SpreadElement(generator: Generator, node: AnyNode) {
+export default function SpreadElement(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = spreadElement.assert(node);
 
-  generator.token('...');
-  generator.print(node.argument, node);
+  return [operator('...'), ...generator.print(node.argument, node)];
 }

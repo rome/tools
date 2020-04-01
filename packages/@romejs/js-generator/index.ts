@@ -6,7 +6,7 @@
  */
 
 import Generator, {GeneratorOptions} from './Generator';
-import {AnyNode, MOCK_PARENT} from '@romejs/js-ast';
+import {AnyNode} from '@romejs/js-ast';
 
 export {GeneratorOptions, Generator};
 
@@ -15,7 +15,5 @@ export function generateJS(
   opts: GeneratorOptions,
   code: string = '',
 ): Generator {
-  const generator = new Generator(opts, code);
-  generator.print(ast, MOCK_PARENT);
-  return generator;
+  return new Generator(opts, ast, code);
 }

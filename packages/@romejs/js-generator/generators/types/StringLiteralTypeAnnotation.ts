@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   StringLiteralTypeAnnotation,
   stringLiteralTypeAnnotation,
@@ -17,7 +18,7 @@ export default function StringLiteralTypeAnnotation(
   generator: Generator,
   node: AnyNode,
   parent: AnyNode,
-) {
+): Tokens {
   node = stringLiteralTypeAnnotation.assert(node);
-  StringLiteral(generator, node, parent);
+  return StringLiteral(generator, node, parent);
 }

@@ -7,10 +7,17 @@
 
 import {TSTypeOperator, tsTypeOperator, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator, space} from '../../tokens';
 
-export default function TSTypeOperator(generator: Generator, node: AnyNode) {
+export default function TSTypeOperator(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsTypeOperator.assert(node);
-  generator.token(node.operator);
-  generator.space();
-  generator.print(node.typeAnnotation, node);
+
+  return [
+    operator(node.operator),
+    space,
+    ...generator.print(node.typeAnnotation, node),
+  ];
 }

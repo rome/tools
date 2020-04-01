@@ -5,12 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSParenthesizedType, tsParenthesizedType, AnyNode} from '@romejs/js-ast';
+import {
+  TSParenthesizedType,
+  tsParenthesizedType,
+  AnyNode,
+} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator} from '../../tokens';
 
-export default function TSParenthesizedType(generator: Generator, node: AnyNode) {
+export default function TSParenthesizedType(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsParenthesizedType.assert(node);
-  generator.token('(');
-  generator.print(node.typeAnnotation, node);
-  generator.token(')');
+
+  return [
+    operator('('),
+    ...generator.print(node.typeAnnotation, node),
+    operator(')'),
+  ];
 }

@@ -6,13 +6,17 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   InterpreterDirective,
   interpreterDirective,
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function InterpreterDirective(generator: Generator, node: AnyNode) {
+export default function InterpreterDirective(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = interpreterDirective.assert(node);
 
   throw new Error('unimplemented');

@@ -11,13 +11,17 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator} from '../../tokens';
 
 export default function TSExternalModuleReference(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = tsExternalModuleReference.assert(node);
-  generator.token('require(');
-  generator.print(node.expression, node);
-  generator.token(')');
+
+  return [
+    operator('require('),
+    ...generator.print(node.expression, node),
+    operator(')'),
+  ];
 }

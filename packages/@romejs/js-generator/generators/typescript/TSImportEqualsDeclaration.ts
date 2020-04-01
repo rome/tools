@@ -11,6 +11,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, space, word, operator} from '../../tokens';
 
 export default function TSImportEqualsDeclaration(
   generator: Generator,
@@ -18,17 +19,21 @@ export default function TSImportEqualsDeclaration(
 ) {
   node = tsImportEqualsDeclaration.assert(node);
 
+  let tokens: Tokens = [];
   if (node.isExport) {
-    generator.word('export');
-    generator.space();
+    tokens.push(word('export'));
+    tokens.push(space);
   }
 
-  generator.word('import');
-  generator.space();
-  generator.print(node.id, node);
-  generator.space();
-  generator.token('=');
-  generator.space();
-  generator.print(node.moduleReference, node);
-  generator.token(';');
+  return [
+    ...tokens,
+    word('import'),
+    space,
+    ...generator.print(node.id, node),
+    space,
+    operator('='),
+    space,
+    ...generator.print(node.moduleReference, node),
+    operator(';'),
+  ];
 }

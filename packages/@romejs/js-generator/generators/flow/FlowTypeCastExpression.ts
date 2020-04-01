@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {
   FlowTypeCastExpression,
   flowTypeCastExpression,
@@ -15,15 +16,17 @@ import {
 export default function FlowTypeCastExpression(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = flowTypeCastExpression.assert(node);
 
   if (generator.options.typeAnnotations) {
-    generator.token('(');
-    generator.print(node.expression, node);
-    generator.printTypeColon(node.typeAnnotation, node);
-    generator.token(')');
+    return [
+      operator('('),
+      ...generator.print(node.expression, node),
+      ...generator.printTypeColon(node.typeAnnotation, node),
+      operator(')'),
+    ];
   } else {
-    generator.print(node.expression, node);
+    return generator.print(node.expression, node);
   }
 }

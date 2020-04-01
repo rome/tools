@@ -6,9 +6,14 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {BooleanLiteral, booleanLiteral, AnyNode} from '@romejs/js-ast';
+import {word} from '@romejs/js-generator/tokens';
 
-export default function BooleanLiteral(generator: Generator, node: AnyNode) {
+export default function BooleanLiteral(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = booleanLiteral.assert(node);
-  generator.word(node.value ? 'true' : 'false');
+  return [word(node.value ? 'true' : 'false')];
 }

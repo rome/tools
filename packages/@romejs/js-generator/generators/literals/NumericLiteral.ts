@@ -6,15 +6,20 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {NumericLiteral, numericLiteral, AnyNode} from '@romejs/js-ast';
 import {humanizeNumber} from '@romejs/string-utils';
+import {number} from '@romejs/js-generator/tokens';
 
-export default function NumericLiteral(generator: Generator, node: AnyNode) {
+export default function NumericLiteral(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = numericLiteral.assert(node);
 
   if (generator.options.format === 'pretty') {
-    generator.number(humanizeNumber(node.value));
+    return [number(humanizeNumber(node.value))];
   } else {
-    generator.number(String(node.value));
+    return [number(String(node.value))];
   }
 }

@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
+import {Tokens, word, operator} from '../../tokens';
 
-export default function DebuggerStatement(generator: Generator) {
-  generator.word('debugger');
-  generator.semicolon();
+export default function DebuggerStatement(): Tokens {
+  return [word('debugger'), operator(';')];
 }

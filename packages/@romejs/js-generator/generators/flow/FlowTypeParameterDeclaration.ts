@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   FlowTypeParameterDeclaration,
   flowTypeParameterDeclaration,
@@ -16,8 +17,7 @@ import FlowTypeParameterInstantiation from './FlowTypeParameterInstantiation';
 export default function FlowTypeParameterDeclaration(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = flowTypeParameterDeclaration.assert(node);
-
-  FlowTypeParameterInstantiation(generator, node);
+  return FlowTypeParameterInstantiation(generator, node);
 }

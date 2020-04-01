@@ -6,12 +6,18 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {JSXNamespacedName, jsxNamespacedName, AnyNode} from '@romejs/js-ast';
 
-export default function JSXNamespacedName(generator: Generator, node: AnyNode) {
+export default function JSXNamespacedName(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = jsxNamespacedName.assert(node);
 
-  generator.print(node.namespace, node);
-  generator.token(':');
-  generator.print(node.name, node);
+  return [
+    ...generator.print(node.namespace, node),
+    operator(':'),
+    ...generator.print(node.name, node),
+  ];
 }

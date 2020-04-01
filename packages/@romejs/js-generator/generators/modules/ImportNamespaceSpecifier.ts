@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator, space, word} from '../../tokens';
 import {
   ImportNamespaceSpecifier,
   importNamespaceSpecifier,
@@ -15,12 +16,14 @@ import {
 export default function ImportNamespaceSpecifier(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = importNamespaceSpecifier.assert(node);
 
-  generator.token('*');
-  generator.space();
-  generator.word('as');
-  generator.space();
-  generator.print(node.local.name, node);
+  return [
+    operator('*'),
+    space,
+    word('as'),
+    space,
+    ...generator.print(node.local.name, node),
+  ];
 }

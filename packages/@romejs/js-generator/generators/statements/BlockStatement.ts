@@ -6,36 +6,35 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, newline, indent, operator} from '../../tokens';
 import {BlockStatement, blockStatement, AnyNode} from '@romejs/js-ast';
 
-export default function BlockStatement(generator: Generator, node: AnyNode) {
+export default function BlockStatement(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = blockStatement.assert(node);
 
-  generator.token('{');
-  generator.printInnerComments(node);
+  let tokens: Tokens = [
+    operator('{'),
+    indent(generator.printInnerComments(node)),
+  ];
 
-  const hasDirectives: boolean = Boolean(node.directives &&
-    node.directives.length > 0
+  const hasDirectives: boolean = Boolean(
+    node.directives && node.directives.length > 0,
   );
 
   if (node.body.length > 0 || hasDirectives) {
-    generator.forceNewline();
-
-    generator.printStatementList(node.directives, node, {indent: true});
-    if (hasDirectives) {
-      generator.forceNewline();
-    }
-
-    generator.printStatementList(node.body, node, {indent: true});
-
-    generator.source('end', node.loc);
-
-    generator.buf.removeTrailingNewlines();
-    generator.forceNewline();
-
-    generator.rightBrace();
-  } else {
-    generator.source('end', node.loc);
-    generator.token('}');
+    tokens = [
+      ...tokens,
+      newline,
+      indent([
+        ...generator.printStatementList(node.directives, node),
+        // TODO newline here if hasDirectives
+        ...generator.printStatementList(node.body, node),
+      ]),
+    ];
   }
+
+  return [...tokens, operator('}')];
 }

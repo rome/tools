@@ -11,20 +11,24 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator, space} from '../../tokens';
 
 export default function TSCallSignatureDeclaration(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = tsCallSignatureDeclaration.assert(node);
 
-  generator.print(node.meta, node);
+  let tokens: Tokens = generator.print(node.meta, node);
 
   if (node.typeAnnotation !== undefined) {
-    generator.token(':');
-    generator.space();
-    generator.print(node.typeAnnotation, node);
+    tokens = [
+      ...tokens,
+      operator(':'),
+      space,
+      ...generator.print(node.typeAnnotation, node),
+    ];
   }
 
-  generator.semicolon();
+  return [...tokens, operator(';')];
 }

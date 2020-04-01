@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
-import {RegExpNonWordCharacter} from '@romejs/js-ast';
+import {Tokens, verbatim} from '../../tokens';
 
-export default function RegExpNonWordCharacter(generator: Generator) {
-  generator.append('\\W');
+export default function RegExpNonWordCharacter(): Tokens {
+  return [verbatim('\\W')];
 }

@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ObjectKeywordTypeAnnotation} from '@romejs/js-ast';
-import {Generator} from '@romejs/js-generator';
+import {Tokens, word} from '../../tokens';
 
-export default function ObjectKeywordTypeAnnotation(generator: Generator) {
-  generator.word('object');
+export default function ObjectKeywordTypeAnnotation(): Tokens {
+  return [word('object')];
 }

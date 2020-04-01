@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
+import {Tokens, word} from '../../tokens';
 
-export default function FlowThisTypeAnnotation(generator: Generator) {
-  generator.word('this');
+export default function FlowThisTypeAnnotation(): Tokens {
+  return [word('this')];
 }

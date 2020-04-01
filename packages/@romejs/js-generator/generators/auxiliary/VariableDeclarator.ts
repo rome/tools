@@ -7,19 +7,23 @@
 
 import Generator from '../../Generator';
 import {VariableDeclarator, variableDeclarator, AnyNode} from '@romejs/js-ast';
+import {operator, space} from '@romejs/js-generator/tokens';
 
-export default function VariableDeclarator(generator: Generator, node: AnyNode) {
+export default function VariableDeclarator(
+  generator: Generator,
+  node: AnyNode,
+) {
   node = variableDeclarator.assert(node);
 
-  generator.print(node.id, node);
-
   if (node.init) {
-    generator.space();
-    generator.token('=');
-    generator.space();
-
-    generator.multiline(node, (multiline, node) => {
-      generator.print(node.init, node);
-    }, {indent: true});
+    return [
+      ...generator.print(node.id, node),
+      space,
+      operator('='),
+      space,
+      ...generator.print(node.init, node),
+    ];
+  } else {
+    return generator.print(node.id, node);
   }
 }

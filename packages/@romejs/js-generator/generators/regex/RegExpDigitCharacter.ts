@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
+import {Tokens, verbatim} from '../../tokens';
 import {RegExpDigitCharacter} from '@romejs/js-ast';
 
-export default function RegExpDigitCharacter(generator: Generator) {
-  generator.append('\\d');
+export default function RegExpDigitCharacter(): Tokens {
+  return [verbatim('\\d')];
 }

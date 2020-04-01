@@ -6,30 +6,38 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, operator, word, linkedGroups} from '../../tokens';
 import {FunctionExpression, functionExpression, AnyNode} from '@romejs/js-ast';
 
-export default function FunctionExpression(generator: Generator, node: AnyNode) {
-  node = node.type === 'FunctionDeclaration' ? node : functionExpression.assert(
-    node,
-  );
+export default function FunctionExpression(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
+  node =
+    node.type === 'FunctionDeclaration'
+      ? node
+      : functionExpression.assert(node);
+
+  let tokens: Tokens = [];
 
   if (node.head.async === true) {
-    generator.word('async');
-    generator.space();
+    tokens.push(word('async'));
+    tokens.push(space);
   }
 
-  generator.word('function');
+  tokens.push(word('function'));
 
   if (node.head.generator === true) {
-    generator.token('*');
+    tokens.push(operator('*'));
   }
 
   if (node.id) {
-    generator.space();
-    generator.print(node.id, node);
+    tokens = [...tokens, space, ...generator.print(node.id, node)];
   }
 
-  generator.print(node.head, node);
-  generator.space();
-  generator.print(node.body, node);
+  return [
+    ...tokens,
+    linkedGroups([...generator.print(node.head, node), space]),
+    ...generator.print(node.body, node),
+  ];
 }

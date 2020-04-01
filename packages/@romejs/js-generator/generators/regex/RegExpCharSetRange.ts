@@ -6,11 +6,18 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, verbatim} from '../../tokens';
 import {AnyNode, RegExpCharSetRange, regExpCharSetRange} from '@romejs/js-ast';
 
-export default function RegExpCharSetRange(generator: Generator, node: AnyNode) {
+export default function RegExpCharSetRange(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = regExpCharSetRange.assert(node);
-  generator.print(node.start, node);
-  generator.append('-');
-  generator.print(node.end, node);
+
+  return [
+    ...generator.print(node.start, node),
+    verbatim('-'),
+    ...generator.print(node.end, node),
+  ];
 }

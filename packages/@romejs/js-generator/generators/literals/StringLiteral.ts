@@ -6,24 +6,36 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {escapeString} from '@romejs/string-escape';
 import {StringLiteral, stringLiteral, AnyNode} from '@romejs/js-ast';
 import {escapeXHTMLEntities} from '@romejs/js-parser';
+import {operator} from '@romejs/js-generator/tokens';
 
 export default function StringLiteral(
   generator: Generator,
   node: AnyNode,
   parent: AnyNode,
-) {
-  node = node.type == 'StringLiteralTypeAnnotation' || node.type === 'Directive'
-    ? node : stringLiteral.assert(node);
+): Tokens {
+  node =
+    node.type == 'StringLiteralTypeAnnotation' || node.type === 'Directive'
+      ? node
+      : stringLiteral.assert(node);
 
   // JSX Attribute strings have ridiculous alternate semantics, should probably be a distinct AST node
-  const quotes = parent.type === 'JSXAttribute' ? '"' : '\'';
-  const value = parent.type === 'JSXAttribute'
-    ? escapeXHTMLEntities(node.value) : node.value;
+  const quotes =
+    parent.type === 'JSXAttribute' || node.value.includes("'") ? '"' : "'";
 
-  generator.token(escapeString(value, {
-    quote: quotes,
-  }));
+  const value =
+    parent.type === 'JSXAttribute'
+      ? escapeXHTMLEntities(node.value)
+      : node.value;
+
+  return [
+    operator(
+      escapeString(value, {
+        quote: quotes,
+      }),
+    ),
+  ];
 }

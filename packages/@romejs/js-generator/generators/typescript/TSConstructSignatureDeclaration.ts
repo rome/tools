@@ -11,6 +11,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, word, space, operator} from '../../tokens';
 
 export default function TSConstructSignatureDeclaration(
   generator: Generator,
@@ -18,15 +19,20 @@ export default function TSConstructSignatureDeclaration(
 ) {
   node = tsConstructSignatureDeclaration.assert(node);
 
-  generator.word('new');
-  generator.space();
-  generator.print(node.meta, node);
+  let tokens: Tokens = [
+    word('new'),
+    space,
+    ...generator.print(node.meta, node),
+  ];
 
   if (node.typeAnnotation !== undefined) {
-    generator.token(':');
-    generator.space();
-    generator.print(node.typeAnnotation, node);
+    tokens = [
+      ...tokens,
+      operator(':'),
+      space,
+      ...generator.print(node.typeAnnotation, node),
+    ];
   }
 
-  generator.token(';');
+  return [...tokens, operator(';')];
 }

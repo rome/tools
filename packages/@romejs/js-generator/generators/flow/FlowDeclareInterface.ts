@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {word, space, Tokens} from '../../tokens';
 import {
   FlowDeclareInterface,
   flowDeclareInterface,
@@ -13,10 +14,11 @@ import {
 } from '@romejs/js-ast';
 import FlowInterfaceDeclaration from './FlowInterfaceDeclaration';
 
-export default function FlowDeclareInterface(generator: Generator, node: AnyNode) {
+export default function FlowDeclareInterface(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = flowDeclareInterface.assert(node);
 
-  generator.word('declare');
-  generator.space();
-  FlowInterfaceDeclaration(generator, node);
+  return [word('declare'), space, ...FlowInterfaceDeclaration(generator, node)];
 }

@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, newline, operator} from '../../tokens';
 import {
   IntersectionTypeAnnotation,
   intersectionTypeAnnotation,
@@ -15,36 +16,20 @@ import {
 export default function IntersectionTypeAnnotation(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = intersectionTypeAnnotation.assert(node);
 
-  generator.multiline(node, (multiline, node) => {
-    if (multiline) {
-      andNewlineSeparator(generator, false);
-    }
-
+  return [
     generator.printJoin(node.types, node, {
-      after: multiline ? andNewlineSeparator : andSpaceSeparator,
-    });
-  }, {conditions: ['more-than-one-line'], indent: true});
-}
-
-function andNewlineSeparator(generator: Generator, isLast: boolean) {
-  if (isLast) {
-    return;
-  }
-
-  generator.newline();
-  generator.token('&');
-  generator.space();
-}
-
-function andSpaceSeparator(generator: Generator, isLast: boolean) {
-  if (isLast) {
-    return;
-  }
-
-  generator.space();
-  generator.token('&');
-  generator.space();
+      newline: false,
+      broken: {
+        indentNewline: false,
+        leading: [newline, operator('&'), space],
+        separator: [newline, operator('&'), space],
+      },
+      unbroken: {
+        separator: [space, operator('&'), space],
+      },
+    }),
+  ];
 }

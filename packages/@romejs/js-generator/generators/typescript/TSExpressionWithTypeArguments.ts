@@ -11,12 +11,16 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens} from '../../tokens';
 
 export default function TSExpressionWithTypeArguments(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = tsExpressionWithTypeArguments.assert(node);
-  generator.print(node.expression, node);
-  generator.print(node.typeParameters, node);
+
+  return [
+    ...generator.print(node.expression, node),
+    ...generator.print(node.typeParameters, node),
+  ];
 }

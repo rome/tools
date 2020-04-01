@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, number} from '../../tokens';
 import {
   NumericLiteralTypeAnnotation,
   numericLiteralTypeAnnotation,
@@ -15,7 +16,7 @@ import {
 export default function NumericLiteralTypeAnnotation(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = numericLiteralTypeAnnotation.assert(node);
-  generator.number(String(node.value));
+  return [number(String(node.value))];
 }

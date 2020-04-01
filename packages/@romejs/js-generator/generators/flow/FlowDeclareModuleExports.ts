@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, word, operator} from '../../tokens';
 import {
   FlowDeclareModuleExports,
   flowDeclareModuleExports,
@@ -15,13 +16,15 @@ import {
 export default function FlowDeclareModuleExports(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = flowDeclareModuleExports.assert(node);
 
-  generator.word('declare');
-  generator.space();
-  generator.word('module');
-  generator.token('.');
-  generator.word('exports');
-  generator.printTypeColon(node.typeAnnotation, node);
+  return [
+    word('declare'),
+    space,
+    word('module'),
+    operator('.'),
+    word('exports'),
+    ...generator.printTypeColon(node.typeAnnotation, node),
+  ];
 }

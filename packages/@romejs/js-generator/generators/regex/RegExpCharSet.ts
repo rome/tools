@@ -6,16 +6,24 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, verbatim, flatten} from '../../tokens';
 import {AnyNode, RegExpCharSet, regExpCharSet} from '@romejs/js-ast';
 
-export default function RegExpCharSet(generator: Generator, node: AnyNode) {
+export default function RegExpCharSet(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = regExpCharSet.assert(node);
-  generator.append('[');
+
+  let tokens: Tokens = [verbatim('[')];
+
   if (node.invert) {
-    generator.append('^');
+    tokens.push(verbatim('^'));
   }
-  for (const item of node.body) {
-    generator.print(item, node);
-  }
-  generator.append(']');
+
+  return [
+    ...tokens,
+    ...flatten(node.body.map(item => generator.print(item, node))),
+    verbatim(']'),
+  ];
 }

@@ -6,18 +6,26 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, word, operator} from '../../tokens';
 import {UnaryExpression, unaryExpression, AnyNode} from '@romejs/js-ast';
 
-export default function UnaryExpression(generator: Generator, node: AnyNode) {
+export default function UnaryExpression(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = unaryExpression.assert(node);
 
-  if (node.operator === 'void' || node.operator === 'delete' ||
-  node.operator === 'typeof') {
-    generator.word(node.operator);
-    generator.space();
+  if (
+    node.operator === 'void' ||
+    node.operator === 'delete' ||
+    node.operator === 'typeof'
+  ) {
+    return [
+      word(node.operator),
+      space,
+      ...generator.print(node.argument, node),
+    ];
   } else {
-    generator.token(node.operator);
+    return [operator(node.operator), ...generator.print(node.argument, node)];
   }
-
-  generator.print(node.argument, node);
 }

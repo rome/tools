@@ -6,12 +6,17 @@
  */
 
 import Generator from '../../Generator';
-import {AnyNode, RegExpSubExpression, regExpSubExpression} from '@romejs/js-ast';
+import {Tokens, flatten} from '../../tokens';
+import {
+  AnyNode,
+  RegExpSubExpression,
+  regExpSubExpression,
+} from '@romejs/js-ast';
 
-export default function RegExpSubExpression(generator: Generator, node: AnyNode) {
+export default function RegExpSubExpression(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = regExpSubExpression.assert(node);
-
-  for (const item of node.body) {
-    generator.print(item, node);
-  }
+  return flatten(node.body.map(item => generator.print(item, node)));
 }

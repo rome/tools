@@ -7,37 +7,59 @@
 
 import {TSMappedType, tsMappedType, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
-import {tokenIfPlusMinus} from '../utils';
+import {Tokens, word, operator, space} from '../../tokens';
 
-export default function TSMappedType(generator: Generator, node: AnyNode) {
+export default function TSMappedType(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsMappedType.assert(node);
 
-  generator.token('{');
-  generator.space();
+  let tokens: Tokens = [operator('{'), space];
 
   if (node.readonly) {
-    tokenIfPlusMinus(generator, node.readonly);
-    generator.word('readonly');
-    generator.space();
+    tokens = [
+      ...tokens,
+      ...tokenIfPlusMinus(generator, node.readonly),
+      word('readonly'),
+      space,
+    ];
   }
 
   const {typeParameter} = node;
-  generator.token('[');
-  generator.word(typeParameter.name);
-  generator.space();
-  generator.word('in');
-  generator.space();
-  generator.print(typeParameter.constraint, typeParameter);
-  generator.token(']');
+  tokens = [
+    ...tokens,
+    operator('['),
+    word(typeParameter.name),
+    space,
+    word('in'),
+    space,
+    ...generator.print(typeParameter.constraint, typeParameter),
+    operator(']'),
+  ];
 
   if (node.optional) {
-    tokenIfPlusMinus(generator, node.optional);
-    generator.token('?');
+    tokens = [
+      ...tokens,
+      ...tokenIfPlusMinus(generator, node.optional),
+      operator('?'),
+    ];
   }
 
-  generator.token(':');
-  generator.space();
-  generator.print(node.typeAnnotation, node);
-  generator.space();
-  generator.token('}');
+  return [
+    ...tokens,
+    operator(':'),
+    space,
+    ...generator.print(node.typeAnnotation, node),
+    space,
+    operator('}'),
+  ];
+}
+
+function tokenIfPlusMinus(generator: Generator, token: string | true): Tokens {
+  if (token !== true) {
+    return [operator(token)];
+  } else {
+    return [];
+  }
 }

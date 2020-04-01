@@ -6,45 +6,46 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, space, indent, flatten, operator} from '../../tokens';
 import {JSXElement, jsxElement, AnyNode} from '@romejs/js-ast';
 
-export default function JSXElement(generator: Generator, node: AnyNode) {
+export default function JSXElement(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = jsxElement.assert(node);
-  jsxElement.assert(node);
-  generator.token('<');
-  generator.print(node.name, node);
-  generator.print(node.typeArguments, node);
+
+  let tokens: Tokens = [
+    operator('<'),
+    ...generator.print(node.name, node),
+    ...generator.print(node.typeArguments, node),
+  ];
 
   if (node.attributes.length > 0) {
-    generator.space();
-    generator.printJoin(node.attributes, node, {
-      after: spaceSeparator,
-    });
+    tokens = [
+      ...tokens,
+      space,
+      generator.printJoin(node.attributes, node, {
+        newline: true,
+        broken: {},
+        unbroken: {
+          separator: [space],
+        },
+      }),
+    ];
   }
 
   if (node.selfClosing === true) {
-    generator.space();
-    generator.token('/>');
-    return;
+    return [...tokens, space, operator('/>')];
   } else {
-    generator.token('>');
+    return [
+      ...tokens,
+      operator('>'),
+      indent(flatten(node.children.map(child => generator.print(child, node)))),
+
+      operator('</'),
+      ...generator.print(node.name, node),
+      operator('>'),
+    ];
   }
-
-  generator.indent();
-  for (const child of node.children) {
-    generator.print(child, node);
-  }
-  generator.dedent();
-
-  generator.token('</');
-  generator.print(node.name, node);
-  generator.token('>');
-}
-
-function spaceSeparator(generator: Generator, isLast: boolean) {
-  if (isLast) {
-    return;
-  }
-
-  generator.space();
 }

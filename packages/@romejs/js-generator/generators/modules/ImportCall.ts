@@ -6,13 +6,19 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, operator} from '../../tokens';
 import {ImportCall, importCall, AnyNode} from '@romejs/js-ast';
 
-export default function ImportCall(generator: Generator, node: AnyNode) {
+export default function ImportCall(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = importCall.assert(node);
-  importCall.assert(node);
-  generator.word('import');
-  generator.token('(');
-  generator.print(node.argument, node);
-  generator.token(')');
+
+  return [
+    word('import'),
+    operator('('),
+    ...generator.print(node.argument, node),
+    operator(')'),
+  ];
 }

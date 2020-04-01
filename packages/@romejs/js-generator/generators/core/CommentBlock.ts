@@ -6,9 +6,13 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {CommentBlock, commentBlock, AnyNode} from '@romejs/js-ast';
 
-export default function CommentBlock(generator: Generator, node: AnyNode) {
+export default function CommentBlock(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = commentBlock.assert(node);
   commentBlock.assert(node);
   throw new Error('unimplemented');

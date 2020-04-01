@@ -16,6 +16,7 @@ export default {
     const {node} = path;
 
     if (node.type === 'Program') {
+      const skipImports: Set<ImportDeclaration> = new Set();
       const seenSources: Map<string, undefined | SourceLocation> = new Map();
       let shouldFix = false;
 
@@ -24,26 +25,31 @@ export default {
           const source = bodyNode.source.value;
 
           // Allow duplicate sources if the `importKind` is different
-          const sourceKey = bodyNode.importKind === undefined
-            ? source : `${bodyNode.importKind}:${source}`;
+          const sourceKey =
+            bodyNode.importKind === undefined
+              ? source
+              : `${bodyNode.importKind}:${source}`;
 
           const seenLoc = seenSources.get(sourceKey);
           if (seenLoc === undefined) {
             seenSources.set(sourceKey, bodyNode.loc);
           } else {
-            shouldFix = true;
-            // TODO skip if suppressed
-            path.context.addNodeDiagnostic(
+            const {suppressed} = path.context.addNodeDiagnostic(
               bodyNode,
               descriptions.LINT.DUPLICATE_IMPORT_SOURCE(seenLoc),
             );
+
+            if (suppressed) {
+              skipImports.add(bodyNode);
+            } else {
+              shouldFix = true;
+            }
           }
         }
       }
 
       // Defer fixing unless it's totally necessary since there's additional overhead
       if (shouldFix) {
-        const skipImports: Set<ImportDeclaration> = new Set();
         const newBody: Array<AnyStatement> = [];
 
         for (let i = 0; i < node.body.length; i++) {
@@ -65,9 +71,12 @@ export default {
             for (let x = i + 1; x < node.body.length; x++) {
               const possibleDuplicateNode = node.body[x];
 
-              if (possibleDuplicateNode.type === 'ImportDeclaration' &&
+              if (
+                possibleDuplicateNode.type === 'ImportDeclaration' &&
                 bodyNode.source.value === possibleDuplicateNode.source.value &&
-                bodyNode.importKind === possibleDuplicateNode.importKind) {
+                bodyNode.importKind === possibleDuplicateNode.importKind &&
+                !skipImports.has(possibleDuplicateNode)
+              ) {
                 skipImports.add(possibleDuplicateNode);
                 namedSpecifiers = [
                   ...namedSpecifiers,

@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {
   TSAssignmentNonNullExpression,
   tsAssignmentNonNullExpression,
@@ -15,8 +16,8 @@ import {
 export default function TSAssignmentNonNullExpression(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = tsAssignmentNonNullExpression.assert(node);
-  generator.print(node.expression, node);
-  generator.token('!');
+
+  return [...generator.print(node.expression, node), operator('!')];
 }

@@ -7,20 +7,28 @@
 
 import {TSIndexSignature, tsIndexSignature, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator, word, space} from '../../tokens';
 
-export default function TSIndexSignature(generator: Generator, node: AnyNode) {
+export default function TSIndexSignature(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsIndexSignature.assert(node);
 
+  let tokens: Tokens = [];
   if (node.readonly) {
-    generator.word('readonly');
-    generator.space();
+    tokens.push(word('readonly'));
+    tokens.push(space);
   }
 
-  generator.token('[');
-  generator.print(node.key, node);
-  generator.token(']');
-  generator.token(':');
-  generator.space();
-  generator.print(node.typeAnnotation, node);
-  generator.token(';');
+  return [
+    ...tokens,
+    operator('['),
+    ...generator.print(node.key, node),
+    operator(']'),
+    operator(':'),
+    space,
+    ...generator.print(node.typeAnnotation, node),
+    operator(';'),
+  ];
 }

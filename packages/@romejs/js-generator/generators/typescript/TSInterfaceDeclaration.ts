@@ -11,30 +11,37 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, word, space} from '../../tokens';
 
 export default function TSInterfaceDeclaration(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = tsInterfaceDeclaration.assert(node);
 
+  let tokens: Tokens = [];
+
   if (node.declare) {
-    generator.word('declare');
-    generator.space();
+    tokens = [word('declare'), space];
   }
 
-  generator.word('interface');
-  generator.space();
-  generator.print(node.id, node);
-  generator.print(node.typeParameters, node);
+  tokens = [
+    ...tokens,
+    word('interface'),
+    space,
+    ...generator.print(node.id, node),
+    ...generator.print(node.typeParameters, node),
+  ];
 
   if (node.extends) {
-    generator.space();
-    generator.word('extends');
-    generator.space();
-    generator.printCommaList(node.extends, node);
+    tokens = [
+      ...tokens,
+      space,
+      word('extends'),
+      space,
+      generator.printCommaList(node.extends, node),
+    ];
   }
 
-  generator.space();
-  generator.print(node.body, node);
+  return [...tokens, space, ...generator.print(node.body, node)];
 }

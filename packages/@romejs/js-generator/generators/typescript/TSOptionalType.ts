@@ -7,9 +7,13 @@
 
 import {TSOptionalType, tsOptionalType, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator} from '../../tokens';
 
-export default function TSOptionalType(generator: Generator, node: AnyNode) {
+export default function TSOptionalType(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsOptionalType.assert(node);
-  generator.print(node.typeAnnotation, node);
-  generator.token('?');
+
+  return [...generator.print(node.typeAnnotation, node), operator('?')];
 }

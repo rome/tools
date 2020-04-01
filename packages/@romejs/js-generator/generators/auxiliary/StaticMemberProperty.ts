@@ -11,10 +11,13 @@ import {
   staticMemberProperty,
   AnyNode,
 } from '@romejs/js-ast';
+import {operator} from '@romejs/js-generator/tokens';
 
-export default function StaticMemberProperty(generator: Generator, node: AnyNode) {
+export default function StaticMemberProperty(
+  generator: Generator,
+  node: AnyNode,
+) {
   node = staticMemberProperty.assert(node);
 
-  generator.token('.');
-  generator.print(node.value, node);
+  return [operator('.'), ...generator.print(node.value, node)];
 }

@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
+import {word} from '@romejs/js-generator/tokens';
 
-export default function NullLiteral(generator: Generator) {
-  generator.word('null');
+export default function NullLiteral(): Tokens {
+  return [word('null')];
 }

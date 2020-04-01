@@ -7,18 +7,25 @@
 
 import {TSDeclareFunction, tsDeclareFunction, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, word, operator, space} from '../../tokens';
 
-export default function TSDeclareFunction(generator: Generator, node: AnyNode) {
+export default function TSDeclareFunction(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsDeclareFunction.assert(node);
 
+  let tokens: Tokens = [];
+
   if (node.declare) {
-    generator.word('declare');
-    generator.space();
+    tokens = [word('declare'), space];
   }
 
-  generator.word('function');
-
-  generator.print(node.id, node);
-  generator.print(node.head, node);
-  generator.token(';');
+  return [
+    ...tokens,
+    word('function'),
+    ...generator.print(node.id, node),
+    ...generator.print(node.head, node),
+    operator(';'),
+  ];
 }

@@ -6,10 +6,11 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {JSXText, jsxText, AnyNode} from '@romejs/js-ast';
 import {escapeXHTMLEntities} from '@romejs/js-parser';
-export default function JSXText(generator: Generator, node: AnyNode) {
+
+export default function JSXText(generator: Generator, node: AnyNode): Tokens {
   node = jsxText.assert(node);
-  jsxText.assert(node);
-  generator.token(escapeXHTMLEntities(node.value));
+  return [operator(escapeXHTMLEntities(node.value))];
 }

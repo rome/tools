@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {
   FlowNullableTypeAnnotation,
   flowNullableTypeAnnotation,
@@ -15,9 +16,8 @@ import {
 export default function FlowNullableTypeAnnotation(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = flowNullableTypeAnnotation.assert(node);
 
-  generator.token('?');
-  generator.print(node.typeAnnotation, node);
+  return [operator('?'), ...generator.print(node.typeAnnotation, node)];
 }

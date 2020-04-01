@@ -7,23 +7,35 @@
 
 import {TSTypeParameter, tsTypeParameter, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, space, word, operator} from '../../tokens';
 
-export default function TSTypeParameter(generator: Generator, node: AnyNode) {
+export default function TSTypeParameter(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsTypeParameter.assert(node);
 
-  generator.word(node.name);
+  let tokens: Tokens = [word(node.name)];
 
   if (node.constraint) {
-    generator.space();
-    generator.word('extends');
-    generator.space();
-    generator.print(node.constraint, node);
+    tokens = [
+      ...tokens,
+      space,
+      word('extends'),
+      space,
+      ...generator.print(node.constraint, node),
+    ];
   }
 
   if (node.default) {
-    generator.space();
-    generator.token('=');
-    generator.space();
-    generator.print(node.default, node);
+    tokens = [
+      ...tokens,
+      space,
+      operator('='),
+      space,
+      ...generator.print(node.default, node),
+    ];
   }
+
+  return tokens;
 }

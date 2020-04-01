@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 
-export default function FlowInferredPredicate(generator: Generator) {
-  generator.token('%checks');
+export default function FlowInferredPredicate(): Tokens {
+  return [operator('%checks')];
 }

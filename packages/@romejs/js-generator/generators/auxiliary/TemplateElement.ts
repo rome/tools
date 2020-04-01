@@ -12,6 +12,7 @@ import {
   templateLiteral,
   templateElement,
 } from '@romejs/js-ast';
+import {operator} from '@romejs/js-generator/tokens';
 
 export default function TemplateElement(
   generator: Generator,
@@ -25,6 +26,5 @@ export default function TemplateElement(
   const isLast = parent.quasis[parent.quasis.length - 1] === node;
 
   const value = (isFirst ? '`' : '}') + node.raw + (isLast ? '`' : '${');
-
-  generator.token(value);
+  return [operator(value)];
 }

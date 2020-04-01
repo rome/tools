@@ -6,12 +6,18 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {MetaProperty, metaProperty, AnyNode} from '@romejs/js-ast';
 
-export default function MetaProperty(generator: Generator, node: AnyNode) {
+export default function MetaProperty(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = metaProperty.assert(node);
-  metaProperty.assert(node);
-  generator.print(node.meta, node);
-  generator.token('.');
-  generator.print(node.property, node);
+
+  return [
+    ...generator.print(node.meta, node),
+    operator('.'),
+    ...generator.print(node.property, node),
+  ];
 }

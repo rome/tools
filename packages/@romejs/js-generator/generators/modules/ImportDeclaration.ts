@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, word, linkedGroups, space, operator} from '../../tokens';
 import {
   ImportDeclaration,
   importDeclaration,
@@ -13,65 +14,79 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function ImportDeclaration(generator: Generator, node: AnyNode) {
+export default function ImportDeclaration(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = importDeclaration.assert(node);
 
-  generator.word('import');
-  generator.space();
+  let tokens: Tokens = [word('import'), space];
 
   if (node.importKind === 'type' || node.importKind === 'typeof') {
-    generator.word(node.importKind);
-    generator.space();
+    tokens.push(word(node.importKind));
+    tokens.push(space);
   }
 
-  generator.multiline(node, (multiline, node) => {
-    const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
+  const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
 
-    if (namedSpecifiers.length > 0 || namespaceSpecifier !== undefined ||
-    defaultSpecifier !== undefined) {
-      printModuleSpecifiers(generator, node, multiline);
-      generator.space();
-      generator.word('from');
-      generator.space();
-    }
+  if (
+    namedSpecifiers.length > 0 ||
+    namespaceSpecifier !== undefined ||
+    defaultSpecifier !== undefined
+  ) {
+    tokens = [
+      ...tokens,
+      ...printModuleSpecifiers(generator, node),
+      space,
+      word('from'),
+      space,
+    ];
+  }
 
-    generator.print(node.source, node);
-    generator.semicolon();
-  }, {conditions: ['more-than-one-line']});
+  return [
+    linkedGroups([
+      ...tokens,
+      ...generator.print(node.source, node),
+      operator(';'),
+    ]),
+  ];
 }
 
 export function printModuleSpecifiers(
   generator: Generator,
   node: ImportDeclaration | ExportExternalDeclaration,
-  multiline: boolean,
-) {
+): Tokens {
   const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
 
+  let tokens: Tokens = [];
+
   if (defaultSpecifier !== undefined) {
-    generator.print(node.defaultSpecifier, node);
+    tokens = generator.print(node.defaultSpecifier, node);
+
     if (namedSpecifiers.length > 0 || namespaceSpecifier !== undefined) {
-      generator.token(',');
-      generator.space();
+      tokens = [...tokens, operator(','), space];
     }
   }
 
   if (namespaceSpecifier !== undefined) {
-    generator.print(namespaceSpecifier, node);
+    tokens = [...tokens, ...generator.print(namespaceSpecifier, node)];
+
     if (namedSpecifiers.length > 0) {
-      generator.token(',');
-      generator.space();
+      tokens = [...tokens, operator(','), space];
     }
   }
 
-  if (namedSpecifiers.length > 0) {
-    generator.token('{');
-    generator.printCommaList<
-      | ImportDeclaration['namedSpecifiers'][number]
-      | ExportExternalDeclaration['namedSpecifiers'][number]>(namedSpecifiers, node, {
-      multiline,
-      trailing: true,
-    }
-    );
-    generator.token('}');
+  if (namedSpecifiers.length === 0) {
+    return tokens;
+  } else {
+    return [
+      ...tokens,
+
+      operator('{'),
+      generator.printCommaList(namedSpecifiers, node, {
+        trailing: true,
+      }),
+      operator('}'),
+    ];
   }
 }

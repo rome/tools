@@ -6,14 +6,20 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens, operator} from '../../tokens';
 import {JSXAttribute, jsxAttribute, AnyNode} from '@romejs/js-ast';
 
-export default function JSXAttribute(generator: Generator, node: AnyNode) {
+export default function JSXAttribute(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = jsxAttribute.assert(node);
-  jsxAttribute.assert(node);
-  generator.print(node.name, node);
+
+  const tokens: Tokens = generator.print(node.name, node);
+
   if (node.value) {
-    generator.token('=');
-    generator.print(node.value, node);
+    return [...tokens, operator('='), ...generator.print(node.value, node)];
+  } else {
+    return tokens;
   }
 }

@@ -7,11 +7,21 @@
 
 import {TSFunctionType, tsFunctionType, AnyNode} from '@romejs/js-ast';
 import {Generator} from '@romejs/js-generator';
+import {Tokens, operator, space, linkedGroups} from '../../tokens';
 
-export default function TSFunctionType(generator: Generator, node: AnyNode) {
+export default function TSFunctionType(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = tsFunctionType.assert(node);
-  generator.print(node.meta, node);
-  generator.token('=>');
-  generator.space();
-  generator.print(node.typeAnnotation, node);
+
+  return [
+    linkedGroups([
+      ...generator.print(node.meta, node),
+      space,
+      operator('=>'),
+      space,
+      ...generator.print(node.typeAnnotation, node),
+    ]),
+  ];
 }

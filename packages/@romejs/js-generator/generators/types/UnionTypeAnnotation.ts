@@ -6,38 +6,30 @@
  */
 
 import Generator from '../../Generator';
-import {UnionTypeAnnotation, unionTypeAnnotation, AnyNode} from '@romejs/js-ast';
+import {Tokens, newline, space, operator} from '../../tokens';
+import {
+  UnionTypeAnnotation,
+  unionTypeAnnotation,
+  AnyNode,
+} from '@romejs/js-ast';
 
-export default function UnionTypeAnnotation(generator: Generator, node: AnyNode) {
+export default function UnionTypeAnnotation(
+  generator: Generator,
+  node: AnyNode,
+): Tokens {
   node = unionTypeAnnotation.assert(node);
 
-  generator.multiline(node, (multiline, node) => {
-    if (multiline) {
-      orNewlineSeparator(generator, false);
-    }
-
+  return [
     generator.printJoin(node.types, node, {
-      after: multiline ? orNewlineSeparator : orSpaceSeparator,
-    });
-  }, {conditions: ['more-than-one-line'], indent: true});
-}
-
-function orNewlineSeparator(generator: Generator, isLast: boolean) {
-  if (isLast) {
-    return;
-  }
-
-  generator.newline();
-  generator.token('|');
-  generator.space();
-}
-
-function orSpaceSeparator(generator: Generator, isLast: boolean) {
-  if (isLast) {
-    return;
-  }
-
-  generator.space();
-  generator.token('|');
-  generator.space();
+      newline: false,
+      broken: {
+        indentNewline: false,
+        leading: [newline, operator('|'), space],
+        separator: [newline, operator('|'), space],
+      },
+      unbroken: {
+        separator: [space, operator('|'), space],
+      },
+    }),
+  ];
 }

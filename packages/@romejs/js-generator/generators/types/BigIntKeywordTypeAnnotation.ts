@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Generator from '../../Generator';
+import {Tokens, word} from '../../tokens';
 
-export default function BigIntKeywordTypeAnnotation(generator: Generator) {
-  generator.word('bigint');
+export default function BigIntKeywordTypeAnnotation(): Tokens {
+  return [word('bigint')];
 }

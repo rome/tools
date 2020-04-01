@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {isTagStartChar} from './parse';
 import {coerce0} from '@romejs/ob1';
 import {Dict} from '@romejs/typescript-helpers';
 import {MarkupTagName} from './types';
@@ -14,7 +13,8 @@ import {isEscaped} from '@romejs/parser-core';
 // A tagged template literal helper that will escape all interpolated strings, ensuring only markup works
 export function markup(
   strs: TemplateStringsArray,
-...values: Array<unknown>): string {
+  ...values: Array<unknown>
+): string {
   let out = '';
 
   for (let i = 0; i < strs.length; i++) {
@@ -55,7 +55,12 @@ export function escapeMarkup(input: string): string {
     const isLast = i == input.length - 1;
 
     // Escape all <
-    if (isTagStartChar(coerce0(i), input)) {
+    if (input[i] === '<') {
+      // If it's escaped then we need to escape the escape
+      // TODO, but what if the escape needs to be escaped......???
+      if (isEscaped(coerce0(i), input)) {
+        escaped += '\\';
+      }
       escaped += '\\<';
     } else {
       // If this is the final character and we're a slash that is not escaped, ignore it.

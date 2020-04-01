@@ -6,6 +6,7 @@
  */
 
 import Generator from '../../Generator';
+import {Tokens} from '../../tokens';
 import {
   AnyNode,
   ExportExternalSpecifier,
@@ -16,7 +17,7 @@ import ExportLocalSpecifier from './ExportLocalSpecifier';
 export default function ExportExternalSpecifier(
   generator: Generator,
   node: AnyNode,
-) {
+): Tokens {
   node = exportExternalSpecifier.assert(node);
-  ExportLocalSpecifier(generator, node);
+  return ExportLocalSpecifier(generator, node);
 }
