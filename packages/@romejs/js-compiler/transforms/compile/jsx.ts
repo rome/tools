@@ -225,6 +225,8 @@ function cleanJSXElementLiteralChild(value: string): undefined | StringLiteral {
 
   if (str != '') {
     return stringLiteral.quick(str);
+  } else {
+    return undefined;
   }
 }
 

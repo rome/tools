@@ -341,7 +341,7 @@ export class BunserBuf {
     }
   }
 
-  raise(reason: string) {
+  raise(reason: string): never {
     const bufferLength = this.acc.buffer.length;
     const readableLength = this.acc.readAvail();
     const readOffset = this.acc.readOffset;
@@ -355,7 +355,7 @@ export class BunserBuf {
     );
   }
 
-  expectCode(expected: number) {
+  expectCode(expected: number): void {
     const code = this.acc.readInt(1);
     if (code != expected) {
       this.raise(`Expected bser opcode ${expected} but got ${code}`);

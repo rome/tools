@@ -449,6 +449,7 @@ export default class Master {
               return remote.join();
             }
           }
+          return undefined;
         },
         normalizeFilename: (filename) => {
           const path = this.projectManager.getFilePathFromUid(filename);

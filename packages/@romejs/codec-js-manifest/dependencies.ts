@@ -394,6 +394,8 @@ export function parseGitDependencyPattern(
   if (GITHUB_SHORTHAND.test(pattern)) {
     return parseHostedGit('github', pattern, consumer);
   }
+
+  return undefined;
 }
 
 export function parseDependencyPattern(

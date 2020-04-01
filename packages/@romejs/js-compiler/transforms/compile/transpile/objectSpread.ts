@@ -68,6 +68,8 @@ function getRestProperty(
     case 'BindingObjectPattern':
       return node.rest;
   }
+
+  return undefined;
 }
 
 function transformSpreadProperty(
@@ -79,7 +81,7 @@ function transformSpreadProperty(
 
   function pushProps() {
     if (props.length === 0 && assignArgs.length > 0) {
-      return undefined;
+      return;
     }
 
     assignArgs.push(objectExpression.create({properties: props}));

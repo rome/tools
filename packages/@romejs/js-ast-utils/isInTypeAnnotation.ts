@@ -24,6 +24,8 @@ function getTypeNode(path: Path): undefined | AnyNode {
   if (isTypeNode(parentPath.parent)) {
     return parentPath.parent;
   }
+
+  return undefined;
 }
 
 export default function isInTypeAnnotation(path: Path): boolean {

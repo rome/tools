@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {UnaryExpression, unaryExpression, AnyNode} from '@romejs/js-ast';
+import {unaryExpression, AnyNode} from '@romejs/js-ast';
 import BooleanT from '../../types/BooleanT';
 import NumericT from '../../types/NumericT';
 import VoidT from '../../types/VoidT';
@@ -40,4 +40,6 @@ export default function UnaryExpression(node: AnyNode, scope: Scope) {
     case 'throw':
       break;
   }
+
+  return undefined;
 }

@@ -51,6 +51,7 @@ async function tryChain(
       return possible;
     } catch (err) {}
   }
+  return undefined;
 }
 
 async function tryManifest(root: string): Promise<undefined | string> {
@@ -71,12 +72,13 @@ async function tryManifest(root: string): Promise<undefined | string> {
       }
     }
   }
+  return undefined;
 }
 
 async function getRomeLocation(): Promise<undefined | string> {
   const {workspaceFolders} = vscode.workspace;
   if (workspaceFolders === undefined) {
-    return;
+    return undefined;
   }
 
   // Find relative to workspace folders
@@ -100,6 +102,8 @@ async function getRomeLocation(): Promise<undefined | string> {
     await fs.promises.access(possible);
     return possible;
   } catch (err) {}
+
+  return undefined;
 }
 
 export async function activate() {

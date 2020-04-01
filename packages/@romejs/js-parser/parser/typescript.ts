@@ -177,6 +177,8 @@ export function parseTSModifier<T extends ConstTSModifier>(
     tsNextTokenCanFollowModifier,
   )) {
     return modifier;
+  } else {
+    return undefined;
   }
 }
 
@@ -410,6 +412,8 @@ function tryParseTSTypeParameters(
 ): undefined | TSTypeParameterDeclaration {
   if (parser.isRelational('<')) {
     return parseTSTypeParameters(parser);
+  } else {
+    return undefined;
   }
 }
 
@@ -440,6 +444,8 @@ export function tryTSNextParseConstantContext(
   if (parser.lookaheadState().tokenType === tt._const) {
     parser.next();
     return parseTSTypeReference(parser);
+  } else {
+    return undefined;
   }
 }
 
@@ -1094,7 +1100,7 @@ function tsCheckTypeAnnotationForReadOnly(parser: JSParser, node: AnyTSPrimary) 
   switch (node.type) {
     case 'TSTupleType':
     case 'TSArrayType':
-      return undefined;
+      return;
 
     default:
       parser.addDiagnostic({
@@ -1336,6 +1342,8 @@ function parseTSTypePredicatePrefix(parser: JSParser): undefined | Identifier {
   if (parser.isContextual('is') && !parser.hasPrecedingLineBreak()) {
     parser.next();
     return id;
+  } else {
+    return undefined;
   }
 }
 
@@ -1522,6 +1530,8 @@ function tsEatThenParseType(
 ): AnyTSPrimary | undefined {
   if (parser.match(token)) {
     return tsNextThenParseType(parser);
+  } else {
+    return undefined;
   }
 }
 
@@ -1977,4 +1987,6 @@ export function parseTSExport(
       id,
     });
   }
+
+  return undefined;
 }

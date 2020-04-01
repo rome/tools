@@ -85,7 +85,7 @@ export default class InspectorClient {
           }
           this.callbacks.delete(id);
         }
-        return undefined;
+        return;
       }
 
       // Event

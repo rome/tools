@@ -88,6 +88,7 @@ export default class Scope {
         scope = scope.parentScope;
       }
     }
+    return undefined;
   }
 
   getRootScope(): RootScope {

@@ -199,15 +199,15 @@ export default class TestAPI {
     return advice;
   }
 
-  addToAdvice(item: DiagnosticAdviceItem) {
+  addToAdvice(item: DiagnosticAdviceItem): void {
     this.advice.push(item);
   }
 
-  onTeardown(callback: AsyncFunc) {
+  onTeardown(callback: AsyncFunc): void {
     this.teardownEvent.subscribe(callback);
   }
 
-  clearTimeout() {
+  clearTimeout(): void {
     if (this.timeoutId !== undefined) {
       clearTimeout(this.timeoutId);
     }
@@ -216,7 +216,7 @@ export default class TestAPI {
     this.timeoutStart = undefined;
   }
 
-  extendTimeout(time: number) {
+  extendTimeout(time: number): void {
     const {timeoutMax, timeoutStart} = this;
     if (timeoutMax === undefined || timeoutStart === undefined) {
       throw new Error('No timeout set');
@@ -227,7 +227,7 @@ export default class TestAPI {
     this.setTimeout(newTime);
   }
 
-  setTimeout(time: number) {
+  setTimeout(time: number): void {
     this.clearTimeout();
 
     this.timeoutStart = Date.now();
@@ -238,10 +238,10 @@ export default class TestAPI {
     }, time);
   }
 
-  checkTimeout() {
+  checkTimeout(): void {
     const {startTime, timeoutMax} = this;
     if (timeoutMax === undefined) {
-      return undefined;
+      return;
     }
 
     const delta = Date.now() - startTime;
@@ -254,7 +254,7 @@ export default class TestAPI {
     message: string = 'Test failure triggered by t.fail()',
     advice: DiagnosticAdvice = [],
     framesToPop: number = 0,
-  ) {
+  ): never {
     throw createErrorFromStructure({
       message,
       advice,
@@ -262,7 +262,7 @@ export default class TestAPI {
     });
   }
 
-  truthy(value: unknown, message: string = 'Expected value to be truthy') {
+  truthy(value: unknown, message: string = 'Expected value to be truthy'): void {
     if (Boolean(value) === false) {
       this.fail(message, [
         {
@@ -278,7 +278,7 @@ export default class TestAPI {
     }
   }
 
-  falsy(value: unknown, message: string = 'Expected value to be falsy') {
+  falsy(value: unknown, message: string = 'Expected value to be falsy'): void {
     if (Boolean(value) === true) {
       this.fail(message, [
         {
@@ -294,7 +294,7 @@ export default class TestAPI {
     }
   }
 
-  true(value: unknown, message: string = 'Expected value to be true') {
+  true(value: unknown, message: string = 'Expected value to be true'): void {
     if (value !== true) {
       this.fail(message, [
         {
@@ -310,7 +310,7 @@ export default class TestAPI {
     }
   }
 
-  false(value: unknown, message: string = 'Expected value to be false') {
+  false(value: unknown, message: string = 'Expected value to be false'): void {
     if (value !== false) {
       this.fail(message, [
         {
@@ -330,7 +330,7 @@ export default class TestAPI {
     received: unknown,
     expected: unknown,
     message: string = 't.is() failed, using Object.is semantics',
-  ) {
+  ): void {
     if (Object.is(received, expected) !== true) {
       this.fail(message, this.buildMatchAdvice(received, expected, {
         visualMethod: 'looksLike',
@@ -342,7 +342,7 @@ export default class TestAPI {
     received: unknown,
     expected: unknown,
     message: string = 't.not() failed, using !Object.is() semantics',
-  ) {
+  ): void {
     if (Object.is(received, expected) === true) {
       this.fail(message, this.buildMatchAdvice(received, expected, {
         visualMethod: 'notLooksLike',
@@ -354,7 +354,7 @@ export default class TestAPI {
     received: unknown,
     expected: unknown,
     message: string = 't.looksLike() failed, using prettyFormat semantics',
-  ) {
+  ): void {
     const actualInspect = prettyFormat(received);
     const expectedInspect = prettyFormat(expected);
 
@@ -367,7 +367,7 @@ export default class TestAPI {
     received: unknown,
     expected: unknown,
     message: string = 't.notLooksLike() failed, using !prettyFormat semantics',
-  ) {
+  ): void {
     const actualInspect = prettyFormat(received);
     const expectedInspect = prettyFormat(expected);
 
@@ -380,7 +380,7 @@ export default class TestAPI {
     thrower: SyncThrower,
     expected?: ExpectedError,
     message: string = 't.throws() failed, callback did not throw an error',
-  ) {
+  ): void {
     try {
       thrower();
     } catch (err) {
@@ -404,11 +404,11 @@ export default class TestAPI {
     thrower: AsyncFunc,
     expected?: ExpectedError,
     message?: string,
-  ) {
+  ): Promise<void> {
     throw new Error('unimplemented');
   }
 
-  notThrows(nonThrower: SyncThrower, message?: string) {
+  notThrows(nonThrower: SyncThrower, message?: string): void {
     try {
       nonThrower();
     } catch (err) {
@@ -422,21 +422,21 @@ export default class TestAPI {
     throw new Error('unimplemented');
   }
 
-  regex(contents: string, regex: RegExp, message?: string) {
+  regex(contents: string, regex: RegExp, message?: string): void {
     throw new Error('unimplemented');
   }
 
-  notRegex(contents: string, regex: RegExp, message?: string) {
+  notRegex(contents: string, regex: RegExp, message?: string): void {
     throw new Error('unimplemented');
   }
 
-  snapshot(expected: unknown, message?: string) {
+  snapshot(expected: unknown, message?: string): void {
     const id = this.snapshotCounter++;
-    return this._snapshotNamed(String(id), expected, message, 2);
+    this._snapshotNamed(String(id), expected, message, 2);
   }
 
-  snapshotNamed(name: string, expected: unknown, message?: string) {
-    return this._snapshotNamed(name, expected, message, 1);
+  snapshotNamed(name: string, expected: unknown, message?: string): void {
+    this._snapshotNamed(name, expected, message, 1);
   }
 
   getSnapshot(snapshotName: string): unknown {
@@ -448,7 +448,7 @@ export default class TestAPI {
     expected: unknown,
     message?: string,
     framesToPop?: number,
-  ) {
+  ): void {
     let language: undefined | string;
 
     let formatted = '';
@@ -469,7 +469,7 @@ export default class TestAPI {
         value: formatted,
         language,
       });
-      return undefined;
+      return;
     }
 
     // Compare the snapshots

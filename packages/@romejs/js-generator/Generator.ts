@@ -566,9 +566,9 @@ export default class Generator {
     nodes: undefined | Array<undefined | N>,
     parent: AnyNode,
     opts: PrintJoinOptions<N> = {},
-  ) {
+  ): void {
     if (!nodes || !nodes.length) {
-      return undefined;
+      return;
     }
 
     if (opts.indent === true) {
@@ -681,9 +681,9 @@ export default class Generator {
       trailing?: boolean;
       multiline?: boolean;
     } = {},
-  ) {
+  ): void {
     if (!items || !items.length) {
-      return undefined;
+      return;
     }
 
     const print = (multiline: boolean) => {
@@ -733,9 +733,9 @@ export default class Generator {
     }
   }
 
-  printComments(comments: undefined | Array<AnyComment>) {
+  printComments(comments: undefined | Array<AnyComment>): void {
     if (!comments || !comments.length) {
-      return undefined;
+      return;
     }
 
     for (let i = 0; i < comments.length; i++) {

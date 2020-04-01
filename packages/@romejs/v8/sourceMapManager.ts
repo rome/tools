@@ -131,9 +131,9 @@ function addErrorFrames(
     },
 
   frames: Array<NodeJS.CallSite>,
-) {
+): void {
   if (err[ERROR_FRAMES_PROP]) {
-    return undefined;
+    return;
   }
 
   let builtFrames = frames.map((frameApi): ErrorFrame => {
@@ -277,4 +277,6 @@ export function getSourceMap(filename: string): undefined | SourceMapConsumer {
     maps.set(filename, consumer);
     return consumer;
   }
+
+  return undefined;
 }
