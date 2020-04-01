@@ -17,12 +17,12 @@ if (filename === undefined) {
 }
 
 const {
-  generatorsFolder,
+  buildersFolder,
   analysisFolder,
   astFolder,
 } = require('../_constants.cjs');
 
-fs.unlinkSync(path.join(generatorsFolder, `${filename}.ts`));
+fs.unlinkSync(path.join(buildersFolder, `${filename}.ts`));
 fs.unlinkSync(path.join(analysisFolder, `${filename}.ts`));
 fs.unlinkSync(path.join(astFolder, `${filename}.ts`));
 

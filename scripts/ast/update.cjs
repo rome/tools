@@ -13,7 +13,7 @@ const fs = require('fs');
 const {write, getBuilderName} = require('../_utils.cjs');
 
 const {
-  generatorsFolder,
+  buildersFolder,
   analysisFolder,
   astFolder,
 } = require('../_constants.cjs');
@@ -89,12 +89,12 @@ readIndexFile(path.join(astFolder, 'index.ts'), [
   },
 ]);
 
-// Add to generators
-readIndexFile(path.join(generatorsFolder, 'index.ts'), [
+// Add to builders
+readIndexFile(path.join(buildersFolder, 'index.ts'), [
   {
     iterator({category, nodeType}) {
       return `import ${nodeType} from './${category}/${nodeType}';\n` +
-        `generators.set('${nodeType}', ${nodeType});\n\n`;
+        `builders.set('${nodeType}', ${nodeType});\n\n`;
     },
   },
 ]);

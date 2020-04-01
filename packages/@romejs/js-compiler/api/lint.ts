@@ -10,7 +10,7 @@ import {TransformRequest} from '../types';
 import {lintTransforms} from '../transforms/lint/index';
 import {program} from '@romejs/js-ast';
 import {Cache, Context} from '@romejs/js-compiler';
-import {generateJS} from '@romejs/js-generator';
+import {formatJS} from '@romejs/js-formatter';
 
 export type LintResult = {
   diagnostics: Diagnostics;
@@ -55,7 +55,7 @@ export default async function lint(req: FormatRequest): Promise<LintResult> {
       frozen: false,
     }));
 
-    const generator = generateJS(newAst, {
+    const generator = formatJS(newAst, {
       typeAnnotations: true,
       format: 'pretty',
     }, sourceText);

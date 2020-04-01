@@ -11,7 +11,7 @@ const path = require('path');
 const fs = require('fs');
 
 const {
-  generatorsFolder,
+  buildersFolder,
   analysisFolder,
   astFolder,
 } = require('../_constants.cjs');
@@ -54,24 +54,25 @@ if (fs.existsSync(fileLoc, 'utf8')) {
 }
 write(fileLoc, file);
 
-// Write generator
-const generatorDefFile = path.join(generatorsFolder, category, `${nodeType}.ts`);
-const generatorContent = `/**
+// Write builder
+const builderDefFile = path.join(buildersFolder, category, `${nodeType}.ts`);
+const builderContent = `/**
 * Copyright (c) Facebook, Inc. and its affiliates.
 *
 * This source code is licensed under the MIT license found in the
 * LICENSE file in the root directory of this source tree.
 */
 
-import Generator from '../../Generator';
+import Builder from '../../Builder';
 import {AnyNode, ${nodeType}, ${builderName}} from '@romejs/js-ast';
+import {Tokens} from '../../tokens';
 
-export default function ${nodeType}(generator: Generator, node: AnyNode) {
+export default function ${nodeType}(builder: Builder, node: AnyNode): Tokens {
   node = ${builderName}.assert(node);
   throw new Error('unimplemented');
 }
 `;
-write(generatorDefFile, generatorContent);
+write(builderDefFile, builderContent);
 
 // Write analysis
 const analysisDefFile = path.join(analysisFolder, category, `${nodeType}.ts`);

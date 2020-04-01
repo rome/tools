@@ -23,7 +23,7 @@ import {
   AnalyzeDependencyResult,
   UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
 } from './types/analyzeDependencies';
-import {generateJS} from '@romejs/js-generator';
+import {formatJS} from '@romejs/js-formatter';
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
 
@@ -304,7 +304,7 @@ function buildJSHandler(
           ref,
         );
 
-        const res = generateJS(ast, {
+        const res = formatJS(ast, {
           typeAnnotations: true,
           format: 'pretty',
         });
