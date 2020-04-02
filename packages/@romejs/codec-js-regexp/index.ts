@@ -72,8 +72,8 @@ type Tokens =
         escaped: boolean;
       }
     >;
-    NamedBackReference: ComplexToken<
-      'NamedBackReference',
+    NamedBackReferenceCharacter: ComplexToken<
+      'NamedBackReferenceCharacter',
       {
         value: string;
         escaped: boolean;
@@ -232,7 +232,7 @@ export const createRegExpParser = createParser((ParserCore) =>
                   // skip the closing >
                   namedBackReferenceIndex++;
                 }
-                return this.finishComplexToken('NamedBackReference', {
+                return this.finishComplexToken('NamedBackReferenceCharacter', {
                   value: namedBackReference,
                   escaped: true,
                 }, coerce0(namedBackReferenceIndex));
@@ -626,6 +626,16 @@ export const createRegExpParser = createParser((ParserCore) =>
         };
       }
 
+      if (token.type === 'NamedBackReferenceCharacter') {
+        this.nextToken();
+        
+        return {
+          type: 'RegExpNamedBackReference',
+          name: token.value,
+          loc: this.finishLocFromToken(token),
+        };
+      }
+
       if (token.type === 'EscapedCharacter') {
         this.nextToken();
 
@@ -926,13 +936,8 @@ export const createRegExpParser = createParser((ParserCore) =>
         case 'EscapedCharacter':
         case 'Character':
         case 'NumericBackReferenceCharacter':
+        case 'NamedBackReferenceCharacter':
           return this.parseCharacter();
-
-        case 'NamedBackReference':  {
-          this.nextToken();
-          console.log(token.value, ' : ', token.end);
-          return undefined;
-        }
       }
 
       this.addDiagnostic({
