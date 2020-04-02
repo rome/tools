@@ -47,6 +47,7 @@ export default async function compile(
     sourceMapTarget: filename,
     sourceFileName: filename,
     inputSourceMap: req.inputSourceMap,
+    sourceMaps: true,
   }, sourceText);
 
   const res: CompileResult = {

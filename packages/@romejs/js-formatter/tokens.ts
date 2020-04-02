@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {SourceLocation} from '@romejs/parser-core';
+
 export type WordToken = {
   type: 'Word';
   value: string;
@@ -86,6 +88,12 @@ export type CommentToken = {
   value: string;
 };
 
+export type PositionMarkerToken = {
+  type: 'PositionMarker';
+  tokens: Tokens;
+  location: SourceLocation;
+};
+
 export type Token =
   | GroupToken
   | IndentToken
@@ -98,7 +106,8 @@ export type Token =
   | DerivedNewlineToken
   | TerminatorlessToken
   | CommentToken
-  | WordToken;
+  | WordToken
+  | PositionMarkerToken;
 
 export type Tokens = Array<Token>;
 
@@ -203,6 +212,17 @@ export function indent(tokens: Tokens): IndentToken {
   return {
     type: 'Indent',
     tokens,
+  };
+}
+
+export function positionMarker(
+  tokens: Tokens,
+  location: SourceLocation,
+): PositionMarkerToken {
+  return {
+    type: 'PositionMarker',
+    tokens,
+    location,
   };
 }
 

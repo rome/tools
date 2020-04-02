@@ -19,6 +19,7 @@ import {
   derivedNewline,
   indent,
   comment,
+  positionMarker,
 } from './tokens';
 import {Number0} from '@romejs/ob1';
 
@@ -34,6 +35,7 @@ export type BuilderOptions = {
   typeAnnotations: boolean;
   format?: 'pretty' | 'compact';
   indent?: number;
+  sourceMaps?: boolean;
   inputSourceMap?: SourceMap;
   sourceMapTarget?: string;
   sourceRoot?: string;
@@ -95,10 +97,10 @@ export default class Builder {
       return [];
     }
 
-    const printMethod: undefined | BuilderMethod = builderFunctions.get(
+    const tokenizeNode: undefined | BuilderMethod = builderFunctions.get(
       node.type,
     );
-    if (printMethod === undefined) {
+    if (tokenizeNode === undefined) {
       throw new Error(
         `No known builder for node ${node.type} with parent ${parent.type}`,
       );
@@ -130,7 +132,12 @@ export default class Builder {
       ];
     }
 
-    tokens = [...tokens, ...printMethod(this, node, parent)];
+    const nodeTokens = tokenizeNode(this, node, parent);
+    if (node.loc === undefined || !this.options.sourceMaps) {
+      tokens = [...tokens, ...nodeTokens];
+    } else {
+      tokens = [...tokens, positionMarker(nodeTokens, node.loc)];
+    }
 
     if (needsParens) {
       tokens.push(operator(')'));

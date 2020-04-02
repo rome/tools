@@ -27,13 +27,13 @@ function rename(src, dest) {
 }
 
 const {
-  buildersFolder,
+  formatterFolder,
   analysisFolder,
   astFolder,
 } = require('../_constants.cjs');
 
-rename(path.join(buildersFolder, `${fromType}.ts`), path.join(
-  buildersFolder,
+rename(path.join(formatterFolder, `${fromType}.ts`), path.join(
+  formatterFolder,
   `${toType}ts`,
 ));
 rename(path.join(analysisFolder, `${fromType}ts`), path.join(

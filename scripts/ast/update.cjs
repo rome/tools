@@ -13,7 +13,7 @@ const fs = require('fs');
 const {write, getBuilderName} = require('../_utils.cjs');
 
 const {
-  buildersFolder,
+  formatterFolder,
   analysisFolder,
   astFolder,
 } = require('../_constants.cjs');
@@ -90,7 +90,7 @@ readIndexFile(path.join(astFolder, 'index.ts'), [
 ]);
 
 // Add to builders
-readIndexFile(path.join(buildersFolder, 'index.ts'), [
+readIndexFile(path.join(formatterFolder, 'index.ts'), [
   {
     iterator({category, nodeType}) {
       return `import ${nodeType} from './${category}/${nodeType}';\n` +

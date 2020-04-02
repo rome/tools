@@ -191,10 +191,7 @@ export type AnyExpression =
 
 export type AnyWhileStatement = n.WhileStatement | n.DoWhileStatement;
 
-type AnyStatementWithBodyReducer<T> = T extends {body: AnyStatement}
-  ? T
-  : never
-;
+type AnyStatementWithBodyReducer<T> = T extends {body: AnyStatement} ? T : never;
 
 export type AnyStatementWithBody = AnyStatementWithBodyReducer<AnyStatement>;
 

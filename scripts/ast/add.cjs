@@ -11,7 +11,7 @@ const path = require('path');
 const fs = require('fs');
 
 const {
-  buildersFolder,
+  formatterFolder,
   analysisFolder,
   astFolder,
 } = require('../_constants.cjs');
@@ -55,7 +55,7 @@ if (fs.existsSync(fileLoc, 'utf8')) {
 write(fileLoc, file);
 
 // Write builder
-const builderDefFile = path.join(buildersFolder, category, `${nodeType}.ts`);
+const builderDefFile = path.join(formatterFolder, category, `${nodeType}.ts`);
 const builderContent = `/**
 * Copyright (c) Facebook, Inc. and its affiliates.
 *

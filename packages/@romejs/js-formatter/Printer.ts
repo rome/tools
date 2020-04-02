@@ -19,24 +19,27 @@ import {
   WordToken,
   OperatorToken,
   VerbatimToken,
+  PositionMarkerToken,
 } from './tokens';
 import {BuilderOptions} from './Builder';
-import {Mappings} from '@romejs/codec-source-map';
-import {Number1, Number0, number0, number1, get0, inc} from '@romejs/ob1';
+import {Mappings, SourceMapConsumer} from '@romejs/codec-source-map';
+import {Number1, Number0, number0, number1, get0, inc, dec} from '@romejs/ob1';
+import {SourceLocation} from '@romejs/parser-core';
 
 type TerminatorState = {printed: boolean};
 
 type State = {
-  lastToken: Token;
   lastBuff: string;
   indentString: string;
   indentLevel: number;
   endsWithSpace: boolean;
   endsWithInteger: boolean;
   endsWithNewline: boolean;
-  line: Number1;
-  column: Number0;
+  endsWithWord: boolean;
+  generatedLine: Number1;
+  generatedColumn: Number0;
   terminator?: TerminatorState;
+  sourceLocation?: SourceLocation;
 };
 
 type GroupSnapshot = {
@@ -70,15 +73,15 @@ export default class Printer {
     this.options = opts;
 
     this.state = {
-      lastToken: newline,
       lastBuff: '',
       indentString: '',
       indentLevel: 0,
       endsWithSpace: false,
       endsWithInteger: false,
       endsWithNewline: true,
-      column: number0,
-      line: number1,
+      endsWithWord: false,
+      generatedColumn: number0,
+      generatedLine: number1,
     };
 
     this.compact = this.options.format === 'compact';
@@ -88,11 +91,16 @@ export default class Printer {
     this.mappings = [];
     this.lastUnbrokenGroup = undefined;
     this.brokenGroups = new Set();
+
+    this.inputSourceMap = opts.inputSourceMap === undefined
+      ? undefined
+      : new SourceMapConsumer(opts.inputSourceMap);
   }
 
   compact: boolean;
   lineWrap: boolean;
 
+  inputSourceMap: undefined | SourceMapConsumer;
   derivedNewlines: Array<number>;
   buff: Array<string>;
   mappings: Mappings;
@@ -129,9 +137,57 @@ export default class Printer {
     return;
   }
 
+  mark() {
+    const {sourceLocation, generatedLine, generatedColumn} = this.state;
+    if (sourceLocation === undefined) {
+      return;
+    }
+
+    let originalLine = sourceLocation.start.line;
+    let originalColumn = sourceLocation.start.column;
+
+    // If this mapping points to the same source location as the last one, we can ignore it since
+    // the previous one covers it.
+    //if (this.lastGenLine === generatedLine && this.lastSourceLine ===
+    //originalLine && this.lastSourceColumn === originalColumn) {
+    //  return;
+    //}
+    //
+    //this.lastGenLine = generatedLine;
+    //this.lastSourceLine = originalLine;
+    //this.lastSourceColumn = originalColumn;
+
+    // Forward mappings if provided with an inputSourceMap
+    const {inputSourceMap} = this;
+    if (inputSourceMap !== undefined) {
+      const actual = inputSourceMap.exactOriginalPositionFor(
+        originalLine,
+        originalColumn,
+      );
+      if (actual === undefined) {
+        // If we were given an input source map and we didn't find the original location in it then omit it since it probably doesn't make sense
+        return;
+      } else {
+        originalLine = actual.line;
+        originalColumn = actual.column;
+      }
+    }
+
+    this.mappings.push({
+      generated: {line: generatedLine, column: generatedColumn},
+      original: {line: originalLine, column: originalColumn},
+      name: sourceLocation.identifierName,
+      source: sourceLocation.filename,
+    });
+  }
+
   push(str: string) {
     if (str === '') {
       return;
+    }
+
+    if (str[0] !== '\n' && this.options.sourceMaps) {
+      this.mark();
     }
 
     this.maybeAddTerminatorlessParen(str);
@@ -151,14 +207,14 @@ export default class Printer {
               lastUnbrokenGroup.breakOnNewline) {
             throw new BreakGroupError(lastUnbrokenGroup);
           }
-          this.state.column = number0;
-          this.state.line = inc(this.state.line);
+          this.state.generatedColumn = number0;
+          this.state.generatedLine = inc(this.state.generatedLine);
         } else {
-          this.state.column = inc(this.state.column);
+          this.state.generatedColumn = inc(this.state.generatedColumn);
         }
       }
 
-      if (lastUnbrokenGroup !== undefined && get0(this.state.column) >
+      if (lastUnbrokenGroup !== undefined && get0(this.state.generatedColumn) >
           MAX_LINE_LENGTH) {
         throw new BreakGroupError(lastUnbrokenGroup);
       }
@@ -166,6 +222,7 @@ export default class Printer {
 
     this.state.endsWithNewline = str[str.length - 1] === '\n';
     this.state.endsWithInteger = false;
+    this.state.endsWithWord = false;
     this.state.endsWithSpace = str[str.length - 1] === ' ';
     this.state.lastBuff = str;
     this.buff.push(str);
@@ -216,9 +273,11 @@ export default class Printer {
     }
   }
 
-  trim(str: string): boolean {
+  // Trim a character from the output buffer. Should NOT be a newline
+  trimCharacter(str: string): boolean {
     const {buff} = this;
     if (buff[buff.length - 1] === str) {
+      this.state.generatedColumn = dec(this.state.generatedColumn);
       buff.pop();
       return true;
     } else {
@@ -246,7 +305,7 @@ export default class Printer {
 
   newline() {
     while ( // Remove all trailing spaces
-    this.trim(' ')) ;
+    this.trimCharacter(' ')) ;
     this.push('\n');
   }
 
@@ -322,10 +381,11 @@ export default class Printer {
   }
 
   printWordToken(token: WordToken) {
-    if (this.state.lastToken.type === 'Word') {
+    if (this.state.endsWithWord) {
       this.push(' ');
     }
     this.push(token.value);
+    this.state.endsWithWord = true;
   }
 
   printOperatorToken(token: OperatorToken) {
@@ -429,7 +489,7 @@ export default class Printer {
     }
 
     if (!isBroken && unbroken.trim !== undefined) {
-      this.trim(unbroken.trim);
+      this.trimCharacter(unbroken.trim);
     }
 
     if (isBroken) {
@@ -437,6 +497,34 @@ export default class Printer {
     }
 
     return {abort: false};
+  }
+
+  findUnbrokenGroupForLinkedGroups(
+    tokens: Tokens,
+  ): undefined | LinkedGroupsToken | GroupToken {
+    for (const token of tokens) {
+      let group: undefined | LinkedGroupsToken | GroupToken;
+
+      switch (token.type) {
+        case 'LinkedGroups':
+        case 'Group':
+          if (!this.isGroupBroken(token)) {
+            group = token;
+          }
+          break;
+
+        case 'Indent':
+        case 'PositionMarker':
+          group = this.findUnbrokenGroupForLinkedGroups(token.tokens);
+          break;
+      }
+
+      if (group !== undefined) {
+        return group;
+      }
+    }
+
+    return undefined;
   }
 
   // Any group catchers inside a LinkedGroups will be deactivated. When the LinkedGroup is triggered it goes through the direct
@@ -447,16 +535,7 @@ export default class Printer {
     index: number,
   ): {abort: boolean} {
     if (this.lineWrap && this.canOverwriteLastUnbrokenGroup()) {
-      let firstGroup: undefined | LinkedGroupsToken | GroupToken;
-      // Get the first unbroken group
-      for (const tok of token.tokens) {
-        if ((tok.type === 'LinkedGroups' || tok.type === 'Group') &&
-            !this.isGroupBroken(tok)) {
-          firstGroup = tok;
-          break;
-        }
-      }
-
+      const firstGroup = this.findUnbrokenGroupForLinkedGroups(token.tokens);
       if (firstGroup !== undefined) {
         const snapshot = this.createStateSnapshot({
           priority: true,
@@ -488,6 +567,17 @@ export default class Printer {
 
   printVerbatimToken(token: VerbatimToken) {
     this.push(token.value);
+  }
+
+  printPositionMarkerToken(token: PositionMarkerToken) {
+    const {state} = this;
+
+    const origSourceLocation = state.sourceLocation;
+    state.sourceLocation = token.location;
+
+    this.print(token.tokens);
+
+    state.sourceLocation = origSourceLocation;
   }
 
   print(tokens: undefined | Tokens, i: number = 0) {
@@ -548,13 +638,15 @@ export default class Printer {
         case 'Verbatim':
           this.printVerbatimToken(token);
           break;
+
+        case 'PositionMarker':
+          this.printPositionMarkerToken(token);
+          break;
       }
 
       if (abort) {
         return;
       }
-
-      this.state.lastToken = token;
     }
   }
 
