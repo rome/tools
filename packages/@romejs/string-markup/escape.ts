@@ -70,6 +70,16 @@ export function escapeMarkup(input: string): string {
   return escaped;
 }
 
+/**
+ * If the string ends with a backslash, it replaces it with 2 backslashes to escape it
+ */
+export function escapeEndingBackslash(text: string): string {
+  if (text.endsWith("\\") && !text.endsWith("\\\\")) {
+    return text.replace(/.$/, "\\\\");
+  }
+  return text;
+}
+
 export function markupTag(
   tagName: MarkupTagName,
   text: string,
@@ -84,7 +94,7 @@ export function markupTag(
     }
   }
 
-  ret += `>${text}</${tagName}>`;
+  ret += `>${escapeEndingBackslash(text)}</${tagName}>`;
 
   return ret;
 }
