@@ -10,7 +10,6 @@ import {
   Token,
   LinkedGroupsToken,
   GroupToken,
-  newline,
   IndentToken,
   DerivedNewlineToken,
   NumberToken,
