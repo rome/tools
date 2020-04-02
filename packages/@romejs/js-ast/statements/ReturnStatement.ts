@@ -8,12 +8,10 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type ReturnStatement =
-  & JSNodeBase
-  & {
-    type: 'ReturnStatement';
-    argument?: AnyExpression;
-  };
+export type ReturnStatement = JSNodeBase & {
+  type: 'ReturnStatement';
+  argument?: AnyExpression;
+};
 
 export const returnStatement = createQuickBuilder<ReturnStatement, 'argument'>(
   'ReturnStatement',

@@ -49,9 +49,9 @@ export type WorkerCompilerOptions = {bundle?: WorkerBundleCompileOptions};
 export type WorkerBundleCompileOptions = Omit<BundleCompileOptions, 'analyze'>;
 
 //
-export type WorkerAnalyzeDependencyResult =
-  & AnalyzeDependencyResult
-  & {cached: boolean};
+export type WorkerAnalyzeDependencyResult = AnalyzeDependencyResult & {
+  cached: boolean;
+};
 
 export type WorkerParseOptions = {
   compact: boolean;
@@ -70,23 +70,21 @@ export type WorkerStatus = {
   uptime: number;
 };
 
-export type PrefetchedModuleSignatures = {[key: string]:
-    | {
-      type: 'USE_CACHED';
-      filename: string;
-    }
-    | {
-      type: 'RESOLVED';
-      graph: ModuleSignature;
-    }
-    | {
-      type: 'OWNED';
-      file: JSONFileReference;
-    }
-    | {
-      type: 'POINTER';
-      key: string;
-    }};
+export type PrefetchedModuleSignatures = {
+  [key: string]: {
+    type: 'USE_CACHED';
+    filename: string;
+  } | {
+    type: 'RESOLVED';
+    graph: ModuleSignature;
+  } | {
+    type: 'OWNED';
+    file: JSONFileReference;
+  } | {
+    type: 'POINTER';
+    key: string;
+  };
+};
 
 export type WorkerFormatResult = {
   original: string;
@@ -143,15 +141,15 @@ export default class WorkerBridge extends Bridge {
     | WorkerFormatResult>({
     name: 'format',
     direction: 'server->client',
-  }
-  );
+  });
 
-  moduleSignatureJS = this.createEvent<{file: JSONFileReference}, ModuleSignature>(
-    {
-      name: 'moduleSignatureJS',
-      direction: 'server->client',
-    },
-  );
+  moduleSignatureJS = this.createEvent<
+    {file: JSONFileReference},
+    ModuleSignature
+  >({
+    name: 'moduleSignatureJS',
+    direction: 'server->client',
+  });
 
   analyzeDependencies = this.createEvent<
     {file: JSONFileReference},
@@ -199,10 +197,8 @@ export default class WorkerBridge extends Bridge {
       },
 
       hydrate(err, data) {
-        return new DiagnosticsError(
-          String(err.message),( // rome-suppress-next-line lint/noExplicitAny
-          data.diagnostics as any),
-        );
+        return new DiagnosticsError(String(err.message), ( // rome-suppress-next-line lint/noExplicitAny
+        data.diagnostics as any));
       },
     });
   }

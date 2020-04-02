@@ -12,7 +12,10 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function FlowTypeParameterDeclaration(node: AnyNode, scope: Scope) {
+export default function FlowTypeParameterDeclaration(
+  node: AnyNode,
+  scope: Scope,
+) {
   node = flowTypeParameterDeclaration.assert(node);
 
   for (const param of node.params) {

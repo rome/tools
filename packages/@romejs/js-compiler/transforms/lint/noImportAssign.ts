@@ -30,8 +30,9 @@ export default {
     const {node, scope} = path;
 
     if (node.type === 'AssignmentIdentifier' && isAssignment(path) ||
-    node.type === 'ReferenceIdentifier' && path.parentPath.node.type ===
-    'UpdateExpression') {
+            node.type ===
+            'ReferenceIdentifier' &&
+          path.parentPath.node.type === 'UpdateExpression') {
       const binding = scope.getBinding(node.name);
       if (binding !== undefined && binding.kind === 'import') path.context.addNodeDiagnostic(
         node,

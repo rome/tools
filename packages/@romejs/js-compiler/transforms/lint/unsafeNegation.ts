@@ -15,8 +15,10 @@ export default {
     const {node} = path;
 
     if (node.type === 'BinaryExpression' && (node.operator === 'in' ||
-    node.operator === 'instanceof') && node.left.type === 'UnaryExpression' &&
-      node.left.operator === '!') {
+            node.operator ===
+            'instanceof') && node.left.type === 'UnaryExpression' &&
+          node.left.operator ===
+          '!') {
       const {suppressed} = path.context.addNodeDiagnostic(
         node,
         descriptions.LINT.UNSAFE_NEGATION,

@@ -28,12 +28,13 @@ export type MasterQueryRequest = {
   terminateWhenIdle: boolean;
 };
 
-export type PartialMasterQueryRequest =
-  & Partial<Omit<MasterQueryRequest, 'requestFlags'>>
-  & {
-    requestFlags?: Partial<ClientRequestFlags>;
-    command: string;
-  };
+export type PartialMasterQueryRequest = Partial<Omit<
+  MasterQueryRequest,
+  'requestFlags'
+>> & {
+  requestFlags?: Partial<ClientRequestFlags>;
+  command: string;
+};
 
 export type MasterQueryResponseSuccess = {
   type: 'SUCCESS';

@@ -10,33 +10,35 @@ import {createUnknownFilePath} from '@romejs/path';
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('no shadow restricted names', async (t) => {
-  let failingCases = [
-    'function NaN() {}',
-    'let Set;',
-    '!function Array() {}',
-    'function test(JSON) {}',
-    'try {  } catch(Object) {}',
-  ];
-  for (let failingCase of failingCases) {
-    const res = await testLint(failingCase);
-    if (!res.diagnostics.some((d) =>
-      d.description.category === 'lint/noShadowRestrictedNames'
-    )) {
-      t.fail(
-        `expected "\n${failingCase}\n" to report a lint/noShadowRestrictedNames diagnostic but it didn't`,
-        [
-          {
-            type: 'inspect',
-            data: parseJS({
-              input: failingCase,
-              sourceType: 'module',
-              path: createUnknownFilePath('unknown'),
-            }),
-          },
-          {type: 'inspect', data: res.diagnostics},
-        ],
-      );
+test(
+  'no shadow restricted names',
+  async (t) => {
+    let failingCases = [
+      'function NaN() {}',
+      'let Set;',
+      '!function Array() {}',
+      'function test(JSON) {}',
+      'try {  } catch(Object) {}',
+    ];
+    for (let failingCase of failingCases) {
+      const res = await testLint(failingCase);
+      if (!res.diagnostics.some((d) => d.description.category ===
+          'lint/noShadowRestrictedNames')) {
+        t.fail(
+          `expected "\n${failingCase}\n" to report a lint/noShadowRestrictedNames diagnostic but it didn't`,
+          [
+            {
+              type: 'inspect',
+              data: parseJS({
+                input: failingCase,
+                sourceType: 'module',
+                path: createUnknownFilePath('unknown'),
+              }),
+            },
+            {type: 'inspect', data: res.diagnostics},
+          ],
+        );
+      }
     }
-  }
-});
+  },
+);

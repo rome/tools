@@ -225,7 +225,7 @@ export default class Progress extends ProgressBase {
   // This allows us to use the progress bar for sync work where the event loop is always blocked
   isRenderDue(): boolean {
     const isDue: boolean = this.current > this.lastRenderCurrent +
-    this.renderEvery;
+      this.renderEvery;
     if (isDue) {
       // We also make sure that we never force update more often than once a second
 

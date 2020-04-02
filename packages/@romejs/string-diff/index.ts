@@ -267,7 +267,7 @@ function bisect(text1: string, text2: string): Diffs {
       }
       let y1 = x1 - k1;
       while (x1 < text1_length && y1 < text2_length && text1.charAt(x1) ===
-      text2.charAt(y1)) {
+        text2.charAt(y1)) {
         x1++;
         y1++;
       }
@@ -302,7 +302,9 @@ function bisect(text1: string, text2: string): Diffs {
       }
       let y2 = x2 - k2;
       while (x2 < text1_length && y2 < text2_length && text1.charAt(
-        text1_length - x2 - 1,
+            text1_length -
+            x2 -
+          1,
       ) === text2.charAt(text2_length - y2 - 1)) {
         x2++;
         y2++;
@@ -382,9 +384,9 @@ function commonPrefix(text1: string, text2: string): number {
   let pointerstart = 0;
   while (pointermin < pointermid) {
     if (text1.substring(pointerstart, pointermid) == text2.substring(
-      pointerstart,
-      pointermid,
-    )) {
+        pointerstart,
+        pointermid,
+      )) {
       pointermin = pointermid;
       pointerstart = pointermin;
     } else {
@@ -421,7 +423,7 @@ function commonSuffix(text1: string, text2: string): number {
   let pointerend = 0;
   while (pointermin < pointermid) {
     if (text1.substring(text1.length - pointermid, text1.length - pointerend) ==
-    text2.substring(text2.length - pointermid, text2.length - pointerend)) {
+        text2.substring(text2.length - pointermid, text2.length - pointerend)) {
       pointermin = pointermid;
       pointerend = pointermin;
     } else {
@@ -532,7 +534,7 @@ function halfMatchI(
     );
     if (best_common.length < suffixLength + prefixLength) {
       best_common = shorttext.substring(j - suffixLength, j) +
-      shorttext.substring(j, j + prefixLength);
+        shorttext.substring(j, j + prefixLength);
       best_longtext_a = longtext.substring(0, i - suffixLength);
       best_longtext_b = longtext.substring(i + prefixLength);
       best_shorttext_a = shorttext.substring(0, j - suffixLength);
@@ -606,8 +608,8 @@ function cleanupMerge(diffs: Diffs, fix_unicode: boolean) {
 
           // and we keep scanning for the next equality before rewriting the tuples.
           if (previous_equality >= 0 && ends_with_pair_start(
-            diffs[previous_equality][1],
-          )) {
+              diffs[previous_equality][1],
+            )) {
             let stray = diffs[previous_equality][1].slice(-1);
             diffs[previous_equality][1] = diffs[previous_equality][1].slice(
               0,
@@ -671,11 +673,11 @@ function cleanupMerge(diffs: Diffs, fix_unicode: boolean) {
             commonlength = commonSuffix(text_insert, text_delete);
             if (commonlength !== 0) {
               diffs[pointer][1] = text_insert.substring(text_insert.length -
-              commonlength) + diffs[pointer][1];
+                commonlength) + diffs[pointer][1];
               text_insert = text_insert.substring(0, text_insert.length -
-              commonlength);
+                commonlength);
               text_delete = text_delete.substring(0, text_delete.length -
-              commonlength);
+                commonlength);
             }
           }
 
@@ -727,10 +729,10 @@ function cleanupMerge(diffs: Diffs, fix_unicode: boolean) {
 
   while (pointer < diffs.length - 1) {
     if (diffs[pointer - 1][0] === DIFF_EQUAL && diffs[pointer + 1][0] ===
-    DIFF_EQUAL) {
+        DIFF_EQUAL) {
       // This is a single edit surrounded by equalities.
       if (diffs[pointer][1].substring(diffs[pointer][1].length - diffs[pointer -
-      1][1].length) === diffs[pointer - 1][1]) {
+          1][1].length) === diffs[pointer - 1][1]) {
         // Shift the edit over the previous equality.
         diffs[pointer][1] = diffs[pointer - 1][1] + diffs[pointer][1].substring(
           0,
@@ -740,7 +742,7 @@ function cleanupMerge(diffs: Diffs, fix_unicode: boolean) {
         diffs.splice(pointer - 1, 1);
         changes = true;
       } else if (diffs[pointer][1].substring(0, diffs[pointer + 1][1].length) ==
-      diffs[pointer + 1][1]) {
+          diffs[pointer + 1][1]) {
         // Shift the edit over the next equality.
         diffs[pointer - 1][1] += diffs[pointer + 1][1];
         diffs[pointer][1] = diffs[pointer][1].substring(

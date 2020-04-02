@@ -8,9 +8,9 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type BooleanKeywordTypeAnnotation =
-  & JSNodeBase
-  & {type: 'BooleanKeywordTypeAnnotation'};
+export type BooleanKeywordTypeAnnotation = JSNodeBase & {
+  type: 'BooleanKeywordTypeAnnotation';
+};
 
 export const booleanKeywordTypeAnnotation = createBuilder<
   BooleanKeywordTypeAnnotation

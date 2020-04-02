@@ -23,7 +23,7 @@ export default {
     }
 
     if (node.type === 'TemplateLiteral' && parent.type !==
-    'TaggedTemplateExpression') {
+        'TaggedTemplateExpression') {
       const nodes: Array<AnyExpression> = [];
       const {expressions, quasis} = node;
 

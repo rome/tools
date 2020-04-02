@@ -96,8 +96,8 @@ type State = {inTagHead: boolean};
 
 type StringMarkupParserOptions = ParserOptions;
 
-const createStringMarkupParser = createParser((ParserCore) =>
-  class StringMarkupParser extends ParserCore<Tokens, State> {
+const createStringMarkupParser = createParser(
+  (ParserCore) => class StringMarkupParser extends ParserCore<Tokens, State> {
     constructor(opts: StringMarkupParserOptions) {
       super(opts, 'parse/stringMarkup', {inTagHead: false});
     }
@@ -106,12 +106,10 @@ const createStringMarkupParser = createParser((ParserCore) =>
       index: Number0,
       input: string,
       state: State,
-    ):
-      | undefined
-      | {
-        token: TokenValues<Tokens>;
-        state: State;
-      } {
+    ): undefined | {
+      token: TokenValues<Tokens>;
+      state: State;
+    } {
       const escaped = isEscaped(index, input);
       const char = input[get0(index)];
 
@@ -224,20 +222,23 @@ const createStringMarkupParser = createParser((ParserCore) =>
         if (keyToken.type === 'Word') {
           key = keyToken.value;
 
-          if (!allowedAttributes.includes(key) && !globalAttributes.includes(key)) {
-            throw this.unexpected({
-              description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
-                tagName,
-                key,
-              ),
-            });
+          if (!allowedAttributes.includes(key) &&
+              !globalAttributes.includes(key)) {
+            throw this.unexpected(
+                {
+                  description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
+                    tagName,
+                    key,
+                  ),
+                },
+              );
           }
 
           this.nextToken();
 
           // Shorthand properties
           if (this.matchToken('Word') || this.matchToken('Slash') ||
-          this.matchToken('Greater')) {
+              this.matchToken('Greater')) {
             attributes.set(key, 'true');
             continue;
           }
@@ -286,12 +287,14 @@ const createStringMarkupParser = createParser((ParserCore) =>
           const name = this.getToken();
           if (name.type === 'Word') {
             if (name.value !== tagName) {
-              throw this.unexpected({
-                description: descriptions.STRING_MARKUP.INCORRECT_CLOSING_TAG_NAME(
-                  tagName,
-                  name.value,
-                ),
-              });
+              throw this.unexpected(
+                  {
+                    description: descriptions.STRING_MARKUP.INCORRECT_CLOSING_TAG_NAME(
+                      tagName,
+                      name.value,
+                    ),
+                  },
+                );
             }
 
             this.nextToken();
@@ -339,7 +342,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
       }
       return children;
     }
-  }
+  },
 );
 
 export function parseMarkup(input: string) {

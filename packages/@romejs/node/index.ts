@@ -22,7 +22,8 @@ function getRequire(folder: AbsoluteFilePath = CWD_PATH): RequireFunction {
 
   const filename = folder.join();
   const req = mod.createRequire
-    ? mod.createRequire(filename) : mod.createRequireFromPath(filename);
+    ? mod.createRequire(filename)
+    : mod.createRequireFromPath(filename);
   requires.set(folder, req);
   return req;
 }

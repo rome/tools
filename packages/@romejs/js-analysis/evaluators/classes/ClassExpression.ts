@@ -59,7 +59,8 @@ export default function ClassExpression(node: AnyNode, scope: Scope) {
     instances,
     statics,
     extends: node.meta.superClass
-      ? scope.evaluate(node.meta.superClass) : undefined,
+      ? scope.evaluate(node.meta.superClass)
+      : undefined,
   });
   if (node.id) {
     type.setHuman(node.id.name);

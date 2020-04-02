@@ -8,13 +8,11 @@
 import {JSNodeBase, AnyTargetBindingPattern, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type VariableDeclarator =
-  & JSNodeBase
-  & {
-    type: 'VariableDeclarator';
-    id: AnyTargetBindingPattern;
-    init?: AnyExpression;
-  };
+export type VariableDeclarator = JSNodeBase & {
+  type: 'VariableDeclarator';
+  id: AnyTargetBindingPattern;
+  init?: AnyExpression;
+};
 
 export const variableDeclarator = createBuilder<VariableDeclarator>(
   'VariableDeclarator',

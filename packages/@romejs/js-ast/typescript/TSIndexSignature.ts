@@ -8,14 +8,12 @@
 import {JSNodeBase, BindingIdentifier, AnyPrimaryType} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSIndexSignature =
-  & JSNodeBase
-  & {
-    type: 'TSIndexSignature';
-    readonly?: boolean;
-    key: BindingIdentifier;
-    typeAnnotation: undefined | AnyPrimaryType;
-  };
+export type TSIndexSignature = JSNodeBase & {
+  type: 'TSIndexSignature';
+  readonly?: boolean;
+  key: BindingIdentifier;
+  typeAnnotation: undefined | AnyPrimaryType;
+};
 
 export const tsIndexSignature = createBuilder<TSIndexSignature>(
   'TSIndexSignature',

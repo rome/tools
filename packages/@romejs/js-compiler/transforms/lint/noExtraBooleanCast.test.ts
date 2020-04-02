@@ -15,9 +15,8 @@ test('disallow unnecessary boolean casts', async (t) => {
     }
     `);
 
-  t.truthy(ifTest.diagnostics.find((d) =>
-    d.description.message.value === `Redundant double negation.`
-  ));
+  t.truthy(ifTest.diagnostics.find((d) => d.description.message.value ===
+    `Redundant double negation.`));
 
   const whileTest = await testLint(`
     while (!!foo) {
@@ -25,9 +24,8 @@ test('disallow unnecessary boolean casts', async (t) => {
     }
     `);
 
-  t.truthy(whileTest.diagnostics.find((d) =>
-    d.description.message.value === `Redundant double negation.`
-  ));
+  t.truthy(whileTest.diagnostics.find((d) => d.description.message.value ===
+    `Redundant double negation.`));
 
   const doWhileTest = await testLint(`
     let x = 1;
@@ -37,9 +35,8 @@ test('disallow unnecessary boolean casts', async (t) => {
     } while (Boolean(x));
     `);
 
-  t.truthy(doWhileTest.diagnostics.find((d) =>
-    d.description.message.value === `Redundant double negation.`
-  ));
+  t.truthy(doWhileTest.diagnostics.find((d) => d.description.message.value ===
+    `Redundant double negation.`));
 
   const forTest = await testLint(`
     for (; !!foo; ) {
@@ -47,7 +44,6 @@ test('disallow unnecessary boolean casts', async (t) => {
     }
     `);
 
-  t.truthy(forTest.diagnostics.find((d) =>
-    d.description.message.value === `Redundant double negation.`
-  ));
+  t.truthy(forTest.diagnostics.find((d) => d.description.message.value ===
+    `Redundant double negation.`));
 });

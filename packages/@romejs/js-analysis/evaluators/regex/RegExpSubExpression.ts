@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, RegExpSubExpression, regExpSubExpression} from '@romejs/js-ast';
+import {
+  AnyNode,
+  RegExpSubExpression,
+  regExpSubExpression,
+} from '@romejs/js-ast';
 
 export default function RegExpSubExpression(node: AnyNode) {
   node = regExpSubExpression.assert(node);

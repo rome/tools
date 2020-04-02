@@ -14,17 +14,15 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclareClass =
-  & JSNodeBase
-  & {
-    type: 'FlowDeclareClass';
-    id: BindingIdentifier;
-    typeParameters?: FlowTypeParameterDeclaration;
-    extends: Array<FlowInterfaceExtends>;
-    implements: Array<FlowInterfaceExtends>;
-    mixins: Array<FlowInterfaceExtends>;
-    body: FlowObjectTypeAnnotation;
-  };
+export type FlowDeclareClass = JSNodeBase & {
+  type: 'FlowDeclareClass';
+  id: BindingIdentifier;
+  typeParameters?: FlowTypeParameterDeclaration;
+  extends: Array<FlowInterfaceExtends>;
+  implements: Array<FlowInterfaceExtends>;
+  mixins: Array<FlowInterfaceExtends>;
+  body: FlowObjectTypeAnnotation;
+};
 
 export const flowDeclareClass = createBuilder<FlowDeclareClass>(
   'FlowDeclareClass',

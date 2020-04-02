@@ -8,14 +8,12 @@
 import {JSNodeBase, TSThisType, Identifier, AnyPrimaryType} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTypePredicate =
-  & JSNodeBase
-  & {
-    type: 'TSTypePredicate';
-    asserts: boolean;
-    parameterName: Identifier | TSThisType;
-    typeAnnotation?: AnyPrimaryType;
-  };
+export type TSTypePredicate = JSNodeBase & {
+  type: 'TSTypePredicate';
+  asserts: boolean;
+  parameterName: Identifier | TSThisType;
+  typeAnnotation?: AnyPrimaryType;
+};
 
 export const tsTypePredicate = createBuilder<TSTypePredicate>(
   'TSTypePredicate',

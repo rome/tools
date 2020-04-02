@@ -8,12 +8,10 @@
 import {JSNodeBase, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type PrivateName =
-  & JSNodeBase
-  & {
-    type: 'PrivateName';
-    id: Identifier;
-  };
+export type PrivateName = JSNodeBase & {
+  type: 'PrivateName';
+  id: Identifier;
+};
 
 export const privateName = createBuilder<PrivateName>('PrivateName', {
   bindingKeys: {},

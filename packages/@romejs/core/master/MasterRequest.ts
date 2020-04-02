@@ -41,7 +41,11 @@ import Master, {
   MasterUnfinishedMarker,
 } from './Master';
 import {Reporter} from '@romejs/cli-reporter';
-import {Event, EventSubscription, mergeEventSubscriptions} from '@romejs/events';
+import {
+  Event,
+  EventSubscription,
+  mergeEventSubscriptions,
+} from '@romejs/events';
 import {serializeCLIFlags, SerializeCLITarget} from '@romejs/cli-flags';
 import {Program} from '@romejs/js-ast';
 import {TransformStageName} from '@romejs/js-compiler';
@@ -89,18 +93,18 @@ type ResolvedArg = {
 
 type ResolvedArgs = Array<ResolvedArg>;
 
-export type MasterRequestGetFilesOptions =
-  & Omit<MemoryFSGlobOptions, 'getProjectIgnore' | 'getProjectEnabled'>
-  & {
-    ignoreArgumentMisses?: boolean;
-    ignoreProjectIgnore?: boolean;
-    disabledDiagnosticCategory?: DiagnosticCategory;
-    advice?: DiagnosticAdvice;
-    configCategory?: ProjectConfigCategoriesWithIgnoreAndEnabled;
-    verb?: string;
-    noun?: string;
-    args?: Array<string>;
-  };
+export type MasterRequestGetFilesOptions = Omit<MemoryFSGlobOptions,
+  | 'getProjectIgnore'
+  | 'getProjectEnabled'> & {
+  ignoreArgumentMisses?: boolean;
+  ignoreProjectIgnore?: boolean;
+  disabledDiagnosticCategory?: DiagnosticCategory;
+  advice?: DiagnosticAdvice;
+  configCategory?: ProjectConfigCategoriesWithIgnoreAndEnabled;
+  verb?: string;
+  noun?: string;
+  args?: Array<string>;
+};
 
 export type MasterRequestGetFilesResult = {
   projects: Set<ProjectDefinition>;
@@ -155,7 +159,9 @@ export default class MasterRequest {
     await this.master.handleRequestStart(this);
   }
 
-  teardown(res: undefined | MasterQueryResponse): undefined | MasterQueryResponse {
+  teardown(
+    res: undefined | MasterQueryResponse,
+  ): undefined | MasterQueryResponse {
     if (res !== undefined) {
       // If the query asked for no data then strip all diagnostics and data values
       if (this.query.noData) {
@@ -247,7 +253,8 @@ export default class MasterRequest {
         if (min === 0) {
           message = `Expected no arguments`;
         } else {
-          message = `Expected exactly <number emphasis>${min}</number> arguments`;
+            message =
+            `Expected exactly <number emphasis>${min}</number> arguments`;
         }
       }
     } else {
@@ -257,14 +264,15 @@ export default class MasterRequest {
 
       if (args.length > max) {
         excessive = true;
-        message =
+          message =
           `Expected no more than <number emphasis>${min}</number> arguments`;
       }
     }
 
     if (message !== undefined) {
       this.throwDiagnosticFlagError(excessive
-        ? 'Too many arguments' : 'Missing arguments', {
+        ? 'Too many arguments'
+        : 'Missing arguments', {
         type: 'arg-range',
         from: min,
         to: max,
@@ -289,7 +297,8 @@ export default class MasterRequest {
       description: {
         message: createBlessedDiagnosticMessage(message),
         category: target.type === 'arg' || target.type === 'arg-range'
-          ? 'args/invalid' : 'flags/invalid',
+          ? 'args/invalid'
+          : 'flags/invalid',
         advice,
       },
       location,
@@ -359,9 +368,7 @@ export default class MasterRequest {
     };
   }
 
-  async resolveFilesFromArgs(
-    overrideArgs?: Array<string>,
-  ): Promise<{
+  async resolveFilesFromArgs(overrideArgs?: Array<string>): Promise<{
     projects: Set<ProjectDefinition>;
     resolvedArgs: ResolvedArgs;
   }> {
@@ -417,10 +424,13 @@ export default class MasterRequest {
 
   async watchFilesFromArgs(
     opts: MasterRequestGetFilesOptions,
-    callback: (result: MasterRequestGetFilesResult, initial: boolean) => Promise<
-      void
-    >,
-  ): Promise<EventSubscription> {
+    callback: (
+      result: MasterRequestGetFilesResult,
+      initial: boolean,
+    ) => Promise<void>,
+  ): Promise<
+    EventSubscription
+  > {
     // Everything needs to be relative to this
     const {resolvedArgs} = await this.resolveFilesFromArgs();
 
@@ -503,11 +513,12 @@ export default class MasterRequest {
     const extendedGlobOpts: MemoryFSGlobOptions = {...opts};
 
     if (configCategory !== undefined) {
-      extendedGlobOpts.getProjectEnabled = (project) =>
-        project.config[configCategory].enabled;
+        extendedGlobOpts.getProjectEnabled =
+        (project) => project.config[configCategory].enabled;
 
-      extendedGlobOpts.getProjectIgnore = (project) =>
-        ignoreProjectIgnore ? [] : project.config[configCategory].ignore;
+      extendedGlobOpts.getProjectIgnore = (project) => ignoreProjectIgnore
+        ? []
+        : project.config[configCategory].ignore;
     }
 
     // Resolved arguments that resulted in no files
@@ -541,27 +552,26 @@ export default class MasterRequest {
 
         // Hint if `path` failed `globOpts.test`
         if (configCategory !== undefined &&
-          !project.config[configCategory].enabled) {
+            !project.config[configCategory].enabled) {
           const enabledSource = master.projectManager.findProjectConfigConsumer(
             project,
-            (consumer) =>
-              consumer.has(configCategory) && consumer.get(configCategory).get(
-                'enabled',
-              ),
+            (consumer) => consumer.has(configCategory) && consumer.get(
+              configCategory,
+            ).get('enabled'),
           );
 
           const explanationPrefix = opts.verb === undefined
-            ? 'Files excluded' : `Files excluded from ${opts.verb}`;
+            ? 'Files excluded'
+            : `Files excluded from ${opts.verb}`;
 
           if (opts.disabledDiagnosticCategory !== undefined) {
             category = opts.disabledDiagnosticCategory;
           }
 
           if (enabledSource.value === undefined) {
-            let explanation =
-              `${explanationPrefix} as it's not enabled for this project`;
+            let explanation = `${explanationPrefix} as it's not enabled for this project`;
             if (configCategory !== undefined) {
-              explanation +=
+                explanation +=
                 `. Run <command>rome config enable-category ${configCategory}</command> to enable it.`;
             }
             advice.push({
@@ -570,11 +580,13 @@ export default class MasterRequest {
               message: explanation,
             });
           } else {
-            advice.push({
-              type: 'log',
-              category: 'info',
-              message: `${explanationPrefix} as it's explicitly disabled in this project config`,
-            });
+            advice.push(
+              {
+                type: 'log',
+                category: 'info',
+                message: `${explanationPrefix} as it's explicitly disabled in this project config`,
+              },
+            );
 
             const disabledPointer = enabledSource.value.getDiagnosticLocation(
               'value',
@@ -607,19 +619,19 @@ export default class MasterRequest {
 
             advice.push({
               type: 'list',
-              list: Array.from(withoutIgnore, (path) =>
-                `<filelink target="${path.join()}" />`
+              list: Array.from(
+                withoutIgnore,
+                (path) => `<filelink target="${path.join()}" />`,
               ),
               truncate: true,
             });
 
-            const ignoreSource =
-              master.projectManager.findProjectConfigConsumer(
-                project,
-                (consumer) =>
-                  consumer.has(configCategory) &&
-                    consumer.get(configCategory).get('ignore'),
-              );
+            const ignoreSource = master.projectManager.findProjectConfigConsumer(
+              project,
+              (consumer) => consumer.has(configCategory) && consumer.get(
+                configCategory,
+              ).get('ignore'),
+            );
 
             if (ignoreSource.value !== undefined) {
               const ignorePointer = ignoreSource.value.getDiagnosticLocation(
@@ -645,8 +657,8 @@ export default class MasterRequest {
           description: {
             category,
             message: createBlessedDiagnosticMessage(opts.noun === undefined
-              ? 'No files found' : `No files to ${opts.noun} found`
-            ),
+              ? 'No files found'
+              : `No files to ${opts.noun} found`),
             advice,
           },
           marker: `<filelink target="${path.join()}" />`,
@@ -654,9 +666,9 @@ export default class MasterRequest {
       }
 
       throw new DiagnosticsError(
-        'MasterRequest.getFilesFromArgs: Some arguments did not resolve to any files',
-        diagnostics,
-      );
+          'MasterRequest.getFilesFromArgs: Some arguments did not resolve to any files',
+          diagnostics,
+        );
     }
 
     return {paths, projects};
@@ -668,11 +680,13 @@ export default class MasterRequest {
     // Turn all the cacheDependencies entries from 'absolute paths to UIDs
     return {
       ...res,
-      cacheDependencies: res.cacheDependencies.map((filename) => {
-        return (
-          projectManager.getFileReference(createAbsoluteFilePath(filename)).uid
-        );
-      }),
+      cacheDependencies: res.cacheDependencies.map(
+        (filename) => {
+          return projectManager.getFileReference(
+              createAbsoluteFilePath(filename),
+            ).uid;
+        },
+      ),
     };
   }
 
@@ -721,17 +735,19 @@ export default class MasterRequest {
       if (diagnostics === undefined) {
         const info = getErrorStructure(err);
 
-        throw createErrorFromStructure({
-          ...info,
-          advice: [
-            ...info.advice,
+        throw createErrorFromStructure(
             {
-              type: 'log',
-              category: 'info',
-              message: `Error occurred while requesting ${method} for <filelink emphasis target="${ref.uid}" />`,
+              ...info,
+              advice: [
+                ...info.advice,
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: `Error occurred while requesting ${method} for <filelink emphasis target="${ref.uid}" />`,
+                },
+              ],
             },
-          ],
-        });
+          );
       } else {
         // We don't want to tamper with these
         throw err;
@@ -743,8 +759,10 @@ export default class MasterRequest {
     path: AbsoluteFilePath,
     content: string,
   ): Promise<void> {
-    await this.wrapRequestDiagnostic('updateBuffer', path, (bridge, file) =>
-      bridge.updateBuffer.call({file, content})
+    await this.wrapRequestDiagnostic(
+      'updateBuffer',
+      path,
+      (bridge, file) => bridge.updateBuffer.call({file, content}),
     );
     this.master.fileChangeEvent.send(path);
   }
@@ -753,8 +771,10 @@ export default class MasterRequest {
     path: AbsoluteFilePath,
     opts: WorkerParseOptions,
   ): Promise<Program> {
-    return this.wrapRequestDiagnostic('parse', path, (bridge, file) =>
-      bridge.parseJS.call({file, opts})
+    return this.wrapRequestDiagnostic(
+      'parse',
+      path,
+      (bridge, file) => bridge.parseJS.call({file, opts}),
     );
   }
 
@@ -772,8 +792,10 @@ export default class MasterRequest {
       path,
     );
 
-    const res = await this.wrapRequestDiagnostic('lint', path, (bridge, file) =>
-      bridge.lint.call({file, fix, prefetchedModuleSignatures})
+    const res = await this.wrapRequestDiagnostic(
+      'lint',
+      path,
+      (bridge, file) => bridge.lint.call({file, fix, prefetchedModuleSignatures}),
     );
 
     await cache.update(path, {
@@ -786,8 +808,10 @@ export default class MasterRequest {
   async requestWorkerFormat(
     path: AbsoluteFilePath,
   ): Promise<undefined | WorkerFormatResult> {
-    return await this.wrapRequestDiagnostic('format', path, (bridge, file) =>
-      bridge.format.call({file})
+    return await this.wrapRequestDiagnostic(
+      'format',
+      path,
+      (bridge, file) => bridge.format.call({file}),
     );
   }
 
@@ -799,9 +823,9 @@ export default class MasterRequest {
     const {cache} = this.master;
 
     // Create a cache key comprised of the stage and hash of the options
-    const optionsHash = options === undefined ? 'none' : crypto.createHash(
-      'sha256',
-    ).update(JSON.stringify(options)).digest('hex');
+    const optionsHash = options === undefined
+      ? 'none'
+      : crypto.createHash('sha256').update(JSON.stringify(options)).digest('hex');
     const cacheKey = `${stage}:${optionsHash}`;
 
     // Check cache for this stage and options
@@ -830,17 +854,15 @@ export default class MasterRequest {
     });
 
     // There's a race condition here between the file being opened and then rewritten
-    await cache.update(path, (cacheEntry) =>
-      ({
-        compile: {
-          ...cacheEntry.compile,
-          [cacheKey]: {
-            ...res,
-            cached: true,
-          },
+    await cache.update(path, (cacheEntry) => ({
+      compile: {
+        ...cacheEntry.compile,
+        [cacheKey]: {
+          ...res,
+          cached: true,
         },
-      })
-    );
+      },
+    }));
 
     return res;
   }

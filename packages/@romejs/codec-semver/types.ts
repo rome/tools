@@ -41,7 +41,15 @@ export type VersionNode = WildcardVersionNode | AbsoluteVersionNode;
 export type WildcardNode = SimpleNode<'Wildcard'>;
 
 // >=1.2.3
-export type ComparatorOperator = '<' | '>' | '>=' | '<=' | '~>' | '^' | '~' | '=';
+export type ComparatorOperator =
+  | '<'
+  | '>'
+  | '>='
+  | '<='
+  | '~>'
+  | '^'
+  | '~'
+  | '=';
 
 export type ComparatorNode = ComplexNode<'Comparator', {
   operator: ComparatorOperator;
@@ -75,20 +83,18 @@ export type RangeNode =
   | VersionNode;
 
 // TOKENS
-export type Tokens =
-  & BaseTokens
-  & {
-    Space: SimpleToken<'Space'>;
-    Number: ValueToken<'Number', number>;
-    Word: ValueToken<'Word', string>;
-    Dash: SimpleToken<'Dash'>;
-    RangeDash: SimpleToken<'RangeDash'>;
-    Plus: SimpleToken<'Plus'>;
-    Star: SimpleToken<'Star'>;
-    Operator: ValueToken<'Operator', ComparatorOperator>;
-    Dot: SimpleToken<'Dot'>;
-    Pipe: SimpleToken<'Pipe'>;
-  };
+export type Tokens = BaseTokens & {
+  Space: SimpleToken<'Space'>;
+  Number: ValueToken<'Number', number>;
+  Word: ValueToken<'Word', string>;
+  Dash: SimpleToken<'Dash'>;
+  RangeDash: SimpleToken<'RangeDash'>;
+  Plus: SimpleToken<'Plus'>;
+  Star: SimpleToken<'Star'>;
+  Operator: ValueToken<'Operator', ComparatorOperator>;
+  Dot: SimpleToken<'Dot'>;
+  Pipe: SimpleToken<'Pipe'>;
+};
 
 // Types for public API
 export type UserVersion = AbsoluteVersionNode | string;

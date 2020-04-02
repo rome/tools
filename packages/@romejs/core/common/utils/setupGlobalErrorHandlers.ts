@@ -8,10 +8,9 @@
 export default function setupGlobalErrorHandlers(
   callback: (err: Error) => void,
 ): () => void {
-  const onUncaughtException: NodeJS.UncaughtExceptionListener =
-    (err: Error) => {
-      callback(err);
-    };
+  const onUncaughtException: NodeJS.UncaughtExceptionListener = (err: Error) => {
+    callback(err);
+  };
   process.on('uncaughtException', onUncaughtException);
 
   const onUnhandledRejection: NodeJS.UnhandledRejectionListener = (

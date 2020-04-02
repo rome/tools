@@ -31,24 +31,20 @@ export type WebMasterTime = {
   endTime: undefined | number;
 };
 
-export type WebMasterClient =
-  & WebMasterTime
-  & {
-    id: number;
-    flags: ClientFlagsJSON;
-    stdoutAnsi: string;
-    stdoutHTML: string;
-  };
+export type WebMasterClient = WebMasterTime & {
+  id: number;
+  flags: ClientFlagsJSON;
+  stdoutAnsi: string;
+  stdoutHTML: string;
+};
 
-export type WebMasterRequest =
-  & WebMasterTime
-  & {
-    id: number;
-    client: number;
-    query: MasterQueryRequest;
-    markers: Array<MasterMarker>;
-    response: undefined | MasterQueryResponse;
-  };
+export type WebMasterRequest = WebMasterTime & {
+  id: number;
+  client: number;
+  query: MasterQueryRequest;
+  markers: Array<MasterMarker>;
+  response: undefined | MasterQueryResponse;
+};
 
 export class WebServer {
   constructor(req: MasterRequest) {
@@ -250,9 +246,7 @@ export class WebServer {
     }
   }
 
-  async getBundler(
-    url: ConsumableUrl,
-  ): Promise<{
+  async getBundler(url: ConsumableUrl): Promise<{
     bundler: Bundler;
     path: AbsoluteFilePath;
   }> {
@@ -279,10 +273,11 @@ export class WebServer {
       return {bundler: cached, path};
     }
 
-    const bundlerConfig: BundlerConfig =
-      this.masterRequest.getBundlerConfigFromFlags({
+    const bundlerConfig: BundlerConfig = this.masterRequest.getBundlerConfigFromFlags(
+      {
         platform,
-      });
+      },
+    );
 
     const bundler = new Bundler(this.masterRequest, bundlerConfig);
     this.bundlerCache.set(cacheKey, bundler);

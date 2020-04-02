@@ -35,21 +35,19 @@ export type BundleOptions = {
 };
 
 export default class BundleRequest {
-  constructor(
-    {
-      bundler,
-      reporter,
-      mode,
-      resolvedEntry,
-      options,
-    }: {
-      bundler: Bundler;
-      reporter: Reporter;
-      mode: BundlerMode;
-      resolvedEntry: AbsoluteFilePath;
-      options: BundleOptions;
-    },
-  ) {
+  constructor({
+    bundler,
+    reporter,
+    mode,
+    resolvedEntry,
+    options,
+  }: {
+    bundler: Bundler;
+    reporter: Reporter;
+    mode: BundlerMode;
+    resolvedEntry: AbsoluteFilePath;
+    options: BundleOptions;
+  }) {
     this.reporter = reporter;
     this.interpreter = options.interpreter;
     this.bundler = bundler;
@@ -59,15 +57,17 @@ export default class BundleRequest {
     this.resolvedEntry = resolvedEntry;
     this.resolvedEntryUid = bundler.master.projectManager.getUid(resolvedEntry);
 
-    this.diagnostics =
-      new DiagnosticsProcessor({
-        origins: [
-          {
-            category: 'bundler',
-            message: `Requested bundle for <filelink target="${this.resolvedEntryUid}" />`,
-          },
-        ],
-      });
+      this.diagnostics =
+      new DiagnosticsProcessor(
+        {
+          origins: [
+            {
+              category: 'bundler',
+              message: `Requested bundle for <filelink target="${this.resolvedEntryUid}" />`,
+            },
+          ],
+        },
+      );
     this.diagnostics.addAllowedUnusedSuppressionPrefix('lint');
 
     this.compiles = new Map();
@@ -153,8 +153,7 @@ export default class BundleRequest {
     // Diagnostics would have already been added during the initial DependencyGraph.seed
 
     // We're doing the work of resolving everything again, maybe we should cache it?
-    const resolvedImports: BundleCompileResolvedImports =
-      mod.resolveImports().resolved;
+    const resolvedImports: BundleCompileResolvedImports = mod.resolveImports().resolved;
 
     let assetPath: undefined | string;
     if (mod.handler !== undefined && mod.handler.isAsset) {
@@ -178,14 +177,13 @@ export default class BundleRequest {
       assetPath,
     };
 
-    const res: WorkerCompileResult =
-      await this.bundler.request.requestWorkerCompile(
-        path,
-        'compileForBundle',
-        {
-          bundle: opts,
-        },
-      );
+    const res: WorkerCompileResult = await this.bundler.request.requestWorkerCompile(
+      path,
+      'compileForBundle',
+      {
+        bundle: opts,
+      },
+    );
 
     if (!res.cached) {
       this.cached = false;
@@ -327,7 +325,7 @@ export default class BundleRequest {
 
     // push footer
     push(
-      '})(typeof global !== \'undefined\' ? global : typeof window !== \'undefined\' ? window : this);',
+      "})(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this);",
     );
 
     //

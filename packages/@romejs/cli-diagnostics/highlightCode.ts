@@ -31,7 +31,8 @@ export default function highlightCode(opts: AnsiHighlightOptions): string {
   if (opts.language === 'js') {
     // js-parser does not accept an "unknown" sourceType
     return ansiHighlightJS(opts.input, opts.sourceType === undefined ||
-    opts.sourceType === 'unknown' ? 'script' : opts.sourceType);
+        opts.sourceType ===
+        'unknown' ? 'script' : opts.sourceType);
   }
 
   if (opts.language === 'json') {
@@ -41,10 +42,12 @@ export default function highlightCode(opts: AnsiHighlightOptions): string {
   return escapeMarkup(opts.input);
 }
 
-function reduce<Token extends {
-  start: Number0;
-  end: Number0;
-}>(
+function reduce<
+  Token extends {
+    start: Number0;
+    end: Number0;
+  }
+>(
   input: string,
   tokens: Array<Token>,
   callback: (token: Token, line: string) => string,
@@ -124,6 +127,7 @@ function ansiHighlightJSON(path: UnknownFilePath, input: string): string {
 
       case 'Invalid':
         return invalidHighlight(value);
+
 
       // Will never be hit
       case 'EOF':

@@ -31,7 +31,7 @@ export default function getNodeReferenceParts(
         return add(node.property);
       }
     } else if (node.type === 'ComputedMemberProperty' && node.value.type ===
-    'StringLiteral') {
+        'StringLiteral') {
       return add(node.value);
     } else if (node.type === 'StaticMemberProperty') {
       return add(node.value);

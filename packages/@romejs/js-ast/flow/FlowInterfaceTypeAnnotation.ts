@@ -12,13 +12,11 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowInterfaceTypeAnnotation =
-  & JSNodeBase
-  & {
-    type: 'FlowInterfaceTypeAnnotation';
-    extends: Array<FlowInterfaceExtends>;
-    body: FlowObjectTypeAnnotation;
-  };
+export type FlowInterfaceTypeAnnotation = JSNodeBase & {
+  type: 'FlowInterfaceTypeAnnotation';
+  extends: Array<FlowInterfaceExtends>;
+  body: FlowObjectTypeAnnotation;
+};
 
 export const flowInterfaceTypeAnnotation = createBuilder<
   FlowInterfaceTypeAnnotation

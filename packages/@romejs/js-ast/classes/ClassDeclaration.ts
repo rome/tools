@@ -8,15 +8,13 @@
 import {JSNodeBase, BindingIdentifier, ClassHead} from '../index';
 import {createBuilder} from '../utils';
 
-export type ClassDeclaration =
-  & JSNodeBase
-  & {
-    type: 'ClassDeclaration';
-    id: BindingIdentifier;
-    meta: ClassHead;
-    abstract?: boolean;
-    declare?: boolean;
-  };
+export type ClassDeclaration = JSNodeBase & {
+  type: 'ClassDeclaration';
+  id: BindingIdentifier;
+  meta: ClassHead;
+  abstract?: boolean;
+  declare?: boolean;
+};
 
 export const classDeclaration = createBuilder<ClassDeclaration>(
   'ClassDeclaration',

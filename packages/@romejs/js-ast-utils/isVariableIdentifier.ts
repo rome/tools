@@ -11,6 +11,7 @@ export default function isVariableIdentifier(
   node: AnyNode,
 ): node is AnyVariableIdentifier {
   return node.type === 'BindingIdentifier' || node.type ===
-  'AssignmentIdentifier' || node.type === 'ReferenceIdentifier' || node.type ===
-  'JSXReferenceIdentifier';
+      'AssignmentIdentifier' || node.type === 'ReferenceIdentifier' ||
+      node.type ===
+      'JSXReferenceIdentifier';
 }

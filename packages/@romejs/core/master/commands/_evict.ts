@@ -21,7 +21,8 @@ export default createMasterCommand({
     } = req;
 
     const files = args.length === 0
-      ? master.fileAllocator.getAllOwnedFilenames() : args;
+      ? master.fileAllocator.getAllOwnedFilenames()
+      : args;
 
     for (const file of files) {
       await master.fileAllocator.evict(client.flags.cwd.resolve(file));

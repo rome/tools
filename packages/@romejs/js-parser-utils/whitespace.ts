@@ -15,8 +15,7 @@ export function isNewLine(code: number): boolean {
   return code === 10 || code === 13 || code === 8_232 || code === 8_233;
 }
 
-export const nonASCIIwhitespace =
-  /[\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\ufeff]/;
+export const nonASCIIwhitespace = /[\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\ufeff]/;
 
 export const skipWhiteSpace = /(?:\s|\/\/.*|\/\*[^]*?\*\/)*/g;
 

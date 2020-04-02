@@ -56,7 +56,9 @@ export default class Bundler {
     return new Bundler(req, req.getBundlerConfigFromFlags());
   }
 
-  async getResolvedEntry(unresolvedEntry: string): Promise<BundlerEntryResoluton> {
+  async getResolvedEntry(
+    unresolvedEntry: string,
+  ): Promise<BundlerEntryResoluton> {
     const {cwd} = this.config;
 
     const res = await this.master.resolver.resolveEntryAssert({
@@ -75,9 +77,8 @@ export default class Bundler {
       requestedType: 'package',
       source: createUnknownFilePath(unresolvedEntry),
     });
-    const manifestRoot: undefined | AbsoluteFilePath =
-      manifestRootResolved.type === 'FOUND'
-        ? manifestRootResolved.path : undefined;
+    const manifestRoot: undefined | AbsoluteFilePath = manifestRootResolved.type ===
+      'FOUND' ? manifestRootResolved.path : undefined;
     let manifestDef;
     if (manifestRoot !== undefined) {
       const def = master.memoryFs.getManifestDefinition(manifestRoot);
@@ -132,9 +133,9 @@ export default class Bundler {
         },
       ],
     });
-    const entryUids = entries.map((entry) =>
-      this.master.projectManager.getUid(entry)
-    );
+    const entryUids = entries.map((entry) => this.master.projectManager.getUid(
+      entry,
+    ));
     const analyzeProgress = this.reporter.progress({
       name: `bundler:analyze:${entryUids.join(',')}`,
       title: 'Analyzing',
@@ -250,12 +251,15 @@ export default class Bundler {
   async deriveManifest(
     manifestDef: ManifestDefinition,
     entryBundle: BundleResultBundle,
-    createBundle: (resolvedSegment: AbsoluteFilePath, options: BundleOptions) => Promise<
-      BundleResultBundle
-    >,
+    createBundle: (
+      resolvedSegment: AbsoluteFilePath,
+      options: BundleOptions,
+    ) => Promise<BundleResultBundle>,
 
     addFile: (relative: string, buffer: Buffer | string) => void,
-  ): Promise<JSONManifest> {
+  ): Promise<
+    JSONManifest
+  > {
     // TODO figure out some way to use bundleMultiple here
     const manifest = manifestDef.manifest;
 
@@ -301,10 +305,9 @@ export default class Bundler {
       const isBinShorthand = typeof binConsumer.asUnknown() === 'string';
 
       for (const [binName, relative] of manifest.bin) {
-        const location =
-          (isBinShorthand ? binConsumer : binConsumer.get(binName)).getDiagnosticLocation(
-            'inner-value',
-          );
+        const location = (isBinShorthand
+          ? binConsumer
+          : binConsumer.get(binName)).getDiagnosticLocation('inner-value');
 
         const absolute = await this.master.resolver.resolveAssert({
           ...this.config.resolver,

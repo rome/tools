@@ -44,10 +44,9 @@ export function arrayOfPatterns(consumer: Consumer): PathPatterns {
   });
 }
 
-export function mergeArrays<T>(
-  a: undefined | Array<T>,
-  b: undefined | Array<T>,
-): undefined | Array<T> {
+export function mergeArrays<
+  T
+>(a: undefined | Array<T>, b: undefined | Array<T>): undefined | Array<T> {
   if (a === undefined) {
     return a;
   }

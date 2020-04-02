@@ -20,19 +20,18 @@ export type AnyExportExternalSpecifier =
   | ExportDefaultSpecifier
   | ExportExternalSpecifier;
 
-export type ExportExternalDeclaration =
-  & JSNodeBase
-  & {
-    type: 'ExportExternalDeclaration';
-    defaultSpecifier?: ExportDefaultSpecifier;
-    namespaceSpecifier?: ExportNamespaceSpecifier;
-    namedSpecifiers: Array<ExportExternalSpecifier>;
-    source: StringLiteral;
-    exportKind?: ConstExportModuleKind;
-  };
+export type ExportExternalDeclaration = JSNodeBase & {
+  type: 'ExportExternalDeclaration';
+  defaultSpecifier?: ExportDefaultSpecifier;
+  namespaceSpecifier?: ExportNamespaceSpecifier;
+  namedSpecifiers: Array<ExportExternalSpecifier>;
+  source: StringLiteral;
+  exportKind?: ConstExportModuleKind;
+};
 
-export const exportExternalDeclaration =
-  createBuilder<ExportExternalDeclaration>('ExportExternalDeclaration', {
+export const exportExternalDeclaration = createBuilder<ExportExternalDeclaration>(
+  'ExportExternalDeclaration',
+  {
     bindingKeys: {},
     visitorKeys: {
       defaultSpecifier: true,
@@ -40,4 +39,5 @@ export const exportExternalDeclaration =
       namedSpecifiers: true,
       source: true,
     },
-  });
+  },
+);

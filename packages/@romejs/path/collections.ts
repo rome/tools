@@ -139,7 +139,10 @@ export class RelativeFilePathMap<Value> extends FilePathMap<
   type: 'relative' = 'relative';
 }
 
-export class UnknownFilePathMap<Value> extends FilePathMap<UnknownFilePath, Value> {
+export class UnknownFilePathMap<Value> extends FilePathMap<
+  UnknownFilePath,
+  Value
+> {
   type: 'unknown' = 'unknown';
 }
 

@@ -6,7 +6,11 @@
  */
 
 import {Scope} from '../../scopes';
-import {TSPropertySignature, tsPropertySignature, AnyNode} from '@romejs/js-ast';
+import {
+  TSPropertySignature,
+  tsPropertySignature,
+  AnyNode,
+} from '@romejs/js-ast';
 
 export default function TSPropertySignature(node: AnyNode, scope: Scope) {
   node = tsPropertySignature.assert(node);

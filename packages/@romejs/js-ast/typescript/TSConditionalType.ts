@@ -8,15 +8,13 @@
 import {JSNodeBase, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSConditionalType =
-  & JSNodeBase
-  & {
-    type: 'TSConditionalType';
-    checkType: AnyTSPrimary;
-    extendsType: AnyTSPrimary;
-    trueType: AnyTSPrimary;
-    falseType: AnyTSPrimary;
-  };
+export type TSConditionalType = JSNodeBase & {
+  type: 'TSConditionalType';
+  checkType: AnyTSPrimary;
+  extendsType: AnyTSPrimary;
+  trueType: AnyTSPrimary;
+  falseType: AnyTSPrimary;
+};
 
 export const tsConditionalType = createBuilder<TSConditionalType>(
   'TSConditionalType',

@@ -48,8 +48,8 @@ function escapeChar(
     case '"':
       return '\\"';
 
-    case '\'':
-      return '\\\'';
+    case "'":
+      return "\\'";
 
     case '\b':
       return '\\b';
@@ -79,7 +79,7 @@ function escapeChar(
   return undefined;
 }
 
-type QuoteChar = '' | '"' | '\'' | '`';
+type QuoteChar = '' | '"' | "'" | '`';
 
 type EscapeStringOptions = {
   quote?: QuoteChar;
@@ -118,8 +118,8 @@ export default function escapeString(
         const isLowSurrogate = nextCharCode >= 56_320 && nextCharCode <= 57_343;
         if (isLowSurrogate) {
           // https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
-          const codePoint =
-            (charCode - 55_296) * 1_024 + nextCharCode - 56_320 + 65_536;
+          const codePoint = (charCode - 55_296) * 1_024 + nextCharCode - 56_320 +
+            65_536;
           const hex = codePoint.toString(16);
           result += `\\u{${hex}}`;
           index++;
@@ -145,7 +145,7 @@ export default function escapeString(
 
     // Escape single quotes
     if (char == SINGLE_QUOTE) {
-      result += quote == char ? '\\\'' : char;
+      result += quote == char ? "\\'" : char;
       continue;
     }
 

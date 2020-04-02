@@ -20,16 +20,14 @@ export type AnyImportSpecifier =
   | ImportNamespaceSpecifier
   | ImportSpecifier;
 
-export type ImportDeclaration =
-  & JSNodeBase
-  & {
-    type: 'ImportDeclaration';
-    defaultSpecifier?: ImportDefaultSpecifier;
-    namespaceSpecifier?: ImportNamespaceSpecifier;
-    namedSpecifiers: Array<ImportSpecifier>;
-    source: StringLiteral;
-    importKind?: ConstImportModuleKind;
-  };
+export type ImportDeclaration = JSNodeBase & {
+  type: 'ImportDeclaration';
+  defaultSpecifier?: ImportDefaultSpecifier;
+  namespaceSpecifier?: ImportNamespaceSpecifier;
+  namedSpecifiers: Array<ImportSpecifier>;
+  source: StringLiteral;
+  importKind?: ConstImportModuleKind;
+};
 
 export const importDeclaration = createBuilder<ImportDeclaration>(
   'ImportDeclaration',

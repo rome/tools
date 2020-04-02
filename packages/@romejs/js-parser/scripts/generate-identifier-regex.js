@@ -8,7 +8,6 @@
 'use strict';
 
 // Which Unicode version should be used?
-
 const version = '10.0.0';
 
 const start = require(
@@ -37,7 +36,7 @@ function pad(str, width) {
 
 function esc(code) {
   const hex = code.toString(16);
-  if (hex.length <= 2) return `\\x${pad(hex, 2)}`;else return `\\u${pad(hex, 4)}`;
+  if (hex.length <= 2) return `\\x${pad(hex, 2)}`; else return `\\u${pad(hex, 4)}`;
 }
 
 function generate(chars) {
@@ -51,8 +50,9 @@ function generate(chars) {
       to++;
     }
     if (to <= 65_535) {
-      if (from == to) re += esc(from);else if (from + 1 == to) re += esc(from) +
-      esc(to);else re += `${esc(from)}-esc(to)`;
+      if (from == to) re += esc(from); else if (from + 1 == to) re +=
+          esc(from) +
+          esc(to); else re += `${esc(from)}-esc(to)`;
     } else {
       astral.push(from - at, to - from);
       at = to;

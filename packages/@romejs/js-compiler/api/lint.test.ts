@@ -51,6 +51,6 @@ test(
   'format enabled in project config should result in regenerated file',
   async (t) => {
     const res = await testLint('foobar ( "yes" );', true);
-    t.is(res.src, 'foobar(\'yes\');\n');
+    t.is(res.src, "foobar('yes');\n");
   },
 );
