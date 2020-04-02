@@ -72,13 +72,10 @@ type Tokens =
         escaped: boolean;
       }
     >;
-    NamedBackReferenceCharacter: ComplexToken<
-      'NamedBackReferenceCharacter',
-      {
-        value: string;
-        escaped: boolean;
-      }
-    >;
+    NamedBackReferenceCharacter: ComplexToken<'NamedBackReferenceCharacter', {
+      value: string;
+      escaped: boolean;
+    }>;
   };
 
 type GroupModifiers =
@@ -217,13 +214,14 @@ export const createRegExpParser = createParser((ParserCore) =>
             if (this.unicode) {
               // named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
               let namedBackReference = '';
-              let namedBackReferenceIndex = get0(index) + 2; 
+              let namedBackReferenceIndex = get0(index) + 2;
               let namedBackRefenenceChar = input[namedBackReferenceIndex];
               if (namedBackRefenenceChar === '<') {
                 // skip the opening <
                 namedBackReferenceIndex++;
                 namedBackRefenenceChar = input[namedBackReferenceIndex];
-                while(namedBackRefenenceChar !== '>' && namedBackReferenceIndex < input.length) {
+                while (namedBackRefenenceChar !== '>' &&
+                  namedBackReferenceIndex < input.length) {
                   namedBackReference += namedBackRefenenceChar;
                   namedBackReferenceIndex++;
                   namedBackRefenenceChar = input[namedBackReferenceIndex];
@@ -628,7 +626,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
       if (token.type === 'NamedBackReferenceCharacter') {
         this.nextToken();
-        
+
         return {
           type: 'RegExpNamedBackReference',
           name: token.value,

@@ -5,10 +5,13 @@
 * LICENSE file in the root directory of this source tree.
 */
 
-import {AnyNode, RegExpNamedBackReference, regExpNamedBackReference} from '@romejs/js-ast';
+import {
+  AnyNode,
+  RegExpNamedBackReference,
+  regExpNamedBackReference,
+} from '@romejs/js-ast';
 
 export default function RegExpNamedBackReference(node: AnyNode) {
   node = regExpNamedBackReference.assert(node);
   throw new Error('unimplemented');
 }
- 

@@ -6,9 +6,16 @@
 */
 
 import Generator from '../../Generator';
-import {AnyNode, RegExpNamedBackReference, regExpNamedBackReference} from '@romejs/js-ast';
+import {
+  AnyNode,
+  RegExpNamedBackReference,
+  regExpNamedBackReference,
+} from '@romejs/js-ast';
 
-export default function RegExpNamedBackReference(generator: Generator, node: AnyNode) {
+export default function RegExpNamedBackReference(
+  generator: Generator,
+  node: AnyNode,
+) {
   node = regExpNamedBackReference.assert(node);
   generator.append('\\k');
   generator.append('<');
