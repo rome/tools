@@ -40,6 +40,7 @@ export type BuilderOptions = {
   sourceMapTarget?: string;
   sourceRoot?: string;
   sourceFileName?: string;
+  sourceText?: string;
 };
 
 type PrintJoinOptions = Omit<GroupToken, 'type' | 'groups'> & {

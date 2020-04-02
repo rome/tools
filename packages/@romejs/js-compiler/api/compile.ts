@@ -48,7 +48,8 @@ export default async function compile(
     sourceFileName: filename,
     inputSourceMap: req.inputSourceMap,
     sourceMaps: true,
-  }, sourceText);
+    sourceText,
+  });
 
   const res: CompileResult = {
     compiledCode: generator.getCode(),

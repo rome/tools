@@ -11,11 +11,7 @@ import Printer from './Printer';
 
 export {BuilderOptions, Builder};
 
-export function formatJS(
-  ast: AnyNode,
-  opts: BuilderOptions,
-  code: string = '',
-): Printer {
+export function formatJS(ast: AnyNode, opts: BuilderOptions): Printer {
   const builder = new Builder(opts);
   const tokens = builder.tokenize(ast, MOCK_PARENT);
   const printer = new Printer(opts);

@@ -22,7 +22,12 @@ import {
   PositionMarkerToken,
 } from './tokens';
 import {BuilderOptions} from './Builder';
-import {Mappings, SourceMapConsumer} from '@romejs/codec-source-map';
+import {
+  Mappings,
+  SourceMapConsumer,
+  SourceMapGenerator,
+  SourceMap,
+} from '@romejs/codec-source-map';
 import {Number1, Number0, number0, number1, get0, inc, dec} from '@romejs/ob1';
 import {SourceLocation} from '@romejs/parser-core';
 
@@ -656,5 +661,24 @@ export default class Printer {
 
   getMappings(): Mappings {
     return this.mappings.slice();
+  }
+
+  getSourceMap(): SourceMap {
+    const {options} = this;
+
+    const map = new SourceMapGenerator({
+      file: options.sourceMapTarget,
+      sourceRoot: options.sourceRoot,
+    });
+
+    if (options.sourceFileName !== undefined) {
+      map.setSourceContent(options.sourceFileName, options.sourceText);
+    }
+
+    for (const mapping of this.mappings) {
+      map.addMapping(mapping);
+    }
+
+    return map.toJSON();
   }
 }

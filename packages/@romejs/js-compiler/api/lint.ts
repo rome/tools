@@ -58,7 +58,8 @@ export default async function lint(req: FormatRequest): Promise<LintResult> {
     const generator = formatJS(newAst, {
       typeAnnotations: true,
       format: 'pretty',
-    }, sourceText);
+      sourceText,
+    });
     formattedCode = generator.getCode();
   }
 
