@@ -76,7 +76,7 @@ class GitVCSClient extends VCSClient {
     const files: Array<string> = [];
 
     for (const line of lines) {
-      const match = line.match(/^[M]\s+(.*?)$/);
+      const match = line.match(/^[AM]\s+(.*?)$/);
       if (match != null) {
         files.push(match[1]);
       }

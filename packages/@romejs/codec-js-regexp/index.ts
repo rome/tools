@@ -82,7 +82,6 @@ type Tokens =
   };
 
 type GroupModifiers =
-  | undefined
   | {
     type: 'NON_CAPTURE';
     kind: RegExpGroupNonCapture['kind'];
@@ -153,11 +152,11 @@ export const createRegExpParser = createParser((ParserCore) =>
     diagnostics: Diagnostics;
     unicode: boolean;
 
-    addDiagnostic(opts: ParserUnexpectedOptions) {
+    addDiagnostic(opts: ParserUnexpectedOptions): void {
       this.diagnostics.push(this.createDiagnostic(opts));
     }
 
-    unexpected() {
+    unexpected(): never {
       throw new Error('No throwing');
     }
 
@@ -423,7 +422,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       });
     }
 
-    getGroupModifiers(): GroupModifiers {
+    getGroupModifiers(): undefined | GroupModifiers {
       const token = this.getToken();
 
       if (token.type === 'Character') {
@@ -508,6 +507,8 @@ export const createRegExpParser = createParser((ParserCore) =>
         ...descriptions.REGEX_PARSER.INVALID_CAPTURE_GROUP_MODIFIER,
         token,
       });
+
+      return undefined;
     }
 
     matchOperator(op: string): boolean {
@@ -528,7 +529,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       const start = this.getPosition();
       this.nextToken();
 
-      let modifiers: GroupModifiers;
+      let modifiers: undefined | GroupModifiers;
       if (this.eatOperator('?')) {
         modifiers = this.getGroupModifiers();
       }
@@ -804,6 +805,8 @@ export const createRegExpParser = createParser((ParserCore) =>
 
         this.restore(snapshot);
       }
+
+      return undefined;
     }
 
     parseBodyItem(): undefined | AnyRegExpBodyItem {
@@ -907,6 +910,9 @@ export const createRegExpParser = createParser((ParserCore) =>
         case ']':
         case '}':
           return this.parseCharacter();
+
+        default:
+          return undefined;
       }
     }
 
@@ -933,6 +939,8 @@ export const createRegExpParser = createParser((ParserCore) =>
         ...descriptions.REGEX_PARSER.UNKNOWN_REGEX_PART,
         token,
       });
+
+      return undefined;
     }
 
     parseExpression(

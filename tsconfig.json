@@ -11,6 +11,7 @@
     "downlevelIteration": true,
     "noUnusedLocals": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
     "typeRoots": ["./node_modules/@types"],
     "lib": ["dom", "es2020"],
     "baseUrl": ".",

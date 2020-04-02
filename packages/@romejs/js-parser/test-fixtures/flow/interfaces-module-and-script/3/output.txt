@@ -114,7 +114,7 @@ Program {
       }
       extends: Array [
         FlowInterfaceExtends {
-          id: Identifier {
+          id: ReferenceIdentifier {
             name: 'B'
             loc: Object {
               filename: 'input.js'
@@ -159,7 +159,7 @@ Program {
             }
             params: Array [
               FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'T'
                   loc: Object {
                     filename: 'input.js'
@@ -194,7 +194,7 @@ Program {
           }
         }
         FlowInterfaceExtends {
-          id: Identifier {
+          id: ReferenceIdentifier {
             name: 'C'
             loc: Object {
               filename: 'input.js'
@@ -239,7 +239,7 @@ Program {
             }
             params: Array [
               FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'T'
                   loc: Object {
                     filename: 'input.js'

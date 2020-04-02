@@ -811,6 +811,8 @@ export function maybeCreateURLFilePath(
 ): undefined | URLFilePath {
   if (filename !== undefined) {
     return createURLFilePath(filename);
+  } else {
+    return undefined;
   }
 }
 
@@ -819,6 +821,8 @@ export function maybeCreateRelativeFilePath(
 ): undefined | RelativeFilePath {
   if (filename !== undefined) {
     return createRelativeFilePath(filename);
+  } else {
+    return undefined;
   }
 }
 
@@ -827,6 +831,8 @@ export function maybeCreateAbsoluteFilePath(
 ): undefined | AbsoluteFilePath {
   if (filename !== undefined) {
     return createAbsoluteFilePath(filename);
+  } else {
+    return undefined;
   }
 }
 
@@ -835,5 +841,7 @@ export function maybeCreateUnknownFilePath(
 ): undefined | UnknownFilePath {
   if (filename !== undefined) {
     return createUnknownFilePath(filename);
+  } else {
+    return undefined;
   }
 }

@@ -151,12 +151,12 @@ export default class Buffer {
     originalColumn: undefined | Number0,
     identifierName: undefined | string,
     filename: undefined | string = this.opts.sourceFileName,
-  ) {
+  ): void {
     // TODO: emit a mapping with `original: undefined` in this case - after
 
     // deduplicating using lastSourceLine and lastSourceColumn.
     if (originalLine === undefined || originalColumn === undefined) {
-      return undefined;
+      return;
     }
 
     // If this mapping points to the same source location as the last one, we can ignore it since
@@ -164,7 +164,7 @@ export default class Buffer {
     // the previous one covers it.
     if (this.lastGenLine === generatedLine && this.lastSourceLine ===
     originalLine && this.lastSourceColumn === originalColumn) {
-      return undefined;
+      return;
     }
 
     this.lastGenLine = generatedLine;

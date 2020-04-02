@@ -52,6 +52,8 @@ export default class Cache<Result> {
     const astCache = this.cache.get(query.ast);
     if (astCache) {
       return astCache.get(query.key);
+    } else {
+      return undefined;
     }
   }
 

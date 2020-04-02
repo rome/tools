@@ -5,6 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export default function PrivateName() {
-  throw new Error('unimplemented');
+import Generator from '../../Generator';
+import {AnyNode, privateName} from '@romejs/js-ast';
+
+export default function PrivateName(generator: Generator, node: AnyNode) {
+  node = privateName.assert(node);
+
+  generator.token('#');
+  generator.print(node.id, node);
 }

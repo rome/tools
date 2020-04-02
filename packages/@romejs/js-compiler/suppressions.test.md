@@ -6,29 +6,18 @@
 
 ```javascript
 Object {
-  suppressions: Array [
-    Object {
-      category: 'foo'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
+  suppressions: Array []
   diagnostics: Array [
     Object {
       description: Object {
-        category: 'suppressions/duplicate'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate suppression category <emphasis>foo</emphasis>'}
+        category: 'suppressions/incorrectPrefix'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid suppression prefix <emphasis>rome-suppress</emphasis>'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+          }
+        ]
       }
       location: Object {
         filename: 'unknown'
@@ -52,11 +41,20 @@ Object {
 
 ```javascript
 Object {
-  diagnostics: Array []
-  suppressions: Array [
+  suppressions: Array []
+  diagnostics: Array [
     Object {
-      category: 'foo'
-      loc: Object {
+      description: Object {
+        category: 'suppressions/incorrectPrefix'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid suppression prefix <emphasis>rome-suppress</emphasis>'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+          }
+        ]
+      }
+      location: Object {
         filename: 'unknown'
         end: Object {
           column: 0
@@ -71,24 +69,17 @@ Object {
       }
     }
     Object {
-      category: 'bar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
+      description: Object {
+        category: 'suppressions/incorrectPrefix'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid suppression prefix <emphasis>rome-suppress</emphasis>'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+          }
+        ]
       }
-    }
-    Object {
-      category: 'foo'
-      loc: Object {
+      location: Object {
         filename: 'unknown'
         end: Object {
           column: 0
@@ -103,24 +94,17 @@ Object {
       }
     }
     Object {
-      category: 'bar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 0
-          index: 0
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 2
-        }
+      description: Object {
+        category: 'suppressions/incorrectPrefix'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid suppression prefix <emphasis>rome-suppress</emphasis>'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+          }
+        ]
       }
-    }
-    Object {
-      category: 'foo'
-      loc: Object {
+      location: Object {
         filename: 'unknown'
         end: Object {
           column: 0
@@ -135,24 +119,17 @@ Object {
       }
     }
     Object {
-      category: 'bar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 0
-          index: 0
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 3
-        }
+      description: Object {
+        category: 'suppressions/incorrectPrefix'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid suppression prefix <emphasis>rome-suppress</emphasis>'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+          }
+        ]
       }
-    }
-    Object {
-      category: 'foo'
-      loc: Object {
+      location: Object {
         filename: 'unknown'
         end: Object {
           column: 0
@@ -167,40 +144,17 @@ Object {
       }
     }
     Object {
-      category: 'bar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 0
-          index: 0
-          line: 4
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 4
-        }
+      description: Object {
+        category: 'suppressions/incorrectPrefix'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid suppression prefix <emphasis>rome-suppress</emphasis>'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+          }
+        ]
       }
-    }
-    Object {
-      category: 'cat'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 0
-          index: 0
-          line: 4
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 4
-        }
-      }
-    }
-    Object {
-      category: 'dog'
-      loc: Object {
+      location: Object {
         filename: 'unknown'
         end: Object {
           column: 0
@@ -222,11 +176,20 @@ Object {
 
 ```javascript
 Object {
-  diagnostics: Array []
-  suppressions: Array [
+  suppressions: Array []
+  diagnostics: Array [
     Object {
-      category: 'foo'
-      loc: Object {
+      description: Object {
+        category: 'suppressions/incorrectPrefix'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid suppression prefix <emphasis>rome-suppress</emphasis>'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+          }
+        ]
+      }
+      location: Object {
         filename: 'unknown'
         end: Object {
           column: 0
@@ -241,8 +204,17 @@ Object {
       }
     }
     Object {
-      category: 'foo'
-      loc: Object {
+      description: Object {
+        category: 'suppressions/incorrectPrefix'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid suppression prefix <emphasis>rome-suppress</emphasis>'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+          }
+        ]
+      }
+      location: Object {
         filename: 'unknown'
         end: Object {
           column: 0
@@ -257,8 +229,17 @@ Object {
       }
     }
     Object {
-      category: 'foo'
-      loc: Object {
+      description: Object {
+        category: 'suppressions/incorrectPrefix'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid suppression prefix <emphasis>rome-suppress</emphasis>'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+          }
+        ]
+      }
+      location: Object {
         filename: 'unknown'
         end: Object {
           column: 0
@@ -273,8 +254,17 @@ Object {
       }
     }
     Object {
-      category: 'foo'
-      loc: Object {
+      description: Object {
+        category: 'suppressions/incorrectPrefix'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid suppression prefix <emphasis>rome-suppress</emphasis>'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+          }
+        ]
+      }
+      location: Object {
         filename: 'unknown'
         end: Object {
           column: 0
@@ -305,7 +295,7 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            message: 'Did you mean <emphasis>rome-suppress</emphasis>?'
+            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
           }
         ]
       }
