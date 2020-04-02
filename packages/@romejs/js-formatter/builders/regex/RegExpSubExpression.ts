@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, flatten} from '../../tokens';
+import {Tokens} from '../../tokens';
 import {
   AnyNode,
   RegExpSubExpression,
@@ -18,5 +18,5 @@ export default function RegExpSubExpression(
   node: AnyNode,
 ): Tokens {
   node = regExpSubExpression.assert(node);
-  return flatten(node.body.map((item) => builder.tokenize(item, node)));
+  return node.body.flatMap((item) => builder.tokenize(item, node));
 }

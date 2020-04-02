@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, indent, flatten, operator} from '../../tokens';
+import {Tokens, space, indent, operator} from '../../tokens';
 import {JSXElement, jsxElement, AnyNode} from '@romejs/js-ast';
 
 export default function JSXElement(builder: Builder, node: AnyNode): Tokens {
@@ -38,10 +38,7 @@ export default function JSXElement(builder: Builder, node: AnyNode): Tokens {
     return [
       ...tokens,
       operator('>'),
-      indent(
-        flatten(node.children.map((child) => builder.tokenize(child, node))),
-      ),
-
+      indent(node.children.flatMap((child) => builder.tokenize(child, node))),
       operator('</'),
       ...builder.tokenize(node.name, node),
       operator('>'),

@@ -6,17 +6,15 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, indent, operator, flatten} from '../../tokens';
+import {Tokens, indent, operator} from '../../tokens';
 import {JSXFragment, jsxFragment, AnyNode} from '@romejs/js-ast';
 
 export default function JSXFragment(builder: Builder, node: AnyNode): Tokens {
   node = jsxFragment.assert(node);
 
   return [
-      operator('<>'),
-      indent(
-        flatten(node.children.map((child) => builder.tokenize(child, node))),
-      ),
-      operator('</>'),
-    ];
+    operator('<>'),
+    indent(node.children.flatMap((child) => builder.tokenize(child, node))),
+    operator('</>'),
+  ];
 }
