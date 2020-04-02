@@ -31,7 +31,7 @@ import {
   AnyRegExpExpression,
 } from '@romejs/js-ast';
 import {Diagnostics, descriptions} from '@romejs/diagnostics';
-import {Number0, get0, add} from '@romejs/ob1';
+import {Number0, get0, add, coerce0} from '@romejs/ob1';
 
 type Operator =
   | '^'
@@ -69,6 +69,13 @@ type Tokens =
       'NumericBackReferenceCharacter',
       {
         value: number;
+        escaped: boolean;
+      }
+    >;
+    NamedBackReference: ComplexToken<
+      'NamedBackReference',
+      {
+        value: string;
         escaped: boolean;
       }
     >;
@@ -209,7 +216,28 @@ export const createRegExpParser = createParser((ParserCore) =>
 
           case 'k':
             if (this.unicode) {
-              // TODO named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
+              // named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
+              let namedBackReference = '';
+              let namedBackReferenceIndex = get0(index) + 2; 
+              let namedBackRefenenceChar = input[namedBackReferenceIndex];
+              if (namedBackRefenenceChar === '<') {
+                // skip the opening <
+                namedBackReferenceIndex++;
+                namedBackRefenenceChar = input[namedBackReferenceIndex];
+                while(namedBackRefenenceChar !== '>' && namedBackReferenceIndex < input.length) {
+                  namedBackReference += namedBackRefenenceChar;
+                  namedBackReferenceIndex++;
+                  namedBackRefenenceChar = input[namedBackReferenceIndex];
+                }
+                if (namedBackRefenenceChar === '>') {
+                  // skip the closing >
+                  namedBackReferenceIndex++;
+                }
+                return this.finishComplexToken('NamedBackReference', {
+                  value: namedBackReference,
+                  escaped: true,
+                }, coerce0(namedBackReferenceIndex));
+              }
             }
 
             return this.finishComplexToken('Character', {
@@ -893,6 +921,12 @@ export const createRegExpParser = createParser((ParserCore) =>
         case 'Character':
         case 'NumericBackReferenceCharacter':
           return this.parseCharacter();
+
+        case 'NamedBackReference':  {
+          this.nextToken();
+          console.log(token.value, ' : ', token.end);
+          return undefined;
+        }
       }
 
       this.addDiagnostic({
