@@ -62,14 +62,13 @@ export default function IfStatement(builder: Builder, node: AnyNode): Tokens {
 
 // Recursively get the last statement.
 function getLastStatement(statement: AnyNode): AnyNode {
-  if ((statement.type === 'WithStatement' || statement.type === 'WhileStatement' ||
-              statement.type === 'DoWhileStatement' ||
-            statement.type === 'ForOfStatement' ||
-          statement.type === 'ForInStatement' ||
-        statement.type === 'ForStatement') &&
-      isStatement(statement.body)) {
-    return getLastStatement(statement.body);
-  } else {
-    return statement;
+  let node = statement;
+  while ((node.type === 'WithStatement' || node.type === 'WhileStatement' ||
+      node.type ===
+      'DoWhileStatement' || node.type === 'ForOfStatement' || node.type ===
+    'ForInStatement' || node.type === 'ForStatement') && isStatement(node.body)) {
+    node = node.body;
   }
+
+  return node;
 }
