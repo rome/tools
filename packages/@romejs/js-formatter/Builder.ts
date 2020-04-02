@@ -118,8 +118,7 @@ export default class Builder {
 
     // If leading comment had an empty line after then retain it
     if (leadingComments !== undefined) {
-      tokens = [
-        ...tokens,
+      tokens.push(
         ...this.tokenizeComments(leadingComments),
         ...this.maybeCommentNewlines(
           node,
@@ -127,10 +126,10 @@ export default class Builder {
             1],
           false,
         ),
-      ];
+      );
     }
 
-    tokens = [...tokens, ...printMethod(this, node, parent)];
+    tokens.push(...printMethod(this, node, parent));
 
     if (needsParens) {
       tokens.push(operator(')'));
@@ -139,13 +138,9 @@ export default class Builder {
     // If there's an empty line between the node and it's trailing comments then keep it
     const trailingComments = this.getComments(false, node);
     if (trailingComments !== undefined) {
-      tokens = tokens.concat(this.maybeCommentNewlines(
-        node,
-        trailingComments[0],
-        true,
-      ));
+      tokens.push(...this.maybeCommentNewlines(node, trailingComments[0], true));
     }
-    tokens = tokens.concat(this.tokenizeComments(trailingComments));
+    tokens.push(...this.tokenizeComments(trailingComments));
 
     this.printStack.pop();
 
@@ -247,7 +242,7 @@ export default class Builder {
         continue;
       }
 
-      tokens = [...tokens, ...this.tokenize(node, parent)];
+      tokens.push(...this.tokenize(node, parent));
 
       const {
         nextNode,
@@ -258,10 +253,7 @@ export default class Builder {
         tokens.push(newline);
       }
 
-      tokens = tokens.concat(this.maybeInsertExtraStatementNewlines(
-        node,
-        nextNode,
-      ));
+      tokens.push(...this.maybeInsertExtraStatementNewlines(node, nextNode));
     }
 
     if (shouldIndent) {
@@ -291,7 +283,9 @@ export default class Builder {
       tokens.push(newline);
     }
 
-    return [...tokens, ...this.tokenizeComments(innerComments)];
+    tokens.push(...this.tokenizeComments(innerComments));
+
+    return tokens;
   }
 
   tokenizeComments(comments: undefined | Array<AnyComment>): Tokens {
@@ -303,15 +297,11 @@ export default class Builder {
 
     for (let i = 0; i < comments.length; i++) {
       const comment = comments[i];
-      tokens = tokens.concat(this.tokenizeComment(comment));
+      tokens.push(...this.tokenizeComment(comment));
 
       const nextComment = comments[i + 1];
       if (nextComment !== undefined) {
-        tokens = tokens.concat(this.maybeCommentNewlines(
-          comment,
-          nextComment,
-          true,
-        ));
+        tokens.push(...this.maybeCommentNewlines(comment, nextComment, true));
       }
     }
 
