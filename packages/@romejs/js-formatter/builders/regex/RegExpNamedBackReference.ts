@@ -5,7 +5,8 @@
 * LICENSE file in the root directory of this source tree.
 */
 
-import Generator from '../../Generator';
+import Builder from '../../Builder';
+import {Tokens, verbatim} from '../../tokens';
 import {
   AnyNode,
   RegExpNamedBackReference,
@@ -13,12 +14,14 @@ import {
 } from '@romejs/js-ast';
 
 export default function RegExpNamedBackReference(
-  generator: Generator,
+  builder: Builder,
   node: AnyNode,
-) {
+): Tokens {
   node = regExpNamedBackReference.assert(node);
-  generator.append('\\k');
-  generator.append('<');
-  generator.append(node.name);
-  generator.append('>');
+  return [
+    verbatim('\\k'),
+    verbatim('<'),
+    verbatim(node.name),
+    verbatim('>'),
+  ];
 }

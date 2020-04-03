@@ -48,7 +48,6 @@ type Operator =
   | '*'
   | '|';
 
-<<<<<<< HEAD
 type Tokens =
   & BaseTokens
   & {
@@ -88,36 +87,6 @@ type GroupModifiers =
     type: 'NAMED_CAPTURE';
     name: string;
   };
-=======
-type Tokens = BaseTokens & {
-  Operator: ValueToken<'Operator', Operator>;
-  Character: ComplexToken<'Character', {
-    value: string;
-    escaped: boolean;
-  }>;
-  EscapedCharacter: ValueToken<'EscapedCharacter',
-    | 'd'
-    | 'D'
-    | 'b'
-    | 'B'
-    | 's'
-    | 'S'
-    | 'w'
-    | 'W'>;
-  NumericBackReferenceCharacter: ComplexToken<'NumericBackReferenceCharacter', {
-    value: number;
-    escaped: boolean;
-  }>;
-};
-
-type GroupModifiers = {
-  type: 'NON_CAPTURE';
-  kind: RegExpGroupNonCapture['kind'];
-} | {
-  type: 'NAMED_CAPTURE';
-  name: string;
-};
->>>>>>> master
 
 type RegExpParserOptions = ParserOptions & {unicode: boolean};
 
@@ -505,15 +474,9 @@ export const createRegExpParser = createParser(
                   skipCount++;
                 }
 
-<<<<<<< HEAD
                 if (targetToken.type === 'Character' && targetToken.value === '>') {
                   // Skip through all the name tokens including >
                   skipCount++;
-=======
-                if (targetToken.type === 'Character' && targetToken.value ===
-                    '>') {
-                  // Skip through all the name tokens
->>>>>>> master
 
                   // This is kinda a hacky solution, and slower than it could be
                   for (let i = 0; i < skipCount; i++) {
