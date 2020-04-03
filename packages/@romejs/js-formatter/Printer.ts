@@ -507,26 +507,25 @@ export default class Printer {
   findUnbrokenGroupForLinkedGroups(
     tokens: Tokens,
   ): undefined | LinkedGroupsToken | GroupToken {
-    for (const token of tokens) {
-      let group: undefined | LinkedGroupsToken | GroupToken;
+    const stacks = [tokens];
 
-      switch (token.type) {
-        case 'LinkedGroups':
-        case 'Group':
-          if (!this.isGroupBroken(token)) {
-            group = token;
+    for (const stack of stacks) {
+      for (let token of stack) {
+        switch (token.type) {
+          case 'LinkedGroups':
+          case 'Group':
+            if (!this.isGroupBroken(token)) {
+              return token;
+            }
+            break;
+
+          case 'ConcatToken':
+          case 'Indent':
+          case 'PositionMarker': {
+            stacks.push(token.tokens);
+            break;
           }
-          break;
-
-        case 'ConcatToken':
-        case 'Indent':
-        case 'PositionMarker':
-          group = this.findUnbrokenGroupForLinkedGroups(token.tokens);
-          break;
-      }
-
-      if (group !== undefined) {
-        return group;
+        }
       }
     }
 
