@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, operator} from '../../tokens';
+import {Tokens, space, operator, concat} from '../../tokens';
 import {
   BindingAssignmentPattern,
   bindingAssignmentPattern,
@@ -20,10 +20,10 @@ export default function BindingAssignmentPattern(
   node = bindingAssignmentPattern.assert(node);
 
   return [
-    ...builder.tokenize(node.left, node),
+    concat(builder.tokenize(node.left, node)),
     space,
     operator('='),
     space,
-    ...builder.tokenize(node.right, node),
+    concat(builder.tokenize(node.right, node)),
   ];
 }

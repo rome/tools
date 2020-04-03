@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {operator} from '../../tokens';
+import {operator, concat} from '../../tokens';
 import {AnyNode} from '@romejs/js-ast';
 import StringLiteral from '../literals/StringLiteral';
 
@@ -15,5 +15,5 @@ export default function Directive(
   node: AnyNode,
   parent: AnyNode,
 ) {
-  return [...StringLiteral(builder, node, parent), operator(';')];
+  return [concat(StringLiteral(builder, node, parent)), operator(';')];
 }

@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, space, operator} from '../../tokens';
-import {WithStatement, withStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, word, space, operator, concat} from '../../tokens';
+import {withStatement, AnyNode} from '@romejs/js-ast';
 
 export default function WithStatement(builder: Builder, node: AnyNode): Tokens {
   node = withStatement.assert(node);
@@ -16,8 +16,8 @@ export default function WithStatement(builder: Builder, node: AnyNode): Tokens {
     word('with'),
     space,
     operator('('),
-    ...builder.tokenize(node.object, node),
+    concat(builder.tokenize(node.object, node)),
     operator(')'),
-    ...builder.tokenize(node.body, node),
+    concat(builder.tokenize(node.body, node)),
   ];
 }

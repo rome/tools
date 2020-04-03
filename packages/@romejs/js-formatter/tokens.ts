@@ -94,6 +94,11 @@ export type PositionMarkerToken = {
   location: SourceLocation;
 };
 
+export type ConcatToken = {
+  type: 'ConcatToken';
+  tokens: Tokens;
+};
+
 export type Token =
   | GroupToken
   | IndentToken
@@ -107,7 +112,8 @@ export type Token =
   | TerminatorlessToken
   | CommentToken
   | WordToken
-  | PositionMarkerToken;
+  | PositionMarkerToken
+  | ConcatToken;
 
 export type Tokens = Array<Token>;
 
@@ -226,12 +232,9 @@ export function positionMarker(
   };
 }
 
-export function flatten(arr: Array<Tokens>): Tokens {
-  let tokens: Tokens = [];
-
-  for (const elem of arr) {
-    tokens = tokens.concat(elem);
-  }
-
-  return tokens;
+export function concat(tokens: Tokens): ConcatToken {
+  return {
+    type: 'ConcatToken',
+    tokens,
+  };
 }

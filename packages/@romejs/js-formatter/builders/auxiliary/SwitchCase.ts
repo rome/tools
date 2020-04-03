@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {SwitchCase, switchCase, AnyNode} from '@romejs/js-ast';
+import {switchCase, AnyNode} from '@romejs/js-ast';
 import {
   word,
   space,
@@ -14,6 +14,7 @@ import {
   operator,
   indent,
   Tokens,
+  concat,
 } from '@romejs/js-formatter/tokens';
 
 export default function SwitchCase(builder: Builder, node: AnyNode): Tokens {
@@ -25,7 +26,7 @@ export default function SwitchCase(builder: Builder, node: AnyNode): Tokens {
     tokens = [
       word('case'),
       space,
-      ...builder.tokenize(node.test, node),
+      concat(builder.tokenize(node.test, node)),
       operator(':'),
     ];
   } else {
@@ -35,7 +36,7 @@ export default function SwitchCase(builder: Builder, node: AnyNode): Tokens {
   const {consequent} = node;
   if (consequent.length === 1 && consequent[0].type === 'BlockStatement') {
     tokens.push(space);
-    tokens = tokens.concat(builder.tokenize(consequent[0], node));
+    tokens.push(concat(builder.tokenize(consequent[0], node)));
   } else if (consequent.length > 0) {
     tokens.push(newline);
     tokens.push(indent(builder.tokenizeStatementList(consequent, node)));

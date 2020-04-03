@@ -24,6 +24,7 @@ import {
   space,
   terminatorless,
   breakGroup,
+  concat,
 } from '../tokens';
 
 export function buildForXStatementBuilder(op: 'of' | 'in'): BuilderMethod {
@@ -38,16 +39,16 @@ export function buildForXStatementBuilder(op: 'of' | 'in'): BuilderMethod {
     }
 
     return [
-      ...tokens,
+      concat(tokens),
       operator('('),
-      ...builder.tokenize(node.left, node),
+      concat(builder.tokenize(node.left, node)),
       space,
       word(op),
       space,
-      ...builder.tokenize(node.right, node),
+      concat(builder.tokenize(node.right, node)),
       operator(')'),
       space,
-      ...builder.tokenize(node.body, node),
+      concat(builder.tokenize(node.body, node)),
     ];
   };
 }
@@ -66,7 +67,7 @@ export function buildYieldAwaitBuilder(keyword: string): BuilderMethod {
 
       if (node.argument) {
         return [
-          ...tokens,
+          concat(tokens),
           space,
           terminatorless(builder.tokenize(node.argument, node)),
         ];
@@ -82,12 +83,12 @@ export function buildLabelStatementBuilder(prefix: string): BuilderMethod {
         node.type === 'ContinueStatement' || node.type === 'ReturnStatement' ||
         node.type === 'BreakStatement' ? node : throwStatement.assert(node);
 
-    let tokens: Tokens = [word(prefix)];
+    const tokens: Tokens = [word(prefix)];
 
     if ((node.type === 'ContinueStatement' || node.type === 'BreakStatement') &&
         node.label !== undefined) {
       tokens.push(space);
-      tokens = tokens.concat(builder.tokenize(node.label, node));
+      tokens.push(concat(builder.tokenize(node.label, node)));
     }
 
     if ((node.type === 'ThrowStatement' || node.type === 'ReturnStatement') &&
@@ -128,15 +129,15 @@ export function printMethod(
   }
 
   if (node.type === 'TSDeclareMethod') {
-    return [...tokens, ...builder.tokenize(node.head, node)];
+    return [concat(tokens), concat(builder.tokenize(node.head, node))];
   }
 
   return [
-    ...tokens,
-    ...builder.tokenize(node.key, node),
-    ...builder.tokenize(node.head, node),
+    concat(tokens),
+    concat(builder.tokenize(node.key, node)),
+    concat(builder.tokenize(node.head, node)),
     space,
-    ...builder.tokenize(node.body, node),
+    concat(builder.tokenize(node.body, node)),
   ];
 }
 
@@ -151,7 +152,7 @@ export function printBindingPatternParams(
   });
 
   if (rest !== undefined) {
-    group.groups.push([operator('...'), ...builder.tokenize(rest, node)]);
+    group.groups.push([operator('...'), concat(builder.tokenize(rest, node))]);
   }
 
   return [group];
@@ -184,12 +185,15 @@ export function printPatternMeta(
   meta: undefined | PatternMeta,
 ): Tokens {
   if (builder.options.typeAnnotations && meta !== undefined) {
-    let tokens: Tokens = [];
+    const tokens: Tokens = [];
     if (meta.optional) {
       tokens.push(operator('?'));
     }
 
-    return [...tokens, ...builder.tokenizeTypeColon(meta.typeAnnotation, node)];
+    return [
+      concat(tokens),
+      concat(builder.tokenizeTypeColon(meta.typeAnnotation, node)),
+    ];
   } else {
     return [];
   }

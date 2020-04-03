@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {CallExpression, callExpression, AnyNode} from '@romejs/js-ast';
+import {Tokens, operator, concat} from '../../tokens';
+import {callExpression, AnyNode} from '@romejs/js-ast';
 
 export default function CallExpression(builder: Builder, node: AnyNode): Tokens {
     node =
@@ -15,17 +15,18 @@ export default function CallExpression(builder: Builder, node: AnyNode): Tokens 
       ? node
       : callExpression.assert(node);
 
-  const tokens: Tokens = [
-    ...builder.tokenize(node.callee, node),
-    ...builder.tokenize(node.typeArguments, node),
-  ];
+  const tokens: Tokens = builder.tokenize(node.callee, node);
 
   if (node.type === 'OptionalCallExpression') {
-    tokens.push(operator('?'));
+    tokens.push(operator('?.'));
+  }
+
+  if (node.typeArguments) {
+    tokens.push(concat(builder.tokenize(node.typeArguments, node)));
   }
 
   return [
-    ...tokens,
+    concat(tokens),
     operator('('),
     builder.tokenizeCommaList(node.arguments, node, {
       trailing: true,

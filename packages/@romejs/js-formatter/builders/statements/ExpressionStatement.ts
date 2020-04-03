@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
+import {Tokens, operator, concat} from '../../tokens';
 import {
   ExpressionStatement,
   expressionStatement,
@@ -19,5 +19,5 @@ export default function ExpressionStatement(
 ): Tokens {
   node = expressionStatement.assert(node);
 
-  return [...builder.tokenize(node.expression, node), operator(';')];
+  return [concat(builder.tokenize(node.expression, node)), operator(';')];
 }

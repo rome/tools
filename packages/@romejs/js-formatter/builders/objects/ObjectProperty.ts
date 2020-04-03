@@ -6,13 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, space} from '../../tokens';
-import {
-  ObjectProperty,
-  objectProperty,
-  AnyNode,
-  AnyObjectPropertyKey,
-} from '@romejs/js-ast';
+import {Tokens, operator, space, concat} from '../../tokens';
+import {objectProperty, AnyNode, AnyObjectPropertyKey} from '@romejs/js-ast';
 
 function isShorthand(key: AnyObjectPropertyKey, value: AnyNode): boolean {
   return key.type === 'StaticPropertyKey' && key.value.type === 'Identifier' &&
@@ -31,18 +26,18 @@ export default function ObjectProperty(builder: Builder, node: AnyNode): Tokens 
   if ((node.value.type === 'BindingAssignmentPattern' || node.value.type ===
       'AssignmentAssignmentPattern') && isShorthand(node.key, node.value.left)) {
     return [
-      ...tokens,
+      concat(tokens),
       space,
       operator('='),
       space,
-      ...builder.tokenize(node.value.right, node.value),
+      concat(builder.tokenize(node.value.right, node.value)),
     ];
   } else if (!isShorthand(node.key, node.value)) {
     return [
-      ...tokens,
+      concat(tokens),
       operator(':'),
       space,
-      ...builder.tokenize(node.value, node),
+      concat(builder.tokenize(node.value, node)),
     ];
   } else {
     return tokens;

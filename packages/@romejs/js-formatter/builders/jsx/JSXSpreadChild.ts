@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {JSXSpreadChild, jsxSpreadChild, AnyNode} from '@romejs/js-ast';
+import {Tokens, operator, concat} from '../../tokens';
+import {jsxSpreadChild, AnyNode} from '@romejs/js-ast';
 
 export default function JSXSpreadChild(builder: Builder, node: AnyNode): Tokens {
   node = jsxSpreadChild.assert(node);
@@ -15,7 +15,7 @@ export default function JSXSpreadChild(builder: Builder, node: AnyNode): Tokens 
   return [
     operator('{'),
     operator('...'),
-    ...builder.tokenize(node.expression, node),
+    concat(builder.tokenize(node.expression, node)),
     operator('}'),
   ];
 }

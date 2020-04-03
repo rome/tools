@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {JSXNamespacedName, jsxNamespacedName, AnyNode} from '@romejs/js-ast';
+import {Tokens, operator, concat} from '../../tokens';
+import {jsxNamespacedName, AnyNode} from '@romejs/js-ast';
 
 export default function JSXNamespacedName(
   builder: Builder,
@@ -16,8 +16,8 @@ export default function JSXNamespacedName(
   node = jsxNamespacedName.assert(node);
 
   return [
-    ...builder.tokenize(node.namespace, node),
+    concat(builder.tokenize(node.namespace, node)),
     operator(':'),
-    ...builder.tokenize(node.name, node),
+    concat(builder.tokenize(node.name, node)),
   ];
 }

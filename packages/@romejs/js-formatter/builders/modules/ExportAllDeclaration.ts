@@ -6,12 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, space, operator} from '../../tokens';
-import {
-  ExportAllDeclaration,
-  exportAllDeclaration,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Tokens, word, space, operator, concat} from '../../tokens';
+import {exportAllDeclaration, AnyNode} from '@romejs/js-ast';
 
 export default function ExportAllDeclaration(
   builder: Builder,
@@ -26,7 +22,7 @@ export default function ExportAllDeclaration(
     space,
     word('from'),
     space,
-    ...builder.tokenize(node.source, node),
+    concat(builder.tokenize(node.source, node)),
     operator(';'),
   ];
 }

@@ -6,12 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  BindingArrayPattern,
-  bindingArrayPattern,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Tokens, concat} from '../../tokens';
+import {bindingArrayPattern, AnyNode} from '@romejs/js-ast';
 import ArrayExpression from '../expressions/ArrayExpression';
 import {printPatternMeta} from '../utils';
 
@@ -22,7 +18,7 @@ export default function BindingArrayPattern(
   node = bindingArrayPattern.assert(node);
 
   return [
-    ...ArrayExpression(builder, node),
-    ...printPatternMeta(builder, node, node.meta),
+    concat(ArrayExpression(builder, node)),
+    concat(printPatternMeta(builder, node, node.meta)),
   ];
 }

@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word} from '../../tokens';
+import {Tokens, space, word, concat} from '../../tokens';
 import {
   ExportLocalSpecifier,
   exportLocalSpecifier,
@@ -27,11 +27,11 @@ export default function ExportLocalSpecifier(
     return tokens;
   } else {
     return [
-      ...tokens,
+      concat(tokens),
       space,
       word('as'),
       space,
-      ...builder.tokenize(node.exported, node),
+      concat(builder.tokenize(node.exported, node)),
     ];
   }
 }

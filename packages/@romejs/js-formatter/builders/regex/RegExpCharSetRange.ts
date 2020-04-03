@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, verbatim} from '../../tokens';
-import {AnyNode, RegExpCharSetRange, regExpCharSetRange} from '@romejs/js-ast';
+import {Tokens, verbatim, concat} from '../../tokens';
+import {AnyNode, regExpCharSetRange} from '@romejs/js-ast';
 
 export default function RegExpCharSetRange(
   builder: Builder,
@@ -16,8 +16,8 @@ export default function RegExpCharSetRange(
   node = regExpCharSetRange.assert(node);
 
   return [
-    ...builder.tokenize(node.start, node),
+    concat(builder.tokenize(node.start, node)),
     verbatim('-'),
-    ...builder.tokenize(node.end, node),
+    concat(builder.tokenize(node.end, node)),
   ];
 }

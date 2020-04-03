@@ -6,12 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, word, space} from '../../tokens';
-import {
-  ArrowFunctionExpression,
-  arrowFunctionExpression,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Tokens, operator, word, space, concat} from '../../tokens';
+import {arrowFunctionExpression, AnyNode} from '@romejs/js-ast';
 
 export default function ArrowFunctionExpression(builder: Builder, node: AnyNode) {
   node = arrowFunctionExpression.assert(node);
@@ -24,11 +20,11 @@ export default function ArrowFunctionExpression(builder: Builder, node: AnyNode)
   }
 
   return [
-    ...tokens,
-    ...builder.tokenize(node.head, node),
+    concat(tokens),
+    concat(builder.tokenize(node.head, node)),
     space,
     operator('=>'),
     space,
-    ...builder.tokenize(node.body, node),
+    concat(builder.tokenize(node.body, node)),
   ];
 }

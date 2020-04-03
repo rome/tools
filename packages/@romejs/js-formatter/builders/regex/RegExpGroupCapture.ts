@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, verbatim} from '../../tokens';
-import {AnyNode, RegExpGroupCapture, regExpGroupCapture} from '@romejs/js-ast';
+import {Tokens, verbatim, concat} from '../../tokens';
+import {AnyNode, regExpGroupCapture} from '@romejs/js-ast';
 
 export default function RegExpGroupCapture(
   builder: Builder,
@@ -23,5 +23,9 @@ export default function RegExpGroupCapture(
     tokens.push(verbatim('>'));
   }
 
-  return [...tokens, ...builder.tokenize(node.expression, node), verbatim(')')];
+  return [
+    concat(tokens),
+    concat(builder.tokenize(node.expression, node)),
+    verbatim(')'),
+  ];
 }

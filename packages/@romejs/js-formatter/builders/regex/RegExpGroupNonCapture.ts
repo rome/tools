@@ -6,12 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, verbatim} from '../../tokens';
-import {
-  AnyNode,
-  RegExpGroupNonCapture,
-  regExpGroupNonCapture,
-} from '@romejs/js-ast';
+import {Tokens, verbatim, concat} from '../../tokens';
+import {AnyNode, regExpGroupNonCapture} from '@romejs/js-ast';
 
 export default function RegExpGroupNonCapture(builder: Builder, node: AnyNode) {
   node = regExpGroupNonCapture.assert(node);
@@ -39,5 +35,9 @@ export default function RegExpGroupNonCapture(builder: Builder, node: AnyNode) {
       tokens.push(verbatim(':'));
   }
 
-  return [...tokens, ...builder.tokenize(node.expression, node), verbatim(')')];
+  return [
+    concat(tokens),
+    concat(builder.tokenize(node.expression, node)),
+    verbatim(')'),
+  ];
 }

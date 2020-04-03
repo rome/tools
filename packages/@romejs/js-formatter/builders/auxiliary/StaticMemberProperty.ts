@@ -6,15 +6,11 @@
  */
 
 import Builder from '../../Builder';
-import {
-  StaticMemberProperty,
-  staticMemberProperty,
-  AnyNode,
-} from '@romejs/js-ast';
-import {operator} from '@romejs/js-formatter/tokens';
+import {staticMemberProperty, AnyNode} from '@romejs/js-ast';
+import {operator, concat} from '@romejs/js-formatter/tokens';
 
 export default function StaticMemberProperty(builder: Builder, node: AnyNode) {
   node = staticMemberProperty.assert(node);
 
-  return [operator('.'), ...builder.tokenize(node.value, node)];
+  return [operator('.'), concat(builder.tokenize(node.value, node))];
 }

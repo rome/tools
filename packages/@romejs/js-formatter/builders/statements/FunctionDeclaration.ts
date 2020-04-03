@@ -7,11 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {
-  FunctionDeclaration,
-  functionDeclaration,
-  AnyNode,
-} from '@romejs/js-ast';
+import {functionDeclaration, AnyNode} from '@romejs/js-ast';
 import FunctionExpression from '../expressions/FunctionExpression';
 
 export default function FunctionDeclaration(
