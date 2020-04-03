@@ -15,13 +15,14 @@ export default function CallExpression(builder: Builder, node: AnyNode): Tokens 
       ? node
       : callExpression.assert(node);
 
-  const tokens: Tokens = [
-    concat(builder.tokenize(node.callee, node)),
-    concat(builder.tokenize(node.typeArguments, node)),
-  ];
+  const tokens: Tokens = builder.tokenize(node.callee, node);
 
   if (node.type === 'OptionalCallExpression') {
-    tokens.push(operator('?'));
+    tokens.push(operator('?.'));
+  }
+
+  if (node.typeArguments) {
+    tokens.push(concat(builder.tokenize(node.typeArguments, node)));
   }
 
   return [
