@@ -213,8 +213,6 @@ export const createRegExpParser = createParser(
               let namedBackReferenceIndex = get0(index) + 2;
               let namedBackRefenenceChar = input[namedBackReferenceIndex];
               if (namedBackRefenenceChar === '<') {
-                // skip the opening <
-                namedBackReferenceIndex++;
                 namedBackRefenenceChar = input[namedBackReferenceIndex];
                 while (namedBackRefenenceChar !== '>' &&
                   namedBackReferenceIndex < input.length) {
@@ -223,9 +221,10 @@ export const createRegExpParser = createParser(
                   namedBackRefenenceChar = input[namedBackReferenceIndex];
                 }
                 if (namedBackRefenenceChar === '>') {
-                  // skip the closing >
+                  namedBackReference += namedBackRefenenceChar;
                   namedBackReferenceIndex++;
                 }
+                console.log('name: ', namedBackReference);
                 return this.finishComplexToken('NamedBackReferenceCharacter', {
                   value: namedBackReference,
                   escaped: true,
@@ -617,11 +616,27 @@ export const createRegExpParser = createParser(
       }
 
       if (token.type === 'NamedBackReferenceCharacter') {
+        const start = this.input.slice(0, get0(token.start));
         this.nextToken();
 
+        if (token.value[token.value.length - 1] != '>') {
+          this.addDiagnostic({
+            description: descriptions.REGEX_PARSER.UNCLOSED_NAMED_CAPTURE,
+            loc: this.finishLocFromToken(token),
+          });
+        }
+
+        if (!start.includes(token.value)) {
+          this.addDiagnostic({
+            description: descriptions.REGEX_PARSER.INVALID_NAMED_CAPTURE,
+            loc: this.finishLocFromToken(token),
+          });
+        }
+
+        const name = token.value.slice(1, token.value.length - 1);
         return {
           type: 'RegExpNamedBackReference',
-          name: token.value,
+          name,
           loc: this.finishLocFromToken(token),
         };
       }
