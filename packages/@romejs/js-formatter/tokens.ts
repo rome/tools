@@ -238,13 +238,3 @@ export function concat(tokens: Tokens): ConcatToken {
     tokens,
   };
 }
-
-export function flatten(arr: Array<Tokens>): Tokens {
-  let tokens: Tokens = [];
-
-  for (const elem of arr) {
-    tokens = tokens.concat(elem);
-  }
-
-  return tokens;
-}

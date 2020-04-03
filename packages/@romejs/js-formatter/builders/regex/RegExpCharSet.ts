@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, verbatim, flatten, concat} from '../../tokens';
+import {Tokens, verbatim, concat} from '../../tokens';
 import {AnyNode, regExpCharSet} from '@romejs/js-ast';
 
 export default function RegExpCharSet(builder: Builder, node: AnyNode): Tokens {
@@ -20,7 +20,7 @@ export default function RegExpCharSet(builder: Builder, node: AnyNode): Tokens {
 
   return [
     concat(tokens),
-    concat(flatten(node.body.map((item) => builder.tokenize(item, node)))),
+    concat(node.body.map((item) => concat(builder.tokenize(item, node)))),
     verbatim(']'),
   ];
 }
