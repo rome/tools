@@ -48,45 +48,38 @@ type Operator =
   | '*'
   | '|';
 
-type Tokens =
-  & BaseTokens
-  & {
-    Operator: ValueToken<'Operator', Operator>;
-    Character: ComplexToken<'Character', {
-      value: string;
-      escaped: boolean;
-    }>;
-    EscapedCharacter: ValueToken<'EscapedCharacter',
-      | 'd'
-      | 'D'
-      | 'b'
-      | 'B'
-      | 's'
-      | 'S'
-      | 'w'
-      | 'W'>;
-    NumericBackReferenceCharacter: ComplexToken<
-      'NumericBackReferenceCharacter',
-      {
-        value: number;
-        escaped: boolean;
-      }
-    >;
-    NamedBackReferenceCharacter: ComplexToken<'NamedBackReferenceCharacter', {
-      value: string;
-      escaped: boolean;
-    }>;
-  };
+type Tokens = BaseTokens & {
+  Operator: ValueToken<'Operator', Operator>;
+  Character: ComplexToken<'Character', {
+    value: string;
+    escaped: boolean;
+  }>;
+  EscapedCharacter: ValueToken<'EscapedCharacter',
+    | 'd'
+    | 'D'
+    | 'b'
+    | 'B'
+    | 's'
+    | 'S'
+    | 'w'
+    | 'W'>;
+  NumericBackReferenceCharacter: ComplexToken<'NumericBackReferenceCharacter', {
+    value: number;
+    escaped: boolean;
+  }>;
+  NamedBackReferenceCharacter: ComplexToken<'NamedBackReferenceCharacter', {
+    value: string;
+    escaped: boolean;
+  }>;
+};
 
-type GroupModifiers =
-  | {
-    type: 'NON_CAPTURE';
-    kind: RegExpGroupNonCapture['kind'];
-  }
-  | {
-    type: 'NAMED_CAPTURE';
-    name: string;
-  };
+type GroupModifiers = {
+  type: 'NON_CAPTURE';
+  kind: RegExpGroupNonCapture['kind'];
+} | {
+  type: 'NAMED_CAPTURE';
+  name: string;
+};
 
 type RegExpParserOptions = ParserOptions & {unicode: boolean};
 
@@ -215,7 +208,8 @@ export const createRegExpParser = createParser(
               if (namedBackRefenenceChar === '<') {
                 namedBackRefenenceChar = input[namedBackReferenceIndex];
                 while (namedBackRefenenceChar !== '>' &&
-                  namedBackReferenceIndex < input.length) {
+                    namedBackReferenceIndex <
+                    input.length) {
                   namedBackReference += namedBackRefenenceChar;
                   namedBackReferenceIndex++;
                   namedBackRefenenceChar = input[namedBackReferenceIndex];
@@ -473,7 +467,8 @@ export const createRegExpParser = createParser(
                   skipCount++;
                 }
 
-                if (targetToken.type === 'Character' && targetToken.value === '>') {
+                if (targetToken.type === 'Character' && targetToken.value ===
+                    '>') {
                   // Skip through all the name tokens including >
                   skipCount++;
 

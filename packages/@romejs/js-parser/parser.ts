@@ -341,7 +341,7 @@ const createJSParser = createParser(
       end?: Position;
       loc?: SourceLocation;
       index?: Number0;
-      location?: DiagnosticLocation,
+      location?: DiagnosticLocation;
     }): void {
       if (this.isLookahead) {
         return;
@@ -373,7 +373,7 @@ const createJSParser = createParser(
         end = opts.location.end;
       }
 
-      if ((start === undefined && end === undefined) && opts.loc !== undefined) {
+      if (start === undefined && end === undefined && opts.loc !== undefined) {
         start = opts.loc.start;
         end = opts.loc.end;
       }

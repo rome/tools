@@ -8,12 +8,10 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpNamedBackReference =
-  & JSNodeBase
-  & {
-    type: 'RegExpNamedBackReference';
-    name: string;
-  };
+export type RegExpNamedBackReference = JSNodeBase & {
+  type: 'RegExpNamedBackReference';
+  name: string;
+};
 
 export const regExpNamedBackReference = createBuilder<RegExpNamedBackReference>(
   'RegExpNamedBackReference',
