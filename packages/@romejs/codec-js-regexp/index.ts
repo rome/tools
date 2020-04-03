@@ -204,21 +204,20 @@ export const createRegExpParser = createParser(
               // named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
               let namedBackReference = '';
               let namedBackReferenceIndex = get0(index) + 2;
-              let namedBackRefenenceChar = input[namedBackReferenceIndex];
-              if (namedBackRefenenceChar === '<') {
-                namedBackRefenenceChar = input[namedBackReferenceIndex];
-                while (namedBackRefenenceChar !== '>' &&
+              let namedBackReferenceChar = input[namedBackReferenceIndex];
+              if (namedBackReferenceChar === '<') {
+                namedBackReferenceChar = input[namedBackReferenceIndex];
+                while (namedBackReferenceChar !== '>' &&
                     namedBackReferenceIndex <
                     input.length) {
-                  namedBackReference += namedBackRefenenceChar;
+                  namedBackReference += namedBackReferenceChar;
                   namedBackReferenceIndex++;
-                  namedBackRefenenceChar = input[namedBackReferenceIndex];
+                  namedBackReferenceChar = input[namedBackReferenceIndex];
                 }
-                if (namedBackRefenenceChar === '>') {
-                  namedBackReference += namedBackRefenenceChar;
+                if (namedBackReferenceChar === '>') {
+                  namedBackReference += namedBackReferenceChar;
                   namedBackReferenceIndex++;
                 }
-                console.log('name: ', namedBackReference);
                 return this.finishComplexToken('NamedBackReferenceCharacter', {
                   value: namedBackReference,
                   escaped: true,
