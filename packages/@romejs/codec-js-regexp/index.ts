@@ -461,7 +461,7 @@ export const createRegExpParser = createParser(
       }
 
       this.addDiagnostic({
-        ...descriptions.REGEX_PARSER.INVALID_CAPTURE_GROUP_MODIFIER,
+        description: descriptions.REGEX_PARSER.INVALID_CAPTURE_GROUP_MODIFIER,
         token,
       });
 
@@ -495,7 +495,7 @@ export const createRegExpParser = createParser(
 
       if (!this.eatOperator(')')) {
         this.addDiagnostic({
-          ...descriptions.REGEX_PARSER.UNCLOSED_GROUP,
+          description: descriptions.REGEX_PARSER.UNCLOSED_GROUP,
           start,
         });
       }
@@ -532,7 +532,7 @@ export const createRegExpParser = createParser(
 
       if (!this.eatOperator(']')) {
         this.addDiagnostic({
-          ...descriptions.REGEX_PARSER.UNCLOSED_CHAR_SET,
+          description: descriptions.REGEX_PARSER.UNCLOSED_CHAR_SET,
           start,
         });
       }
@@ -667,7 +667,7 @@ export const createRegExpParser = createParser(
           if (start.type === 'RegExpCharacter' && end.type === 'RegExpCharacter' &&
               getCodePoint(end.value) < getCodePoint(start.value)) {
             this.addDiagnostic({
-              ...descriptions.REGEX_PARSER.REVERSED_CHAR_SET_RANGE,
+              description: descriptions.REGEX_PARSER.REVERSED_CHAR_SET_RANGE,
               loc,
             });
             const _end = end;
@@ -827,7 +827,7 @@ export const createRegExpParser = createParser(
         case ')':
           this.nextToken();
           this.addDiagnostic({
-            ...descriptions.REGEX_PARSER.UNOPENED_GROUP,
+            description: descriptions.REGEX_PARSER.UNOPENED_GROUP,
             token,
           });
           return;
@@ -856,7 +856,7 @@ export const createRegExpParser = createParser(
         case '+':
           this.nextToken();
           this.addDiagnostic({
-            ...descriptions.REGEX_PARSER.INVALID_QUANTIFIER_TARGET,
+            description: descriptions.REGEX_PARSER.INVALID_QUANTIFIER_TARGET,
             token,
           });
           return;
@@ -884,7 +884,7 @@ export const createRegExpParser = createParser(
       }
 
       this.addDiagnostic({
-        ...descriptions.REGEX_PARSER.UNKNOWN_REGEX_PART,
+        description: descriptions.REGEX_PARSER.UNKNOWN_REGEX_PART,
         token,
       });
 
