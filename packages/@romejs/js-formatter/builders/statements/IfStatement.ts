@@ -14,14 +14,15 @@ import {
   word,
   space,
   newline,
+  concat,
 } from '../../tokens';
-import {IfStatement, ifStatement, AnyNode} from '@romejs/js-ast';
+import {ifStatement, AnyNode} from '@romejs/js-ast';
 import {isStatement} from '@romejs/js-ast-utils';
 
 export default function IfStatement(builder: Builder, node: AnyNode): Tokens {
   node = ifStatement.assert(node);
 
-  let tokens: Tokens = [
+  const tokens: Tokens = [
     word('if'),
     space,
     operator('('),
@@ -35,26 +36,19 @@ export default function IfStatement(builder: Builder, node: AnyNode): Tokens {
     needsBlock = getLastStatement(node.consequent).type === 'IfStatement';
   }
   if (needsBlock) {
-    tokens = [
-      ...tokens,
-      operator('{'),
-      newline,
-      indent(builder.tokenize(node.consequent, node)),
-      newline,
-      operator('}'),
-    ];
+    tokens.push(operator('{'), newline, indent(builder.tokenize(
+      node.consequent,
+      node,
+    )), newline, operator('}'));
   } else {
-    tokens = [...tokens, ...builder.tokenize(node.consequent, node)];
+    tokens.push(concat(builder.tokenize(node.consequent, node)));
   }
 
   if (node.alternate) {
-    tokens = [
-      ...tokens,
-      space,
-      word('else'),
-      space,
-      ...builder.tokenize(node.alternate, node),
-    ];
+    tokens.push(space, word('else'), space, concat(builder.tokenize(
+      node.alternate,
+      node,
+    )));
   }
 
   return tokens;

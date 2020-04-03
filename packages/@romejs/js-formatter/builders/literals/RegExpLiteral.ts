@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {RegExpLiteral, regExpLiteral, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat} from '../../tokens';
+import {regExpLiteral, AnyNode} from '@romejs/js-ast';
 import {operator} from '@romejs/js-formatter/tokens';
 
 export default function RegExpLiteral(builder: Builder, node: AnyNode): Tokens {
@@ -41,7 +41,7 @@ export default function RegExpLiteral(builder: Builder, node: AnyNode): Tokens {
 
   return [
     operator('/'),
-    ...builder.tokenize(node.expression, node),
+    concat(builder.tokenize(node.expression, node)),
     operator(`/${flags.join('')}`),
   ];
 }

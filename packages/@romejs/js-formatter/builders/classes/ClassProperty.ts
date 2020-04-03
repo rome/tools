@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, operator} from '../../tokens';
-import {ClassProperty, classProperty, AnyNode} from '@romejs/js-ast';
+import {Tokens, space, operator, concat} from '../../tokens';
+import {classProperty, AnyNode} from '@romejs/js-ast';
 
 export default function ClassProperty(builder: Builder, node: AnyNode): Tokens {
   node = classProperty.assert(node);
@@ -18,21 +18,19 @@ export default function ClassProperty(builder: Builder, node: AnyNode): Tokens {
   }
 
   const tokens: Tokens = [
-    ...builder.tokenize(node.meta, node),
-    ...builder.tokenize(node.key, node),
-    ...builder.tokenizeTypeColon(node.typeAnnotation, node),
+    concat(builder.tokenize(node.meta, node)),
+    concat(builder.tokenize(node.key, node)),
+    concat(builder.tokenizeTypeColon(node.typeAnnotation, node)),
   ];
 
   if (node.value) {
-    return [
-      ...tokens,
-      space,
-      operator('='),
-      space,
-      ...builder.tokenize(node.value, node),
-      operator(';'),
-    ];
-  } else {
-    return [...tokens, operator(';')];
+    tokens.push(space);
+    tokens.push(operator('='));
+    tokens.push(space);
+    tokens.push(concat(builder.tokenize(node.value, node)));
   }
+
+  tokens.push(operator(';'));
+
+  return tokens;
 }

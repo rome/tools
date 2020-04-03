@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, operator} from '../../tokens';
-import {ObjectExpression, objectExpression, AnyNode} from '@romejs/js-ast';
+import {Tokens, space, operator, concat} from '../../tokens';
+import {objectExpression, AnyNode} from '@romejs/js-ast';
 
 export default function ObjectExpression(
   builder: Builder,
@@ -18,9 +18,9 @@ export default function ObjectExpression(
 
   const props = node.properties;
 
-  let tokens: Tokens = [
+  const tokens: Tokens = [
     operator('{'),
-    ...builder.tokenizeInnerComments(node),
+    concat(builder.tokenizeInnerComments(node)),
     builder.tokenizeCommaList(props, node, {
       trailing: true,
       breakOnNewline: true,
@@ -30,10 +30,10 @@ export default function ObjectExpression(
   if ((node.type === 'BindingObjectPattern' || node.type ===
       'AssignmentObjectPattern') && node.rest !== undefined) {
     if (props.length > 0) {
-      tokens = [...tokens, operator(','), space];
+      tokens.push(operator(','), space);
     }
 
-    tokens = [...tokens, operator('...'), ...builder.tokenize(node.rest, node)];
+    tokens.push(operator('...'), concat(builder.tokenize(node.rest, node)));
   }
 
   tokens.push(operator('}'));

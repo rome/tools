@@ -7,22 +7,22 @@
 
 import Builder from '../../Builder';
 import {AnyNode, classPrivateProperty} from '@romejs/js-ast';
-import {Tokens, operator, space} from '@romejs/js-formatter/tokens';
+import {Tokens, operator, space, concat} from '@romejs/js-formatter/tokens';
 
 export default function ClassPrivateProperty(builder: Builder, node: AnyNode) {
   node = classPrivateProperty.assert(node);
 
-  let tokens: Tokens = [
-    ...builder.tokenize(node.meta, node),
-    ...builder.tokenize(node.key, node),
-    ...builder.tokenizeTypeColon(node.typeAnnotation, node),
+  const tokens: Tokens = [
+    concat(builder.tokenize(node.meta, node)),
+    concat(builder.tokenize(node.key, node)),
+    concat(builder.tokenizeTypeColon(node.typeAnnotation, node)),
   ];
 
   if (node.value) {
     tokens.push(space);
     tokens.push(operator('='));
     tokens.push(space);
-    tokens = tokens.concat(builder.tokenize(node.value, node));
+    tokens.push(concat(builder.tokenize(node.value, node)));
   }
 
   tokens.push(operator(';'));

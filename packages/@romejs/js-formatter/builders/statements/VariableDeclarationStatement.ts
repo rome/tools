@@ -6,12 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {
-  VariableDeclarationStatement,
-  variableDeclarationStatement,
-  AnyNode,
-} from '@romejs/js-ast';
-import {Tokens, operator, word} from '@romejs/js-formatter/tokens';
+import {variableDeclarationStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, operator, word, concat} from '@romejs/js-formatter/tokens';
 
 export default function VariableDeclarationStatement(
   builder: Builder,
@@ -23,15 +19,15 @@ export default function VariableDeclarationStatement(
     return [];
   }
 
-  let tokens: Tokens = [];
+  const tokens: Tokens = [];
 
   if (node.declare) {
     tokens.push(word('declare'));
   }
 
   return [
-    ...tokens,
-    ...builder.tokenize(node.declaration, node),
+    concat(tokens),
+    concat(builder.tokenize(node.declaration, node)),
     operator(';'),
   ];
 }

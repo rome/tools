@@ -19,6 +19,7 @@ import {
   OperatorToken,
   VerbatimToken,
   PositionMarkerToken,
+  ConcatToken,
 } from './tokens';
 import {BuilderOptions} from './Builder';
 import {
@@ -506,25 +507,25 @@ export default class Printer {
   findUnbrokenGroupForLinkedGroups(
     tokens: Tokens,
   ): undefined | LinkedGroupsToken | GroupToken {
-    for (const token of tokens) {
-      let group: undefined | LinkedGroupsToken | GroupToken;
+    const stacks = [tokens];
 
-      switch (token.type) {
-        case 'LinkedGroups':
-        case 'Group':
-          if (!this.isGroupBroken(token)) {
-            group = token;
+    for (const stack of stacks) {
+      for (let token of stack) {
+        switch (token.type) {
+          case 'LinkedGroups':
+          case 'Group':
+            if (!this.isGroupBroken(token)) {
+              return token;
+            }
+            break;
+
+          case 'ConcatToken':
+          case 'Indent':
+          case 'PositionMarker': {
+            stacks.push(token.tokens);
+            break;
           }
-          break;
-
-        case 'Indent':
-        case 'PositionMarker':
-          group = this.findUnbrokenGroupForLinkedGroups(token.tokens);
-          break;
-      }
-
-      if (group !== undefined) {
-        return group;
+        }
       }
     }
 
@@ -582,6 +583,10 @@ export default class Printer {
     this.print(token.tokens);
 
     state.sourceLocation = origSourceLocation;
+  }
+
+  printConcatToken(token: ConcatToken) {
+    this.print(token.tokens);
   }
 
   print(tokens: undefined | Tokens, i: number = 0) {
@@ -645,6 +650,10 @@ export default class Printer {
 
         case 'PositionMarker':
           this.printPositionMarkerToken(token);
+          break;
+
+        case 'ConcatToken':
+          this.printConcatToken(token);
           break;
       }
 

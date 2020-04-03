@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {JSXAttribute, jsxAttribute, AnyNode} from '@romejs/js-ast';
+import {Tokens, operator, concat} from '../../tokens';
+import {jsxAttribute, AnyNode} from '@romejs/js-ast';
 
 export default function JSXAttribute(builder: Builder, node: AnyNode): Tokens {
   node = jsxAttribute.assert(node);
@@ -15,7 +15,11 @@ export default function JSXAttribute(builder: Builder, node: AnyNode): Tokens {
   const tokens: Tokens = builder.tokenize(node.name, node);
 
   if (node.value) {
-    return [...tokens, operator('='), ...builder.tokenize(node.value, node)];
+    return [
+      concat(tokens),
+      operator('='),
+      concat(builder.tokenize(node.value, node)),
+    ];
   } else {
     return tokens;
   }

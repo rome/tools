@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, space, operator} from '../../tokens';
-import {DoWhileStatement, doWhileStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, word, space, operator, concat} from '../../tokens';
+import {doWhileStatement, AnyNode} from '@romejs/js-ast';
 
 export default function DoWhileStatement(
   builder: Builder,
@@ -18,12 +18,12 @@ export default function DoWhileStatement(
   return [
     word('do'),
     space,
-    ...builder.tokenize(node.body, node),
+    concat(builder.tokenize(node.body, node)),
     space,
     word('while'),
     space,
     operator('('),
-    ...builder.tokenize(node.test, node),
+    concat(builder.tokenize(node.test, node)),
     operator(')'),
     operator(';'),
   ];

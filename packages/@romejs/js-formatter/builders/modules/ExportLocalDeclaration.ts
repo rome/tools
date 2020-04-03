@@ -6,12 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, space, word} from '../../tokens';
-import {
-  ExportLocalDeclaration,
-  exportLocalDeclaration,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Tokens, operator, space, word, concat} from '../../tokens';
+import {exportLocalDeclaration, AnyNode} from '@romejs/js-ast';
 import {isDeclaration} from '@romejs/js-ast-utils';
 
 export default function ExportLocalDeclaration(
@@ -24,7 +20,7 @@ export default function ExportLocalDeclaration(
     return [];
   }
 
-  return [word('export'), space, ..._ExportDeclaration(builder, node)];
+  return [word('export'), space, concat(_ExportDeclaration(builder, node))];
 }
 
 export function _ExportDeclaration(builder: Builder, node: AnyNode): Tokens {
@@ -44,10 +40,10 @@ export function _ExportDeclaration(builder: Builder, node: AnyNode): Tokens {
       throw new Error('Expected  ExportLocalDeclaration');
     }
 
-    let tokens: Tokens = [];
+    const tokens: Tokens = [];
 
     if (node.exportKind === 'type') {
-      tokens = [word('type'), space];
+      tokens.push(word('type'), space);
     }
 
     const {specifiers} = node;
@@ -56,7 +52,7 @@ export function _ExportDeclaration(builder: Builder, node: AnyNode): Tokens {
     }
 
     return [
-      ...tokens,
+      concat(tokens),
       operator('{'),
       builder.tokenizeCommaList(specifiers, node, {
         trailing: true,

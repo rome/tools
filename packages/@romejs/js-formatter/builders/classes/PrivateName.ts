@@ -7,10 +7,10 @@
 
 import Builder from '../../Builder';
 import {AnyNode, privateName} from '@romejs/js-ast';
-import {operator} from '@romejs/js-formatter/tokens';
+import {operator, concat} from '@romejs/js-formatter/tokens';
 
 export default function PrivateName(builder: Builder, node: AnyNode) {
   node = privateName.assert(node);
 
-  return [operator('#'), ...builder.tokenize(node.id, node)];
+  return [operator('#'), concat(builder.tokenize(node.id, node))];
 }

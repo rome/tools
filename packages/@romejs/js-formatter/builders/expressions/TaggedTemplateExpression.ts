@@ -6,12 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  TaggedTemplateExpression,
-  taggedTemplateExpression,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Tokens, concat} from '../../tokens';
+import {taggedTemplateExpression, AnyNode} from '@romejs/js-ast';
 
 export default function TaggedTemplateExpression(
   builder: Builder,
@@ -20,7 +16,7 @@ export default function TaggedTemplateExpression(
   node = taggedTemplateExpression.assert(node);
 
   return [
-    ...builder.tokenize(node.tag, node),
-    ...builder.tokenize(node.quasi, node),
+    concat(builder.tokenize(node.tag, node)),
+    concat(builder.tokenize(node.quasi, node)),
   ];
 }

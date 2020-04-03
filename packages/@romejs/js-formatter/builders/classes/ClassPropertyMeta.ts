@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens, word} from '../../tokens';
-import {ClassPropertyMeta, classPropertyMeta, AnyNode} from '@romejs/js-ast';
+import {classPropertyMeta, AnyNode} from '@romejs/js-ast';
 
 export default function ClassPropertyMeta(
   builder: Builder,
@@ -15,7 +15,7 @@ export default function ClassPropertyMeta(
 ): Tokens {
   node = classPropertyMeta.assert(node);
 
-  let tokens: Tokens = [];
+  const tokens: Tokens = [];
 
   if (!builder.options.typeAnnotations) {
     if (node.accessibility) {

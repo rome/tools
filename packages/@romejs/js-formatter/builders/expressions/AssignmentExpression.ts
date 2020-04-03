@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, word, breakGroup, space} from '../../tokens';
+import {Tokens, operator, word, breakGroup, space, concat} from '../../tokens';
 import {
   AnyNode,
   AssignmentExpression,
@@ -49,7 +49,7 @@ export default function AssignmentExpression(
 
   const right = builder.tokenize(node.right, node);
 
-  tokens.push(breakGroup([[...left, space, sep], right]));
+  tokens.push(breakGroup([[concat(left), space, sep], right]));
 
   if (needsExtraParens) {
     tokens.push(operator(')'));

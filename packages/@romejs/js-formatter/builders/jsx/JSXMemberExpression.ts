@@ -6,12 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {
-  JSXMemberExpression,
-  jsxMemberExpression,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Tokens, operator, concat} from '../../tokens';
+import {jsxMemberExpression, AnyNode} from '@romejs/js-ast';
 
 export default function JSXMemberExpression(
   builder: Builder,
@@ -20,8 +16,8 @@ export default function JSXMemberExpression(
   node = jsxMemberExpression.assert(node);
 
   return [
-    ...builder.tokenize(node.object, node),
+    concat(builder.tokenize(node.object, node)),
     operator('.'),
-    ...builder.tokenize(node.property, node),
+    concat(builder.tokenize(node.property, node)),
   ];
 }

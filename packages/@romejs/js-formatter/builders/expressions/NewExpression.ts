@@ -6,12 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word} from '../../tokens';
-import {NewExpression, newExpression, AnyNode} from '@romejs/js-ast';
+import {Tokens, word, concat} from '../../tokens';
+import {newExpression, AnyNode} from '@romejs/js-ast';
 import CallExpression from './CallExpression';
 
 export default function NewExpression(builder: Builder, node: AnyNode): Tokens {
   node = newExpression.assert(node);
 
-  return [word('new'), ...CallExpression(builder, node)];
+  return [word('new'), concat(CallExpression(builder, node))];
 }
