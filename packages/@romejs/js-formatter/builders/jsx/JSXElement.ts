@@ -32,7 +32,7 @@ export default function JSXElement(builder: Builder, node: AnyNode): Tokens {
     ];
   }
 
-  if (node.selfClosing === true) {
+  if (node.selfClosing === true && node.children.length === 0) {
     return [...tokens, space, operator('/>')];
   } else {
     return [
