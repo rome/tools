@@ -6,7 +6,14 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, linkedGroups, space, operator} from '../../tokens';
+import {
+  Tokens,
+  word,
+  linkedGroups,
+  space,
+  operator,
+  concat,
+} from '../../tokens';
 import {
   ImportDeclaration,
   importDeclaration,
@@ -20,7 +27,7 @@ export default function ImportDeclaration(
 ): Tokens {
   node = importDeclaration.assert(node);
 
-  let tokens: Tokens = [word('import'), space];
+  const tokens: Tokens = [word('import'), space];
 
   if (node.importKind === 'type' || node.importKind === 'typeof') {
     tokens.push(word(node.importKind));
@@ -32,19 +39,18 @@ export default function ImportDeclaration(
   if (namedSpecifiers.length > 0 || namespaceSpecifier !== undefined ||
         defaultSpecifier !==
         undefined) {
-    tokens = [
-      ...tokens,
-      ...printModuleSpecifiers(builder, node),
+    tokens.push(
+      concat(printModuleSpecifiers(builder, node)),
       space,
       word('from'),
       space,
-    ];
+    );
   }
 
   return [
     linkedGroups([
-      ...tokens,
-      ...builder.tokenize(node.source, node),
+      concat(tokens),
+      concat(builder.tokenize(node.source, node)),
       operator(';'),
     ]),
   ];
@@ -62,15 +68,15 @@ export function printModuleSpecifiers(
     tokens = builder.tokenize(node.defaultSpecifier, node);
 
     if (namedSpecifiers.length > 0 || namespaceSpecifier !== undefined) {
-      tokens = [...tokens, operator(','), space];
+      tokens.push(operator(','), space);
     }
   }
 
   if (namespaceSpecifier !== undefined) {
-    tokens = [...tokens, ...builder.tokenize(namespaceSpecifier, node)];
+    tokens.push(concat(builder.tokenize(namespaceSpecifier, node)));
 
     if (namedSpecifiers.length > 0) {
-      tokens = [...tokens, operator(','), space];
+      tokens.push(operator(','), space);
     }
   }
 
@@ -78,8 +84,7 @@ export function printModuleSpecifiers(
     return tokens;
   } else {
     return [
-      ...tokens,
-
+      concat(tokens),
       operator('{'),
       builder.tokenizeCommaList(namedSpecifiers, node, {
         trailing: true,

@@ -6,12 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {
-  JSXExpressionContainer,
-  jsxExpressionContainer,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Tokens, operator, concat} from '../../tokens';
+import {jsxExpressionContainer, AnyNode} from '@romejs/js-ast';
 
 export default function JSXExpressionContainer(
   builder: Builder,
@@ -21,7 +17,7 @@ export default function JSXExpressionContainer(
 
   return [
     operator('{'),
-    ...builder.tokenize(node.expression, node),
+    concat(builder.tokenize(node.expression, node)),
     operator('}'),
   ];
 }

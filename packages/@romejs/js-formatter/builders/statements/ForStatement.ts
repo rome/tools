@@ -6,35 +6,36 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, word, space} from '../../tokens';
-import {ForStatement, forStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, operator, word, space, concat} from '../../tokens';
+import {forStatement, AnyNode} from '@romejs/js-ast';
 
 export default function ForStatement(builder: Builder, node: AnyNode): Tokens {
   node = forStatement.assert(node);
 
   builder.inForStatementInitCounter++;
-  let tokens: Tokens = [
+  const tokens: Tokens = [
     word('for'),
     space,
     operator('('),
-    ...builder.tokenize(node.init, node),
+    concat(builder.tokenize(node.init, node)),
     operator(';'),
   ];
   builder.inForStatementInitCounter--;
 
   if (node.test) {
-    tokens = [...tokens, space, ...builder.tokenize(node.test, node)];
+    tokens.push(space, concat(builder.tokenize(node.test, node)));
   }
+
   tokens.push(operator(';'));
 
   if (node.update) {
-    tokens = [...tokens, space, ...builder.tokenize(node.update, node)];
+    tokens.push(space, concat(builder.tokenize(node.update, node)));
   }
 
   return [
-    ...tokens,
+    concat(tokens),
     operator(')'),
     space,
-    ...builder.tokenize(node.body, node),
+    concat(builder.tokenize(node.body, node)),
   ];
 }

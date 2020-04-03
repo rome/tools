@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens, indent, operator, flatten} from '../../tokens';
-import {JSXFragment, jsxFragment, AnyNode} from '@romejs/js-ast';
+import {jsxFragment, AnyNode} from '@romejs/js-ast';
 
 export default function JSXFragment(builder: Builder, node: AnyNode): Tokens {
   node = jsxFragment.assert(node);

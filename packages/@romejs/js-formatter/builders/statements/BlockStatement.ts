@@ -6,13 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, newline, indent, operator} from '../../tokens';
-import {BlockStatement, blockStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, newline, indent, operator, concat} from '../../tokens';
+import {blockStatement, AnyNode} from '@romejs/js-ast';
 
 export default function BlockStatement(builder: Builder, node: AnyNode): Tokens {
   node = blockStatement.assert(node);
 
-  let tokens: Tokens = [
+  const tokens: Tokens = [
     operator('{'),
     indent(builder.tokenizeInnerComments(node)),
   ];
@@ -22,16 +22,12 @@ export default function BlockStatement(builder: Builder, node: AnyNode): Tokens 
       0);
 
   if (node.body.length > 0 || hasDirectives) {
-    tokens = [
-      ...tokens,
-      newline,
-      indent([
-        ...builder.tokenizeStatementList(node.directives, node),
-        // TODO newline here if hasDirectives
-        ...builder.tokenizeStatementList(node.body, node),
-      ]),
-    ];
+    tokens.push(newline, indent([
+      concat(builder.tokenizeStatementList(node.directives, node)),
+      // TODO newline here if hasDirectives
+      concat(builder.tokenizeStatementList(node.body, node)),
+    ]));
   }
 
-  return [...tokens, operator('}')];
+  return [concat(tokens), operator('}')];
 }

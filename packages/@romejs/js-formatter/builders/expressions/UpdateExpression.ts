@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {UpdateExpression, updateExpression, AnyNode} from '@romejs/js-ast';
+import {Tokens, operator, concat} from '../../tokens';
+import {updateExpression, AnyNode} from '@romejs/js-ast';
 
 export default function UpdateExpression(
   builder: Builder,
@@ -16,8 +16,14 @@ export default function UpdateExpression(
   node = updateExpression.assert(node);
 
   if (node.prefix === true) {
-    return [operator(node.operator), ...builder.tokenize(node.argument, node)];
+    return [
+      operator(node.operator),
+      concat(builder.tokenize(node.argument, node)),
+    ];
   } else {
-    return [...builder.tokenize(node.argument, node), operator(node.operator)];
+    return [
+      concat(builder.tokenize(node.argument, node)),
+      operator(node.operator),
+    ];
   }
 }

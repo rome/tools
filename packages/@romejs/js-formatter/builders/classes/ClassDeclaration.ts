@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, operator, word} from '../../tokens';
-import {ClassDeclaration, classDeclaration, AnyNode} from '@romejs/js-ast';
+import {Tokens, space, operator, word, concat} from '../../tokens';
+import {classDeclaration, AnyNode} from '@romejs/js-ast';
 
 export default function ClassDeclaration(
   builder: Builder,
@@ -15,20 +15,20 @@ export default function ClassDeclaration(
 ): Tokens {
   node = node.type === 'ClassExpression' ? node : classDeclaration.assert(node);
 
-  let tokens: Tokens = [word('class')];
+  const tokens: Tokens = [word('class')];
 
   if (node.id) {
-    tokens = [...tokens, space, ...builder.tokenize(node.id, node)];
+    tokens.push(space, concat(builder.tokenize(node.id, node)));
   }
 
   return [
-    ...tokens,
-    ...builder.tokenize(node.meta, node),
+    concat(tokens),
+    concat(builder.tokenize(node.meta, node)),
     space,
     operator('{'),
-    ...builder.tokenizeInnerComments(node),
-    ...builder.tokenizeInnerComments(node.meta),
-    ...builder.tokenizeStatementList(node.meta.body, node.meta, true),
+    concat(builder.tokenizeInnerComments(node)),
+    concat(builder.tokenizeInnerComments(node.meta)),
+    concat(builder.tokenizeStatementList(node.meta.body, node.meta, true)),
     operator('}'),
   ];
 }

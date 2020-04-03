@@ -6,12 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, space, operator} from '../../tokens';
-import {
-  TypeAliasTypeAnnotation,
-  typeAliasTypeAnnotation,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Tokens, word, space, operator, concat} from '../../tokens';
+import {typeAliasTypeAnnotation, AnyNode} from '@romejs/js-ast';
 
 export default function TypeAliasTypeAnnotation(
   builder: Builder,
@@ -22,12 +18,12 @@ export default function TypeAliasTypeAnnotation(
   return [
     word('type'),
     space,
-    ...builder.tokenize(node.id, node),
-    ...builder.tokenize(node.typeParameters, node),
+    concat(builder.tokenize(node.id, node)),
+    concat(builder.tokenize(node.typeParameters, node)),
     space,
     operator('='),
     space,
-    ...builder.tokenize(node.right, node),
+    concat(builder.tokenize(node.right, node)),
     operator(';'),
   ];
 }

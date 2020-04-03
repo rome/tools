@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, operator, space} from '../../tokens';
-import {WhileStatement, whileStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, word, operator, space, concat} from '../../tokens';
+import {whileStatement, AnyNode} from '@romejs/js-ast';
 
 export default function WhileStatement(builder: Builder, node: AnyNode): Tokens {
   node = whileStatement.assert(node);
@@ -16,9 +16,9 @@ export default function WhileStatement(builder: Builder, node: AnyNode): Tokens 
     word('while'),
     space,
     operator('('),
-    ...builder.tokenize(node.test, node),
+    concat(builder.tokenize(node.test, node)),
     operator(')'),
     space,
-    ...builder.tokenize(node.body, node),
+    concat(builder.tokenize(node.body, node)),
   ];
 }

@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, operator} from '../../tokens';
-import {ArrayExpression, arrayExpression, AnyNode} from '@romejs/js-ast';
+import {Tokens, space, operator, concat} from '../../tokens';
+import {arrayExpression, AnyNode} from '@romejs/js-ast';
 
 export default function ArrayExpression(
   builder: Builder,
@@ -18,9 +18,9 @@ export default function ArrayExpression(
 
   const elems = node.elements;
 
-  let tokens: Tokens = [
+  const tokens: Tokens = [
     operator('['),
-    ...builder.tokenizeInnerComments(node),
+    concat(builder.tokenizeInnerComments(node)),
     builder.tokenizeCommaList(elems, node, {
       trailing: true,
       breakOnNewline: true,
@@ -34,7 +34,7 @@ export default function ArrayExpression(
       tokens.push(space);
     }
 
-    tokens = [...tokens, operator('...'), ...builder.tokenize(node.rest, node)];
+    tokens.push(operator('...'), concat(builder.tokenize(node.rest, node)));
   }
 
   tokens.push(operator(']'));

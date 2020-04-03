@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word} from '../../tokens';
-import {TryStatement, tryStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, space, word, concat} from '../../tokens';
+import {tryStatement, AnyNode} from '@romejs/js-ast';
 
 export default function TryStatement(builder: Builder, node: AnyNode): Tokens {
   node = tryStatement.assert(node);
@@ -15,18 +15,18 @@ export default function TryStatement(builder: Builder, node: AnyNode): Tokens {
   const tokens: Tokens = [
     word('try'),
     space,
-    ...builder.tokenize(node.block, node),
+    concat(builder.tokenize(node.block, node)),
     space,
-    ...builder.tokenize(node.handler, node),
+    concat(builder.tokenize(node.handler, node)),
   ];
 
   if (node.finalizer) {
     return [
-      ...tokens,
+      concat(tokens),
       space,
       word('finally'),
       space,
-      ...builder.tokenize(node.finalizer, node),
+      concat(builder.tokenize(node.finalizer, node)),
     ];
   } else {
     return tokens;

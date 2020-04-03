@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {FunctionHead, functionHead, AnyNode} from '@romejs/js-ast';
+import {functionHead, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {printBindingPatternParams} from '../utils';
 import {
@@ -13,6 +13,7 @@ import {
   operator,
   Tokens,
   linkedGroups,
+  concat,
 } from '@romejs/js-formatter/tokens';
 
 export default function FunctionHead(builder: Builder, node: AnyNode): Tokens {
@@ -20,15 +21,15 @@ export default function FunctionHead(builder: Builder, node: AnyNode): Tokens {
 
   const {typeAnnotations} = builder.options;
 
-  let tokens: Tokens = [
+  const tokens: Tokens = [
     operator('('),
-    ...printBindingPatternParams(builder, node, node.params, node.rest),
+    concat(printBindingPatternParams(builder, node, node.params, node.rest)),
     operator(')'),
   ];
 
   if (typeAnnotations) {
     if (node.returnType) {
-      tokens = tokens.concat(builder.tokenizeTypeColon(node.returnType, node));
+      tokens.push(concat(builder.tokenizeTypeColon(node.returnType, node)));
     }
 
     if (node.predicate) {
@@ -36,9 +37,12 @@ export default function FunctionHead(builder: Builder, node: AnyNode): Tokens {
         tokens.push(operator(':'));
       }
       tokens.push(space);
-      tokens = tokens.concat(builder.tokenize(node.predicate, node));
+      tokens.push(concat(builder.tokenize(node.predicate, node)));
     }
   }
 
-  return [...builder.tokenize(node.typeParameters, node), linkedGroups(tokens)];
+  return [
+    concat(builder.tokenize(node.typeParameters, node)),
+    linkedGroups(tokens),
+  ];
 }

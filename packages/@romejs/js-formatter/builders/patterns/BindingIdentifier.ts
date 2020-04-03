@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {BindingIdentifier, bindingIdentifier, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat} from '../../tokens';
+import {bindingIdentifier, AnyNode} from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
 import {printPatternMeta} from '../utils';
 
@@ -23,7 +23,7 @@ export default function BindingIdentifier(
   }
 
   return [
-    ...Identifier(builder, node),
-    ...printPatternMeta(builder, node, node.meta),
+    concat(Identifier(builder, node)),
+    concat(printPatternMeta(builder, node, node.meta)),
   ];
 }

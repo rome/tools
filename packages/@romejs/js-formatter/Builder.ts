@@ -20,6 +20,7 @@ import {
   indent,
   comment,
   positionMarker,
+  concat,
 } from './tokens';
 import {Number0} from '@romejs/ob1';
 
@@ -109,7 +110,7 @@ export default class Builder {
 
     this.printStack.push(node);
 
-    let tokens: Tokens = [];
+    const tokens: Tokens = [];
 
     const needsParens = n.needsParens(node, parent, this.printStack);
 
@@ -121,23 +122,17 @@ export default class Builder {
 
     // If leading comment had an empty line after then retain it
     if (leadingComments !== undefined) {
-      tokens = [
-        ...tokens,
-        ...this.tokenizeComments(leadingComments),
-        ...this.maybeCommentNewlines(
-          node,
-          leadingComments[leadingComments.length -
-            1],
-          false,
-        ),
-      ];
+      tokens.push(concat(this.tokenizeComments(leadingComments)), concat(
+        this.maybeCommentNewlines(node, leadingComments[leadingComments.length -
+          1], false),
+      ));
     }
 
     const nodeTokens = tokenizeNode(this, node, parent);
     if (node.loc === undefined || !this.options.sourceMaps) {
-      tokens = [...tokens, ...nodeTokens];
+      tokens.push(concat(nodeTokens));
     } else {
-      tokens = [...tokens, positionMarker(nodeTokens, node.loc)];
+      tokens.push(positionMarker(nodeTokens, node.loc));
     }
 
     if (needsParens) {
@@ -147,13 +142,13 @@ export default class Builder {
     // If there's an empty line between the node and it's trailing comments then keep it
     const trailingComments = this.getComments(false, node);
     if (trailingComments !== undefined) {
-      tokens = tokens.concat(this.maybeCommentNewlines(
+      tokens.push(concat(this.maybeCommentNewlines(
         node,
         trailingComments[0],
         true,
-      ));
+      )));
     }
-    tokens = tokens.concat(this.tokenizeComments(trailingComments));
+    tokens.push(concat(this.tokenizeComments(trailingComments)));
 
     this.printStack.pop();
 
@@ -194,7 +189,7 @@ export default class Builder {
 
           groups.push({
             tokens: this.tokenize(node, parent),
-            afterBroken: [...afterBroken, ...newlines],
+            afterBroken: [concat(afterBroken), concat(newlines)],
             afterUnbroken: newlines,
           });
         }
@@ -244,7 +239,7 @@ export default class Builder {
     parent: AnyNode,
     shouldIndent: boolean = false,
   ): Tokens {
-    let tokens: Tokens = [];
+    const tokens: Tokens = [];
     if (nodes === undefined || nodes.length === 0) {
       return tokens;
     }
@@ -255,7 +250,7 @@ export default class Builder {
         continue;
       }
 
-      tokens = [...tokens, ...this.tokenize(node, parent)];
+      tokens.push(concat(this.tokenize(node, parent)));
 
       const {
         nextNode,
@@ -266,14 +261,11 @@ export default class Builder {
         tokens.push(newline);
       }
 
-      tokens = tokens.concat(this.maybeInsertExtraStatementNewlines(
-        node,
-        nextNode,
-      ));
+      tokens.push(concat(this.maybeInsertExtraStatementNewlines(node, nextNode)));
     }
 
     if (shouldIndent) {
-      tokens = [newline, indent(tokens), newline];
+      return [newline, indent(tokens), newline];
     }
 
     return tokens;
@@ -283,7 +275,7 @@ export default class Builder {
     if (node === undefined) {
       return [];
     } else {
-      return [operator(':'), space, ...this.tokenize(node, parent)];
+      return [operator(':'), space, concat(this.tokenize(node, parent))];
     }
   }
 
@@ -293,13 +285,15 @@ export default class Builder {
       return [];
     }
 
-    let tokens: Tokens = [];
+    const tokens: Tokens = [];
 
     if (n.getLinesBetween(node, innerComments[0])) {
       tokens.push(newline);
     }
 
-    return [...tokens, ...this.tokenizeComments(innerComments)];
+    tokens.push(concat(this.tokenizeComments(innerComments)));
+
+    return tokens;
   }
 
   tokenizeComments(comments: undefined | Array<AnyComment>): Tokens {
@@ -307,19 +301,17 @@ export default class Builder {
       return [];
     }
 
-    let tokens: Tokens = [];
+    const tokens: Tokens = [];
 
     for (let i = 0; i < comments.length; i++) {
       const comment = comments[i];
-      tokens = tokens.concat(this.tokenizeComment(comment));
+      tokens.push(concat(this.tokenizeComment(comment)));
 
       const nextComment = comments[i + 1];
       if (nextComment !== undefined) {
-        tokens = tokens.concat(this.maybeCommentNewlines(
-          comment,
-          nextComment,
-          true,
-        ));
+        tokens.push(
+          concat(this.maybeCommentNewlines(comment, nextComment, true)),
+        );
       }
     }
 
@@ -392,7 +384,7 @@ export default class Builder {
       lines.shift();
     }
 
-    let tokens: Tokens = [];
+    const tokens: Tokens = [];
 
     if (lines.length >= 1) {
       tokens.push(derivedNewline(lines[0]));

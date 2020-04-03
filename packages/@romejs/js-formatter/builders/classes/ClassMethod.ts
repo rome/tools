@@ -6,18 +6,18 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word} from '../../tokens';
-import {ClassMethod, classMethod, AnyNode} from '@romejs/js-ast';
+import {Tokens, space, word, concat} from '../../tokens';
+import {classMethod, AnyNode} from '@romejs/js-ast';
 import {printMethod} from '../utils';
 
 export default function ClassMethod(builder: Builder, node: AnyNode): Tokens {
   node = classMethod.assert(node);
 
-  let tokens: Tokens = [];
+  const tokens: Tokens = printMethod(builder, node);
 
   if (node.meta.static === true) {
-    tokens = [word('static'), space];
+    return [word('static'), space, concat(tokens)];
+  } else {
+    return tokens;
   }
-
-  return [...tokens, ...printMethod(builder, node)];
 }

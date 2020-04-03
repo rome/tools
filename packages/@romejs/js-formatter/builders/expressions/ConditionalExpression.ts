@@ -6,12 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, space, group, newline} from '../../tokens';
-import {
-  ConditionalExpression,
-  conditionalExpression,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Tokens, operator, space, group, newline, concat} from '../../tokens';
+import {conditionalExpression, AnyNode} from '@romejs/js-ast';
 
 export default function ConditionalExpression(
   builder: Builder,
@@ -20,11 +16,11 @@ export default function ConditionalExpression(
   node = conditionalExpression.assert(node);
 
   return [
-    ...builder.tokenize(node.test, node),
+    concat(builder.tokenize(node.test, node)),
     space,
     group([
-      [operator('?'), space, ...builder.tokenize(node.consequent, node)],
-      [operator(':'), space, ...builder.tokenize(node.alternate, node)],
+      [operator('?'), space, concat(builder.tokenize(node.consequent, node))],
+      [operator(':'), space, concat(builder.tokenize(node.alternate, node))],
     ], {
       priority: true,
       broken: {

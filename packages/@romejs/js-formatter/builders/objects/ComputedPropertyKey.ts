@@ -6,17 +6,17 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {
-  ComputedPropertyKey,
-  computedPropertyKey,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Tokens, operator, concat} from '../../tokens';
+import {computedPropertyKey, AnyNode} from '@romejs/js-ast';
 
 export default function ComputedPropertyKey(
   builder: Builder,
   node: AnyNode,
 ): Tokens {
   node = computedPropertyKey.assert(node);
-  return [operator('['), ...builder.tokenize(node.value, node), operator(']')];
+  return [
+    operator('['),
+    concat(builder.tokenize(node.value, node)),
+    operator(']'),
+  ];
 }

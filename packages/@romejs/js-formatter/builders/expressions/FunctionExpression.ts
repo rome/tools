@@ -6,8 +6,15 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, operator, word, linkedGroups} from '../../tokens';
-import {FunctionExpression, functionExpression, AnyNode} from '@romejs/js-ast';
+import {
+  Tokens,
+  space,
+  operator,
+  word,
+  linkedGroups,
+  concat,
+} from '../../tokens';
+import {functionExpression, AnyNode} from '@romejs/js-ast';
 
 export default function FunctionExpression(
   builder: Builder,
@@ -17,7 +24,7 @@ export default function FunctionExpression(
     ? node
     : functionExpression.assert(node);
 
-  let tokens: Tokens = [];
+  const tokens: Tokens = [];
 
   if (node.head.async === true) {
     tokens.push(word('async'));
@@ -31,12 +38,12 @@ export default function FunctionExpression(
   }
 
   if (node.id) {
-    tokens = [...tokens, space, ...builder.tokenize(node.id, node)];
+    tokens.push(space, concat(builder.tokenize(node.id, node)));
   }
 
   return [
-    ...tokens,
-    linkedGroups([...builder.tokenize(node.head, node), space]),
-    ...builder.tokenize(node.body, node),
+    concat(tokens),
+    linkedGroups([concat(builder.tokenize(node.head, node)), space]),
+    concat(builder.tokenize(node.body, node)),
   ];
 }

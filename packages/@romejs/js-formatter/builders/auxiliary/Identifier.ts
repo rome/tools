@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {AnyNode, Identifier, identifier} from '@romejs/js-ast';
+import {AnyNode, identifier} from '@romejs/js-ast';
 import {word} from '@romejs/js-formatter/tokens';
 
 export default function Identifier(builder: Builder, node: AnyNode): Tokens {

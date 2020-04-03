@@ -43,27 +43,21 @@ export default function RegExpCharacter(
   switch (node.value) {
     case '\t':
       return [verbatim('\\t')];
-      break;
 
     case '\n':
       return [verbatim('\\n')];
-      break;
 
     case '\r':
       return [verbatim('\\r')];
-      break;
 
     case '\x0b':
       return [verbatim('\\v')];
-      break;
 
     case '\f':
       return [verbatim('\\f')];
-      break;
 
     case '\b':
       return [verbatim('\\b')];
-      break;
 
     case '/':
     case '\\':

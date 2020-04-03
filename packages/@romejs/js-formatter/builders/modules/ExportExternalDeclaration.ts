@@ -6,12 +6,15 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, linkedGroups, operator, space, word} from '../../tokens';
 import {
-  AnyNode,
-  ExportExternalDeclaration,
-  exportExternalDeclaration,
-} from '@romejs/js-ast';
+  Tokens,
+  linkedGroups,
+  operator,
+  space,
+  word,
+  concat,
+} from '../../tokens';
+import {AnyNode, exportExternalDeclaration} from '@romejs/js-ast';
 import {printModuleSpecifiers} from './ImportDeclaration';
 
 export default function ExportExternalDeclaration(
@@ -29,12 +32,12 @@ export default function ExportExternalDeclaration(
 
   return [
     linkedGroups([
-      ...tokens,
-      ...printModuleSpecifiers(builder, node),
+      concat(tokens),
+      concat(printModuleSpecifiers(builder, node)),
       space,
       word('from'),
       space,
-      ...builder.tokenize(node.source, node),
+      concat(builder.tokenize(node.source, node)),
       operator(';'),
     ]),
   ];

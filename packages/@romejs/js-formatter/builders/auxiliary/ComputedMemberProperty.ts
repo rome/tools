@@ -6,12 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  ComputedMemberProperty,
-  computedMemberProperty,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Tokens, concat} from '../../tokens';
+import {computedMemberProperty, AnyNode} from '@romejs/js-ast';
 import {operator} from '@romejs/js-formatter/tokens';
 
 export default function ComputedMemberProperty(
@@ -20,5 +16,9 @@ export default function ComputedMemberProperty(
 ): Tokens {
   node = computedMemberProperty.assert(node);
 
-  return [operator('['), ...builder.tokenize(node.value, node), operator(']')];
+  return [
+    operator('['),
+    concat(builder.tokenize(node.value, node)),
+    operator(']'),
+  ];
 }

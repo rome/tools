@@ -7,11 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {
-  ReferenceIdentifier,
-  referenceIdentifier,
-  AnyNode,
-} from '@romejs/js-ast';
+import {referenceIdentifier, AnyNode} from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
 
 export default function ReferenceIdentifier(
