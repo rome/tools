@@ -16,16 +16,14 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowDeclareExportNamed =
-  & JSNodeBase
-  & {
-    type: 'FlowDeclareExportNamed';
-    declaration?: AnyFlowDeclare | ExportLocalDeclaration['declaration'];
-    specifiers?: Array<ExportLocalSpecifier | AnyExportExternalSpecifier>;
-    source?: StringLiteral;
-    exportKind?: ConstExportModuleKind;
-    declare?: boolean;
-  };
+export type FlowDeclareExportNamed = JSNodeBase & {
+  type: 'FlowDeclareExportNamed';
+  declaration?: AnyFlowDeclare | ExportLocalDeclaration['declaration'];
+  specifiers?: Array<ExportLocalSpecifier | AnyExportExternalSpecifier>;
+  source?: StringLiteral;
+  exportKind?: ConstExportModuleKind;
+  declare?: boolean;
+};
 
 export const flowDeclareExportNamed = createBuilder<FlowDeclareExportNamed>(
   'FlowDeclareExportNamed',

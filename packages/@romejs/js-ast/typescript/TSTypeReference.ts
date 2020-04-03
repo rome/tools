@@ -12,13 +12,11 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTypeReference =
-  & JSNodeBase
-  & {
-    type: 'TSTypeReference';
-    typeName: AnyTSEntityName;
-    typeParameters?: TSTypeParameterInstantiation;
-  };
+export type TSTypeReference = JSNodeBase & {
+  type: 'TSTypeReference';
+  typeName: AnyTSEntityName;
+  typeParameters?: TSTypeParameterInstantiation;
+};
 
 export const tsTypeReference = createBuilder<TSTypeReference>(
   'TSTypeReference',

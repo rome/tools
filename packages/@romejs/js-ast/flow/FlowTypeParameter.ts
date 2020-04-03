@@ -13,15 +13,13 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowTypeParameter =
-  & JSNodeBase
-  & {
-    type: 'FlowTypeParameter';
-    name: string;
-    bound?: AnyPrimaryType;
-    default?: AnyFlowPrimary;
-    variance?: FlowVariance;
-  };
+export type FlowTypeParameter = JSNodeBase & {
+  type: 'FlowTypeParameter';
+  name: string;
+  bound?: AnyPrimaryType;
+  default?: AnyFlowPrimary;
+  variance?: FlowVariance;
+};
 
 export const flowTypeParameter = createBuilder<FlowTypeParameter>(
   'FlowTypeParameter',

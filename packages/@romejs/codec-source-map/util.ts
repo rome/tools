@@ -42,7 +42,8 @@ export function compareByGeneratedPositionsInflated(
   mappingA: Mapping,
   mappingB: Mapping,
 ): number {
-  let cmp: number = get1(mappingA.generated.line) - get1(mappingB.generated.line);
+  let cmp: number = get1(mappingA.generated.line) -
+    get1(mappingB.generated.line);
   if (cmp !== 0) {
     return cmp;
   }

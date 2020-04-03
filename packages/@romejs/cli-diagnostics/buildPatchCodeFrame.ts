@@ -55,11 +55,8 @@ export default function buildPatchCodeFrame(
     }
 
     if (hasChange) {
-      for (
-        let start = i - CODE_FRAME_CONTEXT_LINES;
-        start < i + CODE_FRAME_CONTEXT_LINES;
-        start++
-      ) {
+      for (let start = i - CODE_FRAME_CONTEXT_LINES; start < i +
+        CODE_FRAME_CONTEXT_LINES; start++) {
         shownLines.add(start);
 
         if (start > lastVisibleLine) {
@@ -79,8 +76,7 @@ export default function buildPatchCodeFrame(
   let truncated = false;
   let lastDisplayedLine = -1;
 
-  const skippedLine =
-    `<emphasis>${CODE_FRAME_INDENT}${'.'.repeat(lineLength)}${GUTTER}</emphasis>`;
+  const skippedLine = `<emphasis>${CODE_FRAME_INDENT}${'.'.repeat(lineLength)}${GUTTER}</emphasis>`;
 
   // Build the actual frame
   for (let i = 0; i < diffsByLine.length; i++) {
@@ -133,21 +129,23 @@ export default function buildPatchCodeFrame(
       frame.push(skippedLine);
     }
 
-    const gutter = `<emphasis>${CODE_FRAME_INDENT}<pad count="${String(
+    const gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad count="${String(
       lineLength,
     )}">${String(lineNo)}</pad>${GUTTER}</emphasis>`;
+    const gutterNoLine = `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(lineLength)}${GUTTER}</emphasis>`;
 
     if (hasAddition) {
-      frame.push(`${gutter}${ADD_MARKER} ${formatDiffLine(addition)}`);
+      frame.push(`${gutterWithLine}${ADD_MARKER} ${formatDiffLine(addition)}`);
     }
 
     if (hasDeletions) {
+      const gutter = hasAddition ? gutterNoLine : gutterWithLine;
       frame.push(`${gutter}${DELETE_MARKER} ${formatDiffLine(deletions)}`);
     }
 
     if (!hasAddition && !hasDeletions) {
       // Output one of the lines, they're the same
-      frame.push(`${gutter}  ${formatDiffLine(addition)}`);
+      frame.push(`${gutterWithLine}  ${formatDiffLine(addition)}`);
     }
 
     lastDisplayedLine = lineNo;

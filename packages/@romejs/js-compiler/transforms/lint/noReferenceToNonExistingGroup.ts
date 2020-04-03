@@ -10,9 +10,8 @@ import {AnyNode, RegExpGroupCapture} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 
 function findCaptureGroups(path: Path): Array<RegExpGroupCapture> | undefined {
-  const regexLiteral = path.findAncestry((path) =>
-    path.node.type === 'RegExpLiteral'
-  );
+  const regexLiteral = path.findAncestry((path) => path.node.type ===
+    'RegExpLiteral');
   if (regexLiteral === undefined) {
     return regexLiteral;
   }

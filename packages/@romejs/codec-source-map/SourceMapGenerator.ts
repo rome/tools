@@ -19,12 +19,10 @@ import MappingList from './MappingList';
 import {Number1, Number0, get1, get0, number0, number1, inc} from '@romejs/ob1';
 
 export default class SourceMapGenerator {
-  constructor(
-    args: {
-      file?: string;
-      sourceRoot?: string;
-    },
-  ) {
+  constructor(args: {
+    file?: string;
+    sourceRoot?: string;
+  }) {
     this.file = args.file;
     this.sourceRoot = args.sourceRoot;
 
@@ -46,8 +44,8 @@ export default class SourceMapGenerator {
   assertUnlocked() {
     if (this.map !== undefined) {
       throw new Error(
-        'Source map has already been materialized, toJSON() should be your final call',
-      );
+          'Source map has already been materialized, toJSON() should be your final call',
+        );
     }
   }
 
@@ -229,8 +227,7 @@ export default class SourceMapGenerator {
   toComment(): string {
     const jsonMap = this.toString();
     const base64Map = new Buffer(jsonMap).toString('base64');
-    const comment =
-      `//# sourceMappingURL=data:application/json;charset=utf-8;base64,${base64Map}`;
+    const comment = `//# sourceMappingURL=data:application/json;charset=utf-8;base64,${base64Map}`;
     return comment;
   }
 

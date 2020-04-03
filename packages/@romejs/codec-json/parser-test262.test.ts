@@ -116,57 +116,76 @@ test(
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
-test('Whitespace characters can appear before/after any JSONtoken', () => {
-  parse(
-    `\t\r \n{\t\r \n"property"\t\r \n:\t\r \n{\t\r \n}\t\r \n,\t\r \n"prop2"\t\r \n:\t\r \n` +
-    `[\t\r \ntrue\t\r \n,\t\r \nnull\t\r \n,123.456\t\r \n]\t\r \n}\t\r \n`,
-  ); // should JOSN parse without error
-});
+test(
+  'Whitespace characters can appear before/after any JSONtoken',
+  () => {
+    parse(
+        `\t\r \n{\t\r \n"property"\t\r \n:\t\r \n{\t\r \n}\t\r \n,\t\r \n"prop2"\t\r \n:\t\r \n` +
+        `[\t\r \ntrue\t\r \n,\t\r \nnull\t\r \n,123.456\t\r \n]\t\r \n}\t\r \n`,
+    ); // should JOSN parse without error
+  },
+);
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test('The JSON lexical grammar treats <TAB> as a whitespace character', (t) => {
   t.is(parse('\t1234'), 1_234, '<TAB> should be ignored');
 
-  t.throws(function() {
-    parse('12\t34');
-  }, DiagnosticsError, '<TAB> should produce a syntax error as whitespace results in two tokens');
+  t.throws(
+    function() {
+      parse('12\t34');
+    },
+    DiagnosticsError,
+    '<TAB> should produce a syntax error as whitespace results in two tokens',
+  );
 });
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test('The JSON lexical grammar treats <CR> as a whitespace character', (t) => {
   t.is(parse('\r1234'), 1_234, '<cr> should be ignored');
 
-  t.throws(function() {
-    parse('12\r34');
-  }, DiagnosticsError, '<CR> should produce a syntax error as whitespace results in two tokens');
+  t.throws(
+    function() {
+      parse('12\r34');
+    },
+    DiagnosticsError,
+    '<CR> should produce a syntax error as whitespace results in two tokens',
+  );
 });
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test('The JSON lexical grammar treats <LF> as a whitespace character', (t) => {
   t.is(parse('\n1234'), 1_234, '<LF> should be ignored');
 
-  t.throws(function() {
-    parse('12\n34');
-  }, DiagnosticsError, '<LF> should produce a syntax error as whitespace results in two tokens');
+  t.throws(
+    function() {
+      parse('12\n34');
+    },
+    DiagnosticsError,
+    '<LF> should produce a syntax error as whitespace results in two tokens',
+  );
 });
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test('The JSON lexical grammar treats <SP> as a whitespace character', (t) => {
   t.is(parse(' 1234'), 1_234, '<SP> should be ignored');
-  t.throws(function() {
-    parse('12 34');
-  }, DiagnosticsError, '<SP> should produce a syntax error as whitespace results in two tokens');
+  t.throws(
+    function() {
+      parse('12 34');
+    },
+    DiagnosticsError,
+    '<SP> should produce a syntax error as whitespace results in two tokens',
+  );
 });
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test('JSONStrings can be written using double quotes', (t) => {
-  t.is(parse('"abc"'), 'abc', 'parse(\'"abc"\'})');
+  t.is(parse('"abc"'), 'abc', "parse('\"abc\"'})");
 });
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test('A JSONString may not be delimited by single quotes', (t) => {
   t.throws(function() {
-    parse('\'abc\'');
+    parse("'abc'");
   });
 });
 
@@ -178,12 +197,11 @@ test('A JSONString may not be delimited by Uncode escaped quotes', (t) => {
 });
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
-test(
-  'A JSONStrings can contain no JSONStringCharacters (Empty JSONStrings)',
-  (t) => {
-    t.is(parse('""'), '', 'parse(\'""\'})');
-  },
-);
+test('A JSONStrings can contain no JSONStringCharacters (Empty JSONStrings)', (
+  t,
+) => {
+  t.is(parse('""'), '', "parse('\"\"'})");
+});
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
@@ -229,7 +247,7 @@ test(
 test(
   'The JSON lexical grammar allows Unicode escape sequences in a JSONString',
   (t) => {
-    t.is(parse('"\\u0058"'), 'X', 'parse(\'"\\u0058"\'})');
+    t.is(parse('"\\u0058"'), 'X', "parse('\"\\u0058\"'})");
   },
 );
 
@@ -255,57 +273,57 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-  'The JSON lexical grammer allows \'/\' as a JSONEscapeCharacter after \'\' in a JSONString',
+  "The JSON lexical grammer allows '/' as a JSONEscapeCharacter after '' in a JSONString",
   (t) => {
-    t.is(parse('"\\/"'), '/', 'parse(\'"\\/"\'})');
+    t.is(parse('"\\/"'), '/', "parse('\"\\/\"'})");
   },
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-  'The JSON lexical grammer allows \'\' as a JSONEscapeCharacter after \'\' in a JSONString',
+  "The JSON lexical grammer allows '' as a JSONEscapeCharacter after '' in a JSONString",
   (t) => {
-    t.is(parse('"\\\\"'), '\\', 'parse(\'"\\\\"\'})');
+    t.is(parse('"\\\\"'), '\\', "parse('\"\\\\\"'})");
   },
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-  'The JSON lexical grammer allows \'b\' as a JSONEscapeCharacter after \'\' in a JSONString',
+  "The JSON lexical grammer allows 'b' as a JSONEscapeCharacter after '' in a JSONString",
   (t) => {
-    t.is(parse('"\\b"'), '\b', 'parse(\'"\\b"\'})');
+    t.is(parse('"\\b"'), '\b', "parse('\"\\b\"'})");
   },
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-  'The JSON lexical grammer allows \'f\' as a JSONEscapeCharacter after \'\' in a JSONString',
+  "The JSON lexical grammer allows 'f' as a JSONEscapeCharacter after '' in a JSONString",
   (t) => {
-    t.is(parse('"\\f"'), '\f', 'parse(\'"\\f"\'})');
+    t.is(parse('"\\f"'), '\f', "parse('\"\\f\"'})");
   },
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-  'The JSON lexical grammer allows \'n\' as a JSONEscapeCharacter after \'\' in a JSONString',
+  "The JSON lexical grammer allows 'n' as a JSONEscapeCharacter after '' in a JSONString",
   (t) => {
-    t.is(parse('"\\n"'), '\n', 'parse(\'"\\n"\'})');
+    t.is(parse('"\\n"'), '\n', "parse('\"\\n\"'})");
   },
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-  'The JSON lexical grammer allows \'r\' as a JSONEscapeCharacter after \'\' in a JSONString',
+  "The JSON lexical grammer allows 'r' as a JSONEscapeCharacter after '' in a JSONString",
   (t) => {
-    t.is(parse('"\\r"'), '\r', 'parse(\'"\\r"\'})');
+    t.is(parse('"\\r"'), '\r', "parse('\"\\r\"'})");
   },
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-  'The JSON lexical grammer allows \'t\' as a JSONEscapeCharacter after \'\' in a JSONString',
+  "The JSON lexical grammer allows 't' as a JSONEscapeCharacter after '' in a JSONString",
   (t) => {
-    t.is(parse('"\\t"'), '\t', 'parse(\'"\\t"\'})');
+    t.is(parse('"\\t"'), '\t', "parse('\"\\t\"'})");
   },
 );
 

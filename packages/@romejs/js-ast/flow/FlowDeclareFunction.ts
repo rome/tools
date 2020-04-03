@@ -14,13 +14,11 @@ import {
 import {createBuilder} from '../utils';
 import {RequiredProps} from '@romejs/typescript-helpers';
 
-export type FlowDeclareFunction =
-  & JSNodeBase
-  & {
-    type: 'FlowDeclareFunction';
-    id: RequiredProps<BindingIdentifier, 'meta'>;
-    predicate?: FlowDeclaredPredicate | FlowInferredPredicate;
-  };
+export type FlowDeclareFunction = JSNodeBase & {
+  type: 'FlowDeclareFunction';
+  id: RequiredProps<BindingIdentifier, 'meta'>;
+  predicate?: FlowDeclaredPredicate | FlowInferredPredicate;
+};
 
 export const flowDeclareFunction = createBuilder<FlowDeclareFunction>(
   'FlowDeclareFunction',

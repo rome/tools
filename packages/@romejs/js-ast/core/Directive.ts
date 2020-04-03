@@ -8,12 +8,10 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type Directive =
-  & JSNodeBase
-  & {
-    type: 'Directive';
-    value: string;
-  };
+export type Directive = JSNodeBase & {
+  type: 'Directive';
+  value: string;
+};
 
 export const directive = createBuilder<Directive>('Directive', {
   bindingKeys: {},

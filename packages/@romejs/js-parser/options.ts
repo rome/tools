@@ -16,11 +16,13 @@ type UserOptionsBase = {
   manifestPath?: undefined | string;
 };
 
-export type JSParserUserOptions = ParserOptionsWithRequiredPath & UserOptionsBase;
-
-export type JSParserOptions =
+export type JSParserUserOptions =
   & ParserOptionsWithRequiredPath
-  & Required<UserOptionsBase>;
+  & UserOptionsBase;
+
+export type JSParserOptions = ParserOptionsWithRequiredPath & Required<
+  UserOptionsBase
+>;
 
 const DEFAULT_USER_OPTIONS: Required<UserOptionsBase> = {
   // I want to kill this option very badly

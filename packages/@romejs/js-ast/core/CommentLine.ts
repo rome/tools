@@ -8,12 +8,10 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type CommentLine =
-  & JSNodeBase
-  & {
-    type: 'CommentLine';
-    value: string;
-  };
+export type CommentLine = JSNodeBase & {
+  type: 'CommentLine';
+  value: string;
+};
 
 export const commentLine = createBuilder<CommentLine>('CommentLine', {
   bindingKeys: {},

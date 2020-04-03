@@ -9,7 +9,7 @@ import {Mappings} from '@romejs/codec-source-map';
 import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {CompileRequest} from '../types';
 import {Cache} from '@romejs/js-compiler';
-import {generateJS} from '@romejs/js-generator';
+import {formatJS} from '@romejs/js-formatter';
 import transform from '../methods/transform';
 
 export type CompileResult = {
@@ -41,17 +41,19 @@ export default async function compile(
     suppressions,
     cacheDependencies,
   } = await transform(req);
-  const generator = generateJS(transformedAst, {
+  const generator = formatJS(transformedAst, {
     typeAnnotations: false,
     indent: req.stage === 'compileForBundle' ? 1 : 0,
     sourceMapTarget: filename,
     sourceFileName: filename,
     inputSourceMap: req.inputSourceMap,
-  }, sourceText);
+    sourceMaps: true,
+    sourceText,
+  });
 
   const res: CompileResult = {
-    compiledCode: generator.buf.getCode(),
-    mappings: generator.buf.getMappings(),
+    compiledCode: generator.getCode(),
+    mappings: generator.getMappings(),
     diagnostics: [...ast.diagnostics, ...diagnostics],
     cacheDependencies,
     suppressions,

@@ -157,19 +157,17 @@ export default class DependencyGraph {
     return mod;
   }
 
-  async seed(
-    {
-      paths,
-      diagnosticsProcessor,
-      analyzeProgress,
-      validate = false,
-    }: {
-      paths: Array<AbsoluteFilePath>;
-      diagnosticsProcessor: DiagnosticsProcessor;
-      analyzeProgress?: ReporterProgress;
-      validate?: boolean;
-    },
-  ): Promise<void> {
+  async seed({
+    paths,
+    diagnosticsProcessor,
+    analyzeProgress,
+    validate = false,
+  }: {
+    paths: Array<AbsoluteFilePath>;
+    diagnosticsProcessor: DiagnosticsProcessor;
+    analyzeProgress?: ReporterProgress;
+    validate?: boolean;
+  }): Promise<void> {
     const workerQueue: DependencyGraphWorkerQueue = new WorkerQueue(this.master);
 
     workerQueue.addCallback(async (path, item) => {
@@ -182,13 +180,13 @@ export default class DependencyGraph {
     });
 
     // Add initial queue items
-    const roots: Array<DependencyNode> = await Promise.all(paths.map((path) =>
-      this.resolve(path, {
+    const roots: Array<DependencyNode> = await Promise.all(paths.map(
+      (path) => this.resolve(path, {
         workerQueue,
         all: true,
         async: false,
         ancestry: [],
-      }, diagnosticsProcessor, analyzeProgress)
+      }, diagnosticsProcessor, analyzeProgress),
     ));
 
     await workerQueue.spin();
@@ -209,9 +207,8 @@ export default class DependencyGraph {
     diagnosticsProcessor: DiagnosticsProcessor,
   ): boolean {
     const resolvedImports = node.resolveImports();
-    return (
-      diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics).length > 0
-    );
+    return diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics).length >
+        0;
   }
 
   validateTransitive(
@@ -267,8 +264,9 @@ export default class DependencyGraph {
       analyzeProgress.pushText(progressText);
     }
 
-    const res: WorkerAnalyzeDependencyResult =
-      await this.request.requestWorkerAnalyzeDependencies(path);
+    const res: WorkerAnalyzeDependencyResult = await this.request.requestWorkerAnalyzeDependencies(
+      path,
+    );
 
     const node = this.addNode(path, res);
     node.setAll(all);

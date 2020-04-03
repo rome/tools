@@ -56,7 +56,8 @@ export default class DependencyOrderer {
 
       // We want to get the shortest cycle path since it's likely the most easily resolved
       const isShortestCycle = existingCycle === undefined ||
-      existingCycle.length > ourCyclePath.length;
+          existingCycle.length >
+          ourCyclePath.length;
       if (isShortestCycle) {
         this.possibleCyclePaths.set(node, ourCyclePath);
       }
@@ -102,11 +103,10 @@ export default class DependencyOrderer {
       const node = flatOrder[i];
 
       for (const imp of node.analyze.importFirstUsage) {
-        const resolved =
-          node.getNodeFromRelativeDependency(imp.source).resolveImport(
-            imp.imported,
-            imp.loc,
-          );
+        const resolved = node.getNodeFromRelativeDependency(imp.source).resolveImport(
+          imp.imported,
+          imp.loc,
+        );
         if (resolved.type !== 'FOUND') {
           continue;
         }
@@ -138,9 +138,8 @@ export default class DependencyOrderer {
     }
 
     const target = path[path.length - 1];
-    const culprit = String(path.find(
-      (value, index) => path[index - 1] === target,
-    ));
+    const culprit = String(path.find((value, index) => path[index - 1] ===
+      target));
 
     this.diagnostics.push({
       description: descriptions.BUNDLER.DETECTED_CYCLE(

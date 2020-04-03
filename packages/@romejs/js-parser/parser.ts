@@ -91,8 +91,8 @@ const SCOPE_TYPES: Array<ScopeType> = [
   'FLOW_COMMENT',
 ];
 
-const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
-  // rome-suppress-next-line lint/noExplicitAny
+const createJSParser = createParser(
+  (ParserCore, ParserWithRequiredPath) => // rome-suppress-next-line lint/noExplicitAny
   class JSParser extends ParserWithRequiredPath<any, State> {
     constructor(options: JSParserOptions) {
       const state = createInitialState();
@@ -111,7 +111,8 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
       this.sourceType = options.sourceType;
       this.options = options;
       this.inModule = this.options.sourceType === 'template' ||
-      this.options.sourceType === 'module';
+          this.options.sourceType ===
+          'module';
       this.parenthesized = new Set();
 
       // Turn options.syntax into a Set, probably faster than doing `includes` on the array
@@ -280,8 +281,9 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
           {
             category: 'js-parser',
           },
-        ],
+        ]
         //unique: ['start.line'],
+        ,
       });
 
       for (const filter of this.state.diagnosticFilters) {
@@ -332,15 +334,13 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
       this.state.tokens.push(token);
     }
 
-    addDiagnostic(
-      opts: {
-        description: Omit<DiagnosticDescription, 'category'>;
-        start?: Position;
-        end?: Position;
-        loc?: SourceLocation;
-        index?: Number0;
-      },
-    ): void {
+    addDiagnostic(opts: {
+      description: Omit<DiagnosticDescription, 'category'>;
+      start?: Position;
+      end?: Position;
+      loc?: SourceLocation;
+      index?: Number0;
+    }): void {
       if (this.isLookahead) {
         return;
       }
@@ -458,13 +458,15 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
     // Tests whether parsed token is a contextual keyword.
     isContextual(name: string): boolean {
       return this.match(tt.name) && this.state.tokenValue === name &&
-        this.state.escapePosition === undefined;
+          this.state.escapePosition ===
+          undefined;
     }
 
     isLookaheadContextual(name: string): boolean {
       const l = this.lookaheadState();
       return l.tokenType === tt.name && l.tokenValue === name &&
-        l.escapePosition === undefined;
+          l.escapePosition ===
+          undefined;
     }
 
     // Consumes contextual keyword if possible.
@@ -497,7 +499,7 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
     // Test whether a semicolon can be inserted at the current position.
     canInsertSemicolon(): boolean {
       return this.match(tt.eof) || this.match(tt.braceR) ||
-      this.hasPrecedingLineBreak();
+        this.hasPrecedingLineBreak();
     }
 
     hasPrecedingLineBreak(): boolean {
@@ -588,7 +590,8 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
 
         const possibleMistake = TOKEN_MISTAKES[tokenType.label];
         possibleShiftMistake = possibleMistake !== undefined &&
-          possibleMistake === this.state.tokenType.label;
+            possibleMistake ===
+            this.state.tokenType.label;
       }
 
       this.addDiagnostic({
@@ -603,8 +606,8 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
 
     unexpected(): never {
       throw new Error(
-        'js-parser should never throw an exception, use addDiagnostic or unexpectedToken instead',
-      );
+          'js-parser should never throw an exception, use addDiagnostic or unexpectedToken instead',
+        );
     }
 
     tokenize(): never {
@@ -613,7 +616,7 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
 
     cloneNode<T extends AnyNode>(node: T): T {
       if (node.leadingComments === undefined && node.trailingComments ===
-      undefined && node.innerComments === undefined) {
+          undefined && node.innerComments === undefined) {
         // Do we really need to clone this?
         return {...node};
       } else {
@@ -745,7 +748,7 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) =>
 
       return program;
     }
-  }
+  },
 );
 
 export type JSParser = ReturnType<typeof createJSParser>;

@@ -14,16 +14,14 @@ test('no label var', async (t) => {
   x: const y = "test";
   `);
 
-  t.truthy(badLabel.diagnostics.find((d) =>
-    d.description.category === 'lint/noLabelVar'
-  ));
+  t.truthy(badLabel.diagnostics.find((d) => d.description.category ===
+    'lint/noLabelVar'));
 
   const okLabel = await testLint(`
   const x = "test";
   z: const y = "test";
   `);
 
-  t.falsy(okLabel.diagnostics.find((d) =>
-    d.description.category === 'lint/noLabelVar'
-  ));
+  t.falsy(okLabel.diagnostics.find((d) => d.description.category ===
+    'lint/noLabelVar'));
 });

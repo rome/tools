@@ -267,8 +267,8 @@ export default class Worker {
           ));
           if (cached === undefined) {
             throw new Error(
-              `Master told us we have the export types for ${value.filename} cached but we dont!`,
-            );
+                `Master told us we have the export types for ${value.filename} cached but we dont!`,
+              );
           }
           return cached;
       }
@@ -298,14 +298,11 @@ export default class Worker {
     }
   }
 
-  async parseJS(
-    ref: FileReference,
-    opts: {
-      sourceType?: ConstSourceType;
-      syntax?: Array<ConstProgramSyntax>;
-      cache?: boolean;
-    } = {},
-  ): Promise<ParseResult> {
+  async parseJS(ref: FileReference, opts: {
+    sourceType?: ConstSourceType;
+    syntax?: Array<ConstProgramSyntax>;
+    cache?: boolean;
+  } = {}): Promise<ParseResult> {
     const path = createAbsoluteFilePath(ref.real);
 
     const {project: projectId, uid} = ref;

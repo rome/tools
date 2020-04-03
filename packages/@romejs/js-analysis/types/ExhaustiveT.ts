@@ -113,10 +113,8 @@ export default class ExhaustiveT extends T {
   }
 
   humanize(builder: HumanBuilder): string {
-    return (
-      `exhaustive ${builder.humanize(this.target)} should only match ${builder.humanize(
+    return `exhaustive ${builder.humanize(this.target)} should only match ${builder.humanize(
         this.target,
-      )}`
-    );
+      )}`;
   }
 }

@@ -88,10 +88,10 @@ export type MasterUnfinishedMarker = {
   facet: string;
 };
 
-export type MasterMarker =
-  & MasterUnfinishedMarker
-  & {// End time in milliseconds
-    end: number};
+export type MasterMarker = MasterUnfinishedMarker & {
+  // End time in milliseconds
+  end: number;
+};
 
 export default class Master {
   constructor(opts: MasterOptions) {
@@ -130,7 +130,8 @@ export default class Master {
 
     this.logger = new Logger('master', () => {
       return this.logEvent.hasSubscribers() ||
-      this.connectedClientsListeningForLogs.size > 0;
+          this.connectedClientsListeningForLogs.size >
+          0;
     }, {
       streams: [
         {
@@ -215,7 +216,8 @@ export default class Master {
 
   onFatalError(err: Error) {
     const message = `<emphasis>Fatal error occurred</emphasis>: ${escapeMarkup(
-      err.stack || err.message,
+        err.stack ||
+        err.message,
     )}`;
     this.logger.error(message);
     this.connectedReporters.error(message);
@@ -584,7 +586,8 @@ export default class Master {
       silent: partialQuery.silent === true || requestFlags.benchmark,
       terminateWhenIdle: partialQuery.terminateWhenIdle === true,
       commandFlags: partialQuery.commandFlags === undefined
-        ? {} : partialQuery.commandFlags,
+        ? {}
+        : partialQuery.commandFlags,
     };
 
     const {bridge} = client;
@@ -667,20 +670,25 @@ export default class Master {
     progress.end();
     const benchmarkTook = Date.now() - benchmarkStart;
 
-    reporter.section('Benchmark results', () => {
-      reporter.info(
-        'Request artifacts may have been cached after the first run, artificially decreasing subsequent run time',
-      );
-      reporter.heading('Query');
-      reporter.inspect(req.query);
-      reporter.heading('Stats');
-      reporter.list([
-        `Warmup took <duration emphasis>${warmupTook}</duration>`,
-        `<number emphasis>${benchmarkIterations}</number> runs`,
-        `<duration emphasis>${benchmarkTook}</duration> total`,
-        `<duration emphasis approx>${benchmarkTook / benchmarkIterations}</duration> per run`,
-      ]);
-    });
+    reporter.section(
+      'Benchmark results',
+      () => {
+        reporter.info(
+          'Request artifacts may have been cached after the first run, artificially decreasing subsequent run time',
+        );
+        reporter.heading('Query');
+        reporter.inspect(req.query);
+        reporter.heading('Stats');
+        reporter.list(
+          [
+            `Warmup took <duration emphasis>${warmupTook}</duration>`,
+            `<number emphasis>${benchmarkIterations}</number> runs`,
+            `<duration emphasis>${benchmarkTook}</duration> total`,
+            `<duration emphasis approx>${benchmarkTook / benchmarkIterations}</duration> per run`,
+          ],
+        );
+      },
+    );
 
     return result;
   }
@@ -733,13 +741,14 @@ export default class Master {
       let promises: Array<Promise<unknown> | undefined> = [bridgeEndPromise];
 
       // Get command
-      const commandOpts: undefined | MasterCommand<Dict<unknown>> =
-        masterCommands.get(query.commandName);
+      const commandOpts: undefined | MasterCommand<Dict<unknown>> = masterCommands.get(
+        query.commandName,
+      );
       if (commandOpts) {
         // Warn about disabled disk caching
         if (process.env.ROME_CACHE === '0' && !this.warnedCacheClients.has(
-          bridge,
-        )) {
+            bridge,
+          )) {
           reporter.warn(
             'Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable',
           );

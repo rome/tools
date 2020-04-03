@@ -38,16 +38,16 @@ export function convertManifestToJSON(manifest: Manifest): JSONManifest {
     contributors: manifest.contributors,
     maintainers: manifest.maintainers,
 
-    version: manifest.version === undefined ? undefined : stringifySemver(
-      manifest.version,
-    ),
-    license: manifest.license === undefined ? undefined : stringifySPDXLicense(
-      manifest.license,
-    ),
+    version: manifest.version === undefined
+      ? undefined
+      : stringifySemver(manifest.version),
+    license: manifest.license === undefined
+      ? undefined
+      : stringifySPDXLicense(manifest.license),
 
-    files: maybeArray(manifest.files.map((pattern) =>
-      stringifyPathPattern(pattern)
-    )),
+    files: maybeArray(manifest.files.map((pattern) => stringifyPathPattern(
+      pattern,
+    ))),
     keywords: maybeArray(manifest.keywords),
     cpu: maybeArray(manifest.cpu),
     os: maybeArray(manifest.os),

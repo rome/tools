@@ -32,9 +32,7 @@ export function formatPercent(num: number): string {
   }
 }
 
-export function percentInsideCoverageFolder(
-  folder: CoverageFolder,
-): {
+export function percentInsideCoverageFolder(folder: CoverageFolder): {
   functions: number;
   branches: number;
   lines: number;

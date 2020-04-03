@@ -119,7 +119,7 @@ test('strings', (t) => {
   }, descriptions.JSON.UNCLOSED_STRING.message.value);
 
   t.throws(() => {
-    parseExtJSON({input: '\'foo\''});
+    parseExtJSON({input: "'foo'"});
   }, descriptions.JSON.SINGLE_QUOTE_USAGE.message.value);
 
   t.throws(() => {

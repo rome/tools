@@ -25,8 +25,9 @@ function removeComments(
     return undefined;
   }
 
-  const newComments: Array<AnyComment> = comments.map((comment) =>
-    comment.type === 'CommentBlock' ? removeProp(comment) : removeProp(comment)
+  const newComments: Array<AnyComment> = comments.map(
+    (comment) => comment.type ===
+      'CommentBlock' ? removeProp(comment) : removeProp(comment),
   );
   return newComments;
 }

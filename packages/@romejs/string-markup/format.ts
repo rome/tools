@@ -15,13 +15,17 @@ import {
 import {formatAnsi, ansiPad} from './ansi';
 import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
 
-type FormatReduceCallback = (name: MarkupTagName, attributes: TagAttributes, value: string) => string;
+type FormatReduceCallback = (
+  name: MarkupTagName,
+  attributes: TagAttributes,
+  value: string,
+) => string;
 
 export type MarkupFormatFilenameNormalizer = (filename: string) => string;
 
-export type MarkupFormatFilenameHumanizer = (filename: string) =>
-  | undefined
-  | string;
+export type MarkupFormatFilenameHumanizer = (
+  filename: string,
+) => undefined | string;
 
 export type MarkupFormatOptions = {
   normalizeFilename?: MarkupFormatFilenameNormalizer;
@@ -187,30 +191,28 @@ export function markupToAnsi(
 ): string {
   return formatReduceFromInput(input, (tag, attributes, value) => {
     switch (tag) {
-      case 'hyperlink':
-        {
-          let text = value;
-          let hyperlink = attributes.get('target');
+      case 'hyperlink': {
+        let text = value;
+        let hyperlink = attributes.get('target');
 
-          if (hyperlink === undefined) {
-            hyperlink = text;
-          }
-
-          if (text === '') {
-            text = hyperlink;
-          }
-
-          return formatAnsi.hyperlink(text, hyperlink);
+        if (hyperlink === undefined) {
+          hyperlink = text;
         }
+
+        if (text === '') {
+          text = hyperlink;
+        }
+
+        return formatAnsi.hyperlink(text, hyperlink);
+      }
 
       case 'pad':
         return formatPad(attributes, value);
 
-      case 'filelink':
-        {
-          const {text, href} = formatFileLink(attributes, value, opts);
-          return formatAnsi.hyperlink(text, href);
-        }
+      case 'filelink': {
+        const {text, href} = formatFileLink(attributes, value, opts);
+        return formatAnsi.hyperlink(text, href);
+      }
 
       case 'inverse':
         return formatAnsi.inverse(` ${value} `);

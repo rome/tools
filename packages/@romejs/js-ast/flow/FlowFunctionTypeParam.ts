@@ -9,13 +9,11 @@ import {JSNodeBase, PatternMeta, Identifier} from '../index';
 import {createBuilder} from '../utils';
 import '../patterns/PatternMeta';
 
-export type FlowFunctionTypeParam =
-  & JSNodeBase
-  & {
-    type: 'FlowFunctionTypeParam';
-    name?: Identifier;
-    meta: PatternMeta;
-  };
+export type FlowFunctionTypeParam = JSNodeBase & {
+  type: 'FlowFunctionTypeParam';
+  name?: Identifier;
+  meta: PatternMeta;
+};
 
 export const flowFunctionTypeParam = createBuilder<FlowFunctionTypeParam>(
   'FlowFunctionTypeParam',

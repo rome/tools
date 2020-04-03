@@ -84,7 +84,7 @@ function isValidManifest(path: AbsoluteFilePath): boolean {
 
   // - 3 should be node_modules
   if (segments.includes('node_modules') && segments[segments.length - 3] !==
-  'node_modules') {
+      'node_modules') {
     return false;
   }
 
@@ -127,7 +127,11 @@ export type MemoryFSGlobOptions = {
   test?: (path: AbsoluteFilePath) => boolean;
 };
 
-export type HasteCollisionCallback = (hasteName: string, existing: string, filename: string) => void;
+export type HasteCollisionCallback = (
+  hasteName: string,
+  existing: string,
+  filename: string,
+) => void;
 
 async function createRegularWatcher(
   memoryFs: MemoryFileSystem,
@@ -158,46 +162,53 @@ async function createRegularWatcher(
         return;
       }
 
-      const watcher = watch(folderPath, {recursive: true, persistent: false}, (
-        eventType,
-        filename,
-      ) => {
-        if (filename === null) {
-          // TODO not sure how we want to handle this?
-          return;
-        }
-
-        const path = folderPath.resolve(filename);
-
-        memoryFs.stat(path).then((newStats) => {
-          const diagnostics =
-            memoryFs.master.createDisconnectedDiagnosticsProcessor([
-              {
-                category: 'memory-fs',
-                message: 'Processing fs.watch changes',
-              },
-            ]);
-
-          if (newStats.type === 'file') {
-            memoryFs.handleFileChange(path, newStats, {
-              diagnostics,
-              crawl: true,
-            });
-          } else if (newStats.type === 'directory') {
-            memoryFs.addDirectory(path, newStats, {
-              crawl: true,
-              diagnostics,
-              onFoundDirectory,
-            });
+      const watcher = watch(
+        folderPath,
+        {recursive: true, persistent: false},
+        (
+          eventType,
+          filename,
+        ) => {
+          if (filename === null) {
+            // TODO not sure how we want to handle this?
+            return;
           }
-        }).catch((err) => {
-          if (err.code === 'ENOENT') {
-            memoryFs.handleDeletion(path);
-          } else {
-            throw err;
-          }
-        });
-      });
+
+          const path = folderPath.resolve(filename);
+
+          memoryFs.stat(path).then(
+            (newStats) => {
+              const diagnostics = memoryFs.master.createDisconnectedDiagnosticsProcessor(
+                [
+                  {
+                    category: 'memory-fs',
+                    message: 'Processing fs.watch changes',
+                  },
+                ],
+              );
+
+              if (newStats.type === 'file') {
+                memoryFs.handleFileChange(path, newStats, {
+                  diagnostics,
+                  crawl: true,
+                });
+              } else if (newStats.type === 'directory') {
+                memoryFs.addDirectory(path, newStats, {
+                  crawl: true,
+                  diagnostics,
+                  onFoundDirectory,
+                });
+              }
+            },
+          ).catch((err) => {
+            if (err.code === 'ENOENT') {
+              memoryFs.handleDeletion(path);
+            } else {
+              throw err;
+            }
+          });
+        },
+      );
       watchers.set(folderPath, watcher);
     }
 
@@ -242,15 +253,20 @@ async function createWatchmanWatcher(
   let timeout;
 
   function queueCallout() {
-    timeout =
-      setTimeout(memoryFs.master.wrapFatal(() => {
-        connectedReporters.warn(
-          'Watchman is taking a while to respond. Watchman may have just started and is still crawling the disk.',
-        );
+      timeout =
+      setTimeout(
+        memoryFs.master.wrapFatal(
+          () => {
+            connectedReporters.warn(
+              'Watchman is taking a while to respond. Watchman may have just started and is still crawling the disk.',
+            );
 
-        // Show an even more aggressive message when watchman takes longer
-        queueCallout();
-      }), 5_000);
+            // Show an even more aggressive message when watchman takes longer
+            queueCallout();
+          },
+        ),
+        5_000,
+      );
   }
 
   // Show a message when watchman takes too long
@@ -796,8 +812,8 @@ export default class MemoryFileSystem {
       ext = `.${ext}`; // we also want to remove the dot suffix from the haste name
       if (!filename.endsWith(ext)) {
         throw new Error(
-          `Expected ${filename} to end with ${ext} as it was returned as the extension name`,
-        );
+            `Expected ${filename} to end with ${ext} as it was returned as the extension name`,
+          );
       }
 
       return basename.slice(0, -ext.length);
@@ -824,13 +840,11 @@ export default class MemoryFileSystem {
     }
   }
 
-  async _declareManifest(
-    {
-      path,
-      hasteName,
-      diagnostics,
-    }: DeclareManifestOpts,
-  ): Promise<undefined | string> {
+  async _declareManifest({
+    path,
+    hasteName,
+    diagnostics,
+  }: DeclareManifestOpts): Promise<undefined | string> {
     // Fetch the manifest
     const manifestRaw = await readFileText(path);
     const hash = crypto.createHash('sha256').update(manifestRaw).digest('hex');

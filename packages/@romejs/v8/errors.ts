@@ -42,7 +42,9 @@ export class NativeStructuredError extends Error {
   [ERROR_POP_FRAMES_PROP]: undefined | number;
 }
 
-export function createErrorFromStructure(struct: Partial<StructuredError>): Error {
+export function createErrorFromStructure(
+  struct: Partial<StructuredError>,
+): Error {
   return new NativeStructuredError(struct);
 }
 

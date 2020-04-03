@@ -31,7 +31,8 @@ export default createMasterCommand<Flags>({
     const {reporter} = req;
 
     const fixLocation = flags.fix === false
-      ? undefined : req.getDiagnosticPointerFromFlags({
+      ? undefined
+      : req.getDiagnosticPointerFromFlags({
         type: 'flag',
         key: 'fix',
       });

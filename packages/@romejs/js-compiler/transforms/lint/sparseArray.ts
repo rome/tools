@@ -21,10 +21,8 @@ export default {
       );
 
       if (!suppressed) {
-        return arrayExpression.quick(node.elements.map((elem) =>
-          elem === undefined
-            ? referenceIdentifier.create({name: 'undefined'}) : elem
-        ));
+        return arrayExpression.quick(node.elements.map((elem) => elem ===
+          undefined ? referenceIdentifier.create({name: 'undefined'}) : elem));
       }
     }
 

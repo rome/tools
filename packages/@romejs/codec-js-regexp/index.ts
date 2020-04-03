@@ -48,6 +48,7 @@ type Operator =
   | '*'
   | '|';
 
+<<<<<<< HEAD
 type Tokens =
   & BaseTokens
   & {
@@ -87,6 +88,36 @@ type GroupModifiers =
     type: 'NAMED_CAPTURE';
     name: string;
   };
+=======
+type Tokens = BaseTokens & {
+  Operator: ValueToken<'Operator', Operator>;
+  Character: ComplexToken<'Character', {
+    value: string;
+    escaped: boolean;
+  }>;
+  EscapedCharacter: ValueToken<'EscapedCharacter',
+    | 'd'
+    | 'D'
+    | 'b'
+    | 'B'
+    | 's'
+    | 'S'
+    | 'w'
+    | 'W'>;
+  NumericBackReferenceCharacter: ComplexToken<'NumericBackReferenceCharacter', {
+    value: number;
+    escaped: boolean;
+  }>;
+};
+
+type GroupModifiers = {
+  type: 'NON_CAPTURE';
+  kind: RegExpGroupNonCapture['kind'];
+} | {
+  type: 'NAMED_CAPTURE';
+  name: string;
+};
+>>>>>>> master
 
 type RegExpParserOptions = ParserOptions & {unicode: boolean};
 
@@ -110,11 +141,7 @@ function getCodePoint(char: string): number {
   throw new Error('Input was not 1 character long');
 }
 
-function readOctalCode(
-  input: string,
-  index: Number0,
-  nextChar: string,
-): {
+function readOctalCode(input: string, index: Number0, nextChar: string): {
   octalValue: number | undefined;
   end: Number0;
 } {
@@ -138,8 +165,8 @@ function readOctalCode(
   return {octalValue, end: nextIndex};
 }
 
-export const createRegExpParser = createParser((ParserCore) =>
-  class RegExpParser extends ParserCore<Tokens, void> {
+export const createRegExpParser = createParser(
+  (ParserCore) => class RegExpParser extends ParserCore<Tokens, void> {
     constructor(opts: RegExpParserOptions) {
       super(opts, 'parse/regex');
       this.diagnostics = [];
@@ -269,78 +296,74 @@ export const createRegExpParser = createParser((ParserCore) =>
               escaped: true,
             }, end);
 
-          case '0':
-            {
-              const {octalValue, end: octalEnd} = readOctalCode(
-                input,
-                index,
-                nextChar,
-              );
-              if (octalValue !== undefined && isOct(octalValue.toString())) {
-                const octal = parseInt(octalValue.toString(), 8);
-                return this.finishComplexToken('Character', {
-                  value: String.fromCharCode(octal),
-                  escaped: true,
-                }, octalEnd);
-              }
-              return this.finishComplexToken('Character', {
-                value: String.fromCharCode(0),
-                escaped: true,
-              }, end);
-            }
-
-          case 'x':
-            {
-              const possibleHex = input.slice(get0(index) + 1, get0(index) + 3);
-
-              // \xhh
-              if (possibleHex.length === 2 && isHex(possibleHex)) {
-                end = add(end, 2);
-
-                return this.finishComplexToken('Character', {
-                  value: String.fromCharCode(parseInt(possibleHex, 16)),
-                  escaped: true,
-                }, end);
-              }
-
-              return this.finishComplexToken('Character', {
-                value: 'x',
-                escaped: true,
-              }, end);
-            }
-
-          case 'u':
-            {
-              // Get the next 4 characters after \u
-              const possibleHex = input.slice(get0(index) + 2, get0(index) + 6);
-
-              // \uhhhh
-              if (possibleHex.length === 4 && isHex(possibleHex)) {
-                end = add(end, 4);
-
-                return this.finishComplexToken('Character', {
-                  value: String.fromCharCode(parseInt(possibleHex, 16)),
-                  escaped: true,
-                }, end);
-              }
-
-              if (this.unicode) {
-                // TODO \u{hhhh} or \u{hhhhh}
-              }
-
-              return this.finishComplexToken('Character', {
-                value: 'u',
-                escaped: true,
-              }, end);
-            }
-
-          // Redundant escaping
-          default:
-            let {octalValue: referenceValue, end: referenceEnd} = readOctalCode(
+          case '0': {
+            const {octalValue, end: octalEnd} = readOctalCode(
               input,
               index,
               nextChar,
             );
+            if (octalValue !== undefined && isOct(octalValue.toString())) {
+              const octal = parseInt(octalValue.toString(), 8);
+              return this.finishComplexToken('Character', {
+                value: String.fromCharCode(octal),
+                escaped: true,
+              }, octalEnd);
+            }
+            return this.finishComplexToken('Character', {
+              value: String.fromCharCode(0),
+              escaped: true,
+            }, end);
+          }
+
+          case 'x': {
+            const possibleHex = input.slice(get0(index) + 1, get0(index) + 3);
+
+            // \xhh
+            if (possibleHex.length === 2 && isHex(possibleHex)) {
+              end = add(end, 2);
+
+              return this.finishComplexToken('Character', {
+                value: String.fromCharCode(parseInt(possibleHex, 16)),
+                escaped: true,
+              }, end);
+            }
+
+            return this.finishComplexToken('Character', {
+              value: 'x',
+              escaped: true,
+            }, end);
+          }
+
+          case 'u': {
+            // Get the next 4 characters after \u
+            const possibleHex = input.slice(get0(index) + 2, get0(index) + 6);
+
+            // \uhhhh
+            if (possibleHex.length === 4 && isHex(possibleHex)) {
+              end = add(end, 4);
+
+              return this.finishComplexToken('Character', {
+                value: String.fromCharCode(parseInt(possibleHex, 16)),
+                escaped: true,
+              }, end);
+            }
+
+            if (this.unicode) {
+              // TODO \u{hhhh} or \u{hhhhh}
+            }
+
+            return this.finishComplexToken('Character', {
+              value: 'u',
+              escaped: true,
+            }, end);
+          }
+
+          // Redundant escaping
+          default:
+            let {
+              octalValue: referenceValue,
+              end: referenceEnd,
+            } = readOctalCode(input, index, nextChar);
             if (referenceValue !== undefined) {
               let backReference = referenceValue.toString();
               // \8 \9 are treated as escape char
@@ -482,9 +505,15 @@ export const createRegExpParser = createParser((ParserCore) =>
                   skipCount++;
                 }
 
+<<<<<<< HEAD
                 if (targetToken.type === 'Character' && targetToken.value === '>') {
                   // Skip through all the name tokens including >
                   skipCount++;
+=======
+                if (targetToken.type === 'Character' && targetToken.value ===
+                    '>') {
+                  // Skip through all the name tokens
+>>>>>>> master
 
                   // This is kinda a hacky solution, and slower than it could be
                   for (let i = 0; i < skipCount; i++) {
@@ -704,7 +733,8 @@ export const createRegExpParser = createParser((ParserCore) =>
       // Range
       const nextToken = this.getToken();
       if (start.type === 'RegExpCharacter' && nextToken.type === 'Character' &&
-        nextToken.value === '-' && !nextToken.escaped) {
+            nextToken.value ===
+            '-' && !nextToken.escaped) {
         const lookaheadToken = this.lookaheadToken();
         if (lookaheadToken.type === 'Character') {
           // Skip dash
@@ -714,10 +744,8 @@ export const createRegExpParser = createParser((ParserCore) =>
 
           const loc = this.finishLoc(startPos);
 
-          if (
-            start.type === 'RegExpCharacter' && end.type === 'RegExpCharacter' &&
-              getCodePoint(end.value) < getCodePoint(start.value)
-          ) {
+          if (start.type === 'RegExpCharacter' && end.type === 'RegExpCharacter' &&
+              getCodePoint(end.value) < getCodePoint(start.value)) {
             this.addDiagnostic({
               ...descriptions.REGEX_PARSER.REVERSED_CHAR_SET_RANGE,
               loc,
@@ -754,12 +782,10 @@ export const createRegExpParser = createParser((ParserCore) =>
       }
     }
 
-    parseQuantifier():
-      | undefined
-      | {
-        min: number;
-        max?: number;
-      } {
+    parseQuantifier(): undefined | {
+      min: number;
+      max?: number;
+    } {
       if (this.eatOperator('?')) {
         return {
           min: 0,
@@ -960,7 +986,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       let alternateStart = start;
 
       while (!this.matchToken('EOF') && (whileCallback === undefined ||
-      whileCallback())) {
+        whileCallback())) {
         if (this.eatOperator('|')) {
           alternations.push({
             start: alternateStart,
@@ -1014,8 +1040,8 @@ export const createRegExpParser = createParser((ParserCore) =>
 
       if (expression === undefined) {
         throw new Error(
-          'Impossible. We should always have at least one alternation that will set this.',
-        );
+            'Impossible. We should always have at least one alternation that will set this.',
+          );
       }
 
       return expression;
@@ -1030,5 +1056,5 @@ export const createRegExpParser = createParser((ParserCore) =>
         diagnostics: this.diagnostics,
       };
     }
-  }
+  },
 );

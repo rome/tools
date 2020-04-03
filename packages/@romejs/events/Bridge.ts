@@ -139,12 +139,10 @@ export default class Bridge {
     }
   }
 
-  async handshake(
-    opts: {
-      timeout?: number;
-      second?: boolean;
-    } = {},
-  ): Promise<void> {
+  async handshake(opts: {
+    timeout?: number;
+    second?: boolean;
+  } = {}): Promise<void> {
     if (this.hasHandshook) {
       throw new Error('Already performed handshake');
     }
@@ -296,7 +294,8 @@ export default class Bridge {
     // Fetch some metadata for hydration
     const tranport = this.errorTransports.get(err.name);
     const metadata: JSONObject = tranport === undefined
-      ? {} : tranport.serialize(err);
+      ? {}
+      : tranport.serialize(err);
 
     return {
       id,
@@ -327,8 +326,8 @@ export default class Bridge {
 
     if (msg.type === 'response') {
       if (this.prioritizedResponses.size > 0 && !this.prioritizedResponses.has(
-        msg.id,
-      )) {
+          msg.id,
+        )) {
         this.deprioritizedResponseQueue.push(msg);
         return;
       }

@@ -54,8 +54,8 @@ export default function renameBindings(
 
     // oldName -> newName
     if (oldToNewMapping.has(node.name) && binding === oldNameToBinding.get(
-      node.name,
-    )) {
+        node.name,
+      )) {
       const newName = oldToNewMapping.get(node.name);
       if (newName === undefined) {
         throw new Error('Should exist');
@@ -87,8 +87,9 @@ export default function renameBindings(
 
       // Retain the correct exported name for `export function` and `export class`
       if (node.type === 'ExportLocalDeclaration' && node.declaration !==
-      undefined && (node.declaration.type === 'FunctionDeclaration' ||
-      node.declaration.type === 'ClassDeclaration')) {
+          undefined && (node.declaration.type === 'FunctionDeclaration' ||
+            node.declaration.type ===
+            'ClassDeclaration')) {
         const newName = replaceNodesWithName.get(node.declaration.id);
 
         if (newName !== undefined) {
@@ -113,7 +114,7 @@ export default function renameBindings(
 
       // Retain the correct exported names for `export const`
       if (node.type === 'ExportLocalDeclaration' && node.declaration !==
-      undefined) {
+          undefined) {
         const bindings = getBindingIdentifiers(node.declaration);
         let includesAny = false;
         for (const node of bindings) {

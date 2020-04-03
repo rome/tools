@@ -65,21 +65,19 @@ function matchExpectedError(error: Error, expected: ExpectedError): boolean {
 export type OnTimeout = (time: number) => void;
 
 export default class TestAPI {
-  constructor(
-    {
-      testName,
-      onTimeout,
-      file,
-      snapshotManager,
-      options,
-    }: {
-      file: FileReference;
-      testName: string;
-      onTimeout: OnTimeout;
-      snapshotManager: SnapshotManager;
-      options: TestRunnerOptions;
-    },
-  ) {
+  constructor({
+    testName,
+    onTimeout,
+    file,
+    snapshotManager,
+    options,
+  }: {
+    file: FileReference;
+    testName: string;
+    onTimeout: OnTimeout;
+    snapshotManager: SnapshotManager;
+    options: TestRunnerOptions;
+  }) {
     this.testName = testName;
     this.options = options;
     this.snapshotManager = snapshotManager;
@@ -112,19 +110,15 @@ export default class TestAPI {
   snapshotCounter: number;
   snapshotManager: SnapshotManager;
 
-  buildMatchAdvice(
-    received: unknown,
-    expected: unknown,
-    {
-      visualMethod,
-      expectedAlias,
-      receivedAlias,
-    }: {
-      visualMethod?: string;
-      expectedAlias?: string;
-      receivedAlias?: string;
-    } = {},
-  ): DiagnosticAdvice {
+  buildMatchAdvice(received: unknown, expected: unknown, {
+    visualMethod,
+    expectedAlias,
+    receivedAlias,
+  }: {
+    visualMethod?: string;
+    expectedAlias?: string;
+    receivedAlias?: string;
+  } = {}): DiagnosticAdvice {
     let expectedFormat;
     let receivedFormat;
     if (typeof received === 'string' && typeof expected === 'string') {
@@ -484,21 +478,25 @@ export default class TestAPI {
       );
 
       if (message === undefined) {
-        message =
+          message =
           markup`Snapshot ${name} at <filelink emphasis target="${this.snapshotManager.path.join()}" /> doesn't match`;
       } else {
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: `Snapshot can be found at <filelink emphasis target="${this.snapshotManager.path.join()}" />`,
-        });
+        advice.push(
+          {
+            type: 'log',
+            category: 'info',
+            message: `Snapshot can be found at <filelink emphasis target="${this.snapshotManager.path.join()}" />`,
+          },
+        );
       }
 
-      advice.push({
-        type: 'log',
-        category: 'info',
-        message: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
-      });
+      advice.push(
+        {
+          type: 'log',
+          category: 'info',
+          message: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
+        },
+      );
 
       this.fail(message, advice, framesToPop);
     }

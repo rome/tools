@@ -53,14 +53,10 @@ export default class GetPropT extends T {
     ));
   }
 
-  lookup(
-    object: T,
-    property: T,
-    opts: {
-      topObject?: T;
-      protoKeys?: Array<string>;
-    } = {},
-  ): T {
+  lookup(object: T, property: T, opts: {
+    topObject?: T;
+    protoKeys?: Array<string>;
+  } = {}): T {
     object = this.utils.reduce(object);
     property = this.utils.reduce(property);
 

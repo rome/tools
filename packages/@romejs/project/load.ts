@@ -46,15 +46,18 @@ function categoryExists(consumer: Consumer): boolean {
 
   const value = consumer.asUnknown();
   if (typeof value === 'boolean') {
-    consumer.unexpected(`Expected an object here but got a boolean`, {
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          message: `You likely wanted \`{"enabled": ${String(value)}}\` instead`,
-        },
-      ],
-    });
+    consumer.unexpected(
+      `Expected an object here but got a boolean`,
+      {
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: `You likely wanted \`{"enabled": ${String(value)}}\` instead`,
+          },
+        ],
+      },
+    );
     return false;
   }
 
@@ -88,7 +91,9 @@ export function loadCompleteProjectConfig(
   const config: ProjectConfig = {
     ...DEFAULT_PROJECT_CONFIG,
     name,
-    root: partial.root === undefined ? DEFAULT_PROJECT_CONFIG.root : partial.root,
+    root: partial.root === undefined
+      ? DEFAULT_PROJECT_CONFIG.root
+      : partial.root,
     ...mergePartialConfig(defaultConfig, partial),
   };
 
@@ -254,7 +259,8 @@ export function normalizeProjectConfig(
   const bundler = consumer.get('bundler');
   if (categoryExists(bundler)) {
     if (bundler.has('mode')) {
-      config.bundler.mode = bundler.get('mode').asStringSet(['modern', 'legacy']);
+        config.bundler.mode =
+        bundler.get('mode').asStringSet(['modern', 'legacy']);
     }
   }
 
@@ -357,7 +363,9 @@ export function normalizeProjectConfig(
 
     if (files.has('assetExtensions')) {
       config.files.assetExtensions = files.get('assetExtensions').asArray().map(
-        (item) => item.asString(),
+        (
+          item,
+        ) => item.asString(),
       );
     }
   }
@@ -378,8 +386,8 @@ export function normalizeProjectConfig(
   if (categoryExists(targets)) {
     for (const [name, object] of targets.asMap()) {
       const target: ProjectConfigTarget = {
-        constraints: object.get('constraints').asImplicitArray().map((item) =>
-          item.asString()
+        constraints: object.get('constraints').asImplicitArray().map(
+          (item) => item.asString(),
         ),
       };
       object.enforceUsedProperties('config target property');
@@ -519,10 +527,7 @@ type MergedPartialConfig<
 function mergePartialConfig<
   A extends PartialProjectConfig,
   B extends PartialProjectConfig
->(
-  a: A,
-  b: B,
-): MergedPartialConfig<A, B> {
+>(a: A, b: B): MergedPartialConfig<A, B> {
   return {
     cache: {
       ...a.cache,

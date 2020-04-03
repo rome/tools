@@ -79,7 +79,8 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
   addExtension(ext: string, clearExt: boolean = false): Super {
     const newBasename = clearExt
-      ? this.getExtensionlessBasename() : this.getBasename();
+      ? this.getExtensionlessBasename()
+      : this.getBasename();
     const newExt = clearExt ? ext : this.memoizedExtension + ext;
     const segments = this.getParentSegments(false).concat(newBasename + ext);
 
@@ -207,7 +208,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
   isWindows(): boolean {
     return this.absoluteType === 'windows-drive' || this.absoluteType ===
-    'windows-unc';
+      'windows-unc';
   }
 
   isPosix(): boolean {
@@ -265,7 +266,8 @@ class BaseFilePath<Super extends UnknownFilePath> {
   }
 
   hasExtension(ext: string): boolean {
-    return this.hasEndExtension(ext) || this.getExtensions().includes(`.${ext}.`);
+    return this.hasEndExtension(ext) ||
+      this.getExtensions().includes(`.${ext}.`);
   }
 
   getExtensions(): string {
@@ -358,7 +360,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
   equal(other: UnknownFilePath): boolean {
     // Quick check if we've materalized the filename on both instances
     if (this.memoizedFilename !== undefined && other.memoizedFilename !==
-    undefined) {
+        undefined) {
       return this.memoizedFilename === other.memoizedFilename;
     }
 
@@ -643,14 +645,15 @@ function parsePathSegments(segments: PathSegments): ParsedPath {
 
   // Detect URL
   if (!isWindowsDrive(firstSeg) && firstSeg[firstSeg.length - 1] === ':' &&
-    segments[1] === '') {
+        segments[1] ===
+        '') {
     absoluteTarget = firstSeg.slice(0, -1);
 
     switch (absoluteTarget) {
       case 'file':
         // Automatically normalize a file scheme into an absolute path
-        return parsePathSegments(segments.slice(2).map((segment) =>
-          decodeURIComponent(segment)
+        return parsePathSegments(segments.slice(2).map(
+          (segment) => decodeURIComponent(segment),
         ));
 
       default:
@@ -723,7 +726,8 @@ function normalizeSegments(
 
     // Only allow a dot part in the first position, otherwise it's a noop
     if (seg === '.' && (segments[1] === '..' || i > 0 ||
-    absoluteSegments.length > 0)) {
+          absoluteSegments.length >
+          0)) {
       continue;
     }
 
@@ -734,7 +738,9 @@ function normalizeSegments(
 
     // Remove the previous segment, as long as it's not also ..
     if (seg === '..' && relativeSegments.length > 0 &&
-      relativeSegments[relativeSegments.length - 1] !== '..') {
+          relativeSegments[relativeSegments.length -
+            1] !==
+          '..') {
       relativeSegments.pop();
       continue;
     }
@@ -746,8 +752,9 @@ function normalizeSegments(
 
   // Retain explicit folder
   if (segments[segments.length - 1] === '' &&
-    finalSegments[finalSegments.length - 1] !== '' &&
-    relativeSegments.length !== 0) {
+        finalSegments[finalSegments.length -
+          1] !==
+        '' && relativeSegments.length !== 0) {
     finalSegments.push('');
   }
 

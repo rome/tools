@@ -9,14 +9,12 @@ import {JSNodeBase, BindingIdentifier, FunctionHead} from '../index';
 import {createBuilder} from '../utils';
 import {BlockStatement} from '../statements/BlockStatement';
 
-export type FunctionExpression =
-  & JSNodeBase
-  & {
-    type: 'FunctionExpression';
-    id?: BindingIdentifier;
-    head: FunctionHead;
-    body: BlockStatement;
-  };
+export type FunctionExpression = JSNodeBase & {
+  type: 'FunctionExpression';
+  id?: BindingIdentifier;
+  head: FunctionHead;
+  body: BlockStatement;
+};
 
 export const functionExpression = createBuilder<FunctionExpression>(
   'FunctionExpression',

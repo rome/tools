@@ -8,12 +8,10 @@
 import {JSNodeBase, AnyExpression, SpreadElement} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type ArrayExpression =
-  & JSNodeBase
-  & {
-    type: 'ArrayExpression';
-    elements: Array<undefined | AnyExpression | SpreadElement>;
-  };
+export type ArrayExpression = JSNodeBase & {
+  type: 'ArrayExpression';
+  elements: Array<undefined | AnyExpression | SpreadElement>;
+};
 
 export const arrayExpression = createQuickBuilder<ArrayExpression, 'elements'>(
   'ArrayExpression',

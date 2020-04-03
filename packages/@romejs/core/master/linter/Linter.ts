@@ -40,7 +40,11 @@ type ProgressFactory = (opts: ReporterProgressOptions) => ReporterProgress;
 type WatchEvents = {
   onRunStart: () => void;
   createProgress: ProgressFactory;
-  onChanges: (result: WatchResults, initial: boolean, runner: LintRunner) => void;
+  onChanges: (
+    result: WatchResults,
+    initial: boolean,
+    runner: LintRunner,
+  ) => void;
 };
 
 type WatchResults = {
@@ -64,64 +68,64 @@ function createDiagnosticsPrinter(
 ): DiagnosticsPrinter {
   const printer = request.createDiagnosticsPrinter(processor);
 
-  printer.onBeforeFooterPrint((reporter, isError) => {
-    if (fixedCount > 0) {
-      reporter.success(
-        `<number emphasis>${fixedCount}</number> <grammarNumber plural="files" singular="file">${fixedCount}</grammarNumber> fixed`,
-      );
-    }
-
-    if (isError) {
-      let couldFix = false;
-      let hasPendingFixes = false;
-
-      for (const {description} of processor.getDiagnostics()) {
-        if (description.category === 'lint/pendingFixes') {
-          hasPendingFixes = true;
-        }
-
-        if (description.fixable) {
-          couldFix = true;
-        }
-      }
-
-      if (hasPendingFixes) {
-        reporter.info(
-          'Fixes available. Run <command>rome lint --fix</command> to apply.',
-        );
-      } else if (couldFix) {
-        reporter.warn(
-          'Autofixes are available for some of these errors when formatting is enabled. Run <command>rome config enable-category format</command> to enable.',
+  printer.onBeforeFooterPrint(
+    (reporter, isError) => {
+      if (fixedCount > 0) {
+        reporter.success(
+          `<number emphasis>${fixedCount}</number> <grammarNumber plural="files" singular="file">${fixedCount}</grammarNumber> fixed`,
         );
       }
-    } else {
-      if (totalCount === 0) {
-        reporter.warn('No files linted');
+
+      if (isError) {
+        let couldFix = false;
+        let hasPendingFixes = false;
+
+        for (const {description} of processor.getDiagnostics()) {
+          if (description.category === 'lint/pendingFixes') {
+            hasPendingFixes = true;
+          }
+
+          if (description.fixable) {
+            couldFix = true;
+          }
+        }
+
+        if (hasPendingFixes) {
+          reporter.info(
+            'Fixes available. Run <command>rome lint --fix</command> to apply.',
+          );
+        } else if (couldFix) {
+          reporter.warn(
+            'Autofixes are available for some of these errors when formatting is enabled. Run <command>rome config enable-category format</command> to enable.',
+          );
+        }
       } else {
-        reporter.info(
-          `<number emphasis>${totalCount}</number> <grammarNumber plural="files" singular="file">${totalCount}</grammarNumber> linted`,
-        );
+        if (totalCount === 0) {
+          reporter.warn('No files linted');
+        } else {
+          reporter.info(
+            `<number emphasis>${totalCount}</number> <grammarNumber plural="files" singular="file">${totalCount}</grammarNumber> linted`,
+          );
+        }
       }
-    }
-  });
+    },
+  );
 
   return printer;
 }
 
 class LintRunner {
-  constructor(
-    {
-      request,
-      graph,
-      fix,
-      events,
-    }: {
-      events: WatchEvents;
-      request: MasterRequest;
-      graph: DependencyGraph;
-      fix: boolean;
-    },
-  ) {
+  constructor({
+    request,
+    graph,
+    fix,
+    events,
+  }: {
+    events: WatchEvents;
+    request: MasterRequest;
+    graph: DependencyGraph;
+    fix: boolean;
+  }) {
     this.master = request.master;
     this.graph = graph;
     this.request = request;
@@ -144,12 +148,10 @@ class LintRunner {
   graph: DependencyGraph;
   fix: boolean;
 
-  async runLint(
-    {
-      evictedPaths: changedPaths,
-      processor,
-    }: LintRunOptions,
-  ): Promise<{fixedCount: number}> {
+  async runLint({
+    evictedPaths: changedPaths,
+    processor,
+  }: LintRunOptions): Promise<{fixedCount: number}> {
     let fixedCount = 0;
     const {master} = this.request;
     const pathsByWorker = await master.fileAllocator.groupPathsByWorker(
@@ -186,17 +188,14 @@ class LintRunner {
     return {fixedCount};
   }
 
-  async runGraph(
-    {
-      evictedPaths,
-      processor,
-    }: LintRunOptions,
-  ): Promise<AbsoluteFilePathSet> {
+  async runGraph({
+    evictedPaths,
+    processor,
+  }: LintRunOptions): Promise<AbsoluteFilePathSet> {
     const {graph} = this;
 
     // Get all the current dependency nodes for the evicted files, and invalidate their nodes
-    const oldEvictedNodes: AbsoluteFilePathMap<DependencyNode> =
-      new AbsoluteFilePathMap();
+    const oldEvictedNodes: AbsoluteFilePathMap<DependencyNode> = new AbsoluteFilePathMap();
     for (const path of evictedPaths) {
       const node = graph.maybeGetNode(path);
       if (node !== undefined) {
@@ -217,12 +216,10 @@ class LintRunner {
     });
 
     // Maintain a list of all the dependencies we revalidated
-    const validatedDependencyPaths: AbsoluteFilePathSet =
-      new AbsoluteFilePathSet();
+    const validatedDependencyPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
     // Maintain a list of all the dependents that need to be revalidated
-    const validatedDependencyPathDependents: AbsoluteFilePathSet =
-      new AbsoluteFilePathSet();
+    const validatedDependencyPathDependents: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
     // Build a list of dependents to recheck
     for (const path of evictedPaths) {
@@ -238,7 +235,8 @@ class LintRunner {
       for (const depNode of newNode.getDependents()) {
         // If the old node has the same shape as the new one, only revalidate the dependent if it had dependency errors
         if (sameShape &&
-          this.hadDependencyValidationErrors.get(depNode.path) === false) {
+              this.hadDependencyValidationErrors.get(depNode.path) ===
+              false) {
           continue;
         }
 
@@ -284,10 +282,9 @@ class LintRunner {
     const diagnosticsByFilename = processor.getDiagnosticsByFilename();
 
     // In case we pushed on any diagnostics that aren't from the input paths, try to resolve them
-    const includedFilenamesInDiagnostics =
-      master.projectManager.normalizeFilenamesToFilePaths(
-        diagnosticsByFilename.keys(),
-      );
+    const includedFilenamesInDiagnostics = master.projectManager.normalizeFilenamesToFilePaths(
+      diagnosticsByFilename.keys(),
+    );
     for (const path of includedFilenamesInDiagnostics.absolutes) {
       updatedPaths.add(path);
     }
@@ -387,16 +384,17 @@ export default class Linter {
     // Only display files that aren't absolute, are in the changed paths, or have had previous compiler diagnostics
 
     // This hides errors that have been lint ignored but may have been produced by dependency analysis
-    processor.addFilter({
-      test: (diag) => {
-        const absolute =
-          this.request.master.projectManager.getFilePathFromUidOrAbsolute(
+    processor.addFilter(
+      {
+        test: (diag) => {
+          const absolute = this.request.master.projectManager.getFilePathFromUidOrAbsolute(
             diag.location.filename,
           );
-        return absolute === undefined || evictedPaths.has(absolute) ||
-        runner.compilerDiagnosticsCache.has(absolute);
+          return absolute === undefined || evictedPaths.has(absolute) ||
+            runner.compilerDiagnosticsCache.has(absolute);
+        },
       },
-    });
+    );
 
     return processor;
   }

@@ -110,7 +110,8 @@ function _getCompletionRecords(node: AnyNode): undefined | Records {
   }
 
   if (node.type === 'ReturnStatement' || node.type === 'ContinueStatement' ||
-  node.type === 'BreakStatement' || node.type === 'ThrowStatement') {
+        node.type ===
+        'BreakStatement' || node.type === 'ThrowStatement') {
     return [
       {
         type: 'COMPLETION',

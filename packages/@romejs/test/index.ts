@@ -11,12 +11,14 @@ export type TestName = string | Array<string>;
 
 declare const __ROME__TEST_OPTIONS__: GlobalTestOptions;
 
-export type GlobalTestOptions =
-  | undefined
-  | {
-    dirname?: string;
-    register?: (err: Error, opts: import('@romejs/test').TestOptions, callback?: import('@romejs/test').TestCallback) => void;
-  };
+export type GlobalTestOptions = undefined | {
+  dirname?: string;
+  register?: (
+    err: Error,
+    opts: import('@romejs/test').TestOptions,
+    callback?: import('@romejs/test').TestCallback,
+  ) => void;
+};
 
 type NamelessTestOptions = {
   timeout?: number;
@@ -30,10 +32,11 @@ export type TestOptions = NamelessTestOptions & {name: TestName};
 type TestArg = TestName | NamelessTestOptions | TestCallback | undefined;
 
 const testOptions: NonNullable<GlobalTestOptions> = __ROME__TEST_OPTIONS__ ===
-undefined ? {} : __ROME__TEST_OPTIONS__;
+  undefined ? {} : __ROME__TEST_OPTIONS__;
 
 export const dirname = testOptions.dirname === undefined
-  ? '' : testOptions.dirname;
+  ? ''
+  : testOptions.dirname;
 
 function registerTest(
   callsiteError: Error,
@@ -53,9 +56,7 @@ function isOptionsObject(arg: TestArg): arg is NamelessTestOptions {
   return typeof arg === 'object' && arg != null && !Array.isArray(arg);
 }
 
-function splitArgs(
-  args: TestRegisterFunctionArgs,
-): {
+function splitArgs(args: TestRegisterFunctionArgs): {
   options: TestOptions;
   callback: undefined | TestCallback;
 } {
@@ -105,15 +106,16 @@ function splitArgs(
 
 export * from './fixtures';
 
-type TestRegisterFunctionArgs =
-  | [TestName]
-  | [TestName, TestCallback]
-  | [TestName, NamelessTestOptions, TestCallback];
+type TestRegisterFunctionArgs = [TestName] | [TestName, TestCallback] | [
+  TestName,
+  NamelessTestOptions,
+  TestCallback
+];
 
 type TestRegisterFunction = (...args: TestRegisterFunctionArgs) => void;
 
 const test: {
-  (...args: TestRegisterFunctionArgs) : void;
+  (...args: TestRegisterFunctionArgs): void;
   skip: TestRegisterFunction;
   only: TestRegisterFunction;
 } = function(...args: TestRegisterFunctionArgs) {

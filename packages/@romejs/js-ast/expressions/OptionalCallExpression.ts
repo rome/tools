@@ -14,14 +14,12 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type OptionalCallExpression =
-  & JSNodeBase
-  & {
-    type: 'OptionalCallExpression';
-    callee: AnyExpression | Super;
-    arguments: Array<AnyExpression | SpreadElement>;
-    typeArguments?: AnyTypeArguments;
-  };
+export type OptionalCallExpression = JSNodeBase & {
+  type: 'OptionalCallExpression';
+  callee: AnyExpression | Super;
+  arguments: Array<AnyExpression | SpreadElement>;
+  typeArguments?: AnyTypeArguments;
+};
 
 export const optionalCallExpression = createBuilder<OptionalCallExpression>(
   'OptionalCallExpression',

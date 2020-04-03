@@ -8,14 +8,12 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type TemplateElement =
-  & JSNodeBase
-  & {
-    type: 'TemplateElement';
-    tail?: boolean;
-    cooked: string;
-    raw: string;
-  };
+export type TemplateElement = JSNodeBase & {
+  type: 'TemplateElement';
+  tail?: boolean;
+  cooked: string;
+  raw: string;
+};
 
 export const templateElement = createBuilder<TemplateElement>(
   'TemplateElement',

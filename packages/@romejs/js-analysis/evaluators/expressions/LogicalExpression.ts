@@ -18,40 +18,38 @@ export default function LogicalExpression(node: AnyNode, scope: Scope) {
   node = logicalExpression.assert(node);
 
   switch (node.operator) {
-    case '||':
-      {
-        const left = scope.refine().evaluate(node.left);
-        const right = scope.refine().evaluate(node.right);
+    case '||': {
+      const left = scope.refine().evaluate(node.left);
+      const right = scope.refine().evaluate(node.right);
 
-        // create a new scope that has unions of all the refined bindings
-        const refinedScope = scope.refine();
-        const refinedNames = uniq([
-          ...left.scope.getOwnBindingNames(),
-          ...right.scope.getOwnBindingNames(),
-        ]);
-        const mergeScopes = [left.scope, right.scope];
-        for (const name of refinedNames) {
-          const rawTypes: Set<T> = new Set();
-          for (const scope of mergeScopes) {
-            const binding = scope.getBinding(name);
-            if (binding !== undefined) {
-              rawTypes.add(binding);
-            }
+      // create a new scope that has unions of all the refined bindings
+      const refinedScope = scope.refine();
+      const refinedNames = uniq([
+        ...left.scope.getOwnBindingNames(),
+        ...right.scope.getOwnBindingNames(),
+      ]);
+      const mergeScopes = [left.scope, right.scope];
+      for (const name of refinedNames) {
+        const rawTypes: Set<T> = new Set();
+        for (const scope of mergeScopes) {
+          const binding = scope.getBinding(name);
+          if (binding !== undefined) {
+            rawTypes.add(binding);
           }
-
-          const types = Array.from(rawTypes);
-          refinedScope.addBinding(name, refinedScope.createUnion(types));
         }
 
-        return new UnionT(refinedScope, node, [left, right]);
+        const types = Array.from(rawTypes);
+        refinedScope.addBinding(name, refinedScope.createUnion(types));
       }
 
-    case '&&':
-      {
-        const left = scope.evaluate(node.left);
-        const right = left.scope.evaluate(node.right);
-        return new UnionT(right.scope, node, [left, right]);
-      }
+      return new UnionT(refinedScope, node, [left, right]);
+    }
+
+    case '&&': {
+      const left = scope.evaluate(node.left);
+      const right = left.scope.evaluate(node.right);
+      return new UnionT(right.scope, node, [left, right]);
+    }
 
     default:
       throw new Error('Unknown operator');
