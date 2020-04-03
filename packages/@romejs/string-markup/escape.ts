@@ -75,7 +75,7 @@ export function escapeMarkup(input: string): string {
  */
 export function escapeEndingBackslash(text: string): string {
   if (text.endsWith('\\') && !text.endsWith('\\\\')) {
-    return text.replace(/.$/, '\\\\');
+    return text.replace(/.$/, '/');
   }
   return text;
 }

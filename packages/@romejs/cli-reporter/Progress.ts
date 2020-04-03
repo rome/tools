@@ -257,6 +257,10 @@ export default class Progress extends ProgressBase {
     });
   }
 
+  backslashCharToSlash(str: string) {
+    return str === '\\' ? '/' : str;
+  }
+
   buildProgressBouncer(stream: ReporterStream, bar: SplitBar): string {
     let start = this.getBouncerPosition(stream);
     let fullBar = '';
@@ -270,7 +274,7 @@ export default class Progress extends ProgressBase {
           fullBar += markupTag('white', markupTag('bgYellow', char));
         }
       } else {
-        fullBar += char;
+        fullBar += this.backslashCharToSlash(char);
       }
     }
     return fullBar;
@@ -289,7 +293,7 @@ export default class Progress extends ProgressBase {
           fullBar += markupTag('white', markupTag('bgGreen', char));
         }
       } else {
-        fullBar += char;
+        fullBar += this.backslashCharToSlash(char);
       }
     }
     return fullBar;
