@@ -75,16 +75,32 @@ function isValidManifest(path: AbsoluteFilePath): boolean {
     return false;
   }
 
-  // If a manifest is in node_modules, then make sure we're directly inside a folder in node_modules
+  // If a manifest is in node_modules, then make sure we're directly inside
+  // a folder in node_modules.
+  //
+  // For unscoped package, the segments should be:
+  //   -1: package.json
+  //   -2: module folder
+  //   -3: node_modules
+  //
+  // For scoped package (@scope/some-module), the segments should be:
+  //   -1: package.json
+  //   -2: module folder
+  //   -3: scope folder
+  //   -4: node_modules
   const segments = path.getSegments();
+  if (segments.includes('node_modules')) {
+    // Unscoped package
+    if (segments[segments.length - 3] === 'node_modules') {
+      return true;
+    }
 
-  // - 1 is package.json
+    // Scoped module
+    if (segments[segments.length - 4] === 'node_modules' &&
+      segments[segments.length - 3].startsWith('@')) {
+      return true;
+    }
 
-  // - 2 is the module folder
-
-  // - 3 should be node_modules
-  if (segments.includes('node_modules') && segments[segments.length - 3] !==
-      'node_modules') {
     return false;
   }
 
