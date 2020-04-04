@@ -158,6 +158,8 @@ export const descriptions = createMessages(
       DUPLICATE_FLAG: 'Duplicate regular expression flag',
       INVALID_FLAG: 'Invalid regular expression flag',
       NO_TARGET_QUANTIFIER: 'Nothing to repeat',
+      INVALID_NAMED_CAPTURE: 'Invalid named capture referenced',
+      UNCLOSED_NAMED_CAPTURE: 'Unclosed named capture',
     },
 
     // @romejs/codec-json

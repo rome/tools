@@ -26,6 +26,7 @@ import {
   DiagnosticDescription,
   descriptions,
   DiagnosticsProcessor,
+  DiagnosticLocation,
 } from '@romejs/diagnostics';
 import ParserBranchFinder from './ParserBranchFinder';
 import {Token, nextToken} from './tokenizer/index';
@@ -340,6 +341,7 @@ const createJSParser = createParser(
       end?: Position;
       loc?: SourceLocation;
       index?: Number0;
+      location?: DiagnosticLocation;
     }): void {
       if (this.isLookahead) {
         return;
@@ -366,7 +368,12 @@ const createJSParser = createParser(
         end = start;
       }
 
-      if (opts.loc !== undefined) {
+      if (opts.location !== undefined) {
+        start = opts.location.start;
+        end = opts.location.end;
+      }
+
+      if (start === undefined && end === undefined && opts.loc !== undefined) {
         start = opts.loc.start;
         end = opts.loc.end;
       }

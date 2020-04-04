@@ -479,6 +479,9 @@ builders.set('RegExpGroupNonCapture', RegExpGroupNonCapture);
 import RegExpLiteral from './literals/RegExpLiteral';
 builders.set('RegExpLiteral', RegExpLiteral);
 
+import RegExpNamedBackReference from './regex/RegExpNamedBackReference';
+builders.set('RegExpNamedBackReference', RegExpNamedBackReference);
+
 import RegExpNonDigitCharacter from './regex/RegExpNonDigitCharacter';
 builders.set('RegExpNonDigitCharacter', RegExpNonDigitCharacter);
 

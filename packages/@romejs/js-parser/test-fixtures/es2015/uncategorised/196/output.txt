@@ -33,13 +33,13 @@ Program {
         mtime: undefined
         sourceType: 'script'
         end: Object {
-          column: 33
-          index: 33
+          column: 21
+          index: 21
           line: 1
         }
         start: Object {
-          column: 33
-          index: 33
+          column: 8
+          index: 8
           line: 1
         }
       }

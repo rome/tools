@@ -492,6 +492,9 @@ evaluators.set('RegExpGroupNonCapture', RegExpGroupNonCapture);
 import RegExpLiteral from './literals/RegExpLiteral';
 evaluators.set('RegExpLiteral', RegExpLiteral);
 
+import RegExpNamedBackReference from './regex/RegExpNamedBackReference';
+evaluators.set('RegExpNamedBackReference', RegExpNamedBackReference);
+
 import RegExpNonDigitCharacter from './regex/RegExpNonDigitCharacter';
 evaluators.set('RegExpNonDigitCharacter', RegExpNonDigitCharacter);
 
