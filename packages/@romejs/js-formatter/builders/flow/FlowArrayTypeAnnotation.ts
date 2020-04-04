@@ -6,22 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {
-  AnyNode,
-  FlowArrayTypeAnnotation,
-  flowArrayTypeAnnotation,
-} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {FlowArrayTypeAnnotation} from '@romejs/js-ast';
 
 export default function FlowArrayTypeAnnotation(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowArrayTypeAnnotation.assert(node);
-
-  return [
-    ...builder.tokenize(node.elementType, node),
-    operator('['),
-    operator(']'),
-  ];
+  node: FlowArrayTypeAnnotation,
+): Token {
+  return concat([builder.tokenize(node.elementType, node), '[]']);
 }

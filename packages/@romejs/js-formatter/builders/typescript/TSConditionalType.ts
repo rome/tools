@@ -5,35 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, TSConditionalType, tsConditionalType} from '@romejs/js-ast';
+import {TSConditionalType} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, group, newline, operator, space, word} from '../../tokens';
+import {Token, concat, space} from '../../tokens';
+import {printConditionalExpression} from '../expressions/ConditionalExpression';
 
 export default function TSConditionalType(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsConditionalType.assert(node);
-
-  return [
-    ...builder.tokenize(node.checkType, node),
-    space,
-    word('extends'),
-    space,
-    ...builder.tokenize(node.extendsType, node),
-    space,
-
-    group([
-      [operator('?'), space, ...builder.tokenize(node.trueType, node)],
-      [operator(':'), space, ...builder.tokenize(node.falseType, node)],
-    ], {
-      priority: true,
-      broken: {
-        separator: [newline],
-      },
-      unbroken: {
-        separator: [space],
-      },
-    }),
-  ];
+  node: TSConditionalType,
+): Token {
+  return printConditionalExpression(
+    concat([
+      builder.tokenize(node.checkType, node),
+      space,
+      'extends',
+      space,
+      builder.tokenize(node.extendsType, node),
+    ]),
+    builder.tokenize(node.trueType, node),
+    builder.tokenize(node.falseType, node),
+  );
 }

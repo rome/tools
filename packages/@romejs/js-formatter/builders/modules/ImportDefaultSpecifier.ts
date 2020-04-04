@@ -6,17 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  AnyNode,
-  ImportDefaultSpecifier,
-  importDefaultSpecifier,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {ImportDefaultSpecifier} from '@romejs/js-ast';
 
 export default function ImportDefaultSpecifier(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = importDefaultSpecifier.assert(node);
+  node: ImportDefaultSpecifier,
+): Token {
   return builder.tokenize(node.local.name, node);
 }

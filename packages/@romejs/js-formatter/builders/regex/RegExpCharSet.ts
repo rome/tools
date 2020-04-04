@@ -6,21 +6,22 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat, verbatim} from '../../tokens';
-import {AnyNode, regExpCharSet} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {RegExpCharSet} from '@romejs/js-ast';
 
-export default function RegExpCharSet(builder: Builder, node: AnyNode): Tokens {
-  node = regExpCharSet.assert(node);
-
-  const tokens: Tokens = [verbatim('[')];
+export default function RegExpCharSet(
+  builder: Builder,
+  node: RegExpCharSet,
+): Token {
+  const tokens: Array<Token> = ['['];
 
   if (node.invert) {
-    tokens.push(verbatim('^'));
+    tokens.push('^');
   }
 
-  return [
+  return concat([
     concat(tokens),
-    concat(node.body.map((item) => concat(builder.tokenize(item, node)))),
-    verbatim(']'),
-  ];
+    concat(node.body.map((item) => builder.tokenize(item, node))),
+    ']',
+  ]);
 }

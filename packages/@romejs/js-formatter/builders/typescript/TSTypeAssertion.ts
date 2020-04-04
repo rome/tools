@@ -5,21 +5,30 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, TSTypeAssertion, tsTypeAssertion} from '@romejs/js-ast';
+import {TSTypeAssertion} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator, space} from '../../tokens';
+import {Token, concat, group, indent, softline} from '../../tokens';
 
-export default function TSTypeAssertion(builder: Builder, node: AnyNode): Tokens {
-  node = tsTypeAssertion.assert(node);
-
+export default function TSTypeAssertion(
+  builder: Builder,
+  node: TSTypeAssertion,
+): Token {
   if (builder.options.typeAnnotations) {
-    return [
-      operator('<'),
-      ...builder.tokenize(node.typeAnnotation, node),
-      operator('>'),
-      space,
-      ...builder.tokenize(node.expression, node),
-    ];
+    return group(
+      concat([
+        group(
+          concat([
+            '<',
+            indent(
+              concat([softline, builder.tokenize(node.typeAnnotation, node)]),
+            ),
+            softline,
+            '>',
+          ]),
+        ),
+        builder.tokenize(node.expression, node),
+      ]),
+    );
   } else {
     return builder.tokenize(node.expression, node);
   }

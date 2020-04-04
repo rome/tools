@@ -6,29 +6,25 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, space} from '../../tokens';
-import {
-  AnyNode,
-  FlowFunctionTypeParam,
-  flowFunctionTypeParam,
-} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {FlowFunctionTypeParam} from '@romejs/js-ast';
 
-export default function FlowFunctionTypeParam(builder: Builder, node: AnyNode) {
-  node = flowFunctionTypeParam.assert(node);
-
+export default function FlowFunctionTypeParam(
+  builder: Builder,
+  node: FlowFunctionTypeParam,
+): Token {
   if (node.name) {
-    const tokens: Tokens = builder.tokenize(node.name, node);
+    const tokens: Array<Token> = [builder.tokenize(node.name, node)];
 
     if (node.meta.optional === true) {
-      tokens.push(operator('?'));
+      tokens.push('?');
     }
 
-    return [
-      ...tokens,
-      operator(':'),
-      space,
-      ...builder.tokenize(node.meta.typeAnnotation, node),
-    ];
+    if (node.meta.typeAnnotation) {
+      tokens.push(':', space, builder.tokenize(node.meta.typeAnnotation, node));
+    }
+
+    return concat(tokens);
   } else {
     return builder.tokenize(node.meta.typeAnnotation, node);
   }

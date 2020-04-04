@@ -6,19 +6,14 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  AnyNode,
-  StringLiteralTypeAnnotation,
-  stringLiteralTypeAnnotation,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {AnyNode, StringLiteralTypeAnnotation} from '@romejs/js-ast';
 import StringLiteral from '../literals/StringLiteral';
 
 export default function StringLiteralTypeAnnotation(
   builder: Builder,
-  node: AnyNode,
+  node: StringLiteralTypeAnnotation,
   parent: AnyNode,
-): Tokens {
-  node = stringLiteralTypeAnnotation.assert(node);
+): Token {
   return StringLiteral(builder, node, parent);
 }

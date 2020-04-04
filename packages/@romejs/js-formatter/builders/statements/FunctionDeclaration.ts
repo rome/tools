@@ -6,14 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {AnyNode, functionDeclaration} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {FunctionDeclaration} from '@romejs/js-ast';
 import FunctionExpression from '../expressions/FunctionExpression';
 
 export default function FunctionDeclaration(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = functionDeclaration.assert(node);
+  node: FunctionDeclaration,
+): Token {
   return FunctionExpression(builder, node);
 }

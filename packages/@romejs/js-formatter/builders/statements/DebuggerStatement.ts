@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Tokens, operator, word} from '../../tokens';
+import {Token, concat} from '../../tokens';
 
-export default function DebuggerStatement(): Tokens {
-  return [word('debugger'), operator(';')];
+export default function DebuggerStatement(): Token {
+  return concat(['debugger', ';']);
 }

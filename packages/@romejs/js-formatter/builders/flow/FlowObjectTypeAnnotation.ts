@@ -6,22 +6,17 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {
-  AnyNode,
-  FlowObjectTypeAnnotation,
-  flowObjectTypeAnnotation,
-} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {FlowObjectTypeAnnotation} from '@romejs/js-ast';
+import {printCommaList} from '../utils';
 
 export default function FlowObjectTypeAnnotation(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowObjectTypeAnnotation.assert(node);
-
-  return [
-    operator(node.exact ? '{|' : '{'),
-    builder.tokenizeCommaList(node.properties, node),
-    operator(node.exact ? '|}' : '}'),
-  ];
+  node: FlowObjectTypeAnnotation,
+): Token {
+  return concat([
+    node.exact ? '{|' : '{',
+    printCommaList(builder, node.properties, node),
+    node.exact ? '|}' : '}',
+  ]);
 }

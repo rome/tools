@@ -6,17 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word} from '../../tokens';
-import {
-  AnyNode,
-  BooleanLiteralTypeAnnotation,
-  booleanLiteralTypeAnnotation,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {BooleanLiteralTypeAnnotation} from '@romejs/js-ast';
 
 export default function BooleanLiteralTypeAnnotation(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = booleanLiteralTypeAnnotation.assert(node);
-  return [word(node.value ? 'true' : 'false')];
+  node: BooleanLiteralTypeAnnotation,
+): Token {
+  return node.value ? 'true' : 'false';
 }

@@ -6,18 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word} from '../../tokens';
-import {
-  AnyNode,
-  FlowTypeofTypeAnnotation,
-  flowTypeofTypeAnnotation,
-} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {FlowTypeofTypeAnnotation} from '@romejs/js-ast';
 
 export default function FlowTypeofTypeAnnotation(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowTypeofTypeAnnotation.assert(node);
-
-  return [word('typeof'), space, ...builder.tokenize(node.argument, node)];
+  node: FlowTypeofTypeAnnotation,
+): Token {
+  return concat(['typeof', space, builder.tokenize(node.argument, node)]);
 }

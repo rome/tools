@@ -6,14 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {AnyNode, referenceIdentifier} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {ReferenceIdentifier} from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
 
 export default function ReferenceIdentifier(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = referenceIdentifier.assert(node);
+  node: ReferenceIdentifier,
+): Token {
   return Identifier(builder, node);
 }

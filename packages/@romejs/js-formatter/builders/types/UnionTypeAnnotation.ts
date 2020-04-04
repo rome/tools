@@ -6,30 +6,37 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, newline, operator, space} from '../../tokens';
 import {
-  AnyNode,
-  UnionTypeAnnotation,
-  unionTypeAnnotation,
-} from '@romejs/js-ast';
+  Token,
+  concat,
+  group,
+  hardline,
+  ifBreak,
+  indent,
+  join,
+  lineOrSpace,
+  space,
+} from '../../tokens';
+import {AnyNode, UnionTypeAnnotation} from '@romejs/js-ast';
 
 export default function UnionTypeAnnotation(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = unionTypeAnnotation.assert(node);
+  node: UnionTypeAnnotation,
+  parent: AnyNode,
+): Token {
+  // Indentation may be handled by the parent node
+  const shouldIndent =
+    parent.type !== 'TSTypeAssertion' &&
+    parent.type !== 'TSTypeParameterDeclaration' &&
+    parent.type !== 'TSTypeParameterInstantiation';
 
-  return [
-    builder.tokenizeJoin(node.types, node, {
-      newline: false,
-      broken: {
-        indentNewline: false,
-        leading: [newline, operator('|'), space],
-        separator: [newline, operator('|'), space],
-      },
-      unbroken: {
-        separator: [space, operator('|'), space],
-      },
-    }),
-  ];
+  const printed = concat([
+    ifBreak(concat([shouldIndent ? hardline : '', '|', space])),
+    join(
+      concat([lineOrSpace, '|', space]),
+      node.types.map((type) => indent(builder.tokenize(type, node))),
+    ),
+  ]);
+
+  return group(shouldIndent ? indent(printed) : printed);
 }

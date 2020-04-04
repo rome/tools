@@ -64,11 +64,10 @@ const builderContent = `/**
 */
 
 import Builder from '../../Builder';
-import {AnyNode, ${nodeType}, ${builderName}} from '@romejs/js-ast';
-import {Tokens} from '../../tokens';
+import {AnyNode, ${nodeType}} from '@romejs/js-ast';
+import {Token} from '../../tokens';
 
-export default function ${nodeType}(builder: Builder, node: AnyNode): Tokens {
-  node = ${builderName}.assert(node);
+export default function ${nodeType}(builder: Builder, node: ${nodeType}): Token {
   throw new Error('unimplemented');
 }
 `;

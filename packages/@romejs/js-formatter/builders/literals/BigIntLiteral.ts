@@ -5,12 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {BigIntLiteral} from '@romejs/js-ast';
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {AnyNode, BigIntLiteral, bigIntLiteral} from '@romejs/js-ast';
-import {word} from '@romejs/js-formatter/tokens';
+import {Token} from '../../tokens';
 
-export default function BigIntLiteral(builder: Builder, node: AnyNode): Tokens {
-  node = bigIntLiteral.assert(node);
-  return [word(`${node.value}n`)];
+export default function BigIntLiteral(
+  builder: Builder,
+  node: BigIntLiteral,
+): Token {
+  return `${node.value}n`;
 }

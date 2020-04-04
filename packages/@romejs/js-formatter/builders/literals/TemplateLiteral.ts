@@ -6,23 +6,23 @@
  */
 
 import Builder from '../../Builder';
-import {AnyNode, TemplateLiteral, templateLiteral} from '@romejs/js-ast';
-import {Tokens, concat} from '@romejs/js-formatter/tokens';
+import {TemplateLiteral} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
 
-export default function TemplateLiteral(builder: Builder, node: AnyNode): Tokens {
-  node = templateLiteral.assert(node);
-
-  const tokens: Tokens = [];
-
+export default function TemplateLiteral(
+  builder: Builder,
+  node: TemplateLiteral,
+): Token {
+  const tokens: Array<Token> = [];
   const quasis = node.quasis;
 
   for (let i = 0; i < quasis.length; i++) {
-    tokens.push(concat(builder.tokenize(quasis[i], node)));
+    tokens.push(builder.tokenize(quasis[i], node));
 
     if (i + 1 < quasis.length) {
-      tokens.push(concat(builder.tokenize(node.expressions[i], node)));
+      tokens.push(builder.tokenize(node.expressions[i], node));
     }
   }
 
-  return tokens;
+  return concat(tokens);
 }

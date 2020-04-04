@@ -28,8 +28,11 @@ function findMapping(
   column: Number0,
 ): undefined | Mapping['generated'] {
   for (const {original, generated} of mappings) {
-    if (original !== undefined && original.line === line && original.column ===
-        column) {
+    if (
+      original !== undefined &&
+      original.line === line &&
+      original.column === column
+    ) {
       return generated;
     }
   }
@@ -180,14 +183,15 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
   let formattedAst = formatContext.reduceRoot(ast, lintTransforms);
   formattedAst = addSuppressions(formatContext, formattedAst);
 
-  const generator = formatJS(formattedAst, {
+  const formatted = formatJS(formattedAst, {
     typeAnnotations: true,
     sourceMaps: true,
     format: 'pretty',
     sourceText,
   });
-  const formattedCode = generator.getCode();
-  const formattedMappings = generator.getMappings();
+
+  const formattedCode = formatted.code;
+  const formattedMappings = formatted.mappings;
 
   // Run lints
   const context = new CompilerContext({
@@ -230,12 +234,14 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
       }
 
       // Get the source text to compare
-      const oldCode = req.sourceText.slice(ob1Get0(start.index), ob1Get0(
-        end.index,
-      ));
-      const newCode = formattedCode.slice(ob1Get0(newStart.index), ob1Get0(
-        newEnd.index,
-      ));
+      const oldCode = req.sourceText.slice(
+        ob1Get0(start.index),
+        ob1Get0(end.index),
+      );
+      const newCode = formattedCode.slice(
+        ob1Get0(newStart.index),
+        ob1Get0(newEnd.index),
+      );
 
       const advice: DiagnosticAdvice = [...(diag.description.advice || [])];
 

@@ -6,33 +6,31 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, space, word} from '../../tokens';
-import {AnyNode, FlowTypeParameter, flowTypeParameter} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {FlowTypeParameter} from '@romejs/js-ast';
 
 export default function FlowTypeParameter(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowTypeParameter.assert(node);
-
-  let tokens: Tokens = [
-    ...builder.tokenize(node.variance, node),
-    word(node.name),
+  node: FlowTypeParameter,
+): Token {
+  const tokens: Array<Token> = [
+    builder.tokenize(node.variance, node),
+    node.name,
   ];
 
   if (node.bound) {
-    tokens = [...tokens, ...builder.tokenize(node.bound, node)];
+    tokens.push(builder.tokenize(node.bound, node));
   }
 
   if (node.default) {
-    return [
-      ...tokens,
+    return concat([
+      concat(tokens),
       space,
-      operator('='),
+      '=',
       space,
-      ...builder.tokenize(node.default, node),
-    ];
+      builder.tokenize(node.default, node),
+    ]);
   } else {
-    return tokens;
+    return concat(tokens);
   }
 }

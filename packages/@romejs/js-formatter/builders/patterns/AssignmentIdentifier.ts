@@ -6,18 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  AnyNode,
-  AssignmentIdentifier,
-  assignmentIdentifier,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {AssignmentIdentifier} from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
 
 export default function AssignmentIdentifier(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = assignmentIdentifier.assert(node);
+  node: AssignmentIdentifier,
+): Token {
   return Identifier(builder, node);
 }

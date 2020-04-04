@@ -6,11 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {AnyNode, spreadElement} from '@romejs/js-ast';
-import {Tokens, concat, operator} from '@romejs/js-formatter/tokens';
+import {SpreadElement} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
 
-export default function SpreadElement(builder: Builder, node: AnyNode): Tokens {
-  node = spreadElement.assert(node);
-
-  return [operator('...'), concat(builder.tokenize(node.argument, node))];
+export default function SpreadElement(
+  builder: Builder,
+  node: SpreadElement,
+): Token {
+  return concat(['...', builder.tokenize(node.argument, node)]);
 }

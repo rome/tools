@@ -5,17 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, TSDeclareMethod, tsDeclareMethod} from '@romejs/js-ast';
+import {TSDeclareMethod} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens} from '../../tokens';
+import {Token, concat} from '../../tokens';
 import {printMethod} from '../utils';
 
-export default function TSDeclareMethod(builder: Builder, node: AnyNode): Tokens {
-  node = tsDeclareMethod.assert(node);
-
-  return [
-    ...builder.tokenize(node.meta, node),
-    ...builder.tokenize(node.key, node),
-    ...printMethod(builder, node),
-  ];
+export default function TSDeclareMethod(
+  builder: Builder,
+  node: TSDeclareMethod,
+): Token {
+  return concat([
+    builder.tokenize(node.meta, node),
+    builder.tokenize(node.key, node),
+    printMethod(builder, node),
+  ]);
 }

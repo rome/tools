@@ -5,21 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, TSAsExpression, tsAsExpression} from '@romejs/js-ast';
+import {TSAsExpression} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, space, word} from '../../tokens';
+import {Token, concat, space} from '../../tokens';
 
-export default function TSAsExpression(builder: Builder, node: AnyNode): Tokens {
-  node = tsAsExpression.assert(node);
-
+export default function TSAsExpression(
+  builder: Builder,
+  node: TSAsExpression,
+): Token {
   if (builder.options.typeAnnotations) {
-    return [
-      ...builder.tokenize(node.expression, node),
+    return concat([
+      builder.tokenize(node.expression, node),
       space,
-      word('as'),
+      'as',
       space,
-      ...builder.tokenize(node.typeAnnotation, node),
-    ];
+      builder.tokenize(node.typeAnnotation, node),
+    ]);
   } else {
     return builder.tokenize(node.expression, node);
   }

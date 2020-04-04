@@ -6,10 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word} from '../../tokens';
-import {AnyNode, jsxIdentifier} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {JSXIdentifier} from '@romejs/js-ast';
 
-export default function JSXIdentifier(builder: Builder, node: AnyNode): Tokens {
-  node = jsxIdentifier.assert(node);
-  return [word(node.name)];
+export default function JSXIdentifier(
+  builder: Builder,
+  node: JSXIdentifier,
+): Token {
+  return node.name;
 }

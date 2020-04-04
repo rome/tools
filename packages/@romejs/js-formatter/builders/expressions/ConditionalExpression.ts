@@ -5,32 +5,31 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {ConditionalExpression} from '@romejs/js-ast';
 import Builder from '../../Builder';
-import {Tokens, concat, group, newline, operator, space} from '../../tokens';
-import {AnyNode, conditionalExpression} from '@romejs/js-ast';
+import {Token, concat, group, indent, lineOrSpace, space} from '../../tokens';
 
 export default function ConditionalExpression(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = conditionalExpression.assert(node);
+  node: ConditionalExpression,
+): Token {
+  return printConditionalExpression(
+    builder.tokenize(node.test, node),
+    builder.tokenize(node.consequent, node),
+    builder.tokenize(node.alternate, node),
+  );
+}
 
-  return [
-    concat(builder.tokenize(node.test, node)),
-    space,
-    group([
-      [operator('?'), space, concat(builder.tokenize(node.consequent, node))],
-      [operator(':'), space, concat(builder.tokenize(node.alternate, node))],
-    ], {
-      priority: true,
-      broken: {
-        before: [newline],
-        indentNewline: false,
-        separator: [newline],
-      },
-      unbroken: {
-        separator: [space],
-      },
-    }),
-  ];
+export function printConditionalExpression(
+  test: Token,
+  consequent: Token,
+  alternate: Token,
+): Token {
+  return group(
+    concat([
+      test,
+      indent(concat([lineOrSpace, '?', space, indent(consequent)])),
+      indent(concat([lineOrSpace, ':', space, indent(alternate)])),
+    ]),
+  );
 }

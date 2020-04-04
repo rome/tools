@@ -6,18 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {
-  AnyNode,
-  FlowNullableTypeAnnotation,
-  flowNullableTypeAnnotation,
-} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {FlowNullableTypeAnnotation} from '@romejs/js-ast';
 
 export default function FlowNullableTypeAnnotation(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowNullableTypeAnnotation.assert(node);
-
-  return [operator('?'), ...builder.tokenize(node.typeAnnotation, node)];
+  node: FlowNullableTypeAnnotation,
+): Token {
+  return concat(['?', builder.tokenize(node.typeAnnotation, node)]);
 }

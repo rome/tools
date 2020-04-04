@@ -6,11 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {AnyNode, BooleanLiteral, booleanLiteral} from '@romejs/js-ast';
-import {word} from '@romejs/js-formatter/tokens';
+import {Token} from '../../tokens';
+import {BooleanLiteral} from '@romejs/js-ast';
 
-export default function BooleanLiteral(builder: Builder, node: AnyNode): Tokens {
-  node = booleanLiteral.assert(node);
-  return [word(node.value ? 'true' : 'false')];
+export default function BooleanLiteral(
+  builder: Builder,
+  node: BooleanLiteral,
+): Token {
+  return node.value ? 'true' : 'false';
 }

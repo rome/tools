@@ -102,7 +102,9 @@ export type ExtensionHandler = {
   canHaveScale?: boolean;
   lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
   format?: (info: ExtensionHandlerMethodInfo) => Promise<ExtensionLintResult>;
-  toJavaScript?: (opts: ExtensionHandlerMethodInfo) => Promise<{
+  toJavaScript?: (
+    opts: ExtensionHandlerMethodInfo,
+  ) => Promise<{
     generated: boolean;
     sourceText: string;
   }>;
@@ -115,9 +117,7 @@ const textHandler: ExtensionHandler = {
   sourceType: 'module',
 
   // Mock a single default export
-
   // We could always just pass this through to analyzeDependencies and get the same result due to the toJavaScript call below,
-
   // but the return value is predictable so we inline it
   async analyzeDependencies() {
     return {
@@ -197,8 +197,9 @@ const jsonHandler: ExtensionHandler = {
       if (hasExtensions) {
         formatted = stringifyJSON({consumer, comments});
       } else {
-          formatted =
-          String(JSON.stringify(consumer.asUnknown(), undefined, '  '));
+        formatted = String(
+          JSON.stringify(consumer.asUnknown(), undefined, '  '),
+        );
       }
     }
 
@@ -306,13 +307,14 @@ function buildJSHandler(
           parseOptions,
         );
 
-        const res = formatJS(ast, {
+        const out = formatJS(ast, {
           typeAnnotations: true,
           format: 'pretty',
+          sourceText,
         });
 
         return worker.api.interceptAndAddGeneratedToDiagnostics({
-          formatted: res.getCode(),
+          formatted: out.code,
           sourceText,
           suppressions: [],
           diagnostics: ast.diagnostics,

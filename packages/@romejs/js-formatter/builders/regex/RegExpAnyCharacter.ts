@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Tokens, verbatim} from '../../tokens';
-import {RegExpAnyCharacter} from '@romejs/js-ast';
+import {Token} from '../../tokens';
 
-export default function RegExpAnyCharacter(): Tokens {
-  return [verbatim('.')];
+export default function RegExpAnyCharacter(): Token {
+  return '.';
 }

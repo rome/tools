@@ -6,15 +6,21 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {AnyNode, identifier} from '@romejs/js-ast';
-import {word} from '@romejs/js-formatter/tokens';
+import {Token} from '../../tokens';
+import {
+  AssignmentIdentifier,
+  BindingIdentifier,
+  Identifier,
+  ReferenceIdentifier,
+} from '@romejs/js-ast';
 
-export default function Identifier(builder: Builder, node: AnyNode): Tokens {
-  node = node.type === 'ReferenceIdentifier' || node.type ===
-    'BindingIdentifier' || node.type === 'AssignmentIdentifier'
-    ? node
-    : identifier.assert(node);
-
-  return [word(node.name)];
+export default function Identifier(
+  builder: Builder,
+  node:
+    | AssignmentIdentifier
+    | BindingIdentifier
+    | Identifier
+    | ReferenceIdentifier,
+): Token {
+  return node.name;
 }

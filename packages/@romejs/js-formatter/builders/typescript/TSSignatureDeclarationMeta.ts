@@ -6,24 +6,16 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {
-  AnyNode,
-  TSSignatureDeclarationMeta,
-  tsSignatureDeclarationMeta,
-} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {TSSignatureDeclarationMeta} from '@romejs/js-ast';
 import {printBindingPatternParams} from '../utils';
 
 export default function TSSignatureDeclarationMeta(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsSignatureDeclarationMeta.assert(node);
-
-  return [
-    ...builder.tokenize(node.typeParameters, node),
-    operator('('),
-    ...printBindingPatternParams(builder, node, node.parameters, node.rest),
-    operator(')'),
-  ];
+  node: TSSignatureDeclarationMeta,
+): Token {
+  return concat([
+    builder.tokenize(node.typeParameters, node),
+    printBindingPatternParams(builder, node, node.parameters, node.rest),
+  ]);
 }

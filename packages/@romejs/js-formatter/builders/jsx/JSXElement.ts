@@ -6,40 +6,45 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat, indent, operator, space} from '../../tokens';
-import {AnyNode, jsxElement} from '@romejs/js-ast';
+import {
+  Token,
+  concat,
+  group,
+  indent,
+  join,
+  lineOrSpace,
+  space,
+} from '../../tokens';
+import {JSXElement} from '@romejs/js-ast';
 
-export default function JSXElement(builder: Builder, node: AnyNode): Tokens {
-  node = jsxElement.assert(node);
-
-  const tokens: Tokens = [
-    operator('<'),
-    concat(builder.tokenize(node.name, node)),
-    concat(builder.tokenize(node.typeArguments, node)),
+export default function JSXElement(builder: Builder, node: JSXElement): Token {
+  const tokens: Array<Token> = [
+    '<',
+    builder.tokenize(node.name, node),
+    builder.tokenize(node.typeArguments, node),
   ];
 
   if (node.attributes.length > 0) {
-    tokens.push(space, builder.tokenizeJoin(node.attributes, node, {
-      newline: true,
-      broken: {},
-      unbroken: {
-        separator: [space],
-      },
-    }));
+    tokens.push(
+      space,
+      join(
+        lineOrSpace,
+        node.attributes.map((attr) => builder.tokenize(attr, node)),
+      ),
+    );
   }
 
   if (node.selfClosing === true && node.children.length === 0) {
-    return [concat(tokens), space, operator('/>')];
+    return group(concat([concat(tokens), space, '/>']));
   } else {
-    return [
-        concat(tokens),
-        operator('>'),
-        indent(node.children.map(
-          (child) => concat(builder.tokenize(child, node)),
-        )),
-        operator('</'),
-        concat(builder.tokenize(node.name, node)),
-        operator('>'),
-      ];
+    return concat([
+      group(concat([concat(tokens), '>'])),
+      indent(
+        concat(node.children.map((child) => builder.tokenize(child, node))),
+      ),
+      '</',
+      builder.tokenize(node.name, node),
+      '>',
+    ]);
   }
 }

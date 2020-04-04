@@ -6,32 +6,24 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat, space, word} from '../../tokens';
-import {
-  AnyNode,
-  ExportLocalSpecifier,
-  exportLocalSpecifier,
-} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {ExportExternalSpecifier, ExportLocalSpecifier} from '@romejs/js-ast';
 
 export default function ExportLocalSpecifier(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = node.type === 'ExportExternalSpecifier'
-    ? node
-    : exportLocalSpecifier.assert(node);
-
-  const tokens = builder.tokenize(node.local, node);
+  node: ExportExternalSpecifier | ExportLocalSpecifier,
+): Token {
+  const tokens = [builder.tokenize(node.local, node)];
 
   if (node.local.name === node.exported.name) {
-    return tokens;
+    return concat(tokens);
   } else {
-    return [
+    return concat([
       concat(tokens),
       space,
-      word('as'),
+      'as',
       space,
-      concat(builder.tokenize(node.exported, node)),
-    ];
+      builder.tokenize(node.exported, node),
+    ]);
   }
 }
