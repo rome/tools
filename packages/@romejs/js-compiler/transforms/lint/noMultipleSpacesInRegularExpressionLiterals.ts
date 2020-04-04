@@ -20,7 +20,7 @@ function isSpaceChar(
   node: undefined | AnyRegExpBodyItem,
 ): node is RegExpCharacter {
   return node !== undefined && node.type === 'RegExpCharacter' && node.value ===
-  ' ';
+    ' ';
 }
 
 function checkRegex(

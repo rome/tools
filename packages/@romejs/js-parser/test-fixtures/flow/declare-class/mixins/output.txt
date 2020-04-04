@@ -79,7 +79,7 @@ Program {
       }
       mixins: Array [
         FlowInterfaceExtends {
-          id: Identifier {
+          id: ReferenceIdentifier {
             name: 'B'
             loc: Object {
               filename: 'input.js'

@@ -161,10 +161,11 @@ export function matchesSuppression(
   suppression: DiagnosticSuppression,
 ): boolean {
   const targetLine = suppression.type === 'current'
-    ? suppression.loc.end.line : add(suppression.loc.end.line, 1);
+    ? suppression.loc.end.line
+    : add(suppression.loc.end.line, 1);
 
   if (loc.filename !== undefined && loc.start !== undefined && loc.filename ===
-  suppression.loc.filename && loc.start.line === targetLine) {
+      suppression.loc.filename && loc.start.line === targetLine) {
     return true;
   }
 

@@ -8,12 +8,10 @@
 import {JSNodeBase, AnyTSTypeElement} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTypeLiteral =
-  & JSNodeBase
-  & {
-    type: 'TSTypeLiteral';
-    members: Array<AnyTSTypeElement>;
-  };
+export type TSTypeLiteral = JSNodeBase & {
+  type: 'TSTypeLiteral';
+  members: Array<AnyTSTypeElement>;
+};
 
 export const tsTypeLiteral = createBuilder<TSTypeLiteral>('TSTypeLiteral', {
   bindingKeys: {},

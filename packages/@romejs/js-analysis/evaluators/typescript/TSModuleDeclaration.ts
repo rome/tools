@@ -6,7 +6,11 @@
  */
 
 import {Scope} from '../../scopes';
-import {TSModuleDeclaration, tsModuleDeclaration, AnyNode} from '@romejs/js-ast';
+import {
+  TSModuleDeclaration,
+  tsModuleDeclaration,
+  AnyNode,
+} from '@romejs/js-ast';
 
 export default function TSModuleDeclaration(node: AnyNode, scope: Scope) {
   node = tsModuleDeclaration.assert(node);

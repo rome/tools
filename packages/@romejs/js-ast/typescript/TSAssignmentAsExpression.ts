@@ -8,13 +8,11 @@
 import {JSNodeBase, AnyTSPrimary, AnyTargetAssignmentPattern} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSAssignmentAsExpression =
-  & JSNodeBase
-  & {
-    type: 'TSAssignmentAsExpression';
-    typeAnnotation: AnyTSPrimary;
-    expression: AnyTargetAssignmentPattern;
-  };
+export type TSAssignmentAsExpression = JSNodeBase & {
+  type: 'TSAssignmentAsExpression';
+  typeAnnotation: AnyTSPrimary;
+  expression: AnyTargetAssignmentPattern;
+};
 
 export const tsAssignmentAsExpression = createBuilder<TSAssignmentAsExpression>(
   'TSAssignmentAsExpression',

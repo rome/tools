@@ -73,7 +73,8 @@ export default {
       if (specifiers !== undefined) {
         for (const specifier of specifiers) {
           const kind: ConstExportModuleKind = maybeTypeBinding(getExportKind(
-            specifier.exportKind || node.exportKind,
+              specifier.exportKind ||
+              node.exportKind,
           ), scope, specifier.local);
 
           context.record(new ExportRecord({
@@ -162,7 +163,8 @@ export default {
 
     // TS: import A = require('B');
     if (node.type === 'TSImportEqualsDeclaration' &&
-      node.moduleReference.type === 'TSExternalModuleReference') {
+          node.moduleReference.type ===
+          'TSExternalModuleReference') {
       context.record(new ImportRecord({
         type: 'cjs',
         kind: 'value',
@@ -197,7 +199,7 @@ export default {
     }
 
     if (node.type === 'ExportAllDeclaration' || node.type ===
-    'ExportDefaultDeclaration' || node.type === 'ExportLocalDeclaration') {
+        'ExportDefaultDeclaration' || node.type === 'ExportLocalDeclaration') {
       context.record(new ESExportRecord(getExportKind(node.exportKind), node));
     }
 
@@ -216,7 +218,8 @@ export default {
         }
 
         const kind: ConstImportModuleKind = getImportKind(
-          specifier.local.importKind || node.importKind,
+            specifier.local.importKind ||
+            node.importKind,
         );
         specifierKinds.push(kind);
 
@@ -250,9 +253,9 @@ export default {
     }
 
     // Detect top level await
-    if (node.type === 'AwaitExpression' && path.findAncestry((path) =>
-      isFunctionNode(path.node)
-    ) === undefined) {
+    if (node.type === 'AwaitExpression' && path.findAncestry(
+        (path) => isFunctionNode(path.node),
+      ) === undefined) {
       const {loc} = node;
       if (loc === undefined) {
         throw new Error('loc is undefined on AwaitExpression we want to mark');
@@ -275,9 +278,9 @@ export default {
         // These are nodes that will defer the execution of code outside the init path
 
         // (They could still be triggered with an actual function call but this is just for some basic analysis)
-        const deferredExecution = path.findAncestry((path) =>
-          isFunctionNode(path.node) || path.node.type === 'ClassProperty'
-        );
+        const deferredExecution = path.findAncestry((path) => isFunctionNode(
+          path.node,
+        ) || path.node.type === 'ClassProperty');
         const isTop = deferredExecution === undefined;
 
         let kind: ConstImportModuleKind = getImportKind(meta.kind);

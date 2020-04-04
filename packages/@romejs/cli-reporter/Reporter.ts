@@ -65,13 +65,11 @@ export type LogOptions = {
   newline?: boolean;
 };
 
-export type LogCategoryOptions =
-  & LogOptions
-  & {
-    prefix: string;
-    markupTag: MarkupTagName;
-    suffix?: string;
-  };
+export type LogCategoryOptions = LogOptions & {
+  prefix: string;
+  markupTag: MarkupTagName;
+  suffix?: string;
+};
 
 type QuestionValidateResult<T> = [false, string] | [true, T];
 
@@ -95,12 +93,10 @@ let remoteProgressIdCounter = 0;
 
 const INDENT = '  ';
 
-type Stdout =
-  & stream.Writable
-  & {
-    isTTY?: boolean;
-    columns?: number;
-  };
+type Stdout = stream.Writable & {
+  isTTY?: boolean;
+  columns?: number;
+};
 
 function getStreamFormat(stdout: undefined | Stdout): ReporterStream['format'] {
   return stdout !== undefined && stdout.isTTY === true ? 'ansi' : 'none';
@@ -108,7 +104,9 @@ function getStreamFormat(stdout: undefined | Stdout): ReporterStream['format'] {
 
 export default class Reporter {
   constructor(opts: ReporterOptions = {}) {
-    this.programName = opts.programName === undefined ? 'rome' : opts.programName;
+    this.programName = opts.programName === undefined
+      ? 'rome'
+      : opts.programName;
     this.programVersion = opts.programVersion;
 
     this.noProgress = process.env.CI === '1';
@@ -116,13 +114,15 @@ export default class Reporter {
 
     this.startTime = opts.startTime === undefined ? Date.now() : opts.startTime;
     this.hasClearScreen = opts.hasClearScreen === undefined
-      ? true : opts.hasClearScreen;
+      ? true
+      : opts.hasClearScreen;
     this.activeElements = new Set();
     this.indentLevel = 0;
     this.indentString = '';
     this.enabled = opts.disabled === true ? 0 : 1;
     this.markupOptions = opts.markupOptions === undefined
-      ? {} : opts.markupOptions;
+      ? {}
+      : opts.markupOptions;
     this.hasSpacer = false;
     this.shouldRedirectOutToErr = false;
     this.stdin = opts.stdin;
@@ -156,7 +156,8 @@ export default class Reporter {
 
   attachStdoutStreams(stdout?: Stdout, stderr?: Stdout): ReporterDerivedStreams {
     const columns = stdout === undefined || stdout.columns === undefined
-      ? Reporter.DEFAULT_COLUMNS : stdout.columns;
+      ? Reporter.DEFAULT_COLUMNS
+      : stdout.columns;
 
     const columnsUpdated: Event<number, void> = new Event({
       name: 'columnsUpdated',
@@ -277,8 +278,8 @@ export default class Reporter {
     let bar = this.remoteClientProgressBars.get(msg.id);
     if (bar === undefined) {
       throw new Error(
-        `Remote reporter message for progress bar ${msg.id} that does not exist`,
-      );
+          `Remote reporter message for progress bar ${msg.id} that does not exist`,
+        );
     }
 
     bar.processRemoteClientMessage(msg);
@@ -303,9 +304,14 @@ export default class Reporter {
     return '';
   }
 
-  normalizeMessage(stream: ReporterStream, tty: string, opts: LogOptions): string {
+  normalizeMessage(
+    stream: ReporterStream,
+    tty: string,
+    opts: LogOptions,
+  ): string {
     let msg = stream.format !== 'none' || opts.nonTTY === undefined
-      ? tty : opts.nonTTY;
+      ? tty
+      : opts.nonTTY;
 
     if (opts.noPrefix !== true) {
       msg = this.getMessagePrefix() + msg;
@@ -332,8 +338,8 @@ export default class Reporter {
     for (const stream of streams) {
       if (!this.streams.has(stream)) {
         throw new Error(
-          'Trying to setStreamColumns on a stream that isn\'t attached to this Reporter',
-        );
+            "Trying to setStreamColumns on a stream that isn't attached to this Reporter",
+          );
       }
 
       stream.columns = columns;
@@ -384,8 +390,7 @@ export default class Reporter {
 
     const stdin = this.getStdin();
 
-    const origPrompt =
-      `<brightBlack emphasis>?</brightBlack> <emphasis>${message}</emphasis>`;
+    const origPrompt = `<brightBlack emphasis>?</brightBlack> <emphasis>${message}</emphasis>`;
     let prompt = origPrompt;
     if (hint !== undefined) {
       prompt += ` <dim>${hint}</dim>`;
@@ -491,15 +496,12 @@ export default class Reporter {
     return Array.from(set)[0];
   }
 
-  async select<Options extends SelectOptions>(
-    message: string,
-    {
-      options,
-      defaults = [],
-      radio = false,
-      yes = false,
-    }: SelectArguments<Options>,
-  ): Promise<Set<keyof Options>> {
+  async select<Options extends SelectOptions>(message: string, {
+    options,
+    defaults = [],
+    radio = false,
+    yes = false,
+  }: SelectArguments<Options>): Promise<Set<keyof Options>> {
     const optionNames: Array<keyof Options> = Object.keys(options);
     const optionCount = optionNames.length;
     if (optionCount === 0) {
@@ -553,7 +555,8 @@ export default class Reporter {
         const key = optionNames[i];
         const {label} = options[key];
         const formattedLabel = optionNames.indexOf(key) === activeOption
-          ? `<underline>${label}</underline>` : label;
+          ? `<underline>${label}</underline>`
+          : label;
 
         let symbol = '';
         if (radio) {
@@ -609,7 +612,7 @@ export default class Reporter {
 
         prompt += ': ';
         if (selectedOptions.size > 0) {
-          prompt +=
+            prompt +=
             Array.from(selectedOptions, (key) => options[key].label).join(', ');
         } else {
           prompt += '<dim>none</dim>';
@@ -619,13 +622,10 @@ export default class Reporter {
         resolve();
       };
 
-      onkeypress = (
-        chunk: Buffer,
-        key: {
-          name: string;
-          ctrl: boolean;
-        },
-      ) => {
+      onkeypress = (chunk: Buffer, key: {
+        name: string;
+        ctrl: boolean;
+      }) => {
         switch (key.name) {
           case 'up':
             activeOption--;
@@ -791,9 +791,10 @@ export default class Reporter {
   //# VISUALISATION
   table(head: Array<string>, rawBody: Array<Array<string | number>>) {
     // Format the head, just treat it like another row
-    head = head.map((field: string): string =>
-      markupTag('emphasis', markupTag('underline', field))
-    );
+    head = head.map((field: string): string => markupTag('emphasis', markupTag(
+      'underline',
+      field,
+    )));
 
     // Humanize all number fields
     const rows: Array<Array<string>> = [head];
@@ -918,10 +919,9 @@ export default class Reporter {
     }
 
     for (const stream of this.getStreams(false)) {
-      const prefix = this.markupify(
-        stream,
-        text === undefined ? '' : ` ${text} `,
-      );
+      const prefix = this.markupify(stream, text === undefined
+        ? ''
+        : ` ${text} `);
       const prefixLength = this.indentString.length + stripAnsi(prefix).length;
       const barLength = Math.max(0, stream.columns - prefixLength);
       this.logOneNoMarkup(stream, prefix + '\u2501'.repeat(barLength));
@@ -930,13 +930,11 @@ export default class Reporter {
     this.spacer();
   }
 
-  async steps(
-    callbacks: Array<{
-      message: string;
-      callback: () => Promise<void>;
-      clear?: boolean;
-    }>,
-  ) {
+  async steps(callbacks: Array<{
+    message: string;
+    callback: () => Promise<void>;
+    clear?: boolean;
+  }>) {
     const total = callbacks.length;
     let current = 1;
     for (const {clear, message, callback} of callbacks) {
@@ -1015,7 +1013,8 @@ export default class Reporter {
 
   logOne(stream: ReporterStream, tty: string, opts: LogOptions = {}) {
     const msg = stream.format !== 'none' || opts.nonTTY === undefined
-      ? tty : opts.nonTTY;
+      ? tty
+      : opts.nonTTY;
     const formatted = this.markupify(stream, msg);
     this.logOneNoMarkup(stream, formatted, opts);
   }
@@ -1039,13 +1038,13 @@ export default class Reporter {
   ) {
     const prefix = markupTag('emphasis', markupTag(
       opts.markupTag,
-      this.getMessagePrefix() + opts.prefix,
+        this.getMessagePrefix() +
+        opts.prefix,
     ));
     const inner = markupTag(opts.markupTag, rawInner);
-    const suffix = opts.suffix === undefined ? '' : markupTag(
-      'emphasis',
-      markupTag(opts.markupTag, opts.suffix),
-    );
+    const suffix = opts.suffix === undefined
+      ? ''
+      : markupTag('emphasis', markupTag(opts.markupTag, opts.suffix));
 
     for (const stream of this.getStreams(opts.stderr)) {
       const prefixMarkup = this.markupify(stream, prefix);
@@ -1173,11 +1172,16 @@ export default class Reporter {
       indentLength += numLen + 1;
 
       for (const [index, item] of tuples) {
-        callback(item, (str) => {
-          const num: string =
-            `<pad count="${numLen}" dir="right">${humanizeNumber(index + 1)}.</pad>`;
-          this.logAll(`${indent}<dim>${num}</dim> ${str}`);
-        });
+        callback(
+          item,
+          (str) => {
+            const num: string = `<pad count="${numLen}" dir="right">${humanizeNumber(
+                index +
+                1,
+            )}.</pad>`;
+            this.logAll(`${indent}<dim>${num}</dim> ${str}`);
+          },
+        );
       }
     } else {
       // "- "
@@ -1256,7 +1260,8 @@ export default class Reporter {
         });
       },
 
-      setTotal: (total: number, approximate: boolean = false) => {
+      setTotal: (total: number,
+      approximate: boolean = false) => {
         dispatch({
           type: 'PROGRESS_SET_TOTAL',
           total,

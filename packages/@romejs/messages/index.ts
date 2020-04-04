@@ -17,9 +17,9 @@ type Factory = (...args: Array<unknown>) => string;
 
 type FactoryObject<Messages extends MessagesShape> = { [P in keyof Messages]: Factory };
 
-export function createMessageFactory<Messages extends MessagesShape>(
-  messages: Messages,
-): FactoryObject<Messages> {
+export function createMessageFactory<
+  Messages extends MessagesShape
+>(messages: Messages): FactoryObject<Messages> {
   // @ts-ignore: TS complains about {} not being full of the possible properties in message... which is true
 
   // but they will be filled it by the time we return

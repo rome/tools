@@ -78,7 +78,7 @@ Program {
       }
       implements: Array [
         FlowInterfaceExtends {
-          id: Identifier {
+          id: ReferenceIdentifier {
             name: 'C'
             loc: Object {
               filename: 'input.js'
@@ -112,7 +112,7 @@ Program {
       ]
       mixins: Array [
         FlowInterfaceExtends {
-          id: Identifier {
+          id: ReferenceIdentifier {
             name: 'B'
             loc: Object {
               filename: 'input.js'

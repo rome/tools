@@ -195,7 +195,7 @@ export default class WebRequest {
 
     // TODO check if it is a file
     if (possibleStaticPath !== undefined &&
-      (await this.master.memoryFs.existsHard(possibleStaticPath))) {
+        (await this.master.memoryFs.existsHard(possibleStaticPath))) {
       return true;
     }
 

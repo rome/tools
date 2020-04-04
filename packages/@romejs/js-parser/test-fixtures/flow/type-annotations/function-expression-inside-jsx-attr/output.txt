@@ -194,7 +194,7 @@ Program {
                     }
                   ]
                   returnType: FlowGenericTypeAnnotation {
-                    id: Identifier {
+                    id: ReferenceIdentifier {
                       name: 'Array'
                       loc: Object {
                         filename: 'input.js'

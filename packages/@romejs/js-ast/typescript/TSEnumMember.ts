@@ -8,13 +8,11 @@
 import {JSNodeBase, StringLiteral, Identifier, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSEnumMember =
-  & JSNodeBase
-  & {
-    type: 'TSEnumMember';
-    id: StringLiteral | Identifier;
-    initializer?: AnyExpression;
-  };
+export type TSEnumMember = JSNodeBase & {
+  type: 'TSEnumMember';
+  id: StringLiteral | Identifier;
+  initializer?: AnyExpression;
+};
 
 export const tsEnumMember = createBuilder<TSEnumMember>('TSEnumMember', {
   bindingKeys: {},

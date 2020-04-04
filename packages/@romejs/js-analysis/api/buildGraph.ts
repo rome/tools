@@ -11,14 +11,12 @@ import {ModuleSignatureManager} from '../Evaluator';
 import Hub from '../Hub';
 import {TransformProjectDefinition} from '@romejs/js-compiler';
 
-export default async function buildGraph(
-  opts: {
-    ast: Program;
-    project: TransformProjectDefinition;
-    connected: boolean;
-    provider: CheckProvider;
-  },
-): Promise<Hub> {
+export default async function buildGraph(opts: {
+  ast: Program;
+  project: TransformProjectDefinition;
+  connected: boolean;
+  provider: CheckProvider;
+}): Promise<Hub> {
   const {ast, connected, project, provider} = opts;
 
   const hub = new Hub(ast, project);

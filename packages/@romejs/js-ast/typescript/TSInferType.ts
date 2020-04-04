@@ -8,12 +8,10 @@
 import {JSNodeBase, TSTypeParameter} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSInferType =
-  & JSNodeBase
-  & {
-    type: 'TSInferType';
-    typeParameter: TSTypeParameter;
-  };
+export type TSInferType = JSNodeBase & {
+  type: 'TSInferType';
+  typeParameter: TSTypeParameter;
+};
 
 export const tsInferType = createBuilder<TSInferType>('TSInferType', {
   bindingKeys: {},

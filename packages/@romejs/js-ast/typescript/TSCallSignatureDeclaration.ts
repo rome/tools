@@ -8,13 +8,11 @@
 import {JSNodeBase, TSSignatureDeclarationMeta, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSCallSignatureDeclaration =
-  & JSNodeBase
-  & {
-    type: 'TSCallSignatureDeclaration';
-    meta: TSSignatureDeclarationMeta;
-    typeAnnotation?: AnyTSPrimary;
-  };
+export type TSCallSignatureDeclaration = JSNodeBase & {
+  type: 'TSCallSignatureDeclaration';
+  meta: TSSignatureDeclarationMeta;
+  typeAnnotation?: AnyTSPrimary;
+};
 
 export const tsCallSignatureDeclaration = createBuilder<
   TSCallSignatureDeclaration

@@ -24,7 +24,9 @@ Program {
   }
   body: Array [
     ExportExternalDeclaration {
+      defaultSpecifier: undefined
       exportKind: undefined
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -54,7 +56,7 @@ Program {
           }
         }
       }
-      specifiers: Array [
+      namedSpecifiers: Array [
         ExportExternalSpecifier {
           loc: Object {
             filename: 'input.js'

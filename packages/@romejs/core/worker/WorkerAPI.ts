@@ -24,7 +24,10 @@ import {
 import Logger from '../common/utils/Logger';
 import {removeLoc} from '@romejs/js-ast-utils';
 import * as jsAnalysis from '@romejs/js-analysis';
-import {getFileHandlerAssert, ExtensionLintResult} from '../common/fileHandlers';
+import {
+  getFileHandlerAssert,
+  ExtensionLintResult,
+} from '../common/fileHandlers';
 import {
   AnalyzeDependencyResult,
   UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
@@ -45,24 +48,27 @@ export default class WorkerAPI {
     generated: boolean,
   ): T {
     if (generated) {
-      const diagnostics = val.diagnostics.map((diag) => {
-        const diagAdvice = diag.description.advice === undefined
-          ? [] : diag.description.advice;
-        return {
-          ...diag,
-          metadata: {
-            ...diag.description,
-            advice: [
-              ...diagAdvice,
-              {
-                type: 'log',
-                category: 'warn',
-                message: 'This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect',
+      const diagnostics = val.diagnostics.map(
+        (diag) => {
+          const diagAdvice = diag.description.advice === undefined
+            ? []
+            : diag.description.advice;
+          return {
+              ...diag,
+              metadata: {
+                ...diag.description,
+                advice: [
+                  ...diagAdvice,
+                  {
+                    type: 'log',
+                    category: 'warn',
+                    message: 'This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect',
+                  },
+                ],
               },
-            ],
-          },
-        };
-      });
+            };
+        },
+      );
 
       return {...val, diagnostics};
     } else {
@@ -82,7 +88,9 @@ export default class WorkerAPI {
     });
   }
 
-  async analyzeDependencies(ref: FileReference): Promise<AnalyzeDependencyResult> {
+  async analyzeDependencies(
+    ref: FileReference,
+  ): Promise<AnalyzeDependencyResult> {
     const project = this.worker.getProject(ref.project);
     const {handler} = getFileHandlerAssert(ref.real, project.config);
     this.logger.info(`Analyze dependencies:`, ref.real);
@@ -171,10 +179,11 @@ export default class WorkerAPI {
     const project = this.worker.getProject(ref.project);
 
     return project.config.format.enabled && matchPathPatterns(
-      ref.real,
-      project.config.lint.ignore,
-    ) === 'NO_MATCH' &&
-      matchPathPatterns(ref.real, project.config.format.ignore) === 'NO_MATCH';
+        ref.real,
+        project.config.lint.ignore,
+      ) === 'NO_MATCH' &&
+        matchPathPatterns(ref.real, project.config.format.ignore) ===
+        'NO_MATCH';
   }
 
   async _format(ref: FileReference): Promise<undefined | ExtensionLintResult> {

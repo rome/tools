@@ -215,7 +215,8 @@ export class TarWriter {
     }
 
     const buffer: Buffer = rawBuffer instanceof Buffer
-      ? rawBuffer : Buffer.from(rawBuffer);
+      ? rawBuffer
+      : Buffer.from(rawBuffer);
     const header = TarWriter.normalizeHeader(rawHeader, buffer.length);
 
     this.stream.write(encodeHeader(header));

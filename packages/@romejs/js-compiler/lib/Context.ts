@@ -116,9 +116,9 @@ export default class Context {
 
     for (const suppression of this.suppressions) {
       if (suppression.category === category && matchesSuppression(
-        loc,
-        suppression,
-      )) {
+          loc,
+          suppression,
+        )) {
         return true;
       }
     }
@@ -173,8 +173,8 @@ export default class Context {
 
     if (loc !== undefined && loc.filename !== this.filename) {
       throw new Error(
-        `Trying to add a location from ${loc.filename} on a Context from ${this.path}`,
-      );
+          `Trying to add a location from ${loc.filename} on a Context from ${this.path}`,
+        );
     }
 
     this.diagnostics.push({

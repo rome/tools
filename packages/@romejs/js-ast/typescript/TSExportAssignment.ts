@@ -8,12 +8,10 @@
 import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSExportAssignment =
-  & JSNodeBase
-  & {
-    type: 'TSExportAssignment';
-    expression: AnyExpression;
-  };
+export type TSExportAssignment = JSNodeBase & {
+  type: 'TSExportAssignment';
+  expression: AnyExpression;
+};
 
 export const tsExportAssignment = createBuilder<TSExportAssignment>(
   'TSExportAssignment',

@@ -63,7 +63,7 @@ export default {
       // map exports and imports and correctly
       for (const child of node.body) {
         if (child.type === 'ImportDeclaration' && child.importKind !== 'type' &&
-          child.importKind !== 'typeof') {
+            child.importKind !== 'typeof') {
           const moduleId = getModuleId(child.source.value, opts);
           if (moduleId === undefined) {
             continue;
@@ -120,7 +120,7 @@ export default {
         if (child.type === 'ExportDefaultDeclaration') {
           const {declaration: decl} = child;
           if ((decl.type === 'FunctionDeclaration' || decl.type ===
-          'ClassDeclaration') && decl.id !== undefined) {
+              'ClassDeclaration') && decl.id !== undefined) {
             mappings.set(decl.id.name, getPrefixedName(
               'default',
               opts.moduleId,
@@ -167,8 +167,8 @@ export default {
           if (child.type === 'ExportLocalDeclaration') {
             if (child.declaration !== undefined) {
               throw new Error(
-                'No export declarations should be here as they have been removed by renameBindings',
-              );
+                  'No export declarations should be here as they have been removed by renameBindings',
+                );
             }
 
             const {specifiers} = child;
@@ -248,7 +248,7 @@ export default {
     if (node.type === 'ExportDefaultDeclaration') {
       const {declaration} = node;
       if (declaration.type === 'FunctionDeclaration' || declaration.type ===
-      'ClassDeclaration') {
+          'ClassDeclaration') {
         if (declaration.id === undefined) {
           // give it the correct name
           return {
@@ -284,8 +284,8 @@ export default {
       if (specifiers === undefined) {
         if (declaration === undefined) {
           throw new Error(
-            'No specifiers or declaration existed, if there\'s no specifiers then there should be a declaration',
-          );
+              "No specifiers or declaration existed, if there's no specifiers then there should be a declaration",
+            );
         }
         return declaration;
       } else {

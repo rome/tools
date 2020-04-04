@@ -8,12 +8,10 @@
 import {JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type StringLiteral =
-  & JSNodeBase
-  & {
-    type: 'StringLiteral';
-    value: string;
-  };
+export type StringLiteral = JSNodeBase & {
+  type: 'StringLiteral';
+  value: string;
+};
 
 export const stringLiteral = createQuickBuilder<StringLiteral, 'value'>(
   'StringLiteral',

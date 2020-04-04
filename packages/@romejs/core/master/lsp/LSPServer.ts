@@ -118,7 +118,7 @@ function convertDiagnosticsToLSP(
         const item = advice[i];
         const nextItem = advice[i + 1];
         if (item.type === 'log' && nextItem !== undefined && nextItem.type ===
-        'frame') {
+            'frame') {
           const abs = master.projectManager.getFilePathFromUidOrAbsolute(
             nextItem.location.filename,
           );
@@ -503,8 +503,7 @@ export default class LSPServer {
 
       case 'textDocument/didChange':
         const path = getPathFromTextDocument(params.get('textDocument'));
-        const content =
-          params.get('contentChanges').asArray()[0].get('text').asString();
+        const content = params.get('contentChanges').asArray()[0].get('text').asString();
         await this.request.requestWorkerUpdateBuffer(path, content);
         break;
     }

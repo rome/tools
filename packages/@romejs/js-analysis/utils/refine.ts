@@ -32,7 +32,8 @@ function isTypeofNode(
   node: AnyNode,
 ): node is UnaryExpression & {argument: ReferenceIdentifier} {
   return node.type === 'UnaryExpression' && node.operator === 'typeof' &&
-    node.argument.type === 'ReferenceIdentifier';
+      node.argument.type ===
+      'ReferenceIdentifier';
 }
 
 function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
@@ -203,11 +204,9 @@ export default function refine(
 
   for (const [name, types] of testTypes) {
     // Build up the type in the case it's been refined to multiple values
-    const type = types.length === 1 ? types[0] : new UnionT(
-      outerScope,
-      undefined,
-      types,
-    );
+    const type = types.length === 1
+      ? types[0]
+      : new UnionT(outerScope, undefined, types);
 
     // Set type on `consequent`
     consequent.addBinding(name, type);

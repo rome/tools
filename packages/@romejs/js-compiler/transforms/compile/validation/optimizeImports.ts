@@ -28,7 +28,7 @@ const IGNORED_NAMES = ['React', 'react'];
 
 function getName(node: AnyNode): undefined | string {
   if (node.type !== 'MemberExpression' && node.type !== 'JSXMemberExpression') {
-    return;
+    return undefined;
   }
 
   const {property} = node;
@@ -42,6 +42,8 @@ function getName(node: AnyNode): undefined | string {
       return property.name;
     }
   }
+
+  return undefined;
 }
 
 export default {
@@ -63,8 +65,8 @@ export default {
     const wildcardImportNodeToLocal: Map<ImportDeclaration, string> = new Map();
     for (const child of node.body) {
       if (child.type === 'ImportDeclaration' && !IGNORED_NAMES.includes(
-        child.source.value,
-      ) && child.namespaceSpecifier !== undefined) {
+          child.source.value,
+        ) && child.namespaceSpecifier !== undefined) {
         const specifier = child.namespaceSpecifier;
         wildcardImports.set(specifier.local.name.name, {
           binding: path.scope.getBindingAssert(specifier.local.name.name),
@@ -100,9 +102,9 @@ export default {
       }
 
       const isComputed = parent.type === 'MemberExpression' && parent.object ===
-      node && getName(parent) === undefined;
+        node && getName(parent) === undefined;
       const isUnboxed = parent.type !== 'MemberExpression' && parent.type !==
-      'JSXMemberExpression';
+        'JSXMemberExpression';
 
       if (isComputed || isUnboxed) {
         // Deopt as we can't follow this
@@ -134,7 +136,7 @@ export default {
 
         // Replace all member expressions with their uids
         if ((node.type === 'MemberExpression' || node.type ===
-        'JSXMemberExpression') && isIdentifierish(node.object)) {
+            'JSXMemberExpression') && isIdentifierish(node.object)) {
           const wildcardInfo = wildcardImports.get(node.object.name);
           if (wildcardInfo !== undefined && wildcardInfo.references.has(node)) {
             const name = getName(node);
@@ -157,8 +159,8 @@ export default {
 
         // Add new specifiers to wildcard import declarations
         if (node.type === 'ImportDeclaration' && wildcardImportNodeToLocal.has(
-          node,
-        )) {
+            node,
+          )) {
           const local = wildcardImportNodeToLocal.get(node);
           if (local === undefined) {
             throw new Error('Expected local');

@@ -14,16 +14,14 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSDeclareMethod =
-  & JSNodeBase
-  & {
-    type: 'TSDeclareMethod';
-    meta: ClassPropertyMeta;
-    kind: ClassMethodKind;
-    key: AnyObjectPropertyKey;
-    head: FunctionHead;
-    body?: void;
-  };
+export type TSDeclareMethod = JSNodeBase & {
+  type: 'TSDeclareMethod';
+  meta: ClassPropertyMeta;
+  kind: ClassMethodKind;
+  key: AnyObjectPropertyKey;
+  head: FunctionHead;
+  body?: void;
+};
 
 export const tsDeclareMethod = createBuilder<TSDeclareMethod>(
   'TSDeclareMethod',

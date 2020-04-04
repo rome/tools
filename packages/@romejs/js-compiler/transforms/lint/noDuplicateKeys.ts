@@ -14,7 +14,8 @@ function extractPropertyKey(
   node: ObjectProperty | ObjectMethod | SpreadProperty,
 ): string | undefined {
   if ((node.type === 'ObjectMethod' || node.type === 'ObjectProperty') &&
-    node.key.type === 'StaticPropertyKey') {
+        node.key.type ===
+        'StaticPropertyKey') {
     const {value} = node.key;
 
     if (value.type === 'PrivateName') {

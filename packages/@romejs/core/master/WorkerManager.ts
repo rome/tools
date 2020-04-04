@@ -109,7 +109,7 @@ export default class WorkerManager {
     let byteCount;
     for (const worker of this.workers.values()) {
       if (!worker.ghost && (byteCount === undefined || byteCount >
-      worker.byteCount)) {
+          worker.byteCount)) {
         smallestWorker = worker;
         byteCount = worker.byteCount;
       }
@@ -330,7 +330,8 @@ export default class WorkerManager {
 
     // our max worker limit, then let's start a new one
     if (smallestWorker.byteCount > MAX_WORKER_BYTES_BEFORE_ADD &&
-      this.getWorkerCount() < MAX_WORKER_COUNT) {
+          this.getWorkerCount() <
+          MAX_WORKER_COUNT) {
       logger.info(
         `[WorkerManager] Spawning a new worker as we've exceeded ${MAX_WORKER_BYTES_BEFORE_ADD} bytes across each worker`,
       );

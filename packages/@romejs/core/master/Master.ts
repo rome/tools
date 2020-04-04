@@ -88,10 +88,10 @@ export type MasterUnfinishedMarker = {
   facet: string;
 };
 
-export type MasterMarker =
-  & MasterUnfinishedMarker
-  & {// End time in milliseconds
-    end: number};
+export type MasterMarker = MasterUnfinishedMarker & {
+  // End time in milliseconds
+  end: number;
+};
 
 export default class Master {
   constructor(opts: MasterOptions) {
@@ -130,7 +130,8 @@ export default class Master {
 
     this.logger = new Logger('master', () => {
       return this.logEvent.hasSubscribers() ||
-      this.connectedClientsListeningForLogs.size > 0;
+          this.connectedClientsListeningForLogs.size >
+          0;
     }, {
       streams: [
         {
@@ -215,7 +216,8 @@ export default class Master {
 
   onFatalError(err: Error) {
     const message = `<emphasis>Fatal error occurred</emphasis>: ${escapeMarkup(
-      err.stack || err.message,
+        err.stack ||
+        err.message,
     )}`;
     this.logger.error(message);
     this.connectedReporters.error(message);
@@ -247,7 +249,7 @@ export default class Master {
       readFile: this.readDiagnosticsPrinterFile.bind(this),
     });
     printer.addDiagnostics(diagnostics);
-    await printer.print();
+    printer.print();
   }
 
   readDiagnosticsPrinterFile(
@@ -449,6 +451,7 @@ export default class Master {
               return remote.join();
             }
           }
+          return undefined;
         },
         normalizeFilename: (filename) => {
           const path = this.projectManager.getFilePathFromUid(filename);
@@ -583,7 +586,8 @@ export default class Master {
       silent: partialQuery.silent === true || requestFlags.benchmark,
       terminateWhenIdle: partialQuery.terminateWhenIdle === true,
       commandFlags: partialQuery.commandFlags === undefined
-        ? {} : partialQuery.commandFlags,
+        ? {}
+        : partialQuery.commandFlags,
     };
 
     const {bridge} = client;
@@ -666,20 +670,25 @@ export default class Master {
     progress.end();
     const benchmarkTook = Date.now() - benchmarkStart;
 
-    reporter.section('Benchmark results', () => {
-      reporter.info(
-        'Request artifacts may have been cached after the first run, artificially decreasing subsequent run time',
-      );
-      reporter.heading('Query');
-      reporter.inspect(req.query);
-      reporter.heading('Stats');
-      reporter.list([
-        `Warmup took <duration emphasis>${warmupTook}</duration>`,
-        `<number emphasis>${benchmarkIterations}</number> runs`,
-        `<duration emphasis>${benchmarkTook}</duration> total`,
-        `<duration emphasis approx>${benchmarkTook / benchmarkIterations}</duration> per run`,
-      ]);
-    });
+    reporter.section(
+      'Benchmark results',
+      () => {
+        reporter.info(
+          'Request artifacts may have been cached after the first run, artificially decreasing subsequent run time',
+        );
+        reporter.heading('Query');
+        reporter.inspect(req.query);
+        reporter.heading('Stats');
+        reporter.list(
+          [
+            `Warmup took <duration emphasis>${warmupTook}</duration>`,
+            `<number emphasis>${benchmarkIterations}</number> runs`,
+            `<duration emphasis>${benchmarkTook}</duration> total`,
+            `<duration emphasis approx>${benchmarkTook / benchmarkIterations}</duration> per run`,
+          ],
+        );
+      },
+    );
 
     return result;
   }
@@ -732,13 +741,14 @@ export default class Master {
       let promises: Array<Promise<unknown> | undefined> = [bridgeEndPromise];
 
       // Get command
-      const commandOpts: undefined | MasterCommand<Dict<unknown>> =
-        masterCommands.get(query.commandName);
+      const commandOpts: undefined | MasterCommand<Dict<unknown>> = masterCommands.get(
+        query.commandName,
+      );
       if (commandOpts) {
         // Warn about disabled disk caching
         if (process.env.ROME_CACHE === '0' && !this.warnedCacheClients.has(
-          bridge,
-        )) {
+            bridge,
+          )) {
           reporter.warn(
             'Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable',
           );
@@ -773,7 +783,7 @@ export default class Master {
         throw new Error(`Unknown command ${String(query.commandName)}`);
       }
     } catch (err) {
-      let diagnostics: undefined | Diagnostics = await this.handleRequestError(
+      let diagnostics: undefined | Diagnostics = this.handleRequestError(
         req,
         err,
       );
@@ -811,10 +821,7 @@ export default class Master {
     }
   }
 
-  async handleRequestError(
-    req: MasterRequest,
-    rawErr: Error,
-  ): Promise<undefined | Diagnostics> {
+  handleRequestError(req: MasterRequest, rawErr: Error): undefined | Diagnostics {
     let err = rawErr;
 
     // If we can derive diagnostics from the error then create a diagnostics printer
@@ -836,7 +843,7 @@ export default class Master {
     if (err instanceof DiagnosticsPrinter) {
       const printer = err;
       if (req.bridge.alive) {
-        await printer.print();
+        printer.print();
 
         // Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
         if (!(rawErr instanceof MasterRequestInvalid)) {
@@ -847,7 +854,7 @@ export default class Master {
     }
 
     if (!req.bridge.alive) {
-      return;
+      return undefined;
     }
 
     const printer = req.createDiagnosticsPrinter(new DiagnosticsProcessor({
@@ -872,11 +879,11 @@ export default class Master {
         ],
       },
     });
-    await printer.print();
+    printer.print();
 
     // We could probably return printer.getDiagnostics() but we just want to print to the console
 
     // We will still want to send the `error` property
-    return;
+    return undefined;
   }
 }

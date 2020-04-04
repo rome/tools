@@ -12,13 +12,11 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSExpressionWithTypeArguments =
-  & JSNodeBase
-  & {
-    type: 'TSExpressionWithTypeArguments';
-    expression: AnyTSEntityName;
-    typeParameters?: TSTypeParameterInstantiation;
-  };
+export type TSExpressionWithTypeArguments = JSNodeBase & {
+  type: 'TSExpressionWithTypeArguments';
+  expression: AnyTSEntityName;
+  typeParameters?: TSTypeParameterInstantiation;
+};
 
 export const tsExpressionWithTypeArguments = createBuilder<
   TSExpressionWithTypeArguments

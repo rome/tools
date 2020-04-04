@@ -65,9 +65,9 @@ function normalizeString(consumer: Consumer, key: string): MString {
 }
 
 function normalizePathPatterns(consumer: Consumer, loose: boolean): PathPatterns {
-  return normalizeStringArray(consumer, loose).map((str) =>
-    parsePathPattern({input: str})
-  );
+  return normalizeStringArray(consumer, loose).map((str) => parsePathPattern({
+    input: str,
+  }));
 }
 
 function normalizeStringArray(consumer: Consumer, loose: boolean): Array<string> {
@@ -149,7 +149,9 @@ function normalizeBin(
   return normalizeStringMap(consumer, 'bin', loose);
 }
 
-function extractLicenseFromObjectConsumer(consumer: Consumer): [string, Consumer] {
+function extractLicenseFromObjectConsumer(
+  consumer: Consumer,
+): [string, Consumer] {
   const prop = consumer.get('type');
   const value = prop.asString();
   return [value, prop];
@@ -182,8 +184,8 @@ function normalizeLicense(
   // Support some legacy ways of specifying licenses: https://docs.npmjs.com/files/package.json#license
   const raw = licenseProp.asUnknown();
   if (loose && Array.isArray(raw)) {
-    const licenseIds = licenseProp.asArray().map((consumer) =>
-      extractLicenseFromObjectConsumer(consumer)[0]
+    const licenseIds = licenseProp.asArray().map(
+      (consumer) => extractLicenseFromObjectConsumer(consumer)[0],
     );
     licenseId = `(${licenseIds.join(' OR ')})`;
   } else if (loose && typeof raw === 'object') {
@@ -512,11 +514,9 @@ function normalizeRootName(consumer: Consumer, loose: boolean): MString {
       prop.unexpected(message, {
         advice,
         at,
-        loc: start === undefined ? undefined : prop.getLocationRange(
-          start,
-          end,
-          'inner-value',
-        ),
+        loc: start === undefined
+          ? undefined
+          : prop.getLocationRange(start, end, 'inner-value'),
       });
     },
   });
@@ -534,7 +534,8 @@ function checkDependencyKeyTypo(key: string, prop: Consumer) {
   for (const depPrefixKey of DEPENDENCIES_KEYS) {
     // Ignore if the key is a valid dependency key
     const depKey = depPrefixKey === ''
-      ? 'dependencies' : `${depPrefixKey}Dependencies`;
+      ? 'dependencies'
+      : `${depPrefixKey}Dependencies`;
     if (key === depKey) {
       return;
     }
@@ -570,84 +571,89 @@ export async function normalizeManifest(
 }> {
   const loose = path.getSegments().includes('node_modules');
 
-  const {result: manifest, diagnostics} = await consumer.capture((consumer) => {
-    // FIXME: There's this ridiculous node module that includes it's tests... which deliberately includes an invalid package.json
-    if (path.join().includes('resolve/test/resolver/invalid_main')) {
-      consumer.setValue({});
-    }
+  const {result: manifest, diagnostics} = await consumer.capture(
+    (consumer) => {
+      // FIXME: There's this ridiculous node module that includes it's tests... which deliberately includes an invalid package.json
+      if (path.join().includes('resolve/test/resolver/invalid_main')) {
+        consumer.setValue({});
+      }
 
-    //
-    if (!loose) {
-      for (const [key, prop] of consumer.asMap()) {
-        // Check for typos for dependencies
-        checkDependencyKeyTypo(key, prop);
+      //
+      if (!loose) {
+        for (const [key, prop] of consumer.asMap()) {
+          // Check for typos for dependencies
+          checkDependencyKeyTypo(key, prop);
 
-        // Check for other typos
-        const correctKey = TYPO_KEYS.get(key);
-        if (correctKey !== undefined) {
-          prop.unexpected(`${key} is a typo of ${correctKey}`);
+          // Check for other typos
+          const correctKey = TYPO_KEYS.get(key);
+          if (correctKey !== undefined) {
+            prop.unexpected(`${key} is a typo of ${correctKey}`);
+          }
         }
       }
-    }
 
-    const name = normalizeRootName(consumer, loose);
+      const name = normalizeRootName(consumer, loose);
 
-    const manifest: Manifest = {
-      name,
-      version: normalizeVersion(consumer, loose),
-      private: normalizeBoolean(consumer, 'private') === true,
-      description: normalizeString(consumer, 'description'),
-      license: normalizeLicense(consumer, loose),
-      type: consumer.get('type').asStringSetOrVoid(['module', 'commonjs']),
+      const manifest: Manifest = {
+        name,
+        version: normalizeVersion(consumer, loose),
+        private: normalizeBoolean(consumer, 'private') === true,
+        description: normalizeString(consumer, 'description'),
+        license: normalizeLicense(consumer, loose),
+        type: consumer.get('type').asStringSetOrVoid(['module', 'commonjs']),
 
-      bin: normalizeBin(consumer, name, loose),
-      scripts: normalizeStringMap(consumer, 'scripts', loose),
-      homepage: normalizeString(consumer, 'homepage'),
-      repository: normalizeRepo(consumer.get('repository'), loose),
-      bugs: normalizeBugs(consumer.get('bugs'), loose),
-      engines: normalizeStringMap(consumer, 'engines', loose),
+        bin: normalizeBin(consumer, name, loose),
+        scripts: normalizeStringMap(consumer, 'scripts', loose),
+        homepage: normalizeString(consumer, 'homepage'),
+        repository: normalizeRepo(consumer.get('repository'), loose),
+        bugs: normalizeBugs(consumer.get('bugs'), loose),
+        engines: normalizeStringMap(consumer, 'engines', loose),
 
-      files: normalizePathPatterns(consumer.get('files'), loose),
-      keywords: normalizeStringArray(consumer.get('keywords'), loose),
-      cpu: normalizeStringArray(consumer.get('cpu'), loose),
-      os: normalizeStringArray(consumer.get('os'), loose),
+        files: normalizePathPatterns(consumer.get('files'), loose),
+        keywords: normalizeStringArray(consumer.get('keywords'), loose),
+        cpu: normalizeStringArray(consumer.get('cpu'), loose),
+        os: normalizeStringArray(consumer.get('os'), loose),
 
-      main: normalizeString(consumer, 'main'),
-      exports: normalizeExports(consumer.get('exports')),
+        main: normalizeString(consumer, 'main'),
+        exports: normalizeExports(consumer.get('exports')),
 
-      // Dependency fields
-      dependencies: normalizeDependencies(consumer, 'dependencies', loose),
-      devDependencies: normalizeDependencies(consumer, 'devDependencies', loose),
-      optionalDependencies: normalizeDependencies(
-        consumer,
-        'optionalDependencies',
-        loose,
-      ),
-      peerDependencies: normalizeDependencies(
-        consumer,
-        'peerDependencies',
-        loose,
-      ),
-      bundledDependencies: [
-        ...normalizeStringArray(consumer.get('bundledDependencies'), loose),
+        // Dependency fields
+        dependencies: normalizeDependencies(consumer, 'dependencies', loose),
+        devDependencies: normalizeDependencies(
+          consumer,
+          'devDependencies',
+          loose,
+        ),
+        optionalDependencies: normalizeDependencies(
+          consumer,
+          'optionalDependencies',
+          loose,
+        ),
+        peerDependencies: normalizeDependencies(
+          consumer,
+          'peerDependencies',
+          loose,
+        ),
+        bundledDependencies: [
+          ...normalizeStringArray(consumer.get('bundledDependencies'), loose),
 
-        // Common misspelling. We error on the existence of this for strict manifests already.
-        ...normalizeStringArray(consumer.get('bundleDependencies'), loose),
-      ],
+          // Common misspelling. We error on the existence of this for strict manifests already.
+          ...normalizeStringArray(consumer.get('bundleDependencies'), loose),
+        ],
 
-      // People fields
-      author: consumer.has('author') ? normalizePerson(
-        consumer.get('author'),
-        loose,
-      ) : undefined,
-      contributors: normalizePeople(consumer.get('contributors'), loose),
-      maintainers: normalizePeople(consumer.get('maintainers'), loose),
+        // People fields
+        author: consumer.has('author')
+          ? normalizePerson(consumer.get('author'), loose)
+          : undefined,
+        contributors: normalizePeople(consumer.get('contributors'), loose),
+        maintainers: normalizePeople(consumer.get('maintainers'), loose),
 
-      raw: consumer.asJSONObject(),
-    };
+        raw: consumer.asJSONObject(),
+      };
 
-    return manifest;
-  });
+      return manifest;
+    },
+  );
 
   return {
     manifest,

@@ -55,7 +55,8 @@ export default class Path {
     this.context = context;
 
     const parentScope = opts.parentScope === undefined
-      ? context.getRootScope() : opts.parentScope;
+      ? context.getRootScope()
+      : opts.parentScope;
 
     let scope = opts.scope;
     if (scope === undefined) {
@@ -106,7 +107,7 @@ export default class Path {
       }
     }
     if (descriptor.call === undefined) {
-      throw new Error('Hook doesn\'t have a call method');
+      throw new Error("Hook doesn't have a call method");
     }
 
     const {depth, ref} = hook;
@@ -120,11 +121,8 @@ export default class Path {
     }
   }
 
-  provideHook<State>(
-    // rome-suppress-next-line lint/noExplicitAny
-    descriptor: HookDescriptor<State, any, any>,
-    state?: State,
-  ): AnyNode {
+  provideHook<State>( // rome-suppress-next-line lint/noExplicitAny
+  descriptor: HookDescriptor<State, any, any>, state?: State): AnyNode {
     this.hooks.push({
       state: {
         ...descriptor.initialState,
@@ -139,12 +137,10 @@ export default class Path {
   findHook(
     descriptor: AnyHookDescriptor,
     requiredDepth: number = 0,
-  ):
-    | undefined
-    | {
-      ref: HookInstance;
-      depth: number;
-    } {
+  ): undefined | {
+    ref: HookInstance;
+    depth: number;
+  } {
     let depth = 0;
     for (const {hooks} of this.ancestryPaths) {
       for (const hook of hooks) {
@@ -157,6 +153,7 @@ export default class Path {
         }
       }
     }
+    return undefined;
   }
 
   findAncestry(callback: (path: Path) => boolean): undefined | Path {
@@ -165,6 +162,7 @@ export default class Path {
         return path;
       }
     }
+    return undefined;
   }
 
   getChildPath(key: string): Path {
@@ -232,10 +230,12 @@ export default class Path {
 
   getPathOptions(): PathOptions {
     return {
-      ...this.opts,
-      hooks: this.hooks,
-      parentScope: this.scope === undefined ? undefined : this.scope.parentScope,
-    };
+        ...this.opts,
+        hooks: this.hooks,
+        parentScope: this.scope === undefined
+          ? undefined
+          : this.scope.parentScope,
+      };
   }
 
   traverse(name: string, callback: (path: Path) => void) {

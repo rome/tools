@@ -8,16 +8,14 @@
 import {JSNodeBase, AnyFlowPrimary, FlowObjectTypePropertyKey} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowObjectTypeInternalSlot =
-  & JSNodeBase
-  & {
-    type: 'FlowObjectTypeInternalSlot';
-    id: FlowObjectTypePropertyKey;
-    value: AnyFlowPrimary;
-    optional?: boolean;
-    static?: boolean;
-    method?: boolean;
-  };
+export type FlowObjectTypeInternalSlot = JSNodeBase & {
+  type: 'FlowObjectTypeInternalSlot';
+  id: FlowObjectTypePropertyKey;
+  value: AnyFlowPrimary;
+  optional?: boolean;
+  static?: boolean;
+  method?: boolean;
+};
 
 export const flowObjectTypeInternalSlot = createBuilder<
   FlowObjectTypeInternalSlot

@@ -20,17 +20,15 @@ import {descriptions} from '@romejs/diagnostics';
 import {inc, Number0, get0} from '@romejs/ob1';
 
 //# Tokens
-type Tokens =
-  & BaseTokens
-  & {
-    ParenOpen: SimpleToken<'ParenOpen'>;
-    ParenClose: SimpleToken<'ParenClose'>;
-    Plus: SimpleToken<'Plus'>;
-    And: SimpleToken<'And'>;
-    With: SimpleToken<'With'>;
-    Or: SimpleToken<'Or'>;
-    Word: ValueToken<'Word', string>;
-  };
+type Tokens = BaseTokens & {
+  ParenOpen: SimpleToken<'ParenOpen'>;
+  ParenClose: SimpleToken<'ParenClose'>;
+  Plus: SimpleToken<'Plus'>;
+  And: SimpleToken<'And'>;
+  With: SimpleToken<'With'>;
+  Or: SimpleToken<'Or'>;
+  Word: ValueToken<'Word', string>;
+};
 
 //# Nodes
 export type ExpressionNode = LicenseNode | AndNode | OrNode;
@@ -57,8 +55,8 @@ function isWordChar(char: string) {
 
 type SPDXLicenseParserOptions = ParserOptions & {loose?: boolean};
 
-const createSPDXLicenseParser = createParser((ParserCore) =>
-  class SPDXLicenseParser extends ParserCore<Tokens, void> {
+const createSPDXLicenseParser = createParser(
+  (ParserCore) => class SPDXLicenseParser extends ParserCore<Tokens, void> {
     constructor(opts: SPDXLicenseParserOptions) {
       super(opts, 'parse/spdxLicense');
       this.loose = opts.loose === true;
@@ -100,6 +98,8 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
           return this.finishValueToken('Word', value, end);
         }
       }
+
+      return undefined;
     }
 
     parseLicense(token: Tokens['Word']): LicenseNode {
@@ -237,7 +237,7 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
       this.finalize();
       return expr;
     }
-  }
+  },
 );
 
 export default function parse(opts: SPDXLicenseParserOptions): ExpressionNode {

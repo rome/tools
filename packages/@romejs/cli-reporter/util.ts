@@ -24,9 +24,10 @@ export function interpolate(msg: string, args: Array<unknown>): string {
   // add on all other arguments to the end, separate with spaces
   if (argIndex < args.length) {
     interpolated += ' ';
-    interpolated += args.slice(argIndex).map((arg) =>
-      prettyFormat(arg, formatOpts)
-    ).join(' ');
+    interpolated += args.slice(argIndex).map((arg) => prettyFormat(
+      arg,
+      formatOpts,
+    )).join(' ');
   }
 
   return interpolated;

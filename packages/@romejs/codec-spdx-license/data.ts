@@ -184,7 +184,7 @@ export default {
       isDeprecatedLicenseId: false,
       detailsUrl: 'http://spdx.org/licenses/AMDPLPA.json',
       referenceNumber: '128',
-      name: 'AMD\'s plpa_map.c License',
+      name: "AMD's plpa_map.c License",
       licenseId: 'AMDPLPA',
       seeAlso: [
         'https://fedoraproject.org/wiki/Licensing/AMD_plpa_map_License',

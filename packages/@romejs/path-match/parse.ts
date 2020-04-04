@@ -21,8 +21,8 @@ type ParseMode = 'path' | 'pattern';
 
 export type PathMatchParserOptions = ParserOptions;
 
-const createPathMatchParser = createParser((ParserCore) =>
-  class PathMatchParser extends ParserCore<Tokens, void> {
+const createPathMatchParser = createParser(
+  (ParserCore) => class PathMatchParser extends ParserCore<Tokens, void> {
     constructor(opts: PathMatchParserOptions, mode: ParseMode) {
       super(opts, 'parse/patchMatch');
       this.mode = mode;
@@ -284,7 +284,7 @@ const createPathMatchParser = createParser((ParserCore) =>
         });
       }
     }
-  }
+  },
 );
 
 export function parsePattern(opts: PathMatchParserOptions): PathPatternNode {

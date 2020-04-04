@@ -89,7 +89,7 @@ Program {
             }
           }
           returnType: FlowGenericTypeAnnotation {
-            id: Identifier {
+            id: ReferenceIdentifier {
               name: 'z'
               loc: Object {
                 filename: 'input.js'

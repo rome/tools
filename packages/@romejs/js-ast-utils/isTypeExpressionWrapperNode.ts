@@ -20,8 +20,7 @@ export default function isTypeExpressionWrapperNode(
   | TSAsExpression
   | TSTypeAssertion
   | TSNonNullExpression {
-  return (
-    node.type === 'FlowTypeCastExpression' || node.type === 'TSAsExpression' ||
-    node.type === 'TSTypeAssertion' || node.type === 'TSNonNullExpression'
-  );
+  return node.type === 'FlowTypeCastExpression' || node.type ===
+    'TSAsExpression' || node.type === 'TSTypeAssertion' || node.type ===
+    'TSNonNullExpression';
 }

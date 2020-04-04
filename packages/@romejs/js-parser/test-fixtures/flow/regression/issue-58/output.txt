@@ -714,7 +714,7 @@ Program {
               }
             ]
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
@@ -915,7 +915,7 @@ Program {
               }
             ]
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
@@ -1132,7 +1132,7 @@ Program {
               }
             ]
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'd'
                 loc: Object {
                   filename: 'input.js'
@@ -1333,7 +1333,7 @@ Program {
               }
             }
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'e'
                 loc: Object {
                   filename: 'input.js'
@@ -1636,7 +1636,7 @@ Program {
               }
             }
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'e'
                 loc: Object {
                   filename: 'input.js'
@@ -2003,7 +2003,7 @@ Program {
                 }
               ]
               returnType: FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
@@ -2299,7 +2299,7 @@ Program {
                   }
                 ]
                 returnType: FlowGenericTypeAnnotation {
-                  id: Identifier {
+                  id: ReferenceIdentifier {
                     name: 'e'
                     loc: Object {
                       filename: 'input.js'
@@ -2564,7 +2564,7 @@ Program {
                 }
               ]
               returnType: FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
@@ -2782,7 +2782,7 @@ Program {
               }
             ]
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'f'
                 loc: Object {
                   filename: 'input.js'
@@ -2883,7 +2883,7 @@ Program {
               }
             ]
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
@@ -3084,7 +3084,7 @@ Program {
               }
             ]
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
@@ -3184,7 +3184,7 @@ Program {
                 }
               ]
               returnType: FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
@@ -3372,7 +3372,7 @@ Program {
               }
             ]
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
@@ -3508,7 +3508,7 @@ Program {
                 }
               ]
               returnType: FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
@@ -3748,7 +3748,7 @@ Program {
               }
             ]
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
@@ -3848,7 +3848,7 @@ Program {
                 }
               ]
               returnType: FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
@@ -4068,7 +4068,7 @@ Program {
               }
             ]
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'd'
                 loc: Object {
                   filename: 'input.js'
@@ -4333,7 +4333,7 @@ Program {
                 }
               ]
               returnType: FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
@@ -4537,7 +4537,7 @@ Program {
               }
             ]
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
@@ -4637,7 +4637,7 @@ Program {
                 }
               ]
               returnType: FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'f'
                   loc: Object {
                     filename: 'input.js'
@@ -4934,7 +4934,7 @@ Program {
                   }
                 }
                 returnType: FlowGenericTypeAnnotation {
-                  id: Identifier {
+                  id: ReferenceIdentifier {
                     name: 'd'
                     loc: Object {
                       filename: 'input.js'
@@ -4997,7 +4997,7 @@ Program {
                         }
                       }
                       typeAnnotation: FlowGenericTypeAnnotation {
-                        id: Identifier {
+                        id: ReferenceIdentifier {
                           name: 'c'
                           loc: Object {
                             filename: 'input.js'
@@ -5168,7 +5168,7 @@ Program {
                 }
               ]
               returnType: FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
@@ -5268,7 +5268,7 @@ Program {
                   }
                 ]
                 returnType: FlowGenericTypeAnnotation {
-                  id: Identifier {
+                  id: ReferenceIdentifier {
                     name: 'h'
                     loc: Object {
                       filename: 'input.js'
@@ -5488,7 +5488,7 @@ Program {
               }
             ]
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
@@ -5688,7 +5688,7 @@ Program {
               }
             ]
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
@@ -5890,7 +5890,7 @@ Program {
               }
             ]
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'd'
                 loc: Object {
                   filename: 'input.js'
@@ -6161,7 +6161,7 @@ Program {
                 }
               ]
               returnType: FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
@@ -6475,7 +6475,7 @@ Program {
                       }
                     ]
                     returnType: FlowGenericTypeAnnotation {
-                      id: Identifier {
+                      id: ReferenceIdentifier {
                         name: 'p'
                         loc: Object {
                           filename: 'input.js'

@@ -32,9 +32,9 @@ export default class UnionT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new UnionT(scope, originNode, Array(data.types).map((id) =>
-      getType(id)
-    ));
+    return new UnionT(scope, originNode, Array(data.types).map((id) => getType(
+      id,
+    )));
   }
 
   reduce(): T {

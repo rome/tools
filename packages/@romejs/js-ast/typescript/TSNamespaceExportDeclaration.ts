@@ -8,12 +8,10 @@
 import {JSNodeBase, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSNamespaceExportDeclaration =
-  & JSNodeBase
-  & {
-    type: 'TSNamespaceExportDeclaration';
-    id: Identifier;
-  };
+export type TSNamespaceExportDeclaration = JSNodeBase & {
+  type: 'TSNamespaceExportDeclaration';
+  id: Identifier;
+};
 
 export const tsNamespaceExportDeclaration = createBuilder<
   TSNamespaceExportDeclaration

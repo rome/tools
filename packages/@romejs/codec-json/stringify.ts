@@ -71,7 +71,7 @@ function stringifyPrimitives(value: unknown): undefined | string {
 
   // Coerce primitive objects to their primitive form, as specified in ECMA262 24.5.2.1
   if (value instanceof Number || value instanceof String || value instanceof
-  Boolean) {
+      Boolean) {
     value = value.valueOf();
   }
 
@@ -145,12 +145,10 @@ type StringifyOptions = {
   stack: Set<unknown>;
 };
 
-type StringifyObjectOptions =
-  & StringifyOptions
-  & {
-    prevIndent: string;
-    nextIndent: string;
-  };
+type StringifyObjectOptions = StringifyOptions & {
+  prevIndent: string;
+  nextIndent: string;
+};
 
 function getComments(consumer: Consumer, opts: StringifyOptions): PathComments {
   const comments = opts.comments.get(consumer.keyPath.join('.'));
@@ -208,7 +206,8 @@ function stringifyPlainObject(
     const value = consumer.asUnknown();
 
     if (typeof value === 'function' || typeof value === 'undefined' ||
-    typeof value === 'symbol') {
+          typeof value ===
+          'symbol') {
       map.delete(key);
     }
   }

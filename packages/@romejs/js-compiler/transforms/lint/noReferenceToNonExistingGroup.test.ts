@@ -17,7 +17,8 @@ test('Dangling backslash in regex', async (t) => {
     String.raw`let foo = /([abc]+)=\119/;foo;`, // matches '\t' followd by '9'
     String.raw`let foo = /([abc]+)=\338/;foo;`, // matches \33 (char code 255) followed by '8'
     String.raw`let foo = /([abc]+)=\377/;foo;`, // matches \377 (char code 255)
-    String.raw`let foo = /([abc]+)=\777/;foo;`, // matches \77  (char code 63) followed by '7'
+    String.raw`let foo = /([abc]+)=\777/;foo;` // matches \77  (char code 63) followed by '7'
+    ,
   ];
 
   const invalidTestCases = [

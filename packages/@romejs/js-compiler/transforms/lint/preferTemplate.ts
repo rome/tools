@@ -15,8 +15,10 @@ export default {
     const {node} = path;
 
     if (node.type === 'BinaryExpression' && node.operator === '+' &&
-      (node.left.type === 'StringLiteral' && !node.left.value.includes('`') ||
-      node.right.type === 'StringLiteral' && !node.right.value.includes('`'))) {
+        (node.left.type ===
+              'StringLiteral' &&
+            !node.left.value.includes('`') ||
+          node.right.type === 'StringLiteral' && !node.right.value.includes('`'))) {
       path.context.addNodeDiagnostic(node, descriptions.LINT.PREFER_TEMPLATE);
     }
 
