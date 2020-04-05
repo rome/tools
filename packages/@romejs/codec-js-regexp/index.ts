@@ -784,17 +784,35 @@ export const createRegExpParser = createParser(
 
         this.nextToken();
 
+        const start = this.getPosition();
         const min = this.parseDigits();
 
         if (min !== undefined) {
           const nextToken = this.getToken();
           if (nextToken.type === 'Character' && nextToken.value === ',') {
             this.nextToken();
+
             const max = this.parseDigits();
+            const end = this.getPosition();
 
             const endToken = this.getToken();
             if (endToken.type === 'Operator' && endToken.value === '}') {
               this.nextToken();
+
+              if (max !== undefined && min > max) {
+                this.addDiagnostic(
+                  {
+                    description: descriptions.REGEX_PARSER.REVERSED_QUANTIFIER_RANGE,
+                    start,
+                    end,
+                  },
+                );
+                return {
+                  max: min,
+                  min: max,
+                };
+              }
+
               return {
                 min,
                 max,
