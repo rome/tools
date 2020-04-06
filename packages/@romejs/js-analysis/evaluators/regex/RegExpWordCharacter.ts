@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, RegExpWordCharacter, regExpWordCharacter} from '@romejs/js-ast';
+import {
+  AnyNode,
+  RegExpWordCharacter,
+  regExpWordCharacter,
+} from '@romejs/js-ast';
 
 export default function RegExpWordCharacter(node: AnyNode) {
   node = regExpWordCharacter.assert(node);

@@ -6,7 +6,11 @@
  */
 
 import {Scope} from '../../scopes';
-import {FlowDeclareFunction, flowDeclareFunction, AnyNode} from '@romejs/js-ast';
+import {
+  FlowDeclareFunction,
+  flowDeclareFunction,
+  AnyNode,
+} from '@romejs/js-ast';
 
 export default function FlowDeclareFunction(node: AnyNode, scope: Scope) {
   node = flowDeclareFunction.assert(node);

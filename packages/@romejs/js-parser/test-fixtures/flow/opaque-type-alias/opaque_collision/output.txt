@@ -107,7 +107,7 @@ Program {
         }
       }
       impltype: FlowGenericTypeAnnotation {
-        id: Identifier {
+        id: ReferenceIdentifier {
           name: 'opaque'
           loc: Object {
             filename: 'input.js'

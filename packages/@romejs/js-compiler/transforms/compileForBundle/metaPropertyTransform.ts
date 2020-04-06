@@ -16,16 +16,15 @@ import {Path, Context} from '@romejs/js-compiler';
 
 function isImportMeta(node: AnyNode): node is MetaProperty {
   return node.type === 'MetaProperty' && node.meta.name === 'import' &&
-    node.property.name === 'meta';
+      node.property.name ===
+      'meta';
 }
 
 function createURLString(context: Context): AnyExpression {
   const str = stringLiteral.create({
     value: `file://${getFilename(context)}`,
   });
-  return (
-    template.expression`typeof __filename === 'string' ? 'file://' + __filename : ${str}`
-  );
+  return template.expression`typeof __filename === 'string' ? 'file://' + __filename : ${str}`;
 }
 
 function getFilename(context: Context): string {
@@ -63,9 +62,9 @@ export default {
 
     // Direct reference to import.meta.url
     if (node.type === 'MemberExpression' && node.property.type ===
-    'StaticMemberProperty' && isImportMeta(node.object) &&
-      node.property.value.type === 'Identifier' && node.property.value.name ===
-    'url') {
+          'StaticMemberProperty' && isImportMeta(node.object) &&
+          node.property.value.type ===
+          'Identifier' && node.property.value.name === 'url') {
       return createURLString(context);
     }
 

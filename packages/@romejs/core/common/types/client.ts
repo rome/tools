@@ -5,9 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticsPrinterFlags} from '@romejs/cli-diagnostics';
+import {
+  DiagnosticsPrinterFlags,
+  DEFAULT_PRINTER_FLAGS,
+} from '@romejs/cli-diagnostics';
 import {Platform} from './platform';
-import {DEFAULT_PRINTER_FLAGS} from '@romejs/cli-diagnostics';
 import {AbsoluteFilePath, CWD_PATH} from '@romejs/path';
 
 export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
@@ -30,21 +32,19 @@ export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
   ...DEFAULT_PRINTER_FLAGS,
 };
 
-export type ClientRequestFlags =
-  & DiagnosticsPrinterFlags
-  & {
-    watch: boolean;
+export type ClientRequestFlags = DiagnosticsPrinterFlags & {
+  watch: boolean;
 
-    // Debugging
-    collectMarkers: boolean;
-    benchmark: boolean;
-    benchmarkIterations: number;
+  // Debugging
+  collectMarkers: boolean;
+  benchmark: boolean;
+  benchmarkIterations: number;
 
-    // Bundler flags
-    resolverPlatform: undefined | Platform;
-    resolverScale: undefined | number;
-    resolverMocks: boolean;
-  };
+  // Bundler flags
+  resolverPlatform: undefined | Platform;
+  resolverScale: undefined | number;
+  resolverMocks: boolean;
+};
 
 export type ClientFlags = {
   clientName: string;
@@ -52,3 +52,5 @@ export type ClientFlags = {
   silent: boolean;
   verbose: boolean;
 };
+
+export type ClientFlagsJSON = Omit<ClientFlags, 'cwd'> & {cwd: string};

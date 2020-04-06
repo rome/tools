@@ -14,15 +14,13 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type ForOfStatement =
-  & JSNodeBase
-  & {
-    type: 'ForOfStatement';
-    await?: boolean;
-    left: VariableDeclaration | AnyTargetAssignmentPattern;
-    right: AnyExpression;
-    body: AnyStatement;
-  };
+export type ForOfStatement = JSNodeBase & {
+  type: 'ForOfStatement';
+  await?: boolean;
+  left: VariableDeclaration | AnyTargetAssignmentPattern;
+  right: AnyExpression;
+  body: AnyStatement;
+};
 
 export const forOfStatement = createBuilder<ForOfStatement>('ForOfStatement', {
   bindingKeys: {},

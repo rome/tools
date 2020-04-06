@@ -6,12 +6,13 @@
  */
 
 import {Worker, FileReference} from '@romejs/core';
-import {Program} from '@romejs/js-ast';
-import {Diagnostics, descriptions} from '@romejs/diagnostics';
+import {Program, program} from '@romejs/js-ast';
+import {Diagnostics, descriptions, catchDiagnostics} from '@romejs/diagnostics';
 import {
   TransformStageName,
   CompileResult,
   CompilerOptions,
+  compile,
 } from '@romejs/js-compiler';
 import {
   PrefetchedModuleSignatures,
@@ -22,11 +23,11 @@ import {
 } from '../common/bridges/WorkerBridge';
 import Logger from '../common/utils/Logger';
 import {removeLoc} from '@romejs/js-ast-utils';
-import {compile} from '@romejs/js-compiler';
-import {catchDiagnostics} from '@romejs/diagnostics';
 import * as jsAnalysis from '@romejs/js-analysis';
-import {program} from '@romejs/js-ast';
-import {getFileHandlerAssert, ExtensionLintResult} from '../common/fileHandlers';
+import {
+  getFileHandlerAssert,
+  ExtensionLintResult,
+} from '../common/fileHandlers';
 import {
   AnalyzeDependencyResult,
   UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
@@ -47,24 +48,27 @@ export default class WorkerAPI {
     generated: boolean,
   ): T {
     if (generated) {
-      const diagnostics = val.diagnostics.map((diag) => {
-        const diagAdvice = diag.description.advice === undefined
-          ? [] : diag.description.advice;
-        return {
-          ...diag,
-          metadata: {
-            ...diag.description,
-            advice: [
-              ...diagAdvice,
-              {
-                type: 'log',
-                category: 'warn',
-                message: 'This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect',
+      const diagnostics = val.diagnostics.map(
+        (diag) => {
+          const diagAdvice = diag.description.advice === undefined
+            ? []
+            : diag.description.advice;
+          return {
+              ...diag,
+              metadata: {
+                ...diag.description,
+                advice: [
+                  ...diagAdvice,
+                  {
+                    type: 'log',
+                    category: 'warn',
+                    message: 'This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect',
+                  },
+                ],
               },
-            ],
-          },
-        };
-      });
+            };
+        },
+      );
 
       return {...val, diagnostics};
     } else {
@@ -84,7 +88,9 @@ export default class WorkerAPI {
     });
   }
 
-  async analyzeDependencies(ref: FileReference): Promise<AnalyzeDependencyResult> {
+  async analyzeDependencies(
+    ref: FileReference,
+  ): Promise<AnalyzeDependencyResult> {
     const project = this.worker.getProject(ref.project);
     const {handler} = getFileHandlerAssert(ref.real, project.config);
     this.logger.info(`Analyze dependencies:`, ref.real);
@@ -173,9 +179,11 @@ export default class WorkerAPI {
     const project = this.worker.getProject(ref.project);
 
     return project.config.format.enabled && matchPathPatterns(
-      ref.real,
-      project.config.format.ignore,
-    ) === 'NO_MATCH';
+        ref.real,
+        project.config.lint.ignore,
+      ) === 'NO_MATCH' &&
+        matchPathPatterns(ref.real, project.config.format.ignore) ===
+        'NO_MATCH';
   }
 
   async _format(ref: FileReference): Promise<undefined | ExtensionLintResult> {
@@ -215,6 +223,7 @@ export default class WorkerAPI {
     const {lint} = handler;
     if (lint === undefined && handler.format === undefined) {
       return {
+        fixed: false,
         diagnostics: [],
         suppressions: [],
       };
@@ -241,6 +250,7 @@ export default class WorkerAPI {
     // These are fatal diagnostics
     if (res.diagnostics !== undefined) {
       return {
+        fixed: false,
         suppressions: [],
         diagnostics: res.diagnostics,
       };
@@ -249,6 +259,7 @@ export default class WorkerAPI {
     // `format` could have return undefined
     if (res.value === undefined) {
       return {
+        fixed: false,
         diagnostics: [],
         suppressions: [],
       };
@@ -271,12 +282,16 @@ export default class WorkerAPI {
       await this.worker.writeFile(ref.real, formatted);
 
       // Relint this file without fixing it, we do this to prevent false positive error messages
-      return this.lint(ref, prefetchedModuleSignatures, false);
+      return {
+        ...(await this.lint(ref, prefetchedModuleSignatures, false)),
+        fixed: true,
+      };
     }
 
     // If there's no pending fix then no need for diagnostics
     if (!needsFix) {
       return {
+        fixed: false,
         diagnostics,
         suppressions,
       };
@@ -284,6 +299,7 @@ export default class WorkerAPI {
 
     // Add pending autofix diagnostic
     return {
+      fixed: false,
       suppressions,
       diagnostics: [
         ...diagnostics,

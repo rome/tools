@@ -9,13 +9,11 @@ import {JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 import {VariableDeclaration} from '../auxiliary/VariableDeclaration';
 
-export type VariableDeclarationStatement =
-  & JSNodeBase
-  & {
-    type: 'VariableDeclarationStatement';
-    declaration: VariableDeclaration;
-    declare?: boolean;
-  };
+export type VariableDeclarationStatement = JSNodeBase & {
+  type: 'VariableDeclarationStatement';
+  declaration: VariableDeclaration;
+  declare?: boolean;
+};
 
 export const variableDeclarationStatement = createQuickBuilder<
   VariableDeclarationStatement,

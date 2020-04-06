@@ -56,19 +56,20 @@ export default class DependencyOrderer {
 
       // We want to get the shortest cycle path since it's likely the most easily resolved
       const isShortestCycle = existingCycle === undefined ||
-      existingCycle.length > ourCyclePath.length;
+          existingCycle.length >
+          ourCyclePath.length;
       if (isShortestCycle) {
         this.possibleCyclePaths.set(node, ourCyclePath);
       }
     }
   }
 
-  addFile(path: AbsoluteFilePath, ancestry: Array<string>) {
+  addFile(path: AbsoluteFilePath, ancestry: Array<string>): void {
     const node = this.graph.getNode(path);
 
     if (this.visitedNodes.has(node)) {
       this.handleAlreadyVisitedFile(node, path, ancestry);
-      return undefined;
+      return;
     }
 
     this.visitedNodes.add(node);
@@ -102,11 +103,10 @@ export default class DependencyOrderer {
       const node = flatOrder[i];
 
       for (const imp of node.analyze.importFirstUsage) {
-        const resolved =
-          node.getNodeFromRelativeDependency(imp.source).resolveImport(
-            imp.imported,
-            imp.loc,
-          );
+        const resolved = node.getNodeFromRelativeDependency(imp.source).resolveImport(
+          imp.imported,
+          imp.loc,
+        );
         if (resolved.type !== 'FOUND') {
           continue;
         }
@@ -130,17 +130,16 @@ export default class DependencyOrderer {
     node: DependencyNode,
     dep: DependencyNode,
     imp: AnalyzeDependencyImportUsageItem,
-  ) {
+  ): void {
     const path = this.possibleCyclePaths.get(dep);
     if (!path) {
       // idk??
-      return undefined;
+      return;
     }
 
     const target = path[path.length - 1];
-    const culprit = String(path.find(
-      (value, index) => path[index - 1] === target,
-    ));
+    const culprit = String(path.find((value, index) => path[index - 1] ===
+      target));
 
     this.diagnostics.push({
       description: descriptions.BUNDLER.DETECTED_CYCLE(

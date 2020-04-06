@@ -12,10 +12,9 @@ import {
   CoverageLocationRange,
   CoverageRangeWithMetadata,
 } from '@romejs/v8';
-import {SourceMap} from '@romejs/codec-source-map';
+import {SourceMap, SourceMapConsumer} from '@romejs/codec-source-map';
 import {Position} from '@romejs/parser-core';
 import {urlToFilename} from './utils';
-import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {
   Number1,
   number1,
@@ -169,8 +168,8 @@ export default class CoverageCollector {
 
         if (sourceStart.source !== sourceEnd.source) {
           throw new Error(
-            `Expected the same source for start and end: ${sourceStart.source} !== ${sourceEnd.source}`,
-          );
+              `Expected the same source for start and end: ${sourceStart.source} !== ${sourceEnd.source}`,
+            );
         }
 
         const key = `${sourceStart.source}:${String(startOffset)}-${String(
@@ -265,7 +264,8 @@ export default class CoverageCollector {
 
       // No point showing fully covered files
       if (uncoveredLines.size === 0 && uncoveredBranches.size === 0 &&
-        uncoveredFunctions.size === 0) {
+            uncoveredFunctions.size ===
+            0) {
         continue;
       }
 

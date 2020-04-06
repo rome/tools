@@ -7,8 +7,7 @@
 
 import {MasterRequest} from '@romejs/core';
 import {WorkerCompileResult} from '../../common/bridges/WorkerBridge';
-import {createMasterCommand} from '../../commands';
-import {commandCategories} from '../../commands';
+import {commandCategories, createMasterCommand} from '../../commands';
 import {DiagnosticsError} from '@romejs/diagnostics';
 import {createUnknownFilePath} from '@romejs/path';
 import {Consumer} from '@romejs/consume';

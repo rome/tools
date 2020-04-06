@@ -8,8 +8,7 @@
 import {MasterRequest} from '@romejs/core';
 import {Consumer} from '@romejs/consume';
 import {DiagnosticsError} from '@romejs/diagnostics';
-import {createMasterCommand} from '../../commands';
-import {commandCategories} from '../../commands';
+import {commandCategories, createMasterCommand} from '../../commands';
 import {createUnknownFilePath} from '@romejs/path';
 import {ConstSourceType} from '@romejs/js-ast';
 

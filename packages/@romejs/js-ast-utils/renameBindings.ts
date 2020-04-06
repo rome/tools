@@ -20,7 +20,6 @@ import assertSingleOrMultipleNodes from './assertSingleOrMultipleNodes';
 import {AnyVariableIdentifier} from '@romejs/js-ast/unions';
 
 // This methods allows either passing in Bindings that could be present within deep scopes,
-
 // or local names for the scope in the passed Path
 export default function renameBindings(
   path: Path,
@@ -55,8 +54,8 @@ export default function renameBindings(
 
     // oldName -> newName
     if (oldToNewMapping.has(node.name) && binding === oldNameToBinding.get(
-      node.name,
-    )) {
+        node.name,
+      )) {
       const newName = oldToNewMapping.get(node.name);
       if (newName === undefined) {
         throw new Error('Should exist');
@@ -88,8 +87,9 @@ export default function renameBindings(
 
       // Retain the correct exported name for `export function` and `export class`
       if (node.type === 'ExportLocalDeclaration' && node.declaration !==
-      undefined && (node.declaration.type === 'FunctionDeclaration' ||
-      node.declaration.type === 'ClassDeclaration')) {
+          undefined && (node.declaration.type === 'FunctionDeclaration' ||
+            node.declaration.type ===
+            'ClassDeclaration')) {
         const newName = replaceNodesWithName.get(node.declaration.id);
 
         if (newName !== undefined) {
@@ -114,7 +114,7 @@ export default function renameBindings(
 
       // Retain the correct exported names for `export const`
       if (node.type === 'ExportLocalDeclaration' && node.declaration !==
-      undefined) {
+          undefined) {
         const bindings = getBindingIdentifiers(node.declaration);
         let includesAny = false;
         for (const node of bindings) {

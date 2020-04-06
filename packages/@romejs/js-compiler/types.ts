@@ -18,18 +18,24 @@ import {Dict} from '@romejs/typescript-helpers';
 //
 export type TransformStageName = 'pre' | 'compile' | 'compileForBundle';
 
-export type TransformStageFactory = (projectConfig: ProjectConfig, options: Object) => Transforms;
+export type TransformStageFactory = (
+  projectConfig: ProjectConfig,
+  options: Object,
+) => Transforms;
 
 export type TransformStageFactories = { [key in TransformStageName]: TransformStageFactory };
 
 //
-export type Transform =
-  | TransformVisitor
-  | ((context: Context) => TransformVisitor);
+export type Transform = TransformVisitor | ((
+  context: Context,
+) => TransformVisitor);
 
 export type Transforms = Array<Transform>;
 
-export type TransformExitResult = Array<AnyNode> | AnyNode | typeof REDUCE_REMOVE;
+export type TransformExitResult =
+  | Array<AnyNode>
+  | AnyNode
+  | typeof REDUCE_REMOVE;
 
 export type TransformEnterResult =
   | TransformExitResult
@@ -59,10 +65,12 @@ export type TransformRequest = {
   stage?: TransformStageName;
 };
 
-export type BundleCompileResolvedImports = {[key: string]: {
+export type BundleCompileResolvedImports = {
+  [key: string]: {
     id: string;
     name: string;
-  }};
+  };
+};
 
 export type BundleCompileOptions = {
   mode: BundlerMode;

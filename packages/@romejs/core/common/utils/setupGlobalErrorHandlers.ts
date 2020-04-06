@@ -8,20 +8,19 @@
 export default function setupGlobalErrorHandlers(
   callback: (err: Error) => void,
 ): () => void {
-  const onUncaughtException: NodeJS.UncaughtExceptionListener =
-    (err: Error) => {
-      callback(err);
-    };
+  const onUncaughtException: NodeJS.UncaughtExceptionListener = (err: Error) => {
+    callback(err);
+  };
   process.on('uncaughtException', onUncaughtException);
 
   const onUnhandledRejection: NodeJS.UnhandledRejectionListener = (
     reason: unknown,
     promise: Promise<unknown>,
   ) => {
-    console.log(reason, promise);
     promise.then(() => {
       throw new Error('Promise is rejected so should never hit this condition');
     }).catch((err) => {
+      console.error(err);
       callback(err);
     });
   };

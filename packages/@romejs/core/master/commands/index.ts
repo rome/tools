@@ -22,6 +22,7 @@ import analyzeDependencies from './analyzeDependencies';
 import parse from './parse';
 import bundle from './bundle';
 import format from './format';
+import lsp from './lsp';
 
 // Code Quality
 import lint from './lint';
@@ -35,7 +36,7 @@ import noop from './noop';
 
 //
 import {MasterCommand} from '../../commands';
-// rome-suppress lint/noExplicitAny
+// rome-suppress-next-line lint/noExplicitAny
 export const masterCommands: Map<string, MasterCommand<any>> = new Map();
 masterCommands.set('_moduleSignature', moduleSignature);
 masterCommands.set('evict', evict);
@@ -54,4 +55,5 @@ masterCommands.set('publish', publish);
 masterCommands.set('ci', ci);
 masterCommands.set('develop', develop);
 masterCommands.set('format', format);
+masterCommands.set('lsp', lsp);
 masterCommands.set('_noop', noop);

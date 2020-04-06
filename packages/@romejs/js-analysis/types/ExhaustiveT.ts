@@ -8,11 +8,10 @@
 import {AnyNode} from '@romejs/js-ast';
 import {Scope} from '../scopes';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
-import {SerialTypeFactory} from './T';
+import T, {SerialTypeFactory} from './T';
 import {HumanBuilder} from '../Utils';
 import E, {ErrorDefinition} from './errors/E';
 import AnyT from './AnyT';
-import T from './T';
 import {descriptions} from '@romejs/diagnostics';
 
 class ENotExhaustive extends E {
@@ -114,10 +113,8 @@ export default class ExhaustiveT extends T {
   }
 
   humanize(builder: HumanBuilder): string {
-    return (
-      `exhaustive ${builder.humanize(this.target)} should only match ${builder.humanize(
+    return `exhaustive ${builder.humanize(this.target)} should only match ${builder.humanize(
         this.target,
-      )}`
-    );
+      )}`;
   }
 }

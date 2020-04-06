@@ -5,23 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Children, TagAttributes, TagName} from './types';
+import {Children, TagAttributes, MarkupTagName} from './types';
 import {parseMarkup} from './parse';
 import {
   humanizeNumber,
   humanizeTime,
   humanizeFileSize,
 } from '@romejs/string-utils';
-import {formatAnsi} from '@romejs/string-ansi';
+import {formatAnsi, ansiPad} from './ansi';
 import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
 
-type FormatReduceCallback = (name: TagName, attributes: TagAttributes, value: string) => string;
+type FormatReduceCallback = (
+  name: MarkupTagName,
+  attributes: TagAttributes,
+  value: string,
+) => string;
 
 export type MarkupFormatFilenameNormalizer = (filename: string) => string;
 
-export type MarkupFormatFilenameHumanizer = (filename: string) =>
-  | undefined
-  | string;
+export type MarkupFormatFilenameHumanizer = (
+  filename: string,
+) => undefined | string;
 
 export type MarkupFormatOptions = {
   normalizeFilename?: MarkupFormatFilenameNormalizer;
@@ -82,14 +86,13 @@ function formatFileLink(
 
   // Normalize filename
   let filename = attributes.get('target') || '';
-  let origFilename = filename;
   if (opts.normalizeFilename !== undefined) {
     filename = opts.normalizeFilename(filename);
   }
 
   // Default text to a humanized version of the filename
   if (text === '') {
-    text = humanizeMarkupFilename([filename, origFilename], opts);
+    text = humanizeMarkupFilename(filename, opts);
 
     const line = attributes.get('line');
     if (line !== undefined) {
@@ -114,6 +117,41 @@ function formatApprox(attributes: TagAttributes, value: string) {
   }
 }
 
+function formatGrammarNumber(attributes: TagAttributes, value: string) {
+  const num = Number(value);
+
+  const none = attributes.get('none');
+  if (none !== undefined && num === 0) {
+    return none;
+  }
+
+  const singular = attributes.get('singular');
+  if (singular !== undefined && num === 1) {
+    return singular;
+  }
+
+  const plural = attributes.get('plural');
+  if (plural !== undefined) {
+    return plural;
+  }
+
+  return '';
+}
+
+function formatNumber(attributes: TagAttributes, value: string) {
+  const num = Number(value);
+  const human = humanizeNumber(num);
+  const humanWithApprox = formatApprox(attributes, human);
+  return humanWithApprox;
+}
+
+function formatPad(attributes: TagAttributes, value: string) {
+  const left = attributes.get('dir') !== 'right';
+  const count = Number(attributes.get('count') || 0);
+  const char = attributes.get('char');
+  return ansiPad(left ? 'left' : 'right', value, count, char);
+}
+
 export function stripMarkupTags(
   input: string,
   opts: MarkupFormatOptions = {},
@@ -124,13 +162,19 @@ export function stripMarkupTags(
         return formatFileLink(attributes, value, opts).text;
 
       case 'number':
-        return formatApprox(attributes, value);
+        return formatNumber(attributes, value);
+
+      case 'grammarNumber':
+        return formatGrammarNumber(attributes, value);
 
       case 'duration':
         return formatApprox(attributes, humanizeTime(Number(value), true));
 
       case 'filesize':
         return humanizeFileSize(Number(value));
+
+      case 'pad':
+        return formatPad(attributes, value);
 
       case 'command':
         return `\`${value}\``;
@@ -147,27 +191,28 @@ export function markupToAnsi(
 ): string {
   return formatReduceFromInput(input, (tag, attributes, value) => {
     switch (tag) {
-      case 'hyperlink':
-        {
-          let text = value;
-          let hyperlink = attributes.get('target');
+      case 'hyperlink': {
+        let text = value;
+        let hyperlink = attributes.get('target');
 
-          if (hyperlink === undefined) {
-            hyperlink = text;
-          }
-
-          if (text === '') {
-            text = hyperlink;
-          }
-
-          return formatAnsi.hyperlink(text, hyperlink);
+        if (hyperlink === undefined) {
+          hyperlink = text;
         }
 
-      case 'filelink':
-        {
-          const {text, href} = formatFileLink(attributes, value, opts);
-          return formatAnsi.hyperlink(text, href);
+        if (text === '') {
+          text = hyperlink;
         }
+
+        return formatAnsi.hyperlink(text, hyperlink);
+      }
+
+      case 'pad':
+        return formatPad(attributes, value);
+
+      case 'filelink': {
+        const {text, href} = formatFileLink(attributes, value, opts);
+        return formatAnsi.hyperlink(text, href);
+      }
 
       case 'inverse':
         return formatAnsi.inverse(` ${value} `);
@@ -185,7 +230,10 @@ export function markupToAnsi(
         return formatApprox(attributes, humanizeTime(Number(value), true));
 
       case 'number':
-        return formatApprox(attributes, humanizeNumber(Number(value)));
+        return formatNumber(attributes, value);
+
+      case 'grammarNumber':
+        return formatGrammarNumber(attributes, value);
 
       case 'italic':
         return formatAnsi.italic(value);
@@ -299,26 +347,15 @@ export function markupToAnsi(
 }
 
 export function humanizeMarkupFilename(
-  filenames: Array<string>,
+  filename: string,
   opts: MarkupFormatOptions = {},
 ): string {
   if (opts.humanizeFilename !== undefined) {
-    const override = opts.humanizeFilename(filenames[0]);
+    const override = opts.humanizeFilename(filename);
     if (override !== undefined) {
       return override;
     }
   }
 
-  if (filenames.length === 0) {
-    return 'unknown';
-  }
-
-  const names: Array<string> = [];
-
-  for (const filename of filenames) {
-    names.push(createUnknownFilePath(filename).format(opts.cwd));
-  }
-
-  // Get the shortest name
-  return names.sort((a, b) => a.length - b.length)[0];
+  return createUnknownFilePath(filename).format(opts.cwd);
 }

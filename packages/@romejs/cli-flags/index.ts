@@ -5,13 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ParserInterface, ParserOptions} from './Parser';
+import Parser, {ParserInterface, ParserOptions} from './Parser';
 import {Reporter} from '@romejs/cli-reporter';
-import Parser from './Parser';
 
 export {ParserInterface as FlagParser};
 
-export function parseCLIFlags<T>(
+export function parseCLIFlags<
+  T
+>(
   reporter: Reporter,
   args: Array<string>,
   opts: ParserOptions<T>,
@@ -20,13 +21,14 @@ export function parseCLIFlags<T>(
   return parser.getInterface();
 }
 
-export function parseCLIFlagsFromProcess<T>(
-  opts: ParserOptions<T>,
-): ParserInterface<T> {
+export function parseCLIFlagsFromProcess<
+  T
+>(opts: ParserOptions<T>): ParserInterface<T> {
   return parseCLIFlags(Reporter.fromProcess(), process.argv.slice(2), {
     ...opts,
     programName: opts.programName === undefined
-      ? process.argv[1] : opts.programName,
+      ? process.argv[1]
+      : opts.programName,
   });
 }
 

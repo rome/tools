@@ -36,3 +36,4 @@ export {
 } from './isTypeExpressionWrapperNode';
 export {default as getCompletionRecords} from './getCompletionRecords';
 export {default as isDeclaration} from './isDeclaration';
+export {default as getImportSpecifiers} from './getImportSpecifiers';

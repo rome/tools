@@ -8,12 +8,10 @@
 import {JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type BooleanLiteral =
-  & JSNodeBase
-  & {
-    type: 'BooleanLiteral';
-    value: boolean;
-  };
+export type BooleanLiteral = JSNodeBase & {
+  type: 'BooleanLiteral';
+  value: boolean;
+};
 
 export const booleanLiteral = createQuickBuilder<BooleanLiteral, 'value'>(
   'BooleanLiteral',

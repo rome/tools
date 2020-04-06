@@ -78,12 +78,11 @@ function joinPath(path: ConsumePath): string {
 
     // If we are a computed property then wrap in brackets, the previous part would not have inserted a dot
     if (isComputedPart(part)) {
-      const inner = typeof part === 'number' ? String(part) : escapeString(
-        part,
-        {
-          quote: '\'',
-        },
-      );
+      const inner = typeof part === 'number'
+        ? String(part)
+        : escapeString(part, {
+          quote: "'",
+        });
 
       str += `[${inner}]`;
     } else {
@@ -134,9 +133,7 @@ export default class Consumer {
   hasHandledUnexpected: boolean;
   forceDiagnosticTarget: undefined | ConsumeSourceLocationRequestTarget;
 
-  async capture<T>(
-    callback: (consumer: Consumer) => Promise<T> | T,
-  ): Promise<{
+  async capture<T>(callback: (consumer: Consumer) => Promise<T> | T): Promise<{
     result: T;
     definitions: Array<ConsumePropertyDefinition>;
     diagnostics: Diagnostics;
@@ -145,7 +142,11 @@ export default class Consumer {
     const definitions: Array<ConsumePropertyDefinition> = [];
 
     const consumer = this.clone({
-      onDefinition(def) {
+      onDefinition: (def, consumer) => {
+        if (this.onDefinition !== undefined) {
+          this.onDefinition(def, consumer);
+        }
+
         definitions.push(def);
       },
 
@@ -156,6 +157,16 @@ export default class Consumer {
 
     const result = await callback(consumer);
     return {result, definitions, diagnostics};
+  }
+
+  async captureDiagnostics<T>(
+    callback: (consumer: Consumer) => Promise<T> | T,
+  ): Promise<T> {
+    const {result, diagnostics} = await this.capture(callback);
+    if (result === undefined || diagnostics.length > 0) {
+      throw new DiagnosticsError('Captured diagnostics', diagnostics);
+    }
+    return result;
   }
 
   handleThrownDiagnostics(callback: () => void) {
@@ -185,7 +196,7 @@ export default class Consumer {
         ...def,
         objectPath: this.keyPath,
         metadata: this.propertyMetadata,
-      } as ConsumePropertyDefinition));
+      } as ConsumePropertyDefinition), this);
     }
   }
 
@@ -207,7 +218,8 @@ export default class Consumer {
   getLocation(target?: ConsumeSourceLocationRequestTarget): SourceLocation {
     const location = this.getDiagnosticLocation(target);
     if (location === undefined || location.start === undefined ||
-    location.end === undefined) {
+          location.end ===
+          undefined) {
       return {
         filename: this.filename,
         start: UNKNOWN_POSITION,
@@ -279,7 +291,10 @@ export default class Consumer {
     return this.getDiagnosticLocation() !== undefined;
   }
 
-  generateUnexpectedMessage(msg: string, opts: UnexpectedConsumerOptions): string {
+  generateUnexpectedMessage(
+    msg: string,
+    opts: UnexpectedConsumerOptions,
+  ): string {
     const {at = 'suffix', atParent = false} = opts;
     const {parent} = this;
 
@@ -303,7 +318,10 @@ export default class Consumer {
     return msg;
   }
 
-  unexpected(msg: string, opts: UnexpectedConsumerOptions = {}): DiagnosticsError {
+  unexpected(
+    msg: string,
+    opts: UnexpectedConsumerOptions = {},
+  ): DiagnosticsError {
     const {target = 'value'} = opts;
 
     const {filename} = this;
@@ -317,11 +335,13 @@ export default class Consumer {
     // Make the errors more descriptive
     if (fromSource) {
       if (this.hasChangedFromSource()) {
-        advice.push({
-          type: 'log',
-          category: 'warn',
-          message: 'Our internal value has been modified since we read the original source',
-        });
+        advice.push(
+          {
+            type: 'log',
+            category: 'warn',
+            message: 'Our internal value has been modified since we read the original source',
+          },
+        );
       }
     } else {
       // Go up the consumer tree and take the position from the first consumer found in the source
@@ -365,7 +385,8 @@ export default class Consumer {
     const diagnostic: Diagnostic = {
       description: {
         category: opts.category === undefined
-          ? this.context.category : opts.category,
+          ? this.context.category
+          : opts.category,
         message: createBlessedDiagnosticMessage(msg),
         advice,
       },
@@ -430,8 +451,9 @@ export default class Consumer {
     // We require this cache as we sometimes want to store state about a forked property such as used items
     const cached = this.forkCache.get(String(key));
     if (cached !== undefined && cached.value === value &&
-      (cached.propertyMetadata === undefined || cached.propertyMetadata ===
-      propertyMetadata)) {
+        (cached.propertyMetadata ===
+            undefined ||
+          cached.propertyMetadata === propertyMetadata)) {
       return cached;
     }
 
@@ -482,7 +504,8 @@ export default class Consumer {
     // Validate the parent is an object
     const parentValue = parent.asUnknown();
     if (parentValue === undefined || parentValue === null ||
-    typeof parentValue !== 'object') {
+          typeof parentValue !==
+          'object') {
       throw parent.unexpected('Attempted to set a property on a non-object');
     }
 
@@ -496,7 +519,7 @@ export default class Consumer {
   }
 
   has(key: string): boolean {
-    return this.get(key).asUnknown() !== undefined;
+    return this.get(key).asUnknown() != null;
   }
 
   setProperty(key: string, value: unknown): Consumer {
@@ -603,13 +626,13 @@ export default class Consumer {
 
   //
   exists() {
-    return this.value !== undefined;
+    return this.value != null;
   }
 
   isObject(): boolean {
     const {value} = this;
     return typeof value === 'object' && value !== null && value.constructor ===
-    Object;
+      Object;
   }
 
   // OBJECTS
@@ -782,7 +805,7 @@ export default class Consumer {
     });
 
     if (this.exists()) {
-      return this.asString(def);
+      return this._asString(def);
     } else {
       return undefined;
     }
@@ -963,37 +986,29 @@ export default class Consumer {
     return this._asNumber(def);
   }
 
-  asNumberInRange(
-    opts: {
-      min?: number;
-      max?: number;
-      default?: number;
-    },
-  ): number
+  asNumberInRange(opts: {
+    min?: number;
+    max?: number;
+    default?: number;
+  }): number
 
-  asNumberInRange(
-    opts: {
-      min: Number0;
-      max?: Number0;
-      default?: Number0;
-    },
-  ): Number0
+  asNumberInRange(opts: {
+    min: Number0;
+    max?: Number0;
+    default?: Number0;
+  }): Number0
 
-  asNumberInRange(
-    opts: {
-      min: Number1;
-      max?: Number1;
-      default?: Number1;
-    },
-  ): Number1
+  asNumberInRange(opts: {
+    min: Number1;
+    max?: Number1;
+    default?: Number1;
+  }): Number1
 
-  asNumberInRange(
-    opts: {
-      min?: Number0 | Number1 | number;
-      max?: Number0 | Number1 | number;
-      default?: Number0 | Number1 | number;
-    },
-  ): UnknownNumber {
+  asNumberInRange(opts: {
+    min?: Number0 | Number1 | number;
+    max?: Number0 | Number1 | number;
+    default?: Number0 | Number1 | number;
+  }): UnknownNumber {
     const num = this._asNumber(opts.default);
 
     const {min, max} = opts;
@@ -1038,7 +1053,7 @@ export default class Consumer {
     return this.value;
   }
 
-  // rome-suppress lint/noExplicitAny
+  // rome-suppress-next-line lint/noExplicitAny
   asAny(): any {
     return this.value;
   }

@@ -56,10 +56,8 @@ export default class ClientRequest {
     }
   }
 
-  async initFromLocal(
-    // rome-suppress lint/noExplicitAny
-    localCommand: LocalCommand<any>,
-  ): Promise<MasterQueryResponse> {
+  async initFromLocal( // rome-suppress-next-line lint/noExplicitAny
+  localCommand: LocalCommand<any>): Promise<MasterQueryResponse> {
     const {query} = this;
 
     let flags;
@@ -100,13 +98,13 @@ export default class ClientRequest {
     } catch (err) {
       if (err instanceof BridgeError) {
         return {
-          type: 'ERROR',
-          fatal: true,
-          handled: false,
-          name: 'Error',
-          message: 'Server died while processing command. Results may be incomplete.',
-          stack: undefined,
-        };
+            type: 'ERROR',
+            fatal: true,
+            handled: false,
+            name: 'Error',
+            message: 'Server died while processing command. Results may be incomplete.',
+            stack: undefined,
+          };
       } else {
         throw err;
       }

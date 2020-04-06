@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+require('../_setup.cjs');
+
 const path = require('path');
 const fs = require('fs');
 
@@ -25,13 +27,13 @@ function rename(src, dest) {
 }
 
 const {
-  generatorsFolder,
+  formatterFolder,
   analysisFolder,
   astFolder,
 } = require('../_constants.cjs');
 
-rename(path.join(generatorsFolder, `${fromType}.ts`), path.join(
-  generatorsFolder,
+rename(path.join(formatterFolder, `${fromType}.ts`), path.join(
+  formatterFolder,
   `${toType}ts`,
 ));
 rename(path.join(analysisFolder, `${fromType}ts`), path.join(

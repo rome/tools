@@ -18,8 +18,14 @@ import {
   LogicalAndNode,
   Tokens,
 } from './types';
-import {TokenValues, ParserOptions} from '@romejs/parser-core';
-import {createParser, isAlpha, isDigit} from '@romejs/parser-core';
+import {
+  TokenValues,
+  ParserOptions,
+  createParser,
+  isAlpha,
+  isDigit,
+} from '@romejs/parser-core';
+
 import {Number0, add, get0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 
@@ -27,8 +33,8 @@ type ParseMode = 'version' | 'range';
 
 export type SemverParserOptions = ParserOptions & {loose?: boolean};
 
-const createSemverParser = createParser((ParserCore) =>
-  class SemverParser extends ParserCore<Tokens, void> {
+const createSemverParser = createParser(
+  (ParserCore) => class SemverParser extends ParserCore<Tokens, void> {
     constructor({loose, ...opts}: SemverParserOptions, mode: ParseMode) {
       super(opts, 'parse/semver');
       this.input = this.input.trimRight();
@@ -44,17 +50,16 @@ const createSemverParser = createParser((ParserCore) =>
       const char = input[get0(index)];
       const nextChar = input[get0(index) + 1];
 
-      if (
-        char === '<' && nextChar === '=' || char === '>' && nextChar === '=' ||
-        char === '~' && nextChar === '>'
-      ) {
+      if (char === '<' && nextChar === '=' || char === '>' && nextChar === '=' ||
+          char === '~' && nextChar === '>') {
         // @ts-ignore: TS doesn't infer the possible combinations
         const value: ComparatorOperator = char + nextChar;
         return this.finishValueToken('Operator', value, add(index, 2));
       }
 
       if (char === '^' || char === '<' || char === '>' || char === '~' ||
-      char === '=') {
+            char ===
+            '=') {
         const op: ComparatorOperator = char;
         return this.finishValueToken('Operator', op);
       }
@@ -106,7 +111,7 @@ const createSemverParser = createParser((ParserCore) =>
 
     // Remove all subsequent space tokens
     eatSpaceToken() {
-      while (this.eatToken('Space') !== undefined);
+      while (this.eatToken('Space') !== undefined) ;
     }
 
     parseVersionOrWildcard(): WildcardNode | VersionNode {
@@ -116,8 +121,10 @@ const createSemverParser = createParser((ParserCore) =>
 
       // We should return a bare wildcard when parsed in a version position if there was nothing else attached
       if (this.isWildcardToken(startToken) && version.minor === undefined &&
-        version.patch === undefined && version.prerelease.length === 0 &&
-        version.build.length === 0) {
+              version.patch ===
+              undefined && version.prerelease.length === 0 &&
+            version.build.length ===
+            0) {
         return {
           type: 'Wildcard',
           loc: this.finishLoc(startPos),
@@ -221,7 +228,7 @@ const createSemverParser = createParser((ParserCore) =>
           });
         }
       } while (this.matchToken('Number') || this.matchToken('Word') ||
-      this.matchToken('Dash'));
+        this.matchToken('Dash'));
 
       if (parts.length === 1 && typeof parts[0] === 'number') {
         return parts[0];
@@ -456,7 +463,7 @@ const createSemverParser = createParser((ParserCore) =>
 
       return node;
     }
-  }
+  },
 );
 
 export function parseSemverRange(opts: SemverParserOptions): RangeNode {

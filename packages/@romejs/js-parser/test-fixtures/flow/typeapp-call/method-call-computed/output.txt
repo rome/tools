@@ -107,7 +107,7 @@ Program {
           }
           params: Array [
             FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'T'
                 loc: Object {
                   filename: 'input.js'

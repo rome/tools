@@ -14,7 +14,7 @@ export default {
     const {declaration} = node;
     const newScope = scope.evaluate(declaration, node);
     if (declaration.type === 'ClassDeclaration' || declaration.type ===
-    'FunctionDeclaration') {
+        'FunctionDeclaration') {
       const id = declaration.id;
       if (id !== undefined) {
         newScope.getBindingAssert(id.name).setExported(true);

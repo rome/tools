@@ -59,7 +59,7 @@ export type ProjectConfigObjects = {
     ignore: PathPatterns;
   };
   develop: {serveStatic: boolean};
-  vsc: {root: AbsoluteFilePath};
+  vcs: {root: AbsoluteFilePath};
   files: {
     assetExtensions: Array<string>;
     watchman: boolean;
@@ -70,10 +70,14 @@ export type ProjectConfigObjects = {
   targets: Map<string, ProjectConfigTarget>;
 };
 
+export type ProjectConfigCategoriesWithIgnoreAndEnabled =
+  | 'tests'
+  | 'format'
+  | 'lint';
+
 export type ProjectConfigTarget = {constraints: Array<string>};
 
 // This is a project config that contains only things that can be JSON serializable
-
 // This is used to transport and reserialize projects in workers
 export type ProjectConfigJSON =
   & ProjectConfigJSONObjectReducer<ProjectConfigBase>
@@ -82,24 +86,21 @@ export type ProjectConfigJSON =
   > };
 
 // Weird way to get the value type from a map
-
-// rome-suppress lint/noExplicitAny
+// rome-suppress-next-line lint/noExplicitAny
 type MapValue<T extends Map<string, any>> = NonNullable<ReturnType<T['get']>>;
 
 // Turn any file paths into strings
-
 // Turn maps into objects
-
 // TODO maybe add path patterns
 type ProjectConfigJSONPropertyReducer<Type> = Type extends AbsoluteFilePath
   ? string
   : Type extends Array<AbsoluteFilePath>
     ? Array<string>
-    : Type extends AbsoluteFilePathSet
-      ? Array<string> // rome-suppress lint/noExplicitAny
-      : Type extends Map<string, any>
-        ? Dict<MapValue<Type>> // rome-suppress lint/noExplicitAny
-        : Type extends Dict<any> ? ProjectConfigJSONObjectReducer<Type> : Type;
+    : Type extends AbsoluteFilePathSet ? Array<string> // rome-suppress-next-line lint/noExplicitAny
+     : Type extends Map<string, any> ? Dict<MapValue<Type>> // rome-suppress-next-line lint/noExplicitAny
+     : Type extends Dict<any> ? ProjectConfigJSONObjectReducer<Type> : Type
+
+;
 
 type ProjectConfigJSONObjectReducer<Object> = { [PropertyKey in keyof Object]: ProjectConfigJSONPropertyReducer<
   Object[PropertyKey]
@@ -119,10 +120,11 @@ export type PartialProjectConfig =
     ProjectConfigObjects[Key]
   > };
 
-// rome-suppress lint/noExplicitAny
-type PartialProjectValue<Type> = Type extends Map<string, any> ? Type : Partial<
-  Type
->;
+// rome-suppress-next-line lint/noExplicitAny
+type PartialProjectValue<Type> = Type extends Map<string, any>
+  ? Type
+  : Partial<Type>
+;
 
 export type ProjectConfigMeta = {
   projectFolder: undefined | AbsoluteFilePath;
@@ -202,7 +204,7 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
     ignore: [],
   },
 
-  vsc: {
+  vcs: {
     root: createAbsoluteFilePath('/'),
   },
 
@@ -210,7 +212,8 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
     vendorPath: TEMP_PATH.append(`rome-remote`),
     assetExtensions: [],
     watchman: false,
-    maxSize: 40_000_000, // 40 megabytes
+    maxSize: 40_000_000 // 40 megabytes
+    ,
   },
 
   targets: new Map(),

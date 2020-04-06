@@ -54,57 +54,55 @@ function compareOp(
     case '<=':
       return compare(version, range) <= 0;
 
-    case '^':
-      {
-        // Make sure that the version isn't less than the range
-        if (compareOp('>=', version, range) === false) {
-          return false;
-        }
-
-        // Deconstruct the range
-        const {major, minor, patch} = range;
-
-        if (major === 0) {
-          if (minor === 0) {
-            // ^0.0.3 := >=0.0.3 <0.0.4
-
-            // @ts-ignore
-            return compareOp('<', version, buildVersion(0, 0, patch + 1));
-          } else {
-            // ^0.2.3 := >=0.2.3 <0.3.0
-
-            // @ts-ignore
-            return compareOp('<', version, buildVersion(0, minor + 1, 0));
-          }
-        }
-
-        // ^1.2.3 := >=1.2.3 <2.0.0
-
-        // @ts-ignore
-        return compareOp('<', version, buildVersion(major + 1, 0, 0));
+    case '^': {
+      // Make sure that the version isn't less than the range
+      if (compareOp('>=', version, range) === false) {
+        return false;
       }
 
-    case '~>':
-    case '~':
-      {
-        // Make sure that the version isn't less than the range
-        if (compareOp('>=', version, range) === false) {
-          return false;
-        }
+      // Deconstruct the range
+      const {major, minor, patch} = range;
 
-        // Deconstruct the range
-        const {major, minor} = range;
-
-        if (minor === undefined) {
-          // ~1 := >=1.0.0 <(1+1).0.0 := >=1.0.0 <2.0.0 (Same as 1.x)
+      if (major === 0) {
+        if (minor === 0) {
+          // ^0.0.3 := >=0.0.3 <0.0.4
 
           // @ts-ignore
-          return compareOp('<', version, buildVersion(major + 1, minor, 0));
-        }
+          return compareOp('<', version, buildVersion(0, 0, patch + 1));
+        } else {
+          // ^0.2.3 := >=0.2.3 <0.3.0
 
-        // ~1.2.3 := >=1.2.3 <1.(2+1).0 := >=1.2.3 <1.3.0
-        return compareOp('<', version, buildVersion(major, minor + 1, 0));
+          // @ts-ignore
+          return compareOp('<', version, buildVersion(0, minor + 1, 0));
+        }
       }
+
+      // ^1.2.3 := >=1.2.3 <2.0.0
+
+      // @ts-ignore
+      return compareOp('<', version, buildVersion(major + 1, 0, 0));
+    }
+
+    case '~>':
+    case '~': {
+      // Make sure that the version isn't less than the range
+      if (compareOp('>=', version, range) === false) {
+        return false;
+      }
+
+      // Deconstruct the range
+      const {major, minor} = range;
+
+      if (minor === undefined) {
+        // ~1 := >=1.0.0 <(1+1).0.0 := >=1.0.0 <2.0.0 (Same as 1.x)
+
+        // @ts-ignore
+        return compareOp('<', version, buildVersion(major + 1, minor, 0));
+      }
+
+      // ~1.2.3 := >=1.2.3 <1.(2+1).0 := >=1.2.3 <1.3.0
+      return compareOp('<', version, buildVersion(major, minor + 1, 0));
+    }
 
     default:
       throw new Error(`Unknown operator ${op}`);
@@ -169,7 +167,7 @@ export default function satisfies(
     for (const comparator of versions) {
       if (comparator.prerelease.length > 0) {
         if (comparator.major === version.major && comparator.minor ===
-        version.minor && comparator.patch === version.patch) {
+            version.minor && comparator.patch === version.patch) {
           return true;
         }
       }

@@ -6,7 +6,11 @@
  */
 
 import {Program} from '@romejs/js-ast';
-import {JSParserUserOptions, normalizeOptions, JSParserOptions} from './options';
+import {
+  JSParserUserOptions,
+  normalizeOptions,
+  JSParserOptions,
+} from './options';
 import {Token} from './tokenizer/index';
 import {types as tokTypes} from './tokenizer/types';
 import createParser from './parser';

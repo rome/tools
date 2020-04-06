@@ -8,12 +8,10 @@
 import {JSNodeBase, TSImportType, AnyTSEntityName} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTypeQuery =
-  & JSNodeBase
-  & {
-    type: 'TSTypeQuery';
-    exprName: TSImportType | AnyTSEntityName;
-  };
+export type TSTypeQuery = JSNodeBase & {
+  type: 'TSTypeQuery';
+  exprName: TSImportType | AnyTSEntityName;
+};
 
 export const tsTypeQuery = createBuilder<TSTypeQuery>('TSTypeQuery', {
   bindingKeys: {},

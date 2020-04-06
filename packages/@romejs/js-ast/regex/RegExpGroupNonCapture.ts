@@ -8,17 +8,15 @@
 import {JSNodeBase, AnyRegExpExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpGroupNonCapture =
-  & JSNodeBase
-  & {
-    type: 'RegExpGroupNonCapture';
-    expression: AnyRegExpExpression;
-    kind?:
-      | 'positive-lookahead'
-      | 'negative-lookahead'
-      | 'positive-lookbehind'
-      | 'negative-lookbehind';
-  };
+export type RegExpGroupNonCapture = JSNodeBase & {
+  type: 'RegExpGroupNonCapture';
+  expression: AnyRegExpExpression;
+  kind?:
+    | 'positive-lookahead'
+    | 'negative-lookahead'
+    | 'positive-lookbehind'
+    | 'negative-lookbehind';
+};
 
 export const regExpGroupNonCapture = createBuilder<RegExpGroupNonCapture>(
   'RegExpGroupNonCapture',

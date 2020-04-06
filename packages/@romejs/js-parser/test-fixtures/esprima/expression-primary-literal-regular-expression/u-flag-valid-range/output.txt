@@ -26,19 +26,20 @@ Program {
       origins: Array [Object {category: 'js-parser'}]
       description: Object {
         category: 'parse/regex'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected character <emphasis>6</emphasis>'}
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Range values reversed. Start char code is greater than end char code'}
       }
       location: Object {
+        filename: 'input.js'
         mtime: undefined
         sourceType: 'script'
         end: Object {
-          column: 60
-          index: 60
+          column: 18
+          index: 18
           line: 1
         }
         start: Object {
-          column: 60
-          index: 60
+          column: 15
+          index: 15
           line: 1
         }
       }

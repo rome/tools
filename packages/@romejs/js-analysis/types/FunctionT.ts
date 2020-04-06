@@ -7,25 +7,20 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
-import {SerialTypeFactory} from './T';
+import T, {SerialTypeFactory} from './T';
 import {Scope} from '../scopes';
 import {HumanBuilder} from '../Utils';
 import ObjT from './ObjT';
-import T from './T';
 
 export default class FunctionT extends ObjT {
-  constructor(
-    scope: Scope,
-    originNode: undefined | AnyNode,
-    opts: {
-      params: Array<T>;
-      rest: undefined | T;
-      returns: T;
-      props?: Array<T>;
-      proto?: T;
-      body?: T;
-    },
-  ) {
+  constructor(scope: Scope, originNode: undefined | AnyNode, opts: {
+    params: Array<T>;
+    rest: undefined | T;
+    returns: T;
+    props?: Array<T>;
+    proto?: T;
+    body?: T;
+  }) {
     super(scope, originNode, {
       props: opts.props,
       proto: opts.proto,
@@ -72,11 +67,9 @@ export default class FunctionT extends ObjT {
   }
 
   humanize(builder: HumanBuilder): string {
-    return (
-      `(${this.params.map((param) => builder.humanize(param)).join(', ')}) => ${builder.humanize(
+    return `(${this.params.map((param) => builder.humanize(param)).join(', ')}) => ${builder.humanize(
         this.returns,
-      )}`
-    );
+      )}`;
   }
 
   reduce(): T {

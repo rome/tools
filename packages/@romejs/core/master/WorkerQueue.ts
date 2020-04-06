@@ -16,9 +16,10 @@ type WorkerQueueItem<M> = {
   queue: Queue<M>;
 };
 
-type Callback<M> = (filename: AbsoluteFilePath, metadata: M) =>
-  | undefined
-  | Promise<void>;
+type Callback<M> = (
+  path: AbsoluteFilePath,
+  metadata: M,
+) => undefined | Promise<void>;
 
 export default class WorkerQueue<M> {
   constructor(master: Master) {
@@ -37,12 +38,12 @@ export default class WorkerQueue<M> {
   workers: Map<WorkerContainer, WorkerQueueItem<M>>;
   open: boolean;
 
-  pushQueue(filename: AbsoluteFilePath, metadata: M) {
+  pushQueue(path: AbsoluteFilePath, metadata: M) {
     if (!this.open) {
       throw new Error('WorkerQueue has already closed');
     }
 
-    this.queue.push([filename, metadata]);
+    this.queue.push([path, metadata]);
   }
 
   addCallback(callback: Callback<M>) {

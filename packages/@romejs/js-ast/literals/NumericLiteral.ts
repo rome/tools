@@ -8,12 +8,10 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type NumericLiteral =
-  & JSNodeBase
-  & {
-    type: 'NumericLiteral';
-    value: number;
-  };
+export type NumericLiteral = JSNodeBase & {
+  type: 'NumericLiteral';
+  value: number;
+};
 
 export const numericLiteral = createBuilder<NumericLiteral>('NumericLiteral', {
   bindingKeys: {},

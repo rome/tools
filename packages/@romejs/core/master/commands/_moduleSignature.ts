@@ -6,8 +6,7 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {commandCategories} from '../../commands';
-import {createMasterCommand} from '../../commands';
+import {commandCategories, createMasterCommand} from '../../commands';
 import {createUnknownFilePath} from '@romejs/path';
 
 export default createMasterCommand({

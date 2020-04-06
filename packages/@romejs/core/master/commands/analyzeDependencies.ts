@@ -6,8 +6,7 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {commandCategories} from '../../commands';
-import {createMasterCommand} from '../../commands';
+import {commandCategories, createMasterCommand} from '../../commands';
 import {Consumer} from '@romejs/consume';
 import {createUnknownFilePath} from '@romejs/path';
 import {SourceLocation} from '@romejs/parser-core';
@@ -60,34 +59,36 @@ export default createMasterCommand({
     }
 
     if (commandFlags.compact) {
-      res =
-        {
-          ...res,
-          importFirstUsage: res.importFirstUsage.map((imp) => {
-            return removeLoc(imp);
-          }),
-          exports: res.exports.map((exp) => {
-            // This weird switch is because TS only returns an object with the properties common amongst all
-            switch (exp.type) {
-              case 'local':
-                return removeLoc(exp);
+      res = {
+        ...res,
+        importFirstUsage: res.importFirstUsage.map((imp) => {
+          return removeLoc(imp);
+        }),
+        exports: res.exports.map((exp) => {
+          // This weird switch is because TS only returns an object with the properties common amongst all
+          switch (exp.type) {
+            case 'local':
+              return removeLoc(exp);
 
-              case 'external':
-                return removeLoc(exp);
+            case 'external':
+              return removeLoc(exp);
 
-              case 'externalAll':
-                return removeLoc(exp);
-            }
-          }),
-          dependencies: res.dependencies.map((dep) => {
-            return {
-              ...removeLoc(dep),
-              names: dep.names.map((name) => {
-                return removeLoc(name);
-              }),
-            };
-          }),
-        };
+            case 'externalAll':
+              return removeLoc(exp);
+
+            case 'externalNamespace':
+              return removeLoc(exp);
+          }
+        }),
+        dependencies: res.dependencies.map((dep) => {
+          return {
+            ...removeLoc(dep),
+            names: dep.names.map((name) => {
+              return removeLoc(name);
+            }),
+          };
+        }),
+      };
     }
 
     reporter.inspect(res);

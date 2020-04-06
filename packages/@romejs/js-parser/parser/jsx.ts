@@ -101,7 +101,6 @@ function parseJSXNamespacedName(
 }
 
 // Parses element name in any form - namespaced, member
-
 // or single identifier.
 function parseJSXElementName(parser: JSParser): JSXElement['name'] {
   const start = parser.getPosition();
@@ -110,8 +109,8 @@ function parseJSXElementName(parser: JSParser): JSXElement['name'] {
 
   let node: JSXElement['name'];
   if (namespacedName.type === 'JSXIdentifier' && !isHTMLTagName(
-    namespacedName.name,
-  )) {
+      namespacedName.name,
+    )) {
     node = {
       ...namespacedName,
       type: 'JSXReferenceIdentifier',
@@ -154,23 +153,20 @@ function parseJSXAttributeValue(
     case tt.string:
       return parseStringLiteral(parser);
 
-    default:
-      {
-        parser.addDiagnostic({
-          description: descriptions.JS_PARSER.JSX_INVALID_ATTRIBUTE_VALUE,
-        });
-        return parser.finishNode(parser.getPosition(), {
-          type: 'StringLiteral',
-          value: '?',
-        });
-      }
+    default: {
+      parser.addDiagnostic({
+        description: descriptions.JS_PARSER.JSX_INVALID_ATTRIBUTE_VALUE,
+      });
+      return parser.finishNode(parser.getPosition(), {
+        type: 'StringLiteral',
+        value: '?',
+      });
+    }
   }
 }
 
 // JSXEmptyExpression is unique type since it doesn't actually parse anything,
-
 // and so it should start at the end of last read token (left brace) and finish
-
 // at the beginning of the next one (right brace).
 function parseJSXEmptyExpression(parser: JSParser): JSXEmptyExpression {
   return parser.finishNode(parser.state.lastEndPos, {
@@ -335,7 +331,6 @@ function recoverFromUnclosedJSX(parser: JSParser) {
 }
 
 // Parses entire JSX element, including it"s opening tag
-
 // (starting after "<"), attributes, contents and closing tag.
 function parseJSXElementAt(
   parser: JSParser,
@@ -351,22 +346,21 @@ function parseJSXElementAt(
   if (openingDef.selfClosing === false) {
     contents: while (true) {
       switch (parser.state.tokenType) {
-        case tt.jsxTagStart:
-          {
-            const start = parser.getPosition();
-            parser.next();
-            if (parser.eat(tt.slash)) {
-              closingName = parseJSXClosingElementAt(parser);
-              closingNameLoc = {
-                filename: parser.filename,
-                start,
-                end: parser.getPosition(),
-              };
-              break contents;
-            }
-            children.push(parseJSXElementAt(parser, start));
-            break;
+        case tt.jsxTagStart: {
+          const start = parser.getPosition();
+          parser.next();
+          if (parser.eat(tt.slash)) {
+            closingName = parseJSXClosingElementAt(parser);
+            closingNameLoc = {
+              filename: parser.filename,
+              start,
+              end: parser.getPosition(),
+            };
+            break contents;
           }
+          children.push(parseJSXElementAt(parser, start));
+          break;
+        }
 
         case tt.jsxText:
           children.push(parseJSXText(parser));
@@ -435,8 +429,8 @@ function parseJSXElementAt(
     // Validate element names: Element open, element close
     if (openingDef.name !== undefined && closingName !== undefined) {
       if (getQualifiedJSXName(closingName) !== getQualifiedJSXName(
-        openingDef.name,
-      )) {
+          openingDef.name,
+        )) {
         parser.addDiagnostic({
           loc: openingDef.loc,
           description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_TAG(

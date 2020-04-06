@@ -8,12 +8,10 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSNonNullExpression =
-  & JSNodeBase
-  & {
-    type: 'TSNonNullExpression';
-    expression: AnyExpression;
-  };
+export type TSNonNullExpression = JSNodeBase & {
+  type: 'TSNonNullExpression';
+  expression: AnyExpression;
+};
 
 export const tsNonNullExpression = createBuilder<TSNonNullExpression>(
   'TSNonNullExpression',

@@ -5,10 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticAdvice, DiagnosticAdviceItem} from '@romejs/diagnostics';
+import {
+  DiagnosticAdvice,
+  DiagnosticAdviceItem,
+  getErrorStackAdvice,
+} from '@romejs/diagnostics';
 import SnapshotManager from './SnapshotManager';
 import {TestRunnerOptions} from '../master/testing/types';
-import {getErrorStackAdvice} from '@romejs/diagnostics';
 import {Event} from '@romejs/events';
 import diff from '@romejs/string-diff';
 import {createErrorFromStructure} from '@romejs/v8';
@@ -22,10 +25,6 @@ type AsyncFunc = () => undefined | Promise<void>;
 type SyncThrower = () => void;
 
 type ExpectedError = undefined | string | RegExp | Class<Error>;
-
-function removeCRLF(str: string): string {
-  return str.replace(/\r/g, '');
-}
 
 function formatExpectedError(expected: ExpectedError): string {
   if (typeof expected === 'string') {
@@ -65,32 +64,20 @@ function matchExpectedError(error: Error, expected: ExpectedError): boolean {
 
 export type OnTimeout = (time: number) => void;
 
-const TRUNCATION_MATCH_LIMIT = 500;
-
-function maybeTruncate(str: string, noTruncate: boolean): string {
-  if (noTruncate || str.length < TRUNCATION_MATCH_LIMIT) {
-    return str;
-  } else {
-    return `${str.slice(0, TRUNCATION_MATCH_LIMIT)}...`;
-  }
-}
-
 export default class TestAPI {
-  constructor(
-    {
-      testName,
-      onTimeout,
-      file,
-      snapshotManager,
-      options,
-    }: {
-      file: FileReference;
-      testName: string;
-      onTimeout: OnTimeout;
-      snapshotManager: SnapshotManager;
-      options: TestRunnerOptions;
-    },
-  ) {
+  constructor({
+    testName,
+    onTimeout,
+    file,
+    snapshotManager,
+    options,
+  }: {
+    file: FileReference;
+    testName: string;
+    onTimeout: OnTimeout;
+    snapshotManager: SnapshotManager;
+    options: TestRunnerOptions;
+  }) {
     this.testName = testName;
     this.options = options;
     this.snapshotManager = snapshotManager;
@@ -123,19 +110,15 @@ export default class TestAPI {
   snapshotCounter: number;
   snapshotManager: SnapshotManager;
 
-  buildMatchAdvice(
-    received: unknown,
-    expected: unknown,
-    {
-      visualMethod,
-      expectedAlias,
-      receivedAlias,
-    }: {
-      visualMethod?: string;
-      expectedAlias?: string;
-      receivedAlias?: string;
-    } = {},
-  ): DiagnosticAdvice {
+  buildMatchAdvice(received: unknown, expected: unknown, {
+    visualMethod,
+    expectedAlias,
+    receivedAlias,
+  }: {
+    visualMethod?: string;
+    expectedAlias?: string;
+    receivedAlias?: string;
+  } = {}): DiagnosticAdvice {
     let expectedFormat;
     let receivedFormat;
     if (typeof received === 'string' && typeof expected === 'string') {
@@ -145,19 +128,6 @@ export default class TestAPI {
       expectedFormat = prettyFormat(expected);
       receivedFormat = prettyFormat(received);
     }
-
-    const expectedFormatCode = maybeTruncate(
-      expectedFormat,
-      this.options.verboseDiagnostics,
-    );
-    const receivedFormatCode = maybeTruncate(
-      receivedFormat,
-      this.options.verboseDiagnostics,
-    );
-    const hasTruncated = expectedFormatCode !== expectedFormat ||
-    receivedFormatCode !== receivedFormat;
-    const hasAllTruncated = expectedFormatCode !== expectedFormat &&
-      receivedFormatCode !== receivedFormat;
 
     const advice: DiagnosticAdvice = [];
 
@@ -171,7 +141,7 @@ export default class TestAPI {
 
       advice.push({
         type: 'code',
-        code: expectedFormatCode,
+        code: expectedFormat,
       });
 
       if (visualMethod !== undefined) {
@@ -182,65 +152,32 @@ export default class TestAPI {
         });
       }
     } else {
-      if (expectedFormat.trim() === receivedFormat.trim()) {
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: 'Only difference is leading and trailing whitespace',
-        });
-      }
-
-      const expectedFormatNoCRLF = removeCRLF(expectedFormat);
-      const receivedFormatNoCRLF = removeCRLF(receivedFormat);
-      if (expectedFormat === receivedFormatNoCRLF) {
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: 'Identical except the received uses CRLF newlines, while the expected does not',
-        });
-      }
-      if (receivedFormat === expectedFormatNoCRLF) {
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: 'Identical except the expected uses CRLF newlines, while the received does not',
-        });
-      }
-
-      if (!hasAllTruncated) {
-        // TODO detect newlines
-
-        // If there was no truncation then display the full code of both values
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: `Expected to receive`,
-        });
-
-        advice.push({
-          type: 'code',
-          code: expectedFormatCode,
-        });
-
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: `But got`,
-        });
-
-        advice.push({
-          type: 'code',
-          code: receivedFormatCode,
-        });
-      }
-
-      // Produce a diff to better visualize differences
-
-      // TODO what about truncation...?
       advice.push({
         type: 'log',
         category: 'info',
-        message: `Diff`,
+        message: `Expected to receive`,
+      });
+
+      advice.push({
+        type: 'code',
+        code: expectedFormat,
+      });
+
+      advice.push({
+        type: 'log',
+        category: 'info',
+        message: `But got`,
+      });
+
+      advice.push({
+        type: 'code',
+        code: receivedFormat,
+      });
+
+      advice.push({
+        type: 'log',
+        category: 'info',
+        message: 'Diff',
       });
 
       advice.push({
@@ -248,38 +185,23 @@ export default class TestAPI {
         diff: diff(expectedFormat, receivedFormat),
         legend: {
           add: receivedAlias ? receivedAlias : 'What we received',
-          delete: expectedAlias ? expectedAlias : 'What we expected<',
+          delete: expectedAlias ? expectedAlias : 'What we expected',
         },
-      });
-    }
-
-    // If there was truncation then warn
-    if (hasAllTruncated) {
-      advice.push({
-        type: 'log',
-        category: 'info',
-        message: 'Add the --verbose-diagnostics flag to show the values being compared',
-      });
-    } else if (hasTruncated) {
-      advice.push({
-        type: 'log',
-        category: 'info',
-        message: 'Some values have been truncated for being too long, add the --verbose-diagnostics flag to disable truncation',
       });
     }
 
     return advice;
   }
 
-  addToAdvice(item: DiagnosticAdviceItem) {
+  addToAdvice(item: DiagnosticAdviceItem): void {
     this.advice.push(item);
   }
 
-  onTeardown(callback: AsyncFunc) {
+  onTeardown(callback: AsyncFunc): void {
     this.teardownEvent.subscribe(callback);
   }
 
-  clearTimeout() {
+  clearTimeout(): void {
     if (this.timeoutId !== undefined) {
       clearTimeout(this.timeoutId);
     }
@@ -288,7 +210,7 @@ export default class TestAPI {
     this.timeoutStart = undefined;
   }
 
-  extendTimeout(time: number) {
+  extendTimeout(time: number): void {
     const {timeoutMax, timeoutStart} = this;
     if (timeoutMax === undefined || timeoutStart === undefined) {
       throw new Error('No timeout set');
@@ -299,7 +221,7 @@ export default class TestAPI {
     this.setTimeout(newTime);
   }
 
-  setTimeout(time: number) {
+  setTimeout(time: number): void {
     this.clearTimeout();
 
     this.timeoutStart = Date.now();
@@ -310,10 +232,10 @@ export default class TestAPI {
     }, time);
   }
 
-  checkTimeout() {
+  checkTimeout(): void {
     const {startTime, timeoutMax} = this;
     if (timeoutMax === undefined) {
-      return undefined;
+      return;
     }
 
     const delta = Date.now() - startTime;
@@ -326,7 +248,7 @@ export default class TestAPI {
     message: string = 'Test failure triggered by t.fail()',
     advice: DiagnosticAdvice = [],
     framesToPop: number = 0,
-  ) {
+  ): never {
     throw createErrorFromStructure({
       message,
       advice,
@@ -334,7 +256,7 @@ export default class TestAPI {
     });
   }
 
-  truthy(value: unknown, message: string = 'Expected value to be truthy') {
+  truthy(value: unknown, message: string = 'Expected value to be truthy'): void {
     if (Boolean(value) === false) {
       this.fail(message, [
         {
@@ -350,7 +272,7 @@ export default class TestAPI {
     }
   }
 
-  falsy(value: unknown, message: string = 'Expected value to be falsy') {
+  falsy(value: unknown, message: string = 'Expected value to be falsy'): void {
     if (Boolean(value) === true) {
       this.fail(message, [
         {
@@ -366,7 +288,7 @@ export default class TestAPI {
     }
   }
 
-  true(value: unknown, message: string = 'Expected value to be true') {
+  true(value: unknown, message: string = 'Expected value to be true'): void {
     if (value !== true) {
       this.fail(message, [
         {
@@ -382,7 +304,7 @@ export default class TestAPI {
     }
   }
 
-  false(value: unknown, message: string = 'Expected value to be false') {
+  false(value: unknown, message: string = 'Expected value to be false'): void {
     if (value !== false) {
       this.fail(message, [
         {
@@ -402,7 +324,7 @@ export default class TestAPI {
     received: unknown,
     expected: unknown,
     message: string = 't.is() failed, using Object.is semantics',
-  ) {
+  ): void {
     if (Object.is(received, expected) !== true) {
       this.fail(message, this.buildMatchAdvice(received, expected, {
         visualMethod: 'looksLike',
@@ -414,7 +336,7 @@ export default class TestAPI {
     received: unknown,
     expected: unknown,
     message: string = 't.not() failed, using !Object.is() semantics',
-  ) {
+  ): void {
     if (Object.is(received, expected) === true) {
       this.fail(message, this.buildMatchAdvice(received, expected, {
         visualMethod: 'notLooksLike',
@@ -426,7 +348,7 @@ export default class TestAPI {
     received: unknown,
     expected: unknown,
     message: string = 't.looksLike() failed, using prettyFormat semantics',
-  ) {
+  ): void {
     const actualInspect = prettyFormat(received);
     const expectedInspect = prettyFormat(expected);
 
@@ -439,7 +361,7 @@ export default class TestAPI {
     received: unknown,
     expected: unknown,
     message: string = 't.notLooksLike() failed, using !prettyFormat semantics',
-  ) {
+  ): void {
     const actualInspect = prettyFormat(received);
     const expectedInspect = prettyFormat(expected);
 
@@ -452,7 +374,7 @@ export default class TestAPI {
     thrower: SyncThrower,
     expected?: ExpectedError,
     message: string = 't.throws() failed, callback did not throw an error',
-  ) {
+  ): void {
     try {
       thrower();
     } catch (err) {
@@ -476,11 +398,11 @@ export default class TestAPI {
     thrower: AsyncFunc,
     expected?: ExpectedError,
     message?: string,
-  ) {
+  ): Promise<void> {
     throw new Error('unimplemented');
   }
 
-  notThrows(nonThrower: SyncThrower, message?: string) {
+  notThrows(nonThrower: SyncThrower, message?: string): void {
     try {
       nonThrower();
     } catch (err) {
@@ -494,21 +416,21 @@ export default class TestAPI {
     throw new Error('unimplemented');
   }
 
-  regex(contents: string, regex: RegExp, message?: string) {
+  regex(contents: string, regex: RegExp, message?: string): void {
     throw new Error('unimplemented');
   }
 
-  notRegex(contents: string, regex: RegExp, message?: string) {
+  notRegex(contents: string, regex: RegExp, message?: string): void {
     throw new Error('unimplemented');
   }
 
-  snapshot(expected: unknown, message?: string) {
+  snapshot(expected: unknown, message?: string): void {
     const id = this.snapshotCounter++;
-    return this._snapshotNamed(String(id), expected, message, 2);
+    this._snapshotNamed(String(id), expected, message, 2);
   }
 
-  snapshotNamed(name: string, expected: unknown, message?: string) {
-    return this._snapshotNamed(name, expected, message, 1);
+  snapshotNamed(name: string, expected: unknown, message?: string): void {
+    this._snapshotNamed(name, expected, message, 1);
   }
 
   getSnapshot(snapshotName: string): unknown {
@@ -520,7 +442,7 @@ export default class TestAPI {
     expected: unknown,
     message?: string,
     framesToPop?: number,
-  ) {
+  ): void {
     let language: undefined | string;
 
     let formatted = '';
@@ -541,7 +463,7 @@ export default class TestAPI {
         value: formatted,
         language,
       });
-      return undefined;
+      return;
     }
 
     // Compare the snapshots
@@ -556,21 +478,25 @@ export default class TestAPI {
       );
 
       if (message === undefined) {
-        message =
+          message =
           markup`Snapshot ${name} at <filelink emphasis target="${this.snapshotManager.path.join()}" /> doesn't match`;
       } else {
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: `Snapshot can be found at <filelink emphasis target="${this.snapshotManager.path.join()}" />`,
-        });
+        advice.push(
+          {
+            type: 'log',
+            category: 'info',
+            message: `Snapshot can be found at <filelink emphasis target="${this.snapshotManager.path.join()}" />`,
+          },
+        );
       }
 
-      advice.push({
-        type: 'log',
-        category: 'info',
-        message: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
-      });
+      advice.push(
+        {
+          type: 'log',
+          category: 'info',
+          message: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
+        },
+      );
 
       this.fail(message, advice, framesToPop);
     }

@@ -9,8 +9,6 @@ import {
   ClientFlags,
   ClientRequestFlags,
   DEFAULT_CLIENT_REQUEST_FLAGS,
-} from '@romejs/core';
-import {
   Client,
   PLATFORMS,
   DEFAULT_CLIENT_FLAGS,
@@ -33,7 +31,7 @@ import {commandCategories} from '@romejs/core/commands';
 import {writeFile} from '@romejs/fs';
 import fs = require('fs');
 
-import {stripAnsi} from '@romejs/string-ansi';
+import {stripAnsi} from '@romejs/string-markup';
 import {Dict} from '@romejs/typescript-helpers';
 
 type CLIFlags = {
@@ -57,80 +55,80 @@ export default async function cli() {
   const p = parseCLIFlagsFromProcess({
     programName: 'rome',
     usage: '[command] [flags]',
-    defineFlags(
-      c: Consumer,
-    ): {
+    defineFlags(c: Consumer): {
       cliFlags: CLIFlags;
       clientFlags: ClientFlags;
       requestFlags: ClientRequestFlags;
     } {
       return {
-        clientFlags: {
-          clientName: 'cli',
-          cwd: createAbsoluteFilePath(c.get('cwd').asString(process.cwd())),
-          verbose: c.get('verbose').asBoolean(DEFAULT_CLIENT_FLAGS.verbose),
-          silent: c.get('silent').asBoolean(DEFAULT_CLIENT_FLAGS.silent),
-          ...overrideClientFlags,
-        },
+          clientFlags: {
+            clientName: 'cli',
+            cwd: createAbsoluteFilePath(c.get('cwd').asString(process.cwd())),
+            verbose: c.get('verbose').asBoolean(DEFAULT_CLIENT_FLAGS.verbose),
+            silent: c.get('silent').asBoolean(DEFAULT_CLIENT_FLAGS.silent),
+            ...overrideClientFlags,
+          },
 
-        cliFlags: {
-          markersPath: maybeCreateAbsoluteFilePath(
-            c.get('markersPath').asStringOrVoid(),
-          ),
-          profile: c.get('profile').asBoolean(false),
-          profilePath: maybeCreateAbsoluteFilePath(
-            c.get('profilePath').asStringOrVoid(),
-          ),
-          profileTimeout: c.get('profileTimeout').asNumber(0),
-          profileWorkers: c.get('profileWorkers').asBoolean(true),
-          profileSampling: c.get('profileSampling').asNumber(100),
-          temporaryDaemon: c.get('temporaryDaemon').asBoolean(false),
-          rage: c.get('rage').asBoolean(false),
-          ragePath: maybeCreateAbsoluteFilePath(
-            c.get('ragePath').asStringOrVoid(),
-          ),
-          logs: c.get('logs').asBoolean(false),
-          logWorkers: c.get('logWorkers').asBooleanOrVoid(),
-          logPath: maybeCreateAbsoluteFilePath(c.get('logPath').asStringOrVoid()),
-          ...overrideCLIFlags,
-        },
+          cliFlags: {
+            markersPath: maybeCreateAbsoluteFilePath(
+              c.get('markersPath').asStringOrVoid(),
+            ),
+            profile: c.get('profile').asBoolean(false),
+            profilePath: maybeCreateAbsoluteFilePath(
+              c.get('profilePath').asStringOrVoid(),
+            ),
+            profileTimeout: c.get('profileTimeout').asNumber(0),
+            profileWorkers: c.get('profileWorkers').asBoolean(true),
+            profileSampling: c.get('profileSampling').asNumber(100),
+            temporaryDaemon: c.get('temporaryDaemon').asBoolean(false),
+            rage: c.get('rage').asBoolean(false),
+            ragePath: maybeCreateAbsoluteFilePath(
+              c.get('ragePath').asStringOrVoid(),
+            ),
+            logs: c.get('logs').asBoolean(false),
+            logWorkers: c.get('logWorkers').asBooleanOrVoid(),
+            logPath: maybeCreateAbsoluteFilePath(
+              c.get('logPath').asStringOrVoid(),
+            ),
+            ...overrideCLIFlags,
+          },
 
-        requestFlags: {
-          benchmark: c.get('benchmark').asBoolean(
-            DEFAULT_CLIENT_REQUEST_FLAGS.benchmark,
-          ),
-          benchmarkIterations: c.get('benchmarkIterations').asNumber(
-            DEFAULT_CLIENT_REQUEST_FLAGS.benchmarkIterations,
-          ),
-          collectMarkers: c.get('collectMarkers').asBoolean(
-            DEFAULT_CLIENT_REQUEST_FLAGS.collectMarkers,
-          ),
-          watch: c.get('watch').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.watch),
-          fieri: c.get('fieri').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.fieri),
-          focus: c.get('focus').asString(DEFAULT_CLIENT_REQUEST_FLAGS.focus),
-          grep: c.get('grep').asString(DEFAULT_CLIENT_REQUEST_FLAGS.grep),
-          maxDiagnostics: c.get('maxDiagnostics').asNumber(
-            DEFAULT_CLIENT_REQUEST_FLAGS.maxDiagnostics,
-          ),
-          verboseDiagnostics: c.get('verboseDiagnostics').asBoolean(
-            DEFAULT_CLIENT_REQUEST_FLAGS.verboseDiagnostics,
-          ),
-          showAllDiagnostics: c.get('showAllDiagnostics').asBoolean(
-            DEFAULT_CLIENT_REQUEST_FLAGS.showAllDiagnostics,
-          ),
-          inverseGrep: c.get('inverseGrep').asBoolean(
-            DEFAULT_CLIENT_REQUEST_FLAGS.inverseGrep,
-          ),
-          resolverPlatform: c.get('resolverPlatform').asStringSetOrVoid(
-            PLATFORMS,
-          ),
-          resolverScale: c.get('resolverScale').asNumberOrVoid(),
-          resolverMocks: c.get('resolverMocks').asBoolean(
-            DEFAULT_CLIENT_REQUEST_FLAGS.resolverMocks,
-          ),
-          ...overrideRequestFlags,
-        },
-      };
+          requestFlags: {
+            benchmark: c.get('benchmark').asBoolean(
+              DEFAULT_CLIENT_REQUEST_FLAGS.benchmark,
+            ),
+            benchmarkIterations: c.get('benchmarkIterations').asNumber(
+              DEFAULT_CLIENT_REQUEST_FLAGS.benchmarkIterations,
+            ),
+            collectMarkers: c.get('collectMarkers').asBoolean(
+              DEFAULT_CLIENT_REQUEST_FLAGS.collectMarkers,
+            ),
+            watch: c.get('watch').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.watch),
+            fieri: c.get('fieri').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.fieri),
+            focus: c.get('focus').asString(DEFAULT_CLIENT_REQUEST_FLAGS.focus),
+            grep: c.get('grep').asString(DEFAULT_CLIENT_REQUEST_FLAGS.grep),
+            maxDiagnostics: c.get('maxDiagnostics').asNumber(
+              DEFAULT_CLIENT_REQUEST_FLAGS.maxDiagnostics,
+            ),
+            verboseDiagnostics: c.get('verboseDiagnostics').asBoolean(
+              DEFAULT_CLIENT_REQUEST_FLAGS.verboseDiagnostics,
+            ),
+            showAllDiagnostics: c.get('showAllDiagnostics').asBoolean(
+              DEFAULT_CLIENT_REQUEST_FLAGS.showAllDiagnostics,
+            ),
+            inverseGrep: c.get('inverseGrep').asBoolean(
+              DEFAULT_CLIENT_REQUEST_FLAGS.inverseGrep,
+            ),
+            resolverPlatform: c.get('resolverPlatform').asStringSetOrVoid(
+              PLATFORMS,
+            ),
+            resolverScale: c.get('resolverScale').asNumberOrVoid(),
+            resolverMocks: c.get('resolverMocks').asBoolean(
+              DEFAULT_CLIENT_REQUEST_FLAGS.resolverMocks,
+            ),
+            ...overrideRequestFlags,
+          },
+        };
     },
   });
 
@@ -251,63 +249,68 @@ export default async function cli() {
     stderr: process.stderr,
   });
 
-  client.bridgeAttachedEvent.subscribe(async () => {
-    const profileOptions: ClientProfileOptions = {
-      samplingInterval: cliFlags.profileSampling,
-      timeoutInterval: cliFlags.profileTimeout,
-      includeWorkers: cliFlags.profileWorkers,
-    };
+  client.bridgeAttachedEvent.subscribe(
+    async () => {
+      const profileOptions: ClientProfileOptions = {
+        samplingInterval: cliFlags.profileSampling,
+        timeoutInterval: cliFlags.profileTimeout,
+        includeWorkers: cliFlags.profileWorkers,
+      };
 
-    if (cliFlags.rage) {
-      const {ragePath} = cliFlags;
-      const filename = clientFlags.cwd.resolve(ragePath === undefined
-        ? `rome-rage-${getFilenameTimestamp()}.tar.gz` : ragePath
-      ).join();
-      await client.rage(filename, profileOptions);
-      return;
-    }
+      if (cliFlags.rage) {
+        const {ragePath} = cliFlags;
+        const filename = clientFlags.cwd.resolve(ragePath === undefined
+          ? `rome-rage-${getFilenameTimestamp()}.tar.gz`
+          : ragePath).join();
+        await client.rage(filename, profileOptions);
+        return;
+      }
 
-    if (cliFlags.profile) {
-      await client.profile(profileOptions, async (events) => {
-        const {cwd} = clientFlags;
-        const {profilePath} = cliFlags;
+      if (cliFlags.profile) {
+        await client.profile(
+          profileOptions,
+          async (events) => {
+            const {cwd} = clientFlags;
+            const {profilePath} = cliFlags;
 
-        const resolvedProfilePath = cwd.resolve(profilePath === undefined
-          ? `Profile-${getFilenameTimestamp()}.json` : profilePath
+            const resolvedProfilePath = cwd.resolve(profilePath === undefined
+              ? `Profile-${getFilenameTimestamp()}.json`
+              : profilePath);
+
+            const str = JSON.stringify(events, undefined, '  ');
+            await writeFile(resolvedProfilePath, str);
+
+            client.reporter.success(
+              `Wrote CPU profile to <filelink emphasis target="${resolvedProfilePath.join()}" />`,
+            );
+          },
         );
+      }
 
-        const str = JSON.stringify(events, undefined, '  ');
-        await writeFile(resolvedProfilePath, str);
+      if (cliFlags.logs) {
+        let fileout: undefined | fs.WriteStream;
+        if (cliFlags.logPath !== undefined) {
+          fileout = fs.createWriteStream(clientFlags.cwd.resolve(
+            cliFlags.logPath,
+          ).join());
 
-        client.reporter.success(
-          `Wrote CPU profile to <filelink emphasis target="${resolvedProfilePath.join()}" />`,
-        );
-      });
-    }
+          client.endEvent.subscribe(() => {
+            if (fileout !== undefined) {
+              fileout.end();
+            }
+          });
+        }
 
-    if (cliFlags.logs) {
-      let fileout: undefined | fs.WriteStream;
-      if (cliFlags.logPath !== undefined) {
-        fileout = fs.createWriteStream(
-          clientFlags.cwd.resolve(cliFlags.logPath).join(),
-        );
-
-        client.endEvent.subscribe(() => {
-          if (fileout !== undefined) {
-            fileout.end();
+        await client.subscribeLogs(cliFlags.logWorkers === true, (chunk) => {
+          if (fileout === undefined) {
+            client.reporter.writeAll(chunk);
+          } else {
+            fileout.write(stripAnsi(chunk));
           }
         });
       }
-
-      await client.subscribeLogs(cliFlags.logWorkers === true, (chunk) => {
-        if (fileout === undefined) {
-          client.reporter.writeAll(chunk);
-        } else {
-          fileout.write(stripAnsi(chunk));
-        }
-      });
-    }
-  });
+    },
+  );
 
   if (cliFlags.temporaryDaemon) {
     await client.forceStartDaemon();
@@ -330,7 +333,9 @@ export default async function cli() {
     // Write markers if we were collecting them
     if (requestFlags.collectMarkers) {
       const markersPath = clientFlags.cwd.resolve(cliFlags.markersPath ===
-      undefined ? `Markers-${getFilenameTimestamp()}.json` : cliFlags.markersPath);
+        undefined
+        ? `Markers-${getFilenameTimestamp()}.json`
+        : cliFlags.markersPath);
 
       await writeFile(markersPath, JSON.stringify(res.markers, null, '  '));
 

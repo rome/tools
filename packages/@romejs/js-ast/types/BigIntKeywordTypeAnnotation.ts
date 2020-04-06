@@ -8,9 +8,9 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type BigIntKeywordTypeAnnotation =
-  & JSNodeBase
-  & {type: 'BigIntKeywordTypeAnnotation'};
+export type BigIntKeywordTypeAnnotation = JSNodeBase & {
+  type: 'BigIntKeywordTypeAnnotation';
+};
 
 export const bigIntKeywordTypeAnnotation = createBuilder<
   BigIntKeywordTypeAnnotation

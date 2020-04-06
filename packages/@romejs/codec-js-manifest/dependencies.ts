@@ -6,8 +6,11 @@
  */
 
 import {Consumer} from '@romejs/consume';
-import {SemverRangeNode, stringifySemver} from '@romejs/codec-semver';
-import {parseSemverRange} from '@romejs/codec-semver';
+import {
+  SemverRangeNode,
+  stringifySemver,
+  parseSemverRange,
+} from '@romejs/codec-semver';
 import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
 import {createUnknownFilePath, UnknownFilePath} from '@romejs/path';
 import {normalizeName} from './name';
@@ -32,14 +35,13 @@ type UrlWithHash = {
 
 export function stringifyDependencyPattern(pattern: DependencyPattern): string {
   switch (pattern.type) {
-    case 'hosted-git':
-      {
-        let str = `${pattern.host}:${pattern.user}/${pattern.repo}`;
-        if (pattern.commitish !== undefined) {
-          str += `#${pattern.commitish}`;
-        }
-        return str;
+    case 'hosted-git': {
+      let str = `${pattern.host}:${pattern.user}/${pattern.repo}`;
+      if (pattern.commitish !== undefined) {
+        str += `#${pattern.commitish}`;
       }
+      return str;
+    }
 
     case 'file':
       return `file:${pattern.path}`;
@@ -58,14 +60,13 @@ export function stringifyDependencyPattern(pattern: DependencyPattern): string {
         return `${pattern.url}#${pattern.hash}`;
       }
 
-    case 'npm':
-      {
-        let str = `${NPM_PREFIX}${pattern.name}`;
-        if (pattern.range !== undefined) {
-          str += `@${stringifySemver(pattern.range)}`;
-        }
-        return str;
+    case 'npm': {
+      let str = `${NPM_PREFIX}${pattern.name}`;
+      if (pattern.range !== undefined) {
+        str += `@${stringifySemver(pattern.range)}`;
       }
+      return str;
+    }
 
     case 'link':
       return `${LINK_PREFIX}${pattern.path.join()}`;
@@ -231,7 +232,7 @@ function parseSemver(
 }
 
 //# FILE
-const FILE_PREFIX_REGEX = /^\.\{1,2\}\//;
+const FILE_PREFIX_REGEX = /^\.{1,2}\//;
 
 type FilePattern = {
   type: 'file';
@@ -332,10 +333,11 @@ function parseNpm(
       consumer.unexpected(message, {
         advice,
         at,
-        loc: start === undefined ? undefined : consumer.getLocationRange(add(
-          start,
-          offset,
-        ), end === undefined ? undefined : add(end, offset), 'inner-value'),
+        loc: start === undefined
+          ? undefined
+          : consumer.getLocationRange(add(start, offset), end === undefined
+            ? undefined
+            : add(end, offset), 'inner-value'),
       });
     },
   });
@@ -391,6 +393,8 @@ export function parseGitDependencyPattern(
   if (GITHUB_SHORTHAND.test(pattern)) {
     return parseHostedGit('github', pattern, consumer);
   }
+
+  return undefined;
 }
 
 export function parseDependencyPattern(
@@ -417,7 +421,7 @@ export function parseDependencyPattern(
   }
 
   if (FILE_PREFIX_REGEX.test(pattern) ||
-  createUnknownFilePath(pattern).isAbsolute() || pattern.startsWith('file:')) {
+      createUnknownFilePath(pattern).isAbsolute() || pattern.startsWith('file:')) {
     return parseFile(pattern);
   }
 

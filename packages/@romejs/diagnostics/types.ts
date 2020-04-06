@@ -13,7 +13,7 @@ import {JSONPropertyValue} from '@romejs/codec-json';
 import {DiagnosticCategory} from './categories';
 
 export type DiagnosticFilter = {
-  category?: string;
+  category?: DiagnosticCategory;
   message?: string;
   filename?: string;
   start?: Position;
@@ -22,25 +22,29 @@ export type DiagnosticFilter = {
 
 export type DiagnosticFilters = Array<DiagnosticFilter>;
 
+export type DiagnosticSuppressionType = 'current' | 'next';
+
 export type DiagnosticSuppression = {
+  type: DiagnosticSuppressionType;
   category: string;
   loc: SourceLocation;
 };
 
 export type DiagnosticSuppressions = Array<DiagnosticSuppression>;
 
-export type DiagnosticFilterWithTest =
-  & DiagnosticFilter
-  & {test?: (diagnostic: Diagnostic) => boolean};
+export type DiagnosticFilterWithTest = DiagnosticFilter & {
+  test?: (diagnostic: Diagnostic) => boolean;
+};
 
-export type DiagnosticLocation =
-  & Partial<SourceLocation>
-  & {
-    sourceText?: string;
-    mtime?: number;
-    language?: DiagnosticLanguage;
-    sourceType?: DiagnosticSourceType;
-  };
+export type DiagnosticLocation = {
+  sourceText?: string;
+  mtime?: number;
+  language?: DiagnosticLanguage;
+  sourceType?: DiagnosticSourceType;
+  filename?: string;
+  start?: Position;
+  end?: Position;
+};
 
 export type DiagnosticOrigin = {
   category: string;
@@ -87,7 +91,13 @@ export type DiagnosticAdviceItem =
   | DiagnosticAdviceCode
   | DiagnosticAdviceFrame
   | DiagnosticAdviceDiff
-  | DiagnosticAdviceStacktrace;
+  | DiagnosticAdviceStacktrace
+  | DiagnosticAdviceCommand;
+
+export type DiagnosticAdviceCommand = {
+  type: 'command';
+  command: string;
+};
 
 export type DiagnosticAdviceLog = {
   type: 'log';

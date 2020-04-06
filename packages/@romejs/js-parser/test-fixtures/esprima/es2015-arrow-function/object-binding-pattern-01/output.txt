@@ -30,6 +30,7 @@ Program {
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ,'}
       }
       location: Object {
+        filename: 'input.js'
         mtime: undefined
         sourceType: 'script'
         end: Object {
@@ -282,7 +283,7 @@ Program {
               }
             }
             typeAnnotation: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
@@ -377,7 +378,7 @@ Program {
               }
               types: Array [
                 FlowGenericTypeAnnotation {
-                  id: Identifier {
+                  id: ReferenceIdentifier {
                     name: 'd'
                     loc: Object {
                       filename: 'input.js'

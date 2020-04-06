@@ -41,6 +41,30 @@ Array [
   Object {
     origins: Array [Object {category: 'lint'}]
     description: Object {
+      category: 'lint/noShorthandArrayType'
+      fixable: true
+      message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Use Array<T> instead of shorthand T[]'}
+    }
+    location: Object {
+      filename: 'unknown'
+      language: 'js'
+      mtime: undefined
+      sourceType: 'module'
+      end: Object {
+        column: 17
+        index: 17
+        line: 1
+      }
+      start: Object {
+        column: 12
+        index: 12
+        line: 1
+      }
+    }
+  }
+  Object {
+    origins: Array [Object {category: 'lint'}]
+    description: Object {
       category: 'lint/noExplicitAny'
       message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected any. Specify a different type.'}
     }
@@ -128,6 +152,30 @@ Array [
 
 ```javascript
 Array [
+  Object {
+    origins: Array [Object {category: 'lint'}]
+    description: Object {
+      category: 'lint/noShorthandArrayType'
+      fixable: true
+      message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Use Array<T> instead of shorthand T[]'}
+    }
+    location: Object {
+      filename: 'unknown'
+      language: 'js'
+      mtime: undefined
+      sourceType: 'module'
+      end: Object {
+        column: 23
+        index: 23
+        line: 1
+      }
+      start: Object {
+        column: 18
+        index: 18
+        line: 1
+      }
+    }
+  }
   Object {
     origins: Array [Object {category: 'lint'}]
     description: Object {

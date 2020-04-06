@@ -25,6 +25,7 @@ Program {
   body: Array [
     ImportDeclaration {
       importKind: undefined
+      namedSpecifiers: Array []
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -54,39 +55,23 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ImportDefaultSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
+      defaultSpecifier: ImportDefaultSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 10
+            index: 10
+            line: 1
           }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'foo'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 10
-                  index: 10
-                  line: 1
-                }
-                start: Object {
-                  column: 7
-                  index: 7
-                  line: 1
-                }
-              }
-            }
-            importKind: undefined
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        local: ImportSpecifierLocal {
+          name: BindingIdentifier {
+            name: 'foo'
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -101,39 +86,39 @@ Program {
               }
             }
           }
-        }
-        ImportNamespaceSpecifier {
+          importKind: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 20
-              index: 20
+              column: 10
+              index: 10
               line: 1
             }
             start: Object {
-              column: 0
-              index: 0
+              column: 7
+              index: 7
               line: 1
             }
           }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'bar'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 20
-                  index: 20
-                  line: 1
-                }
-                start: Object {
-                  column: 17
-                  index: 17
-                  line: 1
-                }
-              }
-            }
-            importKind: undefined
+        }
+      }
+      namespaceSpecifier: ImportNamespaceSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 20
+            index: 20
+            line: 1
+          }
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        local: ImportSpecifierLocal {
+          name: BindingIdentifier {
+            name: 'bar'
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -148,8 +133,22 @@ Program {
               }
             }
           }
+          importKind: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 20
+              index: 20
+              line: 1
+            }
+            start: Object {
+              column: 17
+              index: 17
+              line: 1
+            }
+          }
         }
-      ]
+      }
     }
   ]
 }

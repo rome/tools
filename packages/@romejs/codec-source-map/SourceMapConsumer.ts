@@ -189,7 +189,8 @@ export default class SourceMapConsumer {
     }
 
     const source = mapping.source == undefined
-      ? this.map.file : this.map.sources[mapping.source];
+      ? this.map.file
+      : this.map.sources[mapping.source];
     if (source === undefined) {
       throw new Error('Mapping provided unknown source');
     }
@@ -198,7 +199,9 @@ export default class SourceMapConsumer {
       source,
       line: mapping.originalLine,
       column: mapping.originalColumn,
-      name: mapping.name === undefined ? undefined : this.map.names[mapping.name],
+      name: mapping.name === undefined
+        ? undefined
+        : this.map.names[mapping.name],
     };
   }
 }
