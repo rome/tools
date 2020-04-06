@@ -177,8 +177,8 @@ export function attachComments(parser: JSParser, node: AnyNode) {
   } else if (commentStack.length > 0) {
     const lastInStack = last(commentStack);
     if (hasComments(lastInStack.trailingComments) && start(
-      lastInStack.trailingComments[0],
-    ) >= end(node)) {
+        lastInStack.trailingComments[0],
+      ) >= end(node)) {
       trailingComments = lastInStack.trailingComments;
       lastInStack.trailingComments = undefined;
     }
@@ -229,10 +229,11 @@ export function attachComments(parser: JSParser, node: AnyNode) {
         break;
     }
   } else if (commentPreviousNode !== undefined && (commentPreviousNode.type ===
-  'ImportSpecifier' && node.type !== 'ImportSpecifier' ||
-  commentPreviousNode.type === 'ExportLocalSpecifier' && node.type !==
-  'ExportExternalSpecifier' || commentPreviousNode.type ===
-  'ExportExternalSpecifier' && node.type !== 'ExportExternalSpecifier')) {
+        'ImportSpecifier' && node.type !== 'ImportSpecifier' ||
+          commentPreviousNode.type ===
+          'ExportLocalSpecifier' &&
+        node.type !== 'ExportExternalSpecifier' || commentPreviousNode.type ===
+      'ExportExternalSpecifier' && node.type !== 'ExportExternalSpecifier')) {
     adjustCommentsAfterTrailingComma(parser, node, [
       parser.state.commentPreviousNode,
     ]);
@@ -241,8 +242,8 @@ export function attachComments(parser: JSParser, node: AnyNode) {
   if (lastChild !== undefined) {
     if (hasComments(lastChild.leadingComments)) {
       if (lastChild !== node && end(last(lastChild.leadingComments)) <= start(
-        node,
-      )) {
+          node,
+        )) {
         node.leadingComments = lastChild.leadingComments;
         lastChild.leadingComments = undefined;
       } else {
@@ -264,8 +265,8 @@ export function attachComments(parser: JSParser, node: AnyNode) {
       if (parser.state.commentPreviousNode) {
         for (let j = 0; j < parser.state.leadingComments.length; j++) {
           if (end(parser.state.leadingComments[j]) < end(
-            parser.state.commentPreviousNode,
-          )) {
+              parser.state.commentPreviousNode,
+            )) {
             parser.state.leadingComments.splice(j, 1);
             j--;
           }

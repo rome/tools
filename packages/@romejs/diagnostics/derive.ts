@@ -12,7 +12,7 @@ import {
   DiagnosticOrigin,
 } from './types';
 import {Position} from '@romejs/parser-core';
-import {escapeMarkup} from '@romejs/string-markup';
+import {escapeMarkup, markup} from '@romejs/string-markup';
 import {
   getErrorStructure,
   ErrorFrames,
@@ -30,8 +30,8 @@ function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
 }
 
 export function mergeDiagnostics(
-  rootDiag: Diagnostic,
-...diags: Array<Diagnostic>): Diagnostic {
+  rootDiag: Diagnostic,...diags: Array<Diagnostic>
+): Diagnostic {
   let mergedAdvice: DiagnosticAdvice = [
     ...normalizeArray(rootDiag.description.advice),
   ];
@@ -53,12 +53,10 @@ export function mergeDiagnostics(
   };
 }
 
-export function getDiagnosticHeader(
-  opts: {
-    filename: undefined | string;
-    start: undefined | Position;
-  },
-): string {
+export function getDiagnosticHeader(opts: {
+  filename: undefined | string;
+  start: undefined | Position;
+}): string {
   const {start, filename} = opts;
 
   if (filename === undefined) {
@@ -66,26 +64,21 @@ export function getDiagnosticHeader(
   }
 
   if (start === undefined) {
-    return `<filelink target="${filename}" />`;
+    return markup`<filelink target="${filename}" />`;
   }
 
-  return (
-    `<filelink target="${filename}" line="${start.line}" column="${start.column}" />`
-  );
+  return markup`<filelink target="${filename}" line="${start.line}" column="${start.column}" />`;
 }
 
-export function deriveRootAdviceFromDiagnostic(
-  diag: Diagnostic,
-  opts: {
-    skipFrame: boolean;
-    includeHeaderInAdvice: boolean;
-    outdated: boolean;
-  } = {
-    skipFrame: false,
-    includeHeaderInAdvice: true,
-    outdated: false,
-  },
-): {
+export function deriveRootAdviceFromDiagnostic(diag: Diagnostic, opts: {
+  skipFrame: boolean;
+  includeHeaderInAdvice: boolean;
+  outdated: boolean;
+} = {
+  skipFrame: false,
+  includeHeaderInAdvice: true,
+  outdated: false,
+}): {
   advice: DiagnosticAdvice;
   header: string;
 } {
@@ -192,7 +185,7 @@ export function deriveDiagnosticFromError(
   return {
     description: {
       category: opts.category,
-      message: createBlessedDiagnosticMessage(message),
+      message: createBlessedDiagnosticMessage(escapeMarkup(message)),
       advice,
     },
     location: {

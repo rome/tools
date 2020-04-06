@@ -8,12 +8,14 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpWhiteSpaceCharacter =
-  & JSNodeBase
-  & {type: 'RegExpWhiteSpaceCharacter'};
+export type RegExpWhiteSpaceCharacter = JSNodeBase & {
+  type: 'RegExpWhiteSpaceCharacter';
+};
 
-export const regExpWhiteSpaceCharacter =
-  createBuilder<RegExpWhiteSpaceCharacter>('RegExpWhiteSpaceCharacter', {
+export const regExpWhiteSpaceCharacter = createBuilder<RegExpWhiteSpaceCharacter>(
+  'RegExpWhiteSpaceCharacter',
+  {
     bindingKeys: {},
     visitorKeys: {},
-  });
+  },
+);

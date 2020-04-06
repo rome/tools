@@ -6,8 +6,6 @@
  */
 
 import {Reporter} from '@romejs/cli-reporter';
-import {naturalCompare} from '@romejs/string-utils';
-import {rightPad} from '@romejs/string-ansi';
 import {serializeCLIFlags} from './serializeCLIFlags';
 import {
   consume,
@@ -16,8 +14,7 @@ import {
   ConsumePropertyDefinition,
   ConsumeSourceLocationRequestTarget,
 } from '@romejs/consume';
-import {toKebabCase, toCamelCase} from '@romejs/string-utils';
-import {DiagnosticsError} from '@romejs/diagnostics';
+import {toKebabCase, toCamelCase, naturalCompare} from '@romejs/string-utils';
 import {createUnknownFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
 import {markup} from '@romejs/string-markup';
@@ -64,7 +61,11 @@ function splitCommandName(cmd: string): Array<string> {
 }
 
 export default class Parser<T> {
-  constructor(reporter: Reporter, opts: ParserOptions<T>, rawArgs: Array<string>) {
+  constructor(
+    reporter: Reporter,
+    opts: ParserOptions<T>,
+    rawArgs: Array<string>,
+  ) {
     this.reporter = reporter;
     this.opts = opts;
 
@@ -73,6 +74,10 @@ export default class Parser<T> {
     this.defaultFlags = new Map();
     this.flags = new Map();
     this.args = [];
+
+    // These are used to track where we should insert an argument for a boolean flag value
+    this.flagToArgIndex = new Map();
+    this.flagToArgOffset = 0;
 
     this.consumeRawArgs(rawArgs);
 
@@ -120,6 +125,8 @@ export default class Parser<T> {
   flags: Map<string, string | boolean>;
   defaultFlags: Map<string, unknown>;
   declaredFlags: Map<string, ArgDeclaration>;
+  flagToArgIndex: Map<string, number>;
+  flagToArgOffset: number;
 
   ranCommand: undefined | string;
   commands: Map<string, AnyCommandOptions>;
@@ -150,6 +157,15 @@ export default class Parser<T> {
           continue;
         }
 
+        // Allow for arguments to be passed as --foo=bar
+        const equalsIndex = name.indexOf('=');
+        if (equalsIndex !== -1) {
+          const cleanName = name.slice(0, equalsIndex);
+          const value = name.slice(equalsIndex + 1);
+          this.flags.set(cleanName, value);
+          continue;
+        }
+
         // If the next argument is a flag or we're at the end of the args then just set it to `true`
         if (rawArgs.length === 0 || this.looksLikeFlag(rawArgs[0])) {
           this.flags.set(name, true);
@@ -157,6 +173,8 @@ export default class Parser<T> {
           // Otherwise, take that value
           this.flags.set(name, String(rawArgs.shift()));
         }
+
+        this.flagToArgIndex.set(name, this.args.length);
 
         if (arg[0] === '-' && arg[1] !== '-') {
           this.shorthandFlags.add(name);
@@ -174,6 +192,12 @@ export default class Parser<T> {
       this.flags.delete(key);
       this.flags.set(alias, value);
     }
+
+    const argIndex = this.flagToArgIndex.get(key);
+    if (argIndex !== undefined) {
+      this.flagToArgIndex.set(alias, argIndex);
+      this.flagToArgIndex.delete(key);
+    }
   }
 
   getFlagsConsumer(): Consumer {
@@ -188,12 +212,41 @@ export default class Parser<T> {
       filePath: createUnknownFilePath('argv'),
       value: flags,
 
-      onDefinition: (def) => {
+      onDefinition: (def, valueConsumer) => {
         const key = def.objectPath.join('.');
 
         // Detect root object
         if (key === '') {
           return;
+        }
+
+        const value = flags[key];
+
+        // Allow omitting a string flag value
+        if (def.type === 'string' && value === true) {
+          valueConsumer.setValue('');
+        }
+
+        // We've parsed arguments like `--foo bar` as `{foo: 'bar}`
+
+        // However, --foo may be a boolean flag, so `bar` needs to be correctly added to args
+        if (def.type === 'boolean' && value !== true && value !== false &&
+              value !==
+              undefined) {
+          // This isn't necessarily the correct position... Probably doesn't matter?
+          const argIndex = this.flagToArgIndex.get(key);
+          if (argIndex === undefined) {
+            throw new Error('No arg index. Should always exist.');
+          }
+
+          // Insert the argument at the correct place
+          this.args.splice(argIndex + this.flagToArgOffset, 0, String(value));
+
+          // Increase offset to correct subsequent insertions
+          this.flagToArgOffset++;
+
+          //
+          valueConsumer.setValue(true);
         }
 
         this.declareArgument({
@@ -242,7 +295,8 @@ export default class Parser<T> {
   declareArgument(decl: ArgDeclaration) {
     // Commands may have colliding flags, this is only a problem in help mode, so make it unique
     const key = decl.command === undefined
-      ? decl.name : `${decl.command}.${decl.name}`;
+      ? decl.name
+      : `${decl.command}.${decl.name}`;
 
     // Ensure it hasn't been declared more than once
     if (this.declaredFlags.has(key)) {
@@ -259,7 +313,7 @@ export default class Parser<T> {
     return new ParserInterface(this);
   }
 
-  async shouldRunCommand(
+  async maybeDefineCommand(
     commandName: string,
     consumer: Consumer,
   ): Promise<undefined | DefinedCommand> {
@@ -283,37 +337,21 @@ export default class Parser<T> {
       process.exit(0);
     }
 
-    // We've parsed arguments like `--foo bar` as `{foo: 'bar}`
-
-    // However, --foo may be a boolean flag, so `bar` needs to be correctly added to args
-    for (const [key, value] of this.flags) {
-      const declared = this.declaredFlags.get(key);
-
-      if (declared !== undefined && declared.definition.type === 'boolean' &&
-        value !== true && value !== false) {
-        // This isn't necessarily the correct position... Probably doesn't matter?
-        this.args.push(value);
-
-        //
-        this.flags.set(key, true);
-      }
-    }
-
     const consumer = this.getFlagsConsumer();
 
     let definedCommand: undefined | DefinedCommand;
 
-    const {diagnostics, result} = await consumer.capture(async (consumer) => {
+    const rootFlags = await consumer.captureDiagnostics(async (consumer) => {
       for (const shorthandName of this.shorthandFlags) {
         consumer.get(shorthandName).unexpected(
           `Shorthand flags are not supported`,
         );
       }
 
-      const result = this.opts.defineFlags(consumer);
+      const rootFlags = this.opts.defineFlags(consumer);
 
       for (const key of this.commands.keys()) {
-        const defined = await this.shouldRunCommand(key, consumer);
+        const defined = await this.maybeDefineCommand(key, consumer);
         if (defined) {
           this.currentCommand = key;
           definedCommand = defined;
@@ -324,18 +362,14 @@ export default class Parser<T> {
       consumer.enforceUsedProperties('flag', false);
       this.currentCommand = undefined;
 
-      return result;
+      return rootFlags;
     });
-
-    if (result === undefined) {
-      throw new DiagnosticsError('CLI flag parsing diagnostics', diagnostics);
-    }
 
     // Show help for --help
     if (this.helpMode) {
       await this.showHelp(definedCommand === undefined
-        ? undefined : definedCommand.command.name
-      );
+        ? undefined
+        : definedCommand.command.name);
       process.exit(1);
     }
 
@@ -344,7 +378,7 @@ export default class Parser<T> {
       await definedCommand.command.callback(definedCommand.flags);
     }
 
-    return result;
+    return rootFlags;
   }
 
   buildOptionsHelp(keys: Array<string>): Array<string> {
@@ -401,7 +435,7 @@ export default class Parser<T> {
       }
 
       const descCol: string = metadata === undefined || metadata.description ===
-      undefined ? 'no description found' : metadata.description;
+        undefined ? 'no description found' : metadata.description;
 
       optionOutput.push({
         argName,
@@ -416,14 +450,18 @@ export default class Parser<T> {
     // Output options
     for (const {arg, description} of optionOutput) {
       lines.push(
-        markup`<brightBlack>${rightPad(arg, argColumnLength, ' ')}</brightBlack>  ${description}`,
+        markup`<brightBlack><pad count="${argColumnLength}" dir="right">${arg}</brightBlack>  ${description}`,
       );
     }
 
     return lines;
   }
 
-  showUsageHelp(description?: string, usage: string = '[flags]', prefix?: string) {
+  showUsageHelp(
+    description?: string,
+    usage: string = '[flags]',
+    prefix?: string,
+  ) {
     const {reporter} = this;
     const {programName} = this.opts;
 
@@ -484,13 +522,17 @@ export default class Parser<T> {
     const {description, usage, examples, programName} = this.opts;
 
     const consumer = this.getFlagsConsumer();
-    await this.opts.defineFlags(consumer);
 
-    for (const key of this.commands.keys()) {
-      await this.defineCommandFlags(key, consumer);
-    }
+    // Supress diagnostics
+    await consumer.capture(async (consumer) => {
+      await this.opts.defineFlags(consumer);
 
-    this.showUsageHelp(description, usage);
+      for (const key of this.commands.keys()) {
+        await this.defineCommandFlags(key, consumer);
+      }
+
+      this.showUsageHelp(description, usage);
+    });
 
     const {reporter} = this;
     reporter.section('Global Flags', () => {
@@ -508,8 +550,7 @@ export default class Parser<T> {
     });
 
     // Sort commands into their appropriate categories for output
-    const commandsByCategory: Map<undefined | string, Array<AnyCommandOptions>> =
-      new Map();
+    const commandsByCategory: Map<undefined | string, Array<AnyCommandOptions>> = new Map();
     const categoryNames: Set<string | undefined> = new Set();
     for (const [name, command] of this.commands) {
       if (name[0] === '_') {
@@ -552,7 +593,7 @@ export default class Parser<T> {
 
         reporter.list(commands.map((cmd) => {
           return `<emphasis>${cmd.name}</emphasis> ${cmd.description ===
-          undefined ? '' : cmd.description}`;
+            undefined ? '' : cmd.description}`;
         }));
         reporter.spacer();
       }
@@ -617,7 +658,7 @@ export default class Parser<T> {
 
   addCommand(opts: AnyCommandOptions) {
     if (this.currentCommand !== undefined) {
-      throw new Error('Nested commands aren\'t allowed');
+      throw new Error("Nested commands aren't allowed");
     }
 
     this.commands.set(opts.name, opts);

@@ -13,17 +13,15 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXMemberExpression =
-  & JSNodeBase
-  & {
-    type: 'JSXMemberExpression';
-    object:
-      | JSXMemberExpression
-      | JSXIdentifier
-      | JSXReferenceIdentifier
-      | JSXNamespacedName;
-    property: JSXIdentifier;
-  };
+export type JSXMemberExpression = JSNodeBase & {
+  type: 'JSXMemberExpression';
+  object:
+    | JSXMemberExpression
+    | JSXIdentifier
+    | JSXReferenceIdentifier
+    | JSXNamespacedName;
+  property: JSXIdentifier;
+};
 
 export const jsxMemberExpression = createBuilder<JSXMemberExpression>(
   'JSXMemberExpression',

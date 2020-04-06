@@ -6,7 +6,11 @@
  */
 
 import {Scope} from '../../scopes';
-import {ComputedPropertyKey, computedPropertyKey, AnyNode} from '@romejs/js-ast';
+import {
+  ComputedPropertyKey,
+  computedPropertyKey,
+  AnyNode,
+} from '@romejs/js-ast';
 
 export default function ComputedPropertyKey(node: AnyNode, scope: Scope) {
   node = computedPropertyKey.assert(node);

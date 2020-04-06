@@ -6,28 +6,34 @@
  */
 
 import {
+  TransformExitResult,
+  Path,
+  REDUCE_REMOVE,
+  ImportBinding,
+  FunctionBinding,
+  TypeBinding,
+} from '@romejs/js-compiler';
+import {
+  getPrefixedName,
+  getPrefixedNamespace,
+  getPrivateName,
+  getModuleId,
+  getOptions,
+} from '../_utils';
+import {
+  getBindingIdentifiers,
+  renameBindings,
+  template,
+  getImportSpecifiers,
+} from '@romejs/js-ast-utils';
+import {
   AnyNode,
   functionHead,
   referenceIdentifier,
   bindingIdentifier,
   staticPropertyKey,
   variableDeclarationStatement,
-  ExportExternalDeclaration,
-} from '@romejs/js-ast';
-import {Path, REDUCE_REMOVE} from '@romejs/js-compiler';
-import {ObjectProperties} from '@romejs/js-ast';
-import {
-  getPrefixedName,
-  getPrefixedNamespace,
-  getPrivateName,
-  getModuleId,
-} from '../_utils';
-import {
-  getBindingIdentifiers,
-  renameBindings,
-  template,
-} from '@romejs/js-ast-utils';
-import {
+  ObjectProperties,
   program,
   blockStatement,
   objectExpression,
@@ -38,9 +44,6 @@ import {
   variableDeclaration,
   variableDeclarator,
 } from '@romejs/js-ast';
-import {ImportBinding, FunctionBinding, TypeBinding} from '@romejs/js-compiler';
-import {getOptions} from '../_utils';
-import {TransformExitResult} from '@romejs/js-compiler';
 
 export default {
   name: 'esToRefTransform',
@@ -60,13 +63,13 @@ export default {
       // map exports and imports and correctly
       for (const child of node.body) {
         if (child.type === 'ImportDeclaration' && child.importKind !== 'type' &&
-          child.importKind !== 'typeof' && child.specifiers !== undefined) {
+            child.importKind !== 'typeof') {
           const moduleId = getModuleId(child.source.value, opts);
           if (moduleId === undefined) {
             continue;
           }
 
-          for (const specifier of child.specifiers) {
+          for (const specifier of getImportSpecifiers(child)) {
             if (specifier.type === 'ImportSpecifier') {
               mappings.set(specifier.local.name.name, getPrefixedName(
                 specifier.imported.name,
@@ -117,7 +120,7 @@ export default {
         if (child.type === 'ExportDefaultDeclaration') {
           const {declaration: decl} = child;
           if ((decl.type === 'FunctionDeclaration' || decl.type ===
-          'ClassDeclaration') && decl.id !== undefined) {
+              'ClassDeclaration') && decl.id !== undefined) {
             mappings.set(decl.id.name, getPrefixedName(
               'default',
               opts.moduleId,
@@ -144,43 +147,35 @@ export default {
             ));
           }
 
-          if (child.type === 'ExportLocalDeclaration' || child.type ===
-          'ExportExternalDeclaration') {
-            const {specifiers} = child;
+          if (child.type === 'ExportExternalDeclaration') {
+            // TODO defaultSpecifier and namespaceSpecifier
+            const {source} = child;
 
-            if (child.type === 'ExportLocalDeclaration' && child.declaration !==
-            undefined) {
+            for (const specifier of child.namedSpecifiers) {
+              // If this is an external export then use the correct name
+              const moduleId = getModuleId(source.value, opts);
+              if (moduleId === undefined) {
+                continue;
+              }
+
+              const local = getPrefixedName(specifier.local.name, moduleId, opts);
+
+              exportNames.set(specifier.exported.name, local);
+            }
+          }
+
+          if (child.type === 'ExportLocalDeclaration') {
+            if (child.declaration !== undefined) {
               throw new Error(
-                'No export declarations should be here as they have been removed by renameBindings',
-              );
+                  'No export declarations should be here as they have been removed by renameBindings',
+                );
             }
 
-            let source: undefined | ExportExternalDeclaration['source'];
-            if (child.type === 'ExportExternalDeclaration') {
-              source = child.source;
-            }
-
+            const {specifiers} = child;
             if (specifiers !== undefined) {
               for (const specifier of specifiers) {
-                if (specifier.type === 'ExportLocalSpecifier' ||
-                specifier.type === 'ExportExternalSpecifier') {
-                  // The local binding has already been rewritten by renameBindings if it existed
-                  let local = specifier.local.name;
-
-                  // If this is an external export then use the correct name
-                  if (source !== undefined) {
-                    const moduleId = getModuleId(source.value, opts);
-                    if (moduleId === undefined) {
-                      continue;
-                    }
-
-                    local = getPrefixedName(local, moduleId, opts);
-                  }
-
-                  exportNames.set(specifier.exported.name, local);
-                } else {
-                  // TODO ???
-                }
+                // The local binding has already been rewritten by renameBindings if it existed
+                exportNames.set(specifier.exported.name, specifier.local.name);
               }
             }
           }
@@ -253,7 +248,7 @@ export default {
     if (node.type === 'ExportDefaultDeclaration') {
       const {declaration} = node;
       if (declaration.type === 'FunctionDeclaration' || declaration.type ===
-      'ClassDeclaration') {
+          'ClassDeclaration') {
         if (declaration.id === undefined) {
           // give it the correct name
           return {
@@ -289,8 +284,8 @@ export default {
       if (specifiers === undefined) {
         if (declaration === undefined) {
           throw new Error(
-            'No specifiers or declaration existed, if there\'s no specifiers then there should be a declaration',
-          );
+              "No specifiers or declaration existed, if there's no specifiers then there should be a declaration",
+            );
         }
         return declaration;
       } else {

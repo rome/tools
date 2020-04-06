@@ -34,9 +34,9 @@ async function main() {
 }
 
 sourceMapManager.init();
-sourceMapManager.addSourceMapFactory(BIN.join(), () =>
-  JSON.parse(readFileTextSync(MAP))
-);
+sourceMapManager.addSourceMapFactory(BIN.join(), () => JSON.parse(
+  readFileTextSync(MAP),
+));
 
 main().catch((err) => {
   const diags = getDiagnosticsFromError(err);
@@ -46,7 +46,6 @@ main().catch((err) => {
   } else {
     const reporter = Reporter.fromProcess();
     printDiagnosticsSync(diags, {
-      origins: [],
       reporter,
     });
   }

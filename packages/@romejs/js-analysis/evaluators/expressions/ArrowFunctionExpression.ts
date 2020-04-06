@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {FunctionScope} from '../../scopes';
+import {Scope, FunctionScope} from '../../scopes';
 import {
   ArrowFunctionExpression,
   arrowFunctionExpression,

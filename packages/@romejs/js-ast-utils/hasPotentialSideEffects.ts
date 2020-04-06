@@ -84,7 +84,7 @@ export default function hasPotentialSideEffects(
     case 'BindingObjectPatternProperty':
     case 'ObjectProperty':
       return hasPotentialSideEffects(node.key, scope) ||
-      hasPotentialSideEffects(node.value, scope);
+        hasPotentialSideEffects(node.value, scope);
 
     case 'BindingArrayPattern':
     case 'ArrayExpression':

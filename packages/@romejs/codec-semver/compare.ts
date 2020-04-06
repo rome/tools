@@ -8,9 +8,7 @@
 import {AbsoluteVersionNode, VersionNode} from './types';
 
 // -1: Lesser
-
 // 0: Equal
-
 // 1: Greater
 type CompareRet = -1 | 0 | 1;
 
@@ -52,7 +50,10 @@ function compareMain(
   ) || compareIdentifiers(version.patch, range.patch);
 }
 
-function comparePre(version: AbsoluteVersionNode, range: VersionNode): CompareRet {
+function comparePre(
+  version: AbsoluteVersionNode,
+  range: VersionNode,
+): CompareRet {
   // NOT having a prerelease is > having one
   if (version.prerelease.length > 0 && range.prerelease.length === 0) {
     return -1;

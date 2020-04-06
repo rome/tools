@@ -13,14 +13,12 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type AssignmentArrayPattern =
-  & JSNodeBase
-  & {
-    type: 'AssignmentArrayPattern';
-    meta?: PatternMeta;
-    elements: Array<undefined | AnyAssignmentPattern>;
-    rest?: AnyTargetAssignmentPattern;
-  };
+export type AssignmentArrayPattern = JSNodeBase & {
+  type: 'AssignmentArrayPattern';
+  meta?: PatternMeta;
+  elements: Array<undefined | AnyAssignmentPattern>;
+  rest?: AnyTargetAssignmentPattern;
+};
 
 export const assignmentArrayPattern = createBuilder<AssignmentArrayPattern>(
   'AssignmentArrayPattern',

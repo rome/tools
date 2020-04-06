@@ -7,19 +7,17 @@
 
 import {
   JSNodeBase,
-  Identifier,
+  ReferenceIdentifier,
   FlowTypeParameterInstantiation,
   FlowQualifiedTypeIdentifier,
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowInterfaceExtends =
-  & JSNodeBase
-  & {
-    type: 'FlowInterfaceExtends';
-    id: Identifier | FlowQualifiedTypeIdentifier;
-    typeParameters?: FlowTypeParameterInstantiation;
-  };
+export type FlowInterfaceExtends = JSNodeBase & {
+  type: 'FlowInterfaceExtends';
+  id: ReferenceIdentifier | FlowQualifiedTypeIdentifier;
+  typeParameters?: FlowTypeParameterInstantiation;
+};
 
 export const flowInterfaceExtends = createBuilder<FlowInterfaceExtends>(
   'FlowInterfaceExtends',

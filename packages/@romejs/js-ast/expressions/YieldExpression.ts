@@ -8,13 +8,11 @@
 import {JSNodeBase, AnyExpression} from '../index';
 import {createBuilder} from '../utils';
 
-export type YieldExpression =
-  & JSNodeBase
-  & {
-    type: 'YieldExpression';
-    delegate?: boolean;
-    argument?: AnyExpression;
-  };
+export type YieldExpression = JSNodeBase & {
+  type: 'YieldExpression';
+  delegate?: boolean;
+  argument?: AnyExpression;
+};
 
 export const yieldExpression = createBuilder<YieldExpression>(
   'YieldExpression',

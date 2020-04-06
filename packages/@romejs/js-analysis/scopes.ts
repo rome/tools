@@ -63,6 +63,7 @@ export class Scope {
       }
       scope = scope.parentScope;
     }
+    return undefined;
   }
 
   getBindingAssert(name: string): T {
@@ -125,8 +126,8 @@ export class Scope {
 
   getBindingNames(): Array<string> {
     const names: Set<string> = new Set(this.parentScope
-      ? this.parentScope.getBindingNames() : []
-    );
+      ? this.parentScope.getBindingNames()
+      : []);
 
     for (const [name] of this.bindings) {
       names.add(name);
@@ -172,6 +173,8 @@ export class Scope {
 
       scope = scope.parentScope;
     } while (scope !== undefined);
+
+    return undefined;
   }
 
   refine(): Scope {

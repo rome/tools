@@ -8,15 +8,18 @@
 import {Scope} from '../../scopes';
 import {
   AnyNode,
-  Identifier,
+  ReferenceIdentifier,
   FlowQualifiedTypeIdentifier,
   FlowGenericTypeAnnotation,
   flowGenericTypeAnnotation,
+  Identifier,
 } from '@romejs/js-ast';
 import GenericT from '../../types/GenericT';
 
-function getName(node: Identifier | FlowQualifiedTypeIdentifier): string {
-  if (node.type === 'Identifier') {
+function getName(
+  node: Identifier | ReferenceIdentifier | FlowQualifiedTypeIdentifier,
+): string {
+  if (node.type === 'Identifier' || node.type === 'ReferenceIdentifier') {
     return node.name;
   } else {
     return `${getName(node.id)}.${getName(node.qualification)}`;

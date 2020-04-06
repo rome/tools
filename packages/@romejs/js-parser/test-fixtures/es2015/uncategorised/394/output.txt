@@ -30,6 +30,7 @@ Program {
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid parenthesized binding'}
       }
       location: Object {
+        filename: 'input.js'
         mtime: undefined
         sourceType: 'script'
         end: Object {

@@ -13,7 +13,8 @@ const OPERATORS_TO_CHECK = ['>', '>=', '<', '<=', '==', '===', '!=', '!=='];
 
 function isNegZero(node: AnyNode): boolean {
   return node.type === 'UnaryExpression' && node.operator === '-' &&
-    node.argument.type === 'NumericLiteral' && node.argument.value === 0;
+      node.argument.type ===
+      'NumericLiteral' && node.argument.value === 0;
 }
 
 export default {
@@ -22,13 +23,13 @@ export default {
     const {node} = path;
 
     if (node.type === 'BinaryExpression' && OPERATORS_TO_CHECK.includes(
-      node.operator,
-    ) && (isNegZero(node.left) || isNegZero(node.right))) {
-      path.context.addNodeDiagnostic(
+        node.operator,
+      ) && (isNegZero(node.left) || isNegZero(node.right))) {
+      const {suppressed} = path.context.addNodeDiagnostic(
         node,
         descriptions.LINT.NO_COMPARE_NEG_ZERO(node.operator),
       );
-      if (node.operator === '===') {
+      if (!suppressed && node.operator === '===') {
         return template.expression`Object.is(${node.left}, ${node.right})`;
       }
     }

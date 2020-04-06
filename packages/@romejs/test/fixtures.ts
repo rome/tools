@@ -43,14 +43,12 @@ export type FixtureFile = {
   content: Buffer;
 };
 
-async function _getFixtures(
-  opts: {
-    name: undefined | string;
-    dir: AbsoluteFilePath;
-    parts: Array<string>;
-    options: Consumer;
-  },
-): Promise<Array<Fixture>> {
+async function _getFixtures(opts: {
+  name: undefined | string;
+  dir: AbsoluteFilePath;
+  parts: Array<string>;
+  options: Consumer;
+}): Promise<Array<Fixture>> {
   const {name, dir, parts, options: inheritOptions} = opts;
 
   // Check if directory even exists
@@ -74,7 +72,8 @@ async function _getFixtures(
 
   // Merge options
   const options: Consumer = ownOptions === undefined
-    ? inheritOptions : consumeUnknown({
+    ? inheritOptions
+    : consumeUnknown({
       ...inheritOptions.asUnknownObject(),
       ...ownOptions.asUnknownObject(),
     }, 'tests/fixtureOptions');
@@ -144,32 +143,39 @@ export async function createFixtureTests(
   dir: string = dirname,
 ): Promise<void> {
   for (const fixture of await getFixtures(dir)) {
-    test(fixture.name, {}, async (t) => {
-      t.addToAdvice({
-        type: 'log',
-        category: 'info',
-        message: 'Fixture options',
-      });
+    test(
+      fixture.name,
+      {},
+      async (t) => {
+        t.addToAdvice({
+          type: 'log',
+          category: 'info',
+          message: 'Fixture options',
+        });
 
-      t.addToAdvice({
-        type: 'inspect',
-        data: fixture.options.asJSONPropertyValue(),
-      });
+        t.addToAdvice({
+          type: 'inspect',
+          data: fixture.options.asJSONPropertyValue(),
+        });
 
-      t.addToAdvice({
-        type: 'log',
-        category: 'info',
-        message: 'Fixture files',
-      });
+        t.addToAdvice({
+          type: 'log',
+          category: 'info',
+          message: 'Fixture files',
+        });
 
-      t.addToAdvice({
-        type: 'list',
-        list: Array.from(fixture.files, ([basename, info]) =>
-          `<filelink target="${info.absolute}">${basename}</filelink>`
-        ),
-      });
+        t.addToAdvice(
+          {
+            type: 'list',
+            list: Array.from(
+              fixture.files,
+              ([basename, info]) => `<filelink target="${info.absolute}">${basename}</filelink>`,
+            ),
+          },
+        );
 
-      await callback(fixture, t);
-    });
+        await callback(fixture, t);
+      },
+    );
   }
 }

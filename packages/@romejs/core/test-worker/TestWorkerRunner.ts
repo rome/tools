@@ -14,14 +14,14 @@ import {
   createSingleDiagnosticError,
   descriptions,
   createBlessedDiagnosticMessage,
+  deriveDiagnosticFromError,
 } from '@romejs/diagnostics';
-import {TestCallback, TestOptions} from '@romejs/test';
+import {TestCallback, TestOptions, GlobalTestOptions} from '@romejs/test';
 import {
   default as TestWorkerBridge,
   TestWorkerBridgeRunOptions,
 } from '../common/bridges/TestWorkerBridge';
 import {TestRunnerOptions} from '../master/testing/types';
-import {deriveDiagnosticFromError} from '@romejs/diagnostics';
 import SnapshotManager from './SnapshotManager';
 import TestAPI, {OnTimeout} from './TestAPI';
 import executeMain from '../common/utils/executeMain';
@@ -29,7 +29,6 @@ import {
   FileReference,
   convertTransportFileReference,
 } from '../common/types/files';
-import {GlobalTestOptions} from '@romejs/test';
 import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
 
 const MAX_RUNNING_TESTS = 20;
@@ -103,8 +102,7 @@ export default class TestWorkerRunner {
     });
 
     if (res.syntaxError !== undefined) {
-      const message =
-        `A bundle was generated that contained a syntax error: ${res.syntaxError.description.message.value}`;
+      const message = `A bundle was generated that contained a syntax error: ${res.syntaxError.description.message.value}`;
 
       throw createSingleDiagnosticError({
         ...res.syntaxError,
@@ -131,7 +129,7 @@ export default class TestWorkerRunner {
     callback: undefined | TestCallback,
   ) {
     if (this.locked) {
-      throw new Error('Test can\'t be added outside of init');
+      throw new Error("Test can't be added outside of init");
     }
 
     let testName = options.name;
@@ -154,14 +152,11 @@ export default class TestWorkerRunner {
     }
   }
 
-  onError(
-    testName: undefined | string,
-    opts: {
-      error: Error;
-      firstAdvice: DiagnosticAdvice;
-      lastAdvice: DiagnosticAdvice;
-    },
-  ) {
+  onError(testName: undefined | string, opts: {
+    error: Error;
+    firstAdvice: DiagnosticAdvice;
+    lastAdvice: DiagnosticAdvice;
+  }) {
     const filename = this.file.real.join();
 
     let ref = undefined;
@@ -185,13 +180,15 @@ export default class TestWorkerRunner {
         // Remove everything before the original module factory
         let latestTestWorkerFrame = frames.find((frame, i) => {
           if (frame.typeName === 'global' && frame.methodName === undefined &&
-            frame.functionName === undefined) {
+                frame.functionName ===
+                undefined) {
             // We are the global.<anonymous> frame
 
             // Now check for Script.runInContext
             const nextFrame = frames[i + 1];
             if (nextFrame !== undefined && nextFrame.typeName === 'Script' &&
-              nextFrame.methodName === 'runInContext') {
+                  nextFrame.methodName ===
+                  'runInContext') {
               // Yes!
 
               // TODO also check for ___$romejs$core$common$utils$executeMain_ts$default (packages/romejs/core/common/utils/executeMain.ts:69:17)
@@ -243,23 +240,26 @@ export default class TestWorkerRunner {
     try {
       await api.teardownEvent.callOptional();
     } catch (err) {
-      this.onError(testName, {
-        error: err,
-        firstAdvice: [],
-        lastAdvice: [
-          {
-            type: 'log',
-            category: 'info',
-            message: `Error occured while running <emphasis>teardown</emphasis> for test <emphasis>${testName}</emphasis>`,
-          },
-        ],
-      });
+      this.onError(
+        testName,
+        {
+          error: err,
+          firstAdvice: [],
+          lastAdvice: [
+            {
+              type: 'log',
+              category: 'info',
+              message: `Error occured while running <emphasis>teardown</emphasis> for test <emphasis>${testName}</emphasis>`,
+            },
+          ],
+        },
+      );
     }
   }
 
   async runTest(testName: string, callback: TestCallback) {
     let onTimeout: OnTimeout = () => {
-      throw new Error('Promise wasn\'t created. Should be impossible.');
+      throw new Error("Promise wasn't created. Should be impossible.");
     };
 
     const timeoutPromise = new Promise((resolve, reject) => {
@@ -382,18 +382,21 @@ export default class TestWorkerRunner {
     } catch (err) {
       const diagnostics = getDiagnosticsFromError(err);
       if (diagnostics === undefined) {
-        this.onError(undefined, {
-          error: err,
-          firstAdvice: [],
-          lastAdvice: [
-            {
-              type: 'log',
-              category: 'info',
-              message: `Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
-            },
-            INTERNAL_ERROR_LOG_ADVICE,
-          ],
-        });
+        this.onError(
+          undefined,
+          {
+            error: err,
+            firstAdvice: [],
+            lastAdvice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: `Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
+              },
+              INTERNAL_ERROR_LOG_ADVICE,
+            ],
+          },
+        );
       } else {
         for (const diagnostic of diagnostics) {
           await this.bridge.testError.call({

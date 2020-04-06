@@ -12,6 +12,9 @@ import {
   DiagnosticLanguage,
   DiagnosticSourceType,
   DiagnosticAdvice,
+  DiagnosticsProcessor,
+  deriveRootAdviceFromDiagnostic,
+  getDiagnosticHeader,
 } from '@romejs/diagnostics';
 import {Reporter} from '@romejs/cli-reporter';
 import {
@@ -20,15 +23,11 @@ import {
   DiagnosticsFileReader,
   DiagnosticsFileReaderStats,
 } from './types';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
-import {
-  deriveRootAdviceFromDiagnostic,
-  getDiagnosticHeader,
-} from '@romejs/diagnostics';
-import {humanizeMarkupFilename} from '@romejs/string-markup';
+
+import {humanizeMarkupFilename, formatAnsi} from '@romejs/string-markup';
 import {toLines} from './utils';
 import printAdvice from './printAdvice';
-import {formatAnsi} from '@romejs/string-ansi';
+
 import successBanner from './banners/success.json';
 import errorBanner from './banners/error.json';
 import {
@@ -112,32 +111,36 @@ type ReferenceFileDependency = {
 
 type FileDependency = ChangeFileDependency | ReferenceFileDependency;
 
-export type DiagnosticsPrinterFileSources = UnknownFilePathMap<Array<string>>;
+export type DiagnosticsPrinterFileSources = UnknownFilePathMap<{
+  sourceText: string;
+  lines: Array<string>;
+}>;
 
 export type DiagnosticsPrinterFileMtimes = UnknownFilePathMap<number>;
 
 export default class DiagnosticsPrinter extends Error {
   constructor(opts: DiagnosticsPrinterOptions) {
     super(
-      'Diagnostics printer. If you\'re seeing this then it wasn\'t caught and printed correctly.',
+      "Diagnostics printer. If you're seeing this then it wasn't caught and printed correctly.",
     );
     const {cwd, reporter, flags = DEFAULT_PRINTER_FLAGS} = opts;
 
     this.reporter = reporter;
     this.flags = flags;
     this.readFile = opts.readFile === undefined
-      ? readDiagnosticsFileLocal : opts.readFile;
+      ? readDiagnosticsFileLocal
+      : opts.readFile;
     this.cwd = cwd === undefined ? createAbsoluteFilePath(process.cwd()) : cwd;
-    this.processor = new DiagnosticsProcessor({
-      filters: opts.filters,
-      origins: opts.origins,
-    });
+    this.processor = opts.processor === undefined
+      ? new DiagnosticsProcessor()
+      : opts.processor;
 
     this.displayedCount = 0;
     this.problemCount = 0;
     this.filteredCount = 0;
     this.truncatedCount = 0;
 
+    this.hasTruncatedDiagnostics = false;
     this.missingFileSources = new AbsoluteFilePathSet();
     this.fileSources = new UnknownFilePathMap();
     this.fileMtimes = new UnknownFilePathMap();
@@ -151,6 +154,7 @@ export default class DiagnosticsPrinter extends Error {
   cwd: AbsoluteFilePath;
   readFile: DiagnosticsFileReader;
 
+  hasTruncatedDiagnostics: boolean;
   missingFileSources: AbsoluteFilePathSet;
   fileSources: DiagnosticsPrinterFileSources;
   fileMtimes: DiagnosticsPrinterFileMtimes;
@@ -190,7 +194,7 @@ export default class DiagnosticsPrinter extends Error {
 
   shouldTruncate(): boolean {
     if (!this.flags.showAllDiagnostics && this.displayedCount >
-    this.flags.maxDiagnostics) {
+        this.flags.maxDiagnostics) {
       return true;
     } else {
       return false;
@@ -215,7 +219,7 @@ export default class DiagnosticsPrinter extends Error {
     // If focus is enabled, check if we should ignore this message
     if (filename !== undefined && start !== undefined && end !== undefined) {
       const niceFilename = humanizeMarkupFilename(
-        [filename],
+        filename,
         this.reporter.markupOptions,
       );
       const focusId = getDiagnosticHeader({
@@ -245,8 +249,8 @@ export default class DiagnosticsPrinter extends Error {
     }
 
     // Match against the supplied grep pattern
-    let ignored =
-      diag.description.message.value.toLowerCase().includes(grep) === false;
+    let ignored = diag.description.message.value.toLowerCase().includes(grep) ===
+      false;
     if (inverseGrep) {
       ignored = !ignored;
     }
@@ -260,16 +264,21 @@ export default class DiagnosticsPrinter extends Error {
     this.fileMtimes.set(info.path, stats.mtime);
 
     if (info.type === 'reference') {
-      this.fileSources.set(info.path, toLines({
-        path: info.path,
-        input: stats.content,
-        sourceType: info.sourceType,
-        language: info.language,
-      }));
+      this.fileSources.set(info.path, {
+        sourceText: stats.content,
+        lines: toLines({
+          path: info.path,
+          input: stats.content,
+          sourceType: info.sourceType,
+          language: info.language,
+        }),
+      });
     }
   }
 
-  getDependenciesFromDiagnostics(diagnostics: Diagnostics): Array<FileDependency> {
+  getDependenciesFromDiagnostics(
+    diagnostics: Diagnostics,
+  ): Array<FileDependency> {
     const deps: Array<FileDependency> = [];
 
     for (const {
@@ -302,7 +311,7 @@ export default class DiagnosticsPrinter extends Error {
           if (item.type === 'frame') {
             const {location} = item;
             if (location.filename !== undefined && location.sourceText ===
-            undefined) {
+                undefined) {
               deps.push({
                 type: 'reference',
                 path: this.createFilePath(location.filename),
@@ -404,10 +413,10 @@ export default class DiagnosticsPrinter extends Error {
     if (start !== undefined && end !== undefined && advice !== undefined) {
       adviceLoop: for (const item of advice) {
         if (item.type === 'frame' && item.location.filename === filename &&
-          equalPosition(item.location.start, start) && equalPosition(
-          item.location.end,
-          end,
-        )) {
+            equalPosition(item.location.start, start) && equalPosition(
+            item.location.end,
+            end,
+          )) {
           skipFrame = true;
           break;
         }
@@ -431,7 +440,7 @@ export default class DiagnosticsPrinter extends Error {
     } of this.getDependenciesFromDiagnostics([diag])) {
       const mtime = this.fileMtimes.get(path);
       if (mtime !== undefined && expectedMtime !== undefined && mtime >
-      expectedMtime) {
+          expectedMtime) {
         outdatedFiles.add(path);
       }
     }
@@ -442,22 +451,26 @@ export default class DiagnosticsPrinter extends Error {
       const outdatedFilesArr = Array.from(outdatedFiles, (path) => path.join());
 
       if (outdatedFilesArr.length === 1 && outdatedFilesArr[0] === filename) {
-        outdatedAdvice.push({
-          type: 'log',
-          category: 'warn',
-          message: 'This file has been changed since the diagnostic was produced and may be out of date',
-        });
+        outdatedAdvice.push(
+          {
+            type: 'log',
+            category: 'warn',
+            message: 'This file has been changed since the diagnostic was produced and may be out of date',
+          },
+        );
       } else {
-        outdatedAdvice.push({
-          type: 'log',
-          category: 'warn',
-          message: 'This diagnostic may be out of date as it relies on the following files that have been changed since the diagnostic was generated',
-        });
+        outdatedAdvice.push(
+          {
+            type: 'log',
+            category: 'warn',
+            message: 'This diagnostic may be out of date as it relies on the following files that have been changed since the diagnostic was generated',
+          },
+        );
 
         outdatedAdvice.push({
           type: 'list',
-          list: outdatedFilesArr.map((filename) =>
-            `<filelink target="${filename}" />`
+          list: outdatedFilesArr.map(
+            (filename) => `<filelink target="${filename}" />`,
           ),
         });
       }
@@ -481,7 +494,7 @@ export default class DiagnosticsPrinter extends Error {
 
       // Print advice
       for (const item of advice) {
-        const noSpacer = printAdvice(item, {
+        const res = printAdvice(item, {
           printer: this,
           flags: this.flags,
           missingFileSources: this.missingFileSources,
@@ -489,8 +502,11 @@ export default class DiagnosticsPrinter extends Error {
           diagnostic: diag,
           reporter,
         });
-        if (!noSpacer) {
+        if (res.printed) {
           reporter.spacer();
+        }
+        if (res.truncated) {
+          this.hasTruncatedDiagnostics = true;
         }
       }
 
@@ -545,6 +561,12 @@ export default class DiagnosticsPrinter extends Error {
 
     if (isError) {
       reporter.hr();
+    }
+
+    if (this.hasTruncatedDiagnostics) {
+      reporter.warn(
+        'Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.',
+      );
     }
 
     for (const handler of this.beforeFooterPrint) {
@@ -606,7 +628,7 @@ export default class DiagnosticsPrinter extends Error {
     }
 
     if (filteredCount > 0) {
-      str += formatAnsi.brightBlack(` (${filteredCount} filtered)`);
+      str += `<brightBlack> (${filteredCount} filtered)</brightBlack>`;
     }
 
     reporter.error(str);
@@ -615,7 +637,7 @@ export default class DiagnosticsPrinter extends Error {
       const {maxDiagnostics} = this.flags;
       reporter.warn(
         `Only <number>${maxDiagnostics}</number> errors shown, add the <emphasis>--show-all-diagnostics</emphasis> flag to view the remaining <number>${displayableProblems -
-        maxDiagnostics}</number> errors`,
+          maxDiagnostics}</number> errors`,
       );
     }
   }

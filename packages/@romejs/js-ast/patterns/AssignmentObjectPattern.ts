@@ -13,14 +13,12 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type AssignmentObjectPattern =
-  & JSNodeBase
-  & {
-    type: 'AssignmentObjectPattern';
-    meta?: PatternMeta;
-    properties: Array<AssignmentObjectPatternProperty>;
-    rest: undefined | AssignmentIdentifier;
-  };
+export type AssignmentObjectPattern = JSNodeBase & {
+  type: 'AssignmentObjectPattern';
+  meta?: PatternMeta;
+  properties: Array<AssignmentObjectPatternProperty>;
+  rest: undefined | AssignmentIdentifier;
+};
 
 export const assignmentObjectPattern = createBuilder<AssignmentObjectPattern>(
   'AssignmentObjectPattern',

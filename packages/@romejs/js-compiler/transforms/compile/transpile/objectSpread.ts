@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
+import {Path, TransformExitResult} from '@romejs/js-compiler';
 import {
   AnyNode,
   AnyObjectMember,
@@ -27,7 +27,6 @@ import {
   CallExpression,
 } from '@romejs/js-ast';
 import {template} from '@romejs/js-ast-utils';
-import {TransformExitResult} from '@romejs/js-compiler';
 
 function hasSpreadProperty(props: Array<AnyNode>): boolean {
   for (const prop of props) {
@@ -45,7 +44,9 @@ function getRestProperty(
     | VariableDeclarationStatement
     | VariableDeclaration
     | AnyTargetBindingPattern,
-): undefined | BindingIdentifier {
+):
+  | undefined
+  | BindingIdentifier {
   if (node === undefined) {
     return undefined;
   }
@@ -69,6 +70,8 @@ function getRestProperty(
     case 'BindingObjectPattern':
       return node.rest;
   }
+
+  return undefined;
 }
 
 function transformSpreadProperty(
@@ -80,7 +83,7 @@ function transformSpreadProperty(
 
   function pushProps() {
     if (props.length === 0 && assignArgs.length > 0) {
-      return undefined;
+      return;
     }
 
     assignArgs.push(objectExpression.create({properties: props}));
@@ -142,7 +145,7 @@ function transformRestProperty(
     for (const prop of declarator.id.properties) {
       if (prop.type === 'BindingObjectPatternProperty') {
         if (prop.key.type === 'ComputedPropertyKey' || prop.key.value.type !==
-        'Identifier') {
+            'Identifier') {
           throw new Error('unimplemented');
         } else {
           removeProps.push(prop.key.value.name);
@@ -191,7 +194,8 @@ export default {
     const {node} = path;
 
     if (node.type === 'VariableDeclarationStatement' &&
-      getRestProperty(node) !== undefined) {
+          getRestProperty(node) !==
+          undefined) {
       return transformRestProperty(path, node.declaration);
     }
 

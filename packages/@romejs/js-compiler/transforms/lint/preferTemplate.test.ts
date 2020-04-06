@@ -8,12 +8,17 @@
 import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
-test('prefer template', async (t) => {
-  const template1 = await testLint(`const foo = 'bar'; console.log(foo + 'baz')`);
+test(
+  'prefer template',
+  async (t) => {
+    const template1 = await testLint(
+      `const foo = 'bar'; console.log(foo + 'baz')`,
+    );
 
-  t.snapshot(template1);
+    t.snapshot(template1);
 
-  const template2 = await testLint(`console.log((1 * 2) + 'baz')`);
+    const template2 = await testLint(`console.log((1 * 2) + 'baz')`);
 
-  t.snapshot(template2);
-});
+    t.snapshot(template2);
+  },
+);

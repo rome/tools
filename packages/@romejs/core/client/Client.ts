@@ -5,26 +5,31 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterQueryResponse} from '@romejs/core';
-import {Event} from '@romejs/events';
-import {ClientFlags} from '../common/types/client';
-import {ClientRequestType} from './ClientRequest';
-import {Reporter} from '@romejs/cli-reporter';
-import {DEFAULT_CLIENT_FLAGS} from '../common/types/client';
-import ClientRequest from './ClientRequest';
+import {
+  ClientFlags,
+  ClientFlagsJSON,
+  DEFAULT_CLIENT_FLAGS,
+} from '../common/types/client';
+import ClientRequest, {ClientRequestType} from './ClientRequest';
 import Master from '../master/Master';
-import {MasterBridge, SOCKET_PATH, CLI_SOCKET_PATH} from '@romejs/core';
+import {
+  MasterBridge,
+  MasterQueryResponse,
+  SOCKET_PATH,
+  CLI_SOCKET_PATH,
+} from '@romejs/core';
 import fork from '../common/utils/fork';
-import {createBridgeFromLocal, createBridgeFromSocket} from '@romejs/events';
-import {ReporterDerivedStreams} from '@romejs/cli-reporter';
+import {
+  Event,
+  createBridgeFromLocal,
+  createBridgeFromSocket,
+} from '@romejs/events';
+import {Reporter, ReporterDerivedStreams} from '@romejs/cli-reporter';
 import prettyFormat from '@romejs/pretty-format';
 import {VERSION} from '../common/constants';
 import {TarWriter} from '@romejs/codec-tar';
 import {Trace, Profiler, Profile, TraceEvent} from '@romejs/v8';
-import {
-  PartialMasterQueryRequest,
-  MasterBridgeJSONFlags,
-} from '../common/bridges/MasterBridge';
+import {PartialMasterQueryRequest} from '../common/bridges/MasterBridge';
 import {loadUserConfig, UserConfig} from '../common/userConfig';
 import stream = require('stream');
 
@@ -49,7 +54,7 @@ type ClientOptions = {
   stdout?: stream.Writable;
   stderr?: stream.Writable;
   stdin?: NodeJS.ReadStream;
-  flags: Partial<Omit<ClientFlags, 'clientName'>> & {clientName: string};
+  flags: Partial<Omit<ClientFlags, 'clientName'>>;
 };
 
 export type ClientProfileOptions = {
@@ -90,16 +95,20 @@ export default class Client {
 
     this.reporter = new Reporter({
       stdin: opts.stdin,
-      silent: this.flags.silent === true || opts.stdout === undefined ||
-      opts.stderr === undefined,
       verbose: this.flags.verbose === true,
       markupOptions: {
         cwd: this.flags.cwd,
       },
     });
 
+    // Suppress stdout when silent is set
+    const isSilent = this.flags.silent === true || opts.stdout === undefined ||
+        opts.stderr ===
+        undefined;
+    const stdout = isSilent ? undefined : opts.stdout;
+
     this.derivedReporterStreams = this.reporter.attachStdoutStreams(
-      opts.stdout,
+      stdout,
       opts.stderr,
     );
 
@@ -119,7 +128,18 @@ export default class Client {
   requestResponseEvent: Event<ClientRequestResponseResult, void>;
   endEvent: Event<void, void>;
 
-  getBridgeJSONFlags(): MasterBridgeJSONFlags {
+  setFlags(flags: Partial<ClientFlags>) {
+    if (this.bridgeStatus !== undefined) {
+      throw new Error('Already connected to bridge. Cannot change client flags.');
+    }
+
+    this.flags = {
+      ...this.flags,
+      ...flags,
+    };
+  }
+
+  getClientJSONFlags(): ClientFlagsJSON {
     return {
       ...this.flags,
       cwd: this.flags.cwd.join(),
@@ -211,9 +231,8 @@ export default class Client {
       }
 
       // Fetch profiles
-      const progress = this.reporter.progress();
+      const progress = this.reporter.progress({title: 'Fetching profiles'});
       progress.setTotal(fetchers.length);
-      progress.setTitle('Fetching profiles');
       for (const [text, callback] of fetchers) {
         progress.setText(text);
         const profile = await callback();
@@ -305,7 +324,7 @@ export default class Client {
 
       // Add client flags
       writer.append({name: 'clientFlags.json'}, stringify(
-        this.getBridgeJSONFlags(),
+        this.getClientJSONFlags(),
       ));
 
       function stringify(val: JSONValue): string {
@@ -408,7 +427,7 @@ export default class Client {
         hasClearScreen: this.reporter.hasClearScreen,
         columns: stdout.columns,
         useRemoteReporter: true,
-        flags: this.getBridgeJSONFlags(),
+        flags: this.getClientJSONFlags(),
       }),
 
       bridge.handshake(),
@@ -481,7 +500,13 @@ export default class Client {
 
       const socketServer = net.createServer(() => {
         cleanup();
-        resolve(this.tryConnectToNewDaemon());
+
+        resolve(this.tryConnectToExistingDaemon().then((bridge) => {
+          if (bridge !== undefined) {
+            this.reporter.success(`Started daemon!`);
+          }
+          return bridge;
+        }));
       });
 
       function listen() {
@@ -523,16 +548,7 @@ export default class Client {
       proc.kill();
     }
 
-    console.log('ughhh???');
     return undefined;
-  }
-
-  async tryConnectToNewDaemon(): Promise<undefined | MasterBridge> {
-    const bridge = await this.tryConnectToExistingDaemon();
-    if (bridge !== undefined) {
-      this.reporter.success(`Started daemon!`);
-      return bridge;
-    }
   }
 
   async tryConnectToExistingDaemon(): Promise<undefined | MasterBridge> {
@@ -548,7 +564,7 @@ export default class Client {
 
       socket.on('error', (err: NodeJS.ErrnoException) => {
         if (err.code === 'ENOENT' || err.code === 'ECONNREFUSED' || err.code ===
-        'EADDRINUSE') {
+            'EADDRINUSE') {
           resolve();
         } else {
           reject(err);

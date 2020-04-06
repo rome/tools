@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Context, Path} from '@romejs/js-compiler';
+import {Context, Path, TransformExitResult} from '@romejs/js-compiler';
 import {
   AnyNode,
   functionHead,
@@ -17,8 +17,6 @@ import {
   FunctionDeclaration,
   ClassDeclaration,
   ClassExpression,
-} from '@romejs/js-ast';
-import {
   classMethod,
   callExpression,
   thisExpression,
@@ -32,7 +30,6 @@ import {
   identifier,
 } from '@romejs/js-ast';
 import {template} from '@romejs/js-ast-utils';
-import {TransformExitResult} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
 
 function transformClass(
@@ -55,8 +52,8 @@ function transformClass(
   const {superClass} = node.meta;
   if (superClass !== undefined) {
     if (superClass.type === 'ReferenceIdentifier' && scope.hasBinding(
-      superClass.name,
-    )) {
+        superClass.name,
+      )) {
       superClassRef = superClass;
     } else {
       superClassRef = referenceIdentifier.create({
@@ -70,7 +67,8 @@ function transformClass(
 
   // get the class name, if there's no class id then generate a new name
   const className: string = node.id === undefined
-    ? scope.generateUid('class') : node.id.name;
+    ? scope.generateUid('class')
+    : node.id.name;
 
   // push on the superClass setup
   if (superClass !== undefined) {
@@ -124,14 +122,13 @@ function transformClass(
 
       // TODO super.foo
       if (node.type === 'MemberExpression' && node.object.type === 'Super') {
-        const classMethod2 = path.findAncestry((path) =>
-          path.node.type === 'ClassMethod'
-        );
+        const classMethod2 = path.findAncestry((path) => path.node.type ===
+          'ClassMethod');
         if (classMethod2 === undefined) {
           throw new Error('Expected to find class method here');
         }
         const isStatic = classMethod.assert(classMethod2.node).meta.static ===
-        true;
+          true;
 
         const {property} = node;
 
@@ -154,15 +151,14 @@ function transformClass(
 
       // super.foo();
       if (node.type === 'CallExpression' && node.callee.type ===
-      'MemberExpression' && node.callee.object.type === 'Super') {
-        const classMethod2 = path.findAncestry((path) =>
-          path.node.type === 'ClassMethod'
-        );
+          'MemberExpression' && node.callee.object.type === 'Super') {
+        const classMethod2 = path.findAncestry((path) => path.node.type ===
+          'ClassMethod');
         if (classMethod2 === undefined) {
           throw new Error('Expected to find class method here');
         }
         const isStatic = classMethod.assert(classMethod2.node).meta.static ===
-        true;
+          true;
 
         const args = node.arguments;
         const {property} = node.callee;
@@ -259,7 +255,7 @@ function transformClass(
         template.statement`function ${className}() {}`,
       );
     } else {
-      _constructor =
+        _constructor =
         functionDeclaration.assert(
           template.statement`function ${className}(...args) {${superClassRef}.apply(this, args);}`,
         );
@@ -282,8 +278,9 @@ export default {
 
     // correctly replace an export class with the class node then append the declarations
     if ((node.type === 'ExportLocalDeclaration' || node.type ===
-    'ExportDefaultDeclaration') && node.declaration !== undefined &&
-      node.declaration.type === 'ClassDeclaration') {
+          'ExportDefaultDeclaration') && node.declaration !== undefined &&
+          node.declaration.type ===
+          'ClassDeclaration') {
       const {_constructor, declarations, prependDeclarations} = transformClass(
         node.declaration,
         path.getChildPath('declaration'),
@@ -312,7 +309,8 @@ export default {
     // turn a class expression into an IIFE that returns a class declaration
     if (node.type === 'ClassExpression') {
       const className = node.id === undefined
-        ? scope.generateUid('class') : node.id.name;
+        ? scope.generateUid('class')
+        : node.id.name;
 
       return callExpression.create({
         callee: arrowFunctionExpression.create({

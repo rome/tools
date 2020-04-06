@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+const {root, devFolder} = require('./_constants.cjs');
 const child = require('child_process');
 const path = require('path');
 const fs = require('fs');
@@ -55,4 +56,22 @@ exports.getBuilderName = function(name) {
     const rest = name.slice(startingCapitals.length - 1);
     return startingCapitals.slice(0, -1).toLowerCase() + rest;
   }
+};
+
+exports.inverse = function(str) {
+  return `\u001b[7m ${str} \u001b[27m`;
+};
+
+exports.buildTrunk = function() {
+  exports.unlink(devFolder);
+  fs.mkdirSync(devFolder);
+
+  console.log(exports.inverse('Building trunk'));
+  exports.execNode([
+    path.join(__dirname, 'vendor/rome.cjs'),
+    'bundle',
+    path.join(root, 'packages/@romejs/cli/bin/rome.ts'),
+    devFolder,
+    '--quiet',
+  ]);
 };

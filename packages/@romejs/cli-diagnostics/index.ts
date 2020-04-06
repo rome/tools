@@ -10,7 +10,6 @@ import {DiagnosticsPrinterOptions} from './types';
 import {Reporter, ReporterStream} from '@romejs/cli-reporter';
 import DiagnosticsPrinter from './DiagnosticsPrinter';
 
-export {default as buildMessageCodeFrame} from './buildMessageCodeFrame';
 export {toLines} from './utils';
 export {
   DEFAULT_PRINTER_FLAGS,

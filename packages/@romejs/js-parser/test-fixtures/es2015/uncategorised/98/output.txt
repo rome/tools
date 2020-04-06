@@ -24,7 +24,9 @@ Program {
   }
   body: Array [
     ImportDeclaration {
+      defaultSpecifier: undefined
       importKind: undefined
+      namedSpecifiers: Array []
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -54,39 +56,23 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ImportNamespaceSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 18
-              index: 18
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
+      namespaceSpecifier: ImportNamespaceSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 18
+            index: 18
+            line: 1
           }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'crypto'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 18
-                  index: 18
-                  line: 1
-                }
-                start: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-              }
-            }
-            importKind: undefined
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        local: ImportSpecifierLocal {
+          name: BindingIdentifier {
+            name: 'crypto'
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -101,8 +87,22 @@ Program {
               }
             }
           }
+          importKind: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 18
+              index: 18
+              line: 1
+            }
+            start: Object {
+              column: 12
+              index: 12
+              line: 1
+            }
+          }
         }
-      ]
+      }
     }
   ]
 }

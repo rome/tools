@@ -15,13 +15,11 @@ import OpenT from '../types/OpenT';
 import buildGraph from './buildGraph';
 import {TransformProjectDefinition} from '@romejs/js-compiler';
 
-export default async function check(
-  opts: {
-    ast: Program;
-    project: TransformProjectDefinition;
-    provider: CheckProvider;
-  },
-): Promise<Diagnostics> {
+export default async function check(opts: {
+  ast: Program;
+  project: TransformProjectDefinition;
+  provider: CheckProvider;
+}): Promise<Diagnostics> {
   const hub = await buildGraph({
     ast: opts.ast,
     connected: true,
@@ -72,7 +70,7 @@ function resolveGraph(hub: Hub): Diagnostics {
 
       if (upperTarget !== undefined) {
         const marker = upperTarget && !(upperTarget instanceof
-        reduced.constructor) ? utils.humanize(upperTarget) : undefined;
+          reduced.constructor) ? utils.humanize(upperTarget) : undefined;
         const {originLoc} = upperTarget;
 
         if (originLoc !== undefined && marker !== undefined) {
@@ -101,7 +99,8 @@ function resolveGraph(hub: Hub): Diagnostics {
 
       context.addNodeDiagnostic(lowerTarget.originNode, description, {
         marker: lowerTarget && !(lowerTarget instanceof reduced.constructor)
-          ? utils.humanize(lowerTarget) : undefined,
+          ? utils.humanize(lowerTarget)
+          : undefined,
       });
       continue;
     }

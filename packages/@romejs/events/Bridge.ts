@@ -62,9 +62,12 @@ export default class Bridge {
       name: 'Bridge.heartbeat',
       direction: 'server<->client',
     });
-    this.heartbeatEvent.subscribe(() => {
-      return undefined;
-    });
+
+    if (this.type !== 'server&client') {
+      this.heartbeatEvent.subscribe(() => {
+        return undefined;
+      });
+    }
 
     this.clear();
     this.init();
@@ -88,7 +91,7 @@ export default class Bridge {
   type: BridgeType;
 
   messageIdCounter: number;
-  // rome-suppress lint/noExplicitAny
+  // rome-suppress-next-line lint/noExplicitAny
   events: Map<string, BridgeEvent<any, any>>;
 
   listeners: Set<string>;
@@ -104,6 +107,11 @@ export default class Bridge {
   }
 
   monitorHeartbeat(timeout: number, onExceeded: () => undefined | Promise<void>) {
+    if (this.type === 'server&client') {
+      // No point in monitoring this since we're the same process
+      return;
+    }
+
     this.heartbeatTimeout = setTimeout(async () => {
       try {
         await this.heartbeatEvent.call(undefined, {timeout});
@@ -131,12 +139,10 @@ export default class Bridge {
     }
   }
 
-  async handshake(
-    opts: {
-      timeout?: number;
-      second?: boolean;
-    } = {},
-  ): Promise<void> {
+  async handshake(opts: {
+    timeout?: number;
+    second?: boolean;
+  } = {}): Promise<void> {
     if (this.hasHandshook) {
       throw new Error('Already performed handshake');
     }
@@ -184,10 +190,10 @@ export default class Bridge {
     return names;
   }
 
-  sendSubscriptions() {
+  sendSubscriptions(): void {
     if (!this.hasHandshook) {
       // If we haven't had the handshake then no point sending them. They'll be sent all at once after
-      return undefined;
+      return;
     }
 
     // Notify the other side of what we're currently subscribed to
@@ -203,16 +209,16 @@ export default class Bridge {
     });
   }
 
-  receivedSubscriptions(names: Array<string>) {
+  receivedSubscriptions(names: Array<string>): void {
     this.listeners = new Set(names);
     this.updatedListenersEvent.send(this.listeners);
   }
 
-  init() {
+  init(): void {
     // This method can be overridden by subclasses, it allows you to add logic such as error serializers
   }
 
-  clear() {
+  clear(): void {
     for (const [, event] of this.events) {
       event.clear();
     }
@@ -235,15 +241,15 @@ export default class Bridge {
   }
 
   //# Connection death
-  assertAlive() {
+  assertAlive(): void {
     if (this.alive === false) {
       throw new Error('Bridge is dead');
     }
   }
 
-  endWithError(err: Error) {
+  endWithError(err: Error): void {
     if (this.alive === false) {
-      return undefined;
+      return;
     }
 
     this.alive = false;
@@ -288,7 +294,8 @@ export default class Bridge {
     // Fetch some metadata for hydration
     const tranport = this.errorTransports.get(err.name);
     const metadata: JSONObject = tranport === undefined
-      ? {} : tranport.serialize(err);
+      ? {}
+      : tranport.serialize(err);
 
     return {
       id,
@@ -319,8 +326,8 @@ export default class Bridge {
 
     if (msg.type === 'response') {
       if (this.prioritizedResponses.size > 0 && !this.prioritizedResponses.has(
-        msg.id,
-      )) {
+          msg.id,
+        )) {
         this.deprioritizedResponseQueue.push(msg);
         return;
       }

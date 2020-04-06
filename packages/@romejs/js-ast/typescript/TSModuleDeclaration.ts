@@ -13,15 +13,13 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSModuleDeclaration =
-  & JSNodeBase
-  & {
-    type: 'TSModuleDeclaration';
-    id: BindingIdentifier | StringLiteral;
-    global?: boolean;
-    body?: TSModuleBlock | TSModuleDeclaration;
-    declare?: boolean;
-  };
+export type TSModuleDeclaration = JSNodeBase & {
+  type: 'TSModuleDeclaration';
+  id: BindingIdentifier | StringLiteral;
+  global?: boolean;
+  body?: TSModuleBlock | TSModuleDeclaration;
+  declare?: boolean;
+};
 
 export const tsModuleDeclaration = createBuilder<TSModuleDeclaration>(
   'TSModuleDeclaration',

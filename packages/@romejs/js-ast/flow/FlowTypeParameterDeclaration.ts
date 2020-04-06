@@ -8,12 +8,10 @@
 import {JSNodeBase, FlowTypeParameter} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowTypeParameterDeclaration =
-  & JSNodeBase
-  & {
-    type: 'FlowTypeParameterDeclaration';
-    params: Array<FlowTypeParameter>;
-  };
+export type FlowTypeParameterDeclaration = JSNodeBase & {
+  type: 'FlowTypeParameterDeclaration';
+  params: Array<FlowTypeParameter>;
+};
 
 export const flowTypeParameterDeclaration = createBuilder<
   FlowTypeParameterDeclaration

@@ -15,7 +15,8 @@ export default {
     const {node} = path;
 
     if (node.type === 'UnaryExpression' && node.operator === 'delete' &&
-      node.argument.type === 'ReferenceIdentifier') {
+          node.argument.type ===
+          'ReferenceIdentifier') {
       path.context.addNodeDiagnostic(node, descriptions.LINT.NO_DELETE_VARS);
     }
 

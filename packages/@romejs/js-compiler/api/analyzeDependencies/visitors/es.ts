@@ -6,13 +6,13 @@
  */
 
 import {ConstExportModuleKind, ConstImportModuleKind} from '@romejs/js-ast';
-import {Path} from '@romejs/js-compiler';
+import {Path, ImportBinding} from '@romejs/js-compiler';
 import {AnalyzeDependencyName} from '@romejs/core';
-import {ImportBinding} from '@romejs/js-compiler';
 import {
   isFunctionNode,
   isInTypeAnnotation,
   getBindingIdentifiers,
+  getImportSpecifiers,
 } from '@romejs/js-ast-utils';
 import {
   ImportRecord,
@@ -73,7 +73,8 @@ export default {
       if (specifiers !== undefined) {
         for (const specifier of specifiers) {
           const kind: ConstExportModuleKind = maybeTypeBinding(getExportKind(
-            specifier.exportKind || node.exportKind,
+              specifier.exportKind ||
+              node.exportKind,
           ), scope, specifier.local);
 
           context.record(new ExportRecord({
@@ -105,57 +106,65 @@ export default {
       const specifiersKinds: Array<ConstImportModuleKind> = [];
       const exportedNames: Array<AnalyzeDependencyName> = [];
 
-      const {specifiers} = node;
-      if (specifiers !== undefined) {
-        for (const specifier of specifiers) {
-          switch (specifier.type) {
-            case 'ExportExternalSpecifier':
-              {
-                const kind = getImportKind(specifier.exportKind ||
-                node.exportKind);
-                specifiersKinds.push(kind);
+      const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
 
-                exportedNames.push({
-                  name: specifier.local.name,
-                  kind,
-                  loc: specifier.loc,
-                });
-
-                context.record(new ExportRecord({
-                  type: 'external',
-                  kind,
-                  loc: specifier.loc,
-                  imported: specifier.local.name,
-                  exported: specifier.exported.name,
-                  source: source.value,
-                }));
-                break;
-              }
-
-            case 'ExportNamespaceSpecifier':
-              throw new Error('unimplemented');
-
-            case 'ExportDefaultSpecifier':
-              throw new Error('unimplemented');
-          }
-        }
-
-        context.record(new ImportRecord({
-          type: 'es',
-          async: false,
-          kind: getKindWithSpecifiers(node.exportKind, specifiersKinds),
-          names: exportedNames,
-          loc: source.loc,
+      if (defaultSpecifier !== undefined) {
+        context.record(new ExportRecord({
+          type: 'external',
+          kind: 'value',
+          loc: defaultSpecifier.loc,
+          imported: 'default',
+          exported: defaultSpecifier.exported.name,
           source: source.value,
-          optional: isOptional(path),
-          all: false,
         }));
       }
+
+      if (namespaceSpecifier !== undefined) {
+        context.record(new ExportRecord({
+          type: 'externalNamespace',
+          kind: 'value',
+          loc: namespaceSpecifier.loc,
+          exported: namespaceSpecifier.exported.name,
+          source: source.value,
+        }));
+      }
+
+      for (const specifier of namedSpecifiers) {
+        const kind = getImportKind(specifier.exportKind || node.exportKind);
+        specifiersKinds.push(kind);
+
+        exportedNames.push({
+          name: specifier.local.name,
+          kind,
+          loc: specifier.loc,
+        });
+
+        context.record(new ExportRecord({
+          type: 'external',
+          kind,
+          loc: specifier.loc,
+          imported: specifier.local.name,
+          exported: specifier.exported.name,
+          source: source.value,
+        }));
+      }
+
+      context.record(new ImportRecord({
+        type: 'es',
+        async: false,
+        kind: getKindWithSpecifiers(node.exportKind, specifiersKinds),
+        names: exportedNames,
+        loc: source.loc,
+        source: source.value,
+        optional: isOptional(path),
+        all: false,
+      }));
     }
 
     // TS: import A = require('B');
     if (node.type === 'TSImportEqualsDeclaration' &&
-      node.moduleReference.type === 'TSExternalModuleReference') {
+          node.moduleReference.type ===
+          'TSExternalModuleReference') {
       context.record(new ImportRecord({
         type: 'cjs',
         kind: 'value',
@@ -190,7 +199,7 @@ export default {
     }
 
     if (node.type === 'ExportAllDeclaration' || node.type ===
-    'ExportDefaultDeclaration' || node.type === 'ExportLocalDeclaration') {
+        'ExportDefaultDeclaration' || node.type === 'ExportLocalDeclaration') {
       context.record(new ESExportRecord(getExportKind(node.exportKind), node));
     }
 
@@ -202,34 +211,32 @@ export default {
       const specifierKinds: Array<ConstImportModuleKind> = [];
       const names: Array<AnalyzeDependencyName> = [];
 
-      const {specifiers} = node;
-      if (specifiers !== undefined) {
-        for (const specifier of specifiers) {
-          if (specifier.type === 'ImportNamespaceSpecifier') {
-            hasNamespaceSpecifier = true;
-            break;
-          }
+      for (const specifier of getImportSpecifiers(node)) {
+        if (specifier.type === 'ImportNamespaceSpecifier') {
+          hasNamespaceSpecifier = true;
+          break;
+        }
 
-          const kind: ConstImportModuleKind = getImportKind(
-            specifier.local.importKind || node.importKind,
-          );
-          specifierKinds.push(kind);
+        const kind: ConstImportModuleKind = getImportKind(
+            specifier.local.importKind ||
+            node.importKind,
+        );
+        specifierKinds.push(kind);
 
-          if (specifier.type === 'ImportDefaultSpecifier') {
-            names.push({
-              kind,
-              loc: specifier.loc,
-              name: 'default',
-            });
-          }
+        if (specifier.type === 'ImportDefaultSpecifier') {
+          names.push({
+            kind,
+            loc: specifier.loc,
+            name: 'default',
+          });
+        }
 
-          if (specifier.type === 'ImportSpecifier') {
-            names.push({
-              kind,
-              loc: specifier.loc,
-              name: specifier.imported.name,
-            });
-          }
+        if (specifier.type === 'ImportSpecifier') {
+          names.push({
+            kind,
+            loc: specifier.loc,
+            name: specifier.imported.name,
+          });
         }
       }
 
@@ -246,9 +253,9 @@ export default {
     }
 
     // Detect top level await
-    if (node.type === 'AwaitExpression' && path.findAncestry((path) =>
-      isFunctionNode(path.node)
-    ) === undefined) {
+    if (node.type === 'AwaitExpression' && path.findAncestry(
+        (path) => isFunctionNode(path.node),
+      ) === undefined) {
       const {loc} = node;
       if (loc === undefined) {
         throw new Error('loc is undefined on AwaitExpression we want to mark');
@@ -271,9 +278,9 @@ export default {
         // These are nodes that will defer the execution of code outside the init path
 
         // (They could still be triggered with an actual function call but this is just for some basic analysis)
-        const deferredExecution = path.findAncestry((path) =>
-          isFunctionNode(path.node) || path.node.type === 'ClassProperty'
-        );
+        const deferredExecution = path.findAncestry((path) => isFunctionNode(
+          path.node,
+        ) || path.node.type === 'ClassProperty');
         const isTop = deferredExecution === undefined;
 
         let kind: ConstImportModuleKind = getImportKind(meta.kind);

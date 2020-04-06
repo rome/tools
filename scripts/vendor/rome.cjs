@@ -57,294 +57,6 @@ function ___R$project$rome$$romejs$ob1$index_ts$add(a, b) {
     return x - 1;
   }
 
-  // project-rome/@romejs/diagnostics/normalize.ts
-const ___R$project$rome$$romejs$diagnostics$normalize_ts = {
-    normalizePosition: ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizePosition,
-    normalizeDiagnostics: ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizeDiagnostics,
-    normalizeDiagnostic: ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizeDiagnostic,
-    normalizeDiagnosticAdviceItem: ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizeDiagnosticAdviceItem,
-  };
-  function ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeLanguage(
-    language,
-  ) {
-    if (language === undefined) {
-      return 'unknown';
-    } else {
-      return language;
-    }
-  }
-
-  function ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizePositionAssert(position) {
-    const normalized = ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizePosition(position);
-    if (normalized === undefined) {
-      return (
-        {
-          index: ___R$project$rome$$romejs$ob1$index_ts$number0Neg1,
-          line: ___R$project$rome$$romejs$ob1$index_ts$number1,
-          column: ___R$project$rome$$romejs$ob1$index_ts$number0,
-        }
-      );
-    } else {
-      return normalized;
-    }
-  }
-
-  function ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizePosition(
-    position,
-  ) {
-    if (position === undefined) {
-      return undefined;
-    }
-
-    const {line, column, index} = position;
-
-    if (typeof line !== 'number' || typeof column !== 'number' ||
-    typeof index !==
-    'number') {
-      return undefined;
-    }
-
-    return (
-      {
-        index: ___R$project$rome$$romejs$ob1$index_ts$coerce0(Math.max(index, -1)),
-        line: ___R$project$rome$$romejs$ob1$index_ts$coerce1(Math.max(line, 1)),
-        column: ___R$project$rome$$romejs$ob1$index_ts$coerce0(Math.max(column, 0)),
-      }
-    );
-  }
-
-  function ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(value, def) {
-    if (value === undefined) {
-      return def;
-    } else {
-      return value;
-    }
-  }
-
-  function ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizeDiagnostics(
-    diagnostics,
-    opts,
-  ) {
-    return diagnostics.map((diag) => ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizeDiagnostic(diag, opts));
-  }
-
-  function ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeFilename(
-    filename,
-    opts,
-  ) {
-    if (filename === undefined) {
-      return 'unknown';
-    } else if (opts.normalizeFilename === undefined) {
-      return filename;
-    } else {
-      return opts.normalizeFilename(filename);
-    }
-  }
-
-  function ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizeDiagnostic(
-    diagnostic,
-    opts,
-  ) {
-    const filename = ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeFilename(diagnostic.filename, opts);
-    const mtime = diagnostic.mtime;
-    const origins = ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(diagnostic.origins, []);
-
-    const start = ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizePosition(diagnostic.start);
-    const end = ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizePosition(diagnostic.end);
-
-    const fixable = ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(diagnostic.fixable, false);
-    const sourceText = diagnostic.sourceText;
-    const language = ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeLanguage(diagnostic.language);
-    const sourceType = ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(diagnostic.sourceType, 'unknown');
-    const message = ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(diagnostic.message, 'No message provided');
-    const marker = diagnostic.marker;
-    const dependencies = ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeDependencies(diagnostic.dependencies, opts);
-
-    const diag = {
-      category: diagnostic.category,
-      label: diagnostic.label,
-      message,
-      origins,
-      marker,
-      language,
-      sourceType,
-      sourceText,
-      fixable,
-      dependencies,
-      advice: [],
-      filename,
-      mtime,
-      start,
-      end,
-    };
-
-    const advice = ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeDiagnosticAdvice(diag, diagnostic.advice, opts);
-
-    return (
-      Object.assign(
-        {
-        },
-        diag,
-        {
-          advice,
-        },
-      )
-    );
-  }
-
-  function ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeDependencies(
-    value,
-    opts,
-  ) {
-    if (value === undefined) {
-      return [];
-    } else {
-      const deps = [];
-
-      for (const elem of value) {
-        if (typeof elem === 'object' && elem != null &&
-          typeof elem.filename ===
-          'string' &&
-          typeof elem.mtime === 'number') {
-          deps.push(
-            {
-              filename: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeFilename(elem.filename, opts),
-              mtime: elem.mtime,
-            },
-          );
-        }
-      }
-
-      return deps;
-    }
-  }
-
-  function ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeAdviceStackFrame(
-    value,
-    opts,
-  ) {
-    return (
-      {
-        prefix: value.prefix,
-        suffix: value.suffix,
-        object: value.object,
-        property: value.property,
-        filename: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeFilename(value.filename, opts),
-        line: value.line,
-        column: value.column,
-        sourceText: value.sourceText,
-        language: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeLanguage(value.language),
-      }
-    );
-  }
-
-  function ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeAdviceStackFrames(
-    value,
-    opts,
-  ) {
-    if (Array.isArray(value)) {
-      return value.map((item) => ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeAdviceStackFrame(item, opts));
-    } else {
-      return [];
-    }
-  }
-
-  function ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeDiagnosticAdvice(
-    diag,
-    value,
-    opts,
-  ) {
-    if (Array.isArray(value)) {
-      return value.map((item) => ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizeDiagnosticAdviceItem(diag, item, opts));
-    } else {
-      return [];
-    }
-  }
-
-  function ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizeDiagnosticAdviceItem(
-    diag,
-    part,
-    opts,
-  ) {
-    switch (part.type) {
-      case 'log':
-        return (
-          {
-            type: 'log',
-            category: part.category,
-            message: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(part.message, 'No message provided'),
-            compact: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(part.compact, false),
-          }
-        );
-
-      case 'list':
-        return (
-          {
-            type: 'list',
-            list: part.list,
-            truncate: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(part.truncate, false),
-            reverse: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(part.reverse, false),
-            ordered: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(part.ordered, false),
-          }
-        );
-
-      case 'code':
-        return (
-          {
-            type: 'code',
-            code: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(part.code, ''),
-            language: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeLanguage(part.language || diag.language),
-            sourceType: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(part.sourceType || diag.sourceType, 'unknown'),
-          }
-        );
-
-      case 'frame':
-        return (
-          {
-            type: 'frame',
-            sourceType: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(part.sourceType || diag.sourceType, 'unknown'),
-            language: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeLanguage(part.language || diag.language),
-            sourceText: part.sourceText,
-            marker: part.marker,
-            filename: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeFilename(part.filename, opts),
-            mtime: part.mtime,
-            start: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizePositionAssert(part.start),
-            end: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizePositionAssert(part.end),
-          }
-        );
-
-      case 'diff':
-        return (
-          {
-            type: 'diff',
-            diff: part.diff,
-            legend: part.legend,
-          }
-        );
-
-      case 'stacktrace':
-        return (
-          {
-            type: 'stacktrace',
-            title: part.title,
-            frames: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeAdviceStackFrames(part.frames, opts),
-            truncate: ___R$$priv$project$rome$$romejs$diagnostics$normalize_ts$normalizeValue(part.truncate, false),
-          }
-        );
-
-      case 'inspect':
-        return (
-          {
-            type: 'inspect',
-            // @ts-ignore TODO
-
-            // rome-suppress lint/noExplicitAny
-            data: (part.data),
-          }
-        );
-    }
-  }
-
   // project-rome/@romejs/parser-core/types.ts
 const ___R$project$rome$$romejs$parser$core$types_ts = {
     get UNKNOWN_POSITION() {
@@ -399,13 +111,9 @@ const ___R$project$rome$$romejs$path$collections_ts = {
     },
   };
   // Sometimes we don't want to have to deal with what a FilePath serializes into
-
   // For those purposes we have these wrappers around Map and Set. Here we can add some custom logic
-
   // to speed up the usage of FilePaths in these scenarios.
-
   // The API here attempts to match what is expected from the native classes, however we may deviate from it
-
   // to avoid the usage of getters and generator/symbol indirection for iteration.
   class ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathMap {
     constructor(entries) {
@@ -669,7 +377,7 @@ const ___R$$priv$project$rome$$romejs$path$index_ts$os = require(
     getBasename() {
       const {segments} = this;
       const offset = this.isExplicitFolder() ? 2 : 1;
-      return segments[segments.length - offset];
+      return segments[segments.length - offset] || '';
     }
 
     getExtensionlessBasename() {
@@ -1261,7 +969,17 @@ const ___R$$priv$project$rome$$romejs$path$index_ts$os = require(
 
       switch (absoluteTarget) {
         case 'file':
-          return ___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(segments.slice(2));
+          // Automatically normalize a file scheme into an absolute path
+          return (
+            ___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(
+              segments.slice(2).map(
+                (
+                  segment,
+                ) =>
+                  decodeURIComponent(segment),
+              ),
+            )
+          );
 
         default:
           const absoluteSegments = segments.slice(0, 3);
@@ -1814,7 +1532,7 @@ function ___R$project$rome$$romejs$parser$core$index_ts$tryParseWithOptionalOffs
 
     createDiagnostic(opts = {}) {
       const {currentToken} = this;
-      let {message, start, end, loc, token} = opts;
+      let {description: metadata, start, end, loc, token} = opts;
 
       // Allow passing in a TokenBase
       if (token !== undefined) {
@@ -1847,49 +1565,52 @@ function ___R$project$rome$$romejs$parser$core$index_ts$tryParseWithOptionalOffs
       }
 
       // Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
-      if (message === undefined) {
+      if (metadata === undefined) {
+        let message;
         if (currentToken !== undefined && start !== undefined &&
           start.index ===
           currentToken.start) {
-          message = 'Unexpected ' +
-          currentToken.type;
+          message =
+            ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(
+              'Unexpected ' +
+              currentToken.type,
+            );
         } else {
           if (this.isEOF(start.index)) {
-            message = 'Unexpected end of file';
+            message = ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage('Unexpected end of file');
           } else {
             const char = this.input[___R$project$rome$$romejs$ob1$index_ts$get0(start.index)];
             message =
-              'Unexpected character <emphasis>' +
-              ___R$project$rome$$romejs$string$markup$escape_ts$escapeMarkup(char) +
-              '</emphasis>';
+              ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(
+                'Unexpected character <emphasis>' +
+                ___R$project$rome$$romejs$string$markup$escape_ts$escapeMarkup(char) +
+                '</emphasis>',
+              );
           }
         }
+        metadata = {message};
       }
 
-      let errMessage = message +
-      ' (' +
-      start.line +
-      ':' +
-      start.column +
-      ')';
-      if (this.path !== undefined) {
-        errMessage = this.path +
-        ': ' +
-        errMessage +
-        ' Input: ' +
-        this.input;
-      }
+      const metadataWithCategory = Object.assign(
+        {
+        },
+        metadata,
+        {
+          category: metadata.category === undefined
+            ? this.diagnosticCategory : metadata.category,
+        },
+      );
 
       return (
         {
-          message,
-          advice: opts.advice,
-          category: this.diagnosticCategory,
-          sourceText: this.path === undefined ? this.input : undefined,
-          mtime: this.mtime,
-          start,
-          end,
-          filename: this.filename,
+          description: metadataWithCategory,
+          location: {
+            sourceText: this.path === undefined ? this.input : undefined,
+            mtime: this.mtime,
+            start,
+            end,
+            filename: this.filename,
+          },
         }
       );
     }
@@ -1905,7 +1626,7 @@ function ___R$project$rome$$romejs$parser$core$index_ts$tryParseWithOptionalOffs
         throw (
           this.unexpected(
             {
-              message: 'Expected no space between',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PARSER_CORE.EXPECTED_SPACE,
             },
           )
         );
@@ -1934,7 +1655,7 @@ function ___R$project$rome$$romejs$parser$core$index_ts$tryParseWithOptionalOffs
     }
 
     // Get the current token and assert that it's of the specified type, the token stream will also be advanced
-    expectToken(type, message) {
+    expectToken(type, _metadata) {
       const token = this.getToken();
       if (token.type === type) {
         this.nextToken();
@@ -1944,11 +1665,8 @@ function ___R$project$rome$$romejs$parser$core$index_ts$tryParseWithOptionalOffs
         throw (
           this.unexpected(
             {
-              message: message === undefined
-                ? 'Expected token ' +
-                type +
-                ' but got ' +
-                token.type : message,
+              description: _metadata === undefined
+                ? ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PARSER_CORE.EXPECTED_TOKEN(token.type, (type)) : _metadata,
             },
           )
         );
@@ -2054,7 +1772,7 @@ function ___R$project$rome$$romejs$parser$core$index_ts$tryParseWithOptionalOffs
         throw (
           this.unexpected(
             {
-              message: 'Expected end of file',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PARSER_CORE.EXPECTED_EOF,
             },
           )
         );
@@ -2178,7 +1896,8 @@ const ___R$project$rome$$romejs$string$markup$parse_ts = {
 
   const ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags = new Map();
   ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('emphasis', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('number', ['approx']);
+  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('number', ['approx', 'pluralSuffix', 'singularSuffix']);
+  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('grammarNumber', ['plural', 'singular', 'none']);
   ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('hyperlink', ['target']);
   ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('filelink', ['target', 'column', 'line']);
   ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('inverse', []);
@@ -2303,7 +2022,7 @@ const ___R$project$rome$$romejs$string$markup$parse_ts = {
                 throw (
                   this.unexpected(
                     {
-                      message: 'Unclosed string',
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.UNCLOSED_STRING,
                       start: this.getPositionFromIndex(stringValueEnd),
                     },
                   )
@@ -2370,9 +2089,7 @@ const ___R$project$rome$$romejs$string$markup$parse_ts = {
             throw (
               this.unexpected(
                 {
-                  message: 'Unknown tag name <emphasis>' +
-                  rawName +
-                  '</emphasis>',
+                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.UNKNOWN_TAG_NAME(rawName),
                   start: this.getPositionFromIndex(nameToken.start),
                 },
               )
@@ -2397,10 +2114,10 @@ const ___R$project$rome$$romejs$string$markup$parse_ts = {
                 throw (
                   this.unexpected(
                     {
-                      message: key +
-                      ' is not a valid attribute name for <' +
-                      tagName +
-                      '>',
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
+                        tagName,
+                        key,
+                      ),
                     },
                   )
                 );
@@ -2431,7 +2148,7 @@ const ___R$project$rome$$romejs$string$markup$parse_ts = {
               throw (
                 this.unexpected(
                   {
-                    message: 'Expected attribute name',
+                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.EXPECTED_ATTRIBUTE_NAME,
                   },
                 )
               );
@@ -2451,9 +2168,7 @@ const ___R$project$rome$$romejs$string$markup$parse_ts = {
               throw (
                 this.unexpected(
                   {
-                    message: 'Unclosed ' +
-                    tagName +
-                    ' tag',
+                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.UNCLOSED_TAG(tagName),
                   },
                 )
               );
@@ -2467,10 +2182,10 @@ const ___R$project$rome$$romejs$string$markup$parse_ts = {
                   throw (
                     this.unexpected(
                       {
-                        message: 'Expected to close ' +
-                        tagName +
-                        ' but found ' +
-                        name.value,
+                        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.INCORRECT_CLOSING_TAG_NAME(
+                          tagName,
+                          name.value,
+                        ),
                       },
                     )
                   );
@@ -2481,7 +2196,7 @@ const ___R$project$rome$$romejs$string$markup$parse_ts = {
                 throw (
                   this.unexpected(
                     {
-                      message: 'Expected closing tag name',
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.EXPECTED_CLOSING_TAG_NAME,
                     },
                   )
                 );
@@ -2518,7 +2233,7 @@ const ___R$project$rome$$romejs$string$markup$parse_ts = {
             throw (
               this.unexpected(
                 {
-                  message: 'Unknown child start',
+                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.UNKNOWN_START,
                 },
               )
             );
@@ -4287,14 +4002,13 @@ const ___R$project$rome$$romejs$string$markup$format_ts = {
 
     // Normalize filename
     let filename = attributes.get('target') || '';
-    let origFilename = filename;
     if (opts.normalizeFilename !== undefined) {
       filename = opts.normalizeFilename(filename);
     }
 
     // Default text to a humanized version of the filename
     if (text === '') {
-      text = ___R$project$rome$$romejs$string$markup$format_ts$humanizeMarkupFilename([filename, origFilename], opts);
+      text = ___R$project$rome$$romejs$string$markup$format_ts$humanizeMarkupFilename(filename, opts);
 
       const line = attributes.get('line');
       if (line !== undefined) {
@@ -4323,6 +4037,34 @@ const ___R$project$rome$$romejs$string$markup$format_ts = {
     }
   }
 
+  function ___R$$priv$project$rome$$romejs$string$markup$format_ts$formatGrammarNumber(attributes, value) {
+    const num = Number(value);
+
+    const none = attributes.get('none');
+    if (none !== undefined && num === 0) {
+      return none;
+    }
+
+    const singular = attributes.get('singular');
+    if (singular !== undefined && num === 1) {
+      return singular;
+    }
+
+    const plural = attributes.get('plural');
+    if (plural !== undefined) {
+      return plural;
+    }
+
+    return '';
+  }
+
+  function ___R$$priv$project$rome$$romejs$string$markup$format_ts$formatNumber(attributes, value) {
+    const num = Number(value);
+    const human = ___R$project$rome$$romejs$string$utils$humanizeNumber_ts$humanizeNumber(num);
+    const humanWithApprox = ___R$$priv$project$rome$$romejs$string$markup$format_ts$formatApprox(attributes, human);
+    return humanWithApprox;
+  }
+
   function ___R$project$rome$$romejs$string$markup$format_ts$stripMarkupTags(
     input,
     opts = {},
@@ -4336,7 +4078,10 @@ const ___R$project$rome$$romejs$string$markup$format_ts = {
               return ___R$$priv$project$rome$$romejs$string$markup$format_ts$formatFileLink(attributes, value, opts).text;
 
             case 'number':
-              return ___R$$priv$project$rome$$romejs$string$markup$format_ts$formatApprox(attributes, value);
+              return ___R$$priv$project$rome$$romejs$string$markup$format_ts$formatNumber(attributes, value);
+
+            case 'grammarNumber':
+              return ___R$$priv$project$rome$$romejs$string$markup$format_ts$formatGrammarNumber(attributes, value);
 
             case 'duration':
               return ___R$$priv$project$rome$$romejs$string$markup$format_ts$formatApprox(attributes, ___R$project$rome$$romejs$string$utils$humanizeTime_ts$humanizeTime(Number(value), true));
@@ -4406,7 +4151,10 @@ const ___R$project$rome$$romejs$string$markup$format_ts = {
               return ___R$$priv$project$rome$$romejs$string$markup$format_ts$formatApprox(attributes, ___R$project$rome$$romejs$string$utils$humanizeTime_ts$humanizeTime(Number(value), true));
 
             case 'number':
-              return ___R$$priv$project$rome$$romejs$string$markup$format_ts$formatApprox(attributes, ___R$project$rome$$romejs$string$utils$humanizeNumber_ts$humanizeNumber(Number(value)));
+              return ___R$$priv$project$rome$$romejs$string$markup$format_ts$formatNumber(attributes, value);
+
+            case 'grammarNumber':
+              return ___R$$priv$project$rome$$romejs$string$markup$format_ts$formatGrammarNumber(attributes, value);
 
             case 'italic':
               return ___R$project$rome$$romejs$string$ansi$format_ts$formatAnsi.italic(value);
@@ -4522,28 +4270,17 @@ const ___R$project$rome$$romejs$string$markup$format_ts = {
   }
 
   function ___R$project$rome$$romejs$string$markup$format_ts$humanizeMarkupFilename(
-    filenames,
+    filename,
     opts = {},
   ) {
     if (opts.humanizeFilename !== undefined) {
-      const override = opts.humanizeFilename(filenames[0]);
+      const override = opts.humanizeFilename(filename);
       if (override !== undefined) {
         return override;
       }
     }
 
-    if (filenames.length === 0) {
-      return 'unknown';
-    }
-
-    const names = [];
-
-    for (const filename of filenames) {
-      names.push(___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename).format(opts.cwd));
-    }
-
-    // Get the shortest name
-    return names.sort((a, b) => a.length - b.length)[0];
+    return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename).format(opts.cwd);
   }
 
   // project-rome/@romejs/string-markup/escape.ts
@@ -4611,52 +4348,146 @@ const ___R$project$rome$$romejs$string$markup$escape_ts = {
 const ___R$project$rome$$romejs$cli$diagnostics$types_ts = {
   };
 
-  // project-rome/@romejs/cli-reporter/Progress.ts
-// 30 columns a second
-  const ___R$$priv$project$rome$$romejs$cli$reporter$Progress_ts$BOUNCER_INTERVAL = 1000 / 30;
-  const ___R$$priv$project$rome$$romejs$cli$reporter$Progress_ts$BOUNCER_WIDTH = 20;
-
-  const ___R$$priv$project$rome$$romejs$cli$reporter$Progress_ts$DEFAULT_PROGRESS_OPTIONS = {
+  // project-rome/@romejs/cli-reporter/ProgressBase.ts
+const ___R$$priv$project$rome$$romejs$cli$reporter$ProgressBase_ts$DEFAULT_PROGRESS_OPTIONS = {
     name: undefined,
+    title: undefined,
     initDelay: undefined,
     elapsed: true,
     eta: true,
     persistent: false,
   };
 
-  class ___R$project$rome$$romejs$cli$reporter$Progress_ts$default {
-    constructor(reporter, opts = {}, onEnd) {
+  class ___R$project$rome$$romejs$cli$reporter$ProgressBase_ts$default {
+    constructor(reporter, opts = {}) {
+      this.total = undefined;
       this.reporter = reporter;
+      this.current = 0;
+
+      this.approximateTotal = false;
+      this.approximateETA = undefined;
+
+      this.textStack = [];
+      this.text = undefined;
+      this.title =
+        opts.title === undefined
+          ? undefined : reporter.stripMarkup(
+            opts.title,
+          );
+
+      this.paused = false;
+      this.pausedStart = undefined;
+      this.pausedElapsed = 0;
+
       this.opts =
         Object.assign(
           {
           },
-          ___R$$priv$project$rome$$romejs$cli$reporter$Progress_ts$DEFAULT_PROGRESS_OPTIONS,
+          ___R$$priv$project$rome$$romejs$cli$reporter$ProgressBase_ts$DEFAULT_PROGRESS_OPTIONS,
           opts,
         );
+    }
 
-      this.textStack = [];
-      this.text = undefined;
-      this.title = undefined;
+    setCurrent(current) {
+      this.current = current;
+      this.queueRender();
 
+      // Progress complete
+      if (this.total !== undefined && this.current >= this.total &&
+        !this.opts.persistent) {
+        this.end();
+      }
+    }
+
+    setText(text) {
+      this.text = this.reporter.stripMarkup(text);
+      this.queueRender();
+    }
+
+    setApproximateETA(duration) {
+      this.approximateETA = duration;
+    }
+
+    setTotal(total, approximate = false) {
+      this.total = total;
+      this.approximateTotal = approximate;
+      this.queueRender();
+    }
+
+    pushText(text) {
+      this.setText(text);
+      this.textStack.push(text);
+    }
+
+    popText(text) {
+      // Find
+      const {textStack} = this;
+      const index = textStack.indexOf(text);
+      if (index === -1) {
+        throw new Error('No pushed text: ' +
+        text);
+      }
+
+      // Remove
+      textStack.splice(index, 1);
+
+      // Set last
+      const last = textStack[textStack.length - 1];
+      this.setText(last === undefined ? '' : last);
+    }
+
+    tick() {
+      this.setCurrent(this.current + 1);
+    }
+
+    resume() {
+      if (!this.paused || this.pausedStart === undefined) {
+        return;
+      }
+
+      this.pausedElapsed += Date.now() - this.pausedStart;
       this.pausedStart = undefined;
-      this.pausedElapsed = 0;
+      this.paused = false;
+      this.render();
+    }
+
+    pause() {
+      if (this.paused) {
+        return;
+      }
+
+      this.pausedStart = Date.now();
+      this.paused = true;
+      this.render();
+    }
+
+    queueRender() {
+      this.render();
+    }
+
+    end() {}
+
+    render() {}
+  }
+
+  // project-rome/@romejs/cli-reporter/Progress.ts
+// 30 columns a second
+  const ___R$$priv$project$rome$$romejs$cli$reporter$Progress_ts$BOUNCER_INTERVAL = 1000 / 30;
+  const ___R$$priv$project$rome$$romejs$cli$reporter$Progress_ts$BOUNCER_WIDTH = 20;
+
+  class ___R$project$rome$$romejs$cli$reporter$Progress_ts$default extends ___R$project$rome$$romejs$cli$reporter$ProgressBase_ts$default {
+    constructor(reporter, opts = {}, onEnd) {
+      super(reporter, opts);
 
       this.startTime = Date.now();
       this.lastRenderTime = Date.now();
       this.lastRenderCurrent = 0;
 
       this.closed = false;
-      this.current = 0;
-      this.approximateTotal = false;
-      this.total = undefined;
-      this.approximateETA = undefined;
       this.onEnd = onEnd;
 
       this.delay = 60;
       this.renderEvery = 0;
-
-      this.paused = false;
 
       this.streamToBouncerStart = new Map();
       this.startBouncer();
@@ -4680,9 +4511,6 @@ const ___R$project$rome$$romejs$cli$diagnostics$types_ts = {
 
         case 'PROGRESS_SET_TOTAL':
           return this.setTotal(msg.total, msg.approximate);
-
-        case 'PROGRESS_SET_TITLE':
-          return this.setTitle(msg.title);
 
         case 'PROGRESS_SET_TEXT':
           return this.setText(msg.text);
@@ -4708,27 +4536,6 @@ const ___R$project$rome$$romejs$cli$diagnostics$types_ts = {
         case 'PROGRESS_PAUSE':
           return this.pause();
       }
-    }
-
-    resume() {
-      if (!this.paused || this.pausedStart === undefined) {
-        return;
-      }
-
-      this.pausedElapsed += Date.now() - this.pausedStart;
-      this.pausedStart = undefined;
-      this.paused = false;
-      this.render();
-    }
-
-    pause() {
-      if (this.paused) {
-        return;
-      }
-
-      this.pausedStart = Date.now();
-      this.paused = true;
-      this.render();
     }
 
     getElapsedTime() {
@@ -4788,39 +4595,17 @@ const ___R$project$rome$$romejs$cli$diagnostics$types_ts = {
         return;
       }
 
-      this.current = current;
-
-      // Schedule render
-      if (this.renderTimer === undefined) {
-        this.queueRender();
-      }
+      super.setCurrent(current);
 
       if (this.isRenderDue()) {
         this.render();
       }
-
-      // Progress complete
-      if (this.total !== undefined && this.current >= this.total &&
-        !this.opts.persistent) {
-        this.end();
-      }
-    }
-
-    setApproximateETA(duration) {
-      this.approximateETA = duration;
     }
 
     setTotal(total, approximate = false) {
-      this.total = total;
-      this.approximateTotal = approximate;
+      super.setTotal(total, approximate);
       this.renderEvery = Math.round(total / 100);
       this.endBouncer();
-      this.queueRender();
-    }
-
-    setTitle(title) {
-      this.title = this.reporter.stripMarkup(title);
-      this.queueRender();
     }
 
     setText(text) {
@@ -4828,34 +4613,7 @@ const ___R$project$rome$$romejs$cli$diagnostics$types_ts = {
         return;
       }
 
-      this.text = this.reporter.stripMarkup(text);
-      this.queueRender();
-    }
-
-    pushText(text) {
-      this.setText(text);
-      this.textStack.push(text);
-    }
-
-    popText(text) {
-      // Find
-      const {textStack} = this;
-      const index = textStack.indexOf(text);
-      if (index === -1) {
-        throw new Error('No pushed text: ' +
-        text);
-      }
-
-      // Remove
-      textStack.splice(index, 1);
-
-      // Set last
-      const last = textStack[textStack.length - 1];
-      this.setText(last === undefined ? '' : last);
-    }
-
-    tick() {
-      this.setCurrent(this.current + 1);
+      super.setText(text);
     }
 
     queueRender(delay = this.delay) {
@@ -5125,30 +4883,6 @@ function ___R$project$rome$$romejs$typescript$helpers$index_ts$isPlainObject(
     }
   }
 
-  // project-rome/@romejs/string-escape/messages.ts
-const ___R$project$rome$$romejs$string$escape$messages_ts = {
-    get NOT_ENOUGH_CODE_POINTS() {
-      return (
-        ___R$project$rome$$romejs$string$escape$messages_ts$NOT_ENOUGH_CODE_POINTS
-      );
-    },
-
-    get INVALID_STRING_CHARACTER() {
-      return (
-        ___R$project$rome$$romejs$string$escape$messages_ts$INVALID_STRING_CHARACTER
-      );
-    },
-
-    get INVALID_HEX_DIGIT_FOR_ESCAPE() {
-      return (
-        ___R$project$rome$$romejs$string$escape$messages_ts$INVALID_HEX_DIGIT_FOR_ESCAPE
-      );
-    },
-  };
-  const ___R$project$rome$$romejs$string$escape$messages_ts$NOT_ENOUGH_CODE_POINTS = 'Not enough code point digits';
-  const ___R$project$rome$$romejs$string$escape$messages_ts$INVALID_STRING_CHARACTER = 'Invalid string character (U+0000 to U+001F)';
-  const ___R$project$rome$$romejs$string$escape$messages_ts$INVALID_HEX_DIGIT_FOR_ESCAPE = 'Invalid hex digit for unicode escape';
-
   // project-rome/@romejs/string-escape/constants.ts
 const ___R$project$rome$$romejs$string$escape$constants_ts = {
     get DOUBLE_QUOTE() {
@@ -5345,10 +5079,10 @@ function ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$unescap
   }
 
   const ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$UNEXPECTED_DEFAULT_THROWER = (
-    message,
+    metadata,
     index,
   ) => {
-    throw new TypeError(message +
+    throw new TypeError(metadata.message.value +
     ' (' +
     String(index) +
     ')');
@@ -5376,7 +5110,12 @@ function ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$unescap
           throw new Error('Already validated that this index exists');
         }
         if (codePoint >= 0 && codePoint <= 31) {
-          throw unexpected(___R$project$rome$$romejs$string$escape$messages_ts$INVALID_STRING_CHARACTER, index);
+          throw (
+            unexpected(
+              ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_ESCAPE.INVALID_STRING_CHARACTER,
+              index,
+            )
+          );
         }
 
         // Add it verbatim
@@ -5397,7 +5136,12 @@ function ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$unescap
         if (rawCode.length < 4) {
           // (index of the point start + total point digits)
           const lastDigitIndex = codeStartIndex + rawCode.length - 1;
-          throw unexpected(___R$project$rome$$romejs$string$escape$messages_ts$NOT_ENOUGH_CODE_POINTS, lastDigitIndex);
+          throw (
+            unexpected(
+              ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_ESCAPE.NOT_ENOUGH_CODE_POINTS,
+              lastDigitIndex,
+            )
+          );
         }
 
         // Validate that each character is a valid hex digit
@@ -5410,7 +5154,12 @@ function ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$unescap
 
             // (code start index + digit index)
             const pos = codeStartIndex + i;
-            throw unexpected(___R$project$rome$$romejs$string$escape$messages_ts$INVALID_HEX_DIGIT_FOR_ESCAPE, pos);
+            throw (
+              unexpected(
+                ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_ESCAPE.INVALID_HEX_DIGIT_FOR_ESCAPE,
+                pos,
+              )
+            );
           }
         }
 
@@ -5435,7 +5184,7 @@ function ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$unescap
   }
 
   // project-rome/@romejs/string-escape/index.ts
-const ___R$project$rome$$romejs$string$escape$index_ts$messages = ___R$project$rome$$romejs$string$escape$messages_ts
+
 
   // project-rome/@romejs/pretty-format/index.ts
 const ___R$$priv$project$rome$$romejs$pretty$format$index_ts$DEFAULT_OPTIONS = {
@@ -5639,7 +5388,6 @@ const ___R$$priv$project$rome$$romejs$pretty$format$index_ts$DEFAULT_OPTIONS = {
   }
 
   // These are object keys that should always go at the top and ignore any alphabetization
-
   // This is fairly arbitrary but should include generic identifier keys
   const ___R$project$rome$$romejs$pretty$format$index_ts$PRIORITIZE_KEYS = ['id', 'type', 'kind', 'key', 'name', 'value'];
 
@@ -5865,6 +5613,74 @@ const ___R$$priv$project$rome$$romejs$cli$reporter$util_ts$formatOpts = {
     return interpolated;
   }
 
+  function ___R$project$rome$$romejs$cli$reporter$util_ts$mergeProgresses(
+    progresses,
+  ) {
+    if (progresses.length === 1) {
+      return progresses[0];
+    }
+
+    return (
+      {
+        render: () => {
+          for (const progress of progresses) {
+            progress.render();
+          }
+        },
+        setCurrent: (current) => {
+          for (const progress of progresses) {
+            progress.setCurrent(current);
+          }
+        },
+        setTotal: (total, approximate) => {
+          for (const progress of progresses) {
+            progress.setTotal(total, approximate);
+          }
+        },
+        setText: (text) => {
+          for (const progress of progresses) {
+            progress.setText(text);
+          }
+        },
+        pushText: (text) => {
+          for (const progress of progresses) {
+            progress.pushText(text);
+          }
+        },
+        popText: (text) => {
+          for (const progress of progresses) {
+            progress.popText(text);
+          }
+        },
+        setApproximateETA: (duration) => {
+          for (const progress of progresses) {
+            progress.setApproximateETA(duration);
+          }
+        },
+        tick: () => {
+          for (const progress of progresses) {
+            progress.tick();
+          }
+        },
+        end: () => {
+          for (const progress of progresses) {
+            progress.end();
+          }
+        },
+        pause: () => {
+          for (const progress of progresses) {
+            progress.pause();
+          }
+        },
+        resume: () => {
+          for (const progress of progresses) {
+            progress.resume();
+          }
+        },
+      }
+    );
+  }
+
   // project-rome/@romejs/events/Event.ts
 function ___R$$priv$project$rome$$romejs$events$Event_ts$noPromise(ret) {
     if (ret instanceof Promise) {
@@ -5909,7 +5725,7 @@ function ___R$$priv$project$rome$$romejs$events$Event_ts$noPromise(ret) {
     send(param) {
       const {rootSubscription} = this;
       if (rootSubscription === undefined) {
-        return undefined;
+        return;
       }
 
       rootSubscription(param);
@@ -6084,24 +5900,27 @@ class ___R$project$rome$$romejs$events$BridgeError_ts$default extends Error {
 function ___R$$priv$project$rome$$romejs$events$BridgeEvent_ts$validateDirection(
     // rome-suppress lint/noExplicitAny
     event,
-    eventDirection,
-    bridgeType,
+    invalidDirections,
     verb,
   ) {
-    if (event.direction === eventDirection && event.bridge.type === bridgeType) {
-      throw (
-        new Error(
-          'The ' +
-          eventDirection +
-          ' event "' +
-          event.name +
-          '" cannot be ' +
-          verb +
-          ' by a ' +
-          bridgeType +
-          ' bridge',
-        )
-      );
+    invalidDirections.push(['server<->client', 'server&client']);
+
+    for (const [eventDirection, bridgeType] of invalidDirections) {
+      if (event.direction === eventDirection && event.bridge.type === bridgeType) {
+        throw (
+          new Error(
+            'The ' +
+            eventDirection +
+            ' event "' +
+            event.name +
+            '" cannot be ' +
+            verb +
+            ' by a ' +
+            bridgeType +
+            ' bridge',
+          )
+        );
+      }
     }
   }
 
@@ -6126,8 +5945,14 @@ function ___R$$priv$project$rome$$romejs$events$BridgeEvent_ts$validateDirection
     }
 
     onSubscriptionChange() {
-      ___R$$priv$project$rome$$romejs$events$BridgeEvent_ts$validateDirection(this, 'server->client', 'client', 'subscribed');
-      ___R$$priv$project$rome$$romejs$events$BridgeEvent_ts$validateDirection(this, 'server<-client', 'server', 'subscribed');
+      ___R$$priv$project$rome$$romejs$events$BridgeEvent_ts$validateDirection(
+        this,
+        [
+          ['server->client', 'client'],
+          ['server<-client', 'server'],
+        ],
+        'subscribed',
+      );
       this.bridge.sendSubscriptions();
     }
 
@@ -6163,8 +5988,14 @@ function ___R$$priv$project$rome$$romejs$events$BridgeEvent_ts$validateDirection
     }
 
     validateCanSend() {
-      ___R$$priv$project$rome$$romejs$events$BridgeEvent_ts$validateDirection(this, 'server<-client', 'client', 'called');
-      ___R$$priv$project$rome$$romejs$events$BridgeEvent_ts$validateDirection(this, 'server->client', 'server', 'called');
+      ___R$$priv$project$rome$$romejs$events$BridgeEvent_ts$validateDirection(
+        this,
+        [
+          ['server<-client', 'client'],
+          ['server->client', 'server'],
+        ],
+        'called',
+      );
     }
 
     send(param) {
@@ -6324,25 +6155,15 @@ const ___R$project$rome$$romejs$codec$source$map$base64_ts = {
   }
 
   // A single base 64 digit can contain 6 bits of data. For the base 64 variable
-
   // length quantities we use in the source map spec, the first bit is the sign,
-
   // the next four bits are the actual value, and the 6th bit is the
-
   // continuation bit. The continuation bit tells us whether there are more
-
   // digits in this value following this digit.
-
   //
-
   //   Continuation
-
   //   |    Sign
-
   //   |    |
-
   //   V    V
-
   //   101011
   const ___R$$priv$project$rome$$romejs$codec$source$map$base64_ts$VLQ_BASE_SHIFT = 5;
 
@@ -7864,72 +7685,6 @@ class ___R$project$rome$$romejs$v8$Trace_ts$default {
   // project-rome/@romejs/codec-json/types.ts
 
 
-  // project-rome/@romejs/messages/index.ts
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-  function ___R$$priv$project$rome$$romejs$messages$index_ts$sprintf(msg, ...args) {
-    return (
-      msg.replace(
-        /\$(\d+)/g,
-        (match, num) => {
-          return String(args[num]);
-        },
-      )
-    );
-  }
-
-  function ___R$project$rome$$romejs$messages$index_ts$createMessageFactory(
-    messages,
-  ) {
-    // @ts-ignore: TS complains about {} not being full of the possible properties in message... which is true
-
-    // but they will be filled it by the time we return
-    const obj = {};
-
-    for (const key in messages) {
-      const msg = messages[key];
-
-      obj[key] =
-        (...args) => {
-          return ___R$$priv$project$rome$$romejs$messages$index_ts$sprintf.apply(null, [
-            msg,
-            ...args,
-          ]);
-        };
-    }
-
-    return obj;
-  }
-
-  // project-rome/@romejs/codec-json/messages.ts
-const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$rome$$romejs$messages$index_ts$createMessageFactory(
-    {
-      SINGLE_QUOTE_USAGE: 'You can only use double quoted strings',
-      TRAILING_COMMA_VALUE: 'Trailing comma is only allowed after a value',
-      UNCLOSED_STRING: 'Unclosed string',
-      UNCLOSED_BLOCK_COMMENT: 'Unclosed block comment',
-      MISTAKEN_ARRAY_IDENTITY: 'Trying to use an array element as an object property. Did you mean to make an object?',
-      REDUNDANT_COMMA: 'Redundant comma',
-
-      EMPTY_INPUT_IN_JSON: 'Empty input',
-      PROPERTY_KEY_UNQUOTED_IN_JSON: 'Property keys must be quoted in JSON',
-      IMPLICIT_OBJECT_IN_JSON: 'Objects must be wrapped in curly braces in JSON',
-      COMMENTS_IN_JSON: 'Comments aren\'t allowed in JSON',
-      TRAILING_COMMA_IN_JSON: 'Trailing commas aren\'t allowed in JSON',
-      REGEX_IN_JSON: 'Regular expressions aren\'t allowed in JSON',
-      UNKNOWN_WORD_IN_JSON: '$0 isn\'t a valid JSON word',
-      STRING_NEWLINES_IN_JSON: 'Newlines aren\'t allowed in JSON, you insert a newline by escaping it like this "\\n"',
-      UNDEFINED_IN_JSON: 'undefined isn\'t allowed in JSON, you could use null instead',
-      BIGINT_IN_JSON: 'Bigints aren\'t allowed in JSON',
-      NUMERIC_SEPARATORS_IN_JSON: 'Numeric separators are not allowed in JSON',
-    },
-  );
-
   // project-rome/@romejs/codec-json/parse.ts
 // Words can't start with a digit
   function ___R$$priv$project$rome$$romejs$codec$json$parse_ts$isWordStartChar(char) {
@@ -7942,7 +7697,6 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
   }
 
   // Check if an input string is a valid word, this is used by the stringifier to
-
   // determine if a property key should be quoted
   function ___R$project$rome$$romejs$codec$json$parse_ts$isValidWord(word) {
     if (word.length === 0 || ___R$$priv$project$rome$$romejs$codec$json$parse_ts$isWordStartChar(word[0]) === false) {
@@ -8085,7 +7839,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                 throw (
                   this.unexpected(
                     {
-                      message: ___R$project$rome$$romejs$codec$json$messages_ts$default.UNCLOSED_BLOCK_COMMENT(),
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.UNCLOSED_BLOCK_COMMENT,
                       start: this.getPositionFromIndex(endIndex),
                     },
                   )
@@ -8106,7 +7860,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                   throw (
                     this.unexpected(
                       {
-                        message: ___R$project$rome$$romejs$codec$json$messages_ts$default.UNCLOSED_STRING(),
+                        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.UNCLOSED_STRING,
                         start: this.getPositionFromIndex(end),
                       },
                     )
@@ -8123,7 +7877,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                     throw (
                       this.unexpected(
                         {
-                          message: ___R$project$rome$$romejs$codec$json$messages_ts$default.STRING_NEWLINES_IN_JSON(),
+                          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.STRING_NEWLINES_IN_JSON,
                           start: this.getPositionFromIndex(___R$project$rome$$romejs$ob1$index_ts$add(index, strIndex)),
                         },
                       )
@@ -8134,11 +7888,11 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                 // Unescape the string
                 const unescaped = ___R$project$rome$$romejs$string$escape$unescapeString_ts$default(
                   value,
-                  (message, strIndex) => {
+                  (metadata, strIndex) => {
                     throw (
                       this.unexpected(
                         {
-                          message,
+                          description: metadata,
                           start: this.getPositionFromIndex(___R$project$rome$$romejs$ob1$index_ts$add(index, strIndex)),
                         },
                       )
@@ -8152,7 +7906,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                 throw (
                   this.unexpected(
                     {
-                      message: ___R$project$rome$$romejs$codec$json$messages_ts$default.SINGLE_QUOTE_USAGE(),
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.SINGLE_QUOTE_USAGE,
                       start: this.getPositionFromIndex(index),
                     },
                   )
@@ -8162,7 +7916,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                 throw (
                   this.unexpected(
                     {
-                      message: ___R$project$rome$$romejs$codec$json$messages_ts$default.REGEX_IN_JSON(),
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.REGEX_IN_JSON,
                       start: this.getPositionFromIndex(index),
                     },
                   )
@@ -8249,7 +8003,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                 throw (
                   this.unexpected(
                     {
-                      message: ___R$project$rome$$romejs$codec$json$messages_ts$default.REDUNDANT_COMMA(),
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.REDUNDANT_COMMA,
                     },
                   )
                 );
@@ -8377,7 +8131,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                   throw (
                     this.unexpected(
                       {
-                        message: ___R$project$rome$$romejs$codec$json$messages_ts$default.NUMERIC_SEPARATORS_IN_JSON(),
+                        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.NUMERIC_SEPARATORS_IN_JSON,
                         start: this.getPositionFromIndex(___R$project$rome$$romejs$ob1$index_ts$inc(index)),
                       },
                     )
@@ -8417,7 +8171,13 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
 
               // Comments aren't allowed in regular JSON
               if (!this.hasExtensions) {
-                throw this.unexpected({message: ___R$project$rome$$romejs$codec$json$messages_ts$default.COMMENTS_IN_JSON()});
+                throw (
+                  this.unexpected(
+                    {
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.COMMENTS_IN_JSON,
+                    },
+                  )
+                );
               }
 
               this.nextToken();
@@ -8445,7 +8205,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                 throw (
                   this.unexpected(
                     {
-                      message: ___R$project$rome$$romejs$codec$json$messages_ts$default.REDUNDANT_COMMA(),
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.REDUNDANT_COMMA,
                     },
                   )
                 );
@@ -8491,7 +8251,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                 throw (
                   this.unexpected(
                     {
-                      message: ___R$project$rome$$romejs$codec$json$messages_ts$default.MISTAKEN_ARRAY_IDENTITY(),
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.MISTAKEN_ARRAY_IDENTITY,
                     },
                   )
                 );
@@ -8537,7 +8297,13 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
               // Make sure this isn't a trailing comma
               const lookahead = this.lookaheadToken();
               if (lookahead.type === 'BraceClose' || lookahead.type === 'BracketClose') {
-                throw this.unexpected({message: ___R$project$rome$$romejs$codec$json$messages_ts$default.TRAILING_COMMA_IN_JSON()});
+                throw (
+                  this.unexpected(
+                    {
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.TRAILING_COMMA_IN_JSON,
+                    },
+                  )
+                );
               }
 
               this.nextToken();
@@ -8560,7 +8326,13 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                 return null;
 
               case 'undefined':
-                throw this.unexpected({message: ___R$project$rome$$romejs$codec$json$messages_ts$default.UNDEFINED_IN_JSON()});
+                throw (
+                  this.unexpected(
+                    {
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.UNDEFINED_IN_JSON,
+                    },
+                  )
+                );
             }
 
             if (isStart && this.matchToken('Colon')) {
@@ -8570,7 +8342,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                 throw (
                   this.unexpected(
                     {
-                      message: ___R$project$rome$$romejs$codec$json$messages_ts$default.IMPLICIT_OBJECT_IN_JSON(),
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
                     },
                   )
                 );
@@ -8580,7 +8352,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
             throw (
               this.unexpected(
                 {
-                  message: ___R$project$rome$$romejs$codec$json$messages_ts$default.UNKNOWN_WORD_IN_JSON(token.value),
+                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.UNKNOWN_WORD_IN_JSON(token.value),
                 },
               )
             );
@@ -8630,7 +8402,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
               throw (
                 this.unexpected(
                   {
-                    message: ___R$project$rome$$romejs$codec$json$messages_ts$default.BIGINT_IN_JSON(),
+                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.BIGINT_IN_JSON,
                   },
                 )
               );
@@ -8660,7 +8432,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                   throw (
                     this.unexpected(
                       {
-                        message: ___R$project$rome$$romejs$codec$json$messages_ts$default.PROPERTY_KEY_UNQUOTED_IN_JSON(),
+                        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.PROPERTY_KEY_UNQUOTED_IN_JSON,
                       },
                     )
                   );
@@ -8682,7 +8454,7 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                 throw (
                   this.unexpected(
                     {
-                      message: ___R$project$rome$$romejs$codec$json$messages_ts$default.IMPLICIT_OBJECT_IN_JSON(),
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.IMPLICIT_OBJECT_IN_JSON,
                     },
                   )
                 );
@@ -8724,7 +8496,13 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
                 // If we're in RJSON mode then an empty input is an implicit object
                 return {};
               } else {
-                throw this.unexpected({message: ___R$project$rome$$romejs$codec$json$messages_ts$default.EMPTY_INPUT_IN_JSON()});
+                throw (
+                  this.unexpected(
+                    {
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JSON.EMPTY_INPUT_IN_JSON,
+                    },
+                  )
+                );
               }
             } else {
               return this.parseExpression(true);
@@ -8813,7 +8591,11 @@ const ___R$project$rome$$romejs$codec$json$messages_ts$default = ___R$project$ro
               ) => {
                 const info = this.getPathInfo(keys);
                 if (info === undefined) {
-                  return;
+                  return (
+                    {
+                      filename: this.filename,
+                    }
+                  );
                 }
 
                 let start = info.keyStart;
@@ -9675,18 +9457,12 @@ const ___R$project$rome$$romejs$js$parser$utils$identifier_ts = {
   // ## Character categories
 
   // Big ugly regular expressions that match characters in the
-
   // whitespace, identifier, and identifier-start categories. These
-
   // are only applied when a character is found to actually have a
-
   // code point above 128.
-
   // Generated by `bin/generate-identifier-regex.js`.
-
-  /* prettier-ignore */
   let ___R$$priv$project$rome$$romejs$js$parser$utils$identifier_ts$nonASCIIidentifierStartChars = '\xaa\xb5\xba\xc0-\xd6\xd8-\xf6\xf8-\u02c1\u02c6-\u02d1\u02e0-\u02e4\u02ec\u02ee\u0370-\u0374\u0376\u0377\u037a-\u037d\u037f\u0386\u0388-\u038a\u038c\u038e-\u03a1\u03a3-\u03f5\u03f7-\u0481\u048a-\u052f\u0531-\u0556\u0559\u0561-\u0587\u05d0-\u05ea\u05f0-\u05f2\u0620-\u064a\u066e\u066f\u0671-\u06d3\u06d5\u06e5\u06e6\u06ee\u06ef\u06fa-\u06fc\u06ff\u0710\u0712-\u072f\u074d-\u07a5\u07b1\u07ca-\u07ea\u07f4\u07f5\u07fa\u0800-\u0815\u081a\u0824\u0828\u0840-\u0858\u0860-\u086a\u08a0-\u08b4\u08b6-\u08bd\u0904-\u0939\u093d\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098c\u098f\u0990\u0993-\u09a8\u09aa-\u09b0\u09b2\u09b6-\u09b9\u09bd\u09ce\u09dc\u09dd\u09df-\u09e1\u09f0\u09f1\u09fc\u0a05-\u0a0a\u0a0f\u0a10\u0a13-\u0a28\u0a2a-\u0a30\u0a32\u0a33\u0a35\u0a36\u0a38\u0a39\u0a59-\u0a5c\u0a5e\u0a72-\u0a74\u0a85-\u0a8d\u0a8f-\u0a91\u0a93-\u0aa8\u0aaa-\u0ab0\u0ab2\u0ab3\u0ab5-\u0ab9\u0abd\u0ad0\u0ae0\u0ae1\u0af9\u0b05-\u0b0c\u0b0f\u0b10\u0b13-\u0b28\u0b2a-\u0b30\u0b32\u0b33\u0b35-\u0b39\u0b3d\u0b5c\u0b5d\u0b5f-\u0b61\u0b71\u0b83\u0b85-\u0b8a\u0b8e-\u0b90\u0b92-\u0b95\u0b99\u0b9a\u0b9c\u0b9e\u0b9f\u0ba3\u0ba4\u0ba8-\u0baa\u0bae-\u0bb9\u0bd0\u0c05-\u0c0c\u0c0e-\u0c10\u0c12-\u0c28\u0c2a-\u0c39\u0c3d\u0c58-\u0c5a\u0c60\u0c61\u0c80\u0c85-\u0c8c\u0c8e-\u0c90\u0c92-\u0ca8\u0caa-\u0cb3\u0cb5-\u0cb9\u0cbd\u0cde\u0ce0\u0ce1\u0cf1\u0cf2\u0d05-\u0d0c\u0d0e-\u0d10\u0d12-\u0d3a\u0d3d\u0d4e\u0d54-\u0d56\u0d5f-\u0d61\u0d7a-\u0d7f\u0d85-\u0d96\u0d9a-\u0db1\u0db3-\u0dbb\u0dbd\u0dc0-\u0dc6\u0e01-\u0e30\u0e32\u0e33\u0e40-\u0e46\u0e81\u0e82\u0e84\u0e87\u0e88\u0e8a\u0e8d\u0e94-\u0e97\u0e99-\u0e9f\u0ea1-\u0ea3\u0ea5\u0ea7\u0eaa\u0eab\u0ead-\u0eb0\u0eb2\u0eb3\u0ebd\u0ec0-\u0ec4\u0ec6\u0edc-\u0edf\u0f00\u0f40-\u0f47\u0f49-\u0f6c\u0f88-\u0f8c\u1000-\u102a\u103f\u1050-\u1055\u105a-\u105d\u1061\u1065\u1066\u106e-\u1070\u1075-\u1081\u108e\u10a0-\u10c5\u10c7\u10cd\u10d0-\u10fa\u10fc-\u1248\u124a-\u124d\u1250-\u1256\u1258\u125a-\u125d\u1260-\u1288\u128a-\u128d\u1290-\u12b0\u12b2-\u12b5\u12b8-\u12be\u12c0\u12c2-\u12c5\u12c8-\u12d6\u12d8-\u1310\u1312-\u1315\u1318-\u135a\u1380-\u138f\u13a0-\u13f5\u13f8-\u13fd\u1401-\u166c\u166f-\u167f\u1681-\u169a\u16a0-\u16ea\u16ee-\u16f8\u1700-\u170c\u170e-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176c\u176e-\u1770\u1780-\u17b3\u17d7\u17dc\u1820-\u1877\u1880-\u18a8\u18aa\u18b0-\u18f5\u1900-\u191e\u1950-\u196d\u1970-\u1974\u1980-\u19ab\u19b0-\u19c9\u1a00-\u1a16\u1a20-\u1a54\u1aa7\u1b05-\u1b33\u1b45-\u1b4b\u1b83-\u1ba0\u1bae\u1baf\u1bba-\u1be5\u1c00-\u1c23\u1c4d-\u1c4f\u1c5a-\u1c7d\u1c80-\u1c88\u1ce9-\u1cec\u1cee-\u1cf1\u1cf5\u1cf6\u1d00-\u1dbf\u1e00-\u1f15\u1f18-\u1f1d\u1f20-\u1f45\u1f48-\u1f4d\u1f50-\u1f57\u1f59\u1f5b\u1f5d\u1f5f-\u1f7d\u1f80-\u1fb4\u1fb6-\u1fbc\u1fbe\u1fc2-\u1fc4\u1fc6-\u1fcc\u1fd0-\u1fd3\u1fd6-\u1fdb\u1fe0-\u1fec\u1ff2-\u1ff4\u1ff6-\u1ffc\u2071\u207f\u2090-\u209c\u2102\u2107\u210a-\u2113\u2115\u2118-\u211d\u2124\u2126\u2128\u212a-\u2139\u213c-\u213f\u2145-\u2149\u214e\u2160-\u2188\u2c00-\u2c2e\u2c30-\u2c5e\u2c60-\u2ce4\u2ceb-\u2cee\u2cf2\u2cf3\u2d00-\u2d25\u2d27\u2d2d\u2d30-\u2d67\u2d6f\u2d80-\u2d96\u2da0-\u2da6\u2da8-\u2dae\u2db0-\u2db6\u2db8-\u2dbe\u2dc0-\u2dc6\u2dc8-\u2dce\u2dd0-\u2dd6\u2dd8-\u2dde\u3005-\u3007\u3021-\u3029\u3031-\u3035\u3038-\u303c\u3041-\u3096\u309b-\u309f\u30a1-\u30fa\u30fc-\u30ff\u3105-\u312e\u3131-\u318e\u31a0-\u31ba\u31f0-\u31ff\u3400-\u4db5\u4e00-\u9fea\ua000-\ua48c\ua4d0-\ua4fd\ua500-\ua60c\ua610-\ua61f\ua62a\ua62b\ua640-\ua66e\ua67f-\ua69d\ua6a0-\ua6ef\ua717-\ua71f\ua722-\ua788\ua78b-\ua7ae\ua7b0-\ua7b7\ua7f7-\ua801\ua803-\ua805\ua807-\ua80a\ua80c-\ua822\ua840-\ua873\ua882-\ua8b3\ua8f2-\ua8f7\ua8fb\ua8fd\ua90a-\ua925\ua930-\ua946\ua960-\ua97c\ua984-\ua9b2\ua9cf\ua9e0-\ua9e4\ua9e6-\ua9ef\ua9fa-\ua9fe\uaa00-\uaa28\uaa40-\uaa42\uaa44-\uaa4b\uaa60-\uaa76\uaa7a\uaa7e-\uaaaf\uaab1\uaab5\uaab6\uaab9-\uaabd\uaac0\uaac2\uaadb-\uaadd\uaae0-\uaaea\uaaf2-\uaaf4\uab01-\uab06\uab09-\uab0e\uab11-\uab16\uab20-\uab26\uab28-\uab2e\uab30-\uab5a\uab5c-\uab65\uab70-\uabe2\uac00-\ud7a3\ud7b0-\ud7c6\ud7cb-\ud7fb\uf900-\ufa6d\ufa70-\ufad9\ufb00-\ufb06\ufb13-\ufb17\ufb1d\ufb1f-\ufb28\ufb2a-\ufb36\ufb38-\ufb3c\ufb3e\ufb40\ufb41\ufb43\ufb44\ufb46-\ufbb1\ufbd3-\ufd3d\ufd50-\ufd8f\ufd92-\ufdc7\ufdf0-\ufdfb\ufe70-\ufe74\ufe76-\ufefc\uff21-\uff3a\uff41-\uff5a\uff66-\uffbe\uffc2-\uffc7\uffca-\uffcf\uffd2-\uffd7\uffda-\uffdc';
-  /* prettier-ignore */
+
   let ___R$$priv$project$rome$$romejs$js$parser$utils$identifier_ts$nonASCIIidentifierChars = '\u200c\u200d\xb7\u0300-\u036f\u0387\u0483-\u0487\u0591-\u05bd\u05bf\u05c1\u05c2\u05c4\u05c5\u05c7\u0610-\u061a\u064b-\u0669\u0670\u06d6-\u06dc\u06df-\u06e4\u06e7\u06e8\u06ea-\u06ed\u06f0-\u06f9\u0711\u0730-\u074a\u07a6-\u07b0\u07c0-\u07c9\u07eb-\u07f3\u0816-\u0819\u081b-\u0823\u0825-\u0827\u0829-\u082d\u0859-\u085b\u08d4-\u08e1\u08e3-\u0903\u093a-\u093c\u093e-\u094f\u0951-\u0957\u0962\u0963\u0966-\u096f\u0981-\u0983\u09bc\u09be-\u09c4\u09c7\u09c8\u09cb-\u09cd\u09d7\u09e2\u09e3\u09e6-\u09ef\u0a01-\u0a03\u0a3c\u0a3e-\u0a42\u0a47\u0a48\u0a4b-\u0a4d\u0a51\u0a66-\u0a71\u0a75\u0a81-\u0a83\u0abc\u0abe-\u0ac5\u0ac7-\u0ac9\u0acb-\u0acd\u0ae2\u0ae3\u0ae6-\u0aef\u0afa-\u0aff\u0b01-\u0b03\u0b3c\u0b3e-\u0b44\u0b47\u0b48\u0b4b-\u0b4d\u0b56\u0b57\u0b62\u0b63\u0b66-\u0b6f\u0b82\u0bbe-\u0bc2\u0bc6-\u0bc8\u0bca-\u0bcd\u0bd7\u0be6-\u0bef\u0c00-\u0c03\u0c3e-\u0c44\u0c46-\u0c48\u0c4a-\u0c4d\u0c55\u0c56\u0c62\u0c63\u0c66-\u0c6f\u0c81-\u0c83\u0cbc\u0cbe-\u0cc4\u0cc6-\u0cc8\u0cca-\u0ccd\u0cd5\u0cd6\u0ce2\u0ce3\u0ce6-\u0cef\u0d00-\u0d03\u0d3b\u0d3c\u0d3e-\u0d44\u0d46-\u0d48\u0d4a-\u0d4d\u0d57\u0d62\u0d63\u0d66-\u0d6f\u0d82\u0d83\u0dca\u0dcf-\u0dd4\u0dd6\u0dd8-\u0ddf\u0de6-\u0def\u0df2\u0df3\u0e31\u0e34-\u0e3a\u0e47-\u0e4e\u0e50-\u0e59\u0eb1\u0eb4-\u0eb9\u0ebb\u0ebc\u0ec8-\u0ecd\u0ed0-\u0ed9\u0f18\u0f19\u0f20-\u0f29\u0f35\u0f37\u0f39\u0f3e\u0f3f\u0f71-\u0f84\u0f86\u0f87\u0f8d-\u0f97\u0f99-\u0fbc\u0fc6\u102b-\u103e\u1040-\u1049\u1056-\u1059\u105e-\u1060\u1062-\u1064\u1067-\u106d\u1071-\u1074\u1082-\u108d\u108f-\u109d\u135d-\u135f\u1369-\u1371\u1712-\u1714\u1732-\u1734\u1752\u1753\u1772\u1773\u17b4-\u17d3\u17dd\u17e0-\u17e9\u180b-\u180d\u1810-\u1819\u18a9\u1920-\u192b\u1930-\u193b\u1946-\u194f\u19d0-\u19da\u1a17-\u1a1b\u1a55-\u1a5e\u1a60-\u1a7c\u1a7f-\u1a89\u1a90-\u1a99\u1ab0-\u1abd\u1b00-\u1b04\u1b34-\u1b44\u1b50-\u1b59\u1b6b-\u1b73\u1b80-\u1b82\u1ba1-\u1bad\u1bb0-\u1bb9\u1be6-\u1bf3\u1c24-\u1c37\u1c40-\u1c49\u1c50-\u1c59\u1cd0-\u1cd2\u1cd4-\u1ce8\u1ced\u1cf2-\u1cf4\u1cf7-\u1cf9\u1dc0-\u1df9\u1dfb-\u1dff\u203f\u2040\u2054\u20d0-\u20dc\u20e1\u20e5-\u20f0\u2cef-\u2cf1\u2d7f\u2de0-\u2dff\u302a-\u302f\u3099\u309a\ua620-\ua629\ua66f\ua674-\ua67d\ua69e\ua69f\ua6f0\ua6f1\ua802\ua806\ua80b\ua823-\ua827\ua880\ua881\ua8b4-\ua8c5\ua8d0-\ua8d9\ua8e0-\ua8f1\ua900-\ua909\ua926-\ua92d\ua947-\ua953\ua980-\ua983\ua9b3-\ua9c0\ua9d0-\ua9d9\ua9e5\ua9f0-\ua9f9\uaa29-\uaa36\uaa43\uaa4c\uaa4d\uaa50-\uaa59\uaa7b-\uaa7d\uaab0\uaab2-\uaab4\uaab7\uaab8\uaabe\uaabf\uaac1\uaaeb-\uaaef\uaaf5\uaaf6\uabe3-\uabea\uabec\uabed\uabf0-\uabf9\ufb1e\ufe00-\ufe0f\ufe20-\ufe2f\ufe33\ufe34\ufe4d-\ufe4f\uff10-\uff19\uff3f';
 
   const ___R$$priv$project$rome$$romejs$js$parser$utils$identifier_ts$nonASCIIidentifierStart = new RegExp('[' +
@@ -9700,13 +9476,9 @@ const ___R$project$rome$$romejs$js$parser$utils$identifier_ts = {
   );
 
   // These are a run-length and offset encoded representation of the
-
   // >0xffff code points that are a valid part of identifiers. The
-
   // offset starts at 0x10000, and each pair of numbers represents an
-
   // offset to the next range, and then a size of the range. They were
-
   // generated by `bin/generate-identifier-regex.js`.
 
   /* prettier-ignore */
@@ -10330,9 +10102,7 @@ const ___R$project$rome$$romejs$js$parser$utils$identifier_ts = {
   }
 
   // This has a complexity linear to the value of the code. The
-
   // assumption is that looking up astral identifier characters is
-
   // rare.
   function ___R$$priv$project$rome$$romejs$js$parser$utils$identifier_ts$isInAstralSet(code, set) {
     let pos = 65536;
@@ -10427,14 +10197,6 @@ const ___R$project$rome$$romejs$js$parser$utils$location_ts = {
     return {index: ___R$project$rome$$romejs$ob1$index_ts$number0};
   }
 
-  // project-rome/@romejs/js-parser-utils/messages.ts
-const ___R$project$rome$$romejs$js$parser$utils$messages_ts$default = ___R$project$rome$$romejs$messages$index_ts$createMessageFactory(
-    {
-      DUPLICATE_REGEX_FLAG: 'Duplicate regular expression flag',
-      INVALID_REGEX_FLAG: 'Invalid regular expression flag',
-    },
-  );
-
   // project-rome/@romejs/js-parser-utils/regex.ts
 const ___R$project$rome$$romejs$js$parser$utils$regex_ts = {
     validateRegexFlags: ___R$project$rome$$romejs$js$parser$utils$regex_ts$validateRegexFlags,
@@ -10455,12 +10217,12 @@ const ___R$project$rome$$romejs$js$parser$utils$regex_ts = {
 
       if (___R$$priv$project$rome$$romejs$js$parser$utils$regex_ts$VALID_REGEX_FLAGS.includes(flag)) {
         if (foundFlags.has(flag)) {
-          onUnexpected(___R$project$rome$$romejs$js$parser$utils$messages_ts$default.DUPLICATE_REGEX_FLAG(), i);
+          onUnexpected(___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.REGEX_PARSER.DUPLICATE_FLAG, i);
         } else {
           foundFlags.add(flag);
         }
       } else {
-        onUnexpected(___R$project$rome$$romejs$js$parser$utils$messages_ts$default.INVALID_REGEX_FLAG(), i);
+        onUnexpected(___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.REGEX_PARSER.INVALID_FLAG, i);
       }
     }
 
@@ -11601,7 +11363,9 @@ const ___R$project$rome$$romejs$js$ast$modules$ExportExternalDeclaration_ts = {
     {
       bindingKeys: {},
       visitorKeys: {
-        specifiers: true,
+        defaultSpecifier: true,
+        namespaceSpecifier: true,
+        namedSpecifiers: true,
         source: true,
       },
     },
@@ -12738,9 +12502,15 @@ const ___R$project$rome$$romejs$js$ast$modules$ImportDeclaration_ts = {
   const ___R$project$rome$$romejs$js$ast$modules$ImportDeclaration_ts$importDeclaration = ___R$project$rome$$romejs$js$ast$utils_ts$createBuilder(
     'ImportDeclaration',
     {
-      bindingKeys: {},
+      bindingKeys: {
+        defaultSpecifier: true,
+        namespaceSpecifier: true,
+        namedSpecifiers: true,
+      },
       visitorKeys: {
-        specifiers: true,
+        defaultSpecifier: true,
+        namespaceSpecifier: true,
+        namedSpecifiers: true,
         source: true,
       },
     },
@@ -13786,6 +13556,23 @@ const ___R$project$rome$$romejs$js$ast$regex$RegExpNonWordCharacter_ts = {
 
   const ___R$project$rome$$romejs$js$ast$regex$RegExpNonWordCharacter_ts$regExpNonWordCharacter = ___R$project$rome$$romejs$js$ast$utils_ts$createBuilder(
     'RegExpNonWordCharacter',
+    {
+      bindingKeys: {},
+      visitorKeys: {},
+    },
+  );
+
+  // project-rome/@romejs/js-ast/regex/RegExpNumericBackReference.ts
+const ___R$project$rome$$romejs$js$ast$regex$RegExpNumericBackReference_ts = {
+    get regExpNumericBackReference() {
+      return (
+        ___R$project$rome$$romejs$js$ast$regex$RegExpNumericBackReference_ts$regExpNumericBackReference
+      );
+    },
+  };
+
+  const ___R$project$rome$$romejs$js$ast$regex$RegExpNumericBackReference_ts$regExpNumericBackReference = ___R$project$rome$$romejs$js$ast$utils_ts$createBuilder(
+    'RegExpNumericBackReference',
     {
       bindingKeys: {},
       visitorKeys: {},
@@ -19504,6 +19291,31 @@ const ___R$project$rome$$romejs$js$ast$index_ts = {
     },
   );
   Object.keys(
+    ___R$project$rome$$romejs$js$ast$regex$RegExpNumericBackReference_ts,
+  ).forEach(
+    function(
+      key,
+    ) {
+      if (key ===
+      'default') return (
+        undefined
+      );
+      Object.defineProperty(
+        ___R$project$rome$$romejs$js$ast$index_ts,
+        key,
+        {
+          enumerable: true,
+          configurable: true,
+          get: function get() {
+            return (
+              ___R$project$rome$$romejs$js$ast$regex$RegExpNumericBackReference_ts[key]
+            );
+          },
+        },
+      );
+    },
+  );
+  Object.keys(
     ___R$project$rome$$romejs$js$ast$regex$RegExpQuantified_ts,
   ).forEach(
     function(
@@ -22102,55 +21914,52 @@ const ___R$project$rome$$romejs$js$compiler$scope$evaluators$ImportDeclaration_t
     creator: false,
     build(node, parent, scope) {
       const source = node.source.value;
-      const {specifiers} = node;
 
-      if (specifiers !== undefined) {
-        for (const specifier of specifiers) {
-          let kind = specifier.local.importKind ||
-          node.importKind ||
-          'value';
-          let meta;
+      for (const specifier of ___R$project$rome$$romejs$js$ast$utils$getImportSpecifiers_ts$default(node)) {
+        let kind = specifier.local.importKind ||
+        node.importKind ||
+        'value';
+        let meta;
 
-          if (specifier.type === 'ImportNamespaceSpecifier') {
-            meta =
-              {
-                kind,
-                type: 'namespace',
-                source,
-              };
-          } else if (specifier.type === 'ImportDefaultSpecifier') {
-            meta =
-              {
-                kind,
-                type: 'name',
-                imported: 'default',
-                source,
-              };
-          } else if (specifier.type === 'ImportSpecifier') {
-            meta =
-              {
-                kind,
-                type: 'name',
-                imported: specifier.imported.name,
-                source,
-              };
-          }
-
-          if (meta === undefined) {
-            return undefined;
-          }
-
-          scope.addBinding(
-            new ___R$project$rome$$romejs$js$compiler$scope$bindings_ts$ImportBinding(
-              {
-                node: specifier.local.name,
-                name: specifier.local.name.name,
-                scope,
-              },
-              meta,
-            ),
-          );
+        if (specifier.type === 'ImportNamespaceSpecifier') {
+          meta =
+            {
+              kind,
+              type: 'namespace',
+              source,
+            };
+        } else if (specifier.type === 'ImportDefaultSpecifier') {
+          meta =
+            {
+              kind,
+              type: 'name',
+              imported: 'default',
+              source,
+            };
+        } else if (specifier.type === 'ImportSpecifier') {
+          meta =
+            {
+              kind,
+              type: 'name',
+              imported: specifier.imported.name,
+              source,
+            };
         }
+
+        if (meta === undefined) {
+          return undefined;
+        }
+
+        scope.addBinding(
+          new ___R$project$rome$$romejs$js$compiler$scope$bindings_ts$ImportBinding(
+            {
+              node: specifier.local.name,
+              name: specifier.local.name.name,
+              scope,
+            },
+            meta,
+          ),
+        );
       }
     },
   };
@@ -24445,7 +24254,7 @@ class ___R$project$rome$$romejs$js$compiler$lib$Context_ts$default {
       this.diagnostics = [...this.diagnostics, ...diagnostics];
     }
 
-    addLocDiagnostic(loc, diag) {
+    addLocDiagnostic(loc, description, diag = {}) {
       let origins = [];
       if (this.origin !== undefined) {
         origins.push(this.origin);
@@ -24471,26 +24280,36 @@ class ___R$project$rome$$romejs$js$compiler$lib$Context_ts$default {
           },
           diag,
           {
-            mtime: this.mtime,
-            filename: this.filename,
-            start: loc === undefined ? diag.start : loc.start,
-            end: loc === undefined ? diag.end : loc.end,
-            language: 'js',
-            sourceType: this.sourceType,
+            description,
+            location: {
+              mtime: this.mtime,
+              filename: this.filename,
+              start: loc === undefined ? undefined : loc.start,
+              end: loc === undefined ? undefined : loc.end,
+              language: 'js',
+              sourceType: this.sourceType,
+            },
             origins,
           },
         ),
       );
     }
 
-    addNodeDiagnostic(node, diag) {
-      return this.addLocDiagnostic(node === undefined ? undefined : node.loc, diag);
+    addNodeDiagnostic(node, description, diag = {}) {
+      return (
+        this.addLocDiagnostic(
+          node === undefined ? undefined : node.loc,
+          description,
+          diag,
+        )
+      );
     }
 
-    addNodesRangeDiagnostic(nodes, diag) {
+    addNodesRangeDiagnostic(nodes, description, diag = {}) {
       return (
         this.addLocDiagnostic(
           ___R$project$rome$$romejs$parser$core$index_ts$extractSourceLocationRangeFromNodes(nodes),
+          description,
           diag,
         )
       );
@@ -24742,10 +24561,6 @@ class ___R$project$rome$$romejs$js$compiler$lib$Path_ts$default {
         )
       );
     }
-
-    addDiagnostic(opts) {
-      return this.context.addNodeDiagnostic(this.node, opts);
-    }
   }
 
   // project-rome/@romejs/js-compiler/lib/Record.ts
@@ -24851,40 +24666,16 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$defaultExpo
             if (basename !== id.name) {
               const correctFilename = id.name + context.path.getExtensions();
 
-              let adviceMessage = '';
-
-              if (id.name === '*default*') {
-                adviceMessage += 'The';
-              } else {
-                adviceMessage +=
-                  'Filename should be <emphasis>' +
-                  correctFilename +
-                  '</emphasis> or the';
-              }
-
-              adviceMessage +=
-                ' ' +
-                type +
-                ' name should be <emphasis>' +
-                basename +
-                '</emphasis>';
-
               context.addNodeDiagnostic(
                 id,
-                {
-                  fixable: true,
-                  category: 'lint/defaultExportSameBasename',
-                  message: 'Filename and the name of a default ' +
-                  type +
-                  ' should match',
-                  advice: [
-                    {
-                      type: 'log',
-                      category: 'info',
-                      message: adviceMessage,
-                    },
-                  ],
-                },
+                ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.DEFAULT_EXPORT_SAME_BASENAME(
+                  {
+                    defaultName: id.name,
+                    defaultType: type,
+                    actualFilename: basename,
+                    correctFilename,
+                  },
+                ),
               );
 
               return ___R$project$rome$$romejs$js$ast$utils$renameBindings_ts$default(path, new Map([[id.name, basename]]));
@@ -24897,124 +24688,117 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$defaultExpo
     },
   };
 
-  // project-rome/@romejs/js-compiler/transforms/lint/noMultipleSpacesInRegularExpressionLiterals.ts
-function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(
-    node,
-  ) {
-    return (
-      node !== undefined && node.type === 'RegExpCharacter' &&
-        node.value ===
-        ' '
-    );
-  }
+  // project-rome/@romejs/js-compiler/transforms/lint/duplicateImportSource.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$duplicateImportSource_ts$default = {
+    name: 'duplicateImport',
+    enter(path) {
+      const {node} = path;
 
-  function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$checkRegex(
-    node,
-    context,
-  ) {
-    for (let i = 0;
-    i < node.body.length;
-    i++) {
-      const item = node.body[i];
+      if (node.type === 'Program') {
+        const seenSources = new Map();
+        let shouldFix = false;
 
-      // Do some quick checks to see if we'll produce an error
-      if (!___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(item) || !___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(node.body[i + 1])) {
-        continue;
-      }
+        for (const bodyNode of node.body) {
+          if (bodyNode.type === 'ImportDeclaration') {
+            const source = bodyNode.source.value;
 
-      const spaceNodes = [];
+            // Allow duplicate sources if the `importKind` is different
+            const sourceKey = bodyNode.importKind === undefined
+              ? source : bodyNode.importKind +
+              ':' +
+              source;
 
-      // Get all the space nodes
-      for (let x = i;
-      x < node.body.length;
-      x++) {
-        const item = node.body[i];
-        if (___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(item)) {
-          spaceNodes.push(item);
-          x++;
-        } else {
-          break;
+            const seenLoc = seenSources.get(sourceKey);
+            if (seenLoc === undefined) {
+              seenSources.set(sourceKey, bodyNode.loc);
+            } else {
+              shouldFix = true;
+              path.context.addNodeDiagnostic(
+                bodyNode,
+                ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.DUPLICATE_IMPORT_SOURCE(seenLoc),
+              );
+            }
+          }
+        }
+
+        // Defer fixing unless it's totally necessary since there's additional overhead
+        if (shouldFix) {
+          const skipImports = new Set();
+          const newBody = [];
+
+          for (let i = 0;
+          i < node.body.length;
+          i++) {
+            const bodyNode = node.body[i];
+
+            if (bodyNode.type === 'ImportDeclaration') {
+              // Skip import if it's already been consumed
+              if (skipImports.has(bodyNode)) {
+                continue;
+              }
+
+              let {
+                namedSpecifiers,
+                defaultSpecifier,
+                namespaceSpecifier,
+              } = bodyNode;
+
+              // Find and concat all duplicate imports
+              for (let x = i + 1;
+              x < node.body.length;
+              x++) {
+                const possibleDuplicateNode = node.body[x];
+
+                if (possibleDuplicateNode.type === 'ImportDeclaration' &&
+                  bodyNode.source.value === possibleDuplicateNode.source.value &&
+                  bodyNode.importKind === possibleDuplicateNode.importKind) {
+                  skipImports.add(possibleDuplicateNode);
+                  namedSpecifiers =
+                    [
+                      ...namedSpecifiers,
+                      ...possibleDuplicateNode.namedSpecifiers,
+                    ];
+
+                  // We do not currently handle renaming duplicate namespace and default bindings
+                  if (defaultSpecifier === undefined) {
+                    defaultSpecifier = possibleDuplicateNode.defaultSpecifier;
+                  }
+                  if (namespaceSpecifier === undefined) {
+                    namespaceSpecifier = possibleDuplicateNode.namespaceSpecifier;
+                  }
+                }
+              }
+
+              newBody.push(
+                Object.assign(
+                  {
+                  },
+                  bodyNode,
+                  {
+                    defaultSpecifier,
+                    namespaceSpecifier,
+                    namedSpecifiers,
+                  },
+                ),
+              );
+            } else {
+              newBody.push(bodyNode);
+            }
+          }
+
+          return (
+            Object.assign(
+              {
+              },
+              node,
+              {
+                body: newBody,
+              },
+            )
+          );
         }
       }
-
-      context.addLocDiagnostic(
-        ___R$project$rome$$romejs$parser$core$index_ts$extractSourceLocationRangeFromNodes(spaceNodes),
-        {
-          fixable: true,
-          category: 'lint/noMultipleSpacesInRegularExpressionLiterals',
-          message: 'Unclear multiple spaces in regular expression',
-          advice: [
-            {
-              type: 'log',
-              category: 'info',
-              message: 'It\'s hard to visually count the amount of spaces, it\'s clearer if you use a quantifier instead. eg / {' +
-              spaceNodes.length +
-              '}/',
-            },
-          ],
-        },
-      );
-
-      const quantifiedSpace = ___R$project$rome$$romejs$js$ast$regex$RegExpQuantified_ts$regExpQuantified.create(
-        {
-          min: spaceNodes.length,
-          max: spaceNodes.length,
-          target: item,
-        },
-      );
-
-      const newRegex = Object.assign(
-        {
-        },
-        node,
-        {
-          body: [
-            // Get start
-            ...node.body.slice(0, i - 1),
-            // Inject quantifier
-            quantifiedSpace,
-            // Get end
-            ...node.body.slice(i + spaceNodes.length),
-          ],
-        },
-      );
-
-      return ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$checkRegex(newRegex, context);
-    }
-
-    return node;
-  }
-
-  const ___R$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$default = {
-    name: 'noMultipleSpacesInRegularExpressionLiterals',
-    enter(path) {
-      const {context, node} = path;
-
-      if (node.type === 'RegExpSubExpression') {
-        return ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$checkRegex(node, context);
-      }
-
       return node;
-    },
-  };
-
-  // project-rome/@romejs/js-compiler/transforms/lint/noVar.ts
-const ___R$project$rome$$romejs$js$compiler$transforms$lint$noVar_ts$default = {
-    name: 'noVar',
-    enter(path) {
-      const {context, node: declaration} = path;
-
-      if (declaration.type === 'VariableDeclaration' && declaration.kind === 'var') {
-        context.addNodeDiagnostic(
-          declaration,
-          {
-            category: 'lint/noVar',
-            message: 'Variable declarations using `var` are disallowed, use `let` or `const` instead.',
-          },
-        );
-      }
-
-      return declaration;
     },
   };
 
@@ -25044,10 +24828,7 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$emptyBlocks
         if (___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$emptyBlocks_ts$isEmpty(node.consequent)) {
           context.addNodeDiagnostic(
             node.consequent,
-            {
-              category: 'lint/emptyBlocks',
-              message: 'Empty block',
-            },
+            ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.EMPTY_BLOCKS,
           );
         }
       }
@@ -25068,11 +24849,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$getterReturn_ts$defa
           if (record.type === 'INVALID') {
             path.context.addNodeDiagnostic(
               record.node,
-              {
-                category: 'lint/getterReturn',
-                message: 'Expected a \'return\' at end of a getter method but got ' +
-                record.description,
-              },
+              ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.GETTER_RETURN(record.description),
             );
           }
         }
@@ -25099,10 +24876,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noAsyncPromiseExecut
         node.arguments[0].head.async) {
         context.addNodeDiagnostic(
           node.arguments[0],
-          {
-            category: 'lint/noAsyncPromiseExecutor',
-            message: 'Promise executor functions should not be async.',
-          },
+          ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_ASYNC_PROMISE_EXECUTOR,
         );
       }
 
@@ -25133,15 +24907,11 @@ const ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noCompareNegZe
         (___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noCompareNegZero_ts$isNegZero(node.left) || ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noCompareNegZero_ts$isNegZero(node.right))) {
         path.context.addNodeDiagnostic(
           node,
-          {
-            category: 'lint/noCompareNegZero',
-            message: 'Do not use the \'' +
-            node.operator +
-            '\' operator to compare against -0',
-            fixable: true,
-          },
+          ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_COMPARE_NEG_ZERO(node.operator),
         );
-        return ___R$project$rome$$romejs$js$ast$utils$template_ts$default.expression`Object.is(${node.left}, ${node.right})`;
+        if (node.operator === '===') {
+          return ___R$project$rome$$romejs$js$ast$utils$template_ts$default.expression`Object.is(${node.left}, ${node.right})`;
+        }
       }
 
       return node;
@@ -25159,13 +24929,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noCondAssign_ts$defa
       node.type === 'DoWhileStatement') &&
         node.test &&
         node.test.type === 'AssignmentExpression') {
-        path.context.addNodeDiagnostic(
-          node,
-          {
-            category: 'lint/noCondAssign',
-            message: 'Cannot assign variable in loop condition',
-          },
-        );
+        path.context.addNodeDiagnostic(node, ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_COND_ASSIGN);
       }
 
       return node;
@@ -25179,15 +24943,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noDebugger_ts$defaul
       const {node} = path;
 
       if (node.type === 'DebuggerStatement') {
-        path.context.addNodeDiagnostic(
-          node,
-          {
-            fixable: true,
-            category: 'lint/noDebugger',
-            message: 'Unexpected \'debugger\' statement',
-          },
-        );
-
+        path.context.addNodeDiagnostic(node, ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_DEBUGGER);
         return ___R$project$rome$$romejs$js$compiler$constants_ts$REDUCE_REMOVE;
       }
 
@@ -25203,13 +24959,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noDeleteVars_ts$defa
 
       if (node.type === 'UnaryExpression' && node.operator === 'delete' &&
         node.argument.type === 'ReferenceIdentifier') {
-        path.context.addNodeDiagnostic(
-          node,
-          {
-            category: 'lint/noDeleteVars',
-            message: 'Variables should not be deleted.',
-          },
-        );
+        path.context.addNodeDiagnostic(node, ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_DELETE_VARS);
       }
 
       return node;
@@ -25230,12 +24980,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noDupeArgs_ts$defaul
             if (uniqueIdentifiers.has(name)) {
               context.addNodeDiagnostic(
                 param,
-                {
-                  category: 'lint/noDupeArgs',
-                  message: 'Duplicate argument <emphasis>' +
-                  name +
-                  '</emphasis> in function definition',
-                },
+                ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_DUPE_ARGS(name),
               );
             }
 
@@ -25264,12 +25009,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noDuplicateCase_ts$d
             if (uniqueSwitchCases.has(test.value)) {
               context.addNodeDiagnostic(
                 param,
-                {
-                  category: 'lint/noDuplicateCase',
-                  message: 'Duplicate case <emphasis>' +
-                  test.value +
-                  '</emphasis> not allowed.',
-                },
+                ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_DUPLICATE_CASE(test.value),
               );
             }
 
@@ -25278,6 +25018,51 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noDuplicateCase_ts$d
         }
       }
 
+      return node;
+    },
+  };
+
+  // project-rome/@romejs/js-compiler/transforms/lint/noDuplicateGroupNamesInRegularExpressions.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$noDuplicateGroupNamesInRegularExpressions_ts$default = {
+    name: 'noDuplicateGroupNamesInRegularExpressions',
+    enter(path) {
+      const {context, node} = path;
+
+      if (node.type === 'RegExpSubExpression') {
+        const groupUsage = new Map();
+
+        for (const bodyItem of node.body) {
+          if (bodyItem.type === 'RegExpGroupCapture') {
+            const groupName = bodyItem.name;
+
+            if (groupName !== undefined) {
+              let usages = groupUsage.get(groupName);
+
+              if (usages === undefined) {
+                usages = [];
+                groupUsage.set(groupName, usages);
+              }
+              usages.push(bodyItem);
+            }
+          }
+        }
+
+        for (const [name, usages] of groupUsage) {
+          if (usages.length === 1) {
+            continue;
+          }
+
+          const firstUsage = usages[0];
+
+          context.addNodeDiagnostic(
+            firstUsage,
+            ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.DUPLICATE_REGEX_GROUP_NAME(
+              name,
+              usages.slice(1).map((node) => node.loc),
+            ),
+          );
+        }
+      }
       return node;
     },
   };
@@ -25319,10 +25104,7 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noDuplicate
             if (previousKeys.has(key)) {
               path.context.addNodeDiagnostic(
                 prop,
-                {
-                  category: 'lint/noDuplicateKeys',
-                  message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Duplicate key <emphasis>${key}</emphasis>`,
-                },
+                ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_DUPLICATE_KEYS(key),
               );
             }
 
@@ -25342,14 +25124,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noEmptyCharacterClas
       const {context, node} = path;
 
       if (node.type === 'RegExpCharSet' && node.body.length === 0 && !node.invert) {
-        context.addNodeDiagnostic(
-          node,
-          {
-            fixable: true,
-            category: 'lint/noEmptyCharacterClass',
-            message: 'Empty character classes in regular expressions are not allowed',
-          },
-        );
+        context.addNodeDiagnostic(node, ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_EMPTY_CHAR_SET);
         return ___R$project$rome$$romejs$js$compiler$constants_ts$REDUCE_REMOVE;
       }
 
@@ -25364,13 +25139,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noExplicitAny_ts$def
       const {context, node} = path;
 
       if (node.type === 'AnyKeywordTypeAnnotation') {
-        context.addNodeDiagnostic(
-          node,
-          {
-            category: 'lint/noExplicitAny',
-            message: 'Unexpected any. Specify a different type.',
-          },
-        );
+        context.addNodeDiagnostic(node, ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_EXPLICIT_ANY);
       }
 
       return node;
@@ -25431,13 +25200,7 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noExtraBool
           node.callee.type ===
           'ReferenceIdentifier' &&
           node.callee.name === 'Boolean') {
-          context.addNodeDiagnostic(
-            node,
-            {
-              category: 'lint/noExtraBooleanCast',
-              message: 'Redundant double negation.',
-            },
-          );
+          context.addNodeDiagnostic(node, ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_EXTRA_BOOLEAN_CAST);
         }
       }
 
@@ -25519,8 +25282,8 @@ const ___R$project$rome$$romejs$js$compiler$scope$bindings_ts = {
   }
 
   class ___R$project$rome$$romejs$js$compiler$scope$bindings_ts$ConstBinding extends ___R$project$rome$$romejs$js$compiler$scope$bindings_ts$Binding {
-    constructor(opts, value, defaultKind) {
-      super(opts, defaultKind);
+    constructor(opts, value, kind = 'constant') {
+      super(opts, kind);
       this.value = value;
     }
   }
@@ -25569,13 +25332,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noFunctionAssign_ts$
 
       if (node.type === 'AssignmentIdentifier' &&
         scope.getBinding(node.name) instanceof ___R$project$rome$$romejs$js$compiler$scope$bindings_ts$FunctionBinding) {
-        path.context.addNodeDiagnostic(
-          node,
-          {
-            category: 'lint/noFunctionAssign',
-            message: 'Reassignment of function declaration',
-          },
-        );
+        path.context.addNodeDiagnostic(node, ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_FUNCTION_ASSIGN);
       }
 
       return node;
@@ -25604,13 +25361,10 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noImportAss
       node.type === 'ReferenceIdentifier' &&
         path.parentPath.node.type ===
         'UpdateExpression') {
-        let binding = scope.getBinding(node.name);
+        const binding = scope.getBinding(node.name);
         if (binding !== undefined && binding.kind === 'import') path.context.addNodeDiagnostic(
           node,
-          {
-            category: 'lint/noImportAssign',
-            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`<emphasis>${node.name}</emphasis> is read-only`,
-          },
+          ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_IMPORT_ASSIGN(node.name),
         );
       }
 
@@ -25633,14 +25387,96 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noLabelVar_ts$defaul
         );
 
         if (isDefined) {
-          path.context.addNodeDiagnostic(
-            node,
-            {
-              category: 'lint/noLabelVar',
-              message: 'Labels should not be variable names',
-            },
-          );
+          path.context.addNodeDiagnostic(node, ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_LABEL_VAR);
         }
+      }
+
+      return node;
+    },
+  };
+
+  // project-rome/@romejs/js-compiler/transforms/lint/noMultipleSpacesInRegularExpressionLiterals.ts
+function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(
+    node,
+  ) {
+    return (
+      node !== undefined && node.type === 'RegExpCharacter' &&
+        node.value ===
+        ' '
+    );
+  }
+
+  function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$checkRegex(
+    node,
+    context,
+  ) {
+    for (let i = 0;
+    i < node.body.length;
+    i++) {
+      const item = node.body[i];
+
+      // Do some quick checks to see if we'll produce an error
+      if (!___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(item) || !___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(node.body[i + 1])) {
+        continue;
+      }
+
+      const spaceNodes = [];
+
+      // Get all the space nodes
+      for (let x = i;
+      x < node.body.length;
+      x++) {
+        const item = node.body[i];
+        if (___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(item)) {
+          spaceNodes.push(item);
+          x++;
+        } else {
+          break;
+        }
+      }
+
+      context.addNodesRangeDiagnostic(
+        spaceNodes,
+        ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(spaceNodes.length),
+      );
+
+      const quantifiedSpace = ___R$project$rome$$romejs$js$ast$regex$RegExpQuantified_ts$regExpQuantified.create(
+        {
+          min: spaceNodes.length,
+          max: spaceNodes.length,
+          target: item,
+        },
+      );
+
+      const newRegex = Object.assign(
+        {
+        },
+        node,
+        {
+          body: [
+            // Get start
+            ...node.body.slice(0, i - 1),
+            // Inject quantifier
+            quantifiedSpace,
+            // Get end
+            ...node.body.slice(i + spaceNodes.length),
+          ],
+        },
+      );
+
+      return ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$checkRegex(newRegex, context);
+    }
+
+    return node;
+  }
+
+  const ___R$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$default = {
+    name: 'noMultipleSpacesInRegularExpressionLiterals',
+    enter(path) {
+      const {context, node} = path;
+
+      if (node.type === 'RegExpSubExpression') {
+        return ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$checkRegex(node, context);
       }
 
       return node;
@@ -25659,17 +25495,7 @@ const ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noShadowRestri
           if (___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noShadowRestrictedNames_ts$restrictedNames.has(name)) {
             context.addNodeDiagnostic(
               binding.node,
-              {
-                category: 'lint/noShadowRestrictedNames',
-                message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Shadowing of global property <emphasis>${name}</emphasis>`,
-                advice: [
-                  {
-                    type: 'log',
-                    category: 'info',
-                    message: 'Consider renaming this variable. It\'s easy to confuse the origin of variables when they\'re named after a known global.',
-                  },
-                ],
-              },
+              ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_SHADOW_RESTRICTED_NAMES(name),
             );
           }
         }
@@ -25691,10 +25517,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noTemplateCurlyInStr
         if (regex.test(node.value)) {
           context.addNodeDiagnostic(
             node,
-            {
-              category: 'lint/noTemplateCurlyInString',
-              message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Unexpected template string expression.`,
-            },
+            ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_TEMPLATE_CURLY_IN_STRING,
           );
         }
       }
@@ -25721,12 +25544,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noUnsafeFinally_ts$d
             statement.type === 'ReturnStatement') {
               context.addNodeDiagnostic(
                 statement,
-                {
-                  category: 'lint/noUnsafeFinally',
-                  message: 'Unsafe usage of ' +
-                  statement.type +
-                  '.',
-                },
+                ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_UNSAFE_FINALLY(statement.type),
               );
             }
           }
@@ -25737,9 +25555,22 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noUnsafeFinally_ts$d
     },
   };
 
+  // project-rome/@romejs/js-compiler/transforms/lint/noVar.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$noVar_ts$default = {
+    name: 'noVar',
+    enter(path) {
+      const {context, node: declaration} = path;
+
+      if (declaration.type === 'VariableDeclaration' && declaration.kind === 'var') {
+        context.addNodeDiagnostic(declaration, ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_VAR);
+      }
+
+      return declaration;
+    },
+  };
+
   // project-rome/@romejs/js-compiler/transforms/lint/preferFunctionDeclarations.ts
 // This hook is created with a list of initial VariableDeclarators that contain functions we want to convert
-
   // We then remove any ArrowFunctionExpression VariableDeclarators that contain a valid ThisExpression
   const ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$preferFunctionDeclarations_ts$hook = ___R$project$rome$$romejs$js$compiler$api$createHook_ts$default(
     {
@@ -25813,11 +25644,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$noUnsafeFinally_ts$d
 
           path.context.addNodeDiagnostic(
             init,
-            {
-              category: 'lint/preferFunctionDeclarations',
-              message: 'Use a function declaration instead of a const function',
-              fixable: true,
-            },
+            ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.PREFER_FUNCTION_DECLARATIONS,
           );
 
           // Convert arrow function body if necessary
@@ -25924,13 +25751,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$preferTemplate_ts$de
       if (node.type === 'BinaryExpression' && node.operator === '+' &&
         (node.left.type === 'StringLiteral' && !node.left.value.includes('`') ||
         node.right.type === 'StringLiteral' && !node.right.value.includes('`'))) {
-        path.context.addNodeDiagnostic(
-          node,
-          {
-            category: 'lint/preferTemplate',
-            message: 'You\'re using string concatenation when template literals are preferred',
-          },
-        );
+        path.context.addNodeDiagnostic(node, ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.PREFER_TEMPLATE);
       }
 
       return node;
@@ -25944,14 +25765,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$sparseArray_ts$defau
       const {node} = path;
 
       if (node.type === 'ArrayExpression' && node.elements.includes(undefined)) {
-        path.context.addNodeDiagnostic(
-          node,
-          {
-            fixable: true,
-            category: 'lint/sparseArray',
-            message: 'Your array contains an empty slot',
-          },
-        );
+        path.context.addNodeDiagnostic(node, ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.SPARSE_ARRAY);
 
         return (
           ___R$project$rome$$romejs$js$ast$expressions$ArrayExpression_ts$arrayExpression.quick(
@@ -26021,10 +25835,7 @@ const ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$undeclaredVari
         if (!isDefined) {
           path.context.addNodeDiagnostic(
             node,
-            {
-              category: 'lint/undeclaredVariables',
-              message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Undeclared variable <emphasis>${name}</emphasis>`,
-            },
+            ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.UNDECLARED_VARIABLES(name),
           );
         }
       }
@@ -26044,14 +25855,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$unsafeNegation_ts$de
         node.operator === 'instanceof') &&
         node.left.type === 'UnaryExpression' &&
         node.left.operator === '!') {
-        path.context.addNodeDiagnostic(
-          node,
-          {
-            fixable: true,
-            category: 'lint/unsafeNegation',
-            message: 'Unsafe usage of negation operator in left side of binary expression',
-          },
-        );
+        path.context.addNodeDiagnostic(node, ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.UNSAFE_NEGATION);
 
         return (
           ___R$project$rome$$romejs$js$ast$expressions$UnaryExpression_ts$unaryExpression.create(
@@ -26138,14 +25942,7 @@ const ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$unusedVariable
           if (used === false && binding !== undefined) {
             path.context.addNodeDiagnostic(
               binding.node,
-              {
-                category: 'lint/unusedVariables',
-                message: 'Unused ' +
-                binding.kind +
-                ' <emphasis>' +
-                name +
-                '</emphasis>',
-              },
+              ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.UNUSED_VARIABLES(binding.kind, name),
             );
           }
         }
@@ -26232,11 +26029,99 @@ const ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$unusedVariable
     },
   };
 
+  // project-rome/@romejs/js-compiler/transforms/lint/singleVarDeclarator.ts
+const ___R$project$rome$$romejs$js$compiler$transforms$lint$singleVarDeclarator_ts$default = {
+    name: 'singleVarDeclarator',
+    enter(path) {
+      const {node} = path;
+
+      if (node.type === 'VariableDeclarationStatement' &&
+        node.declaration.declarations.length > 1) {
+        path.context.addNodeDiagnostic(
+          node,
+          ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.SINGLE_VAR_DECLARATOR,
+        );
+
+        const nodes = [];
+        const {kind} = node.declaration;
+
+        for (const declarator of node.declaration.declarations) {
+          nodes.push(
+            ___R$project$rome$$romejs$js$ast$statements$VariableDeclarationStatement_ts$variableDeclarationStatement.quick(
+              ___R$project$rome$$romejs$js$ast$auxiliary$VariableDeclaration_ts$variableDeclaration.create(
+                {
+                  kind,
+                  declarations: [declarator],
+                },
+              ),
+            ),
+          );
+        }
+
+        return nodes;
+      }
+
+      return node;
+    },
+  };
+
+  // project-rome/@romejs/js-compiler/transforms/lint/noReferenceToNonExistingGroup.ts
+function ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noReferenceToNonExistingGroup_ts$findCaptureGroups(path) {
+    const regexLiteral = path.findAncestry(
+      (
+        path,
+      ) =>
+        path.node.type === 'RegExpLiteral',
+    );
+    if (regexLiteral === undefined) {
+      return regexLiteral;
+    }
+    let captureGroups = [];
+    regexLiteral.traverse(
+      'RegExpLiteral',
+      (path) => {
+        if (path.node.type === 'RegExpGroupCapture') {
+          captureGroups.push(path.node);
+        }
+      },
+    );
+    return captureGroups;
+  }
+
+  const ___R$project$rome$$romejs$js$compiler$transforms$lint$noReferenceToNonExistingGroup_ts$default = {
+    name: 'noReferenceToNonExistingGroup',
+    enter(path) {
+      const {node, context} = path;
+      if (node.type === 'RegExpNumericBackReference') {
+        const allCaptureGroups = ___R$$priv$project$rome$$romejs$js$compiler$transforms$lint$noReferenceToNonExistingGroup_ts$findCaptureGroups(path);
+        if (allCaptureGroups === undefined) {
+          context.addNodeDiagnostic(
+            node,
+            ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_REFERENCE_TO_NON_EXISTING_GROUP(
+              String(node.value),
+            ),
+          );
+        } else {
+          if (node.value > allCaptureGroups.length) {
+            context.addNodeDiagnostic(
+              node,
+              ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.NO_REFERENCE_TO_NON_EXISTING_GROUP(
+                String(
+                  node.value,
+                ),
+              ),
+            );
+          }
+        }
+      }
+      return node;
+    },
+  };
+
   // project-rome/@romejs/js-compiler/transforms/lint/index.ts
 const ___R$project$rome$$romejs$js$compiler$transforms$lint$index_ts$lintTransforms = [
     ___R$project$rome$$romejs$js$compiler$transforms$lint$defaultExportSameBasename_ts$default,
-    ___R$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$default,
-    ___R$project$rome$$romejs$js$compiler$transforms$lint$noVar_ts$default,
+    ___R$project$rome$$romejs$js$compiler$transforms$lint$duplicateImportSource_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$emptyBlocks_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$getterReturn_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$noAsyncPromiseExecutor_ts$default,
@@ -26246,6 +26131,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$index_ts$lintTransfo
     ___R$project$rome$$romejs$js$compiler$transforms$lint$noDeleteVars_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$noDupeArgs_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$noDuplicateCase_ts$default,
+    ___R$project$rome$$romejs$js$compiler$transforms$lint$noDuplicateGroupNamesInRegularExpressions_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$noDuplicateKeys_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$noEmptyCharacterClass_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$noExplicitAny_ts$default,
@@ -26253,15 +26139,20 @@ const ___R$project$rome$$romejs$js$compiler$transforms$lint$index_ts$lintTransfo
     ___R$project$rome$$romejs$js$compiler$transforms$lint$noFunctionAssign_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$noImportAssign_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$noLabelVar_ts$default,
+    ___R$project$rome$$romejs$js$compiler$transforms$lint$noReferenceToNonExistingGroup_ts$default,
+    ___R$project$rome$$romejs$js$compiler$transforms$lint$noMultipleSpacesInRegularExpressionLiterals_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$noShadowRestrictedNames_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$noTemplateCurlyInString_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$noUnsafeFinally_ts$default,
+    ___R$project$rome$$romejs$js$compiler$transforms$lint$noVar_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$preferFunctionDeclarations_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$preferTemplate_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$sparseArray_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$undeclaredVariables_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$unsafeNegation_ts$default,
     ___R$project$rome$$romejs$js$compiler$transforms$lint$unusedVariables_ts$default,
+    ___R$project$rome$$romejs$js$compiler$transforms$lint$noDuplicateGroupNamesInRegularExpressions_ts$default,
+    ___R$project$rome$$romejs$js$compiler$transforms$lint$singleVarDeclarator_ts$default,
   ];
 
   // project-rome/@romejs/js-generator/generators/temp/AmbiguousFlowTypeCastExpression.ts
@@ -26807,7 +26698,6 @@ const ___R$$priv$project$rome$$romejs$js$generator$node$parentheses_ts$PRECEDENC
   );
 
   // Walk up the print stack to deterimine if our node can come first
-
   // in statement.
   function ___R$$priv$project$rome$$romejs$js$generator$node$parentheses_ts$isFirstInStatement(
     printStack,
@@ -27526,10 +27416,12 @@ function ___R$project$rome$$romejs$js$generator$generators$auxiliary$CatchClause
     node = ___R$project$rome$$romejs$js$ast$auxiliary$CatchClause_ts$catchClause.assert(node);
     ___R$project$rome$$romejs$js$ast$auxiliary$CatchClause_ts$catchClause.assert(node);
     generator.word('catch');
-    generator.space();
-    generator.token('(');
-    generator.print(node.param, node);
-    generator.token(')');
+    if (node.param) {
+      generator.space();
+      generator.token('(');
+      generator.print(node.param, node);
+      generator.token(')');
+    }
     generator.space();
     generator.print(node.body, node);
   }
@@ -28070,31 +27962,18 @@ const ___R$project$rome$$romejs$js$parser$xhtmlEntities_ts = {
 
   // project-rome/@romejs/js-parser/tokenizer/types.ts
 // ## Token types
-
   // The assignment of fine-grained, information-carrying type objects
-
   // allows the tokenizer to store the information it has about a
-
   // token in a way that is very cheap for the parser to look up.
-
   // All token type variables start with an underscore, to make them
-
   // easy to recognize.
-
   // The `beforeExpr` property is used to disambiguate between regular
-
   // expressions and divisions. It is set on all token types that can
-
   // be followed by an expression (thus, a slash after them would be a
-
   // regular expression).
-
   //
-
   // `isLoop` marks a keyword as starting a loop, which is important
-
   // to know when parsing a label, in order to allow or disallow
-
   // continue jumps to that label.
   const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$types_ts$beforeExpr = true;
   const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$types_ts$startsExpr = true;
@@ -29016,13 +28895,13 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
           if (parser.inScope('STRICT')) {
             parser.addDiagnostic(
               {
-                message: 'In strict mode code, functions can only be declared at top level or inside a block',
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ILLEGAL_FUNCTION_IN_STRICT,
               },
             );
           } else if (context !== 'if' && context !== 'label') {
             parser.addDiagnostic(
               {
-                message: 'In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement',
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ILLEGAL_FUNCTION_IN_NON_STRICT,
               },
             );
           }
@@ -29035,7 +28914,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
         if (context !== undefined && result.head.generator === true) {
           parser.addDiagnostic(
             {
-              message: 'Generators can only be declared at the top level or inside a block',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ILLEGAL_GENERATOR_DEFINITION,
               loc: result.loc,
             },
           );
@@ -29074,7 +28953,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
         if (context !== undefined && kind !== 'var') {
           parser.addDiagnostic(
             {
-              message: 'Lexical declaration cannot appear in a single-statement context',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.LEXICAL_DECLARATION_IN_SINGLE_STATEMENT_CONTEXT,
             },
           );
         }
@@ -29112,7 +28991,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
           if (!topLevel) {
             parser.addDiagnostic(
               {
-                message: '\'import\' and \'export\' may only appear at the top level',
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.IMPORT_EXPORT_MUST_TOP_LEVEL,
               },
             );
           }
@@ -29127,7 +29006,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
           if (context !== undefined) {
             parser.addDiagnostic(
               {
-                message: 'Async functions can only be declared at the top level or inside a block',
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ILLEGAL_ASYNC_DEFINITION,
               },
             );
           }
@@ -29211,24 +29090,9 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
       parser.addDiagnostic(
         {
           loc: node.loc,
-          message: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module',
-          advice: [
-            // TODO this advice is pointless if you have syntax extensions enabled
-
-            // TODO point to the actual package.json for this file
-            {
-              type: 'log',
-              category: 'info',
-              message: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module',
-            },
-            {
-              type: 'log',
-              category: 'info',
-              message: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="' +
-              parser.options.manifestPath +
-              '" />',
-            },
-          ],
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.IMPORT_EXPORT_IN_SCRIPT(
+            parser.options.manifestPath,
+          ),
         },
       );
     }
@@ -29239,7 +29103,6 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
     start,
     isBreak,
   ) {
-    const keyword = isBreak ? 'break' : 'continue';
     parser.next();
 
     let label;
@@ -29274,8 +29137,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
       parser.addDiagnostic(
         {
           start,
-          message: 'Unsyntactic ' +
-          keyword,
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNKNOWN_LABEL(label && label.name),
         },
       );
     }
@@ -29383,7 +29245,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
         parser.addDiagnostic(
           {
             start: awaitAt,
-            message: 'Can\'t have an await on a regular for loop',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.REGULAR_FOR_AWAIT,
           },
         );
       }
@@ -29414,7 +29276,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
       parser.addDiagnostic(
         {
           start: awaitAt,
-          message: 'Can\'t have an await on a regular for loop',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.REGULAR_FOR_AWAIT,
         },
       );
     }
@@ -29458,7 +29320,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
       !parser.options.allowReturnOutsideFunction) {
       parser.addDiagnostic(
         {
-          message: '\'return\' outside of function',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.RETURN_OUTSIDE_FUNCTION,
         },
       );
     }
@@ -29545,10 +29407,11 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
             test = ___R$project$rome$$romejs$js$parser$parser$expression_ts$parseExpression(parser, 'case test');
           } else {
             if (sawDefault) {
+              // TODO point to other default
               parser.addDiagnostic(
                 {
                   start: parser.state.lastStartPos,
-                  message: 'Multiple default clauses',
+                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.MULTIPLE_DEFAULT_CASE,
                 },
               );
             }
@@ -29569,7 +29432,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
             parser.addDiagnostic(
               {
                 loc: stmt.loc,
-                message: 'Statement outside of a case or default block',
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.SWITCH_STATEMENT_OUTSIDE_CASE,
               },
             );
           } else {
@@ -29610,7 +29473,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
       parser.addDiagnostic(
         {
           start: parser.state.lastEndPos,
-          message: 'Illegal newline after throw',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.NEWLINE_AFTER_THROW,
         },
       );
     }
@@ -29672,7 +29535,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
       parser.addDiagnostic(
         {
           start,
-          message: 'Missing catch or finally clause',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TRY_MISSING_FINALLY_OR_CATCH,
         },
       );
     }
@@ -29740,7 +29603,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
       parser.addDiagnostic(
         {
           loc: parser.finishLoc(start),
-          message: '\'with\' in strict mode',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.WITH_IN_STRICT,
         },
       );
     }
@@ -29777,9 +29640,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
         parser.addDiagnostic(
           {
             loc: expr.loc,
-            message: 'Label \'' +
-            maybeName +
-            '\' is already declared',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.DUPLICATE_LABEL(maybeName, label.loc),
           },
         );
       }
@@ -29808,6 +29669,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
       {
         name: maybeName,
         kind,
+        loc: parser.getLoc(expr),
         statementStart: parser.state.startPos.index,
       },
     );
@@ -29835,7 +29697,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
       parser.addDiagnostic(
         {
           loc: body.loc,
-          message: 'Invalid labeled declaration',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_LABEL_DECLARATION,
         },
       );
     }
@@ -29971,7 +29833,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
             parser.addDiagnostic(
               {
                 index: octalPosition,
-                message: 'Octal literal in strict mode',
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.OCTAL_IN_STRICT,
               },
             );
           }
@@ -30045,7 +29907,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
       parser.addDiagnostic(
         {
           start: awaitAt,
-          message: 'Unexpected await for `for-in`',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.REGULAR_FOR_AWAIT,
         },
       );
     }
@@ -30058,8 +29920,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
       parser.addDiagnostic(
         {
           loc: init.loc,
-          message: (isForIn ? 'for-in' : 'for-of') +
-          ' loop variable declaration may not have an initializer',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FOR_IN_OF_WITH_INITIALIZER,
         },
       );
     }
@@ -30129,7 +29990,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
           if (!parser.isSyntaxEnabled('ts')) {
             parser.addDiagnostic(
               {
-                message: 'const with no initializer isn\'t allowed',
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.CONST_WITHOUT_INITIALIZER,
                 loc: id.loc,
               },
             );
@@ -30143,7 +30004,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
           parser.addDiagnostic(
             {
               start: parser.state.lastEndPos,
-              message: 'Complex binding patterns require an initialization value',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.COMPLEX_BINDING_WITHOUT_INITIALIZER,
             },
           );
         }
@@ -30179,15 +30040,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
     let definite;
     if (id.type === 'BindingIdentifier' && parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.bang)) {
       definite = true;
-
-      if (!parser.isSyntaxEnabled('ts')) {
-        parser.addDiagnostic(
-          {
-            message: 'TypeScript syntax isn\'t enabled for definite syntax',
-          },
-        );
-      }
-
+      parser.expectSyntaxEnabled('ts');
       parser.next();
     }
 
@@ -30519,7 +30372,7 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
         parser.addDiagnostic(
           {
             loc: typeParameters.loc,
-            message: 'An accessor cannot have type parameters',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ACCESSOR_WITH_TYPE_PARAMS,
           },
         );
       }
@@ -30546,6 +30399,11 @@ const ___R$project$rome$$romejs$js$parser$parser$statement_ts = {
   // project-rome/@romejs/codec-js-regexp/index.ts
 function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(str) {
     return !/[^0-9a-fA-F]/.test(str);
+  }
+
+  function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isOct(str) {
+    const OCT_REGEX = /^[0-7]+$/;
+    return OCT_REGEX.test(str);
   }
 
   function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$getCodePoint(char) {
@@ -30745,7 +30603,7 @@ function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(str) {
 
                 case 'x':
                   {
-                    const possibleHex = input.slice(___R$project$rome$$romejs$ob1$index_ts$get0(index) + 1, 2);
+                    const possibleHex = input.slice(___R$project$rome$$romejs$ob1$index_ts$get0(index) + 1, ___R$project$rome$$romejs$ob1$index_ts$get0(index) + 3);
 
                     // \xhh
                     if (possibleHex.length === 2 && ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(possibleHex)) {
@@ -30816,7 +30674,78 @@ function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(str) {
                 default:
                   // TODO dangling backslash
 
-                  // TODO backreference
+                  let char = nextChar;
+                  let backReference = '';
+                  let nextIndex = ___R$project$rome$$romejs$ob1$index_ts$add(index, 1);
+                  while (___R$project$rome$$romejs$parser$core$index_ts$isDigit(char)) {
+                    backReference += char;
+                    // stop at max octal ascii in case of octal escape
+                    if (parseInt(backReference) > 377) {
+                      backReference = backReference.slice(0, backReference.length - 1);
+                      break;
+                    }
+                    nextIndex = ___R$project$rome$$romejs$ob1$index_ts$add(nextIndex, 1);
+                    char = input[___R$project$rome$$romejs$ob1$index_ts$get0(nextIndex)];
+                  }
+
+                  if (backReference !== '') {
+                    const referenceValue = parseInt(backReference, 10);
+                    // \8 \9 are treated as escape char
+                    if (referenceValue === 8 || referenceValue === 9) {
+                      return (
+                        this.finishComplexToken(
+                          'Character',
+                          {
+                            value: nextChar,
+                            escaped: true,
+                          },
+                          nextIndex,
+                        )
+                      );
+                    }
+
+                    if (___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isOct(String(referenceValue))) {
+                      const octal = parseInt(backReference, 8);
+                      return (
+                        this.finishComplexToken(
+                          'Character',
+                          {
+                            value: String.fromCharCode(octal),
+                            escaped: true,
+                          },
+                          nextIndex,
+                        )
+                      );
+                    }
+
+                    // back reference allowed are 1 - 99
+                    if (referenceValue >= 1 && referenceValue <= 99) {
+                      return (
+                        this.finishComplexToken(
+                          'NumericBackReferenceCharacter',
+                          {
+                            value: parseInt(backReference, 10),
+                            escaped: true,
+                          },
+                          nextIndex,
+                        )
+                      );
+                    } else {
+                      backReference = backReference.slice(0, backReference.length - 1);
+                      nextIndex = ___R$project$rome$$romejs$ob1$index_ts$add(nextIndex, -1);
+                      return (
+                        this.finishComplexToken(
+                          'Character',
+                          {
+                            value: backReference,
+                            escaped: true,
+                          },
+                          nextIndex,
+                        )
+                      );
+                    }
+                  }
+
                   return (
                     this.finishComplexToken(
                       'Character',
@@ -30835,6 +30764,7 @@ function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(str) {
               case '^':
               case '.':
               case '?':
+              case '{':
               case '}':
               case '+':
               case '|':
@@ -30953,10 +30883,14 @@ function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(str) {
             }
 
             this.addDiagnostic(
-              {
-                message: 'Invalid capture group modifier',
-                token,
-              },
+              Object.assign(
+                {
+                },
+                ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.REGEX_PARSER.INVALID_CAPTURE_GROUP_MODIFIER,
+                {
+                  token,
+                },
+              ),
             );
           }
 
@@ -30987,10 +30921,14 @@ function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(str) {
 
             if (!this.eatOperator(')')) {
               this.addDiagnostic(
-                {
-                  message: 'Unclosed group',
-                  start,
-                },
+                Object.assign(
+                  {
+                  },
+                  ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.REGEX_PARSER.UNCLOSED_GROUP,
+                  {
+                    start,
+                  },
+                ),
               );
             }
 
@@ -31030,10 +30968,14 @@ function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(str) {
 
             if (!this.eatOperator(']')) {
               this.addDiagnostic(
-                {
-                  message: 'Unclosed character set',
-                  start,
-                },
+                Object.assign(
+                  {
+                  },
+                  ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.REGEX_PARSER.UNCLOSED_CHAR_SET,
+                  {
+                    start,
+                  },
+                ),
               );
             }
 
@@ -31071,6 +31013,18 @@ function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(str) {
               return (
                 {
                   type: 'RegExpCharacter',
+                  value: token.value,
+                  loc: this.finishLocFromToken(token),
+                }
+              );
+            }
+
+            if (token.type === 'NumericBackReferenceCharacter') {
+              this.nextToken();
+
+              return (
+                {
+                  type: 'RegExpNumericBackReference',
                   value: token.value,
                   loc: this.finishLocFromToken(token),
                 }
@@ -31179,10 +31133,14 @@ function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(str) {
                 if (start.type === 'RegExpCharacter' && end.type === 'RegExpCharacter' &&
                   ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$getCodePoint(end.value) < ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$getCodePoint(start.value)) {
                   this.addDiagnostic(
-                    {
-                      message: 'Range values reversed. Start char code is greater than end char code',
-                      loc,
-                    },
+                    Object.assign(
+                      {
+                      },
+                      ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.REGEX_PARSER.REVERSED_CHAR_SET_RANGE,
+                      {
+                        loc,
+                      },
+                    ),
                   );
                   const _end = end;
                   end = start;
@@ -31261,6 +31219,7 @@ function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(str) {
 
                   const endToken = this.getToken();
                   if (endToken.type === 'Operator' && endToken.value === '}') {
+                    this.nextToken();
                     return (
                       {
                         min,
@@ -31269,6 +31228,7 @@ function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(str) {
                     );
                   }
                 } else if (nextToken.type === 'Operator' && nextToken.value === '}') {
+                  this.nextToken();
                   return (
                     {
                       min,
@@ -31354,22 +31314,51 @@ function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(str) {
               case ')':
                 this.nextToken();
                 this.addDiagnostic(
-                  {
-                    message: 'Unopened group',
-                    token,
-                  },
+                  Object.assign(
+                    {
+                    },
+                    ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.REGEX_PARSER.UNOPENED_GROUP,
+                    {
+                      token,
+                    },
+                  ),
                 );
                 return;
+
+              case '{':
+                const start = this.getPosition();
+                const unmatchedQuantifier = this.parseQuantifier();
+                if (unmatchedQuantifier === undefined) {
+                  // Quantifier is undefined and eaten tokens were restored
+
+                  // Return a '{' token as a RegexpCharacter, parseBodyItem() will handle parsing of subsequent quantifiers
+                  return this.parseCharacter();
+                } else {
+                  // If quantifier is defined, then syntax error: Nothing to repeat
+                  const end = this.getPosition();
+                  this.addDiagnostic(
+                    {
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.REGEX_PARSER.NO_TARGET_QUANTIFIER,
+                      start,
+                      end,
+                    },
+                  );
+                  return;
+                }
 
               case '?':
               case '*':
               case '+':
                 this.nextToken();
                 this.addDiagnostic(
-                  {
-                    message: 'Invalid target for quantifier',
-                    token,
-                  },
+                  Object.assign(
+                    {
+                    },
+                    ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.REGEX_PARSER.INVALID_QUANTIFIER_TARGET,
+                    {
+                      token,
+                    },
+                  ),
                 );
                 return;
 
@@ -31388,14 +31377,19 @@ function ___R$$priv$project$rome$$romejs$codec$js$regexp$index_ts$isHex(str) {
 
               case 'EscapedCharacter':
               case 'Character':
+              case 'NumericBackReferenceCharacter':
                 return this.parseCharacter();
             }
 
             this.addDiagnostic(
-              {
-                message: 'Unknown regex part',
-                token,
-              },
+              Object.assign(
+                {
+                },
+                ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.REGEX_PARSER.UNKNOWN_REGEX_PART,
+                {
+                  token,
+                },
+              ),
             );
           }
 
@@ -31584,7 +31578,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       if (props.has('proto')) {
         parser.addDiagnostic(
           {
-            message: 'Redefinition of __proto__ property',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.PROTO_PROP_REDEFINITION,
             loc: key.loc,
           },
         );
@@ -31707,7 +31701,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
             parser.addDiagnostic(
               {
                 loc: typeParameters.loc,
-                message: 'Expected an arrow function after this type parameter declaration',
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_TYPE_PARAMS,
               },
             );
             return (
@@ -31923,7 +31917,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
     if (!parser.eat(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.colon)) {
       parser.addDiagnostic(
         {
-          message: 'Missing conditional expression consequent separator',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.MISSING_CONDITIONAL_SEPARATOR,
         },
       );
     }
@@ -32060,7 +32054,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
           parser.addDiagnostic(
             {
               loc: left.argument.loc,
-              message: 'Illegal expression. Wrap left hand side or entire exponentiation in parentheses.',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.WRAP_EXPONENTIATION,
             },
           );
         }
@@ -32162,7 +32156,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
           parser.addDiagnostic(
             {
               loc: argument.loc,
-              message: 'Deleting local variable in strict mode',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.DELETE_LOCAL_VARIABLE_IN_STRICT,
             },
           );
         } else if (argument.type === 'MemberExpression' &&
@@ -32170,7 +32164,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
           parser.addDiagnostic(
             {
               loc: argument.property.loc,
-              message: 'Deleting a private field is not allowed',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.DELETE_PRIVATE_FIELD,
             },
           );
         }
@@ -32654,7 +32648,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
     if (state.optionalChainMember) {
       parser.addDiagnostic(
         {
-          message: 'Tagged Template Literals are not allowed in optionalChain',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TAGGED_TEMPLATE_IN_OPTIONAL_CHAIN,
         },
       );
     }
@@ -32680,7 +32674,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           index: parser.state.yieldPos,
-          message: 'Yield cannot be used as name inside a generator function',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.YIELD_IN_GENERATOR_PARAMS,
         },
       );
     }
@@ -32689,7 +32683,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           index: parser.state.awaitPos,
-          message: 'Await cannot be used as name inside an async function',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.AWAIT_IN_ASYNC_PARAMS,
         },
       );
     }
@@ -32772,7 +32766,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
         } else {
           parser.addDiagnostic(
             {
-              message: 'Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword.',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.CONFUSING_CALL_ARGUMENT,
               loc: elt.loc,
             },
           );
@@ -32790,7 +32784,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
     if (forceAsyncArrow && !___R$project$rome$$romejs$js$parser$parser$expression_ts$shouldParseAsyncArrow(parser)) {
       parser.addDiagnostic(
         {
-          message: 'Expected arrow because we are a possible async arrow and type annotated parameters were present',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_ASYNC_TYPE_PARAMS,
         },
       );
     }
@@ -32801,7 +32795,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           start: innerParenStart,
-          message: 'Inner paren inside of an async arrow function params',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.PARENTHESIZED_FUNCTION_PARAMS,
         },
       );
     }
@@ -33030,8 +33024,9 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
           const start = parser.getPosition();
           parser.addDiagnostic(
             {
-              message: 'Unknown start to an ' +
-              context,
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNKNOWN_EXPRESSION_ATOM_START(
+                context,
+              ),
             },
           );
           parser.next();
@@ -33069,7 +33064,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
     if (isPrivate) {
       const start = parser.getPosition();
       parser.next();
-      parser.assertNoSpace('Unexpected space between # and identifier');
+      parser.assertNoSpace(___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.SPACE_BETWEEN_PRIVATE_HASH);
       const id = ___R$project$rome$$romejs$js$parser$parser$expression_ts$parseIdentifier(parser, true);
       return (
         parser.finishNode(
@@ -33136,12 +33131,10 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           loc: property.loc,
-          message: 'The only valid meta property for ' +
-          meta.name +
-          ' is ' +
-          meta.name +
-          '.' +
-          propertyName,
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_META_PROPERTY(
+            meta.name,
+            propertyName,
+          ),
         },
       );
     }
@@ -33168,7 +33161,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           loc: node.loc,
-          message: 'import.meta may appear only with \'sourceType: "module"\'',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.IMPORT_META_OUTSIDE_MODULE,
         },
       );
     }
@@ -33288,7 +33281,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
             parser.addDiagnostic(
               {
                 loc: param.loc,
-                message: 'Function parameters can\'t be parenthesized',
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.PARENTHESIZED_FUNCTION_PARAMS,
               },
             );
           }
@@ -33336,7 +33329,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
         {
           start: innerStart,
           end: innerEnd,
-          message: 'Parenthesized expression didnt contain anything',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EMPTY_PARENTHESIZED_EXPRESSION,
         },
       );
 
@@ -33522,7 +33515,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
         parser.addDiagnostic(
           {
             loc: metaProp.loc,
-            message: 'new.target can only be used in functions or class properties',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.NEW_TARGET_OUTSIDE_CLASS,
           },
         );
       }
@@ -33536,7 +33529,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           loc: callee.loc,
-          message: 'Cannot use new with import(...)',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.SUPER_OUTSIDE_METHOD,
         },
       );
     }
@@ -33547,20 +33540,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
 
       parser.addDiagnostic(
         {
-          message: 'constructors in/after an Optional Chain are not allowed',
-          advice: [
-            {
-              type: 'log',
-              category: 'info',
-              message: 'Optional chain member responsible',
-            },
-            {
-              type: 'frame',
-              filename: parser.filename,
-              start: memberLoc.start,
-              end: memberLoc.end,
-            },
-          ],
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.NEW_IN_OPTIONAL_CHAIN(memberLoc),
         },
       );
     }
@@ -33568,7 +33548,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
     if (parser.eat(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.questionDot)) {
       parser.addDiagnostic(
         {
-          message: 'constructors in/after an Optional Chain are not allowed',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.NEW_IN_OPTIONAL_CHAIN(),
         },
       );
     }
@@ -33600,7 +33580,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
     } else if (parser.isSyntaxEnabled('ts') && typeArguments !== undefined) {
       parser.addDiagnostic(
         {
-          message: 'In TypeScript, a new expression with type arguments must have parens',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.NEW_WITH_TYPESCRIPT_TYPE_ARGUMENTS_NO_PARENS,
         },
       );
     }
@@ -33652,7 +33632,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
         parser.addDiagnostic(
           {
             index: parser.state.invalidTemplateEscapePosition,
-            message: 'Invalid escape sequence in template',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_TEMPLATE_ESCAPE,
           },
         );
       }
@@ -33799,7 +33779,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
           if (parser.hasPrecedingLineBreak()) {
             parser.addDiagnostic(
               {
-                message: 'There shouldn\'t be any newlines between async and the rest of the function',
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ASYNC_OBJECT_METHOD_LINE_BREAK,
               },
             );
           }
@@ -33897,7 +33877,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
           parser.addDiagnostic(
             {
               loc: argument.loc,
-              message: 'Cannot have multiple rest elements when destructuring',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.MULTIPLE_DESTRUCTURING_RESTS,
             },
           );
         }
@@ -33911,7 +33891,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
           ___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.braceR) {
           parser.addDiagnostic(
             {
-              message: 'A trailing comma is not permitted after the rest element',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TRAILING_COMMA_AFTER_REST,
             },
           );
           parser.eat(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.comma);
@@ -33947,7 +33927,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       if (prop.type !== 'BindingObjectPatternProperty') {
         parser.addDiagnostic(
           {
-            message: 'Invalid property node for object pattern',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROP,
             loc: prop.loc,
           },
         );
@@ -34014,7 +33994,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
         parser.addDiagnostic(
           {
             loc: method.loc,
-            message: 'getter should have no parameters',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.GETTER_WITH_PARAMS,
           },
         );
       }
@@ -34023,14 +34003,14 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
         parser.addDiagnostic(
           {
             loc: head.rest.loc,
-            message: 'setter function argument must not be a rest parameter',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.SETTER_WITH_REST,
           },
         );
       } else if (head.params.length !== 1) {
         parser.addDiagnostic(
           {
             loc: method.loc,
-            message: 'setter should have exactly one param',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.SETTER_NOT_ONE_PARAM,
           },
         );
       }
@@ -34052,7 +34032,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       if (isPattern) {
         parser.addDiagnostic(
           {
-            message: 'Object methods aren\'t allowed in object patterns',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.OBJECT_METHOD_IN_PATTERN,
           },
         );
       }
@@ -34095,7 +34075,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       if (isAsync) {
         parser.addDiagnostic(
           {
-            message: 'An object setter/getter can\'t be async',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ASYNC_GETTER_SETTER,
           },
         );
       }
@@ -34103,7 +34083,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       if (isGenerator) {
         parser.addDiagnostic(
           {
-            message: 'An object setter/getter can\'t be a generator',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.GENERATOR_GETTER_SETTER,
           },
         );
       }
@@ -34255,7 +34235,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           loc: key.variance.loc,
-          message: 'variance not allowed here',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ILLEGAL_VARIANCE,
         },
       );
     }
@@ -34293,7 +34273,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
         parser.addDiagnostic(
           {
             loc: typeParameters.loc,
-            message: 'Object property cannot have type parameters',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.OBJECT_PROPERTY_WITH_TYPE_PARAMETERS,
           },
         );
         return node;
@@ -34465,9 +34445,6 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
     );
   }
 
-  // Parse arrow function expression.
-
-  // If the parameters are provided, they will be converted to an assignable list.
   function ___R$project$rome$$romejs$js$parser$parser$expression_ts$parseArrowExpression(
     parser,
     start,
@@ -34482,7 +34459,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           start: parser.state.yieldInPossibleArrowParameters,
-          message: 'Yield cannot be used as name inside a generator function',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.YIELD_NAME_IN_GENERATOR,
         },
       );
     }
@@ -34729,7 +34706,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
         parser.addDiagnostic(
           {
             loc: firstDirective.loc,
-            message: 'Illegal \'use strict\' directive in function with non-simple parameter list',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.STRICT_DIRECTIVE_IN_NON_SIMPLE_PARAMS,
           },
         );
       }
@@ -34764,7 +34741,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
           parser.addDiagnostic(
             {
               loc: param.loc,
-              message: 'Non-simple parameter in strict mode',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.NON_SIMPLE_PARAM_IN_EXPLICIT_STRICT_FUNCTION,
             },
           );
         }
@@ -34792,15 +34769,6 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
     return true;
   }
 
-  // Parses a comma-separated list of expressions, and returns them as
-
-  // an array. `close` is the token type that ends the list, and
-
-  // `allowEmpty` can be turned on to allow subsequent commas with
-
-  // nothing in between them to be parsed as `null` (which is needed
-
-  // for array literals).
   function ___R$project$rome$$romejs$js$parser$parser$expression_ts$parseExpressionList(
     parser,
     context,
@@ -35050,7 +35018,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
     } else {
       parser.addDiagnostic(
         {
-          message: 'Expected an identifier here',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPECTED_IDENTIFIER,
         },
       );
       name = '';
@@ -35091,7 +35059,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           loc,
-          message: 'Can not use \'yield\' as identifier inside a generator',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.YIELD_NAME_IN_GENERATOR,
         },
       );
     }
@@ -35100,7 +35068,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           loc,
-          message: 'Can not use keyword \'await\' outside an async function',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.AWAIT_NAME_IN_ASYNC,
         },
       );
     }
@@ -35109,7 +35077,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           loc,
-          message: '\'arguments\' is not allowed in class field initializer',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ARGUMENTS_IN_CLASS_FIELD,
         },
       );
     }
@@ -35118,9 +35086,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           loc,
-          message: 'Unexpected keyword \'' +
-          word +
-          '\'',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNEXPECTED_KEYWORD(word),
         },
       );
     }
@@ -35141,15 +35107,14 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
         parser.addDiagnostic(
           {
             loc,
-            message: 'Can not use keyword \'await\' outside an async function',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.AWAIT_OUTSIDE_ASYNC,
           },
         );
       } else {
         parser.addDiagnostic(
           {
             loc,
-            message: word +
-            ' is a reserved word',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.RESERVED_WORD(word),
           },
         );
       }
@@ -35164,7 +35129,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
     if (!parser.inScope('ASYNC')) {
       parser.addDiagnostic(
         {
-          message: 'Can\'t use await outside of an async function',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.AWAIT_OUTSIDE_ASYNC,
         },
       );
     }
@@ -35175,7 +35140,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
     if (parser.inScope('PARAMETERS')) {
       parser.addDiagnostic(
         {
-          message: 'await is not allowed in async function parameters',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.AWAIT_IN_ASYNC_PARAMS,
         },
       );
     }
@@ -35184,7 +35149,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           start,
-          message: 'await* has been removed from the async functions proposal. Use Promise.all() instead.',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.AWAIT_STAR,
         },
       );
     }
@@ -35204,7 +35169,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           start,
-          message: 'yield is not allowed in generator parameters',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.YIELD_IN_GENERATOR_PARAMS,
         },
       );
     }
@@ -35363,7 +35328,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
     if (parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.parenR)) {
       parser.addDiagnostic(
         {
-          message: 'import() requires exactly one argument',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.IMPORT_EXACT_ARGUMENTS,
         },
       );
 
@@ -35393,7 +35358,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
         {
           start: parser.state.lastStartPos,
           end: parser.state.lastEndPos,
-          message: 'Trailing comma is disallowed inside import(...) arguments',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.IMPORT_TRAILING_COMMA,
         },
       );
     }
@@ -35402,7 +35367,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           loc: argument.loc,
-          message: 'Spread is not allowed in import()',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.IMPORT_SPREAD,
         },
       );
     }
@@ -35424,7 +35389,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.sourceType !== 'template') {
       parser.addDiagnostic(
         {
-          message: 'super is only allowed in object methods and classes',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.SUPER_OUTSIDE_METHOD,
         },
       );
     }
@@ -35438,7 +35403,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       )) {
       parser.addDiagnostic(
         {
-          message: 'Invalid super suffix operator',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_SUPER_SUFFIX,
         },
       );
     }
@@ -35455,14 +35420,7 @@ const ___R$project$rome$$romejs$js$parser$parser$expression_ts = {
       parser.addDiagnostic(
         {
           loc,
-          message: 'super() is only valid inside a class constructor of a subclass',
-          advice: [
-            {
-              type: 'log',
-              category: 'info',
-              message: 'Maybe a typo in the method name (\'constructor\') or not extending another class?',
-            },
-          ],
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.SUPER_CALL_OUTSIDE_CONSTRUCTOR,
         },
       );
     }
@@ -35658,7 +35616,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
                 parser.addDiagnostic(
                   {
                     loc: arg.loc,
-                    message: 'Invalid rest operator\'s argument',
+                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_OBJECT_REST_ARGUMENT,
                   },
                 );
               }
@@ -35700,7 +35658,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
             parser.addDiagnostic(
               {
                 loc: parser.getLoc(node.left),
-                message: 'Only \'=\' operator can be used for specifying default value.',
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_ASSIGNMENT_PATTERN_OPERATOR,
               },
             );
           }
@@ -35722,14 +35680,12 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
 
       default:
         {
-          const message = 'Invalid left-hand side in ' +
-          contextDescription +
-          ' ' +
-          node.type;
           parser.addDiagnostic(
             {
               loc: node.loc,
-              message,
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_LEFT_HAND_SIDE(
+                contextDescription,
+              ),
             },
           );
           return (
@@ -35765,7 +35721,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
         parser.addDiagnostic(
           {
             loc: node.loc,
-            message: 'Not a valid assignment target',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_ASSIGNMENT_TARGET,
           },
         );
         return (
@@ -35830,7 +35786,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
       parser.addDiagnostic(
         {
           loc: node.loc,
-          message: 'Binding member expression',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.BINDING_MEMBER_EXPRESSION,
         },
       );
 
@@ -35961,13 +35917,10 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
     switch (prop.type) {
       case 'ObjectMethod':
         {
-          const error = prop.kind === 'get' || prop.kind === 'set'
-            ? 'Object pattern can\'t contain getter or setter' : 'Object pattern can\'t contain methods';
-
           parser.addDiagnostic(
             {
               loc: prop.key.loc,
-              message: error,
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.OBJECT_PATTERN_CANNOT_CONTAIN_METHODS,
             },
           );
 
@@ -36014,7 +35967,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
         parser.addDiagnostic(
           {
             loc: prop.loc,
-            message: 'Not a valid assignment object pattern property',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROPERTY,
           },
         );
         return (
@@ -36100,7 +36053,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
         parser.addDiagnostic(
           {
             loc: expr.loc,
-            message: 'Unexpected type cast in parameter position',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_UNEXPECTED_CAST_IN_PARAMETER_POSITION,
           },
         );
       }
@@ -36228,7 +36181,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
       parser.addDiagnostic(
         {
           loc: expr.loc,
-          message: 'Flow type cast expressions aren\'t allowed in TypeScript',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_TYPE_CAST_IN_TS,
         },
       );
     }
@@ -36237,7 +36190,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
       parser.addDiagnostic(
         {
           loc: expr.loc,
-          message: 'The type cast expression is expected to be wrapped with parentheses',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TYPE_CAST_EXPECTED_PARENS,
         },
       );
     }
@@ -36246,7 +36199,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
       parser.addDiagnostic(
         {
           loc: expr.loc,
-          message: 'Type cast expressions cannot be optional. Did you mean for this to be a function parameter?',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TYPE_CAST_CANNOT_BE_OPTIONAL,
         },
       );
     }
@@ -36257,7 +36210,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
       parser.addDiagnostic(
         {
           loc: expr.loc,
-          message: 'Type cast expression has no type annotation. Did you mean for this to be a function parameter?',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TYPE_CAST_WITHOUT_ANNOTATION,
         },
       );
       return expression;
@@ -36291,8 +36244,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
       if (elem.type === 'SpreadElement') {
         parser.addDiagnostic(
           {
-            message: 'Is this even ever possible?',
-            loc: elem.loc,
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNEXPECTED_SPREAD,
           },
         );
 
@@ -36431,8 +36383,9 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
         if (!parser.eat(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.comma)) {
           parser.addDiagnostic(
             {
-              message: 'Expected a comma to separate items in ' +
-              openContext.name,
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPECTED_COMMA_SEPARATOR(
+                openContext.name,
+              ),
             },
           );
           break;
@@ -36499,7 +36452,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
       if (!parser.isSyntaxEnabled('ts')) {
         parser.addDiagnostic(
           {
-            message: 'Accessibility and readonly syntax found but TS is not enabled',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_DISABLED_BUT_ACCESSIBILITY_OR_READONLY,
           },
         );
       }
@@ -36510,7 +36463,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
         parser.addDiagnostic(
           {
             start,
-            message: 'A parameter property may not be declared using a binding pattern.',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_PARAMETER_PROPERTY_BINDING_PATTERN,
           },
         );
       }
@@ -36553,7 +36506,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
         parser.addDiagnostic(
           {
             loc: param.loc,
-            message: 'A binding pattern parameter cannot be optional in an implementation signature.',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TYPE_BINDING_PARAMETER_OPTIONAL,
           },
         );
       }
@@ -36620,7 +36573,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
       parser.addDiagnostic(
         {
           loc: target.meta.typeAnnotation.loc,
-          message: 'Type annotations must come before default assignments, e.g. instead of `age = 25: number` use `age: number = 25`',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TYPE_ANNOTATION_AFTER_ASSIGNMENT,
         },
       );
     }
@@ -36639,7 +36592,6 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
   ];
 
   // Verify that a node is an lval — something that can be assigned
-
   // to.
   function ___R$project$rome$$romejs$js$parser$parser$lval_ts$checkLVal(
     parser,
@@ -36654,28 +36606,14 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
     // Verify that nodes aren't parenthesized
     if (parser.isParenthesized(expr) &&
       !___R$$priv$project$rome$$romejs$js$parser$parser$lval_ts$ALLOWED_PARENTHESIZED_LVAL_TYPES.includes(expr.type)) {
-      let adviceMsg;
-      if (expr.type === 'BindingObjectPattern') {
-        adviceMsg = 'Did you use `({a}) = 0` instead of `({a} = 0)`?';
-      } else if (expr.type === 'BindingArrayPattern') {
-        adviceMsg = 'Did you use `([a]) = 0` instead of `([a] = 0)`?';
-      }
-
-      const advice = [];
-      if (adviceMsg !== undefined) {
-        advice.push(
-          {
-            type: 'log',
-            category: 'info',
-            message: adviceMsg,
-          },
-        );
-      }
-
       parser.addDiagnostic(
         {
-          message: 'Invalid parenthesized binding',
-          advice,
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_PARENTEHSIZED_LVAL(
+            expr.type === 'BindingObjectPattern'
+              ? 'object' : expr.type ===
+              'BindingArrayPattern'
+                ? 'array' : undefined,
+          ),
           loc: expr.loc,
         },
       );
@@ -36715,8 +36653,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
           parser.addDiagnostic(
             {
               loc: expr.loc,
-              message: expr.name +
-              ' is a reserved word',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.RESERVED_WORD(expr.name),
             },
           );
         }
@@ -36727,24 +36664,13 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
           if (clash === undefined) {
             checkClashes.set(expr.name, expr);
           } else {
-            const loc = parser.getLoc(clash);
             parser.addDiagnostic(
               {
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ARGUMENT_CLASH_IN_STRICT(
+                  expr.name,
+                  expr.loc,
+                ),
                 loc: expr.loc,
-                message: 'Argument name clash in strict mode',
-                advice: [
-                  {
-                    type: 'log',
-                    category: 'info',
-                    message: 'Collides with this existing definition',
-                  },
-                  {
-                    type: 'frame',
-                    filename: parser.filename,
-                    start: loc.start,
-                    end: loc.end,
-                  },
-                ],
               },
             );
           }
@@ -36815,7 +36741,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
       parser.addDiagnostic(
         {
           loc: node.argument.loc,
-          message: 'Invalid rest operator\'s argument',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.REST_INVALID_ARGUMENT,
         },
       );
     }
@@ -36839,7 +36765,7 @@ const ___R$project$rome$$romejs$js$parser$parser$lval_ts = {
       {
         start,
         loc,
-        message: 'The rest element has to be the last element when destructuring',
+        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.DESTRUCTURING_REST_ELEMENT_NOT_LAST,
       },
     );
   }
@@ -36869,7 +36795,9 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
   }
 
   // Transforms JSX element name to string.
-  function ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getQualifiedJSXName(node) {
+  function ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getQualifiedJSXName(
+    node,
+  ) {
     if (node === undefined) {
       return '';
     }
@@ -36906,7 +36834,7 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
     } else {
       parser.addDiagnostic(
         {
-          message: 'Unknown JSX identifier token',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.JSX_UNKNOWN_IDENTIFIER_TOKEN,
         },
       );
       name = '';
@@ -36949,7 +36877,6 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
   }
 
   // Parses element name in any form - namespaced, member
-
   // or single identifier.
   function ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$parseJSXElementName(parser) {
     const start = parser.getPosition();
@@ -37002,7 +36929,7 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
           parser.addDiagnostic(
             {
               loc: node.loc,
-              message: 'JSX attributes must only be assigned a non-empty expression',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.JSX_EMPTY_ATTRIBUTE_VALUE,
             },
           );
         }
@@ -37018,7 +36945,7 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
         {
           parser.addDiagnostic(
             {
-              message: 'JSX value should be either an expression or a quoted JSX text',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.JSX_INVALID_ATTRIBUTE_VALUE,
             },
           );
           return (
@@ -37035,9 +36962,7 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
   }
 
   // JSXEmptyExpression is unique type since it doesn't actually parse anything,
-
   // and so it should start at the end of last read token (left brace) and finish
-
   // at the beginning of the next one (right brace).
   function ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$parseJSXEmptyExpression(parser) {
     return (
@@ -37167,7 +37092,7 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
       if (!parser.isSyntaxEnabled('ts')) {
         parser.addDiagnostic(
           {
-            message: 'JSX element type arguments are only allowed in TS',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.JSX_ELEM_TYPE_ARGUMENTS_OUTSIDE_TS,
           },
         );
       }
@@ -37186,7 +37111,7 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
     if (!parser.eat(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.jsxTagEnd)) {
       parser.addDiagnostic(
         {
-          message: 'Unclosed JSX element open',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.JSX_UNCLOSED_SELF_CLOSING_TAG,
         },
       );
     }
@@ -37205,15 +37130,7 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
   function ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$parseJSXClosingElementAt(
     parser,
   ) {
-    if (parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.jsxTagEnd)) {
-      if (!parser.eat(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.jsxTagEnd)) {
-        parser.addDiagnostic(
-          {
-            message: 'Unclosed JSX fragment close',
-          },
-        );
-      }
-
+    if (parser.eat(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.jsxTagEnd)) {
       return undefined;
     }
 
@@ -37222,77 +37139,12 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
     if (!parser.eat(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.jsxTagEnd)) {
       parser.addDiagnostic(
         {
-          message: 'Unclosed JSX element close',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.JSX_UNCLOSED_CLOSING_TAG,
         },
       );
     }
 
     return name;
-  }
-
-  function ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getJSXOpenElementAdvice(
-    parser,
-    def,
-  ) {
-    let message = 'Originated from this opening tag';
-
-    if (def.name !== undefined) {
-      message =
-        'Originated from opening tag of <emphasis>' +
-        ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getQualifiedJSXName(
-          def.name,
-        ) +
-        '</emphasis>';
-    }
-
-    const {loc} = def;
-    return (
-      [
-        {
-          type: 'log',
-          category: 'info',
-          message,
-        },
-        {
-          type: 'frame',
-          filename: parser.filename,
-          start: loc.start,
-          end: loc.end,
-        },
-      ]
-    );
-  }
-
-  function ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getJSXCloseElementAdvice(
-    parser,
-    name,
-    loc,
-  ) {
-    let message;
-    if (name === undefined) {
-      message = 'But found a closing fragment instead';
-    } else {
-      message =
-        'But found a closing tag of <emphasis>' +
-        ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getQualifiedJSXName(name) +
-        '</emphasis> instead';
-    }
-
-    return (
-      [
-        {
-          type: 'log',
-          category: 'info',
-          message,
-        },
-        {
-          type: 'frame',
-          filename: parser.filename,
-          start: loc.start,
-          end: loc.end,
-        },
-      ]
-    );
   }
 
   function ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$recoverFromUnclosedJSX(parser) {
@@ -37302,7 +37154,6 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
   }
 
   // Parses entire JSX element, including it"s opening tag
-
   // (starting after "<"), attributes, contents and closing tag.
   function ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$parseJSXElementAt(
     parser,
@@ -37351,8 +37202,10 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
           case ___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.eof:
             parser.addDiagnostic(
               {
-                message: 'Unclosed JSX element',
-                advice: ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getJSXOpenElementAdvice(parser, openingDef),
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.JSX_UNCLOSED_ELEMENT(
+                  ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getQualifiedJSXName(openingDef.name),
+                  openingDef.loc,
+                ),
               },
             );
             break contents;
@@ -37360,8 +37213,10 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
           default:
             parser.addDiagnostic(
               {
-                message: 'Unknown JSX children start',
-                advice: ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getJSXOpenElementAdvice(parser, openingDef),
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.JSX_UNKNOWN_CHILD_START(
+                  ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getQualifiedJSXName(openingDef.name),
+                  openingDef.loc,
+                ),
               },
             );
 
@@ -37383,8 +37238,10 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
         parser.addDiagnostic(
           {
             loc: openingDef.loc,
-            message: 'Expected JSX closing fragment tag',
-            advice: ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getJSXCloseElementAdvice(parser, closingName, closingNameLoc),
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_FRAGMENT_TAG(
+              ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getQualifiedJSXName(openingDef.name),
+              openingDef.loc,
+            ),
           },
         );
       }
@@ -37394,12 +37251,10 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
         parser.addDiagnostic(
           {
             loc: openingDef.loc,
-            message: 'Expected a corresponding JSX closing tag for <emphasis>' +
-            ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getQualifiedJSXName(
-              openingDef.name,
-            ) +
-            '</emphasis>',
-            advice: ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getJSXCloseElementAdvice(parser, closingName, closingNameLoc),
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_TAG(
+              ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getQualifiedJSXName(openingDef.name),
+              openingDef.loc,
+            ),
           },
         );
       }
@@ -37413,12 +37268,10 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
           parser.addDiagnostic(
             {
               loc: openingDef.loc,
-              message: 'Expected a corresponding JSX closing tag for <emphasis>' +
-              ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getQualifiedJSXName(
-                openingDef.name,
-              ) +
-              '</emphasis>',
-              advice: ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getJSXCloseElementAdvice(parser, closingName, closingNameLoc),
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_TAG(
+                ___R$$priv$project$rome$$romejs$js$parser$parser$jsx_ts$getQualifiedJSXName(openingDef.name),
+                openingDef.loc,
+              ),
             },
           );
         }
@@ -37459,7 +37312,7 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
     if (parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.relational) && parser.state.tokenValue === '<') {
       parser.addDiagnostic(
         {
-          message: 'Adjacent JSX elements must be wrapped in an enclosing tag. \n        Did you want a JSX fragment <>...</>?',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNWRAPPED_ADJACENT_JHX,
         },
       );
     }
@@ -37488,37 +37341,13 @@ const ___R$project$rome$$romejs$js$parser$parser$jsx_ts = {
       if (parser.isSyntaxEnabled('ts')) {
         parser.addDiagnostic(
           {
-            message: 'JSX isn\'t allowed in regular TypeScript files',
-            advice: [
-              {
-                type: 'log',
-                category: 'info',
-                message: 'Change the file extension to <emphasis>.tsx</emphasis> to enable JSX support',
-              },
-            ],
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.JSX_IN_TS_EXTENSION,
           },
         );
       } else {
         parser.addDiagnostic(
           {
-            message: 'JSX syntax isn\'t enabled',
-            advice: [
-              {
-                type: 'log',
-                category: 'info',
-                message: 'Are you using <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.tsx</emphasis>',
-              },
-              {
-                type: 'log',
-                category: 'info',
-                message: 'Are you using <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
-              },
-              {
-                type: 'log',
-                category: 'info',
-                message: 'Not using either? Change the file extension to <emphasis>.jsx</emphasis>',
-              },
-            ],
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.JSX_DISABLED,
           },
         );
       }
@@ -37583,7 +37412,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
       parser.addDiagnostic(
         {
           loc: id.loc,
-          message: '`_` is only allowed as a type argument to call or new',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_BAD_UNDERSCORE_NAME,
         },
       );
     }
@@ -37685,7 +37514,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
       parser.addDiagnostic(
         {
           start: moduloPos,
-          message: 'Spaces between \xb4%\xb4 and \xb4checks\xb4 are not allowed here.',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_SPACE_BETWEEN_PERCENT_CHECKS,
         },
       );
     }
@@ -37794,7 +37623,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
       parser.addDiagnostic(
         {
           loc: predicate.loc,
-          message: 'Predicate function declarations need to declare a predicate expression',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_UNINFERRABLE_PREDICATE_ON_FUNCTION,
         },
       );
     }
@@ -37860,7 +37689,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
         if (insideModule) {
           parser.addDiagnostic(
             {
-              message: '`declare module` cannot be used inside another `declare module`',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_DECLARE_MODULE_IN_DECLARE_MODULE,
             },
           );
         }
@@ -37886,7 +37715,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
 
     parser.addDiagnostic(
       {
-        message: 'Unknown start to Flow declaration',
+        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_UNKNOWN_DECLARATION_START,
       },
     );
 
@@ -37960,7 +37789,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
         if (lookahead.tokenValue !== 'type' && lookahead.tokenValue !== 'typeof') {
           parser.addDiagnostic(
             {
-              message: 'Imports within a `declare module` body must always be `import type` or `import typeof`',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_IMPORT_KINDLESS_IN_DECLARE_MODULE,
             },
           );
         }
@@ -37969,7 +37798,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
       } else {
         if (!parser.expectContextual(
           'declare',
-          'Only declares and type imports are allowed inside declare module',
+          ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_DECLARE_MODULE_INVALID_CHILD,
         )) {
           break;
         }
@@ -37992,7 +37821,6 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
 
     let kind;
     let hasModuleExport = false;
-    const errorMessage = 'Found both `declare module.exports` and `declare export` in the same module. Modules can only have 1 since they are either an ES module or they are a CommonJS module';
 
     for (const bodyElement of body) {
       if (___R$$priv$project$rome$$romejs$js$parser$parser$flow_ts$isEsModuleType(bodyElement)) {
@@ -38000,7 +37828,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
           parser.addDiagnostic(
             {
               loc: bodyElement.loc,
-              message: errorMessage,
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_MIXED_DECLARE_EXPORTS,
             },
           );
         }
@@ -38010,7 +37838,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
           parser.addDiagnostic(
             {
               loc: bodyElement.loc,
-              message: 'Duplicate `declare module.exports` statement',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_DUPLICATE_DECLARE_MODULE_EXPORTS,
             },
           );
         }
@@ -38019,7 +37847,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
           parser.addDiagnostic(
             {
               loc: bodyElement.loc,
-              message: errorMessage,
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_MIXED_DECLARE_EXPORTS,
             },
           );
         }
@@ -38082,11 +37910,10 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
         const suggestion = String(___R$$priv$project$rome$$romejs$js$parser$parser$flow_ts$exportSuggestions.get(label));
         parser.addDiagnostic(
           {
-            message: '`declare export ' +
-            label +
-            '` is not supported. Use `' +
-            suggestion +
-            '` instead',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_DECLARE_EXPORT_UNSUPPORTED(
+              label,
+              suggestion,
+            ),
           },
         );
       }
@@ -38157,7 +37984,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
     parser.addDiagnostic(
       {
         start,
-        message: 'No valid start for Flow declare export declaration found',
+        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_UNKNOWN_DECLARE_EXPORT_START,
       },
     );
 
@@ -38402,8 +38229,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
       parser.addDiagnostic(
         {
           loc,
-          message: 'Cannot overwrite primitive type ' +
-          word,
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_RESERVED_TYPE(word),
         },
       );
     }
@@ -38515,7 +38341,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
       if (!allowDefault) {
         parser.addDiagnostic(
           {
-            message: 'Default type parameters arent allowed here',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_DISALLOW_DEFAULT_TYPE_PARAMETER,
           },
         );
       }
@@ -38525,7 +38351,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
     } else if (requireDefault) {
       parser.addDiagnostic(
         {
-          message: 'Type parameter declaration needs a default, since a preceding type parameter declaration has a default.',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_DEFAULT_TYPE_PARAMETER_REQUIRED,
         },
       );
     }
@@ -38793,7 +38619,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
             parser.addDiagnostic(
               {
                 loc: variance.loc,
-                message: 'Variance not allowed',
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ILLEGAL_VARIANCE,
               },
             );
           }
@@ -38818,7 +38644,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
           parser.addDiagnostic(
             {
               loc: variance.loc,
-              message: 'Variance not allowed',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ILLEGAL_VARIANCE,
             },
           );
         }
@@ -38901,7 +38727,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
       if (!allowSpread) {
         parser.addDiagnostic(
           {
-            message: 'Spread operator cannot appear in class or interface definitions',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_DISALLOWED_SPREAD,
           },
         );
       }
@@ -38914,7 +38740,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
         parser.addDiagnostic(
           {
             loc: variance.loc,
-            message: 'Spread properties cannot have variance',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ILLEGAL_VARIANCE,
           },
         );
       }
@@ -38930,7 +38756,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
 
         parser.addDiagnostic(
           {
-            message: 'Explicit inexact syntax is only allowed inside inexact objects',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_INEXACT_SYNTAX_NOT_ALLOWED,
           },
         );
       }
@@ -38938,7 +38764,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
       if (parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.braceBarR)) {
         parser.addDiagnostic(
           {
-            message: 'Explicit inexact syntax cannot appear inside an explicit exact object type',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_INEXACT_CANNOT_APPEAR_IN_EXPLICIT_EXACT,
           },
         );
       }
@@ -38946,7 +38772,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
       if (isInexactToken) {
         parser.addDiagnostic(
           {
-            message: 'Explicit inexact syntax must appear at the end of an inexact object',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_INEXACT_MUST_BE_AT_END,
           },
         );
       }
@@ -38976,7 +38802,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
           parser.addDiagnostic(
             {
               loc: variance.loc,
-              message: 'Type methods can\'t have variance',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ILLEGAL_VARIANCE,
             },
           );
         }
@@ -39279,9 +39105,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
   }
 
   // The parsing of types roughly parallels the parsing of expressions, and
-
   // primary types are kind of like primary expressions...they're the
-
   // primitives with which other types are constructed.
   function ___R$$priv$project$rome$$romejs$js$parser$parser$flow_ts$parseFlowPrimaryType(parser) {
     const start = parser.getPosition();
@@ -39461,7 +39285,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
 
     parser.addDiagnostic(
       {
-        message: 'Unknown flow primarty type start',
+        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_UNKNOWN_PRIMARY_START,
       },
     );
 
@@ -39556,7 +39380,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
     if (parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.logicalOR)) {
       parser.addDiagnostic(
         {
-          message: 'Unexpected ||, did you mean just |?',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.CONFUSED_OR,
         },
       );
       parser.next();
@@ -39705,7 +39529,7 @@ const ___R$project$rome$$romejs$js$parser$parser$flow_ts = {
     if (!valid) {
       parser.addDiagnostic(
         {
-          message: 'Invalid async arrow with type parameters',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_INVALID_ASYNC_ARROW_WITH_TYPE_PARAMS,
         },
       );
       return undefined;
@@ -40007,7 +39831,7 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
     if (!parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.string)) {
       parser.addDiagnostic(
         {
-          message: 'Argument in a type import must be a string literal',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_IMPORT_ARG_NOT_STRING,
         },
       );
     }
@@ -40225,14 +40049,13 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
         parser.addDiagnostic(
           {
             loc: node.loc,
-            message: 'Only literal values are allowed in constant contexts',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_CONSTANT_NOT_LITERAL,
           },
         );
     }
   }
 
   // Note: In TypeScript implementation we must provide `yieldContext` and `awaitContext`,
-
   // but here it's always false, because parser.is only used for types.
   function ___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSSignatureDeclarationMeta(
     parser,
@@ -40289,8 +40112,7 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
         parser.addDiagnostic(
           {
             loc: pattern.loc,
-            message: 'Name in a signature must be an Identifier, ObjectPattern or ArrayPattern, instead got ' +
-            pattern.type,
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_INVALID_SIGNATURE_BINDING_NODE,
           },
         );
       }
@@ -40647,7 +40469,7 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
         parser.addDiagnostic(
           {
             loc: type.loc,
-            message: 'A required element cannot follow an optional element.',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_REQUIRED_FOLLOWS_OPTIONAL,
           },
         );
       }
@@ -40800,7 +40622,7 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
       parser.addDiagnostic(
         {
           loc: parser.getLoc(templateNode.expressions[0]),
-          message: 'Template literal types cannot have any substitution',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_TEMPLATE_LITERAL_WITH_SUBSTITUION,
         },
       );
     }
@@ -40886,7 +40708,7 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
 
     parser.addDiagnostic(
       {
-        message: 'Unknown TS non array type start',
+        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_UNKNOWN_NON_ARRAY_START,
       },
     );
     parser.next();
@@ -40977,7 +40799,7 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
         parser.addDiagnostic(
           {
             loc: node.loc,
-            message: '\'readonly\' type modifier is only permitted on array and tuple literal types.',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_INVALID_READONLY_MODIFIER,
           },
         );
         break;
@@ -41349,13 +41171,11 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
       ___R$$priv$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSExpressionWithTypeArguments,
     );
 
-    if (!delimitedList.length) {
+    if (delimitedList.length === 0) {
       parser.addDiagnostic(
         {
           start: originalStart,
-          message: '\'' +
-          descriptor +
-          '\' list cannot be empty.',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_EMPTY_LIST(descriptor),
         },
       );
     }
@@ -41694,7 +41514,7 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
     } else {
       parser.addDiagnostic(
         {
-          message: 'Invalid TS external module reference expression',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_EXTERNAL_MODULE_REFERENCE_ARG_NOT_STRING,
         },
       );
 
@@ -41863,7 +41683,7 @@ const ___R$project$rome$$romejs$js$parser$parser$typescript_ts = {
 
     parser.addDiagnostic(
       {
-        message: 'Unknown typescript declare start',
+        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_UNKNOWN_DECLARE_START,
       },
     );
 
@@ -42311,7 +42131,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
         parser.addDiagnostic(
           {
             index: escapePosition,
-            message: 'No escapes allowed in static contextual keyword',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ESCAPE_SEQUENCE_IN_WORD('static'),
           },
         );
       }
@@ -42414,7 +42234,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
         parser.addDiagnostic(
           {
             loc: key.loc,
-            message: 'Constructor can\'t be a generator',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.GENERATOR_CLASS_CONSTRUCTOR,
           },
         );
       }
@@ -42470,7 +42290,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
           parser.addDiagnostic(
             {
               loc: key.loc,
-              message: 'Duplicate constructor in the same class',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.DUPLICATE_CLASS_CONSTRUCTOR,
             },
           );
         }
@@ -42549,7 +42369,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
           parser.addDiagnostic(
             {
               loc: key.loc,
-              message: 'Constructor can\'t be an async function',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ASYNC_CLASS_CONSTRUCTOR,
             },
           );
         }
@@ -42610,7 +42430,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
           parser.addDiagnostic(
             {
               loc: methodKey.loc,
-              message: 'Constructor can\'t have get/set modifier',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.GET_SET_CLASS_CONSTRUCTOR,
             },
           );
         }
@@ -42631,7 +42451,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
 
     parser.addDiagnostic(
       {
-        message: 'Unknown class property start',
+        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNKNOWN_CLASS_PROPERTY_START,
       },
     );
     return undefined;
@@ -42654,7 +42474,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
       parser.addDiagnostic(
         {
           loc: key.loc,
-          message: 'Classes may not have static property named prototype',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.CLASS_STATIC_PROTOTYPE_PROPERTY,
         },
       );
     }
@@ -42663,7 +42483,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
       parser.addDiagnostic(
         {
           loc: key.loc,
-          message: 'Classes may not have a private field named \'#constructor\'',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.CLASS_PRIVATE_FIELD_NAMED_CONSTRUCTOR,
         },
       );
     }
@@ -42671,15 +42491,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
     let optional = false;
     if (parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.question)) {
       optional = true;
-
-      if (!parser.isSyntaxEnabled('ts')) {
-        parser.addDiagnostic(
-          {
-            message: 'Optional syntax but ts is not enabled',
-          },
-        );
-      }
-
+      parser.expectSyntaxEnabled('ts');
       parser.next();
     }
 
@@ -42712,7 +42524,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
       parser.addDiagnostic(
         {
           loc: key.loc,
-          message: 'Classes may not have a non-static field named \'constructor\'',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.CLASS_PROPERTY_NAME_CONSTRUCTOR,
         },
       );
     }
@@ -42730,7 +42542,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
       parser.addDiagnostic(
         {
           loc: key.variance.loc,
-          message: 'variance not allowed here',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ILLEGAL_VARIANCE,
         },
       );
     }
@@ -42812,7 +42624,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
       parser.addDiagnostic(
         {
           loc: variance.loc,
-          message: 'variance not allowed here',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ILLEGAL_VARIANCE,
         },
       );
     }
@@ -42907,14 +42719,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
     let definite;
     if (!meta.optional && parser.eat(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.bang)) {
       definite = true;
-
-      if (!parser.isSyntaxEnabled('ts')) {
-        parser.addDiagnostic(
-          {
-            message: 'Definite syntax but ts is not enabled',
-          },
-        );
-      }
+      parser.expectSyntaxEnabled('ts');
     }
 
     let typeAnnotation;
@@ -42974,7 +42779,7 @@ const ___R$project$rome$$romejs$js$parser$parser$classes_ts = {
       } else if (!optionalId) {
         parser.addDiagnostic(
           {
-            message: 'A class name is required',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.REQUIRED_CLASS_NAME,
           },
         );
         id =
@@ -43096,7 +42901,7 @@ const ___R$project$rome$$romejs$js$parser$parser$type$systems_ts = {
             if (!parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.num)) {
               parser.addDiagnostic(
                 {
-                  message: 'Unexpected token, expected "number"',
+                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
                 },
               );
               parser.next();
@@ -43125,7 +42930,7 @@ const ___R$project$rome$$romejs$js$parser$parser$type$systems_ts = {
           } else {
             parser.addDiagnostic(
               {
-                message: 'Numeric literal type annotations cannot stand with a +, omit it instead',
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_PLUS,
               },
             );
             parser.next();
@@ -43133,7 +42938,7 @@ const ___R$project$rome$$romejs$js$parser$parser$type$systems_ts = {
             if (!parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.num)) {
               parser.addDiagnostic(
                 {
-                  message: 'Unexpected token, expected "number"',
+                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
                 },
               );
               parser.next();
@@ -43215,21 +43020,7 @@ const ___R$project$rome$$romejs$js$parser$parser$type$systems_ts = {
     parser.addDiagnostic(
       {
         start,
-        message: 'A ' +
-        label +
-        ' is only valid inside of a TypeScript or Flow file',
-        advice: [
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Did you mean <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
-          },
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Did you mean <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
-          },
-        ],
+        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_OR_TEST_REQUIRED(label),
       },
     );
   }
@@ -43246,16 +43037,7 @@ const ___R$project$rome$$romejs$js$parser$parser$type$systems_ts = {
     parser.addDiagnostic(
       {
         start,
-        message: 'A ' +
-        label +
-        ' is only valid inside of a Flow file',
-        advice: [
-          {
-            type: 'log',
-            category: 'info',
-            message: 'To enable <emphasis>Flow</emphasis> support, add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
-          },
-        ],
+        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_REQUIRED(label),
       },
     );
   }
@@ -43268,16 +43050,7 @@ const ___R$project$rome$$romejs$js$parser$parser$type$systems_ts = {
     parser.addDiagnostic(
       {
         start,
-        message: 'A ' +
-        label +
-        ' is only valid inside of a TypeScript file',
-        advice: [
-          {
-            type: 'log',
-            category: 'info',
-            message: 'To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
-          },
-        ],
+        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.TS_REQUIRED(label),
       },
     );
   }
@@ -43591,7 +43364,7 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
 
     let exportKind = 'value';
     let declaration;
-    let specifiers;
+    let localSpecifiers;
 
     // export * from '...'';
     if (___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$shouldParseExportStar(parser)) {
@@ -43599,17 +43372,16 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
     } else if (___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$isExportDefaultSpecifier(parser)) {
       const defStart = parser.getPosition();
       const defExported = ___R$project$rome$$romejs$js$parser$parser$expression_ts$parseIdentifier(parser, true);
-      let specifiers = [];
 
-      specifiers.push(
-        parser.finishNode(
-          defStart,
-          {
-            type: 'ExportDefaultSpecifier',
-            exported: defExported,
-          },
-        ),
+      let namedSpecifiers = [];
+      let defaultSpecifier = parser.finishNode(
+        defStart,
+        {
+          type: 'ExportDefaultSpecifier',
+          exported: defExported,
+        },
       );
+      let namespaceSpecifier;
 
       if (parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.comma) && parser.lookaheadState().tokenType === ___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.star) {
         parser.expect(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.comma);
@@ -43617,32 +43389,37 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
         parser.expect(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.star);
         parser.expectContextual('as');
         const exported = ___R$project$rome$$romejs$js$parser$parser$expression_ts$parseIdentifier(parser);
-        specifiers.push(
+        namespaceSpecifier =
           parser.finishNode(
             specifierStart,
             {
               type: 'ExportNamespaceSpecifier',
               exported,
             },
-          ),
-        );
+          );
       } else {
-        specifiers =
-          [
-            ...specifiers,
-            ...___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$convertLocalToExternalSpecifiers(
-              parser,
-              ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportLocalSpecifiersMaybe(parser),
-            ),
-          ];
+        namedSpecifiers =
+          ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$convertLocalToExternalSpecifiers(
+            parser,
+            ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportLocalSpecifiersMaybe(parser),
+          );
       }
 
       const source = ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportFromExpect(parser);
-      return ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$createExportExternalDeclaration(parser, start, specifiers, source);
+      return (
+        ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$createExportExternalDeclaration(
+          parser,
+          start,
+          defaultSpecifier,
+          namespaceSpecifier,
+          namedSpecifiers,
+          source,
+        )
+      );
     } else if (parser.eat(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types._default)) {
       // export default ...
       const declaration = ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportDefaultExpression(parser);
-      ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$checkExport(parser, specifiers, declaration, true, true);
+      ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$checkExport(parser, localSpecifiers, declaration, true, true);
 
       const node = parser.finishNode(
         start,
@@ -43654,10 +43431,13 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
       return node;
     } else if (___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$shouldParseExportDeclaration(parser)) {
       let source;
-      ({declaration, source, specifiers, exportKind} =
-        ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportDeclaration(
-          parser,
-        ));
+      ({
+        declaration,
+        source,
+        localSpecifiers,
+        exportKind,
+      } =
+        ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportDeclaration(parser));
 
       if (source !== undefined) {
         if (declaration !== undefined) {
@@ -43672,7 +43452,9 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
           ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$createExportExternalDeclaration(
             parser,
             start,
-            specifiers,
+            undefined,
+            undefined,
+            ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$convertLocalToExternalSpecifiers(parser, localSpecifiers),
             source,
             exportKind,
           )
@@ -43688,22 +43470,31 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
         {
           start: next.startPos,
           end: next.endPos,
-          message: 'Started with `export async` so we expected to receive an async function but no function keyword was found',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPORT_ASYNC_NO_FUNCTION_KEYWORD,
         },
       );
       declaration = undefined;
-      specifiers = [];
+      localSpecifiers = [];
     } else {
       // export { x, y as z } [from '...']';
-      specifiers = ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportSpecifiers(parser);
+      localSpecifiers = ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportSpecifiers(parser);
 
       const source = ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportFrom(parser, false);
       if (source !== undefined) {
-        return ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$createExportExternalDeclaration(parser, start, specifiers, source);
+        return (
+          ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$createExportExternalDeclaration(
+            parser,
+            start,
+            undefined,
+            undefined,
+            ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$convertLocalToExternalSpecifiers(parser, localSpecifiers),
+            source,
+          )
+        );
       }
     }
 
-    ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$checkExport(parser, specifiers, declaration, true, false);
+    ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$checkExport(parser, localSpecifiers, declaration, true, false);
 
     if (declaration !== undefined) {
       if (declaration.type !== 'VariableDeclarationStatement' &&
@@ -43721,7 +43512,7 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
         parser.addDiagnostic(
           {
             loc: declaration.loc,
-            message: 'Invalid export declaration',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_EXPORT_DECLARATION,
           },
         );
         return declaration;
@@ -43733,7 +43524,7 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
       {
         type: 'ExportLocalDeclaration',
         exportKind,
-        specifiers,
+        specifiers: localSpecifiers,
         declaration,
       },
     );
@@ -43743,14 +43534,19 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
   function ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$createExportExternalDeclaration(
     parser,
     start,
-    rawSpecifiers,
-
+    defaultSpecifier,
+    namespaceSpecifier,
+    namedSpecifiers,
     source,
     exportKind,
   ) {
-    const specifiers = rawSpecifiers === undefined
-      ? undefined : ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$convertLocalToExternalSpecifiers(parser, rawSpecifiers);
-    ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$checkExport(parser, specifiers, undefined, true, false);
+    ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$checkExport(
+      parser,
+      [defaultSpecifier, namespaceSpecifier, ...namedSpecifiers],
+      undefined,
+      true,
+      false,
+    );
 
     return (
       parser.finishNode(
@@ -43759,7 +43555,9 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
           type: 'ExportExternalDeclaration',
           exportKind,
           source,
-          specifiers,
+          namedSpecifiers,
+          defaultSpecifier,
+          namespaceSpecifier,
         },
       )
     );
@@ -43767,26 +43565,22 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
 
   function ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$convertLocalToExternalSpecifiers(
     parser,
-    specifiers,
+    specifiers = [],
   ) {
     return (
       specifiers.map(
         (specifier) => {
-          if (specifier.type === 'ExportLocalSpecifier') {
-            return (
-              Object.assign(
-                {
-                },
-                specifier,
-                {
-                  type: 'ExportExternalSpecifier',
-                  local: ___R$project$rome$$romejs$js$parser$parser$expression_ts$toIdentifier(parser, specifier.local),
-                },
-              )
-            );
-          } else {
-            return specifier;
-          }
+          return (
+            Object.assign(
+              {
+              },
+              specifier,
+              {
+                type: 'ExportExternalSpecifier',
+                local: ___R$project$rome$$romejs$js$parser$parser$expression_ts$toIdentifier(parser, specifier.local),
+              },
+            )
+          );
         },
       )
     );
@@ -43827,7 +43621,7 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
     if (parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types._const) || parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types._var) || ___R$project$rome$$romejs$js$parser$parser$statement_ts$isLetStart(parser)) {
       parser.addDiagnostic(
         {
-          message: 'Only expressions, functions or classes are allowed as the `default` export.',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_EXPORT_DEFAULT,
         },
       );
     }
@@ -43851,7 +43645,7 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
         return (
           {
             exportKind: 'type',
-            specifiers,
+            localSpecifiers: specifiers,
             source,
           }
         );
@@ -43961,7 +43755,7 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
         parser.addDiagnostic(
           {
             loc: expr.loc,
-            message: 'Import from only allows strings',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPORT_FROM_NOT_STRING,
           },
         );
 
@@ -43975,7 +43769,7 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
     } else if (expect) {
       parser.addDiagnostic(
         {
-          message: 'Expected `from` for an export node',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPORT_MISSING_FROM,
         },
       );
 
@@ -44012,14 +43806,14 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
     parser.expect(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.star);
 
     if (parser.isContextual('as')) {
-      const {source, specifiers} = ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportNamespace(parser, exportKind);
+      const {source, namedSpecifiers} = ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportNamespace(parser, exportKind);
       return (
         parser.finishNode(
           start,
           {
             type: 'ExportExternalDeclaration',
             exportKind,
-            specifiers,
+            namedSpecifiers,
             source,
           },
         )
@@ -44049,7 +43843,7 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
     if (exportKind === 'type') {
       parser.addDiagnostic(
         {
-          message: 'Can\'t have a type export namespacer specifier',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPORT_TYPE_NAMESPACE,
         },
       );
     }
@@ -44058,31 +43852,21 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
     parser.next();
     const exported = ___R$project$rome$$romejs$js$parser$parser$expression_ts$parseIdentifier(parser, true);
 
-    let specifiers = [];
-
-    specifiers.push(
-      parser.finishNode(
-        specifierStart,
-        {
-          type: 'ExportNamespaceSpecifier',
-          exported,
-        },
-      ),
+    const namespaceSpecifier = parser.finishNode(
+      specifierStart,
+      {
+        type: 'ExportNamespaceSpecifier',
+        exported,
+      },
     );
 
-    specifiers =
-      [
-        ...specifiers,
-        ...___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$convertLocalToExternalSpecifiers(
-          parser,
-          ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportLocalSpecifiersMaybe(
-            parser,
-          ),
-        ),
-      ];
+    const namedSpecifiers = ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$convertLocalToExternalSpecifiers(
+      parser,
+      ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportLocalSpecifiersMaybe(parser),
+    );
 
     const source = ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseExportFromExpect(parser);
-    return {source, specifiers};
+    return {source, namespaceSpecifier, namedSpecifiers};
   }
 
   function ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$shouldParseExportDeclaration(parser) {
@@ -44122,28 +43906,6 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
       return undefined;
     }
 
-    if (specifiers !== undefined && specifiers.length > 0) {
-      // Named exports
-      for (const specifier of specifiers) {
-        ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$checkDuplicateExports(parser, specifier, specifier.exported.name);
-
-        if (specifier.type === 'ExportLocalSpecifier') {
-          const {local} = specifier;
-          if (local !== undefined) {
-            // check for keywords used as local names
-            ___R$project$rome$$romejs$js$parser$parser$expression_ts$checkReservedWord(
-              parser,
-              local.name,
-              parser.getLoc(local),
-              true,
-              false,
-            );
-          }
-        }
-      }
-      return undefined;
-    }
-
     if (declaration !== undefined) {
       // Exported declarations
       if (declaration.type === 'FunctionDeclaration') {
@@ -44168,6 +43930,31 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
         }
       }
     }
+
+    if (specifiers !== undefined) {
+      // Named exports
+      for (const specifier of specifiers) {
+        if (specifier === undefined) {
+          continue;
+        }
+
+        ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$checkDuplicateExports(parser, specifier, specifier.exported.name);
+
+        if (specifier.type === 'ExportLocalSpecifier') {
+          const {local} = specifier;
+          if (local !== undefined) {
+            // check for keywords used as local names
+            ___R$project$rome$$romejs$js$parser$parser$expression_ts$checkReservedWord(
+              parser,
+              local.name,
+              parser.getLoc(local),
+              true,
+              false,
+            );
+          }
+        }
+      }
+    }
   }
 
   function ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$checkDuplicateExports(
@@ -44185,23 +43972,7 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
       parser.addDiagnostic(
         {
           loc: node.loc,
-          message: name === 'default'
-            ? 'Only one default export allowed per module.' : '`' +
-            name +
-            '` has already been exported. Exported identifiers must be unique.',
-          advice: [
-            {
-              type: 'log',
-              category: 'info',
-              message: 'First defined here',
-            },
-            {
-              type: 'frame',
-              filename: existing.filename,
-              start: existing.start,
-              end: existing.end,
-            },
-          ],
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.DUPLICATE_EXPORT(name, existing),
         },
       );
     }
@@ -44266,23 +44037,30 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
       return ___R$project$rome$$romejs$js$parser$parser$typescript_ts$parseTSImportEqualsDeclaration(parser, start);
     }
 
-    let specifiers;
+    let namedSpecifiers = [];
+    let namespaceSpecifier;
+    let defaultSpecifier;
     let source;
     let importKind;
 
     // import '...'
     if (parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.string)) {
-      specifiers = [];
       source = ___R$project$rome$$romejs$js$parser$parser$expression_ts$parseStringLiteral(parser);
     } else {
-      ({specifiers, importKind} = ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseImportSpecifiers(parser, start));
+      ({
+        namedSpecifiers,
+        namespaceSpecifier,
+        defaultSpecifier,
+        importKind,
+      } =
+        ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseImportSpecifiers(parser, start));
 
       if (parser.expectContextual('from') && parser.match(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.string)) {
         source = ___R$project$rome$$romejs$js$parser$parser$expression_ts$parseStringLiteral(parser);
       } else {
         parser.addDiagnostic(
           {
-            message: 'import missing a source',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.IMPORT_MISSING_SOURCE,
           },
         );
 
@@ -44303,7 +44081,9 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
         start,
         {
           type: 'ImportDeclaration',
-          specifiers,
+          namedSpecifiers,
+          namespaceSpecifier,
+          defaultSpecifier,
           source,
           importKind,
         },
@@ -44377,7 +44157,7 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
         parser.addDiagnostic(
           {
             start: lh.startPos,
-            message: 'import * is not allowed',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.IMPORT_TYPE_STAR,
           },
         );
       }
@@ -44388,7 +44168,9 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
       }
     }
 
-    const specifiers = [];
+    let namedSpecifiers = [];
+    let namespaceSpecifier;
+    let defaultSpecifier;
 
     let first = true;
 
@@ -44400,18 +44182,24 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
         'default import specifier',
       );
 
-      specifiers.push(
+      defaultSpecifier =
         parser.finishNode(
           start,
           {
             type: 'ImportDefaultSpecifier',
             local: meta,
           },
-        ),
-      );
+        );
 
       if (!parser.eat(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.comma)) {
-        return {specifiers, importKind};
+        return (
+          {
+            namedSpecifiers,
+            namespaceSpecifier,
+            defaultSpecifier,
+            importKind,
+          }
+        );
       }
     }
 
@@ -44425,17 +44213,16 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
         'import namespace specifier',
       );
 
-      specifiers.push(
+      namespaceSpecifier =
         parser.finishNode(
           start,
           {
             type: 'ImportNamespaceSpecifier',
             local: meta,
           },
-        ),
-      );
+        );
 
-      return {specifiers, importKind};
+      return {namedSpecifiers, namespaceSpecifier, defaultSpecifier, importKind};
     }
 
     const openContext = parser.expectOpening(
@@ -44457,7 +44244,7 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
         if (parser.eat(___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.colon)) {
           parser.addDiagnostic(
             {
-              message: 'ES2015 named imports do not destructure. Use another statement for destructuring after the import.',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.DESTRUCTURING_IN_IMPORT,
             },
           );
         }
@@ -44469,10 +44256,10 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
         }
       }
 
-      specifiers.push(___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseImportSpecifier(parser, importKind));
+      namedSpecifiers.push(___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseImportSpecifier(parser, importKind));
     }
 
-    return {specifiers, importKind};
+    return {namedSpecifiers, namespaceSpecifier, defaultSpecifier, importKind};
   }
 
   function ___R$$priv$project$rome$$romejs$js$parser$parser$modules_ts$parseImportSpecifier(
@@ -44531,7 +44318,7 @@ const ___R$project$rome$$romejs$js$parser$parser$modules_ts = {
       parser.addDiagnostic(
         {
           start: firstIdentPos,
-          message: 'The `type` and `typeof` keywords on named imports can only be used on regular `import` statements. It cannot be used with `import type` or `import typeof` statements',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.IMPORT_KIND_SPECIFIER_ON_IMPORT_DECLARATION_WITH_KIND,
         },
       );
     }
@@ -44980,7 +44767,6 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
   const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$DECIMAL_NUMBER = /^\d+$/;
 
   // The following character codes are forbidden from 'being
-
   // an immediate sibling of NumericLiteralSeparator _
   const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$forbiddenNumericSeparatorSiblings = {
     decBinOct: [
@@ -45047,9 +44833,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
   };
 
   // Object type used to represent tokens. Note that normally, tokens
-
   // simply exist as properties on the parser object. This is only
-
   // used for the onToken callback and the external tokenizer.
 
   class ___R$project$rome$$romejs$js$parser$tokenizer$index_ts$RegExpTokenValue {
@@ -45087,7 +44871,6 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
   }
 
   // Toggle strict mode. Re-reads the next number or string to please
-
   // pedantic tests (`"use strict"; 010;` should fail).
   function ___R$project$rome$$romejs$js$parser$tokenizer$index_ts$setStrict(parser, isStrict) {
     parser.pushScope('STRICT', isStrict);
@@ -45245,7 +45028,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
       if (parser.syntax.has('ts')) {
         parser.addDiagnostic(
           {
-            message: 'Cannot have a @flow annotation comment when TypeScript syntax has been enabled',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.FLOW_ANNOTATION_WITH_TYPESCRIPT_ENABLED,
           },
         );
       } else {
@@ -45286,7 +45069,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
       parser.addDiagnostic(
         {
           end: parser.getPositionFromIndex(___R$project$rome$$romejs$ob1$index_ts$sub(parser.state.index, 2)),
-          message: 'Unterminated comment',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNTERMINATED_BLOCK_COMMENT,
         },
       );
       return undefined;
@@ -45347,7 +45130,6 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
   }
 
   // Called at the start of the parse and after every token. Skips
-
   // whitespace and comments, and.
   function ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$skipSpace(parser) {
     loop: while (parser.state.index < parser.length) {
@@ -45426,11 +45208,8 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
   }
 
   // Called at the end of every token. Sets `end`, `val`, and
-
   // maintains `context` and `exprAllowed`, and skips the space after
-
   // the token, so that the next one's `start` will point at the
-
   // right position.
   function ___R$project$rome$$romejs$js$parser$tokenizer$index_ts$finishToken(
     parser,
@@ -45705,24 +45484,16 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
       return undefined;
     }
 
-    // Check if there's a ! after this, in that case it's a confused hashbang
-    let advice;
-    if (parser.input[___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$getIndex(parser) + 1] === '!') {
-      advice =
-        [
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Did you want to write a hashbang? A hashbang can only be the first thing in a file.',
-          },
-        ];
-    }
-
     // TODO make this a diagnostic, and advance to the next line if suspected hashbang
     parser.addDiagnostic(
       {
-        message: 'Unexpected character \'#\'',
-        advice,
+        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNEXPECTED_HASH(
+          parser.input[___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$getIndex(
+            parser,
+          ) +
+          1] ===
+          '!',
+        ),
       },
     );
     ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$bumpIndex(parser);
@@ -45919,23 +45690,12 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
 
       parser.addDiagnostic(
         {
-          message: 'Unexpected Unicode character \'<emphasis>' +
-          char +
-          '</emphasis>\' (<emphasis>' +
-          unicodeName +
-          '</emphasis>)',
-
-          advice: [
-            {
-              type: 'log',
-              category: 'info',
-              message: 'Did you mean \'<emphasis>' +
-              equivalentChar +
-              '</emphasis>\' (<emphasis>' +
-              equivalentName +
-              '</emphasis>)? Both characters look the same, but are not.',
-            },
-          ],
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNEXPECTED_UNICODE_CHARACTER(
+            char,
+            unicodeName,
+            equivalentChar,
+            equivalentName,
+          ),
         },
       );
 
@@ -45946,9 +45706,9 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
 
     parser.addDiagnostic(
       {
-        message: 'Unexpected character \'' +
-        ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$codePointToString(code) +
-        '\'',
+        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(
+          ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$codePointToString(code),
+        ),
       },
     );
 
@@ -45971,13 +45731,14 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
 
   function ___R$project$rome$$romejs$js$parser$tokenizer$index_ts$readRegexp(parser) {
     const start = parser.state.index;
-    let escaped, inClass;
+    let escaped;
+    let inClass;
     for (;;) {
       if (parser.state.index >= parser.length) {
         parser.addDiagnostic(
           {
             end: parser.getPositionFromIndex(parser.state.index),
-            message: 'Unterminated regular expression',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNTERMINATED_REGEX,
           },
         );
         break;
@@ -45988,7 +45749,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
         parser.addDiagnostic(
           {
             end: parser.getPositionFromIndex(parser.state.index),
-            message: 'Unterminated regular expression',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNTERMINATED_REGEX,
           },
         );
         break;
@@ -46020,18 +45781,18 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
       parser.addDiagnostic(
         {
           index: parser.state.escapePosition,
-          message: 'Regular expression flags can\'t contain unicode escapes',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNICODE_ESCAPE_IN_REGEX_FLAGS,
         },
       );
     }
 
     const mods = ___R$project$rome$$romejs$js$parser$utils$regex_ts$validateRegexFlags(
       rawMods,
-      (msg, index) => {
+      (metadata, index) => {
         parser.addDiagnostic(
           {
             index: ___R$project$rome$$romejs$ob1$index_ts$add(start, index),
-            message: msg,
+            description: metadata,
           },
         );
       },
@@ -46041,9 +45802,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
   }
 
   // Read an integer in the given radix. Return null if zero digits
-
   // were read, the integer value otherwise. When `len` is given, this
-
   // will return `null` unless the integer has exactly `len` digits.
   function ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$readInt(
     parser,
@@ -46079,7 +45838,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
         if (allowedSiblings.indexOf(next) === -1) {
           parser.addDiagnostic(
             {
-              message: 'Invalid or unexpected token',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_INT_TOKEN,
             },
           );
         }
@@ -46089,7 +45848,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
         Number.isNaN(next)) {
           parser.addDiagnostic(
             {
-              message: 'Invalid or unexpected token',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_INT_TOKEN,
             },
           );
         }
@@ -46138,8 +45897,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
       parser.addDiagnostic(
         {
           index: ___R$project$rome$$romejs$ob1$index_ts$add(start, 2),
-          message: 'Expected number in radix ' +
-          radix,
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPECTED_NUMBER_IN_RADIX(radix),
         },
       );
     }
@@ -46153,7 +45911,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
       parser.addDiagnostic(
         {
           index: parser.state.index,
-          message: 'Identifier directly after number',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.IDENTIFIER_AFTER_NUMBER,
         },
       );
     }
@@ -46180,7 +45938,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
       parser.addDiagnostic(
         {
           index: parser.state.index,
-          message: 'Invalid number',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_NUMBER,
         },
       );
     }
@@ -46192,7 +45950,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
         parser.addDiagnostic(
           {
             index: parser.state.index,
-            message: 'Legacy octal literals are not allowed in strict mode',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.LEGACY_OCTAL_IN_STRICT_MODE,
           },
         );
       }
@@ -46222,7 +45980,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
         parser.addDiagnostic(
           {
             index: parser.state.index,
-            message: 'Invalid number',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_NUMBER,
           },
         );
       }
@@ -46237,7 +45995,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
         parser.addDiagnostic(
           {
             index: parser.state.index,
-            message: 'A bigint can\'t have a decimal',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.DECIMAL_BIGINT,
           },
         );
       }
@@ -46246,7 +46004,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
         parser.addDiagnostic(
           {
             index: parser.state.index,
-            message: 'A bigint can\'t be an octal',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.OCTAL_BIGINT,
           },
         );
       }
@@ -46259,7 +46017,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
       parser.addDiagnostic(
         {
           index: parser.state.index,
-          message: 'Identifier directly after number',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.IDENTIFIER_AFTER_NUMBER,
         },
       );
     }
@@ -46306,7 +46064,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
           parser.addDiagnostic(
             {
               index: codePos,
-              message: 'Code point out of bounds',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.OUT_OF_BOUND_CODE_POINT,
             },
           );
         } else {
@@ -46329,7 +46087,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
         parser.addDiagnostic(
           {
             end: parser.getPositionFromIndex(parser.state.index),
-            message: 'Unterminated string constant',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNTERMINATED_STRING,
           },
         );
         break;
@@ -46354,7 +46112,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
           parser.addDiagnostic(
             {
               end: parser.getPositionFromIndex(parser.state.index),
-              message: 'Unterminated string constant',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNTERMINATED_STRING,
             },
           );
         }
@@ -46378,7 +46136,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
         parser.addDiagnostic(
           {
             end: parser.getPositionFromIndex(parser.state.index),
-            message: 'Unterminated template',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNTERMINATED_TEMPLATE,
           },
         );
         break;
@@ -46530,7 +46288,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
               parser.addDiagnostic(
                 {
                   index: codePos,
-                  message: 'Octal literal in strict mode',
+                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.OCTAL_IN_STRICT_MODE,
                 },
               );
             } else if (!parser.state.containsOctal) {
@@ -46564,7 +46322,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
         parser.addDiagnostic(
           {
             index: start,
-            message: 'Bad character escape sequence',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.BAD_HEX_ESCAPE,
           },
         );
         return 0;
@@ -46579,13 +46337,9 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
   }
 
   // Read an identifier, and return it as a string. Sets `parser.state.escapePosition`
-
   // to an index if the word contained a '\u' escape.
-
   //
-
   // Incrementally adds only escaped chars, adding other chunks as-is
-
   // as a micro-optimization.
   function ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$readWord1(parser) {
     parser.state.escapePosition = undefined;
@@ -46610,7 +46364,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
           parser.addDiagnostic(
             {
               index: parser.state.index,
-              message: 'Expecting Unicode escape sequence \\uXXXX',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPECTED_UNICODE_ESCAPE,
             },
           );
         }
@@ -46627,7 +46381,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
           parser.addDiagnostic(
             {
               index: parser.state.index,
-              message: 'Invalid Unicode escape',
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_UNICODE_ESCAPE,
             },
           );
         }
@@ -46645,7 +46399,6 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
   }
 
   // Read an identifier or keyword token. Will check for reserved
-
   // words when necessary.
   function ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$readWord(parser) {
     const word = ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$readWord1(parser);
@@ -46657,8 +46410,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
       parser.addDiagnostic(
         {
           index: parser.state.escapePosition,
-          message: 'Escape sequence in keyword ' +
-          word,
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ESCAPE_SEQUENCE_IN_KEYWORD(word),
         },
       );
     }
@@ -46666,8 +46418,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
     if (parser.state.isIterator && (!___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$isIterator(word) || !parser.inScope('TYPE'))) {
       parser.addDiagnostic(
         {
-          message: 'Invalid identifier ' +
-          word,
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.INVALID_IDENTIFIER_NAME(word),
         },
       );
     }
@@ -46837,7 +46588,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
         parser.addDiagnostic(
           {
             end: parser.getPositionFromIndex(parser.state.index),
-            message: 'Unterminated string constant',
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNTERMINATED_JSX_STRING,
           },
         );
         break;
@@ -46907,15 +46658,10 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
   }
 
   // Read a JSX identifier (valid tag or attribute name).
-
   //
-
   // Optimized version since JSX identifiers can't contain
-
   // escape characters and so can be read as single slice.
-
   // Also assumes that first character was already checked
-
   // by isIdentifierStart in readToken.
   function ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$readToken_jsxWord(parser) {
     let ch;
@@ -46932,62 +46678,6 @@ const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$index_ts$HEX_NUMBER = 
           parser.state.index,
         ),
       )
-    );
-  }
-
-  // project-rome/@romejs/js-parser/tokenizer/state.ts
-const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$state_ts$EMPTY_POS = {
-    line: ___R$project$rome$$romejs$ob1$index_ts$number1,
-    column: ___R$project$rome$$romejs$ob1$index_ts$number0,
-    index: ___R$project$rome$$romejs$ob1$index_ts$number0,
-  };
-
-  function ___R$project$rome$$romejs$js$parser$tokenizer$state_ts$createInitialState() {
-    return (
-      {
-        scopes: {},
-        diagnostics: [],
-        diagnosticFilters: [],
-        hasHoistedVars: false,
-        corrupt: false,
-        tokens: [],
-        potentialArrowAt: ___R$project$rome$$romejs$ob1$index_ts$number0Neg1,
-        commaAfterSpreadAt: ___R$project$rome$$romejs$ob1$index_ts$number0Neg1,
-        yieldPos: ___R$project$rome$$romejs$ob1$index_ts$number0,
-        awaitPos: ___R$project$rome$$romejs$ob1$index_ts$number0,
-        noArrowAt: [],
-        noArrowParamsConversionAt: [],
-        maybeInArrowParameters: false,
-        isIterator: false,
-        noAnonFunctionType: false,
-        classLevel: ___R$project$rome$$romejs$ob1$index_ts$number0,
-        labels: [],
-        yieldInPossibleArrowParameters: undefined,
-        comments: [],
-        trailingComments: [],
-        leadingComments: [],
-        commentStack: [],
-        commentPreviousNode: undefined,
-        index: ___R$project$rome$$romejs$ob1$index_ts$number0,
-        lineStartIndex: ___R$project$rome$$romejs$ob1$index_ts$number0,
-        curLine: ___R$project$rome$$romejs$ob1$index_ts$number1,
-        tokenType: ___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.eof,
-        tokenValue: undefined,
-        startPos: ___R$$priv$project$rome$$romejs$js$parser$tokenizer$state_ts$EMPTY_POS,
-        endPos: ___R$$priv$project$rome$$romejs$js$parser$tokenizer$state_ts$EMPTY_POS,
-        lastStartPos: ___R$$priv$project$rome$$romejs$js$parser$tokenizer$state_ts$EMPTY_POS,
-        lastEndPos: ___R$$priv$project$rome$$romejs$js$parser$tokenizer$state_ts$EMPTY_POS,
-        context: [___R$project$rome$$romejs$js$parser$tokenizer$context_ts$types.braceStatement],
-        exprAllowed: true,
-        containsOctal: false,
-        escapePosition: undefined,
-        octalPosition: undefined,
-        invalidTemplateEscapePosition: undefined,
-        exportedIdentifiers: new Map(),
-        possibleIncorrectOpenParens: [],
-        lineStart: true,
-        indentLevel: ___R$project$rome$$romejs$ob1$index_ts$number0,
-      }
     );
   }
 
@@ -47140,6 +46830,61 @@ class ___R$project$rome$$romejs$js$parser$ParserBranchFinder_ts$default {
       parser.setState(state);
       return result;
     }
+  }
+
+  // project-rome/@romejs/js-parser/tokenizer/state.ts
+const ___R$$priv$project$rome$$romejs$js$parser$tokenizer$state_ts$EMPTY_POS = {
+    line: ___R$project$rome$$romejs$ob1$index_ts$number1,
+    column: ___R$project$rome$$romejs$ob1$index_ts$number0,
+    index: ___R$project$rome$$romejs$ob1$index_ts$number0,
+  };
+
+  function ___R$project$rome$$romejs$js$parser$tokenizer$state_ts$createInitialState() {
+    return (
+      {
+        scopes: {},
+        diagnostics: [],
+        diagnosticFilters: [],
+        hasHoistedVars: false,
+        corrupt: false,
+        tokens: [],
+        potentialArrowAt: ___R$project$rome$$romejs$ob1$index_ts$number0Neg1,
+        commaAfterSpreadAt: ___R$project$rome$$romejs$ob1$index_ts$number0Neg1,
+        yieldPos: ___R$project$rome$$romejs$ob1$index_ts$number0,
+        awaitPos: ___R$project$rome$$romejs$ob1$index_ts$number0,
+        noArrowAt: [],
+        noArrowParamsConversionAt: [],
+        maybeInArrowParameters: false,
+        isIterator: false,
+        noAnonFunctionType: false,
+        classLevel: ___R$project$rome$$romejs$ob1$index_ts$number0,
+        labels: [],
+        yieldInPossibleArrowParameters: undefined,
+        comments: [],
+        trailingComments: [],
+        leadingComments: [],
+        commentStack: [],
+        commentPreviousNode: undefined,
+        index: ___R$project$rome$$romejs$ob1$index_ts$number0,
+        lineStartIndex: ___R$project$rome$$romejs$ob1$index_ts$number0,
+        curLine: ___R$project$rome$$romejs$ob1$index_ts$number1,
+        tokenType: ___R$project$rome$$romejs$js$parser$tokenizer$types_ts$types.eof,
+        tokenValue: undefined,
+        startPos: ___R$$priv$project$rome$$romejs$js$parser$tokenizer$state_ts$EMPTY_POS,
+        endPos: ___R$$priv$project$rome$$romejs$js$parser$tokenizer$state_ts$EMPTY_POS,
+        lastStartPos: ___R$$priv$project$rome$$romejs$js$parser$tokenizer$state_ts$EMPTY_POS,
+        lastEndPos: ___R$$priv$project$rome$$romejs$js$parser$tokenizer$state_ts$EMPTY_POS,
+        context: [___R$project$rome$$romejs$js$parser$tokenizer$context_ts$types.braceStatement],
+        exprAllowed: true,
+        containsOctal: false,
+        escapePosition: undefined,
+        octalPosition: undefined,
+        invalidTemplateEscapePosition: undefined,
+        exportedIdentifiers: new Map(),
+        lineStart: true,
+        indentLevel: ___R$project$rome$$romejs$ob1$index_ts$number0,
+      }
+    );
   }
 
   // project-rome/@romejs/js-parser/parser.ts
@@ -47338,7 +47083,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES = {
             );
           }
 
-          assertNoSpace(message = 'Unexpected space') {
+          assertNoSpace(_metadata = ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNEXPECTED_SPACE) {
             const {state} = this;
 
             if (state.startPos.index > state.lastEndPos.index) {
@@ -47346,7 +47091,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES = {
                 {
                   start: state.lastEndPos,
                   end: state.lastEndPos,
-                  message,
+                  description: _metadata,
                 },
               );
             }
@@ -47414,7 +47159,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES = {
             this.state.tokens.push(token);
           }
 
-          addDiagnostic(diag) {
+          addDiagnostic(opts) {
             if (this.isLookahead) {
               return undefined;
             }
@@ -47433,16 +47178,16 @@ const ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES = {
               //return;
             }
 
-            let {start, end} = diag;
+            let {start, end} = opts;
 
-            if (diag.index !== undefined) {
-              start = this.getPositionFromIndex(diag.index);
+            if (opts.index !== undefined) {
+              start = this.getPositionFromIndex(opts.index);
               end = start;
             }
 
-            if (diag.loc !== undefined) {
-              start = diag.loc.start;
-              end = diag.loc.end;
+            if (opts.loc !== undefined) {
+              start = opts.loc.start;
+              end = opts.loc.end;
             }
 
             // If we weren't given a start then default to the provided end, or the current token start
@@ -47461,14 +47206,19 @@ const ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES = {
 
             this.state.diagnostics.push(
               {
-                filename: this.filename,
-                sourceType: this.sourceType,
-                mtime: this.mtime,
-                message: diag.message,
-                advice: diag.advice,
-                start,
-                end,
-                category: 'parse/js',
+                description: Object.assign(
+                  {
+                    category: 'parse/js',
+                  },
+                  opts.description,
+                ),
+                location: {
+                  filename: this.filename,
+                  sourceType: this.sourceType,
+                  mtime: this.mtime,
+                  start,
+                  end,
+                },
               },
             );
           }
@@ -47485,9 +47235,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES = {
             if (!this.isSyntaxEnabled(syntax)) {
               this.addDiagnostic(
                 {
-                  message: 'Expected ' +
-                  syntax +
-                  ' to be enabled',
+                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPECTED_ENABLE_SYNTAX(syntax),
                 },
               );
             }
@@ -47503,7 +47251,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES = {
             } else {
               this.addDiagnostic(
                 {
-                  message: 'Expected relational operator',
+                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPECTED_RELATIONAL_OPERATOR,
                 },
               );
               return false;
@@ -47520,8 +47268,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES = {
               this.addDiagnostic(
                 {
                   index,
-                  message: name +
-                  ' can\'t contain a unicode escape',
+                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.ESCAPE_SEQUENCE_IN_WORD(name),
                 },
               );
             }
@@ -47564,14 +47311,15 @@ const ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES = {
           }
 
           // Asserts that following token is given contextual keyword.
-          expectContextual(name, message = 'Expected keyword ' +
-          name) {
+          expectContextual(name, _metadata = ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPECTED_KEYWORD(
+            name,
+          )) {
             if (this.eatContextual(name)) {
               return true;
             } else {
               this.addDiagnostic(
                 {
-                  message,
+                  description: _metadata,
                 },
               );
               return false;
@@ -47608,7 +47356,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES = {
             if (!this.isLineTerminator()) {
               this.addDiagnostic(
                 {
-                  message: 'Expected a semicolon or a line terminator',
+                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPECTED_SEMI_OR_LINE_TERMINATOR,
                 },
               );
             }
@@ -47643,61 +47391,27 @@ const ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES = {
 
           expectClosing(context) {
             if (this.match(context.close)) {
-              if (this.state.indentLevel !== context.indent) {
-                this.state.possibleIncorrectOpenParens.push(context);
-              }
               this.next();
               return true;
             } else {
               const currPos = this.getPosition();
 
-              const advice = [
-                {
-                  type: 'log',
-                  category: 'info',
-                  message: 'We expected to find the closing character <emphasis>' +
-                  context.close.label +
-                  '</emphasis> here',
-                },
-                {
-                  type: 'frame',
-                  filename: this.filename,
-                  start: currPos,
-                  end: currPos,
-                },
-              ];
-
-              const possibleThief = this.state.possibleIncorrectOpenParens.shift();
-              if (possibleThief !== undefined) {
-                advice.push(
-                  {
-                    type: 'log',
-                    category: 'info',
-                    message: 'We found this ' +
-                    possibleThief.name +
-                    ' that looks suspicious. It could be the real culprit that\'s unclosed.',
-                  },
-                );
-
-                advice.push(
-                  {
-                    type: 'frame',
-                    filename: this.filename,
-                    start: possibleThief.start,
-                    end: possibleThief.start,
-                  },
-                );
-              }
-
               this.addDiagnostic(
                 {
-                  message: 'Unclosed ' +
-                  context.name,
+                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.EXPECTED_CLOSING(
+                    context.name,
+                    context.close.label,
+                    {
+                      filename: this.filename,
+                      start: currPos,
+                      end: currPos,
+                    },
+                  ),
                   start: context.start,
                   end: context.start,
-                  advice,
                 },
               );
+
               return false;
             }
           }
@@ -47706,33 +47420,26 @@ const ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES = {
 
           // instead of a message string.
           unexpectedToken(pos, tokenType) {
-            const advice = [];
-            let message = 'Unexpected token'; // + new Error().stack;
+            let expectedToken;
+            let possibleShiftMistake = false;
+
             if (tokenType !== undefined) {
-              message += ', expected "' +
-              tokenType.label +
-              '"';
+              expectedToken = tokenType.label;
 
               const possibleMistake = ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES[tokenType.label];
-              if (possibleMistake !== undefined &&
-                possibleMistake ===
-                this.state.tokenType.label) {
-                advice.push(
-                  {
-                    type: 'log',
-                    category: 'info',
-                    message: 'Did you accidently hold shift?',
-                  },
-                );
-              }
+              possibleShiftMistake =
+                possibleMistake !== undefined &&
+                  possibleMistake === this.state.tokenType.label;
             }
 
             this.addDiagnostic(
               {
-                message,
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.JS_PARSER.UNEXPECTED_TOKEN(
+                  expectedToken,
+                  possibleShiftMistake,
+                ),
                 start: pos === undefined ? this.state.startPos : pos,
                 end: pos === undefined ? this.state.endPos : pos,
-                advice,
               },
             );
           }
@@ -47952,8 +47659,8 @@ function ___R$project$rome$$romejs$js$parser$index_ts$parseJS(userOptions) {
     // If we have any diagnostics, then mark anything from the first as invalid
     if (diagnostics.length > 0) {
       const firstDiag = diagnostics[0];
-      const invalidStart = firstDiag.start;
-      const invalidEnd = firstDiag.end;
+      const invalidStart = firstDiag.location.start;
+      const invalidEnd = firstDiag.location.end;
       if (invalidStart === undefined || invalidEnd === undefined) {
         throw new Error('All parser diagnostics are expected to have a start/end');
       }
@@ -48157,6 +47864,75 @@ function ___R$project$rome$$romejs$js$generator$generators$modules$ExportDefault
     generator.print(node.exported, node);
   }
 
+  // project-rome/@romejs/js-generator/generators/modules/ImportDeclaration.ts
+function ___R$project$rome$$romejs$js$generator$generators$modules$ImportDeclaration_ts$default(generator, node) {
+    node = ___R$project$rome$$romejs$js$ast$modules$ImportDeclaration_ts$importDeclaration.assert(node);
+
+    generator.word('import');
+    generator.space();
+
+    if (node.importKind === 'type' || node.importKind === 'typeof') {
+      generator.word(node.importKind);
+      generator.space();
+    }
+
+    generator.multiline(
+      node,
+      (multiline, node) => {
+        const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
+
+        if (namedSpecifiers.length > 0 || namespaceSpecifier !== undefined ||
+        defaultSpecifier !== undefined) {
+          ___R$project$rome$$romejs$js$generator$generators$modules$ImportDeclaration_ts$printModuleSpecifiers(generator, node, multiline);
+          generator.space();
+          generator.word('from');
+          generator.space();
+        }
+
+        generator.print(node.source, node);
+        generator.semicolon();
+      },
+      {conditions: ['more-than-one-line']},
+    );
+  }
+
+  function ___R$project$rome$$romejs$js$generator$generators$modules$ImportDeclaration_ts$printModuleSpecifiers(
+    generator,
+    node,
+    multiline,
+  ) {
+    const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
+
+    if (defaultSpecifier !== undefined) {
+      generator.print(node.defaultSpecifier, node);
+      if (namedSpecifiers.length > 0 || namespaceSpecifier !== undefined) {
+        generator.token(',');
+        generator.space();
+      }
+    }
+
+    if (namespaceSpecifier !== undefined) {
+      generator.print(namespaceSpecifier, node);
+      if (namedSpecifiers.length > 0) {
+        generator.token(',');
+        generator.space();
+      }
+    }
+
+    if (namedSpecifiers.length > 0) {
+      generator.token('{');
+      generator.printCommaList(
+        namedSpecifiers,
+        node,
+        {
+          multiline,
+          trailing: true,
+        },
+      );
+      generator.token('}');
+    }
+  }
+
   // project-rome/@romejs/js-generator/generators/modules/ExportExternalDeclaration.ts
 function ___R$project$rome$$romejs$js$generator$generators$modules$ExportExternalDeclaration_ts$default(
     generator,
@@ -48172,48 +47948,10 @@ function ___R$project$rome$$romejs$js$generator$generators$modules$ExportExterna
       generator.space();
     }
 
-    if (node.specifiers === undefined) {
-      throw new Error('Expected specifiers since there was no declaration');
-    }
-
-    const specifiers = node.specifiers.slice(0);
-
     generator.multiline(
       node,
       (multiline, node) => {
-        // print "special" specifiers first
-        let hasSpecial = false;
-        while (true) {
-          const first = specifiers[0];
-          if (first !== undefined &&
-            (first.type === 'ExportDefaultSpecifier' ||
-            first.type === 'ExportNamespaceSpecifier')) {
-            hasSpecial = true;
-            generator.print(specifiers.shift(), node);
-            if (specifiers.length) {
-              generator.token(',');
-              generator.space();
-            }
-          } else {
-            break;
-          }
-        }
-
-        if (specifiers.length || !specifiers.length && !hasSpecial) {
-          generator.token('{');
-          if (specifiers.length) {
-            generator.printCommaList(
-              specifiers,
-              node,
-              {
-                multiline,
-                trailing: true,
-              },
-            );
-          }
-          generator.token('}');
-        }
-
+        ___R$project$rome$$romejs$js$generator$generators$modules$ImportDeclaration_ts$printModuleSpecifiers(generator, node, multiline);
         generator.space();
         generator.word('from');
         generator.space();
@@ -49010,66 +48748,6 @@ function ___R$project$rome$$romejs$js$generator$generators$modules$ImportCall_ts
     generator.token(')');
   }
 
-  // project-rome/@romejs/js-generator/generators/modules/ImportDeclaration.ts
-function ___R$project$rome$$romejs$js$generator$generators$modules$ImportDeclaration_ts$default(generator, node) {
-    node = ___R$project$rome$$romejs$js$ast$modules$ImportDeclaration_ts$importDeclaration.assert(node);
-
-    generator.word('import');
-    generator.space();
-
-    if (node.importKind === 'type' || node.importKind === 'typeof') {
-      generator.word(node.importKind);
-      generator.space();
-    }
-
-    generator.multiline(
-      node,
-      (multiline, node) => {
-        let {specifiers} = node;
-        if (specifiers !== undefined && specifiers.length > 0) {
-          specifiers = [...specifiers];
-
-          // Print "special" specifiers first
-          while (specifiers.length > 0) {
-            const first = specifiers[0];
-            if (first.type === 'ImportDefaultSpecifier' ||
-            first.type ===
-            'ImportNamespaceSpecifier') {
-              generator.print(specifiers.shift(), node);
-              if (specifiers.length) {
-                generator.token(',');
-                generator.space();
-              }
-            } else {
-              break;
-            }
-          }
-
-          if (specifiers.length > 0) {
-            generator.token('{');
-            generator.printCommaList(
-              specifiers,
-              node,
-              {
-                multiline,
-                trailing: true,
-              },
-            );
-            generator.token('}');
-          }
-
-          generator.space();
-          generator.word('from');
-          generator.space();
-        }
-
-        generator.print(node.source, node);
-        generator.semicolon();
-      },
-      {conditions: ['more-than-one-line']},
-    );
-  }
-
   // project-rome/@romejs/js-generator/generators/modules/ImportDefaultSpecifier.ts
 function ___R$project$rome$$romejs$js$generator$generators$modules$ImportDefaultSpecifier_ts$default(
     generator,
@@ -49721,6 +49399,16 @@ function ___R$project$rome$$romejs$js$generator$generators$regex$RegExpNonWordBo
   // project-rome/@romejs/js-generator/generators/regex/RegExpNonWordCharacter.ts
 function ___R$project$rome$$romejs$js$generator$generators$regex$RegExpNonWordCharacter_ts$default(generator) {
     generator.append('\\W');
+  }
+
+  // project-rome/@romejs/js-generator/generators/regex/RegExpNumericBackReference.ts
+function ___R$project$rome$$romejs$js$generator$generators$regex$RegExpNumericBackReference_ts$default(
+    generator,
+    node,
+  ) {
+    node = ___R$project$rome$$romejs$js$ast$regex$RegExpNumericBackReference_ts$regExpNumericBackReference.assert(node);
+    return generator.append('\\' +
+    node.value);
   }
 
   // project-rome/@romejs/js-generator/generators/regex/RegExpQuantified.ts
@@ -50425,7 +50113,9 @@ function ___R$project$rome$$romejs$js$generator$generators$typescript$TSNamespac
 function ___R$project$rome$$romejs$js$generator$generators$typescript$TSNonNullExpression_ts$default(generator, node) {
     node = ___R$project$rome$$romejs$js$ast$typescript$TSNonNullExpression_ts$tsNonNullExpression.assert(node);
     generator.print(node.expression, node);
-    generator.token('!');
+    if (generator.options.typeAnnotations) {
+      generator.token('!');
+    }
   }
 
   // project-rome/@romejs/js-generator/generators/typescript/TSOptionalType.ts
@@ -50503,10 +50193,12 @@ function ___R$project$rome$$romejs$js$generator$generators$typescript$TSTupleTyp
   // project-rome/@romejs/js-generator/generators/typescript/TSTypeAssertion.ts
 function ___R$project$rome$$romejs$js$generator$generators$typescript$TSTypeAssertion_ts$default(generator, node) {
     node = ___R$project$rome$$romejs$js$ast$typescript$TSTypeAssertion_ts$tsTypeAssertion.assert(node);
-    generator.token('<');
-    generator.print(node.typeAnnotation, node);
-    generator.token('>');
-    generator.space();
+    if (generator.options.typeAnnotations) {
+      generator.token('<');
+      generator.print(node.typeAnnotation, node);
+      generator.token('>');
+      generator.space();
+    }
     generator.print(node.expression, node);
   }
 
@@ -50647,7 +50339,6 @@ function ___R$project$rome$$romejs$js$generator$generators$types$UnionTypeAnnota
       node,
       (multiline, node) => {
         if (multiline) {
-          generator.indent();
           ___R$$priv$project$rome$$romejs$js$generator$generators$types$UnionTypeAnnotation_ts$orNewlineSeparator(generator, false);
         }
 
@@ -50658,10 +50349,6 @@ function ___R$project$rome$$romejs$js$generator$generators$types$UnionTypeAnnota
             after: multiline ? ___R$$priv$project$rome$$romejs$js$generator$generators$types$UnionTypeAnnotation_ts$orNewlineSeparator : ___R$$priv$project$rome$$romejs$js$generator$generators$types$UnionTypeAnnotation_ts$orSpaceSeparator,
           },
         );
-
-        if (multiline) {
-          generator.dedent();
-        }
       },
       {conditions: ['more-than-one-line'], indent: true},
     );
@@ -51207,6 +50894,8 @@ const ___R$$priv$project$rome$$romejs$js$generator$generators$index_ts$generator
   ___R$$priv$project$rome$$romejs$js$generator$generators$index_ts$generators.set('RegExpNonWordBoundaryCharacter', ___R$project$rome$$romejs$js$generator$generators$regex$RegExpNonWordBoundaryCharacter_ts$default);
 
   ___R$$priv$project$rome$$romejs$js$generator$generators$index_ts$generators.set('RegExpNonWordCharacter', ___R$project$rome$$romejs$js$generator$generators$regex$RegExpNonWordCharacter_ts$default);
+
+  ___R$$priv$project$rome$$romejs$js$generator$generators$index_ts$generators.set('RegExpNumericBackReference', ___R$project$rome$$romejs$js$generator$generators$regex$RegExpNumericBackReference_ts$default);
 
   ___R$$priv$project$rome$$romejs$js$generator$generators$index_ts$generators.set('RegExpQuantified', ___R$project$rome$$romejs$js$generator$generators$regex$RegExpQuantified_ts$default);
 
@@ -52073,8 +51762,14 @@ ___R$project$rome$$romejs$js$ast$utils_ts$assertNodeTypeSet(___R$project$rome$$r
 
       const lines = ___R$project$rome$$romejs$js$generator$node$index_ts.getLinesBetween(node, comment);
 
-      // BlockComment already has a newline
-      if (lines.length >= 1 && (comment.type !== 'CommentLine' || trailing)) {
+      // Will always have at least one newline
+      if (node.type === 'CommentLine' ||
+      comment.type === 'CommentLine' &&
+        !trailing) {
+        lines.shift();
+      }
+
+      if (lines.length >= 1) {
         this.inferredNewline(lines[0]);
       }
 
@@ -52425,7 +52120,7 @@ function ___R$project$rome$$romejs$js$generator$index_ts$generateJS(
   }
 
   // project-rome/@romejs/js-compiler/suppressions.ts
-const ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$SUPPRESSION_START = 'rome-suppress';
+const ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$SUPPRESSION_START = 'rome-suppress-next-line';
   const ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$PREFIX_MISTAKES = ['@rome-suppress', 'rome-ignore', '@rome-ignore'];
 
   function ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$extractSuppressionsFromComment(
@@ -52453,24 +52148,13 @@ const ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$SUPPRESSION_ST
         for (const prefix of ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$PREFIX_MISTAKES) {
           if (line.startsWith(prefix)) {
             diagnostics.push(
-              Object.assign(
-                {
-                  category: 'suppressions/incorrectPrefix',
-                  message: 'Invalid suppression prefix <emphasis>' +
-                  prefix +
-                  '</emphasis>',
-                  advice: [
-                    {
-                      type: 'log',
-                      category: 'info',
-                      message: 'Did you mean <emphasis>' +
-                      ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$SUPPRESSION_START +
-                      '</emphasis>?',
-                    },
-                  ],
-                },
-                loc,
-              ),
+              {
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SUPPRESSIONS.PREFIX_TYPO(
+                  prefix,
+                  ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$SUPPRESSION_START,
+                ),
+                location: loc,
+              },
             );
           }
         }
@@ -52494,13 +52178,10 @@ const ___R$$priv$project$rome$$romejs$js$compiler$suppressions_ts$SUPPRESSION_ST
 
         if (suppressedCategories.has(category)) {
           diagnostics.push(
-            Object.assign(
-              {
-                category: 'suppressions/duplicate',
-                message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Duplicate suppression category <emphasis>${category}</emphasis>`,
-              },
-              loc,
-            ),
+            {
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SUPPRESSIONS.DUPLICATE(category),
+              location: loc,
+            },
           );
         } else {
           suppressedCategories.add(category);
@@ -53464,9 +53145,7 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$transpil
   // project-rome/@romejs/js-compiler/transforms/compile/validation/optimizeImports.ts
 // TODO: Remove this. This contains React for the following reason:
   //   A user may write: import * as React from 'react';
-
   //   We will remove the namespace and have only the used specifiers
-
   //   But the JSX plugin inserts `React.createElement`. Oh no.
   const ___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$validation$optimizeImports_ts$IGNORED_NAMES = ['React', 'react'];
 
@@ -53505,21 +53184,18 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$transpil
           !___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$validation$optimizeImports_ts$IGNORED_NAMES.includes(
             child.source.value,
           ) &&
-          child.specifiers !== undefined) {
-          for (const specifier of child.specifiers) {
-            if (specifier.type === 'ImportNamespaceSpecifier') {
-              wildcardImports.set(
-                specifier.local.name.name,
-                {
-                  binding: path.scope.getBindingAssert(specifier.local.name.name),
-                  names: new Set(),
-                  mappings: new Map(),
-                  references: new Set(),
-                },
-              );
-              wildcardImportNodeToLocal.set(child, specifier.local.name.name);
-            }
-          }
+          child.namespaceSpecifier !== undefined) {
+          const specifier = child.namespaceSpecifier;
+          wildcardImports.set(
+            specifier.local.name.name,
+            {
+              binding: path.scope.getBindingAssert(specifier.local.name.name),
+              names: new Set(),
+              mappings: new Map(),
+              references: new Set(),
+            },
+          );
+          wildcardImportNodeToLocal.set(child, specifier.local.name.name);
         }
       }
       if (wildcardImports.size === 0) {
@@ -53629,24 +53305,13 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$transpil
                 }
 
                 // Remove wildcard specifier
-                let specifiers = [];
-                if (node.specifiers !== undefined) {
-                  specifiers =
-                    node.specifiers.filter(
-                      (specifier) => {
-                        if (specifier.type === 'ImportNamespaceSpecifier' &&
-                          specifier.local.name.name === local) {
-                          return false;
-                        } else {
-                          return true;
-                        }
-                      },
-                    );
-                }
+                let namedSpecifiers = [
+                  ...(node.namedSpecifiers || []),
+                ];
 
                 // Add on our new mappings
                 for (const [imported, local] of wildcardInfo.mappings) {
-                  specifiers.push(
+                  namedSpecifiers.push(
                     ___R$project$rome$$romejs$js$ast$modules$ImportSpecifier_ts$importSpecifier.create(
                       {
                         imported: ___R$project$rome$$romejs$js$ast$auxiliary$Identifier_ts$identifier.quick(imported),
@@ -53656,7 +53321,19 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$transpil
                   );
                 }
 
-                return ___R$project$rome$$romejs$js$ast$modules$ImportDeclaration_ts$importDeclaration.create({specifiers, source: node.source});
+                return (
+                  ___R$project$rome$$romejs$js$ast$modules$ImportDeclaration_ts$importDeclaration.create(
+                    Object.assign(
+                      {
+                      },
+                      node,
+                      {
+                        namespaceSpecifier: undefined,
+                        namedSpecifiers,
+                      },
+                    ),
+                  )
+                );
               }
 
               return node;
@@ -53688,7 +53365,7 @@ const ___R$project$rome$$romejs$js$compiler$transforms$compile$validation$optimi
               nodes.push(
                 ___R$project$rome$$romejs$js$ast$modules$ExportExternalDeclaration_ts$exportExternalDeclaration.create(
                   {
-                    specifiers: [
+                    namedSpecifiers: [
                       ___R$project$rome$$romejs$js$ast$modules$ExportExternalSpecifier_ts$exportExternalSpecifier.create(
                         {
                           local: ___R$project$rome$$romejs$js$ast$auxiliary$Identifier_ts$identifier.quick(binding.meta.imported),
@@ -53997,13 +53674,7 @@ function ___R$$priv$project$rome$$romejs$js$compiler$transforms$compile$jsx_ts$c
 
         if (___R$project$rome$$romejs$js$ast$jsx$JSXNamespacedName_ts$jsxNamespacedName.is(node.name)) {
           // TODO better handle this
-          context.addNodeDiagnostic(
-            type,
-            {
-              category: 'compile/jsx',
-              message: 'JSX is not XML',
-            },
-          );
+          context.addNodeDiagnostic(type, ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.COMPILER.JSX_NOT_XML);
         }
 
         let attribs;
@@ -54618,7 +54289,7 @@ class ___R$project$rome$$romejs$js$analysis$types$errors$E_ts$default extends __
     }
 
     humanize() {
-      return this.getError().message;
+      return this.getError().description.message.value;
     }
 
     getError() {
@@ -54656,15 +54327,9 @@ class ___R$project$rome$$romejs$js$analysis$types$errors$UnknownPropE_ts$default
     }
 
     getError() {
-      let message = 'Property \'' +
-      this.key +
-      '\' not found in';
-
       return (
         {
-          category: 'typeCheck/unknownProperty',
-          message,
-          advice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice(this.key, this.allProps),
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.TYPE_CHECK.UNKNOWN_PROP(this.key, this.allProps),
           lowerTarget: this.property,
           upperTarget: this.object,
         }
@@ -55160,50 +54825,13 @@ class ___R$project$rome$$romejs$js$analysis$types$errors$UnknownImportE_ts$defau
     }
 
     getError() {
-      const {possibleNames} = this;
-      const suggestion = ___R$project$rome$$romejs$string$utils$findClosestStringMatch_ts$findClosestStringMatch(this.importedName, possibleNames);
-
-      let infoMessage = undefined;
-      let infoList = undefined;
-
-      if (possibleNames.length === 0) {
-        infoMessage = 'This file contains no exports.';
-      } else {
-        if (suggestion === undefined) {
-          infoList = this.possibleNames;
-          infoMessage = 'Did you mean one of these?';
-        } else {
-          infoMessage = 'Did you mean <emphasis>' +
-          suggestion +
-          '</emphasis>?';
-        }
-      }
-
-      const advice = [
-        {
-          type: 'log',
-          category: 'info',
-          message: infoMessage,
-        },
-      ];
-      if (infoList !== undefined) {
-        advice.push(
-          {
-            type: 'list',
-            list: infoList,
-          },
-        );
-      }
-
       return (
         {
-          category: 'typeCheck/unknownImport',
-          message: 'Unknown import \'' +
-          this.importedName +
-          '\' in \'' +
-          this.source +
-          '\'',
-          advice,
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.TYPE_CHECK.UNKNOWN_IMPORT(
+            this.importedName,
+            this.source,
+            this.possibleNames,
+          ),
           lowerTarget: this,
         }
       );
@@ -55317,8 +54945,7 @@ class ___R$project$rome$$romejs$js$analysis$types$errors$NotCallableE_ts$default
     getError() {
       return (
         {
-          category: 'typeCheck/uncallable',
-          message: 'This type isn\'t callable',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.TYPE_CHECK.NOT_CALLABLE,
           lowerTarget: this.callee,
         }
       );
@@ -55888,17 +55515,14 @@ class ___R$$priv$project$rome$$romejs$js$analysis$types$ExhaustiveT_ts$ENotExhau
     }
 
     getError() {
-      let message = 'Expected only a ' +
-      this.utils.humanize(this.only) +
-      ' but got ' +
-      this.utils.humanize(
-        this.target,
-      );
-      //message += `but allows ${this.extraenous.map(type => this.utils.humanize(type)).join(' | ')}`;
       return (
         {
-          category: 'typeCheck/notExhaustive',
-          message,
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.TYPE_CHECK.NOT_EXHAUSTIVE(
+            this.utils.humanize(
+              this.only,
+            ),
+            this.utils.humanize(this.target),
+          ),
           lowerTarget: this.target,
         }
       );
@@ -56218,15 +55842,13 @@ class ___R$project$rome$$romejs$js$analysis$types$errors$MissingUnionE_ts$defaul
     getError() {
       return (
         {
-          category: 'typeCheck/missingCondition',
-          message: 'Missing the conditions ' +
-          this.missing.map(
-            (
-              type,
-            ) =>
-              this.utils.humanize(type),
-          ).join(
-            ', ',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.TYPE_CHECK.MISSING_CONDITION(
+            this.missing.map(
+              (
+                type,
+              ) =>
+                this.utils.humanize(type),
+            ),
           ),
           lowerTarget: this.target,
         }
@@ -56486,11 +56108,10 @@ class ___R$project$rome$$romejs$js$analysis$types$errors$UndeclaredVarE_ts$defau
       const possibleNames = this.scope.getBindingNames();
       return (
         {
-          category: 'typeCheck/undeclaredVariable',
-          message: 'Undeclared variable \'' +
-          this.name +
-          '\'',
-          advice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice(this.name, possibleNames),
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.TYPE_CHECK.UNDECLARED_VARIABLE(
+            this.name,
+            possibleNames,
+          ),
           lowerTarget: this,
         }
       );
@@ -58004,47 +57625,44 @@ function ___R$project$rome$$romejs$js$analysis$evaluators$modules$ImportDeclarat
 
     const source = node.source.value;
 
-    const {specifiers} = node;
-    if (specifiers !== undefined) {
-      for (const specifier of specifiers) {
-        if (specifier.type === 'ImportSpecifier') {
-          const localName = specifier.local.name.name;
-          const importedName = specifier.imported.name;
+    for (const specifier of ___R$project$rome$$romejs$js$ast$utils$getImportSpecifiers_ts$default(node)) {
+      if (specifier.type === 'ImportSpecifier') {
+        const localName = specifier.local.name.name;
+        const importedName = specifier.imported.name;
 
-          const open = new ___R$project$rome$$romejs$js$analysis$types$ImportT_ts$default(
-            scope,
-            specifier,
-            {
-              importedName,
-              source,
-            },
-          );
-          scope.addBinding(localName, open);
-        } else if (specifier.type === 'ImportDefaultSpecifier') {
-          const localName = specifier.local.name.name;
-          const open = new ___R$project$rome$$romejs$js$analysis$types$ImportT_ts$default(
-            scope,
-            specifier,
-            {
-              importedName: 'default',
-              source,
-            },
-          );
-          scope.addBinding(localName, open);
-        } else if (specifier.type === 'ImportNamespaceSpecifier') {
-          const localName = specifier.local.name.name;
-          const open = new ___R$project$rome$$romejs$js$analysis$types$ImportT_ts$default(
-            scope,
-            specifier,
-            {
-              importedName: undefined,
-              source,
-            },
-          );
-          scope.addBinding(localName, open);
-        } else {
-          // TODO error
-        }
+        const open = new ___R$project$rome$$romejs$js$analysis$types$ImportT_ts$default(
+          scope,
+          specifier,
+          {
+            importedName,
+            source,
+          },
+        );
+        scope.addBinding(localName, open);
+      } else if (specifier.type === 'ImportDefaultSpecifier') {
+        const localName = specifier.local.name.name;
+        const open = new ___R$project$rome$$romejs$js$analysis$types$ImportT_ts$default(
+          scope,
+          specifier,
+          {
+            importedName: 'default',
+            source,
+          },
+        );
+        scope.addBinding(localName, open);
+      } else if (specifier.type === 'ImportNamespaceSpecifier') {
+        const localName = specifier.local.name.name;
+        const open = new ___R$project$rome$$romejs$js$analysis$types$ImportT_ts$default(
+          scope,
+          specifier,
+          {
+            importedName: undefined,
+            source,
+          },
+        );
+        scope.addBinding(localName, open);
+      } else {
+        // TODO error
       }
     }
   }
@@ -58517,6 +58135,12 @@ function ___R$project$rome$$romejs$js$analysis$evaluators$regex$RegExpNonWordBou
   // project-rome/@romejs/js-analysis/evaluators/regex/RegExpNonWordCharacter.ts
 function ___R$project$rome$$romejs$js$analysis$evaluators$regex$RegExpNonWordCharacter_ts$default(node) {
     node = ___R$project$rome$$romejs$js$ast$regex$RegExpNonWordCharacter_ts$regExpNonWordCharacter.assert(node);
+    throw new Error('unimplemented');
+  }
+
+  // project-rome/@romejs/js-analysis/evaluators/regex/RegExpNumericBackReference.ts
+function ___R$project$rome$$romejs$js$analysis$evaluators$regex$RegExpNumericBackReference_ts$default(node) {
+    node = ___R$project$rome$$romejs$js$ast$regex$RegExpNumericBackReference_ts$regExpNumericBackReference.assert(node);
     throw new Error('unimplemented');
   }
 
@@ -59506,6 +59130,8 @@ const ___R$$priv$project$rome$$romejs$js$analysis$evaluators$index_ts$evaluators
   ___R$$priv$project$rome$$romejs$js$analysis$evaluators$index_ts$evaluators.set('RegExpNonWordBoundaryCharacter', ___R$project$rome$$romejs$js$analysis$evaluators$regex$RegExpNonWordBoundaryCharacter_ts$default);
 
   ___R$$priv$project$rome$$romejs$js$analysis$evaluators$index_ts$evaluators.set('RegExpNonWordCharacter', ___R$project$rome$$romejs$js$analysis$evaluators$regex$RegExpNonWordCharacter_ts$default);
+
+  ___R$$priv$project$rome$$romejs$js$analysis$evaluators$index_ts$evaluators.set('RegExpNumericBackReference', ___R$project$rome$$romejs$js$analysis$evaluators$regex$RegExpNumericBackReference_ts$default);
 
   ___R$$priv$project$rome$$romejs$js$analysis$evaluators$index_ts$evaluators.set('RegExpQuantified', ___R$project$rome$$romejs$js$analysis$evaluators$regex$RegExpQuantified_ts$default);
 
@@ -60557,13 +60183,7 @@ async function ___R$project$rome$$romejs$js$analysis$api$check_ts$default(
           caughtErrors.add(reduced);
         }
 
-        const {
-          category,
-          lowerTarget,
-          upperTarget,
-          advice: rawAdvice,
-          message,
-        } = reduced.getError();
+        let {description, lowerTarget, upperTarget} = reduced.getError();
 
         // ignore errors inside
         if (___R$$priv$project$rome$$romejs$js$analysis$api$check_ts$isError(lowerTarget) || ___R$$priv$project$rome$$romejs$js$analysis$api$check_ts$isError(upperTarget)) {
@@ -60591,25 +60211,31 @@ async function ___R$project$rome$$romejs$js$analysis$api$check_ts$default(
             advice.push(
               {
                 type: 'frame',
-                filename: originLoc.filename,
-                start: originLoc.start,
-                end: originLoc.end,
+                location: {
+                  filename: originLoc.filename,
+                  start: originLoc.start,
+                  end: originLoc.end,
+                },
                 marker,
               },
             );
           }
         }
 
-        if (rawAdvice !== undefined) {
-          advice = advice.concat(rawAdvice);
-        }
+        description =
+          Object.assign(
+            {
+            },
+            description,
+            {
+              advice: [...advice, ...(description.advice || [])],
+            },
+          );
 
         context.addNodeDiagnostic(
           lowerTarget.originNode,
+          description,
           {
-            category,
-            message,
-            advice,
             marker: lowerTarget && !(lowerTarget instanceof reduced.constructor)
               ? utils.humanize(lowerTarget) : undefined,
           },
@@ -60632,42 +60258,14 @@ async function ___R$project$rome$$romejs$js$analysis$api$check_ts$default(
             continue;
           }
 
-          const advice = [
-            {
-              type: 'log',
-              category: 'error',
-              message: 'This type is incompatible with expected type of',
-            },
-          ];
-
-          const {originLoc} = upper;
-          if (originLoc === undefined) {
-            advice.push(
-              {
-                type: 'log',
-                category: 'info',
-                message: utils.humanize(upper),
-              },
-            );
-          } else {
-            advice.push(
-              {
-                type: 'frame',
-                filename: originLoc.filename,
-                start: originLoc.start,
-                end: originLoc.end,
-                marker: utils.humanize(upper),
-              },
-            );
-          }
-
           context.addNodeDiagnostic(
             compatibility.lower.originNode,
+            ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.TYPE_CHECK.INCOMPATIBILITY(
+              utils.humanize(upper),
+              upper.originLoc,
+            ),
             {
-              category: 'typeCheck/incompatible',
-              message: 'Type incompatibility found',
               marker: utils.humanize(compatibility.lower),
-              advice,
             },
           );
         }
@@ -60762,6 +60360,7 @@ const ___R$project$rome$$romejs$core$common$types$analyzeDependencies_ts = {
   };
 
   const ___R$project$rome$$romejs$core$common$types$analyzeDependencies_ts$UNKNOWN_ANALYZE_DEPENDENCIES_RESULT = {
+    topLevelLocalBindings: {},
     moduleType: 'unknown',
     syntax: [],
     diagnostics: [],
@@ -60770,239 +60369,6 @@ const ___R$project$rome$$romejs$core$common$types$analyzeDependencies_ts = {
     exports: [],
     dependencies: [],
   };
-
-  // project-rome/@romejs/fs/index.ts
-const ___R$$priv$project$rome$$romejs$fs$index_ts$fs = require(
-    'fs',
-  );
-
-  function ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyData(
-    path,
-    factory,
-  ) {
-    return (
-      new Promise(
-        (resolve, reject) => {
-          factory(
-            path.join(),
-            (err, data) => {
-              if (err === null) {
-                resolve(data);
-              } else {
-                reject(err);
-              }
-            },
-          );
-        },
-      )
-    );
-  }
-
-  function ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyVoid(
-    path,
-    factory,
-  ) {
-    return (
-      new Promise(
-        (resolve, reject) => {
-          factory(
-            path.join(),
-            (err) => {
-              if (err === null) {
-                resolve();
-              } else {
-                reject(err);
-              }
-            },
-          );
-        },
-      )
-    );
-  }
-
-  // watch
-  function ___R$project$rome$$romejs$fs$index_ts$watch(
-    path,
-    options,
-
-    listener,
-  ) {
-    return ___R$$priv$project$rome$$romejs$fs$index_ts$fs.watch(path.join(), options, listener);
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$readFile(path) {
-    return (
-      ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyData(
-        path,
-        (
-          filename,
-          callback,
-        ) =>
-          ___R$$priv$project$rome$$romejs$fs$index_ts$fs.readFile(filename, callback),
-      )
-    );
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$readFileSync(path) {
-    return ___R$$priv$project$rome$$romejs$fs$index_ts$fs.readFileSync(path.join());
-  }
-
-  async function ___R$project$rome$$romejs$fs$index_ts$readFileText(path) {
-    return (await ___R$project$rome$$romejs$fs$index_ts$readFile(path)).toString();
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$readFileTextSync(path) {
-    return ___R$$priv$project$rome$$romejs$fs$index_ts$fs.readFileSync(path.join(), 'utf8');
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$writeFile(
-    path,
-    content,
-  ) {
-    return (
-      ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyVoid(
-        path,
-        (
-          filename,
-          callback,
-        ) =>
-          ___R$$priv$project$rome$$romejs$fs$index_ts$fs.writeFile(filename, content, callback),
-      )
-    );
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$writeFileSync(
-    path,
-    content,
-  ) {
-    return ___R$$priv$project$rome$$romejs$fs$index_ts$fs.writeFileSync(path.join(), content);
-  }
-
-  // readdir
-  function ___R$$priv$project$rome$$romejs$fs$index_ts$createReaddirReturn(
-    folder,
-    files,
-  ) {
-    return (
-      new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet(
-        files.map(
-          (basename) => {
-            return folder.append(basename);
-          },
-        ),
-      )
-    );
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$readdir(path) {
-    return (
-      new Promise(
-        (resolve, reject) => {
-          ___R$$priv$project$rome$$romejs$fs$index_ts$fs.readdir(
-            path.join(),
-            (err, files) => {
-              if (err === null) {
-                resolve(___R$$priv$project$rome$$romejs$fs$index_ts$createReaddirReturn(path, files));
-              } else {
-                reject(err);
-              }
-            },
-          );
-        },
-      )
-    );
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$readdirSync(path) {
-    return ___R$$priv$project$rome$$romejs$fs$index_ts$createReaddirReturn(path, ___R$$priv$project$rome$$romejs$fs$index_ts$fs.readdirSync(path.join()));
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$lstat(path) {
-    return (
-      ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyData(
-        path,
-        (filename, callback) => ___R$$priv$project$rome$$romejs$fs$index_ts$fs.lstat(filename, callback),
-      )
-    );
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$lstatSync(path) {
-    return ___R$$priv$project$rome$$romejs$fs$index_ts$fs.lstatSync(path.join());
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$exists(path) {
-    return (
-      new Promise(
-        (resolve) => {
-          ___R$$priv$project$rome$$romejs$fs$index_ts$fs.exists(
-            path.join(),
-            (exists) => {
-              resolve(exists);
-            },
-          );
-        },
-      )
-    );
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$existsSync(path) {
-    return ___R$$priv$project$rome$$romejs$fs$index_ts$fs.existsSync(path.join());
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$unlink(path) {
-    return (
-      ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyVoid(
-        path,
-        (
-          filename,
-          callback,
-        ) =>
-          ___R$$priv$project$rome$$romejs$fs$index_ts$fs.unlink(
-            filename,
-            (err) => {
-              if (err != null && err.code !== 'ENOENT') {
-                callback(err);
-              } else {
-                callback(null);
-              }
-            },
-          ),
-      )
-    );
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$unlinkSync(path) {
-    try {
-      ___R$$priv$project$rome$$romejs$fs$index_ts$fs.unlinkSync(path.join());
-    } catch (err) {
-      if (err.code !== 'ENOENT') {
-        throw err;
-      }
-    }
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$createDirectory(
-    path,
-    opts = {},
-  ) {
-    return (
-      ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyVoid(
-        path,
-        (
-          filename,
-          callback,
-        ) =>
-          ___R$$priv$project$rome$$romejs$fs$index_ts$fs.mkdir(filename, {recursive: opts.recursive}, callback),
-      )
-    );
-  }
-
-  function ___R$project$rome$$romejs$fs$index_ts$createDirectorySync(
-    path,
-    opts = {},
-  ) {
-    ___R$$priv$project$rome$$romejs$fs$index_ts$fs.mkdirSync(path.join(), {recursive: opts.recursive});
-  }
 
   // project-rome/@romejs/core/common/fileHandlers.ts
 function ___R$project$rome$$romejs$core$common$fileHandlers_ts$getFileHandlerExtensions(
@@ -61079,8 +60445,8 @@ function ___R$project$rome$$romejs$core$common$fileHandlers_ts$getFileHandlerExt
       );
     },
 
-    async toJavaScript({file}) {
-      const src = await ___R$project$rome$$romejs$fs$index_ts$readFileText(file.real);
+    async toJavaScript({file, worker}) {
+      const src = await worker.readFile(file.real);
       const serial = JSON.stringify(src);
       return (
         {
@@ -61127,11 +60493,11 @@ function ___R$project$rome$$romejs$core$common$fileHandlers_ts$getFileHandlerExt
       hasteMode: 'noext',
 
       async format(info) {
-        const {file: ref, project} = info;
-        const {uid} = ref;
+        const {file, project, worker} = info;
+        const {uid} = file;
 
-        const real = ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(ref.real);
-        const sourceText = await ___R$project$rome$$romejs$fs$index_ts$readFileText(real);
+        const real = ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(file.real);
+        const sourceText = await worker.readFile(real);
         const path = ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(uid);
 
         let formatted = sourceText;
@@ -61178,8 +60544,8 @@ function ___R$project$rome$$romejs$core$common$fileHandlers_ts$getFileHandlerExt
         );
       },
 
-      async toJavaScript({file}) {
-        const src = await ___R$project$rome$$romejs$fs$index_ts$readFileText(file.real);
+      async toJavaScript({file, worker}) {
+        const src = await worker.readFile(file.real);
 
         // Parse the JSON to make sure it's valid
         const obj = ___R$project$rome$$romejs$codec$json$index_ts$parseJSON(
@@ -61206,15 +60572,10 @@ function ___R$project$rome$$romejs$core$common$fileHandlers_ts$getFileHandlerExt
   );
 
   // These are extensions that be implicitly tried when a file is referenced
-
   // This is mostly for compatibility with Node.js projects. This list should not
-
   // be extended. Explicit extensions are required in the browser for as modules and
-
   // should be required everywhere.
-
   // TypeScript is unfortunately included here as it produces an error if you use an
-
   // import source with ".ts"
   const ___R$project$rome$$romejs$core$common$fileHandlers_ts$IMPLICIT_JS_EXTENSIONS = ['js', 'json', 'ts', 'tsx'];
 
@@ -61269,10 +60630,10 @@ function ___R$project$rome$$romejs$core$common$fileHandlers_ts$getFileHandlerExt
           );
         },
 
-        async toJavaScript({file}) {
+        async toJavaScript({file, worker}) {
           return (
             {
-              sourceText: await ___R$project$rome$$romejs$fs$index_ts$readFileText(file.real),
+              sourceText: await worker.readFile(file.real),
               generated: false,
             }
           );
@@ -61505,14 +60866,13 @@ const ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$modern$e
         // map exports and imports and correctly
         for (const child of node.body) {
           if (child.type === 'ImportDeclaration' && child.importKind !== 'type' &&
-            child.importKind !== 'typeof' &&
-            child.specifiers !== undefined) {
+            child.importKind !== 'typeof') {
             const moduleId = ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$_utils_ts$getModuleId(child.source.value, opts);
             if (moduleId === undefined) {
               continue;
             }
 
-            for (const specifier of child.specifiers) {
+            for (const specifier of ___R$project$rome$$romejs$js$ast$utils$getImportSpecifiers_ts$default(child)) {
               if (specifier.type === 'ImportSpecifier') {
                 mappings.set(
                   specifier.local.name.name,
@@ -61610,14 +60970,25 @@ const ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$modern$e
               );
             }
 
-            if (child.type === 'ExportLocalDeclaration' ||
-            child.type ===
-            'ExportExternalDeclaration') {
-              const {specifiers} = child;
+            if (child.type === 'ExportExternalDeclaration') {
+              // TODO defaultSpecifier and namespaceSpecifier
+              const {source} = child;
 
-              if (child.type === 'ExportLocalDeclaration' &&
-                child.declaration !==
-                undefined) {
+              for (const specifier of child.namedSpecifiers) {
+                // If this is an external export then use the correct name
+                const moduleId = ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$_utils_ts$getModuleId(source.value, opts);
+                if (moduleId === undefined) {
+                  continue;
+                }
+
+                const local = ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$_utils_ts$getPrefixedName(specifier.local.name, moduleId, opts);
+
+                exportNames.set(specifier.exported.name, local);
+              }
+            }
+
+            if (child.type === 'ExportLocalDeclaration') {
+              if (child.declaration !== undefined) {
                 throw (
                   new Error(
                     'No export declarations should be here as they have been removed by renameBindings',
@@ -61625,32 +60996,11 @@ const ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$modern$e
                 );
               }
 
-              let source;
-              if (child.type === 'ExportExternalDeclaration') {
-                source = child.source;
-              }
-
+              const {specifiers} = child;
               if (specifiers !== undefined) {
                 for (const specifier of specifiers) {
-                  if (specifier.type === 'ExportLocalSpecifier' ||
-                  specifier.type === 'ExportExternalSpecifier') {
-                    // The local binding has already been rewritten by renameBindings if it existed
-                    let local = specifier.local.name;
-
-                    // If this is an external export then use the correct name
-                    if (source !== undefined) {
-                      const moduleId = ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$_utils_ts$getModuleId(source.value, opts);
-                      if (moduleId === undefined) {
-                        continue;
-                      }
-
-                      local = ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$_utils_ts$getPrefixedName(local, moduleId, opts);
-                    }
-
-                    exportNames.set(specifier.exported.name, local);
-                  } else {
-                    // TODO ???
-                  }
+                  // The local binding has already been rewritten by renameBindings if it existed
+                  exportNames.set(specifier.exported.name, specifier.local.name);
                 }
               }
             }
@@ -62219,8 +61569,8 @@ const ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$legacy$e
             },
           );
 
-          const {specifiers} = bodyNode;
-          if (specifiers === undefined || specifiers.length === 0) {
+          const specifiers = ___R$project$rome$$romejs$js$ast$utils$getImportSpecifiers_ts$default(bodyNode);
+          if (specifiers.length === 0) {
             topBody.push(___R$project$rome$$romejs$js$ast$utils$template_ts$default.statement`Rome.requireNamespace(${source});`);
           } else {
             for (const specifier of specifiers) {
@@ -62251,25 +61601,35 @@ const ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$legacy$e
           continue;
         }
 
-        if (bodyNode.type === 'ExportLocalDeclaration' ||
-        bodyNode.type ===
-        'ExportExternalDeclaration') {
-          // Ignore typed exports
+        if (bodyNode.type === 'ExportExternalDeclaration') {
           if (bodyNode.exportKind === 'type') {
             continue;
           }
 
-          let declaration;
-          let source;
-          const {specifiers} = bodyNode;
+          const {source} = bodyNode;
 
-          if (bodyNode.type === 'ExportExternalDeclaration') {
-            source = bodyNode.source;
+          // TODO defaultSpecifier and namespaceSpecifier
+          for (const specifier of bodyNode.namedSpecifiers) {
+            topBody.push(
+              ___R$project$rome$$romejs$js$ast$utils$template_ts$default.statement`Object.defineProperty(exports, ${___R$project$rome$$romejs$js$ast$literals$StringLiteral_ts$stringLiteral.create(
+                {
+                  value: specifier.exported.name,
+                },
+              )}, {
+                get: function() {
+                  return Rome.requireNamespace(${source}).${specifier.local};
+                },
+              })`,
+            );
+          }
+        }
+
+        if (bodyNode.type === 'ExportLocalDeclaration') {
+          if (bodyNode.exportKind === 'type') {
+            continue;
           }
 
-          if (bodyNode.type === 'ExportLocalDeclaration') {
-            declaration = bodyNode.declaration;
-          }
+          const {declaration, specifiers} = bodyNode;
 
           if (declaration !== undefined) {
             // Hoist function declarations
@@ -62308,46 +61668,19 @@ const ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$legacy$e
 
           if (specifiers !== undefined) {
             for (const specifier of specifiers) {
-              if (specifier.type === 'ExportDefaultSpecifier') {
-                // TODO only allowed for `source`
-              }
+              const binding = path.scope.getBinding(specifier.local.name);
 
-              if (specifier.type === 'ExportNamespaceSpecifier') {
-                // TODO only allowed for `source`
-              }
-
-              // TODO skip type exports
-              if (specifier.type === 'ExportLocalSpecifier' ||
-              specifier.type ===
-              'ExportExternalSpecifier') {
-                if (source === undefined) {
-                  const binding = path.scope.getBinding(specifier.local.name);
-
-                  if (binding instanceof ___R$project$rome$$romejs$js$compiler$scope$bindings_ts$FunctionBinding) {
-                    topBody.push(
-                      ___R$project$rome$$romejs$js$ast$utils$template_ts$default.statement`exports.${specifier.exported} = ${specifier.local};`,
-                    );
-                  } else {
-                    topBody.push(
-                      ___R$project$rome$$romejs$js$ast$utils$template_ts$default.statement`exports.${specifier.exported} = undefined;`,
-                    );
-                    bottomBody.push(
-                      ___R$project$rome$$romejs$js$ast$utils$template_ts$default.statement`exports.${specifier.exported} = ${specifier.local};`,
-                    );
-                  }
-                } else {
-                  topBody.push(
-                    ___R$project$rome$$romejs$js$ast$utils$template_ts$default.statement`Object.defineProperty(exports, ${___R$project$rome$$romejs$js$ast$literals$StringLiteral_ts$stringLiteral.create(
-                      {
-                        value: specifier.exported.name,
-                      },
-                    )}, {
-                    get: function() {
-                      return Rome.requireNamespace(${source}).${specifier.local};
-                    },
-                  })`,
-                  );
-                }
+              if (binding instanceof ___R$project$rome$$romejs$js$compiler$scope$bindings_ts$FunctionBinding) {
+                topBody.push(
+                  ___R$project$rome$$romejs$js$ast$utils$template_ts$default.statement`exports.${specifier.exported} = ${specifier.local};`,
+                );
+              } else {
+                topBody.push(
+                  ___R$project$rome$$romejs$js$ast$utils$template_ts$default.statement`exports.${specifier.exported} = undefined;`,
+                );
+                bottomBody.push(
+                  ___R$project$rome$$romejs$js$ast$utils$template_ts$default.statement`exports.${specifier.exported} = ${specifier.local};`,
+                );
               }
             }
           }
@@ -62934,6 +62267,114 @@ function ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$
     return node.loc;
   }
 
+  function ___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$arraySame(
+    a,
+    b,
+    callback,
+  ) {
+    if (a.length !== b.length) {
+      return false;
+    }
+
+    for (let i = 0;
+    i < a.length;
+    i++) {
+      if (!callback(a[i], b[i])) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function ___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$syntaxSame(a, b) {
+    return a === b;
+  }
+
+  function ___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$exportsSame(a, b) {
+    if (a.type !== b.type) {
+      return false;
+    }
+
+    if (a.kind !== b.kind) {
+      return false;
+    }
+
+    switch (a.type) {
+      case 'local':
+        return b.type === 'local' && a.name === b.name;
+
+      case 'external':
+        return (
+          b.type === 'external' && a.imported === b.imported &&
+            a.exported ==
+            b.exported &&
+            a.source === b.source
+        );
+
+      case 'externalAll':
+        return b.type === 'externalAll' && a.source === b.source;
+
+      case 'externalNamespace':
+        return (
+          b.type === 'externalNamespace' && a.source === b.source &&
+            a.exported === b.exported
+        );
+    }
+  }
+
+  function ___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$dependencyNameSame(
+    a,
+    b,
+  ) {
+    return a.kind === b.kind && a.name === b.name;
+  }
+
+  function ___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$dependenciesSame(a, b) {
+    return (
+      a.all === b.all && a.async === b.async && a.optional === b.optional &&
+        a.source === b.source &&
+        a.type === b.type &&
+        ___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$arraySame(
+          a.names,
+          b.names,
+          ___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$dependencyNameSame,
+        )
+    );
+  }
+
+  // Check if the shape of two analyzeDependencyResults are equal. Ignoring location information
+  function ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$areAnalyzeDependencyResultsEqual(
+    a,
+    b,
+  ) {
+    if (a.firstTopAwaitLocation === undefined &&
+      b.firstTopAwaitLocation !==
+      undefined ||
+    b.firstTopAwaitLocation === undefined &&
+      a.firstTopAwaitLocation !== undefined) {
+      return false;
+    }
+
+    if (a.moduleType !== b.moduleType) {
+      return false;
+    }
+
+    if (!___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$arraySame(a.syntax, b.syntax, ___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$syntaxSame)) {
+      return false;
+    }
+
+    if (!___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$arraySame(a.exports, b.exports, ___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$exportsSame)) {
+      return false;
+    }
+
+    if (!___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$arraySame(a.dependencies, b.dependencies, ___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$dependenciesSame)) {
+      return false;
+    }
+
+    return true;
+  }
+
   // project-rome/@romejs/js-compiler/api/analyzeDependencies/visitors/es.ts
 const ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$visitors$es_ts$default = {
     name: 'analyzeDependenciesES',
@@ -63029,64 +62470,77 @@ const ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$visitors$es_
         const specifiersKinds = [];
         const exportedNames = [];
 
-        const {specifiers} = node;
-        if (specifiers !== undefined) {
-          for (const specifier of specifiers) {
-            switch (specifier.type) {
-              case 'ExportExternalSpecifier':
-                {
-                  const kind = ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$getImportKind(
-                    specifier.exportKind ||
-                    node.exportKind,
-                  );
-                  specifiersKinds.push(kind);
+        const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
 
-                  exportedNames.push(
-                    {
-                      name: specifier.local.name,
-                      kind,
-                      loc: specifier.loc,
-                    },
-                  );
-
-                  context.record(
-                    new ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$records_ts$ExportRecord(
-                      {
-                        type: 'external',
-                        kind,
-                        loc: specifier.loc,
-                        imported: specifier.local.name,
-                        exported: specifier.exported.name,
-                        source: source.value,
-                      },
-                    ),
-                  );
-                  break;
-                }
-
-              case 'ExportNamespaceSpecifier':
-                throw new Error('unimplemented');
-
-              case 'ExportDefaultSpecifier':
-                throw new Error('unimplemented');
-            }
-          }
-
+        if (defaultSpecifier !== undefined) {
           context.record(
-            new ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$records_ts$ImportRecord(
+            new ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$records_ts$ExportRecord(
               {
-                type: 'es',
-                async: false,
-                kind: ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$getKindWithSpecifiers(node.exportKind, specifiersKinds),
-                names: exportedNames,
-                loc: source.loc,
+                type: 'external',
+                kind: 'value',
+                loc: defaultSpecifier.loc,
+                imported: 'default',
+                exported: defaultSpecifier.exported.name,
                 source: source.value,
-                optional: ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$isOptional(path),
-                all: false,
               },
             ),
           );
         }
+
+        if (namespaceSpecifier !== undefined) {
+          context.record(
+            new ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$records_ts$ExportRecord(
+              {
+                type: 'externalNamespace',
+                kind: 'value',
+                loc: namespaceSpecifier.loc,
+                exported: namespaceSpecifier.exported.name,
+                source: source.value,
+              },
+            ),
+          );
+        }
+
+        for (const specifier of namedSpecifiers) {
+          const kind = ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$getImportKind(specifier.exportKind || node.exportKind);
+          specifiersKinds.push(kind);
+
+          exportedNames.push(
+            {
+              name: specifier.local.name,
+              kind,
+              loc: specifier.loc,
+            },
+          );
+
+          context.record(
+            new ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$records_ts$ExportRecord(
+              {
+                type: 'external',
+                kind,
+                loc: specifier.loc,
+                imported: specifier.local.name,
+                exported: specifier.exported.name,
+                source: source.value,
+              },
+            ),
+          );
+        }
+
+        context.record(
+          new ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$records_ts$ImportRecord(
+            {
+              type: 'es',
+              async: false,
+              kind: ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$getKindWithSpecifiers(node.exportKind, specifiersKinds),
+              names: exportedNames,
+              loc: source.loc,
+              source: source.value,
+              optional: ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$isOptional(path),
+              all: false,
+            },
+          ),
+        );
       }
 
       // TS: import A = require('B');
@@ -63152,38 +62606,35 @@ const ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$visitors$es_
         const specifierKinds = [];
         const names = [];
 
-        const {specifiers} = node;
-        if (specifiers !== undefined) {
-          for (const specifier of specifiers) {
-            if (specifier.type === 'ImportNamespaceSpecifier') {
-              hasNamespaceSpecifier = true;
-              break;
-            }
+        for (const specifier of ___R$project$rome$$romejs$js$ast$utils$getImportSpecifiers_ts$default(node)) {
+          if (specifier.type === 'ImportNamespaceSpecifier') {
+            hasNamespaceSpecifier = true;
+            break;
+          }
 
-            const kind = ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$getImportKind(
-              specifier.local.importKind || node.importKind,
+          const kind = ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$getImportKind(
+            specifier.local.importKind || node.importKind,
+          );
+          specifierKinds.push(kind);
+
+          if (specifier.type === 'ImportDefaultSpecifier') {
+            names.push(
+              {
+                kind,
+                loc: specifier.loc,
+                name: 'default',
+              },
             );
-            specifierKinds.push(kind);
+          }
 
-            if (specifier.type === 'ImportDefaultSpecifier') {
-              names.push(
-                {
-                  kind,
-                  loc: specifier.loc,
-                  name: 'default',
-                },
-              );
-            }
-
-            if (specifier.type === 'ImportSpecifier') {
-              names.push(
-                {
-                  kind,
-                  loc: specifier.loc,
-                  name: specifier.imported.name,
-                },
-              );
-            }
+          if (specifier.type === 'ImportSpecifier') {
+            names.push(
+              {
+                kind,
+                loc: specifier.loc,
+                name: specifier.imported.name,
+              },
+            );
           }
         }
 
@@ -63685,10 +63136,7 @@ const ___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$index_
         if (moduleType === 'es') {
           context.addNodeDiagnostic(
             record.node,
-            {
-              category: 'analyzeDependencies/cjsExportInES',
-              message: 'You cannot use CommonJS exports in an ES module',
-            },
+            ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.ANALYZE_DEPENDENCIES.CJS_EXPORT_IN_ES,
           );
         }
       }
@@ -63707,7 +63155,15 @@ const ___R$$priv$project$rome$$romejs$js$compiler$api$analyzeDependencies$index_
       );
     }
 
+    const topLevelLocalBindings = {};
+
+    // Get all top level bindings
+    for (const [name, binding] of context.getRootScope().evaluate(ast).getOwnBindings()) {
+      topLevelLocalBindings[name] = binding.node.loc;
+    }
+
     const res = {
+      topLevelLocalBindings,
       moduleType,
       firstTopAwaitLocation,
       exports,
@@ -63830,6 +63286,12 @@ const ___R$project$rome$$romejs$js$compiler$index_ts = {
     get Scope() {
       return (
         ___R$project$rome$$romejs$js$compiler$scope$Scope_ts$default
+      );
+    },
+
+    get areAnalyzeDependencyResultsEqual() {
+      return (
+        ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$areAnalyzeDependencyResultsEqual
       );
     },
 
@@ -64020,7 +63482,7 @@ const ___R$project$rome$$romejs$project$types_ts = {
       ignore: [],
     },
 
-    vsc: {
+    vcs: {
       root: ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath('/'),
     },
 
@@ -64150,7 +63612,7 @@ const ___R$$priv$project$rome$$romejs$path$match$parse_ts$createPathMatchParser 
                   this.unexpected(
                     {
                       start: startPos,
-                      message: 'Invalid pattern segment part',
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PATH_MATCH.INVALID_PATTERN_SEGMENT_PART,
                     },
                   )
                 );
@@ -64319,7 +63781,7 @@ const ___R$$priv$project$rome$$romejs$path$match$parse_ts$createPathMatchParser 
               throw (
                 this.unexpected(
                   {
-                    message: 'Invalid path segment',
+                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PATH_MATCH.INVALID_PATH_SEGMENT,
                   },
                 )
               );
@@ -64787,498 +64249,237 @@ const ___R$project$rome$$romejs$project$utils_ts = {
     return deps;
   }
 
-  // project-rome/@romejs/codec-semver/parse.ts
-const ___R$$priv$project$rome$$romejs$codec$semver$parse_ts$createSemverParser = ___R$project$rome$$romejs$parser$core$index_ts$createParser(
-    (
-      ParserCore,
-    ) =>
-      (() => {
-        class SemverParser extends ParserCore {
-          constructor({loose, ...opts}, mode) {
-            super(opts, 'parse/semver');
-            this.input = this.input.trimRight();
-            this.mode = mode;
-            this.loose = loose === undefined ? false : loose;
-          }
-
-          // For some reason Flow will throw an error without the type casts...
-          tokenize(index, input) {
-            const char = input[___R$project$rome$$romejs$ob1$index_ts$get0(index)];
-            const nextChar = input[___R$project$rome$$romejs$ob1$index_ts$get0(index) + 1];
-
-            if (char === '<' && nextChar === '=' || char === '>' && nextChar === '=' ||
-            char === '~' && nextChar === '>') {
-              // @ts-ignore: TS doesn't infer the possible combinations
-              const value = char + nextChar;
-              return this.finishValueToken('Operator', value, ___R$project$rome$$romejs$ob1$index_ts$add(index, 2));
-            }
-
-            if (char === '^' || char === '<' || char === '>' || char === '~' ||
-            char === '=') {
-              const op = char;
-              return this.finishValueToken('Operator', op);
-            }
-
-            if (char === '|' && nextChar === '|') {
-              return this.finishToken('Pipe', ___R$project$rome$$romejs$ob1$index_ts$add(index, 2));
-            }
-
-            if (char === '*') {
-              return this.finishToken('Star');
-            }
-
-            if (input[___R$project$rome$$romejs$ob1$index_ts$get0(index) - 1] === ' ' && char === '-' && nextChar === ' ') {
-              return this.finishToken('RangeDash');
-            }
-
-            if (char === '-') {
-              return this.finishToken('Dash');
-            }
-
-            if (char === '+') {
-              return this.finishToken('Plus');
-            }
-
-            if (char === '.') {
-              return this.finishToken('Dot');
-            }
-
-            if (___R$project$rome$$romejs$parser$core$index_ts$isDigit(char)) {
-              const [value] = this.readInputFrom(index, ___R$project$rome$$romejs$parser$core$index_ts$isDigit);
-              return (
-                this.finishValueToken(
-                  'Number',
-                  Number(value),
-                  ___R$project$rome$$romejs$ob1$index_ts$add(
-                    index,
-                    value.length,
-                  ),
-                )
-              );
-            }
-
-            if (___R$project$rome$$romejs$parser$core$index_ts$isAlpha(char)) {
-              const [value] = this.readInputFrom(index, ___R$project$rome$$romejs$parser$core$index_ts$isAlpha);
-              return this.finishValueToken('Word', value, ___R$project$rome$$romejs$ob1$index_ts$add(index, value.length));
-            }
-
-            if (char === ' ' || char === '\t') {
-              return this.finishToken('Space');
-            }
-
-            // Unknown character
-            return undefined;
-          }
-
-          // Remove all subsequent space tokens
-          eatSpaceToken() {
-            while (this.eatToken('Space') !== undefined);
-          }
-
-          parseVersionOrWildcard() {
-            const startPos = this.getPosition();
-            const startToken = this.getToken();
-            const version = this.parseVersion();
-
-            // We should return a bare wildcard when parsed in a version position if there was nothing else attached
-            if (this.isWildcardToken(startToken) && version.minor === undefined &&
-              version.patch === undefined &&
-              version.prerelease.length === 0 &&
-              version.build.length === 0) {
-              return (
-                {
-                  type: 'Wildcard',
-                  loc: this.finishLoc(startPos),
-                }
-              );
-            }
-
-            return version;
-          }
-
-          parseVersion() {
-            const startPos = this.getPosition();
-            const startToken = this.getToken();
-
-            if (this.isVersionCharacter(startToken)) {
-              this.nextToken();
-            }
-
-            const major = this.parseVersionNumber();
-            let minor = undefined;
-            let patch = undefined;
-
-            if (this.eatToken('Dot')) {
-              minor = this.parseVersionNumber();
-            } else if (this.mode === 'version') {
-              throw (
-                this.unexpected(
-                  {
-                    message: 'A minor number is required for a version',
-                  },
-                )
-              );
-            }
-
-            if (this.eatToken('Dot')) {
-              patch = this.parseVersionNumber();
-            } else if (this.mode === 'version') {
-              throw (
-                this.unexpected(
-                  {
-                    message: 'A patch number is required for a version',
-                  },
-                )
-              );
-            }
-
-            if (this.matchToken('Dot')) {
-              throw this.unexpected({message: 'Too many parts for version'});
-            }
-
-            // The dash is optional in loose mode. eg. 1.2.3pre
-            let prerelease = [];
-            if (this.eatToken('Dash') || this.loose && this.matchToken('Word')) {
-              prerelease = this.parseVersionQualifierParts();
-            }
-
-            let build = [];
-            if (this.eatToken('Plus')) {
-              build = this.parseVersionQualifierParts();
-            }
-
-            if (major !== undefined && minor !== undefined && patch !== undefined) {
-              return (
-                {
-                  type: 'AbsoluteVersion',
-                  loc: this.finishLoc(startPos),
-                  major,
-                  minor,
-                  patch,
-                  prerelease,
-                  build,
-                }
-              );
-            } else {
-              return (
-                {
-                  type: 'WildcardVersion',
-                  loc: this.finishLoc(startPos),
-                  major,
-                  minor,
-                  patch,
-                  prerelease,
-                  build,
-                }
-              );
-            }
-          }
-
-          parseVersionQualifierParts() {
-            const parts = [];
-            do {
-              parts.push(this.parseVersionQualifierPart());
-            } while (this.eatToken('Dot') !== undefined);
-            return parts;
-          }
-
-          parseVersionQualifierPart() {
-            const parts = [];
-
-            do {
-              const token = this.getToken();
-
-              if (token.type === 'Number' || token.type === 'Word') {
-                this.nextToken();
-                parts.push(token.value);
-              } else if (token.type === 'Dash') {
-                this.nextToken();
-                parts.push('-');
-              } else {
-                throw this.unexpected({message: 'Invalid version qualifier part'});
-              }
-            } while (this.matchToken('Number') || this.matchToken('Word') ||
-            this.matchToken('Dash'));
-
-            if (parts.length === 1 && typeof parts[0] === 'number') {
-              return parts[0];
-            } else {
-              return parts.join('');
-            }
-          }
-
-          isWildcardToken(token) {
-            if (token.type === 'Star') {
-              return true;
-            }
-
-            if (token.type === 'Word') {
-              return token.value === 'x' || token.value === 'X';
-            }
-
-            return false;
-          }
-
-          parseVersionNumber() {
-            const token = this.getToken();
-
-            if (token.type === 'Number') {
-              this.nextToken();
-              return token.value;
-            }
-
-            if (this.isWildcardToken(token)) {
-              if (this.mode === 'version') {
-                throw (
-                  this.unexpected(
-                    {
-                      message: 'Wildcard aren\'t allowed in a hard version',
-                    },
-                  )
-                );
-              }
-
-              this.nextToken();
-            } else {
-              throw (
-                this.unexpected(
-                  {
-                    message: 'This isn\'t a valid version part, expected a number',
-                  },
-                )
-              );
-            }
-
-            return undefined;
-          }
-
-          parseLogicalOr(left) {
-            this.nextToken();
-            this.eatSpaceToken();
-
-            const right = this.parseExpression();
-            return (
-              {
-                loc: this.finishLoc(this.getLoc(left).start),
-                type: 'LogicalOr',
-                left,
-                right,
-              }
-            );
-          }
-
-          validateRangeSide(node) {
-            // In loose mode, we allow ranges to be a bare wildcard instead of a version
-
-            // eg. * - 1.2.3
-            if (node.type === 'WildcardVersion' || node.type === 'AbsoluteVersion') {
-              return node;
-            }
-
-            if (node.type === 'Wildcard' && this.loose) {
-              return node;
-            }
-
-            throw (
-              this.unexpected(
-                {
-                  message: 'A semver range can only be defined with versions',
-                  start: this.getLoc(node).start,
-                },
-              )
-            );
-          }
-
-          parseVersionRange(left) {
-            this.nextToken();
-            this.eatSpaceToken();
-
-            const right = this.parseVersionOrWildcard();
-
-            return (
-              {
-                type: 'VersionRange',
-                loc: this.finishLoc(this.getLoc(left).start),
-                left: this.validateRangeSide(left),
-                right: this.validateRangeSide(right),
-              }
-            );
-          }
-
-          parseWildcard() {
-            const startPos = this.getPosition();
-            this.nextToken();
-            return {type: 'Wildcard', loc: this.finishLoc(startPos)};
-          }
-
-          parseAtomOperator(token) {
-            const startPos = this.getPosition();
-            this.nextToken();
-            this.eatSpaceToken();
-
-            const version = this.parseVersionOrWildcard();
-
-            return (
-              {
-                type: 'Comparator',
-                loc: this.finishLoc(startPos),
-                operator: token.value,
-                version,
-              }
-            );
-          }
-
-          isVersionCharacter(token) {
-            if (this.loose && token.type === 'Word') {
-              return token.value === 'v';
-            }
-
-            return false;
-          }
-
-          parseAtomStartPipe() {
-            if (this.loose) {
-              // A bare pipe in an atom start position is treated the same as a wildcard...
-
-              // Why...? Because node-semver allows it lol
-
-              // > satisfies('1.2.3', '||') === true
-              return this.parseWildcard();
-            } else {
-              throw (
-                this.unexpected(
-                  {
-                    message: 'Bare pipes are only allowed in loose mode',
-                  },
-                )
-              );
-            }
-          }
-
-          parseAtomStartWord(token) {
-            if (this.isWildcardToken(token)) {
-              return this.parseWildcard();
-            } else if (this.isVersionCharacter(token)) {
-              return this.parseVersion();
-            } else {
-              throw (
-                this.unexpected(
-                  {
-                    message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Unexpected word <emphasis>${token.value}</emphasis>`,
-                  },
-                )
-              );
-            }
-          }
-
-          parseAtom() {
-            const token = this.getToken();
-
-            switch (token.type) {
-              case 'Number':
-                return this.parseVersion();
-
-              case 'Operator':
-                return this.parseAtomOperator(token);
-
-              case 'Star':
-                return this.parseWildcard();
-
-              case 'Pipe':
-                return this.parseAtomStartPipe();
-
-              case 'Word':
-                return this.parseAtomStartWord(token);
-
-              default:
-                throw this.unexpected({message: 'Unknown start of atom'});
-            }
-          }
-
-          parseLogicalAnd(left) {
-            const right = this.parseExpression();
-
-            return (
-              {
-                type: 'LogicalAnd',
-                left,
-                right,
-                loc: {
-                  filename: this.filename,
-                  start: this.getLoc(left).start,
-                  end: this.getLoc(right).end,
-                },
-              }
-            );
-          }
-
-          parseExpression() {
-            const left = this.parseAtom();
-            this.eatSpaceToken();
-
-            if (this.matchToken('RangeDash')) {
-              return this.parseVersionRange(left);
-            }
-
-            if (this.matchToken('Pipe')) {
-              return this.parseLogicalOr(left);
-            }
-
-            if (!this.matchToken('EOF')) {
-              return this.parseLogicalAnd(left);
-            }
-
-            return left;
-          }
-
-          parseInitialRange() {
-            // Allow spaces at the beginning, spaces at the end have been removed by the trimRight in the constructor
-            this.eatSpaceToken();
-
-            // Empty string is an implicit wildcard in loose mode
-            if (this.matchToken('EOF') && this.loose) {
-              return this.parseWildcard();
-            }
-
-            const expr = this.parseExpression();
-            this.finalize();
-
-            return expr;
-          }
-
-          parseInitialVersion() {
-            const node = this.parseInitialRange();
-
-            // Verify the return value in version mode
-            if (node.type !== 'AbsoluteVersion') {
-              throw (
-                this.unexpected(
-                  {
-                    message: 'Unexpected value for version',
-                    start: this.getLoc(node).start,
-                  },
-                )
-              );
-            }
-
-            return node;
-          }
-        }
-
-        return (
-          SemverParser
-        );
-      })(),
+  // project-rome/@romejs/fs/index.ts
+const ___R$$priv$project$rome$$romejs$fs$index_ts$fs = require(
+    'fs',
   );
 
-  function ___R$project$rome$$romejs$codec$semver$parse_ts$parseSemverRange(opts) {
-    return ___R$$priv$project$rome$$romejs$codec$semver$parse_ts$createSemverParser(opts, 'range').parseInitialRange();
+  function ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyData(
+    path,
+    factory,
+  ) {
+    return (
+      new Promise(
+        (resolve, reject) => {
+          factory(
+            path.join(),
+            (err, data) => {
+              if (err === null) {
+                resolve(data);
+              } else {
+                reject(err);
+              }
+            },
+          );
+        },
+      )
+    );
   }
 
-  function ___R$project$rome$$romejs$codec$semver$parse_ts$parseSemverVersion(
-    opts,
+  function ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyVoid(
+    path,
+    factory,
   ) {
-    return ___R$$priv$project$rome$$romejs$codec$semver$parse_ts$createSemverParser(opts, 'version').parseInitialVersion();
+    return (
+      new Promise(
+        (resolve, reject) => {
+          factory(
+            path.join(),
+            (err) => {
+              if (err === null) {
+                resolve();
+              } else {
+                reject(err);
+              }
+            },
+          );
+        },
+      )
+    );
+  }
+
+  // watch
+  function ___R$project$rome$$romejs$fs$index_ts$watch(
+    path,
+    options,
+
+    listener,
+  ) {
+    return ___R$$priv$project$rome$$romejs$fs$index_ts$fs.watch(path.join(), options, listener);
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$readFile(path) {
+    return (
+      ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyData(
+        path,
+        (
+          filename,
+          callback,
+        ) =>
+          ___R$$priv$project$rome$$romejs$fs$index_ts$fs.readFile(filename, callback),
+      )
+    );
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$readFileSync(path) {
+    return ___R$$priv$project$rome$$romejs$fs$index_ts$fs.readFileSync(path.join());
+  }
+
+  async function ___R$project$rome$$romejs$fs$index_ts$readFileText(path) {
+    return (await ___R$project$rome$$romejs$fs$index_ts$readFile(path)).toString();
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$readFileTextSync(path) {
+    return ___R$$priv$project$rome$$romejs$fs$index_ts$fs.readFileSync(path.join(), 'utf8');
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$writeFile(
+    path,
+    content,
+  ) {
+    return (
+      ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyVoid(
+        path,
+        (
+          filename,
+          callback,
+        ) =>
+          ___R$$priv$project$rome$$romejs$fs$index_ts$fs.writeFile(filename, content, callback),
+      )
+    );
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$writeFileSync(
+    path,
+    content,
+  ) {
+    return ___R$$priv$project$rome$$romejs$fs$index_ts$fs.writeFileSync(path.join(), content);
+  }
+
+  // readdir
+  function ___R$$priv$project$rome$$romejs$fs$index_ts$createReaddirReturn(
+    folder,
+    files,
+  ) {
+    return (
+      new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet(
+        files.map(
+          (basename) => {
+            return folder.append(basename);
+          },
+        ),
+      )
+    );
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$readdir(path) {
+    return (
+      new Promise(
+        (resolve, reject) => {
+          ___R$$priv$project$rome$$romejs$fs$index_ts$fs.readdir(
+            path.join(),
+            (err, files) => {
+              if (err === null) {
+                resolve(___R$$priv$project$rome$$romejs$fs$index_ts$createReaddirReturn(path, files));
+              } else {
+                reject(err);
+              }
+            },
+          );
+        },
+      )
+    );
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$readdirSync(path) {
+    return ___R$$priv$project$rome$$romejs$fs$index_ts$createReaddirReturn(path, ___R$$priv$project$rome$$romejs$fs$index_ts$fs.readdirSync(path.join()));
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$lstat(path) {
+    return (
+      ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyData(
+        path,
+        (filename, callback) => ___R$$priv$project$rome$$romejs$fs$index_ts$fs.lstat(filename, callback),
+      )
+    );
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$lstatSync(path) {
+    return ___R$$priv$project$rome$$romejs$fs$index_ts$fs.lstatSync(path.join());
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$exists(path) {
+    return (
+      new Promise(
+        (resolve) => {
+          ___R$$priv$project$rome$$romejs$fs$index_ts$fs.exists(
+            path.join(),
+            (exists) => {
+              resolve(exists);
+            },
+          );
+        },
+      )
+    );
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$existsSync(path) {
+    return ___R$$priv$project$rome$$romejs$fs$index_ts$fs.existsSync(path.join());
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$unlink(path) {
+    return (
+      ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyVoid(
+        path,
+        (
+          filename,
+          callback,
+        ) =>
+          ___R$$priv$project$rome$$romejs$fs$index_ts$fs.unlink(
+            filename,
+            (err) => {
+              if (err != null && err.code !== 'ENOENT') {
+                callback(err);
+              } else {
+                callback(null);
+              }
+            },
+          ),
+      )
+    );
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$unlinkSync(path) {
+    try {
+      ___R$$priv$project$rome$$romejs$fs$index_ts$fs.unlinkSync(path.join());
+    } catch (err) {
+      if (err.code !== 'ENOENT') {
+        throw err;
+      }
+    }
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$createDirectory(
+    path,
+    opts = {},
+  ) {
+    return (
+      ___R$$priv$project$rome$$romejs$fs$index_ts$promisifyVoid(
+        path,
+        (
+          filename,
+          callback,
+        ) =>
+          ___R$$priv$project$rome$$romejs$fs$index_ts$fs.mkdir(filename, {recursive: opts.recursive}, callback),
+      )
+    );
+  }
+
+  function ___R$project$rome$$romejs$fs$index_ts$createDirectorySync(
+    path,
+    opts = {},
+  ) {
+    ___R$$priv$project$rome$$romejs$fs$index_ts$fs.mkdirSync(path.join(), {recursive: opts.recursive});
   }
 
   // project-rome/@romejs/codec-semver/compare.ts
@@ -65578,6 +64779,526 @@ function ___R$$priv$project$rome$$romejs$codec$semver$satisfies_ts$buildVersion(
     }
   }
 
+  // project-rome/@romejs/codec-semver/parse.ts
+const ___R$$priv$project$rome$$romejs$codec$semver$parse_ts$createSemverParser = ___R$project$rome$$romejs$parser$core$index_ts$createParser(
+    (
+      ParserCore,
+    ) =>
+      (() => {
+        class SemverParser extends ParserCore {
+          constructor({loose, ...opts}, mode) {
+            super(opts, 'parse/semver');
+            this.input = this.input.trimRight();
+            this.mode = mode;
+            this.loose = loose === undefined ? false : loose;
+          }
+
+          // For some reason Flow will throw an error without the type casts...
+          tokenize(index, input) {
+            const char = input[___R$project$rome$$romejs$ob1$index_ts$get0(index)];
+            const nextChar = input[___R$project$rome$$romejs$ob1$index_ts$get0(index) + 1];
+
+            if (char === '<' && nextChar === '=' || char === '>' && nextChar === '=' ||
+            char === '~' && nextChar === '>') {
+              // @ts-ignore: TS doesn't infer the possible combinations
+              const value = char + nextChar;
+              return this.finishValueToken('Operator', value, ___R$project$rome$$romejs$ob1$index_ts$add(index, 2));
+            }
+
+            if (char === '^' || char === '<' || char === '>' || char === '~' ||
+            char === '=') {
+              const op = char;
+              return this.finishValueToken('Operator', op);
+            }
+
+            if (char === '|' && nextChar === '|') {
+              return this.finishToken('Pipe', ___R$project$rome$$romejs$ob1$index_ts$add(index, 2));
+            }
+
+            if (char === '*') {
+              return this.finishToken('Star');
+            }
+
+            if (input[___R$project$rome$$romejs$ob1$index_ts$get0(index) - 1] === ' ' && char === '-' && nextChar === ' ') {
+              return this.finishToken('RangeDash');
+            }
+
+            if (char === '-') {
+              return this.finishToken('Dash');
+            }
+
+            if (char === '+') {
+              return this.finishToken('Plus');
+            }
+
+            if (char === '.') {
+              return this.finishToken('Dot');
+            }
+
+            if (___R$project$rome$$romejs$parser$core$index_ts$isDigit(char)) {
+              const [value] = this.readInputFrom(index, ___R$project$rome$$romejs$parser$core$index_ts$isDigit);
+              return (
+                this.finishValueToken(
+                  'Number',
+                  Number(value),
+                  ___R$project$rome$$romejs$ob1$index_ts$add(
+                    index,
+                    value.length,
+                  ),
+                )
+              );
+            }
+
+            if (___R$project$rome$$romejs$parser$core$index_ts$isAlpha(char)) {
+              const [value] = this.readInputFrom(index, ___R$project$rome$$romejs$parser$core$index_ts$isAlpha);
+              return this.finishValueToken('Word', value, ___R$project$rome$$romejs$ob1$index_ts$add(index, value.length));
+            }
+
+            if (char === ' ' || char === '\t') {
+              return this.finishToken('Space');
+            }
+
+            // Unknown character
+            return undefined;
+          }
+
+          // Remove all subsequent space tokens
+          eatSpaceToken() {
+            while (this.eatToken('Space') !== undefined);
+          }
+
+          parseVersionOrWildcard() {
+            const startPos = this.getPosition();
+            const startToken = this.getToken();
+            const version = this.parseVersion();
+
+            // We should return a bare wildcard when parsed in a version position if there was nothing else attached
+            if (this.isWildcardToken(startToken) && version.minor === undefined &&
+              version.patch === undefined &&
+              version.prerelease.length === 0 &&
+              version.build.length === 0) {
+              return (
+                {
+                  type: 'Wildcard',
+                  loc: this.finishLoc(startPos),
+                }
+              );
+            }
+
+            return version;
+          }
+
+          parseVersion() {
+            const startPos = this.getPosition();
+            const startToken = this.getToken();
+
+            if (this.isVersionCharacter(startToken)) {
+              this.nextToken();
+            }
+
+            const major = this.parseVersionNumber();
+            let minor = undefined;
+            let patch = undefined;
+
+            if (this.eatToken('Dot')) {
+              minor = this.parseVersionNumber();
+            } else if (this.mode === 'version') {
+              throw (
+                this.unexpected(
+                  {
+                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SEMVER.MISSING_MINOR_VERSION,
+                  },
+                )
+              );
+            }
+
+            if (this.eatToken('Dot')) {
+              patch = this.parseVersionNumber();
+            } else if (this.mode === 'version') {
+              throw (
+                this.unexpected(
+                  {
+                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SEMVER.MISSING_PATCH_VERSION,
+                  },
+                )
+              );
+            }
+
+            if (this.matchToken('Dot')) {
+              throw (
+                this.unexpected(
+                  {
+                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SEMVER.EXCESSIVE_VERSION_PARTS,
+                  },
+                )
+              );
+            }
+
+            // The dash is optional in loose mode. eg. 1.2.3pre
+            let prerelease = [];
+            if (this.eatToken('Dash') || this.loose && this.matchToken('Word')) {
+              prerelease = this.parseVersionQualifierParts();
+            }
+
+            let build = [];
+            if (this.eatToken('Plus')) {
+              build = this.parseVersionQualifierParts();
+            }
+
+            if (major !== undefined && minor !== undefined && patch !== undefined) {
+              return (
+                {
+                  type: 'AbsoluteVersion',
+                  loc: this.finishLoc(startPos),
+                  major,
+                  minor,
+                  patch,
+                  prerelease,
+                  build,
+                }
+              );
+            } else {
+              return (
+                {
+                  type: 'WildcardVersion',
+                  loc: this.finishLoc(startPos),
+                  major,
+                  minor,
+                  patch,
+                  prerelease,
+                  build,
+                }
+              );
+            }
+          }
+
+          parseVersionQualifierParts() {
+            const parts = [];
+            do {
+              parts.push(this.parseVersionQualifierPart());
+            } while (this.eatToken('Dot') !== undefined);
+            return parts;
+          }
+
+          parseVersionQualifierPart() {
+            const parts = [];
+
+            do {
+              const token = this.getToken();
+
+              if (token.type === 'Number' || token.type === 'Word') {
+                this.nextToken();
+                parts.push(token.value);
+              } else if (token.type === 'Dash') {
+                this.nextToken();
+                parts.push('-');
+              } else {
+                throw (
+                  this.unexpected(
+                    {
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SEMVER.INVALID_QUANTIFIER_PART,
+                    },
+                  )
+                );
+              }
+            } while (this.matchToken('Number') || this.matchToken('Word') ||
+            this.matchToken('Dash'));
+
+            if (parts.length === 1 && typeof parts[0] === 'number') {
+              return parts[0];
+            } else {
+              return parts.join('');
+            }
+          }
+
+          isWildcardToken(token) {
+            if (token.type === 'Star') {
+              return true;
+            }
+
+            if (token.type === 'Word') {
+              return token.value === 'x' || token.value === 'X';
+            }
+
+            return false;
+          }
+
+          parseVersionNumber() {
+            const token = this.getToken();
+
+            if (token.type === 'Number') {
+              this.nextToken();
+              return token.value;
+            }
+
+            if (this.isWildcardToken(token)) {
+              if (this.mode === 'version') {
+                throw (
+                  this.unexpected(
+                    {
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SEMVER.WILDCARD_IN_VERSION,
+                    },
+                  )
+                );
+              }
+
+              this.nextToken();
+            } else {
+              throw (
+                this.unexpected(
+                  {
+                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SEMVER.INVALID_VERSION_NUMBER,
+                  },
+                )
+              );
+            }
+
+            return undefined;
+          }
+
+          parseLogicalOr(left) {
+            this.nextToken();
+            this.eatSpaceToken();
+
+            const right = this.parseExpression();
+            return (
+              {
+                loc: this.finishLoc(this.getLoc(left).start),
+                type: 'LogicalOr',
+                left,
+                right,
+              }
+            );
+          }
+
+          validateRangeSide(node) {
+            // In loose mode, we allow ranges to be a bare wildcard instead of a version
+
+            // eg. * - 1.2.3
+            if (node.type === 'WildcardVersion' || node.type === 'AbsoluteVersion') {
+              return node;
+            }
+
+            if (node.type === 'Wildcard' && this.loose) {
+              return node;
+            }
+
+            throw (
+              this.unexpected(
+                Object.assign(
+                  {
+                  },
+                  ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SEMVER.INVALID_RANGE,
+                  {
+                    start: this.getLoc(node).start,
+                  },
+                ),
+              )
+            );
+          }
+
+          parseVersionRange(left) {
+            this.nextToken();
+            this.eatSpaceToken();
+
+            const right = this.parseVersionOrWildcard();
+
+            return (
+              {
+                type: 'VersionRange',
+                loc: this.finishLoc(this.getLoc(left).start),
+                left: this.validateRangeSide(left),
+                right: this.validateRangeSide(right),
+              }
+            );
+          }
+
+          parseWildcard() {
+            const startPos = this.getPosition();
+            this.nextToken();
+            return {type: 'Wildcard', loc: this.finishLoc(startPos)};
+          }
+
+          parseAtomOperator(token) {
+            const startPos = this.getPosition();
+            this.nextToken();
+            this.eatSpaceToken();
+
+            const version = this.parseVersionOrWildcard();
+
+            return (
+              {
+                type: 'Comparator',
+                loc: this.finishLoc(startPos),
+                operator: token.value,
+                version,
+              }
+            );
+          }
+
+          isVersionCharacter(token) {
+            if (this.loose && token.type === 'Word') {
+              return token.value === 'v';
+            }
+
+            return false;
+          }
+
+          parseAtomStartPipe() {
+            if (this.loose) {
+              // A bare pipe in an atom start position is treated the same as a wildcard...
+
+              // Why...? Because node-semver allows it lol
+
+              // > satisfies('1.2.3', '||') === true
+              return this.parseWildcard();
+            } else {
+              throw (
+                this.unexpected(
+                  {
+                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SEMVER.BARE_PIPE_WITHOUT_LOOSE,
+                  },
+                )
+              );
+            }
+          }
+
+          parseAtomStartWord(token) {
+            if (this.isWildcardToken(token)) {
+              return this.parseWildcard();
+            } else if (this.isVersionCharacter(token)) {
+              return this.parseVersion();
+            } else {
+              throw (
+                this.unexpected(
+                  {
+                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SEMVER.UNEXPECTED_WORD(token.value),
+                  },
+                )
+              );
+            }
+          }
+
+          parseAtom() {
+            const token = this.getToken();
+
+            switch (token.type) {
+              case 'Number':
+                return this.parseVersion();
+
+              case 'Operator':
+                return this.parseAtomOperator(token);
+
+              case 'Star':
+                return this.parseWildcard();
+
+              case 'Pipe':
+                return this.parseAtomStartPipe();
+
+              case 'Word':
+                return this.parseAtomStartWord(token);
+
+              default:
+                throw (
+                  this.unexpected(
+                    {
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SEMVER.UNKNOWN_START,
+                    },
+                  )
+                );
+            }
+          }
+
+          parseLogicalAnd(left) {
+            const right = this.parseExpression();
+
+            return (
+              {
+                type: 'LogicalAnd',
+                left,
+                right,
+                loc: {
+                  filename: this.filename,
+                  start: this.getLoc(left).start,
+                  end: this.getLoc(right).end,
+                },
+              }
+            );
+          }
+
+          parseExpression() {
+            const left = this.parseAtom();
+            this.eatSpaceToken();
+
+            if (this.matchToken('RangeDash')) {
+              return this.parseVersionRange(left);
+            }
+
+            if (this.matchToken('Pipe')) {
+              return this.parseLogicalOr(left);
+            }
+
+            if (!this.matchToken('EOF')) {
+              return this.parseLogicalAnd(left);
+            }
+
+            return left;
+          }
+
+          parseInitialRange() {
+            // Allow spaces at the beginning, spaces at the end have been removed by the trimRight in the constructor
+            this.eatSpaceToken();
+
+            // Empty string is an implicit wildcard in loose mode
+            if (this.matchToken('EOF') && this.loose) {
+              return this.parseWildcard();
+            }
+
+            const expr = this.parseExpression();
+            this.finalize();
+
+            return expr;
+          }
+
+          parseInitialVersion() {
+            const node = this.parseInitialRange();
+
+            // Verify the return value in version mode
+            if (node.type !== 'AbsoluteVersion') {
+              throw (
+                this.unexpected(
+                  Object.assign(
+                    {
+                    },
+                    ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SEMVER.EXPECTED_VERSION,
+                    {
+                      start: this.getLoc(node).start,
+                    },
+                  ),
+                )
+              );
+            }
+
+            return node;
+          }
+        }
+
+        return (
+          SemverParser
+        );
+      })(),
+  );
+
+  function ___R$project$rome$$romejs$codec$semver$parse_ts$parseSemverRange(opts) {
+    return ___R$$priv$project$rome$$romejs$codec$semver$parse_ts$createSemverParser(opts, 'range').parseInitialRange();
+  }
+
+  function ___R$project$rome$$romejs$codec$semver$parse_ts$parseSemverVersion(
+    opts,
+  ) {
+    return ___R$$priv$project$rome$$romejs$codec$semver$parse_ts$createSemverParser(opts, 'version').parseInitialVersion();
+  }
+
   // project-rome/@romejs/codec-semver/utils.ts
 function ___R$project$rome$$romejs$codec$semver$utils_ts$normalizeUserVersion(
     ver,
@@ -65799,11 +65520,13 @@ const ___R$project$rome$$romejs$project$load_ts = {
       },
       ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG,
       {
-        vsc: Object.assign(
+        vcs: Object.assign(
+          {
+          },
+          ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG.vcs,
           {
             root: projectFolder,
           },
-          ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG.vsc,
         ),
       },
     );
@@ -65826,7 +65549,7 @@ const ___R$project$rome$$romejs$project$load_ts = {
 
     // Infer VCS ignore files as lint ignore rules
     for (const filename of ___R$$priv$project$rome$$romejs$project$load_ts$IGNORE_FILENAMES) {
-      const possiblePath = config.vsc.root.append(filename);
+      const possiblePath = config.vcs.root.append(filename);
       meta.configDependencies.add(possiblePath);
 
       if (___R$project$rome$$romejs$fs$index_ts$existsSync(possiblePath)) {
@@ -65869,13 +65592,13 @@ const ___R$project$rome$$romejs$project$load_ts = {
 
     // Set fs.watchman=true when the file .watchmanconfig is present and no fs.watchman config was set
     if (partial.files.watchman === undefined) {
-      // Try the project and vsc.root folder for a .watchmanconfig
+      // Try the project and vcs.root folder for a .watchmanconfig
 
-      // We do the Set magic to only visit the projectFolder once if it is also the vsc.root
+      // We do the Set magic to only visit the projectFolder once if it is also the vcs.root
       for (const dir of new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet(
         [
           projectFolder,
-          config.vsc.root,
+          config.vcs.root,
         ],
       )) {
         const watchmanConfigPath = dir.append(___R$$priv$project$rome$$romejs$project$load_ts$WATCHMAN_CONFIG_FILENAME);
@@ -65942,7 +65665,7 @@ const ___R$project$rome$$romejs$project$load_ts = {
       format: {},
       tests: {},
       files: {},
-      vsc: {},
+      vcs: {},
       dependencies: {},
       targets: new Map(),
     };
@@ -66116,10 +65839,10 @@ const ___R$project$rome$$romejs$project$load_ts = {
       }
     }
 
-    const vsc = consumer.get('vsc');
-    if (___R$$priv$project$rome$$romejs$project$load_ts$categoryExists(vsc)) {
-      if (vsc.has('root')) {
-        config.vsc.root = projectFolder.resolve(vsc.get('root').asString());
+    const vcs = consumer.get('vcs');
+    if (___R$$priv$project$rome$$romejs$project$load_ts$categoryExists(vcs)) {
+      if (vcs.has('root')) {
+        config.vcs.root = projectFolder.resolve(vcs.get('root').asString());
       }
     }
 
@@ -66358,11 +66081,11 @@ const ___R$project$rome$$romejs$project$load_ts = {
           a.files,
           b.files,
         ),
-        vsc: Object.assign(
+        vcs: Object.assign(
           {
           },
-          a.vsc,
-          b.vsc,
+          a.vcs,
+          b.vcs,
         ),
         targets: new Map([...a.targets.entries(), ...b.targets.entries()]),
       }
@@ -66429,13 +66152,20 @@ const ___R$project$rome$$romejs$project$save_ts = {
         diagnostics.map(
           (diag) => {
             return (
-              diag.filename === configPath.join()
+              diag.location.filename === configPath.join()
                 ? Object.assign(
                   {
                   },
                   diag,
                   {
-                    sourceText: stringified,
+                    location: Object.assign(
+                      {
+                      },
+                      diag.location,
+                      {
+                        sourceText: stringified,
+                      },
+                    ),
                   },
                 ) : diag
             );
@@ -66473,12 +66203,12 @@ const ___R$project$rome$$romejs$project$transport_ts = {
         },
         config,
         {
-          vsc: Object.assign(
+          vcs: Object.assign(
             {
             },
-            config.vsc,
+            config.vcs,
             {
-              root: config.vsc.root.join(),
+              root: config.vcs.root.join(),
             },
           ),
           typeCheck: Object.assign(
@@ -66520,12 +66250,12 @@ const ___R$project$rome$$romejs$project$transport_ts = {
               vendorPath: ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(config.files.vendorPath),
             },
           ),
-          vsc: Object.assign(
+          vcs: Object.assign(
             {
             },
-            config.vsc,
+            config.vcs,
             {
-              root: ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(config.vsc.root),
+              root: ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(config.vcs.root),
             },
           ),
           typeCheck: Object.assign(
@@ -66857,7 +66587,11 @@ const ___R$$priv$project$rome$$romejs$js$ast$utils$template_ts$templateCache = n
 function ___R$project$rome$$romejs$js$ast$utils$isTypeExpressionWrapperNode_ts$default(
     node,
   ) {
-    return node.type === 'FlowTypeCastExpression' || node.type === 'TSAsExpression';
+    return (
+      node.type === 'FlowTypeCastExpression' || node.type === 'TSAsExpression' ||
+      node.type === 'TSTypeAssertion' ||
+      node.type === 'TSNonNullExpression'
+    );
   }
 
   // project-rome/@romejs/js-ast-utils/isInTypeAnnotation.ts
@@ -67061,6 +66795,25 @@ function ___R$$priv$project$rome$$romejs$js$ast$utils$getCompletionRecords_ts$ge
     }
   }
 
+  // project-rome/@romejs/js-ast-utils/getImportSpecifiers.ts
+function ___R$project$rome$$romejs$js$ast$utils$getImportSpecifiers_ts$default(
+    node,
+  ) {
+    let specifiers = [];
+
+    if (node.defaultSpecifier !== undefined) {
+      specifiers.push(node.defaultSpecifier);
+    }
+
+    if (node.namespaceSpecifier !== undefined) {
+      specifiers.push(node.namespaceSpecifier);
+    }
+
+    specifiers = specifiers.concat(node.namedSpecifiers);
+
+    return specifiers;
+  }
+
   // project-rome/@romejs/js-ast-utils/index.ts
 
 
@@ -67133,7 +66886,11 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
 
       const consumer = this.clone(
         {
-          onDefinition(def) {
+          onDefinition: (def, consumer) => {
+            if (this.onDefinition !== undefined) {
+              this.onDefinition(def, consumer);
+            }
+
             definitions.push(def);
           },
 
@@ -67145,6 +66902,14 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
 
       const result = await callback(consumer);
       return {result, definitions, diagnostics};
+    }
+
+    async captureDiagnostics(callback) {
+      const {result, diagnostics} = await this.capture(callback);
+      if (result === undefined || diagnostics.length > 0) {
+        throw new ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError('Captured diagnostics', diagnostics);
+      }
+      return result;
     }
 
     handleThrownDiagnostics(callback) {
@@ -67178,14 +66943,15 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
               metadata: this.propertyMetadata,
             },
           )),
+          this,
         );
       }
     }
 
-    getDiagnosticPointer(target = 'all') {
+    getDiagnosticLocation(target = 'all') {
       const {getDiagnosticPointer} = this.context;
       if (getDiagnosticPointer === undefined) {
-        return undefined;
+        return {};
       }
 
       const {forceDiagnosticTarget} = this;
@@ -67196,8 +66962,9 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
     }
 
     getLocation(target) {
-      const pointer = this.getDiagnosticPointer(target);
-      if (pointer === undefined) {
+      const location = this.getDiagnosticLocation(target);
+      if (location === undefined || location.start === undefined ||
+      location.end === undefined) {
         return (
           {
             filename: this.filename,
@@ -67208,9 +66975,9 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
       } else {
         return (
           {
-            filename: pointer.filename,
-            start: pointer.start,
-            end: pointer.end,
+            filename: location.filename,
+            start: location.start,
+            end: location.end,
           }
         );
       }
@@ -67284,7 +67051,7 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
     }
 
     wasInSource() {
-      return this.getDiagnosticPointer() !== undefined;
+      return this.getDiagnosticLocation() !== undefined;
     }
 
     generateUnexpectedMessage(msg, opts) {
@@ -67318,11 +67085,10 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
 
     unexpected(msg, opts = {}) {
       const {target = 'value'} = opts;
-      let {loc} = opts;
 
       const {filename} = this;
-      let pointer = this.getDiagnosticPointer(target);
-      const fromSource = pointer !== undefined;
+      let location = this.getDiagnosticLocation(target);
+      const fromSource = location !== undefined;
 
       msg = this.generateUnexpectedMessage(msg, opts);
 
@@ -67343,9 +67109,9 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
         // Go up the consumer tree and take the position from the first consumer found in the source
         let consumer = this;
         do {
-          const possiblePointer = consumer.getDiagnosticPointer(target);
-          if (possiblePointer !== undefined) {
-            pointer = possiblePointer;
+          const possibleLocation = consumer.getDiagnosticLocation(target);
+          if (possibleLocation !== undefined) {
+            location = possibleLocation;
             break;
           }
           consumer = consumer.parent;
@@ -67374,44 +67140,32 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
         }
       }
 
-      if (pointer === undefined) {
+      if (opts.loc !== undefined) {
+        location = opts.loc;
+      }
+
+      if (location === undefined) {
         throw new Error(msg);
       }
 
-      if (loc === undefined) {
-        loc =
-          {
-            filename: pointer.filename,
-            start: pointer.start,
-            end: pointer.end,
-          };
-      }
-
-      const diagnostic = Object.assign(
-        {
+      const diagnostic = {
+        description: {
           category: opts.category === undefined
             ? this.context.category : opts.category,
-          filename: this.filename,
-          message: msg,
-        },
-        loc,
-        {
-          language: pointer.language,
-          mtime: pointer.mtime,
-          sourceText: pointer.sourceText,
+          message: ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(msg),
           advice,
         },
-      );
+        location: Object.assign(
+          {
+          },
+          location,
+          {
+            filename: this.filename,
+          },
+        ),
+      };
 
-      const errMsg = 'Error occurred while consuming at ' +
-      loc.filename +
-      ' (' +
-      loc.start.line +
-      ':' +
-      loc.start.column +
-      '): ' +
-      msg;
-      const err = new ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError(errMsg, [diagnostic]);
+      const err = ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError(diagnostic);
 
       if (this.handleUnexpected === undefined) {
         throw err;
@@ -67537,7 +67291,7 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
     }
 
     has(key) {
-      return this.get(key).asUnknown() !== undefined;
+      return this.get(key).asUnknown() != null;
     }
 
     setProperty(key, value) {
@@ -67654,7 +67408,7 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
 
     //
     exists() {
-      return this.value !== undefined;
+      return this.value != null;
     }
 
     isObject() {
@@ -67860,7 +67614,7 @@ function ___R$$priv$project$rome$$romejs$consume$Consumer_ts$isComputedPart(part
       );
 
       if (this.exists()) {
-        return this.asString(def);
+        return this._asString(def);
       } else {
         return undefined;
       }
@@ -69018,11 +68772,14 @@ class ___R$project$rome$$romejs$events$Bridge_ts$default {
             direction: 'server<->client',
           },
         );
-      this.heartbeatEvent.subscribe(
-        () => {
-          return undefined;
-        },
-      );
+
+      if (this.type !== 'server&client') {
+        this.heartbeatEvent.subscribe(
+          () => {
+            return undefined;
+          },
+        );
+      }
 
       this.clear();
       this.init();
@@ -69037,6 +68794,11 @@ class ___R$project$rome$$romejs$events$Bridge_ts$default {
     }
 
     monitorHeartbeat(timeout, onExceeded) {
+      if (this.type === 'server&client') {
+        // No point in monitoring this since we're the same process
+        return;
+      }
+
       this.heartbeatTimeout =
         setTimeout(
           async () => {
@@ -69394,7 +69156,6 @@ const ___R$project$rome$$romejs$events$bridgeCreators_ts = {
   const ___R$$priv$project$rome$$romejs$events$bridgeCreators_ts$SOCKET_LENGTH = /^(\d+):/;
 
   // JSON.stringify but throw on bad data types
-
   // Most likely slower... But safer and our data structures are usually fairly shallow
   function ___R$$priv$project$rome$$romejs$events$bridgeCreators_ts$stringify(obj) {
     return (
@@ -69719,6 +69480,24 @@ const ___R$project$rome$$romejs$events$bridgeCreators_ts = {
 const ___R$project$rome$$romejs$events$types_ts = {
   };
 
+  // project-rome/@romejs/events/utils.ts
+const ___R$project$rome$$romejs$events$utils_ts = {
+    mergeEventSubscriptions: ___R$project$rome$$romejs$events$utils_ts$mergeEventSubscriptions,
+  };
+  function ___R$project$rome$$romejs$events$utils_ts$mergeEventSubscriptions(
+    subs,
+  ) {
+    return (
+      {
+        unsubscribe() {
+          for (const sub of subs) {
+            sub.unsubscribe();
+          }
+        },
+      }
+    );
+  }
+
   // project-rome/@romejs/events/index.ts
 
 
@@ -69733,6 +69512,10 @@ const ___R$$priv$project$rome$$romejs$cli$reporter$Reporter_ts$stream = require(
   let ___R$$priv$project$rome$$romejs$cli$reporter$Reporter_ts$remoteProgressIdCounter = 0;
 
   const ___R$$priv$project$rome$$romejs$cli$reporter$Reporter_ts$INDENT = '  ';
+
+  function ___R$$priv$project$rome$$romejs$cli$reporter$Reporter_ts$getStreamFormat(stdout) {
+    return stdout !== undefined && stdout.isTTY === true ? 'ansi' : 'none';
+  }
 
   class ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default {
     constructor(opts = {}) {
@@ -69751,7 +69534,6 @@ const ___R$$priv$project$rome$$romejs$cli$reporter$Reporter_ts$stream = require(
       this.noProgress = process.env.CI === '1';
       this.isVerbose = Boolean(opts.verbose);
 
-      this.silent = opts.silent === true;
       this.startTime = opts.startTime === undefined ? Date.now() : opts.startTime;
       this.hasClearScreen =
         opts.hasClearScreen === undefined
@@ -69798,13 +69580,9 @@ const ___R$$priv$project$rome$$romejs$cli$reporter$Reporter_ts$stream = require(
       }
     }
 
-    attachStdoutStreams(stdout, stderr, format) {
+    attachStdoutStreams(stdout, stderr) {
       const columns = stdout === undefined || stdout.columns === undefined
         ? ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default.DEFAULT_COLUMNS : stdout.columns;
-
-      if (format === undefined) {
-        format = stdout !== undefined && stdout.isTTY === true ? 'ansi' : 'none';
-      }
 
       const columnsUpdated = new ___R$project$rome$$romejs$events$Event_ts$default(
         {
@@ -69814,7 +69592,7 @@ const ___R$$priv$project$rome$$romejs$cli$reporter$Reporter_ts$stream = require(
 
       const outStream = {
         type: 'out',
-        format,
+        format: ___R$$priv$project$rome$$romejs$cli$reporter$Reporter_ts$getStreamFormat(stdout),
         columns,
         write(chunk) {
           if (stdout !== undefined) {
@@ -69825,19 +69603,16 @@ const ___R$$priv$project$rome$$romejs$cli$reporter$Reporter_ts$stream = require(
         teardown() {},
       };
 
-      const errStream = Object.assign(
-        {
+      const errStream = {
+        type: 'error',
+        format: ___R$$priv$project$rome$$romejs$cli$reporter$Reporter_ts$getStreamFormat(stderr),
+        columns,
+        write(chunk) {
+          if (stderr !== undefined) {
+            stderr.write(chunk);
+          }
         },
-        outStream,
-        {
-          type: 'error',
-          write(chunk) {
-            if (stderr !== undefined) {
-              stderr.write(chunk);
-            }
-          },
-        },
-      );
+      };
 
       // Watch for resizing
       if (outStream.format === 'ansi' && stdout !== undefined) {
@@ -69990,10 +69765,6 @@ const ___R$$priv$project$rome$$romejs$cli$reporter$Reporter_ts$stream = require(
     }
 
     addStream(stream) {
-      if (this.silent) {
-        return;
-      }
-
       this.streams.add(stream);
 
       if (stream.type === 'error' || stream.type === 'all') {
@@ -71058,16 +70829,6 @@ const ___R$$priv$project$rome$$romejs$cli$reporter$Reporter_ts$stream = require(
           );
         },
 
-        setTitle: (title) => {
-          dispatch(
-            {
-              type: 'PROGRESS_SET_TITLE',
-              title,
-              id,
-            },
-          );
-        },
-
         setText: (text) => {
           dispatch(
             {
@@ -71182,6 +70943,7 @@ const ___R$project$rome$$romejs$cli$reporter$types_ts = {
       return (
         ___R$$priv$project$rome$$romejs$cli$diagnostics$ansiHighlightCode_ts$ansiHighlightJS(
           opts.input,
+          opts.sourceType === undefined ||
           opts.sourceType === 'unknown'
             ? 'script' : opts.sourceType,
         )
@@ -71473,6 +71235,60 @@ function ___R$project$rome$$romejs$cli$diagnostics$utils_ts$showInvisibles(str) 
     const lines = ___R$project$rome$$romejs$cli$diagnostics$utils_ts$splitLines(highlighted);
     return lines;
   }
+
+  // project-rome/@romejs/cli-diagnostics/constants.ts
+const ___R$project$rome$$romejs$cli$diagnostics$constants_ts = {
+    get GUTTER() {
+      return (
+        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$GUTTER
+      );
+    },
+
+    get CODE_FRAME_INDENT() {
+      return (
+        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_INDENT
+      );
+    },
+
+    get CODE_FRAME_SELECTED_INDENT() {
+      return (
+        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_SELECTED_INDENT
+      );
+    },
+
+    get FILENAME_INDENT() {
+      return (
+        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$FILENAME_INDENT
+      );
+    },
+
+    get MAX_CODE_FRAME_LINES() {
+      return (
+        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$MAX_CODE_FRAME_LINES
+      );
+    },
+
+    get HALF_MAX_CODE_FRAME_LINES() {
+      return (
+        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$HALF_MAX_CODE_FRAME_LINES
+      );
+    },
+
+    get CODE_FRAME_CONTEXT_LINES() {
+      return (
+        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_CONTEXT_LINES
+      );
+    },
+  };
+  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$GUTTER = ' \u2502 ';
+  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_INDENT = '  ';
+  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_SELECTED_INDENT = ___R$project$rome$$romejs$string$ansi$format_ts$formatAnsi.red('>') +
+  ' ';
+  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$FILENAME_INDENT = '  ';
+
+  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$MAX_CODE_FRAME_LINES = 8;
+  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$HALF_MAX_CODE_FRAME_LINES = ___R$project$rome$$romejs$cli$diagnostics$constants_ts$MAX_CODE_FRAME_LINES / 2;
+  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_CONTEXT_LINES = 2;
 
   // project-rome/@romejs/string-diff/index.ts
 /**
@@ -71933,7 +71749,10 @@ function ___R$project$rome$$romejs$cli$diagnostics$utils_ts$showInvisibles(str) 
     }
 
     // A half-match was found, sort out the return data.
-    let text1_a, text1_b, text2_a, text2_b;
+    let text1_a;
+    let text1_b;
+    let text2_a;
+    let text2_b;
     if (text1.length > text2.length) {
       text1_a = hm[0];
       text1_b = hm[1];
@@ -72263,60 +72082,6 @@ function ___R$project$rome$$romejs$cli$diagnostics$utils_ts$showInvisibles(str) 
     return ___R$$priv$project$rome$$romejs$string$diff$index_ts$is_surrogate_pair_start(str.charCodeAt(str.length - 1));
   }
 
-  // project-rome/@romejs/cli-diagnostics/constants.ts
-const ___R$project$rome$$romejs$cli$diagnostics$constants_ts = {
-    get GUTTER() {
-      return (
-        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$GUTTER
-      );
-    },
-
-    get CODE_FRAME_INDENT() {
-      return (
-        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_INDENT
-      );
-    },
-
-    get CODE_FRAME_SELECTED_INDENT() {
-      return (
-        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_SELECTED_INDENT
-      );
-    },
-
-    get FILENAME_INDENT() {
-      return (
-        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$FILENAME_INDENT
-      );
-    },
-
-    get MAX_CODE_FRAME_LINES() {
-      return (
-        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$MAX_CODE_FRAME_LINES
-      );
-    },
-
-    get HALF_MAX_CODE_FRAME_LINES() {
-      return (
-        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$HALF_MAX_CODE_FRAME_LINES
-      );
-    },
-
-    get CODE_FRAME_CONTEXT_LINES() {
-      return (
-        ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_CONTEXT_LINES
-      );
-    },
-  };
-  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$GUTTER = ' \u2502 ';
-  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_INDENT = '  ';
-  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_SELECTED_INDENT = ___R$project$rome$$romejs$string$ansi$format_ts$formatAnsi.red('>') +
-  ' ';
-  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$FILENAME_INDENT = '  ';
-
-  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$MAX_CODE_FRAME_LINES = 8;
-  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$HALF_MAX_CODE_FRAME_LINES = ___R$project$rome$$romejs$cli$diagnostics$constants_ts$MAX_CODE_FRAME_LINES / 2;
-  const ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_CONTEXT_LINES = 2;
-
   // project-rome/@romejs/cli-diagnostics/buildPatchCodeFrame.ts
 function ___R$$priv$project$rome$$romejs$cli$diagnostics$buildPatchCodeFrame_ts$formatDiffLine(diffs) {
     return (
@@ -72481,6 +72246,10 @@ function ___R$project$rome$$romejs$cli$diagnostics$buildMessageCodeFrame_ts$defa
   ) {
     let markerMessage = maybeMarkerMessage === undefined
       ? '' : maybeMarkerMessage;
+
+    if (start === undefined || end === undefined) {
+      return ___R$project$rome$$romejs$cli$diagnostics$constants_ts$CODE_FRAME_INDENT + markerMessage;
+    }
 
     const startLineIndex = ___R$project$rome$$romejs$ob1$index_ts$coerce1to0(start.line);
 
@@ -72707,6 +72476,9 @@ function ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default(
       case 'code':
         return ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printCode(item, opts);
 
+      case 'command':
+        return ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printCommand(item, opts);
+
       case 'frame':
         return ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printFrame(item, opts);
 
@@ -72716,6 +72488,14 @@ function ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default(
       case 'inspect':
         return ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printInspect(item, opts);
     }
+  }
+
+  function ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printCommand(
+    item,
+    opts,
+  ) {
+    opts.reporter.command(item.command);
+    return false;
   }
 
   function ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printInspect(
@@ -72731,10 +72511,7 @@ function ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default(
     return false;
   }
 
-  function ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printDiff(
-    item,
-    opts,
-  ) {
+  function ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printDiff(item, opts) {
     const frame = ___R$project$rome$$romejs$cli$diagnostics$buildPatchCodeFrame_ts$default(item.diff);
     if (frame === '') {
       return true;
@@ -72757,10 +72534,7 @@ function ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default(
     return false;
   }
 
-  function ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printList(
-    item,
-    opts,
-  ) {
+  function ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printList(item, opts) {
     if (item.list.length === 0) {
       return true;
     } else {
@@ -72776,10 +72550,7 @@ function ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default(
     }
   }
 
-  function ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printCode(
-    item,
-    opts,
-  ) {
+  function ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printCode(item, opts) {
     const {reporter} = opts;
     const {code} = item;
     reporter.indent(
@@ -72795,8 +72566,9 @@ function ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default(
     opts,
   ) {
     const {reporter} = opts;
-    const {start, end, filename, sourceText, marker} = item;
-    const path = ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename);
+    const {marker} = item;
+    const {start, end, filename, sourceText} = item.location;
+    const path = opts.printer.createFilePath(filename);
 
     let cleanMarker = '';
     if (marker !== undefined) {
@@ -72810,8 +72582,8 @@ function ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default(
           {
             path,
             input: sourceText,
-            sourceType: item.sourceType,
-            language: item.language,
+            sourceType: item.location.sourceType,
+            language: item.location.language,
           },
         );
     } else if (filename !== undefined) {
@@ -72849,7 +72621,8 @@ function ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default(
 
     let shownCodeFrames = 0;
 
-    const isFirstPart = diagnostic.advice[0] === item;
+    const isFirstPart = diagnostic.description.advice !== undefined &&
+      diagnostic.description.advice[0] === item;
     if (!isFirstPart) {
       opts.reporter.info(item.title === undefined ? 'Stack trace' : item.title);
       opts.reporter.forceSpacer();
@@ -72930,14 +72703,16 @@ function ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default(
           const skipped = ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printFrame(
             {
               type: 'frame',
-              language,
-              filename,
-              sourceType: 'module',
               marker: undefined,
-              mtime: undefined,
-              start: pos,
-              end: pos,
-              sourceText: code,
+              location: {
+                language,
+                filename,
+                sourceType: 'module',
+                mtime: undefined,
+                start: pos,
+                end: pos,
+                sourceText: code,
+              },
             },
             opts,
           );
@@ -72956,10 +72731,7 @@ function ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default(
     return false;
   }
 
-  function ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printLog(
-    item,
-    opts,
-  ) {
+  function ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$printLog(item, opts) {
     const {reporter} = opts;
     const {message, category} = item;
 
@@ -72987,7 +72759,7 @@ function ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default(
       }
     }
 
-    return item.compact;
+    return item.compact === true;
   }
 
   function ___R$$priv$project$rome$$romejs$cli$diagnostics$printAdvice_ts$cleanMessage(msg) {
@@ -73056,12 +72828,8 @@ function ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDia
           ? ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDiagnosticsFileLocal : opts.readFile;
       this.cwd = cwd === undefined ? ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(process.cwd()) : cwd;
       this.processor =
-        new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default(
-          {
-            filters: opts.filters,
-            origins: opts.origins,
-          },
-        );
+        opts.processor === undefined
+          ? new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default() : opts.processor;
 
       this.displayedCount = 0;
       this.problemCount = 0;
@@ -73072,6 +72840,20 @@ function ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDia
       this.fileSources = new ___R$project$rome$$romejs$path$collections_ts$UnknownFilePathMap();
       this.fileMtimes = new ___R$project$rome$$romejs$path$collections_ts$UnknownFilePathMap();
       this.beforeFooterPrint = [];
+    }
+
+    createFilePath(filename) {
+      if (filename === undefined) {
+        filename = 'unknown';
+      }
+
+      const {normalizeFilename} = this.reporter.markupOptions;
+
+      if (normalizeFilename === undefined) {
+        return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename);
+      } else {
+        return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(normalizeFilename(filename));
+      }
     }
 
     throwIfAny() {
@@ -73099,18 +72881,14 @@ function ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDia
     }
 
     getDiagnostics() {
-      return (
-        this.processor.getCompleteSortedDiagnostics(
-          this.reporter.markupOptions,
-        )
-      );
+      return this.processor.getSortedDiagnostics();
     }
 
     isFocused(diag) {
       const focusFlag = this.flags.focus;
       const focusEnabled = focusFlag !== undefined && focusFlag !== '';
 
-      const {filename, start, end} = diag;
+      const {filename, start, end} = diag.location;
 
       // If focus is enabled, exclude locationless errors
       if (focusEnabled && (filename === undefined || start === undefined)) {
@@ -73120,7 +72898,7 @@ function ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDia
       // If focus is enabled, check if we should ignore this message
       if (filename !== undefined && start !== undefined && end !== undefined) {
         const niceFilename = ___R$project$rome$$romejs$string$markup$format_ts$humanizeMarkupFilename(
-          [filename],
+          filename,
           this.reporter.markupOptions,
         );
         const focusId = ___R$project$rome$$romejs$diagnostics$derive_ts$getDiagnosticHeader(
@@ -73152,7 +72930,7 @@ function ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDia
       }
 
       // Match against the supplied grep pattern
-      let ignored = diag.message.toLowerCase().includes(grep) === false;
+      let ignored = diag.description.message.value.toLowerCase().includes(grep) === false;
       if (inverseGrep) {
         ignored = !ignored;
       }
@@ -73181,18 +72959,15 @@ function ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDia
       const deps = [];
 
       for (const {
-        advice,
-        filename,
         dependencies,
-        language,
-        sourceType,
-        mtime,
+        description: {advice},
+        location: {language, sourceType, mtime, filename},
       } of diagnostics) {
         if (filename !== undefined) {
           deps.push(
             {
               type: 'reference',
-              path: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename),
+              path: this.createFilePath(filename),
               mtime,
               language,
               sourceType,
@@ -73200,28 +72975,36 @@ function ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDia
           );
         }
 
-        for (const {filename, mtime} of dependencies) {
-          deps.push(
-            {
-              type: 'change',
-              path: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename),
-              mtime,
-            },
-          );
-        }
-
-        for (const item of advice) {
-          if (item.type === 'frame' && item.filename !== undefined &&
-            item.sourceText === undefined) {
+        if (dependencies !== undefined) {
+          for (const {filename, mtime} of dependencies) {
             deps.push(
               {
-                type: 'reference',
-                path: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(item.filename),
-                language: item.language,
-                sourceType: item.sourceType,
-                mtime: item.mtime,
+                type: 'change',
+                path: this.createFilePath(filename),
+                mtime,
               },
             );
+          }
+        }
+
+        if (advice !== undefined) {
+          for (const item of advice) {
+            if (item.type === 'frame') {
+              const {location} = item;
+              if (location.filename !== undefined &&
+                location.sourceText ===
+                undefined) {
+                deps.push(
+                  {
+                    type: 'reference',
+                    path: this.createFilePath(location.filename),
+                    language: location.language,
+                    sourceType: location.sourceType,
+                    mtime: location.mtime,
+                  },
+                );
+              }
+            }
           }
         }
       }
@@ -73302,7 +73085,8 @@ function ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDia
 
     displayDiagnostic(diag) {
       const {reporter} = this;
-      const {start, end, filename} = diag;
+      const {start, end, filename} = diag.location;
+      const {advice} = diag.description;
 
       // Determine if we should skip showing the frame at the top of the diagnostic output
 
@@ -73310,11 +73094,14 @@ function ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDia
 
       // useful for stuff like reporting call stacks
       let skipFrame = false;
-      if (start !== undefined && end !== undefined) {
-        adviceLoop: for (const item of diag.advice) {
-          if (item.type === 'frame' && item.filename === filename &&
-            ___R$$priv$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$equalPosition(item.start, start) &&
-            ___R$$priv$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$equalPosition(item.end, end)) {
+      if (start !== undefined && end !== undefined && advice !== undefined) {
+        adviceLoop: for (const item of advice) {
+          if (item.type === 'frame' && item.location.filename === filename &&
+            ___R$$priv$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$equalPosition(item.location.start, start) &&
+            ___R$$priv$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$equalPosition(
+              item.location.end,
+              end,
+            )) {
             skipFrame = true;
             break;
           }
@@ -73396,22 +73183,18 @@ function ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDia
       reporter.indent(
         () => {
           // Concat all the advice together
-          const derivedAdvice = [
+          const advice = [
             ...derived.advice,
             ...outdatedAdvice,
-          ].map(
-            (
-              item,
-            ) =>
-              ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizeDiagnosticAdviceItem(diag, item, this.reporter.markupOptions),
-          );
-          const advice = derivedAdvice.concat(diag.advice);
+            ...(diag.description.advice || []),
+          ];
 
           // Print advice
           for (const item of advice) {
             const noSpacer = ___R$project$rome$$romejs$cli$diagnostics$printAdvice_ts$default(
               item,
               {
+                printer: this,
                 flags: this.flags,
                 missingFileSources: this.missingFileSources,
                 fileSources: this.fileSources,
@@ -73428,7 +73211,7 @@ function ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$readDia
           if (this.flags.verboseDiagnostics) {
             const {origins} = diag;
 
-            if (origins.length > 0) {
+            if (origins !== undefined && origins.length > 0) {
               reporter.spacer();
               reporter.info('Why are you seeing this diagnostic?');
               reporter.forceSpacer();
@@ -73651,19 +73434,16 @@ const ___R$project$rome$$romejs$diagnostics$errors_ts = {
       }
 
       message += '\n';
+      message += ___R$project$rome$$romejs$string$ansi$format_ts$stripAnsi(___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnosticsToString(diagnostics));
       message +=
         ___R$project$rome$$romejs$string$ansi$format_ts$stripAnsi(
-          ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnosticsToString(
-            diagnostics,
-            {
-              origins: [],
-            },
-          ),
-        );
-      message +=
-        ___R$project$rome$$romejs$string$ansi$format_ts$stripAnsi(
-          diagnostics.map((diag) => '- ' +
-          diag.message).join(
+          diagnostics.map(
+            (
+              diag,
+            ) =>
+              '- ' +
+              diag.description.message.value,
+          ).join(
             '\n',
           ),
         );
@@ -73679,17 +73459,21 @@ const ___R$project$rome$$romejs$diagnostics$errors_ts = {
     diag,
     suppressions,
   ) {
-    return new ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError(diag.message, [diag], suppressions);
+    return (
+      new ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError(
+        diag.description.message.value,
+        [diag],
+        suppressions,
+      )
+    );
   }
 
-  function ___R$project$rome$$romejs$diagnostics$errors_ts$getDiagnosticsFromError(
-    err,
-  ) {
+  function ___R$project$rome$$romejs$diagnostics$errors_ts$getDiagnosticsFromError(err) {
     if (err instanceof ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError) {
       const processor = new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default({});
       processor.addSuppressions(err.suppressions);
       processor.addDiagnostics(err.diagnostics);
-      return processor.getPartialDiagnostics();
+      return processor.getDiagnostics();
     }
 
     return undefined;
@@ -73698,6 +73482,1846 @@ const ___R$project$rome$$romejs$diagnostics$errors_ts = {
   // project-rome/@romejs/diagnostics/types.ts
 const ___R$project$rome$$romejs$diagnostics$types_ts = {
   };
+
+  // project-rome/@romejs/diagnostics/helpers.ts
+const ___R$project$rome$$romejs$diagnostics$helpers_ts = {
+    buildSuggestionAdvice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice,
+    buildDuplicateLocationAdvice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildDuplicateLocationAdvice,
+    truncateSourceText: ___R$project$rome$$romejs$diagnostics$helpers_ts$truncateSourceText,
+  };
+
+  function ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice(
+    value,
+    items,
+    {minRating = 0.5, ignoreCase, formatItem} = {},
+  ) {
+    const advice = [];
+
+    const ratings = ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$orderBySimilarity(
+      value,
+      items,
+      {
+        minRating,
+        formatItem,
+        ignoreCase,
+      },
+    );
+
+    const strings = ratings.map(
+      (item) => {
+        const {target} = item;
+        if (formatItem === undefined) {
+          return target;
+        } else {
+          return formatItem(target);
+        }
+      },
+    );
+
+    const topRatingFormatted = strings.shift();
+    if (topRatingFormatted === undefined) {
+      return advice;
+    }
+
+    // Raw rating that hasn't been formatted
+    const topRatingRaw = ratings[0].target;
+
+    if (topRatingRaw === value) {
+      // TODO produce a better example
+    }
+
+    // If there's only 2 suggestions then just say "Did you mean A or B?" rather than printing the list
+    if (strings.length === 1) {
+      advice.push(
+        {
+          type: 'log',
+          category: 'info',
+          message: 'Did you mean <emphasis>' +
+          topRatingFormatted +
+          '</emphasis> or <emphasis>' +
+          strings[0] +
+          '</emphasis>?',
+        },
+      );
+    } else {
+      advice.push(
+        {
+          type: 'log',
+          category: 'info',
+          message: 'Did you mean <emphasis>' +
+          topRatingFormatted +
+          '</emphasis>?',
+        },
+      );
+
+      advice.push(
+        {
+          type: 'diff',
+          diff: ___R$project$rome$$romejs$string$diff$index_ts$default(value, topRatingRaw),
+        },
+      );
+
+      if (strings.length > 0) {
+        advice.push(
+          {
+            type: 'log',
+            category: 'info',
+            message: 'Or one of these?',
+          },
+        );
+
+        advice.push(
+          {
+            type: 'list',
+            list: strings,
+            truncate: true,
+          },
+        );
+      }
+    }
+
+    // TODO check if ANY of the suggestions match
+    if (topRatingRaw !== value &&
+      topRatingRaw.toLowerCase() ===
+      value.toLowerCase()) {
+      advice.push(
+        {
+          type: 'log',
+          category: 'warn',
+          message: 'This operation is case sensitive',
+        },
+      );
+    }
+
+    return advice;
+  }
+
+  function ___R$project$rome$$romejs$diagnostics$helpers_ts$buildDuplicateLocationAdvice(
+    locations,
+  ) {
+    const locationAdvice = locations.map(
+      (location) => {
+        if (location === undefined) {
+          return (
+            {
+              type: 'log',
+              category: 'warn',
+              message: 'Unable to find location',
+            }
+          );
+        } else {
+          return (
+            {
+              type: 'frame',
+              location,
+            }
+          );
+        }
+      },
+    );
+
+    return (
+      [
+        {
+          type: 'log',
+          category: 'info',
+          message: 'Defined already here',
+        },
+        ...locationAdvice,
+      ]
+    );
+  }
+
+  function ___R$project$rome$$romejs$diagnostics$helpers_ts$truncateSourceText(
+    code,
+    start,
+    end,
+  ) {
+    const lines = code.split(___R$project$rome$$romejs$js$parser$utils$whitespace_ts$NEWLINE);
+
+    // Pad the starting and ending lines by 10
+    const fromLine = Math.max(___R$project$rome$$romejs$ob1$index_ts$get1(start.line) - 10, 0);
+    const toLine = Math.max(___R$project$rome$$romejs$ob1$index_ts$get1(end.line) + 10, lines.length);
+
+    const capturedLines = lines.slice(fromLine, toLine);
+    return '\n'.repeat(fromLine) + capturedLines.join('\n');
+  }
+
+  // project-rome/@romejs/diagnostics/descriptions.ts
+const ___R$project$rome$$romejs$diagnostics$descriptions_ts = {
+    createBlessedDiagnosticMessage: ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage,
+    get descriptions() {
+      return (
+        ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions
+      );
+    },
+  };
+
+  function ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(
+    value,
+  ) {
+    return (
+      {
+        type: 'PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE',
+        value,
+      }
+    );
+  }
+
+  // This is a lot of gross meta programming
+  function ___R$$priv$project$rome$$romejs$diagnostics$descriptions_ts$createMessages(
+    messages,
+  ) {
+    // rome-suppress lint/noExplicitAny
+    const out = ({});
+
+    for (const categoryName in messages) {
+      // rome-suppress lint/noExplicitAny
+      const category = {};
+      out[categoryName] = category;
+
+      const inputCategory = messages[categoryName];
+      for (const key in inputCategory) {
+        const value = inputCategory[key];
+
+        if (typeof value === 'string') {
+          category[key] =
+            {
+              message: ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(value),
+            };
+        } else if (typeof value === 'function') {
+          // rome-suppress lint/noExplicitAny
+          const callback = (value);
+
+          category[key] =
+            function(...params) {
+              const ___R$ = callback.apply(null, [
+                ...params,
+              ]);
+              const ret = Object.assign(
+                {
+                },
+                ___R$,
+              );
+              delete ret.message;
+              const {
+                message,
+              } = ___R$;
+              return (
+                Object.assign(
+                  {
+                  },
+                  ret,
+                  {
+                    message: ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(message),
+                  },
+                )
+              );
+            };
+        } else {
+          const ___R$1 = (value);
+          const obj = Object.assign(
+            {
+            },
+            ___R$1,
+          );
+          delete obj.message;
+          const {
+            message,
+          } = ___R$1;
+          category[key] =
+            Object.assign(
+              {
+              },
+              obj,
+              {
+                message: ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(message),
+              },
+            );
+        }
+      }
+    }
+
+    return out;
+  }
+
+  function ___R$$priv$project$rome$$romejs$diagnostics$descriptions_ts$buildJSXOpeningAdvice(
+    name,
+    openingLoc,
+  ) {
+    return (
+      [
+        {
+          type: 'log',
+          category: 'info',
+          message: name === ''
+            ? 'Originated from this opening tag' : 'Originated from opening tag of <emphasis>' +
+            name +
+            '</emphasis>',
+        },
+        {
+          type: 'frame',
+          location: openingLoc,
+        },
+      ]
+    );
+  }
+
+  const ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions = ___R$$priv$project$rome$$romejs$diagnostics$descriptions_ts$createMessages(
+    {
+      // @romejs/parser-core
+      PARSER_CORE: {
+        EXPECTED_SPACE: 'Expected no space between',
+        EXPECTED_EOF: 'Expected end of file',
+
+        UNEXPECTED_CHARACTER: (
+          char,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Unexpected character ${char}`,
+          }),
+
+        EXPECTED_TOKEN: (got, expected) => {
+          return (
+            {
+              message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Expected token ${expected} but got ${got}`,
+            }
+          );
+        },
+      },
+
+      // @romejs/codec-js-regexp
+      REGEX_PARSER: {
+        INVALID_CAPTURE_GROUP_MODIFIER: 'Invalid capture group modifier',
+        UNCLOSED_GROUP: 'Unclosed group',
+        UNOPENED_GROUP: 'Unopened group',
+        INVALID_QUANTIFIER_TARGET: 'Invalid target for quantifier',
+        UNKNOWN_REGEX_PART: 'Unknown regex part',
+        REVERSED_CHAR_SET_RANGE: 'Range values reversed. Start char code is greater than end char code',
+        UNCLOSED_CHAR_SET: 'Unclosed character set',
+        DUPLICATE_FLAG: 'Duplicate regular expression flag',
+        INVALID_FLAG: 'Invalid regular expression flag',
+        NO_TARGET_QUANTIFIER: 'Nothing to repeat',
+      },
+
+      // @romejs/codec-json
+      JSON: {
+        SINGLE_QUOTE_USAGE: 'You can only use double quoted strings',
+        TRAILING_COMMA_VALUE: 'Trailing comma is only allowed after a value',
+        UNCLOSED_STRING: 'Unclosed string',
+        UNCLOSED_BLOCK_COMMENT: 'Unclosed block comment',
+        MISTAKEN_ARRAY_IDENTITY: 'Trying to use an array element as an object property. Did you mean to make an object?',
+        REDUNDANT_COMMA: 'Redundant comma',
+        EMPTY_INPUT_IN_JSON: 'Empty input',
+        PROPERTY_KEY_UNQUOTED_IN_JSON: 'Property keys must be quoted in JSON',
+        IMPLICIT_OBJECT_IN_JSON: 'Objects must be wrapped in curly braces in JSON',
+        COMMENTS_IN_JSON: 'Comments aren\'t allowed in JSON',
+        TRAILING_COMMA_IN_JSON: 'Trailing commas aren\'t allowed in JSON',
+        REGEX_IN_JSON: 'Regular expressions aren\'t allowed in JSON',
+        UNKNOWN_WORD_IN_JSON: (
+          word,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`${word} isn't a valid JSON word`,
+          }),
+        STRING_NEWLINES_IN_JSON: 'Newlines aren\'t allowed in JSON, you insert a newline by escaping it like this "\\n"',
+        UNDEFINED_IN_JSON: 'undefined isn\'t allowed in JSON, you could use null instead',
+        BIGINT_IN_JSON: 'Bigints aren\'t allowed in JSON',
+        NUMERIC_SEPARATORS_IN_JSON: 'Numeric separators are not allowed in JSON',
+      },
+
+      // @romejs/codec-semver
+      SEMVER: {
+        MISSING_MINOR_VERSION: 'A minor number is required for a version',
+        MISSING_PATCH_VERSION: 'A patch number is required for a version',
+        EXCESSIVE_VERSION_PARTS: 'Too many parts for version',
+        INVALID_QUANTIFIER_PART: 'Invalid version qualifier part',
+        WILDCARD_IN_VERSION: 'Wildcard aren\'t allowed in a hard version',
+        INVALID_VERSION_NUMBER: 'This isn\'t a valid version part, expected a number',
+        INVALID_RANGE: 'A semver range can only be defined with versions',
+        BARE_PIPE_WITHOUT_LOOSE: 'Bare pipes are only allowed in loose mode',
+        UNEXPECTED_WORD: (
+          word,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Unexpected word <emphasis>${word}</emphasis>`,
+          }),
+        UNKNOWN_START: 'Unknown start of atom',
+        EXPECTED_VERSION: 'Unexpected value for version',
+      },
+
+      V8: {
+        SYNTAX_ERROR: (message) => ({message, category: 'v8/syntaxError'}),
+      },
+
+      // @romejs/js-compiler
+      LINT: {
+        PENDING_FIXES: (
+          original,
+          formatted,
+        ) =>
+          ({
+            category: 'lint/pendingFixes',
+            message: 'Pending fixes',
+            advice: [
+              {
+                type: 'diff',
+                diff: ___R$project$rome$$romejs$string$diff$index_ts$default(original, formatted),
+              },
+            ],
+          }),
+
+        DUPLICATE_IMPORT_SOURCE: (
+          seenLocation,
+        ) =>
+          ({
+            fixable: true,
+            category: 'lint/duplicateImportSource',
+            message: 'This module has already been imported',
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: 'Previously imported here',
+              },
+              {
+                type: 'frame',
+                location: seenLocation,
+              },
+            ],
+          }),
+
+        PREFER_TEMPLATE: {
+          category: 'lint/preferTemplate',
+          message: 'You\'re using string concatenation when template literals are preferred',
+        },
+
+        UNSAFE_NEGATION: {
+          fixable: true,
+          category: 'lint/unsafeNegation',
+          message: 'Unsafe usage of negation operator in left side of binary expression',
+        },
+
+        UNUSED_VARIABLES: (
+          kind,
+          name,
+        ) =>
+          ({
+            category: 'lint/unusedVariables',
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Unused ${kind} <emphasis>${name}</emphasis>`,
+          }),
+
+        UNDECLARED_VARIABLES: (
+          name,
+        ) =>
+          ({
+            category: 'lint/undeclaredVariables',
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Undeclared variable <emphasis>${name}</emphasis>`,
+          }),
+
+        SPARSE_ARRAY: {
+          fixable: true,
+          category: 'lint/sparseArray',
+          message: 'Your array contains an empty slot',
+        },
+
+        SINGLE_VAR_DECLARATOR: {
+          fixable: true,
+          category: 'lint/singleVarDeclarator',
+          message: 'Declare each variable separately',
+        },
+
+        PREFER_FUNCTION_DECLARATIONS: {
+          category: 'lint/preferFunctionDeclarations',
+          message: 'Use a function declaration instead of a const function',
+          fixable: true,
+        },
+
+        NO_VAR: {
+          category: 'lint/noVar',
+          message: 'Variable declarations using `var` are disallowed, use `let` or `const` instead.',
+        },
+
+        NO_UNSAFE_FINALLY: (
+          type,
+        ) =>
+          ({
+            category: 'lint/noUnsafeFinally',
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Unsafe usage of ${type}.`,
+          }),
+
+        NO_TEMPLATE_CURLY_IN_STRING: {
+          category: 'lint/noTemplateCurlyInString',
+          message: 'Unexpected template string expression.',
+        },
+
+        NO_SHADOW_RESTRICTED_NAMES: (
+          name,
+        ) =>
+          ({
+            category: 'lint/noShadowRestrictedNames',
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Shadowing of global property <emphasis>${name}</emphasis>`,
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: 'Consider renaming this variable. It\'s easy to confuse the origin of variables when they\'re named after a known global.',
+              },
+            ],
+          }),
+
+        NO_MULTIPLE_SPACES_IN_REGEX_LITERAL: (
+          count,
+        ) =>
+          ({
+            fixable: true,
+            category: 'lint/noMultipleSpacesInRegularExpressionLiterals',
+            message: 'Unclear multiple spaces in regular expression',
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: 'It\'s hard to visually count the amount of spaces, it\'s clearer if you use a quantifier instead. eg / {' +
+                String(
+                  count,
+                ) +
+                '}/',
+              },
+            ],
+          }),
+
+        NO_LABEL_VAR: {
+          category: 'lint/noLabelVar',
+          message: 'Labels should not be variable names',
+        },
+
+        NO_IMPORT_ASSIGN: (
+          name,
+        ) =>
+          ({
+            category: 'lint/noImportAssign',
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`<emphasis>${name}</emphasis> is read-only`,
+          }),
+
+        NO_EXTRA_BOOLEAN_CAST: {
+          category: 'lint/noExtraBooleanCast',
+          message: 'Redundant double negation.',
+        },
+
+        NO_FUNCTION_ASSIGN: {
+          category: 'lint/noFunctionAssign',
+          message: 'Reassignment of function declaration',
+        },
+
+        NO_EXPLICIT_ANY: {
+          category: 'lint/noExplicitAny',
+          message: 'Unexpected any. Specify a different type.',
+        },
+
+        NO_EMPTY_CHAR_SET: {
+          fixable: true,
+          category: 'lint/noEmptyCharacterClass',
+          message: 'Empty character classes in regular expressions are not allowed',
+        },
+
+        NO_DUPLICATE_KEYS: (
+          key,
+        ) =>
+          ({
+            category: 'lint/noDuplicateKeys',
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Duplicate key <emphasis>${key}</emphasis>`,
+          }),
+
+        NO_DUPLICATE_CASE: (
+          value,
+        ) =>
+          ({
+            category: 'lint/noDuplicateCase',
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Duplicate case <emphasis>${value}</emphasis> not allowed.`,
+          }),
+
+        NO_DUPE_ARGS: (
+          name,
+        ) =>
+          ({
+            category: 'lint/noDupeArgs',
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Duplicate argument <emphasis>${name}</emphasis> in function definition`,
+          }),
+
+        NO_DELETE_VARS: {
+          category: 'lint/noDeleteVars',
+          message: 'Variables should not be deleted.',
+        },
+
+        NO_DEBUGGER: {
+          fixable: true,
+          category: 'lint/noDebugger',
+          message: 'Unexpected \'debugger\' statement',
+        },
+
+        NO_COND_ASSIGN: {
+          category: 'lint/noCondAssign',
+          message: 'Cannot assign variable in loop condition',
+        },
+
+        NO_COMPARE_NEG_ZERO: (
+          op,
+        ) =>
+          ({
+            category: 'lint/noCompareNegZero',
+            message: 'Do not use the \'' +
+            op +
+            '\' operator to compare against -0',
+            fixable: op === '===',
+          }),
+
+        NO_ASYNC_PROMISE_EXECUTOR: {
+          category: 'lint/noAsyncPromiseExecutor',
+          message: 'Promise executor functions should not be async.',
+        },
+
+        GETTER_RETURN: (
+          got,
+        ) =>
+          ({
+            category: 'lint/getterReturn',
+            message: 'Expected a \'return\' at end of a getter method but got ' +
+            got,
+          }),
+
+        EMPTY_BLOCKS: {
+          category: 'lint/emptyBlocks',
+          message: 'Empty block',
+        },
+
+        DUPLICATE_REGEX_GROUP_NAME: (
+          name,
+          locations,
+        ) =>
+          ({
+            category: 'lint/noDuplicateGroupNamesInRegularExpressions',
+            message: 'Duplicate group name <emphasis>' +
+            name +
+            '</emphasis> in regular expression',
+            advice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildDuplicateLocationAdvice(locations),
+          }),
+
+        NO_REFERENCE_TO_NON_EXISTING_GROUP: (
+          name,
+        ) =>
+          ({
+            category: 'lint/noReferenceToNonExistingGroup',
+            message: 'Reference to non-existent group <emphasis>"' +
+            name +
+            '"</emphasis>',
+          }),
+
+        DEFAULT_EXPORT_SAME_BASENAME: (
+          {defaultName, defaultType, actualFilename, correctFilename},
+        ) => {
+          let adviceMessage = '';
+
+          if (defaultName === '*default*') {
+            adviceMessage += 'The';
+          } else {
+            adviceMessage +=
+              'Filename should be <emphasis>' +
+              correctFilename +
+              '</emphasis> or the';
+          }
+
+          adviceMessage +=
+            ' ' +
+            defaultType +
+            ' name should be <emphasis>' +
+            actualFilename +
+            '</emphasis>';
+
+          return (
+            {
+              fixable: true,
+              category: 'lint/defaultExportSameBasename',
+              message: 'Filename and the name of a default ' +
+              defaultType +
+              ' should match',
+              advice: [
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: adviceMessage,
+                },
+              ],
+            }
+          );
+        },
+      },
+
+      PROJECT_MANAGER: {
+        NO_VCS: (
+          rootConfigLocation,
+        ) =>
+          ({
+            category: 'projectManager/vscMissing',
+            message: 'Can\'t find any version control for this project',
+            advice: rootConfigLocation === undefined
+              ? [
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: 'Version control root was set to the project root as it was not configured. To configure a different folder run',
+                },
+                {
+                  type: 'command',
+                  command: 'rome config set-directory vcs.root DIRECTORY_HERE',
+                },
+              ] : [
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: 'Version control root was set here',
+                },
+                {
+                  type: 'frame',
+                  location: rootConfigLocation,
+                },
+              ],
+          }),
+
+        DUPLICATE_PACKAGE: (
+          packageName,
+          existing,
+        ) =>
+          ({
+            category: 'projectManager/nameCollision',
+            message: 'Duplicate package name <emphasis>' +
+            packageName +
+            '</emphasis>',
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: 'Defined already by <filelink target="' +
+                existing +
+                '" />',
+              },
+            ],
+          }),
+
+        HASTE_COLLISION: (
+          hasteName,
+          existing,
+        ) =>
+          ({
+            category: 'projectManager/nameCollision',
+            message: 'Found a haste collision for <emphasis>' +
+            hasteName +
+            '</emphasis>',
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: 'Defined already by <filelink emphasis target="' +
+                existing +
+                '" />',
+              },
+            ],
+          }),
+
+        NOT_FOUND: {
+          category: 'projectManager/missing',
+          message: 'Couldn\'t find a project',
+          advice: [
+            {
+              type: 'log',
+              category: 'info',
+              message: 'Run <command>rome init</command> in this folder to initialize a project',
+            },
+          ],
+        },
+
+        INCORRECT_CONFIG_FILENAME: (
+          validFilenames,
+        ) =>
+          ({
+            category: 'projectManager/incorrectConfigFilename',
+            message: 'Invalid rome config filename, <emphasis>' +
+            validFilenames.join(
+              ' or ',
+            ) +
+            '</emphasis> are the only valid filename',
+          }),
+      },
+
+      FORMAT: {
+        DISABLED: {
+          category: 'format/disabled',
+          message: 'Format is disabled for this project',
+          // TODO advice and better error message
+        },
+      },
+
+      // @romejs/js-compiler
+      COMPILER: {
+        CLASSES_UNSUPPORTED: {
+          category: 'compile/classes',
+          message: 'The classes transform doesn\'t know how to transform this',
+        },
+
+        JSX_NOT_XML: {
+          category: 'compile/jsx',
+          message: 'JSX is not XML',
+        },
+      },
+
+      // @romejs/string-escape
+      STRING_ESCAPE: {
+        NOT_ENOUGH_CODE_POINTS: 'Not enough code point digits',
+        INVALID_STRING_CHARACTER: 'Invalid string character (U+0000 to U+001F)',
+        INVALID_HEX_DIGIT_FOR_ESCAPE: 'Invalid hex digit for unicode escape',
+      },
+
+      ANALYZE_DEPENDENCIES: {
+        CJS_EXPORT_IN_ES: {
+          category: 'analyzeDependencies/cjsExportInES',
+          message: 'You cannot use CommonJS exports in an ES module',
+        },
+      },
+
+      // @romejs/string-markup
+      STRING_MARKUP: {
+        UNCLOSED_STRING: 'Unclosed string',
+        EXPECTED_CLOSING_TAG_NAME: 'Expected closing tag name',
+        UNKNOWN_START: 'Unknown child start',
+        EXPECTED_ATTRIBUTE_NAME: 'Expected attribute name',
+
+        INCORRECT_CLOSING_TAG_NAME: (
+          expected,
+          got,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Expected to close ${expected} but found ${got}`,
+          }),
+
+        UNCLOSED_TAG: (
+          tagName,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Unclosed ${tagName} tag`,
+          }),
+
+        INVALID_ATTRIBUTE_NAME_FOR_TAG: (
+          tagName,
+          attributeName,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`${attributeName} is not a valid attribute name for <${tagName}>`,
+          }),
+
+        UNKNOWN_TAG_NAME: (
+          tagName,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Unknown tag name <emphasis>${tagName}</emphasis>`,
+          }),
+      },
+
+      // @romejs/path-match
+      PATH_MATCH: {
+        INVALID_PATTERN_SEGMENT_PART: 'Invalid pattern segment part',
+        INVALID_PATH_SEGMENT: 'Invalid path segment',
+      },
+
+      TESTS: {
+        CANCELLED: {
+          category: 'tests/cancelled',
+          message: 'Test was cancelled',
+        },
+
+        UNDECLARED: {
+          message: 'No tests declared in this file',
+          category: 'tests/noneDeclared',
+        },
+      },
+
+      SUPPRESSIONS: {
+        UNUSED: {
+          message: 'Unused suppression. Did not hide any errors.',
+          category: 'suppressions/unused',
+        },
+
+        PREFIX_TYPO: (
+          prefix,
+          suggestion,
+        ) =>
+          ({
+            category: 'suppressions/incorrectPrefix',
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Invalid suppression prefix <emphasis>${prefix}</emphasis>`,
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: 'Did you mean <emphasis>' +
+                suggestion +
+                '</emphasis>?',
+              },
+            ],
+          }),
+
+        DUPLICATE: (
+          category,
+        ) =>
+          ({
+            category: 'suppressions/duplicate',
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Duplicate suppression category <emphasis>${category}</emphasis>`,
+          }),
+      },
+
+      SNAPSHOTS: {
+        MISSING_NEWLINE_AFTER_CODE_BLOCK: 'Newline required after code block',
+        MISSING_NEWLINE_BEFORE_CODE_BLOCK: 'Newline required before code block end',
+        UNCLOSED_CODE_BLOCK: 'Unclosed code block',
+        EXPECTED_CODE_BLOCK_AFTER_HEADING: 'Expected a code block after this heading',
+
+        REDUNDANT: {
+          category: 'tests/snapshots/redundant',
+          message: 'Snapshot should not exist',
+        },
+
+        MISSING: {
+          category: 'tests/snapshots/missing',
+          message: 'Snapshot does not exist',
+        },
+
+        INCORRECT: (
+          expected,
+          got,
+        ) =>
+          ({
+            category: 'tests/snapshots/incorrect',
+            message: 'Snapshots do not match',
+            advice: [
+              {
+                type: 'diff',
+                diff: ___R$project$rome$$romejs$string$diff$index_ts$default(expected, got),
+              },
+            ],
+          }),
+      },
+
+      BUNDLER: {
+        TOP_LEVEL_AWAIT_IN_LEGACY: {
+          category: 'bundler/topLevelAwait',
+          message: 'This module contains a top level await which isn\'t supported in wrapper mode',
+        },
+
+        DETECTED_CYCLE: (
+          localName,
+          target,
+          culprit,
+          path,
+        ) => {
+          function formatPart(part, index) {
+            const tagged = '<filelink target="' +
+            part +
+            '" />';
+            if (part === culprit) {
+              return '<magenta>' +
+              tagged +
+              '</magenta><dim>[1]</dim>';
+            } else if (part === target) {
+              return '<cyan>' +
+              tagged +
+              '</cyan><dim>[2]</dim>';
+            } else if (index === 0) {
+              return tagged +
+              ' <inverse>ENTRY</inverse>';
+            } else {
+              return tagged;
+            }
+          }
+
+          return (
+            {
+              category: 'bundler/moduleCycle',
+              message: 'The variable <emphasis>' +
+              localName +
+              '</emphasis> won\'t be initialized yet',
+              advice: [
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: 'This is because the module it belongs to wont be executed yet. This is due to a circular dependency creating a module cycle.',
+                },
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: 'The likely cause is the file ' +
+                  formatPart(culprit) +
+                  ' that was required by ' +
+                  formatPart(
+                    target,
+                  ) +
+                  ' which created a circular dependency:',
+                },
+                {
+                  type: 'list',
+                  reverse: true,
+                  ordered: true,
+                  list: path.map(formatPart),
+                },
+              ],
+            }
+          );
+        },
+      },
+
+      RESOLVER: {
+        IMPORT_TYPE_MISMATCH: (
+          exportName,
+          source,
+          importedAsKing,
+          actualKind,
+          exportLoc,
+        ) =>
+          ({
+            category: 'resolver/importTypeMismatch',
+            message: 'The export <emphasis>' +
+            exportName +
+            '</emphasis> in <filelink emphasis target="' +
+            source +
+            '" /> was incorrectly imported as a <emphasis>' +
+            importedAsKing +
+            '</emphasis> when it\'s actually a <emphasis>' +
+            actualKind +
+            '</emphasis>',
+            advice: exportLoc &&
+              [
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: 'Export was defined here in <filelink emphasis target="' +
+                  exportLoc.filename +
+                  '" />',
+                },
+
+                {
+                  type: 'frame',
+                  location: exportLoc,
+                },
+              ],
+          }),
+
+        UNKNOWN_EXPORT: (
+          name,
+          source,
+          exportedNames,
+          formatExportedName,
+        ) =>
+          ({
+            message: 'Couldn\'t find export <emphasis>' +
+            name +
+            '</emphasis> in <filelink emphasis target="' +
+            source +
+            '" />',
+            category: 'resolver/unknownExport',
+            advice: exportedNames.length === 0
+              ? [
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: 'This file doesn\'t have any exports',
+                },
+              ] : ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice(
+                name,
+                exportedNames,
+                {
+                  formatItem: (name) => {
+                    const {location, source} = formatExportedName(name);
+
+                    if (location !== undefined) {
+                      if (location.start === undefined) {
+                        name =
+                          '<filelink target="' +
+                          location.filename +
+                          '">' +
+                          name +
+                          '</filelink>';
+                      } else {
+                        name =
+                          '<filelink target="' +
+                          location.filename +
+                          '" line="' +
+                          location.start.line +
+                          '" column="' +
+                          location.start.column +
+                          '">' +
+                          name +
+                          '</filelink>';
+                      }
+                    }
+
+                    if (source !== undefined) {
+                      name += ' <dim>(from <filelink target="' +
+                      source +
+                      '" />)</dim>';
+                    }
+
+                    return name;
+                  },
+                },
+              ),
+          }),
+
+        UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL: (
+          name,
+          source,
+          location,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Couldn't find export <emphasis>${name}</emphasis> in <filelink emphasis target="${source}" />`,
+            category: 'resolver/unknownExport',
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`However we found a matching local variable in <filelink emphasis target="${location.filename}" />. Did you forget to export it?`,
+              },
+              {
+                type: 'frame',
+                location,
+              },
+            ],
+          }),
+      },
+
+      SPDX: {
+        UNKNOWN_LICENSE: (
+          id,
+          knownLicenses,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Unknown SPDX license <emphasis>${id}</emphasis>`,
+            advice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice(id, knownLicenses),
+          }),
+
+        VALID_LICENSE_WITH_MISSING_DASH: (
+          possibleCorrectLicense,
+        ) =>
+          ({
+            message: 'Missing dash between SPDX license name and version',
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: 'Did you mean <emphasis>' +
+                possibleCorrectLicense +
+                '</emphasis>?',
+              },
+            ],
+          }),
+
+        WITH_RIGHT_LICENSE_ONLY: 'Only a license id can be on the right side of a WITH',
+
+        OPERATOR_NOT_BETWEEN_EXPRESSION: 'Can only use AND/OR in between an expression',
+
+        PLUS_NOT_AFTER_LICENSE: 'A plus can only come after a license id',
+
+        UNOPENED_PAREN: 'Nothing open to close',
+      },
+
+      // @romejs/js-parser
+      JS_PARSER: {
+        FLOW_ANNOTATION_WITH_TYPESCRIPT_ENABLED: 'Cannot have a @flow annotation comment when TypeScript syntax has been enabled',
+        UNTERMINATED_BLOCK_COMMENT: 'Unterminated comment',
+        UNTERMINATED_JSX_STRING: 'Unterminated string constant',
+        INVALID_UNICODE_ESCAPE: 'Invalid Unicode escape',
+        EXPECTED_UNICODE_ESCAPE: 'Expecting Unicode escape sequence \\uXXXX',
+        BAD_HEX_ESCAPE: 'Bad character escape sequence',
+        OCTAL_IN_STRICT_MODE: 'Octal literal in strict mode',
+        UNTERMINATED_TEMPLATE: 'Unterminated template',
+        UNTERMINATED_STRING: 'Unterminated string constant',
+        OUT_OF_BOUND_CODE_POINT: 'Code point out of bounds',
+        IDENTIFIER_AFTER_NUMBER: 'Identifier directly after number',
+        OCTAL_BIGINT: 'A bigint can\'t be an octal',
+        DECIMAL_BIGINT: 'A bigint can\'t have a decimal',
+        INVALID_NUMBER: 'Invalid number',
+        LEGACY_OCTAL_IN_STRICT_MODE: 'Legacy octal literals are not allowed in strict mode',
+        INVALID_INT_TOKEN: 'Invalid or unexpected int token',
+        UNICODE_ESCAPE_IN_REGEX_FLAGS: 'Regular expression flags can\'t contain unicode escapes',
+        UNTERMINATED_REGEX: 'Unterminated regular expression',
+        EXPECTED_RELATIONAL_OPERATOR: 'Expected relational operator',
+        UNEXPECTED_SPACE: 'Unexpected space',
+        EXPECTED_SEMI_OR_LINE_TERMINATOR: 'Expected a semicolon or a line terminator',
+        GET_SET_CLASS_CONSTRUCTOR: 'Constructor can\'t have get/set modifier',
+        ASYNC_CLASS_CONSTRUCTOR: 'Constructor cannot be async',
+        GENERATOR_CLASS_CONSTRUCTOR: 'Constructor cannot be a generator',
+        DUPLICATE_CLASS_CONSTRUCTOR: 'Duplicate constructor in the same class',
+        UNKNOWN_CLASS_PROPERTY_START: 'Unknown class property start',
+        CLASS_STATIC_PROTOTYPE_PROPERTY: 'Classes may not have static property named prototype',
+        CLASS_PRIVATE_FIELD_NAMED_CONSTRUCTOR: 'Classes may not have a private field named \'#constructor\'',
+        CLASS_PROPERTY_NAME_CONSTRUCTOR: 'Classes may not have a non-static field named \'constructor\'',
+        PROTO_PROP_REDEFINITION: 'Redefinition of __proto__ property',
+        MISSING_CONDITIONAL_SEPARATOR: 'Missing conditional expression consequent separator',
+        WRAP_EXPONENTIATION: 'Illegal expression. Wrap left hand side or entire exponentiation in parentheses.',
+        DELETE_LOCAL_VARIABLE_IN_STRICT: 'Deleting local variable in strict mode',
+        DELETE_PRIVATE_FIELD: 'Deleting a private field is not allowed',
+        TAGGED_TEMPLATE_IN_OPTIONAL_CHAIN: 'Tagged Template Literals are not allowed in optionalChain',
+        YIELD_NAME_IN_GENERATOR: 'Can not use \'yield\' as identifier inside a generator',
+        AWAIT_NAME_IN_ASYNC: 'Can not use \'await\' as identifier inside an async function',
+        EMPTY_PARENTHESIZED_EXPRESSION: 'Parenthesized expression didnt contain anything',
+        AWAIT_IN_ASYNC_PARAMS: 'await is not allowed in async function parameters',
+        YIELD_IN_GENERATOR_PARAMS: 'yield is not allowed in generator parameters',
+        PARENTHESIZED_FUNCTION_PARAMS: 'Function parameters can\'t be parenthesized',
+        NEW_WITH_TYPESCRIPT_TYPE_ARGUMENTS_NO_PARENS: 'In TypeScript, a new expression with type arguments must have parens',
+        INVALID_TEMPLATE_ESCAPE: 'Invalid escape sequence in template',
+        EXPECTED_IDENTIFIER: 'Expected an identifier',
+        IMPORT_EXACT_ARGUMENTS: 'import() requires exactly one argument',
+        IMPORT_TRAILING_COMMA: 'Trailing comma is disallowed inside import(...) arguments',
+        IMPORT_SPREAD: 'Spread is not allowed in import()',
+        IMPORT_NEW_CALLEE: 'Cannot use new with import(...)',
+        SUPER_OUTSIDE_METHOD: 'super is only allowed in object methods and classes',
+        INVALID_SUPER_SUFFIX: 'Invalid super suffix operator',
+        AWAIT_OUTSIDE_ASYNC: 'Can\'t use await outside of an async function',
+        AWAIT_STAR: 'await* has been removed from the async functions proposal. Use Promise.all() instead.',
+        NEW_TARGET_OUTSIDE_CLASS: 'new.target can only be used in functions or class properties',
+        MULTIPLE_DESTRUCTURING_RESTS: 'Cannot have multiple rest elements when destructuring',
+        TRAILING_COMMA_AFTER_REST: 'A trailing comma is not permitted after the rest element',
+        GETTER_WITH_PARAMS: 'getter should have no parameters',
+        SETTER_WITH_REST: 'setter function argument must not be a rest parameter',
+        SETTER_NOT_ONE_PARAM: 'setter should have exactly one param',
+        ASYNC_GETTER_SETTER: 'An object setter/getter can\'t be async',
+        GENERATOR_GETTER_SETTER: 'An object setter/getter can\'t be a generator',
+        ARGUMENTS_IN_CLASS_FIELD: '\'arguments\' is not allowed in class field initializer',
+        NON_SIMPLE_PARAM_IN_EXPLICIT_STRICT_FUNCTION: 'Non-simple parameter in strict mode',
+        STRICT_DIRECTIVE_IN_NON_SIMPLE_PARAMS: 'Illegal \'use strict\' directive in function with non-simple parameter list',
+        OBJECT_PROPERTY_WITH_TYPE_PARAMETERS: 'Object property cannot have type parameters',
+        ILLEGAL_VARIANCE: 'Variance is not allowed here',
+        OBJECT_METHOD_IN_PATTERN: 'Object methods aren\'t allowed in object patterns',
+        IMPORT_META_OUTSIDE_MODULE: 'import.meta may only appear in a module',
+        EXPECTED_ARROW_AFTER_ASYNC_TYPE_PARAMS: 'Expected arrow because we are a possible async arrow and type annotated parameters were present',
+        INVALID_OBJECT_PATTERN_PROP: 'Invalid property node for object pattern',
+        ASYNC_OBJECT_METHOD_LINE_BREAK: 'There shouldn\'t be any newlines between async and the rest of the function',
+        SPACE_BETWEEN_PRIVATE_HASH: 'Unexpected space between # and identifier',
+        CONFUSING_CALL_ARGUMENT: 'Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword.',
+        EXPECTED_ARROW_AFTER_TYPE_PARAMS: 'Expected an arrow function after this type parameter declaration',
+        REQUIRED_CLASS_NAME: 'Class name is required',
+        JSX_ELEM_TYPE_ARGUMENTS_OUTSIDE_TS: 'JSX element type arguments are only allowed in TS',
+        UNWRAPPED_ADJACENT_JHX: 'Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>?',
+        CONFUSED_OR: 'Unexpected ||, did you mean just |?',
+        INVALID_ASSIGNMENT_TARGET: 'Not a valid assignment target',
+        IMPORT_KIND_SPECIFIER_ON_IMPORT_DECLARATION_WITH_KIND: 'The `type` and `typeof` keywords on named imports can only be used on regular `import` statements. It cannot be used with `import type` or `import typeof` statements',
+        DESTRUCTURING_IN_IMPORT: 'ES2015 named imports do not destructure. Use another statement for destructuring after the import.',
+        IMPORT_TYPE_STAR: 'import * is not allowed',
+        IMPORT_MISSING_SOURCE: 'import missing a source',
+        EXPORT_TYPE_NAMESPACE: 'Can\'t have a type export namespacer specifier',
+        EXPORT_MISSING_FROM: 'Expected `from` for an export node',
+        EXPORT_FROM_NOT_STRING: 'Export from only allows strings',
+        BINDING_MEMBER_EXPRESSION: 'Binding member expression',
+        INVALID_OBJECT_PATTERN_PROPERTY: 'Not a valid assignment object pattern property',
+        OBJECT_PATTERN_CANNOT_CONTAIN_METHODS: 'Object pattern cannot contains methods',
+        INVALID_ASSIGNMENT_PATTERN_OPERATOR: 'Only \'=\' operator can be used for specifying default value.',
+        INVALID_OBJECT_REST_ARGUMENT: 'Invalid rest operator\'s argument',
+        INVALID_EXPORT_DEFAULT: 'Only expressions, functions or classes are allowed as the `default` export.',
+        INVALID_EXPORT_DECLARATION: 'Invalid export declaration',
+        DESTRUCTURING_REST_ELEMENT_NOT_LAST: 'The rest element has to be the last element when destructuring',
+        REST_INVALID_ARGUMENT: 'Invalid rest operator\'s argument',
+        EXPORT_ASYNC_NO_FUNCTION_KEYWORD: 'Started with `export async` so we expected to receive an async function but no function keyword was found',
+        TYPE_CAST_WITHOUT_ANNOTATION: 'Type cast expression has no type annotation. Did you mean for this to be a function parameter?',
+        TYPE_CAST_CANNOT_BE_OPTIONAL: 'Type cast expressions cannot be optional. Did you mean for this to be a function parameter?',
+        TYPE_CAST_EXPECTED_PARENS: 'The type cast expression is expected to be wrapped with parentheses',
+        FLOW_SPACE_BETWEEN_PERCENT_CHECKS: 'Spaces between \xb4%\xb4 and \xb4checks\xb4 are not allowed here.',
+        FLOW_BAD_UNDERSCORE_NAME: '`_` is only allowed as a type argument to call or new',
+        FLOW_UNINFERRABLE_PREDICATE_ON_FUNCTION: 'Predicate function declarations need to declare a predicate expression',
+        FLOW_DECLARE_MODULE_IN_DECLARE_MODULE: '`declare module` cannot be used inside another `declare module`',
+        FLOW_UNKNOWN_DECLARATION_START: 'Unknown start to Flow declaration',
+        FLOW_IMPORT_KINDLESS_IN_DECLARE_MODULE: 'Imports within a `declare module` body must always be `import type` or `import typeof`',
+        FLOW_MIXED_DECLARE_EXPORTS: 'Found both `declare module.exports` and `declare export` in the same module. Modules can only have 1 since they are either an ES module or they are a CommonJS module',
+        FLOW_DUPLICATE_DECLARE_MODULE_EXPORTS: 'Duplicate `declare module.exports` statement',
+        FLOW_DISALLOW_DEFAULT_TYPE_PARAMETER: 'Default type parameters arent allowed here',
+        FLOW_DISALLOWED_SPREAD: 'Spread operator cannot appear in class or interface definitions',
+        FLOW_DEFAULT_TYPE_PARAMETER_REQUIRED: 'Type parameter declaration needs a default, since a preceding type parameter declaration has a default.',
+        FLOW_INEXACT_SYNTAX_NOT_ALLOWED: 'Explicit inexact syntax is only allowed inside inexact objects',
+        FLOW_INEXACT_CANNOT_APPEAR_IN_EXPLICIT_EXACT: 'Explicit inexact syntax cannot appear inside an explicit exact object type',
+        FLOW_INEXACT_MUST_BE_AT_END: 'Explicit inexact syntax must appear at the end of an inexact object',
+        FLOW_TYPE_CAST_IN_TS: 'Flow type cast expressions aren\'t allowed in TypeScript',
+        TYPE_NUMERIC_LITERAL_PLUS: 'Numeric literal type annotations cannot stand with a +, omit it instead',
+        TYPE_NUMERIC_LITERAL_EXPECTED: 'Unexpected token, expected "number"',
+        FLOW_INVALID_ASYNC_ARROW_WITH_TYPE_PARAMS: 'Invalid async arrow with type parameters',
+        FLOW_UNKNOWN_PRIMARY_START: 'Unknown flow primarty type start',
+        FLOW_UNKNOWN_DECLARE_EXPORT_START: 'No valid start for Flow declare export declaration found',
+        FLOW_DECLARE_MODULE_INVALID_CHILD: 'Only declares and type imports are allowed inside declare module',
+        JSX_INVALID_ATTRIBUTE_VALUE: 'JSX attribute value should be either an expression or a quoted JSX text',
+        JSX_UNCLOSED_SELF_CLOSING_TAG: 'Unclosed JSX element open',
+        JSX_UNCLOSED_CLOSING_TAG: 'Unclosed JSX element close',
+        JSX_EMPTY_ATTRIBUTE_VALUE: 'JSX attribute cannot be an empty expression',
+        JSX_UNKNOWN_IDENTIFIER_TOKEN: 'Unknown JSX identifier token',
+        TS_IMPORT_ARG_NOT_STRING: 'Argument in a type import must be a string literal',
+        TS_CONSTANT_NOT_LITERAL: 'Only literal values are allowed as a constant type',
+        TS_INVALID_SIGNATURE_BINDING_NODE: 'Invalid node in signature binding list',
+        TS_REQUIRED_FOLLOWS_OPTIONAL: 'A required element cannot follow an optional element.',
+        TS_TEMPLATE_LITERAL_WITH_SUBSTITUION: 'Template literal types cannot have any substitution',
+        TS_UNKNOWN_NON_ARRAY_START: 'Unknown TS non array type start',
+        TS_INVALID_READONLY_MODIFIER: '\'readonly\' type modifier is only permitted on array and tuple literal types.',
+        TS_EXTERNAL_MODULE_REFERENCE_ARG_NOT_STRING: 'TypeScript require() must have a single string argument',
+        TS_UNKNOWN_DECLARE_START: 'Unknown TypeScript declare start',
+        TS_UNEXPECTED_CAST_IN_PARAMETER_POSITION: 'Unexpected type cast in parameter position',
+        TS_DISABLED_BUT_ACCESSIBILITY_OR_READONLY: 'Accessibility and readonly syntax found but TS is not enabled',
+        TS_PARAMETER_PROPERTY_BINDING_PATTERN: 'A parameter property may not be declared using a binding pattern.',
+        TYPE_ANNOTATION_AFTER_ASSIGNMENT: 'Type annotations must come before default assignments, e.g. instead of `age = 25: number` use `age: number = 25`',
+        TYPE_BINDING_PARAMETER_OPTIONAL: 'A binding pattern parameter cannot be optional in an implementation signature.',
+        ILLEGAL_FUNCTION_IN_STRICT: 'In strict mode code, functions can only be declared at top level or inside a block',
+        ILLEGAL_FUNCTION_IN_NON_STRICT: 'In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement',
+        ILLEGAL_GENERATOR_DEFINITION: 'Generators can only be declared at the top level or inside a block',
+        ILLEGAL_ASYNC_DEFINITION: 'Async functions can only be declared at the top level or inside a block',
+        LEXICAL_DECLARATION_IN_SINGLE_STATEMENT_CONTEXT: 'Lexical declaration cannot appear in a single-statement context',
+        IMPORT_EXPORT_MUST_TOP_LEVEL: '\'import\' and \'export\' may only appear at the top level',
+        REGULAR_FOR_AWAIT: 'Can\'t have an await on a regular for loop',
+        RETURN_OUTSIDE_FUNCTION: '\'return\' outside of function',
+        MULTIPLE_DEFAULT_CASE: 'Multiple default clauses',
+        SWITCH_STATEMENT_OUTSIDE_CASE: 'Statement outside of a case or default block',
+        NEWLINE_AFTER_THROW: 'Illegal newline after throw',
+        TRY_MISSING_FINALLY_OR_CATCH: 'Missing catch or finally clause',
+        INVALID_LABEL_DECLARATION: 'Invalid labeled declaration',
+        WITH_IN_STRICT: '\'with\' in strict mode',
+        OCTAL_IN_STRICT: 'Octal literal in strict mode',
+        FOR_IN_OF_WITH_INITIALIZER: 'Loop variable declaration may not have an initializer',
+        CONST_WITHOUT_INITIALIZER: 'A constant must have an initializer',
+        COMPLEX_BINDING_WITHOUT_INITIALIZER: 'Complex binding patterns require an initialization value',
+        ACCESSOR_WITH_TYPE_PARAMS: 'An accessor cannot have type parameters',
+        UNEXPECTED_SPREAD: 'Unexpected spread',
+
+        DUPLICATE_LABEL: (
+          label,
+          loc,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Label <emphasis>${label}</emphasis> is already declared`,
+            advice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildDuplicateLocationAdvice([loc]),
+          }),
+
+        UNKNOWN_LABEL: (
+          label,
+        ) =>
+          ({
+            message: label === undefined
+              ? 'No loop label found' : ___R$project$rome$$romejs$string$markup$escape_ts$markup`Unknown label <emphasis>${label}</emphasis>`,
+          }),
+
+        IMPORT_EXPORT_IN_SCRIPT: (
+          manifestPath,
+        ) =>
+          ({
+            message: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module',
+            advice: [
+              // TODO this advice is pointless if you have syntax extensions enabled
+
+              {
+                type: 'log',
+                category: 'info',
+                message: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module',
+              },
+              {
+                type: 'log',
+                category: 'info',
+                message: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="' +
+                manifestPath +
+                '" />',
+              },
+            ],
+          }),
+
+        SUPER_CALL_OUTSIDE_CONSTRUCTOR: {
+          message: 'super() is only valid inside a class constructor of a subclass',
+          advice: [
+            {
+              type: 'log',
+              category: 'info',
+              message: 'Maybe a typo in the method name (\'constructor\') or not extending another class?',
+            },
+          ],
+        },
+
+        JSX_DISABLED: {
+          message: 'JSX syntax isn\'t enabled',
+          advice: [
+            {
+              type: 'log',
+              category: 'info',
+              message: 'Are you using <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.tsx</emphasis>',
+            },
+            {
+              type: 'log',
+              category: 'info',
+              message: 'Are you using <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
+            },
+            {
+              type: 'log',
+              category: 'info',
+              message: 'Not using either? Change the file extension to <emphasis>.jsx</emphasis>',
+            },
+            // TODO you can also add `@jsx whatever` at the top of a file
+          ],
+        },
+
+        JSX_IN_TS_EXTENSION: {
+          message: 'JSX isn\'t allowed in regular TypeScript files',
+          advice: [
+            {
+              type: 'log',
+              category: 'info',
+              message: 'Change the file extension to <emphasis>.tsx</emphasis> to enable JSX support',
+            },
+          ],
+        },
+
+        INVALID_PARENTEHSIZED_LVAL: (
+          patternType,
+        ) =>
+          ({
+            message: 'Invalid parenthesized binding',
+            advice: patternType === 'object'
+              ? [
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: 'Did you use `({a}) = 0` instead of `({a} = 0)`?',
+                },
+              ] : patternType === 'array'
+                ? [
+                  {
+                    type: 'log',
+                    category: 'info',
+                    message: 'Did you use `([a]) = 0` instead of `([a] = 0)`?',
+                  },
+                ] : [],
+          }),
+
+        EXPECTED_COMMA_SEPARATOR: (
+          context,
+        ) =>
+          ({
+            message: 'Expected a comma to separate items in ' +
+            context,
+          }),
+
+        INVALID_LEFT_HAND_SIDE: (
+          context,
+        ) =>
+          ({
+            message: 'Invalid left-hand side in ' +
+            context,
+          }),
+
+        TS_EMPTY_LIST: (
+          descriptor,
+        ) =>
+          ({
+            message: descriptor +
+            ' list cannot be empty',
+          }),
+
+        JSX_EXPECTED_CLOSING_TAG: (
+          name,
+          openingLoc,
+        ) =>
+          ({
+            message: 'Expected a corresponding JSX closing tag for <emphasis>' +
+            name +
+            '</emphasis>',
+            advice: ___R$$priv$project$rome$$romejs$diagnostics$descriptions_ts$buildJSXOpeningAdvice(name, openingLoc),
+          }),
+
+        JSX_EXPECTED_CLOSING_FRAGMENT_TAG: (
+          name,
+          openingLoc,
+        ) =>
+          ({
+            message: 'Expected JSX closing fragment tag',
+            advice: ___R$$priv$project$rome$$romejs$diagnostics$descriptions_ts$buildJSXOpeningAdvice(name, openingLoc),
+          }),
+
+        JSX_UNKNOWN_CHILD_START: (
+          name,
+          openingLoc,
+        ) =>
+          ({
+            message: 'Unknown JSX children start',
+            advice: ___R$$priv$project$rome$$romejs$diagnostics$descriptions_ts$buildJSXOpeningAdvice(name, openingLoc),
+          }),
+
+        JSX_UNCLOSED_ELEMENT: (
+          name,
+          openingLoc,
+        ) =>
+          ({
+            message: 'Unclosed JSX element',
+            advice: ___R$$priv$project$rome$$romejs$diagnostics$descriptions_ts$buildJSXOpeningAdvice(name, openingLoc),
+          }),
+
+        FLOW_RESERVED_TYPE: (
+          word,
+        ) =>
+          ({
+            message: 'Cannot overwrite primitive type ' +
+            word,
+          }),
+
+        FLOW_DECLARE_EXPORT_UNSUPPORTED: (
+          label,
+          suggestion,
+        ) =>
+          ({
+            message: '`declare export ' +
+            label +
+            '` is not supported. Use `' +
+            suggestion +
+            '` instead',
+          }),
+
+        FLOW_REQUIRED: (
+          label,
+        ) =>
+          ({
+            message: 'A ' +
+            label +
+            ' is only valid inside of a Flow file',
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: 'To enable <emphasis>Flow</emphasis> support, add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
+              },
+            ],
+          }),
+
+        TS_REQUIRED: (
+          label,
+        ) =>
+          ({
+            message: 'A ' +
+            label +
+            ' is only valid inside of a TypeScript file',
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: 'To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
+              },
+            ],
+          }),
+
+        FLOW_OR_TEST_REQUIRED: (
+          label,
+        ) =>
+          ({
+            message: 'A ' +
+            label +
+            ' is only valid inside of a TypeScript or Flow file',
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: 'Did you mean <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
+              },
+              {
+                type: 'log',
+                category: 'info',
+                message: 'Did you mean <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
+              },
+            ],
+          }),
+
+        DUPLICATE_EXPORT: (
+          name,
+          existing,
+        ) =>
+          ({
+            message: name === 'default'
+              ? 'Only one default export allowed per module.' : '`' +
+              name +
+              '` has already been exported. Exported identifiers must be unique.',
+            advice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildDuplicateLocationAdvice([existing]),
+          }),
+
+        NEW_IN_OPTIONAL_CHAIN: (
+          responsiblePointer,
+        ) =>
+          ({
+            message: 'constructors in/after an Optional Chain are not allowed',
+            advice: responsiblePointer &&
+              [
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: 'Optional chain member responsible',
+                },
+                {
+                  type: 'frame',
+                  location: responsiblePointer,
+                },
+              ],
+          }),
+
+        UNKNOWN_EXPRESSION_ATOM_START: (
+          context,
+        ) =>
+          ({
+            message: 'Unknown start to an ' +
+            context,
+          }),
+
+        INVALID_META_PROPERTY: (
+          metaName,
+          propertyName,
+        ) =>
+          ({
+            message: 'The only valid meta property for ' +
+            metaName +
+            ' is ' +
+            metaName +
+            '.' +
+            propertyName,
+          }),
+
+        ARGUMENT_CLASH_IN_STRICT: (
+          name,
+          loc,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Argument <emphasis>${name}</emphasis> name clash in strict mode`,
+            advice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildDuplicateLocationAdvice([loc]),
+          }),
+
+        RESERVED_WORD: (
+          word,
+        ) =>
+          ({
+            message: word +
+            ' is a reserved word',
+          }),
+
+        UNEXPECTED_KEYWORD: (
+          keyword,
+        ) =>
+          ({
+            message: 'Unexpected keyword ' +
+            keyword,
+          }),
+
+        UNEXPECTED_TOKEN: (
+          expected,
+          possibleShiftMistake,
+        ) =>
+          ({
+            message: expected === undefined
+              ? 'Unexpected token' : 'Unexpected token, expected ' +
+              expected,
+            advice: possibleShiftMistake
+              ? [
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: 'Did you accidently hold shift?',
+                },
+              ] : [],
+          }),
+
+        EXPECTED_CLOSING: (
+          name,
+          char,
+          location,
+        ) =>
+          ({
+            message: 'Unclosed ' +
+            name,
+
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: 'We expected to find the closing character <emphasis>' +
+                char +
+                '</emphasis> here',
+              },
+              {
+                type: 'frame',
+                location,
+              },
+            ],
+          }),
+
+        EXPECTED_KEYWORD: (
+          keyword,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Expected keyword ${keyword}`,
+          }),
+
+        ESCAPE_SEQUENCE_IN_WORD: (
+          word,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`${word} can't contain a unicode escape`,
+          }),
+
+        EXPECTED_ENABLE_SYNTAX: (
+          syntaxName,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Expected ${syntaxName} syntax to be enabled`,
+          }),
+
+        UNEXPECTED_HASH: (
+          exclamationFollowed,
+        ) =>
+          ({
+            message: 'Unexpected character #',
+            advice: exclamationFollowed
+              ? [
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: 'Did you want to write a hashbang? A hashbang can only be the first thing in a file.',
+                },
+              ] : [],
+          }),
+
+        UNEXPECTED_UNICODE_CHARACTER: (
+          char,
+          unicodeName,
+          equivalentChar,
+          equivalentName,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Unexpected Unicode character '<emphasis>${char}</emphasis>' (<emphasis>${unicodeName}</emphasis>)`,
+
+            advice: [
+              {
+                type: 'log',
+                category: 'info',
+                message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Did you mean '<emphasis>${equivalentChar}</emphasis>' (<emphasis>${equivalentName}</emphasis>)? Both characters look the same, but are not.`,
+              },
+            ],
+          }),
+
+        EXPECTED_NUMBER_IN_RADIX: (
+          radix,
+        ) =>
+          ({
+            message: 'Expected number in radix ' +
+            String(radix),
+          }),
+
+        INVALID_IDENTIFIER_NAME: (
+          name,
+        ) =>
+          ({
+            message: 'Invalid identifier ' +
+            name,
+          }),
+
+        ESCAPE_SEQUENCE_IN_KEYWORD: (
+          keyword,
+        ) =>
+          ({
+            message: 'Escape sequence in keyword ' +
+            keyword,
+          }),
+      },
+
+      // @romejs/js-analysis
+      TYPE_CHECK: {
+        NOT_CALLABLE: {
+          category: 'typeCheck/uncallable',
+          message: 'This type isn\'t callable',
+        },
+
+        INCOMPATIBILITY: (
+          upper,
+          originLoc,
+        ) =>
+          ({
+            category: 'typeCheck/incompatible',
+            message: 'Type incompatibility found',
+            advice: [
+              {
+                type: 'log',
+                category: 'error',
+                message: 'This type is incompatible with expected type of',
+              },
+
+              originLoc === undefined
+                ? {
+                  type: 'log',
+                  category: 'info',
+                  message: upper,
+                } : {
+                  type: 'frame',
+                  location: originLoc,
+                  marker: upper,
+                },
+            ],
+          }),
+
+        UNKNOWN_IMPORT: (
+          importedName,
+          source,
+          possibleNames,
+        ) =>
+          ({
+            category: 'typeCheck/unknownImport',
+            message: 'Unknown import \'' +
+            importedName +
+            '\' in \'' +
+            source +
+            '\'',
+            advice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice(importedName, possibleNames),
+          }),
+
+        UNKNOWN_PROP: (
+          key,
+          possibleNames,
+        ) =>
+          ({
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Property ${key} not found in`,
+            category: 'typeCheck/unknownProperty',
+            advice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice(key, possibleNames),
+          }),
+
+        UNDECLARED_VARIABLE: (
+          name,
+          possibleNames,
+        ) =>
+          ({
+            category: 'typeCheck/undeclaredVariable',
+            message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Undeclared variable ${name}`,
+            advice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice(name, possibleNames),
+          }),
+
+        NOT_EXHAUSTIVE: (
+          only,
+          target,
+        ) =>
+          ({
+            category: 'typeCheck/notExhaustive',
+            //message += `but allows ${this.extraenous.map(type => this.utils.humanize(type)).join(' | ')}`;
+            message: 'Expected only a ' +
+            only +
+            ' but got ' +
+            target,
+          }),
+
+        MISSING_CONDITION: (
+          missing,
+        ) =>
+          ({
+            category: 'typeCheck/missingCondition',
+            message: 'Missing the conditions ' +
+            missing.join(', '),
+          }),
+      },
+    },
+  );
 
   // project-rome/@romejs/diagnostics/derive.ts
 const ___R$project$rome$$romejs$diagnostics$derive_ts = {
@@ -73721,7 +75345,7 @@ const ___R$project$rome$$romejs$diagnostics$derive_ts = {
     rootDiag,
   ...diags) {
     let mergedAdvice = [
-      ...___R$$priv$project$rome$$romejs$diagnostics$derive_ts$normalizeArray(rootDiag.advice),
+      ...___R$$priv$project$rome$$romejs$diagnostics$derive_ts$normalizeArray(rootDiag.description.advice),
     ];
 
     for (const diag of diags) {
@@ -73729,7 +75353,7 @@ const ___R$project$rome$$romejs$diagnostics$derive_ts = {
         [
           ...mergedAdvice,
           ...___R$project$rome$$romejs$diagnostics$derive_ts$deriveRootAdviceFromDiagnostic(diag).advice,
-          ...___R$$priv$project$rome$$romejs$diagnostics$derive_ts$normalizeArray(diag.advice),
+          ...___R$$priv$project$rome$$romejs$diagnostics$derive_ts$normalizeArray(diag.description.advice),
         ];
     }
 
@@ -73739,7 +75363,14 @@ const ___R$project$rome$$romejs$diagnostics$derive_ts = {
         },
         rootDiag,
         {
-          advice: mergedAdvice,
+          description: Object.assign(
+            {
+            },
+            rootDiag.description,
+            {
+              advice: mergedAdvice,
+            },
+          ),
         },
       )
     );
@@ -73780,11 +75411,12 @@ const ___R$project$rome$$romejs$diagnostics$derive_ts = {
     },
   ) {
     const advice = [];
+    const {description: metadata, location} = diag;
 
     let header = ___R$project$rome$$romejs$diagnostics$derive_ts$getDiagnosticHeader(
       {
-        start: diag.start,
-        filename: diag.filename,
+        start: location.start,
+        filename: location.filename,
       },
     );
 
@@ -73793,20 +75425,20 @@ const ___R$project$rome$$romejs$diagnostics$derive_ts = {
       diag.label +
       '</emphasis>';
 
-      if (diag.category !== undefined) {
+      if (metadata.category !== undefined) {
         header += ' <dim>' +
-        diag.category +
+        metadata.category +
         '</dim>';
       }
     } else {
-      if (diag.category !== undefined) {
+      if (metadata.category !== undefined) {
         header += ' <emphasis>' +
-        diag.category +
+        metadata.category +
         '</emphasis>';
       }
     }
 
-    if (diag.fixable === true) {
+    if (metadata.fixable === true) {
       header += ' <inverse>FIXABLE</inverse>';
     }
 
@@ -73828,21 +75460,17 @@ const ___R$project$rome$$romejs$diagnostics$derive_ts = {
       {
         type: 'log',
         category: 'error',
-        message: diag.message,
+        message: metadata.message.value,
       },
     );
 
     if (opts.skipFrame === false) {
-      if (diag.start !== undefined && diag.end !== undefined) {
+      if (location.start !== undefined && location.end !== undefined) {
         advice.push(
           {
             type: 'frame',
-            sourceText: diag.sourceText,
-            filename: diag.filename,
-            mtime: diag.mtime,
+            location: diag.location,
             marker: diag.marker,
-            start: diag.start,
-            end: diag.end,
           },
         );
       } else if (diag.marker !== undefined) {
@@ -73892,14 +75520,18 @@ const ___R$project$rome$$romejs$diagnostics$derive_ts = {
 
     return (
       {
-        filename: targetFilename,
-        start: targetLoc === undefined ? undefined : targetLoc.start,
-        end: targetLoc === undefined ? undefined : targetLoc.end,
-        sourceText: targetCode,
-        category: opts.category,
+        description: {
+          category: opts.category,
+          message: ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(___R$project$rome$$romejs$string$markup$escape_ts$escapeMarkup(message)),
+          advice,
+        },
+        location: {
+          filename: targetFilename,
+          start: targetLoc === undefined ? undefined : targetLoc.start,
+          end: targetLoc === undefined ? undefined : targetLoc.end,
+          sourceText: targetCode,
+        },
         label: opts.label,
-        message,
-        advice,
       }
     );
   }
@@ -74075,149 +75707,25 @@ const ___R$project$rome$$romejs$diagnostics$wrap_ts = {
     }
   }
 
-  // project-rome/@romejs/diagnostics/helpers.ts
-const ___R$project$rome$$romejs$diagnostics$helpers_ts = {
-    buildSuggestionAdvice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice,
-    truncateSourceText: ___R$project$rome$$romejs$diagnostics$helpers_ts$truncateSourceText,
-  };
-
-  function ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice(
-    value,
-    items,
-    {minRating = 0.5, ignoreCase, formatItem} = {},
-  ) {
-    const advice = [];
-
-    const ratings = ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$orderBySimilarity(
-      value,
-      items,
-      {
-        minRating,
-        formatItem,
-        ignoreCase,
-      },
-    );
-
-    const strings = ratings.map(
-      (item) => {
-        const {target} = item;
-        if (formatItem === undefined) {
-          return target;
-        } else {
-          return formatItem(target);
-        }
-      },
-    );
-
-    const topRatingFormatted = strings.shift();
-    if (topRatingFormatted === undefined) {
-      return advice;
-    }
-
-    // Raw rating that hasn't been formatted
-    const topRatingRaw = ratings[0].target;
-
-    if (topRatingRaw === value) {
-      // TODO produce a better example
-    }
-
-    // If there's only 2 suggestions then just say "Did you mean A or B?" rather than printing the list
-    if (strings.length === 1) {
-      advice.push(
-        {
-          type: 'log',
-          category: 'info',
-          message: 'Did you mean <emphasis>' +
-          topRatingFormatted +
-          '</emphasis> or <emphasis>' +
-          strings[0] +
-          '</emphasis>?',
-        },
-      );
-    } else {
-      advice.push(
-        {
-          type: 'log',
-          category: 'info',
-          message: 'Did you mean <emphasis>' +
-          topRatingFormatted +
-          '</emphasis>?',
-        },
-      );
-
-      advice.push(
-        {
-          type: 'diff',
-          diff: ___R$project$rome$$romejs$string$diff$index_ts$default(value, topRatingRaw),
-        },
-      );
-
-      if (strings.length > 0) {
-        advice.push(
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Or one of these?',
-          },
-        );
-
-        advice.push(
-          {
-            type: 'list',
-            list: strings,
-            truncate: true,
-          },
-        );
-      }
-    }
-
-    // TODO check if ANY of the suggestions match
-    if (topRatingRaw !== value &&
-      topRatingRaw.toLowerCase() ===
-      value.toLowerCase()) {
-      advice.push(
-        {
-          type: 'log',
-          category: 'warn',
-          message: 'This operation is case sensitive',
-        },
-      );
-    }
-
-    return advice;
-  }
-
-  function ___R$project$rome$$romejs$diagnostics$helpers_ts$truncateSourceText(
-    code,
-    start,
-    end,
-  ) {
-    const lines = code.split(___R$project$rome$$romejs$js$parser$utils$whitespace_ts$NEWLINE);
-
-    // Pad the starting and ending lines by 10
-    const fromLine = Math.max(___R$project$rome$$romejs$ob1$index_ts$get1(start.line) - 10, 0);
-    const toLine = Math.max(___R$project$rome$$romejs$ob1$index_ts$get1(end.line) + 10, lines.length);
-
-    const capturedLines = lines.slice(fromLine, toLine);
-    return '\n'.repeat(fromLine) + capturedLines.join('\n');
-  }
-
   // project-rome/@romejs/diagnostics/DiagnosticsProcessor.ts
 const ___R$$priv$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$DEFAULT_UNIQUE = [
     ['category', 'filename', 'message', 'start.line', 'start.column'],
   ];
 
   class ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default {
-    constructor(options) {
-      this.diagnostics = [];
+    constructor(options = {}) {
       this.filters = [];
-      this.allowedUnusedSuppressionPrefixes = new Set();
-      this.usedSuppressions = new Set();
-      this.suppressions = new Set();
       this.options = options;
       this.includedKeys = new Set();
       this.unique = options.unique === undefined ? ___R$$priv$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$DEFAULT_UNIQUE : options.unique;
       this.throwAfter = undefined;
+      this.origins = options.origins === undefined ? [] : [...options.origins];
+      this.allowedUnusedSuppressionPrefixes = new Set();
+      this.usedSuppressions = new Set();
+      this.suppressions = new Set();
+
+      this.diagnostics = [];
+      this.cachedDiagnostics = undefined;
     }
 
     static createImmediateThrower(origins) {
@@ -74232,6 +75740,10 @@ const ___R$$priv$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$DEFAUL
       return diagnostics;
     }
 
+    unshiftOrigin(origin) {
+      this.origins.unshift(origin);
+    }
+
     setThrowAfter(num) {
       this.throwAfter = num;
     }
@@ -74241,73 +75753,83 @@ const ___R$$priv$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$DEFAUL
         throw (
           new ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError(
             'Thrown by DiagnosticsProcessor',
-            this.getPartialDiagnostics(),
+            this.getDiagnostics(),
           )
         );
       }
     }
 
     hasDiagnostics() {
-      return this.diagnostics.length > 0;
+      return this.getDiagnostics().length > 0;
     }
 
     addAllowedUnusedSuppressionPrefix(prefix) {
+      this.cachedDiagnostics = undefined;
       this.allowedUnusedSuppressionPrefixes.add(prefix);
     }
 
     addSuppressions(suppressions) {
+      this.cachedDiagnostics = undefined;
       for (const suppression of suppressions) {
         this.suppressions.add(suppression);
       }
     }
 
     addFilters(filters) {
+      this.cachedDiagnostics = undefined;
       this.filters = this.filters.concat(filters);
     }
 
     addFilter(filter) {
+      this.cachedDiagnostics = undefined;
       this.filters.push(filter);
     }
 
     doesMatchFilter(diag) {
       for (const suppression of this.suppressions) {
         const targetLine = ___R$project$rome$$romejs$ob1$index_ts$add(suppression.loc.end.line, 1);
-        if (diag.filename !== undefined && diag.start !== undefined &&
-          diag.filename === suppression.loc.filename &&
-          diag.start.line ===
-          targetLine) {
+        if (diag.location.filename !== undefined &&
+          diag.location.start !==
+          undefined &&
+          diag.location.filename === suppression.loc.filename &&
+          diag.location.start.line === targetLine) {
           this.usedSuppressions.add(suppression);
           return true;
         }
       }
 
       for (const filter of this.filters) {
-        if (filter.message !== undefined && filter.message !== diag.message) {
+        if (filter.message !== undefined &&
+          filter.message !==
+          diag.description.message.value) {
           continue;
         }
 
-        if (filter.filename !== undefined && filter.filename !== diag.filename) {
+        if (filter.filename !== undefined &&
+          filter.filename !==
+          diag.location.filename) {
           continue;
         }
 
-        if (filter.category !== undefined && filter.category !== diag.category) {
+        if (filter.category !== undefined &&
+          filter.category !==
+          diag.description.category) {
           continue;
         }
 
-        if (filter.start !== undefined && diag.start !== undefined) {
-          if (filter.start.line !== diag.start.line ||
-          filter.start.column !==
-          diag.start.column) {
+        if (filter.start !== undefined && diag.location.start !== undefined) {
+          if (filter.start.line !== diag.location.start.line ||
+          filter.start.column !== diag.location.start.column) {
             continue;
           }
         }
 
-        if (filter.line !== undefined && diag.start !== undefined &&
-          diag.start.line !== filter.line) {
+        if (filter.line !== undefined && diag.location.start !== undefined &&
+          diag.location.start.line !== filter.line) {
           continue;
         }
 
-        if (filter.test !== undefined && !filter.test(diag)) {
+        if (filter.test !== undefined && filter.test(diag)) {
           continue;
         }
 
@@ -74319,7 +75841,7 @@ const ___R$$priv$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$DEFAUL
 
     buildDedupeKeys(diag) {
       // We don't do anything with `end` in this method, it's fairly meaningless for deduping errors
-      let {start} = diag;
+      let {start} = diag.location;
 
       const keys = [];
 
@@ -74328,17 +75850,17 @@ const ___R$$priv$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$DEFAUL
 
         if (rule.includes('category')) {
           parts.push('category:' +
-          diag.category);
+          diag.description.category);
         }
 
         if (rule.includes('filename')) {
           parts.push('filename:' +
-          String(diag.filename));
+          String(diag.location.filename));
         }
 
         if (rule.includes('message')) {
           parts.push('message:' +
-          diag.message);
+          diag.description.message);
         }
 
         if (start !== undefined) {
@@ -74369,12 +75891,13 @@ const ___R$$priv$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$DEFAUL
         return diags;
       }
 
+      this.cachedDiagnostics = undefined;
+
       const {max} = this.options;
       const added = [];
 
       // Add origins to diagnostics
-      const origins = this.options.origins === undefined
-        ? [] : [...this.options.origins];
+      const origins = [...this.origins];
       if (origin !== undefined) {
         origins.push(origin);
       }
@@ -74419,7 +75942,29 @@ const ___R$$priv$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$DEFAUL
       return added;
     }
 
-    getPartialDiagnostics() {
+    getDiagnosticsByFilename() {
+      const byFilename = new Map();
+
+      for (const diag of this.getDiagnostics()) {
+        const {filename} = diag.location;
+
+        let filenameDiagnostics = byFilename.get(filename);
+        if (filenameDiagnostics === undefined) {
+          filenameDiagnostics = [];
+          byFilename.set(filename, filenameDiagnostics);
+        }
+        filenameDiagnostics.push(diag);
+      }
+
+      return byFilename;
+    }
+
+    getDiagnostics() {
+      const {cachedDiagnostics} = this;
+      if (cachedDiagnostics !== undefined) {
+        return cachedDiagnostics;
+      }
+
       const diagnostics = [...this.diagnostics];
 
       // Add errors for remaining suppressions
@@ -74434,45 +75979,59 @@ const ___R$$priv$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$DEFAUL
         }
 
         diagnostics.push(
-          Object.assign(
-            {
-            },
-            suppression.loc,
-            {
-              message: 'Did not hide any error',
-              category: 'suppressions/unused',
-            },
-          ),
+          {
+            location: suppression.loc,
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SUPPRESSIONS.UNUSED,
+          },
         );
       }
+
+      this.cachedDiagnostics = diagnostics;
 
       return diagnostics;
     }
 
-    getCompleteDiagnostics(markupOptions = {}) {
-      return ___R$project$rome$$romejs$diagnostics$normalize_ts$normalizeDiagnostics(this.getPartialDiagnostics(), markupOptions);
-    }
+    getSortedDiagnostics() {
+      const diagnosticsByFilename = this.getDiagnosticsByFilename();
 
-    getCompleteSortedDiagnostics(markupOptions = {}) {
-      // Sort files by filename to ensure they're always in the same order
+      // Get all filenames and sort them
+      const filenames = Array.from(
+        diagnosticsByFilename.keys(),
+      ).sort(
+        (a, b) => {
+          if (a === undefined || b === undefined) {
+            return 0;
+          } else {
+            return ___R$project$rome$$romejs$string$utils$naturalCompare_ts$naturalCompare(a, b);
+          }
+        },
+      );
 
-      // TODO also sort by line/column
-      return (
-        this.getCompleteDiagnostics(markupOptions).sort(
+      let sortedDiagnostics = [];
+
+      for (const filename of filenames) {
+        const fileDiagnostics = diagnosticsByFilename.get(filename);
+        if (fileDiagnostics === undefined) {
+          throw new Error('We use keys() so should be present');
+        }
+
+        // Sort all file diagnostics by location start index
+        const sortedFileDiagnostics = fileDiagnostics.sort(
           (a, b) => {
-            if (a.filename === undefined || b.filename === undefined) {
+            const aStart = a.location.start;
+            const bStart = b.location.start;
+            if (aStart === undefined || bStart === undefined) {
               return 0;
             } else {
-              return ___R$project$rome$$romejs$string$utils$naturalCompare_ts$naturalCompare(a.filename, b.filename);
+              return ___R$project$rome$$romejs$ob1$index_ts$get0(aStart.index) - ___R$project$rome$$romejs$ob1$index_ts$get0(bStart.index);
             }
           },
-        )
-      );
-    }
+        );
 
-    clear() {
-      this.includedKeys = new Set();
-      this.diagnostics = [];
+        sortedDiagnostics = [...sortedDiagnostics, ...sortedFileDiagnostics];
+      }
+
+      return sortedDiagnostics;
     }
   }
 
@@ -74713,13 +76272,20 @@ const ___R$$priv$project$rome$$romejs$core$common$utils$executeMain_ts$internalM
         };
 
         const syntaxError = {
-          message: err.message,
-          category: 'v8/syntaxError',
-          start: pos,
-          end: pos,
-          filename,
-          sourceText: ___R$project$rome$$romejs$diagnostics$helpers_ts$truncateSourceText(code, pos, pos),
-          advice: [___R$project$rome$$romejs$diagnostics$constants_ts$INTERNAL_ERROR_LOG_ADVICE],
+          description: Object.assign(
+            {
+            },
+            ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.V8.SYNTAX_ERROR(err.message),
+            {
+              advice: [___R$project$rome$$romejs$diagnostics$constants_ts$INTERNAL_ERROR_LOG_ADVICE],
+            },
+          ),
+          location: {
+            start: pos,
+            end: pos,
+            filename,
+            sourceText: ___R$project$rome$$romejs$diagnostics$helpers_ts$truncateSourceText(code, pos, pos),
+          },
         };
         return {syntaxError};
       }
@@ -75027,6 +76593,59 @@ const ___R$project$rome$$romejs$core$client$commands_ts$localCommands = new Map(
     },
   );
 
+  ___R$project$rome$$romejs$core$client$commands_ts$localCommands.set(
+    'lsp',
+    {
+      description: 'connect to an lsp',
+      category: ___R$project$rome$$romejs$core$commands_ts$commandCategories.PROJECT_MANAGEMENT,
+      defineFlags(consumer) {
+        // vscode-languageclient adds these on
+        consumer.get('stdio').asBooleanOrVoid();
+        consumer.get('clientProcessId').asStringOrVoid();
+        return {};
+      },
+
+      async callback(req) {
+        req.client.setFlags(
+          {
+            clientName: 'lsp',
+            silent: true,
+          },
+        );
+
+        const stdin = req.client.reporter.getStdin();
+        req.client.reporter.teardown();
+
+        const bridge = await req.client.findOrStartMaster();
+        if (bridge === undefined) {
+          return false;
+        }
+
+        bridge.lspFromServerBuffer.subscribe(
+          (chunk) => {
+            req.client.derivedReporterStreams.stdout.write(chunk);
+          },
+        );
+
+        stdin.on(
+          'data',
+          (chunk) => {
+            bridge.lspFromClientBuffer.call(chunk.toString());
+          },
+        );
+
+        await req.client.query(
+          {
+            command: 'lsp',
+          },
+          'master',
+        );
+
+        return true;
+      },
+    },
+  );
+
   // project-rome/@romejs/core/client/ClientRequest.ts
 class ___R$project$rome$$romejs$core$client$ClientRequest_ts$default {
     constructor(client, type = 'local', query) {
@@ -75278,6 +76897,10 @@ function ___R$$priv$project$rome$$romejs$cli$flags$Parser_ts$splitCommandName(cm
       this.flags = new Map();
       this.args = [];
 
+      // These are used to track where we should insert an argument for a boolean flag value
+      this.flagToArgIndex = new Map();
+      this.flagToArgOffset = 0;
+
       this.consumeRawArgs(rawArgs);
 
       this.commands = new Map();
@@ -75343,6 +76966,15 @@ function ___R$$priv$project$rome$$romejs$cli$flags$Parser_ts$splitCommandName(cm
             continue;
           }
 
+          // Allow for arguments to be passed as --foo=bar
+          const equalsIndex = name.indexOf('=');
+          if (equalsIndex !== -1) {
+            const cleanName = name.slice(0, equalsIndex);
+            const value = name.slice(equalsIndex + 1);
+            this.flags.set(cleanName, value);
+            continue;
+          }
+
           // If the next argument is a flag or we're at the end of the args then just set it to `true`
           if (rawArgs.length === 0 || this.looksLikeFlag(rawArgs[0])) {
             this.flags.set(name, true);
@@ -75350,6 +76982,8 @@ function ___R$$priv$project$rome$$romejs$cli$flags$Parser_ts$splitCommandName(cm
             // Otherwise, take that value
             this.flags.set(name, String(rawArgs.shift()));
           }
+
+          this.flagToArgIndex.set(name, this.args.length);
 
           if (arg[0] === '-' && arg[1] !== '-') {
             this.shorthandFlags.add(name);
@@ -75367,6 +77001,12 @@ function ___R$$priv$project$rome$$romejs$cli$flags$Parser_ts$splitCommandName(cm
         this.flags.delete(key);
         this.flags.set(alias, value);
       }
+
+      const argIndex = this.flagToArgIndex.get(key);
+      if (argIndex !== undefined) {
+        this.flagToArgIndex.set(alias, argIndex);
+        this.flagToArgIndex.delete(key);
+      }
     }
 
     getFlagsConsumer() {
@@ -75383,12 +77023,40 @@ function ___R$$priv$project$rome$$romejs$cli$flags$Parser_ts$splitCommandName(cm
             filePath: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath('argv'),
             value: flags,
 
-            onDefinition: (def) => {
+            onDefinition: (def, valueConsumer) => {
               const key = def.objectPath.join('.');
 
               // Detect root object
               if (key === '') {
                 return;
+              }
+
+              const value = flags[key];
+
+              // Allow omitting a string flag value
+              if (def.type === 'string' && value === true) {
+                valueConsumer.setValue('');
+              }
+
+              // We've parsed arguments like `--foo bar` as `{foo: 'bar}`
+
+              // However, --foo may be a boolean flag, so `bar` needs to be correctly added to args
+              if (def.type === 'boolean' && value !== true && value !== false &&
+                value !== undefined) {
+                // This isn't necessarily the correct position... Probably doesn't matter?
+                const argIndex = this.flagToArgIndex.get(key);
+                if (argIndex === undefined) {
+                  throw new Error('No arg index. Should always exist.');
+                }
+
+                // Insert the argument at the correct place
+                this.args.splice(argIndex + this.flagToArgOffset, 0, String(value));
+
+                // Increase offset to correct subsequent insertions
+                this.flagToArgOffset++;
+
+                //
+                valueConsumer.setValue(true);
               }
 
               this.declareArgument(
@@ -75466,7 +77134,7 @@ function ___R$$priv$project$rome$$romejs$cli$flags$Parser_ts$splitCommandName(cm
       return new ___R$project$rome$$romejs$cli$flags$Parser_ts$ParserInterface(this);
     }
 
-    async shouldRunCommand(commandName, consumer) {
+    async maybeDefineCommand(commandName, consumer) {
       // A command name could be made of multiple strings
       const commandParts = ___R$$priv$project$rome$$romejs$cli$flags$Parser_ts$splitCommandName(commandName);
       for (let i = 0;
@@ -75489,28 +77157,11 @@ function ___R$$priv$project$rome$$romejs$cli$flags$Parser_ts$splitCommandName(cm
         process.exit(0);
       }
 
-      // We've parsed arguments like `--foo bar` as `{foo: 'bar}`
-
-      // However, --foo may be a boolean flag, so `bar` needs to be correctly added to args
-      for (const [key, value] of this.flags) {
-        const declared = this.declaredFlags.get(key);
-
-        if (declared !== undefined && declared.definition.type === 'boolean' &&
-          value !== true &&
-          value !== false) {
-          // This isn't necessarily the correct position... Probably doesn't matter?
-          this.args.push(value);
-
-          //
-          this.flags.set(key, true);
-        }
-      }
-
       const consumer = this.getFlagsConsumer();
 
       let definedCommand;
 
-      const {diagnostics, result} = await consumer.capture(
+      const rootFlags = await consumer.captureDiagnostics(
         async (consumer) => {
           for (const shorthandName of this.shorthandFlags) {
             consumer.get(shorthandName).unexpected(
@@ -75518,10 +77169,10 @@ function ___R$$priv$project$rome$$romejs$cli$flags$Parser_ts$splitCommandName(cm
             );
           }
 
-          const result = this.opts.defineFlags(consumer);
+          const rootFlags = this.opts.defineFlags(consumer);
 
           for (const key of this.commands.keys()) {
-            const defined = await this.shouldRunCommand(key, consumer);
+            const defined = await this.maybeDefineCommand(key, consumer);
             if (defined) {
               this.currentCommand = key;
               definedCommand = defined;
@@ -75532,13 +77183,9 @@ function ___R$$priv$project$rome$$romejs$cli$flags$Parser_ts$splitCommandName(cm
           consumer.enforceUsedProperties('flag', false);
           this.currentCommand = undefined;
 
-          return result;
+          return rootFlags;
         },
       );
-
-      if (result === undefined) {
-        throw new ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError('CLI flag parsing diagnostics', diagnostics);
-      }
 
       // Show help for --help
       if (this.helpMode) {
@@ -75554,7 +77201,7 @@ function ___R$$priv$project$rome$$romejs$cli$flags$Parser_ts$splitCommandName(cm
         await definedCommand.command.callback(definedCommand.flags);
       }
 
-      return result;
+      return rootFlags;
     }
 
     buildOptionsHelp(keys) {
@@ -75706,13 +77353,19 @@ function ___R$$priv$project$rome$$romejs$cli$flags$Parser_ts$splitCommandName(cm
       const {description, usage, examples, programName} = this.opts;
 
       const consumer = this.getFlagsConsumer();
-      await this.opts.defineFlags(consumer);
 
-      for (const key of this.commands.keys()) {
-        await this.defineCommandFlags(key, consumer);
-      }
+      // Supress diagnostics
+      await consumer.capture(
+        async (consumer) => {
+          await this.opts.defineFlags(consumer);
 
-      this.showUsageHelp(description, usage);
+          for (const key of this.commands.keys()) {
+            await this.defineCommandFlags(key, consumer);
+          }
+
+          this.showUsageHelp(description, usage);
+        },
+      );
 
       const {reporter} = this;
       reporter.section(
@@ -75961,8 +77614,8 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
     constructor(opts) {
       this.query = opts.query;
       this.master = opts.master;
-      this.bridge = opts.bridge;
-      this.reporter = opts.reporter;
+      this.bridge = opts.client.bridge;
+      this.reporter = opts.client.reporter;
       this.markerEvent =
         new ___R$project$rome$$romejs$events$Event_ts$default(
           {
@@ -75980,6 +77633,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
         );
       this.client = opts.client;
       this.id = ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$requestIdCounter++;
+      this.markers = [];
 
       this.normalizedCommandFlags =
         {
@@ -75988,37 +77642,92 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
         };
     }
 
+    async init() {
+      if (this.query.requestFlags.collectMarkers) {
+        this.markerEvent.subscribe(
+          (marker) => {
+            this.markers.push(marker);
+          },
+        );
+      }
+
+      await this.master.handleRequestStart(this);
+    }
+
+    teardown(res) {
+      if (res !== undefined) {
+        // If the query asked for no data then strip all diagnostics and data values
+        if (this.query.noData) {
+          if (res.type === 'SUCCESS') {
+            res =
+              {
+                type: 'SUCCESS',
+                hasData: res.data !== undefined,
+                data: undefined,
+                markers: [],
+              };
+          } else if (res.type === 'DIAGNOSTICS') {
+            res =
+              {
+                type: 'DIAGNOSTICS',
+                diagnostics: [],
+              };
+          } else if (res.type === 'INVALID_REQUEST') {
+            res =
+              {
+                type: 'INVALID_REQUEST',
+                diagnostics: [],
+              };
+          }
+        }
+
+        // Add on markers
+        if (res.type === 'SUCCESS') {
+          res =
+            Object.assign(
+              {
+              },
+              res,
+              {
+                markers: this.markers,
+              },
+            );
+        }
+      }
+
+      this.reporter.teardown();
+      this.endEvent.send(res);
+      this.master.handleRequestEnd(this);
+      return res;
+    }
+
     setNormalizedCommandFlags(normalized) {
       this.normalizedCommandFlags = normalized;
     }
 
-    teardown(response) {
-      this.reporter.teardown();
-      this.endEvent.send(response);
-    }
-
     async assertClientCwdProject() {
-      const pointer = this.getDiagnosticPointerForClientCwd();
+      const location = this.getDiagnosticPointerForClientCwd();
       return (
         this.master.projectManager.assertProject(
           this.client.flags.cwd,
-          pointer,
+          location,
         )
       );
     }
 
-    createDiagnosticsPrinter(origin) {
+    createDiagnosticsPrinter(processor = new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default()) {
+      processor.unshiftOrigin(
+        {
+          category: 'master',
+          message: this.query.commandName +
+          ' command was dispatched',
+        },
+      );
+
       return (
         new ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default(
           {
-            origins: [
-              {
-                category: 'master',
-                message: this.query.commandName +
-                ' command was dispatched',
-              },
-              origin,
-            ],
+            processor,
             reporter: this.reporter,
             cwd: this.client.flags.cwd,
             flags: this.getDiagnosticsPrinterFlags(),
@@ -76051,9 +77760,13 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 
       if (min === max) {
         if (args.length !== min) {
-          message = 'Expected exactly <number emphasis>' +
-          min +
-          '</number> arguments';
+          if (min === 0) {
+            message = 'Expected no arguments';
+          } else {
+            message = 'Expected exactly <number emphasis>' +
+            min +
+            '</number> arguments';
+          }
         }
       } else {
         if (args.length < min) {
@@ -76092,26 +77805,19 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
     }
 
     throwDiagnosticFlagError(message, target = {type: 'none'}, advice) {
-      const pointer = this.getDiagnosticPointerFromFlags(target);
-      throw (
-        new ___R$project$rome$$romejs$core$master$MasterRequest_ts$MasterRequestInvalid(
-          message,
-          [
-            Object.assign(
-              {
-                message,
-                filename: 'argv',
-                category: target.type === 'arg' || target.type === 'arg-range'
-                  ? 'args/invalid' : 'flags/invalid',
-              },
-              pointer,
-              {
-                advice,
-              },
-            ),
-          ],
-        )
-      );
+      const location = this.getDiagnosticPointerFromFlags(target);
+
+      const diag = {
+        description: {
+          message: ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(message),
+          category: target.type === 'arg' || target.type === 'arg-range'
+            ? 'args/invalid' : 'flags/invalid',
+          advice,
+        },
+        location,
+      };
+
+      throw new ___R$project$rome$$romejs$core$master$MasterRequest_ts$MasterRequestInvalid(message, [diag]);
     }
 
     getDiagnosticPointerForClientCwd() {
@@ -76193,23 +77899,21 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
       );
     }
 
-    async getFilesFromArgs(
-      globOpts = {},
+    async resolveFilesFromArgs(
+      overrideArgs,
     ) {
-      const {master} = this;
-      const {flags} = this.client;
       const projects = new Set();
-
-      // Build up args, defaulting to the current project dir if none passed
-      const rawArgs = [...this.query.args];
+      const rawArgs = overrideArgs === undefined ? this.query.args : overrideArgs;
       const resolvedArgs = [];
-      if (rawArgs.length === 0) {
-        const pointer = this.getDiagnosticPointerForClientCwd();
+
+      // If args was explicitly provided then don't assume empty args is the project root
+      if (rawArgs.length === 0 && overrideArgs === undefined) {
+        const location = this.getDiagnosticPointerForClientCwd();
         const project = await this.assertClientCwdProject();
         resolvedArgs.push(
           {
             path: project.folder,
-            pointer,
+            location,
             project,
           },
         );
@@ -76220,7 +77924,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
         i++) {
           const arg = rawArgs[i];
 
-          const pointer = this.getDiagnosticPointerFromFlags(
+          const location = this.getDiagnosticPointerFromFlags(
             {
               type: 'arg',
               key: i,
@@ -76229,12 +77933,12 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 
           const resolved = await this.master.resolver.resolveEntryAssert(
             {
-              origin: flags.cwd,
+              origin: this.client.flags.cwd,
               source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(arg),
               requestedType: 'folder',
             },
             {
-              pointer,
+              location,
             },
           );
 
@@ -76247,16 +77951,122 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
             {
               project,
               path: resolved.path,
-              pointer,
+              location,
             },
           );
         }
       }
 
+      return (
+        {
+          resolvedArgs,
+          projects,
+        }
+      );
+    }
+
+    async watchFilesFromArgs(opts, callback) {
+      // Everything needs to be relative to this
+      const {resolvedArgs} = await this.resolveFilesFromArgs();
+
+      const initial = await this.getFilesFromArgs(opts);
+      await callback(initial, true);
+
+      let pendingEvictPaths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
+      let pendingEvictProjects = new Set();
+      let timeout;
+      let changesWhileRunningCallback = false;
+      let runningCallback = false;
+
+      async function flush() {
+        if (pendingEvictPaths.size === 0) {
+          return;
+        }
+
+        timeout = undefined;
+
+        const result = {
+          paths: pendingEvictPaths,
+          projects: pendingEvictProjects,
+        };
+        pendingEvictPaths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
+        pendingEvictProjects = new Set();
+
+        runningCallback = true;
+        await callback(result, false);
+        runningCallback = false;
+
+        if (changesWhileRunningCallback) {
+          changesWhileRunningCallback = false;
+          flush();
+        }
+      }
+
+      const onChange = (path) => {
+        let matches = false;
+        for (const arg of resolvedArgs) {
+          if (arg.path.equal(path) || path.isRelativeTo(arg.path)) {
+            matches = true;
+            break;
+          }
+        }
+        if (!matches) {
+          return;
+        }
+
+        const project = this.master.projectManager.findProjectExisting(path);
+        if (project !== undefined) {
+          pendingEvictProjects.add(project);
+        }
+
+        pendingEvictPaths.add(path);
+
+        // Buffer up evicted paths
+        if (runningCallback) {
+          changesWhileRunningCallback = true;
+        } else if (timeout === undefined) {
+          timeout = setTimeout(flush, 100);
+        }
+      };
+
+      // Subscribe to evictions and file changes. This can cause double emits but we dedupe them with AbsoluteFilePathSet. An updated buffer dispatches a fileChangeEvent but NOT an evictEvent. An evictEvent is dispatched for all files in a project when the project config is changed but does NOT dispatch evictEvent.
+      const evictSubscription = this.master.fileAllocator.evictEvent.subscribe(
+        onChange,
+      );
+      const fileChangeEvent = this.master.fileChangeEvent.subscribe(onChange);
+
+      return ___R$project$rome$$romejs$events$utils_ts$mergeEventSubscriptions([evictSubscription, fileChangeEvent]);
+    }
+
+    async getFilesFromArgs(opts = {}) {
+      const {master} = this;
+      const {configCategory, ignoreProjectIgnore} = opts;
+      const {projects, resolvedArgs} = await this.resolveFilesFromArgs(opts.args);
+
+      const extendedGlobOpts = Object.assign(
+        {
+        },
+        opts,
+      );
+
+      if (configCategory !== undefined) {
+        extendedGlobOpts.getProjectEnabled =
+          (
+            project,
+          ) =>
+            project.config[configCategory].enabled;
+
+        extendedGlobOpts.getProjectIgnore =
+          (
+            project,
+          ) =>
+            ignoreProjectIgnore ? [] : project.config[configCategory].ignore;
+      }
+
       // Build up files
       const paths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
-      for (const {path, pointer, project} of resolvedArgs) {
-        const matches = master.memoryFs.glob(path, globOpts);
+      for (const {path, location, project} of resolvedArgs) {
+        const matches = master.memoryFs.glob(path, extendedGlobOpts);
 
         if (matches.size > 0) {
           for (const path of matches) {
@@ -76267,78 +78077,79 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 
         let category = 'args/fileNotFound';
 
-        let advice = globOpts.advice === undefined
-          ? [] : [...globOpts.advice];
+        let advice = opts.advice === undefined
+          ? [] : [
+            ...opts.advice,
+          ];
 
         // Hint if `path` failed `globOpts.test`
-        if (globOpts.getProjectEnabled !== undefined) {
-          const test = globOpts.getProjectEnabled(project);
+        if (configCategory !== undefined && !project.config[configCategory].enabled) {
+          const enabledSource = master.projectManager.findProjectConfigConsumer(
+            project,
+            (
+              consumer,
+            ) =>
+              consumer.has(configCategory) &&
+                consumer.get(configCategory).get(
+                  'enabled',
+                ),
+          );
 
-          if (!test.enabled && test.source !== undefined) {
-            const testSource = test.source;
+          const explanationPrefix = opts.verb === undefined
+            ? 'Files excluded' : 'Files excluded from ' +
+            opts.verb;
 
-            const explanationPrefix = globOpts.verb === undefined
-              ? 'Files excluded' : 'Files excluded from ' +
-              globOpts.verb;
+          if (opts.disabledDiagnosticCategory !== undefined) {
+            category = opts.disabledDiagnosticCategory;
+          }
 
-            if (globOpts.disabledDiagnosticCategory !== undefined) {
-              category = globOpts.disabledDiagnosticCategory;
+          if (enabledSource.value === undefined) {
+            let explanation = explanationPrefix +
+            ' as it\'s not enabled for this project';
+            if (configCategory !== undefined) {
+              explanation +=
+                '. Run <command>rome config enable-category ' +
+                configCategory +
+                '</command> to enable it.';
             }
+            advice.push(
+              {
+                type: 'log',
+                category: 'info',
+                message: explanation,
+              },
+            );
+          } else {
+            advice.push(
+              {
+                type: 'log',
+                category: 'info',
+                message: explanationPrefix +
+                ' as it\'s explicitly disabled in this project config',
+              },
+            );
 
-            if (testSource.value === undefined) {
-              let explanation = explanationPrefix +
-              ' as it\'s not enabled for this project';
-              if (globOpts.configCategory !== undefined) {
-                explanation +=
-                  '. Run <command>rome config enable-category ' +
-                  globOpts.configCategory +
-                  '</command> to enable it.';
-              }
-              advice.push(
-                {
-                  type: 'log',
-                  category: 'info',
-                  message: explanation,
-                },
-              );
-            } else {
-              advice.push(
-                {
-                  type: 'log',
-                  category: 'info',
-                  message: explanationPrefix +
-                  ' as it\'s explicitly disabled in this project config',
-                },
-              );
-
-              const disabledPointer = testSource.value.getDiagnosticPointer(
-                'value',
-              );
-              if (disabledPointer !== undefined) {
-                advice.push(
-                  Object.assign(
-                    {
-                      type: 'frame',
-                    },
-                    disabledPointer,
-                  ),
-                );
-              }
-            }
+            const disabledPointer = enabledSource.value.getDiagnosticLocation(
+              'value',
+            );
+            advice.push(
+              {
+                type: 'frame',
+                location: disabledPointer,
+              },
+            );
           }
         }
 
         // Hint if all files were ignored
-        if (globOpts.getProjectIgnore !== undefined) {
-          const ignore = globOpts.getProjectIgnore(project);
-
+        if (configCategory !== undefined && !ignoreProjectIgnore) {
           const {paths: withoutIgnore} = await this.getFilesFromArgs(
             Object.assign(
               {
               },
-              globOpts,
+              opts,
               {
-                getProjectIgnore: undefined,
+                ignoreProjectIgnore: true,
               },
             ),
           );
@@ -76368,48 +78179,55 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
               },
             );
 
-            if (ignore.source !== undefined && ignore.source.value !== undefined) {
-              const ignorePointer = ignore.source.value.getDiagnosticPointer(
+            const ignoreSource = master.projectManager.findProjectConfigConsumer(
+              project,
+              (
+                consumer,
+              ) =>
+                consumer.has(configCategory) &&
+                  consumer.get(configCategory).get(
+                    'ignore',
+                  ),
+            );
+
+            if (ignoreSource.value !== undefined) {
+              const ignorePointer = ignoreSource.value.getDiagnosticLocation(
                 'value',
               );
 
-              if (ignorePointer !== undefined) {
-                advice.push(
-                  {
-                    type: 'log',
-                    category: 'info',
-                    message: 'Ignore patterns were defined here',
-                  },
-                );
+              advice.push(
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: 'Ignore patterns were defined here',
+                },
+              );
 
-                advice.push(
-                  Object.assign(
-                    {
-                      type: 'frame',
-                    },
-                    ignorePointer,
-                  ),
-                );
-              }
+              advice.push(
+                {
+                  type: 'frame',
+                  location: ignorePointer,
+                },
+              );
             }
           }
         }
 
         throw (
           ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError(
-            Object.assign(
-              {
-              },
-              pointer,
-              {
+            {
+              location,
+              description: {
                 category,
-                message: globOpts.noun === undefined
-                  ? 'No files found' : 'No files to ' +
-                  globOpts.noun +
-                  ' found',
+                message: ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(
+                  opts.noun === undefined
+                    ? 'No files found' : 'No files to ' +
+                    opts.noun +
+                    ' found',
+                ),
                 advice,
               },
-            ),
+            },
           )
         );
       }
@@ -76523,11 +78341,24 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
       }
     }
 
-    async requestWorkerParse(filename, opts) {
+    async requestWorkerUpdateBuffer(path, content) {
+      await this.wrapRequestDiagnostic(
+        'updateBuffer',
+        path,
+        (
+          bridge,
+          file,
+        ) =>
+          bridge.updateBuffer.call({file, content}),
+      );
+      this.master.fileChangeEvent.send(path);
+    }
+
+    async requestWorkerParse(path, opts) {
       return (
         this.wrapRequestDiagnostic(
           'parse',
-          filename,
+          path,
           (
             bridge,
             file,
@@ -76537,25 +78368,29 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
       );
     }
 
-    async requestWorkerLint(filename, fix) {
+    async requestWorkerLint(path, fix) {
       const {cache} = this.master;
-      const cacheEntry = await cache.get(filename);
+      const cacheEntry = await cache.get(path);
       if (cacheEntry.lint !== undefined) {
         return cacheEntry.lint;
       }
 
       const prefetchedModuleSignatures = await this.maybePrefetchModuleSignatures(
-        filename,
+        path,
       );
 
       const res = await this.wrapRequestDiagnostic(
         'lint',
-        filename,
-        (bridge, file) => bridge.lint.call({file, fix, prefetchedModuleSignatures}),
+        path,
+        (
+          bridge,
+          file,
+        ) =>
+          bridge.lint.call({file, fix, prefetchedModuleSignatures}),
       );
 
       await cache.update(
-        filename,
+        path,
         {
           lint: res,
         },
@@ -76700,17 +78535,17 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
       );
     }
 
-    async requestWorkerModuleSignature(filename) {
+    async requestWorkerModuleSignature(path) {
       const {cache} = this.master;
 
-      const cacheEntry = await cache.get(filename);
+      const cacheEntry = await cache.get(path);
       if (cacheEntry.moduleSignature !== undefined) {
         return cacheEntry.moduleSignature;
       }
 
       const res = await this.wrapRequestDiagnostic(
         'moduleSignature',
-        filename,
+        path,
         (
           bridge,
           file,
@@ -76718,7 +78553,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
           bridge.moduleSignatureJS.call({file}),
       );
       await cache.update(
-        filename,
+        path,
         {
           moduleSignature: res,
         },
@@ -76726,11 +78561,11 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
       return res;
     }
 
-    async maybePrefetchModuleSignatures(filename) {
+    async maybePrefetchModuleSignatures(path) {
       const {projectManager} = this.master;
 
       const prefetchedModuleSignatures = {};
-      const project = await projectManager.assertProject(filename);
+      const project = await projectManager.assertProject(path);
       if (project.config.typeCheck.enabled === false) {
         return prefetchedModuleSignatures;
       }
@@ -76805,6 +78640,122 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
     }*/
       return prefetchedModuleSignatures;
     }
+  }
+
+  // project-rome/@romejs/vcs/index.ts
+const ___R$$priv$project$rome$$romejs$vcs$index_ts$child_process = require(
+    'child_process',
+  );
+  const ___R$$priv$project$rome$$romejs$vcs$index_ts$TIMEOUT = 10000;
+
+  async function ___R$$priv$project$rome$$romejs$vcs$index_ts$exec(command, args) {
+    return (
+      new Promise(
+        (resolve, reject) => {
+          const proc = ___R$$priv$project$rome$$romejs$vcs$index_ts$child_process.spawn(command, args, {timeout: ___R$$priv$project$rome$$romejs$vcs$index_ts$TIMEOUT});
+          let stderr = '';
+          let stdout = '';
+
+          proc.stdout.on(
+            'data',
+            (data) => {
+              stdout += data;
+            },
+          );
+
+          proc.stderr.on(
+            'data',
+            (data) => {
+              stderr += data;
+            },
+          );
+
+          function error(message) {
+            reject(
+              new Error(
+                'Error while running ' +
+                command +
+                ' ' +
+                args.join(' ') +
+                ': ' +
+                message +
+                '. stderr: ' +
+                stderr,
+              ),
+            );
+          }
+
+          proc.on(
+            'error',
+            (err) => {
+              if (err.code === 'ETIMEDOUT') {
+                error('Timed out after ' +
+                ___R$$priv$project$rome$$romejs$vcs$index_ts$TIMEOUT +
+                'ms');
+              } else {
+                error(err.message);
+              }
+            },
+          );
+
+          proc.on(
+            'close',
+            (code) => {
+              if (code === 0) {
+                resolve(stdout);
+              } else {
+                error('Exited with code ' +
+                code);
+              }
+            },
+          );
+        },
+      )
+    );
+  }
+
+  class ___R$project$rome$$romejs$vcs$index_ts$VCSClient {
+    constructor(root) {
+      this.root = root;
+      this.trunkBranch = 'unknown';
+    }
+
+    getModifiedFiles(branch) {
+      throw new Error('unimplemented');
+    }
+  }
+
+  class ___R$$priv$project$rome$$romejs$vcs$index_ts$GitVCSClient extends ___R$project$rome$$romejs$vcs$index_ts$VCSClient {
+    constructor(root) {
+      super(root);
+      this.trunkBranch = 'master';
+    }
+
+    async getModifiedFiles(branch) {
+      const out = await ___R$$priv$project$rome$$romejs$vcs$index_ts$exec('git', ['diff', '--name-status', branch]);
+      const lines = out.trim().split('\n');
+
+      const files = [];
+
+      for (const line of lines) {
+        const match = line.match(/^[M]\s+(.*?)$/);
+        if (match != null) {
+          files.push(match[1]);
+        }
+      }
+
+      return files;
+    }
+  }
+
+  async function ___R$project$rome$$romejs$vcs$index_ts$getVCSClient(
+    root,
+  ) {
+    if (await ___R$project$rome$$romejs$fs$index_ts$exists(root.append('.git'))) {
+      return new ___R$$priv$project$rome$$romejs$vcs$index_ts$GitVCSClient(root);
+    }
+
+    return undefined;
   }
 
   // project-rome/@romejs/core/master/project/ProjectManager.ts
@@ -76930,6 +78881,46 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 
     getFilePathFromUid(uid) {
       return this.uidToFilename.get(uid);
+    }
+
+    getFilePathFromUidOrAbsolute(uid) {
+      if (uid === undefined) {
+        return;
+      }
+
+      const uidToPath = this.getFilePathFromUid(uid);
+      if (uidToPath !== undefined) {
+        return uidToPath;
+      }
+
+      const path = ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(uid);
+      if (path.isAbsolute()) {
+        return path.assertAbsolute();
+      }
+    }
+
+    normalizeFilenamesToFilePaths(
+      filenames,
+    ) {
+      const others = new Set();
+      const absolutes = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
+
+      for (const filename of filenames) {
+        if (filename === undefined) {
+          others.add(undefined);
+          continue;
+        }
+
+        const absolute = this.getFilePathFromUidOrAbsolute(filename);
+        if (absolute === undefined) {
+          // Relative path
+          others.add(filename);
+        } else {
+          absolutes.add(absolute);
+        }
+      }
+
+      return {absolutes, others};
     }
 
     setUid(path, uid) {
@@ -77251,12 +79242,46 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 
       for (const consumer of meta.consumersChain) {
         const value = test(consumer);
-        if (value !== undefined && value.exists()) {
+        if (value !== undefined && value !== false && value.exists()) {
           return {value, consumer: meta.consumer};
         }
       }
 
       return {value: undefined, consumer: meta.consumer};
+    }
+
+    async getVCSClient(project) {
+      const client = await ___R$project$rome$$romejs$vcs$index_ts$getVCSClient(project.config.vcs.root);
+
+      if (client === undefined) {
+        const {
+          value: rootConfigConsumer,
+          consumer,
+        } = this.findProjectConfigConsumer(
+          project,
+          (
+            consumer,
+          ) =>
+            consumer.has('vsc') && consumer.get('vsc').get('root'),
+        );
+
+        const rootConfigLocation = rootConfigConsumer === undefined
+          ? undefined : rootConfigConsumer.getDiagnosticLocation();
+
+        const location = rootConfigLocation === undefined
+          ? consumer.getDiagnosticLocation() : rootConfigLocation;
+
+        throw (
+          ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError(
+            {
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PROJECT_MANAGER.NO_VCS(rootConfigLocation),
+              location,
+            },
+          )
+        );
+      } else {
+        return client;
+      }
     }
 
     async addProject(projectFolder, configPath) {
@@ -77353,27 +79378,13 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
           }
 
           diagnostics.addDiagnostic(
-            Object.assign(
-              {
-                category: 'projectManager/nameCollision',
-                filename: def.path.join(),
-                message: 'Duplicate package name <emphasis>' +
-                name +
-                '</emphasis>',
-              },
-              def.consumer.get('name').getDiagnosticPointer('inner-value'),
-              {
-                advice: [
-                  {
-                    type: 'log',
-                    category: 'info',
-                    message: 'Defined already by <filelink target="' +
-                    existingPackage.path +
-                    '" />',
-                  },
-                ],
-              },
-            ),
+            {
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PROJECT_MANAGER.DUPLICATE_PACKAGE(
+                name,
+                existingPackage.path.join(),
+              ),
+              location: def.consumer.get('name').getDiagnosticLocation('inner-value'),
+            },
           );
           return;
         }
@@ -77444,20 +79455,13 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 
           diagnostics.addDiagnostic(
             {
-              category: 'projectManager/nameCollision',
-              filename: hastePath.join(),
-              message: 'Found a haste collision for <emphasis>' +
-              hasteName +
-              '</emphasis>',
-              advice: [
-                {
-                  type: 'log',
-                  category: 'info',
-                  message: 'Defined already by <filelink emphasis target="' +
-                  existing +
-                  '" />',
-                },
-              ],
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PROJECT_MANAGER.HASTE_COLLISION(
+                hasteName,
+                existing.join(),
+              ),
+              location: {
+                filename: hastePath.join(),
+              },
             },
           );
           continue;
@@ -77511,7 +79515,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
       await Promise.all(promises);
     }
 
-    async assertProject(path, pointer) {
+    async assertProject(path, location) {
       // We won't recurse up and check a parent project if we've already visited it
       const syncProject = this.findProjectExisting(path);
       const project = syncProject || (await this.findProject(path));
@@ -77527,7 +79531,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
         return project;
       }
 
-      if (pointer === undefined) {
+      if (location === undefined) {
         throw (
           new Error(
             'Couldn\'t find a project. Checked ' +
@@ -77540,22 +79544,10 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
 
       throw (
         ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError(
-          Object.assign(
-            {
-            },
-            pointer,
-            {
-              category: 'projectManager/missing',
-              message: 'Couldn\'t find a project',
-              advice: [
-                {
-                  type: 'log',
-                  category: 'info',
-                  message: 'Run <command>rome init</command> in this folder to initialize a project',
-                },
-              ],
-            },
-          ),
+          {
+            location,
+            description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PROJECT_MANAGER.NOT_FOUND,
+          },
         )
       );
     }
@@ -77570,8 +79562,8 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
       }
     }
 
-    getHierarchyFromFilename(filename) {
-      const project = this.findProjectExisting(filename);
+    getHierarchyFromFilename(path) {
+      const project = this.findProjectExisting(path);
       if (project === undefined) {
         return [];
       } else {
@@ -77648,6 +79640,7 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
         for (const configFilename of ___R$project$rome$$romejs$project$constants_ts$ROME_CONFIG_FILENAMES) {
           // Check in root
           const configPath = dir.append(configFilename);
+
           const hasProject = await this.master.memoryFs.existsHard(configPath);
           if (hasProject) {
             return this.queueAddProject(dir, configPath);
@@ -77709,13 +79702,12 @@ function ___R$$priv$project$rome$$romejs$core$master$project$ProjectManager_ts$c
     warnIncorrectConfigFile(path, diagnostics) {
       diagnostics.addDiagnostic(
         {
-          category: 'projectManager/incorrectConfigFilename',
-          filename: path.join(),
-          message: 'Invalid rome config filename, <emphasis>' +
-          ___R$project$rome$$romejs$project$constants_ts$ROME_CONFIG_FILENAMES.join(
-            ' or ',
-          ) +
-          '</emphasis> are the only valid filename',
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PROJECT_MANAGER.INCORRECT_CONFIG_FILENAME(
+            ___R$project$rome$$romejs$project$constants_ts$ROME_CONFIG_FILENAMES,
+          ),
+          location: {
+            filename: path.join(),
+          },
         },
       );
     }
@@ -78095,11 +80087,18 @@ const ___R$$priv$project$rome$$romejs$core$master$WorkerManager_ts$child = requi
       const {logger, memoryFs, fileAllocator} = this.master;
 
       // Get stats first
-      const stats = memoryFs.getFileStats(path);
+      let stats = memoryFs.getFileStats(path);
       if (stats === undefined) {
-        throw new Error('The file ' +
-        path.join() +
-        ' doesn\'t exist');
+        // Give memoryFs a chance to finish initializing if it's in a pending project
+        await this.master.memoryFs.waitIfInitializingWatch(path);
+
+        stats = memoryFs.getFileStats(path);
+        if (stats === undefined) {
+          console.error(Array.from(memoryFs.files.keys(), (path) => path.join()));
+          throw new Error('The file ' +
+          path.join() +
+          ' doesn\'t exist');
+        }
       }
 
       // Verify that this file doesn't exceed any size limit
@@ -78205,12 +80204,12 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
     // Use the querySource returned by the resolution which will be the one that actually triggered this error, otherwise use the query source provided to us
     const querySource = resolved.source === undefined
       ? origQuerySource : resolved.source;
-    if (querySource === undefined || querySource.pointer === undefined) {
+    if (querySource === undefined || querySource.location === undefined) {
       // TODO do something about the `advice` on some `resolved` that may contain metadata?
       throw new Error(errMsg);
     }
 
-    const {pointer} = querySource;
+    const {location} = querySource;
 
     let advice = [];
 
@@ -78325,7 +80324,7 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
       }
 
       // Hint on any indirection
-      if (origQuerySource !== undefined && origQuerySource.pointer !== undefined &&
+      if (origQuerySource !== undefined && origQuerySource.location !== undefined &&
         resolved.source !== undefined) {
         advice.push(
           {
@@ -78339,15 +80338,13 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
           },
         );
 
-        const origPointer = origQuerySource.pointer;
+        const origPointer = origQuerySource.location;
 
         advice.push(
-          Object.assign(
-            {
-              type: 'frame',
-            },
-            origPointer,
-          ),
+          {
+            type: 'frame',
+            location: origPointer,
+          },
         );
       }
 
@@ -78448,21 +80445,19 @@ function ___R$project$rome$$romejs$core$master$fs$resolverSuggest_ts$default(
       ' <emphasis>' +
       source +
       '</emphasis> from <filelink emphasis target="' +
-      pointer.filename +
+      location.filename +
       '" />';
 
     throw (
       ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError(
-        Object.assign(
-          {
-          },
-          pointer,
-          {
+        {
+          location,
+          description: {
             category,
-            message,
+            message: ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(message),
             advice,
           },
-        ),
+        },
       )
     );
   }
@@ -78750,7 +80745,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
       return res;
     }
 
-    const pointer = alias.key.getDiagnosticPointer('value');
+    const location = alias.key.getDiagnosticLocation('value');
 
     return (
       Object.assign(
@@ -78758,9 +80753,9 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$Resolver_ts$https = require
         },
         res,
         {
-          source: pointer === undefined
+          source: location === undefined
             ? undefined : {
-              pointer,
+              location,
               source: alias.value.join(),
             },
         },
@@ -79480,6 +81475,12 @@ class ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default {
       this.master = master;
       this.fileToWorker = new Map();
       this.locker = new ___R$project$rome$$romejs$core$common$utils$Locker_ts$default();
+      this.evictEvent =
+        new ___R$project$rome$$romejs$events$Event_ts$default(
+          {
+            name: 'evict',
+          },
+        );
     }
 
     init() {
@@ -79592,6 +81593,7 @@ class ___R$project$rome$$romejs$core$master$fs$FileAllocator_ts$default {
           filename,
         },
       );
+      this.evictEvent.send(path);
 
       this.master.logger.info('[FileAllocator] Evicted %s', filename);
     }
@@ -84447,18 +86449,11 @@ function ___R$$priv$project$rome$$romejs$codec$spdx$license$parse_ts$isWordChar(
                   throw (
                     this.unexpected(
                       {
-                        message: 'Missing dash between SPDX license name and version',
+                        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SPDX.VALID_LICENSE_WITH_MISSING_DASH(
+                          possibleCorrectLicense,
+                        ),
                         start: this.getPositionFromIndex(token.start),
                         end: this.getPositionFromIndex(nextToken.end),
-                        advice: [
-                          {
-                            type: 'log',
-                            category: 'info',
-                            message: 'Did you mean <emphasis>' +
-                            possibleCorrectLicense +
-                            '</emphasis>?',
-                          },
-                        ],
                       },
                     )
                   );
@@ -84470,12 +86465,9 @@ function ___R$$priv$project$rome$$romejs$codec$spdx$license$parse_ts$isWordChar(
               throw (
                 this.unexpected(
                   {
-                    message: 'Unknown SPDX license <emphasis>' +
-                    id +
-                    '</emphasis>',
+                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SPDX.UNKNOWN_LICENSE(id, ___R$project$rome$$romejs$codec$spdx$license$index_ts$licenseNames),
                     start: this.getPositionFromIndex(token.start),
                     end: this.getPositionFromIndex(token.end),
-                    advice: ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice(id, ___R$project$rome$$romejs$codec$spdx$license$index_ts$licenseNames),
                   },
                 )
               );
@@ -84495,7 +86487,7 @@ function ___R$$priv$project$rome$$romejs$codec$spdx$license$parse_ts$isWordChar(
                 throw (
                   this.unexpected(
                     {
-                      message: 'Only a license id can be on the right side of a WITH',
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SPDX.WITH_RIGHT_LICENSE_ONLY,
                     },
                   )
                 );
@@ -84535,7 +86527,7 @@ function ___R$$priv$project$rome$$romejs$codec$spdx$license$parse_ts$isWordChar(
                 throw (
                   this.unexpected(
                     {
-                      message: 'Can only use AND/OR in between an expression',
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SPDX.OPERATOR_NOT_BETWEEN_EXPRESSION,
                     },
                   )
                 );
@@ -84544,16 +86536,19 @@ function ___R$$priv$project$rome$$romejs$codec$spdx$license$parse_ts$isWordChar(
                 throw (
                   this.unexpected(
                     {
-                      message: 'A plus can only come after a license id',
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SPDX.PLUS_NOT_AFTER_LICENSE,
                     },
                   )
                 );
 
               case 'ParenClose':
-                throw this.unexpected({message: 'Nothing open to close'});
-
-              case 'EOF':
-                throw this.unexpected({message: 'Unexpected end of file'});
+                throw (
+                  this.unexpected(
+                    {
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SPDX.UNOPENED_PAREN,
+                    },
+                  )
+                );
 
               default:
                 throw this.unexpected();
@@ -85029,7 +87024,7 @@ function ___R$project$rome$$romejs$codec$js$manifest$dependencies_ts$stringifyDe
   }
 
   //# FILE
-  const ___R$$priv$project$rome$$romejs$codec$js$manifest$dependencies_ts$FILE_PREFIX_REGEX = /^\.\{1,2\}\//;
+  const ___R$$priv$project$rome$$romejs$codec$js$manifest$dependencies_ts$FILE_PREFIX_REGEX = /^\.{1,2}\//;
 
   function ___R$$priv$project$rome$$romejs$codec$js$manifest$dependencies_ts$parseFile(pattern) {
     return (
@@ -86101,9 +88096,7 @@ const ___R$$priv$project$rome$$romejs$codec$watchman$bser_ts$os = require(
     'os',
   );
   // BSER uses the local endianness to reduce byte swapping overheads
-
   // (the protocol is expressly local IPC only).  We need to tell node
-
   // to use the native endianness when reading various native values.
   const ___R$$priv$project$rome$$romejs$codec$watchman$bser_ts$isBigEndian = ___R$$priv$project$rome$$romejs$codec$watchman$bser_ts$os.endianness() == 'BE';
 
@@ -87070,6 +89063,28 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
     return [...___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$GLOB_IGNORE, ...patterns];
   }
 
+  function ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$isValidManifest(path) {
+    if (path.getBasename() !== 'package.json') {
+      return false;
+    }
+
+    // If a manifest is in node_modules, then make sure we're directly inside a folder in node_modules
+    const segments = path.getSegments();
+
+    // - 1 is package.json
+
+    // - 2 is the module folder
+
+    // - 3 should be node_modules
+    if (segments.includes('node_modules') &&
+      segments[segments.length - 3] !==
+      'node_modules') {
+      return false;
+    }
+
+    return true;
+  }
+
   // Whenever we're performing an operation on a set of files, always do these first as they may influence how the rest are processed
   const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$PRIORITY_FILES = new Set(___R$project$rome$$romejs$project$constants_ts$ROME_CONFIG_FILENAMES);
 
@@ -87085,10 +89100,10 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
     const activity = memoryFs.master.connectedReporters.progress(
       {
         initDelay: 1000,
+        title: 'Adding project ' +
+        projectFolder,
       },
     );
-    activity.setTitle('Adding project ' +
-    projectFolder);
 
     const watchers = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 
@@ -87209,10 +89224,13 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
     const projectFolder = projectFolderPath.join();
     const {connectedReporters} = memoryFs.master;
 
-    const activity = connectedReporters.progress();
-    activity.setTitle('Adding project ' +
-    projectFolder +
-    ' with watchman');
+    const activity = connectedReporters.progress(
+      {
+        title: 'Adding project ' +
+        projectFolder +
+        ' with watchman',
+      },
+    );
 
     let timeout;
 
@@ -87463,12 +89481,12 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
       }
     }
 
-    isDirectory(filename) {
-      return this.directories.has(filename);
+    isDirectory(path) {
+      return this.directories.has(path);
     }
 
-    isFile(filename) {
-      return this.files.has(filename);
+    isFile(path) {
+      return this.files.has(path);
     }
 
     getFiles() {
@@ -87586,6 +89604,23 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
       return changed;
     }
 
+    async waitIfInitializingWatch(projectFolderPath) {
+      // Defer if we're initializing a parent folder
+      for (const {promise, path} of this.watchPromises.values()) {
+        if (projectFolderPath.isRelativeTo(path)) {
+          await promise;
+          return undefined;
+        }
+      }
+
+      // Wait if we're initializing descendents
+      for (const {path, promise} of this.watchPromises.values()) {
+        if (path.isRelativeTo(projectFolderPath)) {
+          await promise;
+        }
+      }
+    }
+
     async watch(projectFolderPath, projectConfig) {
       const {logger} = this.master;
       const projectFolder = projectFolderPath.join();
@@ -87615,20 +89650,8 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
         }
       }
 
-      // Defer if we're initializing a parent folder
-      for (const {promise, path} of this.watchPromises.values()) {
-        if (projectFolderPath.isRelativeTo(path)) {
-          await promise;
-          return undefined;
-        }
-      }
-
-      // Wait if we're initializing descendents
-      for (const {path, promise} of this.watchPromises.values()) {
-        if (path.isRelativeTo(projectFolderPath)) {
-          await promise;
-        }
-      }
+      // Wait for other initializations
+      await this.waitIfInitializingWatch(projectFolderPath);
 
       // New watch target
       logger.info('[MemoryFileSystem] Adding new project folder ' +
@@ -87711,30 +89734,26 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
       );
     }
 
-    getMtime(filename) {
-      const stats = this.getFileStats(filename);
+    getMtime(path) {
+      const stats = this.getFileStats(path);
       if (stats === undefined) {
-        throw (
-          new Error(
-            'File ' +
-            filename.join() +
-            ' not in database, cannot get mtime',
-          )
-        );
+        throw new Error('File ' +
+        path.join() +
+        ' not in database, cannot get mtime');
       } else {
         return stats.mtime;
       }
     }
 
-    getFileStats(filename) {
-      return this.files.get(filename);
+    getFileStats(path) {
+      return this.files.get(path);
     }
 
-    getFileStatsAssert(filename) {
-      const stats = this.getFileStats(filename);
+    getFileStatsAssert(path) {
+      const stats = this.getFileStats(path);
       if (stats === undefined) {
         throw new Error('Expected file stats for ' +
-        filename);
+        path);
       }
       return stats;
     }
@@ -87929,13 +89948,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
         if (getProjectIgnore !== undefined) {
           const projectIgnore = ignoresByProject.get(project);
           if (projectIgnore === undefined) {
-            ignore =
-              ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$concatGlobIgnore(
-                [
-                  ...ignore,
-                  ...getProjectIgnore(project).patterns,
-                ],
-              );
+            ignore = ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$concatGlobIgnore([...ignore, ...getProjectIgnore(project)]);
             ignoresByProject.set(project, ignore);
           } else {
             ignore = projectIgnore;
@@ -87951,8 +89964,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
 
         // Add if a matching file
         if (this.files.has(path) && ignoreMatched === 'NO_MATCH') {
-          if (getProjectEnabled !== undefined &&
-            !getProjectEnabled(project).enabled) {
+          if (getProjectEnabled !== undefined && !getProjectEnabled(project)) {
             continue;
           }
 
@@ -88024,8 +90036,8 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
       return count;
     }
 
-    hasStatsChanged(filename, newStats) {
-      const oldStats = this.directories.get(filename) || this.files.get(filename);
+    hasStatsChanged(path, newStats) {
+      const oldStats = this.directories.get(path) || this.files.get(path);
       return oldStats === undefined || newStats.mtime !== oldStats.mtime;
     }
 
@@ -88143,7 +90155,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
       }
 
       // If this is a package.json then declare this module and setup the correct haste variables
-      if (basename === 'package.json') {
+      if (___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$isValidManifest(path)) {
         hasteName =
           await this.declareManifest(
             {
@@ -88207,15 +90219,13 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
       await memoryFs.watch(this.cachePath, ___R$project$rome$$romejs$project$types_ts$DEFAULT_PROJECT_CONFIG);
     }
 
-    async createEmptyEntry(filename) {
+    async createEmptyEntry(path) {
       const {projectManager, memoryFs} = this.master;
 
-      const project = await projectManager.assertProject(
-        filename,
-      );
+      const project = await projectManager.assertProject(path);
 
       const configHashes = [...project.meta.configHashes];
-      const pkg = this.master.memoryFs.getOwnedManifest(filename);
+      const pkg = this.master.memoryFs.getOwnedManifest(path);
       if (pkg !== undefined) {
         configHashes.push(pkg.hash);
       }
@@ -88224,7 +90234,7 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
         version: ___R$project$rome$$romejs$core$common$constants_ts$VERSION,
         projectDir: project.folder.join(),
         configHash: configHashes.join(';'),
-        mtime: memoryFs.getMtime(filename),
+        mtime: memoryFs.getMtime(path),
         compile: {},
         analyzeDependencies: undefined,
         moduleSignature: undefined,
@@ -88234,23 +90244,23 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
       return entry;
     }
 
-    getCacheFilename(filename) {
-      const uid = this.master.projectManager.getUid(filename);
+    getCacheFilename(path) {
+      const uid = this.master.projectManager.getUid(path);
       return this.cachePath.append(uid);
     }
 
-    async handleDeleted(filename) {
+    async handleDeleted(path) {
       // Handle the file not existing
-      const cacheFilename = this.getCacheFilename(filename);
+      const cacheFilename = this.getCacheFilename(path);
       await ___R$project$rome$$romejs$fs$index_ts$unlink(cacheFilename);
-      this.loadedEntries.delete(filename);
+      this.loadedEntries.delete(path);
     }
 
-    async get(filename) {
-      const emptyEntry = await this.createEmptyEntry(filename);
+    async get(path) {
+      const emptyEntry = await this.createEmptyEntry(path);
 
       // If we have a loaded memory entry, make sure it's valid compared to the default entry (file changes etc)
-      let loaded = this.loadedEntries.get(filename);
+      let loaded = this.loadedEntries.get(path);
       if (loaded !== undefined && ___R$$priv$project$rome$$romejs$core$master$Cache_ts$areEntriesEqual(loaded, emptyEntry)) {
         return emptyEntry;
       }
@@ -88259,12 +90269,12 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
         return emptyEntry;
       }
 
-      const cacheFilename = this.getCacheFilename(filename);
+      const cacheFilename = this.getCacheFilename(path);
       const entry = await this.checkPossibleDiskCacheEntry(
         cacheFilename,
         emptyEntry,
       );
-      this.loadedEntries.set(filename, entry);
+      this.loadedEntries.set(path, entry);
       return entry;
     }
 
@@ -88297,8 +90307,8 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
       }
     }
 
-    async update(filename, partialEntryCallback) {
-      const currEntry = await this.get(filename);
+    async update(path, partialEntryCallback) {
+      const currEntry = await this.get(path);
       const partialEntry = typeof partialEntryCallback ===
       'function'
         ? partialEntryCallback(currEntry) : partialEntryCallback;
@@ -88311,8 +90321,8 @@ const ___R$$priv$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$crypto 
       );
 
       // TODO should batch these and write during idle time
-      const cacheFilename = this.getCacheFilename(filename);
-      this.loadedEntries.set(filename, entry);
+      const cacheFilename = this.getCacheFilename(path);
+      this.loadedEntries.set(path, entry);
 
       if (this.disabled) {
         return;
@@ -88339,12 +90349,12 @@ class ___R$project$rome$$romejs$core$master$WorkerQueue_ts$default {
       this.open = true;
     }
 
-    pushQueue(filename, metadata) {
+    pushQueue(path, metadata) {
       if (!this.open) {
         throw new Error('WorkerQueue has already closed');
       }
 
-      this.queue.push([filename, metadata]);
+      this.queue.push([path, metadata]);
     }
 
     addCallback(callback) {
@@ -88554,60 +90564,20 @@ class ___R$project$rome$$romejs$core$master$dependencies$DependencyOrderer_ts$de
         ),
       );
 
-      function formatPart(part, index) {
-        const tagged = '<filelink target="' +
-        part +
-        '" />';
-        if (part === culprit) {
-          return '<magenta>' +
-          tagged +
-          '</magenta><dim>[1]</dim>';
-        } else if (part === target) {
-          return '<cyan>' +
-          tagged +
-          '</cyan><dim>[2]</dim>';
-        } else if (index === 0) {
-          return tagged +
-          ' <inverse>ENTRY</inverse>';
-        } else {
-          return tagged;
-        }
-      }
-
       this.diagnostics.push(
         {
-          category: 'bundler/moduleCycle',
-          filename: node.path.join(),
-          mtime: node.getMtime(),
-          start: imp.loc === undefined ? undefined : imp.loc.start,
-          end: imp.loc === undefined ? undefined : imp.loc.end,
-          message: 'The variable <emphasis>' +
-          imp.local +
-          '</emphasis> won\'t be initialized yet',
-          advice: [
-            {
-              type: 'log',
-              category: 'info',
-              message: 'This is because the module it belongs to wont be executed yet. This is due to a circular dependency creating a module cycle.',
-            },
-            {
-              type: 'log',
-              category: 'info',
-              message: 'The likely cause is the file ' +
-              formatPart(culprit) +
-              ' that was required by ' +
-              formatPart(
-                target,
-              ) +
-              ' which created a circular dependency:',
-            },
-            {
-              type: 'list',
-              reverse: true,
-              ordered: true,
-              list: path.map(formatPart),
-            },
-          ],
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.BUNDLER.DETECTED_CYCLE(
+            imp.local,
+            target,
+            culprit,
+            path,
+          ),
+          location: {
+            filename: node.path.join(),
+            mtime: node.getMtime(),
+            start: imp.loc === undefined ? undefined : imp.loc.start,
+            end: imp.loc === undefined ? undefined : imp.loc.end,
+          },
         },
       );
     }
@@ -88633,8 +90603,11 @@ function ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode
     consumerKind,
   ) {
     // Allow importing functions and classes as `type` and `typeof`
-    if ((producer.valueType === 'class' || producer.valueType === 'function') &&
-      (consumerKind === 'type' || consumerKind === 'typeof')) {
+    if (producer.type === 'local' &&
+      (producer.valueType === 'class' ||
+      producer.valueType === 'function') &&
+      (consumerKind === 'type' ||
+      consumerKind === 'typeof')) {
       return true;
     }
 
@@ -88652,12 +90625,13 @@ function ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode
   }
 
   class ___R$project$rome$$romejs$core$master$dependencies$DependencyNode_ts$default {
-    constructor(graph, id, path, res) {
+    constructor(graph, ref, res) {
       this.graph = graph;
 
-      this.project = graph.master.projectManager.assertProjectExisting(path);
-      this.path = path;
-      this.id = id;
+      this.project = graph.master.projectManager.assertProjectExisting(ref.real);
+      this.uid = ref.uid;
+      this.path = ref.real;
+      this.ref = ref;
       this.type = res.moduleType;
 
       this.usedAsync = false;
@@ -88667,7 +90641,7 @@ function ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode
 
       this.analyze = res;
 
-      const {handler} = ___R$project$rome$$romejs$core$common$fileHandlers_ts$getFileHandler(path, this.project.config);
+      const {handler} = ___R$project$rome$$romejs$core$common$fileHandlers_ts$getFileHandler(ref.real, this.project.config);
       this.handler = handler;
     }
 
@@ -88766,6 +90740,26 @@ function ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode
       return orderer.order(this.path);
     }
 
+    // Get a list of all DependencyNodes where exports could be resolved. eg. `export *`
+    getExportedModules(chain = new Set()) {
+      if (chain.has(this)) {
+        return new Set();
+      } else {
+        chain.add(this);
+      }
+
+      for (const exp of this.analyze.exports) {
+        if (exp.type === 'externalAll' &&
+          this.relativeToAbsolutePath.has(
+            exp.source,
+          )) {
+          this.getNodeFromRelativeDependency(exp.source).getExportedModules(chain);
+        }
+      }
+
+      return chain;
+    }
+
     getExportedNames(kind, seen = new Set()) {
       if (seen.has(this)) {
         return new Set();
@@ -88776,31 +90770,41 @@ function ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode
       let names = new Set();
 
       for (const exp of this.analyze.exports) {
-        if (exp.type === 'local' && ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode_ts$equalKind(exp, kind)) {
-          names.add(exp.name);
+        if (!___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode_ts$equalKind(exp, kind)) {
+          continue;
         }
 
-        if (exp.type === 'external') {
-          const resolved = this.getNodeFromRelativeDependency(exp.source).resolveImport(
-            exp.imported,
-            exp.loc,
-          );
-          if (resolved.type === 'FOUND' && ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode_ts$equalKind(resolved.record, kind)) {
-            names.add(exp.exported);
-          }
-        }
+        switch (exp.type) {
+          case 'local':
+            names.add(exp.name);
+            break;
 
-        if (exp.type === 'externalAll') {
-          names =
-            new Set(
-              [
-                ...names,
-                ...this.getNodeFromRelativeDependency(exp.source).getExportedNames(
-                  kind,
-                  seen,
-                ),
-              ],
+          case 'external':
+            const resolved = this.getNodeFromRelativeDependency(exp.source).resolveImport(
+              exp.imported,
+              exp.loc,
             );
+            if (resolved.type === 'FOUND' && ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode_ts$equalKind(resolved.record, kind)) {
+              names.add(exp.exported);
+            }
+            break;
+
+          case 'externalNamespace':
+            names.add(exp.exported);
+            break;
+
+          case 'externalAll':
+            names =
+              new Set(
+                [
+                  ...names,
+                  ...this.getNodeFromRelativeDependency(exp.source).getExportedNames(
+                    kind,
+                    seen,
+                  ),
+                ],
+              );
+            break;
         }
       }
 
@@ -88808,149 +90812,104 @@ function ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode
     }
 
     buildDiagnosticForUnknownExport(kind, resolved) {
-      const resolvedFileLink = '<filelink emphasis target="' +
-      resolved.node.id +
-      '" />';
+      const location = Object.assign(
+        {
+        },
+        resolved.loc,
+        {
+          mtime: this.getMtime(),
+        },
+      );
 
-      const message = 'Couldn\'t find export <emphasis>' +
-      resolved.name +
-      '</emphasis> in ' +
-      resolvedFileLink;
-      let advice = [];
+      const expectedName = resolved.name;
+      const fromSource = resolved.node.uid;
 
-      if (resolved.node.analyze.exports.length === 0) {
-        advice.push(
-          {
-            type: 'log',
-            category: 'info',
-            message: 'This file doesn\'t have any exports',
-          },
-        );
-      } else {
-        // Provide suggestion on unknown import
-        const exportedNames = resolved.node.getExportedNames(kind);
-
-        advice =
-          advice.concat(
-            ___R$project$rome$$romejs$diagnostics$helpers_ts$buildSuggestionAdvice(
-              resolved.name,
-              Array.from(
-                exportedNames,
-              ),
+      // Check if there was a matching local in any of the exported modules
+      for (const mod of resolved.node.getExportedModules()) {
+        // We use an object as a hash map so need to check for pollution
+        if (Object.prototype.hasOwnProperty.call(
+          mod.analyze.topLevelLocalBindings,
+          expectedName,
+        )) {
+          const localLoc = mod.analyze.topLevelLocalBindings[expectedName];
+          if (localLoc !== undefined) {
+            return (
               {
-                formatItem: (name) => {
-                  const exportInfo = resolved.node.resolveImport(name, undefined);
-
-                  if (exportInfo.type === 'NOT_FOUND') {
-                    throw (
-                      new Error(
-                        'mod.resolveImport returned NOT_FOUND for an export ' +
-                        name +
-                        ' in ' +
-                        exportInfo.node.path +
-                        ' despite being returned by getExportedNames',
-                      )
-                    );
-                  }
-
-                  const {record} = exportInfo;
-
-                  const {loc} = record;
-                  if (loc !== undefined) {
-                    name =
-                      '<filelink target="' +
-                      loc.filename +
-                      '" line="' +
-                      loc.start.line +
-                      '" column="' +
-                      loc.start.column +
-                      '">' +
-                      name +
-                      '</filelink>';
-
-                    if (exportInfo.node !== resolved.node) {
-                      name +=
-                        ' <dim>(from <filelink target="' +
-                        exportInfo.node.path.join() +
-                        '" />)</dim>';
-                    }
-                  }
-
-                  return name;
-                },
-              },
-            ),
-          );
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.RESOLVER.UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL(
+                  expectedName,
+                  fromSource,
+                  localLoc,
+                ),
+                location,
+              }
+            );
+          }
+        }
       }
 
       return (
-        Object.assign(
-          {
-            category: 'bundler/unknownExport',
-          },
-          resolved.loc,
-          {
-            message,
-            advice,
-            mtime: this.getMtime(),
-          },
-        )
+        {
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.RESOLVER.UNKNOWN_EXPORT(
+            expectedName,
+            fromSource,
+            Array.from(resolved.node.getExportedNames(kind)),
+            (name) => {
+              const exportInfo = resolved.node.resolveImport(name, undefined);
+
+              if (exportInfo.type === 'NOT_FOUND') {
+                throw (
+                  new Error(
+                    'mod.resolveImport returned NOT_FOUND for an export ' +
+                    name +
+                    ' in ' +
+                    exportInfo.node.path +
+                    ' despite being returned by getExportedNames',
+                  )
+                );
+              }
+
+              return (
+                {
+                  location: exportInfo.record.loc,
+                  source: exportInfo.node === resolved.node
+                    ? undefined : exportInfo.node.path.join(),
+                }
+              );
+            },
+          ),
+          location,
+        }
       );
     }
 
     buildDiagnosticForTypeMismatch(resolved, node, nameInfo) {
       const {name, kind, loc} = nameInfo;
-      const advice = [];
-
       const {record} = resolved;
 
-      if (record.loc !== undefined) {
-        advice.push(
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Export was defined here in <filelink emphasis target="' +
-            record.loc.filename +
-            '" />',
-          },
-        );
-
-        advice.push(
-          Object.assign(
-            {
-              type: 'frame',
-            },
+      return (
+        {
+          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.RESOLVER.IMPORT_TYPE_MISMATCH(
+            name,
+            node.uid,
+            kind,
+            record.kind,
             record.loc,
           ),
-        );
-      }
 
-      return (
-        Object.assign(
-          {
-            category: 'bundler/importTypeMismatch',
-          },
-          loc,
-          {
-            message: 'The export <emphasis>' +
-            name +
-            '</emphasis> in <filelink emphasis target="' +
-            node.id +
-            '" /> was incorrectly imported as a <emphasis>' +
-            kind +
-            '</emphasis> when it\'s actually a <emphasis>' +
-            record.kind +
-            '</emphasis>',
-            advice,
-            mtime: this.getMtime(),
-          },
-        )
+          location: Object.assign(
+            {
+            },
+            loc,
+            {
+              mtime: this.getMtime(),
+            },
+          ),
+        }
       );
     }
 
     resolveImports() {
       const {graph} = this;
-      const deps = this.relativeToAbsolutePath;
 
       // Build up a map of any forwarded imports
       const resolvedImports = {};
@@ -88960,7 +90919,7 @@ function ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode
 
       // Go through all of our dependencies and check if they have any external exports to forward
       const allowTypeImportsAsValue = this.analyze.syntax.includes('ts');
-      for (const absolute of deps.values()) {
+      for (const absolute of this.relativeToAbsolutePath.values()) {
         const mod = graph.getNode(absolute);
 
         // We can't follow CJS names
@@ -88999,12 +90958,12 @@ function ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyNode
           }
 
           // If the resolved target isn't the same as the file then forward it
-          if (resolved.node.id !== mod.id) {
-            resolvedImports[mod.id +
+          if (resolved.node.uid !== mod.uid) {
+            resolvedImports[mod.uid +
             ':' +
             name] =
               {
-                id: resolved.node.id,
+                id: resolved.node.uid,
                 name: resolved.record.name,
               };
           }
@@ -89139,32 +91098,6 @@ const ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyGraph_t
       this.closeEvent = new ___R$project$rome$$romejs$events$Event_ts$default({name: 'DependencyGraph.closeEvent'});
     }
 
-    watch(callback) {
-      const watchSubscription = this.master.fileChangeEvent.subscribe(
-        async (path) => {
-          if (this.nodes.has(path)) {
-            this.nodes.delete(path);
-          } else {
-            return;
-          }
-
-          const diagnosticsProcessor = new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default({origins: []});
-          await this.seed({paths: [path], diagnosticsProcessor});
-          diagnosticsProcessor.maybeThrowDiagnosticsError();
-
-          if (callback !== undefined) {
-            callback({path});
-          }
-        },
-      );
-
-      this.closeEvent.subscribe(
-        () => {
-          watchSubscription.unsubscribe();
-        },
-      );
-    }
-
     close() {
       this.closeEvent.send();
     }
@@ -89177,10 +91110,10 @@ const ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyGraph_t
       const stats = [];
 
       for (const node of this.nodes.values()) {
-        const source = node.id;
+        const source = node.uid;
 
         for (const absoluteTarget of node.relativeToAbsolutePath.values()) {
-          const target = this.getNode(absoluteTarget).id;
+          const target = this.getNode(absoluteTarget).uid;
           stats.push(
             {
               target,
@@ -89191,7 +91124,7 @@ const ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyGraph_t
       }
 
       for (const absoluteEntry of entries) {
-        const source = this.getNode(absoluteEntry).id;
+        const source = this.getNode(absoluteEntry).uid;
         stats.push(
           {
             source,
@@ -89203,21 +91136,26 @@ const ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyGraph_t
       return stats;
     }
 
-    addNode(filename, res) {
+    deleteNode(path) {
+      this.nodes.delete(path);
+    }
+
+    addNode(path, res) {
       const module = new ___R$project$rome$$romejs$core$master$dependencies$DependencyNode_ts$default(
         this,
-        this.master.projectManager.getUid(
-          filename,
-        ),
-        filename,
+        this.master.projectManager.getFileReference(path),
         res,
       );
-      this.nodes.set(filename, module);
+      this.nodes.set(path, module);
       return module;
     }
 
+    maybeGetNode(path) {
+      return this.nodes.get(path);
+    }
+
     getNode(path) {
-      const mod = this.nodes.get(path);
+      const mod = this.maybeGetNode(path);
       if (mod === undefined) {
         throw new Error('No module found for ' +
         path.join());
@@ -89284,7 +91222,9 @@ const ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyGraph_t
 
     validate(node, diagnosticsProcessor) {
       const resolvedImports = node.resolveImports();
-      diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics);
+      return (
+        diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics).length > 0
+      );
     }
 
     validateTransitive(node, diagnosticsProcessor) {
@@ -89372,7 +91312,7 @@ const ___R$$priv$project$rome$$romejs$core$master$dependencies$DependencyGraph_t
                   ),
                   dep.loc === undefined
                     ? undefined : {
-                      pointer: Object.assign(
+                      location: Object.assign(
                         {
                           sourceText: undefined,
                         },
@@ -89477,9 +91417,9 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
         {
           name: 'bundler:analyze:' +
           this.resolvedEntryUid,
+          title: 'Analyzing',
         },
       );
-      analyzeProgress.setTitle('Analyzing');
       this.diagnostics.setThrowAfter(100);
       try {
         await graph.seed(
@@ -89487,6 +91427,7 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
             paths: [this.resolvedEntry],
             diagnosticsProcessor: this.diagnostics,
             analyzeProgress,
+            validate: true,
           },
         );
       } finally {
@@ -89505,10 +91446,10 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
         {
           name: 'bundler:compile:' +
           this.resolvedEntryUid,
+          title: 'Compiling',
         },
       );
       compilingSpinner.setTotal(paths.length);
-      compilingSpinner.setTitle('Compiling');
 
       const groupedPaths = await master.fileAllocator.groupPathsByWorker(paths);
       await Promise.all(
@@ -89538,7 +91479,7 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
       // Build a map of relative module sources to module id
       const relativeSourcesToModuleId = {};
       for (const [relative, absolute] of mod.relativeToAbsolutePath) {
-        const moduleId = graph.getNode(absolute).id;
+        const moduleId = graph.getNode(absolute).uid;
         relativeSourcesToModuleId[relative] = moduleId;
       }
 
@@ -89566,7 +91507,7 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
       const opts = {
         mode: this.mode,
         moduleAll: mod.all,
-        moduleId: mod.id,
+        moduleId: mod.uid,
         relativeSourcesToModuleId,
         resolvedImports,
         assetPath,
@@ -89651,12 +91592,15 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
           for (const {loc, mtime} of order.firstTopAwaitLocations) {
             this.diagnostics.addDiagnostic(
               {
-                category: 'bundler/topLevelAwait',
-                filename: loc.filename,
-                start: loc.start,
-                end: loc.end,
-                message: 'This module contains a top level await which isn\'t supported in wrapper mode',
-                mtime,
+                description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.BUNDLER.TOP_LEVEL_AWAIT_IN_LEGACY,
+                location: Object.assign(
+                  {
+                  },
+                  loc,
+                  {
+                    mtime,
+                  },
+                ),
               },
             );
           }
@@ -89697,7 +91641,7 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
         declaredCJS.add(module);
 
         push('  var ' +
-        ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$_utils_ts$getPrefixedNamespace(module.id) +
+        ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$_utils_ts$getPrefixedNamespace(module.uid) +
         ' = {};');
       }
 
@@ -89718,12 +91662,12 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
         // Only do this in modern mode, the module id will already be in the wrapper otherwise
         if (mode === 'modern') {
           push('  // ' +
-          module.id);
+          module.uid);
         }
 
         declareCJS(module);
 
-        addMappings(module.id, compileResult.sourceText, compileResult.mappings);
+        addMappings(module.uid, compileResult.sourceText, compileResult.mappings);
         push(compileResult.compiledCode);
         push('');
       }
@@ -89732,11 +91676,11 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
       const entryModule = graph.getNode(resolvedEntry);
       if (mode === 'modern') {
         push('  return ' +
-        ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$_utils_ts$getPrefixedNamespace(entryModule.id) +
+        ___R$project$rome$$romejs$js$compiler$transforms$compileForBundle$_utils_ts$getPrefixedNamespace(entryModule.uid) +
         ';');
       } else {
         push('  return Rome.requireNamespace("' +
-        entryModule.id +
+        entryModule.uid +
         '");');
       }
 
@@ -89753,7 +91697,7 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
 
       return (
         {
-          diagnostics: this.diagnostics.getPartialDiagnostics(),
+          diagnostics: this.diagnostics.getDiagnostics(),
           content,
           map: sourceMap.toJSON(),
           cached: this.cached,
@@ -89771,7 +91715,7 @@ const ___R$$priv$project$rome$$romejs$core$master$bundler$BundleRequest_ts$crypt
         {
           map: this.sourceMap.toJSON(),
           content: '',
-          diagnostics: this.diagnostics.getPartialDiagnostics(),
+          diagnostics: this.diagnostics.getDiagnostics(),
           cached: false,
           assets: this.assets,
         }
@@ -89909,9 +91853,9 @@ class ___R$project$rome$$romejs$core$master$bundler$Bundler_ts$default {
         {
           name: 'bundler:analyze:' +
           entryUids.join(','),
+          title: 'Analyzing',
         },
       );
-      analyzeProgress.setTitle('Analyzing');
       processor.setThrowAfter(100);
       await this.graph.seed(
         {
@@ -89927,13 +91871,12 @@ class ___R$project$rome$$romejs$core$master$bundler$Bundler_ts$default {
       // Now actually bundle them
       const map = new Map();
 
-      const progress = this.reporter.progress();
-      progress.setTitle('Bundling');
+      const progress = this.reporter.progress({title: 'Bundling'});
       progress.setTotal(entries.length);
 
       const silentReporter = this.reporter.fork(
         {
-          silent: true,
+          streams: [],
         },
       );
 
@@ -90093,7 +92036,7 @@ class ___R$project$rome$$romejs$core$master$bundler$Bundler_ts$default {
         const isBinShorthand = typeof binConsumer.asUnknown() === 'string';
 
         for (const [binName, relative] of manifest.bin) {
-          const pointer = (isBinShorthand ? binConsumer : binConsumer.get(binName)).getDiagnosticPointer(
+          const location = (isBinShorthand ? binConsumer : binConsumer.get(binName)).getDiagnosticLocation(
             'inner-value',
           );
 
@@ -90108,7 +92051,7 @@ class ___R$project$rome$$romejs$core$master$bundler$Bundler_ts$default {
               },
             ),
             {
-              pointer,
+              location,
             },
           );
 
@@ -90926,9 +92869,15 @@ const ___R$$priv$project$rome$$romejs$core$master$web$WebRequest_ts$http = requi
         //this.request.reporter.clear();
         try {
           const printer = this.masterRequest.createDiagnosticsPrinter(
-            {
-              category: 'WebRequest',
-            },
+            new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default(
+              {
+                origins: [
+                  {
+                    category: 'WebRequest',
+                  },
+                ],
+              },
+            ),
           );
           printer.addDiagnostics(diagnostics);
           await printer.print();
@@ -91202,7 +93151,14 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
 
           const data = {
             id: client.id,
-            flags: client.flags,
+            flags: Object.assign(
+              {
+              },
+              client.flags,
+              {
+                cwd: client.flags.cwd.join(),
+              },
+            ),
             startTime: Date.now(),
             endTime: undefined,
             stdoutAnsi: '',
@@ -91382,13 +93338,13 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
         throw new Error('Pathname is attempting to escalate out of cwd');
       }
 
-      const pathPointer = url.path.getDiagnosticPointer();
+      const pathPointer = url.path.getDiagnosticLocation();
       const path = await this.master.resolver.resolveEntryAssertPath(
         {
           origin: this.masterRequest.client.flags.cwd,
           source: absolute,
         },
-        pathPointer === undefined ? undefined : {pointer: pathPointer},
+        pathPointer === undefined ? undefined : {location: pathPointer},
       );
 
       const platform = url.query.get('platform').asStringSetOrVoid(___R$project$rome$$romejs$core$common$types$platform_ts$PLATFORMS);
@@ -91410,15 +93366,7 @@ const ___R$$priv$project$rome$$romejs$core$master$web$index_ts$http = require(
       );
 
       const bundler = new ___R$project$rome$$romejs$core$master$bundler$Bundler_ts$default(this.masterRequest, bundlerConfig);
-
-      bundler.graph.watch(
-        async () => {
-          // TODO HMR
-        },
-      );
-
       this.bundlerCache.set(cacheKey, bundler);
-
       return {bundler, path};
     }
   }
@@ -91484,7 +93432,7 @@ const ___R$project$rome$$romejs$core$master$commands$config_ts$default = ___R$pr
         let keyParts;
         let value;
 
-        const [action] = req.query.args;
+        const [action, ...restArgs] = req.query.args;
         switch (action) {
           case 'enable':
             {
@@ -91522,10 +93470,25 @@ const ___R$project$rome$$romejs$core$master$commands$config_ts$default = ___R$pr
               break;
             }
 
+          case 'set-directory':
+            {
+              req.expectArgumentLength(3);
+              [keyParts, value] = restArgs;
+
+              // If the value is an absolute path, then make it relative to the project folder
+              const path = ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(value);
+              if (path.isAbsolute()) {
+                value =
+                  ___R$project$rome$$romejs$project$utils_ts$assertHardMeta(project.meta).projectFolder.relative(path).join();
+              }
+
+              break;
+            }
+
           case 'set':
             {
               req.expectArgumentLength(3);
-              [keyParts, value] = req.query.args;
+              [keyParts, value] = restArgs;
               break;
             }
 
@@ -91624,7 +93587,7 @@ const ___R$project$rome$$romejs$core$master$commands$compile_ts$default = ___R$p
               source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(args[0]),
             },
           ),
-          {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
+          {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
         );
 
         let res;
@@ -91691,7 +93654,7 @@ const ___R$project$rome$$romejs$core$master$commands$resolve_ts$default = ___R$p
         const resolved = await master.resolver.resolveEntryAssert(
           query,
           {
-            pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key}),
+            location: req.getDiagnosticPointerFromFlags({type: 'arg', key}),
           },
         );
         const filename = resolved.ref.real.join();
@@ -91745,7 +93708,7 @@ function ___R$$priv$project$rome$$romejs$core$master$commands$analyzeDependencie
               source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(args[0]),
             },
           ),
-          {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
+          {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
         );
 
         let res = await req.requestWorkerAnalyzeDependencies(filename);
@@ -91795,6 +93758,9 @@ function ___R$$priv$project$rome$$romejs$core$master$commands$analyzeDependencie
                         return ___R$$priv$project$rome$$romejs$core$master$commands$analyzeDependencies_ts$removeLoc(exp);
 
                       case 'externalAll':
+                        return ___R$$priv$project$rome$$romejs$core$master$commands$analyzeDependencies_ts$removeLoc(exp);
+
+                      case 'externalNamespace':
                         return ___R$$priv$project$rome$$romejs$core$master$commands$analyzeDependencies_ts$removeLoc(exp);
                     }
                   },
@@ -91856,7 +93822,7 @@ const ___R$project$rome$$romejs$core$master$commands$parse_ts$default = ___R$pro
               source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(args[0]),
             },
           ),
-          {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
+          {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
         );
 
         const ast = await req.requestWorkerParse(
@@ -91931,11 +93897,9 @@ const ___R$project$rome$$romejs$core$master$commands$bundle_ts$default = ___R$pr
         }
 
         if (commandFlags.quiet) {
-          reporter.success(
-            'Saved to <filelink target="' +
-            dir.join() +
-            '" />',
-          );
+          reporter.success('Saved to <filelink target="' +
+          dir.join() +
+          '" />');
         } else {
           reporter.success(
             'Saved the following files to <filelink target="' +
@@ -91961,153 +93925,126 @@ const ___R$project$rome$$romejs$core$master$commands$format_ts$default = ___R$pr
       category: ___R$project$rome$$romejs$core$commands_ts$commandCategories.INTERNAL,
       description: 'TODO',
 
-      defineFlags(consumer) {
-        return (
-          {
-            write: consumer.get('write').asBoolean(false),
-          }
-        );
-      },
-
-      async default(req, flags) {
+      async default(req) {
         const {reporter, master} = req;
+        const {args} = req.query;
+        req.expectArgumentLength(1);
 
-        const {paths} = await req.getFilesFromArgs(
-          {
-            getProjectIgnore: (
-              project,
-            ) =>
-              ({
-                patterns: project.config.format.ignore,
-                source: master.projectManager.findProjectConfigConsumer(
-                  project,
-                  (
-                    consumer,
-                  ) =>
-                    consumer.has('format') && consumer.get('format').has('ignore')
-                      ? consumer.get('format').get('ignore') : undefined,
-                ),
-              }),
-            getProjectEnabled: (
-              project,
-            ) =>
-              ({
-                enabled: project.config.format.enabled,
-                source: master.projectManager.findProjectConfigConsumer(
-                  project,
-                  (
-                    consumer,
-                  ) =>
-                    consumer.has('format')
-                      ? consumer.get('format').get('enabled') : undefined,
-                ),
-              }),
-            noun: 'formatting',
-            verb: 'linting',
-            configCategory: 'format',
-            extensions: ___R$project$rome$$romejs$core$common$fileHandlers_ts$FORMATTABLE_EXTENSIONS,
-            disabledDiagnosticCategory: 'format/disabled',
-          },
-        );
-
-        if (paths.size === 0) {
-          reporter.warn('No files formatted');
-          return;
-        }
-
-        const pathsByWorker = await req.master.fileAllocator.groupPathsByWorker(
-          paths,
-        );
-
-        const progress = reporter.progress();
-        progress.setTotal(paths.size);
-        progress.setTitle('Formatting');
-
-        const diagnosticsProcessor = new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default({});
-
-        // TODO probably add the same logic in CompilerLinter if the project config disables formatting
-        await Promise.all(
-          pathsByWorker.map(
-            async (paths) => {
-              for (const path of paths) {
-                progress.setText('<filelink target="' +
-                path.join() +
-                '" />');
-                progress.tick();
-
-                const res = await req.requestWorkerFormat(path);
-                if (res === undefined) {
-                  continue;
-                }
-
-                if (res.diagnostics.length > 0) {
-                  diagnosticsProcessor.addDiagnostics(res.diagnostics);
-                  continue;
-                }
-
-                if (!flags.write && res.formatted !== res.original) {
-                  // TODO abstract this and the pendingFixes diagnostic in WorkerAPI
-                  diagnosticsProcessor.addDiagnostic(
-                    {
-                      category: 'lint/pendingFixes',
-                      filename: path.join(),
-                      message: 'Pending fixes',
-                      advice: [
-                        {
-                          type: 'diff',
-                          diff: ___R$project$rome$$romejs$string$diff$index_ts$default(res.original, res.formatted),
-                        },
-                        {
-                          type: 'code',
-                          code: res.formatted,
-                        },
-                      ],
-                    },
-                  );
-                } else {
-                  //await writeFile(path, res.formatted);
-                }
-              }
+        const filename = await master.resolver.resolveEntryAssertPath(
+          Object.assign(
+            {
+            },
+            req.getResolverOptionsFromFlags(),
+            {
+              source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(args[0]),
             },
           ),
+          {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
         );
 
-        diagnosticsProcessor.maybeThrowDiagnosticsError();
-
-        if (flags.write) {
-          reporter.success(
-            '<number emphasis>' +
-            paths.size +
-            '</number> files formatted successfully',
-          );
+        const res = await req.requestWorkerFormat(filename);
+        if (res === undefined) {
+          reporter.error('No formatter for this file');
+          return undefined;
         } else {
-          reporter.success(
-            '<number emphasis>' +
-            paths.size +
-            '</number> files formatted correctly',
-          );
+          reporter.writeAll(res.formatted);
+          return res.formatted;
         }
       },
     },
   );
 
-  // project-rome/@romejs/core/master/linter/CompilerLinter.ts
-class ___R$project$rome$$romejs$core$master$linter$CompilerLinter_ts$default {
-    constructor(req, printer, fix) {
-      this.request = req;
+  // project-rome/@romejs/core/master/linter/Linter.ts
+function ___R$$priv$project$rome$$romejs$core$master$linter$Linter_ts$createDiagnosticsPrinter(
+    request,
+    processor,
+    totalCount,
+    fixedCount,
+  ) {
+    const printer = request.createDiagnosticsPrinter(processor);
+
+    printer.onBeforeFooterPrint(
+      (reporter, isError) => {
+        if (fixedCount > 0) {
+          reporter.success(
+            '<number emphasis>' +
+            fixedCount +
+            '</number> <grammarNumber plural="files" singular="file">' +
+            fixedCount +
+            '</grammarNumber> fixed',
+          );
+        }
+
+        if (isError) {
+          let couldFix = false;
+          let hasPendingFixes = false;
+
+          for (const {description} of processor.getDiagnostics()) {
+            if (description.category === 'lint/pendingFixes') {
+              hasPendingFixes = true;
+            }
+
+            if (description.fixable) {
+              couldFix = true;
+            }
+          }
+
+          if (hasPendingFixes) {
+            reporter.info(
+              'Fixes available. Run <command>rome lint --fix</command> to apply.',
+            );
+          } else if (couldFix) {
+            reporter.warn(
+              'Autofixes are available for some of these errors when formatting is enabled. Run <command>rome config enable-category format</command> to enable.',
+            );
+          }
+        } else {
+          if (totalCount === 0) {
+            reporter.warn('No files linted');
+          } else {
+            reporter.info(
+              '<number emphasis>' +
+              totalCount +
+              '</number> <grammarNumber plural="files" singular="file">' +
+              totalCount +
+              '</grammarNumber> linted',
+            );
+          }
+        }
+      },
+    );
+
+    return printer;
+  }
+
+  class ___R$$priv$project$rome$$romejs$core$master$linter$Linter_ts$LintRunner {
+    constructor({
+      request,
+      graph,
+      fix,
+      events,
+    }) {
+      this.master = request.master;
+      this.graph = graph;
+      this.request = request;
       this.fix = fix;
-      this.printer = printer;
+      this.events = events;
+      this.compilerDiagnosticsCache = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
+      this.hadDependencyValidationErrors = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
     }
 
-    async lint(paths) {
-      const {request, printer} = this;
-      const {master, reporter} = request;
+    async runLint({
+      evictedPaths: changedPaths,
+      processor,
+    }) {
+      let fixedCount = 0;
+      const {master} = this.request;
+      const pathsByWorker = await master.fileAllocator.groupPathsByWorker(
+        changedPaths,
+      );
 
-      const pathsByWorker = await master.fileAllocator.groupPathsByWorker(paths);
-
-      const spinner = reporter.progress();
-      spinner.setTitle('Linting');
-      spinner.setTotal(paths.size);
+      const progress = this.events.createProgress({title: 'Linting'});
+      progress.setTotal(changedPaths.size);
 
       await Promise.all(
         pathsByWorker.map(
@@ -92116,209 +94053,993 @@ class ___R$project$rome$$romejs$core$master$linter$CompilerLinter_ts$default {
               const text = '<filelink target="' +
               path.join() +
               '" />';
-              spinner.pushText(text);
+              progress.pushText(text);
 
               const {
                 diagnostics,
                 suppressions,
+                fixed,
               } = await this.request.requestWorkerLint(path, this.fix);
-              printer.processor.addSuppressions(suppressions);
-              printer.addDiagnostics(diagnostics);
+              processor.addSuppressions(suppressions);
+              processor.addDiagnostics(diagnostics);
+              this.compilerDiagnosticsCache.set(path, {suppressions, diagnostics});
+              if (fixed) {
+                fixedCount++;
+              }
 
-              spinner.popText(text);
-              spinner.tick();
+              progress.popText(text);
+              progress.tick();
             }
           },
         ),
       );
 
-      spinner.end();
-    }
-  }
+      progress.end();
 
-  // project-rome/@romejs/core/master/linter/Linter.ts
-class ___R$project$rome$$romejs$core$master$linter$Linter_ts$default {
-    constructor(req, fix) {
-      this.request = req;
-      this.fix = fix;
+      return {fixedCount};
     }
 
-    async lint(throwAlways = true) {
-      const {request} = this;
-      const {reporter, master} = request;
+    async runGraph({
+      evictedPaths,
+      processor,
+    }) {
+      const {graph} = this;
 
-      const printer = request.createDiagnosticsPrinter(
+      // Get all the current dependency nodes for the evicted files, and invalidate their nodes
+      const oldEvictedNodes = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
+      for (const path of evictedPaths) {
+        const node = graph.maybeGetNode(path);
+        if (node !== undefined) {
+          oldEvictedNodes.set(path, node);
+          graph.deleteNode(path);
+        }
+      }
+
+      // Refresh only the evicted paths
+      const progress = this.events.createProgress(
         {
-          category: 'lint',
-          message: 'Dispatched',
+          title: 'Analyzing changed files',
+        },
+      );
+      await graph.seed(
+        {
+          paths: Array.from(evictedPaths),
+          diagnosticsProcessor: processor,
+          validate: false,
+          analyzeProgress: progress,
         },
       );
 
-      printer.processor.addAllowedUnusedSuppressionPrefix('bundler');
+      // Maintain a list of all the dependencies we revalidated
+      const validatedDependencyPaths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
 
-      const {paths, projects} = await request.getFilesFromArgs(
+      // Maintain a list of all the dependents that need to be revalidated
+      const validatedDependencyPathDependents = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
+
+      // Build a list of dependents to recheck
+      for (const path of evictedPaths) {
+        validatedDependencyPaths.add(path);
+
+        const newNode = graph.getNode(path);
+
+        // Get the previous node and see if the exports have actually changed
+        const oldNode = oldEvictedNodes.get(path);
+        const sameShape = oldNode !== undefined &&
+          ___R$project$rome$$romejs$js$compiler$api$analyzeDependencies$utils_ts$areAnalyzeDependencyResultsEqual(oldNode.analyze, newNode.analyze);
+
+        for (const depNode of newNode.getDependents()) {
+          // If the old node has the same shape as the new one, only revalidate the dependent if it had dependency errors
+          if (sameShape &&
+            this.hadDependencyValidationErrors.get(depNode.path) === false) {
+            continue;
+          }
+
+          validatedDependencyPaths.add(depNode.path);
+          validatedDependencyPathDependents.add(depNode.path);
+        }
+      }
+
+      // Revalidate dependents
+      if (validatedDependencyPathDependents.size > 0) {
+        const progress = this.events.createProgress(
+          {
+            title: 'Analyzing dependents',
+          },
+        );
+
+        await graph.seed(
+          {
+            paths: Array.from(validatedDependencyPaths),
+            diagnosticsProcessor: processor,
+            validate: false,
+            analyzeProgress: progress,
+          },
+        );
+      }
+
+      // Validate connections
+      for (const path of validatedDependencyPaths) {
+        const hasValidationErrors = graph.validate(graph.getNode(path), processor);
+        this.hadDependencyValidationErrors.set(path, hasValidationErrors);
+      }
+
+      return validatedDependencyPaths;
+    }
+
+    computeChanges({evictedPaths, processor}, validatedDependencyPaths) {
+      const {master} = this;
+      const changes = [];
+
+      const updatedPaths = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet(
+        [
+          ...validatedDependencyPaths,
+        ],
+      );
+
+      const diagnosticsByFilename = processor.getDiagnosticsByFilename();
+
+      // In case we pushed on any diagnostics that aren't from the input paths, try to resolve them
+      const includedFilenamesInDiagnostics = master.projectManager.normalizeFilenamesToFilePaths(
+        diagnosticsByFilename.keys(),
+      );
+      for (const path of includedFilenamesInDiagnostics.absolutes) {
+        updatedPaths.add(path);
+      }
+
+      // If we validated the diagnostics of the dependents, then we need to also push their previous compiler diagnostics
+      for (const path of validatedDependencyPaths) {
+        if (!evictedPaths.has(path)) {
+          const compilerDiagnostics = this.compilerDiagnosticsCache.get(path);
+          if (compilerDiagnostics !== undefined) {
+            processor.addSuppressions(compilerDiagnostics.suppressions);
+            processor.addDiagnostics(compilerDiagnostics.diagnostics);
+          }
+        }
+      }
+
+      // We can't just use getDiagnosticFilenames as we need to produce empty arrays for removed diagnostics
+      for (const path of updatedPaths) {
+        const ref = this.request.master.projectManager.getFileReference(path);
+        const diagnostics = [
+          ...(diagnosticsByFilename.get(ref.uid) || []),
+          ...(diagnosticsByFilename.get(ref.real.join()) || []),
+        ];
+
+        changes.push(
+          {
+            filename: ref.uid,
+            ref,
+            diagnostics,
+          },
+        );
+      }
+
+      // We can produce diagnostics that don't actually point at a file. For LSP we will just throw these away,
+
+      // otherwise inside of Rome we can display them.
+
+      // These filenames may be relative or undefined
+      for (const filename of includedFilenamesInDiagnostics.others) {
+        changes.push(
+          {
+            filename,
+            ref: undefined,
+            diagnostics: diagnosticsByFilename.get(filename) || [],
+          },
+        );
+      }
+
+      return changes;
+    }
+
+    async run(opts) {
+      this.events.onRunStart();
+      const {fixedCount} = await this.runLint(opts);
+      const validatedDependencyPaths = await this.runGraph(opts);
+      const changes = await this.computeChanges(opts, validatedDependencyPaths);
+      return (
         {
-          getProjectIgnore: (
-            project,
-          ) =>
-            ({
-              patterns: project.config.lint.ignore,
-              source: master.projectManager.findProjectConfigConsumer(
-                project,
-                (
-                  consumer,
-                ) =>
-                  consumer.has('lint') && consumer.get('lint').has('ignore')
-                    ? consumer.get('lint').get('ignore') : undefined,
-              ),
-            }),
-          getProjectEnabled: (
-            project,
-          ) =>
-            ({
-              enabled: project.config.lint.enabled,
-              source: master.projectManager.findProjectConfigConsumer(
-                project,
-                (
-                  consumer,
-                ) =>
-                  consumer.has('lint')
-                    ? consumer.get('lint').get('enabled') : undefined,
-              ),
-            }),
+          evictedPaths: opts.evictedPaths,
+          changes,
+          fixedCount,
+          totalCount: validatedDependencyPaths.size,
+          runner: this,
+        }
+      );
+    }
+  }
+
+  class ___R$project$rome$$romejs$core$master$linter$Linter_ts$default {
+    constructor(req, opts) {
+      this.request = req;
+      this.options = opts;
+    }
+
+    getFileArgOptions() {
+      return (
+        {
+          args: this.options.args,
           noun: 'lint',
           verb: 'linting',
           configCategory: 'lint',
           extensions: ___R$project$rome$$romejs$core$common$fileHandlers_ts$LINTABLE_EXTENSIONS,
           disabledDiagnosticCategory: 'lint/disabled',
+        }
+      );
+    }
+
+    createDiagnosticsProcessor(evictedPaths, runner) {
+      const processor = new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default(
+        {
+          origins: [
+            {
+              category: 'lint',
+              message: 'Dispatched',
+            },
+          ],
         },
       );
 
-      const {fix} = this;
-      const shouldFix = fix !== undefined;
+      processor.addAllowedUnusedSuppressionPrefix('bundler');
 
-      if (fix !== undefined) {
-        for (const project of projects) {
-          if (!project.config.format.enabled) {
-            printer.addDiagnostic(
-              Object.assign(
-                {
-                },
-                fix,
-                {
-                  category: 'format/disabled',
-                  message: 'Format is disabled for this project',
-                  // TODO advice and better error message
-                },
-              ),
+      // Only display files that aren't absolute, are in the changed paths, or have had previous compiler diagnostics
+
+      // This hides errors that have been lint ignored but may have been produced by dependency analysis
+      processor.addFilter(
+        {
+          test: (diag) => {
+            const absolute = this.request.master.projectManager.getFilePathFromUidOrAbsolute(
+              diag.location.filename,
             );
+            return (
+              absolute === undefined || evictedPaths.has(absolute) ||
+              runner.compilerDiagnosticsCache.has(absolute)
+            );
+          },
+        },
+      );
+
+      return processor;
+    }
+
+    async watch(events) {
+      const graph = new ___R$project$rome$$romejs$core$master$dependencies$DependencyGraph_ts$default(
+        this.request,
+        this.request.getResolverOptionsFromFlags(),
+      );
+
+      const {fixLocation} = this.options;
+      const shouldFix = fixLocation !== undefined;
+
+      const runner = new ___R$$priv$project$rome$$romejs$core$master$linter$Linter_ts$LintRunner(
+        {
+          events,
+          request: this.request,
+          fix: shouldFix,
+          graph,
+        },
+      );
+
+      return (
+        this.request.watchFilesFromArgs(
+          this.getFileArgOptions(),
+          async (
+            {paths: evictedPaths, projects},
+            initial,
+          ) => {
+            const processor = this.createDiagnosticsProcessor(evictedPaths, runner);
+
+            if (fixLocation !== undefined) {
+              for (const project of projects) {
+                if (!project.config.format.enabled) {
+                  processor.addDiagnostic(
+                    {
+                      location: fixLocation,
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.FORMAT.DISABLED,
+                    },
+                  );
+                }
+              }
+            }
+
+            const result = await runner.run({evictedPaths, processor});
+            events.onChanges(result, initial, runner);
+          },
+        )
+      );
+    }
+
+    async run(watch) {
+      const {request} = this;
+      const {reporter} = request;
+
+      let printer;
+
+      const diagnosticsByFilename = new Map();
+
+      const watchEvent = await this.watch(
+        {
+          onRunStart: () => {
+            if (watch) {
+              reporter.clear();
+            }
+          },
+
+          createProgress: () => {
+            return reporter.progress();
+          },
+
+          onChanges: ({evictedPaths, changes, totalCount, fixedCount, runner}) => {
+            printer =
+              ___R$$priv$project$rome$$romejs$core$master$linter$Linter_ts$createDiagnosticsPrinter(
+                request,
+                this.createDiagnosticsProcessor(evictedPaths, runner),
+                totalCount,
+                fixedCount,
+              );
+
+            // Update our diagnostics with the changes
+            for (const {filename, diagnostics} of changes) {
+              if (diagnostics.length === 0) {
+                diagnosticsByFilename.delete(filename);
+              } else {
+                diagnosticsByFilename.set(filename, diagnostics);
+              }
+            }
+
+            // Print all diagnostics
+            for (const diagnostics of diagnosticsByFilename.values()) {
+              printer.addDiagnostics(diagnostics);
+            }
+
+            if (watch) {
+              reporter.clear();
+              printer.print();
+              printer.footer();
+            }
+          },
+        },
+      );
+
+      if (watch) {
+        await request.endEvent.wait();
+      } else {
+        watchEvent.unsubscribe();
+
+        if (printer === undefined) {
+          throw new Error('Expected a printer');
+        }
+
+        throw printer;
+      }
+    }
+  }
+
+  // project-rome/@romejs/core/master/lsp/LSPServer.ts
+const ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$HEADERS_END = '\r\n\r\n';
+
+  function ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$parseHeaders(buffer) {
+    const headers = new Map();
+
+    for (const line of buffer.split('\n')) {
+      const clean = line.trim();
+      const match = clean.match(/^(.*?): (.*?)$/);
+      if (match == null) {
+        throw new Error('Invalid header: ' +
+        clean);
+      }
+
+      const [, key, value] = match;
+      headers.set(key.toLowerCase(), value);
+    }
+
+    const length = headers.get('content-length');
+    if (length === undefined) {
+      throw new Error('Expected Content-Length');
+    }
+    headers.delete('content-length');
+
+    return (
+      {
+        length: Number(length),
+        extra: headers,
+      }
+    );
+  }
+
+  function ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertPositionToLSP(pos) {
+    if (pos === undefined) {
+      return (
+        {
+          line: ___R$project$rome$$romejs$ob1$index_ts$number0,
+          character: ___R$project$rome$$romejs$ob1$index_ts$number0,
+        }
+      );
+    } else {
+      return (
+        {
+          line: ___R$project$rome$$romejs$ob1$index_ts$coerce1to0(pos.line),
+          character: pos.column,
+        }
+      );
+    }
+  }
+
+  function ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertDiagnosticLocationToLSPRange(
+    location,
+  ) {
+    return (
+      {
+        start: ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertPositionToLSP(location.start),
+        end: ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertPositionToLSP(location.end),
+      }
+    );
+  }
+
+  function ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertDiagnosticsToLSP(
+    diagnostics,
+    master,
+  ) {
+    const lspDiagnostics = [];
+
+    for (const {description, location} of diagnostics) {
+      // Infer relatedInformation from log messages followed by frames
+      let relatedInformation = [];
+      const {advice} = description;
+      if (advice !== undefined) {
+        for (let i = 0;
+        i < advice.length;
+        i++) {
+          const item = advice[i];
+          const nextItem = advice[i + 1];
+          if (item.type === 'log' && nextItem !== undefined &&
+            nextItem.type ===
+            'frame') {
+            const abs = master.projectManager.getFilePathFromUidOrAbsolute(
+              nextItem.location.filename,
+            );
+            if (abs !== undefined) {
+              relatedInformation.push(
+                {
+                  message: ___R$project$rome$$romejs$string$markup$format_ts$stripMarkupTags(item.message),
+                  location: {
+                    uri: 'file://' +
+                    abs.join(),
+                    range: ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertDiagnosticLocationToLSPRange(nextItem.location),
+                  },
+                },
+              );
+            }
           }
         }
       }
 
-      printer.onBeforeFooterPrint(
-        (reporter, isError) => {
-          if (isError) {
-            let couldFix = false;
-            let hasPendingFixes = false;
-
-            for (const {category, fixable} of printer.processor.getPartialDiagnostics()) {
-              if (category === 'lint/pendingFixes') {
-                hasPendingFixes = true;
-              }
-
-              if (fixable) {
-                couldFix = true;
-              }
-            }
-
-            if (hasPendingFixes) {
-              reporter.info(
-                'Fixes available. Run <command>rome lint --fix</command> to apply.',
-              );
-            } else if (couldFix) {
-              reporter.warn(
-                'Autofixes are available for some of these errors when formatting is enabled. Run <command>rome config enable-category format</command> to enable.',
-              );
-            }
-          } else {
-            const fileCount = paths.size;
-            if (fileCount === 0) {
-              reporter.warn('No files linted');
-            } else if (fileCount === 1) {
-              reporter.info('<emphasis>1</emphasis> file linted');
-            } else {
-              reporter.info('<number emphasis>' +
-              fileCount +
-              '</number> files linted');
-            }
-          }
-        },
-      );
-
-      // Add a filter so that only files that are explicitly referenced will be included
-
-      // For example, we don't want to show analysis or parse errors for transitive dependencies if the user only requested a specific file
-      printer.processor.addFilter(
+      lspDiagnostics.push(
         {
-          test: (diag) => {
-            const {filename} = diag;
-            if (filename === undefined) {
-              return false;
-            }
-
-            const path = request.master.projectManager.getFilePathFromUid(filename);
-            if (path === undefined) {
-              return false;
-            }
-
-            return !paths.has(path);
-          },
+          severity: 1,
+          range: ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertDiagnosticLocationToLSPRange(location),
+          message: ___R$project$rome$$romejs$string$markup$format_ts$stripMarkupTags(description.message.value),
+          code: description.category,
+          source: 'rome',
+          relatedInformation,
         },
       );
+    }
 
-      await reporter.steps(
-        [
-          {
-            clear: true,
-            message: 'Analyzing files',
-            callback: async () => {
-              const compilerLinter = new ___R$project$rome$$romejs$core$master$linter$CompilerLinter_ts$default(request, printer, shouldFix);
-              await compilerLinter.lint(paths);
-            },
-          },
-          {
-            clear: true,
-            message: 'Analyzing dependencies',
-            async callback() {
-              const analyzeProgress = reporter.progress();
-              analyzeProgress.setTitle('Analyzing');
+    return lspDiagnostics;
+  }
 
-              const graph = new ___R$project$rome$$romejs$core$master$dependencies$DependencyGraph_ts$default(request, {});
-              await graph.seed(
-                {
-                  paths: Array.from(paths),
-                  diagnosticsProcessor: printer.processor,
-                  validate: false,
-                  analyzeProgress,
-                },
-              );
+  function ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$getPathFromTextDocument(consumer) {
+    return ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(consumer.get('uri').asString());
+  }
 
-              for (const path of paths) {
-                graph.validate(graph.getNode(path), printer.processor);
-              }
-            },
-          },
-        ],
-      );
+  function ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$diffTextEdits(original, desired) {
+    const edits = [];
 
-      if (throwAlways || printer.hasDiagnostics()) {
-        throw printer;
-      } else {
-        printer.footer();
+    const diffs = ___R$project$rome$$romejs$string$diff$index_ts$default(original, desired);
+
+    let currLine = ___R$project$rome$$romejs$ob1$index_ts$number0;
+    let currChar = ___R$project$rome$$romejs$ob1$index_ts$number0;
+
+    function advance(str) {
+      for (const char of str) {
+        if (char === '\n') {
+          currLine = ___R$project$rome$$romejs$ob1$index_ts$inc(currLine);
+          currChar = ___R$project$rome$$romejs$ob1$index_ts$number0;
+        } else {
+          currChar = ___R$project$rome$$romejs$ob1$index_ts$inc(currChar);
+        }
       }
     }
+
+    function getPosition() {
+      return (
+        {
+          line: currLine,
+          character: currChar,
+        }
+      );
+    }
+
+    for (const [type, text] of diffs) {
+      switch (type) {
+        case ___R$project$rome$$romejs$string$diff$index_ts$constants.ADD:
+          const pos = getPosition();
+          edits.push(
+            {
+              range: {
+                start: pos,
+                end: pos,
+              },
+              newText: text,
+            },
+          );
+          break;
+
+        case ___R$project$rome$$romejs$string$diff$index_ts$constants.DELETE:
+          const start = getPosition();
+          advance(text);
+          const end = getPosition();
+          edits.push(
+            {
+              range: {
+                start,
+                end,
+              },
+              newText: '',
+            },
+          );
+          break;
+
+        case ___R$project$rome$$romejs$string$diff$index_ts$constants.EQUAL:
+          advance(text);
+          break;
+      }
+    }
+
+    return edits;
   }
+
+  let ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$progressTokenCounter = 0;
+
+  class ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$LSPProgress extends ___R$project$rome$$romejs$cli$reporter$ProgressBase_ts$default {
+    constructor(server, reporter, opts) {
+      super(reporter, opts);
+      this.server = server;
+      this.token = ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$progressTokenCounter++;
+      this.lastRenderKey = '';
+
+      server.write(
+        {
+          type: '$/progress',
+          params: {
+            token: this.token,
+            value: {
+              kind: 'begin',
+              cancellable: false,
+              title: this.title,
+              percentage: 0,
+            },
+          },
+        },
+      );
+    }
+
+    render() {
+      const total = this.total === undefined ? 0 : this.total;
+      const percentage = Math.floor(100 / total * this.current);
+
+      // Make sure we don't send pointless duplicate messages
+      const renderKey = 'percent:' +
+      percentage +
+      ',text:' +
+      this.text;
+      if (this.lastRenderKey === renderKey) {
+        return;
+      }
+
+      this.lastRenderKey = renderKey;
+      this.server.write(
+        {
+          type: '$/progress',
+          params: {
+            token: this.token,
+            value: {
+              kind: 'report',
+              cancellable: false,
+              message: this.text,
+              percentage,
+            },
+          },
+        },
+      );
+    }
+
+    end() {
+      this.server.write(
+        {
+          type: '$/progress',
+          params: {
+            token: this.token,
+            value: {
+              kind: 'end',
+            },
+          },
+        },
+      );
+    }
+  }
+
+  class ___R$project$rome$$romejs$core$master$lsp$LSPServer_ts$default {
+    constructor(request) {
+      this.status = 'IDLE';
+      this.buffer = '';
+      this.nextHeaders = undefined;
+
+      this.request = request;
+      this.master = request.master;
+      this.client = request.client;
+
+      this.lintSessionsPending = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet();
+      this.lintSessions = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
+
+      request.endEvent.subscribe(
+        () => {
+          this.shutdown();
+        },
+      );
+    }
+
+    write(res) {
+      const json = JSON.stringify(res);
+      const out = 'Content-Length: ' +
+      String(json.length) +
+      ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$HEADERS_END +
+      json;
+      this.client.bridge.lspFromServerBuffer.send(out);
+    }
+
+    createFakeMasterRequest(commandName, args = []) {
+      return (
+        new ___R$project$rome$$romejs$core$master$MasterRequest_ts$default(
+          {
+            client: this.client,
+            master: this.master,
+            query: {
+              requestFlags: ___R$project$rome$$romejs$core$common$types$client_ts$DEFAULT_CLIENT_REQUEST_FLAGS,
+              commandFlags: {},
+              args,
+              commandName,
+              silent: true,
+              noData: false,
+              terminateWhenIdle: false,
+            },
+          },
+        )
+      );
+    }
+
+    unwatchProject(path) {
+      // TODO maybe unset all buffers?
+      const req = this.lintSessions.get(path);
+      if (req !== undefined) {
+        req.teardown(
+          {
+            type: 'SUCCESS',
+            hasData: false,
+            data: undefined,
+            markers: [],
+          },
+        );
+        this.lintSessions.delete(path);
+      }
+    }
+
+    createProgress(opts) {
+      return new ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$LSPProgress(this, this.request.reporter, opts);
+    }
+
+    async watchProject(path) {
+      if (this.lintSessions.has(path) || this.lintSessionsPending.has(path)) {
+        return;
+      }
+
+      this.lintSessionsPending.add(path);
+
+      const project = await this.master.projectManager.findProject(path);
+
+      if (project === undefined) {
+        // Not a Rome project
+        this.lintSessionsPending.delete(path);
+        return;
+      }
+
+      const req = this.createFakeMasterRequest('lsp_project', [path.join()]);
+      await req.init();
+
+      const linter = new ___R$project$rome$$romejs$core$master$linter$Linter_ts$default(req, {});
+
+      const subscription = await linter.watch(
+        {
+          onRunStart: () => {},
+          createProgress: () => {
+            return this.createProgress();
+          },
+          onChanges: ({changes}) => {
+            for (const {ref, diagnostics} of changes) {
+              if (ref === undefined) {
+                // Cannot display diagnostics without a reference
+                continue;
+              }
+
+              // We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
+              const processor = new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default();
+              processor.addFilter(
+                {
+                  category: 'lint/pendingFixes',
+                },
+              );
+              processor.addDiagnostics(diagnostics);
+
+              this.write(
+                {
+                  method: 'textDocument/publishDiagnostics',
+                  params: {
+                    uri: 'file://' +
+                    ref.real.join(),
+                    diagnostics: ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$convertDiagnosticsToLSP(
+                      processor.getDiagnostics(),
+                      this.master,
+                    ),
+                  },
+                },
+              );
+            }
+          },
+        },
+      );
+
+      req.endEvent.subscribe(
+        () => {
+          subscription.unsubscribe();
+        },
+      );
+
+      this.lintSessions.set(path, req);
+      this.lintSessionsPending.delete(path);
+    }
+
+    shutdown() {
+      for (const path of this.lintSessions.keys()) {
+        this.unwatchProject(path);
+      }
+      this.lintSessions.clear();
+    }
+
+    async sendClientRequest(req) {
+      return (
+        this.master.handleRequest(
+          this.client,
+          Object.assign(
+            {
+              silent: true,
+            },
+            req,
+          ),
+        )
+      );
+    }
+
+    async handleRequest(method, params) {
+      switch (method) {
+        case 'initialize':
+          const rootUri = params.get('rootUri');
+          if (rootUri.exists()) {
+            this.watchProject(___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(rootUri.asString()));
+          }
+
+          const workspaceFolders = params.get('workspaceFolders');
+          if (workspaceFolders.exists()) {
+            for (const elem of workspaceFolders.asArray()) {
+              this.watchProject(___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$getPathFromTextDocument(elem));
+            }
+          }
+
+          return (
+            {
+              capabilities: {
+                textDocumentSync: {
+                  openClose: true,
+                  // This sends over the full text on change. We should make this incremental later
+                  change: 1,
+                },
+                documentFormattingProvider: true,
+                workspaceFolders: {
+                  supported: true,
+                  changeNotifications: true,
+                },
+              },
+              serverInfo: {
+                name: 'rome',
+              },
+            }
+          );
+
+        case 'textDocument/formatting':
+          const path = ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$getPathFromTextDocument(params.get('textDocument'));
+
+          const project = this.master.projectManager.findProjectExisting(path);
+          if (project === undefined) {
+            // Not in a Rome project
+            return null;
+          }
+
+          const res = await this.request.requestWorkerFormat(path);
+          if (res === undefined) {
+            // Not a file we support formatting
+            return null;
+          }
+
+          return ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$diffTextEdits(res.original, res.formatted);
+
+        case 'shutdown':
+          this.shutdown();
+          break;
+      }
+
+      return null;
+    }
+
+    async handleNotification(method, params) {
+      switch (method) {
+        case 'workspace/didChangeWorkspaceFolders':
+          for (const elem of params.get('added').asArray()) {
+            this.watchProject(___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$getPathFromTextDocument(elem));
+          }
+          for (const elem of params.get('removed').asArray()) {
+            this.unwatchProject(___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$getPathFromTextDocument(elem));
+          }
+          break;
+
+        case 'textDocument/didChange':
+          const path = ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$getPathFromTextDocument(params.get('textDocument'));
+          const content = params.get('contentChanges').asArray()[0].get('text').asString();
+          await this.request.requestWorkerUpdateBuffer(path, content);
+          break;
+      }
+    }
+
+    normalizeMessage(content) {
+      try {
+        const data = JSON.parse(content);
+        const consumer = ___R$project$rome$$romejs$consume$index_ts$consumeUnknown(data, 'lsp/parse');
+        return consumer;
+      } catch (err) {
+        if (err instanceof SyntaxError) {
+          console.error('JSON parse error', content);
+          return undefined;
+        } else {
+          throw err;
+        }
+      }
+    }
+
+    async onMessage(headers, content) {
+      const consumer = this.normalizeMessage(content);
+      if (consumer === undefined) {
+        return;
+      }
+
+      if (!consumer.has('method')) {
+        console.error('NO METHOD', content);
+        return;
+      }
+
+      const method = consumer.get('method').asString();
+      const params = consumer.get('params');
+
+      if (consumer.has('id')) {
+        const id = consumer.get('id').asNumber();
+
+        try {
+          const res = {
+            id,
+            result: await this.handleRequest(method, params),
+          };
+          this.write(res);
+        } catch (err) {
+          const res = {
+            id,
+            error: {
+              code: -32603,
+              message: err.message,
+            },
+          };
+          this.write(res);
+        }
+      } else {
+        await this.handleNotification(method, params);
+      }
+    }
+
+    process() {
+      switch (this.status) {
+        case 'IDLE':
+          if (this.buffer.length > 0) {
+            this.status = 'WAITING_FOR_HEADERS_END';
+            this.process();
+          }
+          break;
+
+        case 'WAITING_FOR_HEADERS_END':
+          const endIndex = this.buffer.indexOf(___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$HEADERS_END);
+          if (endIndex !== -1) {
+            // Parse headers
+            const rawHeaders = this.buffer.slice(0, endIndex);
+            this.nextHeaders = ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$parseHeaders(rawHeaders);
+
+            // Process rest of the buffer
+            this.status = 'WAITING_FOR_RESPONSE_END';
+            this.buffer = this.buffer.slice(endIndex + ___R$$priv$project$rome$$romejs$core$master$lsp$LSPServer_ts$HEADERS_END.length);
+            this.process();
+          }
+          break;
+
+        case 'WAITING_FOR_RESPONSE_END':
+          const headers = this.nextHeaders;
+          if (headers === undefined) {
+            throw new Error('Expected headers due to our status');
+          }
+          if (this.buffer.length >= headers.length) {
+            const content = this.buffer.slice(0, headers.length);
+            this.onMessage(headers, content);
+
+            // Reset headers and trim content
+            this.nextHeaders = undefined;
+            this.buffer = this.buffer.slice(headers.length);
+
+            // Process rest of the buffer
+            this.status = 'IDLE';
+            this.process();
+          }
+          break;
+      }
+    }
+
+    append(data) {
+      this.buffer += data;
+      this.process();
+    }
+  }
+
+  // project-rome/@romejs/core/master/commands/lsp.ts
+const ___R$project$rome$$romejs$core$master$commands$lsp_ts$default = ___R$project$rome$$romejs$core$commands_ts$createMasterCommand(
+    {
+      category: ___R$project$rome$$romejs$core$commands_ts$commandCategories.PROJECT_MANAGEMENT,
+      description: 'TODO',
+
+      async default(req) {
+        const {master, bridge} = req;
+
+        const lspServer = new ___R$project$rome$$romejs$core$master$lsp$LSPServer_ts$default(req);
+        master.connectedLSPServers.add(lspServer);
+
+        bridge.endEvent.subscribe(
+          () => {
+            master.connectedLSPServers.delete(lspServer);
+          },
+        );
+
+        bridge.lspFromClientBuffer.subscribe(
+          (chunk) => {
+            lspServer.append(chunk);
+          },
+        );
+
+        await bridge.endEvent.wait();
+      },
+    },
+  );
 
   // project-rome/@romejs/core/master/commands/lint.ts
 const ___R$project$rome$$romejs$core$master$commands$lint_ts$default = ___R$project$rome$$romejs$core$commands_ts$createMasterCommand(
@@ -92330,99 +95051,59 @@ const ___R$project$rome$$romejs$core$master$commands$lint_ts$default = ___R$proj
         return (
           {
             fix: consumer.get('fix').asBoolean(false),
+            changed: consumer.get('changed').asStringOrVoid(),
           }
         );
       },
 
       async default(req, flags) {
-        return (
-          new Promise(
-            (resolve, reject) => {
-              if (req.query.requestFlags.watch) {
-                ___R$$priv$project$rome$$romejs$core$master$commands$lint_ts$initWatchLint(req, reject);
-              } else {
-                resolve(___R$$priv$project$rome$$romejs$core$master$commands$lint_ts$runLint(req, flags.fix));
-              }
+        const {reporter} = req;
+
+        const fixLocation = flags.fix === false
+          ? undefined : req.getDiagnosticPointerFromFlags(
+            {
+              type: 'flag',
+              key: 'fix',
             },
-          )
-        );
+          );
+
+        // Look up arguments manually in vsc if we were passed a changes branch
+        let args;
+        if (flags.changed !== undefined) {
+          // No arguments expected when using this flag
+          req.expectArgumentLength(0);
+
+          const client = await req.master.projectManager.getVCSClient(
+            await req.assertClientCwdProject(),
+          );
+          const target = flags.changed === '' ? client.trunkBranch : flags.changed;
+          args = await client.getModifiedFiles(target);
+
+          if (args.length === 0) {
+            reporter.warn('No files changed from <emphasis>' +
+            target +
+            '</emphasis>');
+          } else {
+            reporter.info('Files changed from <emphasis>' +
+            target +
+            '</emphasis>');
+            reporter.list(args.map((arg) => '<filelink target="' +
+            arg +
+            '" />'));
+            reporter.hr();
+          }
+        }
+
+        const opts = {
+          fixLocation,
+          args,
+        };
+
+        const linter = new ___R$project$rome$$romejs$core$master$linter$Linter_ts$default(req, opts);
+        await linter.run(req.query.requestFlags.watch);
       },
     },
   );
-  function ___R$$priv$project$rome$$romejs$core$master$commands$lint_ts$initWatchLint(req, reject) {
-    const {master, reporter} = req;
-
-    // whenever a file change happens, we wait 250ms to do lint, this is in case there's multiple
-
-    // files being linted, like if an autofix is triggered
-    let queued = false;
-
-    // whether or not we're currently linting
-    let running = false;
-
-    // if a file event happens while we're linting then we'll need to run the full lint again to make
-
-    // sure it's up to date
-    let runAgainAfterComplete = false;
-
-    function runWatchLint() {
-      if (running) {
-        runAgainAfterComplete = true;
-        return undefined;
-      }
-
-      queued = false;
-      running = true;
-      reporter.clear();
-
-      ___R$$priv$project$rome$$romejs$core$master$commands$lint_ts$runLint(req, false).then(
-        () => {
-          running = false;
-
-          if (runAgainAfterComplete) {
-            runAgainAfterComplete = false;
-            runWatchLint();
-          }
-        },
-        reject,
-      );
-    }
-
-    const listener = master.fileChangeEvent.subscribe(
-      () => {
-        if (running) {
-          // queue up a lint to happen afterwards
-          runWatchLint();
-          return undefined;
-        }
-
-        if (queued) {
-          // already have a timer waiting
-          return undefined;
-        }
-
-        // queue up a lint
-        queued = true;
-        setTimeout(runWatchLint, 250);
-      },
-    );
-
-    req.endEvent.subscribe(
-      () => {
-        listener.unsubscribe();
-      },
-    );
-
-    runWatchLint();
-  }
-
-  async function ___R$$priv$project$rome$$romejs$core$master$commands$lint_ts$runLint(
-    req,
-    fix,
-  ) {
-    const linter = new ___R$project$rome$$romejs$core$master$linter$Linter_ts$default(req, fix);
-    await linter.lint();
-  }
 
   // project-rome/@romejs/core/master/testing/utils.ts
 function ___R$project$rome$$romejs$core$master$testing$utils_ts$sortMapKeys(map) {
@@ -92533,10 +95214,16 @@ class ___R$$priv$project$rome$$romejs$core$master$testing$TestRunner_ts$BridgeSt
 
       this.printer =
         opts.request.createDiagnosticsPrinter(
-          {
-            category: 'test',
-            message: 'Run initiated',
-          },
+          new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default(
+            {
+              origins: [
+                {
+                  category: 'test',
+                  message: 'Run initiated',
+                },
+              ],
+            },
+          ),
         );
       this.printer.addDiagnostics(opts.addDiagnostics);
     }
@@ -92935,9 +95622,9 @@ class ___R$$priv$project$rome$$romejs$core$master$testing$TestRunner_ts$BridgeSt
       const progress = this.request.reporter.progress(
         {
           persistent: true,
+          title: 'Running tests',
         },
       );
-      progress.setTitle('Running tests');
 
       for (let i = 0;
       i < workers.length;
@@ -92967,21 +95654,30 @@ class ___R$$priv$project$rome$$romejs$core$master$testing$TestRunner_ts$BridgeSt
                 // If we only have one test to cancel then let's only point the bridge error to this test
                 this.ignoreBridgeEndError.add(bridge);
 
+                const errDiag = ___R$project$rome$$romejs$diagnostics$derive_ts$deriveDiagnosticFromError(
+                  {
+                    label: ref.testName,
+                    category: 'tests/failure',
+                    filename: ref.filename,
+                    error,
+                  },
+                );
+
                 this.printer.addDiagnostic(
                   Object.assign(
                     {
                     },
-                    ___R$project$rome$$romejs$diagnostics$derive_ts$deriveDiagnosticFromError(
-                      {
-                        label: ref.testName,
-                        category: 'tests/failure',
-                        filename: ref.filename,
-                        error,
-                      },
-                    ),
+                    errDiag,
                     {
-                      // We don't care about the advice
-                      advice: [],
+                      description: Object.assign(
+                        {
+                        },
+                        errDiag.description,
+                        {
+                          // We don't care about the advice
+                          advice: [],
+                        },
+                      ),
                     },
                   ),
                 );
@@ -92989,9 +95685,10 @@ class ___R$$priv$project$rome$$romejs$core$master$testing$TestRunner_ts$BridgeSt
                 this.printer.addDiagnostic(
                   {
                     label: ref.testName,
-                    category: 'tests/failure',
-                    filename: ref.filename,
-                    message: 'Test was cancelled',
+                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.TESTS.CANCELLED,
+                    location: {
+                      filename: ref.filename,
+                    },
                   },
                 );
               }
@@ -93285,38 +95982,10 @@ const ___R$project$rome$$romejs$core$master$commands$test_ts$default = ___R$proj
       },
 
       async default(req, commandFlags) {
-        const {reporter, master} = req;
+        const {reporter} = req;
 
         const {paths} = await req.getFilesFromArgs(
           {
-            getProjectIgnore: (
-              project,
-            ) =>
-              ({
-                patterns: project.config.tests.ignore,
-                source: master.projectManager.findProjectConfigConsumer(
-                  project,
-                  (
-                    consumer,
-                  ) =>
-                    consumer.has('tests') && consumer.get('tests').has('ignore')
-                      ? consumer.get('tests').get('ignore') : undefined,
-                ),
-              }),
-            getProjectEnabled: (
-              project,
-            ) =>
-              ({
-                enabled: project.config.tests.enabled,
-                source: master.projectManager.findProjectConfigConsumer(
-                  project,
-                  (
-                    consumer,
-                  ) =>
-                    consumer.has('tests')
-                      ? consumer.get('tests').get('enabled') : undefined,
-                ),
-              }),
             test: (path) => path.hasExtension('test'),
             noun: 'test',
             verb: 'testing',
@@ -93396,8 +96065,13 @@ const ___R$project$rome$$romejs$core$master$commands$ci_ts$default = ___R$projec
         const {reporter} = req;
 
         reporter.heading('Running lint');
-        const linter = new ___R$project$rome$$romejs$core$master$linter$Linter_ts$default(req, false);
-        await linter.lint(false);
+        await ___R$project$rome$$romejs$core$master$commands$lint_ts$default.default(
+          req,
+          {
+            fix: false,
+            changed: undefined,
+          },
+        );
 
         reporter.heading('Running tests');
         await ___R$project$rome$$romejs$core$master$commands$test_ts$default.default(
@@ -93464,7 +96138,7 @@ const ___R$project$rome$$romejs$core$master$commands$_moduleSignature_ts$default
               source: ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(args[0]),
             },
           ),
-          {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
+          {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
         );
         reporter.inspect(await req.requestWorkerModuleSignature(filename));
       },
@@ -93502,6 +96176,7 @@ const ___R$project$rome$$romejs$core$master$commands$index_ts$masterCommands = n
   ___R$project$rome$$romejs$core$master$commands$index_ts$masterCommands.set('ci', ___R$project$rome$$romejs$core$master$commands$ci_ts$default);
   ___R$project$rome$$romejs$core$master$commands$index_ts$masterCommands.set('develop', ___R$project$rome$$romejs$core$master$commands$develop_ts$default);
   ___R$project$rome$$romejs$core$master$commands$index_ts$masterCommands.set('format', ___R$project$rome$$romejs$core$master$commands$format_ts$default);
+  ___R$project$rome$$romejs$core$master$commands$index_ts$masterCommands.set('lsp', ___R$project$rome$$romejs$core$master$commands$lsp_ts$default);
   ___R$project$rome$$romejs$core$master$commands$index_ts$masterCommands.set('_noop', ___R$project$rome$$romejs$core$master$commands$noop_ts$default);
 
   // project-rome/@romejs/core/common/utils/setupGlobalErrorHandlers.ts
@@ -93517,13 +96192,13 @@ function ___R$project$rome$$romejs$core$common$utils$setupGlobalErrorHandlers_ts
       reason,
       promise,
     ) => {
-      console.log(reason, promise);
       promise.then(
         () => {
           throw new Error('Promise is rejected so should never hit this condition');
         },
       ).catch(
         (err) => {
+          console.error(err);
           callback(err);
         },
       );
@@ -93579,6 +96254,29 @@ const ___R$project$rome$$romejs$core$common$userConfig_ts$DEFAULT_USER_CONFIG = 
     }
 
     return ___R$project$rome$$romejs$core$common$userConfig_ts$DEFAULT_USER_CONFIG;
+  }
+
+  // project-rome/@romejs/core/master/MasterReporter.ts
+class ___R$project$rome$$romejs$core$master$MasterReporter_ts$default extends ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default {
+    constructor(master) {
+      super(
+        {
+          wrapperFactory: master.wrapFatal.bind(master),
+        },
+      );
+      this.master = master;
+    }
+
+    // This is so all progress bars are also shown on an LSP client, alongside connected CLIs
+    progress(opts) {
+      const progresses = [this.progressLocal(opts)];
+
+      for (const server of this.master.connectedLSPServers) {
+        progresses.push(server.createProgress(opts));
+      }
+
+      return ___R$project$rome$$romejs$cli$reporter$util_ts$mergeProgresses(progresses);
+    }
   }
 
   // project-rome/@romejs/core/master/Master.ts
@@ -93657,14 +96355,10 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
           },
         );
 
-      this.connectedReporters =
-        new ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default(
-          {
-            wrapperFactory: this.wrapFatal.bind(this),
-          },
-        );
+      this.connectedReporters = new ___R$project$rome$$romejs$core$master$MasterReporter_ts$default(this);
 
       this.connectedClientsListeningForLogs = new Set();
+      this.connectedLSPServers = new Set();
       this.connectedClients = new Set();
 
       this.memoryFs = new ___R$project$rome$$romejs$core$master$fs$MemoryFileSystem_ts$default(this);
@@ -93738,7 +96432,6 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
       );
       const printer = new ___R$project$rome$$romejs$cli$diagnostics$DiagnosticsPrinter_ts$default(
         {
-          origins: [],
           reporter: this.connectedReporters,
           readFile: this.readDiagnosticsPrinterFile.bind(this),
         },
@@ -93888,13 +96581,13 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
         return;
       }
 
-      await this.clientStartEvent.callOptional(client);
-
       bridge.query.subscribe(
         async (request) => {
           return await this.handleRequest(client, request);
         },
       );
+
+      await this.clientStartEvent.callOptional(client);
     }
 
     async createClient(bridge) {
@@ -93965,7 +96658,6 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
           wrapperFactory: this.wrapFatal.bind(this),
           streams: [outStream, errStream],
           verbose: flags.verbose,
-          silent: flags.silent,
           markupOptions: {
             cwd: flags.cwd,
             humanizeFilename: (filename) => {
@@ -94005,8 +96697,10 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
       );
 
       // Add reporter to connected set, important logs may be output to these
+      if (!flags.silent) {
+        this.connectedReporters.addStream(outStream);
+      }
       this.connectedReporters.addStream(errStream);
-      this.connectedReporters.addStream(outStream);
 
       const client = {
         id: this.clientIdCounter++,
@@ -94081,6 +96775,31 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
       this.fileChangeEvent.send(path);
     }
 
+    async handleRequestStart(req) {
+      this.logger.info('[Master] Handling CLI request:', req.query);
+
+      // Hook used by the web server to track and collect master requests
+      await this.requestStartEvent.callOptional(req);
+
+      // Track the amount of running queries for terminateWhenIdle
+      this.requestRunningCounter++;
+
+      // Sometimes we'll want to terminate the process once all queries have finished
+      if (req.query.terminateWhenIdle) {
+        this.terminateWhenIdle = true;
+      }
+    }
+
+    handleRequestEnd(req) {
+      this.requestRunningCounter--;
+      this.logger.info('[Master] Replying to CLI request:', req.query);
+
+      // If we're waiting to terminate ourselves when idle, then do so when there's no running requests
+      if (this.terminateWhenIdle && this.requestRunningCounter === 0) {
+        this.end();
+      }
+    }
+
     async handleRequest(client, partialQuery) {
       const requestFlags = Object.assign(
         {
@@ -94101,7 +96820,6 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
       };
 
       const {bridge} = client;
-      this.logger.info('[Master] Handling CLI request:', query);
 
       // Create a promise for the client dying so we can race it later
       let bridgeEndEvent;
@@ -94130,78 +96848,40 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
           );
       }
 
-      // Create master request wrapper which is just a bucket of objects
       const req = new ___R$project$rome$$romejs$core$master$MasterRequest_ts$default(
         {
           client,
           query,
           master: this,
-          reporter,
-          bridge,
         },
       );
 
-      // Hook used by the web server to track and collect master requests
-      await this.requestStartEvent.callOptional(req);
-
-      // Track the amount of running queries for terminateWhenIdle
-      this.requestRunningCounter++;
-
-      // Sometimes we'll want to terminate the process once all queries have finished
-      if (query.terminateWhenIdle) {
-        this.terminateWhenIdle = true;
-      }
+      await req.init();
 
       try {
-        const res = await this.dispatchRequest(
+        let res = await this.dispatchRequest(
           req,
           bridgeEndPromise,
           [],
         );
 
-        req.teardown(res);
+        res = req.teardown(res);
 
-        // If the query asked for no data then strip all diagnostics and data values
-        if (query.noData) {
-          if (res.type === 'SUCCESS') {
-            return (
-              {
-                type: 'SUCCESS',
-                hasData: res.data !== undefined,
-                data: undefined,
-                markers: res.markers,
-              }
-            );
-          } else if (res.type === 'DIAGNOSTICS') {
-            return (
-              {
-                type: 'DIAGNOSTICS',
-                diagnostics: [],
-              }
-            );
-          } else if (res.type === 'INVALID_REQUEST') {
-            return (
-              {
-                type: 'INVALID_REQUEST',
-                diagnostics: [],
-              }
-            );
-          }
+        if (res === undefined) {
+          throw (
+            new Error(
+              'teardown should have returned a normalized MasterQueryResponse',
+            )
+          );
         }
 
         return res;
+      } catch (err) {
+        req.teardown(undefined);
+        throw err;
       } finally {
-        this.requestRunningCounter--;
-
-        this.logger.info('[Master] Replying to CLI request:', query);
-
         // We no longer care if the client dies
         bridgeEndEvent.unsubscribe();
-
-        // If we're waiting to terminate ourselves when idle, then do so when there's no running requests
-        if (this.terminateWhenIdle && this.requestRunningCounter === 0) {
-          this.end();
-        }
       }
     }
 
@@ -94222,8 +96902,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
       const warmupTook = Date.now() - warmupStart;
 
       // Benchmark
-      const progress = client.reporter.progress();
-      progress.setTitle('Running benchmark');
+      const progress = client.reporter.progress({title: 'Running benchmark'});
       progress.setTotal(benchmarkIterations);
       const benchmarkStart = Date.now();
       for (let i = 0;
@@ -94271,16 +96950,6 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 
       if (query.requestFlags.benchmark && !origins.includes('benchmark')) {
         return this.dispatchBenchmarkRequest(req, bridgeEndPromise);
-      }
-
-      const markers = [];
-
-      if (query.requestFlags.collectMarkers) {
-        req.markerEvent.subscribe(
-          (marker) => {
-            markers.push(marker);
-          },
-        );
       }
 
       try {
@@ -94364,7 +97033,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
               type: 'SUCCESS',
               hasData: data !== undefined,
               data,
-              markers,
+              markers: [],
             }
           );
         } else {
@@ -94395,7 +97064,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
               type: 'SUCCESS',
               hasData: false,
               data: undefined,
-              markers,
+              markers: [],
             }
           );
         } else {
@@ -94425,10 +97094,16 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
       const diagnostics = ___R$project$rome$$romejs$diagnostics$errors_ts$getDiagnosticsFromError(err);
       if (diagnostics !== undefined) {
         const printer = req.createDiagnosticsPrinter(
-          {
-            category: 'internal',
-            message: 'Derived diagnostics from thrown error',
-          },
+          new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default(
+            {
+              origins: [
+                {
+                  category: 'internal',
+                  message: 'Derived diagnostics from thrown error',
+                },
+              ],
+            },
+          ),
         );
         printer.addDiagnostics(diagnostics);
         err = printer;
@@ -94453,10 +97128,16 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
       }
 
       const printer = req.createDiagnosticsPrinter(
-        {
-          category: 'internal',
-          message: 'Error captured and converted into a diagnostic',
-        },
+        new ___R$project$rome$$romejs$diagnostics$DiagnosticsProcessor_ts$default(
+          {
+            origins: [
+              {
+                category: 'internal',
+                message: 'Error captured and converted into a diagnostic',
+              },
+            ],
+          },
+        ),
       );
       const errorDiag = ___R$project$rome$$romejs$diagnostics$derive_ts$deriveDiagnosticFromError(
         {
@@ -94470,7 +97151,17 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
           },
           errorDiag,
           {
-            advice: [...(errorDiag.advice || []), ___R$project$rome$$romejs$diagnostics$constants_ts$INTERNAL_ERROR_LOG_ADVICE],
+            description: Object.assign(
+              {
+              },
+              errorDiag.description,
+              {
+                advice: [
+                  ...(errorDiag.description.advice || []),
+                  ___R$project$rome$$romejs$diagnostics$constants_ts$INTERNAL_ERROR_LOG_ADVICE,
+                ],
+              },
+            ),
           },
         ),
       );
@@ -94762,8 +97453,6 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
         new ___R$project$rome$$romejs$cli$reporter$Reporter_ts$default(
           {
             stdin: opts.stdin,
-            silent: this.flags.silent === true || opts.stdout === undefined ||
-            opts.stderr === undefined,
             verbose: this.flags.verbose === true,
             markupOptions: {
               cwd: this.flags.cwd,
@@ -94771,9 +97460,14 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
           },
         );
 
+      // Suppress stdout when silent is set
+      const isSilent = this.flags.silent === true || opts.stdout === undefined ||
+      opts.stderr === undefined;
+      const stdout = isSilent ? undefined : opts.stdout;
+
       this.derivedReporterStreams =
         this.reporter.attachStdoutStreams(
-          opts.stdout,
+          stdout,
           opts.stderr,
         );
 
@@ -94784,7 +97478,21 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
       );
     }
 
-    getBridgeJSONFlags() {
+    setFlags(flags) {
+      if (this.bridgeStatus !== undefined) {
+        throw new Error('Already connected to bridge. Cannot change client flags.');
+      }
+
+      this.flags =
+        Object.assign(
+          {
+          },
+          this.flags,
+          flags,
+        );
+    }
+
+    getClientJSONFlags() {
       return (
         Object.assign(
           {
@@ -94902,9 +97610,8 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
         }
 
         // Fetch profiles
-        const progress = this.reporter.progress();
+        const progress = this.reporter.progress({title: 'Fetching profiles'});
         progress.setTotal(fetchers.length);
-        progress.setTitle('Fetching profiles');
         for (const [text, callback] of fetchers) {
           progress.setText(text);
           const profile = await callback();
@@ -95017,7 +97724,7 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
           writer.append(
             {name: 'clientFlags.json'},
             stringify(
-              this.getBridgeJSONFlags(),
+              this.getClientJSONFlags(),
             ),
           );
 
@@ -95152,7 +97859,7 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
               hasClearScreen: this.reporter.hasClearScreen,
               columns: stdout.columns,
               useRemoteReporter: true,
-              flags: this.getBridgeJSONFlags(),
+              flags: this.getClientJSONFlags(),
             },
           ),
 
@@ -95238,7 +97945,17 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
           const socketServer = ___R$$priv$project$rome$$romejs$core$client$Client_ts$net.createServer(
             () => {
               cleanup();
-              resolve(this.tryConnectToNewDaemon());
+
+              resolve(
+                this.tryConnectToExistingDaemon().then(
+                  (bridge) => {
+                    if (bridge !== undefined) {
+                      this.reporter.success('Started daemon!');
+                    }
+                    return bridge;
+                  },
+                ),
+              );
             },
           );
 
@@ -95291,16 +98008,7 @@ const ___R$$priv$project$rome$$romejs$core$client$Client_ts$stream = require(
         proc.kill();
       }
 
-      console.log('ughhh???');
       return undefined;
-    }
-
-    async tryConnectToNewDaemon() {
-      const bridge = await this.tryConnectToExistingDaemon();
-      if (bridge !== undefined) {
-        this.reporter.success('Started daemon!');
-        return bridge;
-      }
     }
 
     async tryConnectToExistingDaemon() {
@@ -95393,21 +98101,29 @@ class ___R$project$rome$$romejs$core$worker$WorkerAPI_ts$default {
       if (generated) {
         const diagnostics = val.diagnostics.map(
           (diag) => {
-            const diagAdvice = diag.advice === undefined ? [] : diag.advice;
+            const diagAdvice = diag.description.advice === undefined
+              ? [] : diag.description.advice;
             return (
               Object.assign(
                 {
                 },
                 diag,
                 {
-                  advice: [
-                    ...diagAdvice,
+                  metadata: Object.assign(
                     {
-                      type: 'log',
-                      category: 'warn',
-                      message: 'This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect',
                     },
-                  ],
+                    diag.description,
+                    {
+                      advice: [
+                        ...diagAdvice,
+                        {
+                          type: 'log',
+                          category: 'warn',
+                          message: 'This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect',
+                        },
+                      ],
+                    },
+                  ),
                 },
               )
             );
@@ -95562,9 +98278,10 @@ class ___R$project$rome$$romejs$core$worker$WorkerAPI_ts$default {
         project.config.format.enabled &&
           ___R$project$rome$$romejs$path$match$index_ts$matchPathPatterns(
             ref.real,
-            project.config.format.ignore,
+            project.config.lint.ignore,
           ) ===
-          'NO_MATCH'
+          'NO_MATCH' &&
+          ___R$project$rome$$romejs$path$match$index_ts$matchPathPatterns(ref.real, project.config.format.ignore) === 'NO_MATCH'
       );
     }
 
@@ -95604,6 +98321,7 @@ class ___R$project$rome$$romejs$core$worker$WorkerAPI_ts$default {
       if (lint === undefined && handler.format === undefined) {
         return (
           {
+            fixed: false,
             diagnostics: [],
             suppressions: [],
           }
@@ -95639,6 +98357,7 @@ class ___R$project$rome$$romejs$core$worker$WorkerAPI_ts$default {
       if (res.diagnostics !== undefined) {
         return (
           {
+            fixed: false,
             suppressions: [],
             diagnostics: res.diagnostics,
           }
@@ -95649,6 +98368,7 @@ class ___R$project$rome$$romejs$core$worker$WorkerAPI_ts$default {
       if (res.value === undefined) {
         return (
           {
+            fixed: false,
             diagnostics: [],
             suppressions: [],
           }
@@ -95672,13 +98392,23 @@ class ___R$project$rome$$romejs$core$worker$WorkerAPI_ts$default {
         await this.worker.writeFile(ref.real, formatted);
 
         // Relint this file without fixing it, we do this to prevent false positive error messages
-        return this.lint(ref, prefetchedModuleSignatures, false);
+        return (
+          Object.assign(
+            {
+            },
+            await this.lint(ref, prefetchedModuleSignatures, false),
+            {
+              fixed: true,
+            },
+          )
+        );
       }
 
       // If there's no pending fix then no need for diagnostics
       if (!needsFix) {
         return (
           {
+            fixed: false,
             diagnostics,
             suppressions,
           }
@@ -95688,23 +98418,15 @@ class ___R$project$rome$$romejs$core$worker$WorkerAPI_ts$default {
       // Add pending autofix diagnostic
       return (
         {
+          fixed: false,
           suppressions,
           diagnostics: [
             ...diagnostics,
             {
-              category: 'lint/pendingFixes',
-              filename: ref.uid,
-              message: 'Pending fixes',
-              advice: [
-                {
-                  type: 'diff',
-                  diff: ___R$project$rome$$romejs$string$diff$index_ts$default(raw, formatted),
-                  legend: {
-                    add: 'Code to be added',
-                    delete: 'Code to be removed',
-                  },
-                },
-              ],
+              location: {
+                filename: ref.uid,
+              },
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.LINT.PENDING_FIXES(raw, formatted),
             },
           ],
         }
@@ -95720,8 +98442,9 @@ class ___R$project$rome$$romejs$core$worker$Worker_ts$default {
       this.userConfig = ___R$project$rome$$romejs$core$common$userConfig_ts$loadUserConfig();
       this.partialManifests = new Map();
       this.projects = new Map();
-      this.astCache = new ___R$project$rome$$romejs$path$collections_ts$UnknownFilePathMap();
+      this.astCache = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
       this.moduleSignatureCache = new ___R$project$rome$$romejs$path$collections_ts$UnknownFilePathMap();
+      this.buffers = new ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap();
 
       this.logger =
         new ___R$project$rome$$romejs$core$common$utils$Logger_ts$default(
@@ -95900,6 +98623,26 @@ class ___R$project$rome$$romejs$core$worker$Worker_ts$default {
           );
         },
       );
+
+      bridge.updateBuffer.subscribe(
+        (payload) => {
+          return (
+            this.updateBuffer(
+              ___R$project$rome$$romejs$core$common$types$files_ts$convertTransportFileReference(payload.file),
+              payload.content,
+            )
+          );
+        },
+      );
+    }
+
+    async updateBuffer(ref, content) {
+      const path = ref.real;
+      this.buffers.set(path, content);
+
+      // Now outdated
+      this.astCache.delete(path);
+      this.moduleSignatureCache.delete(path);
     }
 
     async getTypeCheckProvider(projectId, prefetchedModuleSignatures = {}) {
@@ -95987,6 +98730,15 @@ class ___R$project$rome$$romejs$core$worker$Worker_ts$default {
       return diagnostics;
     }
 
+    async readFile(path) {
+      const buffer = this.buffers.get(path);
+      if (buffer === undefined) {
+        return await ___R$project$rome$$romejs$fs$index_ts$readFileText(path);
+      } else {
+        return buffer;
+      }
+    }
+
     async parseJS(ref, opts = {}) {
       const path = ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(ref.real);
 
@@ -96031,24 +98783,33 @@ class ___R$project$rome$$romejs$core$worker$Worker_ts$default {
       }
 
       const cacheEnabled = opts.cache !== false;
+
       if (cacheEnabled) {
         // Update the lastAccessed of the ast cache and return it, it will be evicted on
 
         // any file change
         const cachedResult = this.astCache.get(path);
-        if (cachedResult && cachedResult.ast.sourceType === sourceType) {
-          this.astCache.set(
-            path,
-            Object.assign(
-              {
-              },
-              cachedResult,
-              {
-                lastAccessed: Date.now(),
-              },
-            ),
-          );
-          return cachedResult;
+        if (cachedResult !== undefined) {
+          let useCached = true;
+
+          if (cachedResult.ast.sourceType !== sourceType) {
+            useCached = false;
+          }
+
+          if (useCached) {
+            this.astCache.set(
+              path,
+              Object.assign(
+                {
+                },
+                cachedResult,
+                {
+                  lastAccessed: Date.now(),
+                },
+              ),
+            );
+            return cachedResult;
+          }
         }
       }
 
@@ -96111,17 +98872,17 @@ class ___R$project$rome$$romejs$core$worker$Worker_ts$default {
       return config;
     }
 
-    async writeFile(filename, content) {
+    async writeFile(path, content) {
       // Write the file out
-      await ___R$project$rome$$romejs$fs$index_ts$writeFile(filename, content);
+      await ___R$project$rome$$romejs$fs$index_ts$writeFile(path, content);
 
       // We just wrote the file but the server watcher hasn't had time to notify us
-      this.evict(filename);
+      this.evict(path);
     }
 
-    evict(filename) {
-      this.astCache.delete(filename);
-      this.moduleSignatureCache.delete(filename);
+    evict(path) {
+      this.astCache.delete(path);
+      this.moduleSignatureCache.delete(path);
     }
 
     updateManifests(manifests) {
@@ -96797,7 +99558,7 @@ function ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotParser_ts$isHa
                   throw (
                     this.unexpected(
                       {
-                        message: 'Newline required after code block',
+                        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SNAPSHOTS.MISSING_NEWLINE_AFTER_CODE_BLOCK,
                         start: this.getPositionFromIndex(codeOffset),
                       },
                     )
@@ -96831,7 +99592,7 @@ function ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotParser_ts$isHa
                     throw (
                       this.unexpected(
                         {
-                          message: 'Newline required before code block end',
+                          description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SNAPSHOTS.MISSING_NEWLINE_BEFORE_CODE_BLOCK,
                           start: this.getPositionFromIndex(end),
                         },
                       )
@@ -96841,7 +99602,7 @@ function ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotParser_ts$isHa
                   throw (
                     this.unexpected(
                       {
-                        message: 'Unclosed code block',
+                        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SNAPSHOTS.UNCLOSED_CODE_BLOCK,
                         start: this.getPositionFromIndex(end),
                       },
                     )
@@ -96943,13 +99704,13 @@ function ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$cle
       this.entries = new Map();
     }
 
-    async emitDiagnostic(category, message, advice) {
+    async emitDiagnostic(metadata) {
       await this.runner.emitDiagnostic(
         {
-          category,
-          filename: this.path.join(),
-          message,
-          advice,
+          description: metadata,
+          location: {
+            filename: this.path.join(),
+          },
         },
       );
     }
@@ -97006,7 +99767,7 @@ function ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$cle
                 throw (
                   parser.unexpected(
                     {
-                      message: 'Expected a code block after this heading',
+                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SNAPSHOTS.EXPECTED_CODE_BLOCK_AFTER_HEADING,
                       loc: node.loc,
                     },
                   )
@@ -97057,10 +99818,7 @@ function ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$cle
       if (this.entries.size === 0) {
         if (this.exists) {
           if (this.options.freezeSnapshots) {
-            await this.emitDiagnostic(
-              'tests/snapshots/redundant',
-              'Snapshot should not exist',
-            );
+            await this.emitDiagnostic(___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SNAPSHOTS.REDUNDANT);
           } else {
             // Remove the snapshot file as there were none ran
             await ___R$project$rome$$romejs$fs$index_ts$unlink(path);
@@ -97136,20 +99894,13 @@ function ___R$$priv$project$rome$$romejs$core$test$worker$SnapshotManager_ts$cle
 
       if (this.options.freezeSnapshots) {
         if (!this.exists) {
-          await this.emitDiagnostic(
-            'tests/snapshots/missing',
-            'Snapshot does not exist',
-          );
+          await this.emitDiagnostic(___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SNAPSHOTS.MISSING);
         } else if (formatted !== this.raw) {
           await this.emitDiagnostic(
-            'tests/snapshots/incorrect',
-            'Snapshots do not match',
-            [
-              {
-                type: 'diff',
-                diff: ___R$project$rome$$romejs$string$diff$index_ts$default(this.raw, formatted),
-              },
-            ],
+            ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.SNAPSHOTS.INCORRECT(
+              this.raw,
+              formatted,
+            ),
           );
         }
       } else if (formatted !== this.raw) {
@@ -97252,7 +100003,7 @@ const ___R$$priv$project$rome$$romejs$core$test$worker$TestWorkerRunner_ts$MAX_R
 
       if (res.syntaxError !== undefined) {
         const message = 'A bundle was generated that contained a syntax error: ' +
-        res.syntaxError.message;
+        res.syntaxError.description.message.value;
 
         throw (
           ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError(
@@ -97261,9 +100012,23 @@ const ___R$$priv$project$rome$$romejs$core$test$worker$TestWorkerRunner_ts$MAX_R
               },
               res.syntaxError,
               {
-                message,
-                filename: this.file.uid,
-                advice: [___R$project$rome$$romejs$diagnostics$constants_ts$INTERNAL_ERROR_LOG_ADVICE],
+                description: Object.assign(
+                  {
+                  },
+                  res.syntaxError.description,
+                  {
+                    message: ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(message),
+                    advice: [___R$project$rome$$romejs$diagnostics$constants_ts$INTERNAL_ERROR_LOG_ADVICE],
+                  },
+                ),
+                location: Object.assign(
+                  {
+                  },
+                  res.syntaxError.location,
+                  {
+                    filename: this.file.uid,
+                  },
+                ),
               },
             ),
           )
@@ -97380,11 +100145,18 @@ const ___R$$priv$project$rome$$romejs$core$test$worker$TestWorkerRunner_ts$MAX_R
           },
           diagnostic,
           {
-            advice: [
-              ...opts.firstAdvice,
-              ...(diagnostic.advice || []),
-              ...opts.lastAdvice,
-            ],
+            description: Object.assign(
+              {
+              },
+              diagnostic.description,
+              {
+                advice: [
+                  ...opts.firstAdvice,
+                  ...(diagnostic.description.advice || []),
+                  ...opts.lastAdvice,
+                ],
+              },
+            ),
           },
         );
 
@@ -97486,9 +100258,10 @@ const ___R$$priv$project$rome$$romejs$core$test$worker$TestWorkerRunner_ts$MAX_R
           {
             ref: undefined,
             diagnostic: {
-              filename: this.file.uid,
-              message: 'No tests declared in this file',
-              category: 'tests/noneDeclared',
+              location: {
+                filename: this.file.uid,
+              },
+              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.TESTS.UNDECLARED,
             },
           },
         );
@@ -97785,6 +100558,13 @@ class ___R$project$rome$$romejs$core$common$bridges$WorkerBridge_ts$default exte
         this.createEvent(
           {name: 'parseJS', direction: 'server->client'},
         );
+      this.updateBuffer =
+        this.createEvent(
+          {
+            name: 'updateBuffer',
+            direction: 'server->client',
+          },
+        );
     }
 
     init() {
@@ -97806,8 +100586,7 @@ class ___R$project$rome$$romejs$core$common$bridges$WorkerBridge_ts$default exte
           hydrate(err, data) {
             return (
               new ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError(
-                String(err.message),
-                ( // rome-suppress lint/noExplicitAny
+                String(err.message),( // rome-suppress lint/noExplicitAny
                 data.diagnostics),
               )
             );
@@ -97912,6 +100691,20 @@ class ___R$project$rome$$romejs$core$common$bridges$MasterBridge_ts$default exte
           {
             name: 'profile.stopWorker',
             direction: 'server<-client',
+          },
+        );
+      this.lspFromClientBuffer =
+        this.createEvent(
+          {
+            name: 'lspFromClientBuffer',
+            direction: 'server<-client',
+          },
+        );
+      this.lspFromServerBuffer =
+        this.createEvent(
+          {
+            name: 'lspFromServerBuffer',
+            direction: 'server->client',
           },
         );
     }
@@ -98481,7 +101274,6 @@ async function ___R$$priv$project$rome$$romejs$cli$bin$rome_ts$main() {
         ___R$project$rome$$romejs$cli$diagnostics$index_ts$printDiagnosticsSync(
           diags,
           {
-            origins: [],
             reporter,
           },
         );

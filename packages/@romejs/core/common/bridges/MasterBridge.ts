@@ -7,7 +7,7 @@
 
 import {Profile} from '@romejs/v8';
 import {Diagnostics} from '@romejs/diagnostics';
-import {ClientFlags, ClientRequestFlags} from '../types/client';
+import {ClientRequestFlags, ClientFlagsJSON} from '../types/client';
 import {Bridge} from '@romejs/events';
 import {JSONPropertyValue} from '@romejs/codec-json';
 import {
@@ -28,12 +28,13 @@ export type MasterQueryRequest = {
   terminateWhenIdle: boolean;
 };
 
-export type PartialMasterQueryRequest =
-  & Partial<Omit<MasterQueryRequest, 'requestFlags'>>
-  & {
-    requestFlags?: Partial<ClientRequestFlags>;
-    command: string;
-  };
+export type PartialMasterQueryRequest = Partial<Omit<
+  MasterQueryRequest,
+  'requestFlags'
+>> & {
+  requestFlags?: Partial<ClientRequestFlags>;
+  command: string;
+};
 
 export type MasterQueryResponseSuccess = {
   type: 'SUCCESS';
@@ -69,15 +70,13 @@ export type MasterQueryResponse =
 
 export type ProfilingStartData = {samplingInterval: number};
 
-export type MasterBridgeJSONFlags = Omit<ClientFlags, 'cwd'> & {cwd: string};
-
 export type MasterBridgeInfo = {
   version: string;
   columns: number;
   hasClearScreen: boolean;
   useRemoteReporter: boolean;
   format: ReporterStream['format'];
-  flags: MasterBridgeJSONFlags;
+  flags: ClientFlagsJSON;
 };
 
 export default class MasterBridge extends Bridge {
@@ -153,5 +152,15 @@ export default class MasterBridge extends Bridge {
   profilingStopWorker = this.createEvent<number, Profile>({
     name: 'profile.stopWorker',
     direction: 'server<-client',
+  });
+
+  lspFromClientBuffer = this.createEvent<string, void>({
+    name: 'lspFromClientBuffer',
+    direction: 'server<-client',
+  });
+
+  lspFromServerBuffer = this.createEvent<string, void>({
+    name: 'lspFromServerBuffer',
+    direction: 'server->client',
   });
 }

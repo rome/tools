@@ -11,6 +11,7 @@ import {
   isAlpha,
   isEscaped,
   TokenValues,
+  Position,
 } from '@romejs/parser-core';
 import {
   Tokens,
@@ -18,7 +19,7 @@ import {
   TagNode,
   ChildNode,
   Children,
-  TagName,
+  MarkupTagName,
 } from './types';
 import {inc, Number0, add, get0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
@@ -26,8 +27,10 @@ import {descriptions} from '@romejs/diagnostics';
 const globalAttributes: Array<string> = ['emphasis', 'dim'];
 
 const tags: Map<string, Array<string>> = new Map();
+tags.set('pad', ['dir', 'char', 'count']);
 tags.set('emphasis', []);
-tags.set('number', ['approx']);
+tags.set('number', ['approx', 'pluralSuffix', 'singularSuffix']);
+tags.set('grammarNumber', ['plural', 'singular', 'none']);
 tags.set('hyperlink', ['target']);
 tags.set('filelink', ['target', 'column', 'line']);
 tags.set('inverse', []);
@@ -81,21 +84,20 @@ function isStringValueChar(char: string, index: Number0, input: string): boolean
 }
 
 function isTextChar(char: string, index: Number0, input: string): boolean {
-  return !isTagChar(index, input);
+  return !isTagStartChar(index, input);
 }
 
-export function isTagChar(index: Number0, input: string): boolean {
+export function isTagStartChar(index: Number0, input: string): boolean {
   const i = get0(index);
-  return input[i] === '<' && !isEscaped(index, input) &&
-    (isAlpha(input[i + 1]) || input[i + 1] === '/');
+  return input[i] === '<' && !isEscaped(index, input);
 }
 
 type State = {inTagHead: boolean};
 
 type StringMarkupParserOptions = ParserOptions;
 
-const createStringMarkupParser = createParser((ParserCore) =>
-  class StringMarkupParser extends ParserCore<Tokens, State> {
+const createStringMarkupParser = createParser(
+  (ParserCore) => class StringMarkupParser extends ParserCore<Tokens, State> {
     constructor(opts: StringMarkupParserOptions) {
       super(opts, 'parse/stringMarkup', {inTagHead: false});
     }
@@ -104,12 +106,10 @@ const createStringMarkupParser = createParser((ParserCore) =>
       index: Number0,
       input: string,
       state: State,
-    ):
-      | undefined
-      | {
-        token: TokenValues<Tokens>;
-        state: State;
-      } {
+    ): undefined | {
+      token: TokenValues<Tokens>;
+      state: State;
+    } {
       const escaped = isEscaped(index, input);
       const char = input[get0(index)];
 
@@ -170,7 +170,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
         }
       }
 
-      if (isTagChar(index, input)) {
+      if (isTagStartChar(index, input)) {
         return {
           state: {
             inTagHead: true,
@@ -185,7 +185,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
         state,
         token: {
           type: 'Text',
-          value: normalizeTextValue(value),
+          value: unescapeTextValue(value),
           start: index,
           end,
         },
@@ -196,7 +196,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
       return this.matchToken('Less') && this.lookahead().token.type === 'Slash';
     }
 
-    parseTag(): TagNode {
+    parseTag(headStart: Position): TagNode {
       const nameToken = this.expectToken('Word');
       const rawName = nameToken.value;
 
@@ -208,8 +208,8 @@ const createStringMarkupParser = createParser((ParserCore) =>
         });
       }
 
-      // rome-suppress lint/noExplicitAny
-      const tagName: TagName = (rawName as any);
+      // rome-suppress-next-line lint/noExplicitAny
+      const tagName: MarkupTagName = (rawName as any);
       const attributes: TagAttributes = new Map();
       const children: Children = [];
       let selfClosing = false;
@@ -222,20 +222,23 @@ const createStringMarkupParser = createParser((ParserCore) =>
         if (keyToken.type === 'Word') {
           key = keyToken.value;
 
-          if (!allowedAttributes.includes(key) && !globalAttributes.includes(key)) {
-            throw this.unexpected({
-              description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
-                tagName,
-                key,
-              ),
-            });
+          if (!allowedAttributes.includes(key) &&
+              !globalAttributes.includes(key)) {
+            throw this.unexpected(
+                {
+                  description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
+                    tagName,
+                    key,
+                  ),
+                },
+              );
           }
 
           this.nextToken();
 
           // Shorthand properties
           if (this.matchToken('Word') || this.matchToken('Slash') ||
-          this.matchToken('Greater')) {
+              this.matchToken('Greater')) {
             attributes.set(key, 'true');
             continue;
           }
@@ -261,6 +264,8 @@ const createStringMarkupParser = createParser((ParserCore) =>
 
       this.expectToken('Greater');
 
+      const headEnd = this.getPosition();
+
       // Verify closing tag
       if (!selfClosing) {
         while ( // Build children
@@ -270,7 +275,10 @@ const createStringMarkupParser = createParser((ParserCore) =>
 
         if (this.matchToken('EOF')) {
           throw this.unexpected({
-            description: descriptions.STRING_MARKUP.UNCLOSED_TAG(tagName),
+            description: descriptions.STRING_MARKUP.UNCLOSED_TAG(
+              tagName,
+              this.finishLocAt(headStart, headEnd),
+            ),
           });
         } else {
           this.expectToken('Less');
@@ -279,12 +287,14 @@ const createStringMarkupParser = createParser((ParserCore) =>
           const name = this.getToken();
           if (name.type === 'Word') {
             if (name.value !== tagName) {
-              throw this.unexpected({
-                description: descriptions.STRING_MARKUP.INCORRECT_CLOSING_TAG_NAME(
-                  tagName,
-                  name.value,
-                ),
-              });
+              throw this.unexpected(
+                  {
+                    description: descriptions.STRING_MARKUP.INCORRECT_CLOSING_TAG_NAME(
+                      tagName,
+                      name.value,
+                    ),
+                  },
+                );
             }
 
             this.nextToken();
@@ -307,6 +317,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
     }
 
     parseChild(): ChildNode {
+      const start = this.getPosition();
       const token = this.getToken();
       this.nextToken();
 
@@ -316,7 +327,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
           value: token.value,
         };
       } else if (token.type === 'Less') {
-        return this.parseTag();
+        return this.parseTag(start);
       } else {
         throw this.unexpected({
           description: descriptions.STRING_MARKUP.UNKNOWN_START,
@@ -331,7 +342,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
       }
       return children;
     }
-  }
+  },
 );
 
 export function parseMarkup(input: string) {
@@ -342,6 +353,23 @@ export function parseMarkup(input: string) {
   }
 }
 
-function normalizeTextValue(str: string): string {
-  return str.replace(/\\<([a-zA-Z\/])/g, '<$1');
+function unescapeTextValue(str: string): string {
+  let unescaped = '';
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+
+    if (char === '\\') {
+      const nextChar = str[i + 1];
+      if (nextChar === '<') {
+        i++;
+        unescaped += '<';
+        continue;
+      }
+    }
+
+    unescaped += char;
+  }
+
+  return unescaped;
 }

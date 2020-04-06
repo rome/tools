@@ -30,7 +30,7 @@ const provider = createHook<State, undefined, AnyNode>({
   call(path: Path, state: State) {
     const {node} = path;
     if (node.type !== 'ReferenceIdentifier' && node.type !==
-    'JSXReferenceIdentifier') {
+        'JSXReferenceIdentifier') {
       throw new Error('Expected only Identifier to be dispatched');
     }
 
@@ -98,8 +98,8 @@ export default {
 
       // For functions, consider all parameters except the last to be used
       if (node.type === 'FunctionDeclaration' || node.type ===
-      'FunctionExpression' || node.type === 'ObjectMethod' || node.type ===
-      'ClassMethod' || node.type === 'ArrowFunctionExpression') {
+          'FunctionExpression' || node.type === 'ObjectMethod' || node.type ===
+          'ClassMethod' || node.type === 'ArrowFunctionExpression') {
         for (const {name} of getBindingIdentifiers(node.head.params.slice(0, -1))) {
           usedBindings[name] = true;
         }
@@ -109,7 +109,8 @@ export default {
         // to be used as this is typically an interface definition
         const {body: block} = node;
         if (block.type === 'BlockStatement' && block.body.length === 1 &&
-          block.body[0].type === 'ThrowStatement') {
+              block.body[0].type ===
+              'ThrowStatement') {
           for (const {name} of getBindingIdentifiers(node.head.params)) {
             usedBindings[name] = true;
           }
@@ -117,7 +118,7 @@ export default {
       }
 
       if (node.type === 'CatchClause' && node.param && node.param.type ===
-      'BindingIdentifier') {
+          'BindingIdentifier') {
         // Mark error param as used as they are required
         usedBindings[node.param.name] = true;
       }
@@ -134,7 +135,7 @@ export default {
     }
 
     if (node.type === 'JSXReferenceIdentifier' || node.type ===
-    'ReferenceIdentifier') {
+        'ReferenceIdentifier') {
       return path.callHook(provider, undefined);
     }
 

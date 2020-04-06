@@ -15,8 +15,10 @@ export default {
     const {node} = path;
 
     if ((node.type === 'IfStatement' || node.type === 'ForStatement' ||
-    node.type === 'WhileStatement' || node.type === 'DoWhileStatement') &&
-      node.test && node.test.type === 'AssignmentExpression') {
+            node.type ===
+            'WhileStatement' || node.type === 'DoWhileStatement') && node.test &&
+          node.test.type ===
+          'AssignmentExpression') {
       path.context.addNodeDiagnostic(node, descriptions.LINT.NO_COND_ASSIGN);
     }
 

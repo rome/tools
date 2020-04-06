@@ -30,6 +30,7 @@ Program {
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ,'}
       }
       location: Object {
+        filename: 'input.ts'
         mtime: undefined
         sourceType: 'module'
         end: Object {

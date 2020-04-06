@@ -327,6 +327,8 @@ export * from './regex/RegExpGroupNonCapture';
 
 export * from './literals/RegExpLiteral';
 
+export * from './regex/RegExpNamedBackReference';
+
 export * from './regex/RegExpNonDigitCharacter';
 
 export * from './regex/RegExpNonWhiteSpaceCharacter';
@@ -334,6 +336,8 @@ export * from './regex/RegExpNonWhiteSpaceCharacter';
 export * from './regex/RegExpNonWordBoundaryCharacter';
 
 export * from './regex/RegExpNonWordCharacter';
+
+export * from './regex/RegExpNumericBackReference';
 
 export * from './regex/RegExpQuantified';
 

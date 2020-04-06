@@ -8,13 +8,11 @@
 import {JSNodeBase, AnyRegExpEscapedCharacter} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpCharSetRange =
-  & JSNodeBase
-  & {
-    type: 'RegExpCharSetRange';
-    start: AnyRegExpEscapedCharacter;
-    end: AnyRegExpEscapedCharacter;
-  };
+export type RegExpCharSetRange = JSNodeBase & {
+  type: 'RegExpCharSetRange';
+  start: AnyRegExpEscapedCharacter;
+  end: AnyRegExpEscapedCharacter;
+};
 
 export const regExpCharSetRange = createBuilder<RegExpCharSetRange>(
   'RegExpCharSetRange',

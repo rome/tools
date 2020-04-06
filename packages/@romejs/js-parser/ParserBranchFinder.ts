@@ -86,10 +86,10 @@ export default class ParserBranchFinder<T> {
     const newDiagnosticCount = newState.diagnostics.length;
     const prevDiagnosticCount = prevState.diagnostics.length;
     if (maxNewDiagnostics !== undefined && newDiagnosticCount -
-    prevDiagnosticCount > maxNewDiagnostics) {
+        prevDiagnosticCount > maxNewDiagnostics) {
       throw new Error(
-        `Max diagnostics unexpectedly exceeded ${maxNewDiagnostics}. Prev: ${prevDiagnosticCount} New: ${newDiagnosticCount}`,
-      );
+          `Max diagnostics unexpectedly exceeded ${maxNewDiagnostics}. Prev: ${prevDiagnosticCount} New: ${newDiagnosticCount}`,
+        );
     }
 
     const branch: ParserBranch<T> = {
@@ -114,20 +114,23 @@ export default class ParserBranchFinder<T> {
 
       // Promote if we have a priority but the top branch doesn't
       if (branch.diagnosticsPriority !== undefined &&
-        topBranch.diagnosticsPriority === undefined) {
+            topBranch.diagnosticsPriority ===
+            undefined) {
         shouldPromote = true;
       }
 
       // Promote if we have a priority, and the top branch does, and we're higher
       if (branch.diagnosticsPriority !== undefined &&
-        topBranch.diagnosticsPriority !== undefined &&
-        branch.diagnosticsPriority > topBranch.diagnosticsPriority) {
+            topBranch.diagnosticsPriority !==
+            undefined && branch.diagnosticsPriority >
+          topBranch.diagnosticsPriority) {
         shouldPromote = true;
       }
 
       // Don't promote if the top branch has a priority but we don't
       if (topBranch.diagnosticsPriority !== undefined &&
-        branch.diagnosticsPriority === undefined) {
+            branch.diagnosticsPriority ===
+            undefined) {
         shouldPromote = false;
       }
     }

@@ -20,20 +20,24 @@ export type AnyExportExternalSpecifier =
   | ExportDefaultSpecifier
   | ExportExternalSpecifier;
 
-export type ExportExternalDeclaration =
-  & JSNodeBase
-  & {
-    type: 'ExportExternalDeclaration';
-    specifiers?: Array<AnyExportExternalSpecifier>;
-    source: StringLiteral;
-    exportKind?: ConstExportModuleKind;
-  };
+export type ExportExternalDeclaration = JSNodeBase & {
+  type: 'ExportExternalDeclaration';
+  defaultSpecifier?: ExportDefaultSpecifier;
+  namespaceSpecifier?: ExportNamespaceSpecifier;
+  namedSpecifiers: Array<ExportExternalSpecifier>;
+  source: StringLiteral;
+  exportKind?: ConstExportModuleKind;
+};
 
-export const exportExternalDeclaration =
-  createBuilder<ExportExternalDeclaration>('ExportExternalDeclaration', {
+export const exportExternalDeclaration = createBuilder<ExportExternalDeclaration>(
+  'ExportExternalDeclaration',
+  {
     bindingKeys: {},
     visitorKeys: {
-      specifiers: true,
+      defaultSpecifier: true,
+      namespaceSpecifier: true,
+      namedSpecifiers: true,
       source: true,
     },
-  });
+  },
+);

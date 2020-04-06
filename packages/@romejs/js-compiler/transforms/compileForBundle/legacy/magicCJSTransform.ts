@@ -5,9 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, FunctionExpression} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
-import {functionExpression, blockStatement, stringLiteral} from '@romejs/js-ast';
+import {
+  functionExpression,
+  blockStatement,
+  stringLiteral,
+  AnyNode,
+  FunctionExpression,
+} from '@romejs/js-ast';
 import {template} from '@romejs/js-ast-utils';
 import {getOptions} from '../_utils';
 
@@ -19,9 +24,9 @@ export default {
 
     // Update relative requires with their module id
     if (node.type === 'CallExpression' && node.callee.type ===
-    'ReferenceIdentifier' && node.callee.name === 'require' && scope.getBinding(
-      'require',
-    ) === undefined) {
+          'ReferenceIdentifier' && node.callee.name === 'require' &&
+          scope.getBinding('require') ===
+          undefined) {
       const args = node.arguments;
       const arg = args[0];
 
@@ -33,9 +38,9 @@ export default {
       const source = arg.value;
 
       if (Object.prototype.hasOwnProperty.call(
-        options.relativeSourcesToModuleId,
-        source,
-      )) {
+          options.relativeSourcesToModuleId,
+          source,
+        )) {
         const resolved = options.relativeSourcesToModuleId[source];
         const sourceNode = stringLiteral.create({
           value: resolved,
@@ -45,7 +50,8 @@ export default {
     }
 
     if (node.type === 'ReferenceIdentifier' && node.name === 'require' &&
-      scope.getBinding('require') === undefined) {
+          scope.getBinding('require') ===
+          undefined) {
       return template.expression`Rome.requireNamespace`;
     }
 
@@ -77,7 +83,8 @@ export default {
 
       // Build call
       const declare = options.analyze.moduleType === 'es'
-        ? template.expression`Rome.declareES` : template.expression`Rome.declareCJS`;
+        ? template.expression`Rome.declareES`
+        : template.expression`Rome.declareCJS`;
       const wrapper = template.statement`${declare}(${source}, ${factory})`;
 
       return {
