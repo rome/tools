@@ -512,6 +512,10 @@ export const descriptions = createMessages(
             ],
           };
       },
+      RESTRICTED_GLOBALS: (globalName) => ({
+        category: 'lint/restrictedGlobals',
+        message: markup`The use of the existing global variable <emphasis>${globalName}</emphasis> is not allowed. Use local variable instead.`,
+      }),
     },
 
     PROJECT_MANAGER: {
