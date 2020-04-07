@@ -1029,11 +1029,11 @@ export function readRegexp(parser: JSParser): void {
   }
   const mods = validateRegexFlags(rawMods, getIndex(parser), (
     metadata,
-    parserIndex
+    parserIndex,
     flagPosition,
   ) => {
     parser.addDiagnostic({
-      index: add(parserIndex - rawMods.length, flagPosition),
+      index: add(coerce0(parserIndex - rawMods.length), flagPosition),
       description: metadata,
     });
   });
