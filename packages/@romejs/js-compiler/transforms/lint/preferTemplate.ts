@@ -6,7 +6,7 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
+import {AnyNode, templateLiteral, templateElement} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
@@ -19,7 +19,25 @@ export default {
               'StringLiteral' &&
             !node.left.value.includes('`') ||
           node.right.type === 'StringLiteral' && !node.right.value.includes('`'))) {
-      path.context.addNodeDiagnostic(node, descriptions.LINT.PREFER_TEMPLATE);
+      const {suppressed} = path.context.addNodeDiagnostic(node, descriptions.LINT.PREFER_TEMPLATE);
+
+      if (!suppressed) {
+        if (node.right.type === 'StringLiteral') {
+            console.log(node.left);
+            const quasis = [templateElement.create({
+              ...node.right,
+              raw: node.right.value,
+              cooked: node.right.value,
+            })];
+            const expressions = [node.left];
+            const transformed = templateLiteral.create({
+              expressions,
+              quasis,
+            })
+            console.log(transformed);
+            return transformed;
+        }
+      }
     }
 
     return node;
