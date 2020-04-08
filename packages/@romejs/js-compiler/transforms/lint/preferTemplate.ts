@@ -23,19 +23,40 @@ export default {
 
       if (!suppressed) {
         if (node.right.type === 'StringLiteral') {
-            console.log(node.left);
-            const quasis = [templateElement.create({
-              ...node.right,
-              raw: node.right.value,
-              cooked: node.right.value,
-            })];
+            const quasis = [
+              templateElement.create({
+                raw: '',
+                cooked: '',
+              }),
+              templateElement.create({
+                raw: node.right.value,
+                cooked: node.right.value,
+              }),
+            ];
             const expressions = [node.left];
-            const transformed = templateLiteral.create({
+            return templateLiteral.create({
               expressions,
               quasis,
+              loc: node.loc,
             })
-            console.log(transformed);
-            return transformed;
+        }
+        if (node.left.type === 'StringLiteral') {
+          const quasis = [
+            templateElement.create({
+              raw: node.left.value,
+              cooked: node.left.value,
+            }),
+            templateElement.create({
+              raw: '',
+              cooked: '',
+            }),
+          ];
+          const expressions = [node.right];
+          return templateLiteral.create({
+            expressions,
+            quasis,
+            loc: node.loc,
+          })
         }
       }
     }
