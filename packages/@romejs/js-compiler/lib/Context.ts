@@ -24,6 +24,7 @@ import {
   DiagnosticSuppressions,
   DiagnosticCategory,
   DiagnosticsProcessor,
+  DiagnosticLocation,
 } from '@romejs/diagnostics';
 import Record from './Record';
 import {RootScope} from '../scope/Scope';
@@ -108,7 +109,7 @@ export default class Context {
   }
 
   hasLocSuppression(
-    loc: undefined | SourceLocation,
+    loc: undefined | DiagnosticLocation,
     category: DiagnosticCategory,
   ): boolean {
     if (loc === undefined) {
@@ -156,7 +157,7 @@ export default class Context {
   }
 
   addLocDiagnostic(
-    loc: undefined | SourceLocation,
+    loc: undefined | DiagnosticLocation,
     description: DiagnosticDescription,
     diag: ContextDiagnostic = {},
   ): AddDiagnosticResult {

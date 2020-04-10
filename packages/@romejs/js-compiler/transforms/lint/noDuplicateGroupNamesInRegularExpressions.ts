@@ -8,9 +8,7 @@
 import {AnyNode} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
-import {
-  DiagnosticsDuplicateHelper,
-} from '@romejs/diagnostics/DiagnosticsDuplicateHelper';
+import {DiagnosticsDuplicateHelper} from '../../lib/DiagnosticsDuplicateHelper';
 
 export default {
   name: 'noDuplicateGroupNamesInRegularExpressions',
@@ -19,7 +17,7 @@ export default {
 
     if (node.type === 'RegExpSubExpression') {
       const duplicates = new DiagnosticsDuplicateHelper(
-        context.diagnostics,
+        context,
         descriptions.LINT.DUPLICATE_REGEX_GROUP_NAME,
       );
 

@@ -9,9 +9,7 @@ import {Path} from '@romejs/js-compiler';
 import {ObjectProperty, ObjectMethod, SpreadProperty} from '@romejs/js-ast';
 import {TransformExitResult} from '@romejs/js-compiler/types';
 import {descriptions} from '@romejs/diagnostics';
-import {
-  DiagnosticsDuplicateHelper,
-} from '@romejs/diagnostics/DiagnosticsDuplicateHelper';
+import {DiagnosticsDuplicateHelper} from '../../lib/DiagnosticsDuplicateHelper';
 
 function extractPropertyKey(
   node: ObjectProperty | ObjectMethod | SpreadProperty,
@@ -42,7 +40,7 @@ export default {
 
     if (node.type === 'ObjectExpression') {
       const duplicates = new DiagnosticsDuplicateHelper(
-        context.diagnostics,
+        context,
         descriptions.LINT.NO_DUPLICATE_KEYS,
       );
 
