@@ -267,7 +267,7 @@ export default async function analyzeDependencies(
     dependencies,
     importFirstUsage,
     syntax: ast.syntax,
-    diagnostics: [...ast.diagnostics, ...context.diagnostics],
+    diagnostics: [...ast.diagnostics, ...context.diagnostics.getDiagnostics()],
   };
   analyzeCache.set(query, res);
   return res;

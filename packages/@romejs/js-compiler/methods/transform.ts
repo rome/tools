@@ -74,7 +74,10 @@ export default async function transform(
 
   const res: TransformResult = {
     suppressions: context.suppressions,
-    diagnostics: [...prevStageDiagnostics, ...context.diagnostics],
+    diagnostics: [
+      ...prevStageDiagnostics,
+      ...context.diagnostics.getDiagnostics(),
+    ],
     cacheDependencies: [
       ...prevStageCacheDeps,
       ...context.getCacheDependencies(),

@@ -101,6 +101,22 @@ export function buildSuggestionAdvice(
   return advice;
 }
 
+// Sometimes we'll have big blobs of JS in a diagnostic when we'll only show a snippet. This method pads it out then truncates the rest for efficient transmission. We will have crappy ANSI formatting in the console and elsewhere but for places where we need to truncate we probably don't care (generated code).
+export function truncateSourceText(
+  code: string,
+  start: Position,
+  end: Position,
+): string {
+  const lines = code.split(NEWLINE);
+
+  // Pad the starting and ending lines by 10
+  const fromLine = Math.max(get1(start.line) - 10, 0);
+  const toLine = Math.max(get1(end.line) + 10, lines.length);
+
+  const capturedLines = lines.slice(fromLine, toLine);
+  return '\n'.repeat(fromLine) + capturedLines.join('\n');
+}
+
 export function buildDuplicateLocationAdvice(
   locations: Array<undefined | DiagnosticLocation>,
 ): DiagnosticAdvice {
@@ -127,20 +143,4 @@ export function buildDuplicateLocationAdvice(
     },
     ...locationAdvice,
   ];
-}
-
-// Sometimes we'll have big blobs of JS in a diagnostic when we'll only show a snippet. This method pads it out then truncates the rest for efficient transmission. We will have crappy ANSI formatting in the console and elsewhere but for places where we need to truncate we probably don't care (generated code).
-export function truncateSourceText(
-  code: string,
-  start: Position,
-  end: Position,
-): string {
-  const lines = code.split(NEWLINE);
-
-  // Pad the starting and ending lines by 10
-  const fromLine = Math.max(get1(start.line) - 10, 0);
-  const toLine = Math.max(get1(end.line) + 10, lines.length);
-
-  const capturedLines = lines.slice(fromLine, toLine);
-  return '\n'.repeat(fromLine) + capturedLines.join('\n');
 }

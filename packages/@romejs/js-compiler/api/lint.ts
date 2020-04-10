@@ -75,7 +75,7 @@ export default async function lint(req: FormatRequest): Promise<LintResult> {
 
   const result: LintResult = {
     suppressions: context.suppressions,
-    diagnostics: [...ast.diagnostics, ...context.diagnostics],
+    diagnostics: [...ast.diagnostics, ...context.diagnostics.getDiagnostics()],
     src: formattedCode,
   };
   lintCache.set(query, result);
