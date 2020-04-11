@@ -37,32 +37,24 @@ export const formatAnsi = {
     return `\u001b]8;;${href}\u0007${name}\u001b]8;;\u0007`;
   },
 
-  rgb(
-    str: string,
-    color: {
-      r: number;
-      g: number;
-      b: number;
-    },
-  ): string {
-    return (
-      `\u001b[38;2;${String(color.r)};${String(color.g)};${String(color.b)}m` +
-      str + createEscape(39)
-    );
+  rgb(str: string, color: {
+    r: number;
+    g: number;
+    b: number;
+  }): string {
+    return `\u001b[38;2;${String(color.r)};${String(color.g)};${String(color.b)}m` +
+          str +
+        createEscape(39);
   },
 
-  bgRgb(
-    str: string,
-    color: {
-      r: number;
-      g: number;
-      b: number;
-    },
-  ): string {
-    return (
-      `\u001b[48;2;${String(color.r)};${String(color.g)};${String(color.b)}m` +
-      str + createEscape(49)
-    );
+  bgRgb(str: string, color: {
+    r: number;
+    g: number;
+    b: number;
+  }): string {
+    return `\u001b[48;2;${String(color.r)};${String(color.g)};${String(color.b)}m` +
+          str +
+        createEscape(49);
   },
 
   bold(str: string): string {

@@ -31,7 +31,7 @@ import {
   AnyRegExpExpression,
 } from '@romejs/js-ast';
 import {Diagnostics, descriptions} from '@romejs/diagnostics';
-import {Number0, get0, add} from '@romejs/ob1';
+import {Number0, get0, add, coerce0} from '@romejs/ob1';
 
 type Operator =
   | '^'
@@ -48,42 +48,38 @@ type Operator =
   | '*'
   | '|';
 
-type Tokens =
-  & BaseTokens
-  & {
-    Operator: ValueToken<'Operator', Operator>;
-    Character: ComplexToken<'Character', {
-      value: string;
-      escaped: boolean;
-    }>;
-    EscapedCharacter: ValueToken<'EscapedCharacter',
-      | 'd'
-      | 'D'
-      | 'b'
-      | 'B'
-      | 's'
-      | 'S'
-      | 'w'
-      | 'W'>;
-    NumericBackReferenceCharacter: ComplexToken<
-      'NumericBackReferenceCharacter',
-      {
-        value: number;
-        escaped: boolean;
-      }
-    >;
-  };
+type Tokens = BaseTokens & {
+  Operator: ValueToken<'Operator', Operator>;
+  Character: ComplexToken<'Character', {
+    value: string;
+    escaped: boolean;
+  }>;
+  EscapedCharacter: ValueToken<'EscapedCharacter',
+    | 'd'
+    | 'D'
+    | 'b'
+    | 'B'
+    | 's'
+    | 'S'
+    | 'w'
+    | 'W'>;
+  NumericBackReferenceCharacter: ComplexToken<'NumericBackReferenceCharacter', {
+    value: number;
+    escaped: boolean;
+  }>;
+  NamedBackReferenceCharacter: ComplexToken<'NamedBackReferenceCharacter', {
+    value: string;
+    escaped: boolean;
+  }>;
+};
 
-type GroupModifiers =
-  | undefined
-  | {
-    type: 'NON_CAPTURE';
-    kind: RegExpGroupNonCapture['kind'];
-  }
-  | {
-    type: 'NAMED_CAPTURE';
-    name: string;
-  };
+type GroupModifiers = {
+  type: 'NON_CAPTURE';
+  kind: RegExpGroupNonCapture['kind'];
+} | {
+  type: 'NAMED_CAPTURE';
+  name: string;
+};
 
 type RegExpParserOptions = ParserOptions & {unicode: boolean};
 
@@ -107,11 +103,7 @@ function getCodePoint(char: string): number {
   throw new Error('Input was not 1 character long');
 }
 
-function readOctalCode(
-  input: string,
-  index: Number0,
-  nextChar: string,
-): {
+function readOctalCode(input: string, index: Number0, nextChar: string): {
   octalValue: number | undefined;
   end: Number0;
 } {
@@ -135,8 +127,8 @@ function readOctalCode(
   return {octalValue, end: nextIndex};
 }
 
-export const createRegExpParser = createParser((ParserCore) =>
-  class RegExpParser extends ParserCore<Tokens, void> {
+export const createRegExpParser = createParser(
+  (ParserCore) => class RegExpParser extends ParserCore<Tokens, void> {
     constructor(opts: RegExpParserOptions) {
       super(opts, 'parse/regex');
       this.diagnostics = [];
@@ -146,11 +138,11 @@ export const createRegExpParser = createParser((ParserCore) =>
     diagnostics: Diagnostics;
     unicode: boolean;
 
-    addDiagnostic(opts: ParserUnexpectedOptions) {
+    addDiagnostic(opts: ParserUnexpectedOptions): void {
       this.diagnostics.push(this.createDiagnostic(opts));
     }
 
-    unexpected() {
+    unexpected(): never {
       throw new Error('No throwing');
     }
 
@@ -209,7 +201,28 @@ export const createRegExpParser = createParser((ParserCore) =>
 
           case 'k':
             if (this.unicode) {
-              // TODO named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
+              // named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
+              let namedBackReference = '';
+              let namedBackReferenceIndex = get0(index) + 2;
+              let namedBackReferenceChar = input[namedBackReferenceIndex];
+              if (namedBackReferenceChar === '<') {
+                namedBackReferenceChar = input[namedBackReferenceIndex];
+                while (namedBackReferenceChar !== '>' &&
+                    namedBackReferenceIndex <
+                    input.length) {
+                  namedBackReference += namedBackReferenceChar;
+                  namedBackReferenceIndex++;
+                  namedBackReferenceChar = input[namedBackReferenceIndex];
+                }
+                if (namedBackReferenceChar === '>') {
+                  namedBackReference += namedBackReferenceChar;
+                  namedBackReferenceIndex++;
+                }
+                return this.finishComplexToken('NamedBackReferenceCharacter', {
+                  value: namedBackReference,
+                  escaped: true,
+                }, coerce0(namedBackReferenceIndex));
+              }
             }
 
             return this.finishComplexToken('Character', {
@@ -244,78 +257,74 @@ export const createRegExpParser = createParser((ParserCore) =>
               escaped: true,
             }, end);
 
-          case '0':
-            {
-              const {octalValue, end: octalEnd} = readOctalCode(
-                input,
-                index,
-                nextChar,
-              );
-              if (octalValue !== undefined && isOct(octalValue.toString())) {
-                const octal = parseInt(octalValue.toString(), 8);
-                return this.finishComplexToken('Character', {
-                  value: String.fromCharCode(octal),
-                  escaped: true,
-                }, octalEnd);
-              }
-              return this.finishComplexToken('Character', {
-                value: String.fromCharCode(0),
-                escaped: true,
-              }, end);
-            }
-
-          case 'x':
-            {
-              const possibleHex = input.slice(get0(index) + 1, get0(index) + 3);
-
-              // \xhh
-              if (possibleHex.length === 2 && isHex(possibleHex)) {
-                end = add(end, 2);
-
-                return this.finishComplexToken('Character', {
-                  value: String.fromCharCode(parseInt(possibleHex, 16)),
-                  escaped: true,
-                }, end);
-              }
-
-              return this.finishComplexToken('Character', {
-                value: 'x',
-                escaped: true,
-              }, end);
-            }
-
-          case 'u':
-            {
-              // Get the next 4 characters after \u
-              const possibleHex = input.slice(get0(index) + 2, get0(index) + 6);
-
-              // \uhhhh
-              if (possibleHex.length === 4 && isHex(possibleHex)) {
-                end = add(end, 4);
-
-                return this.finishComplexToken('Character', {
-                  value: String.fromCharCode(parseInt(possibleHex, 16)),
-                  escaped: true,
-                }, end);
-              }
-
-              if (this.unicode) {
-                // TODO \u{hhhh} or \u{hhhhh}
-              }
-
-              return this.finishComplexToken('Character', {
-                value: 'u',
-                escaped: true,
-              }, end);
-            }
-
-          // Redundant escaping
-          default:
-            let {octalValue: referenceValue, end: referenceEnd} = readOctalCode(
+          case '0': {
+            const {octalValue, end: octalEnd} = readOctalCode(
               input,
               index,
               nextChar,
             );
+            if (octalValue !== undefined && isOct(octalValue.toString())) {
+              const octal = parseInt(octalValue.toString(), 8);
+              return this.finishComplexToken('Character', {
+                value: String.fromCharCode(octal),
+                escaped: true,
+              }, octalEnd);
+            }
+            return this.finishComplexToken('Character', {
+              value: String.fromCharCode(0),
+              escaped: true,
+            }, end);
+          }
+
+          case 'x': {
+            const possibleHex = input.slice(get0(index) + 1, get0(index) + 3);
+
+            // \xhh
+            if (possibleHex.length === 2 && isHex(possibleHex)) {
+              end = add(end, 2);
+
+              return this.finishComplexToken('Character', {
+                value: String.fromCharCode(parseInt(possibleHex, 16)),
+                escaped: true,
+              }, end);
+            }
+
+            return this.finishComplexToken('Character', {
+              value: 'x',
+              escaped: true,
+            }, end);
+          }
+
+          case 'u': {
+            // Get the next 4 characters after \u
+            const possibleHex = input.slice(get0(index) + 2, get0(index) + 6);
+
+            // \uhhhh
+            if (possibleHex.length === 4 && isHex(possibleHex)) {
+              end = add(end, 4);
+
+              return this.finishComplexToken('Character', {
+                value: String.fromCharCode(parseInt(possibleHex, 16)),
+                escaped: true,
+              }, end);
+            }
+
+            if (this.unicode) {
+              // TODO \u{hhhh} or \u{hhhhh}
+            }
+
+            return this.finishComplexToken('Character', {
+              value: 'u',
+              escaped: true,
+            }, end);
+          }
+
+          // Redundant escaping
+          default:
+            let {
+              octalValue: referenceValue,
+              end: referenceEnd,
+            } = readOctalCode(input, index, nextChar);
             if (referenceValue !== undefined) {
               let backReference = referenceValue.toString();
               // \8 \9 are treated as escape char
@@ -395,7 +404,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       });
     }
 
-    getGroupModifiers(): GroupModifiers {
+    getGroupModifiers(): undefined | GroupModifiers {
       const token = this.getToken();
 
       if (token.type === 'Character') {
@@ -457,8 +466,10 @@ export const createRegExpParser = createParser((ParserCore) =>
                   skipCount++;
                 }
 
-                if (targetToken.type === 'Character' && targetToken.value === '>') {
-                  // Skip through all the name tokens
+                if (targetToken.type === 'Character' && targetToken.value ===
+                    '>') {
+                  // Skip through all the name tokens including >
+                  skipCount++;
 
                   // This is kinda a hacky solution, and slower than it could be
                   for (let i = 0; i < skipCount; i++) {
@@ -476,9 +487,11 @@ export const createRegExpParser = createParser((ParserCore) =>
       }
 
       this.addDiagnostic({
-        ...descriptions.REGEX_PARSER.INVALID_CAPTURE_GROUP_MODIFIER,
+        description: descriptions.REGEX_PARSER.INVALID_CAPTURE_GROUP_MODIFIER,
         token,
       });
+
+      return undefined;
     }
 
     matchOperator(op: string): boolean {
@@ -499,7 +512,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       const start = this.getPosition();
       this.nextToken();
 
-      let modifiers: GroupModifiers;
+      let modifiers: undefined | GroupModifiers;
       if (this.eatOperator('?')) {
         modifiers = this.getGroupModifiers();
       }
@@ -508,7 +521,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
       if (!this.eatOperator(')')) {
         this.addDiagnostic({
-          ...descriptions.REGEX_PARSER.UNCLOSED_GROUP,
+          description: descriptions.REGEX_PARSER.UNCLOSED_GROUP,
           start,
         });
       }
@@ -545,7 +558,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
       if (!this.eatOperator(']')) {
         this.addDiagnostic({
-          ...descriptions.REGEX_PARSER.UNCLOSED_CHAR_SET,
+          description: descriptions.REGEX_PARSER.UNCLOSED_CHAR_SET,
           start,
         });
       }
@@ -592,6 +605,32 @@ export const createRegExpParser = createParser((ParserCore) =>
         return {
           type: 'RegExpNumericBackReference',
           value: token.value,
+          loc: this.finishLocFromToken(token),
+        };
+      }
+
+      if (token.type === 'NamedBackReferenceCharacter') {
+        const start = this.input.slice(0, get0(token.start));
+        this.nextToken();
+
+        if (token.value[token.value.length - 1] != '>') {
+          this.addDiagnostic({
+            description: descriptions.REGEX_PARSER.UNCLOSED_NAMED_CAPTURE,
+            loc: this.finishLocFromToken(token),
+          });
+        }
+
+        if (!start.includes(token.value)) {
+          this.addDiagnostic({
+            description: descriptions.REGEX_PARSER.INVALID_NAMED_CAPTURE,
+            loc: this.finishLocFromToken(token),
+          });
+        }
+
+        const name = token.value.slice(1, token.value.length - 1);
+        return {
+          type: 'RegExpNamedBackReference',
+          name,
           loc: this.finishLocFromToken(token),
         };
       }
@@ -666,7 +705,8 @@ export const createRegExpParser = createParser((ParserCore) =>
       // Range
       const nextToken = this.getToken();
       if (start.type === 'RegExpCharacter' && nextToken.type === 'Character' &&
-        nextToken.value === '-' && !nextToken.escaped) {
+            nextToken.value ===
+            '-' && !nextToken.escaped) {
         const lookaheadToken = this.lookaheadToken();
         if (lookaheadToken.type === 'Character') {
           // Skip dash
@@ -676,12 +716,10 @@ export const createRegExpParser = createParser((ParserCore) =>
 
           const loc = this.finishLoc(startPos);
 
-          if (
-            start.type === 'RegExpCharacter' && end.type === 'RegExpCharacter' &&
-              getCodePoint(end.value) < getCodePoint(start.value)
-          ) {
+          if (start.type === 'RegExpCharacter' && end.type === 'RegExpCharacter' &&
+              getCodePoint(end.value) < getCodePoint(start.value)) {
             this.addDiagnostic({
-              ...descriptions.REGEX_PARSER.REVERSED_CHAR_SET_RANGE,
+              description: descriptions.REGEX_PARSER.REVERSED_CHAR_SET_RANGE,
               loc,
             });
             const _end = end;
@@ -716,12 +754,10 @@ export const createRegExpParser = createParser((ParserCore) =>
       }
     }
 
-    parseQuantifier():
-      | undefined
-      | {
-        min: number;
-        max?: number;
-      } {
+    parseQuantifier(): undefined | {
+      min: number;
+      max?: number;
+    } {
       if (this.eatOperator('?')) {
         return {
           min: 0,
@@ -748,17 +784,35 @@ export const createRegExpParser = createParser((ParserCore) =>
 
         this.nextToken();
 
+        const start = this.getPosition();
         const min = this.parseDigits();
 
         if (min !== undefined) {
           const nextToken = this.getToken();
           if (nextToken.type === 'Character' && nextToken.value === ',') {
             this.nextToken();
+
             const max = this.parseDigits();
+            const end = this.getPosition();
 
             const endToken = this.getToken();
             if (endToken.type === 'Operator' && endToken.value === '}') {
               this.nextToken();
+
+              if (max !== undefined && min > max) {
+                this.addDiagnostic(
+                  {
+                    description: descriptions.REGEX_PARSER.REVERSED_QUANTIFIER_RANGE,
+                    start,
+                    end,
+                  },
+                );
+                return {
+                  max: min,
+                  min: max,
+                };
+              }
+
               return {
                 min,
                 max,
@@ -775,6 +829,8 @@ export const createRegExpParser = createParser((ParserCore) =>
 
         this.restore(snapshot);
       }
+
+      return undefined;
     }
 
     parseBodyItem(): undefined | AnyRegExpBodyItem {
@@ -841,7 +897,7 @@ export const createRegExpParser = createParser((ParserCore) =>
         case ')':
           this.nextToken();
           this.addDiagnostic({
-            ...descriptions.REGEX_PARSER.UNOPENED_GROUP,
+            description: descriptions.REGEX_PARSER.UNOPENED_GROUP,
             token,
           });
           return;
@@ -870,7 +926,7 @@ export const createRegExpParser = createParser((ParserCore) =>
         case '+':
           this.nextToken();
           this.addDiagnostic({
-            ...descriptions.REGEX_PARSER.INVALID_QUANTIFIER_TARGET,
+            description: descriptions.REGEX_PARSER.INVALID_QUANTIFIER_TARGET,
             token,
           });
           return;
@@ -878,6 +934,9 @@ export const createRegExpParser = createParser((ParserCore) =>
         case ']':
         case '}':
           return this.parseCharacter();
+
+        default:
+          return undefined;
       }
     }
 
@@ -891,13 +950,16 @@ export const createRegExpParser = createParser((ParserCore) =>
         case 'EscapedCharacter':
         case 'Character':
         case 'NumericBackReferenceCharacter':
+        case 'NamedBackReferenceCharacter':
           return this.parseCharacter();
       }
 
       this.addDiagnostic({
-        ...descriptions.REGEX_PARSER.UNKNOWN_REGEX_PART,
+        description: descriptions.REGEX_PARSER.UNKNOWN_REGEX_PART,
         token,
       });
+
+      return undefined;
     }
 
     parseExpression(
@@ -914,7 +976,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       let alternateStart = start;
 
       while (!this.matchToken('EOF') && (whileCallback === undefined ||
-      whileCallback())) {
+        whileCallback())) {
         if (this.eatOperator('|')) {
           alternations.push({
             start: alternateStart,
@@ -968,8 +1030,8 @@ export const createRegExpParser = createParser((ParserCore) =>
 
       if (expression === undefined) {
         throw new Error(
-          'Impossible. We should always have at least one alternation that will set this.',
-        );
+            'Impossible. We should always have at least one alternation that will set this.',
+          );
       }
 
       return expression;
@@ -984,5 +1046,5 @@ export const createRegExpParser = createParser((ParserCore) =>
         diagnostics: this.diagnostics,
       };
     }
-  }
+  },
 );

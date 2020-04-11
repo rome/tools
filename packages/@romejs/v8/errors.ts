@@ -14,11 +14,13 @@ import {number1, number0, number0Neg1} from '@romejs/ob1';
 export * from './types';
 
 export const ERROR_FRAMES_PROP = Symbol();
+export const ERROR_MARKUP_MESSAGE_PROP = Symbol();
 export const ERROR_ADVICE_PROP = Symbol();
 export const ERROR_POP_FRAMES_PROP = Symbol();
 
 export type StructuredError = {
   name: string;
+  markupMessage: undefined | string;
   message: string;
   stack: undefined | string;
   frames: ErrorFrames;
@@ -32,17 +34,21 @@ export class NativeStructuredError extends Error {
     this.name = struct.name === undefined ? 'Error' : struct.name;
     this.stack = struct.stack;
 
+    this[ERROR_MARKUP_MESSAGE_PROP] = struct.markupMessage;
     this[ERROR_FRAMES_PROP] = struct.frames;
     this[ERROR_ADVICE_PROP] = struct.advice;
     this[ERROR_POP_FRAMES_PROP] = struct.framesToPop;
   }
 
+  [ERROR_MARKUP_MESSAGE_PROP]: undefined | string;
   [ERROR_FRAMES_PROP]: undefined | ErrorFrames;
   [ERROR_ADVICE_PROP]: undefined | DiagnosticAdvice;
   [ERROR_POP_FRAMES_PROP]: undefined | number;
 }
 
-export function createErrorFromStructure(struct: Partial<StructuredError>): Error {
+export function createErrorFromStructure(
+  struct: Partial<StructuredError>,
+): Error {
   return new NativeStructuredError(struct);
 }
 
@@ -50,6 +56,7 @@ export function getErrorStructure(err: unknown): StructuredError {
   let name = 'Error';
   let message = 'Unknown message';
   let stack = undefined;
+  let markupMessage: string | undefined = undefined;
   let frames: ErrorFrames = [];
   let advice: DiagnosticAdvice = [];
   let framesToPop = 0;
@@ -59,10 +66,16 @@ export function getErrorStructure(err: unknown): StructuredError {
     [ERROR_ADVICE_PROP]: unknown;
     [ERROR_POP_FRAMES_PROP]: unknown;
     [ERROR_FRAMES_PROP]: unknown;
+    [ERROR_MARKUP_MESSAGE_PROP]: unknown;
   }>(err)) {
     if (typeof err.name === 'string') {
       looksLikeValidError = true;
       name = err.name;
+    }
+
+    if (typeof err[ERROR_MARKUP_MESSAGE_PROP] === 'string') {
+      // @ts-ignore
+      markupMessage = err[ERROR_MARKUP_MESSAGE_PROP];
     }
 
     if (typeof err.message === 'string') {
@@ -98,6 +111,7 @@ export function getErrorStructure(err: unknown): StructuredError {
   return {
     name,
     message,
+    markupMessage,
     stack,
     frames,
     advice,

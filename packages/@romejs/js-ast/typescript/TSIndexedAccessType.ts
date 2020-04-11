@@ -8,13 +8,11 @@
 import {JSNodeBase, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSIndexedAccessType =
-  & JSNodeBase
-  & {
-    type: 'TSIndexedAccessType';
-    objectType: AnyTSPrimary;
-    indexType: AnyTSPrimary;
-  };
+export type TSIndexedAccessType = JSNodeBase & {
+  type: 'TSIndexedAccessType';
+  objectType: AnyTSPrimary;
+  indexType: AnyTSPrimary;
+};
 
 export const tsIndexedAccessType = createBuilder<TSIndexedAccessType>(
   'TSIndexedAccessType',

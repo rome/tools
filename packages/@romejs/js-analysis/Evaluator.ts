@@ -27,9 +27,10 @@ export type HydrateTypeFactory = (id: unknown) => T;
 
 export type HydrateData = JSONObject;
 
-export type GetModuleSignature = (source: string, relative: string) => Promise<
-  | undefined
-  | ModuleSignatureManager>;
+export type GetModuleSignature = (
+  source: string,
+  relative: string,
+) => Promise<undefined | ModuleSignatureManager>;
 
 export class ModuleSignatureManager {
   constructor(
@@ -95,10 +96,10 @@ export class ModuleSignatureManager {
 
       if (type === undefined) {
         throw new Error(
-          `${graph.filename}: Expected type of id ${id} but it doesn't exist, serialized data: ${String(
-            JSON.stringify(currGetType),
-          )}`,
-        );
+            `${graph.filename}: Expected type of id ${id} but it doesn't exist, serialized data: ${String(
+              JSON.stringify(currGetType),
+            )}`,
+          );
       }
 
       return type;
@@ -161,7 +162,7 @@ export class ModuleSignatureManager {
     }
   }
 
-  link(importedName: string, type: ImportT) {
+  link(importedName: string, type: ImportT): void {
     const graph = this.graph;
 
     // Get type id for this export
@@ -174,7 +175,7 @@ export class ModuleSignatureManager {
         source: graph.filename,
       });
       error.shouldMatch(type);
-      return undefined;
+      return;
     }
 
     // Retrieve the open type
@@ -188,16 +189,14 @@ export class ModuleSignatureManager {
   }
 }
 
-type Export =
-  | {
-    type: 'local';
-    name: string;
-    value: T;
-  }
-  | {
-    type: 'all';
-    source: string;
-  };
+type Export = {
+  type: 'local';
+  name: string;
+  value: T;
+} | {
+  type: 'all';
+  source: string;
+};
 
 export default class Evaluator {
   constructor(hub: Hub, filename: string) {
@@ -264,8 +263,8 @@ export default class Evaluator {
     const type = this.nodeToType.get(node);
     if (type === undefined) {
       throw new Error(
-        'getTypeFromEvaluatedNode() called on a node that has not been validated yet',
-      );
+          'getTypeFromEvaluatedNode() called on a node that has not been validated yet',
+        );
     } else {
       return type;
     }
@@ -286,14 +285,11 @@ export default class Evaluator {
     });
   }
 
-  addImport(
-    t: ImportT,
-    opts: {
-      importedName: undefined | string;
-      source: string;
-      relative: string;
-    },
-  ) {
+  addImport(t: ImportT, opts: {
+    importedName: undefined | string;
+    source: string;
+    relative: string;
+  }) {
     this.imports.push({
       relative: opts.relative,
       importedName: opts.importedName,

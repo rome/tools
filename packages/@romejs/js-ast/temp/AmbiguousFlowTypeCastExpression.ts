@@ -13,18 +13,16 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type AmbiguousFlowTypeCastExpression =
-  & JSNodeBase
-  & {
-    type: 'AmbiguousFlowTypeCastExpression';
-    expression: AnyExpression | SpreadElement;
-    typeAnnotation?: AnyPrimaryType;
+export type AmbiguousFlowTypeCastExpression = JSNodeBase & {
+  type: 'AmbiguousFlowTypeCastExpression';
+  expression: AnyExpression | SpreadElement;
+  typeAnnotation?: AnyPrimaryType;
 
-    // This is for js-parser so that we can convert type casts to parameters
+  // This is for js-parser so that we can convert type casts to parameters
 
-    // We should figure out some way to remove this
-    optional?: boolean;
-  };
+  // We should figure out some way to remove this
+  optional?: boolean;
+};
 
 export const ambiguousFlowTypeCastExpression = createBuilder<
   AmbiguousFlowTypeCastExpression

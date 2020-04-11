@@ -19,8 +19,8 @@ type TransformResult = {
   cacheDependencies: Array<string>;
 };
 
-const transformCaches: Array<Cache<TransformResult>> = stageOrder.map(() =>
-  new Cache()
+const transformCaches: Array<Cache<TransformResult>> = stageOrder.map(
+  () => new Cache(),
 );
 
 export default async function transform(
@@ -74,7 +74,10 @@ export default async function transform(
 
   const res: TransformResult = {
     suppressions: context.suppressions,
-    diagnostics: [...prevStageDiagnostics, ...context.diagnostics],
+    diagnostics: [
+      ...prevStageDiagnostics,
+      ...context.diagnostics.getDiagnostics(),
+    ],
     cacheDependencies: [
       ...prevStageCacheDeps,
       ...context.getCacheDependencies(),

@@ -5,10 +5,32 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {commandCategories, createMasterCommand} from '../../commands';
+import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import {MasterRequest} from '@romejs/core';
-import test from './test';
+import {commandCategories, createMasterCommand} from '../../commands';
 import lint from './lint';
+import test from './test';
+
+async function runChildCommand(
+  req: MasterRequest,
+  fn: () => Promise<void>,
+): Promise<void> {
+  try {
+    await fn();
+  } catch (err) {
+    if (err instanceof DiagnosticsPrinter) {
+      // If the command raises diagnostics, it is safe to throw the printer.
+      // By doing so, the `ci` command bails and is marked as failed.
+      if (err.hasDiagnostics()) {
+        throw err;
+      } else {
+        req.master.handleRequestError(req, err);
+      }
+    } else {
+      throw err;
+    }
+  }
+}
 
 export default createMasterCommand({
   category: commandCategories.CODE_QUALITY,
@@ -18,18 +40,22 @@ export default createMasterCommand({
     const {reporter} = req;
 
     reporter.heading('Running lint');
-    await lint.default(req, {
-      fix: false,
-      changed: undefined,
+    await runChildCommand(req, async () => {
+      await lint.default(req, {
+        fix: false,
+        changed: undefined,
+      });
     });
 
     reporter.heading('Running tests');
-    await test.default(req, {
-      coverage: true,
-      freezeSnapshots: true,
-      updateSnapshots: false,
-      showAllCoverage: true,
-      syncTests: false,
+    await runChildCommand(req, async () => {
+      await test.default(req, {
+        coverage: true,
+        freezeSnapshots: true,
+        updateSnapshots: false,
+        showAllCoverage: true,
+        syncTests: false,
+      });
     });
   },
 });

@@ -20,7 +20,8 @@ export default {
     const {node} = path;
 
     if (node.type === 'VariableDeclarationStatement' &&
-      node.declaration.declarations.length > 1) {
+          node.declaration.declarations.length >
+          1) {
       const {suppressed} = path.context.addNodeDiagnostic(
         node,
         descriptions.LINT.SINGLE_VAR_DECLARATOR,

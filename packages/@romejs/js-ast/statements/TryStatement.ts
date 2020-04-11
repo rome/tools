@@ -8,14 +8,12 @@
 import {JSNodeBase, BlockStatement, CatchClause} from '../index';
 import {createBuilder} from '../utils';
 
-export type TryStatement =
-  & JSNodeBase
-  & {
-    type: 'TryStatement';
-    block: BlockStatement;
-    handler: undefined | CatchClause;
-    finalizer: undefined | BlockStatement;
-  };
+export type TryStatement = JSNodeBase & {
+  type: 'TryStatement';
+  block: BlockStatement;
+  handler: undefined | CatchClause;
+  finalizer: undefined | BlockStatement;
+};
 
 export const tryStatement = createBuilder<TryStatement>('TryStatement', {
   bindingKeys: {},

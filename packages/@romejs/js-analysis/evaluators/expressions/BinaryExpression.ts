@@ -27,7 +27,8 @@ function maybeRefine(
   }
 
   if (left.type === 'UnaryExpression' && left.operator === 'typeof' &&
-    left.argument.type === 'ReferenceIdentifier') {
+        left.argument.type ===
+        'ReferenceIdentifier') {
     const name = left.argument.name;
     const binding = scope.getBinding(name);
     if (binding !== undefined) {

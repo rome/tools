@@ -8,13 +8,11 @@
 import {JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
-export type AssignmentIdentifier =
-  & JSNodeBase
-  & {
-    type: 'AssignmentIdentifier';
-    name: string;
-    definite?: boolean;
-  };
+export type AssignmentIdentifier = JSNodeBase & {
+  type: 'AssignmentIdentifier';
+  name: string;
+  definite?: boolean;
+};
 
 export const assignmentIdentifier = createQuickBuilder<
   AssignmentIdentifier,

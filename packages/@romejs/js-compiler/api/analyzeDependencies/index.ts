@@ -118,8 +118,8 @@ export default async function analyzeDependencies(
 
       // If this source was only ever used as a type then convert us to a value
       if (data.type === 'es' && data.kind === 'value' && sourcesUsedAsType.has(
-        data.source,
-      )) {
+          data.source,
+        )) {
         const names: Array<AnalyzeDependencyName> = [];
 
         for (const name of data.names) {
@@ -184,7 +184,8 @@ export default async function analyzeDependencies(
         firstTopAwaitLocation = record.loc;
       }
     } else if (record instanceof ImportUsageRecord && record.isTop &&
-      record.data.kind === 'value') {
+          record.data.kind ===
+          'value') {
       // Track the first reference to a value import that's not in a function
 
       // This is used to detect module cycles
@@ -266,7 +267,7 @@ export default async function analyzeDependencies(
     dependencies,
     importFirstUsage,
     syntax: ast.syntax,
-    diagnostics: [...ast.diagnostics, ...context.diagnostics],
+    diagnostics: [...ast.diagnostics, ...context.diagnostics.getDiagnostics()],
   };
   analyzeCache.set(query, res);
   return res;

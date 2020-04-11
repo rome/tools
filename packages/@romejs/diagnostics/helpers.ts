@@ -54,11 +54,13 @@ export function buildSuggestionAdvice(
 
   // If there's only 2 suggestions then just say "Did you mean A or B?" rather than printing the list
   if (strings.length === 1) {
-    advice.push({
-      type: 'log',
-      category: 'info',
-      message: `Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
-    });
+    advice.push(
+      {
+        type: 'log',
+        category: 'info',
+        message: `Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
+      },
+    );
   } else {
     advice.push({
       type: 'log',
@@ -88,7 +90,7 @@ export function buildSuggestionAdvice(
 
   // TODO check if ANY of the suggestions match
   if (topRatingRaw !== value && topRatingRaw.toLowerCase() ===
-  value.toLowerCase()) {
+      value.toLowerCase()) {
     advice.push({
       type: 'log',
       category: 'warn',
@@ -97,6 +99,22 @@ export function buildSuggestionAdvice(
   }
 
   return advice;
+}
+
+// Sometimes we'll have big blobs of JS in a diagnostic when we'll only show a snippet. This method pads it out then truncates the rest for efficient transmission. We will have crappy ANSI formatting in the console and elsewhere but for places where we need to truncate we probably don't care (generated code).
+export function truncateSourceText(
+  code: string,
+  start: Position,
+  end: Position,
+): string {
+  const lines = code.split(NEWLINE);
+
+  // Pad the starting and ending lines by 10
+  const fromLine = Math.max(get1(start.line) - 10, 0);
+  const toLine = Math.max(get1(end.line) + 10, lines.length);
+
+  const capturedLines = lines.slice(fromLine, toLine);
+  return '\n'.repeat(fromLine) + capturedLines.join('\n');
 }
 
 export function buildDuplicateLocationAdvice(
@@ -125,20 +143,4 @@ export function buildDuplicateLocationAdvice(
     },
     ...locationAdvice,
   ];
-}
-
-// Sometimes we'll have big blobs of JS in a diagnostic when we'll only show a snippet. This method pads it out then truncates the rest for efficient transmission. We will have crappy ANSI formatting in the console and elsewhere but for places where we need to truncate we probably don't care (generated code).
-export function truncateSourceText(
-  code: string,
-  start: Position,
-  end: Position,
-): string {
-  const lines = code.split(NEWLINE);
-
-  // Pad the starting and ending lines by 10
-  const fromLine = Math.max(get1(start.line) - 10, 0);
-  const toLine = Math.max(get1(end.line) + 10, lines.length);
-
-  const capturedLines = lines.slice(fromLine, toLine);
-  return '\n'.repeat(fromLine) + capturedLines.join('\n');
 }

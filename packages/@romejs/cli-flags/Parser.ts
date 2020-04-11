@@ -61,7 +61,11 @@ function splitCommandName(cmd: string): Array<string> {
 }
 
 export default class Parser<T> {
-  constructor(reporter: Reporter, opts: ParserOptions<T>, rawArgs: Array<string>) {
+  constructor(
+    reporter: Reporter,
+    opts: ParserOptions<T>,
+    rawArgs: Array<string>,
+  ) {
     this.reporter = reporter;
     this.opts = opts;
 
@@ -227,7 +231,8 @@ export default class Parser<T> {
 
         // However, --foo may be a boolean flag, so `bar` needs to be correctly added to args
         if (def.type === 'boolean' && value !== true && value !== false &&
-          value !== undefined) {
+              value !==
+              undefined) {
           // This isn't necessarily the correct position... Probably doesn't matter?
           const argIndex = this.flagToArgIndex.get(key);
           if (argIndex === undefined) {
@@ -290,7 +295,8 @@ export default class Parser<T> {
   declareArgument(decl: ArgDeclaration) {
     // Commands may have colliding flags, this is only a problem in help mode, so make it unique
     const key = decl.command === undefined
-      ? decl.name : `${decl.command}.${decl.name}`;
+      ? decl.name
+      : `${decl.command}.${decl.name}`;
 
     // Ensure it hasn't been declared more than once
     if (this.declaredFlags.has(key)) {
@@ -362,8 +368,8 @@ export default class Parser<T> {
     // Show help for --help
     if (this.helpMode) {
       await this.showHelp(definedCommand === undefined
-        ? undefined : definedCommand.command.name
-      );
+        ? undefined
+        : definedCommand.command.name);
       process.exit(1);
     }
 
@@ -429,7 +435,7 @@ export default class Parser<T> {
       }
 
       const descCol: string = metadata === undefined || metadata.description ===
-      undefined ? 'no description found' : metadata.description;
+        undefined ? 'no description found' : metadata.description;
 
       optionOutput.push({
         argName,
@@ -444,14 +450,18 @@ export default class Parser<T> {
     // Output options
     for (const {arg, description} of optionOutput) {
       lines.push(
-        markup`<brightBlack><pad count="${argColumnLength}" dir="right">${arg}</brightBlack>  ${description}`,
+        markup`<brightBlack><pad count="${argColumnLength}" dir="right">${arg}</pad></brightBlack>  ${description}`,
       );
     }
 
     return lines;
   }
 
-  showUsageHelp(description?: string, usage: string = '[flags]', prefix?: string) {
+  showUsageHelp(
+    description?: string,
+    usage: string = '[flags]',
+    prefix?: string,
+  ) {
     const {reporter} = this;
     const {programName} = this.opts;
 
@@ -540,8 +550,7 @@ export default class Parser<T> {
     });
 
     // Sort commands into their appropriate categories for output
-    const commandsByCategory: Map<undefined | string, Array<AnyCommandOptions>> =
-      new Map();
+    const commandsByCategory: Map<undefined | string, Array<AnyCommandOptions>> = new Map();
     const categoryNames: Set<string | undefined> = new Set();
     for (const [name, command] of this.commands) {
       if (name[0] === '_') {
@@ -584,7 +593,7 @@ export default class Parser<T> {
 
         reporter.list(commands.map((cmd) => {
           return `<emphasis>${cmd.name}</emphasis> ${cmd.description ===
-          undefined ? '' : cmd.description}`;
+            undefined ? '' : cmd.description}`;
         }));
         reporter.spacer();
       }
@@ -649,7 +658,7 @@ export default class Parser<T> {
 
   addCommand(opts: AnyCommandOptions) {
     if (this.currentCommand !== undefined) {
-      throw new Error('Nested commands aren\'t allowed');
+      throw new Error("Nested commands aren't allowed");
     }
 
     this.commands.set(opts.name, opts);

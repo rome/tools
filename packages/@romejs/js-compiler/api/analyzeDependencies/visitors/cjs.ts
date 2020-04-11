@@ -35,7 +35,8 @@ export default {
       const {callee, arguments: args} = node;
 
       const isRequire: boolean = callee.type === 'ReferenceIdentifier' &&
-        callee.name === 'require' && path.scope.hasBinding('require') === false;
+          callee.name ===
+          'require' && path.scope.hasBinding('require') === false;
       const sourceArg = args[0];
 
       if (isRequire && args.length === 1 && sourceArg.type === 'StringLiteral') {
@@ -78,7 +79,7 @@ export default {
           for (const prop of right.properties) {
             // Don't allow spread, unknown, or computed properties
             if (prop.type === 'SpreadProperty' || prop.key.type ===
-            'ComputedPropertyKey' && prop.key.value.type !== 'StringLiteral') {
+                'ComputedPropertyKey' && prop.key.value.type !== 'StringLiteral') {
               context.record(new EscapedCJSRefRecord(prop));
               continue;
             }
@@ -157,14 +158,15 @@ export default {
       // Detect references to exports and module
       if (binding === undefined) {
         if (node.name === '__filename' || node.name === '__dirname' ||
-        node.name === 'require' || node.name === 'module' || node.name ===
-        'exports') {
+              node.name ===
+              'require' || node.name === 'module' || node.name === 'exports') {
           context.record(new CJSVarRefRecord(node));
         }
 
         if (node.name === 'module' || node.name === 'exports') {
           const inMemberExpression = parent.type === 'MemberExpression' &&
-            parent.object === node;
+              parent.object ===
+              node;
           if (!inMemberExpression) {
             context.record(new EscapedCJSRefRecord(node));
           }

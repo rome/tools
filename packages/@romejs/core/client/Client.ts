@@ -103,7 +103,8 @@ export default class Client {
 
     // Suppress stdout when silent is set
     const isSilent = this.flags.silent === true || opts.stdout === undefined ||
-    opts.stderr === undefined;
+        opts.stderr ===
+        undefined;
     const stdout = isSilent ? undefined : opts.stdout;
 
     this.derivedReporterStreams = this.reporter.attachStdoutStreams(
@@ -563,7 +564,7 @@ export default class Client {
 
       socket.on('error', (err: NodeJS.ErrnoException) => {
         if (err.code === 'ENOENT' || err.code === 'ECONNREFUSED' || err.code ===
-        'EADDRINUSE') {
+            'EADDRINUSE') {
           resolve();
         } else {
           reject(err);

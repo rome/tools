@@ -30,8 +30,7 @@ type FoundProject = {
   definition: TransformProjectDefinition;
 };
 
-const foundProjects: AbsoluteFilePathMap<FoundProject> =
-  new AbsoluteFilePathMap();
+const foundProjects: AbsoluteFilePathMap<FoundProject> = new AbsoluteFilePathMap();
 
 function addProject(
   projectFolder: AbsoluteFilePath,

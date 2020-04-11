@@ -96,11 +96,11 @@ type ProjectConfigJSONPropertyReducer<Type> = Type extends AbsoluteFilePath
   ? string
   : Type extends Array<AbsoluteFilePath>
     ? Array<string>
-    : Type extends AbsoluteFilePathSet
-      ? Array<string> // rome-suppress-next-line lint/noExplicitAny
-      : Type extends Map<string, any>
-        ? Dict<MapValue<Type>> // rome-suppress-next-line lint/noExplicitAny
-        : Type extends Dict<any> ? ProjectConfigJSONObjectReducer<Type> : Type;
+    : Type extends AbsoluteFilePathSet ? Array<string> // rome-suppress-next-line lint/noExplicitAny
+     : Type extends Map<string, any> ? Dict<MapValue<Type>> // rome-suppress-next-line lint/noExplicitAny
+     : Type extends Dict<any> ? ProjectConfigJSONObjectReducer<Type> : Type
+
+;
 
 type ProjectConfigJSONObjectReducer<Object> = { [PropertyKey in keyof Object]: ProjectConfigJSONPropertyReducer<
   Object[PropertyKey]
@@ -121,9 +121,10 @@ export type PartialProjectConfig =
   > };
 
 // rome-suppress-next-line lint/noExplicitAny
-type PartialProjectValue<Type> = Type extends Map<string, any> ? Type : Partial<
-  Type
->;
+type PartialProjectValue<Type> = Type extends Map<string, any>
+  ? Type
+  : Partial<Type>
+;
 
 export type ProjectConfigMeta = {
   projectFolder: undefined | AbsoluteFilePath;
@@ -211,7 +212,8 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
     vendorPath: TEMP_PATH.append(`rome-remote`),
     assetExtensions: [],
     watchman: false,
-    maxSize: 40_000_000, // 40 megabytes
+    maxSize: 40_000_000 // 40 megabytes
+    ,
   },
 
   targets: new Map(),

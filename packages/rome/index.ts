@@ -73,13 +73,11 @@ export async function getCacheKey(filename: string): Promise<string> {
 }
 
 //
-export const compile = wrapForErrors(async function(
-  opts: {
-    filename: string;
-    input: string;
-    sourceType: ConstSourceType;
-  },
-): Promise<{
+export const compile = wrapForErrors(async function(opts: {
+  filename: string;
+  input: string;
+  sourceType: ConstSourceType;
+}): Promise<{
   cacheKey: string;
   code: string;
   sourceMap: SourceMap;
@@ -92,7 +90,8 @@ export const compile = wrapForErrors(async function(
   const {handler} = getFileHandlerAssert(path, project.config);
 
   const sourceType = opts.sourceType === undefined
-    ? handler.sourceType : opts.sourceType;
+    ? handler.sourceType
+    : opts.sourceType;
 
   const ast = parseJS({
     input: opts.input,

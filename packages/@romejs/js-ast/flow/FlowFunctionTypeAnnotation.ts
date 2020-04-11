@@ -13,15 +13,13 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowFunctionTypeAnnotation =
-  & JSNodeBase
-  & {
-    type: 'FlowFunctionTypeAnnotation';
-    typeParameters?: FlowTypeParameterDeclaration;
-    params: Array<FlowFunctionTypeParam>;
-    rest?: FlowFunctionTypeParam;
-    returnType?: AnyFlowPrimary;
-  };
+export type FlowFunctionTypeAnnotation = JSNodeBase & {
+  type: 'FlowFunctionTypeAnnotation';
+  typeParameters?: FlowTypeParameterDeclaration;
+  params: Array<FlowFunctionTypeParam>;
+  rest?: FlowFunctionTypeParam;
+  returnType?: AnyFlowPrimary;
+};
 
 export const flowFunctionTypeAnnotation = createBuilder<
   FlowFunctionTypeAnnotation

@@ -13,14 +13,12 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type TSImportType =
-  & JSNodeBase
-  & {
-    type: 'TSImportType';
-    argument: AnyExpression;
-    typeParameters?: TSTypeParameterInstantiation;
-    qualifier?: AnyTSEntityName;
-  };
+export type TSImportType = JSNodeBase & {
+  type: 'TSImportType';
+  argument: AnyExpression;
+  typeParameters?: TSTypeParameterInstantiation;
+  qualifier?: AnyTSEntityName;
+};
 
 export const tsImportType = createBuilder<TSImportType>('TSImportType', {
   bindingKeys: {},

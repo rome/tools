@@ -8,12 +8,10 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowNumericLiteral =
-  & JSNodeBase
-  & {
-    type: 'FlowNumericLiteral';
-    value: number;
-  };
+export type FlowNumericLiteral = JSNodeBase & {
+  type: 'FlowNumericLiteral';
+  value: number;
+};
 
 export const flowNumericLiteral = createBuilder<FlowNumericLiteral>(
   'FlowNumericLiteral',

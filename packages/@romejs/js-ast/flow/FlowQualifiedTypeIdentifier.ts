@@ -8,13 +8,11 @@
 import {JSNodeBase, ReferenceIdentifier, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type FlowQualifiedTypeIdentifier =
-  & JSNodeBase
-  & {
-    type: 'FlowQualifiedTypeIdentifier';
-    id: Identifier;
-    qualification: ReferenceIdentifier | FlowQualifiedTypeIdentifier;
-  };
+export type FlowQualifiedTypeIdentifier = JSNodeBase & {
+  type: 'FlowQualifiedTypeIdentifier';
+  id: Identifier;
+  qualification: ReferenceIdentifier | FlowQualifiedTypeIdentifier;
+};
 
 export const flowQualifiedTypeIdentifier = createBuilder<
   FlowQualifiedTypeIdentifier

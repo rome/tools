@@ -19,22 +19,18 @@ type SerializeCLIData = {
   shorthandFlags: Set<string>;
 };
 
-export type SerializeCLITarget =
-  | {
-    type: 'flag';
-    key: string;
-    target?: ConsumeSourceLocationRequestTarget;
-  }
-  | {
-    type: 'arg';
-    key: number;
-  }
-  | {
-    type: 'arg-range';
-    from: number;
-    to?: number;
-  }
-  | {type: 'none'};
+export type SerializeCLITarget = {
+  type: 'flag';
+  key: string;
+  target?: ConsumeSourceLocationRequestTarget;
+} | {
+  type: 'arg';
+  key: number;
+} | {
+  type: 'arg-range';
+  from: number;
+  to?: number;
+} | {type: 'none'};
 
 function normalizeFlagValue(val: unknown): unknown {
   if (val === 'true') {
@@ -81,7 +77,9 @@ export function serializeCLIFlags(
 
     // We are the end target if we're within the from-to range or we're greater than from with no to
     if (cliTarget.type === 'arg-range' && i > cliTarget.from &&
-      (cliTarget.to === undefined || cliTarget.to <= i)) {
+        (cliTarget.to ===
+            undefined ||
+          cliTarget.to <= i)) {
       isEndTarget = true;
     }
 
@@ -117,7 +115,8 @@ export function serializeCLIFlags(
     if (typeof val !== 'boolean') {
       // Only point to the value for flags that specify it
       if (isTarget && cliTarget.type === 'flag' &&
-        (cliTarget.target === 'value' || cliTarget.target === 'inner-value')) {
+          (cliTarget.target === 'value' ||
+            cliTarget.target === 'inner-value')) {
         startColumn = coerce0(code.length);
       }
 

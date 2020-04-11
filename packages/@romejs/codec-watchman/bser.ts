@@ -67,7 +67,7 @@ export class Accumulator {
 
     // Allocate a replacement and copy it in
     const buf = Buffer.alloc(nextPow2(this.buffer.length + size -
-    this.writeAvail()));
+      this.writeAvail()));
     this.buffer.copy(buf);
     this.buffer = buf;
   }
@@ -114,18 +114,16 @@ export class Accumulator {
 
       case 2:
         return isBigEndian
-          ? this.buffer.readInt16BE(this.readOffset) : this.buffer.readInt16LE(
-            this.readOffset,
-          );
+          ? this.buffer.readInt16BE(this.readOffset)
+          : this.buffer.readInt16LE(this.readOffset);
 
       case 4:
         return isBigEndian
-          ? this.buffer.readInt32BE(this.readOffset) : this.buffer.readInt32LE(
-            this.readOffset,
-          );
+          ? this.buffer.readInt32BE(this.readOffset)
+          : this.buffer.readInt32LE(this.readOffset);
 
       case 8:
-        throw new Error('64-bit numbers aren\'t supported');
+        throw new Error("64-bit numbers aren't supported");
 
       default:
         throw new Error(`invalid integer size ${size}`);
@@ -141,9 +139,8 @@ export class Accumulator {
   peekDouble(): number {
     this.assertReadableSize(8);
     return isBigEndian
-      ? this.buffer.readDoubleBE(this.readOffset) : this.buffer.readDoubleLE(
-        this.readOffset,
-      );
+      ? this.buffer.readDoubleBE(this.readOffset)
+      : this.buffer.readDoubleLE(this.readOffset);
   }
 
   readDouble(): number {
@@ -157,8 +154,8 @@ export class Accumulator {
       this.assertReadableSize(size);
     } else if (size < 0 && this.readOffset + size < 0) {
       throw new Error(
-        `advance with negative offset ${size} would seek off the start of the buffer`,
-      );
+          `advance with negative offset ${size} would seek off the start of the buffer`,
+        );
     }
 
     this.readOffset += size;
@@ -341,21 +338,22 @@ export class BunserBuf {
     }
   }
 
-  raise(reason: string) {
+  raise(reason: string): never {
     const bufferLength = this.acc.buffer.length;
     const readableLength = this.acc.readAvail();
     const readOffset = this.acc.readOffset;
     const buffer = JSON.stringify(this.acc.buffer.slice(
       this.acc.readOffset,
-      this.acc.readOffset + 32,
+        this.acc.readOffset +
+        32,
     ).toJSON());
 
     throw new Error(
-      `${reason} in Buffer of length ${bufferLength}, ${readableLength} readable at offset ${readOffset} buffer: ${buffer}`,
-    );
+        `${reason} in Buffer of length ${bufferLength}, ${readableLength} readable at offset ${readOffset} buffer: ${buffer}`,
+      );
   }
 
-  expectCode(expected: number) {
+  expectCode(expected: number): void {
     const code = this.acc.readInt(1);
     if (code != expected) {
       this.raise(`Expected bser opcode ${expected} but got ${code}`);
@@ -607,7 +605,7 @@ function dumpUnknown(buf: Accumulator, val: unknown) {
       return;
 
     case 'bigint':
-      throw new Error('bigint isn\'t supported yet');
+      throw new Error("bigint isn't supported yet");
 
     case 'string':
       buf.writeByte(BSER_STRING);

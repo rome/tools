@@ -32,9 +32,9 @@ export type DiagnosticSuppression = {
 
 export type DiagnosticSuppressions = Array<DiagnosticSuppression>;
 
-export type DiagnosticFilterWithTest =
-  & DiagnosticFilter
-  & {test?: (diagnostic: Diagnostic) => boolean};
+export type DiagnosticFilterWithTest = DiagnosticFilter & {
+  test?: (diagnostic: Diagnostic) => boolean;
+};
 
 export type DiagnosticLocation = {
   sourceText?: string;

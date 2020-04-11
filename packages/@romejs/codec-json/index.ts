@@ -50,15 +50,15 @@ export function parseJSON(opts: JSONParserOptions): JSONValue {
   return createParser(opts).parse().value;
 }
 
-export function tokenizeJSON(opts: JSONParserOptions): Array<TokenValues<Tokens>> {
+export function tokenizeJSON(
+  opts: JSONParserOptions,
+): Array<TokenValues<Tokens>> {
   return createParser(opts).tokenizeAll();
 }
 
-export function stringifyJSON(
-  opts: {
-    consumer: Consumer;
-    comments: PathToComments;
-  },
-): string {
+export function stringifyJSON(opts: {
+  consumer: Consumer;
+  comments: PathToComments;
+}): string {
   return stringifyRootConsumer(opts.consumer, opts.comments);
 }

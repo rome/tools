@@ -129,8 +129,8 @@ function createIdentifier(
 }
 
 export default function template(
-  strs: TemplateStringsArray,
-...substitutions: TemplateSubstitions): AnyNode {
+  strs: TemplateStringsArray,...substitutions: TemplateSubstitions
+): AnyNode {
   const {ast, placeholderPaths} = getTemplate(strs);
 
   // no substitutions so we can just return the ast!
@@ -175,8 +175,8 @@ export default function template(
 }
 
 template.expression = (
-  strs: TemplateStringsArray,
-...substitutions: TemplateSubstitions): AnyExpression => {
+  strs: TemplateStringsArray,...substitutions: TemplateSubstitions
+): AnyExpression => {
   const first = template.statement(strs, ...substitutions);
 
   // Ensure that the single statement is an ExpressionStatement
@@ -188,15 +188,15 @@ template.expression = (
 };
 
 template.statement = (
-  strs: TemplateStringsArray,
-...substitutions: TemplateSubstitions): AnyStatement => {
+  strs: TemplateStringsArray,...substitutions: TemplateSubstitions
+): AnyStatement => {
   // Parse the template, with caching
   const ast = program.assert(template(strs, ...substitutions));
 
   // Ensure that there's only a single statement in the Program body
   const body = ast.body;
   if (body.length !== 1) {
-    throw new Error('More than one statement isn\'t allowed for a template.');
+    throw new Error("More than one statement isn't allowed for a template.");
   }
   return body[0];
 };

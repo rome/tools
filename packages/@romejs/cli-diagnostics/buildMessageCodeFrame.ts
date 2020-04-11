@@ -49,19 +49,18 @@ export default function buildMessageCodeFrame(
 
   // Increase the amount of lines we should show for "context"
   let contextStartIndex = coerce0(Math.max(0, get0(startLineIndex) -
-  CODE_FRAME_CONTEXT_LINES));
+    CODE_FRAME_CONTEXT_LINES));
   let contextEndIndex = coerce0(Math.min(
     allLines.length - 1,
-    get0(endLineIndex) + CODE_FRAME_CONTEXT_LINES,
+      get0(endLineIndex) +
+      CODE_FRAME_CONTEXT_LINES,
   ));
 
-  let formattedLines: Array<
-    | {
-      gutter: string;
-      line: string;
-      lineIndex: Number0;
-    }
-    | undefined> = [];
+  let formattedLines: Array<{
+    gutter: string;
+    line: string;
+    lineIndex: Number0;
+  } | undefined> = [];
   for (let i = contextStartIndex; i <= contextEndIndex; i = inc(i)) {
     let line: undefined | string = allLines[get0(i)];
     if (line === undefined) {
@@ -69,7 +68,8 @@ export default function buildMessageCodeFrame(
     }
 
     // Ensure that the frame doesn't start with whitespace
-    if (line.trim() === '' && formattedLines.length === 0 && i !== startLineIndex) {
+    if (line.trim() === '' && formattedLines.length === 0 && i !==
+        startLineIndex) {
       continue;
     }
 
@@ -136,7 +136,7 @@ export default function buildMessageCodeFrame(
 
   // If there's no lines to target then return the normal marker
   if (formattedLines.length === 0 || end.line === number1Neg1 || start.line ===
-  number1Neg1) {
+      number1Neg1) {
     return CODE_FRAME_INDENT + markerMessage;
   }
 
@@ -152,26 +152,26 @@ export default function buildMessageCodeFrame(
   // Calculate the max width of the gutter based on the line count
   const maxVisibleLineNo = get0(lastLine.lineIndex) + 1;
   const maxGutterLength = String(maxVisibleLineNo).length + GUTTER.length +
-  CODE_FRAME_INDENT.length;
+    CODE_FRAME_INDENT.length;
 
   // If what the marker is highlighting equals the marker message then it's redundant so don't show the message
   if (markerMessage !== '') {
     const text = sourceText.slice(get0(start.index), get0(end.index));
     if (cleanEquivalentString(text) === cleanEquivalentString(stripMarkupTags(
-      markerMessage,
-    ))) {
+        markerMessage,
+      ))) {
       markerMessage = '';
     }
   }
 
   const pointerLength: number = Math.max(get0(markerSize), 1);
-  const pointer: string =
-    `<red><emphasis>${'^'.repeat(pointerLength)}</emphasis></red>`;
+  const pointer: string = `<red><emphasis>${'^'.repeat(pointerLength)}</emphasis></red>`;
   const pointerIndent: string = ' '.repeat(get0(markerOffset));
 
   // If the marker is just pointing to the first character and we have no message, no point showing it
   const noMarkerLine = get0(markerOffset) === 0 && pointerLength === 1 &&
-    markerMessage === '';
+      markerMessage ===
+      '';
 
   // Output no gutter with a soft indent if this is true
   if (noGutter) {
@@ -184,12 +184,10 @@ export default function buildMessageCodeFrame(
 
   // Build marker
   const markerGutterIndent: string = ' '.repeat(maxGutterLength - GUTTER.length);
-  const markerLine: string =
-    `${markerGutterIndent}<emphasis>${GUTTER}</emphasis>${pointerIndent}${pointer} ${markerMessage}`;
+  const markerLine: string = `${markerGutterIndent}<emphasis>${GUTTER}</emphasis>${pointerIndent}${pointer} ${markerMessage}`;
 
   // Build up the line we display when source lines are omitted
-  const omittedLine =
-    `<pad count="${String(maxGutterLength)}"><emphasis>...</emphasis></pad>` +
+  const omittedLine = `<pad count="${String(maxGutterLength)}"><emphasis>...</emphasis></pad>` +
     GUTTER;
 
   // Build the frame
@@ -206,8 +204,8 @@ export default function buildMessageCodeFrame(
       result.push(line);
     } else {
       result.push(
-        `<emphasis><pad count="${String(maxGutterLength)}">${gutter}</pad></emphasis>` +
-        line,
+          `<emphasis><pad count="${String(maxGutterLength)}">${gutter}</pad></emphasis>` +
+          line,
       );
     }
     if (lineIndex === endLineIndex && !noMarkerLine) {

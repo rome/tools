@@ -19,11 +19,12 @@ import {
 } from '@romejs/js-compiler';
 import {
   Diagnostic,
-  Diagnostics,
   DiagnosticOrigin,
   DiagnosticDescription,
   DiagnosticSuppressions,
   DiagnosticCategory,
+  DiagnosticsProcessor,
+  DiagnosticLocation,
 } from '@romejs/diagnostics';
 import Record from './Record';
 import {RootScope} from '../scope/Scope';
@@ -66,13 +67,14 @@ export default class Context {
 
     const {suppressions, diagnostics} = extractSuppressionsFromProgram(ast);
     this.suppressions = suppressions;
-    this.diagnostics = diagnostics;
+    this.diagnostics = new DiagnosticsProcessor();
+    this.diagnostics.addDiagnostics(diagnostics);
   }
 
   sourceType: ConstSourceType;
   cacheDependencies: Set<string>;
   records: Array<Record>;
-  diagnostics: Diagnostics;
+  diagnostics: DiagnosticsProcessor;
   suppressions: DiagnosticSuppressions;
 
   rootScope: undefined | RootScope;
@@ -107,7 +109,7 @@ export default class Context {
   }
 
   hasLocSuppression(
-    loc: undefined | SourceLocation,
+    loc: undefined | DiagnosticLocation,
     category: DiagnosticCategory,
   ): boolean {
     if (loc === undefined) {
@@ -116,9 +118,9 @@ export default class Context {
 
     for (const suppression of this.suppressions) {
       if (suppression.category === category && matchesSuppression(
-        loc,
-        suppression,
-      )) {
+          loc,
+          suppression,
+        )) {
         return true;
       }
     }
@@ -154,12 +156,8 @@ export default class Context {
     this.records.push(record);
   }
 
-  addDiagnostics(diagnostics: Diagnostics) {
-    this.diagnostics = [...this.diagnostics, ...diagnostics];
-  }
-
   addLocDiagnostic(
-    loc: undefined | SourceLocation,
+    loc: undefined | DiagnosticLocation,
     description: DiagnosticDescription,
     diag: ContextDiagnostic = {},
   ): AddDiagnosticResult {
@@ -173,11 +171,11 @@ export default class Context {
 
     if (loc !== undefined && loc.filename !== this.filename) {
       throw new Error(
-        `Trying to add a location from ${loc.filename} on a Context from ${this.path}`,
-      );
+          `Trying to add a location from ${loc.filename} on a Context from ${this.path}`,
+        );
     }
 
-    this.diagnostics.push({
+    this.diagnostics.addDiagnostic({
       ...diag,
       description,
       location: {

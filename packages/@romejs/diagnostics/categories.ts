@@ -25,6 +25,7 @@ export type DiagnosticCategory =
   | 'lint/duplicateImportSource'
   | 'lint/emptyBlocks'
   | 'lint/getterReturn'
+  | 'lint/noArguments'
   | 'lint/noAsyncPromiseExecutor'
   | 'lint/noCompareNegZero'
   | 'lint/noCondAssign'

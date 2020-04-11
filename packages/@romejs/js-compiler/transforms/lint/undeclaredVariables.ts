@@ -44,14 +44,14 @@ export default {
     const {node, scope} = path;
 
     if ((node.type === 'ReferenceIdentifier' || node.type ===
-    'JSXReferenceIdentifier') && !isInTypeAnnotation(path)) {
+        'JSXReferenceIdentifier') && !isInTypeAnnotation(path)) {
       const {name} = node;
       const binding = scope.getBinding(name);
 
       const isDefined = binding !== undefined || scope.getRootScope().isGlobal(
-        name,
-      ) || JEST_VARIABLES.includes(name) || BROWSER_VARIABLES.includes(name) ||
-      NODE_VARIABLES.includes(name);
+          name,
+        ) || JEST_VARIABLES.includes(name) || BROWSER_VARIABLES.includes(name) ||
+        NODE_VARIABLES.includes(name);
 
       if (!isDefined) {
         path.context.addNodeDiagnostic(

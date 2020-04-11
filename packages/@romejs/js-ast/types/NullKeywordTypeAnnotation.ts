@@ -8,12 +8,14 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type NullKeywordTypeAnnotation =
-  & JSNodeBase
-  & {type: 'NullKeywordTypeAnnotation'};
+export type NullKeywordTypeAnnotation = JSNodeBase & {
+  type: 'NullKeywordTypeAnnotation';
+};
 
-export const nullKeywordTypeAnnotation =
-  createBuilder<NullKeywordTypeAnnotation>('NullKeywordTypeAnnotation', {
+export const nullKeywordTypeAnnotation = createBuilder<NullKeywordTypeAnnotation>(
+  'NullKeywordTypeAnnotation',
+  {
     bindingKeys: {},
     visitorKeys: {},
-  });
+  },
+);

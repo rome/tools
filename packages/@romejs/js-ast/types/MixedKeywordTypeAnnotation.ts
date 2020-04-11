@@ -8,9 +8,9 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type MixedKeywordTypeAnnotation =
-  & JSNodeBase
-  & {type: 'MixedKeywordTypeAnnotation'};
+export type MixedKeywordTypeAnnotation = JSNodeBase & {
+  type: 'MixedKeywordTypeAnnotation';
+};
 
 export const mixedKeywordTypeAnnotation = createBuilder<
   MixedKeywordTypeAnnotation

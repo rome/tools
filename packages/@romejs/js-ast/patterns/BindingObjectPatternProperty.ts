@@ -8,14 +8,12 @@
 import {JSNodeBase, AnyObjectPropertyKey, AnyBindingPattern} from '../index';
 import {createBuilder} from '../utils';
 
-export type BindingObjectPatternProperty =
-  & JSNodeBase
-  & {
-    type: 'BindingObjectPatternProperty';
-    key: AnyObjectPropertyKey;
-    value: AnyBindingPattern;
-    meta?: undefined;
-  };
+export type BindingObjectPatternProperty = JSNodeBase & {
+  type: 'BindingObjectPatternProperty';
+  key: AnyObjectPropertyKey;
+  value: AnyBindingPattern;
+  meta?: undefined;
+};
 
 export const bindingObjectPatternProperty = createBuilder<
   BindingObjectPatternProperty

@@ -26,7 +26,7 @@ export default {
 
     // turn `import {a} from 'b'; export {a}`; to `export {a} from 'b';`';
     if (node.type === 'ExportLocalDeclaration' && node.exportKind === 'value' &&
-      node.declaration === undefined && node.specifiers !== undefined) {
+        node.declaration === undefined && node.specifiers !== undefined) {
       const nodes: Array<ExportExternalDeclaration | ExportLocalDeclaration> = [];
       const specifiers = [];
 
@@ -34,7 +34,8 @@ export default {
         if (specifier.type === 'ExportLocalSpecifier') {
           const binding = path.scope.getBinding(specifier.local.name);
           if (binding !== undefined && binding instanceof ImportBinding &&
-            binding.meta.type === 'name') {
+                binding.meta.type ===
+                'name') {
             nodes.push(exportExternalDeclaration.create({
               namedSpecifiers: [
                 exportExternalSpecifier.create({

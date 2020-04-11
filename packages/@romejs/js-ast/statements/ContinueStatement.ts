@@ -8,12 +8,10 @@
 import {JSNodeBase, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type ContinueStatement =
-  & JSNodeBase
-  & {
-    type: 'ContinueStatement';
-    label?: Identifier;
-  };
+export type ContinueStatement = JSNodeBase & {
+  type: 'ContinueStatement';
+  label?: Identifier;
+};
 
 export const continueStatement = createBuilder<ContinueStatement>(
   'ContinueStatement',

@@ -353,6 +353,7 @@ export type AnyRegExpEscapedCharacter =
   | n.RegExpDigitCharacter
   | n.RegExpNonDigitCharacter
   | n.RegExpWordBoundaryCharacter
+  | n.RegExpNamedBackReference
   | n.RegExpNonWordBoundaryCharacter
   | n.RegExpNumericBackReference
   | n.RegExpWhiteSpaceCharacter
@@ -543,6 +544,7 @@ export type AnyNode =
   | n.RegExpGroupCapture
   | n.RegExpGroupNonCapture
   | n.RegExpLiteral
+  | n.RegExpNamedBackReference
   | n.RegExpNonDigitCharacter
   | n.RegExpNonWhiteSpaceCharacter
   | n.RegExpNonWordBoundaryCharacter

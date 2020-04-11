@@ -33,7 +33,10 @@ function unescapeChar(modifier: string): string {
   }
 }
 
-type UnescapeStringUnexpected = (metadata: Omit<DiagnosticDescription, 'category'>, index: number) => void;
+type UnescapeStringUnexpected = (
+  metadata: Omit<DiagnosticDescription, 'category'>,
+  index: number,
+) => void;
 
 const UNEXPECTED_DEFAULT_THROWER: UnescapeStringUnexpected = (
   metadata: Omit<DiagnosticDescription, 'category'>,

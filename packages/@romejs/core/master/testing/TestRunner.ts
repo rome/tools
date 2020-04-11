@@ -17,7 +17,11 @@ import {Master, MasterRequest, TestWorkerBridge} from '@romejs/core';
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import {createClient} from '@romejs/codec-websocket';
 import {humanizeNumber} from '@romejs/string-utils';
-import {Bridge, BridgeError, createBridgeFromChildProcess} from '@romejs/events';
+import {
+  Bridge,
+  BridgeError,
+  createBridgeFromChildProcess,
+} from '@romejs/events';
 import {
   InspectorClientCloseError,
   InspectorClient,
@@ -135,7 +139,7 @@ export default class TestRunner {
 
     const nextTest = async () => {
       if (sourcesQueue.length === 0) {
-        return undefined;
+        return;
       }
 
       const item = sourcesQueue.pop();
@@ -155,15 +159,17 @@ export default class TestRunner {
       this.testFileCounter++;
 
       try {
-        await bridge.prepareTest.call({
-          id,
-          options: opts,
-          projectFolder: req.master.projectManager.assertProjectExisting(path).folder.join(),
-          file: req.master.projectManager.getTransportFileReference(path),
-          cwd: flags.cwd.join(),
-          code,
-          sourceMap,
-        });
+        await bridge.prepareTest.call(
+          {
+            id,
+            options: opts,
+            projectFolder: req.master.projectManager.assertProjectExisting(path).folder.join(),
+            file: req.master.projectManager.getTransportFileReference(path),
+            cwd: flags.cwd.join(),
+            code,
+            sourceMap,
+          },
+        );
 
         await bridge.runTest.call(id);
       } finally {
@@ -223,23 +229,26 @@ export default class TestRunner {
     });
 
     // Suppress any debugger logs
-    stderr.on('data', (chunk) => {
-      const str = chunk.toString();
+    stderr.on(
+      'data',
+      (chunk) => {
+        const str = chunk.toString();
 
-      if (str.startsWith('Debugger listening on ws://')) {
-        return;
-      }
+        if (str.startsWith('Debugger listening on ws://')) {
+          return;
+        }
 
-      if (str.startsWith('For help, see: https://nodejs.org/en/docs/inspector')) {
-        return;
-      }
+        if (str.startsWith('For help, see: https://nodejs.org/en/docs/inspector')) {
+          return;
+        }
 
-      if (str.startsWith('Debugger attached')) {
-        return;
-      }
+        if (str.startsWith('Debugger attached')) {
+          return;
+        }
 
-      process.stderr.write(chunk);
-    });
+        process.stderr.write(chunk);
+      },
+    );
 
     const bridge = createBridgeFromChildProcess(TestWorkerBridge, proc, {
       type: 'client',
@@ -285,9 +294,9 @@ export default class TestRunner {
 
     const workerContainers: TestWorkerContainers = this.getWorkers();
 
-    await Promise.all(workerContainers.map((container) =>
-      this.runWorker(container)
-    ));
+    await Promise.all(workerContainers.map((container) => this.runWorker(
+      container,
+    )));
 
     teardown();
 
@@ -298,27 +307,36 @@ export default class TestRunner {
     duration: string,
     container: TestWorkerContainer,
   ): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => {
-        resolve(container.bridge.end(
-          `Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but we timed out again trying to fetch it...`,
-        ));
-      }, 3_000);
-
-      this._handleWorkerTimeout(duration, container).then(() => {
-        clearTimeout(timeout);
-        resolve();
-      }).catch((err) => {
-        clearTimeout(timeout);
-        if (err instanceof InspectorClientCloseError) {
-          return container.bridge.end(
-            `Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but the inspector connection closed abruptly`,
+    return new Promise(
+        (resolve, reject) => {
+          const timeout = setTimeout(
+            () => {
+              resolve(
+                container.bridge.end(
+                  `Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but we timed out again trying to fetch it...`,
+                ),
+              );
+            },
+            3_000,
           );
-        } else {
-          reject(err);
-        }
-      });
-    });
+
+          this._handleWorkerTimeout(duration, container).then(() => {
+            clearTimeout(timeout);
+            resolve();
+          }).catch(
+            (err) => {
+              clearTimeout(timeout);
+              if (err instanceof InspectorClientCloseError) {
+                return container.bridge.end(
+                    `Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but the inspector connection closed abruptly`,
+                  );
+              } else {
+                reject(err);
+              }
+            },
+          );
+        },
+      );
   }
 
   async _handleWorkerTimeout(
@@ -348,10 +366,9 @@ export default class TestRunner {
         'columnNumber',
       ).asZeroIndexedNumber());
 
-      const name =
-        callFrame.get('scopeChain').asArray()[0].get('name').asString('').split(
-          '$',
-        ).pop();
+      const name = callFrame.get('scopeChain').asArray()[0].get('name').asString(
+        '',
+      ).split('$').pop();
 
       frames.push({
         resolvedLocation: resolved.found,
@@ -369,17 +386,22 @@ export default class TestRunner {
       });
     }
 
-    bridge.endWithError(new BridgeStructuredError({
-      message: `Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
-      frames,
-      advice: [
+    bridge.endWithError(
+      new BridgeStructuredError(
         {
-          type: 'log',
-          category: 'info',
-          message: `You can find the specific test that caused this by running <command>rome test --sync-tests</command>`,
+          message: `Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
+          frames,
+          advice: [
+            {
+              type: 'log',
+              category: 'info',
+              message: `You can find the specific test that caused this by running <command>rome test --sync-tests</command>`,
+            },
+          ],
         },
-      ],
-    }, bridge));
+        bridge,
+      ),
+    );
   }
 
   getWorkers(): TestWorkerContainers {
@@ -403,11 +425,10 @@ export default class TestRunner {
 
     let timeout = undefined;
     if (timeoutMs !== undefined) {
-      timeout =
-        setTimeout(() => {
-          // TODO This will kill the whole worker, maybe it's possible to just terminate the current test? Throw an error, see if the next test was ran, or else terminate completely
-          this.handleWorkerTimeout(`${String(timeoutMs)}ms`, container);
-        }, timeoutMs);
+      timeout = setTimeout(() => {
+        // TODO This will kill the whole worker, maybe it's possible to just terminate the current test? Throw an error, see if the next test was ran, or else terminate completely
+        this.handleWorkerTimeout(`${String(timeoutMs)}ms`, container);
+      }, timeoutMs);
     }
 
     this.runningTests.set(this.refToKey(ref), {
@@ -514,26 +535,28 @@ export default class TestRunner {
         progress.pushText(getProgressTestRefText(data.ref));
       });
 
-      bridge.testError.subscribe((data) => {
-        let origin: DiagnosticOrigin = {
-          category: 'test/error',
-          message: 'Generated from a test worker without being attached to a test',
-        };
+      bridge.testError.subscribe(
+        (data) => {
+          let origin: DiagnosticOrigin = {
+            category: 'test/error',
+            message: 'Generated from a test worker without being attached to a test',
+          };
 
-        const {ref} = data;
-        if (ref !== undefined) {
-          const uid = this.master.projectManager.getUid(createAbsoluteFilePath(
-            ref.filename,
-          ));
-          origin.message =
-            `Generated from the file <filelink target="${uid}" /> and test name "${ref.testName}"`;
-          this.onTestFinished(ref);
-          progress.popText(getProgressTestRefText(ref));
-          progress.tick();
-        }
+          const {ref} = data;
+          if (ref !== undefined) {
+            const uid = this.master.projectManager.getUid(
+              createAbsoluteFilePath(ref.filename),
+            );
+              origin.message =
+              `Generated from the file <filelink target="${uid}" /> and test name "${ref.testName}"`;
+            this.onTestFinished(ref);
+            progress.popText(getProgressTestRefText(ref));
+            progress.tick();
+          }
 
-        this.printer.addDiagnostic(data.diagnostic, origin);
-      });
+          this.printer.addDiagnostic(data.diagnostic, origin);
+        },
+      );
 
       bridge.testSuccess.subscribe((data) => {
         this.onTestFinished(data.ref);
@@ -553,7 +576,7 @@ export default class TestRunner {
     // Fetch coverage entries
     const files = this.coverageCollector.generate();
     if (files.length === 0) {
-      return undefined;
+      return;
     }
 
     reporter.heading('Code coverage');
@@ -626,7 +649,8 @@ export default class TestRunner {
       root = {
         ...newRoot,
         name: root.name !== undefined && newRoot.name !== undefined
-          ? `${root.name}/${newRoot.name}` : newRoot.name,
+          ? `${root.name}/${newRoot.name}`
+          : newRoot.name,
       };
     }
 
@@ -650,7 +674,7 @@ export default class TestRunner {
 
       // Don't ever show anything deeper than a single level when showAllCoverage is off
       if (!showAllCoverage && depth > 0) {
-        return undefined;
+        return;
       }
 
       const fileIndent = ' '.repeat(depth + 1);

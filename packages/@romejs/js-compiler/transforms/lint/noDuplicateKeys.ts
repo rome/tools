@@ -9,12 +9,14 @@ import {Path} from '@romejs/js-compiler';
 import {ObjectProperty, ObjectMethod, SpreadProperty} from '@romejs/js-ast';
 import {TransformExitResult} from '@romejs/js-compiler/types';
 import {descriptions} from '@romejs/diagnostics';
+import {DiagnosticsDuplicateHelper} from '../../lib/DiagnosticsDuplicateHelper';
 
 function extractPropertyKey(
   node: ObjectProperty | ObjectMethod | SpreadProperty,
 ): string | undefined {
   if ((node.type === 'ObjectMethod' || node.type === 'ObjectProperty') &&
-    node.key.type === 'StaticPropertyKey') {
+        node.key.type ===
+        'StaticPropertyKey') {
     const {value} = node.key;
 
     if (value.type === 'PrivateName') {
@@ -34,25 +36,22 @@ function extractPropertyKey(
 export default {
   name: 'noDuplicateKeys',
   enter(path: Path): TransformExitResult {
-    const {node} = path;
+    const {node, context} = path;
 
     if (node.type === 'ObjectExpression') {
-      const previousKeys = new Set();
+      const duplicates = new DiagnosticsDuplicateHelper(
+        context,
+        descriptions.LINT.NO_DUPLICATE_KEYS,
+      );
 
       for (const prop of node.properties) {
         const key = extractPropertyKey(prop);
-
         if (key !== undefined) {
-          if (previousKeys.has(key)) {
-            path.context.addNodeDiagnostic(
-              prop,
-              descriptions.LINT.NO_DUPLICATE_KEYS(key),
-            );
-          }
-
-          previousKeys.add(key);
+          duplicates.addLocation(key, prop.loc);
         }
       }
+
+      duplicates.process();
     }
 
     return node;

@@ -11,15 +11,11 @@ import E, {ErrorDefinition} from './E';
 import {AnyNode} from '@romejs/js-ast';
 
 export default class UnknownImportE extends E {
-  constructor(
-    scope: Scope,
-    originNode: undefined | AnyNode,
-    opts: {
-      possibleNames: Array<string>;
-      importedName: string;
-      source: string;
-    },
-  ) {
+  constructor(scope: Scope, originNode: undefined | AnyNode, opts: {
+    possibleNames: Array<string>;
+    importedName: string;
+    source: string;
+  }) {
     super(scope, originNode);
     this.possibleNames = opts.possibleNames;
     this.importedName = opts.importedName;

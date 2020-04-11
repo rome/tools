@@ -114,7 +114,7 @@ export class WatchmanClient {
       const event = this.subscriptions.get(name);
       if (event === undefined) {
         this.reporter.warn(
-          'Received a watchman subscription event for %s that we aren\'t listening for',
+          "Received a watchman subscription event for %s that we aren't listening for",
           name,
         );
       } else {
@@ -130,7 +130,7 @@ export class WatchmanClient {
 
     if (res.get('unilateral').asBooleanOrVoid() === true) {
       this.reporter.warn(
-        'Received a watchman unilateral event that we don\'t support',
+        "Received a watchman unilateral event that we don't support",
         res.asUnknown(),
       );
       return;
@@ -203,10 +203,10 @@ export async function getWatchmanSocketLocation(): Promise<string> {
 
       // Validate JSON result
       if (typeof data !== 'object' || data == null || typeof data.sockname !==
-      'string') {
+          'string') {
         throw new Error(
-          `Watchman returned JSON payload that wasnt an object with a sockname property`,
-        );
+            `Watchman returned JSON payload that wasnt an object with a sockname property`,
+          );
       }
 
       return data.sockname;
