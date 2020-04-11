@@ -228,12 +228,10 @@ export default class Parser<T> {
         }
 
         // We've parsed arguments like `--foo bar` as `{foo: 'bar}`
-
         // However, --foo may be a boolean flag, so `bar` needs to be correctly added to args
         if (def.type === 'boolean' && value !== true && value !== false &&
               value !==
               undefined) {
-          // This isn't necessarily the correct position... Probably doesn't matter?
           const argIndex = this.flagToArgIndex.get(key);
           if (argIndex === undefined) {
             throw new Error('No arg index. Should always exist.');

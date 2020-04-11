@@ -6,24 +6,18 @@
  */
 
 import test from '@romejs/test';
-import {testLint} from '../../api/lint.test';
+import {testLintMultiple} from '../../api/lint.test';
 
 test('no async promise executor', async (t) => {
-  const validTestCases = [
+  await testLintMultiple(t, [
+    // VALID
     'new Promise(() => {})',
     'new Promise(() => {}, async function unrelated() {})',
     'class Foo {} new Foo(async () => {})',
-  ];
-  const invalidTestCases = [
+
+    // INVALID
     'new Promise(async function foo() {})',
     'new Promise(async () => {})',
     'new Promise(((((async () => {})))))',
-  ];
-  for (const validTestCase of validTestCases) {
-    const {diagnostics} = await testLint(validTestCase);
-    t.is(diagnostics.length, 0);
-  }
-  for (const invalidTestCase of invalidTestCases) {
-    t.snapshot(await testLint(invalidTestCase));
-  }
+  ], {category: 'lint/noAsyncPromiseExecutor'});
 });

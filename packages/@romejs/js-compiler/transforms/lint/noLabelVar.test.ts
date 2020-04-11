@@ -9,19 +9,13 @@ import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
 test('no label var', async (t) => {
-  const badLabel = await testLint(`
-  const x = "test";
-  x: const y = "test";
-  `);
+  await testLint(t, `
+      const x = "test";
+      x: const y = "test";
+      `, {category: 'lint/noLabelVar'});
 
-  t.truthy(badLabel.diagnostics.find((d) => d.description.category ===
-    'lint/noLabelVar'));
-
-  const okLabel = await testLint(`
-  const x = "test";
-  z: const y = "test";
-  `);
-
-  t.falsy(okLabel.diagnostics.find((d) => d.description.category ===
-    'lint/noLabelVar'));
+  await testLint(t, `
+      const x = "test";
+      z: const y = "test";
+      `, {category: 'lint/noLabelVar'});
 });

@@ -9,15 +9,14 @@ import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
 test('duplicate import source', async (t) => {
-  const res = await testLint(`
+  await testLint(t, `
     import foo from './testdummy.ts';
     import {bar} from './testdummy.ts';
     import type {fooType} from './testdummy.ts';
-  
+
     const typedFoo: fooType = {
       type: 'foo'
-    } 
+    }
     console.log(typedFoo, foo, bar);
-    `);
-  t.snapshot(res);
+    `, {category: 'lint/duplicateImportSource'});
 });

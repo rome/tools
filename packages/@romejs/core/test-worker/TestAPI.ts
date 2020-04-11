@@ -197,6 +197,10 @@ export default class TestAPI {
     this.advice.push(item);
   }
 
+  clearAdvice() {
+    this.advice = [];
+  }
+
   onTeardown(callback: AsyncFunc): void {
     this.teardownEvent.subscribe(callback);
   }

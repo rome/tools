@@ -9,7 +9,5 @@ import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
 test('unsafe negation', async (t) => {
-  const res = await testLint(`!1 in [1,2]`);
-
-  t.snapshot(res);
+  await testLint(t, `!1 in [1,2]`, {category: 'lint/unsafeNegation'});
 });

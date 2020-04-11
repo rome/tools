@@ -9,6 +9,11 @@ import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
 test('disallow multiple spaces in regular expression literals', async (t) => {
-  t.snapshot(await testLint(`/foo  bar/`));
-  t.snapshot(await testLint(`/foo {2}bar/`));
+  await testLint(t, `/foo  bar/`, {
+    category: 'lint/noMultipleSpacesInRegularExpressionLiterals',
+  });
+
+  await testLint(t, `/foo {2}bar/`, {
+    category: 'lint/noMultipleSpacesInRegularExpressionLiterals',
+  });
 });

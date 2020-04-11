@@ -6,15 +6,11 @@
  */
 
 import test from '@romejs/test';
-import {testLint} from '../../api/lint.test';
-import {Diagnostic} from '@romejs/diagnostics/types';
+import {testLintMultiple} from '../../api/lint.test';
 
 test('no function reassignment', async (t) => {
-  function checkCategory(diagnostic: Diagnostic): Boolean {
-    return diagnostic.description.category === 'lint/noFunctionAssign';
-  }
-
-  const validTestCases = [
+  await testLintMultiple(t, [
+    // VALID
     'function foo() { var foo = bar; }',
     'function foo(foo) { foo = bar; }',
     'function foo() { var foo; foo = bar; }',
@@ -22,9 +18,8 @@ test('no function reassignment', async (t) => {
     'var foo = function() {}; foo = bar;',
     'var foo = function() { foo = bar; };',
     `import bar from 'bar'; function foo() { var foo = bar; }`,
-  ];
 
-  const invalidTestCases = [
+    // INVALID
     'function foo() {}; foo = bar;',
     'function foo() { foo = bar; }',
     'foo = bar; function foo() { };',
@@ -32,15 +27,5 @@ test('no function reassignment', async (t) => {
     '({x: foo = 0} = bar); function foo() { };',
     'function foo() { [foo] = bar; }',
     '(function() { ({x: foo = 0} = bar); function foo() { }; })();',
-  ];
-
-  for (const testCase of validTestCases) {
-    const {diagnostics} = await testLint(testCase);
-    t.falsy(diagnostics.find(checkCategory));
-  }
-
-  for (const testCase of invalidTestCases) {
-    const {diagnostics} = await testLint(testCase);
-    t.truthy(diagnostics.find(checkCategory));
-  }
+  ], {category: 'lint/noFunctionAssign'});
 });

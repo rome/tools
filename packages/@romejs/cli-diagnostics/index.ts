@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {DiagnosticsPrinterOptions} from './types';
 import {Reporter, ReporterStream} from '@romejs/cli-reporter';
 import DiagnosticsPrinter from './DiagnosticsPrinter';
@@ -42,11 +42,17 @@ export function printDiagnosticsSync(
   return printer;
 }
 
-export function printDiagnosticsToString(
-  diagnostics: Diagnostics,
-  opts: Omit<DiagnosticsPrinterOptions, 'reporter'> = {},
-  format: ReporterStream['format'] = 'none',
-): string {
+export function printDiagnosticsToString({
+  diagnostics,
+  suppressions = [],
+  format = 'none',
+  printerOptions = {},
+}: {
+  diagnostics: Diagnostics;
+  suppressions?: DiagnosticSuppressions;
+  printerOptions?: Omit<DiagnosticsPrinterOptions, 'reporter'>;
+  format?: ReporterStream['format'];
+}): string {
   let buff = '';
 
   const reporter = new Reporter({
@@ -63,10 +69,13 @@ export function printDiagnosticsToString(
   });
 
   const printer = new DiagnosticsPrinter({
-    ...opts,
+    ...printerOptions,
     reporter,
   });
+
+  printer.processor.addSuppressions(suppressions);
   printer.addDiagnostics(diagnostics);
   printer.print();
+  printer.footer();
   return buff;
 }

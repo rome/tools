@@ -9,13 +9,6 @@ import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
 test('disallows comparing negative zero', async (t) => {
-  const sourceTextA = '(1 >= -0)';
-
-  const sourceTextB = '(1 >= 0)';
-
-  const res1 = await testLint(sourceTextA);
-  t.snapshot(res1);
-
-  const res2 = await testLint(sourceTextB);
-  t.snapshot(res2);
+  await testLint(t, '(1 >= -0)', {category: 'lint/noCompareNegZero'});
+  await testLint(t, '(1 >= 0)', {category: 'lint/noCompareNegZero'});
 });

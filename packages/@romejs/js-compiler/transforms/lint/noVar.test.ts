@@ -9,6 +9,5 @@ import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
 test('disallow var', async (t) => {
-  const res = await testLint('var foobar;\nfoobar');
-  t.snapshot(res);
+  await testLint(t, 'var foobar;\nfoobar', {category: 'lint/noVar'});
 });

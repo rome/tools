@@ -9,10 +9,8 @@ import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
 test('no delete vars', async (t) => {
-  const res = await testLint(`
-    const foo = "test";
-    delete foo;
-    `, false, 'script');
-
-  t.snapshot(res);
+  await testLint(t, `
+  const foo = "test";
+  delete foo;
+  `, {category: 'lint/noDeleteVars', sourceType: 'script'});
 });

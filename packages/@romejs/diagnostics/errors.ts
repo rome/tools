@@ -21,7 +21,7 @@ export class DiagnosticsError extends Error {
     }
 
     message += '\n';
-    message += stripAnsi(printDiagnosticsToString(diagnostics));
+    message += stripAnsi(printDiagnosticsToString({diagnostics, suppressions}));
     message += stripAnsi(diagnostics.map(
       (diag) => `- ${diag.description.message.value}`,
     ).join('\n'));
