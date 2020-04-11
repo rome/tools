@@ -74,7 +74,7 @@ export default class BundleRequest {
     this.assets = new Map();
 
     this.sourceMap = new SourceMapGenerator({
-      file: 'TODO-something',
+      file: resolvedEntry.getBasename(),
     });
   }
 
@@ -220,7 +220,6 @@ export default class BundleRequest {
       sourceContent: string,
       mappings: Mappings,
     ) {
-      return;
       sourceMap.setSourceContent(filename, sourceContent);
       for (const mapping of mappings) {
         sourceMap.addMapping({
@@ -332,6 +331,8 @@ export default class BundleRequest {
     if (inlineSourceMap === true) {
       const sourceMapComment = sourceMap.toComment();
       content += sourceMapComment;
+    } else {
+      content += `//# sourceMappingURL=${this.sourceMap.file}.map`;
     }
 
     return {
