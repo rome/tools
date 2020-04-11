@@ -402,6 +402,11 @@ export const descriptions = createMessages(
         message: `Expected a 'return' at end of a getter method but got ${got}`,
       }),
 
+      NO_SETTER_RETURN: {
+        category: 'lint/noSetterReturn',
+        message: `Setter cannot return a value`,
+      },
+
       EMPTY_BLOCKS: {
         category: 'lint/emptyBlocks',
         message: 'Empty block',
