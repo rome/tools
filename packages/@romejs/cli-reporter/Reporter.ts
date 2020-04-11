@@ -808,25 +808,29 @@ export default class Reporter {
       }));
     }
 
-    // Get column widths
-    const cols: Array<number> = [];
-    for (let i = 0; i < head.length; i++) {
-      const widths = rows.map((row): number => stripAnsi(row[i]).length);
-      cols[i] = Math.max(...widths);
-    }
-
-    // Format all rows
-    const builtRows = rows.map((row): string => {
-      for (let i = 0; i < row.length; i++) {
-        const field = row[i];
-        const padding = cols[i] - stripAnsi(field).length;
-
-        row[i] = field + ' '.repeat(padding);
+    for (const stream of this.getStreams(false)) {
+      // Get column widths
+      const cols: Array<number> = [];
+      for (let i = 0; i < head.length; i++) {
+        const widths = rows.map((row): number => this.markupifyLength(
+          stream,
+          row[i],
+        ));
+        cols[i] = Math.max(...widths);
       }
-      return row.join(' ');
-    });
 
-    this.logAll(builtRows.join('\n'));
+      // Format all rows
+      const builtRows = rows.map((row): string => {
+        for (let i = 0; i < row.length; i++) {
+          const field = row[i];
+          const padding = cols[i] - this.markupifyLength(stream, field);
+          row[i] = field + ' '.repeat(padding);
+        }
+        return row.join(' ');
+      });
+
+      this.logOne(stream, builtRows.join('\n'));
+    }
   }
 
   verboseInspect(val: unknown) {
@@ -992,6 +996,17 @@ export default class Reporter {
   //# LOG
   stripMarkup(str: string) {
     return stripMarkupTags(str, this.markupOptions);
+  }
+
+  markupifyLength(stream: ReporterStream, str: string): number {
+    const markup = this.markupify(stream, str);
+
+    if (stream.format === 'ansi') {
+      return stripAnsi(markup).length;
+    }
+
+    // TODO html
+    return markup.length;
   }
 
   markupify(stream: ReporterStream, str: string): string {
