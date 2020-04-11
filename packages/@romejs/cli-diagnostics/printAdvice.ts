@@ -218,17 +218,21 @@ function printCode(
 ): PrintAdviceResult {
   const {reporter} = opts;
 
-  let truncated = item.code.length > RAW_CODE_MAX_LENGTH;
-  let code = item.code.slice(0, RAW_CODE_MAX_LENGTH);
+  const truncated = !opts.flags.verboseDiagnostics && item.code.length >
+    RAW_CODE_MAX_LENGTH;
+  const code = truncated ? item.code.slice(0, RAW_CODE_MAX_LENGTH) : item.code;
 
-  if (truncated) {
-      code +=
-      `\n<dim><number>${item.code.length - RAW_CODE_MAX_LENGTH}</number> more characters truncated</dim>`;
-  }
+  reporter.indent(
+    () => {
+      reporter.logAll(escapeMarkup(code));
 
-  reporter.indent(() => {
-    reporter.logAll(escapeMarkup(code));
-  });
+      if (truncated) {
+        reporter.logAll(
+          `<dim><number>${item.code.length - RAW_CODE_MAX_LENGTH}</number> more characters truncated</dim>`,
+        );
+      }
+    },
+  );
 
   return {
     printed: true,

@@ -25,36 +25,26 @@ export class DiagnosticsDuplicateHelper {
 
   category: DiagnosticCategory;
   descriptionFactory: DescriptionFactory;
-  locations: Map<string, Array<DiagnosticLocation>>;
+  locations: Map<string, Array<undefined | DiagnosticLocation>>;
   context: Context;
 
   addLocation(
     key: string,
     location: undefined | DiagnosticLocation,
   ): {duplicate: boolean} {
+    const isSuppressed = this.context.hasLocSuppression(location, this.category);
+    if (isSuppressed) {
+      // If this location has had it's diagnostic suppressed then we don't want to return
+      // that it was a duplicate even if there's multiple occurences
+      return {duplicate: false};
+    }
+
     let locations = this.locations.get(key);
     if (locations === undefined) {
       locations = [];
       this.locations.set(key, locations);
     }
-
-    if (location !== undefined) {
-      // We allow passing in `node.loc` which could be undefined, we don't want to point to it
-      // since it would have been injected dynamically
-
-      const isSuppressed = this.context.hasLocSuppression(
-        location,
-        this.category,
-      );
-      if (!isSuppressed) {
-        // If this location has had it's diagnostic suppressed then we don't want to return
-        // that it was a duplicate even if there's multiple occurences
-        return {duplicate: false};
-      }
-
-      locations.push(location);
-    }
-
+    locations.push(location);
     return {duplicate: locations.length > 1};
   }
 

@@ -162,7 +162,7 @@ export function deriveDiagnosticFromError(
   let targetLoc = undefined;
 
   const structErr = getErrorStructure(error);
-  let {frames, message, advice} = structErr;
+  let {frames, markupMessage, message, advice} = structErr;
 
   const {cleanFrames} = opts;
   if (cleanFrames !== undefined) {
@@ -185,7 +185,9 @@ export function deriveDiagnosticFromError(
   return {
     description: {
       category: opts.category,
-      message: createBlessedDiagnosticMessage(escapeMarkup(message)),
+      message: createBlessedDiagnosticMessage(markupMessage === undefined
+        ? escapeMarkup(message)
+        : markupMessage),
       advice,
     },
     location: {
@@ -307,10 +309,9 @@ export function addOriginsToDiagnostic(
   origins: Array<DiagnosticOrigin>,
   diag: Diagnostic,
 ): Diagnostic {
-  const newOrigins = diag.origins === undefined ? origins : [
-    ...origins,
-    ...diag.origins,
-  ];
+  const newOrigins = diag.origins === undefined
+    ? origins
+    : [...origins, ...diag.origins];
   return {
     ...diag,
     origins: newOrigins,
