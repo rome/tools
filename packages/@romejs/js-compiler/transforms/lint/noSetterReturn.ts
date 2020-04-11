@@ -16,10 +16,11 @@ export default {
     const {node} = path;
 
     if ((node.type === 'ClassMethod' || node.type === 'ObjectMethod') &&
-      node.kind === 'set') {
+          node.kind ===
+          'set') {
       for (const record of getCompletionRecords(node.body)) {
         if (record.type === 'COMPLETION' && record.node.type ===
-        'ReturnStatement' && record.node.argument !== undefined) {
+            'ReturnStatement' && record.node.argument !== undefined) {
           path.context.addNodeDiagnostic(
             record.node,
             descriptions.LINT.NO_SETTER_RETURN,

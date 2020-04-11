@@ -19,26 +19,29 @@ export default {
               'StringLiteral' &&
             !node.left.value.includes('`') ||
           node.right.type === 'StringLiteral' && !node.right.value.includes('`'))) {
-      const {suppressed} = path.context.addNodeDiagnostic(node, descriptions.LINT.PREFER_TEMPLATE);
+      const {suppressed} = path.context.addNodeDiagnostic(
+        node,
+        descriptions.LINT.PREFER_TEMPLATE,
+      );
 
       if (!suppressed) {
         if (node.right.type === 'StringLiteral') {
-            const quasis = [
-              templateElement.create({
-                raw: '',
-                cooked: '',
-              }),
-              templateElement.create({
-                raw: node.right.value,
-                cooked: node.right.value,
-              }),
-            ];
-            const expressions = [node.left];
-            return templateLiteral.create({
-              expressions,
-              quasis,
-              loc: node.loc,
-            })
+          const quasis = [
+            templateElement.create({
+              raw: '',
+              cooked: '',
+            }),
+            templateElement.create({
+              raw: node.right.value,
+              cooked: node.right.value,
+            }),
+          ];
+          const expressions = [node.left];
+          return templateLiteral.create({
+            expressions,
+            quasis,
+            loc: node.loc,
+          });
         }
         if (node.left.type === 'StringLiteral') {
           const quasis = [
@@ -56,7 +59,7 @@ export default {
             expressions,
             quasis,
             loc: node.loc,
-          })
+          });
         }
       }
     }
