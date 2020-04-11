@@ -91,6 +91,7 @@ export class WebServer {
         type: 'all',
         format: 'ansi',
         columns: 100,
+        unicode: true,
         write(chunk) {
           data.stdoutAnsi += chunk;
         },
@@ -100,6 +101,7 @@ export class WebServer {
         type: 'all',
         format: 'html',
         columns: 100,
+        unicode: true,
         write(chunk) {
           data.stdoutAnsi += chunk;
         },

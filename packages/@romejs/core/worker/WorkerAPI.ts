@@ -34,6 +34,19 @@ import {
 } from '../common/types/analyzeDependencies';
 import {matchPathPatterns} from '@romejs/path-match';
 
+// Some Windows git repos will automatically convert Unix line endings to Windows
+// This retains the line endings for the formatted code if they were present in the source
+function normalizeFormattedLineEndings(
+  sourceText: string,
+  formatted: string,
+): string {
+  if (sourceText.includes('\r')) {
+    return formatted.replace(/\n/g, '\r\n');
+  } else {
+    return formatted;
+  }
+}
+
 export default class WorkerAPI {
   constructor(worker: Worker) {
     this.worker = worker;
@@ -168,7 +181,7 @@ export default class WorkerAPI {
       return undefined;
     } else {
       return {
-        formatted: res.formatted,
+        formatted: normalizeFormattedLineEndings(res.sourceText, res.formatted),
         original: res.sourceText,
         diagnostics: res.diagnostics,
       };
@@ -267,14 +280,18 @@ export default class WorkerAPI {
 
     // These are normal diagnostics returned from the linter
     const {
-      formatted,
-      sourceText: raw,
+      sourceText,
       diagnostics,
       suppressions,
     }: ExtensionLintResult = res.value;
 
+    const formatted = normalizeFormattedLineEndings(
+      sourceText,
+      res.value.formatted,
+    );
+
     // If the file has pending fixes
-    const needsFix = formatted !== raw;
+    const needsFix = formatted !== sourceText;
 
     // Autofix if necessary
     if (fix && needsFix) {
@@ -307,7 +324,7 @@ export default class WorkerAPI {
           location: {
             filename: ref.uid,
           },
-          description: descriptions.LINT.PENDING_FIXES(raw, formatted),
+          description: descriptions.LINT.PENDING_FIXES(sourceText, formatted),
         },
       ],
     };

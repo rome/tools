@@ -75,6 +75,7 @@ export type MasterBridgeInfo = {
   columns: number;
   hasClearScreen: boolean;
   useRemoteReporter: boolean;
+  unicode: boolean;
   format: ReporterStream['format'];
   flags: ClientFlagsJSON;
 };

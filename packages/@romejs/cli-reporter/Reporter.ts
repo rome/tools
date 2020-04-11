@@ -66,9 +66,10 @@ export type LogOptions = {
 };
 
 export type LogCategoryOptions = LogOptions & {
-  prefix: string;
+  unicodePrefix: string;
+  rawPrefix: string;
   markupTag: MarkupTagName;
-  suffix?: string;
+  unicodeSuffix?: string;
 };
 
 type QuestionValidateResult<T> = [false, string] | [true, T];
@@ -163,10 +164,14 @@ export default class Reporter {
       name: 'columnsUpdated',
     });
 
+    // Windows terminals are awful
+    const unicode = process.platform !== 'win32';
+
     const outStream: ReporterStream = {
       type: 'out',
       format: getStreamFormat(stdout),
       columns,
+      unicode,
       write(chunk) {
         if (stdout !== undefined) {
           stdout.write(chunk);
@@ -180,6 +185,7 @@ export default class Reporter {
       type: 'error',
       format: getStreamFormat(stderr),
       columns,
+      unicode,
       write(chunk) {
         if (stderr !== undefined) {
           stderr.write(chunk);
@@ -1058,20 +1064,27 @@ export default class Reporter {
     args: Array<unknown>,
     opts: LogCategoryOptions,
   ) {
-    const prefix = markupTag('emphasis', markupTag(
-      opts.markupTag,
-        this.getMessagePrefix() +
-        opts.prefix,
-    ));
     const inner = markupTag(opts.markupTag, rawInner);
-    const suffix = opts.suffix === undefined
+    const unicodeSuffix = opts.unicodeSuffix === undefined
       ? ''
-      : markupTag('emphasis', markupTag(opts.markupTag, opts.suffix));
+      : markupTag('emphasis', markupTag(opts.markupTag, opts.unicodeSuffix));
 
     for (const stream of this.getStreams(opts.stderr)) {
+      // Format the prefix, selecting it depending on if we're a unicode stream
+      const prefixInner = stream.unicode ? opts.unicodePrefix : opts.rawPrefix;
+      const prefix = markupTag('emphasis', markupTag(
+        opts.markupTag,
+          this.getMessagePrefix() +
+          prefixInner,
+      ));
+
       const prefixMarkup = this.markupify(stream, prefix);
       const innerMarkup = this.markupify(stream, inner);
-      const suffixMarkup = this.markupify(stream, suffix);
+
+      // Ignore suffix unless we're a unicode stream
+      const suffixMarkup = stream.unicode
+        ? this.markupify(stream, unicodeSuffix)
+        : '';
 
       // Format with string-markup, we only do the first message rather than the interpolated string so you can pass in any data and not have to worry about escaping it
       const formatted = prefixMarkup + innerMarkup + suffixMarkup;
@@ -1097,7 +1110,8 @@ export default class Reporter {
 
   success(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
-      prefix: '\u2714 ',
+      unicodePrefix: '\u2714 ',
+      rawPrefix: '\u221a ',
       markupTag: 'green',
     });
   }
@@ -1105,7 +1119,8 @@ export default class Reporter {
   error(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
       markupTag: 'red',
-      prefix: '\u2716 ',
+      unicodePrefix: '\u2716 ',
+      rawPrefix: '\xd7 ',
       stderr: true,
     });
   }
@@ -1116,15 +1131,17 @@ export default class Reporter {
 
   info(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
-      prefix: '\u2139 ',
+      unicodePrefix: '\u2139 ',
+      rawPrefix: 'i ',
       markupTag: 'blue',
     });
   }
 
   warn(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
-      prefix: '\u26a0 ',
-      suffix: ' \u26a0',
+      unicodePrefix: '\u26a0 ',
+      rawPrefix: '! ',
+      unicodeSuffix: ' \u26a0',
       markupTag: 'yellow',
       stderr: true,
     });
@@ -1138,7 +1155,8 @@ export default class Reporter {
 
   verboseForce(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
-      prefix: '\u26a1 ',
+      unicodePrefix: '\u26a1 ',
+      rawPrefix: '* ',
       markupTag: 'brightBlack',
     });
   }

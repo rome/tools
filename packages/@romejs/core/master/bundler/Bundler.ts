@@ -27,6 +27,7 @@ import {WorkerCompileResult} from '../../common/bridges/WorkerBridge';
 import {Dict} from '@romejs/typescript-helpers';
 import {readFile} from '@romejs/fs';
 import {flipPathPatterns} from '@romejs/path-match';
+import {markup} from '@romejs/string-markup';
 
 export type BundlerEntryResoluton = {
   manifestDef: undefined | ManifestDefinition;
@@ -170,7 +171,7 @@ export default class Bundler {
       }
 
       const promise = (async () => {
-        const text = `<filelink target="${entry.join()}" />`;
+        const text = markup`<filelink target="${entry.join()}" />`;
         progress.pushText(text);
         map.set(entry, await this.bundle(entry, {}, silentReporter));
         progress.popText(text);
@@ -337,7 +338,7 @@ export default class Bundler {
     reporter: Reporter = this.reporter,
   ): Promise<BundleResult> {
     reporter.info(
-      `Bundling <filelink emphasis target="${resolvedEntry.join()}" />`,
+      markup`Bundling <filelink emphasis target="${resolvedEntry.join()}" />`,
     );
 
     const req = this.createBundleRequest(resolvedEntry, options, reporter);

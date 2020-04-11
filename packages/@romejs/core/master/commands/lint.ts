@@ -10,6 +10,7 @@ import {createMasterCommand, commandCategories} from '../../commands';
 import Linter, {LinterOptions} from '../linter/Linter';
 
 import {Consumer} from '@romejs/consume';
+import {markup} from '@romejs/string-markup';
 
 type Flags = {
   fix: boolean;
@@ -53,7 +54,7 @@ export default createMasterCommand<Flags>({
         reporter.warn(`No files changed from <emphasis>${target}</emphasis>`);
       } else {
         reporter.info(`Files changed from <emphasis>${target}</emphasis>`);
-        reporter.list(args.map((arg) => `<filelink target="${arg}" />`));
+        reporter.list(args.map((arg) => markup`<filelink target="${arg}" />`));
         reporter.hr();
       }
     }

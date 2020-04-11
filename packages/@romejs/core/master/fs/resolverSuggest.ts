@@ -24,6 +24,7 @@ import {
 import {orderBySimilarity} from '@romejs/string-utils';
 import {createUnknownFilePath, AbsoluteFilePath} from '@romejs/path';
 import {PLATFORMS} from '../../common/types/platform';
+import {markup} from '@romejs/string-markup';
 
 export default function resolverSuggest(
   resolver: Resolver,
@@ -110,7 +111,7 @@ export default function resolverSuggest(
 
       if (resolved.type === 'FOUND') {
         validPlatforms.push(
-          `<emphasis>${PLATFORM}</emphasis> at <filelink emphasis target="${resolved.ref.uid}" />`,
+          markup`<emphasis>${PLATFORM}</emphasis> at <filelink emphasis target="${resolved.ref.uid}" />`,
         );
       }
     }
@@ -128,7 +129,7 @@ export default function resolverSuggest(
           {
             type: 'log',
             category: 'info',
-            message: `No module found for the platform <emphasis>${query.platform}</emphasis> but we found these others`,
+            message: markup`No module found for the platform <emphasis>${query.platform}</emphasis> but we found these others`,
           },
         );
       }
@@ -193,19 +194,24 @@ export default function resolverSuggest(
           },
         );
 
-        advice = [
-          ...advice,
-          ...buildSuggestionAdvice(query.source.join(), relativeSuggestions, {
-            formatItem: (relative) => {
-              const absolute = relativeToAbsolute.get(relative);
-              if (absolute === undefined) {
-                throw new Error('Should be valid');
-              }
+          advice =
+          [
+            ...advice,
+            ...buildSuggestionAdvice(
+              query.source.join(),
+              relativeSuggestions,
+              {
+                formatItem: (relative) => {
+                  const absolute = relativeToAbsolute.get(relative);
+                  if (absolute === undefined) {
+                    throw new Error('Should be valid');
+                  }
 
-              return `<filelink target="${absolute}">${relative}</filelink>`;
-            },
-          }),
-        ];
+                  return markup`<filelink target="${absolute}">${relative}</filelink>`;
+                },
+              },
+            ),
+          ];
       }
     }
 
@@ -243,7 +249,7 @@ export default function resolverSuggest(
   }
 
     message +=
-    ` <emphasis>${source}</emphasis> from <filelink emphasis target="${location.filename}" />`;
+    markup` <emphasis>${source}</emphasis> from <filelink emphasis target="${location.filename}" />`;
 
   throw createSingleDiagnosticError({
     location,

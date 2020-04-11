@@ -424,6 +424,7 @@ export default class Client {
       bridge.getClientInfo.wait({
         version: VERSION,
         format: stdout.format,
+        unicode: stdout.unicode,
         hasClearScreen: this.reporter.hasClearScreen,
         columns: stdout.columns,
         useRemoteReporter: true,

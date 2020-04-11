@@ -23,6 +23,7 @@ import DependencyGraph from '../dependencies/DependencyGraph';
 import {ReporterProgressOptions, ReporterProgress} from '@romejs/cli-reporter';
 import DependencyNode from '../dependencies/DependencyNode';
 import {areAnalyzeDependencyResultsEqual} from '@romejs/js-compiler';
+import {markup} from '@romejs/string-markup';
 
 type LintWatchChanges = Array<{
   filename: undefined | string;
@@ -163,7 +164,7 @@ class LintRunner {
 
     await Promise.all(pathsByWorker.map(async (paths) => {
       for (const path of paths) {
-        const text = `<filelink target="${path.join()}" />`;
+        const text = markup`<filelink target="${path.join()}" />`;
         progress.pushText(text);
 
         const {

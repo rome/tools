@@ -38,6 +38,7 @@ import {
   get0,
   add,
   sub,
+  dec,
 } from '@romejs/ob1';
 import {escapeMarkup} from '@romejs/string-markup';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
@@ -715,11 +716,14 @@ export function isESIdentifierStart(char: undefined | string): boolean {
   return char !== undefined && /[A-Fa-z_$]/.test(char);
 }
 
-export function isEscaped(index: Number0, input: string) {
+export function isEscaped(index: Number0, input: string): boolean {
   const prevChar = input[get0(index) - 1];
-  const prevPrevChar = input[get0(index) - 2];
-  const isEscaped = prevChar === '\\' && prevPrevChar !== '\\';
-  return isEscaped;
+
+  if (prevChar === '\\') {
+    return !isEscaped(dec(index), input);
+  } else {
+    return false;
+  }
 }
 
 export function readUntilLineBreak(char: string): boolean {

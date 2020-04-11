@@ -509,7 +509,7 @@ export const descriptions = createMessages(
           {
             type: 'log',
             category: 'info',
-            message: `Defined already by <filelink target="${existing}" />`,
+            message: markup`Defined already by <filelink target="${existing}" />`,
           },
         ],
       }),
@@ -521,7 +521,7 @@ export const descriptions = createMessages(
           {
             type: 'log',
             category: 'info',
-            message: `Defined already by <filelink emphasis target="${existing}" />`,
+            message: markup`Defined already by <filelink emphasis target="${existing}" />`,
           },
         ],
       }),
@@ -540,7 +540,7 @@ export const descriptions = createMessages(
 
       INCORRECT_CONFIG_FILENAME: (validFilenames: Array<string>) => ({
         category: 'projectManager/incorrectConfigFilename',
-        message: `Invalid rome config filename, <emphasis>${validFilenames.join(
+        message: markup`Invalid rome config filename, <emphasis>${validFilenames.join(
           ' or ',
         )}</emphasis> are the only valid filename`,
       }),
@@ -794,15 +794,16 @@ export const descriptions = createMessages(
                 if (location !== undefined) {
                   if (location.start === undefined) {
                       name =
-                      `<filelink target="${location.filename}">${name}</filelink>`;
+                      markup`<filelink target="${location.filename}">${name}</filelink>`;
                   } else {
                       name =
-                      `<filelink target="${location.filename}" line="${location.start.line}" column="${location.start.column}">${name}</filelink>`;
+                      markup`<filelink target="${location.filename}" line="${location.start.line}" column="${location.start.column}">${name}</filelink>`;
                   }
                 }
 
                 if (source !== undefined) {
-                  name += ` <dim>(from <filelink target="${source}" />)</dim>`;
+                    name +=
+                    markup` <dim>(from <filelink target="${source}" />)</dim>`;
                 }
 
                 return name;

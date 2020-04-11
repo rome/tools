@@ -138,6 +138,7 @@ export default class Master {
           type: 'all',
           format: 'none',
           columns: 0,
+          unicode: true,
           write: (chunk) => {
             this.emitMasterLog(chunk);
           },
@@ -388,6 +389,7 @@ export default class Master {
       useRemoteReporter,
       hasClearScreen,
       columns,
+      unicode,
       format,
       version,
     } = await bridge.getClientInfo.call();
@@ -402,6 +404,7 @@ export default class Master {
       type: 'out',
       columns,
       format,
+      unicode,
       write(chunk: string) {
         if (flags.silent === true) {
           return;

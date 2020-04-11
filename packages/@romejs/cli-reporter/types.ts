@@ -15,6 +15,7 @@ export type Package = {
 export type ReporterStream = {
   type: 'out' | 'error' | 'all';
   columns: number;
+  unicode: boolean;
   format: 'ansi' | 'html' | 'none';
   write: (chunk: string) => void;
   teardown?: () => void;

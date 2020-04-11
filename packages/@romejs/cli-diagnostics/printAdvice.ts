@@ -20,7 +20,7 @@ import {
   getDiagnosticHeader,
 } from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
-import {toLines} from './utils';
+import {toLines, showInvisibles} from './utils';
 import buildPatchCodeFrame from './buildPatchCodeFrame';
 import buildMessageCodeFrame from './buildMessageCodeFrame';
 import {escapeMarkup, markupTag} from '@romejs/string-markup';
@@ -227,7 +227,14 @@ function printCode(
 
   reporter.indent(
     () => {
-      reporter.logAll(escapeMarkup(code));
+      if (code === '') {
+        reporter.logAll('<dim>empty input</dim>');
+      } else if (code.trim() === '') {
+        // If it's a string with only whitespace then make it obvious
+        reporter.logAll(showInvisibles(code));
+      } else {
+        reporter.logAll(escapeMarkup(code));
+      }
 
       if (truncated) {
         reporter.logAll(

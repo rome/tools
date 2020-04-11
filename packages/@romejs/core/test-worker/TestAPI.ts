@@ -490,7 +490,7 @@ export default class TestAPI {
           {
             type: 'log',
             category: 'info',
-            message: `Snapshot can be found at <filelink emphasis target="${this.snapshotManager.path.join()}" />`,
+            message: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.path.join()}" />`,
           },
         );
       }

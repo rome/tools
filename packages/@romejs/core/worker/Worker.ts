@@ -68,6 +68,7 @@ export default class Worker {
           type: 'all',
           format: 'none',
           columns: Reporter.DEFAULT_COLUMNS,
+          unicode: true,
           write(chunk) {
             opts.bridge.log.send(chunk.toString());
           },

@@ -46,7 +46,7 @@ import {
   CoverageFolder,
 } from './types';
 import {percentInsideCoverageFolder, formatPercent, sortMapKeys} from './utils';
-import {escapeMarkup} from '@romejs/string-markup';
+import {escapeMarkup, markup} from '@romejs/string-markup';
 
 class BridgeStructuredError extends NativeStructuredError {
   constructor(struct: Partial<StructuredError>, bridge: Bridge) {
@@ -58,7 +58,9 @@ class BridgeStructuredError extends NativeStructuredError {
 }
 
 function getProgressTestRefText(ref: TestRef) {
-  return `<filelink target="${ref.filename}" />: ${escapeMarkup(ref.testName)}`;
+  return markup`<filelink target="${ref.filename}" />: ${escapeMarkup(
+    ref.testName,
+  )}`;
 }
 
 export default class TestRunner {
@@ -548,7 +550,7 @@ export default class TestRunner {
               createAbsoluteFilePath(ref.filename),
             );
               origin.message =
-              `Generated from the file <filelink target="${uid}" /> and test name "${ref.testName}"`;
+              markup`Generated from the file <filelink target="${uid}" /> and test name "${ref.testName}"`;
             this.onTestFinished(ref);
             progress.popText(getProgressTestRefText(ref));
             progress.tick();
@@ -689,12 +691,15 @@ export default class TestRunner {
           absolute = absolutePath.join();
         }
 
-        rows.push([
-          fileIndent + `<filelink target="${absolute}">${name}</filelink>`,
-          formatPercent(file.functions.percent),
-          formatPercent(file.branches.percent),
-          formatPercent(file.lines.percent),
-        ]);
+        rows.push(
+          [
+              fileIndent +
+              markup`<filelink target="${absolute}">${name}</filelink>`,
+            formatPercent(file.functions.percent),
+            formatPercent(file.branches.percent),
+            formatPercent(file.lines.percent),
+          ],
+        );
       }
 
       for (const subFolder of sortMapKeys(folder.folders).values()) {
