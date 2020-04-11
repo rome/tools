@@ -10,6 +10,7 @@ import {MasterRequest} from '@romejs/core';
 import {commandCategories, createMasterCommand} from '../../commands';
 import lint from './lint';
 import test from './test';
+import {Consumer} from '@romejs/consume';
 
 async function runChildCommand(
   req: MasterRequest,
@@ -32,17 +33,27 @@ async function runChildCommand(
   }
 }
 
+type Flags = {
+  fix: boolean;
+};
+
 export default createMasterCommand({
   category: commandCategories.CODE_QUALITY,
   description: 'run lint and tests',
 
-  async default(req: MasterRequest): Promise<void> {
+  defineFlags(consumer: Consumer): Flags {
+    return {
+      fix: consumer.get('fix').asBoolean(false),
+    };
+  },
+
+  async default(req: MasterRequest, flags: Flags): Promise<void> {
     const {reporter} = req;
 
     reporter.heading('Running lint');
     await runChildCommand(req, async () => {
       await lint.default(req, {
-        fix: false,
+        fix: flags.fix,
         changed: undefined,
       });
     });
@@ -51,8 +62,8 @@ export default createMasterCommand({
     await runChildCommand(req, async () => {
       await test.default(req, {
         coverage: true,
-        freezeSnapshots: true,
-        updateSnapshots: false,
+        freezeSnapshots: !flags.fix,
+        updateSnapshots: flags.fix,
         showAllCoverage: true,
         syncTests: false,
       });
