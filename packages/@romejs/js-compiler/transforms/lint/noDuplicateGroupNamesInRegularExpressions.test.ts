@@ -11,10 +11,10 @@ import {testLint} from '../../api/lint.test';
 test(
   'disallow duplicate group names in regular expression',
   async (t) => {
-    t.snapshot(
-      await testLint(
-        `/(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/`,
-      ),
+    await testLint(
+      t,
+      `/(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/`,
+      {category: 'lint/noDuplicateGroupNamesInRegularExpressions'},
     );
   },
 );

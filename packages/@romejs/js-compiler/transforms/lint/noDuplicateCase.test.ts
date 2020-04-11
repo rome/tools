@@ -9,7 +9,7 @@ import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
 test('no duplicated switch cases allowed', async (t) => {
-  const duplicatedSwitchCase = await testLint(`
+  await testLint(t, `
     const expr = 'a';
     switch (expr) {
       case 'a':
@@ -25,10 +25,5 @@ test('no duplicated switch cases allowed', async (t) => {
       default:
         break;
     }
-  `);
-
-  t.truthy(duplicatedSwitchCase.diagnostics.find(
-    (d) => d.description.category ===
-      'lint/noDuplicateCase',
-  ));
+  `, {category: 'lint/noDuplicateCase'});
 });

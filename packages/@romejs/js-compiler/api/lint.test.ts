@@ -14,14 +14,61 @@ import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
 import {ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
+import {DiagnosticCategory} from '@romejs/diagnostics';
+import {TestAPI} from '@romejs/core';
+import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
 
-export async function testLint(
-  input: string,
-  format: boolean = false,
-  sourceType: ConstSourceType = 'module',
-  syntax?: Array<ConstProgramSyntax>,
+type TestLintOptions = {
+  category: undefined | DiagnosticCategory;
+  format?: boolean;
+  sourceType?: ConstSourceType;
+  syntax?: Array<ConstProgramSyntax>;
+};
+
+export async function testLintMultiple(
+  t: TestAPI,
+  inputs: Array<string>,
+  opts: TestLintOptions,
 ) {
-  return await lint({
+  for (const input of inputs) {
+    await testLint(t, input, opts);
+  }
+}
+
+export async function testLint(t: TestAPI, input: string, {
+  syntax = [],
+  category,
+  format = false,
+  sourceType = 'module',
+}: TestLintOptions) {
+  t.addToAdvice({
+    type: 'log',
+    category: 'info',
+    message: 'Lint options',
+  });
+
+  t.addToAdvice({
+    type: 'inspect',
+    data: {
+      category,
+      syntax,
+      format,
+      sourceType,
+    },
+  });
+
+  t.addToAdvice({
+    type: 'log',
+    category: 'info',
+    message: 'Input',
+  });
+
+  t.addToAdvice({
+    type: 'code',
+    code: input,
+  });
+
+  const res = await lint({
     options: {},
     format,
     ast: parseJS({
@@ -36,21 +83,48 @@ export async function testLint(
       config: DEFAULT_PROJECT_CONFIG,
     },
   });
+
+  const diagnostics = res.diagnostics.filter((diag) => {
+    return diag.description.category === category;
+  }).map((diag) => {
+    return {
+      ...diag,
+      location: {
+        ...diag.location,
+        sourceText: input,
+      },
+    };
+  });
+
+  if (format) {
+    t.snapshot({
+      ...res,
+      diagnostics,
+    });
+  } else {
+    // Nicer snapshot when we don't care about formatting
+    t.snapshot(printDiagnosticsToString({
+      diagnostics,
+      suppressions: res.suppressions,
+    }));
+  }
+
+  t.clearAdvice();
 }
 
 test('format disabled in project config should not regenerate the file', async (
   t,
 ) => {
   // Intentionally weird formatting
-  const sourceText = 'foobar ( "yes" );';
-  const res = await testLint(sourceText, false);
-  t.is(res.src, sourceText);
+  await testLint(t, 'foobar ( "yes" );', {category: undefined, format: false});
 });
 
 test(
   'format enabled in project config should result in regenerated file',
   async (t) => {
-    const res = await testLint('foobar ( "yes" );', true);
-    t.is(res.src, "foobar('yes');\n");
+    await testLint(t, 'foobar ( "yes" );', {
+      category: undefined,
+      format: true,
+    });
   },
 );

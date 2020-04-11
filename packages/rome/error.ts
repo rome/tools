@@ -29,13 +29,12 @@ export function throwDiagnostics(diagnostics: Diagnostics) {
   }
 
   // We do not want to expose the `diagnostics`
-  const err = new RomeDiagnosticsError(printDiagnosticsToString(
+  const err = new RomeDiagnosticsError(printDiagnosticsToString({
     diagnostics,
-    {},
-    'none',
-  ));
-  err.getHTML = () => printDiagnosticsToString(diagnostics, {}, 'none');
-  err.getAnsi = () => printDiagnosticsToString(diagnostics, {}, 'ansi');
+    format: 'none',
+  }));
+  err.getHTML = () => printDiagnosticsToString({diagnostics, format: 'html'});
+  err.getAnsi = () => printDiagnosticsToString({diagnostics, format: 'ansi'});
   throw err;
 }
 

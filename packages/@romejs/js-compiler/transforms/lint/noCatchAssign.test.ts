@@ -6,10 +6,10 @@
  */
 
 import test from '@romejs/test';
-import {testLint} from '../../api/lint.test';
+import {testLintMultiple} from '../../api/lint.test';
 
 test('no exception assign', async (t) => {
-  const testCases = [
+  await testLintMultiple(t, [
     // VALID
     `try { } catch (e) { three = 2 + 1; }`,
     'try { } catch ({e}) { this.something = 2; }',
@@ -22,9 +22,5 @@ test('no exception assign', async (t) => {
     "try { } catch ({message, name}) { message = 'test'; name = 10; }",
     'try { } catch (ex) { ({x: ex = 0} = {}); }',
     'try { } catch (ex) { let a; ({x: a = ex = 0} = {}); }',
-  ];
-
-  for (const test of testCases) {
-    t.snapshot(await testLint(test));
-  }
+  ], {category: 'lint/noCatchAssign'});
 });

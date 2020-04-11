@@ -9,38 +9,32 @@ import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
 test('getter return', async (t) => {
-  const badClass = await testLint(`
-    class p {
-      get name() {
-        console.log('hello')
-      };
-    }
-    console.log(new p())
-    `);
-
-  t.snapshot(badClass);
-
-  const badObject = await testLint(`
-    let p;
-    p = {
-      get name() {
-        console.log('hello')
-      }
+  await testLint(t, `
+  class p {
+    get name() {
+      console.log('hello')
     };
-    console.log(p)
-    `);
+  }
+  console.log(new p())
+  `, {category: 'lint/getterReturn'});
 
-  t.snapshot(badObject);
+  await testLint(t, `
+  let p;
+  p = {
+    get name() {
+      console.log('hello')
+    }
+  };
+  console.log(p)
+  `, {category: 'lint/getterReturn'});
 
-  const badDefinedProperty = await testLint(`
-    let p = {};
-    Object.defineProperty(p, {
-      get: function (){
-          console.log('hello')
-      }
-    });
-    console.log(p)
-    `);
-
-  t.snapshot(badDefinedProperty);
+  await testLint(t, `
+  let p = {};
+  Object.defineProperty(p, {
+    get: function (){
+        console.log('hello')
+    }
+  });
+  console.log(p)
+  `, {category: 'lint/getterReturn'});
 });

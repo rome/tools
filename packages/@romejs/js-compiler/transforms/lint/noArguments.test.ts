@@ -9,34 +9,34 @@ import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
 test('no arguments', async (t) => {
-  t.snapshot(await testLint(`
+  await testLint(t, `
     function f() {
       console.log(arguments);
     }
     f();
-  `));
+  `, {category: 'lint/noArguments'});
 
-  t.snapshot(await testLint(`
+  await testLint(t, `
     (function () {
       console.log(arguments);
     })();
-  `));
+  `, {category: 'lint/noArguments'});
 
-  t.snapshot(await testLint(`
+  await testLint(t, `
     class C {
       fn() {
         console.log(arguments);
       }
     }
     (new C()).fn();
-  `));
+  `, {category: 'lint/noArguments'});
 
-  t.snapshot(await testLint(`
+  await testLint(t, `
     const o = {
       fn() {
         console.log(arguments);
       }
     };
     o.fn();
-  `));
+  `, {category: 'lint/noArguments'});
 });

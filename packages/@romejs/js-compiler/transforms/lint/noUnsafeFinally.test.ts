@@ -11,75 +11,60 @@ import {testLint} from '../../api/lint.test';
 test(
   'disallow unsafe usage of break, continue, throw and return',
   async (t) => {
-    const returnTest = await testLint(`
-    function greet1() {
-      try {
-        throw new Error("Try")
-      } catch(err) {
-          throw err;
-      } finally {
-          return 1;
+    await testLint(t, `
+      function greet1() {
+        try {
+          throw new Error("Try")
+        } catch(err) {
+            throw err;
+        } finally {
+            return 1;
+        }
       }
-    }
 
-    greet1();
-    `);
+      greet1();
+    `, {category: 'lint/noUnsafeFinally'});
 
-    t.truthy(returnTest.diagnostics.find((d) => d.description.message.value ===
-      `Unsafe usage of ReturnStatement.`));
-
-    const breakTest = await testLint(`
-
-    function greet2() {
-      try {
-        throw new Error("Try")
-      } catch(err) {
-          throw err;
-      } finally {
-          break;
+    await testLint(t, `
+      function greet2() {
+        try {
+          throw new Error("Try")
+        } catch(err) {
+            throw err;
+        } finally {
+            break;
+        }
       }
-    }
 
-    greet2();
-    `);
+      greet2();
+    `, {category: 'lint/noUnsafeFinally'});
 
-    t.truthy(breakTest.diagnostics.find((d) => d.description.message.value ===
-      `Unsafe usage of BreakStatement.`));
-
-    const continueTest = await testLint(`
-    function greet3() {
-      try {
-        throw new Error("Try")
-      } catch(err) {
-          throw err;
-      } finally {
-          continue;
+    await testLint(t, `
+      function greet3() {
+        try {
+          throw new Error("Try")
+        } catch(err) {
+            throw err;
+        } finally {
+            continue;
+        }
       }
-    }
 
-    greet3();
-    `);
+      greet3();
+    `, {category: 'lint/noUnsafeFinally'});
 
-    t.truthy(continueTest.diagnostics.find(
-      (d) => d.description.message.value ===
-        `Unsafe usage of ContinueStatement.`,
-    ));
-
-    const throwTest = await testLint(`
-    function greet4() {
-      try {
-        throw new Error("Try")
-      } catch(err) {
-          throw err;
-      } finally {
-          throw new Error("Finally");
+    await testLint(t, `
+      function greet4() {
+        try {
+          throw new Error("Try")
+        } catch(err) {
+            throw err;
+        } finally {
+            throw new Error("Finally");
+        }
       }
-    }
 
-    greet4();
-    `);
-
-    t.truthy(throwTest.diagnostics.find((d) => d.description.message.value ===
-      `Unsafe usage of ThrowStatement.`));
+      greet4();
+      `, {category: 'lint/noUnsafeFinally'});
   },
 );

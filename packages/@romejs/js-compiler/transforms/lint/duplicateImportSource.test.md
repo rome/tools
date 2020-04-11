@@ -4,88 +4,38 @@
 
 ## `duplicate import source`
 
+```
+
+ unknown:3:4 lint/duplicateImportSource FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ This module has already been imported
+
+    2 │     import foo from './testdummy.ts';
+  > 3 │     import {bar} from './testdummy.ts';
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+    4 │     import type {fooType} from './testdummy.ts';
+
+  ℹ Previously imported here
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+## `format disabled in project config should not regenerate the file`
+
+```
+✔ No known problems!
+
+```
+
+## `format enabled in project config should result in regenerated file`
+
 ```javascript
 Object {
-  src: '\n    import foo from \'./testdummy.ts\';\n    import {bar} from \'./testdummy.ts\';\n    import type {fooType} from \'./testdummy.ts\';\n  \n    const typedFoo: fooType = {\n      type: \'foo\'\n    } \n    console.log(typedFoo, foo, bar);\n    '
+  diagnostics: Array []
+  src: 'foobar(\'yes\');\n'
   suppressions: Array []
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'A type annotation is only valid inside of a TypeScript or Flow file'}
-        advice: Array [
-          log {
-            category: 'info'
-            message: 'Did you mean <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>'
-          }
-          log {
-            category: 'info'
-            message: 'Did you mean <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file'
-          }
-        ]
-      }
-      location: Object {
-        filename: 'unknown'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 18
-          index: 149
-          line: 6
-        }
-        start: Object {
-          column: 18
-          index: 149
-          line: 6
-        }
-      }
-    }
-    Object {
-      origins: Array [Object {category: 'lint'}]
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 39
-          index: 78
-          line: 3
-        }
-        start: Object {
-          column: 4
-          index: 43
-          line: 3
-        }
-      }
-      description: Object {
-        category: 'lint/duplicateImportSource'
-        fixable: true
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'This module has already been imported'}
-        advice: Array [
-          log {
-            category: 'info'
-            message: 'Previously imported here'
-          }
-          frame {
-            location: Object {
-              filename: 'unknown'
-              end: Object {
-                column: 37
-                index: 38
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 5
-                line: 2
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
 }
 ```

@@ -9,13 +9,10 @@ import test from '@romejs/test';
 import {testLint} from '../../api/lint.test';
 
 test('no duplicated args allowed', async (t) => {
-  const duplicatedArgs = await testLint(`
+  await testLint(t, `
   function hello(a, a) {
     console.log("Hello);
   }
   hello();
-  `);
-
-  t.truthy(duplicatedArgs.diagnostics.find((d) => d.description.category ===
-    'lint/noDupeArgs'));
+  `, {category: 'lint/noDupeArgs'});
 });
