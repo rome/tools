@@ -48,7 +48,7 @@ export type DiagnosticCategory =
   | 'lint/noShorthandArrayType'
   | 'lint/noTemplateCurlyInString'
   | 'lint/noUnsafeFinally'
-  | 'lint/noExAssign'
+  | 'lint/noCatchAssign'
   | 'lint/noVar'
   | 'lint/pendingFixes'
   | 'lint/preferFunctionDeclarations'

@@ -210,7 +210,9 @@ export async function getWatchmanSocketLocation(): Promise<string> {
       }
 
       return data.sockname;
-    } catch (err) {
+    } catch (_err) {
+      let err = _err;
+
       // Better error message for syntatically invalid JSON
       if (err instanceof SyntaxError) {
         err = new Error(`Watchman returned malformed JSON payload`);

@@ -33,7 +33,7 @@ import noShadowRestrictedNames from './noShadowRestrictedNames';
 import noShorthandArrayType from './noShorthandArrayType';
 import noTemplateCurlyInString from './noTemplateCurlyInString';
 import noUnsafeFinally from './noUnsafeFinally';
-import noExAssign from './noExAssign';
+import noCatchAssign from './noCatchAssign';
 import noVar from './noVar';
 import preferFunctionDeclarations from './preferFunctionDeclarations';
 import preferTemplate from './preferTemplate';
@@ -72,7 +72,7 @@ export const lintTransforms = [
   noShorthandArrayType,
   noTemplateCurlyInString,
   noUnsafeFinally,
-  noExAssign,
+  noCatchAssign,
   noVar,
   preferFunctionDeclarations,
   preferTemplate,

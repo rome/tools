@@ -258,6 +258,11 @@ export const descriptions = createMessages(
         message: markup`Undeclared variable <emphasis>${name}</emphasis>`,
       }),
 
+      NO_CATCH_ASSIGN: {
+        category: 'lint/noCatchAssign',
+        message: "Don't reassign catch parameters",
+      },
+
       SPARSE_ARRAY: {
         fixable: true,
         category: 'lint/sparseArray',
