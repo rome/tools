@@ -575,17 +575,19 @@ function cleanupMerge(diffs: Diffs, fix_unicode: boolean) {
       continue;
     }
     switch (diffs[pointer][0]) {
-      case DIFF_INSERT:
+      case DIFF_INSERT: {
         count_insert++;
         text_insert += diffs[pointer][1];
         pointer++;
         break;
-      case DIFF_DELETE:
+      }
+      case DIFF_DELETE: {
         count_delete++;
         text_delete += diffs[pointer][1];
         pointer++;
         break;
-      case DIFF_EQUAL:
+      }
+      case DIFF_EQUAL: {
         let previous_equality = pointer - count_insert - count_delete - 1;
         if (fix_unicode) {
           // prevent splitting of unicode surrogate pairs.  when fix_unicode is true,
@@ -712,6 +714,7 @@ function cleanupMerge(diffs: Diffs, fix_unicode: boolean) {
         text_delete = '';
         text_insert = '';
         break;
+      }
     }
   }
   if (diffs[diffs.length - 1][1] === '') {

@@ -190,7 +190,7 @@ localCommands.set('run', {
       const type = data.get('type').asString();
 
       switch (type) {
-        case 'executeCode':
+        case 'executeCode': {
           process.execArgv = [...process.execArgv, process.argv[1], 'run'];
           process.argv = [
             process.argv[0],
@@ -207,6 +207,7 @@ localCommands.set('run', {
           }
           await new Promise(() => {});
           break;
+        }
       }
     }
 

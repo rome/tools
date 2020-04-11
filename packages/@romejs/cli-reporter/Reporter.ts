@@ -292,11 +292,12 @@ export default class Reporter {
   receivedRemoteServerMessage(msg: RemoteReporterServerMessage) {
     // Currently the only message a remote Reporter can send is that it has ended
     switch (msg.type) {
-      case 'ENDED':
+      case 'ENDED': {
         const progress = this.remoteServerProgressBars.get(msg.id);
         if (progress !== undefined) {
           progress.end();
         }
+      }
     }
   }
 
@@ -627,15 +628,17 @@ export default class Reporter {
         ctrl: boolean;
       }) => {
         switch (key.name) {
-          case 'up':
+          case 'up': {
             activeOption--;
             break;
+          }
 
-          case 'down':
+          case 'down': {
             activeOption++;
             break;
+          }
 
-          case 'space':
+          case 'space': {
             if (!radio) {
               const optionName = optionNames[activeOption];
               if (selectedOptions.has(optionName)) {
@@ -645,24 +648,28 @@ export default class Reporter {
               }
             }
             break;
+          }
 
-          case 'c':
+          case 'c': {
             if (key.ctrl) {
               this.forceSpacer();
               this.warn('Cancelled by user');
               process.exit(1);
             }
             return;
+          }
 
-          case 'escape':
+          case 'escape': {
             this.forceSpacer();
             this.warn('Cancelled by user');
             process.exit(1);
             return;
+          }
 
-          case 'return':
+          case 'return': {
             finish();
             return;
+          }
 
           default:
             return;

@@ -199,7 +199,7 @@ export const createRegExpParser = createParser(
           case 'W':
             return this.finishValueToken('EscapedCharacter', nextChar, end);
 
-          case 'k':
+          case 'k': {
             if (this.unicode) {
               // named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
               let namedBackReference = '';
@@ -229,8 +229,9 @@ export const createRegExpParser = createParser(
               value: 'k',
               escaped: true,
             }, end);
+          }
 
-          case 'p':
+          case 'p': {
             if (this.unicode) {
               // TODO unicode property escapes https://github.com/tc39/proposal-regexp-unicode-property-escapes
             }
@@ -239,8 +240,9 @@ export const createRegExpParser = createParser(
               value: 'p',
               escaped: true,
             }, end);
+          }
 
-          case 'P':
+          case 'P': {
             if (this.unicode) {
               // TODO unicode property escapes https://github.com/tc39/proposal-regexp-unicode-property-escapes
             }
@@ -249,6 +251,7 @@ export const createRegExpParser = createParser(
               value: 'P',
               escaped: true,
             }, end);
+          }
 
           case 'c':
             // TODO???
@@ -320,7 +323,7 @@ export const createRegExpParser = createParser(
           }
 
           // Redundant escaping
-          default:
+          default: {
             let {
               octalValue: referenceValue,
               end: referenceEnd,
@@ -378,6 +381,7 @@ export const createRegExpParser = createParser(
               value: nextChar,
               escaped: true,
             }, end);
+          }
         }
       }
 
@@ -409,47 +413,52 @@ export const createRegExpParser = createParser(
 
       if (token.type === 'Character') {
         switch (token.value) {
-          case ':':
+          case ':': {
             this.nextToken();
             return {
               type: 'NON_CAPTURE',
               kind: undefined,
             };
+          }
 
-          case '=':
+          case '=': {
             this.nextToken();
             return {
               type: 'NON_CAPTURE',
               kind: 'positive-lookahead',
             };
+          }
 
-          case '!':
+          case '!': {
             this.nextToken();
             return {
               type: 'NON_CAPTURE',
               kind: 'negative-lookahead',
             };
+          }
 
-          case '<':
+          case '<': {
             const nextToken = this.lookaheadToken();
 
             if (nextToken.type === 'Character') {
               switch (nextToken.value) {
-                case '!':
+                case '!': {
                   this.nextToken();
                   this.nextToken();
                   return {
                     type: 'NON_CAPTURE',
                     kind: 'negative-lookbehind',
                   };
+                }
 
-                case '=':
+                case '=': {
                   this.nextToken();
                   this.nextToken();
                   return {
                     type: 'NON_CAPTURE',
                     kind: 'positive-lookbehind',
                   };
+                }
               }
 
               if (isESIdentifierStart(nextToken.value)) {
@@ -483,6 +492,7 @@ export const createRegExpParser = createParser(
                 }
               }
             }
+          }
         }
       }
 
@@ -867,26 +877,29 @@ export const createRegExpParser = createParser(
 
     parseOperator(token: Tokens['Operator']): undefined | AnyRegExpBodyItem {
       switch (token.value) {
-        case '$':
+        case '$': {
           this.nextToken();
           return {
             type: 'RegExpEndCharacter',
             loc: this.finishLocFromToken(token),
           };
+        }
 
-        case '^':
+        case '^': {
           this.nextToken();
           return {
             type: 'RegExpStartCharacter',
             loc: this.finishLocFromToken(token),
           };
+        }
 
-        case '.':
+        case '.': {
           this.nextToken();
           return {
             type: 'RegExpAnyCharacter',
             loc: this.finishLocFromToken(token),
           };
+        }
 
         case '[':
           return this.parseCharSet();
@@ -894,15 +907,16 @@ export const createRegExpParser = createParser(
         case '(':
           return this.parseGroupCapture();
 
-        case ')':
+        case ')': {
           this.nextToken();
           this.addDiagnostic({
             description: descriptions.REGEX_PARSER.UNOPENED_GROUP,
             token,
           });
           return;
+        }
 
-        case '{':
+        case '{': {
           const start = this.getPosition();
           const unmatchedQuantifier = this.parseQuantifier();
           if (unmatchedQuantifier === undefined) {
@@ -920,16 +934,18 @@ export const createRegExpParser = createParser(
             });
             return;
           }
+        }
 
         case '?':
         case '*':
-        case '+':
+        case '+': {
           this.nextToken();
           this.addDiagnostic({
             description: descriptions.REGEX_PARSER.INVALID_QUANTIFIER_TARGET,
             token,
           });
           return;
+        }
 
         case ']':
         case '}':

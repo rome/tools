@@ -245,11 +245,12 @@ export default class DependencyNode {
       }
 
       switch (exp.type) {
-        case 'local':
+        case 'local': {
           names.add(exp.name);
           break;
+        }
 
-        case 'external':
+        case 'external': {
           const resolved = this.getNodeFromRelativeDependency(exp.source).resolveImport(
             exp.imported,
             exp.loc,
@@ -258,12 +259,14 @@ export default class DependencyNode {
             names.add(exp.exported);
           }
           break;
+        }
 
-        case 'externalNamespace':
+        case 'externalNamespace': {
           names.add(exp.exported);
           break;
+        }
 
-        case 'externalAll':
+        case 'externalAll': {
           names = new Set([
             ...names,
             ...this.getNodeFromRelativeDependency(exp.source).getExportedNames(
@@ -272,6 +275,7 @@ export default class DependencyNode {
             ),
           ]);
           break;
+        }
       }
     }
 

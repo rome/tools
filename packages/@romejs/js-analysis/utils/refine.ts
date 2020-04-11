@@ -41,7 +41,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
   let types = [];
 
   switch (node.type) {
-    case 'BinaryExpression':
+    case 'BinaryExpression': {
       const {left, right} = node;
       switch (node.operator) {
         case '==':
@@ -50,7 +50,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
         case '!=':
           return [];
 
-        case '===':
+        case '===': {
           // typeof foo === 'string'
           if (isTypeofNode(left)) {
             const name = left.argument.name;
@@ -101,8 +101,9 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
             });
           }
           break;
+        }
 
-        case '!==':
+        case '!==': {
           // TODO add `typeof`
           if (left.type === 'ReferenceIdentifier') {
             types.push({
@@ -127,6 +128,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
             });
           }
           return types;
+        }
 
         case 'instanceof':
           return [];
@@ -135,10 +137,11 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
           throw new Error('Unknown BinaryExpression operator');
       }
       break;
+    }
 
     case 'LogicalExpression':
       switch (node.operator) {
-        case '||':
+        case '||': {
           const leftMap = typesToMap(genTypes(node.left, scope));
           const rightMap = typesToMap(genTypes(node.right, scope));
           const names = new Set([...leftMap.keys(), ...rightMap.keys()]);
@@ -166,6 +169,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
               value: type,
             };
           });
+        }
 
         case '&&':
           return [

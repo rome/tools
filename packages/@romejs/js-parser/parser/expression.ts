@@ -2681,9 +2681,10 @@ function createFunctionHead(
       case 'BindingIdentifier':
       case 'BindingAssignmentPattern':
       case 'BindingObjectPattern':
-      case 'BindingArrayPattern':
+      case 'BindingArrayPattern': {
         nonRestParams.push(param);
         break;
+      }
 
       default:
         throw new Error('TODO');

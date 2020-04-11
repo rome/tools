@@ -299,15 +299,17 @@ function parseClassMemberWithIsStatic(
 
   const mod = parseTSModifier(parser, ['abstract', 'readonly']);
   switch (mod) {
-    case 'readonly':
+    case 'readonly': {
       readonly = true;
       abstract = hasTSModifier(parser, ['abstract']);
       break;
+    }
 
-    case 'abstract':
+    case 'abstract': {
       abstract = true;
       readonly = hasTSModifier(parser, ['readonly']);
       break;
+    }
   }
 
   const nameOpts = {

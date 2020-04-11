@@ -281,7 +281,7 @@ export function parseStatement(
     case tt._for:
       return parseForStatement(parser, start);
 
-    case tt._function:
+    case tt._function: {
       if (parser.lookaheadState().tokenType === tt.dot) {
         // MetaProperty: eg. function.sent
         break;
@@ -311,6 +311,7 @@ export function parseStatement(
       }
 
       return result;
+    }
 
     case tt._class: {
       if (context !== undefined) {
@@ -335,7 +336,7 @@ export function parseStatement(
       return parseTryStatement(parser, start);
 
     case tt._const:
-    case tt._var:
+    case tt._var: {
       kind = kind === undefined
         ? assertVarKind(String(parser.state.tokenValue))
         : kind;
@@ -347,6 +348,7 @@ export function parseStatement(
         );
       }
       return parseVarStatement(parser, start, kind);
+    }
 
     case tt._while:
       return parseWhileStatement(parser, start);

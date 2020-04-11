@@ -77,12 +77,13 @@ export default createParser(
       const char = input[get0(index)];
 
       switch (char) {
-        case '#':
+        case '#': {
           const [hashes] = this.readInputFrom(index, isHash);
           const level = hashes.length;
           return this.finishValueToken('Hashes', level, add(index, level));
+        }
 
-        case '`':
+        case '`': {
           const nextChar = input[get0(add(index, 1))];
           const nextNextChar = input[get0(add(index, 2))];
 
@@ -142,6 +143,7 @@ export default createParser(
               });
             }
           }
+        }
       }
 
       const [text, end] = this.readInputFrom(index, isntNewline);
@@ -156,7 +158,7 @@ export default createParser(
         const token = this.getToken();
 
         switch (token.type) {
-          case 'Hashes':
+          case 'Hashes': {
             const level = token.value;
             this.nextToken();
             const text = this.expectToken('TextLine').value;
@@ -167,8 +169,9 @@ export default createParser(
               loc: this.finishLoc(start),
             });
             break;
+          }
 
-          case 'CodeBlock':
+          case 'CodeBlock': {
             nodes.push({
               type: 'CodeBlock',
               ...token.value,
@@ -176,8 +179,9 @@ export default createParser(
             });
             this.nextToken();
             break;
+          }
 
-          case 'TextLine':
+          case 'TextLine': {
             nodes.push({
               type: 'TextLine',
               text: token.value,
@@ -185,6 +189,7 @@ export default createParser(
             });
             this.nextToken();
             break;
+          }
 
           default:
             throw this.unexpected();

@@ -247,11 +247,12 @@ export default class Worker {
       }
 
       switch (value.type) {
-        case 'RESOLVED':
+        case 'RESOLVED': {
           this.moduleSignatureCache.set(createUnknownFilePath(
             value.graph.filename,
           ), value.graph);
           return value.graph;
+        }
 
         case 'OWNED':
           return this.api.moduleSignatureJS(convertTransportFileReference(
@@ -261,7 +262,7 @@ export default class Worker {
         case 'POINTER':
           return resolveGraph(value.key);
 
-        case 'USE_CACHED':
+        case 'USE_CACHED': {
           const cached = this.moduleSignatureCache.get(createUnknownFilePath(
             value.filename,
           ));
@@ -271,6 +272,7 @@ export default class Worker {
               );
           }
           return cached;
+        }
       }
     };
 

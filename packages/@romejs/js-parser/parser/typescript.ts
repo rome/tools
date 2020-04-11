@@ -468,21 +468,24 @@ export function tsCheckLiteralForConstantContext(
     case 'ObjectExpression':
       break;
 
-    case 'ArrayExpression':
+    case 'ArrayExpression': {
       for (const elem of node.elements) {
         if (elem) {
           tsCheckLiteralForConstantContext(parser, elem);
         }
       }
       break;
+    }
 
-    case 'ObjectProperty':
+    case 'ObjectProperty': {
       tsCheckLiteralForConstantContext(parser, node.value);
       break;
+    }
 
-    case 'UnaryExpression':
+    case 'UnaryExpression': {
       tsCheckLiteralForConstantContext(parser, node.argument);
       break;
+    }
 
     default:
       parser.addDiagnostic({
@@ -1105,12 +1108,13 @@ function tsCheckTypeAnnotationForReadOnly(parser: JSParser, node: AnyTSPrimary) 
     case 'TSArrayType':
       return;
 
-    default:
+    default: {
       parser.addDiagnostic({
         loc: node.loc,
         description: descriptions.JS_PARSER.TS_INVALID_READONLY_MODIFIER,
       });
       break;
+    }
   }
 }
 
@@ -1811,7 +1815,7 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
       };
 
     case tt._const:
-    case tt._var:
+    case tt._var: {
       kind = kind === undefined
         ? assertVarKind(String(parser.state.tokenValue))
         : kind;
@@ -1819,6 +1823,7 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
         declare: true,
         ...parseVarStatement(parser, start, kind),
       };
+    }
 
     case tt.name: {
       const value = String(parser.state.tokenValue);

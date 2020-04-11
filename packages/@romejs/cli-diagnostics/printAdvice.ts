@@ -117,18 +117,21 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
 
   for (const [type, text] of diffs) {
     switch (type) {
-      case diffConstants.ADD:
+      case diffConstants.ADD: {
         received += text;
         break;
+      }
 
-      case diffConstants.DELETE:
+      case diffConstants.DELETE: {
         expected += text;
         break;
+      }
 
-      case diffConstants.EQUAL:
+      case diffConstants.EQUAL: {
         expected += text;
         received += text;
         break;
+      }
     }
   }
 
@@ -411,21 +414,25 @@ function printLog(
 
   if (message !== undefined) {
     switch (category) {
-      case 'none':
+      case 'none': {
         reporter.logAll(message);
         break;
+      }
 
-      case 'warn':
+      case 'warn': {
         reporter.warn(message);
         break;
+      }
 
-      case 'info':
+      case 'info': {
         reporter.info(message);
         break;
+      }
 
-      case 'error':
+      case 'error': {
         reporter.error(message);
         break;
+      }
 
       default:
         throw new Error(`Unknown message item log category ${category}`);
