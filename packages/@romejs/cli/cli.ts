@@ -346,25 +346,29 @@ export default async function cli() {
   }
 
   switch (res.type) {
-    case 'ERROR':
+    case 'ERROR': {
       if (!res.handled) {
         console.error('Unhandled CLI query error');
         console.error(res.stack);
       }
       process.exit(1);
       break;
+    }
 
-    case 'INVALID_REQUEST':
+    case 'INVALID_REQUEST': {
       await p.showHelp();
       process.exit(1);
       break;
+    }
 
-    case 'DIAGNOSTICS':
+    case 'DIAGNOSTICS': {
       process.exit(1);
       break;
+    }
 
-    case 'SUCCESS':
+    case 'SUCCESS': {
       process.exit(0);
       break;
+    }
   }
 }

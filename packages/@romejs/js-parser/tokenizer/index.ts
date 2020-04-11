@@ -418,22 +418,24 @@ function skipSpace(parser: JSParser): void {
 
     switch (ch) {
       case charCodes.space:
-      case charCodes.nonBreakingSpace:
+      case charCodes.nonBreakingSpace: {
         bumpIndex(parser);
         break;
+      }
 
       case charCodes.carriageReturn:
       case charCodes.lineFeed:
       case charCodes.lineSeparator:
-      case charCodes.paragraphSeparator:
+      case charCodes.paragraphSeparator: {
         bumpIndex(parser);
         parser.state.curLine = inc(parser.state.curLine);
         parser.resetTokenizerLine();
         break;
+      }
 
-      case charCodes.slash:
+      case charCodes.slash: {
         switch (parser.input.charCodeAt(getIndex(parser) + 1)) {
-          case charCodes.asterisk:
+          case charCodes.asterisk: {
             // Break the loop and don't consume Flow comment code
             if (parser.input.charCodeAt(getIndex(parser) + 2) ===
                   charCodes.colon &&
@@ -444,15 +446,18 @@ function skipSpace(parser: JSParser): void {
 
             skipBlockComment(parser);
             break;
+          }
 
-          case charCodes.slash:
+          case charCodes.slash: {
             skipLineComment(parser, 2);
             break;
+          }
 
           default:
             break loop;
         }
         break;
+      }
 
       default:
         if (ch > charCodes.backSpace && ch < charCodes.shiftOut || ch >=
@@ -768,43 +773,49 @@ function getTokenFromCode(parser: JSParser, code: number): void {
     // The interpretation of a dot depends on whether it is followed
 
     // by a digit or another two dots.
-    case charCodes.dot:
+    case charCodes.dot: {
       readToken_dot(parser);
       return undefined;
-
+    }
 
     // Punctuation tokens.
-    case charCodes.leftParenthesis:
+    case charCodes.leftParenthesis: {
       bumpIndex(parser);
       finishToken(parser, tt.parenL);
       return undefined;
+    }
 
-    case charCodes.rightParenthesis:
+    case charCodes.rightParenthesis: {
       bumpIndex(parser);
       finishToken(parser, tt.parenR);
       return undefined;
+    }
 
-    case charCodes.semicolon:
+    case charCodes.semicolon: {
       bumpIndex(parser);
       finishToken(parser, tt.semi);
       return undefined;
+    }
 
-    case charCodes.comma:
+    case charCodes.comma: {
       bumpIndex(parser);
       finishToken(parser, tt.comma);
       return undefined;
+    }
 
-    case charCodes.leftSquareBracket:
+    case charCodes.leftSquareBracket: {
       bumpIndex(parser);
       finishToken(parser, tt.bracketL);
       return undefined;
+    }
 
-    case charCodes.rightSquareBracket:
+    case charCodes.rightSquareBracket: {
       bumpIndex(parser);
       finishToken(parser, tt.bracketR);
       return undefined;
+    }
 
-    case charCodes.leftCurlyBrace:
+    case charCodes.leftCurlyBrace: {
       if (parser.input.charCodeAt(getIndex(parser) + 1) ===
           charCodes.verticalBar) {
         finishOp(parser, tt.braceBarL, 2);
@@ -813,13 +824,15 @@ function getTokenFromCode(parser: JSParser, code: number): void {
         finishToken(parser, tt.braceL);
       }
       return undefined;
+    }
 
-    case charCodes.rightCurlyBrace:
+    case charCodes.rightCurlyBrace: {
       bumpIndex(parser);
       finishToken(parser, tt.braceR);
       return undefined;
+    }
 
-    case charCodes.colon:
+    case charCodes.colon: {
       if (parser.input.charCodeAt(getIndex(parser) + 1) === charCodes.colon) {
         finishOp(parser, tt.doubleColon, 2);
       } else {
@@ -827,10 +840,12 @@ function getTokenFromCode(parser: JSParser, code: number): void {
         finishToken(parser, tt.colon);
       }
       return undefined;
+    }
 
-    case charCodes.questionMark:
+    case charCodes.questionMark: {
       readToken_question(parser);
       return undefined;
+    }
 
     case charCodes.atSign: {
       // The token @@ is the start of a Flow iterator name
@@ -845,11 +860,11 @@ function getTokenFromCode(parser: JSParser, code: number): void {
       return undefined;
     }
 
-    case charCodes.graveAccent:
+    case charCodes.graveAccent: {
       bumpIndex(parser);
       finishToken(parser, tt.backQuote);
       return undefined;
-
+    }
 
     // Anything else beginning with a digit is an integer, octal
 
@@ -863,17 +878,17 @@ function getTokenFromCode(parser: JSParser, code: number): void {
     case charCodes.digit6:
     case charCodes.digit7:
     case charCodes.digit8:
-    case charCodes.digit9:
+    case charCodes.digit9: {
       readNumber(parser, false);
       return undefined;
-
+    }
 
     // Quotes produce strings.
     case charCodes.quotationMark:
-    case charCodes.apostrophe:
+    case charCodes.apostrophe: {
       readString(parser, code);
       return undefined;
-
+    }
 
     // Operators are parsed inline in tiny state machines. '=' (charCodes.equalsTo) is
 
@@ -882,42 +897,50 @@ function getTokenFromCode(parser: JSParser, code: number): void {
     // characters it is given as second argument, and returns a token
 
     // of the type given by its first argument.
-    case charCodes.slash:
+    case charCodes.slash: {
       readToken_slash(parser);
       return undefined;
+    }
 
     case charCodes.percentSign:
-    case charCodes.asterisk:
+    case charCodes.asterisk: {
       readToken_mult_modulo(parser, code);
       return undefined;
+    }
 
     case charCodes.verticalBar:
-    case charCodes.ampersand:
+    case charCodes.ampersand: {
       readToken_pipe_amp(parser, code);
       return undefined;
+    }
 
-    case charCodes.caret:
+    case charCodes.caret: {
       readToken_caret(parser);
       return undefined;
+    }
 
     case charCodes.plusSign:
-    case charCodes.dash:
+    case charCodes.dash: {
       readToken_plus_min(parser, code);
       return undefined;
+    }
 
     case charCodes.lessThan:
-    case charCodes.greaterThan:
+    case charCodes.greaterThan: {
       readToken_lt_gt(parser, code);
       return undefined;
+    }
 
     case charCodes.equalsTo:
-    case charCodes.exclamationMark:
+    case charCodes.exclamationMark: {
       readToken_eq_excl(parser, code);
       return undefined;
+    }
 
-    case charCodes.tilde:
+    case charCodes.tilde: {
       finishOp(parser, tt.tilde, 1);
       return undefined;
+    }
   }
 
   const char = parser.input[getIndex(parser)];
@@ -1386,13 +1409,15 @@ export function readTemplateToken(parser: JSParser): void {
 
       switch (ch) {
         case charCodes.carriageReturn:
-        case charCodes.lineFeed:
+        case charCodes.lineFeed: {
           out += '\n';
           break;
+        }
 
-        default:
+        default: {
           out += String.fromCharCode(ch);
           break;
+        }
       }
 
       parser.state.curLine = inc(parser.state.curLine);
@@ -1449,12 +1474,13 @@ function readEscapedChar(
       return '\f';
 
     case charCodes.carriageReturn:
-    case charCodes.lineFeed:
+    case charCodes.lineFeed: {
       parser.state.curLine = inc(parser.state.curLine);
       parser.resetTokenizerLine();
       return '';
+    }
 
-    default:
+    default: {
       if (ch >= charCodes.digit0 && ch <= charCodes.digit7) {
         const codePos = dec(parser.state.index);
         const octalMatches = parser.input.substr(getIndex(parser) - 1, 3).match(
@@ -1495,6 +1521,7 @@ function readEscapedChar(
       }
 
       return String.fromCharCode(ch);
+    }
   }
 }
 

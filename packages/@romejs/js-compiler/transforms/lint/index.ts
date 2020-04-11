@@ -6,6 +6,7 @@
  */
 
 // Add imports in alphabetical order.
+import caseSingleStatement from './caseSingleStatement';
 import defaultExportSameBasename from './defaultExportSameBasename';
 import duplicateImportSource from './duplicateImportSource';
 import emptyBlocks from './emptyBlocks';
@@ -47,6 +48,7 @@ import unusedVariables from './unusedVariables';
 export const lintTransforms = [
   defaultExportSameBasename,
   duplicateImportSource,
+  caseSingleStatement,
   emptyBlocks,
   getterReturn,
   noArguments,

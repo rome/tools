@@ -205,18 +205,21 @@ export class WebServer {
     }).join(' ');
 
     switch (msg.level) {
-      case 'info':
+      case 'info': {
         reporter.info(buf);
         break;
+      }
 
-      case 'warn':
+      case 'warn': {
         reporter.warn(buf);
         break;
+      }
 
       case 'log':
-      case 'trace':
+      case 'trace': {
         reporter.verboseForce(buf);
         break;
+      }
 
       case 'group':
       case 'groupCollapsed':

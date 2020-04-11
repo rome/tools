@@ -206,27 +206,32 @@ export function attachComments(parser: JSParser, node: AnyNode) {
   // element
   if (firstChild) {
     switch (node.type) {
-      case 'ObjectExpression':
+      case 'ObjectExpression': {
         adjustCommentsAfterTrailingComma(parser, node, node.properties);
         break;
+      }
 
       case 'BindingObjectPattern':
-      case 'AssignmentObjectPattern':
+      case 'AssignmentObjectPattern': {
         adjustCommentsAfterTrailingComma(parser, node, node.properties, true);
         break;
+      }
 
-      case 'CallExpression':
+      case 'CallExpression': {
         adjustCommentsAfterTrailingComma(parser, node, node.arguments);
         break;
+      }
 
-      case 'ArrayExpression':
+      case 'ArrayExpression': {
         adjustCommentsAfterTrailingComma(parser, node, node.elements);
         break;
+      }
 
       case 'BindingArrayPattern':
-      case 'AssignmentArrayPattern':
+      case 'AssignmentArrayPattern': {
         adjustCommentsAfterTrailingComma(parser, node, node.elements, true);
         break;
+      }
     }
   } else if (commentPreviousNode !== undefined && (commentPreviousNode.type ===
         'ImportSpecifier' && node.type !== 'ImportSpecifier' ||

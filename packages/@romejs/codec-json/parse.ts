@@ -201,7 +201,7 @@ export default createParser(
 
       // Single character token starters
       switch (char) {
-        case '"':
+        case '"': {
           const [value] = this.readInputFrom(inc(index), isStringValueChar);
 
           // Check for closed string (index is the current token index + string length + closing quote + 1 for the end char)
@@ -234,6 +234,7 @@ export default createParser(
           });
 
           return this.finishValueToken('String', unescaped, end);
+        }
 
         case "'":
           throw this.unexpected({
@@ -681,9 +682,10 @@ export default createParser(
       const token = this.getToken();
 
       switch (token.type) {
-        case 'String':
+        case 'String': {
           this.nextToken();
           return token.value;
+        }
 
         case 'Word':
           if (this.hasExtensions) {
@@ -734,9 +736,10 @@ export default createParser(
         case 'BracketOpen':
           return this.parseArray();
 
-        case 'BraceOpen':
+        case 'BraceOpen': {
           this.nextToken();
           return this.parseObject();
+        }
 
         default:
           throw this.unexpected();

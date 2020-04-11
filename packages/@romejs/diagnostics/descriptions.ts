@@ -258,6 +258,12 @@ export const descriptions = createMessages(
         message: markup`Undeclared variable <emphasis>${name}</emphasis>`,
       }),
 
+      CASE_SINGLE_STATEMENT: {
+        category: 'lint/caseSingleStatement',
+        message: 'A switch case should only have a single statement. If you want more then wrap it in a block.',
+        fixable: true,
+      },
+
       NO_CATCH_ASSIGN: {
         category: 'lint/noCatchAssign',
         message: "Don't reassign catch parameters",

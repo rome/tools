@@ -33,21 +33,25 @@ export default class RefineTypeofT extends T {
       let val;
 
       switch (str.value) {
-        case 'string':
+        case 'string': {
           val = new StringT(this.scope, undefined);
           break;
+        }
 
-        case 'number':
+        case 'number': {
           val = new NumericT(this.scope, undefined);
           break;
+        }
 
-        case 'undefined':
+        case 'undefined': {
           val = new VoidT(this.scope, undefined);
           break;
+        }
 
-        case 'boolean':
+        case 'boolean': {
           val = new BooleanT(this.scope, undefined);
           break;
+        }
 
         case 'symbol':
         case 'function':

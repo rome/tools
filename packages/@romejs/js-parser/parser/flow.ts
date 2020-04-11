@@ -1495,12 +1495,13 @@ function flowIdentToTypeAnnotation(
         type: 'BigIntKeywordTypeAnnotation',
       });
 
-    default:
+    default: {
       checkNotUnderscore(parser, id);
       return parseFlowGenericType(parser, start, toReferenceIdentifier(
         parser,
         id,
       ));
+    }
   }
 }
 
@@ -1514,12 +1515,13 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
   const oldNoAnonFunctionType = parser.state.noAnonFunctionType;
 
   switch (parser.state.tokenType) {
-    case tt.name:
+    case tt.name: {
       if (parser.isContextual('interface')) {
         return parseFlowInterfaceType(parser);
       }
 
       return flowIdentToTypeAnnotation(parser, start, parseIdentifier(parser));
+    }
 
     case tt.braceL:
       return parseFlowObjectType(parser, {
@@ -1542,7 +1544,7 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
     case tt.bracketL:
       return parseFlowTupleType(parser);
 
-    case tt.relational:
+    case tt.relational: {
       if (parser.state.tokenValue === '<') {
         const typeParameters = parseFlowTypeParameterDeclaration(parser, false);
         const openContext = parser.expectOpening(
@@ -1566,6 +1568,7 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
         });
       }
       break;
+    }
 
     case tt.parenL: {
       const openContext = parser.expectOpening(
@@ -1632,21 +1635,25 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
     case tt.plusMin:
       return parseTypeLiteralAnnotation(parser);
 
-    case tt._void:
+    case tt._void: {
       parser.next();
       return parser.finishNode(start, {type: 'VoidKeywordTypeAnnotation'});
+    }
 
-    case tt._null:
+    case tt._null: {
       parser.next();
       return parser.finishNode(start, {type: 'NullKeywordTypeAnnotation'});
+    }
 
-    case tt._this:
+    case tt._this: {
       parser.next();
       return parser.finishNode(start, {type: 'FlowThisTypeAnnotation'});
+    }
 
-    case tt.star:
+    case tt.star: {
       parser.next();
       return parser.finishNode(start, {type: 'FlowExistsTypeAnnotation'});
+    }
 
     default:
       if (parser.state.tokenType.keyword === 'typeof') {

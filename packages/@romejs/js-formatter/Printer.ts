@@ -523,11 +523,12 @@ export default class Printer {
       for (let token of stack) {
         switch (token.type) {
           case 'LinkedGroups':
-          case 'Group':
+          case 'Group': {
             if (!this.isGroupBroken(token)) {
               return token;
             }
             break;
+          }
 
           case 'ConcatToken':
           case 'Indent':
@@ -610,61 +611,75 @@ export default class Printer {
       const token: Token = tokens[i];
 
       switch (token.type) {
-        case 'Terminatorless':
+        case 'Terminatorless': {
           this.printTerminatorlessToken(token);
           break;
+        }
 
-        case 'Indent':
+        case 'Indent': {
           this.printIndentToken(token);
           break;
+        }
 
-        case 'DerivedNewline':
+        case 'DerivedNewline': {
           this.printDerivedNewlineToken(token);
           break;
+        }
 
-        case 'Newline':
+        case 'Newline': {
           this.printNewlineToken();
           break;
+        }
 
-        case 'Space':
+        case 'Space': {
           this.printSpaceToken();
           break;
+        }
 
-        case 'Comment':
+        case 'Comment': {
           this.printCommentToken(token);
           break;
+        }
 
-        case 'Number':
+        case 'Number': {
           this.printNumberToken(token);
           break;
+        }
 
-        case 'Word':
+        case 'Word': {
           this.printWordToken(token);
           break;
+        }
 
-        case 'Operator':
+        case 'Operator': {
           this.printOperatorToken(token);
           break;
+        }
 
-        case 'Group':
+        case 'Group': {
           ({abort} = this.printGroupToken(token, tokens, i));
           break;
+        }
 
-        case 'LinkedGroups':
+        case 'LinkedGroups': {
           ({abort} = this.printLinkedGroupsToken(token, tokens, i));
           break;
+        }
 
-        case 'Verbatim':
+        case 'Verbatim': {
           this.printVerbatimToken(token);
           break;
+        }
 
-        case 'PositionMarker':
+        case 'PositionMarker': {
           this.printPositionMarkerToken(token);
           break;
+        }
 
-        case 'ConcatToken':
+        case 'ConcatToken': {
           this.printConcatToken(token);
           break;
+        }
       }
 
       if (abort) {

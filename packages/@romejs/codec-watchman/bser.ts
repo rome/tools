@@ -170,25 +170,28 @@ export class Accumulator {
   writeInt(value: number, size: number) {
     this.reserve(size);
     switch (size) {
-      case 1:
+      case 1: {
         this.buffer.writeInt8(value, this.writeOffset);
         break;
+      }
 
-      case 2:
+      case 2: {
         if (isBigEndian) {
           this.buffer.writeInt16BE(value, this.writeOffset);
         } else {
           this.buffer.writeInt16LE(value, this.writeOffset);
         }
         break;
+      }
 
-      case 4:
+      case 4: {
         if (isBigEndian) {
           this.buffer.writeInt32BE(value, this.writeOffset);
         } else {
           this.buffer.writeInt32LE(value, this.writeOffset);
         }
         break;
+      }
 
       default:
         throw new Error(`unsupported integer size ${size}`);
@@ -369,21 +372,25 @@ export class BunserBuf {
       case BSER_INT64:
         return this.decodeInt();
 
-      case BSER_REAL:
+      case BSER_REAL: {
         this.acc.readAdvance(1);
         return this.acc.readDouble();
+      }
 
-      case BSER_TRUE:
+      case BSER_TRUE: {
         this.acc.readAdvance(1);
         return true;
+      }
 
-      case BSER_FALSE:
+      case BSER_FALSE: {
         this.acc.readAdvance(1);
         return false;
+      }
 
-      case BSER_NULL:
+      case BSER_NULL: {
         this.acc.readAdvance(1);
         return null;
+      }
 
       case BSER_STRING:
         return this.decodeString();
@@ -471,21 +478,25 @@ export class BunserBuf {
 
     const code = this.acc.peekInt(1);
     switch (code) {
-      case BSER_INT8:
+      case BSER_INT8: {
         size = 1;
         break;
+      }
 
-      case BSER_INT16:
+      case BSER_INT16: {
         size = 2;
         break;
+      }
 
-      case BSER_INT32:
+      case BSER_INT32: {
         size = 4;
         break;
+      }
 
-      case BSER_INT64:
+      case BSER_INT64: {
         size = 8;
         break;
+      }
 
       default:
         throw this.raise(`invalid bser int encoding ${code}`);
@@ -594,7 +605,7 @@ function dumpObject(buf: Accumulator, val: object | null) {
 
 function dumpUnknown(buf: Accumulator, val: unknown) {
   switch (typeof val) {
-    case 'number':
+    case 'number': {
       // check if it is an integer or a float
       if (isFinite(val) && Math.floor(val) === val) {
         dumpInt(buf, val);
@@ -603,23 +614,27 @@ function dumpUnknown(buf: Accumulator, val: unknown) {
         buf.writeDouble(val);
       }
       return;
+    }
 
     case 'bigint':
       throw new Error("bigint isn't supported yet");
 
-    case 'string':
+    case 'string': {
       buf.writeByte(BSER_STRING);
       dumpInt(buf, Buffer.byteLength(val));
       buf.append(val);
       return;
+    }
 
-    case 'boolean':
+    case 'boolean': {
       buf.writeByte(val ? BSER_TRUE : BSER_FALSE);
       return;
+    }
 
-    case 'object':
+    case 'object': {
       dumpObject(buf, val);
       return;
+    }
 
     default:
       throw new Error(`Cannot serialize type ${typeof val} to BSER`);

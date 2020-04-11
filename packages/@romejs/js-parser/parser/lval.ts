@@ -215,7 +215,7 @@ export function toTargetAssignmentPattern(
     case 'TSAssignmentTypeAssertion':
       return binding;
 
-    default:
+    default: {
       parser.addDiagnostic({
         loc: node.loc,
         description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_TARGET,
@@ -225,6 +225,7 @@ export function toTargetAssignmentPattern(
         loc: node.loc,
         name: 'X',
       };
+    }
   }
 }
 
@@ -405,7 +406,7 @@ export function toAssignmentObjectProperty(
         ),
       };
 
-    default:
+    default: {
       parser.addDiagnostic({
         loc: prop.loc,
         description: descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROPERTY,
@@ -428,6 +429,7 @@ export function toAssignmentObjectProperty(
           name: 'X',
         },
       };
+    }
   }
 }
 
@@ -1010,7 +1012,7 @@ export function checkLVal(
 
     case 'TSAsExpression':
     case 'TSNonNullExpression':
-    case 'TSTypeAssertion':
+    case 'TSTypeAssertion': {
       checkLVal(
         parser,
         expr.expression,
@@ -1019,10 +1021,11 @@ export function checkLVal(
         contextDescription,
       );
       return undefined;
+    }
 
     case 'BindingIdentifier':
     case 'ReferenceIdentifier':
-    case 'AssignmentIdentifier':
+    case 'AssignmentIdentifier': {
       if (parser.inScope('STRICT') && isStrictBindReservedWord(
           expr.name,
           parser.inModule,
@@ -1049,9 +1052,10 @@ export function checkLVal(
         }
       }
       break;
+    }
 
     case 'AssignmentObjectPattern':
-    case 'BindingObjectPattern':
+    case 'BindingObjectPattern': {
       if (expr.rest !== undefined) {
         checkLVal(parser, expr.rest, isBinding, checkClashes, 'rest property');
       }
@@ -1076,13 +1080,14 @@ export function checkLVal(
         }
       }
       break;
+    }
 
     case 'AssignmentObjectPatternProperty':
     case 'BindingObjectPatternProperty':
       break;
 
     case 'AssignmentArrayPattern':
-    case 'BindingArrayPattern':
+    case 'BindingArrayPattern': {
       if (expr.rest !== undefined) {
         checkLVal(parser, expr.rest, isBinding, checkClashes, 'rest element');
       }
@@ -1099,10 +1104,12 @@ export function checkLVal(
         }
       }
       break;
+    }
 
-    case 'BindingAssignmentPattern':
+    case 'BindingAssignmentPattern': {
       checkLVal(parser, expr.left, isBinding, checkClashes, 'assignment pattern');
       break;
+    }
   }
 }
 

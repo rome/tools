@@ -176,15 +176,17 @@ const createSPDXLicenseParser = createParser(
       let value;
 
       switch (startToken.type) {
-        case 'ParenOpen':
+        case 'ParenOpen': {
           this.nextToken();
           value = this.parseExpression();
           this.expectToken('ParenClose');
           break;
+        }
 
-        case 'Word':
+        case 'Word': {
           value = this.parseLicense(startToken);
           break;
+        }
 
         case 'Or':
         case 'And':
@@ -209,7 +211,7 @@ const createSPDXLicenseParser = createParser(
       // Parse and/or
       const nextToken = this.getToken();
       switch (nextToken.type) {
-        case 'Or':
+        case 'Or': {
           this.nextToken();
           return {
             type: 'Or',
@@ -217,8 +219,9 @@ const createSPDXLicenseParser = createParser(
             left: value,
             right: this.parseExpression(),
           };
+        }
 
-        case 'And':
+        case 'And': {
           this.nextToken();
           return {
             type: 'And',
@@ -226,6 +229,7 @@ const createSPDXLicenseParser = createParser(
             left: value,
             right: this.parseExpression(),
           };
+        }
 
         default:
           return value;
