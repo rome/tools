@@ -28,7 +28,15 @@ import {
   SourceMapGenerator,
   SourceMap,
 } from '@romejs/codec-source-map';
-import {Number1, Number0, number0, number1, get0, inc, dec} from '@romejs/ob1';
+import {
+  Number1,
+  Number0,
+  number0,
+  number1,
+  get0,
+  inc,
+  coerce0,
+} from '@romejs/ob1';
 import {SourceLocation} from '@romejs/parser-core';
 
 type TerminatorState = {printed: boolean};
@@ -282,7 +290,9 @@ export default class Printer {
   trimCharacter(str: string): boolean {
     const {buff} = this;
     if (buff[buff.length - 1] === str) {
-      this.state.generatedColumn = dec(this.state.generatedColumn);
+      this.state.generatedColumn = coerce0(Math.max(0, get0(
+        this.state.generatedColumn,
+      ) - 1));
       buff.pop();
       return true;
     } else {

@@ -19,10 +19,7 @@ import MappingList from './MappingList';
 import {Number1, Number0, get1, get0, number0, number1, inc} from '@romejs/ob1';
 
 export default class SourceMapGenerator {
-  constructor(args: {
-    file?: string;
-    sourceRoot?: string;
-  }) {
+  constructor(args: {file?: string; sourceRoot?: string}) {
     this.file = args.file;
     this.sourceRoot = args.sourceRoot;
 

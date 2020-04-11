@@ -5,13 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {getBindingIdentifiers, isVariableIdentifier} from '@romejs/js-ast-utils';
-import {Path} from '@romejs/js-compiler';
+import {
+  getBindingIdentifiers,
+  isVariableIdentifier,
+} from '@romejs/js-ast-utils';
+import {Path, Context} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
-import {Context} from '@romejs/js-compiler';
+
 function addDiagnostic(name: string, node: AnyNode, context: Context) {
-  const identifiers = getBindingIdentifiers(node).map((identifier) =>
-    identifier.name
+  const identifiers = getBindingIdentifiers(node).map(
+    (identifier) => identifier.name,
   );
 
   if (!identifiers.includes(name)) {
@@ -32,7 +35,7 @@ export default {
     if (node.type === 'CatchClause' && node.body.type === 'BlockStatement') {
       node.body.body.forEach((item) => {
         if (item.type === 'ExpressionStatement' && item.expression.type ===
-        'AssignmentExpression') {
+            'AssignmentExpression') {
           if (isVariableIdentifier(item.expression.left)) {
             const {name} = item.expression.left;
 

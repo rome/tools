@@ -17,12 +17,13 @@ test('no exception assign', async (t) => {
 
   const invalidTestCases = [
     'try { } catch (e) { e; e = 10; }',
-    'try { } catch (ex) { console.log(\'test\'); ex = 10; }',
+    "try { } catch (ex) { console.log('test'); ex = 10; }",
     'try { } catch (ex) { [ex, test] = []; }',
-    'try { } catch ({message, name}) { message = \'test\'; name = 10; }',
+    "try { } catch ({message, name}) { message = 'test'; name = 10; }"
     // "try { } catch (ex) { ({x: ex = 0} = {}); }",
 
     // "try { } catch (ex) { let a; ({x: a = ex = 0} = {}); }"
+    ,
   ];
 
   for (const validTestCase of validTestCases) {

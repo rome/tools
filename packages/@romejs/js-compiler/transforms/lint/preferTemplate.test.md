@@ -34,6 +34,52 @@ Object {
         }
       }
     }
+    Object {
+      origins: Array [Object {category: 'lint'}]
+      description: Object {
+        category: 'lint/undeclaredVariables'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Undeclared variable <emphasis>foo</emphasis>'}
+      }
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 34
+          index: 34
+          line: 1
+        }
+        start: Object {
+          column: 31
+          index: 31
+          line: 1
+        }
+      }
+    }
+    Object {
+      origins: Array [Object {category: 'lint'}]
+      description: Object {
+        category: 'lint/unusedVariables'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused constant <emphasis>foo</emphasis>'}
+      }
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 9
+          index: 9
+          line: 1
+        }
+        start: Object {
+          column: 6
+          index: 6
+          line: 1
+        }
+      }
+    }
   ]
 }
 ```
