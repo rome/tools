@@ -74,6 +74,8 @@ Program {
         body: Array [
           ImportDeclaration {
             importKind: 'type'
+            namedSpecifiers: Array []
+            namespaceSpecifier: undefined
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -103,39 +105,23 @@ Program {
                 }
               }
             }
-            specifiers: Array [
-              ImportDefaultSpecifier {
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 34
-                    index: 34
-                    line: 1
-                  }
-                  start: Object {
-                    column: 21
-                    index: 21
-                    line: 1
-                  }
+            defaultSpecifier: ImportDefaultSpecifier {
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 34
+                  index: 34
+                  line: 1
                 }
-                local: ImportSpecifierLocal {
-                  name: BindingIdentifier {
-                    name: 'T'
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 34
-                        index: 34
-                        line: 1
-                      }
-                      start: Object {
-                        column: 33
-                        index: 33
-                        line: 1
-                      }
-                    }
-                  }
-                  importKind: 'type'
+                start: Object {
+                  column: 21
+                  index: 21
+                  line: 1
+                }
+              }
+              local: ImportSpecifierLocal {
+                name: BindingIdentifier {
+                  name: 'T'
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
@@ -150,8 +136,22 @@ Program {
                     }
                   }
                 }
+                importKind: 'type'
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 34
+                    index: 34
+                    line: 1
+                  }
+                  start: Object {
+                    column: 33
+                    index: 33
+                    line: 1
+                  }
+                }
               }
-            ]
+            }
           }
         ]
       }

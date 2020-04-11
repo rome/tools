@@ -12,19 +12,16 @@ import {Scope} from '../scopes';
 import T from './T';
 
 export default class ImportT extends T {
-  constructor(
-    scope: Scope,
-    originNode: undefined | AnyNode,
-    opts: {
-      importedName: undefined | string;
-      relative?: string;
-      source: string;
-    },
-  ) {
+  constructor(scope: Scope, originNode: undefined | AnyNode, opts: {
+    importedName: undefined | string;
+    relative?: string;
+    source: string;
+  }) {
     super(scope, originNode);
     this.importedName = opts.importedName;
     this.relative = opts.relative === undefined
-      ? scope.evaluator.filename : opts.relative;
+      ? scope.evaluator.filename
+      : opts.relative;
     this.source = opts.source;
     this.absolute = undefined;
     this.resolvedType = undefined;

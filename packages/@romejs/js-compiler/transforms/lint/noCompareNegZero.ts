@@ -7,12 +7,14 @@
 import {AnyNode} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 import {template} from '@romejs/js-ast-utils';
+import {descriptions} from '@romejs/diagnostics';
 
 const OPERATORS_TO_CHECK = ['>', '>=', '<', '<=', '==', '===', '!=', '!=='];
 
 function isNegZero(node: AnyNode): boolean {
   return node.type === 'UnaryExpression' && node.operator === '-' &&
-    node.argument.type === 'NumericLiteral' && node.argument.value === 0;
+      node.argument.type ===
+      'NumericLiteral' && node.argument.value === 0;
 }
 
 export default {
@@ -21,14 +23,15 @@ export default {
     const {node} = path;
 
     if (node.type === 'BinaryExpression' && OPERATORS_TO_CHECK.includes(
-      node.operator,
-    ) && (isNegZero(node.left) || isNegZero(node.right))) {
-      path.context.addNodeDiagnostic(node, {
-        category: 'lint/noCompareNegZero',
-        message: `Do not use the '${node.operator}' operator to compare against -0`,
-        fixable: true,
-      });
-      return template.expression`Object.is(${node.left}, ${node.right})`;
+        node.operator,
+      ) && (isNegZero(node.left) || isNegZero(node.right))) {
+      const {suppressed} = path.context.addNodeDiagnostic(
+        node,
+        descriptions.LINT.NO_COMPARE_NEG_ZERO(node.operator),
+      );
+      if (!suppressed && node.operator === '===') {
+        return template.expression`Object.is(${node.left}, ${node.right})`;
+      }
     }
 
     return node;

@@ -7,27 +7,22 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {Scope} from '../scopes';
-import {SerialTypeFactory} from './T';
+import T, {SerialTypeFactory} from './T';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
 import StringLiteralT from './StringLiteralT';
 import GetPropT from './GetPropT';
 import ObjPropT from './ObjPropT';
 import OpenT from './OpenT';
 import ObjT from './ObjT';
-import T from './T';
 
 export default class ClassT extends ObjT {
-  constructor(
-    scope: Scope,
-    originNode: undefined | AnyNode,
-    opts: {
-      _constructor: undefined | T;
-      statics: Array<T>;
-      instances: Array<T>;
-      extends?: T;
-      calls?: Array<T>;
-    },
-  ) {
+  constructor(scope: Scope, originNode: undefined | AnyNode, opts: {
+    _constructor: undefined | T;
+    statics: Array<T>;
+    instances: Array<T>;
+    extends?: T;
+    calls?: Array<T>;
+  }) {
     // point `class.prototype.__proto__` to `superClass.prototype`
     let protoProp = undefined;
     if (opts.extends) {
@@ -83,9 +78,9 @@ export default class ClassT extends ObjT {
 
   serialize(addType: SerialTypeFactory): HydrateData {
     return {
-      constructor: this._constructor === undefined ? undefined : addType(
-        this._constructor,
-      ),
+      constructor: this._constructor === undefined
+        ? undefined
+        : addType(this._constructor),
       statics: this._statics.map((type) => addType(type)),
       instances: this._instances.map((type) => addType(type)),
       extends: this._extends === undefined ? undefined : addType(this._extends),
@@ -99,9 +94,9 @@ export default class ClassT extends ObjT {
     getType: HydrateTypeFactory,
   ): T {
     return new ClassT(scope, originNode, {
-      _constructor: data.constructor === undefined ? undefined : getType(
-        data.constructor,
-      ),
+      _constructor: data.constructor === undefined
+        ? undefined
+        : getType(data.constructor),
       statics: Array(data.statics).map((id) => getType(id)),
       instances: Array(data.instances).map((id) => getType(id)),
       extends: data.extends === undefined ? undefined : getType(data.extends),

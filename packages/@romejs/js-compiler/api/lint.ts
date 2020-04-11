@@ -5,16 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {TransformRequest} from '../types';
 import {lintTransforms} from '../transforms/lint/index';
 import {program} from '@romejs/js-ast';
 import {Cache, Context} from '@romejs/js-compiler';
-import {generateJS} from '@romejs/js-generator';
-import {extractSuppressionsFromProgram} from '../suppressions';
+import {formatJS} from '@romejs/js-formatter';
 
 export type LintResult = {
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   suppressions: DiagnosticSuppressions;
   src: string;
 };
@@ -56,11 +55,12 @@ export default async function lint(req: FormatRequest): Promise<LintResult> {
       frozen: false,
     }));
 
-    const generator = generateJS(newAst, {
+    const generator = formatJS(newAst, {
       typeAnnotations: true,
       format: 'pretty',
-    }, sourceText);
-    formattedCode = generator.buf.getCode();
+      sourceText,
+    });
+    formattedCode = generator.getCode();
   }
 
   // Run lints (could be with the autofixed AST)
@@ -73,15 +73,9 @@ export default async function lint(req: FormatRequest): Promise<LintResult> {
   });
   program.assert(context.reduce(ast, lintTransforms, {frozen: true}));
 
-  const extractedSuppressions = extractSuppressionsFromProgram(ast);
-
   const result: LintResult = {
-    suppressions: extractedSuppressions.suppressions,
-    diagnostics: [
-      ...ast.diagnostics,
-      ...context.diagnostics,
-      ...extractedSuppressions.diagnostics,
-    ],
+    suppressions: context.suppressions,
+    diagnostics: [...ast.diagnostics, ...context.diagnostics.getDiagnostics()],
     src: formattedCode,
   };
   lintCache.set(query, result);

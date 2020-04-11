@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics, getDiagnosticsFromError} from '@romejs/diagnostics';
+import {Diagnostics, getDiagnosticsFromError} from '@romejs/diagnostics';
 import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
 
 export class RomeDiagnosticsError extends Error {
@@ -23,7 +23,7 @@ export class RomeDiagnosticsError extends Error {
   }
 }
 
-export function throwDiagnostics(diagnostics: PartialDiagnostics) {
+export function throwDiagnostics(diagnostics: Diagnostics) {
   if (diagnostics.length === 0) {
     return;
   }
@@ -39,9 +39,10 @@ export function throwDiagnostics(diagnostics: PartialDiagnostics) {
   throw err;
 }
 
-export function wrapForErrors<T, Args extends Array<unknown>>(
-  callback: (...args: Args) => Promise<T>,
-): (...args: Args) => Promise<T> {
+export function wrapForErrors<
+  T,
+  Args extends Array<unknown>
+>(callback: (...args: Args) => Promise<T>): (...args: Args) => Promise<T> {
   return async function(...args: Args): Promise<T> {
     try {
       return await callback(...args);

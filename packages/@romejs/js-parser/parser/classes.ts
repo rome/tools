@@ -51,6 +51,7 @@ import {
 } from './index';
 import {inc, dec} from '@romejs/ob1';
 import {parseBindingIdentifier, toBindingIdentifier} from './expression';
+import {descriptions} from '@romejs/diagnostics';
 
 export function parseClassExpression(
   parser: JSParser,
@@ -143,10 +144,9 @@ export function parseClass(
 }
 
 function isClassProperty(parser: JSParser): boolean {
-  return (
-    parser.match(tt.bang) || parser.match(tt.colon) || parser.match(tt.eq) ||
-    parser.match(tt.semi) || parser.match(tt.braceR)
-  );
+  return parser.match(tt.bang) || parser.match(tt.colon) || parser.match(tt.eq) ||
+        parser.match(tt.semi) ||
+      parser.match(tt.braceR);
 }
 
 function isClassMethod(parser: JSParser): boolean {
@@ -169,7 +169,8 @@ function isNonstaticConstructor(
   }
 
   if (key.type === 'StaticPropertyKey' && key.value.type === 'Identifier' &&
-    key.value.name === 'constructor') {
+        key.value.name ===
+        'constructor') {
     return true;
   }
 
@@ -269,7 +270,7 @@ function parseClassMember(
     if (escapePosition !== undefined) {
       parser.addDiagnostic({
         index: escapePosition,
-        message: 'No escapes allowed in static contextual keyword',
+        description: descriptions.JS_PARSER.ESCAPE_SEQUENCE_IN_WORD('static'),
       });
     }
 
@@ -357,7 +358,7 @@ function parseClassMemberWithIsStatic(
     if (isNonstaticConstructor(parser, key, meta)) {
       parser.addDiagnostic({
         loc: key.loc,
-        message: 'Constructor can\'t be a generator',
+        description: descriptions.JS_PARSER.GENERATOR_CLASS_CONSTRUCTOR,
       });
     }
 
@@ -401,7 +402,7 @@ function parseClassMemberWithIsStatic(
       if (state.hadConstructor && !parser.isSyntaxEnabled('ts')) {
         parser.addDiagnostic({
           loc: key.loc,
-          message: 'Duplicate constructor in the same class',
+          description: descriptions.JS_PARSER.DUPLICATE_CLASS_CONSTRUCTOR,
         });
       }
       state.hadConstructor = true;
@@ -430,7 +431,7 @@ function parseClassMemberWithIsStatic(
 
   // Async method
   if (key.value.type === 'Identifier' && key.value.name === 'async' &&
-    !parser.isLineTerminator()) {
+      !parser.isLineTerminator()) {
     parser.banUnicodeEscape(escapePosition, 'async');
 
     // an async method
@@ -465,7 +466,7 @@ function parseClassMemberWithIsStatic(
       if (isNonstaticConstructor(parser, key, meta)) {
         parser.addDiagnostic({
           loc: key.loc,
-          message: 'Constructor can\'t be an async function',
+          description: descriptions.JS_PARSER.ASYNC_CLASS_CONSTRUCTOR,
         });
       }
 
@@ -475,9 +476,8 @@ function parseClassMemberWithIsStatic(
 
   // Getter/setter method
   if (key.value.type === 'Identifier' && (key.value.name === 'get' ||
-  key.value.name === 'set') && !(parser.isLineTerminator() && parser.match(
-    tt.star,
-  ))) {
+        key.value.name ===
+        'set') && !(parser.isLineTerminator() && parser.match(tt.star))) {
     // `get\n*` is an uninitialized property named 'get' followed by a generator.
 
     // a getter or setter
@@ -515,7 +515,7 @@ function parseClassMemberWithIsStatic(
       if (isNonstaticConstructor(parser, key, meta)) {
         parser.addDiagnostic({
           loc: methodKey.loc,
-          message: 'Constructor can\'t have get/set modifier',
+          description: descriptions.JS_PARSER.GET_SET_CLASS_CONSTRUCTOR,
         });
       }
 
@@ -534,21 +534,18 @@ function parseClassMemberWithIsStatic(
   }
 
   parser.addDiagnostic({
-    message: 'Unknown class property start',
+    description: descriptions.JS_PARSER.UNKNOWN_CLASS_PROPERTY_START,
   });
   return undefined;
 }
 
-function parseClassPropertyMeta(
-  parser: JSParser,
-  opts: {
-    start: Position;
-    static: boolean;
-    accessibility: undefined | ConstTSAccessibility;
-    readonly: boolean;
-    abstract: boolean;
-  },
-): {
+function parseClassPropertyMeta(parser: JSParser, opts: {
+  start: Position;
+  static: boolean;
+  accessibility: undefined | ConstTSAccessibility;
+  readonly: boolean;
+  abstract: boolean;
+}): {
   key: AnyObjectPropertyKey;
   meta: ClassPropertyMeta;
 } {
@@ -560,30 +557,25 @@ function parseClassPropertyMeta(
   const key = parseObjectPropertyKey(parser);
 
   if (key.type === 'StaticPropertyKey' && opts.static === true &&
-    key.value.type === 'Identifier' && key.value.name === 'prototype') {
+        key.value.type ===
+        'Identifier' && key.value.name === 'prototype') {
     parser.addDiagnostic({
       loc: key.loc,
-      message: 'Classes may not have static property named prototype',
+      description: descriptions.JS_PARSER.CLASS_STATIC_PROTOTYPE_PROPERTY,
     });
   }
 
   if (key.value.type === 'PrivateName' && key.value.id.name === 'constructor') {
     parser.addDiagnostic({
       loc: key.loc,
-      message: 'Classes may not have a private field named \'#constructor\'',
+      description: descriptions.JS_PARSER.CLASS_PRIVATE_FIELD_NAMED_CONSTRUCTOR,
     });
   }
 
   let optional = false;
   if (parser.match(tt.question)) {
     optional = true;
-
-    if (!parser.isSyntaxEnabled('ts')) {
-      parser.addDiagnostic({
-        message: 'Optional syntax but ts is not enabled',
-      });
-    }
-
+    parser.expectSyntaxEnabled('ts');
     parser.next();
   }
 
@@ -608,32 +600,29 @@ function pushClassProperty(
   if (isNonstaticConstructor(parser, key, meta)) {
     parser.addDiagnostic({
       loc: key.loc,
-      message: 'Classes may not have a non-static field named \'constructor\'',
+      description: descriptions.JS_PARSER.CLASS_PROPERTY_NAME_CONSTRUCTOR,
     });
   }
 
   return parseClassProperty(parser, start, key, meta);
 }
 
-function parseClassMethod(
-  parser: JSParser,
-  opts: {
-    start: Position;
-    meta: ClassPropertyMeta;
-    key: AnyObjectPropertyKey;
-    kind: ClassMethodKind;
-    isStatic: boolean;
-    isGenerator: boolean;
-    isAsync: boolean;
-    isConstructor: boolean;
-  },
-): ClassMethod | TSDeclareMethod {
+function parseClassMethod(parser: JSParser, opts: {
+  start: Position;
+  meta: ClassPropertyMeta;
+  key: AnyObjectPropertyKey;
+  kind: ClassMethodKind;
+  isStatic: boolean;
+  isGenerator: boolean;
+  isAsync: boolean;
+  isConstructor: boolean;
+}): ClassMethod | TSDeclareMethod {
   const {start, key, meta, kind, isGenerator, isAsync, isConstructor} = opts;
 
   if (key.variance !== undefined) {
     parser.addDiagnostic({
       loc: key.variance.loc,
-      message: 'variance not allowed here',
+      description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
     });
   }
 
@@ -681,24 +670,21 @@ function parseClassMethod(
   }
 }
 
-function parseClassPrivateMethod(
-  parser: JSParser,
-  opts: {
-    key: PrivateName;
-    start: Position;
-    meta: ClassPropertyMeta;
-    isGenerator: boolean;
-    isAsync: boolean;
-    kind: ClassMethodKind;
-    variance: undefined | FlowVariance;
-  },
-): ClassPrivateMethod {
+function parseClassPrivateMethod(parser: JSParser, opts: {
+  key: PrivateName;
+  start: Position;
+  meta: ClassPropertyMeta;
+  isGenerator: boolean;
+  isAsync: boolean;
+  kind: ClassMethodKind;
+  variance: undefined | FlowVariance;
+}): ClassPrivateMethod {
   const {start, key, variance, meta, isGenerator, isAsync, kind} = opts;
 
   if (variance !== undefined) {
     parser.addDiagnostic({
       loc: variance.loc,
-      message: 'variance not allowed here',
+      description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
     });
   }
 
@@ -744,9 +730,9 @@ function parseClassPrivateProperty(
     typeAnnotation = parsePrimaryTypeAnnotation(parser);
   }
 
-  const value: undefined | AnyExpression = parser.eat(tt.eq) ? parseMaybeAssign<
-    AnyExpression
-  >(parser, 'class private property value') : undefined;
+  const value: undefined | AnyExpression = parser.eat(tt.eq)
+    ? parseMaybeAssign<AnyExpression>(parser, 'class private property value')
+    : undefined;
   parser.semicolon();
   parser.popScope('CLASS_PROPERTY');
 
@@ -769,12 +755,7 @@ function parseClassProperty(
   let definite;
   if (!meta.optional && parser.eat(tt.bang)) {
     definite = true;
-
-    if (!parser.isSyntaxEnabled('ts')) {
-      parser.addDiagnostic({
-        message: 'Definite syntax but ts is not enabled',
-      });
-    }
+    parser.expectSyntaxEnabled('ts');
   }
 
   let typeAnnotation;
@@ -795,8 +776,8 @@ function parseClassProperty(
 
   if (key.value.type === 'PrivateName') {
     throw new Error(
-      'PrivateName encountered in regular parseClassProperty, expects method is parsePrivateClassProperty',
-    );
+        'PrivateName encountered in regular parseClassProperty, expects method is parsePrivateClassProperty',
+      );
   }
 
   return parser.finishNode(start, {
@@ -832,7 +813,7 @@ function parseClassId(
       id = parseBindingIdentifier(parser);
     } else if (!optionalId) {
       parser.addDiagnostic({
-        message: 'A class name is required',
+        description: descriptions.JS_PARSER.REQUIRED_CLASS_NAME,
       });
       id = toBindingIdentifier(parser, parser.createUnknownIdentifier(
         'required class name',
@@ -844,24 +825,23 @@ function parseClassId(
   return {id, typeParameters};
 }
 
-function parseClassSuper(
-  parser: JSParser,
-): {
+function parseClassSuper(parser: JSParser): {
   superClass: undefined | AnyExpression;
   superTypeParameters: undefined | AnyTypeArguments;
   implemented: ClassHead['implements'];
 } {
   let superClass = parser.eat(tt._extends)
-    ? parseExpressionWithPossibleSubscripts(parser, 'class heritage') : undefined;
+    ? parseExpressionWithPossibleSubscripts(parser, 'class heritage')
+    : undefined;
   let superTypeParameters;
 
   if (superClass !== undefined) {
     superTypeParameters = maybeParseTypeArguments(parser);
   }
 
-  let implemented:
-    | undefined
-    | Array<FlowClassImplements | TSExpressionWithTypeArguments>;
+  let implemented: undefined | Array<
+    | FlowClassImplements
+    | TSExpressionWithTypeArguments>;
   if (parser.isContextual('implements')) {
     parser.next();
     implemented = parseClassImplements(parser);

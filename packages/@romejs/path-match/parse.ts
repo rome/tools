@@ -15,13 +15,14 @@ import {
 } from './types';
 import {ParserOptions, createParser} from '@romejs/parser-core';
 import {Number0, add, number0, get0, coerce0} from '@romejs/ob1';
+import {descriptions} from '@romejs/diagnostics';
 
 type ParseMode = 'path' | 'pattern';
 
 export type PathMatchParserOptions = ParserOptions;
 
-const createPathMatchParser = createParser((ParserCore) =>
-  class PathMatchParser extends ParserCore<Tokens, void> {
+const createPathMatchParser = createParser(
+  (ParserCore) => class PathMatchParser extends ParserCore<Tokens, void> {
     constructor(opts: PathMatchParserOptions, mode: ParseMode) {
       super(opts, 'parse/patchMatch');
       this.mode = mode;
@@ -124,7 +125,7 @@ const createPathMatchParser = createParser((ParserCore) =>
         default:
           throw this.unexpected({
             start: startPos,
-            message: 'Invalid pattern segment part',
+            description: descriptions.PATH_MATCH.INVALID_PATTERN_SEGMENT_PART,
           });
       }
     }
@@ -279,11 +280,11 @@ const createPathMatchParser = createParser((ParserCore) =>
         return token.value;
       } else {
         throw this.unexpected({
-          message: 'Invalid path segment',
+          description: descriptions.PATH_MATCH.INVALID_PATH_SEGMENT,
         });
       }
     }
-  }
+  },
 );
 
 export function parsePattern(opts: PathMatchParserOptions): PathPatternNode {

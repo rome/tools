@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Master} from '@romejs/core';
+import {Master, MasterRequest} from '@romejs/core';
 import {Reporter} from '@romejs/cli-reporter';
 import {
   BundlerConfig,
@@ -14,7 +14,6 @@ import {
   BundlerMode,
   BundleResultBundle,
 } from '../../common/types/bundler';
-import {MasterRequest} from '@romejs/core';
 import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import DependencyGraph from '../dependencies/DependencyGraph';
 import BundleRequest, {BundleOptions} from './BundleRequest';
@@ -57,7 +56,9 @@ export default class Bundler {
     return new Bundler(req, req.getBundlerConfigFromFlags());
   }
 
-  async getResolvedEntry(unresolvedEntry: string): Promise<BundlerEntryResoluton> {
+  async getResolvedEntry(
+    unresolvedEntry: string,
+  ): Promise<BundlerEntryResoluton> {
     const {cwd} = this.config;
 
     const res = await this.master.resolver.resolveEntryAssert({
@@ -76,9 +77,8 @@ export default class Bundler {
       requestedType: 'package',
       source: createUnknownFilePath(unresolvedEntry),
     });
-    const manifestRoot: undefined | AbsoluteFilePath =
-      manifestRootResolved.type === 'FOUND'
-        ? manifestRootResolved.path : undefined;
+    const manifestRoot: undefined | AbsoluteFilePath = manifestRootResolved.type ===
+      'FOUND' ? manifestRootResolved.path : undefined;
     let manifestDef;
     if (manifestRoot !== undefined) {
       const def = master.memoryFs.getManifestDefinition(manifestRoot);
@@ -133,13 +133,13 @@ export default class Bundler {
         },
       ],
     });
-    const entryUids = entries.map((entry) =>
-      this.master.projectManager.getUid(entry)
-    );
+    const entryUids = entries.map((entry) => this.master.projectManager.getUid(
+      entry,
+    ));
     const analyzeProgress = this.reporter.progress({
       name: `bundler:analyze:${entryUids.join(',')}`,
+      title: 'Analyzing',
     });
-    analyzeProgress.setTitle('Analyzing');
     processor.setThrowAfter(100);
     await this.graph.seed({
       paths: entries,
@@ -153,12 +153,11 @@ export default class Bundler {
     // Now actually bundle them
     const map: Map<AbsoluteFilePath, BundleResult> = new Map();
 
-    const progress = this.reporter.progress();
-    progress.setTitle('Bundling');
+    const progress = this.reporter.progress({title: 'Bundling'});
     progress.setTotal(entries.length);
 
     const silentReporter = this.reporter.fork({
-      silent: true,
+      streams: [],
     });
 
     const promises: Set<Promise<void>> = new Set();
@@ -252,12 +251,15 @@ export default class Bundler {
   async deriveManifest(
     manifestDef: ManifestDefinition,
     entryBundle: BundleResultBundle,
-    createBundle: (resolvedSegment: AbsoluteFilePath, options: BundleOptions) => Promise<
-      BundleResultBundle
-    >,
+    createBundle: (
+      resolvedSegment: AbsoluteFilePath,
+      options: BundleOptions,
+    ) => Promise<BundleResultBundle>,
 
     addFile: (relative: string, buffer: Buffer | string) => void,
-  ): Promise<JSONManifest> {
+  ): Promise<
+    JSONManifest
+  > {
     // TODO figure out some way to use bundleMultiple here
     const manifest = manifestDef.manifest;
 
@@ -303,17 +305,16 @@ export default class Bundler {
       const isBinShorthand = typeof binConsumer.asUnknown() === 'string';
 
       for (const [binName, relative] of manifest.bin) {
-        const pointer =
-          (isBinShorthand ? binConsumer : binConsumer.get(binName)).getDiagnosticPointer(
-            'inner-value',
-          );
+        const location = (isBinShorthand
+          ? binConsumer
+          : binConsumer.get(binName)).getDiagnosticLocation('inner-value');
 
         const absolute = await this.master.resolver.resolveAssert({
           ...this.config.resolver,
           origin: manifestDef.folder,
           source: createUnknownFilePath(relative).toExplicitRelative(),
         }, {
-          pointer,
+          location,
         });
 
         const res = await createBundle(absolute.path, {

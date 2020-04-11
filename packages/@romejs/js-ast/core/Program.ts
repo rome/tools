@@ -14,25 +14,23 @@ import {
   AnyComment,
   ConstProgramSyntax,
 } from '../index';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics} from '@romejs/diagnostics';
 import {createBuilder} from '../utils';
 
-export type Program =
-  & JSNodeBase
-  & {
-    type: 'Program';
-    directives: Array<Directive>;
-    body: Array<AnyStatement>;
-    filename: string;
-    interpreter: undefined | InterpreterDirective;
-    mtime: undefined | number;
-    corrupt: boolean;
-    sourceType: ConstSourceType;
-    diagnostics: PartialDiagnostics;
-    comments: Array<AnyComment>;
-    syntax: Array<ConstProgramSyntax>;
-    hasHoistedVars: boolean;
-  };
+export type Program = JSNodeBase & {
+  type: 'Program';
+  directives: Array<Directive>;
+  body: Array<AnyStatement>;
+  filename: string;
+  interpreter: undefined | InterpreterDirective;
+  mtime: undefined | number;
+  corrupt: boolean;
+  sourceType: ConstSourceType;
+  diagnostics: Diagnostics;
+  comments: Array<AnyComment>;
+  syntax: Array<ConstProgramSyntax>;
+  hasHoistedVars: boolean;
+};
 
 export const MOCK_PROGRAM: Program = {
   type: 'Program',

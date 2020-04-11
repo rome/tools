@@ -7,8 +7,7 @@
 
 import {consumeUnknown, Consumer} from '@romejs/consume';
 import ClientRequest from './ClientRequest';
-import {LocalCommand} from '../commands';
-import {commandCategories} from '../commands';
+import {LocalCommand, commandCategories} from '../commands';
 import executeMain from '../common/utils/executeMain';
 import {createSingleDiagnosticError} from '@romejs/diagnostics';
 import {createAbsoluteFilePath} from '@romejs/path';
@@ -16,89 +15,92 @@ import {Dict} from '@romejs/typescript-helpers';
 import {writeFile, exists} from '@romejs/fs';
 import {VERSION} from '../common/constants';
 
-// rome-suppress lint/noExplicitAny
+// rome-suppress-next-line lint/noExplicitAny
 export const localCommands: Map<string, LocalCommand<any>> = new Map();
 
 type InitFlags = {defaults: boolean};
 
-localCommands.set('init', {
-  category: commandCategories.PROJECT_MANAGEMENT,
-  description: 'create a project config',
+localCommands.set(
+  'init',
+  {
+    category: commandCategories.PROJECT_MANAGEMENT,
+    description: 'create a project config',
 
-  defineFlags(consumer: Consumer): InitFlags {
-    return {
-      defaults: consumer.get('defaults').asBoolean(false),
-    };
-  },
+    defineFlags(consumer: Consumer): InitFlags {
+      return {
+        defaults: consumer.get('defaults').asBoolean(false),
+      };
+    },
 
-  async callback(req: ClientRequest, flags: InitFlags) {
-    const {reporter} = req.client;
+    async callback(req: ClientRequest, flags: InitFlags) {
+      const {reporter} = req.client;
 
-    const config: Dict<unknown> = {};
+      const config: Dict<unknown> = {};
 
-    const configPath = req.client.flags.cwd.append('rome.json');
-    if (await exists(configPath)) {
-      reporter.error(
-        `<filelink target="${configPath.join()}" emphasis>rome.json</filelink> file already exists`,
-      );
-      reporter.info(
-        'Use <command>rome config</command> to update an existing config',
-      );
-      return false;
-    }
-
-    reporter.heading('Welcome to Rome!');
-
-    if (flags.defaults === false) {
-      const useDefaults = await reporter.radioConfirm(
-        'Use recommended settings?',
-      );
-      if (useDefaults) {
-        flags = {defaults: true};
+      const configPath = req.client.flags.cwd.append('rome.json');
+      if (await exists(configPath)) {
+        reporter.error(
+          `<filelink target="${configPath.join()}" emphasis>rome.json</filelink> file already exists`,
+        );
+        reporter.info(
+          'Use <command>rome config</command> to update an existing config',
+        );
+        return false;
       }
-    }
 
-    const name = await reporter.question('Project name', {yes: flags.defaults});
-    if (name !== '') {
-      config.name = name;
-    }
+      reporter.heading('Welcome to Rome!');
 
-    config.version = `^${VERSION}`;
+      if (flags.defaults === false) {
+        const useDefaults = await reporter.radioConfirm(
+          'Use recommended settings?',
+        );
+        if (useDefaults) {
+          flags = {defaults: true};
+        }
+      }
 
-    const enabledComponents = await reporter.select('Features enabled', {
-      yes: flags.defaults,
-      options: {
-        lint: {
-          label: 'Lint',
+      const name = await reporter.question('Project name', {yes: flags.defaults});
+      if (name !== '') {
+        config.name = name;
+      }
+
+      config.version = `^${VERSION}`;
+
+      const enabledComponents = await reporter.select('Features enabled', {
+        yes: flags.defaults,
+        options: {
+          lint: {
+            label: 'Lint',
+          },
+          format: {
+            label: 'Format',
+          },
+          tests: {
+            label: 'Testing',
+          },
         },
-        format: {
-          label: 'Format',
-        },
-        tests: {
-          label: 'Testing',
-        },
-      },
-      defaults: ['lint'],
-    });
-    if (enabledComponents.has('lint')) {
-      config.lint = {enabled: true};
-    }
-    if (enabledComponents.has('format')) {
-      config.format = {enabled: true};
-    }
-    if (enabledComponents.has('tests')) {
-      config.tests = {enabled: true};
-    }
+        defaults: ['lint'],
+      });
+      if (enabledComponents.has('lint')) {
+        config.lint = {enabled: true};
+      }
+      if (enabledComponents.has('format')) {
+        config.format = {enabled: true};
+      }
+      if (enabledComponents.has('tests')) {
+        config.tests = {enabled: true};
+      }
 
-    await writeFile(configPath, `${JSON.stringify(config, null, '  ')}\n`);
+      await writeFile(configPath, `${JSON.stringify(config, null, '  ')}\n`);
 
-    reporter.success(
-      `Created config <filelink emphasis target="${configPath.join()}" />`,
-    );
+      reporter.success(
+        `Created config <filelink emphasis target="${configPath.join()}" />`,
+      );
 
-    return true;
+      return true;
+    },
   },
-});
+);
 
 localCommands.set('start', {
   category: commandCategories.PROCESS_MANAGEMENT,
@@ -251,5 +253,45 @@ localCommands.set('status', {
       reporter.error('Server not running.');
       return false;
     }
+  },
+});
+
+localCommands.set('lsp', {
+  description: 'connect to an lsp',
+  category: commandCategories.PROJECT_MANAGEMENT,
+  defineFlags(consumer) {
+    // vscode-languageclient adds these on
+    consumer.get('stdio').asBooleanOrVoid();
+    consumer.get('clientProcessId').asStringOrVoid();
+    return {};
+  },
+
+  async callback(req: ClientRequest) {
+    req.client.setFlags({
+      clientName: 'lsp',
+      silent: true,
+    });
+
+    const stdin = req.client.reporter.getStdin();
+    req.client.reporter.teardown();
+
+    const bridge = await req.client.findOrStartMaster();
+    if (bridge === undefined) {
+      return false;
+    }
+
+    bridge.lspFromServerBuffer.subscribe((chunk) => {
+      req.client.derivedReporterStreams.stdout.write(chunk);
+    });
+
+    stdin.on('data', (chunk) => {
+      bridge.lspFromClientBuffer.call(chunk.toString());
+    });
+
+    await req.client.query({
+      command: 'lsp',
+    }, 'master');
+
+    return true;
   },
 });

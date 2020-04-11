@@ -12,14 +12,13 @@ import prettyFormat from '@romejs/pretty-format';
 import http = require('http');
 
 import {escapeMarkup} from '@romejs/string-markup';
-import {Reporter} from '@romejs/cli-reporter';
+import {Reporter, ReporterStream} from '@romejs/cli-reporter';
 import {
   MasterQueryRequest,
   MasterQueryResponse,
 } from '../../common/bridges/MasterBridge';
-import {ReporterStream} from '@romejs/cli-reporter';
 import {MasterMarker} from '../Master';
-import {ClientFlags} from '../../common/types/client';
+import {ClientFlagsJSON} from '../../common/types/client';
 import WebRequest, {stripBundleSuffix} from './WebRequest';
 import {BundlerConfig} from '../../common/types/bundler';
 import {AbsoluteFilePath} from '@romejs/path';
@@ -32,24 +31,20 @@ export type WebMasterTime = {
   endTime: undefined | number;
 };
 
-export type WebMasterClient =
-  & WebMasterTime
-  & {
-    id: number;
-    flags: ClientFlags;
-    stdoutAnsi: string;
-    stdoutHTML: string;
-  };
+export type WebMasterClient = WebMasterTime & {
+  id: number;
+  flags: ClientFlagsJSON;
+  stdoutAnsi: string;
+  stdoutHTML: string;
+};
 
-export type WebMasterRequest =
-  & WebMasterTime
-  & {
-    id: number;
-    client: number;
-    query: MasterQueryRequest;
-    markers: Array<MasterMarker>;
-    response: undefined | MasterQueryResponse;
-  };
+export type WebMasterRequest = WebMasterTime & {
+  id: number;
+  client: number;
+  query: MasterQueryRequest;
+  markers: Array<MasterMarker>;
+  response: undefined | MasterQueryResponse;
+};
 
 export class WebServer {
   constructor(req: MasterRequest) {
@@ -80,7 +75,10 @@ export class WebServer {
 
       const data: WebMasterClient = {
         id: client.id,
-        flags: client.flags,
+        flags: {
+          ...client.flags,
+          cwd: client.flags.cwd.join(),
+        },
         startTime: Date.now(),
         endTime: undefined,
         stdoutAnsi: '',
@@ -202,7 +200,7 @@ export class WebServer {
       if (typeof arg === 'string') {
         return escapeMarkup(arg);
       } else {
-        return prettyFormat(arg, {escapeMarkup: true, color: true});
+        return prettyFormat(arg, {markup: true});
       }
     }).join(' ');
 
@@ -236,6 +234,8 @@ export class WebServer {
     // This check makes sure that files outside of the project directory cannot be served
     if (possibleStaticPath.isRelativeTo(project.folder)) {
       return possibleStaticPath;
+    } else {
+      return undefined;
     }
   }
 
@@ -246,9 +246,7 @@ export class WebServer {
     }
   }
 
-  async getBundler(
-    url: ConsumableUrl,
-  ): Promise<{
+  async getBundler(url: ConsumableUrl): Promise<{
     bundler: Bundler;
     path: AbsoluteFilePath;
   }> {
@@ -259,11 +257,11 @@ export class WebServer {
       throw new Error('Pathname is attempting to escalate out of cwd');
     }
 
-    const pathPointer = url.path.getDiagnosticPointer();
+    const pathPointer = url.path.getDiagnosticLocation();
     const path = await this.master.resolver.resolveEntryAssertPath({
       origin: this.masterRequest.client.flags.cwd,
       source: absolute,
-    }, pathPointer === undefined ? undefined : {pointer: pathPointer});
+    }, pathPointer === undefined ? undefined : {location: pathPointer});
 
     const platform = url.query.get('platform').asStringSetOrVoid(PLATFORMS);
     const cacheKey = JSON.stringify({
@@ -275,19 +273,14 @@ export class WebServer {
       return {bundler: cached, path};
     }
 
-    const bundlerConfig: BundlerConfig =
-      this.masterRequest.getBundlerConfigFromFlags({
+    const bundlerConfig: BundlerConfig = this.masterRequest.getBundlerConfigFromFlags(
+      {
         platform,
-      });
+      },
+    );
 
     const bundler = new Bundler(this.masterRequest, bundlerConfig);
-
-    bundler.graph.watch(async () => {
-      // TODO HMR
-    });
-
     this.bundlerCache.set(cacheKey, bundler);
-
     return {bundler, path};
   }
 }

@@ -13,14 +13,12 @@ import {
 } from '../index';
 import {createBuilder} from '../utils';
 
-export type BindingAssignmentPattern =
-  & JSNodeBase
-  & {
-    type: 'BindingAssignmentPattern';
-    left: AnyTargetBindingPattern;
-    right: AnyExpression;
-    meta?: PatternMeta;
-  };
+export type BindingAssignmentPattern = JSNodeBase & {
+  type: 'BindingAssignmentPattern';
+  left: AnyTargetBindingPattern;
+  right: AnyExpression;
+  meta?: PatternMeta;
+};
 
 export const bindingAssignmentPattern = createBuilder<BindingAssignmentPattern>(
   'BindingAssignmentPattern',

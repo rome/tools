@@ -15,10 +15,11 @@ import Resolver, {
   ResolverRemoteQuery,
 } from './Resolver';
 import {
-  PartialDiagnosticAdvice,
+  DiagnosticAdvice,
   buildSuggestionAdvice,
   createSingleDiagnosticError,
   DiagnosticCategory,
+  createBlessedDiagnosticMessage,
 } from '@romejs/diagnostics';
 import {orderBySimilarity} from '@romejs/string-utils';
 import {createUnknownFilePath, AbsoluteFilePath} from '@romejs/path';
@@ -47,15 +48,16 @@ export default function resolverSuggest(
 
   // Use the querySource returned by the resolution which will be the one that actually triggered this error, otherwise use the query source provided to us
   const querySource = resolved.source === undefined
-    ? origQuerySource : resolved.source;
-  if (querySource === undefined || querySource.pointer === undefined) {
+    ? origQuerySource
+    : resolved.source;
+  if (querySource === undefined || querySource.location === undefined) {
     // TODO do something about the `advice` on some `resolved` that may contain metadata?
     throw new Error(errMsg);
   }
 
-  const {pointer} = querySource;
+  const {location} = querySource;
 
-  let advice: PartialDiagnosticAdvice = [];
+  let advice: DiagnosticAdvice = [];
 
   if (query.origin.isAbsolute()) {
     const localQuery: ResolverLocalQuery = {
@@ -72,17 +74,21 @@ export default function resolverSuggest(
 
       if (nonStrictResolved.type === 'FOUND') {
         if (nonStrictResolved.types.includes('implicitIndex')) {
-          advice.push({
-            type: 'log',
-            category: 'info',
-            message: `This successfully resolves as an implicit index file. Trying adding <emphasis>/index${nonStrictResolved.path.getExtensions()}</emphasis> to the end of the import source`,
-          });
+          advice.push(
+            {
+              type: 'log',
+              category: 'info',
+              message: `This successfully resolves as an implicit index file. Trying adding <emphasis>/index${nonStrictResolved.path.getExtensions()}</emphasis> to the end of the import source`,
+            },
+          );
         } else if (nonStrictResolved.types.includes('implicitExtension')) {
-          advice.push({
-            type: 'log',
-            category: 'info',
-            message: `This successfully resolves as an implicit extension. Try adding the extension <emphasis>${nonStrictResolved.path.getExtensions()}</emphasis>`,
-          });
+          advice.push(
+            {
+              type: 'log',
+              category: 'info',
+              message: `This successfully resolves as an implicit extension. Try adding the extension <emphasis>${nonStrictResolved.path.getExtensions()}</emphasis>`,
+            },
+          );
         }
       }
     }
@@ -110,17 +116,21 @@ export default function resolverSuggest(
     }
     if (validPlatforms.length > 0) {
       if (query.platform === undefined) {
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: 'No platform was specified but we found modules for the following platforms',
-        });
+        advice.push(
+          {
+            type: 'log',
+            category: 'info',
+            message: 'No platform was specified but we found modules for the following platforms',
+          },
+        );
       } else {
-        advice.push({
-          type: 'log',
-          category: 'info',
-          message: `No module found for the platform <emphasis>${query.platform}</emphasis> but we found these others`,
-        });
+        advice.push(
+          {
+            type: 'log',
+            category: 'info',
+            message: `No module found for the platform <emphasis>${query.platform}</emphasis> but we found these others`,
+          },
+        );
       }
 
       skipSimilaritySuggestions = true;
@@ -132,21 +142,21 @@ export default function resolverSuggest(
     }
 
     // Hint on any indirection
-    if (
-      origQuerySource !== undefined && origQuerySource.pointer !== undefined &&
-        resolved.source !== undefined
-    ) {
-      advice.push({
-        type: 'log',
-        category: 'info',
-        message: `Found while resolving <emphasis>${query.source}</emphasis> from <filelink emphasis target="${query.origin}" />`,
-      });
+    if (origQuerySource !== undefined && origQuerySource.location !== undefined &&
+        resolved.source !== undefined) {
+      advice.push(
+        {
+          type: 'log',
+          category: 'info',
+          message: `Found while resolving <emphasis>${query.source}</emphasis> from <filelink emphasis target="${query.origin}" />`,
+        },
+      );
 
-      const origPointer = origQuerySource.pointer;
+      const origPointer = origQuerySource.location;
 
       advice.push({
         type: 'frame',
-        ...origPointer,
+        location: origPointer,
       });
     }
 
@@ -201,19 +211,20 @@ export default function resolverSuggest(
 
     // Hint if this was an entry resolve and the cwd wasn't a project
     if (query.entry === true &&
-      resolver.master.projectManager.findProjectExisting(localQuery.origin) ===
-      undefined) {
+          resolver.master.projectManager.findProjectExisting(localQuery.origin) ===
+          undefined) {
       advice.push({
         type: 'log',
         category: 'warn',
-        message: 'You aren\'t in a Rome project',
+        message: "You aren't in a Rome project",
       });
     }
   }
 
   // TODO check if this would have been successful if not for exports access control
   const source = querySource.source === undefined
-    ? query.source.join() : querySource.source;
+    ? query.source.join()
+    : querySource.source;
   let message = '';
   let category: DiagnosticCategory = 'resolver/notFound';
 
@@ -231,14 +242,16 @@ export default function resolverSuggest(
     advice = advice.concat(resolved.advice);
   }
 
-  message +=
-    ` <emphasis>${source}</emphasis> from <filelink emphasis target="${pointer.filename}" />`;
+    message +=
+    ` <emphasis>${source}</emphasis> from <filelink emphasis target="${location.filename}" />`;
 
   throw createSingleDiagnosticError({
-    ...pointer,
-    category,
-    message,
-    advice,
+    location,
+    description: {
+      category,
+      message: createBlessedDiagnosticMessage(message),
+      advice,
+    },
   });
 }
 
@@ -300,8 +313,9 @@ function tryPathSuggestions(
 
     // Our basename isn't valid, but our parent exists
     if (!memoryFs.exists(path) && memoryFs.exists(parentPath)) {
-      const entries = Array.from(memoryFs.readdir(parentPath), (path) =>
-        path.join()
+      const entries = Array.from(
+        memoryFs.readdir(parentPath),
+        (path) => path.join(),
       );
       if (entries.length === 0) {
         continue;

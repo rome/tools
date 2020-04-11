@@ -8,10 +8,9 @@
 import Master from '../Master';
 import {SourceLocation} from '@romejs/parser-core';
 import {BundleBuddyStats} from '../../common/types/bundler';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
+import {catchDiagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
 import {ResolverOptions} from '../fs/Resolver';
 import WorkerQueue from '../WorkerQueue';
-import {catchDiagnostics} from '@romejs/diagnostics';
 import DependencyNode from './DependencyNode';
 import {ReporterProgress} from '@romejs/cli-reporter';
 import Locker from '../../common/utils/Locker';
@@ -98,30 +97,6 @@ export default class DependencyGraph {
   locker: Locker<string>;
   closeEvent: Event<void, void>;
 
-  watch(callback?: (opts: {path: AbsoluteFilePath}) => void) {
-    const watchSubscription = this.master.fileChangeEvent.subscribe(
-      async (path) => {
-        if (this.nodes.has(path)) {
-          this.nodes.delete(path);
-        } else {
-          return;
-        }
-
-        const diagnosticsProcessor = new DiagnosticsProcessor({origins: []});
-        await this.seed({paths: [path], diagnosticsProcessor});
-        diagnosticsProcessor.maybeThrowDiagnosticsError();
-
-        if (callback !== undefined) {
-          callback({path});
-        }
-      },
-    );
-
-    this.closeEvent.subscribe(() => {
-      watchSubscription.unsubscribe();
-    });
-  }
-
   close() {
     this.closeEvent.send();
   }
@@ -134,10 +109,10 @@ export default class DependencyGraph {
     const stats: BundleBuddyStats = [];
 
     for (const node of this.nodes.values()) {
-      const source = node.id;
+      const source = node.uid;
 
       for (const absoluteTarget of node.relativeToAbsolutePath.values()) {
-        const target = this.getNode(absoluteTarget).id;
+        const target = this.getNode(absoluteTarget).uid;
         stats.push({
           target,
           source,
@@ -146,7 +121,7 @@ export default class DependencyGraph {
     }
 
     for (const absoluteEntry of entries) {
-      const source = this.getNode(absoluteEntry).id;
+      const source = this.getNode(absoluteEntry).uid;
       stats.push({
         source,
         target: undefined,
@@ -156,35 +131,43 @@ export default class DependencyGraph {
     return stats;
   }
 
-  addNode(filename: AbsoluteFilePath, res: WorkerAnalyzeDependencyResult) {
-    const module = new DependencyNode(this, this.master.projectManager.getUid(
-      filename,
-    ), filename, res);
-    this.nodes.set(filename, module);
+  deleteNode(path: AbsoluteFilePath) {
+    this.nodes.delete(path);
+  }
+
+  addNode(path: AbsoluteFilePath, res: WorkerAnalyzeDependencyResult) {
+    const module = new DependencyNode(
+      this,
+      this.master.projectManager.getFileReference(path),
+      res,
+    );
+    this.nodes.set(path, module);
     return module;
   }
 
+  maybeGetNode(path: AbsoluteFilePath): undefined | DependencyNode {
+    return this.nodes.get(path);
+  }
+
   getNode(path: AbsoluteFilePath): DependencyNode {
-    const mod = this.nodes.get(path);
+    const mod = this.maybeGetNode(path);
     if (mod === undefined) {
       throw new Error(`No module found for ${path.join()}`);
     }
     return mod;
   }
 
-  async seed(
-    {
-      paths,
-      diagnosticsProcessor,
-      analyzeProgress,
-      validate = false,
-    }: {
-      paths: Array<AbsoluteFilePath>;
-      diagnosticsProcessor: DiagnosticsProcessor;
-      analyzeProgress?: ReporterProgress;
-      validate?: boolean;
-    },
-  ): Promise<void> {
+  async seed({
+    paths,
+    diagnosticsProcessor,
+    analyzeProgress,
+    validate = false,
+  }: {
+    paths: Array<AbsoluteFilePath>;
+    diagnosticsProcessor: DiagnosticsProcessor;
+    analyzeProgress?: ReporterProgress;
+    validate?: boolean;
+  }): Promise<void> {
     const workerQueue: DependencyGraphWorkerQueue = new WorkerQueue(this.master);
 
     workerQueue.addCallback(async (path, item) => {
@@ -197,13 +180,13 @@ export default class DependencyGraph {
     });
 
     // Add initial queue items
-    const roots: Array<DependencyNode> = await Promise.all(paths.map((path) =>
-      this.resolve(path, {
+    const roots: Array<DependencyNode> = await Promise.all(paths.map(
+      (path) => this.resolve(path, {
         workerQueue,
         all: true,
         async: false,
         ancestry: [],
-      }, diagnosticsProcessor, analyzeProgress)
+      }, diagnosticsProcessor, analyzeProgress),
     ));
 
     await workerQueue.spin();
@@ -219,9 +202,13 @@ export default class DependencyGraph {
     }
   }
 
-  validate(node: DependencyNode, diagnosticsProcessor: DiagnosticsProcessor) {
+  validate(
+    node: DependencyNode,
+    diagnosticsProcessor: DiagnosticsProcessor,
+  ): boolean {
     const resolvedImports = node.resolveImports();
-    diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics);
+    return diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics).length >
+        0;
   }
 
   validateTransitive(
@@ -277,8 +264,9 @@ export default class DependencyGraph {
       analyzeProgress.pushText(progressText);
     }
 
-    const res: WorkerAnalyzeDependencyResult =
-      await this.request.requestWorkerAnalyzeDependencies(path);
+    const res: WorkerAnalyzeDependencyResult = await this.request.requestWorkerAnalyzeDependencies(
+      path,
+    );
 
     const node = this.addNode(path, res);
     node.setAll(all);
@@ -311,7 +299,7 @@ export default class DependencyGraph {
           origin,
           source: createUnknownFilePath(source),
         }, dep.loc === undefined ? undefined : {
-          pointer: {
+          location: {
             sourceText: undefined,
             ...dep.loc,
             language: 'js',

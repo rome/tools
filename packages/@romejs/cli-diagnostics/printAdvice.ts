@@ -9,27 +9,32 @@ import {Reporter} from '@romejs/cli-reporter';
 import {
   Diagnostic,
   DiagnosticAdviceItem,
-  DiagnosticAdviceItemLog,
-  DiagnosticAdviceItemList,
-  DiagnosticAdviceItemCode,
-  DiagnosticAdviceItemFrame,
-  DiagnosticAdviceItemInspect,
-  DiagnosticAdviceItemDiff,
-  DiagnosticAdviceItemStacktrace,
+  DiagnosticAdviceLog,
+  DiagnosticAdviceList,
+  DiagnosticAdviceCode,
+  DiagnosticAdviceFrame,
+  DiagnosticAdviceInspect,
+  DiagnosticAdviceDiff,
+  DiagnosticAdviceStacktrace,
+  DiagnosticAdviceCommand,
+  getDiagnosticHeader,
 } from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
 import {toLines} from './utils';
-import {getDiagnosticHeader} from '@romejs/diagnostics';
 import buildPatchCodeFrame from './buildPatchCodeFrame';
 import buildMessageCodeFrame from './buildMessageCodeFrame';
-import {escapeMarkup} from '@romejs/string-markup';
-import {formatAnsi} from '@romejs/string-ansi';
+import {escapeMarkup, markupTag} from '@romejs/string-markup';
 import {DiagnosticsPrinterFlags} from './types';
 import {number0Neg1} from '@romejs/ob1';
-import {DiagnosticsPrinterFileSources} from './DiagnosticsPrinter';
-import {createUnknownFilePath, AbsoluteFilePathSet} from '@romejs/path';
+import DiagnosticsPrinter, {
+  DiagnosticsPrinterFileSources,
+} from './DiagnosticsPrinter';
+import {AbsoluteFilePathSet} from '@romejs/path';
+import {RAW_CODE_MAX_LENGTH} from './constants';
+import {Diffs, diffConstants} from '@romejs/string-diff';
 
 type AdvicePrintOptions = {
+  printer: DiagnosticsPrinter;
   flags: DiagnosticsPrinterFlags;
   missingFileSources: AbsoluteFilePathSet;
   fileSources: DiagnosticsPrinterFileSources;
@@ -37,10 +42,25 @@ type AdvicePrintOptions = {
   diagnostic: Diagnostic;
 };
 
+type PrintAdviceResult = {
+  printed: boolean;
+  truncated: boolean;
+};
+
+const DID_PRINT: PrintAdviceResult = {
+  printed: true,
+  truncated: false,
+};
+
+const DID_NOT_PRINT: PrintAdviceResult = {
+  printed: false,
+  truncated: false,
+};
+
 export default function printAdvice(
   item: DiagnosticAdviceItem,
   opts: AdvicePrintOptions,
-): boolean {
+): PrintAdviceResult {
   switch (item.type) {
     case 'log':
       return printLog(item, opts);
@@ -54,6 +74,9 @@ export default function printAdvice(
     case 'code':
       return printCode(item, opts);
 
+    case 'command':
+      return printCommand(item, opts);
+
     case 'frame':
       return printFrame(item, opts);
 
@@ -65,113 +88,210 @@ export default function printAdvice(
   }
 }
 
-function printInspect(
-  item: DiagnosticAdviceItemInspect,
+function printCommand(
+  item: DiagnosticAdviceCommand,
   opts: AdvicePrintOptions,
-): boolean {
+): PrintAdviceResult {
+  opts.reporter.command(item.command);
+  return DID_PRINT;
+}
+
+function printInspect(
+  item: DiagnosticAdviceInspect,
+  opts: AdvicePrintOptions,
+): PrintAdviceResult {
   const {reporter} = opts;
   reporter.indent(() => {
     reporter.inspect(item.data);
   });
-  return false;
+  return DID_PRINT;
+}
+
+function removeCRLF(str: string): string {
+  return str.replace(/\r/g, '');
+}
+
+function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
+  let expected = '';
+  let received = '';
+
+  for (const [type, text] of diffs) {
+    switch (type) {
+      case diffConstants.ADD:
+        received += text;
+        break;
+
+      case diffConstants.DELETE:
+        expected += text;
+        break;
+
+      case diffConstants.EQUAL:
+        expected += text;
+        received += text;
+        break;
+    }
+  }
+
+  if (expected.trim() === received.trim()) {
+    return {
+      type: 'log',
+      category: 'info',
+      message: 'Only difference is leading and trailing whitespace',
+    };
+  }
+
+  const receivedNoCRLF = removeCRLF(received);
+  if (expected === receivedNoCRLF) {
+    return {
+        type: 'log',
+        category: 'info',
+        message: 'Identical except the received uses CRLF newlines, while the expected does not',
+      };
+  }
+
+  const expectedNoCRLF = removeCRLF(expected);
+  if (received === expectedNoCRLF) {
+    return {
+        type: 'log',
+        category: 'info',
+        message: 'Identical except the expected uses CRLF newlines, while the received does not',
+      };
+  }
+
+  return undefined;
 }
 
 function printDiff(
-  item: DiagnosticAdviceItemDiff,
+  item: DiagnosticAdviceDiff,
   opts: AdvicePrintOptions,
-): boolean {
-  const frame = buildPatchCodeFrame(item.diff);
+): PrintAdviceResult {
+  const {frame, truncated} = buildPatchCodeFrame(
+    item.diff,
+    opts.flags.verboseDiagnostics,
+  );
   if (frame === '') {
-    return true;
+    return DID_NOT_PRINT;
   }
 
-  opts.reporter.logAll(escapeMarkup(frame));
+  opts.reporter.logAll(frame);
 
   const {legend} = item;
   if (legend !== undefined) {
     opts.reporter.spacer();
-    opts.reporter.logAll(`<green>+ ${escapeMarkup(legend.add)}</green>`);
-    opts.reporter.logAll(`<red>- ${escapeMarkup(legend.delete)}</red>`);
+    opts.reporter.logAll(`<green>+ ${legend.add}</green>`);
+    opts.reporter.logAll(`<red>- ${legend.delete}</red>`);
     opts.reporter.spacer();
   }
 
-  return false;
+  const hint = generateDiffHint(item.diff);
+  if (hint !== undefined) {
+    opts.reporter.spacer();
+    printAdvice(hint, opts);
+    opts.reporter.spacer();
+  }
+
+  return {
+    printed: true,
+    truncated,
+  };
 }
 
 function printList(
-  item: DiagnosticAdviceItemList,
+  item: DiagnosticAdviceList,
   opts: AdvicePrintOptions,
-): boolean {
+): PrintAdviceResult {
   if (item.list.length === 0) {
-    return true;
+    return DID_NOT_PRINT;
   } else {
     opts.reporter.list(item.list, {
       truncate: opts.flags.verboseDiagnostics ? undefined : 20,
       reverse: item.reverse,
       ordered: item.ordered,
     });
-    return false;
+    return DID_PRINT;
   }
 }
 
 function printCode(
-  item: DiagnosticAdviceItemCode,
+  item: DiagnosticAdviceCode,
   opts: AdvicePrintOptions,
-): boolean {
+): PrintAdviceResult {
   const {reporter} = opts;
-  const {code} = item;
-  reporter.indent(() => {
-    reporter.logAll(escapeMarkup(code));
-  });
-  return false;
+
+  const truncated = !opts.flags.verboseDiagnostics && item.code.length >
+    RAW_CODE_MAX_LENGTH;
+  const code = truncated ? item.code.slice(0, RAW_CODE_MAX_LENGTH) : item.code;
+
+  reporter.indent(
+    () => {
+      reporter.logAll(escapeMarkup(code));
+
+      if (truncated) {
+        reporter.logAll(
+          `<dim><number>${item.code.length - RAW_CODE_MAX_LENGTH}</number> more characters truncated</dim>`,
+        );
+      }
+    },
+  );
+
+  return {
+    printed: true,
+    truncated,
+  };
 }
 
 function printFrame(
-  item: DiagnosticAdviceItemFrame,
+  item: DiagnosticAdviceFrame,
   opts: AdvicePrintOptions,
-): boolean {
+): PrintAdviceResult {
   const {reporter} = opts;
-  const {start, end, filename, sourceText, marker} = item;
-  const path = createUnknownFilePath(filename);
+  const {marker} = item;
+  const {start, end, filename} = item.location;
+  let {sourceText} = item.location;
+  const path = opts.printer.createFilePath(filename);
 
   let cleanMarker: string = '';
   if (marker !== undefined) {
-    cleanMarker = formatAnsi.bold(cleanMessage(marker));
+    cleanMarker = markupTag('emphasis', cleanMessage(marker));
   }
 
-  let lines: undefined | Array<string>;
+  let lines: Array<string> = [];
   if (sourceText !== undefined) {
     lines = toLines({
       path,
       input: sourceText,
-      sourceType: item.sourceType,
-      language: item.language,
+      sourceType: item.location.sourceType,
+      language: item.location.language,
     });
   } else if (filename !== undefined) {
-    lines = opts.fileSources.get(path);
+    const source = opts.fileSources.get(path);
+    if (source !== undefined) {
+      lines = source.lines;
+      sourceText = source.sourceText;
+    }
   } else if (path.isAbsolute() && opts.missingFileSources.has(
-    path.assertAbsolute(),
-  )) {
-    lines = [formatAnsi.dim('file does not exist')];
+      path.assertAbsolute(),
+    )) {
+    lines = ['<dim>File does not exist</dim>'];
   }
 
-  if (lines === undefined) {
-    lines = [];
+  if (sourceText === undefined) {
+    sourceText = '';
   }
 
-  const frame = buildMessageCodeFrame(lines, start, end, cleanMarker);
+  const frame = buildMessageCodeFrame(sourceText, lines, start, end, cleanMarker);
   if (frame.trim() === '') {
-    return true;
+    return DID_NOT_PRINT;
   }
 
-  reporter.logAll(escapeMarkup(frame));
-  return false;
+  reporter.logAll(frame);
+  return DID_PRINT;
 }
 
 function printStacktrace(
-  item: DiagnosticAdviceItemStacktrace,
+  item: DiagnosticAdviceStacktrace,
   opts: AdvicePrintOptions,
-): boolean {
+): PrintAdviceResult {
   // Here we duplicate some of the list logic that is in Reporter
 
   // This is different as we also want to push frames after some of the items
@@ -181,7 +301,9 @@ function printStacktrace(
 
   let shownCodeFrames = 0;
 
-  const isFirstPart = diagnostic.advice[0] === item;
+  const isFirstPart = diagnostic.description.advice !== undefined &&
+      diagnostic.description.advice[0] ===
+      item;
   if (!isFirstPart) {
     opts.reporter.info(item.title === undefined ? 'Stack trace' : item.title);
     opts.reporter.forceSpacer();
@@ -204,16 +326,16 @@ function printStacktrace(
 
     // Add prefix
     if (prefix !== undefined) {
-      logParts.push(formatAnsi.dim(escapeMarkup(prefix)));
+      logParts.push(markupTag('dim', escapeMarkup(prefix)));
     }
 
     // Build path
     const objParts = [];
     if (object !== undefined) {
-      objParts.push(formatAnsi.magenta(escapeMarkup(object)));
+      objParts.push(markupTag('magenta', escapeMarkup(object)));
     }
     if (property !== undefined) {
-      objParts.push(formatAnsi.cyan(escapeMarkup(property)));
+      objParts.push(markupTag('cyan', escapeMarkup(property)));
     }
     if (objParts.length > 0) {
       logParts.push(objParts.join('.'));
@@ -221,7 +343,7 @@ function printStacktrace(
 
     // Add suffix
     if (suffix !== undefined) {
-      logParts.push(formatAnsi.green(escapeMarkup(suffix)));
+      logParts.push(markupTag('green', escapeMarkup(suffix)));
     }
 
     // Add source
@@ -238,7 +360,7 @@ function printStacktrace(
       if (logParts.length === 0) {
         logParts.push(header);
       } else {
-        logParts.push(`(${formatAnsi.dim(header)})`);
+        logParts.push(`(<dim>${header}</dim>)`);
       }
     }
 
@@ -246,7 +368,8 @@ function printStacktrace(
 
     // Push on frame
     if (shownCodeFrames < 2 && filename !== undefined && line !== undefined &&
-      column !== undefined) {
+          column !==
+          undefined) {
       const pos: Position = {
         index: number0Neg1,
         line,
@@ -255,14 +378,16 @@ function printStacktrace(
 
       const skipped = printFrame({
         type: 'frame',
-        language,
-        filename,
-        sourceType: 'module',
         marker: undefined,
-        mtime: undefined,
-        start: pos,
-        end: pos,
-        sourceText: code,
+        location: {
+          language,
+          filename,
+          sourceType: 'module',
+          mtime: undefined,
+          start: pos,
+          end: pos,
+          sourceText: code,
+        },
       }, opts);
       if (!skipped) {
         opts.reporter.forceSpacer();
@@ -274,13 +399,13 @@ function printStacktrace(
     truncate: opts.flags.verboseDiagnostics ? undefined : 20,
   });
 
-  return false;
+  return DID_PRINT;
 }
 
 function printLog(
-  item: DiagnosticAdviceItemLog,
+  item: DiagnosticAdviceLog,
   opts: AdvicePrintOptions,
-): boolean {
+): PrintAdviceResult {
   const {reporter} = opts;
   const {message, category} = item;
 
@@ -307,7 +432,7 @@ function printLog(
     }
   }
 
-  return item.compact;
+  return item.compact ? DID_NOT_PRINT : DID_PRINT;
 }
 
 function cleanMessage(msg: string): string {

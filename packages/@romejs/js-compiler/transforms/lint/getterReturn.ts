@@ -8,6 +8,7 @@
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
 import {getCompletionRecords} from '@romejs/js-ast-utils';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'getterReturn',
@@ -15,13 +16,14 @@ export default {
     const {node} = path;
 
     if ((node.type === 'ClassMethod' || node.type === 'ObjectMethod') &&
-      node.kind === 'get') {
+          node.kind ===
+          'get') {
       for (const record of getCompletionRecords(node.body)) {
         if (record.type === 'INVALID') {
-          path.context.addNodeDiagnostic(record.node, {
-            category: 'lint/getterReturn',
-            message: `Expected a 'return' at end of a getter method but got ${record.description}`,
-          });
+          path.context.addNodeDiagnostic(
+            record.node,
+            descriptions.LINT.GETTER_RETURN(record.description),
+          );
         }
       }
     }

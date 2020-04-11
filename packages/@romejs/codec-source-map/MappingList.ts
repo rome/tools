@@ -26,7 +26,8 @@ function generatedPositionAfter(mappingA: Mapping, mappingB: Mapping): boolean {
   const columnA = mappingA.generated.column;
   const columnB = mappingB.generated.column;
   return lineB > lineA || lineB == lineA && columnB >= columnA ||
-  compareByGeneratedPositionsInflated(mappingA, mappingB) <= 0;
+      compareByGeneratedPositionsInflated(mappingA, mappingB) <=
+      0;
 }
 
 /**

@@ -5,16 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
-import {escapeMarkup} from '@romejs/string-markup';
-import {stripAnsi} from '@romejs/string-ansi';
+import {Diagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
+import {escapeMarkup, stripAnsi} from '@romejs/string-markup';
 import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
-import {PartialDiagnostic, DiagnosticSuppressions} from './types';
+import {Diagnostic, DiagnosticSuppressions} from './types';
 
 export class DiagnosticsError extends Error {
   constructor(
     message: string,
-    diagnostics: PartialDiagnostics,
+    diagnostics: Diagnostics,
     suppressions: DiagnosticSuppressions = [],
   ) {
     if (diagnostics.length === 0) {
@@ -22,12 +21,10 @@ export class DiagnosticsError extends Error {
     }
 
     message += '\n';
-    message += stripAnsi(printDiagnosticsToString(diagnostics, {
-      origins: [],
-    }));
-    message += stripAnsi(diagnostics.map((diag) => `- ${diag.message}`).join(
-      '\n',
-    ));
+    message += stripAnsi(printDiagnosticsToString(diagnostics));
+    message += stripAnsi(diagnostics.map(
+      (diag) => `- ${diag.description.message.value}`,
+    ).join('\n'));
 
     super(escapeMarkup(message));
     this.diagnostics = diagnostics;
@@ -35,25 +32,27 @@ export class DiagnosticsError extends Error {
     this.name = 'DiagnosticsError';
   }
 
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   suppressions: DiagnosticSuppressions;
 }
 
 export function createSingleDiagnosticError(
-  diag: PartialDiagnostic,
+  diag: Diagnostic,
   suppressions?: DiagnosticSuppressions,
 ): DiagnosticsError {
-  return new DiagnosticsError(diag.message, [diag], suppressions);
+  return new DiagnosticsError(
+    diag.description.message.value,
+    [diag],
+    suppressions,
+  );
 }
 
-export function getDiagnosticsFromError(
-  err: Error,
-): undefined | PartialDiagnostics {
+export function getDiagnosticsFromError(err: Error): undefined | Diagnostics {
   if (err instanceof DiagnosticsError) {
     const processor = new DiagnosticsProcessor({});
     processor.addSuppressions(err.suppressions);
     processor.addDiagnostics(err.diagnostics);
-    return processor.getPartialDiagnostics();
+    return processor.getDiagnostics();
   }
 
   return undefined;

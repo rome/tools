@@ -8,12 +8,10 @@
 import {JSNodeBase, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
-export type ExportNamespaceSpecifier =
-  & JSNodeBase
-  & {
-    type: 'ExportNamespaceSpecifier';
-    exported: Identifier;
-  };
+export type ExportNamespaceSpecifier = JSNodeBase & {
+  type: 'ExportNamespaceSpecifier';
+  exported: Identifier;
+};
 
 export const exportNamespaceSpecifier = createBuilder<ExportNamespaceSpecifier>(
   'ExportNamespaceSpecifier',

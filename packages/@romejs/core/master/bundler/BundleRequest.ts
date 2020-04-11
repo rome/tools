@@ -7,17 +7,20 @@
 
 import Bundler from './Bundler';
 import DependencyNode from '../dependencies/DependencyNode';
-import {Mappings} from '@romejs/codec-source-map';
+import {Mappings, SourceMapGenerator} from '@romejs/codec-source-map';
 import {BundleRequestResult, BundlerMode} from '../../common/types/bundler';
 import {
   WorkerBundleCompileOptions,
   WorkerCompileResult,
 } from '../../common/bridges/WorkerBridge';
 import {DependencyOrder} from '../dependencies/DependencyOrderer';
-import {CompileResult, BundleCompileResolvedImports} from '@romejs/js-compiler';
-import {getPrefixedBundleNamespace} from '@romejs/js-compiler';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
-import {SourceMapGenerator} from '@romejs/codec-source-map';
+import {
+  CompileResult,
+  BundleCompileResolvedImports,
+  getPrefixedBundleNamespace,
+} from '@romejs/js-compiler';
+
+import {DiagnosticsProcessor, descriptions} from '@romejs/diagnostics';
 import {AbsoluteFilePath} from '@romejs/path';
 import {add} from '@romejs/ob1';
 import {readFile} from '@romejs/fs';
@@ -32,21 +35,19 @@ export type BundleOptions = {
 };
 
 export default class BundleRequest {
-  constructor(
-    {
-      bundler,
-      reporter,
-      mode,
-      resolvedEntry,
-      options,
-    }: {
-      bundler: Bundler;
-      reporter: Reporter;
-      mode: BundlerMode;
-      resolvedEntry: AbsoluteFilePath;
-      options: BundleOptions;
-    },
-  ) {
+  constructor({
+    bundler,
+    reporter,
+    mode,
+    resolvedEntry,
+    options,
+  }: {
+    bundler: Bundler;
+    reporter: Reporter;
+    mode: BundlerMode;
+    resolvedEntry: AbsoluteFilePath;
+    options: BundleOptions;
+  }) {
     this.reporter = reporter;
     this.interpreter = options.interpreter;
     this.bundler = bundler;
@@ -56,22 +57,24 @@ export default class BundleRequest {
     this.resolvedEntry = resolvedEntry;
     this.resolvedEntryUid = bundler.master.projectManager.getUid(resolvedEntry);
 
-    this.diagnostics =
-      new DiagnosticsProcessor({
-        origins: [
-          {
-            category: 'bundler',
-            message: `Requested bundle for <filelink target="${this.resolvedEntryUid}" />`,
-          },
-        ],
-      });
+      this.diagnostics =
+      new DiagnosticsProcessor(
+        {
+          origins: [
+            {
+              category: 'bundler',
+              message: `Requested bundle for <filelink target="${this.resolvedEntryUid}" />`,
+            },
+          ],
+        },
+      );
     this.diagnostics.addAllowedUnusedSuppressionPrefix('lint');
 
     this.compiles = new Map();
     this.assets = new Map();
 
     this.sourceMap = new SourceMapGenerator({
-      file: 'TODO-something',
+      file: resolvedEntry.getBasename(),
     });
   }
 
@@ -93,14 +96,15 @@ export default class BundleRequest {
 
     const analyzeProgress = reporter.progress({
       name: `bundler:analyze:${this.resolvedEntryUid}`,
+      title: 'Analyzing',
     });
-    analyzeProgress.setTitle('Analyzing');
     this.diagnostics.setThrowAfter(100);
     try {
       await graph.seed({
         paths: [this.resolvedEntry],
         diagnosticsProcessor: this.diagnostics,
         analyzeProgress,
+        validate: true,
       });
     } finally {
       analyzeProgress.end();
@@ -116,9 +120,9 @@ export default class BundleRequest {
 
     const compilingSpinner = reporter.progress({
       name: `bundler:compile:${this.resolvedEntryUid}`,
+      title: 'Compiling',
     });
     compilingSpinner.setTotal(paths.length);
-    compilingSpinner.setTitle('Compiling');
 
     const groupedPaths = await master.fileAllocator.groupPathsByWorker(paths);
     await Promise.all(groupedPaths.map(async (paths) => {
@@ -142,15 +146,14 @@ export default class BundleRequest {
     // Build a map of relative module sources to module id
     const relativeSourcesToModuleId: Dict<string> = {};
     for (const [relative, absolute] of mod.relativeToAbsolutePath) {
-      const moduleId = graph.getNode(absolute).id;
+      const moduleId = graph.getNode(absolute).uid;
       relativeSourcesToModuleId[relative] = moduleId;
     }
 
     // Diagnostics would have already been added during the initial DependencyGraph.seed
 
     // We're doing the work of resolving everything again, maybe we should cache it?
-    const resolvedImports: BundleCompileResolvedImports =
-      mod.resolveImports().resolved;
+    const resolvedImports: BundleCompileResolvedImports = mod.resolveImports().resolved;
 
     let assetPath: undefined | string;
     if (mod.handler !== undefined && mod.handler.isAsset) {
@@ -168,20 +171,19 @@ export default class BundleRequest {
     const opts: WorkerBundleCompileOptions = {
       mode: this.mode,
       moduleAll: mod.all,
-      moduleId: mod.id,
+      moduleId: mod.uid,
       relativeSourcesToModuleId,
       resolvedImports,
       assetPath,
     };
 
-    const res: WorkerCompileResult =
-      await this.bundler.request.requestWorkerCompile(
-        path,
-        'compileForBundle',
-        {
-          bundle: opts,
-        },
-      );
+    const res: WorkerCompileResult = await this.bundler.request.requestWorkerCompile(
+      path,
+      'compileForBundle',
+      {
+        bundle: opts,
+      },
+    );
 
     if (!res.cached) {
       this.cached = false;
@@ -218,7 +220,6 @@ export default class BundleRequest {
       sourceContent: string,
       mappings: Mappings,
     ) {
-      return;
       sourceMap.setSourceContent(filename, sourceContent);
       for (const mapping of mappings) {
         sourceMap.addMapping({
@@ -241,12 +242,11 @@ export default class BundleRequest {
       if (mode === 'legacy') {
         for (const {loc, mtime} of order.firstTopAwaitLocations) {
           this.diagnostics.addDiagnostic({
-            category: 'bundler/topLevelAwait',
-            filename: loc.filename,
-            start: loc.start,
-            end: loc.end,
-            message: 'This module contains a top level await which isn\'t supported in wrapper mode',
-            mtime,
+            description: descriptions.BUNDLER.TOP_LEVEL_AWAIT_IN_LEGACY,
+            location: {
+              ...loc,
+              mtime,
+            },
           });
         }
       }
@@ -285,7 +285,7 @@ export default class BundleRequest {
 
       declaredCJS.add(module);
 
-      push(`  var ${getPrefixedBundleNamespace(module.id)} = {};`);
+      push(`  var ${getPrefixedBundleNamespace(module.uid)} = {};`);
     }
 
     // Add on files
@@ -304,12 +304,12 @@ export default class BundleRequest {
 
       // Only do this in modern mode, the module id will already be in the wrapper otherwise
       if (mode === 'modern') {
-        push(`  // ${module.id}`);
+        push(`  // ${module.uid}`);
       }
 
       declareCJS(module);
 
-      addMappings(module.id, compileResult.sourceText, compileResult.mappings);
+      addMappings(module.uid, compileResult.sourceText, compileResult.mappings);
       push(compileResult.compiledCode);
       push('');
     }
@@ -317,24 +317,26 @@ export default class BundleRequest {
     // push on initial entry require
     const entryModule = graph.getNode(resolvedEntry);
     if (mode === 'modern') {
-      push(`  return ${getPrefixedBundleNamespace(entryModule.id)};`);
+      push(`  return ${getPrefixedBundleNamespace(entryModule.uid)};`);
     } else {
-      push(`  return Rome.requireNamespace("${entryModule.id}");`);
+      push(`  return Rome.requireNamespace("${entryModule.uid}");`);
     }
 
     // push footer
     push(
-      '})(typeof global !== \'undefined\' ? global : typeof window !== \'undefined\' ? window : this);',
+      "})(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this);",
     );
 
     //
     if (inlineSourceMap === true) {
       const sourceMapComment = sourceMap.toComment();
       content += sourceMapComment;
+    } else {
+      content += `//# sourceMappingURL=${this.sourceMap.file}.map`;
     }
 
     return {
-      diagnostics: this.diagnostics.getPartialDiagnostics(),
+      diagnostics: this.diagnostics.getDiagnostics(),
       content,
       map: sourceMap.toJSON(),
       cached: this.cached,
@@ -350,7 +352,7 @@ export default class BundleRequest {
     return {
       map: this.sourceMap.toJSON(),
       content: '',
-      diagnostics: this.diagnostics.getPartialDiagnostics(),
+      diagnostics: this.diagnostics.getDiagnostics(),
       cached: false,
       assets: this.assets,
     };

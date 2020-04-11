@@ -113,7 +113,7 @@ Program {
                 }
               }
               returnType: FlowGenericTypeAnnotation {
-                id: Identifier {
+                id: ReferenceIdentifier {
                   name: 'Iterator'
                   loc: Object {
                     filename: 'input.js'
@@ -158,7 +158,7 @@ Program {
                   }
                   params: Array [
                     FlowGenericTypeAnnotation {
-                      id: Identifier {
+                      id: ReferenceIdentifier {
                         name: 'File'
                         loc: Object {
                           filename: 'input.js'

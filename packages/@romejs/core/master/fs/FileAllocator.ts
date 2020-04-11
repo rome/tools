@@ -10,14 +10,19 @@ import {Stats} from './MemoryFileSystem';
 import {WorkerContainer} from '../WorkerManager';
 import Locker from '../../common/utils/Locker';
 import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
+import {Event} from '@romejs/events';
 
 export default class FileAllocator {
   constructor(master: Master) {
     this.master = master;
     this.fileToWorker = new Map();
     this.locker = new Locker();
+    this.evictEvent = new Event({
+      name: 'evict',
+    });
   }
 
+  evictEvent: Event<AbsoluteFilePath, void>;
   master: Master;
   locker: Locker<string>;
   fileToWorker: Map<string, number>;
@@ -52,8 +57,8 @@ export default class FileAllocator {
 
     if (stats.size > maxSize) {
       throw new Error(
-        `The file ${path.join()} exceeds the project config max size of ${maxSize} bytes`,
-      );
+          `The file ${path.join()} exceeds the project config max size of ${maxSize} bytes`,
+        );
     }
   }
 
@@ -116,6 +121,7 @@ export default class FileAllocator {
     await worker.bridge.evict.call({
       filename,
     });
+    this.evictEvent.send(path);
 
     this.master.logger.info(`[FileAllocator] Evicted %s`, filename);
   }
@@ -163,8 +169,8 @@ export default class FileAllocator {
       // Add on the new size, and remove the old
       if (oldStats === undefined) {
         throw new Error(
-          'File already has an owner so expected to have old stats but had none',
-        );
+            'File already has an owner so expected to have old stats but had none',
+          );
       }
       workerManager.disown(workerId, oldStats);
       workerManager.own(workerId, newStats);

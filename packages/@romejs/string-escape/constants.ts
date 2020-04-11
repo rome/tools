@@ -6,5 +6,5 @@
  */
 
 export const DOUBLE_QUOTE: '"' = '"';
-export const SINGLE_QUOTE: '\'' = '\'';
+export const SINGLE_QUOTE: "'" = "'";
 export const TICK_QUOTE: '`' = '`';

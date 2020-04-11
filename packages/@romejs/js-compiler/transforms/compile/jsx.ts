@@ -41,7 +41,12 @@ import {
   spreadElement,
 } from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
-import {template, isValidIdentifierName, inheritLoc} from '@romejs/js-ast-utils';
+import {
+  template,
+  isValidIdentifierName,
+  inheritLoc,
+} from '@romejs/js-ast-utils';
+import {descriptions} from '@romejs/diagnostics';
 
 function convertJSXIdentifier(
   path: Path,
@@ -74,8 +79,8 @@ function convertJSXIdentifier(
     }
   } else {
     throw new Error(
-      `Received a node of type ${node.type}, the only node types that should be in this position are JSXIdentifier and JSXMemberExpression`,
-    );
+        `Received a node of type ${node.type}, the only node types that should be in this position are JSXIdentifier and JSXMemberExpression`,
+      );
   }
 }
 
@@ -102,7 +107,7 @@ function convertAttribute(node: JSXAttribute): ObjectProperty {
     value: true,
   }));
   if (valueNode.type === 'StringLiteral' && (!node.value || node.value.type !==
-  'JSXExpressionContainer')) {
+      'JSXExpressionContainer')) {
     valueNode = stringLiteral.create({
       value: valueNode.value.replace(/\n\s+/g, ' '),
     });
@@ -224,6 +229,8 @@ function cleanJSXElementLiteralChild(value: string): undefined | StringLiteral {
 
   if (str != '') {
     return stringLiteral.quick(str);
+  } else {
+    return undefined;
   }
 }
 
@@ -270,10 +277,7 @@ export default {
 
       if (jsxNamespacedName.is(node.name)) {
         // TODO better handle this
-        context.addNodeDiagnostic(type, {
-          category: 'compile/jsx',
-          message: 'JSX is not XML',
-        });
+        context.addNodeDiagnostic(type, descriptions.COMPILER.JSX_NOT_XML);
       }
 
       let attribs: AnyExpression;

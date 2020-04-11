@@ -8,13 +8,11 @@
 import {JSNodeBase, Identifier, ImportSpecifierLocal} from '../index';
 import {createBuilder} from '../utils';
 
-export type ImportSpecifier =
-  & JSNodeBase
-  & {
-    type: 'ImportSpecifier';
-    imported: Identifier;
-    local: ImportSpecifierLocal;
-  };
+export type ImportSpecifier = JSNodeBase & {
+  type: 'ImportSpecifier';
+  imported: Identifier;
+  local: ImportSpecifierLocal;
+};
 
 export const importSpecifier = createBuilder<ImportSpecifier>(
   'ImportSpecifier',

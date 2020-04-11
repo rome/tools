@@ -7,52 +7,54 @@
 
 import Scope from '../Scope';
 import {ImportBindingMeta, ImportBinding} from '@romejs/js-compiler';
-import {ImportDeclaration, AnyNode, ConstImportModuleKind} from '@romejs/js-ast';
+import {
+  ImportDeclaration,
+  AnyNode,
+  ConstImportModuleKind,
+} from '@romejs/js-ast';
+import {getImportSpecifiers} from '@romejs/js-ast-utils';
 
 export default {
   creator: false,
   build(node: ImportDeclaration, parent: AnyNode, scope: Scope) {
     const source = node.source.value;
-    const {specifiers} = node;
 
-    if (specifiers !== undefined) {
-      for (const specifier of specifiers) {
-        let kind: ConstImportModuleKind = specifier.local.importKind ||
+    for (const specifier of getImportSpecifiers(node)) {
+      let kind: ConstImportModuleKind = specifier.local.importKind ||
         node.importKind || 'value';
-        let meta: undefined | ImportBindingMeta;
+      let meta: undefined | ImportBindingMeta;
 
-        if (specifier.type === 'ImportNamespaceSpecifier') {
-          meta = {
-            kind,
-            type: 'namespace',
-            source,
-          };
-        } else if (specifier.type === 'ImportDefaultSpecifier') {
-          meta = {
-            kind,
-            type: 'name',
-            imported: 'default',
-            source,
-          };
-        } else if (specifier.type === 'ImportSpecifier') {
-          meta = {
-            kind,
-            type: 'name',
-            imported: specifier.imported.name,
-            source,
-          };
-        }
-
-        if (meta === undefined) {
-          return undefined;
-        }
-
-        scope.addBinding(new ImportBinding({
-          node: specifier.local.name,
-          name: specifier.local.name.name,
-          scope,
-        }, meta));
+      if (specifier.type === 'ImportNamespaceSpecifier') {
+        meta = {
+          kind,
+          type: 'namespace',
+          source,
+        };
+      } else if (specifier.type === 'ImportDefaultSpecifier') {
+        meta = {
+          kind,
+          type: 'name',
+          imported: 'default',
+          source,
+        };
+      } else if (specifier.type === 'ImportSpecifier') {
+        meta = {
+          kind,
+          type: 'name',
+          imported: specifier.imported.name,
+          source,
+        };
       }
+
+      if (meta === undefined) {
+        return;
+      }
+
+      scope.addBinding(new ImportBinding({
+        node: specifier.local.name,
+        name: specifier.local.name.name,
+        scope,
+      }, meta));
     }
   },
 };

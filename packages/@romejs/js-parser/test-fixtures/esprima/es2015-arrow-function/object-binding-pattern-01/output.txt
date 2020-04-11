@@ -23,22 +23,26 @@ Program {
   }
   diagnostics: Array [
     Object {
-      advice: Array []
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Unexpected token, expected ","'
-      mtime: undefined
-      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 6
-        index: 6
-        line: 1
+      description: Object {
+        advice: Array []
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ,'}
       }
-      start: Object {
-        column: 5
-        index: 5
-        line: 1
+      location: Object {
+        filename: 'input.js'
+        mtime: undefined
+        sourceType: 'script'
+        end: Object {
+          column: 6
+          index: 6
+          line: 1
+        }
+        start: Object {
+          column: 5
+          index: 5
+          line: 1
+        }
       }
     }
   ]
@@ -279,7 +283,7 @@ Program {
               }
             }
             typeAnnotation: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
@@ -374,7 +378,7 @@ Program {
               }
               types: Array [
                 FlowGenericTypeAnnotation {
-                  id: Identifier {
+                  id: ReferenceIdentifier {
                     name: 'd'
                     loc: Object {
                       filename: 'input.js'

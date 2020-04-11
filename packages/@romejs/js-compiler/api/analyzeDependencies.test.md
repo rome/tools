@@ -11,6 +11,7 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {}
   exports: Array [
     local {
       kind: 'value'
@@ -33,22 +34,26 @@ Object {
   ]
   diagnostics: Array [
     Object {
-      category: 'analyzeDependencies/cjsExportInES'
-      filename: 'unknown'
-      language: 'js'
-      message: 'You cannot use CommonJS exports in an ES module'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'analyzeDependencies'}]
-      end: Object {
-        column: 25
-        index: 26
-        line: 2
+      description: Object {
+        category: 'analyzeDependencies/cjsExportInES'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'You cannot use CommonJS exports in an ES module'}
       }
-      start: Object {
-        column: 6
-        index: 7
-        line: 2
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 25
+          index: 26
+          line: 2
+        }
+        start: Object {
+          column: 6
+          index: 7
+          line: 2
+        }
       }
     }
   ]
@@ -65,6 +70,21 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {
+    foo: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 22
+        index: 23
+        line: 2
+      }
+      start: Object {
+        column: 19
+        index: 20
+        line: 2
+      }
+    }
+  }
   exports: Array [
     local {
       kind: 'value'
@@ -98,6 +118,7 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {}
   dependencies: Array [
     es {
       kind: 'value'
@@ -135,6 +156,88 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {}
+}
+```
+
+## `defines topLevelLocalBindings`
+
+```javascript
+Object {
+  diagnostics: Array []
+  exports: Array []
+  firstTopAwaitLocation: undefined
+  importFirstUsage: Array []
+  moduleType: 'es'
+  syntax: Array []
+  topLevelLocalBindings: Object {
+    bar: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 15
+        index: 16
+        line: 2
+      }
+      start: Object {
+        column: 12
+        index: 13
+        line: 2
+      }
+    }
+    foo: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 13
+        index: 43
+        line: 3
+      }
+      start: Object {
+        column: 10
+        index: 40
+        line: 3
+      }
+    }
+  }
+  dependencies: Array [
+    es {
+      kind: 'value'
+      all: false
+      async: false
+      optional: false
+      source: 'foo'
+      loc: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 27
+          index: 28
+          line: 2
+        }
+        start: Object {
+          column: 22
+          index: 23
+          line: 2
+        }
+      }
+      names: Array [
+        value {
+          name: 'bar'
+          loc: Object {
+            filename: 'unknown'
+            end: Object {
+              column: 15
+              index: 16
+              line: 2
+            }
+            start: Object {
+              column: 12
+              index: 13
+              line: 2
+            }
+          }
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -147,34 +250,53 @@ Object {
   importFirstUsage: Array []
   moduleType: 'cjs'
   syntax: Array []
-  diagnostics: Array [
-    Object {
-      category: 'parse/js'
+  topLevelLocalBindings: Object {
+    foo: Object {
       filename: 'unknown'
-      message: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module'
-      mtime: undefined
-      sourceType: 'script'
-      origins: Array [Object {category: 'js-parser'}]
       end: Object {
-        column: 31
-        index: 32
+        column: 22
+        index: 23
         line: 2
       }
       start: Object {
-        column: 6
-        index: 7
+        column: 19
+        index: 20
         line: 2
       }
-      advice: Array [
-        log {
-          category: 'info'
-          message: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
+    }
+  }
+  diagnostics: Array [
+    Object {
+      origins: Array [Object {category: 'js-parser'}]
+      description: Object {
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
+          }
+          log {
+            category: 'info'
+            message: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
+          }
+        ]
+      }
+      location: Object {
+        filename: 'unknown'
+        mtime: undefined
+        sourceType: 'script'
+        end: Object {
+          column: 31
+          index: 32
+          line: 2
         }
-        log {
-          category: 'info'
-          message: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
+        start: Object {
+          column: 6
+          index: 7
+          line: 2
         }
-      ]
+      }
     }
   ]
   exports: Array [
@@ -234,6 +356,21 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {
+    yes: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 18
+        index: 43
+        line: 4
+      }
+      start: Object {
+        column: 15
+        index: 40
+        line: 4
+      }
+    }
+  }
   dependencies: Array [
     es {
       kind: 'value'
@@ -291,6 +428,7 @@ Object {
   importFirstUsage: Array []
   moduleType: 'cjs'
   syntax: Array []
+  topLevelLocalBindings: Object {}
   exports: Array [
     local {
       kind: 'value'
@@ -330,6 +468,7 @@ Object {
   importFirstUsage: Array []
   moduleType: 'cjs'
   syntax: Array []
+  topLevelLocalBindings: Object {}
   exports: Array [
     local {
       kind: 'value'
@@ -369,6 +508,47 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {
+    Bar: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 22
+        index: 83
+        line: 4
+      }
+      start: Object {
+        column: 19
+        index: 80
+        line: 4
+      }
+    }
+    foo: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 25
+        index: 55
+        line: 3
+      }
+      start: Object {
+        column: 22
+        index: 52
+        line: 3
+      }
+    }
+    yes: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 22
+        index: 23
+        line: 2
+      }
+      start: Object {
+        column: 19
+        index: 20
+        line: 2
+      }
+    }
+  }
   exports: Array [
     local {
       kind: 'value'
@@ -438,6 +618,7 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {}
   exports: Array [
     local {
       kind: 'value'
@@ -470,6 +651,7 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {}
   exports: Array [
     external {
       kind: 'value'
@@ -648,6 +830,7 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {}
   exports: Array [
     externalAll {
       kind: 'value'
@@ -703,6 +886,21 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {
+    bar: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 16
+        index: 17
+        line: 2
+      }
+      start: Object {
+        column: 13
+        index: 14
+        line: 2
+      }
+    }
+  }
   dependencies: Array [
     es {
       kind: 'value'
@@ -756,6 +954,60 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {
+    bar: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 17
+        index: 18
+        line: 2
+      }
+      start: Object {
+        column: 14
+        index: 15
+        line: 2
+      }
+    }
+    foo: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 22
+        index: 23
+        line: 2
+      }
+      start: Object {
+        column: 19
+        index: 20
+        line: 2
+      }
+    }
+    lol: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 38
+        index: 39
+        line: 2
+      }
+      start: Object {
+        column: 35
+        index: 36
+        line: 2
+      }
+    }
+    to: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 48
+        index: 49
+        line: 2
+      }
+      start: Object {
+        column: 46
+        index: 47
+        line: 2
+      }
+    }
+  }
   dependencies: Array [
     es {
       kind: 'value'
@@ -857,6 +1109,7 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {}
   dependencies: Array [
     es {
       kind: 'value'
@@ -893,6 +1146,7 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {}
   exports: Array [
     local {
       kind: 'value'
@@ -962,6 +1216,7 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {}
   dependencies: Array [
     es {
       kind: 'value'
@@ -1019,6 +1274,7 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {}
   firstTopAwaitLocation: Object {
     filename: 'unknown'
     end: Object {
@@ -1053,6 +1309,21 @@ Object {
       valueType: 'other'
     }
   ]
+  topLevelLocalBindings: Object {
+    yes: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 18
+        index: 90
+        line: 7
+      }
+      start: Object {
+        column: 15
+        index: 87
+        line: 7
+      }
+    }
+  }
 }
 ```
 
@@ -1067,5 +1338,6 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
+  topLevelLocalBindings: Object {}
 }
 ```

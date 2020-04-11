@@ -168,7 +168,7 @@ Program {
                         }
                       }
                       typeAnnotation: FlowGenericTypeAnnotation {
-                        id: Identifier {
+                        id: ReferenceIdentifier {
                           name: 'bar'
                           loc: Object {
                             filename: 'input.js'
@@ -232,7 +232,7 @@ Program {
                         }
                       }
                       typeAnnotation: FlowGenericTypeAnnotation {
-                        id: Identifier {
+                        id: ReferenceIdentifier {
                           name: 'foo'
                           loc: Object {
                             filename: 'input.js'

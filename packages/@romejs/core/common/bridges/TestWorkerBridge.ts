@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostic} from '@romejs/diagnostics';
+import {Diagnostic} from '@romejs/diagnostics';
 import {SourceMap} from '@romejs/codec-source-map';
 import {TestRunnerOptions} from '../../master/testing/types';
 import {Bridge} from '@romejs/events';
@@ -62,7 +62,7 @@ export default class TestWorkerBridge extends Bridge {
 
   testError = this.createEvent<{
     ref: undefined | TestRef;
-    diagnostic: PartialDiagnostic;
+    diagnostic: Diagnostic;
   }, void>({name: 'onTestError', direction: 'server<-client'});
 
   testSuccess = this.createEvent<{ref: TestRef}, void>({

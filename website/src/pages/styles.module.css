@@ -39,6 +39,12 @@
 .heroBannerSubtitle {
   font-size: 1.5rem;
   font-weight: var(--ifm-font-weight-semibold);
+  margin-bottom: var(--ifm-paragraph-margin-bottom);
+  line-height: var(--ifm-line-height-base);
+}
+
+.getStarted:focus {
+  box-shadow: 0 0 0 2px var(--ifm-color-content);
 }
 
 @media screen and (max-width: 966px) {

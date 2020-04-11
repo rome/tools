@@ -24,7 +24,7 @@ async function testAnalyzeDeps(input: string, sourceType: ConstSourceType) {
   });
 }
 
-test('discovers require(\'module\') call', async (t) => {
+test("discovers require('module') call", async (t) => {
   t.snapshot(await testAnalyzeDeps(`
       import * as foo from 'foo';
 
@@ -54,7 +54,7 @@ test('ignores require() call if shadowed', async (t) => {
     `, 'script'));
 });
 
-test('discovers async import(\'foo\')', async (t) => {
+test("discovers async import('foo')", async (t) => {
   t.snapshot(await testAnalyzeDeps(`
       import('./foo');
 
@@ -152,7 +152,9 @@ test('correctly identifies a file with cjs exports as cjs', async (t) => {
 
 test(
   'correctly identifies a file with no imports or exports as unknown',
-  async (t) => {
+  async (
+    t,
+  ) => {
     t.snapshot(await testAnalyzeDeps(`
       foo();
     `, 'module'));
@@ -164,4 +166,11 @@ test('disallow mix of es and cjs exports', async (t) => {
       export const foo = 'bar';
       exports.bar = 'foo';
     `, 'script'));
+});
+
+test('defines topLevelLocalBindings', async (t) => {
+  t.snapshot(await testAnalyzeDeps(`
+    import {bar} from 'foo';
+    const foo = 'bar';
+  `, 'module'));
 });

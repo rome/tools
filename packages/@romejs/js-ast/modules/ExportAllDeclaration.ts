@@ -8,14 +8,12 @@
 import {JSNodeBase, ConstExportModuleKind, StringLiteral} from '../index';
 import {createBuilder} from '../utils';
 
-export type ExportAllDeclaration =
-  & JSNodeBase
-  & {
-    type: 'ExportAllDeclaration';
-    source: StringLiteral;
-    exportKind?: ConstExportModuleKind;
-    declare?: boolean;
-  };
+export type ExportAllDeclaration = JSNodeBase & {
+  type: 'ExportAllDeclaration';
+  source: StringLiteral;
+  exportKind?: ConstExportModuleKind;
+  declare?: boolean;
+};
 
 export const exportAllDeclaration = createBuilder<ExportAllDeclaration>(
   'ExportAllDeclaration',

@@ -8,8 +8,7 @@
 import {MasterRequest} from '@romejs/core';
 import {Consumer} from '@romejs/consume';
 import {DiagnosticsError} from '@romejs/diagnostics';
-import {createMasterCommand} from '../../commands';
-import {commandCategories} from '../../commands';
+import {commandCategories, createMasterCommand} from '../../commands';
 import {createUnknownFilePath} from '@romejs/path';
 import {ConstSourceType} from '@romejs/js-ast';
 
@@ -39,7 +38,7 @@ export default createMasterCommand({
     const filename = await master.resolver.resolveEntryAssertPath({
       ...req.getResolverOptionsFromFlags(),
       source: createUnknownFilePath(args[0]),
-    }, {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
+    }, {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
 
     const ast = await req.requestWorkerParse(filename, {
       compact: commandFlags.compact,

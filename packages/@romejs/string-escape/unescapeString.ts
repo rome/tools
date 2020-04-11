@@ -6,11 +6,7 @@
  */
 
 import {isHexDigit} from '@romejs/parser-core';
-import {
-  INVALID_STRING_CHARACTER,
-  NOT_ENOUGH_CODE_POINTS,
-  INVALID_HEX_DIGIT_FOR_ESCAPE,
-} from './messages';
+import {DiagnosticDescription, descriptions} from '@romejs/diagnostics';
 
 function unescapeChar(modifier: string): string {
   switch (modifier) {
@@ -37,13 +33,16 @@ function unescapeChar(modifier: string): string {
   }
 }
 
-type UnescapeStringUnexpected = (message: string, index: number) => void;
+type UnescapeStringUnexpected = (
+  metadata: Omit<DiagnosticDescription, 'category'>,
+  index: number,
+) => void;
 
 const UNEXPECTED_DEFAULT_THROWER: UnescapeStringUnexpected = (
-  message: string,
+  metadata: Omit<DiagnosticDescription, 'category'>,
   index: number,
 ) => {
-  throw new TypeError(`${message} (${String(index)})`);
+  throw new TypeError(`${metadata.message.value} (${String(index)})`);
 };
 
 export default function unescapeString(
@@ -68,7 +67,10 @@ export default function unescapeString(
         throw new Error('Already validated that this index exists');
       }
       if (codePoint >= 0 && codePoint <= 31) {
-        throw unexpected(INVALID_STRING_CHARACTER, index);
+        throw unexpected(
+          descriptions.STRING_ESCAPE.INVALID_STRING_CHARACTER,
+          index,
+        );
       }
 
       // Add it verbatim
@@ -89,7 +91,10 @@ export default function unescapeString(
       if (rawCode.length < 4) {
         // (index of the point start + total point digits)
         const lastDigitIndex = codeStartIndex + rawCode.length - 1;
-        throw unexpected(NOT_ENOUGH_CODE_POINTS, lastDigitIndex);
+        throw unexpected(
+          descriptions.STRING_ESCAPE.NOT_ENOUGH_CODE_POINTS,
+          lastDigitIndex,
+        );
       }
 
       // Validate that each character is a valid hex digit
@@ -100,7 +105,10 @@ export default function unescapeString(
 
           // (code start index + digit index)
           const pos = codeStartIndex + i;
-          throw unexpected(INVALID_HEX_DIGIT_FOR_ESCAPE, pos);
+          throw unexpected(
+            descriptions.STRING_ESCAPE.INVALID_HEX_DIGIT_FOR_ESCAPE,
+            pos,
+          );
         }
       }
 

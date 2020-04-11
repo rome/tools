@@ -191,7 +191,7 @@ Program {
               }
             }
             value: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'U'
                 loc: Object {
                   filename: 'input.js'

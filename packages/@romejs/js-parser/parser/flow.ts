@@ -43,6 +43,7 @@ import {
   FlowObjectTypeInternalSlot,
   FlowObjectTypePropertyKey,
   FlowObjectTypePropertyKind,
+  ReferenceIdentifier,
   FlowObjectTypeSpreadProperty,
   FlowFunctionTypeAnnotation,
   FlowFunctionTypeParam,
@@ -80,6 +81,8 @@ import {
   parseTypeLiteralAnnotation,
 } from './index';
 import {get0} from '@romejs/ob1';
+import {descriptions} from '@romejs/diagnostics';
+import {parseReferenceIdentifier} from './expression';
 
 const primitiveTypes = [
   'any',
@@ -112,16 +115,17 @@ function checkNotUnderscore(parser: JSParser, id: Identifier) {
   if (id.name === '_') {
     parser.addDiagnostic({
       loc: id.loc,
-      message: '`_` is only allowed as a type argument to call or new',
+      description: descriptions.JS_PARSER.FLOW_BAD_UNDERSCORE_NAME,
     });
   }
 }
 
 function isEsModuleType(bodyElement: AnyNode): boolean {
   return bodyElement.type === 'ExportAllDeclaration' || bodyElement.type ===
-  'ExportLocalDeclaration' && (!bodyElement.declaration ||
-  bodyElement.declaration.type !== 'TypeAliasTypeAnnotation' &&
-    bodyElement.declaration.type !== 'FlowInterfaceDeclaration');
+    'ExportLocalDeclaration' && (!bodyElement.declaration ||
+        bodyElement.declaration.type !==
+        'TypeAliasTypeAnnotation' &&
+      bodyElement.declaration.type !== 'FlowInterfaceDeclaration');
 }
 
 export function hasTypeImportKind(
@@ -132,7 +136,8 @@ export function hasTypeImportKind(
 
 export function isMaybeDefaultImport(state: State): boolean {
   return (state.tokenType === tt.name || !!state.tokenType.keyword) &&
-    state.tokenValue !== 'from';
+      state.tokenValue !==
+      'from';
 }
 
 export function parseFlowTypeParameterInstantiationCallOrNew(
@@ -165,7 +170,7 @@ export function parseFlowTypeParameterInstantiationCallOrNew(
 function parseFlowTypeOrImplicitInstantiation(parser: JSParser): AnyFlowPrimary {
   if (parser.state.tokenType === tt.name && parser.state.tokenValue === '_') {
     const startPos = parser.state.startPos;
-    const node = parseIdentifier(parser);
+    const node = parseReferenceIdentifier(parser);
     return parseFlowGenericType(parser, startPos, node);
   } else {
     return parseFlowType(parser);
@@ -194,11 +199,11 @@ function parseFlowPredicate(
 
   // Force '%' and 'checks' to be adjacent
   if (moduloPos.line !== checksPos.line || get0(moduloPos.column) !== get0(
-    checksPos.column,
-  ) - 1) {
+      checksPos.column,
+    ) - 1) {
     parser.addDiagnostic({
       start: moduloPos,
-      message: 'Spaces between \xb4%\xb4 and \xb4checks\xb4 are not allowed here.',
+      description: descriptions.JS_PARSER.FLOW_SPACE_BETWEEN_PERCENT_CHECKS,
     });
   }
 
@@ -284,10 +289,12 @@ function parseFlowDeclareFunction(
   parser.semicolon();
 
   if (predicate !== undefined && predicate.type === 'FlowInferredPredicate') {
-    parser.addDiagnostic({
-      loc: predicate.loc,
-      message: 'Predicate function declarations need to declare a predicate expression',
-    });
+    parser.addDiagnostic(
+      {
+        loc: predicate.loc,
+        description: descriptions.JS_PARSER.FLOW_UNINFERRABLE_PREDICATE_ON_FUNCTION,
+      },
+    );
   }
 
   return parser.finishNode(start, {
@@ -335,9 +342,11 @@ export function parseFlowDeclare(
       return parseFlowDeclareModuleExports(parser, start);
     } else {
       if (insideModule) {
-        parser.addDiagnostic({
-          message: '`declare module` cannot be used inside another `declare module`',
-        });
+        parser.addDiagnostic(
+          {
+            description: descriptions.JS_PARSER.FLOW_DECLARE_MODULE_IN_DECLARE_MODULE,
+          },
+        );
       }
       return parseFlowDeclareModule(parser, start);
     }
@@ -360,7 +369,7 @@ export function parseFlowDeclare(
   }
 
   parser.addDiagnostic({
-    message: 'Unknown start to Flow declaration',
+    description: descriptions.JS_PARSER.FLOW_UNKNOWN_DECLARATION_START,
   });
 
   // Fake node
@@ -418,17 +427,19 @@ function parseFlowDeclareModule(
     if (parser.match(tt._import)) {
       const lookahead = parser.lookaheadState();
       if (lookahead.tokenValue !== 'type' && lookahead.tokenValue !== 'typeof') {
-        parser.addDiagnostic({
-          message: 'Imports within a `declare module` body must always be `import type` or `import typeof`',
-        });
+        parser.addDiagnostic(
+          {
+            description: descriptions.JS_PARSER.FLOW_IMPORT_KINDLESS_IN_DECLARE_MODULE,
+          },
+        );
       }
       parser.next();
       bodyNode = parseImport(parser, bodyNodeStart);
     } else {
       if (!parser.expectContextual(
-        'declare',
-        'Only declares and type imports are allowed inside declare module',
-      )) {
+          'declare',
+          descriptions.JS_PARSER.FLOW_DECLARE_MODULE_INVALID_CHILD,
+        )) {
         break;
       }
 
@@ -447,30 +458,30 @@ function parseFlowDeclareModule(
 
   let kind: undefined | 'commonjs' | 'es';
   let hasModuleExport = false;
-  const errorMessage =
-    'Found both `declare module.exports` and `declare export` in the same module. Modules can only have 1 since they are either an ES module or they are a CommonJS module';
 
   for (const bodyElement of body) {
     if (isEsModuleType(bodyElement)) {
       if (kind === 'commonjs') {
         parser.addDiagnostic({
           loc: bodyElement.loc,
-          message: errorMessage,
+          description: descriptions.JS_PARSER.FLOW_MIXED_DECLARE_EXPORTS,
         });
       }
       kind = 'es';
     } else if (bodyElement.type === 'FlowDeclareModuleExports') {
       if (hasModuleExport) {
-        parser.addDiagnostic({
-          loc: bodyElement.loc,
-          message: 'Duplicate `declare module.exports` statement',
-        });
+        parser.addDiagnostic(
+          {
+            loc: bodyElement.loc,
+            description: descriptions.JS_PARSER.FLOW_DUPLICATE_DECLARE_MODULE_EXPORTS,
+          },
+        );
       }
 
       if (kind === 'es') {
         parser.addDiagnostic({
           loc: bodyElement.loc,
-          message: errorMessage,
+          description: descriptions.JS_PARSER.FLOW_MIXED_DECLARE_EXPORTS,
         });
       }
 
@@ -513,12 +524,15 @@ function parseExportLocalDeclaration(
     });
   } else {
     if (parser.match(tt._const) || isLetStart(parser) || (parser.isContextual(
-      'type',
-    ) || parser.isContextual('interface')) && !insideModule) {
+        'type',
+      ) || parser.isContextual('interface')) && !insideModule) {
       const label = String(parser.state.tokenValue);
       const suggestion = String(exportSuggestions.get(label));
       parser.addDiagnostic({
-        message: `\`declare export ${label}\` is not supported. Use \`${suggestion}\` instead`,
+        description: descriptions.JS_PARSER.FLOW_DECLARE_EXPORT_UNSUPPORTED(
+          label,
+          suggestion,
+        ),
       });
     }
 
@@ -545,7 +559,7 @@ function parseExportLocalDeclaration(
 
       if (node !== undefined) {
         if (node.type === 'ExportLocalDeclaration' || node.type ===
-        'ExportExternalDeclaration') {
+            'ExportExternalDeclaration') {
           return {
             ...node,
             type: 'FlowDeclareExportNamed',
@@ -562,7 +576,7 @@ function parseExportLocalDeclaration(
 
   parser.addDiagnostic({
     start,
-    message: 'No valid start for Flow declare export declaration found',
+    description: descriptions.JS_PARSER.FLOW_UNKNOWN_DECLARE_EXPORT_START,
   });
 
   // Fake node
@@ -629,10 +643,7 @@ function parseFlowDeclareInterface(
 }
 
 // Interfaces
-function parseFlowInterfaceish(
-  parser: JSParser,
-  isClass: boolean = false,
-): {
+function parseFlowInterfaceish(parser: JSParser, isClass: boolean = false): {
   body: FlowObjectTypeAnnotation;
   extends: Array<FlowInterfaceExtends>;
   mixins: Array<FlowInterfaceExtends>;
@@ -750,7 +761,7 @@ export function checkReservedType(
   if (primitiveTypes.includes(word)) {
     parser.addDiagnostic({
       loc,
-      message: `Cannot overwrite primitive type ${word}`,
+      description: descriptions.JS_PARSER.FLOW_RESERVED_TYPE(word),
     });
   }
 }
@@ -846,16 +857,18 @@ function parseFlowTypeParameter(
   let def;
   if (parser.match(tt.eq)) {
     if (!allowDefault) {
-      parser.addDiagnostic({
-        message: 'Default type parameters arent allowed here',
-      });
+      parser.addDiagnostic(
+        {
+          description: descriptions.JS_PARSER.FLOW_DISALLOW_DEFAULT_TYPE_PARAMETER,
+        },
+      );
     }
 
     parser.eat(tt.eq);
     def = parseFlowType(parser);
   } else if (requireDefault) {
     parser.addDiagnostic({
-      message: 'Type parameter declaration needs a default, since a preceding type parameter declaration has a default.',
+      description: descriptions.JS_PARSER.FLOW_DEFAULT_TYPE_PARAMETER_REQUIRED,
     });
   }
 
@@ -1022,16 +1035,13 @@ function parseFlowObjectTypeCallProperty(
   });
 }
 
-function parseFlowObjectType(
-  parser: JSParser,
-  opts: {
-    allowStatic: boolean;
-    allowExact: boolean;
-    allowSpread: boolean;
-    allowProto: boolean;
-    allowInexact: boolean;
-  },
-): FlowObjectTypeAnnotation {
+function parseFlowObjectType(parser: JSParser, opts: {
+  allowStatic: boolean;
+  allowExact: boolean;
+  allowSpread: boolean;
+  allowProto: boolean;
+  allowInexact: boolean;
+}): FlowObjectTypeAnnotation {
   const {allowExact, allowSpread, allowProto, allowInexact} = opts;
   let {allowStatic} = opts;
 
@@ -1068,7 +1078,8 @@ function parseFlowObjectType(
     if (allowProto && parser.isContextual('proto')) {
       const lookahead = parser.lookaheadState();
 
-      if (lookahead.tokenType !== tt.colon && lookahead.tokenType !== tt.question) {
+      if (lookahead.tokenType !== tt.colon && lookahead.tokenType !==
+          tt.question) {
         parser.next();
         protoStart = parser.state.startPos;
         allowStatic = false;
@@ -1079,7 +1090,8 @@ function parseFlowObjectType(
       const lookahead = parser.lookaheadState();
 
       // static is a valid identifier name
-      if (lookahead.tokenType !== tt.colon && lookahead.tokenType !== tt.question) {
+      if (lookahead.tokenType !== tt.colon && lookahead.tokenType !==
+          tt.question) {
         parser.next();
         isStatic = true;
       }
@@ -1096,7 +1108,7 @@ function parseFlowObjectType(
         if (variance) {
           parser.addDiagnostic({
             loc: variance.loc,
-            message: 'Variance not allowed',
+            description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
           });
         }
 
@@ -1117,7 +1129,7 @@ function parseFlowObjectType(
       if (variance) {
         parser.addDiagnostic({
           loc: variance.loc,
-          message: 'Variance not allowed',
+          description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
         });
       }
 
@@ -1127,10 +1139,8 @@ function parseFlowObjectType(
 
       if (parser.isContextual('get') || parser.isContextual('set')) {
         const lookahead = parser.lookaheadState();
-        if (
-          lookahead.tokenType === tt.name || lookahead.tokenType === tt.string ||
-          lookahead.tokenType === tt.num
-        ) {
+        if (lookahead.tokenType === tt.name || lookahead.tokenType === tt.string ||
+            lookahead.tokenType === tt.num) {
           const value = String(parser.state.tokenValue);
           if (value !== 'get' && value !== 'set') {
             throw new Error(
@@ -1173,18 +1183,15 @@ function parseFlowObjectType(
   });
 }
 
-function parseFlowObjectTypeProperty(
-  parser: JSParser,
-  opts: {
-    start: Position;
-    protoStart: undefined | Position;
-    isStatic: boolean;
-    variance: undefined | FlowVariance;
-    kind: FlowObjectTypePropertyKind;
-    allowSpread: boolean;
-    allowInexact: boolean;
-  },
-): undefined | FlowObjectTypeProperty | FlowObjectTypeSpreadProperty {
+function parseFlowObjectTypeProperty(parser: JSParser, opts: {
+  start: Position;
+  protoStart: undefined | Position;
+  isStatic: boolean;
+  variance: undefined | FlowVariance;
+  kind: FlowObjectTypePropertyKind;
+  allowSpread: boolean;
+  allowInexact: boolean;
+}): undefined | FlowObjectTypeProperty | FlowObjectTypeSpreadProperty {
   const {
     start,
     isStatic,
@@ -1198,7 +1205,7 @@ function parseFlowObjectTypeProperty(
   if (parser.match(tt.ellipsis)) {
     if (!allowSpread) {
       parser.addDiagnostic({
-        message: 'Spread operator cannot appear in class or interface definitions',
+        description: descriptions.JS_PARSER.FLOW_DISALLOWED_SPREAD,
       });
     }
 
@@ -1209,7 +1216,7 @@ function parseFlowObjectTypeProperty(
     if (variance) {
       parser.addDiagnostic({
         loc: variance.loc,
-        message: 'Spread properties cannot have variance',
+        description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
       });
     }
 
@@ -1223,19 +1230,21 @@ function parseFlowObjectTypeProperty(
       }
 
       parser.addDiagnostic({
-        message: 'Explicit inexact syntax is only allowed inside inexact objects',
+        description: descriptions.JS_PARSER.FLOW_INEXACT_SYNTAX_NOT_ALLOWED,
       });
     }
 
     if (parser.match(tt.braceBarR)) {
-      parser.addDiagnostic({
-        message: 'Explicit inexact syntax cannot appear inside an explicit exact object type',
-      });
+      parser.addDiagnostic(
+        {
+          description: descriptions.JS_PARSER.FLOW_INEXACT_CANNOT_APPEAR_IN_EXPLICIT_EXACT,
+        },
+      );
     }
 
     if (isInexactToken) {
       parser.addDiagnostic({
-        message: 'Explicit inexact syntax must appear at the end of an inexact object',
+        description: descriptions.JS_PARSER.FLOW_INEXACT_MUST_BE_AT_END,
       });
     }
 
@@ -1258,7 +1267,7 @@ function parseFlowObjectTypeProperty(
       if (variance) {
         parser.addDiagnostic({
           loc: variance.loc,
-          message: 'Type methods can\'t have variance',
+          description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
         });
       }
 
@@ -1292,10 +1301,8 @@ function parseFlowObjectTypeProperty(
 }
 
 function flowObjectTypeSemicolon(parser: JSParser): void {
-  if (
-    !parser.eat(tt.semi) && !parser.eat(tt.comma) && !parser.match(tt.braceR) &&
-      !parser.match(tt.braceBarR)
-  ) {
+  if (!parser.eat(tt.semi) && !parser.eat(tt.comma) && !parser.match(tt.braceR) &&
+      !parser.match(tt.braceBarR)) {
     parser.unexpectedToken();
   }
 }
@@ -1303,10 +1310,11 @@ function flowObjectTypeSemicolon(parser: JSParser): void {
 function parseFlowQualifiedTypeIdentifier(
   parser: JSParser,
   start: Position = parser.getPosition(),
-  id?: Identifier,
-): Identifier | FlowQualifiedTypeIdentifier {
-  let node: Identifier | FlowQualifiedTypeIdentifier = id === undefined
-    ? parseIdentifier(parser) : id;
+  id?: ReferenceIdentifier,
+): ReferenceIdentifier | FlowQualifiedTypeIdentifier {
+  let node: ReferenceIdentifier | FlowQualifiedTypeIdentifier = id === undefined
+    ? parseReferenceIdentifier(parser)
+    : id;
 
   while (parser.eat(tt.dot)) {
     const id = parseIdentifier(parser);
@@ -1323,7 +1331,7 @@ function parseFlowQualifiedTypeIdentifier(
 function parseFlowGenericType(
   parser: JSParser,
   start: Position,
-  _id: Identifier,
+  _id: ReferenceIdentifier,
 ): FlowGenericTypeAnnotation | FlowGenericTypeAnnotation {
   let typeParameters = undefined;
   const id = parseFlowQualifiedTypeIdentifier(parser, start, _id);
@@ -1420,9 +1428,7 @@ function reinterpretTypeAsFlowFunctionTypeParam(
   };
 }
 
-function parseFlowFunctionTypeParams(
-  parser: JSParser,
-): {
+function parseFlowFunctionTypeParams(parser: JSParser): {
   params: Array<FlowFunctionTypeParam>;
   rest: undefined | FlowFunctionTypeParam;
 } {
@@ -1491,14 +1497,15 @@ function flowIdentToTypeAnnotation(
 
     default:
       checkNotUnderscore(parser, id);
-      return parseFlowGenericType(parser, start, id);
+      return parseFlowGenericType(parser, start, toReferenceIdentifier(
+        parser,
+        id,
+      ));
   }
 }
 
 // The parsing of types roughly parallels the parsing of expressions, and
-
 // primary types are kind of like primary expressions...they're the
-
 // primitives with which other types are constructed.
 function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
   const start = parser.getPosition();
@@ -1560,64 +1567,63 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
       }
       break;
 
-    case tt.parenL:
-      {
-        const openContext = parser.expectOpening(
-          tt.parenL,
-          tt.parenR,
-          'flow function params',
-        );
+    case tt.parenL: {
+      const openContext = parser.expectOpening(
+        tt.parenL,
+        tt.parenR,
+        'flow function params',
+      );
 
-        // Check to see if this is actually a grouped type
-        if (!parser.match(tt.parenR) && !parser.match(tt.ellipsis)) {
-          if (parser.match(tt.name)) {
-            const token = parser.lookaheadState().tokenType;
-            isGroupedType = token !== tt.question && token !== tt.colon;
-          } else {
-            isGroupedType = true;
-          }
-        }
-
-        if (isGroupedType) {
-          parser.state.noAnonFunctionType = false;
-          type = parseFlowType(parser);
-          parser.state.noAnonFunctionType = oldNoAnonFunctionType;
-
-          // A `,` or a `) =>` means this is an anonymous function type
-          if (parser.state.noAnonFunctionType || !(parser.match(tt.comma) ||
-          parser.match(tt.parenR) && parser.lookaheadState().tokenType ===
-          tt.arrow)) {
-            parser.expectClosing(openContext);
-            return type;
-          } else {
-            // Eat a comma if there is one
-            parser.eat(tt.comma);
-          }
-        }
-
-        let params;
-        let rest;
-        if (type) {
-          const firstParam = reinterpretTypeAsFlowFunctionTypeParam(parser, type);
-          ({params, rest} = parseFlowFunctionTypeParams(parser));
-          params = [firstParam, ...params];
+      // Check to see if this is actually a grouped type
+      if (!parser.match(tt.parenR) && !parser.match(tt.ellipsis)) {
+        if (parser.match(tt.name)) {
+          const token = parser.lookaheadState().tokenType;
+          isGroupedType = token !== tt.question && token !== tt.colon;
         } else {
-          ({params, rest} = parseFlowFunctionTypeParams(parser));
+          isGroupedType = true;
         }
-
-        parser.expectClosing(openContext);
-        parser.expect(tt.arrow);
-
-        const returnType = parseFlowType(parser);
-
-        return parser.finishNode(start, {
-          type: 'FlowFunctionTypeAnnotation',
-          typeParameters: undefined,
-          params,
-          rest,
-          returnType,
-        });
       }
+
+      if (isGroupedType) {
+        parser.state.noAnonFunctionType = false;
+        type = parseFlowType(parser);
+        parser.state.noAnonFunctionType = oldNoAnonFunctionType;
+
+        // A `,` or a `) =>` means this is an anonymous function type
+        if (parser.state.noAnonFunctionType || !(parser.match(tt.comma) ||
+              parser.match(tt.parenR) &&
+              parser.lookaheadState().tokenType === tt.arrow)) {
+          parser.expectClosing(openContext);
+          return type;
+        } else {
+          // Eat a comma if there is one
+          parser.eat(tt.comma);
+        }
+      }
+
+      let params;
+      let rest;
+      if (type) {
+        const firstParam = reinterpretTypeAsFlowFunctionTypeParam(parser, type);
+        ({params, rest} = parseFlowFunctionTypeParams(parser));
+        params = [firstParam, ...params];
+      } else {
+        ({params, rest} = parseFlowFunctionTypeParams(parser));
+      }
+
+      parser.expectClosing(openContext);
+      parser.expect(tt.arrow);
+
+      const returnType = parseFlowType(parser);
+
+      return parser.finishNode(start, {
+        type: 'FlowFunctionTypeAnnotation',
+        typeParameters: undefined,
+        params,
+        rest,
+        returnType,
+      });
+    }
 
     case tt.num:
     case tt.string:
@@ -1651,11 +1657,10 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
         const id = createIdentifier(parser, start, label);
         return flowIdentToTypeAnnotation(parser, start, id);
       }
-
   }
 
   parser.addDiagnostic({
-    message: 'Unknown flow primarty type start',
+    description: descriptions.JS_PARSER.FLOW_UNKNOWN_PRIMARY_START,
   });
 
   // Fake node
@@ -1729,7 +1734,7 @@ function parseFlowIntersectionType(parser: JSParser): AnyFlowPrimary {
 function eatUnionBitwise(parser: JSParser) {
   if (parser.match(tt.logicalOR)) {
     parser.addDiagnostic({
-      message: 'Unexpected ||, did you mean just |?',
+      description: descriptions.JS_PARSER.CONFUSED_OR,
     });
     parser.next();
   } else {
@@ -1767,7 +1772,7 @@ function parseFlowType(parser: JSParser): AnyFlowPrimary {
 
   // statement, except in arrow functions (noAnonFunctionType)
   parser.state.exprAllowed = parser.state.exprAllowed ||
-  parser.state.noAnonFunctionType;
+    parser.state.noAnonFunctionType;
   return type;
 }
 
@@ -1783,7 +1788,8 @@ function parseFlowTypeAnnotatableIdentifier(
 ): BindingIdentifier {
   const start = parser.getPosition();
   const ident = allowPrimitiveOverride
-    ? parseBindingIdentifier(parser) : parseFlowRestrictedIdentifier(parser);
+    ? parseBindingIdentifier(parser)
+    : parseFlowRestrictedIdentifier(parser);
 
   let typeAnnotation = undefined;
   if (parser.match(tt.colon)) {
@@ -1839,6 +1845,8 @@ export function parseFlowVariance(parser: JSParser): undefined | FlowVariance {
       type: 'FlowVariance',
       kind,
     });
+  } else {
+    return undefined;
   }
 }
 
@@ -1850,9 +1858,11 @@ export function parseAsyncArrowWithFlowTypeParameters(
 
   const {returnType, valid, predicate} = parseArrowHead(parser);
   if (!valid) {
-    parser.addDiagnostic({
-      message: 'Invalid async arrow with type parameters',
-    });
+    parser.addDiagnostic(
+      {
+        description: descriptions.JS_PARSER.FLOW_INVALID_ASYNC_ARROW_WITH_TYPE_PARAMS,
+      },
+    );
     return undefined;
   }
 

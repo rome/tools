@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {buildSuggestionAdvice} from '@romejs/diagnostics';
+import {descriptions} from '@romejs/diagnostics';
 import {Scope} from '../../scopes';
 import T from '../T';
 import {orderBySimilarity} from '@romejs/string-utils';
@@ -13,17 +13,13 @@ import E, {ErrorDefinition} from './E';
 import {AnyNode} from '@romejs/js-ast';
 
 export default class UnknownPropE extends E {
-  constructor(
-    scope: Scope,
-    originNode: undefined | AnyNode,
-    opts: {
-      object: T;
-      property: T;
-      key: string;
-      thisKeys: Array<string>;
-      protoKeys: Array<string>;
-    },
-  ) {
+  constructor(scope: Scope, originNode: undefined | AnyNode, opts: {
+    object: T;
+    property: T;
+    key: string;
+    thisKeys: Array<string>;
+    protoKeys: Array<string>;
+  }) {
     super(scope, originNode);
     this.thisKeys = opts.thisKeys;
     this.protoKeys = opts.protoKeys;
@@ -52,14 +48,13 @@ export default class UnknownPropE extends E {
   }
 
   getError(): ErrorDefinition {
-    let message: string = `Property '${this.key}' not found in`;
-
     return {
-      category: 'typeCheck/unknownProperty',
-      message,
-      advice: buildSuggestionAdvice(this.key, this.allProps),
-      lowerTarget: this.property,
-      upperTarget: this.object,
-    };
+        description: descriptions.TYPE_CHECK.UNKNOWN_PROP(
+          this.key,
+          this.allProps,
+        ),
+        lowerTarget: this.property,
+        upperTarget: this.object,
+      };
   }
 }

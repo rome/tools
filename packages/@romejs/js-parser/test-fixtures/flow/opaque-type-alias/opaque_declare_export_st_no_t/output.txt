@@ -73,7 +73,7 @@ Program {
           }
         }
         supertype: FlowGenericTypeAnnotation {
-          id: Identifier {
+          id: ReferenceIdentifier {
             name: 'Bar'
             loc: Object {
               filename: 'input.js'

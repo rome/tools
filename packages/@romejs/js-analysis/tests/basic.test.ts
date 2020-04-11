@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics} from '@romejs/diagnostics';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
 import test from '@romejs/test';
 import {check} from '@romejs/js-analysis';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 
-async function testCheck(code: string): Promise<PartialDiagnostics> {
+async function testCheck(code: string): Promise<Diagnostics> {
   const ast = parseJS({
     input: code,
     sourceType: 'module',
@@ -33,7 +33,7 @@ async function testCheck(code: string): Promise<PartialDiagnostics> {
   });
 }
 
-test('discovers require(\'module\') call', async () => {
+test("discovers require('module') call", async () => {
   testCheck;
 
   /*const diagnostics = await testCheck(`

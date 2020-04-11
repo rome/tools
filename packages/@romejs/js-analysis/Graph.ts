@@ -19,9 +19,9 @@ export default class Graph<Value> {
   nodes: Array<Node<Value>>;
   nodesByValue: Map<Value, Node<Value>>;
 
-  addNode(value: Value) {
+  addNode(value: Value): void {
     if (this.find(value)) {
-      return undefined;
+      return;
     }
 
     const node: Node<Value> = {lines: [], value};

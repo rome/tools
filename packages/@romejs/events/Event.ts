@@ -58,7 +58,7 @@ export default class Event<Param, Ret = void> {
   send(param: Param) {
     const {rootSubscription} = this;
     if (rootSubscription === undefined) {
-      return undefined;
+      return;
     }
 
     rootSubscription(param);

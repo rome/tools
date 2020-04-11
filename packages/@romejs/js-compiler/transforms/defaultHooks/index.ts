@@ -19,7 +19,9 @@ import {
   variableDeclarationStatement,
 } from '@romejs/js-ast';
 
-type VariableInjectorState = {bindings: Array<[string, undefined | AnyExpression]>};
+type VariableInjectorState = {
+  bindings: Array<[string, undefined | AnyExpression]>;
+};
 
 type VariableInjectorArgs = {
   name?: string;
@@ -37,7 +39,11 @@ export const bindingInjector = createHook<
     bindings: [],
   },
 
-  call(path: Path, state: VariableInjectorState, opts: VariableInjectorArgs = {}) {
+  call(
+    path: Path,
+    state: VariableInjectorState,
+    opts: VariableInjectorArgs = {},
+  ) {
     const name = opts.name === undefined ? path.scope.generateUid() : opts.name;
 
     const ref = referenceIdentifier.quick(name);

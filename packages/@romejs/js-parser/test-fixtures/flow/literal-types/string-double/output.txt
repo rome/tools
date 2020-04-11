@@ -95,7 +95,7 @@ Program {
           }
         }
         returnType: FlowGenericTypeAnnotation {
-          id: Identifier {
+          id: ReferenceIdentifier {
             name: 'HTMLDivElement'
             loc: Object {
               filename: 'input.js'

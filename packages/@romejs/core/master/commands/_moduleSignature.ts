@@ -6,8 +6,7 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {commandCategories} from '../../commands';
-import {createMasterCommand} from '../../commands';
+import {commandCategories, createMasterCommand} from '../../commands';
 import {createUnknownFilePath} from '@romejs/path';
 
 export default createMasterCommand({
@@ -22,7 +21,7 @@ export default createMasterCommand({
     const filename = await master.resolver.resolveEntryAssertPath({
       ...req.getResolverOptionsFromFlags(),
       source: createUnknownFilePath(args[0]),
-    }, {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
+    }, {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
     reporter.inspect(await req.requestWorkerModuleSignature(filename));
   },
 });

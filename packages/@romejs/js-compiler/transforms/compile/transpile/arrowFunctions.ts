@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
+import {Path, createHook} from '@romejs/js-compiler';
 import {
   variableDeclaration,
   thisExpression,
@@ -18,7 +18,6 @@ import {
   variableDeclarationStatement,
 } from '@romejs/js-ast';
 import {inheritLoc} from '@romejs/js-ast-utils';
-import {createHook} from '@romejs/js-compiler';
 
 function isInsideArrow(path: Path): boolean {
   for (const ancestor of path.ancestryPaths) {
@@ -48,11 +47,7 @@ const arrowProvider = createHook<State, ThisExpression, Identifier>({
     id: undefined,
   },
 
-  call(
-    path: Path,
-    state: State,
-    node: ThisExpression,
-  ): {
+  call(path: Path, state: State, node: ThisExpression): {
     value: Identifier;
     state: State;
   } {
@@ -71,7 +66,8 @@ const arrowProvider = createHook<State, ThisExpression, Identifier>({
   exit(path: Path, state: State): AnyNode {
     const {node} = path;
 
-    if (node.type !== 'FunctionDeclaration' && node.type !== 'FunctionExpression') {
+    if (node.type !== 'FunctionDeclaration' && node.type !==
+        'FunctionExpression') {
       throw new Error('Only ever expected function nodes');
     }
 
@@ -109,7 +105,8 @@ export default {
   enter(path: Path) {
     const {node} = path;
 
-    if (node.type === 'FunctionDeclaration' || node.type === 'FunctionExpression') {
+    if (node.type === 'FunctionDeclaration' || node.type ===
+        'FunctionExpression') {
       // Add a provider to consume `this` inside of arrow functions
       return path.provideHook(arrowProvider);
     }

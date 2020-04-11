@@ -1,0 +1,30 @@
+{
+  "name": "@romejs-editor/vscode",
+  "displayName": "Rome",
+  "description": "Rome LSP VSCode extension",
+  "version": "0.0.1",
+  "activationEvents": [
+    "*"
+  ],
+  "_activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact",
+    "onLanguage:json"
+  ],
+  "main": "./out/extension",
+  "engines": {
+    "vscode": "^1.33.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^5.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebookexperimental/rome.git"
+  },
+  "bugs": {
+    "url": "https://github.com/facebookexperimental/rome/issues"
+  }
+}

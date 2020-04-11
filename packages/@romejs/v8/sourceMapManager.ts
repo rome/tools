@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SourceMap} from '@romejs/codec-source-map';
+import {SourceMap, SourceMapConsumer} from '@romejs/codec-source-map';
 import {ErrorFrame} from '@romejs/v8';
-import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {coerce1, coerce1to0, Number1, Number0} from '@romejs/ob1';
 import {
   getErrorStructure,
@@ -34,9 +33,7 @@ function prepareStackTrace(err: Error, frames: Array<NodeJS.CallSite>) {
     addErrorFrames(err, frames);
     return buildStackString(err);
   } catch (err2) {
-    return (
-      `${err.name}: ${err.message}\n  Failed to generate stacktrace: ${err2.message}`
-    );
+    return `${err.name}: ${err.message}\n  Failed to generate stacktrace: ${err2.message}`;
   }
 }
 
@@ -101,7 +98,8 @@ function buildStackString(err: Error): string {
     if (isNative) {
       parts.push('native');
     } else if (filename !== undefined && lineNumber !== undefined &&
-      columnNumber !== undefined) {
+          columnNumber !==
+          undefined) {
       parts.push(`(${filename}:${lineNumber}:${columnNumber})`);
     }
 
@@ -123,18 +121,13 @@ function noNull<T>(val: null | T): undefined | T {
   }
 }
 
-function addErrorFrames(
-  err:
-    & Error
-    & {
-      [ERROR_FRAMES_PROP]?: unknown;
-      [ERROR_POP_FRAMES_PROP]?: unknown;
-    },
-
-  frames: Array<NodeJS.CallSite>,
-) {
+function addErrorFrames(err: Error & {
+  [ERROR_FRAMES_PROP]?: unknown;
+  [ERROR_POP_FRAMES_PROP]?: unknown;
+},
+frames: Array<NodeJS.CallSite>): void {
   if (err[ERROR_FRAMES_PROP]) {
-    return undefined;
+    return;
   }
 
   let builtFrames = frames.map((frameApi): ErrorFrame => {
@@ -165,7 +158,8 @@ function addErrorFrames(
     };
 
     if (frame.filename !== undefined && frame.lineNumber !== undefined &&
-      frame.columnNumber !== undefined) {
+          frame.columnNumber !==
+          undefined) {
       const {found, line, column, filename, name} = resolveLocation(
         frame.filename,
         frame.lineNumber,
@@ -175,7 +169,8 @@ function addErrorFrames(
       return {
         ...frame,
         functionName: frame.functionName === undefined
-          ? name : frame.functionName,
+          ? name
+          : frame.functionName,
         methodName: frame.methodName === undefined ? name : frame.methodName,
         resolvedLocation: found,
         lineNumber: line,
@@ -239,7 +234,6 @@ export function addSourceMap(filename: string, map: SourceMap) {
 }
 
 // Add a source map factory. We jump through some hoops to return a function to remove the source map.
-
 // We make sure not to remove the source map if it's been subsequently added by another call.
 export function addSourceMapFactory(
   filename: string,
@@ -279,4 +273,6 @@ export function getSourceMap(filename: string): undefined | SourceMapConsumer {
     maps.set(filename, consumer);
     return consumer;
   }
+
+  return undefined;
 }

@@ -6,14 +6,14 @@
  */
 
 const path = require('path');
+const os = require('os');
 
+exports.devFolder = path.join(os.tmpdir(), 'rome-dev');
 exports.root = path.join(__dirname, '..');
 exports.packages = path.join(exports.root, 'packages', '@romejs');
-exports.generatorsFolder = path.join(
-  exports.packages,
-  'js-generator',
-  'generators',
-);
-exports.analysisFolder = path.join(exports.packages, 'js-analysis', 'evaluators');
+  exports.formatterFolder =
+  path.join(exports.packages, 'js-formatter', 'builders');
+  exports.analysisFolder =
+  path.join(exports.packages, 'js-analysis', 'evaluators');
 exports.astFolder = path.join(exports.packages, 'js-ast');
 exports.argv = process.argv.slice(2);

@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {ClassScope} from '../../scopes';
+import {Scope, ClassScope} from '../../scopes';
 import {ClassExpression, classExpression, AnyNode} from '@romejs/js-ast';
 import InstanceT from '../../types/InstanceT';
 import ClassT from '../../types/ClassT';
@@ -60,7 +59,8 @@ export default function ClassExpression(node: AnyNode, scope: Scope) {
     instances,
     statics,
     extends: node.meta.superClass
-      ? scope.evaluate(node.meta.superClass) : undefined,
+      ? scope.evaluate(node.meta.superClass)
+      : undefined,
   });
   if (node.id) {
     type.setHuman(node.id.name);

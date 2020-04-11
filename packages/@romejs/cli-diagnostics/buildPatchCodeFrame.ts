@@ -5,29 +5,39 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diffs} from '@romejs/string-diff';
-import {CODE_FRAME_INDENT, CODE_FRAME_CONTEXT_LINES, GUTTER} from './constants';
-import {leftPad, formatAnsi} from '@romejs/string-ansi';
+import {
+  CODE_FRAME_INDENT,
+  CODE_FRAME_CONTEXT_LINES,
+  GUTTER,
+  MAX_PATCH_LINES,
+} from './constants';
 import {showInvisibles} from './utils';
-import {constants as diffConstants, groupDiffByLines} from '@romejs/string-diff';
+import {Diffs, diffConstants, groupDiffByLines} from '@romejs/string-diff';
+import {markupTag, escapeMarkup} from '@romejs/string-markup';
 
 function formatDiffLine(diffs: Diffs) {
   return diffs.map(([type, text]) => {
     if (type === diffConstants.DELETE) {
-      return formatAnsi.red(showInvisibles(text));
+      return markupTag('red', escapeMarkup(showInvisibles(text)));
     } else if (type === diffConstants.ADD) {
-      return formatAnsi.green(showInvisibles(text));
+      return markupTag('green', escapeMarkup(showInvisibles(text)));
     } else {
       // type === diffConstants.EQUAL
-      return text;
+      return escapeMarkup(text);
     }
   }).join('');
 }
 
-const DELETE_MARKER = formatAnsi.red('-');
-const ADD_MARKER = formatAnsi.green('+');
+const DELETE_MARKER = markupTag('red', '-');
+const ADD_MARKER = markupTag('green', '+');
 
-export default function buildPatchCodeFrame(rawDiffs: Diffs): string {
+export default function buildPatchCodeFrame(
+  rawDiffs: Diffs,
+  verbose: boolean,
+): {
+  truncated: boolean;
+  frame: string;
+} {
   const diffsByLine = groupDiffByLines(rawDiffs);
   let lastVisibleLine = -1;
 
@@ -45,11 +55,8 @@ export default function buildPatchCodeFrame(rawDiffs: Diffs): string {
     }
 
     if (hasChange) {
-      for (
-        let start = i - CODE_FRAME_CONTEXT_LINES;
-        start < i + CODE_FRAME_CONTEXT_LINES;
-        start++
-      ) {
+      for (let start = i - CODE_FRAME_CONTEXT_LINES; start < i +
+        CODE_FRAME_CONTEXT_LINES; start++) {
         shownLines.add(start);
 
         if (start > lastVisibleLine) {
@@ -64,11 +71,23 @@ export default function buildPatchCodeFrame(rawDiffs: Diffs): string {
   // Don't output a gutter if there's only a single line
   const noGutter = diffsByLine.length === 1;
 
-  // Build the actual frame
   const frame = [];
+  let displayedLines = 0;
+  let truncated = false;
   let lastDisplayedLine = -1;
+
+  const skippedLine = `<emphasis>${CODE_FRAME_INDENT}${'.'.repeat(lineLength)}${GUTTER}</emphasis>`;
+
+  // Build the actual frame
   for (let i = 0; i < diffsByLine.length; i++) {
     if (shownLines.has(i) === false) {
+      continue;
+    }
+
+    displayedLines++;
+
+    if (!verbose && displayedLines > MAX_PATCH_LINES) {
+      truncated = true;
       continue;
     }
 
@@ -107,31 +126,39 @@ export default function buildPatchCodeFrame(rawDiffs: Diffs): string {
     }
 
     if (lastDisplayedLine !== lineNo - 1 && lastDisplayedLine !== -1) {
-      frame.push(formatAnsi.bold(
-        `${CODE_FRAME_INDENT}${'.'.repeat(lineLength)}${GUTTER}`,
-      ));
+      frame.push(skippedLine);
     }
 
-    const gutter = formatAnsi.bold(`${CODE_FRAME_INDENT}${leftPad(
-      String(lineNo),
+    const gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad count="${String(
       lineLength,
-    )}${GUTTER}`);
+    )}">${String(lineNo)}</pad>${GUTTER}</emphasis>`;
+    const gutterNoLine = `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(lineLength)}${GUTTER}</emphasis>`;
 
     if (hasAddition) {
-      frame.push(`${gutter}${ADD_MARKER} ${formatDiffLine(addition)}`);
+      frame.push(`${gutterWithLine}${ADD_MARKER} ${formatDiffLine(addition)}`);
     }
 
     if (hasDeletions) {
+      const gutter = hasAddition ? gutterNoLine : gutterWithLine;
       frame.push(`${gutter}${DELETE_MARKER} ${formatDiffLine(deletions)}`);
     }
 
     if (!hasAddition && !hasDeletions) {
       // Output one of the lines, they're the same
-      frame.push(`${gutter}  ${formatDiffLine(addition)}`);
+      frame.push(`${gutterWithLine}  ${formatDiffLine(addition)}`);
     }
 
     lastDisplayedLine = lineNo;
   }
 
-  return frame.join('\n');
+  if (truncated) {
+    frame.push(
+      `${skippedLine} <dim><number>${displayedLines - MAX_PATCH_LINES}</number> more lines truncated</dim>`,
+    );
+  }
+
+  return {
+    truncated,
+    frame: frame.join('\n'),
+  };
 }

@@ -7,8 +7,7 @@
 
 import {MasterRequest} from '@romejs/core';
 import {WorkerCompileResult} from '../../common/bridges/WorkerBridge';
-import {createMasterCommand} from '../../commands';
-import {commandCategories} from '../../commands';
+import {commandCategories, createMasterCommand} from '../../commands';
 import {DiagnosticsError} from '@romejs/diagnostics';
 import {createUnknownFilePath} from '@romejs/path';
 import {Consumer} from '@romejs/consume';
@@ -34,7 +33,7 @@ export default createMasterCommand({
     const resolved = await master.resolver.resolveEntryAssert({
       ...req.getResolverOptionsFromFlags(),
       source: createUnknownFilePath(args[0]),
-    }, {pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
+    }, {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
 
     let res: WorkerCompileResult;
     if (commandFlags.bundle) {

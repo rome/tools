@@ -6,14 +6,11 @@
  */
 
 // The algorithm used to determine whether a regexp can appear at a
-
 // given point in the program is loosely based on sweet.js' approach.
-
 // See https://github.com/mozilla/sweet.js/wiki/design
 
 import {JSParser} from '../parser';
-import {isBraceBlock, getCurContext} from './index';
-import {readTemplateToken} from './index';
+import {isBraceBlock, getCurContext, readTemplateToken} from './index';
 import {lineBreak} from '@romejs/js-parser-utils';
 import {types as tt} from './types';
 import {Dict} from '@romejs/typescript-helpers';
@@ -61,12 +58,12 @@ tt.parenR.updateContext = tt.braceR.updateContext =
   function(parser) {
     if (parser.state.context.length === 1) {
       parser.state.exprAllowed = true;
-      return undefined;
+      return;
     }
 
     let out = parser.state.context.pop();
     if (out === types.braceStatement && getCurContext(parser).token ===
-    'function') {
+        'function') {
       out = parser.state.context.pop();
     }
 
@@ -81,7 +78,9 @@ tt.name.updateContext = function(parser, prevType) {
   let allowed = false;
   if (prevType !== tt.dot) {
     if (parser.state.tokenValue === 'of' && !parser.state.exprAllowed ||
-    parser.state.tokenValue === 'yield' && parser.inScope('GENERATOR')) {
+            parser.state.tokenValue ===
+            'yield' &&
+          parser.inScope('GENERATOR')) {
       allowed = true;
     }
   }
@@ -95,8 +94,8 @@ tt.name.updateContext = function(parser, prevType) {
 
 tt.braceL.updateContext = function(parser, prevType) {
   parser.state.context.push(isBraceBlock(parser, prevType)
-    ? types.braceStatement : types.braceExpression
-  );
+    ? types.braceStatement
+    : types.braceExpression);
   parser.state.exprAllowed = true;
 };
 
@@ -107,10 +106,11 @@ tt.dollarBraceL.updateContext = function(parser) {
 
 tt.parenL.updateContext = function(parser, prevType) {
   const statementParens = prevType === tt._if || prevType === tt._for ||
-  prevType === tt._with || prevType === tt._while;
+      prevType ===
+      tt._with || prevType === tt._while;
   parser.state.context.push(statementParens
-    ? types.parenStatement : types.parenExpression
-  );
+    ? types.parenStatement
+    : types.parenExpression);
   parser.state.exprAllowed = true;
 };
 
@@ -120,12 +120,14 @@ tt.incDec.updateContext = function() {
 
 tt._function.updateContext = function(parser, prevType) {
   if (prevType.beforeExpr && prevType !== tt.semi && prevType !== tt._else &&
-    !(prevType === tt._return && lineBreak.test(parser.getRawInput(
-      parser.state.lastEndPos.index,
-      parser.state.startPos.index,
-    ))) && !((prevType === tt.colon || prevType === tt.braceL) && getCurContext(
-    parser,
-  ) === types.b_stat)) {
+      !(prevType ===
+          tt._return &&
+        lineBreak.test(parser.getRawInput(
+          parser.state.lastEndPos.index,
+          parser.state.startPos.index,
+        ))) && !((prevType === tt.colon || prevType === tt.braceL) &&
+        getCurContext(parser) ===
+        types.b_stat)) {
     parser.state.context.push(types.functionExpression);
   } else {
     parser.state.context.push(types.functionStatement);
@@ -145,17 +147,16 @@ tt.backQuote.updateContext = function(parser) {
   parser.state.exprAllowed = false;
 };
 
-tt.jsxTagStart.updateContext =
-  function(parser) {
-    parser.state.context.push(types.jsxInner); // treat as beginning of JSX expression
-    parser.state.context.push(types.jsxOpenTag); // start opening tag context
-    parser.state.exprAllowed = false;
-  };
+tt.jsxTagStart.updateContext = function(parser) {
+  parser.state.context.push(types.jsxInner); // treat as beginning of JSX expression
+  parser.state.context.push(types.jsxOpenTag); // start opening tag context
+  parser.state.exprAllowed = false;
+};
 
 tt.jsxTagEnd.updateContext = function(parser, prevType) {
   const out = parser.state.context.pop();
   if (out === types.jsxOpenTag && prevType === tt.slash || out ===
-  types.jsxCloseTag) {
+      types.jsxCloseTag) {
     parser.state.context.pop();
     parser.state.exprAllowed = getCurContext(parser) === types.jsxInner;
   } else {

@@ -5,24 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics, DiagnosticOrigin} from './types';
+import {Diagnostics, DiagnosticOrigin} from './types';
 import {addOriginsToDiagnostics} from './derive';
 import {getDiagnosticsFromError} from './errors';
 
-type WrapResult<T> =
-  | {
-    readonly value: T;
-    readonly diagnostics: undefined;
-  }
-  | {
-    readonly value: undefined;
-    readonly diagnostics: PartialDiagnostics;
-  };
+type WrapResult<T> = {
+  readonly value: T;
+  readonly diagnostics: undefined;
+} | {
+  readonly value: undefined;
+  readonly diagnostics: Diagnostics;
+};
 
-export async function catchDiagnostics<T>(
-  origin: DiagnosticOrigin,
-  promise: () => Promise<T>,
-): Promise<WrapResult<T>> {
+export async function catchDiagnostics<
+  T
+>(origin: DiagnosticOrigin, promise: () => Promise<T>): Promise<WrapResult<T>> {
   try {
     const value = await promise();
 

@@ -44,6 +44,7 @@ export default class NumericLiteralT extends ObjT {
 
   compatibleWith(type: T): boolean {
     return type instanceof NumericT || type instanceof NumericLiteralT &&
-      type.value === this.value;
+        type.value ===
+        this.value;
   }
 }

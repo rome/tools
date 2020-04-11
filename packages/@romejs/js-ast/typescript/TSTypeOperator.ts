@@ -8,13 +8,11 @@
 import {JSNodeBase, AnyTSPrimary} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSTypeOperator =
-  & JSNodeBase
-  & {
-    type: 'TSTypeOperator';
-    operator: 'keyof' | 'unique' | 'readonly';
-    typeAnnotation: AnyTSPrimary;
-  };
+export type TSTypeOperator = JSNodeBase & {
+  type: 'TSTypeOperator';
+  operator: 'keyof' | 'unique' | 'readonly';
+  typeAnnotation: AnyTSPrimary;
+};
 
 export const tsTypeOperator = createBuilder<TSTypeOperator>('TSTypeOperator', {
   bindingKeys: {},

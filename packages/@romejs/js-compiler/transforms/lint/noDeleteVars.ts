@@ -7,6 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noDeleteVars',
@@ -14,11 +15,9 @@ export default {
     const {node} = path;
 
     if (node.type === 'UnaryExpression' && node.operator === 'delete' &&
-      node.argument.type === 'ReferenceIdentifier') {
-      path.context.addNodeDiagnostic(node, {
-        category: 'lint/noDeleteVars',
-        message: 'Variables should not be deleted.',
-      });
+          node.argument.type ===
+          'ReferenceIdentifier') {
+      path.context.addNodeDiagnostic(node, descriptions.LINT.NO_DELETE_VARS);
     }
 
     return node;

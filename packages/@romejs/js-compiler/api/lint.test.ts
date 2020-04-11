@@ -6,7 +6,6 @@
  */
 
 // TODO: Shift file into packages/@romejs/js-compiler/transforms/lint/__rtests__
-
 // after all open linting PRs have been merged.
 
 import test from '@romejs/test';
@@ -52,6 +51,6 @@ test(
   'format enabled in project config should result in regenerated file',
   async (t) => {
     const res = await testLint('foobar ( "yes" );', true);
-    t.is(res.src, 'foobar(\'yes\');\n');
+    t.is(res.src, "foobar('yes');\n");
   },
 );

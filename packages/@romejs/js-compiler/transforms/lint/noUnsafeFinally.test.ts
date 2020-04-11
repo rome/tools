@@ -25,9 +25,8 @@ test(
     greet1();
     `);
 
-    t.truthy(returnTest.diagnostics.find((d) =>
-      d.message === `Unsafe usage of ReturnStatement.`
-    ));
+    t.truthy(returnTest.diagnostics.find((d) => d.description.message.value ===
+      `Unsafe usage of ReturnStatement.`));
 
     const breakTest = await testLint(`
 
@@ -44,9 +43,8 @@ test(
     greet2();
     `);
 
-    t.truthy(breakTest.diagnostics.find((d) =>
-      d.message === `Unsafe usage of BreakStatement.`
-    ));
+    t.truthy(breakTest.diagnostics.find((d) => d.description.message.value ===
+      `Unsafe usage of BreakStatement.`));
 
     const continueTest = await testLint(`
     function greet3() {
@@ -62,8 +60,9 @@ test(
     greet3();
     `);
 
-    t.truthy(continueTest.diagnostics.find((d) =>
-      d.message === `Unsafe usage of ContinueStatement.`
+    t.truthy(continueTest.diagnostics.find(
+      (d) => d.description.message.value ===
+        `Unsafe usage of ContinueStatement.`,
     ));
 
     const throwTest = await testLint(`
@@ -80,8 +79,7 @@ test(
     greet4();
     `);
 
-    t.truthy(throwTest.diagnostics.find((d) =>
-      d.message === `Unsafe usage of ThrowStatement.`
-    ));
+    t.truthy(throwTest.diagnostics.find((d) => d.description.message.value ===
+      `Unsafe usage of ThrowStatement.`));
   },
 );

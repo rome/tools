@@ -27,7 +27,7 @@ import {
   parseTSTypeArguments,
   parseStringLiteral,
 } from './index';
-import {PartialDiagnosticAdvice} from '@romejs/diagnostics';
+import {descriptions} from '@romejs/diagnostics';
 import {isValidIdentifierName} from '@romejs/js-ast-utils';
 
 // Indicates whether we should create a JSXIdentifier or a JSXReferenceIdentifier
@@ -37,7 +37,9 @@ function isHTMLTagName(tagName: string): boolean {
 }
 
 // Transforms JSX element name to string.
-function getQualifiedJSXName(node: JSXElement['name'] | JSXIdentifier): string {
+function getQualifiedJSXName(
+  node: undefined | JSXElement['name'] | JSXIdentifier,
+): string {
   if (node === undefined) {
     return '';
   }
@@ -67,7 +69,7 @@ function parseJSXIdentifier(parser: JSParser): JSXIdentifier {
     name = parser.state.tokenType.keyword;
   } else {
     parser.addDiagnostic({
-      message: 'Unknown JSX identifier token',
+      description: descriptions.JS_PARSER.JSX_UNKNOWN_IDENTIFIER_TOKEN,
     });
     name = '';
   }
@@ -99,7 +101,6 @@ function parseJSXNamespacedName(
 }
 
 // Parses element name in any form - namespaced, member
-
 // or single identifier.
 function parseJSXElementName(parser: JSParser): JSXElement['name'] {
   const start = parser.getPosition();
@@ -108,8 +109,8 @@ function parseJSXElementName(parser: JSParser): JSXElement['name'] {
 
   let node: JSXElement['name'];
   if (namespacedName.type === 'JSXIdentifier' && !isHTMLTagName(
-    namespacedName.name,
-  )) {
+      namespacedName.name,
+    )) {
     node = {
       ...namespacedName,
       type: 'JSXReferenceIdentifier',
@@ -141,7 +142,7 @@ function parseJSXAttributeValue(
       if (node.expression.type === 'JSXEmptyExpression') {
         parser.addDiagnostic({
           loc: node.loc,
-          message: 'JSX attributes must only be assigned a non-empty expression',
+          description: descriptions.JS_PARSER.JSX_EMPTY_ATTRIBUTE_VALUE,
         });
       }
       return node;
@@ -152,23 +153,20 @@ function parseJSXAttributeValue(
     case tt.string:
       return parseStringLiteral(parser);
 
-    default:
-      {
-        parser.addDiagnostic({
-          message: 'JSX value should be either an expression or a quoted JSX text',
-        });
-        return parser.finishNode(parser.getPosition(), {
-          type: 'StringLiteral',
-          value: '?',
-        });
-      }
+    default: {
+      parser.addDiagnostic({
+        description: descriptions.JS_PARSER.JSX_INVALID_ATTRIBUTE_VALUE,
+      });
+      return parser.finishNode(parser.getPosition(), {
+        type: 'StringLiteral',
+        value: '?',
+      });
+    }
   }
 }
 
 // JSXEmptyExpression is unique type since it doesn't actually parse anything,
-
 // and so it should start at the end of last read token (left brace) and finish
-
 // at the beginning of the next one (right brace).
 function parseJSXEmptyExpression(parser: JSParser): JSXEmptyExpression {
   return parser.finishNode(parser.state.lastEndPos, {
@@ -278,7 +276,7 @@ function parseJSXOpeningElementAt(
   if (parser.isRelational('<')) {
     if (!parser.isSyntaxEnabled('ts')) {
       parser.addDiagnostic({
-        message: 'JSX element type arguments are only allowed in TS',
+        description: descriptions.JS_PARSER.JSX_ELEM_TYPE_ARGUMENTS_OUTSIDE_TS,
       });
     }
 
@@ -295,7 +293,7 @@ function parseJSXOpeningElementAt(
   const selfClosing = parser.eat(tt.slash);
   if (!parser.eat(tt.jsxTagEnd)) {
     parser.addDiagnostic({
-      message: 'Unclosed JSX element open',
+      description: descriptions.JS_PARSER.JSX_UNCLOSED_SELF_CLOSING_TAG,
     });
   }
   return {
@@ -311,13 +309,7 @@ function parseJSXOpeningElementAt(
 function parseJSXClosingElementAt(
   parser: JSParser,
 ): undefined | JSXElement['name'] {
-  if (parser.match(tt.jsxTagEnd)) {
-    if (!parser.eat(tt.jsxTagEnd)) {
-      parser.addDiagnostic({
-        message: 'Unclosed JSX fragment close',
-      });
-    }
-
+  if (parser.eat(tt.jsxTagEnd)) {
     return undefined;
   }
 
@@ -325,67 +317,11 @@ function parseJSXClosingElementAt(
 
   if (!parser.eat(tt.jsxTagEnd)) {
     parser.addDiagnostic({
-      message: 'Unclosed JSX element close',
+      description: descriptions.JS_PARSER.JSX_UNCLOSED_CLOSING_TAG,
     });
   }
 
   return name;
-}
-
-function getJSXOpenElementAdvice(
-  parser: JSParser,
-  def: OpeningElementDef,
-): PartialDiagnosticAdvice {
-  let message = 'Originated from this opening tag';
-
-  if (def.name !== undefined) {
-    message = `Originated from opening tag of <emphasis>${getQualifiedJSXName(
-      def.name,
-    )}</emphasis>`;
-  }
-
-  const {loc} = def;
-  return [
-    {
-      type: 'log',
-      category: 'info',
-      message,
-    },
-    {
-      type: 'frame',
-      filename: parser.filename,
-      start: loc.start,
-      end: loc.end,
-    },
-  ];
-}
-
-function getJSXCloseElementAdvice(
-  parser: JSParser,
-  name: undefined | JSXElement['name'],
-  loc: SourceLocation,
-): PartialDiagnosticAdvice {
-  let message;
-  if (name === undefined) {
-    message = 'But found a closing fragment instead';
-  } else {
-    message =
-      `But found a closing tag of <emphasis>${getQualifiedJSXName(name)}</emphasis> instead`;
-  }
-
-  return [
-    {
-      type: 'log',
-      category: 'info',
-      message,
-    },
-    {
-      type: 'frame',
-      filename: parser.filename,
-      start: loc.start,
-      end: loc.end,
-    },
-  ];
 }
 
 function recoverFromUnclosedJSX(parser: JSParser) {
@@ -395,7 +331,6 @@ function recoverFromUnclosedJSX(parser: JSParser) {
 }
 
 // Parses entire JSX element, including it"s opening tag
-
 // (starting after "<"), attributes, contents and closing tag.
 function parseJSXElementAt(
   parser: JSParser,
@@ -411,22 +346,21 @@ function parseJSXElementAt(
   if (openingDef.selfClosing === false) {
     contents: while (true) {
       switch (parser.state.tokenType) {
-        case tt.jsxTagStart:
-          {
-            const start = parser.getPosition();
-            parser.next();
-            if (parser.eat(tt.slash)) {
-              closingName = parseJSXClosingElementAt(parser);
-              closingNameLoc = {
-                filename: parser.filename,
-                start,
-                end: parser.getPosition(),
-              };
-              break contents;
-            }
-            children.push(parseJSXElementAt(parser, start));
-            break;
+        case tt.jsxTagStart: {
+          const start = parser.getPosition();
+          parser.next();
+          if (parser.eat(tt.slash)) {
+            closingName = parseJSXClosingElementAt(parser);
+            closingNameLoc = {
+              filename: parser.filename,
+              start,
+              end: parser.getPosition(),
+            };
+            break contents;
           }
+          children.push(parseJSXElementAt(parser, start));
+          break;
+        }
 
         case tt.jsxText:
           children.push(parseJSXText(parser));
@@ -442,15 +376,19 @@ function parseJSXElementAt(
 
         case tt.eof:
           parser.addDiagnostic({
-            message: 'Unclosed JSX element',
-            advice: getJSXOpenElementAdvice(parser, openingDef),
+            description: descriptions.JS_PARSER.JSX_UNCLOSED_ELEMENT(
+              getQualifiedJSXName(openingDef.name),
+              openingDef.loc,
+            ),
           });
           break contents;
 
         default:
           parser.addDiagnostic({
-            message: 'Unknown JSX children start',
-            advice: getJSXOpenElementAdvice(parser, openingDef),
+            description: descriptions.JS_PARSER.JSX_UNKNOWN_CHILD_START(
+              getQualifiedJSXName(openingDef.name),
+              openingDef.loc,
+            ),
           });
 
           // We don't need to do it for the tt.eof case above because nothing will ever be parsed after
@@ -470,8 +408,10 @@ function parseJSXElementAt(
     if (openingDef.name === undefined && closingName !== undefined) {
       parser.addDiagnostic({
         loc: openingDef.loc,
-        message: `Expected JSX closing fragment tag`,
-        advice: getJSXCloseElementAdvice(parser, closingName, closingNameLoc),
+        description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_FRAGMENT_TAG(
+          getQualifiedJSXName(openingDef.name),
+          openingDef.loc,
+        ),
       });
     }
 
@@ -479,24 +419,24 @@ function parseJSXElementAt(
     if (openingDef.name !== undefined && closingName === undefined) {
       parser.addDiagnostic({
         loc: openingDef.loc,
-        message: `Expected a corresponding JSX closing tag for <emphasis>${getQualifiedJSXName(
-          openingDef.name,
-        )}</emphasis>`,
-        advice: getJSXCloseElementAdvice(parser, closingName, closingNameLoc),
+        description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_TAG(
+          getQualifiedJSXName(openingDef.name),
+          openingDef.loc,
+        ),
       });
     }
 
     // Validate element names: Element open, element close
     if (openingDef.name !== undefined && closingName !== undefined) {
       if (getQualifiedJSXName(closingName) !== getQualifiedJSXName(
-        openingDef.name,
-      )) {
+          openingDef.name,
+        )) {
         parser.addDiagnostic({
           loc: openingDef.loc,
-          message: `Expected a corresponding JSX closing tag for <emphasis>${getQualifiedJSXName(
-            openingDef.name,
-          )}</emphasis>`,
-          advice: getJSXCloseElementAdvice(parser, closingName, closingNameLoc),
+          description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_TAG(
+            getQualifiedJSXName(openingDef.name),
+            openingDef.loc,
+          ),
         });
       }
     }
@@ -525,8 +465,7 @@ function parseJSXElementAt(
 function checkAccidentalFragment(parser: JSParser) {
   if (parser.match(tt.relational) && parser.state.tokenValue === '<') {
     parser.addDiagnostic({
-      message: `Adjacent JSX elements must be wrapped in an enclosing tag. 
-        Did you want a JSX fragment <>...</>?`,
+      description: descriptions.JS_PARSER.UNWRAPPED_ADJACENT_JHX,
     });
   }
 }
@@ -549,35 +488,11 @@ export function parseJSXElement(parser: JSParser): JSXElement | JSXFragment {
   if (!parser.isSyntaxEnabled('jsx')) {
     if (parser.isSyntaxEnabled('ts')) {
       parser.addDiagnostic({
-        message: 'JSX isn\'t allowed in regular TypeScript files',
-        advice: [
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Change the file extension to <emphasis>.tsx</emphasis> to enable JSX support',
-          },
-        ],
+        description: descriptions.JS_PARSER.JSX_IN_TS_EXTENSION,
       });
     } else {
       parser.addDiagnostic({
-        message: 'JSX syntax isn\'t enabled',
-        advice: [
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Are you using <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.tsx</emphasis>',
-          },
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Are you using <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
-          },
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Not using either? Change the file extension to <emphasis>.jsx</emphasis>',
-          },
-        ],
+        description: descriptions.JS_PARSER.JSX_DISABLED,
       });
     }
   }

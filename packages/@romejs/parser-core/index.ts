@@ -19,11 +19,14 @@ import {
   ComplexToken,
 } from './types';
 import {
-  PartialDiagnosticAdvice,
   getDiagnosticsFromError,
   createSingleDiagnosticError,
-  PartialDiagnostic,
+  Diagnostic,
   DiagnosticCategory,
+  DiagnosticDescription,
+  DiagnosticsError,
+  createBlessedDiagnosticMessage,
+  descriptions,
 } from '@romejs/diagnostics';
 import {
   Number1,
@@ -38,7 +41,7 @@ import {
 } from '@romejs/ob1';
 import {escapeMarkup} from '@romejs/string-markup';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
-import {Class} from '@romejs/typescript-helpers';
+import {Class, OptionalProps} from '@romejs/typescript-helpers';
 
 export * from './types';
 
@@ -49,17 +52,16 @@ export type ParserOptions = {
   offsetPosition?: Position;
 };
 
-export type ParserOptionsWithRequiredPath =
-  & Omit<ParserOptions, 'path'>
-  & {path: NonNullable<ParserOptions['path']>};
+export type ParserOptionsWithRequiredPath = Omit<ParserOptions, 'path'> & {
+  path: NonNullable<ParserOptions['path']>;
+};
 
 export type ParserUnexpectedOptions = {
-  message?: string;
+  description?: OptionalProps<DiagnosticDescription, 'category'>;
   loc?: SourceLocation;
   start?: Position;
   end?: Position;
   token?: TokenBase;
-  advice?: PartialDiagnosticAdvice;
 };
 
 export type TokenValues<Tokens extends TokensShape> =
@@ -69,13 +71,10 @@ export type TokenValues<Tokens extends TokensShape> =
 export function tryParseWithOptionalOffsetPosition<
   Opts extends ParserOptions,
   Ret
->(
-  parserOpts: Opts,
-  opts: {
-    getOffsetPosition: () => Position;
-    parse: (opts: Opts) => Ret;
-  },
-): Ret {
+>(parserOpts: Opts, opts: {
+  getOffsetPosition: () => Position;
+  parse: (opts: Opts) => Ret;
+}): Ret {
   try {
     return opts.parse(parserOpts);
   } catch (err) {
@@ -132,9 +131,11 @@ export class ParserCore<Tokens extends TokensShape, State> {
     this.tokenizing = false;
     this.currLine = offsetPosition === undefined ? number1 : offsetPosition.line;
     this.currColumn = offsetPosition === undefined
-      ? number0 : offsetPosition.column;
+      ? number0
+      : offsetPosition.column;
     this.offsetIndex = offsetPosition === undefined
-      ? number0 : offsetPosition.index;
+      ? number0
+      : offsetPosition.index;
     this.startLine = this.currLine;
     this.startColumn = this.currColumn;
     this.nextTokenIndex = number0;
@@ -222,32 +223,22 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   // Alternate tokenize method to allow that allows the use of state
-  tokenizeWithState(
-    index: Number0,
-    input: string,
-    state: State,
-  ):
-    | undefined
-    | {
-      token: TokenValues<Tokens>;
-      state: State;
-    } {
+  tokenizeWithState(index: Number0, input: string, state: State): undefined | {
+    token: TokenValues<Tokens>;
+    state: State;
+  } {
     const token = this.tokenize(index, input);
     if (token !== undefined) {
       return {token, state};
+    } else {
+      return undefined;
     }
   }
 
-  _tokenizeWithState(
-    index: Number0,
-    input: string,
-    state: State,
-  ):
-    | undefined
-    | {
-      token: TokenValues<Tokens>;
-      state: State;
-    } {
+  _tokenizeWithState(index: Number0, input: string, state: State): undefined | {
+    token: TokenValues<Tokens>;
+    state: State;
+  } {
     if (this.ignoreWhitespaceTokens) {
       switch (input[get0(index)]) {
         case ' ':
@@ -299,7 +290,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     }
 
     if (this.tokenizing) {
-      throw new Error('Can\'t call nextToken while tokenizing');
+      throw new Error("Can't call nextToken while tokenizing");
     }
 
     const prevToken = this.currentToken;
@@ -307,13 +298,13 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
     if (nextToken.end === prevToken.end) {
       throw new Error(
-        `tokenize() returned a token with the same position as the last - Previous token: ${JSON.stringify(
-          prevToken,
-        )}; Next token: ${JSON.stringify(nextToken)}; Input: ${this.input.slice(
-          0,
-          100,
-        )}`,
-      );
+          `tokenize() returned a token with the same position as the last - Previous token: ${JSON.stringify(
+            prevToken,
+          )}; Next token: ${JSON.stringify(nextToken)}; Input: ${this.input.slice(
+            0,
+            100,
+          )}`,
+        );
     }
 
     const {line, column} = this.getPositionFromIndex(nextToken.start);
@@ -346,7 +337,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   // Get the end position of the current token
-  getLastEndPosition() {
+  getLastEndPosition(): Position {
     return this.getPositionFromIndex(this.prevToken.end);
   }
 
@@ -356,9 +347,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   // Return the token and state that's after the current token without advancing to it
-  lookahead(
-    index: Number0 = this.nextTokenIndex,
-  ): {
+  lookahead(index: Number0 = this.nextTokenIndex): {
     token: TokenValues<Tokens>;
     state: State;
   } {
@@ -413,7 +402,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     const {latestPosition} = this;
     const currPosition = this.getPosition();
     if (currPosition.index > latestPosition.index && currPosition.index <
-    indexWithOffset) {
+        indexWithOffset) {
       line = currPosition.line;
       column = currPosition.column;
       indexSearchOffset = get0(this.removeOffset(currPosition.index));
@@ -449,9 +438,9 @@ export class ParserCore<Tokens extends TokensShape, State> {
     return pos;
   }
 
-  createDiagnostic(opts: ParserUnexpectedOptions = {}): PartialDiagnostic {
+  createDiagnostic(opts: ParserUnexpectedOptions = {}): Diagnostic {
     const {currentToken} = this;
-    let {message, start, end, loc, token} = opts;
+    let {description: metadata, start, end, loc, token} = opts;
 
     // Allow passing in a TokenBase
     if (token !== undefined) {
@@ -484,48 +473,55 @@ export class ParserCore<Tokens extends TokensShape, State> {
     }
 
     // Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
-    if (message === undefined) {
+    if (metadata === undefined) {
+      let message;
       if (currentToken !== undefined && start !== undefined && start.index ===
-      currentToken.start) {
-        message = `Unexpected ${currentToken.type}`;
+          currentToken.start) {
+        message = createBlessedDiagnosticMessage(
+          `Unexpected ${currentToken.type}`,
+        );
       } else {
         if (this.isEOF(start.index)) {
-          message = 'Unexpected end of file';
+          message = createBlessedDiagnosticMessage('Unexpected end of file');
         } else {
           const char = this.input[get0(start.index)];
-          message =
-            `Unexpected character <emphasis>${escapeMarkup(char)}</emphasis>`;
+          message = createBlessedDiagnosticMessage(
+            `Unexpected character <emphasis>${escapeMarkup(char)}</emphasis>`,
+          );
         }
       }
+      metadata = {message};
     }
 
-    let errMessage = `${message} (${start.line}:${start.column})`;
-    if (this.path !== undefined) {
-      errMessage = `${this.path}: ${errMessage} Input: ${this.input}`;
-    }
+    const metadataWithCategory: DiagnosticDescription = {
+      ...metadata,
+      category: metadata.category === undefined
+        ? this.diagnosticCategory
+        : metadata.category,
+    };
 
     return {
-      message,
-      advice: opts.advice,
-      category: this.diagnosticCategory,
-      sourceText: this.path === undefined ? this.input : undefined,
-      mtime: this.mtime,
-      start,
-      end,
-      filename: this.filename,
+      description: metadataWithCategory,
+      location: {
+        sourceText: this.path === undefined ? this.input : undefined,
+        mtime: this.mtime,
+        start,
+        end,
+        filename: this.filename,
+      },
     };
   }
 
   // Return an error to indicate a parser error, this must be thrown at the callsite for refinement
-  unexpected(opts: ParserUnexpectedOptions = {}) {
-    throw createSingleDiagnosticError(this.createDiagnostic(opts));
+  unexpected(opts: ParserUnexpectedOptions = {}): DiagnosticsError {
+    return createSingleDiagnosticError(this.createDiagnostic(opts));
   }
 
   //# Token utility methods
-  assertNoSpace() {
+  assertNoSpace(): void {
     if (this.currentToken.start !== this.prevToken.end) {
       throw this.unexpected({
-        message: 'Expected no space between',
+        description: descriptions.PARSER_CORE.EXPECTED_SPACE,
       });
     }
   }
@@ -534,6 +530,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
   eatToken(type: keyof Tokens): undefined | TokenValues<Tokens> {
     if (this.matchToken(type)) {
       return this.nextToken();
+    } else {
+      return undefined;
     }
   }
 
@@ -554,7 +552,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   // Get the current token and assert that it's of the specified type, the token stream will also be advanced
   expectToken<Type extends keyof Tokens>(
     type: Type,
-    message?: string,
+    _metadata?: DiagnosticDescription,
   ): Tokens[Type] {
     const token = this.getToken();
     if (token.type === type) {
@@ -562,10 +560,16 @@ export class ParserCore<Tokens extends TokensShape, State> {
       // @ts-ignore
       return token;
     } else {
-      throw this.unexpected({
-        message: message === undefined
-          ? `Expected token ${type} but got ${token.type}` : message,
-      });
+      throw this.unexpected(
+        {
+          description: _metadata === undefined
+            ? descriptions.PARSER_CORE.EXPECTED_TOKEN(
+              token.type,
+              (type as string),
+            )
+            : _metadata,
+        },
+      );
     }
   }
 
@@ -663,10 +667,10 @@ export class ParserCore<Tokens extends TokensShape, State> {
     };
   }
 
-  finalize() {
+  finalize(): void {
     if (!this.eatToken('EOF')) {
       throw this.unexpected({
-        message: 'Expected end of file',
+        description: descriptions.PARSER_CORE.EXPECTED_EOF,
       });
     }
   }
@@ -723,11 +727,14 @@ export function readUntilLineBreak(char: string): boolean {
 }
 
 // Lazy initialize a ParserCore subclass... Circular dependencies are wild and necessitate this as ParserCore may not be available
-export function createParser<T, Args extends Array<unknown>>(
-  callback: (parser: typeof ParserCore, parserRequiredPath: typeof ParserWithRequiredPath) => Class<
-    T,
-    Args
-  >,
+export function createParser<
+  T,
+  Args extends Array<unknown>
+>(
+  callback: (
+    parser: typeof ParserCore,
+    parserRequiredPath: typeof ParserWithRequiredPath,
+  ) => Class<T, Args>,
 ): (...args: Args) => T {
   let klass: undefined | Class<T, Args>;
 

@@ -14,10 +14,11 @@ import {
   ForStatement,
   ConditionalExpression,
 } from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 function isBooleanConstructorCall(node: AnyNode) {
   return node.type === 'NewExpression' && node.callee.type ===
-  'ReferenceIdentifier' && node.callee.name === 'Boolean';
+    'ReferenceIdentifier' && node.callee.name === 'Boolean';
 }
 
 function isConditionalStatement(node: AnyNode): node is ConditionalExpression {
@@ -28,7 +29,8 @@ function isInBooleanContext(
   node: AnyNode,
 ): node is IfStatement | DoWhileStatement | WhileStatement | ForStatement {
   return node.type === 'IfStatement' || node.type === 'DoWhileStatement' ||
-  node.type === 'WhileStatement' || node.type === 'ForStatement';
+      node.type ===
+      'WhileStatement' || node.type === 'ForStatement';
 }
 
 function getNode(path: Path): undefined | AnyNode {
@@ -43,6 +45,8 @@ function getNode(path: Path): undefined | AnyNode {
   if (isInBooleanContext(node) || isConditionalStatement(node)) {
     return node.test;
   }
+
+  return undefined;
 }
 
 export default {
@@ -54,13 +58,12 @@ export default {
 
     if (node !== undefined) {
       if (node.type === 'UnaryExpression' && node.operator === '!' &&
-        node.argument.type === 'UnaryExpression' && node.argument.operator ===
-      '!' || node.type === 'CallExpression' && node.callee.type ===
-      'ReferenceIdentifier' && node.callee.name === 'Boolean') {
-        context.addNodeDiagnostic(node, {
-          category: 'lint/noExtraBooleanCast',
-          message: `Redundant double negation.`,
-        });
+            node.argument.type ===
+            'UnaryExpression' && node.argument.operator === '!' || node.type ===
+            'CallExpression' && node.callee.type === 'ReferenceIdentifier' &&
+            node.callee.name ===
+            'Boolean') {
+        context.addNodeDiagnostic(node, descriptions.LINT.NO_EXTRA_BOOLEAN_CAST);
       }
     }
 

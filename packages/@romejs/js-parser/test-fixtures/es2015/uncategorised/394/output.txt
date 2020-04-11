@@ -23,22 +23,26 @@ Program {
   }
   diagnostics: Array [
     Object {
-      advice: Array []
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Invalid parenthesized binding'
-      mtime: undefined
-      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 2
-        index: 9
-        line: 2
+      description: Object {
+        advice: Array []
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid parenthesized binding'}
       }
-      start: Object {
-        column: 1
-        index: 8
-        line: 2
+      location: Object {
+        filename: 'input.js'
+        mtime: undefined
+        sourceType: 'script'
+        end: Object {
+          column: 2
+          index: 9
+          line: 2
+        }
+        start: Object {
+          column: 1
+          index: 8
+          line: 2
+        }
       }
     }
   ]

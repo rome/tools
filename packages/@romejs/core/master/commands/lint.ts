@@ -6,13 +6,15 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand} from '../../commands';
-import Linter from '../linter/Linter';
-import {commandCategories} from '../../commands';
-import {Consumer} from '@romejs/consume';
-import {DiagnosticPointer} from '@romejs/diagnostics';
+import {createMasterCommand, commandCategories} from '../../commands';
+import Linter, {LinterOptions} from '../linter/Linter';
 
-type Flags = {fix: boolean};
+import {Consumer} from '@romejs/consume';
+
+type Flags = {
+  fix: boolean;
+  changed: undefined | string;
+};
 
 export default createMasterCommand<Flags>({
   category: commandCategories.CODE_QUALITY,
@@ -21,94 +23,47 @@ export default createMasterCommand<Flags>({
   defineFlags(consumer: Consumer): Flags {
     return {
       fix: consumer.get('fix').asBoolean(false),
+      changed: consumer.get('changed').asStringOrVoid(),
     };
   },
 
   async default(req: MasterRequest, flags: Flags): Promise<void> {
-    const fix = flags.fix === false
-      ? undefined : req.getDiagnosticPointerFromFlags({
+    const {reporter} = req;
+
+    const fixLocation = flags.fix === false
+      ? undefined
+      : req.getDiagnosticPointerFromFlags({
         type: 'flag',
         key: 'fix',
       });
 
-    return new Promise((resolve, reject) => {
-      if (req.query.requestFlags.watch) {
-        initWatchLint(req, fix, reject);
+    // Look up arguments manually in vsc if we were passed a changes branch
+    let args;
+    if (flags.changed !== undefined) {
+      // No arguments expected when using this flag
+      req.expectArgumentLength(0);
+
+      const client = await req.master.projectManager.getVCSClient(
+        await req.assertClientCwdProject(),
+      );
+      const target = flags.changed === '' ? client.trunkBranch : flags.changed;
+      args = await client.getModifiedFiles(target);
+
+      if (args.length === 0) {
+        reporter.warn(`No files changed from <emphasis>${target}</emphasis>`);
       } else {
-        resolve(runLint(req, fix));
+        reporter.info(`Files changed from <emphasis>${target}</emphasis>`);
+        reporter.list(args.map((arg) => `<filelink target="${arg}" />`));
+        reporter.hr();
       }
-    });
+    }
+
+    const opts: LinterOptions = {
+      fixLocation,
+      args,
+    };
+
+    const linter = new Linter(req, opts);
+    await linter.run(req.query.requestFlags.watch);
   },
 });
-
-function initWatchLint(
-  req: MasterRequest,
-  fix: undefined | DiagnosticPointer,
-  reject: (err: Error) => void,
-) {
-  const {master, reporter} = req;
-
-  // whenever a file change happens, we wait 250ms to do lint, this is in case there's multiple
-
-  // files being linted, like if an autofix is triggered
-  let queued = false;
-
-  // whether or not we're currently linting
-  let running = false;
-
-  // if a file event happens while we're linting then we'll need to run the full lint again to make
-
-  // sure it's up to date
-  let runAgainAfterComplete = false;
-
-  function runWatchLint() {
-    if (running) {
-      runAgainAfterComplete = true;
-      return undefined;
-    }
-
-    queued = false;
-    running = true;
-    reporter.clear();
-
-    runLint(req, fix).then(() => {
-      running = false;
-
-      if (runAgainAfterComplete) {
-        runAgainAfterComplete = false;
-        runWatchLint();
-      }
-    }, reject);
-  }
-
-  const listener = master.fileChangeEvent.subscribe(() => {
-    if (running) {
-      // queue up a lint to happen afterwards
-      runWatchLint();
-      return undefined;
-    }
-
-    if (queued) {
-      // already have a timer waiting
-      return undefined;
-    }
-
-    // queue up a lint
-    queued = true;
-    setTimeout(runWatchLint, 250);
-  });
-
-  req.endEvent.subscribe(() => {
-    listener.unsubscribe();
-  });
-
-  runWatchLint();
-}
-
-async function runLint(
-  req: MasterRequest,
-  fix: undefined | DiagnosticPointer,
-): Promise<void> {
-  const linter = new Linter(req, fix);
-  await linter.lint();
-}

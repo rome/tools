@@ -18,35 +18,40 @@ export default function getRequireSource(
   allowStaticMember: boolean = false,
 ): undefined | string {
   if (node === undefined) {
-    return;
+    return undefined;
   }
 
   if (allowStaticMember && node.type === 'MemberExpression' &&
-    node.property.type === 'StaticMemberProperty') {
+        node.property.type ===
+        'StaticMemberProperty') {
     node = node.object;
   }
 
   if (node.type !== 'CallExpression') {
-    return;
+    return undefined;
   }
 
   const {arguments: args, callee} = node;
 
   const [firstArg] = args;
   if (args.length !== 1 || firstArg.type !== 'StringLiteral') {
-    return;
+    return undefined;
   }
 
   const validRequireCallee = callee.type === 'ReferenceIdentifier' &&
-    callee.name === 'require' && scope.getBinding('require') === undefined;
+      callee.name ===
+      'require' && scope.getBinding('require') === undefined;
 
   const validRomeRequreCallee = (doesNodeMatchPattern(
-    callee,
-    ROME_DEFAULT_REQUIRE,
-  ) || doesNodeMatchPattern(callee, ROME_NAMESPACE_REQUIRE)) &&
-    scope.getBinding('Rome') === undefined;
+      callee,
+      ROME_DEFAULT_REQUIRE,
+    ) || doesNodeMatchPattern(callee, ROME_NAMESPACE_REQUIRE)) &&
+      scope.getBinding('Rome') ===
+      undefined;
 
   if (validRequireCallee || validRomeRequreCallee) {
     return firstArg.value;
   }
+
+  return undefined;
 }

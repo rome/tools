@@ -9,6 +9,7 @@ import {WebBridge, Master, MasterRequest} from '@romejs/core';
 import {
   getDiagnosticsFromError,
   deriveDiagnosticFromError,
+  DiagnosticsProcessor,
 } from '@romejs/diagnostics';
 import {removeSuffix, removePrefix} from '@romejs/string-utils';
 import Bundler from '../bundler/Bundler';
@@ -97,9 +98,15 @@ export default class WebRequest {
 
       //this.request.reporter.clear();
       try {
-        const printer = this.masterRequest.createDiagnosticsPrinter({
-          category: 'WebRequest',
-        });
+        const printer = this.masterRequest.createDiagnosticsPrinter(
+          new DiagnosticsProcessor({
+            origins: [
+              {
+                category: 'WebRequest',
+              },
+            ],
+          }),
+        );
         printer.addDiagnostics(diagnostics);
         await printer.print();
       } catch (err) {
@@ -188,7 +195,7 @@ export default class WebRequest {
 
     // TODO check if it is a file
     if (possibleStaticPath !== undefined &&
-      (await this.master.memoryFs.existsHard(possibleStaticPath))) {
+        (await this.master.memoryFs.existsHard(possibleStaticPath))) {
       return true;
     }
 

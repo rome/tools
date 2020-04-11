@@ -6,7 +6,11 @@
  */
 
 import {Scope} from '../../scopes';
-import {BindingArrayPattern, bindingArrayPattern, AnyNode} from '@romejs/js-ast';
+import {
+  BindingArrayPattern,
+  bindingArrayPattern,
+  AnyNode,
+} from '@romejs/js-ast';
 
 export default function BindingArrayPattern(node: AnyNode, scope: Scope) {
   node = bindingArrayPattern.assert(node);

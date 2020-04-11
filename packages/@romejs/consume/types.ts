@@ -6,8 +6,8 @@
  */
 
 import {
-  DiagnosticPointer,
-  PartialDiagnostic,
+  DiagnosticLocation,
+  Diagnostic,
   DiagnosticCategory,
 } from '@romejs/diagnostics';
 import Consumer from './Consumer';
@@ -28,9 +28,10 @@ export type ConsumeSourceLocationRequestTarget =
 
 export type ConsumeContext = {
   category: DiagnosticCategory;
-  getDiagnosticPointer?: (keys: ConsumePath, target: ConsumeSourceLocationRequestTarget) =>
-    | undefined
-    | DiagnosticPointer;
+  getDiagnosticPointer?: (
+    keys: ConsumePath,
+    target: ConsumeSourceLocationRequestTarget,
+  ) => DiagnosticLocation;
   getOriginalValue?: (path: ConsumePath) => unknown;
 };
 
@@ -45,30 +46,33 @@ type ConsumePropertyDefinitionBase = {
 
 type ConsumePropertyPrimitiveDefinition =
   & ConsumePropertyDefinitionBase
-  & {type:
+  & {
+    type:
       | 'string'
       | 'number'
       | 'boolean'
       | 'bigint'
       | 'date'
       | 'array'
-      | 'object'};
-
-type ConsumePropertyNumberRangeDefinition =
-  & ConsumePropertyDefinitionBase
-  & {
-    type: 'number-range';
-    min: undefined | Number0 | Number1 | number;
-    max: undefined | Number0 | Number1 | number;
+      | 'object';
   };
+
+type ConsumePropertyNumberRangeDefinition = ConsumePropertyDefinitionBase & {
+  type: 'number-range';
+  min: undefined | Number0 | Number1 | number;
+  max: undefined | Number0 | Number1 | number;
+};
 
 export type ConsumePropertyDefinition =
   | ConsumePropertyPrimitiveDefinition
   | ConsumePropertyNumberRangeDefinition;
 
-export type ConsumerOnDefinition = (definition: ConsumePropertyDefinition) => void;
+export type ConsumerOnDefinition = (
+  definition: ConsumePropertyDefinition,
+  consumer: Consumer,
+) => void;
 
-export type ConsumerHandleUnexpected = (diagnostic: PartialDiagnostic) => void;
+export type ConsumerHandleUnexpected = (diagnostic: Diagnostic) => void;
 
 export type ConsumerOptions = {
   handleUnexpectedDiagnostic?: ConsumerHandleUnexpected;

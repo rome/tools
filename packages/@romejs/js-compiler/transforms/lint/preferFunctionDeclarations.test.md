@@ -12,42 +12,50 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/preferFunctionDeclarations'
-      filename: 'unknown'
-      fixable: true
-      language: 'js'
-      message: 'Use a function declaration instead of a const function'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 26
-        index: 26
-        line: 1
+      description: Object {
+        category: 'lint/preferFunctionDeclarations'
+        fixable: true
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Use a function declaration instead of a const function'}
       }
-      start: Object {
-        column: 12
-        index: 12
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 26
+          index: 26
+          line: 1
+        }
+        start: Object {
+          column: 12
+          index: 12
+          line: 1
+        }
       }
     }
     Object {
-      category: 'lint/unusedVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Unused variable <emphasis>foo</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 9
-        index: 9
-        line: 1
+      description: Object {
+        category: 'lint/unusedVariables'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused constant <emphasis>foo</emphasis>'}
       }
-      start: Object {
-        column: 6
-        index: 6
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 9
+          index: 9
+          line: 1
+        }
+        start: Object {
+          column: 6
+          index: 6
+          line: 1
+        }
       }
     }
   ]
@@ -62,42 +70,50 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/preferFunctionDeclarations'
-      filename: 'unknown'
-      fixable: true
-      language: 'js'
-      message: 'Use a function declaration instead of a const function'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 20
-        index: 20
-        line: 1
+      description: Object {
+        category: 'lint/preferFunctionDeclarations'
+        fixable: true
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Use a function declaration instead of a const function'}
       }
-      start: Object {
-        column: 12
-        index: 12
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 20
+          index: 20
+          line: 1
+        }
+        start: Object {
+          column: 12
+          index: 12
+          line: 1
+        }
       }
     }
     Object {
-      category: 'lint/unusedVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Unused variable <emphasis>foo</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 9
-        index: 9
-        line: 1
+      description: Object {
+        category: 'lint/unusedVariables'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused constant <emphasis>foo</emphasis>'}
       }
-      start: Object {
-        column: 6
-        index: 6
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 9
+          index: 9
+          line: 1
+        }
+        start: Object {
+          column: 6
+          index: 6
+          line: 1
+        }
       }
     }
   ]
@@ -112,22 +128,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/unusedVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Unused variable <emphasis>foo</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 9
-        index: 9
-        line: 1
+      description: Object {
+        category: 'lint/unusedVariables'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused constant <emphasis>foo</emphasis>'}
       }
-      start: Object {
-        column: 6
-        index: 6
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 9
+          index: 9
+          line: 1
+        }
+        start: Object {
+          column: 6
+          index: 6
+          line: 1
+        }
       }
     }
   ]
@@ -142,61 +162,73 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/unusedVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Unused function <emphasis>bar</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 31
-        index: 31
-        line: 1
+      description: Object {
+        category: 'lint/unusedVariables'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused function <emphasis>bar</emphasis>'}
       }
-      start: Object {
-        column: 28
-        index: 28
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 31
+          index: 31
+          line: 1
+        }
+        start: Object {
+          column: 28
+          index: 28
+          line: 1
+        }
       }
     }
     Object {
-      category: 'lint/preferFunctionDeclarations'
-      filename: 'unknown'
-      fixable: true
-      language: 'js'
-      message: 'Use a function declaration instead of a const function'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 42
-        index: 42
-        line: 1
+      description: Object {
+        category: 'lint/preferFunctionDeclarations'
+        fixable: true
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Use a function declaration instead of a const function'}
       }
-      start: Object {
-        column: 12
-        index: 12
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 42
+          index: 42
+          line: 1
+        }
+        start: Object {
+          column: 12
+          index: 12
+          line: 1
+        }
       }
     }
     Object {
-      category: 'lint/unusedVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Unused variable <emphasis>foo</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 9
-        index: 9
-        line: 1
+      description: Object {
+        category: 'lint/unusedVariables'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused constant <emphasis>foo</emphasis>'}
       }
-      start: Object {
-        column: 6
-        index: 6
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 9
+          index: 9
+          line: 1
+        }
+        start: Object {
+          column: 6
+          index: 6
+          line: 1
+        }
       }
     }
   ]
@@ -211,22 +243,26 @@ Object {
   suppressions: Array []
   diagnostics: Array [
     Object {
-      category: 'lint/unusedVariables'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Unused variable <emphasis>foo</emphasis>'
-      mtime: undefined
-      sourceType: 'module'
       origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 17
-        index: 17
-        line: 1
+      description: Object {
+        category: 'lint/unusedVariables'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused constant <emphasis>foo</emphasis>'}
       }
-      start: Object {
-        column: 6
-        index: 6
-        line: 1
+      location: Object {
+        filename: 'unknown'
+        language: 'js'
+        mtime: undefined
+        sourceType: 'module'
+        end: Object {
+          column: 17
+          index: 17
+          line: 1
+        }
+        start: Object {
+          column: 6
+          index: 6
+          line: 1
+        }
       }
     }
   ]

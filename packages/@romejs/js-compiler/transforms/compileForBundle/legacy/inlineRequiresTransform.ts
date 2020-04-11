@@ -23,7 +23,7 @@ export default {
       if (binding !== undefined && binding instanceof ConstBinding) {
         const source = getRequireSource(binding.value, path.scope, true);
         if (source !== undefined && !NON_INLINED_REQUIRES.includes(source) &&
-          !isInTypeAnnotation(path) && binding.value !== undefined) {
+            !isInTypeAnnotation(path) && binding.value !== undefined) {
           return binding.value;
         }
       }
@@ -42,7 +42,8 @@ export default {
       // Remove all require declarations that could have been inlined
       for (const bodyNode of node.body) {
         if (bodyNode.type === 'VariableDeclarationStatement' &&
-          bodyNode.declaration.kind === 'const') {
+              bodyNode.declaration.kind ===
+              'const') {
           let hadRequireDeclarators = false;
           const declarators: Array<VariableDeclarator> = [];
 

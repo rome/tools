@@ -6,8 +6,12 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {AnyNode, AnyExpression} from '@romejs/js-ast';
-import {stringLiteral, binaryExpression} from '@romejs/js-ast';
+import {
+  AnyNode,
+  AnyExpression,
+  stringLiteral,
+  binaryExpression,
+} from '@romejs/js-ast';
 
 export default {
   name: 'templateLiterals',
@@ -19,7 +23,7 @@ export default {
     }
 
     if (node.type === 'TemplateLiteral' && parent.type !==
-    'TaggedTemplateExpression') {
+        'TaggedTemplateExpression') {
       const nodes: Array<AnyExpression> = [];
       const {expressions, quasis} = node;
 

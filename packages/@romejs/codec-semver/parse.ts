@@ -18,17 +18,23 @@ import {
   LogicalAndNode,
   Tokens,
 } from './types';
-import {TokenValues, ParserOptions} from '@romejs/parser-core';
-import {markup} from '@romejs/string-markup';
-import {createParser, isAlpha, isDigit} from '@romejs/parser-core';
+import {
+  TokenValues,
+  ParserOptions,
+  createParser,
+  isAlpha,
+  isDigit,
+} from '@romejs/parser-core';
+
 import {Number0, add, get0} from '@romejs/ob1';
+import {descriptions} from '@romejs/diagnostics';
 
 type ParseMode = 'version' | 'range';
 
 export type SemverParserOptions = ParserOptions & {loose?: boolean};
 
-const createSemverParser = createParser((ParserCore) =>
-  class SemverParser extends ParserCore<Tokens, void> {
+const createSemverParser = createParser(
+  (ParserCore) => class SemverParser extends ParserCore<Tokens, void> {
     constructor({loose, ...opts}: SemverParserOptions, mode: ParseMode) {
       super(opts, 'parse/semver');
       this.input = this.input.trimRight();
@@ -44,17 +50,16 @@ const createSemverParser = createParser((ParserCore) =>
       const char = input[get0(index)];
       const nextChar = input[get0(index) + 1];
 
-      if (
-        char === '<' && nextChar === '=' || char === '>' && nextChar === '=' ||
-        char === '~' && nextChar === '>'
-      ) {
+      if (char === '<' && nextChar === '=' || char === '>' && nextChar === '=' ||
+          char === '~' && nextChar === '>') {
         // @ts-ignore: TS doesn't infer the possible combinations
         const value: ComparatorOperator = char + nextChar;
         return this.finishValueToken('Operator', value, add(index, 2));
       }
 
       if (char === '^' || char === '<' || char === '>' || char === '~' ||
-      char === '=') {
+            char ===
+            '=') {
         const op: ComparatorOperator = char;
         return this.finishValueToken('Operator', op);
       }
@@ -106,7 +111,7 @@ const createSemverParser = createParser((ParserCore) =>
 
     // Remove all subsequent space tokens
     eatSpaceToken() {
-      while (this.eatToken('Space') !== undefined);
+      while (this.eatToken('Space') !== undefined) ;
     }
 
     parseVersionOrWildcard(): WildcardNode | VersionNode {
@@ -116,8 +121,10 @@ const createSemverParser = createParser((ParserCore) =>
 
       // We should return a bare wildcard when parsed in a version position if there was nothing else attached
       if (this.isWildcardToken(startToken) && version.minor === undefined &&
-        version.patch === undefined && version.prerelease.length === 0 &&
-        version.build.length === 0) {
+              version.patch ===
+              undefined && version.prerelease.length === 0 &&
+            version.build.length ===
+            0) {
         return {
           type: 'Wildcard',
           loc: this.finishLoc(startPos),
@@ -143,7 +150,7 @@ const createSemverParser = createParser((ParserCore) =>
         minor = this.parseVersionNumber();
       } else if (this.mode === 'version') {
         throw this.unexpected({
-          message: 'A minor number is required for a version',
+          description: descriptions.SEMVER.MISSING_MINOR_VERSION,
         });
       }
 
@@ -151,12 +158,14 @@ const createSemverParser = createParser((ParserCore) =>
         patch = this.parseVersionNumber();
       } else if (this.mode === 'version') {
         throw this.unexpected({
-          message: 'A patch number is required for a version',
+          description: descriptions.SEMVER.MISSING_PATCH_VERSION,
         });
       }
 
       if (this.matchToken('Dot')) {
-        throw this.unexpected({message: 'Too many parts for version'});
+        throw this.unexpected({
+          description: descriptions.SEMVER.EXCESSIVE_VERSION_PARTS,
+        });
       }
 
       // The dash is optional in loose mode. eg. 1.2.3pre
@@ -214,10 +223,12 @@ const createSemverParser = createParser((ParserCore) =>
           this.nextToken();
           parts.push('-');
         } else {
-          throw this.unexpected({message: 'Invalid version qualifier part'});
+          throw this.unexpected({
+            description: descriptions.SEMVER.INVALID_QUANTIFIER_PART,
+          });
         }
       } while (this.matchToken('Number') || this.matchToken('Word') ||
-      this.matchToken('Dash'));
+        this.matchToken('Dash'));
 
       if (parts.length === 1 && typeof parts[0] === 'number') {
         return parts[0];
@@ -249,14 +260,14 @@ const createSemverParser = createParser((ParserCore) =>
       if (this.isWildcardToken(token)) {
         if (this.mode === 'version') {
           throw this.unexpected({
-            message: 'Wildcard aren\'t allowed in a hard version',
+            description: descriptions.SEMVER.WILDCARD_IN_VERSION,
           });
         }
 
         this.nextToken();
       } else {
         throw this.unexpected({
-          message: 'This isn\'t a valid version part, expected a number',
+          description: descriptions.SEMVER.INVALID_VERSION_NUMBER,
         });
       }
 
@@ -289,7 +300,7 @@ const createSemverParser = createParser((ParserCore) =>
       }
 
       throw this.unexpected({
-        message: 'A semver range can only be defined with versions',
+        ...descriptions.SEMVER.INVALID_RANGE,
         start: this.getLoc(node).start,
       });
     }
@@ -347,7 +358,7 @@ const createSemverParser = createParser((ParserCore) =>
         return this.parseWildcard();
       } else {
         throw this.unexpected({
-          message: 'Bare pipes are only allowed in loose mode',
+          description: descriptions.SEMVER.BARE_PIPE_WITHOUT_LOOSE,
         });
       }
     }
@@ -359,7 +370,7 @@ const createSemverParser = createParser((ParserCore) =>
         return this.parseVersion();
       } else {
         throw this.unexpected({
-          message: markup`Unexpected word <emphasis>${token.value}</emphasis>`,
+          description: descriptions.SEMVER.UNEXPECTED_WORD(token.value),
         });
       }
     }
@@ -384,7 +395,9 @@ const createSemverParser = createParser((ParserCore) =>
           return this.parseAtomStartWord(token);
 
         default:
-          throw this.unexpected({message: 'Unknown start of atom'});
+          throw this.unexpected({
+            description: descriptions.SEMVER.UNKNOWN_START,
+          });
       }
     }
 
@@ -443,14 +456,14 @@ const createSemverParser = createParser((ParserCore) =>
       // Verify the return value in version mode
       if (node.type !== 'AbsoluteVersion') {
         throw this.unexpected({
-          message: 'Unexpected value for version',
+          ...descriptions.SEMVER.EXPECTED_VERSION,
           start: this.getLoc(node).start,
         });
       }
 
       return node;
     }
-  }
+  },
 );
 
 export function parseSemverRange(opts: SemverParserOptions): RangeNode {

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {stripAnsi} from '@romejs/string-ansi';
-import ansiHighlightCode, {AnsiHighlightOptions} from './ansiHighlightCode';
+import {stripAnsi} from '@romejs/string-markup';
+import highlightCode, {AnsiHighlightOptions} from './highlightCode';
 import {NEWLINE} from '@romejs/js-parser-utils';
 
 export function showInvisibles(str: string): string {
@@ -54,7 +54,7 @@ export function splitLines(src: string): Array<string> {
 }
 
 export function toLines(opts: AnsiHighlightOptions): Array<string> {
-  const highlighted = ansiHighlightCode(opts);
+  const highlighted = highlightCode(opts);
   const lines = splitLines(highlighted);
   return lines;
 }

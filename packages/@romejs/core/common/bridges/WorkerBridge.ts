@@ -5,16 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BundleCompileOptions} from '@romejs/js-compiler';
 import {ModuleSignature} from '@romejs/js-analysis';
 import {Manifest} from '@romejs/codec-js-manifest';
 import {Program, ConstSourceType} from '@romejs/js-ast';
-import {CompileResult, TransformStageName} from '@romejs/js-compiler';
+import {
+  BundleCompileOptions,
+  CompileResult,
+  TransformStageName,
+} from '@romejs/js-compiler';
 import {Profile} from '@romejs/v8';
 import {ProfilingStartData} from './MasterBridge';
-import {PartialDiagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {
+  Diagnostics,
+  DiagnosticSuppressions,
+  DiagnosticsError,
+} from '@romejs/diagnostics';
 import {ProjectConfigJSON} from '@romejs/project';
-import {DiagnosticsError} from '@romejs/diagnostics';
 import {Bridge} from '@romejs/events';
 import {JSONFileReference} from '../types/files';
 import {AnalyzeDependencyResult} from '../types/analyzeDependencies';
@@ -43,9 +49,9 @@ export type WorkerCompilerOptions = {bundle?: WorkerBundleCompileOptions};
 export type WorkerBundleCompileOptions = Omit<BundleCompileOptions, 'analyze'>;
 
 //
-export type WorkerAnalyzeDependencyResult =
-  & AnalyzeDependencyResult
-  & {cached: boolean};
+export type WorkerAnalyzeDependencyResult = AnalyzeDependencyResult & {
+  cached: boolean;
+};
 
 export type WorkerParseOptions = {
   compact: boolean;
@@ -64,32 +70,31 @@ export type WorkerStatus = {
   uptime: number;
 };
 
-export type PrefetchedModuleSignatures = {[key: string]:
-    | {
-      type: 'USE_CACHED';
-      filename: string;
-    }
-    | {
-      type: 'RESOLVED';
-      graph: ModuleSignature;
-    }
-    | {
-      type: 'OWNED';
-      file: JSONFileReference;
-    }
-    | {
-      type: 'POINTER';
-      key: string;
-    }};
+export type PrefetchedModuleSignatures = {
+  [key: string]: {
+    type: 'USE_CACHED';
+    filename: string;
+  } | {
+    type: 'RESOLVED';
+    graph: ModuleSignature;
+  } | {
+    type: 'OWNED';
+    file: JSONFileReference;
+  } | {
+    type: 'POINTER';
+    key: string;
+  };
+};
 
 export type WorkerFormatResult = {
   original: string;
   formatted: string;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
 };
 
 export type WorkerLintResult = {
-  diagnostics: PartialDiagnostics;
+  fixed: boolean;
+  diagnostics: Diagnostics;
   suppressions: DiagnosticSuppressions;
 };
 
@@ -136,15 +141,15 @@ export default class WorkerBridge extends Bridge {
     | WorkerFormatResult>({
     name: 'format',
     direction: 'server->client',
-  }
-  );
+  });
 
-  moduleSignatureJS = this.createEvent<{file: JSONFileReference}, ModuleSignature>(
-    {
-      name: 'moduleSignatureJS',
-      direction: 'server->client',
-    },
-  );
+  moduleSignatureJS = this.createEvent<
+    {file: JSONFileReference},
+    ModuleSignature
+  >({
+    name: 'moduleSignatureJS',
+    direction: 'server->client',
+  });
 
   analyzeDependencies = this.createEvent<
     {file: JSONFileReference},
@@ -171,6 +176,14 @@ export default class WorkerBridge extends Bridge {
     opts: WorkerParseOptions;
   }, Program>({name: 'parseJS', direction: 'server->client'});
 
+  updateBuffer = this.createEvent<{
+    file: JSONFileReference;
+    content: string;
+  }, void>({
+    name: 'updateBuffer',
+    direction: 'server->client',
+  });
+
   init() {
     this.addErrorTransport('DiagnosticsError', {
       serialize(err: Error) {
@@ -184,11 +197,8 @@ export default class WorkerBridge extends Bridge {
       },
 
       hydrate(err, data) {
-        return new DiagnosticsError(
-          String(err.message),
-          ( // rome-suppress lint/noExplicitAny
-          data.diagnostics as any),
-        );
+        return new DiagnosticsError(String(err.message), ( // rome-suppress-next-line lint/noExplicitAny
+        data.diagnostics as any));
       },
     });
   }

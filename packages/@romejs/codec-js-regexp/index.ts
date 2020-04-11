@@ -30,8 +30,8 @@ import {
   RegExpAlternation,
   AnyRegExpExpression,
 } from '@romejs/js-ast';
-import {PartialDiagnostics} from '@romejs/diagnostics';
-import {Number0, get0, add} from '@romejs/ob1';
+import {Diagnostics, descriptions} from '@romejs/diagnostics';
+import {Number0, get0, add, coerce0} from '@romejs/ob1';
 
 type Operator =
   | '^'
@@ -48,40 +48,48 @@ type Operator =
   | '*'
   | '|';
 
-type Tokens =
-  & BaseTokens
-  & {
-    Operator: ValueToken<'Operator', Operator>;
-    Character: ComplexToken<'Character', {
-      value: string;
-      escaped: boolean;
-    }>;
-    EscapedCharacter: ValueToken<'EscapedCharacter',
-      | 'd'
-      | 'D'
-      | 'b'
-      | 'B'
-      | 's'
-      | 'S'
-      | 'w'
-      | 'W'>;
-  };
+type Tokens = BaseTokens & {
+  Operator: ValueToken<'Operator', Operator>;
+  Character: ComplexToken<'Character', {
+    value: string;
+    escaped: boolean;
+  }>;
+  EscapedCharacter: ValueToken<'EscapedCharacter',
+    | 'd'
+    | 'D'
+    | 'b'
+    | 'B'
+    | 's'
+    | 'S'
+    | 'w'
+    | 'W'>;
+  NumericBackReferenceCharacter: ComplexToken<'NumericBackReferenceCharacter', {
+    value: number;
+    escaped: boolean;
+  }>;
+  NamedBackReferenceCharacter: ComplexToken<'NamedBackReferenceCharacter', {
+    value: string;
+    escaped: boolean;
+  }>;
+};
 
-type GroupModifiers =
-  | undefined
-  | {
-    type: 'NON_CAPTURE';
-    kind: RegExpGroupNonCapture['kind'];
-  }
-  | {
-    type: 'NAMED_CAPTURE';
-    name: string;
-  };
+type GroupModifiers = {
+  type: 'NON_CAPTURE';
+  kind: RegExpGroupNonCapture['kind'];
+} | {
+  type: 'NAMED_CAPTURE';
+  name: string;
+};
 
 type RegExpParserOptions = ParserOptions & {unicode: boolean};
 
 function isHex(str: string): boolean {
   return !/[^0-9a-fA-F]/.test(str);
+}
+
+function isOct(str: string): boolean {
+  const OCT_REGEX = /^[0-7]+$/;
+  return OCT_REGEX.test(str);
 }
 
 function getCodePoint(char: string): number {
@@ -95,22 +103,46 @@ function getCodePoint(char: string): number {
   throw new Error('Input was not 1 character long');
 }
 
-export const createRegExpParser = createParser((ParserCore) =>
-  class RegExpParser extends ParserCore<Tokens, void> {
+function readOctalCode(input: string, index: Number0, nextChar: string): {
+  octalValue: number | undefined;
+  end: Number0;
+} {
+  let char = nextChar;
+  let octal = '';
+  let nextIndex: Number0 = add(index, 1);
+  while (isDigit(char)) {
+    octal += char;
+    // stop at max octal ascii in case of octal escape
+    if (parseInt(octal) > 377) {
+      octal = octal.slice(0, octal.length - 1);
+      break;
+    }
+    nextIndex = add(nextIndex, 1);
+    char = input[get0(nextIndex)];
+  }
+  if (octal === '') {
+    return {octalValue: undefined, end: nextIndex};
+  }
+  const octalValue = parseInt(octal, 10);
+  return {octalValue, end: nextIndex};
+}
+
+export const createRegExpParser = createParser(
+  (ParserCore) => class RegExpParser extends ParserCore<Tokens, void> {
     constructor(opts: RegExpParserOptions) {
       super(opts, 'parse/regex');
       this.diagnostics = [];
       this.unicode = opts.unicode;
     }
 
-    diagnostics: PartialDiagnostics;
+    diagnostics: Diagnostics;
     unicode: boolean;
 
-    addDiagnostic(opts: ParserUnexpectedOptions) {
+    addDiagnostic(opts: ParserUnexpectedOptions): void {
       this.diagnostics.push(this.createDiagnostic(opts));
     }
 
-    unexpected() {
+    unexpected(): never {
       throw new Error('No throwing');
     }
 
@@ -169,7 +201,28 @@ export const createRegExpParser = createParser((ParserCore) =>
 
           case 'k':
             if (this.unicode) {
-              // TODO named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
+              // named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
+              let namedBackReference = '';
+              let namedBackReferenceIndex = get0(index) + 2;
+              let namedBackReferenceChar = input[namedBackReferenceIndex];
+              if (namedBackReferenceChar === '<') {
+                namedBackReferenceChar = input[namedBackReferenceIndex];
+                while (namedBackReferenceChar !== '>' &&
+                    namedBackReferenceIndex <
+                    input.length) {
+                  namedBackReference += namedBackReferenceChar;
+                  namedBackReferenceIndex++;
+                  namedBackReferenceChar = input[namedBackReferenceIndex];
+                }
+                if (namedBackReferenceChar === '>') {
+                  namedBackReference += namedBackReferenceChar;
+                  namedBackReferenceIndex++;
+                }
+                return this.finishComplexToken('NamedBackReferenceCharacter', {
+                  value: namedBackReference,
+                  escaped: true,
+                }, coerce0(namedBackReferenceIndex));
+              }
             }
 
             return this.finishComplexToken('Character', {
@@ -204,64 +257,123 @@ export const createRegExpParser = createParser((ParserCore) =>
               escaped: true,
             }, end);
 
-          case '0':
-            // TODO octal
-
+          case '0': {
+            const {octalValue, end: octalEnd} = readOctalCode(
+              input,
+              index,
+              nextChar,
+            );
+            if (octalValue !== undefined && isOct(octalValue.toString())) {
+              const octal = parseInt(octalValue.toString(), 8);
+              return this.finishComplexToken('Character', {
+                value: String.fromCharCode(octal),
+                escaped: true,
+              }, octalEnd);
+            }
             return this.finishComplexToken('Character', {
               value: String.fromCharCode(0),
               escaped: true,
             }, end);
+          }
 
-          case 'x':
-            {
-              const possibleHex = input.slice(get0(index) + 1, 2);
+          case 'x': {
+            const possibleHex = input.slice(get0(index) + 1, get0(index) + 3);
 
-              // \xhh
-              if (possibleHex.length === 2 && isHex(possibleHex)) {
-                end = add(end, 2);
-
-                return this.finishComplexToken('Character', {
-                  value: String.fromCharCode(parseInt(possibleHex, 16)),
-                  escaped: true,
-                }, end);
-              }
+            // \xhh
+            if (possibleHex.length === 2 && isHex(possibleHex)) {
+              end = add(end, 2);
 
               return this.finishComplexToken('Character', {
-                value: 'x',
+                value: String.fromCharCode(parseInt(possibleHex, 16)),
                 escaped: true,
               }, end);
             }
 
-          case 'u':
-            {
-              // Get the next 4 characters after \u
-              const possibleHex = input.slice(get0(index) + 2, get0(index) + 6);
+            return this.finishComplexToken('Character', {
+              value: 'x',
+              escaped: true,
+            }, end);
+          }
 
-              // \uhhhh
-              if (possibleHex.length === 4 && isHex(possibleHex)) {
-                end = add(end, 4);
+          case 'u': {
+            // Get the next 4 characters after \u
+            const possibleHex = input.slice(get0(index) + 2, get0(index) + 6);
 
-                return this.finishComplexToken('Character', {
-                  value: String.fromCharCode(parseInt(possibleHex, 16)),
-                  escaped: true,
-                }, end);
-              }
-
-              if (this.unicode) {
-                // TODO \u{hhhh} or \u{hhhhh}
-              }
+            // \uhhhh
+            if (possibleHex.length === 4 && isHex(possibleHex)) {
+              end = add(end, 4);
 
               return this.finishComplexToken('Character', {
-                value: 'u',
+                value: String.fromCharCode(parseInt(possibleHex, 16)),
                 escaped: true,
               }, end);
             }
+
+            if (this.unicode) {
+              // TODO \u{hhhh} or \u{hhhhh}
+            }
+
+            return this.finishComplexToken('Character', {
+              value: 'u',
+              escaped: true,
+            }, end);
+          }
 
           // Redundant escaping
           default:
-            // TODO dangling backslash
+            let {
+              octalValue: referenceValue,
+              end: referenceEnd,
+            } = readOctalCode(input, index, nextChar);
+            if (referenceValue !== undefined) {
+              let backReference = referenceValue.toString();
+              // \8 \9 are treated as escape char
+              if (referenceValue === 8 || referenceValue === 9) {
+                return this.finishComplexToken('Character', {
+                  value: backReference,
+                  escaped: true,
+                }, referenceEnd);
+              }
 
-            // TODO backreference
+              if (isOct(backReference)) {
+                const octal = parseInt(backReference, 8);
+                return this.finishComplexToken('Character', {
+                  value: String.fromCharCode(octal),
+                  escaped: true,
+                }, referenceEnd);
+              }
+
+              // back reference allowed are 1 - 99
+              if (referenceValue >= 1 && referenceValue <= 99) {
+                return this.finishComplexToken(
+                  'NumericBackReferenceCharacter',
+                  {
+                    value: parseInt(backReference, 10),
+                    escaped: true,
+                  },
+                  referenceEnd,
+                );
+              } else {
+                backReference = backReference.slice(0, backReference.length - 1);
+                referenceEnd = add(referenceEnd, -1);
+                if (isOct(backReference)) {
+                  return this.finishComplexToken('Character', {
+                    value: String.fromCharCode(parseInt(backReference, 8)),
+                    escaped: true,
+                  }, referenceEnd);
+                } else {
+                  return this.finishComplexToken(
+                    'NumericBackReferenceCharacter',
+                    {
+                      value: parseInt(backReference, 10),
+                      escaped: true,
+                    },
+                    referenceEnd,
+                  );
+                }
+              }
+            }
+
             return this.finishComplexToken('Character', {
               value: nextChar,
               escaped: true,
@@ -274,6 +386,7 @@ export const createRegExpParser = createParser((ParserCore) =>
         case '^':
         case '.':
         case '?':
+        case '{':
         case '}':
         case '+':
         case '|':
@@ -291,7 +404,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       });
     }
 
-    getGroupModifiers(): GroupModifiers {
+    getGroupModifiers(): undefined | GroupModifiers {
       const token = this.getToken();
 
       if (token.type === 'Character') {
@@ -353,8 +466,10 @@ export const createRegExpParser = createParser((ParserCore) =>
                   skipCount++;
                 }
 
-                if (targetToken.type === 'Character' && targetToken.value === '>') {
-                  // Skip through all the name tokens
+                if (targetToken.type === 'Character' && targetToken.value ===
+                    '>') {
+                  // Skip through all the name tokens including >
+                  skipCount++;
 
                   // This is kinda a hacky solution, and slower than it could be
                   for (let i = 0; i < skipCount; i++) {
@@ -372,9 +487,11 @@ export const createRegExpParser = createParser((ParserCore) =>
       }
 
       this.addDiagnostic({
-        message: 'Invalid capture group modifier',
+        description: descriptions.REGEX_PARSER.INVALID_CAPTURE_GROUP_MODIFIER,
         token,
       });
+
+      return undefined;
     }
 
     matchOperator(op: string): boolean {
@@ -395,7 +512,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       const start = this.getPosition();
       this.nextToken();
 
-      let modifiers: GroupModifiers;
+      let modifiers: undefined | GroupModifiers;
       if (this.eatOperator('?')) {
         modifiers = this.getGroupModifiers();
       }
@@ -404,7 +521,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
       if (!this.eatOperator(')')) {
         this.addDiagnostic({
-          message: 'Unclosed group',
+          description: descriptions.REGEX_PARSER.UNCLOSED_GROUP,
           start,
         });
       }
@@ -441,7 +558,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
       if (!this.eatOperator(']')) {
         this.addDiagnostic({
-          message: 'Unclosed character set',
+          description: descriptions.REGEX_PARSER.UNCLOSED_CHAR_SET,
           start,
         });
       }
@@ -478,6 +595,42 @@ export const createRegExpParser = createParser((ParserCore) =>
         return {
           type: 'RegExpCharacter',
           value: token.value,
+          loc: this.finishLocFromToken(token),
+        };
+      }
+
+      if (token.type === 'NumericBackReferenceCharacter') {
+        this.nextToken();
+
+        return {
+          type: 'RegExpNumericBackReference',
+          value: token.value,
+          loc: this.finishLocFromToken(token),
+        };
+      }
+
+      if (token.type === 'NamedBackReferenceCharacter') {
+        const start = this.input.slice(0, get0(token.start));
+        this.nextToken();
+
+        if (token.value[token.value.length - 1] != '>') {
+          this.addDiagnostic({
+            description: descriptions.REGEX_PARSER.UNCLOSED_NAMED_CAPTURE,
+            loc: this.finishLocFromToken(token),
+          });
+        }
+
+        if (!start.includes(token.value)) {
+          this.addDiagnostic({
+            description: descriptions.REGEX_PARSER.INVALID_NAMED_CAPTURE,
+            loc: this.finishLocFromToken(token),
+          });
+        }
+
+        const name = token.value.slice(1, token.value.length - 1);
+        return {
+          type: 'RegExpNamedBackReference',
+          name,
           loc: this.finishLocFromToken(token),
         };
       }
@@ -552,7 +705,8 @@ export const createRegExpParser = createParser((ParserCore) =>
       // Range
       const nextToken = this.getToken();
       if (start.type === 'RegExpCharacter' && nextToken.type === 'Character' &&
-        nextToken.value === '-' && !nextToken.escaped) {
+            nextToken.value ===
+            '-' && !nextToken.escaped) {
         const lookaheadToken = this.lookaheadToken();
         if (lookaheadToken.type === 'Character') {
           // Skip dash
@@ -562,12 +716,10 @@ export const createRegExpParser = createParser((ParserCore) =>
 
           const loc = this.finishLoc(startPos);
 
-          if (
-            start.type === 'RegExpCharacter' && end.type === 'RegExpCharacter' &&
-              getCodePoint(end.value) < getCodePoint(start.value)
-          ) {
+          if (start.type === 'RegExpCharacter' && end.type === 'RegExpCharacter' &&
+              getCodePoint(end.value) < getCodePoint(start.value)) {
             this.addDiagnostic({
-              message: 'Range values reversed. Start char code is greater than end char code',
+              description: descriptions.REGEX_PARSER.REVERSED_CHAR_SET_RANGE,
               loc,
             });
             const _end = end;
@@ -602,12 +754,10 @@ export const createRegExpParser = createParser((ParserCore) =>
       }
     }
 
-    parseQuantifier():
-      | undefined
-      | {
-        min: number;
-        max?: number;
-      } {
+    parseQuantifier(): undefined | {
+      min: number;
+      max?: number;
+    } {
       if (this.eatOperator('?')) {
         return {
           min: 0,
@@ -634,22 +784,42 @@ export const createRegExpParser = createParser((ParserCore) =>
 
         this.nextToken();
 
+        const start = this.getPosition();
         const min = this.parseDigits();
 
         if (min !== undefined) {
           const nextToken = this.getToken();
           if (nextToken.type === 'Character' && nextToken.value === ',') {
             this.nextToken();
+
             const max = this.parseDigits();
+            const end = this.getPosition();
 
             const endToken = this.getToken();
             if (endToken.type === 'Operator' && endToken.value === '}') {
+              this.nextToken();
+
+              if (max !== undefined && min > max) {
+                this.addDiagnostic(
+                  {
+                    description: descriptions.REGEX_PARSER.REVERSED_QUANTIFIER_RANGE,
+                    start,
+                    end,
+                  },
+                );
+                return {
+                  max: min,
+                  min: max,
+                };
+              }
+
               return {
                 min,
                 max,
               };
             }
           } else if (nextToken.type === 'Operator' && nextToken.value === '}') {
+            this.nextToken();
             return {
               min,
               max: min,
@@ -659,6 +829,8 @@ export const createRegExpParser = createParser((ParserCore) =>
 
         this.restore(snapshot);
       }
+
+      return undefined;
     }
 
     parseBodyItem(): undefined | AnyRegExpBodyItem {
@@ -725,17 +897,36 @@ export const createRegExpParser = createParser((ParserCore) =>
         case ')':
           this.nextToken();
           this.addDiagnostic({
-            message: 'Unopened group',
+            description: descriptions.REGEX_PARSER.UNOPENED_GROUP,
             token,
           });
           return;
+
+        case '{':
+          const start = this.getPosition();
+          const unmatchedQuantifier = this.parseQuantifier();
+          if (unmatchedQuantifier === undefined) {
+            // Quantifier is undefined and eaten tokens were restored
+
+            // Return a '{' token as a RegexpCharacter, parseBodyItem() will handle parsing of subsequent quantifiers
+            return this.parseCharacter();
+          } else {
+            // If quantifier is defined, then syntax error: Nothing to repeat
+            const end = this.getPosition();
+            this.addDiagnostic({
+              description: descriptions.REGEX_PARSER.NO_TARGET_QUANTIFIER,
+              start,
+              end,
+            });
+            return;
+          }
 
         case '?':
         case '*':
         case '+':
           this.nextToken();
           this.addDiagnostic({
-            message: 'Invalid target for quantifier',
+            description: descriptions.REGEX_PARSER.INVALID_QUANTIFIER_TARGET,
             token,
           });
           return;
@@ -743,6 +934,9 @@ export const createRegExpParser = createParser((ParserCore) =>
         case ']':
         case '}':
           return this.parseCharacter();
+
+        default:
+          return undefined;
       }
     }
 
@@ -755,13 +949,17 @@ export const createRegExpParser = createParser((ParserCore) =>
 
         case 'EscapedCharacter':
         case 'Character':
+        case 'NumericBackReferenceCharacter':
+        case 'NamedBackReferenceCharacter':
           return this.parseCharacter();
       }
 
       this.addDiagnostic({
-        message: 'Unknown regex part',
+        description: descriptions.REGEX_PARSER.UNKNOWN_REGEX_PART,
         token,
       });
+
+      return undefined;
     }
 
     parseExpression(
@@ -778,7 +976,7 @@ export const createRegExpParser = createParser((ParserCore) =>
       let alternateStart = start;
 
       while (!this.matchToken('EOF') && (whileCallback === undefined ||
-      whileCallback())) {
+        whileCallback())) {
         if (this.eatOperator('|')) {
           alternations.push({
             start: alternateStart,
@@ -832,8 +1030,8 @@ export const createRegExpParser = createParser((ParserCore) =>
 
       if (expression === undefined) {
         throw new Error(
-          'Impossible. We should always have at least one alternation that will set this.',
-        );
+            'Impossible. We should always have at least one alternation that will set this.',
+          );
       }
 
       return expression;
@@ -841,12 +1039,12 @@ export const createRegExpParser = createParser((ParserCore) =>
 
     parse(): {
       expression: AnyRegExpExpression;
-      diagnostics: PartialDiagnostics;
+      diagnostics: Diagnostics;
     } {
       return {
         expression: this.parseExpression(),
         diagnostics: this.diagnostics,
       };
     }
-  }
+  },
 );

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnosticAdvice} from './types';
+import {DiagnosticAdvice, DiagnosticLocation} from './types';
 import {orderBySimilarity} from '@romejs/string-utils';
 import diff from '@romejs/string-diff';
 import {Position} from '@romejs/parser-core';
@@ -22,8 +22,8 @@ export function buildSuggestionAdvice(
   value: string,
   items: Array<string>,
   {minRating = 0.5, ignoreCase, formatItem}: BuildSuggestionAdviceOptions = {},
-): PartialDiagnosticAdvice {
-  const advice: PartialDiagnosticAdvice = [];
+): DiagnosticAdvice {
+  const advice: DiagnosticAdvice = [];
 
   const ratings = orderBySimilarity(value, items, {
     minRating,
@@ -54,11 +54,13 @@ export function buildSuggestionAdvice(
 
   // If there's only 2 suggestions then just say "Did you mean A or B?" rather than printing the list
   if (strings.length === 1) {
-    advice.push({
-      type: 'log',
-      category: 'info',
-      message: `Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
-    });
+    advice.push(
+      {
+        type: 'log',
+        category: 'info',
+        message: `Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
+      },
+    );
   } else {
     advice.push({
       type: 'log',
@@ -88,7 +90,7 @@ export function buildSuggestionAdvice(
 
   // TODO check if ANY of the suggestions match
   if (topRatingRaw !== value && topRatingRaw.toLowerCase() ===
-  value.toLowerCase()) {
+      value.toLowerCase()) {
     advice.push({
       type: 'log',
       category: 'warn',
@@ -113,4 +115,32 @@ export function truncateSourceText(
 
   const capturedLines = lines.slice(fromLine, toLine);
   return '\n'.repeat(fromLine) + capturedLines.join('\n');
+}
+
+export function buildDuplicateLocationAdvice(
+  locations: Array<undefined | DiagnosticLocation>,
+): DiagnosticAdvice {
+  const locationAdvice: DiagnosticAdvice = locations.map((location) => {
+    if (location === undefined) {
+      return {
+        type: 'log',
+        category: 'warn',
+        message: 'Unable to find location',
+      };
+    } else {
+      return {
+        type: 'frame',
+        location,
+      };
+    }
+  });
+
+  return [
+    {
+      type: 'log',
+      category: 'info',
+      message: 'Defined already here',
+    },
+    ...locationAdvice,
+  ];
 }

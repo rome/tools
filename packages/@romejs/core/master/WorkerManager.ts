@@ -6,17 +6,16 @@
  */
 
 import {ProjectDefinition} from '@romejs/project';
-import {Master} from '@romejs/core';
 import {Stats} from './fs/MemoryFileSystem';
-import {Event} from '@romejs/events';
 import fork from '../common/utils/fork';
 import {
   MAX_MASTER_BYTES_BEFORE_WORKERS,
   MAX_WORKER_BYTES_BEFORE_ADD,
 } from '../common/constants';
-import {WorkerBridge, Worker, MAX_WORKER_COUNT} from '@romejs/core';
+import {Master, WorkerBridge, Worker, MAX_WORKER_COUNT} from '@romejs/core';
 import Locker from '../common/utils/Locker';
 import {
+  Event,
   createBridgeFromLocal,
   createBridgeFromChildProcess,
 } from '@romejs/events';
@@ -110,7 +109,7 @@ export default class WorkerManager {
     let byteCount;
     for (const worker of this.workers.values()) {
       if (!worker.ghost && (byteCount === undefined || byteCount >
-      worker.byteCount)) {
+          worker.byteCount)) {
         smallestWorker = worker;
         byteCount = worker.byteCount;
       }
@@ -295,9 +294,16 @@ export default class WorkerManager {
     const {logger, memoryFs, fileAllocator} = this.master;
 
     // Get stats first
-    const stats = memoryFs.getFileStats(path);
+    let stats = memoryFs.getFileStats(path);
     if (stats === undefined) {
-      throw new Error(`The file ${path.join()} doesn't exist`);
+      // Give memoryFs a chance to finish initializing if it's in a pending project
+      await this.master.memoryFs.waitIfInitializingWatch(path);
+
+      stats = memoryFs.getFileStats(path);
+      if (stats === undefined) {
+        console.error(Array.from(memoryFs.files.keys(), (path) => path.join()));
+        throw new Error(`The file ${path.join()} doesn't exist`);
+      }
     }
 
     // Verify that this file doesn't exceed any size limit
@@ -324,7 +330,8 @@ export default class WorkerManager {
 
     // our max worker limit, then let's start a new one
     if (smallestWorker.byteCount > MAX_WORKER_BYTES_BEFORE_ADD &&
-      this.getWorkerCount() < MAX_WORKER_COUNT) {
+          this.getWorkerCount() <
+          MAX_WORKER_COUNT) {
       logger.info(
         `[WorkerManager] Spawning a new worker as we've exceeded ${MAX_WORKER_BYTES_BEFORE_ADD} bytes across each worker`,
       );

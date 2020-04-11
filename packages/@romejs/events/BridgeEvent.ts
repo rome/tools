@@ -26,19 +26,24 @@ export type BridgeEventDirection =
   | 'server<-client'
   | 'server<->client';
 
-export type BridgeEventOptions = EventOptions & {direction: BridgeEventDirection};
+export type BridgeEventOptions = EventOptions & {
+  direction: BridgeEventDirection;
+};
 
 function validateDirection(
-  // rome-suppress lint/noExplicitAny
+  // rome-suppress-next-line lint/noExplicitAny
   event: BridgeEvent<any, any>,
-  eventDirection: BridgeEventDirection,
-  bridgeType: BridgeType,
+  invalidDirections: Array<[BridgeEventDirection, BridgeType]>,
   verb: string,
 ) {
-  if (event.direction === eventDirection && event.bridge.type === bridgeType) {
-    throw new Error(
-      `The ${eventDirection} event "${event.name}" cannot be ${verb} by a ${bridgeType} bridge`,
-    );
+  invalidDirections.push(['server<->client', 'server&client']);
+
+  for (const [eventDirection, bridgeType] of invalidDirections) {
+    if (event.direction === eventDirection && event.bridge.type === bridgeType) {
+      throw new Error(
+          `The ${eventDirection} event "${event.name}" cannot be ${verb} by a ${bridgeType} bridge`,
+        );
+    }
   }
 }
 
@@ -74,8 +79,10 @@ export default class BridgeEvent<
   }
 
   onSubscriptionChange() {
-    validateDirection(this, 'server->client', 'client', 'subscribed');
-    validateDirection(this, 'server<-client', 'server', 'subscribed');
+    validateDirection(this, [
+      ['server->client', 'client'],
+      ['server<-client', 'server'],
+    ], 'subscribed');
     this.bridge.sendSubscriptions();
   }
 
@@ -86,11 +93,11 @@ export default class BridgeEvent<
   dispatchResponse(
     id: number,
     data: BridgeSuccessResponseMessage | BridgeErrorResponseMessage,
-  ) {
+  ): void {
     const callbacks = this.requestCallbacks.get(id);
     if (!callbacks) {
       // ???
-      return undefined;
+      return;
     }
 
     this.requestCallbacks.delete(id);
@@ -113,15 +120,17 @@ export default class BridgeEvent<
     return this.bridge.listeners.has(this.name);
   }
 
-  validateCanSend() {
-    validateDirection(this, 'server<-client', 'client', 'called');
-    validateDirection(this, 'server->client', 'server', 'called');
+  validateCanSend(): void {
+    validateDirection(this, [
+      ['server<-client', 'client'],
+      ['server->client', 'server'],
+    ], 'called');
   }
 
-  send(param: Param) {
+  send(param: Param): void {
     if (!this.hasSubscribers()) {
       // No point in sending over a subscription that doesn't have a listener
-      return undefined;
+      return;
     }
 
     this.validateCanSend();

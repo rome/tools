@@ -30,10 +30,16 @@ export * from './scope/bindings';
 export * from './constants';
 
 export {
+  areAnalyzeDependencyResultsEqual,
+} from './api/analyzeDependencies/utils';
+export {
   getPrefixedNamespace as getPrefixedBundleNamespace,
 } from './transforms/compileForBundle/_utils';
 export {default as createHook} from './api/createHook';
-export {extractSuppressionsFromProgram} from './suppressions';
+export {
+  extractSuppressionsFromProgram,
+  matchesSuppression,
+} from './suppressions';
 
 // types
 export {LintResult} from './api/lint';
