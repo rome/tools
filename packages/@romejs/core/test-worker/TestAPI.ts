@@ -251,6 +251,7 @@ export default class TestAPI {
   ): never {
     throw createErrorFromStructure({
       message,
+      markupMessage: message,
       advice,
       framesToPop: framesToPop + 1,
     });

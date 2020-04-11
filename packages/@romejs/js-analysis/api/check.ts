@@ -27,7 +27,7 @@ export default async function check(opts: {
     project: opts.project,
   });
   resolveGraph(hub);
-  return hub.context.diagnostics;
+  return hub.context.diagnostics.getDiagnostics();
 }
 
 function isError(t: undefined | T): boolean {
@@ -134,5 +134,5 @@ function resolveGraph(hub: Hub): Diagnostics {
     }
   }
 
-  return context.diagnostics;
+  return context.diagnostics.getDiagnostics();
 }

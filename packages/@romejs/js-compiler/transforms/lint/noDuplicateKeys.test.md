@@ -11,25 +11,46 @@ Object {
   diagnostics: Array [
     Object {
       origins: Array [Object {category: 'lint'}]
-      description: Object {
-        category: 'lint/noDuplicateKeys'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate key <emphasis>test</emphasis>'}
-      }
       location: Object {
         filename: 'unknown'
         language: 'js'
         mtime: undefined
         sourceType: 'module'
         end: Object {
-          column: 17
-          index: 73
-          line: 5
+          column: 16
+          index: 35
+          line: 3
         }
         start: Object {
           column: 6
-          index: 62
-          line: 5
+          index: 25
+          line: 3
         }
+      }
+      description: Object {
+        category: 'lint/noDuplicateKeys'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate key <emphasis>test</emphasis>'}
+        advice: Array [
+          log {
+            category: 'info'
+            message: 'Defined already here'
+          }
+          frame {
+            location: Object {
+              filename: 'unknown'
+              end: Object {
+                column: 17
+                index: 73
+                line: 5
+              }
+              start: Object {
+                column: 6
+                index: 62
+                line: 5
+              }
+            }
+          }
+        ]
       }
     }
   ]

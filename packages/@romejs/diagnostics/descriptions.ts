@@ -412,13 +412,9 @@ export const descriptions = createMessages(
         message: "Use the rest parameters instead of 'arguments'",
       },
 
-      DUPLICATE_REGEX_GROUP_NAME: (
-        name: string,
-        locations: Array<undefined | DiagnosticLocation>,
-      ) => ({
+      DUPLICATE_REGEX_GROUP_NAME: (name: string) => ({
         category: 'lint/noDuplicateGroupNamesInRegularExpressions',
         message: `Duplicate group name <emphasis>${name}</emphasis> in regular expression`,
-        advice: buildDuplicateLocationAdvice(locations),
       }),
 
       NO_REFERENCE_TO_NON_EXISTING_GROUP: (name: string) => ({
