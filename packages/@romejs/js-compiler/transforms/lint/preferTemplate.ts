@@ -6,7 +6,7 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
+import {AnyNode, templateLiteral, templateElement} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
@@ -19,7 +19,46 @@ export default {
               'StringLiteral' &&
             !node.left.value.includes('`') ||
           node.right.type === 'StringLiteral' && !node.right.value.includes('`'))) {
-      path.context.addNodeDiagnostic(node, descriptions.LINT.PREFER_TEMPLATE);
+      const {suppressed} = path.context.addNodeDiagnostic(node, descriptions.LINT.PREFER_TEMPLATE);
+
+      if (!suppressed) {
+        if (node.right.type === 'StringLiteral') {
+            const quasis = [
+              templateElement.create({
+                raw: '',
+                cooked: '',
+              }),
+              templateElement.create({
+                raw: node.right.value,
+                cooked: node.right.value,
+              }),
+            ];
+            const expressions = [node.left];
+            return templateLiteral.create({
+              expressions,
+              quasis,
+              loc: node.loc,
+            })
+        }
+        if (node.left.type === 'StringLiteral') {
+          const quasis = [
+            templateElement.create({
+              raw: node.left.value,
+              cooked: node.left.value,
+            }),
+            templateElement.create({
+              raw: '',
+              cooked: '',
+            }),
+          ];
+          const expressions = [node.right];
+          return templateLiteral.create({
+            expressions,
+            quasis,
+            loc: node.loc,
+          })
+        }
+      }
     }
 
     return node;
