@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLintMultiple} from '../../api/lint.test';
 
 test('no empty character class in regular expression', async (t) => {

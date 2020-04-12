@@ -7,7 +7,7 @@
 
 import {escapeMarkup} from '@romejs/string-markup';
 import {parseJS} from '@romejs/js-parser';
-import {createFixtureTests} from '@romejs/test';
+import {createFixtureTests} from '@romejs/test-helpers';
 import prettyFormat from '@romejs/pretty-format';
 import {ConstProgramSyntax} from '@romejs/js-ast';
 import {writeFileSync} from '@romejs/fs';

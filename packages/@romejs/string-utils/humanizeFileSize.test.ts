@@ -6,7 +6,7 @@
  */
 
 import {humanizeFileSize} from './humanizeFileSize';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 test('humanizeFileSize', (t) => {
   const testCases = [

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {extractSuppressionsFromComments} from './suppressions';
 import {CommentBlock} from '@romejs/js-ast';
 import {number0, coerce1} from '@romejs/ob1';

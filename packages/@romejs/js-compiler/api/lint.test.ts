@@ -8,7 +8,7 @@
 // TODO: Shift file into packages/@romejs/js-compiler/transforms/lint/__rtests__
 // after all open linting PRs have been merged.
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import lint from './lint';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';

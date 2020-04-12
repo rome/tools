@@ -7,7 +7,7 @@
 
 import analyzeDependencies from './analyzeDependencies';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import test from '@romejs/test';
+import {test} from 'rome';
 import {parseJS} from '@romejs/js-parser';
 import {ConstSourceType} from '@romejs/js-ast';
 import {createUnknownFilePath} from '@romejs/path';

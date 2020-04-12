@@ -7,7 +7,7 @@
 
 import '@romejs/string-markup';
 import {satisfiesSemver} from '@romejs/codec-semver';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 const looseOnly: Array<[string, string]> = [
   ['||', '1.3.4'],

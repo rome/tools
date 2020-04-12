@@ -42,7 +42,7 @@
 import '@romejs/string-markup';
 import {DiagnosticsError} from '@romejs/diagnostics';
 import {parseJSON} from '@romejs/codec-json';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 function parse(input: string) {
   return parseJSON({input});
