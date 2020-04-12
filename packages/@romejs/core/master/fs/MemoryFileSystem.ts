@@ -48,6 +48,7 @@ import {
   getFileHandler,
   getFileHandlerExtensions,
 } from '../../common/fileHandlers';
+import {markup} from '@romejs/string-markup';
 
 const DEFAULT_DENYLIST = ['.hg', '.git'];
 
@@ -657,6 +658,7 @@ export default class MemoryFileSystem {
   ): Promise<void> {
     const {logger} = this.master;
     const projectFolder = projectFolderPath.join();
+    const folderLink = markup`<filelink target="${projectFolder}" />`;
 
     // Defer if we're already currently initializing this project
     const cached = this.watchPromises.get(projectFolder);
@@ -674,7 +676,7 @@ export default class MemoryFileSystem {
     for (const {path} of this.watchers.values()) {
       if (projectFolderPath.isRelativeTo(path)) {
         logger.info(
-          `[MemoryFileSystem] Skipped crawl for ${projectFolder} because we're already watching the parent directory ${path.join()}`,
+          `[MemoryFileSystem] Skipped crawl for ${folderLink} because we're already watching the parent directory ${path.join()}`,
         );
         return undefined;
       }
@@ -684,7 +686,7 @@ export default class MemoryFileSystem {
     await this.waitIfInitializingWatch(projectFolderPath);
 
     // New watch target
-    logger.info(`[MemoryFileSystem] Adding new project folder ${projectFolder}`);
+    logger.info(`[MemoryFileSystem] Adding new project folder ${folderLink}`);
 
     // Remove watchers that are descedents of this folder as this watcher will handle them
     for (const [loc, {close, path}] of this.watchers) {
@@ -705,7 +707,7 @@ export default class MemoryFileSystem {
 
     let promise;
     if (projectConfig.files.watchman) {
-      logger.info(`[MemoryFileSystem] Watching ${projectFolder} with watchman`);
+      logger.info(`[MemoryFileSystem] Watching ${folderLink} with watchman`);
       promise = createWatchmanWatcher(
         this,
         diagnostics,
@@ -713,7 +715,7 @@ export default class MemoryFileSystem {
         projectConfig,
       );
     } else {
-      logger.info(`[MemoryFileSystem] Watching ${projectFolder} with fs.watch`);
+      logger.info(`[MemoryFileSystem] Watching ${folderLink} with fs.watch`);
       promise = createRegularWatcher(this, diagnostics, projectFolderPath);
     }
     this.watchPromises.set(projectFolder, {

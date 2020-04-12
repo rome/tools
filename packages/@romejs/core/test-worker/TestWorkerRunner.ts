@@ -30,6 +30,7 @@ import {
   convertTransportFileReference,
 } from '../common/types/files';
 import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
+import {markup} from '@romejs/string-markup';
 
 const MAX_RUNNING_TESTS = 20;
 
@@ -391,7 +392,7 @@ export default class TestWorkerRunner {
               {
                 type: 'log',
                 category: 'info',
-                message: `Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
+                message: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
               },
               INTERNAL_ERROR_LOG_ADVICE,
             ],

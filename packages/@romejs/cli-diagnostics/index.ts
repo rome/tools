@@ -60,6 +60,7 @@ export function printDiagnosticsToString({
       {
         type: 'all',
         format,
+        unicode: true,
         columns: 400,
         write(chunk) {
           buff += chunk;

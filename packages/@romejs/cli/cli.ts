@@ -31,7 +31,7 @@ import {commandCategories} from '@romejs/core/commands';
 import {writeFile} from '@romejs/fs';
 import fs = require('fs');
 
-import {stripAnsi} from '@romejs/string-markup';
+import {stripAnsi, markup} from '@romejs/string-markup';
 import {Dict} from '@romejs/typescript-helpers';
 
 type CLIFlags = {
@@ -281,7 +281,7 @@ export default async function cli() {
             await writeFile(resolvedProfilePath, str);
 
             client.reporter.success(
-              `Wrote CPU profile to <filelink emphasis target="${resolvedProfilePath.join()}" />`,
+              markup`Wrote CPU profile to <filelink emphasis target="${resolvedProfilePath.join()}" />`,
             );
           },
         );
@@ -340,7 +340,7 @@ export default async function cli() {
       await writeFile(markersPath, JSON.stringify(res.markers, null, '  '));
 
       client.reporter.success(
-        `Wrote markers to <filelink emphasis target="${markersPath.join()}" />`,
+        markup`Wrote markers to <filelink emphasis target="${markersPath.join()}" />`,
       );
     }
   }

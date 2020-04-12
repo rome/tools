@@ -24,6 +24,7 @@ import {
   AbsoluteFilePathMap,
 } from '@romejs/path';
 import {AnalyzeModuleType} from '../../common/types/analyzeDependencies';
+import {markup} from '@romejs/string-markup';
 
 export type DependencyGraphSeedResult = {
   node: DependencyNode;
@@ -258,7 +259,7 @@ export default class DependencyGraph {
       return node;
     }
 
-    const progressText = `<filelink target="${filename}" />`;
+    const progressText = markup`<filelink target="${filename}" />`;
 
     if (analyzeProgress !== undefined) {
       analyzeProgress.pushText(progressText);

@@ -71,6 +71,7 @@ import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
 import {Dict, RequiredProps} from '@romejs/typescript-helpers';
 import {number1, number0, coerce0} from '@romejs/ob1';
 import {MemoryFSGlobOptions} from './fs/MemoryFileSystem';
+import {markup} from '@romejs/string-markup';
 
 type MasterRequestOptions = {
   master: Master;
@@ -546,9 +547,9 @@ export default class MasterRequest {
       for (const {path, project, location} of noArgMatches) {
         let category: DiagnosticCategory = 'args/fileNotFound';
 
-        let advice: DiagnosticAdvice = opts.advice === undefined ? [] : [
-          ...opts.advice,
-        ];
+        let advice: DiagnosticAdvice = opts.advice === undefined
+          ? []
+          : [...opts.advice];
 
         // Hint if `path` failed `globOpts.test`
         if (configCategory !== undefined &&
@@ -743,7 +744,7 @@ export default class MasterRequest {
                 {
                   type: 'log',
                   category: 'info',
-                  message: `Error occurred while requesting ${method} for <filelink emphasis target="${ref.uid}" />`,
+                  message: markup`Error occurred while requesting ${method} for <filelink emphasis target="${ref.uid}" />`,
                 },
               ],
             },

@@ -13,7 +13,7 @@ import {
   ReporterProgressOptions,
 } from './types';
 import ProgressBase from './ProgressBase';
-import {markupTag, ansiEscapes} from '@romejs/string-markup';
+import {markupTag, ansiEscapes, escapeMarkup} from '@romejs/string-markup';
 
 type BoldRanges = Array<[number, number]>;
 
@@ -261,16 +261,17 @@ export default class Progress extends ProgressBase {
     let start = this.getBouncerPosition(stream);
     let fullBar = '';
     for (const [i, char] of bar) {
+      const escaped = escapeMarkup(char);
       const isBounce = i >= start && i < start + BOUNCER_WIDTH;
 
       if (isBounce) {
         if (this.paused) {
-          fullBar += markupTag('inverse', char);
+          fullBar += markupTag('inverse', escaped);
         } else {
-          fullBar += markupTag('white', markupTag('bgYellow', char));
+          fullBar += markupTag('white', markupTag('bgYellow', escaped));
         }
       } else {
-        fullBar += char;
+        fullBar += escaped;
       }
     }
     return fullBar;

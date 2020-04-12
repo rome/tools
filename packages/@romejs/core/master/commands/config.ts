@@ -10,6 +10,7 @@ import {createMasterCommand, commandCategories} from '../../commands';
 
 import {modifyProjectConfig, assertHardMeta} from '@romejs/project';
 import {createUnknownFilePath} from '@romejs/path';
+import {markup} from '@romejs/string-markup';
 
 export default createMasterCommand(
   {
@@ -103,7 +104,7 @@ export default createMasterCommand(
           {
             pre: (meta) => {
               reporter.success(
-                `Setting <emphasis>${keyParts}</emphasis> to <emphasis>${JSON.stringify(
+                markup`Setting <emphasis>${keyParts}</emphasis> to <emphasis>${JSON.stringify(
                   value,
                 )}</emphasis> in the project config <filelink emphasis target="${meta.configPath.join()}" />`,
               );
@@ -111,9 +112,9 @@ export default createMasterCommand(
               if (value === 'true' || value === 'false') {
                 const suggestedCommand = value === 'true' ? 'enable' : 'disable';
                 reporter.warn(
-                  `Value is the string <emphasis>${value}</emphasis> but it looks like a boolean. You probably meant to use the command:`,
+                  markup`Value is the string <emphasis>${value}</emphasis> but it looks like a boolean. You probably meant to use the command:`,
                 );
-                reporter.command(`config ${suggestedCommand} ${keyParts}`);
+                reporter.command(markup`config ${suggestedCommand} ${keyParts}`);
               }
             },
 

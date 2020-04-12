@@ -24,7 +24,11 @@ import {
   DiagnosticsFileReaderStats,
 } from './types';
 
-import {humanizeMarkupFilename, formatAnsi} from '@romejs/string-markup';
+import {
+  humanizeMarkupFilename,
+  formatAnsi,
+  markup,
+} from '@romejs/string-markup';
 import {toLines} from './utils';
 import printAdvice from './printAdvice';
 
@@ -470,7 +474,7 @@ export default class DiagnosticsPrinter extends Error {
         outdatedAdvice.push({
           type: 'list',
           list: outdatedFilesArr.map(
-            (filename) => `<filelink target="${filename}" />`,
+            (filename) => markup`<filelink target="${filename}" />`,
           ),
         });
       }

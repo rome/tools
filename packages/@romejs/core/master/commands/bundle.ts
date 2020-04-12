@@ -10,6 +10,7 @@ import {commandCategories, createMasterCommand} from '../../commands';
 import Bundler from '../bundler/Bundler';
 import {createDirectory, writeFile} from '@romejs/fs';
 import {Consumer} from '@romejs/consume';
+import {markup} from '@romejs/string-markup';
 
 type Flags = {quiet: boolean};
 
@@ -45,7 +46,7 @@ export default createMasterCommand<Flags>(
         const file = dir.append(filename);
         const loc = file.join();
         savedList.push(
-          `<filelink target="${loc}">${filename}</filelink> <filesize dim>${Buffer.byteLength(
+          markup`<filelink target="${loc}">${filename}</filelink> <filesize dim>${Buffer.byteLength(
             content,
           )}</filesize> <inverse>${kind}</inverse>`,
         );
@@ -54,10 +55,10 @@ export default createMasterCommand<Flags>(
       }
 
       if (commandFlags.quiet) {
-        reporter.success(`Saved to <filelink target="${dir.join()}" />`);
+        reporter.success(markup`Saved to <filelink target="${dir.join()}" />`);
       } else {
         reporter.success(
-          `Saved the following files to <filelink target="${dir.join()}" />`,
+          markup`Saved the following files to <filelink target="${dir.join()}" />`,
         );
         reporter.list(savedList);
       }

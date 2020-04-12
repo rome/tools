@@ -286,7 +286,10 @@ function pushComment(parser: JSParser, opts: {
   if (opts.block) {
     comment = {
       type: 'CommentBlock',
-      value: opts.text,
+      // Remove carriage returns. We want to have predictable line endings.
+      // If this is indeed a Windows systems then we'll correctly retain their line endings
+      // in the lint autofixer.
+      value: opts.text.replace(/\r/g, ''),
       loc,
     };
   } else {
