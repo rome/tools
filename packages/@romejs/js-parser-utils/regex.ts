@@ -12,10 +12,8 @@ const VALID_REGEX_FLAGS: Array<string> = 'gmsiyu'.split('');
 // This is used by both rome-json and rome-js-parser to validate regex flags
 export function validateRegexFlags(
   flags: string,
-  parserIndex: number,
   onUnexpected: (
     metadata: Omit<DiagnosticDescription, 'category'>,
-    parserIndex: number,
     index: number,
   ) => void,
 ): Set<
@@ -27,12 +25,12 @@ export function validateRegexFlags(
 
     if (VALID_REGEX_FLAGS.includes(flag)) {
       if (foundFlags.has(flag)) {
-        onUnexpected(descriptions.REGEX_PARSER.DUPLICATE_FLAG, i, parserIndex);
+        onUnexpected(descriptions.REGEX_PARSER.DUPLICATE_FLAG, i);
       } else {
         foundFlags.add(flag);
       }
     } else {
-      onUnexpected(descriptions.REGEX_PARSER.INVALID_FLAG, i, parserIndex);
+      onUnexpected(descriptions.REGEX_PARSER.INVALID_FLAG, i);
     }
   }
 

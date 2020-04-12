@@ -1027,13 +1027,9 @@ export function readRegexp(parser: JSParser): void {
       description: descriptions.JS_PARSER.UNICODE_ESCAPE_IN_REGEX_FLAGS,
     });
   }
-  const mods = validateRegexFlags(rawMods, getIndex(parser), (
-    metadata,
-    parserIndex,
-    flagPosition,
-  ) => {
+  const mods = validateRegexFlags(rawMods, (metadata, flagPosition) => {
     parser.addDiagnostic({
-      index: add(coerce0(parserIndex - rawMods.length), flagPosition),
+      index: add(coerce0(getIndex(parser) - rawMods.length), flagPosition),
       description: metadata,
     });
   });
