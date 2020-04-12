@@ -48,6 +48,7 @@ import {removeCarriageReturn} from '@romejs/string-utils';
 export * from './types';
 
 export type ParserOptions = {
+  retainCarriageReturn?: boolean;
   path?: string | UnknownFilePath;
   mtime?: number;
   input?: string;
@@ -108,8 +109,11 @@ type ParserSnapshot<Tokens extends TokensShape, State> = {
 
 function normalizeInput(opts: ParserOptions): string {
   const {input} = opts;
+
   if (input === undefined) {
     return '';
+  } else if (opts.retainCarriageReturn) {
+    return input;
   } else {
     return removeCarriageReturn(input);
   }

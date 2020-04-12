@@ -34,7 +34,7 @@ import {
   convertTransportFileReference,
 } from '../common/types/files';
 import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
-import {markup} from '@romejs/string-markup';
+import {markup, escapeMarkup} from '@romejs/string-markup';
 
 const MAX_RUNNING_TESTS = 20;
 
@@ -177,7 +177,7 @@ export default class TestWorkerRunner {
     let diagnostic: Diagnostic = deriveDiagnosticFromError({
       error: opts.error,
       category: 'tests/failure',
-      label: testName,
+      label: escapeMarkup(testName),
       filename,
       cleanFrames(frames) {
         // TODO we should actually get the frames before module init and do it that way
