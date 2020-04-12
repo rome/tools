@@ -117,7 +117,7 @@ Program {
                 line: 2
               }
             }
-            typeAnnotation: VoidKeywordTypeAnnotation {
+            returnType: VoidKeywordTypeAnnotation {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {

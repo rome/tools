@@ -117,7 +117,7 @@ Program {
                 line: 2
               }
             }
-            typeAnnotation: TSTypeReference {
+            returnType: TSTypeReference {
               typeParameters: undefined
               loc: Object {
                 filename: 'input.ts'
