@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {assertNodeTypeSet, AnyNode, AnyComment} from '@romejs/js-ast';
+import {AnyNode, AnyComment} from '@romejs/js-ast';
 import builderFunctions from './builders/index';
 import * as n from './node/index';
 import {isTypeNode, isTypeExpressionWrapperNode} from '@romejs/js-ast-utils';
@@ -23,8 +23,6 @@ import {
   concat,
 } from './tokens';
 import {Number0} from '@romejs/ob1';
-
-assertNodeTypeSet(builderFunctions, 'builders');
 
 export type BuilderMethod = (
   builder: Builder,

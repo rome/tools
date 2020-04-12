@@ -5,16 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, BindingIdentifier} from '@romejs/js-ast';
-import {bindingKeys} from '@romejs/js-ast/utils';
+import {AnyNode, BindingIdentifier, bindingKeys} from '@romejs/js-ast';
 
 export default function getBindingIdentifiers(
   node: AnyNode | Array<AnyNode>,
 ): Array<BindingIdentifier> {
   const ids: Array<BindingIdentifier> = [];
-  let queue: Array<undefined | AnyNode> = Array.isArray(node) ? [...node] : [
-    node,
-  ];
+  let queue: Array<undefined | AnyNode> = Array.isArray(node)
+    ? [...node]
+    : [node];
 
   while (queue.length) {
     const node = queue.pop();
