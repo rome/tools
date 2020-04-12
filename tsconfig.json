@@ -19,7 +19,7 @@
       "@romejs/*": ["packages/@romejs/*"],
       "@romejs-web/*": ["packages/@romejs-web/*"],
       "@romejs-runtime/*": ["packages/@romejs-runtime/*"],
-      "rome": ["packages/@romejs-runtime/rome"]
+      "*": ["packages/@romejs-runtime/*"]
     }
   },
 
