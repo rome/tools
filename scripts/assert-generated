@@ -9,7 +9,13 @@
 
 require('./_setup.cjs');
 
-const {argv} = require('./_constants.cjs');
 const {execDev} = require('./_utils.cjs');
 
-execDev(argv);
+// Generate files
+require('./runtime-modules/update.cjs');
+require('./ast/update.cjs');
+
+// Autofix them
+execDev(['lint', '--fix']);
+
+// Check that `git status` is fine
