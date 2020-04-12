@@ -34,8 +34,11 @@ jobs:
 
   tests:
     name: Tests
-    runs-on: [ubuntu-latest, windows-latest, macos-latest]
     needs: [typescript, lint]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
       - uses: actions/checkout@v2
