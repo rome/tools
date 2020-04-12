@@ -23,20 +23,6 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    needs: [typescript]
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '13.x'
-      - name: Run Rome test
-        run: node scripts/dev-rome test --freeze-snapshots
-
-  tests:
-    name: Tests
-    runs-on: [ubuntu-latest, windows-latest, macos-latest]
-    needs: [lint]
 
     steps:
       - uses: actions/checkout@v2
@@ -45,6 +31,19 @@ jobs:
           node-version: '13.x'
       - name: Run Rome lint
         run: node scripts/dev-rome lint
+
+  tests:
+    name: Tests
+    runs-on: [ubuntu-latest, windows-latest, macos-latest]
+    needs: [typescript, lint]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+      - name: Run Rome test
+        run: node scripts/dev-rome test --freeze-snapshots
 
   build:
     name: Build
