@@ -18,7 +18,7 @@ export type TSMethodSignature = JSNodeBase & {
   type: 'TSMethodSignature';
   optional?: boolean;
   meta: TSSignatureDeclarationMeta;
-  typeAnnotation?: AnyTSPrimary;
+  returnType?: AnyTSPrimary;
 };
 
 export const tsMethodSignature = createBuilder<TSMethodSignature>(
@@ -28,7 +28,7 @@ export const tsMethodSignature = createBuilder<TSMethodSignature>(
     visitorKeys: {
       key: true,
       meta: true,
-      typeAnnotation: true,
+      returnType: true,
     },
   },
 );

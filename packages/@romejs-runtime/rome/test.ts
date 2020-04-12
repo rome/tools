@@ -13,30 +13,32 @@ export type ExpectedError = undefined | string | RegExp | Function;
 
 export interface TestHelper {
   // TODO this should be DiagnosticAdviceItem
-  addToAdvice(item: unknown);
-  clearAdvice();
-  onTeardown(callback: AsyncFunc);
-  clearTimeout();
-  extendTimeout(time: number);
-  setTimeout(time: number);
-  checkTimeout();
-  truthy(value: unknown, message?: string);
-  falsy(value: unknown, message?: string);
-  true(value: unknown, message?: string);
-  false(value: unknown, message?: string);
-  is(received: unknown, expected: unknown, message?: string);
-  not(received: unknown, expected: unknown, message?: string);
-  looksLike(received: unknown, expected: unknown, message?: string);
-  notLooksLike(received: unknown, expected: unknown, message?: string);
-  throws(thrower: SyncThrower, expected?: ExpectedError, message?: string);
-  throwsAsync(thrower: AsyncFunc, expected?: ExpectedError, message?: string);
-  notThrows(nonThrower: SyncThrower, message?: string);
-  notThrowsAsync(nonThrower: AsyncFunc, message?: string);
-  regex(contents: string, regex: RegExp, message?: string);
-  notRegex(contents: string, regex: RegExp, message?: string);
-  snapshot(expected: unknown, message?: string);
-  snapshotNamed(name: string, expected: unknown, message?: string);
-  getSnapshot(snapshotName: string);
+  addToAdvice(item: unknown): void;
+  clearAdvice(): void;
+  onTeardown(callback: AsyncFunc): void;
+  clearTimeout(): void;
+  extendTimeout(time: number): void;
+  setTimeout(time: number): void;
+  checkTimeout(): void;
+  truthy(value: unknown, message?: string): void;
+  falsy(value: unknown, message?: string): void;
+  true(value: unknown, message?: string): void;
+  false(value: unknown, message?: string): void;
+  is(received: unknown, expected: unknown, message?: string): void;
+  not(received: unknown, expected: unknown, message?: string): void;
+  looksLike(received: unknown, expected: unknown, message?: string): void;
+  notLooksLike(received: unknown, expected: unknown, message?: string): void;
+  throws(thrower: SyncThrower, expected?: ExpectedError, message?: string): void;
+  throwsAsync(thrower: AsyncFunc, expected?: ExpectedError, message?: string): Promise<
+    void
+  >;
+  notThrows(nonThrower: SyncThrower, message?: string): void;
+  notThrowsAsync(nonThrower: AsyncFunc, message?: string): Promise<void>;
+  regex(contents: string, regex: RegExp, message?: string): void;
+  notRegex(contents: string, regex: RegExp, message?: string): void;
+  snapshot(expected: unknown, message?: string): void;
+  snapshotNamed(name: string, expected: unknown, message?: string): void;
+  getSnapshot(snapshotName: string): unknown;
 }
 
 export type TestName = string | Array<string>;

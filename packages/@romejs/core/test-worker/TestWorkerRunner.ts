@@ -20,7 +20,7 @@ import {
   TestCallback,
   TestOptions,
   GlobalTestOptions,
-} from '@romejs-runtime/rome';
+} from '@romejs-runtime/rome/test';
 import {
   default as TestWorkerBridge,
   TestWorkerBridgeRunOptions,
