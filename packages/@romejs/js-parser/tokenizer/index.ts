@@ -41,6 +41,7 @@ import {
   number0Neg1,
   number0,
 } from '@romejs/ob1';
+import {removeCarriageReturn} from '@romejs/string-utils';
 
 const HEX_NUMBER = /^[\da-fA-F]+$/;
 const DECIMAL_NUMBER = /^\d+$/;
@@ -286,10 +287,7 @@ function pushComment(parser: JSParser, opts: {
   if (opts.block) {
     comment = {
       type: 'CommentBlock',
-      // Remove carriage returns. We want to have predictable line endings.
-      // If this is indeed a Windows systems then we'll correctly retain their line endings
-      // in the lint autofixer.
-      value: opts.text.replace(/\r/g, ''),
+      value: removeCarriageReturn(opts.text),
       loc,
     };
   } else {

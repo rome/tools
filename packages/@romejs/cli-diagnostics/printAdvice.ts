@@ -32,6 +32,7 @@ import DiagnosticsPrinter, {
 import {AbsoluteFilePathSet} from '@romejs/path';
 import {RAW_CODE_MAX_LENGTH} from './constants';
 import {Diffs, diffConstants} from '@romejs/string-diff';
+import {removeCarriageReturn} from '@romejs/string-utils';
 
 type AdvicePrintOptions = {
   printer: DiagnosticsPrinter;
@@ -107,10 +108,6 @@ function printInspect(
   return DID_PRINT;
 }
 
-function removeCRLF(str: string): string {
-  return str.replace(/\r/g, '');
-}
-
 function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
   let expected = '';
   let received = '';
@@ -143,7 +140,7 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
     };
   }
 
-  const receivedNoCRLF = removeCRLF(received);
+  const receivedNoCRLF = removeCarriageReturn(received);
   if (expected === receivedNoCRLF) {
     return {
         type: 'log',
@@ -152,7 +149,7 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
       };
   }
 
-  const expectedNoCRLF = removeCRLF(expected);
+  const expectedNoCRLF = removeCarriageReturn(expected);
   if (received === expectedNoCRLF) {
     return {
         type: 'log',
