@@ -113,6 +113,7 @@ export type ResolverQuerySource = undefined | {
 type ResolverQueryResponseFoundType =
   | 'package'
   | 'mock'
+  | 'virtual'
   | 'haste'
   | 'implicitPlatform'
   | 'implicitScale'
@@ -790,13 +791,13 @@ export default class Resolver {
   resolveModule(query: ResolverLocalQuery): ResolverQueryResponse {
     const {origin, source} = query;
 
-    // get project for the origin
+    // Get project for the origin
     const project = this.master.projectManager.findProjectExisting(origin);
 
-    // get all the parent directories for when we crawl up
+    // Get all the parent directories for when we crawl up
     const parentDirectories = this.getOriginFolder(query).getChain();
 
-    // if mocks are enabled for this query then check all parent mocks folder
+    // If mocks are enabled for this query then check all parent mocks folder
     if (query.mocks === true) {
       const mockResolved = this.resolveMock(query, project, parentDirectories);
       if (shouldReturnQueryResponse(mockResolved)) {
@@ -806,6 +807,15 @@ export default class Resolver {
 
     // Extract the module name and it's relative file parts
     const [moduleName, moduleNameParts] = this.splitModuleName(source);
+
+    // Resolve a virtual module
+    const virtualResolved = this.master.virtualModules.resolve(moduleName);
+    if (virtualResolved !== undefined) {
+      return this.resolvePath({
+        ...query,
+        source: virtualResolved.append(moduleNameParts),
+      }, true, ['virtual']);
+    }
 
     // Check the haste map
     if (project !== undefined && project.hasteMap.size > 0) {

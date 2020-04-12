@@ -58,6 +58,7 @@ import {
 import {Dict} from '@romejs/typescript-helpers';
 import LSPServer from './lsp/LSPServer';
 import MasterReporter from './MasterReporter';
+import VirtualModules from './fs/VirtualModules';
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;
 
@@ -152,6 +153,7 @@ export default class Master {
     this.connectedLSPServers = new Set();
     this.connectedClients = new Set();
 
+    this.virtualModules = new VirtualModules(this);
     this.memoryFs = new MemoryFileSystem(this);
     this.projectManager = new ProjectManager(this);
     this.workerManager = new WorkerManager(this);
@@ -195,6 +197,7 @@ export default class Master {
 
   warnedCacheClients: WeakSet<MasterBridge>;
   memoryFs: MemoryFileSystem;
+  virtualModules: VirtualModules;
   resolver: Resolver;
   projectManager: ProjectManager;
   workerManager: WorkerManager;
@@ -303,6 +306,7 @@ export default class Master {
     this.fileAllocator.init();
     this.resolver.init();
     await this.cache.init();
+    await this.virtualModules.init();
     await this.workerManager.init();
   }
 

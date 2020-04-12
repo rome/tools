@@ -7,8 +7,8 @@
 
 import {Consumer, consumeUnknown} from '@romejs/consume';
 import {consumeJSON} from '@romejs/codec-json';
-import test, {dirname} from '.';
-import {TestAPI} from '@romejs/core';
+import {test, TestHelper, testOptions} from '@romejs-runtime/rome';
+
 import {
   AbsoluteFilePath,
   createAbsoluteFilePath,
@@ -16,6 +16,8 @@ import {
   UnknownFilePath,
 } from '@romejs/path';
 import {readFileText, lstat, exists, readFile, readdir} from '@romejs/fs';
+
+const dirname = testOptions.dirname === undefined ? '' : testOptions.dirname;
 
 async function isFile(path: AbsoluteFilePath): Promise<boolean> {
   return (await lstat(path)).isFile();
@@ -139,7 +141,7 @@ export async function getFixtures(dir: string): Promise<Array<Fixture>> {
 }
 
 export async function createFixtureTests(
-  callback: (fixture: Fixture, t: TestAPI) => void | Promise<void>,
+  callback: (fixture: Fixture, t: TestHelper) => void | Promise<void>,
   dir: string = dirname,
 ): Promise<void> {
   for (const fixture of await getFixtures(dir)) {

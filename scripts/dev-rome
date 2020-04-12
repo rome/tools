@@ -9,13 +9,7 @@
 
 require('./_setup.cjs');
 
-const {argv, devFolder} = require('./_constants.cjs');
-const {execNode, buildTrunk, inverse} = require('./_utils.cjs');
-const path = require('path');
+const {argv} = require('./_constants.cjs');
+const {execDev} = require('./_utils.cjs');
 
-buildTrunk();
-
-process.env.ROME_CACHE = '0';
-
-console.log(inverse('Executing trunk'));
-execNode([path.join(devFolder, 'index.js'), ...argv]);
+execDev(argv);

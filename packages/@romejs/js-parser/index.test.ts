@@ -7,10 +7,11 @@
 
 import {escapeMarkup} from '@romejs/string-markup';
 import {parseJS} from '@romejs/js-parser';
-import {createFixtureTests} from '@romejs/test';
+import {createFixtureTests} from '@romejs/test-helpers';
 import prettyFormat from '@romejs/pretty-format';
 import {ConstProgramSyntax} from '@romejs/js-ast';
 import {writeFileSync} from '@romejs/fs';
+import {removeCarriageReturn} from '@romejs/string-utils';
 
 const promise = createFixtureTests(
   (fixture, t) => {
@@ -29,7 +30,7 @@ const promise = createFixtureTests(
     const outputFile = files.get('output.txt');
     let outputContent = undefined;
     if (outputFile !== undefined) {
-      outputContent = outputFile.content.toString().replace(/\r/g, '');
+      outputContent = removeCarriageReturn(outputFile.content.toString());
     }
 
     const sourceTypeProp = options.get('sourceType');
@@ -67,7 +68,7 @@ const promise = createFixtureTests(
       },
     });
 
-    const inputContent = inputFile.content.toString().replace(/\r/g, '');
+    const inputContent = removeCarriageReturn(inputFile.content.toString());
     t.addToAdvice({
       type: 'log',
       category: 'info',

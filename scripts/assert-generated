@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+require('./_setup.cjs');
+
+const child_process = require('child_process');
+const {execDev} = require('./_utils.cjs');
+
+// Generate files
+require('./runtime-modules/update.cjs');
+require('./ast/update.cjs');
+
+// Autofix them
+execDev(['lint', '--fix']);
+
+// Check that `git status` is fine
+const out = child_process
+  .spawnSync('git', ['ls-files', '-m'])
+  .stdout.toString();
+if (out !== '') {
+  console.error('Modified files:');
+  console.error(out);
+  process.exit(1);
+}

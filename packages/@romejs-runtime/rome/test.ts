@@ -5,7 +5,41 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TestAPI} from '@romejs/core';
+export type AsyncFunc = () => undefined | Promise<void>;
+
+export type SyncThrower = () => void;
+
+export type ExpectedError = undefined | string | RegExp | Function;
+
+export interface TestHelper {
+  // TODO this should be DiagnosticAdviceItem
+  addToAdvice(item: unknown): void;
+  clearAdvice(): void;
+  onTeardown(callback: AsyncFunc): void;
+  clearTimeout(): void;
+  extendTimeout(time: number): void;
+  setTimeout(time: number): void;
+  checkTimeout(): void;
+  truthy(value: unknown, message?: string): void;
+  falsy(value: unknown, message?: string): void;
+  true(value: unknown, message?: string): void;
+  false(value: unknown, message?: string): void;
+  is(received: unknown, expected: unknown, message?: string): void;
+  not(received: unknown, expected: unknown, message?: string): void;
+  looksLike(received: unknown, expected: unknown, message?: string): void;
+  notLooksLike(received: unknown, expected: unknown, message?: string): void;
+  throws(thrower: SyncThrower, expected?: ExpectedError, message?: string): void;
+  throwsAsync(thrower: AsyncFunc, expected?: ExpectedError, message?: string): Promise<
+    void
+  >;
+  notThrows(nonThrower: SyncThrower, message?: string): void;
+  notThrowsAsync(nonThrower: AsyncFunc, message?: string): Promise<void>;
+  regex(contents: string, regex: RegExp, message?: string): void;
+  notRegex(contents: string, regex: RegExp, message?: string): void;
+  snapshot(expected: unknown, message?: string): void;
+  snapshotNamed(name: string, expected: unknown, message?: string): void;
+  getSnapshot(snapshotName: string): unknown;
+}
 
 export type TestName = string | Array<string>;
 
@@ -13,11 +47,7 @@ declare const __ROME__TEST_OPTIONS__: GlobalTestOptions;
 
 export type GlobalTestOptions = undefined | {
   dirname?: string;
-  register?: (
-    err: Error,
-    opts: import('@romejs/test').TestOptions,
-    callback?: import('@romejs/test').TestCallback,
-  ) => void;
+  register?: (err: Error, opts: TestOptions, callback?: TestCallback) => void;
 };
 
 type NamelessTestOptions = {
@@ -25,18 +55,14 @@ type NamelessTestOptions = {
   only?: boolean;
 };
 
-export type TestCallback = (t: TestAPI) => void | undefined | Promise<void>;
+export type TestCallback = (t: TestHelper) => void | undefined | Promise<void>;
 
 export type TestOptions = NamelessTestOptions & {name: TestName};
 
 type TestArg = TestName | NamelessTestOptions | TestCallback | undefined;
 
-const testOptions: NonNullable<GlobalTestOptions> = __ROME__TEST_OPTIONS__ ===
+export const testOptions: NonNullable<GlobalTestOptions> = __ROME__TEST_OPTIONS__ ===
   undefined ? {} : __ROME__TEST_OPTIONS__;
-
-export const dirname = testOptions.dirname === undefined
-  ? ''
-  : testOptions.dirname;
 
 function registerTest(
   callsiteError: Error,
@@ -104,8 +130,6 @@ function splitArgs(args: TestRegisterFunctionArgs): {
   };
 }
 
-export * from './fixtures';
-
 type TestRegisterFunctionArgs = [TestName] | [TestName, TestCallback] | [
   TestName,
   NamelessTestOptions,
@@ -114,7 +138,7 @@ type TestRegisterFunctionArgs = [TestName] | [TestName, TestCallback] | [
 
 type TestRegisterFunction = (...args: TestRegisterFunctionArgs) => void;
 
-const test: {
+export const test: {
   (...args: TestRegisterFunctionArgs): void;
   skip: TestRegisterFunction;
   only: TestRegisterFunction;
@@ -135,5 +159,3 @@ test.only = function(...args: TestRegisterFunctionArgs) {
     only: true,
   }, callback);
 };
-
-export default test;

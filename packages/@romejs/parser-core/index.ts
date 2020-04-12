@@ -43,10 +43,12 @@ import {
 import {escapeMarkup} from '@romejs/string-markup';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 import {Class, OptionalProps} from '@romejs/typescript-helpers';
+import {removeCarriageReturn} from '@romejs/string-utils';
 
 export * from './types';
 
 export type ParserOptions = {
+  retainCarriageReturn?: boolean;
   path?: string | UnknownFilePath;
   mtime?: number;
   input?: string;
@@ -105,19 +107,31 @@ type ParserSnapshot<Tokens extends TokensShape, State> = {
   state: State;
 };
 
+function normalizeInput(opts: ParserOptions): string {
+  const {input} = opts;
+
+  if (input === undefined) {
+    return '';
+  } else if (opts.retainCarriageReturn) {
+    return input;
+  } else {
+    return removeCarriageReturn(input);
+  }
+}
+
 export class ParserCore<Tokens extends TokensShape, State> {
   constructor(
     opts: ParserOptions,
     diagnosticCategory: DiagnosticCategory,
     initialState: State,
   ) {
-    const {path, mtime, input, offsetPosition} = opts;
+    const {path, mtime, offsetPosition} = opts;
 
     // Input information
     this.path = path === undefined ? undefined : createUnknownFilePath(path);
     this.filename = this.path === undefined ? undefined : this.path.join();
     this.mtime = mtime;
-    this.input = input === undefined ? '' : input;
+    this.input = normalizeInput(opts);
     this.length = coerce0(this.input.length);
 
     this.eofToken = {

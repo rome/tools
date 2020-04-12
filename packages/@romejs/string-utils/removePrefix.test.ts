@@ -6,7 +6,7 @@
  */
 
 import {removePrefix} from './removePrefix';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 test('removePrefix', (t) => {
   const testCases = [

@@ -7,7 +7,7 @@
 
 import {TSMethodSignature, tsMethodSignature, AnyNode} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator} from '../../tokens';
+import {Tokens, operator, space, concat} from '../../tokens';
 
 export default function TSMethodSignature(
   builder: Builder,
@@ -15,9 +15,18 @@ export default function TSMethodSignature(
 ): Tokens {
   node = tsMethodSignature.assert(node);
 
-  return [
+  const tokens: Tokens = [
     ...builder.tokenize(node.key, node),
     ...builder.tokenize(node.meta, node),
-    operator(';'),
   ];
+
+  if (node.returnType) {
+    tokens.push(operator(':'));
+    tokens.push(space);
+    tokens.push(concat(builder.tokenize(node.returnType, node)));
+  }
+
+  tokens.push(operator(';'));
+
+  return tokens;
 }

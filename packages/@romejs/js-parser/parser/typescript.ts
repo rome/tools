@@ -657,7 +657,7 @@ function parseTSPropertyOrMethodSignature(
       optional,
       meta,
       key,
-      typeAnnotation,
+      returnType: typeAnnotation,
     });
   } else {
     const typeAnnotation = tryTSParseTypeAnnotation(parser);
