@@ -10,7 +10,7 @@ on:
 jobs:
   typescript:
     runs-on: ubuntu-latest
-    name: TypeScript Check
+    name: TypeScript check
 
     steps:
       - uses: actions/checkout@v2
@@ -31,6 +31,18 @@ jobs:
           node-version: '13.x'
       - name: Run Rome lint
         run: node scripts/dev-rome lint
+
+  generated:
+    name: Generated files check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+      - name: Check if generated files need to be updated
+        run: node scripts/assert-generated
 
   tests:
     name: Tests
