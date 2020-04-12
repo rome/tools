@@ -16,15 +16,14 @@ import {Event} from '@romejs/events';
 import diff from '@romejs/string-diff';
 import {createErrorFromStructure} from '@romejs/v8';
 import prettyFormat from '@romejs/pretty-format';
-import {Class} from '@romejs/typescript-helpers';
 import {FileReference} from '../common/types/files';
 import {markup} from '@romejs/string-markup';
-
-type AsyncFunc = () => undefined | Promise<void>;
-
-type SyncThrower = () => void;
-
-type ExpectedError = undefined | string | RegExp | Class<Error>;
+import {
+  TestHelper,
+  AsyncFunc,
+  SyncThrower,
+  ExpectedError,
+} from '@romejs-runtime/rome/test';
 
 function formatExpectedError(expected: ExpectedError): string {
   if (typeof expected === 'string') {
@@ -64,7 +63,7 @@ function matchExpectedError(error: Error, expected: ExpectedError): boolean {
 
 export type OnTimeout = (time: number) => void;
 
-export default class TestAPI {
+export default class TestAPI implements TestHelper {
   constructor({
     testName,
     onTimeout,

@@ -16,7 +16,11 @@ import {
   createBlessedDiagnosticMessage,
   deriveDiagnosticFromError,
 } from '@romejs/diagnostics';
-import {TestCallback, TestOptions, GlobalTestOptions} from '@romejs/test';
+import {
+  TestCallback,
+  TestOptions,
+  GlobalTestOptions,
+} from '@romejs-runtime/rome';
 import {
   default as TestWorkerBridge,
   TestWorkerBridgeRunOptions,
