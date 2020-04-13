@@ -24,6 +24,7 @@ import {ReporterProgressOptions, ReporterProgress} from '@romejs/cli-reporter';
 import DependencyNode from '../dependencies/DependencyNode';
 import {areAnalyzeDependencyResultsEqual} from '@romejs/js-compiler';
 import {markup} from '@romejs/string-markup';
+import WorkerQueue from '../WorkerQueue';
 
 type LintWatchChanges = Array<{
   filename: undefined | string;
@@ -155,35 +156,37 @@ class LintRunner {
   }: LintRunOptions): Promise<{fixedCount: number}> {
     let fixedCount = 0;
     const {master} = this.request;
-    const pathsByWorker = await master.fileAllocator.groupPathsByWorker(
-      changedPaths,
-    );
+
+    const queue: WorkerQueue<void> = new WorkerQueue(master);
 
     const progress = this.events.createProgress({title: 'Linting'});
     progress.setTotal(changedPaths.size);
 
-    await Promise.all(pathsByWorker.map(async (paths) => {
-      for (const path of paths) {
-        const text = markup`<filelink target="${path.join()}" />`;
-        progress.pushText(text);
+    queue.addCallback(async (path) => {
+      const text = markup`<filelink target="${path.join()}" />`;
+      progress.pushText(text);
 
-        const {
-          diagnostics,
-          suppressions,
-          fixed,
-        } = await this.request.requestWorkerLint(path, this.fix);
-        processor.addSuppressions(suppressions);
-        processor.addDiagnostics(diagnostics);
-        this.compilerDiagnosticsCache.set(path, {suppressions, diagnostics});
-        if (fixed) {
-          fixedCount++;
-        }
-
-        progress.popText(text);
-        progress.tick();
+      const {
+        diagnostics,
+        suppressions,
+        fixed,
+      } = await this.request.requestWorkerLint(path, this.fix);
+      processor.addSuppressions(suppressions);
+      processor.addDiagnostics(diagnostics);
+      this.compilerDiagnosticsCache.set(path, {suppressions, diagnostics});
+      if (fixed) {
+        fixedCount++;
       }
-    }));
 
+      progress.popText(text);
+      progress.tick();
+    });
+
+    for (const path of changedPaths) {
+      await queue.pushQueue(path);
+    }
+
+    await queue.spin();
     progress.end();
 
     return {fixedCount};
