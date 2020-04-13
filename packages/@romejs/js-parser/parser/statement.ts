@@ -110,12 +110,9 @@ export function parseTopLevel(parser: JSParser): Program {
   const interpreter = parsePossibleInterpreterDirective(parser);
   const {body, directives} = parseBlockBody(parser, true, true, openContext);
 
-  const loc = parser.finishLoc(start);
-
-  return {
+  return parser.finishNode(start, {
     type: 'Program',
     corrupt: parser.state.corrupt,
-    loc,
     body,
     directives,
     mtime: parser.mtime,
@@ -126,7 +123,7 @@ export function parseTopLevel(parser: JSParser): Program {
     interpreter,
     syntax: Array.from(parser.syntax),
     hasHoistedVars: parser.state.hasHoistedVars,
-  };
+  });
 }
 
 export function parsePossibleInterpreterDirective(
