@@ -133,11 +133,11 @@ export default class Consumer {
   hasHandledUnexpected: boolean;
   forceDiagnosticTarget: undefined | ConsumeSourceLocationRequestTarget;
 
-  async capture<T>(callback: (consumer: Consumer) => Promise<T> | T): Promise<{
-    result: T;
+  capture<T>(): {
+    consumer: Consumer;
     definitions: Array<ConsumePropertyDefinition>;
     diagnostics: Diagnostics;
-  }> {
+  } {
     let diagnostics: Diagnostics = [];
     const definitions: Array<ConsumePropertyDefinition> = [];
 
@@ -154,15 +154,14 @@ export default class Consumer {
         diagnostics.push(diag);
       },
     });
-
-    const result = await callback(consumer);
-    return {result, definitions, diagnostics};
+    return {consumer, definitions, diagnostics};
   }
 
-  async captureDiagnostics<T>(
+  async bufferDiagnostics<T>(
     callback: (consumer: Consumer) => Promise<T> | T,
   ): Promise<T> {
-    const {result, diagnostics} = await this.capture(callback);
+    const {diagnostics, consumer} = await this.capture();
+    const result = await callback(consumer);
     if (result === undefined || diagnostics.length > 0) {
       throw new DiagnosticsError('Captured diagnostics', diagnostics);
     }
@@ -986,11 +985,7 @@ export default class Consumer {
     return this._asNumber(def);
   }
 
-  asNumberInRange(opts: {
-    min?: number;
-    max?: number;
-    default?: number;
-  }): number
+  asNumberInRange(opts: {min?: number; max?: number; default?: number}): number
 
   asNumberInRange(opts: {
     min: Number0;
