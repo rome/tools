@@ -853,7 +853,7 @@ export default class Reporter {
   }
 
   inspect(value: unknown) {
-    if (!this.isEnabled()) {
+    if (!this.isEnabled(false)) {
       return;
     }
 
