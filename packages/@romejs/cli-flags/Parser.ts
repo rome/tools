@@ -339,7 +339,7 @@ export default class Parser<T> {
 
     let definedCommand: undefined | DefinedCommand;
 
-    const rootFlags = await consumer.captureDiagnostics(async (consumer) => {
+    const rootFlags = await consumer.bufferDiagnostics(async (consumer) => {
       for (const shorthandName of this.shorthandFlags) {
         consumer.get(shorthandName).unexpected(
           `Shorthand flags are not supported`,
@@ -519,18 +519,16 @@ export default class Parser<T> {
 
     const {description, usage, examples, programName} = this.opts;
 
-    const consumer = this.getFlagsConsumer();
+    const {consumer} = this.getFlagsConsumer().capture();
 
     // Supress diagnostics
-    await consumer.capture(async (consumer) => {
-      await this.opts.defineFlags(consumer);
+    await this.opts.defineFlags(consumer);
 
-      for (const key of this.commands.keys()) {
-        await this.defineCommandFlags(key, consumer);
-      }
+    for (const key of this.commands.keys()) {
+      await this.defineCommandFlags(key, consumer);
+    }
 
-      this.showUsageHelp(description, usage);
-    });
+    this.showUsageHelp(description, usage);
 
     const {reporter} = this;
     reporter.section('Global Flags', () => {

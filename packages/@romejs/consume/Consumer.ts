@@ -133,27 +133,7 @@ export default class Consumer {
   hasHandledUnexpected: boolean;
   forceDiagnosticTarget: undefined | ConsumeSourceLocationRequestTarget;
 
-  async capture<T>(callback: (consumer: Consumer) => Promise<T> | T): Promise<{
-    result: T;
-    definitions: Array<ConsumePropertyDefinition>;
-    diagnostics: Diagnostics;
-  }> {
-    const {definitions, diagnostics, consumer} = this._capture();
-    const result = await callback(consumer);
-    return {result, definitions, diagnostics};
-  }
-
-  captureSync<T>(callback: (consumer: Consumer) => T): {
-    result: T;
-    definitions: Array<ConsumePropertyDefinition>;
-    diagnostics: Diagnostics;
-  } {
-    const {definitions, diagnostics, consumer} = this._capture();
-    const result = callback(consumer);
-    return {result, definitions, diagnostics};
-  }
-
-  _capture<T>(): {
+  capture<T>(): {
     consumer: Consumer;
     definitions: Array<ConsumePropertyDefinition>;
     diagnostics: Diagnostics;
@@ -177,10 +157,11 @@ export default class Consumer {
     return {consumer, definitions, diagnostics};
   }
 
-  async captureDiagnostics<T>(
+  async bufferDiagnostics<T>(
     callback: (consumer: Consumer) => Promise<T> | T,
   ): Promise<T> {
-    const {result, diagnostics} = await this.capture(callback);
+    const {diagnostics, consumer} = await this.capture();
+    const result = await callback(consumer);
     if (result === undefined || diagnostics.length > 0) {
       throw new DiagnosticsError('Captured diagnostics', diagnostics);
     }
