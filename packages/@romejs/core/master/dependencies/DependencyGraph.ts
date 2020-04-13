@@ -320,7 +320,7 @@ export default class DependencyGraph {
     const subAncestry = [...ancestry, filename];
     for (const path of node.getAbsoluteDependencies()) {
       const dep = node.getDependencyInfoFromAbsolute(path).analyze;
-      opts.workerQueue.pushQueue(path, {
+      await opts.workerQueue.pushQueue(path, {
         all: dep.all,
         async: dep.async,
         type: dep.type,
