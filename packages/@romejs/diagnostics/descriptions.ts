@@ -264,6 +264,30 @@ export const descriptions = createMessages(
         fixable: true,
       },
 
+      DOUBLE_EQUALS: {
+        category: 'lint/doubleEquals',
+        message: 'Use === instead of ==',
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: '== is only allowed when comparing against null',
+          },
+        ],
+      },
+
+      NEGATE_DOUBLE_EQUALS: {
+        category: 'lint/doubleEquals',
+        message: 'Use !== instead of !=',
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: '!= is only allowed when comparing against null',
+          },
+        ],
+      },
+
       NO_CATCH_ASSIGN: {
         category: 'lint/noCatchAssign',
         message: "Don't reassign catch parameters",
