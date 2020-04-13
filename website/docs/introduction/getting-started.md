@@ -59,7 +59,7 @@ not with `rome`, please [create an issue](https://github.com/facebookexperimenta
 ### `lint`
 
 This command will lint a file with a set of default lints and display the produced diagnostics.
-When ran with no arguments, all JavaScript files in a project are linted. For example:
+When run with no arguments, all JavaScript files in a project are linted. For example:
 
 ```bash
 rome lint file.js
