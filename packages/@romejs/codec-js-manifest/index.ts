@@ -405,7 +405,10 @@ function normalizeRepo(
 }
 
 function normalizeExports(consumer: Consumer): boolean | ManifestExports {
-  if (typeof consumer.asUnknown() === 'boolean') {
+  const unknown = consumer.asUnknown();
+
+  // "exports": false
+  if (typeof unknown === 'boolean') {
     return consumer.asBoolean();
   }
 
@@ -414,6 +417,20 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
   }
 
   const exports: ManifestExports = new RelativeFilePathMap();
+
+  // "exports": "./index.js"
+  if (typeof unknown === 'string') {
+    exports.set(createRelativeFilePath('.'), new Map([
+      [
+        'default',
+        {
+          consumer,
+          relative: consumer.asExplicitRelativeFilePath(),
+        },
+      ],
+    ]));
+    return exports;
+  }
 
   const dotConditions: ManifestExportConditions = new Map();
 
@@ -424,6 +441,10 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
         value.unexpected(
           'Cannot mix a root conditional export with relative paths',
         );
+      }
+
+      if (dotConditions.size === 0) {
+        exports.set(createRelativeFilePath('.'), dotConditions);
       }
 
       dotConditions.set(relative, {
@@ -440,11 +461,6 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
     }
 
     const conditions = normalizeExportsConditions(value);
-
-    if (dotConditions.size > 0) {
-      exports.set(createRelativeFilePath('.'), dotConditions);
-    }
-
     exports.set(value.getKey().asExplicitRelativeFilePath(), conditions);
   }
 
