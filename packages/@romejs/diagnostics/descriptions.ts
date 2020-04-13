@@ -264,6 +264,23 @@ export const descriptions = createMessages(
         fixable: true,
       },
 
+      INCONSIDERATE_LANGUAGE: (
+        description: string,
+        word: string,
+        suggestion: string,
+      ) => ({
+        fixable: true,
+        category: 'lint/inconsiderateLanguage',
+        message: description,
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: markup`Instead of <emphasis>${word}</emphasis> use <emphasis>${suggestion}</emphasis>`,
+          },
+        ],
+      }),
+
       DOUBLE_EQUALS: {
         category: 'lint/doubleEquals',
         message: 'Use === instead of ==',

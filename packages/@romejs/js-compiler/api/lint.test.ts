@@ -67,15 +67,17 @@ export async function testLint(t: TestHelper, input: string, {
     code: input,
   });
 
+  const ast = parseJS({
+    input,
+    sourceType,
+    path: createUnknownFilePath('unknown'),
+    syntax,
+  });
+
   const res = await lint({
     options: {},
     format,
-    ast: parseJS({
-      input,
-      sourceType,
-      path: createUnknownFilePath('unknown'),
-      syntax,
-    }),
+    ast,
     sourceText: input,
     project: {
       folder: undefined,
@@ -95,17 +97,13 @@ export async function testLint(t: TestHelper, input: string, {
     };
   });
 
+  const snapshotName = t.snapshot(printDiagnosticsToString({
+    diagnostics,
+    suppressions: res.suppressions,
+  }));
+
   if (format) {
-    t.snapshot({
-      ...res,
-      diagnostics,
-    });
-  } else {
-    // Nicer snapshot when we don't care about formatting
-    t.snapshot(printDiagnosticsToString({
-      diagnostics,
-      suppressions: res.suppressions,
-    }));
+    t.snapshotNamed(`${snapshotName}: formatted`, res.src);
   }
 
   t.clearAdvice();

@@ -36,8 +36,8 @@ export interface TestHelper {
   notThrowsAsync(nonThrower: AsyncFunc, message?: string): Promise<void>;
   regex(contents: string, regex: RegExp, message?: string): void;
   notRegex(contents: string, regex: RegExp, message?: string): void;
-  snapshot(expected: unknown, message?: string): void;
-  snapshotNamed(name: string, expected: unknown, message?: string): void;
+  snapshot(expected: unknown, message?: string): string;
+  snapshotNamed(name: string, expected: unknown, message?: string): string;
   getSnapshot(snapshotName: string): unknown;
 }
 

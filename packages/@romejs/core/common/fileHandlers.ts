@@ -238,7 +238,7 @@ const jsonHandler: ExtensionHandler = {
 // should be required everywhere.
 // TypeScript is unfortunately included here as it produces an error if you use an
 // import source with ".ts"
-export const IMPLICIT_JS_EXTENSIONS = ['js', 'json', 'ts', 'tsx'];
+export const IMPLICIT_JS_EXTENSIONS = ['js', 'ts', 'tsx', 'json'];
 
 // Extensions that have a `lint` handler
 export const LINTABLE_EXTENSIONS: Array<string> = [];

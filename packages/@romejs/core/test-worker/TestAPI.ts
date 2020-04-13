@@ -428,13 +428,13 @@ export default class TestAPI implements TestHelper {
     throw new Error('unimplemented');
   }
 
-  snapshot(expected: unknown, message?: string): void {
+  snapshot(expected: unknown, message?: string): string {
     const id = this.snapshotCounter++;
-    this._snapshotNamed(String(id), expected, message, 2);
+    return this._snapshotNamed(String(id), expected, message, 2);
   }
 
-  snapshotNamed(name: string, expected: unknown, message?: string): void {
-    this._snapshotNamed(name, expected, message, 1);
+  snapshotNamed(name: string, expected: unknown, message?: string): string {
+    return this._snapshotNamed(name, expected, message, 1);
   }
 
   getSnapshot(snapshotName: string): unknown {
@@ -446,7 +446,7 @@ export default class TestAPI implements TestHelper {
     expected: unknown,
     message?: string,
     framesToPop?: number,
-  ): void {
+  ): string {
     let language: undefined | string;
 
     let formatted = '';
@@ -467,7 +467,7 @@ export default class TestAPI implements TestHelper {
         value: formatted,
         language,
       });
-      return;
+      return name;
     }
 
     // Compare the snapshots
@@ -504,5 +504,7 @@ export default class TestAPI implements TestHelper {
 
       this.fail(message, advice, framesToPop);
     }
+
+    return name;
   }
 }
