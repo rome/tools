@@ -188,7 +188,7 @@ export default class SourceMapConsumer {
       return undefined;
     }
 
-    const source = mapping.source == undefined
+    const source = mapping.source === undefined
       ? this.map.file
       : this.map.sources[mapping.source];
     if (source === undefined) {

@@ -23,6 +23,7 @@ export type DiagnosticCategory =
   | 'lint/caseSingleStatement'
   | 'lint/defaultExportSameBasename'
   | 'lint/disabled'
+  | 'lint/doubleEquals'
   | 'lint/duplicateImportSource'
   | 'lint/emptyBlocks'
   | 'lint/getterReturn'

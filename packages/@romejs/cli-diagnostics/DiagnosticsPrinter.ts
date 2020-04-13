@@ -627,7 +627,7 @@ export default class DiagnosticsPrinter extends Error {
 
     const displayableProblems = this.getDisplayedProblemsCount();
     let str = `Found <number emphasis>${displayableProblems}</number> problem`;
-    if (displayableProblems > 1 || displayableProblems == 0) {
+    if (displayableProblems > 1 || displayableProblems === 0) {
       str += 's';
     }
 

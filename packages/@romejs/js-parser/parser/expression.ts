@@ -844,7 +844,7 @@ export function parseExpressionSubscript(
   if (parser.match(tt.questionDot)) {
     state.optionalChainMember = true;
 
-    if (noCalls && parser.lookaheadState().tokenType == tt.parenL) {
+    if (noCalls && parser.lookaheadState().tokenType === tt.parenL) {
       state.stop = true;
       return base;
     }
@@ -3351,7 +3351,6 @@ export function parseYield(parser: JSParser, noIn?: boolean): YieldExpression {
   }
 
   if (parser.state.maybeInArrowParameters && // We only set yieldInPossibleArrowParameters if we haven't already
-
   // found a possible invalid YieldExpression.
   parser.state.yieldInPossibleArrowParameters === undefined) {
     parser.state.yieldInPossibleArrowParameters = start;

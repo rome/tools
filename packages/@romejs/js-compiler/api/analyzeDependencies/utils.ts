@@ -178,8 +178,9 @@ function exportsSame(a: AnyAnalyzeExport, b: AnyAnalyzeExport): boolean {
       return b.type === 'local' && a.name === b.name;
 
     case 'external':
-      return b.type === 'external' && a.imported === b.imported && a.exported ==
-        b.exported && a.source === b.source;
+      return b.type === 'external' && a.imported === b.imported &&
+          a.exported ===
+          b.exported && a.source === b.source;
 
     case 'externalAll':
       return b.type === 'externalAll' && a.source === b.source;

@@ -383,7 +383,7 @@ function commonPrefix(text1: string, text2: string): number {
   let pointermid = pointermax;
   let pointerstart = 0;
   while (pointermin < pointermid) {
-    if (text1.substring(pointerstart, pointermid) == text2.substring(
+    if (text1.substring(pointerstart, pointermid) === text2.substring(
         pointerstart,
         pointermid,
       )) {
@@ -422,7 +422,7 @@ function commonSuffix(text1: string, text2: string): number {
   let pointermid = pointermax;
   let pointerend = 0;
   while (pointermin < pointermid) {
-    if (text1.substring(text1.length - pointermid, text1.length - pointerend) ==
+    if (text1.substring(text1.length - pointermid, text1.length - pointerend) ===
         text2.substring(text2.length - pointermid, text2.length - pointerend)) {
       pointermin = pointermid;
       pointerend = pointermin;
@@ -744,7 +744,7 @@ function cleanupMerge(diffs: Diffs, fix_unicode: boolean) {
         diffs[pointer + 1][1] = diffs[pointer - 1][1] + diffs[pointer + 1][1];
         diffs.splice(pointer - 1, 1);
         changes = true;
-      } else if (diffs[pointer][1].substring(0, diffs[pointer + 1][1].length) ==
+      } else if (diffs[pointer][1].substring(0, diffs[pointer + 1][1].length) ===
           diffs[pointer + 1][1]) {
         // Shift the edit over the next equality.
         diffs[pointer - 1][1] += diffs[pointer + 1][1];

@@ -372,7 +372,7 @@ export function parseStatement(
       parser.next();
 
       let result: ParseExportResult | ParseImportResult;
-      if (startType == tt._import) {
+      if (startType === tt._import) {
         result = parseImport(parser, start);
       } else {
         result = parseExport(parser, start);
@@ -977,9 +977,9 @@ export function parseLabeledStatement(
   }
   const body = parseStatement(parser, statementContext);
 
-  if (body.type == 'ClassDeclaration' || body.type ==
+  if (body.type === 'ClassDeclaration' || body.type ===
         'VariableDeclarationStatement' && body.declaration.kind !== 'var' ||
-          body.type ==
+          body.type ===
           'FunctionDeclaration' &&
         (parser.inScope('STRICT') || body.head.generator === true ||
             body.head.async ===

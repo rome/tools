@@ -241,7 +241,7 @@ function parseTSDelimitedList<
     }
 
     const element = parseElement(parser);
-    if (element == undefined) {
+    if (element === undefined) {
       break;
     }
 

@@ -377,7 +377,7 @@ function isExportDefaultSpecifier(parser: JSParser): boolean {
 
   if (parser.match(tt.name) && (parser.state.tokenValue === 'type' ||
         parser.state.tokenValue ===
-        'interface' || parser.state.tokenValue == 'opaque')) {
+        'interface' || parser.state.tokenValue === 'opaque')) {
     return false;
   }
 
