@@ -439,21 +439,7 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
       );
     }
 
-    const conditions: ManifestExportConditions = new Map();
-
-    if (typeof value.asUnknown() === 'string') {
-      conditions.set('default', {
-        consumer: value,
-        relative: value.asExplicitRelativeFilePath(),
-      });
-    } else {
-      for (const [type, relativeAlias] of value.asMap()) {
-        conditions.set(type, {
-          consumer: relativeAlias,
-          relative: relativeAlias.asExplicitRelativeFilePath(),
-        });
-      }
-    }
+    const conditions = normalizeExportsConditions(value);
 
     if (dotConditions.size > 0) {
       exports.set(createRelativeFilePath('.'), dotConditions);
@@ -463,6 +449,37 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
   }
 
   return exports;
+}
+
+function normalizeExportsConditions(value: Consumer): ManifestExportConditions {
+  const conditions: ManifestExportConditions = new Map();
+  const unknown = value.asUnknown();
+
+  if (typeof unknown === 'string') {
+    conditions.set('default', {
+      consumer: value,
+      relative: value.asExplicitRelativeFilePath(),
+    });
+  } else if (Array.isArray(unknown)) {
+    // Find the first item that passes validation
+    for (const elem of value.asArray()) {
+      const {result, diagnostics} = elem.captureSync(
+        (consumer) => normalizeExportsConditions(consumer),
+      );
+      if (diagnostics.length === 0) {
+        return result;
+      }
+    }
+  } else {
+    for (const [type, relativeAlias] of value.asMap()) {
+      conditions.set(type, {
+        consumer: relativeAlias,
+        relative: relativeAlias.asExplicitRelativeFilePath(),
+      });
+    }
+  }
+
+  return conditions;
 }
 
 function normalizeBugs(

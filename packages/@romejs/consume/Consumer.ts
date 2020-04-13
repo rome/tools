@@ -138,6 +138,26 @@ export default class Consumer {
     definitions: Array<ConsumePropertyDefinition>;
     diagnostics: Diagnostics;
   }> {
+    const {definitions, diagnostics, consumer} = this._capture();
+    const result = await callback(consumer);
+    return {result, definitions, diagnostics};
+  }
+
+  captureSync<T>(callback: (consumer: Consumer) => T): {
+    result: T;
+    definitions: Array<ConsumePropertyDefinition>;
+    diagnostics: Diagnostics;
+  } {
+    const {definitions, diagnostics, consumer} = this._capture();
+    const result = callback(consumer);
+    return {result, definitions, diagnostics};
+  }
+
+  _capture<T>(): {
+    consumer: Consumer;
+    definitions: Array<ConsumePropertyDefinition>;
+    diagnostics: Diagnostics;
+  } {
     let diagnostics: Diagnostics = [];
     const definitions: Array<ConsumePropertyDefinition> = [];
 
@@ -154,9 +174,7 @@ export default class Consumer {
         diagnostics.push(diag);
       },
     });
-
-    const result = await callback(consumer);
-    return {result, definitions, diagnostics};
+    return {consumer, definitions, diagnostics};
   }
 
   async captureDiagnostics<T>(
@@ -986,11 +1004,7 @@ export default class Consumer {
     return this._asNumber(def);
   }
 
-  asNumberInRange(opts: {
-    min?: number;
-    max?: number;
-    default?: number;
-  }): number
+  asNumberInRange(opts: {min?: number; max?: number; default?: number}): number
 
   asNumberInRange(opts: {
     min: Number0;
