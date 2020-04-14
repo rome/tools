@@ -6,17 +6,14 @@ Program {
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
-  sourceType: 'module'
-  syntax: Array [
-    'jsx'
-    'flow'
-  ]
+  sourceType: 'script'
+  syntax: Array []
   loc: Object {
     filename: 'input.js'
     end: Object {
       column: 0
-      index: 91
-      line: 5
+      index: 23
+      line: 4
     }
     start: Object {
       column: 0
@@ -25,35 +22,19 @@ Program {
     }
   }
   comments: Array [
-    CommentBlock {
-      value: 'flow-include prop: string; '
+    CommentLine {
+      value: ' empty'
       loc: Object {
         filename: 'input.js'
         end: Object {
-          column: 33
-          index: 49
+          column: 10
+          index: 20
           line: 2
         }
         start: Object {
           column: 2
-          index: 18
+          index: 12
           line: 2
-        }
-      }
-    }
-    CommentBlock {
-      value: '      flow-include foo: number; '
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 38
-          index: 88
-          line: 3
-        }
-        start: Object {
-          column: 2
-          index: 52
-          line: 3
         }
       }
     }
@@ -61,12 +42,12 @@ Program {
   body: Array [
     ClassDeclaration {
       id: BindingIdentifier {
-        name: 'MyClass'
+        name: 'x'
         loc: Object {
           filename: 'input.js'
           end: Object {
-            column: 13
-            index: 13
+            column: 7
+            index: 7
             line: 1
           }
           start: Object {
@@ -80,8 +61,8 @@ Program {
         filename: 'input.js'
         end: Object {
           column: 1
-          index: 90
-          line: 4
+          index: 22
+          line: 3
         }
         start: Object {
           column: 0
@@ -100,8 +81,8 @@ Program {
           filename: 'input.js'
           end: Object {
             column: 1
-            index: 90
-            line: 4
+            index: 22
+            line: 3
           }
           start: Object {
             column: 0
@@ -110,35 +91,19 @@ Program {
           }
         }
         innerComments: Array [
-          CommentBlock {
-            value: 'flow-include prop: string; '
+          CommentLine {
+            value: ' empty'
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 33
-                index: 49
+                column: 10
+                index: 20
                 line: 2
               }
               start: Object {
                 column: 2
-                index: 18
+                index: 12
                 line: 2
-              }
-            }
-          }
-          CommentBlock {
-            value: '      flow-include foo: number; '
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 38
-                index: 88
-                line: 3
-              }
-              start: Object {
-                column: 2
-                index: 52
-                line: 3
               }
             }
           }

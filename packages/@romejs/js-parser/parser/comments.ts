@@ -70,19 +70,12 @@ function adjustCommentsAfterTrailingComma(
   node: AnyNode,
   elements: Array<undefined | AnyNode>,
   // When the current node is followed by a token which hasn't a respective AST node, we
-
   // need to take all the trailing comments to prevent them from being attached to an
-
   // unrelated node. e.g. in
-
   //     var { x } /* cmt */ = { y }
-
   // we don't want /* cmt */ to be attached to { y }.
-
   // On the other hand, in
-
   //     fn(x) [new line] /* cmt */ [new line] y
-
   // /* cmt */ is both a trailing comment of fn(x) and a leading comment of y
   takeAllComments?: boolean,
 ) {
@@ -151,26 +144,18 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 
   if (parser.state.trailingComments.length > 0) {
     // If the first comment in trailingComments comes after the
-
     // current node, then we're good - all comments in the array will
-
     // come after the node and so it's safe to add them as official
-
     // trailingComments.
     if (start(parser.state.trailingComments[0]) >= end(node)) {
       trailingComments = parser.state.trailingComments;
       parser.state.trailingComments = [];
     } else {
       // Otherwise, if the first comment doesn't come after the
-
       // current node, that means we have a mix of leading and trailing
-
       // comments in the array and that leadingComments contains the
-
       // same items as trailingComments. Reset trailingComments to
-
       // zero items and we'll handle this by evaluating leadingComments
-
       // later.
       parser.state.trailingComments = [];
     }
@@ -200,9 +185,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
   }
 
   // Adjust comments that follow a trailing comma on the last element in a
-
   // comma separated list of nodes to be the trailing comments on the last
-
   // element
   if (firstChild) {
     switch (node.type) {
@@ -253,9 +236,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
         lastChild.leadingComments = undefined;
       } else {
         // A leading comment for an anonymous class had been stolen by its first ClassMethod,
-
         // so this takes back the leading comment.
-
         // See also: https://github.com/eslint/espree/issues/158
         for (let i = lastChild.leadingComments.length - 2; i >= 0; --i) {
           if (end(lastChild.leadingComments[i]) <= start(node)) {
@@ -277,31 +258,22 @@ export function attachComments(parser: JSParser, node: AnyNode) {
           }
         }
       }
+
       if (parser.state.leadingComments.length > 0) {
         node.leadingComments = parser.state.leadingComments;
         parser.state.leadingComments = [];
       }
     } else {
       // https://github.com/eslint/espree/issues/2
-
       //
-
       // In special cases, such as return (without a value) and
-
       // debugger, all comments will end up as leadingComments and
-
       // will otherwise be eliminated. This step runs when the
-
       // commentStack is empty and there are comments left
-
       // in leadingComments.
-
       //
-
       // This loop figures out the stopping point between the actual
-
       // leading and trailing comments by finding the location of the
-
       // first comment that comes after the given node.
       let i = 0;
       while (i < parser.state.leadingComments.length) {
@@ -313,11 +285,8 @@ export function attachComments(parser: JSParser, node: AnyNode) {
       }
 
       // Split the array based on the location of the first comment
-
       // that comes after the node. Keep in mind that this could
-
       // result in an empty array, and if so, the array must be
-
       // deleted.
       const leadingComments = parser.state.leadingComments.slice(0, i);
 
@@ -326,7 +295,6 @@ export function attachComments(parser: JSParser, node: AnyNode) {
       }
 
       // Similarly, trailing comments are attached later. The variable
-
       // must be reset to null if there are no trailing comments.
       trailingComments = parser.state.leadingComments.slice(i);
       if (trailingComments.length === 0) {
