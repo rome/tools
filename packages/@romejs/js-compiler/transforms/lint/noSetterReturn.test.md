@@ -11,12 +11,18 @@
 
 ## `format enabled in project config should result in regenerated file`
 
-```javascript
-Object {
-  diagnostics: Array []
-  src: 'foobar(\'yes\');\n'
-  suppressions: Array []
-}
+### `0`
+
+```
+✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
+
 ```
 
 ## `no setter return`

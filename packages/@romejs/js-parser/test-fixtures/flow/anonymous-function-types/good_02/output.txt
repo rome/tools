@@ -8,6 +8,7 @@ Program {
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
+  trailingComments: Array []
   syntax: Array [
     'jsx'
     'flow'
@@ -26,6 +27,40 @@ Program {
     }
   }
   comments: Array [
+    CommentLine {
+      value: ' TODO: declare export syntax'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 30
+          index: 30
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+    }
+    CommentLine {
+      value: ' declare export function foo(x: number, string): void;'
+      loc: Object {
+        filename: 'input.js'
+        end: Object {
+          column: 56
+          index: 87
+          line: 2
+        }
+        start: Object {
+          column: 0
+          index: 31
+          line: 2
+        }
+      }
+    }
+  ]
+  innerComments: Array [
     CommentLine {
       value: ' TODO: declare export syntax'
       loc: Object {

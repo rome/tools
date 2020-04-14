@@ -11,32 +11,50 @@
 
 ## `format enabled in project config should result in regenerated file`
 
-```javascript
-Object {
-  diagnostics: Array []
-  src: 'foobar(\'yes\');\n'
-  suppressions: Array []
-}
+### `0`
+
+```
+✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
+
 ```
 
 ## `no shorthand array type`
 
 ### `0`
 
-```javascript
-Object {
-  diagnostics: Array []
-  src: '\n        let valid: Array<foo>;\n        let invalid = bar[];\n      '
-  suppressions: Array []
-}
+```
+✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+
+        let valid: Array<foo>;
+        let invalid = bar[];
+      
 ```
 
 ### `1`
 
-```javascript
-Object {
-  diagnostics: Array []
-  src: '\n        let valid: Array<foo>;\n        let invalid = bar[];\n      '
-  suppressions: Array []
-}
+```
+✔ No known problems!
+
+```
+
+### `1: formatted`
+
+```
+
+        let valid: Array<foo>;
+        let invalid = bar[];
+      
 ```

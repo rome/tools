@@ -11,140 +11,124 @@
 
 ## `format enabled in project config should result in regenerated file`
 
-```javascript
-Object {
-  diagnostics: Array []
-  src: 'foobar(\'yes\');\n'
-  suppressions: Array []
-}
+### `0`
+
+```
+✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
+
 ```
 
 ## `prefer function declarations`
 
 ### `0`
 
-```javascript
-Object {
-  src: 'function foo() {}\n'
-  suppressions: Array []
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'lint'}]
-      description: Object {
-        category: 'lint/preferFunctionDeclarations'
-        fixable: true
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Use a function declaration instead of a const function'}
-      }
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        mtime: undefined
-        sourceText: 'const foo = function () {};'
-        sourceType: 'module'
-        end: Object {
-          column: 26
-          index: 26
-          line: 1
-        }
-        start: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-      }
-    }
-  ]
-}
+```
+
+ unknown:1:12 lint/preferFunctionDeclarations FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Use a function declaration instead of a const function
+
+    const foo = function () {};
+                ^^^^^^^^^^^^^^ 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+function foo() {}
+
 ```
 
 ### `1`
 
-```javascript
-Object {
-  src: 'function foo() {}\n'
-  suppressions: Array []
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'lint'}]
-      description: Object {
-        category: 'lint/preferFunctionDeclarations'
-        fixable: true
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Use a function declaration instead of a const function'}
-      }
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        mtime: undefined
-        sourceText: 'const foo = () => {};'
-        sourceType: 'module'
-        end: Object {
-          column: 20
-          index: 20
-          line: 1
-        }
-        start: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-      }
-    }
-  ]
-}
+```
+
+ unknown:1:12 lint/preferFunctionDeclarations FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Use a function declaration instead of a const function
+
+    const foo = () => {};
+                ^^^^^^^^ 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
+function foo() {}
+
 ```
 
 ### `2`
 
-```javascript
-Object {
-  diagnostics: Array []
-  src: 'const foo = () => {\n  this;\n};\n'
-  suppressions: Array []
-}
+```
+✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+const foo = () => {
+  this;
+};
+
 ```
 
 ### `3`
 
-```javascript
-Object {
-  src: 'function foo() {\n  function bar() {\n    this;\n  }\n}\n'
-  suppressions: Array []
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'lint'}]
-      description: Object {
-        category: 'lint/preferFunctionDeclarations'
-        fixable: true
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Use a function declaration instead of a const function'}
-      }
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        mtime: undefined
-        sourceText: 'const foo = () => {function bar() {this;}};'
-        sourceType: 'module'
-        end: Object {
-          column: 42
-          index: 42
-          line: 1
-        }
-        start: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-      }
-    }
-  ]
+```
+
+ unknown:1:12 lint/preferFunctionDeclarations FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Use a function declaration instead of a const function
+
+    const foo = () => {function bar() {this;}};
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `3: formatted`
+
+```
+function foo() {
+  function bar() {
+    this;
+  }
 }
+
 ```
 
 ### `4`
 
-```javascript
-Object {
-  diagnostics: Array []
-  src: 'const foo: string = function() {};\n'
-  suppressions: Array []
-}
+```
+✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+const foo: string = function() {};
+
 ```
