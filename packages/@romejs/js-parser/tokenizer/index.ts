@@ -285,23 +285,21 @@ function pushComment(parser: JSParser, opts: {
   const loc = parser.finishLocAt(opts.startPos, opts.endPos);
   let comment: AnyComment;
   if (opts.block) {
-    comment = {
+    comment = parser.comments.addComment({
       type: 'CommentBlock',
       value: removeCarriageReturn(opts.text),
       loc,
-    };
+    });
   } else {
-    comment = {
+    comment = parser.comments.addComment({
       type: 'CommentLine',
       value: opts.text,
       loc,
-    };
+    });
   }
 
   // TODO maybe make sure this is at the head?
-
   // We should enable flow syntax when there's a comment with @\flow
-
   // We also handle @\noflow here as it's sometimes in files that have type annotations
   if (opts.text.includes('@flow') || opts.text.includes('@noflow')) {
     if (parser.syntax.has('ts')) {

@@ -49,7 +49,7 @@ foobar('yes');
 ### `0: formatted`
 
 ```
-// the blacklist
+// the denylist
 
 ```
 
@@ -77,7 +77,7 @@ foobar('yes');
 
 ```
 /* the
-blacklist */
+denylist */
 ```
 
 ### `2`

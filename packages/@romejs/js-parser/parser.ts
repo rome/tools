@@ -37,6 +37,7 @@ import {createInitialState, State} from './tokenizer/state';
 import {sub, Number0, number0} from '@romejs/ob1';
 import {Dict, OptionalProps} from '@romejs/typescript-helpers';
 import {attachComments} from './parser/comments';
+import CommentsConsumer from './CommentsConsumer';
 
 const TOKEN_MISTAKES: Dict<string> = {
   ';': ':',
@@ -116,13 +117,14 @@ const createJSParser = createParser(
             this.options.sourceType ===
             'module';
         this.parenthesized = new Set();
+        this.comments = new CommentsConsumer();
 
         // Turn options.syntax into a Set, probably faster than doing `includes` on the array
-
         // We may also push stuff to it as we read comments such as `@\flow`
         this.syntax = new Set(options.syntax);
       }
 
+      comments: CommentsConsumer;
       options: JSParserOptions;
       sourceType: ConstSourceType;
       syntax: Set<ConstProgramSyntax>;
@@ -153,14 +155,12 @@ const createJSParser = createParser(
 
       pushScope(type: ScopeType, value?: unknown) {
         //console.log('+' + type);
-
         //console.group();
         this.getScope(type).push(value);
       }
 
       popScope(type: ScopeType) {
         //console.groupEnd();
-
         //console.log('-' + type);
         this.getScope(type).pop();
       }

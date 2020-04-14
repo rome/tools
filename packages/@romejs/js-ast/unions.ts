@@ -136,6 +136,11 @@ export type AnyAuxiliary =
 
 export type AnyComment = n.CommentBlock | n.CommentLine;
 
+export type AnyCommentWithoutId = Omit<n.CommentBlock, 'id'> | Omit<
+  n.CommentLine,
+  'id'
+>;
+
 export type AnyIdentifier =
   | n.Identifier
   | n.JSXIdentifier
