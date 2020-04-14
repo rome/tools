@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
+import {Path, TransformExitResult} from '@romejs/js-compiler';
 import {
-  AnyNode,
   VariableDeclarationStatement,
   variableDeclarationStatement,
   variableDeclaration,
@@ -16,7 +15,7 @@ import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'singleVarDeclarator',
-  enter(path: Path): AnyNode | Array<VariableDeclarationStatement> {
+  enter(path: Path): TransformExitResult {
     const {node} = path;
 
     if (node.type === 'VariableDeclarationStatement' &&

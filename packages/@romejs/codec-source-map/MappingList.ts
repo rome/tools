@@ -40,7 +40,7 @@ export default class MappingList {
     this.array = [];
     this.sorted = true;
     this.last = {
-      generated: {line: number1Neg1, column: number0},
+      generated: {index: number0, line: number1Neg1, column: number0},
       // TODO: original: undefined
       original: {line: number1Neg1, column: number0},
       source: undefined,
