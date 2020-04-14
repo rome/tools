@@ -210,23 +210,26 @@ export default class Printer {
       str = this.state.indentString + str;
     }
 
-    // Determine if we need to line wrap. We skip this when we aren't in pretty mode for better performance.
-    if (this.lineWrap) {
-      const {lastUnbrokenGroup} = this;
+    const {lastUnbrokenGroup} = this;
 
-      for (const char of str) {
-        if (char === '\n') {
+    for (const char of str) {
+      if (char === '\n') {
+        // Determine if we need to line wrap. We skip this when we aren't in pretty mode for better performance.
+        if (this.lineWrap) {
           if (lastUnbrokenGroup !== undefined &&
               lastUnbrokenGroup.breakOnNewline) {
             throw new BreakGroupError(lastUnbrokenGroup);
           }
-          this.state.generatedColumn = number0;
-          this.state.generatedLine = inc(this.state.generatedLine);
-        } else {
-          this.state.generatedColumn = inc(this.state.generatedColumn);
         }
+        this.state.generatedColumn = number0;
+        this.state.generatedLine = inc(this.state.generatedLine);
+      } else {
+        this.state.generatedColumn = inc(this.state.generatedColumn);
       }
+    }
 
+    // Determine if we need to line wrap. We skip this when we aren't in pretty mode for better performance.
+    if (this.lineWrap) {
       if (lastUnbrokenGroup !== undefined && get0(this.state.generatedColumn) >
           MAX_LINE_LENGTH) {
         throw new BreakGroupError(lastUnbrokenGroup);
