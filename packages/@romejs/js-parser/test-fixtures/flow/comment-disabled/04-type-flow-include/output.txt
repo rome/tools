@@ -26,6 +26,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: 'flow-include prop: string; '
       loc: Object {
         filename: 'input.js'
@@ -42,6 +43,7 @@ Program {
       }
     }
     CommentBlock {
+      id: '1'
       value: '      flow-include foo: number; '
       loc: Object {
         filename: 'input.js'
@@ -96,6 +98,10 @@ Program {
         superTypeParameters: undefined
         trailingComments: Array []
         typeParameters: undefined
+        innerComments: Array [
+          '0'
+          '1'
+        ]
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -109,40 +115,6 @@ Program {
             line: 1
           }
         }
-        innerComments: Array [
-          CommentBlock {
-            value: 'flow-include prop: string; '
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 33
-                index: 49
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 18
-                line: 2
-              }
-            }
-          }
-          CommentBlock {
-            value: '      flow-include foo: number; '
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 38
-                index: 88
-                line: 3
-              }
-              start: Object {
-                column: 2
-                index: 52
-                line: 3
-              }
-            }
-          }
-        ]
       }
     }
   ]

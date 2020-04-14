@@ -9,6 +9,7 @@ Program {
   mtime: undefined
   sourceType: 'module'
   trailingComments: Array []
+  innerComments: Array ['0']
   syntax: Array [
     'jsx'
     'flow'
@@ -28,24 +29,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
-      value: ' flow-include\ntype Foo = {\n  foo: number,\n  bar: boolean,\n  baz: string\n};\n'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 2
-          index: 79
-          line: 7
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  innerComments: Array [
-    CommentBlock {
+      id: '0'
       value: ' flow-include\ntype Foo = {\n  foo: number,\n  bar: boolean,\n  baz: string\n};\n'
       loc: Object {
         filename: 'input.js'

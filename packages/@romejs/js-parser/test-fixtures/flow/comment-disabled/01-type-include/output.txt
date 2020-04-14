@@ -26,6 +26,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: '    :: foo: number; '
       loc: Object {
         filename: 'input.js'
@@ -127,6 +128,7 @@ Program {
             }
             value: undefined
             definite: undefined
+            trailingComments: Array ['0']
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -155,24 +157,6 @@ Program {
                 }
               }
             }
-            trailingComments: Array [
-              CommentBlock {
-                value: '    :: foo: number; '
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 26
-                    index: 66
-                    line: 3
-                  }
-                  start: Object {
-                    column: 2
-                    index: 42
-                    line: 3
-                  }
-                }
-              }
-            ]
             meta: ClassPropertyMeta {
               abstract: false
               accessibility: undefined

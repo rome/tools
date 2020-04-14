@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: ' foo '
       loc: Object {
         filename: 'input.js'
@@ -39,6 +40,7 @@ Program {
       }
     }
     CommentBlock {
+      id: '1'
       value: ' bar '
       loc: Object {
         filename: 'input.js'
@@ -58,6 +60,7 @@ Program {
   body: Array [
     IfStatement {
       alternate: undefined
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -88,26 +91,9 @@ Program {
           }
         }
       }
-      leadingComments: Array [
-        CommentBlock {
-          value: ' foo '
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      ]
       test: ReferenceIdentifier {
         name: 'a'
+        leadingComments: Array ['1']
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -121,24 +107,6 @@ Program {
             line: 2
           }
         }
-        leadingComments: Array [
-          CommentBlock {
-            value: ' bar '
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 13
-                index: 23
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 14
-                line: 2
-              }
-            }
-          }
-        ]
       }
     }
   ]

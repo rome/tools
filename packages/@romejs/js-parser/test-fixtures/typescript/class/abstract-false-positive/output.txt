@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' Exports an identifier, doesn\'t try parsing `abstract class`'
       loc: Object {
         filename: 'input.ts'
@@ -41,6 +42,7 @@ Program {
   ]
   body: Array [
     ExportDefaultDeclaration {
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.ts'
         end: Object {
@@ -71,24 +73,6 @@ Program {
           }
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' Exports an identifier, doesn\'t try parsing `abstract class`'
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 62
-              index: 62
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      ]
     }
   ]
 }

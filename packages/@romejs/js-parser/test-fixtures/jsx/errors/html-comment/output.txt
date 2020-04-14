@@ -9,6 +9,7 @@ Program {
   mtime: undefined
   sourceType: 'script'
   trailingComments: Array []
+  innerComments: Array ['0']
   syntax: Array [
     'jsx'
     'flow'
@@ -28,24 +29,7 @@ Program {
   }
   comments: Array [
     CommentLine {
-      value: 'a'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  innerComments: Array [
-    CommentLine {
+      id: '0'
       value: 'a'
       loc: Object {
         filename: 'input.js'
