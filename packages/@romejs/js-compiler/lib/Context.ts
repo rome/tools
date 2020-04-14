@@ -5,13 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  AnyNode,
-  Program,
-  ConstSourceType,
-  program,
-  AnyComment,
-} from '@romejs/js-ast';
+import {AnyNode, Program, ConstSourceType, AnyComment} from '@romejs/js-ast';
 import {
   SourceLocation,
   extractSourceLocationRangeFromNodes,
