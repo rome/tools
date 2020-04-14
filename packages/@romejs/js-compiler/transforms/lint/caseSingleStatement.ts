@@ -14,20 +14,14 @@ export default {
   enter(path: Path): AnyNode {
     const {node, context} = path;
 
-    if (node.type === 'SwitchCase') {
-      if (node.consequent.length > 1) {
-        const {suppressed} = context.addNodeDiagnostic(
-          node,
-          descriptions.LINT.CASE_SINGLE_STATEMENT,
-        );
-
-        if (!suppressed) {
-          return {
-            ...node,
-            consequent: [blockStatement.quick(node.consequent)],
-          };
-        }
-      }
+    if (node.type === 'SwitchCase' && node.consequent.length > 1) {
+      return context.addFixableDiagnostic({
+        old: node,
+        fixed: {
+          ...node,
+          consequent: [blockStatement.quick(node.consequent)],
+        },
+      }, descriptions.LINT.CASE_SINGLE_STATEMENT);
     }
 
     return node;

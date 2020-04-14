@@ -15,15 +15,11 @@ export default {
     const {node} = path;
 
     if (node.type === 'ArrayExpression' && node.elements.includes(undefined)) {
-      const {suppressed} = path.context.addNodeDiagnostic(
-        node,
-        descriptions.LINT.SPARSE_ARRAY,
-      );
-
-      if (!suppressed) {
-        return arrayExpression.quick(node.elements.map((elem) => elem ===
-          undefined ? referenceIdentifier.create({name: 'undefined'}) : elem));
-      }
+      return path.context.addFixableDiagnostic({
+        old: node,
+        fixed: arrayExpression.quick(node.elements.map((elem) => elem ===
+          undefined ? referenceIdentifier.create({name: 'undefined'}) : elem)),
+      }, descriptions.LINT.SPARSE_ARRAY);
     }
 
     return node;

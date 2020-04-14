@@ -83,7 +83,7 @@ export function deriveRootAdviceFromDiagnostic(diag: Diagnostic, opts: {
   header: string;
 } {
   const advice: DiagnosticAdvice = [];
-  const {description: metadata, location} = diag;
+  const {description, fixable, location} = diag;
 
   let header = getDiagnosticHeader({
     start: location.start,
@@ -93,16 +93,16 @@ export function deriveRootAdviceFromDiagnostic(diag: Diagnostic, opts: {
   if (diag.label !== undefined) {
     header += ` <emphasis>${diag.label}</emphasis>`;
 
-    if (metadata.category !== undefined) {
-      header += ` <dim>${metadata.category}</dim>`;
+    if (description.category !== undefined) {
+      header += ` <dim>${description.category}</dim>`;
     }
   } else {
-    if (metadata.category !== undefined) {
-      header += ` <emphasis>${metadata.category}</emphasis>`;
+    if (description.category !== undefined) {
+      header += ` <emphasis>${description.category}</emphasis>`;
     }
   }
 
-  if (metadata.fixable === true) {
+  if (fixable === true) {
     header += ` <inverse>FIXABLE</inverse>`;
   }
 
@@ -121,7 +121,7 @@ export function deriveRootAdviceFromDiagnostic(diag: Diagnostic, opts: {
   advice.push({
     type: 'log',
     category: 'error',
-    message: metadata.message.value,
+    message: description.message.value,
   });
 
   if (opts.skipFrame === false) {

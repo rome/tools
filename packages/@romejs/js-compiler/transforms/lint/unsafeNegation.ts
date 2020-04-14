@@ -19,20 +19,16 @@ export default {
             'instanceof') && node.left.type === 'UnaryExpression' &&
           node.left.operator ===
           '!') {
-      const {suppressed} = path.context.addNodeDiagnostic(
-        node,
-        descriptions.LINT.UNSAFE_NEGATION,
-      );
-
-      if (!suppressed) {
-        return unaryExpression.create({
+      return path.context.addFixableDiagnostic({
+        old: node,
+        fixed: unaryExpression.create({
           operator: node.left.operator,
           argument: {
             ...node,
             left: node.left.argument,
           },
-        });
-      }
+        }),
+      }, descriptions.LINT.UNSAFE_NEGATION);
     }
 
     return node;

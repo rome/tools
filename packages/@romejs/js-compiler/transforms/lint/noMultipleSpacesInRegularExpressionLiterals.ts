@@ -48,14 +48,6 @@ function checkRegex(
       }
     }
 
-    const {suppressed} = context.addNodesRangeDiagnostic(
-      spaceNodes,
-      descriptions.LINT.NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(spaceNodes.length),
-    );
-    if (suppressed) {
-      return node;
-    }
-
     const quantifiedSpace: RegExpQuantified = regExpQuantified.create({
       min: spaceNodes.length,
       max: spaceNodes.length,
@@ -74,7 +66,11 @@ function checkRegex(
       ],
     };
 
-    return checkRegex(newRegex, context);
+    return context.addFixableDiagnostic({
+      target: spaceNodes,
+      old: node,
+      fixed: checkRegex(newRegex, context),
+    }, descriptions.LINT.NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(spaceNodes.length));
   }
 
   return node;

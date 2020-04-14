@@ -121,6 +121,7 @@ export default {
               word,
               suggestion,
             ),
+            {fixable: true},
           ));
 
           if (suppressed) {
