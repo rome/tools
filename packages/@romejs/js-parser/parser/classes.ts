@@ -121,20 +121,28 @@ export function parseClass(
 
   parser.pushScope('CLASS', superClass === undefined ? 'normal' : 'derived');
 
+  const bodyStart = parser.getPosition();
   const body = parseClassBody(parser);
 
   parser.popScope('CLASS');
   parser.popScope('STRICT');
   parser.popScope('METHOD');
 
-  const meta: ClassHead = parser.finishNode(start, {
-    type: 'ClassHead',
-    body,
-    typeParameters,
-    superClass,
-    superTypeParameters,
-    implements: implemented,
-  });
+  // We have two finishNodes here to consume the innerComments inside of the body
+  // This is since in the Rome AST, we don't have a ClassBody node, so the comment
+  // algorithm thinks that the ClassHead location is too broad, and thinks a different
+  // node should consume them.
+  const meta: ClassHead = parser.finishNode(start, parser.finishNode(
+    bodyStart,
+    {
+      type: 'ClassHead',
+      body,
+      typeParameters,
+      superClass,
+      superTypeParameters,
+      implements: implemented,
+    },
+  ));
 
   return {
     loc: parser.finishLoc(start),
