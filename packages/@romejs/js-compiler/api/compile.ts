@@ -44,7 +44,6 @@ export default async function compile(
   const generator = formatJS(transformedAst, {
     typeAnnotations: false,
     indent: req.stage === 'compileForBundle' ? 1 : 0,
-    format: 'pretty',
     sourceMapTarget: filename,
     sourceFileName: filename,
     inputSourceMap: req.inputSourceMap,
