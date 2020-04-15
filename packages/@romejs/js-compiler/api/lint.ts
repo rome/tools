@@ -132,7 +132,7 @@ export default async function lint(req: FormatRequest): Promise<LintResult> {
       advice.push({
         type: 'log',
         category: 'info',
-        message: 'Diff',
+        message: 'Possible fix',
       });
 
       advice.push({
