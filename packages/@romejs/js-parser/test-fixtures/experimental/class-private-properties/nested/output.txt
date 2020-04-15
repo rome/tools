@@ -340,8 +340,8 @@ Program {
                   line: 5
                 }
                 start: Object {
-                  column: 28
-                  index: 63
+                  column: 13
+                  index: 48
                   line: 5
                 }
               }
@@ -1164,8 +1164,8 @@ Program {
                                   line: 13
                                 }
                                 start: Object {
-                                  column: 32
-                                  index: 186
+                                  column: 17
+                                  index: 171
                                   line: 13
                                 }
                               }
@@ -1664,8 +1664,8 @@ Program {
                                   line: 18
                                 }
                                 start: Object {
-                                  column: 14
-                                  index: 255
+                                  column: 11
+                                  index: 252
                                   line: 18
                                 }
                               }
@@ -1896,8 +1896,8 @@ Program {
                                   line: 19
                                 }
                                 start: Object {
-                                  column: 19
-                                  index: 293
+                                  column: 11
+                                  index: 285
                                   line: 19
                                 }
                               }
@@ -2161,8 +2161,8 @@ Program {
                                   line: 21
                                 }
                                 start: Object {
-                                  column: 14
-                                  index: 329
+                                  column: 11
+                                  index: 326
                                   line: 21
                                 }
                               }
@@ -2393,8 +2393,8 @@ Program {
                                   line: 22
                                 }
                                 start: Object {
-                                  column: 19
-                                  index: 367
+                                  column: 11
+                                  index: 359
                                   line: 22
                                 }
                               }
@@ -2683,8 +2683,8 @@ Program {
                                   line: 24
                                 }
                                 start: Object {
-                                  column: 16
-                                  index: 405
+                                  column: 12
+                                  index: 401
                                   line: 24
                                 }
                               }
@@ -3177,8 +3177,8 @@ Program {
                                   line: 26
                                 }
                                 start: Object {
-                                  column: 17
-                                  index: 471
+                                  column: 14
+                                  index: 468
                                   line: 26
                                 }
                               }
@@ -3541,8 +3541,8 @@ Program {
                   line: 30
                 }
                 start: Object {
-                  column: 10
-                  index: 539
+                  column: 7
+                  index: 536
                   line: 30
                 }
               }
@@ -3773,8 +3773,8 @@ Program {
                   line: 31
                 }
                 start: Object {
-                  column: 15
-                  index: 573
+                  column: 7
+                  index: 565
                   line: 31
                 }
               }
@@ -4038,8 +4038,8 @@ Program {
                   line: 33
                 }
                 start: Object {
-                  column: 10
-                  index: 605
+                  column: 7
+                  index: 602
                   line: 33
                 }
               }
@@ -4270,8 +4270,8 @@ Program {
                   line: 34
                 }
                 start: Object {
-                  column: 15
-                  index: 639
+                  column: 7
+                  index: 631
                   line: 34
                 }
               }
@@ -4560,8 +4560,8 @@ Program {
                   line: 36
                 }
                 start: Object {
-                  column: 12
-                  index: 673
+                  column: 8
+                  index: 669
                   line: 36
                 }
               }
@@ -5054,8 +5054,8 @@ Program {
                   line: 38
                 }
                 start: Object {
-                  column: 13
-                  index: 735
+                  column: 10
+                  index: 732
                   line: 38
                 }
               }

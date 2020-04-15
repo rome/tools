@@ -3092,8 +3092,8 @@ Program {
                           line: 22
                         }
                         start: Object {
-                          column: 39
-                          index: 637
+                          column: 36
+                          index: 634
                           line: 22
                         }
                       }
@@ -3960,8 +3960,8 @@ Program {
                           line: 26
                         }
                         start: Object {
-                          column: 24
-                          index: 784
+                          column: 21
+                          index: 781
                           line: 26
                         }
                       }

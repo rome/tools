@@ -1,0 +1,213 @@
+Program {
+  corrupt: false
+  diagnostics: Array []
+  directives: Array []
+  filename: 'input.ts'
+  hasHoistedVars: false
+  interpreter: undefined
+  mtime: undefined
+  sourceType: 'script'
+  syntax: Array []
+  loc: Object {
+    filename: 'input.ts'
+    end: Object {
+      column: 0
+      index: 62
+      line: 5
+    }
+    start: Object {
+      column: 0
+      index: 0
+      line: 1
+    }
+  }
+  comments: Array [
+    CommentBlock {
+      id: '0'
+      value: ' EMPTY '
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 22
+          index: 22
+          line: 1
+        }
+        start: Object {
+          column: 11
+          index: 11
+          line: 1
+        }
+      }
+    }
+    CommentBlock {
+      id: '1'
+      value: ' ARGS '
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 21
+          index: 46
+          line: 2
+        }
+        start: Object {
+          column: 11
+          index: 36
+          line: 2
+        }
+      }
+    }
+    CommentLine {
+      id: '2'
+      value: ' BODY'
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 9
+          index: 59
+          line: 3
+        }
+        start: Object {
+          column: 2
+          index: 52
+          line: 3
+        }
+      }
+    }
+  ]
+  body: Array [
+    TSDeclareFunction {
+      id: BindingIdentifier {
+        name: 'x'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 10
+            index: 10
+            line: 1
+          }
+          start: Object {
+            column: 9
+            index: 9
+            line: 1
+          }
+        }
+      }
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 24
+          index: 24
+          line: 1
+        }
+        start: Object {
+          column: 0
+          index: 0
+          line: 1
+        }
+      }
+      head: FunctionHead {
+        async: false
+        generator: false
+        hasHoistedVars: false
+        params: Array []
+        predicate: undefined
+        rest: undefined
+        returnType: undefined
+        thisType: undefined
+        trailingComments: Array []
+        typeParameters: undefined
+        innerComments: Array ['0']
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 23
+            index: 23
+            line: 1
+          }
+          start: Object {
+            column: 10
+            index: 10
+            line: 1
+          }
+        }
+      }
+    }
+    FunctionDeclaration {
+      id: BindingIdentifier {
+        name: 'x'
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 10
+            index: 35
+            line: 2
+          }
+          start: Object {
+            column: 9
+            index: 34
+            line: 2
+          }
+        }
+      }
+      loc: Object {
+        filename: 'input.ts'
+        end: Object {
+          column: 1
+          index: 61
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 25
+          line: 2
+        }
+      }
+      body: BlockStatement {
+        body: Array []
+        directives: Array []
+        trailingComments: Array []
+        innerComments: Array ['2']
+        leadingComments: Array ['1']
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 1
+            index: 61
+            line: 4
+          }
+          start: Object {
+            column: 23
+            index: 48
+            line: 2
+          }
+        }
+      }
+      head: FunctionHead {
+        async: false
+        generator: false
+        hasHoistedVars: false
+        params: Array []
+        predicate: undefined
+        rest: undefined
+        returnType: undefined
+        thisType: undefined
+        trailingComments: Array []
+        typeParameters: undefined
+        innerComments: Array ['1']
+        loc: Object {
+          filename: 'input.ts'
+          end: Object {
+            column: 23
+            index: 48
+            line: 2
+          }
+          start: Object {
+            column: 10
+            index: 35
+            line: 2
+          }
+        }
+      }
+    }
+  ]
+}

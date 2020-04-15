@@ -357,13 +357,13 @@ Program {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 21
-                  index: 50
+                  column: 17
+                  index: 46
                   line: 3
                 }
                 start: Object {
-                  column: 21
-                  index: 50
+                  column: 18
+                  index: 47
                   line: 3
                 }
               }
@@ -372,13 +372,13 @@ Program {
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
-                    column: 21
-                    index: 50
+                    column: 17
+                    index: 46
                     line: 3
                   }
                   start: Object {
-                    column: 21
-                    index: 50
+                    column: 18
+                    index: 47
                     line: 3
                   }
                 }
@@ -542,13 +542,13 @@ Program {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 25
-                  index: 77
+                  column: 17
+                  index: 69
                   line: 4
                 }
                 start: Object {
-                  column: 25
-                  index: 77
+                  column: 18
+                  index: 70
                   line: 4
                 }
               }
@@ -557,13 +557,13 @@ Program {
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
-                    column: 25
-                    index: 77
+                    column: 17
+                    index: 69
                     line: 4
                   }
                   start: Object {
-                    column: 25
-                    index: 77
+                    column: 18
+                    index: 70
                     line: 4
                   }
                 }

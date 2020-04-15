@@ -94,10 +94,6 @@ Program {
       body: BlockStatement {
         body: Array []
         directives: Array []
-        leadingComments: Array [
-          '0'
-          '1'
-        ]
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -129,8 +125,8 @@ Program {
             line: 1
           }
           start: Object {
-            column: 0
-            index: 0
+            column: 15
+            index: 15
             line: 1
           }
         }

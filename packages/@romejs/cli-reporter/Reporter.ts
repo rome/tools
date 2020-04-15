@@ -1308,8 +1308,7 @@ export default class Reporter {
         });
       },
 
-      setTotal: (total: number,
-      approximate: boolean = false) => {
+      setTotal: (total: number, approximate: boolean = false) => {
         dispatch({
           type: 'PROGRESS_SET_TOTAL',
           total,

@@ -95,13 +95,13 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 26
-                index: 26
+                column: 23
+                index: 23
                 line: 1
               }
               start: Object {
-                column: 26
-                index: 26
+                column: 24
+                index: 24
                 line: 1
               }
             }
@@ -110,13 +110,13 @@ Program {
               loc: Object {
                 filename: 'input.js'
                 end: Object {
-                  column: 26
-                  index: 26
+                  column: 23
+                  index: 23
                   line: 1
                 }
                 start: Object {
-                  column: 26
-                  index: 26
+                  column: 24
+                  index: 24
                   line: 1
                 }
               }

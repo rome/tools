@@ -200,8 +200,8 @@ Program {
             line: 2
           }
           start: Object {
-            column: 0
-            index: 23
+            column: 11
+            index: 34
             line: 2
           }
         }
@@ -337,8 +337,8 @@ Program {
                         line: 4
                       }
                       start: Object {
-                        column: 18
-                        index: 70
+                        column: 15
+                        index: 67
                         line: 4
                       }
                     }
@@ -510,8 +510,8 @@ Program {
                         line: 5
                       }
                       start: Object {
-                        column: 23
-                        index: 117
+                        column: 15
+                        index: 109
                         line: 5
                       }
                     }
