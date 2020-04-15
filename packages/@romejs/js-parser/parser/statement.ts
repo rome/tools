@@ -1437,6 +1437,7 @@ export function parseFunction(parser: JSParser, opts: {
     id = parseFunctionId(parser, false);
   }
 
+  const headStart = parser.getPosition();
   const {params, rest, typeParameters} = parseFunctionParams(parser);
   const {head, body} = parseFunctionBodyAndFinish(parser, {
     allowBodiless: isStatement,
@@ -1447,6 +1448,7 @@ export function parseFunction(parser: JSParser, opts: {
     isMethod: false,
     isAsync,
     isGenerator,
+    headStart,
     start,
   });
 

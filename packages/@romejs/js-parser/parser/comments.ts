@@ -64,6 +64,30 @@ function hasComments(
   return comments !== undefined && comments.length > 0;
 }
 
+function setComments(
+  node: AnyNode,
+  key: 'leadingComments' | 'trailingComments',
+  comments: Array<AnyComment>,
+) {
+  let innerEndIndex = -1;
+
+  for (let i = 0; i < comments.length; i++) {
+    const comment = comments[i];
+    if (start(comment) >= start(node) && end(comment) <= end(node)) {
+      innerEndIndex++;
+    } else {
+      break;
+    }
+  }
+
+  if (innerEndIndex === -1) {
+    node[key] = getIds(comments);
+  } else {
+    node.innerComments = getIds(comments.slice(0, innerEndIndex + 1));
+    node[key] = getIds(comments.slice(innerEndIndex + 1));
+  }
+}
+
 export function addComment(parser: JSParser, comment: AnyComment): void {
   parser.state.trailingComments.push(comment);
   parser.state.leadingComments.push(comment);
@@ -238,7 +262,9 @@ export function attachComments(parser: JSParser, node: AnyNode) {
       if (lastChild !== node && end(parser.comments.assertGetCommentFromId(last(
           lastChild.leadingComments,
         ))) <= start(node)) {
-        node.leadingComments = lastChild.leadingComments;
+        setComments(node, 'leadingComments', parser.comments.getCommentsFromIds(
+          lastChild.leadingComments,
+        ));
         lastChild.leadingComments = undefined;
       } else {
         // A leading comment for an anonymous class had been stolen by its first ClassMethod,
@@ -248,7 +274,13 @@ export function attachComments(parser: JSParser, node: AnyNode) {
           if (end(parser.comments.assertGetCommentFromId(
               lastChild.leadingComments[i],
             )) <= start(node)) {
-            node.leadingComments = lastChild.leadingComments.splice(0, i + 1);
+            setComments(
+              node,
+              'leadingComments',
+              parser.comments.getCommentsFromIds(
+                lastChild.leadingComments.splice(0, i + 1),
+              ),
+            );
             break;
           }
         }
@@ -268,7 +300,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
       }
 
       if (parser.state.leadingComments.length > 0) {
-        node.leadingComments = getIds(parser.state.leadingComments);
+        setComments(node, 'leadingComments', parser.state.leadingComments);
         parser.state.leadingComments = [];
       }
     } else {
@@ -299,7 +331,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
       const leadingComments = parser.state.leadingComments.slice(0, i);
 
       if (leadingComments.length > 0) {
-        node.leadingComments = getIds(leadingComments);
+        setComments(node, 'leadingComments', leadingComments);
       }
 
       // Similarly, trailing comments are attached later. The variable
@@ -314,23 +346,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
   parser.state.commentPreviousNode = node;
 
   if (trailingComments) {
-    let innerEndIndex = -1;
-
-    for (let i = 0; i < trailingComments.length; i++) {
-      const comment = trailingComments[i];
-      if (start(comment) >= start(node) && end(comment) <= end(node)) {
-        innerEndIndex++;
-      } else {
-        break;
-      }
-    }
-
-    if (innerEndIndex === -1) {
-      node.trailingComments = getIds(trailingComments);
-    } else {
-      node.innerComments = getIds(trailingComments.slice(0, innerEndIndex + 1));
-      node.trailingComments = getIds(trailingComments.slice(innerEndIndex + 1));
-    }
+    setComments(node, 'trailingComments', trailingComments);
   }
 
   commentStack.push(node);
