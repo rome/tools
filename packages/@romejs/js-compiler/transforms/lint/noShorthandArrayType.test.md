@@ -37,10 +37,9 @@ foobar('yes');
 ### `0: formatted`
 
 ```
+let valid: Array<foo>;
+let invalid = bar[INVALID_PLACEHOLDER];
 
-        let valid: Array<foo>;
-        let invalid = bar[];
-      
 ```
 
 ### `1`
@@ -53,8 +52,7 @@ foobar('yes');
 ### `1: formatted`
 
 ```
+let valid: Array<foo>;
+let invalid = bar[INVALID_PLACEHOLDER];
 
-        let valid: Array<foo>;
-        let invalid = bar[];
-      
 ```
