@@ -357,7 +357,9 @@ export default class Parser<T> {
         }
       }
 
-      consumer.enforceUsedProperties('flag', false);
+      if (!this.helpMode) {
+        consumer.enforceUsedProperties('flag', false);
+      }
       this.currentCommand = undefined;
 
       return rootFlags;
@@ -518,15 +520,6 @@ export default class Parser<T> {
     }
 
     const {description, usage, examples, programName} = this.opts;
-
-    const {consumer} = this.getFlagsConsumer().capture();
-
-    // Supress diagnostics
-    await this.opts.defineFlags(consumer);
-
-    for (const key of this.commands.keys()) {
-      await this.defineCommandFlags(key, consumer);
-    }
 
     this.showUsageHelp(description, usage);
 
