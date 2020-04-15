@@ -15,7 +15,7 @@
     let foo, bar;
     ^^^^^^^^^^^^^ 
 
-  ℹ Diff
+  ℹ Possible fix
 
     1 │ + let foo;
       │ - let foo,

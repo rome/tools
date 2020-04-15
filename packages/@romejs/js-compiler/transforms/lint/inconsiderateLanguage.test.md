@@ -93,7 +93,7 @@ blacklist */
 
   ℹ Instead of blacklist use denylist
 
-  ℹ Diff
+  ℹ Possible fix
 
     blackdenylist
 
@@ -123,7 +123,7 @@ denylist;
 
   ℹ Instead of BLACKLIST use DENYLIST
 
-  ℹ Diff
+  ℹ Possible fix
 
     BLACKDENYLIST
 
