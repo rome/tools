@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' empty'
       loc: Object {
         filename: 'input.js'
@@ -77,6 +78,7 @@ Program {
         superTypeParameters: undefined
         trailingComments: Array []
         typeParameters: undefined
+        innerComments: Array ['0']
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -90,24 +92,6 @@ Program {
             line: 1
           }
         }
-        innerComments: Array [
-          CommentLine {
-            value: ' empty'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 10
-                index: 20
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 12
-                line: 2
-              }
-            }
-          }
-        ]
       }
     }
   ]

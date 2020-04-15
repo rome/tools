@@ -36,6 +36,7 @@ export default {
             const {suppressed} = path.context.addNodeDiagnostic(
               bodyNode,
               descriptions.LINT.DUPLICATE_IMPORT_SOURCE(seenLoc),
+              {fixable: true},
             );
 
             if (suppressed) {

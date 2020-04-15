@@ -10,6 +10,7 @@ Program {
   sourceType: 'script'
   syntax: Array []
   trailingComments: Array []
+  innerComments: Array ['0']
   loc: Object {
     filename: 'input.js'
     end: Object {
@@ -25,24 +26,7 @@ Program {
   }
   comments: Array [
     CommentLine {
-      value: ' Hallo, world!'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  innerComments: Array [
-    CommentLine {
+      id: '0'
       value: ' Hallo, world!'
       loc: Object {
         filename: 'input.js'

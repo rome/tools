@@ -6,12 +6,17 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {AnyNode, templateLiteral, templateElement} from '@romejs/js-ast';
+import {
+  templateLiteral,
+  templateElement,
+  TemplateLiteral,
+} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
+import {TransformExitResult} from '@romejs/js-compiler/types';
 
 export default {
   name: 'preferTemplate',
-  enter(path: Path): AnyNode {
+  enter(path: Path): TransformExitResult {
     const {node} = path;
 
     if (node.type === 'BinaryExpression' && node.operator === '+' &&
@@ -19,48 +24,53 @@ export default {
               'StringLiteral' &&
             !node.left.value.includes('`') ||
           node.right.type === 'StringLiteral' && !node.right.value.includes('`'))) {
-      const {suppressed} = path.context.addNodeDiagnostic(
-        node,
-        descriptions.LINT.PREFER_TEMPLATE,
-      );
+      let autofix: undefined | TemplateLiteral;
 
-      if (!suppressed) {
-        if (node.right.type === 'StringLiteral') {
-          const quasis = [
-            templateElement.create({
-              raw: '',
-              cooked: '',
-            }),
-            templateElement.create({
-              raw: node.right.value,
-              cooked: node.right.value,
-            }),
-          ];
-          const expressions = [node.left];
-          return templateLiteral.create({
-            expressions,
-            quasis,
-            loc: node.loc,
-          });
-        }
-        if (node.left.type === 'StringLiteral') {
-          const quasis = [
-            templateElement.create({
-              raw: node.left.value,
-              cooked: node.left.value,
-            }),
-            templateElement.create({
-              raw: '',
-              cooked: '',
-            }),
-          ];
-          const expressions = [node.right];
-          return templateLiteral.create({
-            expressions,
-            quasis,
-            loc: node.loc,
-          });
-        }
+      if (node.right.type === 'StringLiteral') {
+        const quasis = [
+          templateElement.create({
+            raw: '',
+            cooked: '',
+          }),
+          templateElement.create({
+            raw: node.right.value,
+            cooked: node.right.value,
+          }),
+        ];
+        const expressions = [node.left];
+        autofix = templateLiteral.create({
+          expressions,
+          quasis,
+          loc: node.loc,
+        });
+      }
+
+      if (node.left.type === 'StringLiteral') {
+        const quasis = [
+          templateElement.create({
+            raw: node.left.value,
+            cooked: node.left.value,
+          }),
+          templateElement.create({
+            raw: '',
+            cooked: '',
+          }),
+        ];
+        const expressions = [node.right];
+        autofix = templateLiteral.create({
+          expressions,
+          quasis,
+          loc: node.loc,
+        });
+      }
+
+      if (autofix === undefined) {
+        path.context.addNodeDiagnostic(node, descriptions.LINT.PREFER_TEMPLATE);
+      } else {
+        return path.context.addFixableDiagnostic({
+          old: node,
+          fixed: autofix,
+        }, descriptions.LINT.PREFER_TEMPLATE);
       }
     }
 

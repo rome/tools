@@ -26,6 +26,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation.'
       loc: Object {
         filename: 'input.tsx'
@@ -61,6 +62,7 @@ Program {
           }
         }
       }
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.tsx'
         end: Object {
@@ -74,24 +76,6 @@ Program {
           line: 2
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation.'
-          loc: Object {
-            filename: 'input.tsx'
-            end: Object {
-              column: 98
-              index: 98
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      ]
       meta: ClassHead {
         body: Array []
         implements: undefined

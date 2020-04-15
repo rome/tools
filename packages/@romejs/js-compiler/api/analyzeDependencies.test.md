@@ -1216,7 +1216,21 @@ Object {
   importFirstUsage: Array []
   moduleType: 'es'
   syntax: Array []
-  topLevelLocalBindings: Object {}
+  topLevelLocalBindings: Object {
+    yeah: Object {
+      filename: 'unknown'
+      end: Object {
+        column: 19
+        index: 55
+        line: 4
+      }
+      start: Object {
+        column: 15
+        index: 51
+        line: 4
+      }
+    }
+  }
   dependencies: Array [
     es {
       kind: 'value'

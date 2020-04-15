@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: ' Multiline\nComment '
       loc: Object {
         filename: 'input.js'
@@ -111,6 +112,7 @@ Program {
           body: Array [
             ReturnStatement {
               argument: undefined
+              trailingComments: Array ['0']
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -124,26 +126,9 @@ Program {
                   line: 1
                 }
               }
-              trailingComments: Array [
-                CommentBlock {
-                  value: ' Multiline\nComment '
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 10
-                      index: 42
-                      line: 2
-                    }
-                    start: Object {
-                      column: 19
-                      index: 19
-                      line: 1
-                    }
-                  }
-                }
-              ]
             }
             ExpressionStatement {
+              leadingComments: Array ['0']
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -174,24 +159,6 @@ Program {
                   }
                 }
               }
-              leadingComments: Array [
-                CommentBlock {
-                  value: ' Multiline\nComment '
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 10
-                      index: 42
-                      line: 2
-                    }
-                    start: Object {
-                      column: 19
-                      index: 19
-                      line: 1
-                    }
-                  }
-                }
-              ]
             }
           ]
         }

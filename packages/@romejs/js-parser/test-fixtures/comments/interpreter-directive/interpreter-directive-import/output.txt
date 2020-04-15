@@ -38,6 +38,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: 'usr/bin/env babel-node'
       loc: Object {
         filename: 'input.js'
@@ -59,6 +60,7 @@ Program {
       defaultSpecifier: undefined
       importKind: undefined
       namespaceSpecifier: undefined
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -88,24 +90,6 @@ Program {
           }
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: 'usr/bin/env babel-node'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 25
-              index: 25
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-        }
-      ]
       namedSpecifiers: Array [
         ImportSpecifier {
           leadingComments: undefined

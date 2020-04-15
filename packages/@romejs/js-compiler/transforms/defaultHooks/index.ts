@@ -17,6 +17,8 @@ import {
   AssignmentIdentifier,
   AnyNode,
   variableDeclarationStatement,
+  AnyComment,
+  AnyCommentWithoutId,
 } from '@romejs/js-ast';
 
 type VariableInjectorState = {
@@ -97,6 +99,70 @@ export const variableInjectorVisitor = {
 
     if (node.type === 'BlockStatement' || node.type === 'Program') {
       path.provideHook(bindingInjector);
+    }
+
+    return node;
+  },
+};
+
+type CommentInjectorState = {
+  comments: Array<AnyComment>;
+};
+
+type CommentInjectorArg = AnyCommentWithoutId;
+
+export const commentInjector = createHook<
+  CommentInjectorState,
+  CommentInjectorArg,
+  string
+>({
+  name: 'bindingInjectorHook',
+
+  initialState: {
+    comments: [],
+  },
+
+  call(
+    path: Path,
+    state: CommentInjectorState,
+    commentWithoutId: CommentInjectorArg,
+  ) {
+    const commentWithId = path.context.comments.addComment(commentWithoutId);
+
+    return {
+      value: commentWithId.id,
+      state: {
+        comments: [...state.comments, commentWithId],
+      },
+    };
+  },
+
+  exit(path: Path, state: CommentInjectorState): AnyNode {
+    const {node} = path;
+
+    if (node.type !== 'Program') {
+      throw new Error('Never should have been used as a provider');
+    }
+
+    return {
+      ...node,
+      comments: [...node.comments, ...state.comments],
+    };
+  },
+});
+
+export const commentInjectorVisitor = {
+  name: 'commentInjector',
+  enter(path: Path) {
+    const {node, context} = path;
+
+    if (node.type === 'CommentBlock' || node.type === 'CommentLine') {
+      context.comments.updateComment(node);
+    }
+
+    if (node.type === 'Program') {
+      context.comments.setComments(node.comments);
+      path.provideHook(commentInjector);
     }
 
     return node;

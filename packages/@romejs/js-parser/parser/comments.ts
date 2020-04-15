@@ -38,6 +38,10 @@ function last<T>(stack: Array<T>): T {
   return stack[stack.length - 1];
 }
 
+function getIds(comments: Array<AnyComment>): Array<string> {
+  return comments.map((comment) => comment.id);
+}
+
 function getLoc(node: AnyNode): SourceLocation {
   const {loc} = node;
   if (loc === undefined) {
@@ -55,8 +59,8 @@ function end(node: AnyNode): Number0 {
 }
 
 function hasComments(
-  comments: undefined | Array<AnyComment>,
-): comments is Array<AnyComment> {
+  comments: undefined | Array<unknown>,
+): comments is Array<unknown> {
   return comments !== undefined && comments.length > 0;
 }
 
@@ -104,7 +108,7 @@ function adjustCommentsAfterTrailingComma(
     }
   }
 
-  const newTrailingComments = [];
+  const newTrailingComments: Array<AnyComment> = [];
   for (let i = 0; i < parser.state.leadingComments.length; i++) {
     const leadingComment = parser.state.leadingComments[i];
     if (end(leadingComment) < end(node)) {
@@ -119,7 +123,7 @@ function adjustCommentsAfterTrailingComma(
       if (node.trailingComments === undefined) {
         node.trailingComments = [];
       }
-      node.trailingComments.push(leadingComment);
+      node.trailingComments.push(leadingComment.id);
     }
   }
   if (takeAllComments) {
@@ -127,7 +131,7 @@ function adjustCommentsAfterTrailingComma(
   }
 
   if (newTrailingComments.length > 0) {
-    lastElement.trailingComments = newTrailingComments;
+    lastElement.trailingComments = getIds(newTrailingComments);
   } else if (lastElement.trailingComments !== undefined) {
     lastElement.trailingComments = [];
   }
@@ -140,7 +144,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 
   const {commentStack, commentPreviousNode} = parser.state;
 
-  let trailingComments;
+  let trailingComments: undefined | Array<AnyComment>;
 
   if (parser.state.trailingComments.length > 0) {
     // If the first comment in trailingComments comes after the
@@ -162,9 +166,11 @@ export function attachComments(parser: JSParser, node: AnyNode) {
   } else if (commentStack.length > 0) {
     const lastInStack = last(commentStack);
     if (hasComments(lastInStack.trailingComments) && start(
-        lastInStack.trailingComments[0],
+        parser.comments.assertGetCommentFromId(lastInStack.trailingComments[0]),
       ) >= end(node)) {
-      trailingComments = lastInStack.trailingComments;
+      trailingComments = parser.comments.getCommentsFromIds(
+        lastInStack.trailingComments,
+      );
       lastInStack.trailingComments = undefined;
     }
   }
@@ -229,9 +235,9 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 
   if (lastChild !== undefined) {
     if (hasComments(lastChild.leadingComments)) {
-      if (lastChild !== node && end(last(lastChild.leadingComments)) <= start(
-          node,
-        )) {
+      if (lastChild !== node && end(parser.comments.assertGetCommentFromId(last(
+          lastChild.leadingComments,
+        ))) <= start(node)) {
         node.leadingComments = lastChild.leadingComments;
         lastChild.leadingComments = undefined;
       } else {
@@ -239,7 +245,9 @@ export function attachComments(parser: JSParser, node: AnyNode) {
         // so this takes back the leading comment.
         // See also: https://github.com/eslint/espree/issues/158
         for (let i = lastChild.leadingComments.length - 2; i >= 0; --i) {
-          if (end(lastChild.leadingComments[i]) <= start(node)) {
+          if (end(parser.comments.assertGetCommentFromId(
+              lastChild.leadingComments[i],
+            )) <= start(node)) {
             node.leadingComments = lastChild.leadingComments.splice(0, i + 1);
             break;
           }
@@ -260,7 +268,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
       }
 
       if (parser.state.leadingComments.length > 0) {
-        node.leadingComments = parser.state.leadingComments;
+        node.leadingComments = getIds(parser.state.leadingComments);
         parser.state.leadingComments = [];
       }
     } else {
@@ -291,7 +299,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
       const leadingComments = parser.state.leadingComments.slice(0, i);
 
       if (leadingComments.length > 0) {
-        node.leadingComments = leadingComments;
+        node.leadingComments = getIds(leadingComments);
       }
 
       // Similarly, trailing comments are attached later. The variable
@@ -318,10 +326,10 @@ export function attachComments(parser: JSParser, node: AnyNode) {
     }
 
     if (innerEndIndex === -1) {
-      node.trailingComments = trailingComments;
+      node.trailingComments = getIds(trailingComments);
     } else {
-      node.innerComments = trailingComments.slice(0, innerEndIndex + 1);
-      node.trailingComments = trailingComments.slice(innerEndIndex + 1);
+      node.innerComments = getIds(trailingComments.slice(0, innerEndIndex + 1));
+      node.trailingComments = getIds(trailingComments.slice(innerEndIndex + 1));
     }
   }
 

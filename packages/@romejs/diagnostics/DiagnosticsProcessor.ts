@@ -216,8 +216,11 @@ export default class DiagnosticsProcessor {
     return keys;
   }
 
-  addDiagnostic(diag: Diagnostic, origin?: DiagnosticOrigin): boolean {
-    return this.addDiagnostics([diag], origin).length > 0;
+  addDiagnostic(
+    diag: Diagnostic,
+    origin?: DiagnosticOrigin,
+  ): undefined | Diagnostic {
+    return this.addDiagnostics([diag], origin)[0];
   }
 
   addDiagnostics(diags: Diagnostics, origin?: DiagnosticOrigin): Diagnostics {
