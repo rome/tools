@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' Also works on AssignmentPattern'
       loc: Object {
         filename: 'input.ts'
@@ -368,6 +369,7 @@ Program {
                   }
                 }
                 BindingAssignmentPattern {
+                  leadingComments: Array ['0']
                   loc: Object {
                     filename: 'input.ts'
                     end: Object {
@@ -397,24 +399,6 @@ Program {
                       }
                     }
                   }
-                  leadingComments: Array [
-                    CommentLine {
-                      value: ' Also works on AssignmentPattern'
-                      loc: Object {
-                        filename: 'input.ts'
-                        end: Object {
-                          column: 42
-                          index: 197
-                          line: 8
-                        }
-                        start: Object {
-                          column: 8
-                          index: 163
-                          line: 8
-                        }
-                      }
-                    }
-                  ]
                   meta: PatternMeta {
                     accessibility: undefined
                     leadingComments: undefined

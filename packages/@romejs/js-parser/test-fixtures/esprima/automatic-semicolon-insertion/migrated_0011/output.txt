@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' Comment'
       loc: Object {
         filename: 'input.js'
@@ -111,6 +112,7 @@ Program {
           body: Array [
             ReturnStatement {
               argument: undefined
+              trailingComments: Array ['0']
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -124,26 +126,9 @@ Program {
                   line: 1
                 }
               }
-              trailingComments: Array [
-                CommentLine {
-                  value: ' Comment'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 30
-                      index: 30
-                      line: 1
-                    }
-                    start: Object {
-                      column: 20
-                      index: 20
-                      line: 1
-                    }
-                  }
-                }
-              ]
             }
             ExpressionStatement {
+              leadingComments: Array ['0']
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -174,24 +159,6 @@ Program {
                   }
                 }
               }
-              leadingComments: Array [
-                CommentLine {
-                  value: ' Comment'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 30
-                      index: 30
-                      line: 1
-                    }
-                    start: Object {
-                      column: 20
-                      index: 20
-                      line: 1
-                    }
-                  }
-                }
-              ]
             }
           ]
         }

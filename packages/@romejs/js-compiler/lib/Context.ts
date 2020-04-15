@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, Program, ConstSourceType} from '@romejs/js-ast';
+import {AnyNode, Program, ConstSourceType, AnyComment} from '@romejs/js-ast';
 import {
   SourceLocation,
   extractSourceLocationRangeFromNodes,
@@ -35,6 +35,7 @@ import {
   extractSuppressionsFromProgram,
   matchesSuppression,
 } from '../suppressions';
+import CommentsConsumer from '@romejs/js-parser/CommentsConsumer';
 
 export type ContextArg = {
   ast: Program;
@@ -65,12 +66,15 @@ export default class Context {
     this.sourceType = ast.sourceType;
     this.rootScope = new RootScope(this, ast);
 
+    this.comments = new CommentsConsumer(ast.comments);
+
     const {suppressions, diagnostics} = extractSuppressionsFromProgram(ast);
     this.suppressions = suppressions;
     this.diagnostics = new DiagnosticsProcessor();
     this.diagnostics.addDiagnostics(diagnostics);
   }
 
+  comments: CommentsConsumer;
   sourceType: ConstSourceType;
   cacheDependencies: Set<string>;
   records: Array<Record>;
@@ -95,6 +99,10 @@ export default class Context {
         return visitor;
       }
     }));
+  }
+
+  getComments(ids: undefined | Array<string>): Array<AnyComment> {
+    return this.comments.getCommentsFromIds(ids);
   }
 
   hasNodeSuppression(

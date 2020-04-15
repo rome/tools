@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' Copied over from TypeScript\'s test case'
       loc: Object {
         filename: 'input.ts'
@@ -39,6 +40,7 @@ Program {
       }
     }
     CommentLine {
+      id: '1'
       value: ' https://github.com/Microsoft/TypeScript/blob/master/tests/baselines/reference/constAssertions.js'
       loc: Object {
         filename: 'input.ts'
@@ -55,6 +57,7 @@ Program {
       }
     }
     CommentLine {
+      id: '2'
       value: ' Error'
       loc: Object {
         filename: 'input.ts'
@@ -73,6 +76,10 @@ Program {
   ]
   body: Array [
     VariableDeclarationStatement {
+      leadingComments: Array [
+        '0'
+        '1'
+      ]
       loc: Object {
         filename: 'input.ts'
         end: Object {
@@ -86,40 +93,6 @@ Program {
           line: 3
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' Copied over from TypeScript\'s test case'
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 42
-              index: 42
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        CommentLine {
-          value: ' https://github.com/Microsoft/TypeScript/blob/master/tests/baselines/reference/constAssertions.js'
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 99
-              index: 142
-              line: 2
-            }
-            start: Object {
-              column: 0
-              index: 43
-              line: 2
-            }
-          }
-        }
-      ]
       declaration: VariableDeclaration {
         kind: 'let'
         leadingComments: undefined
@@ -3737,6 +3710,7 @@ Program {
       }
     }
     VariableDeclarationStatement {
+      trailingComments: Array ['2']
       loc: Object {
         filename: 'input.ts'
         end: Object {
@@ -3750,24 +3724,6 @@ Program {
           line: 26
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' Error'
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 61
-              index: 821
-              line: 26
-            }
-            start: Object {
-              column: 53
-              index: 813
-              line: 26
-            }
-          }
-        }
-      ]
       declaration: VariableDeclaration {
         kind: 'let'
         trailingComments: undefined
@@ -4145,6 +4101,7 @@ Program {
       }
     }
     VariableDeclarationStatement {
+      leadingComments: Array ['2']
       loc: Object {
         filename: 'input.ts'
         end: Object {
@@ -4158,24 +4115,6 @@ Program {
           line: 28
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' Error'
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 61
-              index: 821
-              line: 26
-            }
-            start: Object {
-              column: 53
-              index: 813
-              line: 26
-            }
-          }
-        }
-      ]
       declaration: VariableDeclaration {
         kind: 'let'
         leadingComments: undefined

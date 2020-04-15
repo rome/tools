@@ -20,6 +20,7 @@ function generateComment(value: string, line: number): CommentBlock {
   return {
     type: 'CommentBlock',
     value,
+    id: '0',
     loc: {
       filename: 'unknown',
       start: pos,

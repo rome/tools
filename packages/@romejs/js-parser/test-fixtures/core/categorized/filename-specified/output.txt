@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' This comment should have a filename prop attached to loc'
       loc: Object {
         filename: 'input.js'
@@ -41,6 +42,7 @@ Program {
   ]
   body: Array [
     VariableDeclarationStatement {
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -54,24 +56,6 @@ Program {
           line: 2
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' This comment should have a filename prop attached to loc'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 59
-              index: 59
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      ]
       declaration: VariableDeclaration {
         kind: 'var'
         leadingComments: undefined

@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' comment'
       loc: Object {
         filename: 'input.js'
@@ -72,6 +73,7 @@ Program {
       }
       cases: Array [
         SwitchCase {
+          trailingComments: Array ['0']
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -101,24 +103,6 @@ Program {
               }
             }
           }
-          trailingComments: Array [
-            CommentLine {
-              value: ' comment'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 14
-                  index: 57
-                  line: 4
-                }
-                start: Object {
-                  column: 4
-                  index: 47
-                  line: 4
-                }
-              }
-            }
-          ]
           consequent: Array [
             ExpressionStatement {
               trailingComments: undefined
@@ -236,6 +220,7 @@ Program {
         }
         SwitchCase {
           test: undefined
+          leadingComments: Array ['0']
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -249,24 +234,6 @@ Program {
               line: 5
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' comment'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 14
-                  index: 57
-                  line: 4
-                }
-                start: Object {
-                  column: 4
-                  index: 47
-                  line: 4
-                }
-              }
-            }
-          ]
           consequent: Array [
             BreakStatement {
               label: undefined

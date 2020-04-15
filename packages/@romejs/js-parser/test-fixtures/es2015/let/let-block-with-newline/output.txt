@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' ASI'
       loc: Object {
         filename: 'input.js'
@@ -88,6 +89,7 @@ Program {
         }
         body: Array [
           LabeledStatement {
+            trailingComments: Array ['0']
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -117,24 +119,6 @@ Program {
                 }
               }
             }
-            trailingComments: Array [
-              CommentLine {
-                value: ' ASI'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 17
-                    index: 30
-                    line: 2
-                  }
-                  start: Object {
-                    column: 11
-                    index: 24
-                    line: 2
-                  }
-                }
-              }
-            ]
             body: ExpressionStatement {
               trailingComments: undefined
               loc: Object {
@@ -172,6 +156,7 @@ Program {
           BlockStatement {
             body: Array []
             directives: Array []
+            leadingComments: Array ['0']
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -185,24 +170,6 @@ Program {
                 line: 3
               }
             }
-            leadingComments: Array [
-              CommentLine {
-                value: ' ASI'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 17
-                    index: 30
-                    line: 2
-                  }
-                  start: Object {
-                    column: 11
-                    index: 24
-                    line: 2
-                  }
-                }
-              }
-            ]
           }
         ]
       }

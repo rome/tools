@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' `export abstract class {}` is not valid TypeScript.'
       loc: Object {
         filename: 'input.ts'
@@ -39,6 +40,7 @@ Program {
       }
     }
     CommentLine {
+      id: '1'
       value: ' `abstract class` is not valid as an expression.'
       loc: Object {
         filename: 'input.ts'
@@ -164,6 +166,7 @@ Program {
     ExportLocalDeclaration {
       exportKind: 'value'
       specifiers: undefined
+      trailingComments: Array ['0']
       loc: Object {
         filename: 'input.ts'
         end: Object {
@@ -177,24 +180,6 @@ Program {
           line: 3
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' `export abstract class {}` is not valid TypeScript.'
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 54
-              index: 132
-              line: 4
-            }
-            start: Object {
-              column: 0
-              index: 78
-              line: 4
-            }
-          }
-        }
-      ]
       declaration: ClassDeclaration {
         id: BindingIdentifier {
           name: 'C3'
@@ -213,6 +198,7 @@ Program {
           }
         }
         abstract: true
+        trailingComments: Array ['0']
         loc: Object {
           filename: 'input.ts'
           end: Object {
@@ -226,24 +212,6 @@ Program {
             line: 3
           }
         }
-        trailingComments: Array [
-          CommentLine {
-            value: ' `export abstract class {}` is not valid TypeScript.'
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 54
-                index: 132
-                line: 4
-              }
-              start: Object {
-                column: 0
-                index: 78
-                line: 4
-              }
-            }
-          }
-        ]
         meta: ClassHead {
           body: Array []
           implements: undefined
@@ -268,6 +236,7 @@ Program {
       }
     }
     ExportDefaultDeclaration {
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.ts'
         end: Object {
@@ -281,24 +250,6 @@ Program {
           line: 5
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' `export abstract class {}` is not valid TypeScript.'
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 54
-              index: 132
-              line: 4
-            }
-            start: Object {
-              column: 0
-              index: 78
-              line: 4
-            }
-          }
-        }
-      ]
       declaration: ClassDeclaration {
         id: BindingIdentifier {
           name: '*default*'
@@ -317,6 +268,7 @@ Program {
           }
         }
         abstract: true
+        leadingComments: Array ['0']
         loc: Object {
           filename: 'input.ts'
           end: Object {
@@ -330,24 +282,6 @@ Program {
             line: 5
           }
         }
-        leadingComments: Array [
-          CommentLine {
-            value: ' `export abstract class {}` is not valid TypeScript.'
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 54
-                index: 132
-                line: 4
-              }
-              start: Object {
-                column: 0
-                index: 78
-                line: 4
-              }
-            }
-          }
-        ]
         meta: ClassHead {
           body: Array []
           implements: undefined
@@ -372,6 +306,7 @@ Program {
       }
     }
     ExportDefaultDeclaration {
+      trailingComments: Array ['1']
       loc: Object {
         filename: 'input.ts'
         end: Object {
@@ -385,24 +320,6 @@ Program {
           line: 6
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' `abstract class` is not valid as an expression.'
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 50
-              index: 254
-              line: 7
-            }
-            start: Object {
-              column: 0
-              index: 204
-              line: 7
-            }
-          }
-        }
-      ]
       declaration: ClassDeclaration {
         id: BindingIdentifier {
           name: 'C4'
@@ -421,6 +338,7 @@ Program {
           }
         }
         abstract: true
+        trailingComments: Array ['1']
         loc: Object {
           filename: 'input.ts'
           end: Object {
@@ -434,24 +352,6 @@ Program {
             line: 6
           }
         }
-        trailingComments: Array [
-          CommentLine {
-            value: ' `abstract class` is not valid as an expression.'
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 50
-                index: 254
-                line: 7
-              }
-              start: Object {
-                column: 0
-                index: 204
-                line: 7
-              }
-            }
-          }
-        ]
         meta: ClassHead {
           body: Array []
           implements: undefined
