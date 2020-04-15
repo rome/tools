@@ -197,9 +197,9 @@ Program {
                   line: 10
                 }
                 start: Object {
-                  column: 31
-                  index: 253
-                  line: 10
+                  column: 15
+                  index: 25
+                  line: 2
                 }
               }
               params: Array [

@@ -159,13 +159,13 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 17
-                  index: 17
+                  column: 15
+                  index: 15
                   line: 1
                 }
                 start: Object {
-                  column: 17
-                  index: 17
+                  column: 16
+                  index: 16
                   line: 1
                 }
               }
@@ -174,13 +174,13 @@ Program {
                 loc: Object {
                   filename: 'input.ts'
                   end: Object {
-                    column: 17
-                    index: 17
+                    column: 15
+                    index: 15
                     line: 1
                   }
                   start: Object {
-                    column: 17
-                    index: 17
+                    column: 16
+                    index: 16
                     line: 1
                   }
                 }

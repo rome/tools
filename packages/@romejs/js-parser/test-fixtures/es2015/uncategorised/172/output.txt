@@ -100,8 +100,8 @@ Program {
               line: 1
             }
             start: Object {
-              column: 1
-              index: 1
+              column: 11
+              index: 11
               line: 1
             }
           }

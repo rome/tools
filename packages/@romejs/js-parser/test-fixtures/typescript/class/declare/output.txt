@@ -377,13 +377,13 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 8
-                  index: 70
+                  column: 7
+                  index: 69
                   line: 5
                 }
                 start: Object {
-                  column: 7
-                  index: 69
+                  column: 5
+                  index: 67
                   line: 5
                 }
               }
@@ -501,13 +501,13 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 14
-                  index: 85
+                  column: 13
+                  index: 84
                   line: 6
                 }
                 start: Object {
-                  column: 7
-                  index: 78
+                  column: 5
+                  index: 76
                   line: 6
                 }
               }

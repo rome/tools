@@ -99,6 +99,7 @@ Program {
           rest: undefined
           returnType: undefined
           thisType: undefined
+          leadingComments: Array ['0']
           loc: Object {
             filename: 'input.js'
             end: Object {

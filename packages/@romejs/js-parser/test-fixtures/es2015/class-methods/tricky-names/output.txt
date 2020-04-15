@@ -154,8 +154,8 @@ Program {
                   line: 3
                 }
                 start: Object {
-                  column: 5
-                  index: 21
+                  column: 2
+                  index: 18
                   line: 3
                 }
               }
@@ -269,8 +269,8 @@ Program {
                   line: 6
                 }
                 start: Object {
-                  column: 5
-                  index: 36
+                  column: 2
+                  index: 33
                   line: 6
                 }
               }
@@ -404,8 +404,8 @@ Program {
                   line: 9
                 }
                 start: Object {
-                  column: 5
-                  index: 54
+                  column: 2
+                  index: 51
                   line: 9
                 }
               }
@@ -493,8 +493,8 @@ Program {
                   line: 12
                 }
                 start: Object {
-                  column: 5
-                  index: 71
+                  column: 2
+                  index: 68
                   line: 12
                 }
               }
@@ -608,8 +608,8 @@ Program {
                   line: 16
                 }
                 start: Object {
-                  column: 5
-                  index: 89
+                  column: 2
+                  index: 86
                   line: 16
                 }
               }
@@ -723,8 +723,8 @@ Program {
                   line: 19
                 }
                 start: Object {
-                  column: 5
-                  index: 106
+                  column: 2
+                  index: 103
                   line: 19
                 }
               }
@@ -838,8 +838,8 @@ Program {
                   line: 22
                 }
                 start: Object {
-                  column: 5
-                  index: 125
+                  column: 2
+                  index: 122
                   line: 22
                 }
               }
@@ -953,8 +953,8 @@ Program {
                   line: 27
                 }
                 start: Object {
-                  column: 5
-                  index: 150
+                  column: 2
+                  index: 147
                   line: 27
                 }
               }
@@ -1068,8 +1068,8 @@ Program {
                   line: 31
                 }
                 start: Object {
-                  column: 5
-                  index: 174
+                  column: 2
+                  index: 171
                   line: 31
                 }
               }
@@ -1183,8 +1183,8 @@ Program {
                   line: 35
                 }
                 start: Object {
-                  column: 5
-                  index: 201
+                  column: 2
+                  index: 198
                   line: 35
                 }
               }
@@ -1298,8 +1298,8 @@ Program {
                   line: 39
                 }
                 start: Object {
-                  column: 5
-                  index: 227
+                  column: 2
+                  index: 224
                   line: 39
                 }
               }
@@ -1413,8 +1413,8 @@ Program {
                   line: 43
                 }
                 start: Object {
-                  column: 5
-                  index: 249
+                  column: 2
+                  index: 246
                   line: 43
                 }
               }
@@ -1528,8 +1528,8 @@ Program {
                   line: 48
                 }
                 start: Object {
-                  column: 5
-                  index: 273
+                  column: 2
+                  index: 270
                   line: 48
                 }
               }
@@ -1643,8 +1643,8 @@ Program {
                   line: 54
                 }
                 start: Object {
-                  column: 5
-                  index: 307
+                  column: 2
+                  index: 304
                   line: 54
                 }
               }
