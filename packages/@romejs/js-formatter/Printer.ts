@@ -50,6 +50,7 @@ type State = {
   endsWithNewline: boolean;
   endsWithWord: boolean;
   generatedLine: Number1;
+  generatedIndex: Number0;
   generatedColumn: Number0;
   terminator?: TerminatorState;
   sourceLocation?: SourceLocation;
@@ -93,6 +94,7 @@ export default class Printer {
       endsWithInteger: false,
       endsWithNewline: true,
       endsWithWord: false,
+      generatedIndex: number0,
       generatedColumn: number0,
       generatedLine: number1,
     };
@@ -150,14 +152,19 @@ export default class Printer {
     return;
   }
 
-  mark() {
-    const {sourceLocation, generatedLine, generatedColumn} = this.state;
+  mark(prop: 'start' | 'end' = 'start') {
+    const {
+      sourceLocation,
+      generatedIndex,
+      generatedLine,
+      generatedColumn,
+    } = this.state;
     if (sourceLocation === undefined) {
       return;
     }
 
-    let originalLine = sourceLocation.start.line;
-    let originalColumn = sourceLocation.start.column;
+    let originalLine = sourceLocation[prop].line;
+    let originalColumn = sourceLocation[prop].column;
 
     // If this mapping points to the same source location as the last one, we can ignore it since
     // the previous one covers it.
@@ -187,8 +194,15 @@ export default class Printer {
     }
 
     this.mappings.push({
-      generated: {line: generatedLine, column: generatedColumn},
-      original: {line: originalLine, column: originalColumn},
+      generated: {
+        index: generatedIndex,
+        line: generatedLine,
+        column: generatedColumn,
+      },
+      original: {
+        line: originalLine,
+        column: originalColumn,
+      },
       name: sourceLocation.identifierName,
       source: sourceLocation.filename,
     });
@@ -213,6 +227,8 @@ export default class Printer {
     const {lastUnbrokenGroup} = this;
 
     for (const char of str) {
+      this.state.generatedIndex = inc(this.state.generatedIndex);
+
       if (char === '\n') {
         // Determine if we need to line wrap. We skip this when we aren't in pretty mode for better performance.
         if (this.lineWrap) {
@@ -594,9 +610,12 @@ export default class Printer {
     const origSourceLocation = state.sourceLocation;
     state.sourceLocation = token.location;
 
-    this.print(token.tokens);
-
-    state.sourceLocation = origSourceLocation;
+    try {
+      this.print(token.tokens);
+      this.mark('end');
+    } finally {
+      state.sourceLocation = origSourceLocation;
+    }
   }
 
   printConcatToken(token: ConcatToken) {

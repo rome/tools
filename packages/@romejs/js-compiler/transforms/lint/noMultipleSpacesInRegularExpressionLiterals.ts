@@ -6,14 +6,13 @@
  */
 
 import {
-  AnyNode,
   RegExpCharacter,
   RegExpSubExpression,
   AnyRegExpBodyItem,
   RegExpQuantified,
   regExpQuantified,
 } from '@romejs/js-ast';
-import {Path, Context} from '@romejs/js-compiler';
+import {Path, Context, TransformExitResult} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
 
 function isSpaceChar(
@@ -26,7 +25,7 @@ function isSpaceChar(
 function checkRegex(
   node: RegExpSubExpression,
   context: Context,
-): RegExpSubExpression {
+): TransformExitResult {
   for (let i = 0; i < node.body.length; i++) {
     const item = node.body[i];
 
@@ -48,14 +47,6 @@ function checkRegex(
       }
     }
 
-    const {suppressed} = context.addNodesRangeDiagnostic(
-      spaceNodes,
-      descriptions.LINT.NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(spaceNodes.length),
-    );
-    if (suppressed) {
-      return node;
-    }
-
     const quantifiedSpace: RegExpQuantified = regExpQuantified.create({
       min: spaceNodes.length,
       max: spaceNodes.length,
@@ -74,7 +65,11 @@ function checkRegex(
       ],
     };
 
-    return checkRegex(newRegex, context);
+    return context.addFixableDiagnostic({
+      target: spaceNodes,
+      old: node,
+      fixed: checkRegex(newRegex, context),
+    }, descriptions.LINT.NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(spaceNodes.length));
   }
 
   return node;
@@ -82,7 +77,7 @@ function checkRegex(
 
 export default {
   name: 'noMultipleSpacesInRegularExpressionLiterals',
-  enter(path: Path): AnyNode {
+  enter(path: Path): TransformExitResult {
     const {context, node} = path;
 
     if (node.type === 'RegExpSubExpression') {

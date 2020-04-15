@@ -60,6 +60,7 @@ export type DiagnosticSourceType = 'unknown' | ConstSourceType;
 export type Diagnostic = {
   description: DiagnosticDescription;
   location: DiagnosticLocation;
+  fixable?: boolean;
   label?: string;
   origins?: Array<DiagnosticOrigin>;
   dependencies?: Array<{
@@ -72,7 +73,6 @@ export type Diagnostic = {
 export type Diagnostics = Array<Diagnostic>;
 
 export type DiagnosticDescription = {
-  fixable?: boolean;
   category: DiagnosticCategory;
   message: DiagnosticBlessedMessage;
   advice?: DiagnosticAdvice;

@@ -211,17 +211,21 @@ export const descriptions = createMessages(
     LINT: {
       PENDING_FIXES: (original: string, formatted: string) => ({
         category: 'lint/pendingFixes',
-        message: 'Pending fixes',
+        message: 'Pending autofixes and formatting',
         advice: [
           {
             type: 'diff',
             diff: stringDiff(original, formatted),
           },
+          {
+            type: 'log',
+            category: 'info',
+            message: 'Run <command>rome lint --fix</command> to apply',
+          },
         ],
       }),
 
       DUPLICATE_IMPORT_SOURCE: (seenLocation: DiagnosticLocation) => ({
-        fixable: true,
         category: 'lint/duplicateImportSource',
         message: 'This module has already been imported',
         advice: [
@@ -243,7 +247,6 @@ export const descriptions = createMessages(
       },
 
       UNSAFE_NEGATION: {
-        fixable: true,
         category: 'lint/unsafeNegation',
         message: 'Unsafe usage of negation operator in left side of binary expression',
       },
@@ -261,7 +264,6 @@ export const descriptions = createMessages(
       CASE_SINGLE_STATEMENT: {
         category: 'lint/caseSingleStatement',
         message: 'A switch case should only have a single statement. If you want more then wrap it in a block.',
-        fixable: true,
       },
 
       INCONSIDERATE_LANGUAGE: (
@@ -269,7 +271,6 @@ export const descriptions = createMessages(
         word: string,
         suggestion: string,
       ) => ({
-        fixable: true,
         category: 'lint/inconsiderateLanguage',
         message: description,
         advice: [
@@ -311,13 +312,11 @@ export const descriptions = createMessages(
       },
 
       SPARSE_ARRAY: {
-        fixable: true,
         category: 'lint/sparseArray',
         message: 'Your array contains an empty slot',
       },
 
       SINGLE_VAR_DECLARATOR: {
-        fixable: true,
         category: 'lint/singleVarDeclarator',
         message: 'Declare each variable separately',
       },
@@ -325,7 +324,6 @@ export const descriptions = createMessages(
       PREFER_FUNCTION_DECLARATIONS: {
         category: 'lint/preferFunctionDeclarations',
         message: 'Use a function declaration instead of a const function',
-        fixable: true,
       },
 
       NO_VAR: {
@@ -334,7 +332,6 @@ export const descriptions = createMessages(
       },
 
       NO_SHORTHAND_ARRAY_TYPE: {
-        fixable: true,
         category: 'lint/noShorthandArrayType',
         message: 'Use Array<T> instead of shorthand T[]',
       },
@@ -362,7 +359,6 @@ export const descriptions = createMessages(
       }),
 
       NO_MULTIPLE_SPACES_IN_REGEX_LITERAL: (count: number) => ({
-        fixable: true,
         category: 'lint/noMultipleSpacesInRegularExpressionLiterals',
         message: 'Unclear multiple spaces in regular expression',
         advice: [
@@ -402,7 +398,6 @@ export const descriptions = createMessages(
       },
 
       NO_EMPTY_CHAR_SET: {
-        fixable: true,
         category: 'lint/noEmptyCharacterClass',
         message: 'Empty character classes in regular expressions are not allowed',
       },
@@ -428,7 +423,6 @@ export const descriptions = createMessages(
       },
 
       NO_DEBUGGER: {
-        fixable: true,
         category: 'lint/noDebugger',
         message: "Unexpected 'debugger' statement",
       },
@@ -500,7 +494,6 @@ export const descriptions = createMessages(
           ` ${defaultType} name should be <emphasis>${actualFilename}</emphasis>`;
 
         return {
-            fixable: true,
             category: 'lint/defaultExportSameBasename',
             message: `Filename and the name of a default ${defaultType} should match`,
             advice: [

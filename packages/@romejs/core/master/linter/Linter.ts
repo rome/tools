@@ -82,12 +82,12 @@ function createDiagnosticsPrinter(
         let couldFix = false;
         let hasPendingFixes = false;
 
-        for (const {description} of processor.getDiagnostics()) {
+        for (const {fixable, description} of processor.getDiagnostics()) {
           if (description.category === 'lint/pendingFixes') {
             hasPendingFixes = true;
           }
 
-          if (description.fixable) {
+          if (fixable) {
             couldFix = true;
           }
         }
