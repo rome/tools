@@ -7,7 +7,7 @@
 
 import {ModuleSignature} from '@romejs/js-analysis';
 import {Manifest} from '@romejs/codec-js-manifest';
-import {Program, ConstSourceType} from '@romejs/js-ast';
+import {Program, ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
 import {
   BundleCompileOptions,
   CompileResult,
@@ -53,9 +53,20 @@ export type WorkerAnalyzeDependencyResult = AnalyzeDependencyResult & {
   cached: boolean;
 };
 
+export type WorkerFormatOptions = {
+  allowParserDiagnostics: boolean;
+};
+
+export type WorkerLintOptions = WorkerFormatOptions & {
+  prefetchedModuleSignatures: PrefetchedModuleSignatures;
+  fix: boolean;
+};
+
 export type WorkerParseOptions = {
-  compact: boolean;
-  sourceType: undefined | ConstSourceType;
+  sourceType?: ConstSourceType;
+  syntax?: Array<ConstProgramSyntax>;
+  cache?: boolean;
+  allowDiagnostics?: boolean;
 };
 
 export type WorkerStatus = {
@@ -136,9 +147,10 @@ export default class WorkerBridge extends Bridge {
     direction: 'server->client',
   });
 
-  format = this.createEvent<{file: JSONFileReference},
-    | undefined
-    | WorkerFormatResult>({
+  format = this.createEvent<{
+    file: JSONFileReference;
+    options: WorkerFormatOptions;
+  }, undefined | WorkerFormatResult>({
     name: 'format',
     direction: 'server->client',
   });
@@ -161,8 +173,7 @@ export default class WorkerBridge extends Bridge {
 
   lint = this.createEvent<{
     file: JSONFileReference;
-    prefetchedModuleSignatures: PrefetchedModuleSignatures;
-    fix: boolean;
+    options: WorkerLintOptions;
   }, WorkerLintResult>({name: 'lint', direction: 'server->client'});
 
   compileJS = this.createEvent<{

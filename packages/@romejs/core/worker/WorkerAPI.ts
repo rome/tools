@@ -6,7 +6,7 @@
  */
 
 import {Worker, FileReference} from '@romejs/core';
-import {Program, program} from '@romejs/js-ast';
+import {Program} from '@romejs/js-ast';
 import {Diagnostics, descriptions, catchDiagnostics} from '@romejs/diagnostics';
 import {
   TransformStageName,
@@ -15,14 +15,14 @@ import {
   compile,
 } from '@romejs/js-compiler';
 import {
-  PrefetchedModuleSignatures,
   WorkerParseOptions,
   WorkerCompilerOptions,
   WorkerFormatResult,
   WorkerLintResult,
+  WorkerFormatOptions,
+  WorkerLintOptions,
 } from '../common/bridges/WorkerBridge';
 import Logger from '../common/utils/Logger';
-import {removeLoc} from '@romejs/js-ast-utils';
 import * as jsAnalysis from '@romejs/js-analysis';
 import {
   getFileHandlerAssert,
@@ -166,17 +166,14 @@ export default class WorkerAPI {
       cache: false,
     });
 
-    ast = this.interceptAndAddGeneratedToDiagnostics(ast, generated);
-
-    if (opts.compact) {
-      return program.assert(removeLoc(ast));
-    } else {
-      return ast;
-    }
+    return this.interceptAndAddGeneratedToDiagnostics(ast, generated);
   }
 
-  async format(ref: FileReference): Promise<undefined | WorkerFormatResult> {
-    const res = await this._format(ref);
+  async format(
+    ref: FileReference,
+    opts: WorkerFormatOptions,
+  ): Promise<undefined | WorkerFormatResult> {
+    const res = await this._format(ref, opts);
     if (res === undefined) {
       return undefined;
     } else {
@@ -199,7 +196,10 @@ export default class WorkerAPI {
         'NO_MATCH';
   }
 
-  async _format(ref: FileReference): Promise<undefined | ExtensionLintResult> {
+  async _format(
+    ref: FileReference,
+    options: WorkerFormatOptions,
+  ): Promise<undefined | ExtensionLintResult> {
     const project = this.worker.getProject(ref.project);
     this.logger.info(`Formatting:`, ref.real);
 
@@ -217,6 +217,7 @@ export default class WorkerAPI {
       file: ref,
       project,
       worker: this.worker,
+      options,
     });
 
     return res;
@@ -224,8 +225,7 @@ export default class WorkerAPI {
 
   async lint(
     ref: FileReference,
-    prefetchedModuleSignatures: PrefetchedModuleSignatures,
-    fix: boolean,
+    options: WorkerLintOptions,
   ): Promise<WorkerLintResult> {
     const project = this.worker.getProject(ref.project);
     this.logger.info(`Linting:`, ref.real);
@@ -248,14 +248,14 @@ export default class WorkerAPI {
       message: 'Caught by WorkerAPI.lint',
     }, () => {
       if (lint === undefined) {
-        return this._format(ref);
+        return this._format(ref, options);
       } else {
         return lint({
           format: this.shouldFormat(ref),
           file: ref,
           project,
-          prefetchedModuleSignatures,
           worker: this.worker,
+          options,
         });
       }
     });
@@ -294,13 +294,13 @@ export default class WorkerAPI {
     const needsFix = formatted !== sourceText;
 
     // Autofix if necessary
-    if (fix && needsFix) {
+    if (options.fix && needsFix) {
       // Save the file and evict it from the cache
       await this.worker.writeFile(ref.real, formatted);
 
       // Relint this file without fixing it, we do this to prevent false positive error messages
       return {
-        ...(await this.lint(ref, prefetchedModuleSignatures, false)),
+        ...(await this.lint(ref, {...options, fix: false})),
         fixed: true,
       };
     }

@@ -31,16 +31,6 @@ export default async function lint(req: FormatRequest): Promise<LintResult> {
     return cached;
   }
 
-  if (ast.corrupt) {
-    const result: LintResult = {
-      suppressions: [],
-      diagnostics: [...ast.diagnostics],
-      src: req.sourceText,
-    };
-    lintCache.set(query, result);
-    return result;
-  }
-
   let formattedCode = sourceText;
   if (format) {
     // Perform autofixes

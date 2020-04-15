@@ -11,6 +11,7 @@ import WorkerBridge, {
   PrefetchedModuleSignatures,
   WorkerPartialManifest,
   WorkerPartialManifests,
+  WorkerParseOptions,
 } from '../common/bridges/WorkerBridge';
 import {Program, ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
 import Logger from '../common/utils/Logger';
@@ -21,7 +22,7 @@ import {Reporter} from '@romejs/cli-reporter';
 import setupGlobalErrorHandlers from '../common/utils/setupGlobalErrorHandlers';
 import {UserConfig, loadUserConfig} from '../common/userConfig';
 import {hydrateJSONProjectConfig} from '@romejs/project';
-import {Diagnostics} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticsError} from '@romejs/diagnostics';
 import {
   createUnknownFilePath,
   AbsoluteFilePath,
@@ -159,13 +160,15 @@ export default class Worker {
     bridge.lint.subscribe((payload) => {
       return this.api.lint(
         convertTransportFileReference(payload.file),
-        payload.prefetchedModuleSignatures,
-        payload.fix,
+        payload.options,
       );
     });
 
     bridge.format.subscribe((payload) => {
-      return this.api.format(convertTransportFileReference(payload.file));
+      return this.api.format(
+        convertTransportFileReference(payload.file),
+        payload.options,
+      );
     });
 
     bridge.analyzeDependencies.subscribe((payload) => {
@@ -301,11 +304,10 @@ export default class Worker {
     }
   }
 
-  async parseJS(ref: FileReference, opts: {
-    sourceType?: ConstSourceType;
-    syntax?: Array<ConstProgramSyntax>;
-    cache?: boolean;
-  } = {}): Promise<ParseResult> {
+  async parseJS(
+    ref: FileReference,
+    opts: WorkerParseOptions = {},
+  ): Promise<ParseResult> {
     const path = createAbsoluteFilePath(ref.real);
 
     const {project: projectId, uid} = ref;
@@ -393,6 +395,20 @@ export default class Worker {
       sourceType,
       syntax,
     });
+
+    // If the AST is corrupt then we don't under any circumstance allow it
+    if (ast.corrupt) {
+      throw new DiagnosticsError('Corrupt AST', ast.diagnostics);
+    }
+
+    // Sometimes we may want to allow the "fixed" AST
+    const allowDiagnostics = opts.allowDiagnostics === true;
+    if (!allowDiagnostics && ast.diagnostics.length > 0) {
+      throw new DiagnosticsError(
+        "AST diagnostics aren't allowed",
+        ast.diagnostics,
+      );
+    }
 
     const res: ParseResult = {
       ast,

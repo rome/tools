@@ -7,7 +7,10 @@
 
 import {ProjectConfig} from '@romejs/project';
 import {FileReference} from '@romejs/core';
-import {PrefetchedModuleSignatures} from '../common/bridges/WorkerBridge';
+import {
+  WorkerFormatOptions,
+  WorkerLintOptions,
+} from '../common/bridges/WorkerBridge';
 import Worker, {ParseResult} from '../worker/Worker';
 import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import * as compiler from '@romejs/js-compiler';
@@ -73,8 +76,12 @@ export function getFileHandlerAssert(
   }
 }
 
+export type ExtensionFormatInfo = ExtensionHandlerMethodInfo & {
+  options: WorkerFormatOptions;
+};
+
 export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
-  prefetchedModuleSignatures: PrefetchedModuleSignatures;
+  options: WorkerLintOptions;
   format: boolean;
 };
 
@@ -98,7 +105,7 @@ export type ExtensionHandler = {
   isAsset?: boolean;
   canHaveScale?: boolean;
   lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
-  format?: (info: ExtensionHandlerMethodInfo) => Promise<ExtensionLintResult>;
+  format?: (info: ExtensionFormatInfo) => Promise<ExtensionLintResult>;
   toJavaScript?: (opts: ExtensionHandlerMethodInfo) => Promise<{
     generated: boolean;
     sourceText: string;
@@ -318,13 +325,7 @@ function buildJSHandler(
       },
 
       async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {
-        const {
-          file: ref,
-          project,
-          format,
-          prefetchedModuleSignatures,
-          worker,
-        } = info;
+        const {file: ref, project, format, options, worker} = info;
 
         const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
           ref,
@@ -355,7 +356,7 @@ function buildJSHandler(
         if (typeCheckingEnabled) {
           const typeCheckProvider = await worker.getTypeCheckProvider(
             ref.project,
-            prefetchedModuleSignatures,
+            options.prefetchedModuleSignatures,
           );
           const typeDiagnostics = await typeCheck({
             ast,

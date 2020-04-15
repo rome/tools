@@ -9,12 +9,23 @@ import {MasterRequest} from '@romejs/core';
 import {createMasterCommand, commandCategories} from '../../commands';
 
 import {createUnknownFilePath} from '@romejs/path';
+import {Consumer} from '@romejs/consume';
+
+type Flags = {
+  allowDiagnostics: boolean;
+};
 
 export default createMasterCommand({
   category: commandCategories.INTERNAL,
   description: 'TODO',
 
-  async default(req: MasterRequest): Promise<undefined | string> {
+  defineFlags(c: Consumer): Flags {
+    return {
+      allowDiagnostics: c.get('allowDiagnostics').asBoolean(false),
+    };
+  },
+
+  async default(req: MasterRequest, flags: Flags): Promise<undefined | string> {
     const {reporter, master} = req;
     const {args} = req.query;
     req.expectArgumentLength(1);
@@ -24,7 +35,10 @@ export default createMasterCommand({
       source: createUnknownFilePath(args[0]),
     }, {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
 
-    const res = await req.requestWorkerFormat(filename);
+    const res = await req.requestWorkerFormat(filename, {
+      allowParserDiagnostics: flags.allowDiagnostics,
+    });
+
     if (res === undefined) {
       reporter.error('No formatter for this file');
       return undefined;

@@ -57,6 +57,8 @@ import WorkerBridge, {
   WorkerCompilerOptions,
   WorkerFormatResult,
   WorkerLintResult,
+  WorkerFormatOptions,
+  WorkerLintOptions,
 } from '../common/bridges/WorkerBridge';
 import {ModuleSignature} from '@romejs/js-analysis';
 import {
@@ -781,8 +783,10 @@ export default class MasterRequest {
 
   async requestWorkerLint(
     path: AbsoluteFilePath,
-    fix: boolean,
-  ): Promise<WorkerLintResult> {
+    optionsWithoutModSigs: Omit<WorkerLintOptions, 'prefetchedModuleSignatures'>,
+  ): Promise<
+    WorkerLintResult
+  > {
     const {cache} = this.master;
     const cacheEntry = await cache.get(path);
     if (cacheEntry.lint !== undefined) {
@@ -793,10 +797,15 @@ export default class MasterRequest {
       path,
     );
 
+    const options: WorkerLintOptions = {
+      ...optionsWithoutModSigs,
+      prefetchedModuleSignatures,
+    };
+
     const res = await this.wrapRequestDiagnostic(
       'lint',
       path,
-      (bridge, file) => bridge.lint.call({file, fix, prefetchedModuleSignatures}),
+      (bridge, file) => bridge.lint.call({file, options}),
     );
 
     await cache.update(path, {
@@ -808,11 +817,12 @@ export default class MasterRequest {
 
   async requestWorkerFormat(
     path: AbsoluteFilePath,
+    options: WorkerFormatOptions,
   ): Promise<undefined | WorkerFormatResult> {
     return await this.wrapRequestDiagnostic(
       'format',
       path,
-      (bridge, file) => bridge.format.call({file}),
+      (bridge, file) => bridge.format.call({file, options}),
     );
   }
 
