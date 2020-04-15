@@ -57,6 +57,7 @@ import WorkerBridge, {
   WorkerCompilerOptions,
   WorkerFormatResult,
   WorkerLintResult,
+  WorkerLintOptions,
 } from '../common/bridges/WorkerBridge';
 import {ModuleSignature} from '@romejs/js-analysis';
 import {
@@ -775,14 +776,18 @@ export default class MasterRequest {
     return this.wrapRequestDiagnostic(
       'parse',
       path,
-      (bridge, file) => bridge.parseJS.call({file, opts}),
+      (bridge, file) => bridge.parseJS.call({file, options: opts}),
     );
   }
 
   async requestWorkerLint(
     path: AbsoluteFilePath,
-    fix: boolean,
-  ): Promise<WorkerLintResult> {
+    optionsWithoutModSigs: Omit<WorkerLintOptions, 'prefetchedModuleSignatures'>,
+
+    parseOptions: WorkerParseOptions,
+  ): Promise<
+    WorkerLintResult
+  > {
     const {cache} = this.master;
     const cacheEntry = await cache.get(path);
     if (cacheEntry.lint !== undefined) {
@@ -793,10 +798,15 @@ export default class MasterRequest {
       path,
     );
 
+    const options: WorkerLintOptions = {
+      ...optionsWithoutModSigs,
+      prefetchedModuleSignatures,
+    };
+
     const res = await this.wrapRequestDiagnostic(
       'lint',
       path,
-      (bridge, file) => bridge.lint.call({file, fix, prefetchedModuleSignatures}),
+      (bridge, file) => bridge.lint.call({file, options, parseOptions}),
     );
 
     await cache.update(path, {
@@ -808,18 +818,20 @@ export default class MasterRequest {
 
   async requestWorkerFormat(
     path: AbsoluteFilePath,
+    parseOptions: WorkerParseOptions,
   ): Promise<undefined | WorkerFormatResult> {
     return await this.wrapRequestDiagnostic(
       'format',
       path,
-      (bridge, file) => bridge.format.call({file}),
+      (bridge, file) => bridge.format.call({file, parseOptions}),
     );
   }
 
   async requestWorkerCompile(
     path: AbsoluteFilePath,
     stage: TransformStageName,
-    options?: WorkerCompilerOptions,
+    options: WorkerCompilerOptions,
+    parseOptions: WorkerParseOptions,
   ): Promise<WorkerCompileResult> {
     const {cache} = this.master;
 
@@ -846,7 +858,7 @@ export default class MasterRequest {
         options = {};
       }
 
-      return bridge.compileJS.call({file, stage, options});
+      return bridge.compileJS.call({file, stage, options, parseOptions});
     });
 
     const res = this.normalizeCompileResult({
@@ -870,6 +882,7 @@ export default class MasterRequest {
 
   async requestWorkerAnalyzeDependencies(
     path: AbsoluteFilePath,
+    parseOptions: WorkerParseOptions,
   ): Promise<WorkerAnalyzeDependencyResult> {
     const {cache} = this.master;
 
@@ -881,7 +894,7 @@ export default class MasterRequest {
     const res = await this.wrapRequestDiagnostic('analyzeDependencies', path, (
       bridge,
       file,
-    ) => bridge.analyzeDependencies.call({file}));
+    ) => bridge.analyzeDependencies.call({file, parseOptions}));
     await cache.update(path, {
       analyzeDependencies: {
         ...res,
@@ -897,6 +910,7 @@ export default class MasterRequest {
 
   async requestWorkerModuleSignature(
     path: AbsoluteFilePath,
+    parseOptions: WorkerParseOptions,
   ): Promise<ModuleSignature> {
     const {cache} = this.master;
 
@@ -908,7 +922,7 @@ export default class MasterRequest {
     const res = await this.wrapRequestDiagnostic('moduleSignature', path, (
       bridge,
       file,
-    ) => bridge.moduleSignatureJS.call({file}));
+    ) => bridge.moduleSignatureJS.call({file, parseOptions}));
     await cache.update(path, {
       moduleSignature: res,
     });

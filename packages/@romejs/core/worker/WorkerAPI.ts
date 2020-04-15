@@ -6,7 +6,7 @@
  */
 
 import {Worker, FileReference} from '@romejs/core';
-import {Program, program} from '@romejs/js-ast';
+import {Program} from '@romejs/js-ast';
 import {Diagnostics, descriptions, catchDiagnostics} from '@romejs/diagnostics';
 import {
   TransformStageName,
@@ -15,14 +15,13 @@ import {
   compile,
 } from '@romejs/js-compiler';
 import {
-  PrefetchedModuleSignatures,
   WorkerParseOptions,
   WorkerCompilerOptions,
   WorkerFormatResult,
   WorkerLintResult,
+  WorkerLintOptions,
 } from '../common/bridges/WorkerBridge';
 import Logger from '../common/utils/Logger';
-import {removeLoc} from '@romejs/js-ast-utils';
 import * as jsAnalysis from '@romejs/js-analysis';
 import {
   getFileHandlerAssert,
@@ -89,20 +88,25 @@ export default class WorkerAPI {
     }
   }
 
-  async moduleSignatureJS(ref: FileReference) {
-    const {ast, project} = await this.worker.parseJS(ref);
+  async moduleSignatureJS(ref: FileReference, parseOptions: WorkerParseOptions) {
+    const {ast, project} = await this.worker.parseJS(ref, parseOptions);
 
     this.logger.info(`Generating export types:`, ref.real);
 
     return await jsAnalysis.getModuleSignature({
       ast,
       project,
-      provider: await this.worker.getTypeCheckProvider(ref.project),
+      provider: await this.worker.getTypeCheckProvider(
+        ref.project,
+        {},
+        parseOptions,
+      ),
     });
   }
 
   async analyzeDependencies(
     ref: FileReference,
+    parseOptions: WorkerParseOptions,
   ): Promise<AnalyzeDependencyResult> {
     const project = this.worker.getProject(ref.project);
     const {handler} = getFileHandlerAssert(ref.real, project.config);
@@ -117,12 +121,14 @@ export default class WorkerAPI {
       file: ref,
       project,
       worker: this.worker,
+      parseOptions,
     });
   }
 
   async workerCompilerOptionsToCompilerOptions(
     ref: FileReference,
     workerOptions: WorkerCompilerOptions,
+    parseOptions: WorkerParseOptions,
   ): Promise<CompilerOptions> {
     const {bundle, ...options} = workerOptions;
 
@@ -133,7 +139,7 @@ export default class WorkerAPI {
         ...options,
         bundle: {
           ...bundle,
-          analyze: await this.analyzeDependencies(ref),
+          analyze: await this.analyzeDependencies(ref, parseOptions),
         },
       };
     }
@@ -142,19 +148,24 @@ export default class WorkerAPI {
   async compileJS(
     ref: FileReference,
     stage: TransformStageName,
-    workerOptions: WorkerCompilerOptions,
+    options: WorkerCompilerOptions,
+    parseOptions: WorkerParseOptions,
   ): Promise<CompileResult> {
-    const {ast, project, sourceText, generated} = await this.worker.parseJS(ref);
+    const {ast, project, sourceText, generated} = await this.worker.parseJS(
+      ref,
+      parseOptions,
+    );
     this.logger.info(`Compiling:`, ref.real);
 
-    const options = await this.workerCompilerOptionsToCompilerOptions(
+    const compilerOptions = await this.workerCompilerOptionsToCompilerOptions(
       ref,
-      workerOptions,
+      options,
+      parseOptions,
     );
     return this.interceptAndAddGeneratedToDiagnostics(await compile({
       ast,
       sourceText,
-      options,
+      options: compilerOptions,
       project,
       stage,
     }), generated);
@@ -162,21 +173,19 @@ export default class WorkerAPI {
 
   async parseJS(ref: FileReference, opts: WorkerParseOptions): Promise<Program> {
     let {ast, generated} = await this.worker.parseJS(ref, {
+      ...opts,
       sourceType: opts.sourceType,
       cache: false,
     });
 
-    ast = this.interceptAndAddGeneratedToDiagnostics(ast, generated);
-
-    if (opts.compact) {
-      return program.assert(removeLoc(ast));
-    } else {
-      return ast;
-    }
+    return this.interceptAndAddGeneratedToDiagnostics(ast, generated);
   }
 
-  async format(ref: FileReference): Promise<undefined | WorkerFormatResult> {
-    const res = await this._format(ref);
+  async format(
+    ref: FileReference,
+    opts: WorkerParseOptions,
+  ): Promise<undefined | WorkerFormatResult> {
+    const res = await this._format(ref, opts);
     if (res === undefined) {
       return undefined;
     } else {
@@ -199,7 +208,10 @@ export default class WorkerAPI {
         'NO_MATCH';
   }
 
-  async _format(ref: FileReference): Promise<undefined | ExtensionLintResult> {
+  async _format(
+    ref: FileReference,
+    parseOptions: WorkerParseOptions,
+  ): Promise<undefined | ExtensionLintResult> {
     const project = this.worker.getProject(ref.project);
     this.logger.info(`Formatting:`, ref.real);
 
@@ -217,6 +229,7 @@ export default class WorkerAPI {
       file: ref,
       project,
       worker: this.worker,
+      parseOptions,
     });
 
     return res;
@@ -224,8 +237,8 @@ export default class WorkerAPI {
 
   async lint(
     ref: FileReference,
-    prefetchedModuleSignatures: PrefetchedModuleSignatures,
-    fix: boolean,
+    options: WorkerLintOptions,
+    parseOptions: WorkerParseOptions,
   ): Promise<WorkerLintResult> {
     const project = this.worker.getProject(ref.project);
     this.logger.info(`Linting:`, ref.real);
@@ -248,14 +261,15 @@ export default class WorkerAPI {
       message: 'Caught by WorkerAPI.lint',
     }, () => {
       if (lint === undefined) {
-        return this._format(ref);
+        return this._format(ref, parseOptions);
       } else {
         return lint({
           format: this.shouldFormat(ref),
           file: ref,
           project,
-          prefetchedModuleSignatures,
           worker: this.worker,
+          options,
+          parseOptions,
         });
       }
     });
@@ -294,13 +308,13 @@ export default class WorkerAPI {
     const needsFix = formatted !== sourceText;
 
     // Autofix if necessary
-    if (fix && needsFix) {
+    if (options.fix && needsFix) {
       // Save the file and evict it from the cache
       await this.worker.writeFile(ref.real, formatted);
 
       // Relint this file without fixing it, we do this to prevent false positive error messages
       return {
-        ...(await this.lint(ref, prefetchedModuleSignatures, false)),
+        ...(await this.lint(ref, {...options, fix: false}, parseOptions)),
         fixed: true,
       };
     }

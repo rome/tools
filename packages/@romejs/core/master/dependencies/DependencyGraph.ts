@@ -267,6 +267,7 @@ export default class DependencyGraph {
 
     const res: WorkerAnalyzeDependencyResult = await this.request.requestWorkerAnalyzeDependencies(
       path,
+      {},
     );
 
     const node = this.addNode(path, res);

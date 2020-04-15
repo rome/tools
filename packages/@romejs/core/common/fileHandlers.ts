@@ -7,7 +7,10 @@
 
 import {ProjectConfig} from '@romejs/project';
 import {FileReference} from '@romejs/core';
-import {PrefetchedModuleSignatures} from '../common/bridges/WorkerBridge';
+import {
+  WorkerParseOptions,
+  WorkerLintOptions,
+} from '../common/bridges/WorkerBridge';
 import Worker, {ParseResult} from '../worker/Worker';
 import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import * as compiler from '@romejs/js-compiler';
@@ -74,7 +77,7 @@ export function getFileHandlerAssert(
 }
 
 export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
-  prefetchedModuleSignatures: PrefetchedModuleSignatures;
+  options: WorkerLintOptions;
   format: boolean;
 };
 
@@ -86,6 +89,7 @@ export type ExtensionLintResult = {
 };
 
 export type ExtensionHandlerMethodInfo = {
+  parseOptions: WorkerParseOptions;
   file: FileReference;
   project: compiler.TransformProjectDefinition;
   worker: Worker;
@@ -273,8 +277,11 @@ function buildJSHandler(
       syntax,
       sourceType,
 
-      async analyzeDependencies({file, worker}) {
-        const {ast, sourceText, project, generated} = await worker.parseJS(file);
+      async analyzeDependencies({file, worker, parseOptions}) {
+        const {ast, sourceText, project, generated} = await worker.parseJS(
+          file,
+          parseOptions,
+        );
         worker.logger.info(`Analyzing:`, file.real);
 
         return worker.api.interceptAndAddGeneratedToDiagnostics(
@@ -298,10 +305,11 @@ function buildJSHandler(
       async format(
         info: ExtensionHandlerMethodInfo,
       ): Promise<ExtensionLintResult> {
-        const {file: ref, worker} = info;
+        const {file: ref, parseOptions, worker} = info;
 
         const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
           ref,
+          parseOptions,
         );
 
         const res = formatJS(ast, {
@@ -318,16 +326,11 @@ function buildJSHandler(
       },
 
       async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {
-        const {
-          file: ref,
-          project,
-          format,
-          prefetchedModuleSignatures,
-          worker,
-        } = info;
+        const {file: ref, project, format, parseOptions, options, worker} = info;
 
         const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
           ref,
+          parseOptions,
         );
 
         worker.logger.info(`Linting: `, ref.real);
@@ -355,7 +358,8 @@ function buildJSHandler(
         if (typeCheckingEnabled) {
           const typeCheckProvider = await worker.getTypeCheckProvider(
             ref.project,
-            prefetchedModuleSignatures,
+            options.prefetchedModuleSignatures,
+            parseOptions,
           );
           const typeDiagnostics = await typeCheck({
             ast,

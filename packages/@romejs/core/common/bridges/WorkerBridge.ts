@@ -7,7 +7,7 @@
 
 import {ModuleSignature} from '@romejs/js-analysis';
 import {Manifest} from '@romejs/codec-js-manifest';
-import {Program, ConstSourceType} from '@romejs/js-ast';
+import {Program, ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
 import {
   BundleCompileOptions,
   CompileResult,
@@ -44,7 +44,9 @@ export type WorkerPartialManifests = Array<{
 }>;
 
 // Omit analyze value as the worker will fetch it itself, skips sending over a large payload that it already has in memory
-export type WorkerCompilerOptions = {bundle?: WorkerBundleCompileOptions};
+export type WorkerCompilerOptions = {
+  bundle?: WorkerBundleCompileOptions;
+};
 
 export type WorkerBundleCompileOptions = Omit<BundleCompileOptions, 'analyze'>;
 
@@ -53,9 +55,16 @@ export type WorkerAnalyzeDependencyResult = AnalyzeDependencyResult & {
   cached: boolean;
 };
 
+export type WorkerLintOptions = {
+  prefetchedModuleSignatures: PrefetchedModuleSignatures;
+  fix: boolean;
+};
+
 export type WorkerParseOptions = {
-  compact: boolean;
-  sourceType: undefined | ConstSourceType;
+  sourceType?: ConstSourceType;
+  syntax?: Array<ConstProgramSyntax>;
+  cache?: boolean;
+  allowParserDiagnostics?: boolean;
 };
 
 export type WorkerStatus = {
@@ -136,44 +145,46 @@ export default class WorkerBridge extends Bridge {
     direction: 'server->client',
   });
 
-  format = this.createEvent<{file: JSONFileReference},
-    | undefined
-    | WorkerFormatResult>({
+  format = this.createEvent<{
+    file: JSONFileReference;
+    parseOptions: WorkerParseOptions;
+  }, undefined | WorkerFormatResult>({
     name: 'format',
     direction: 'server->client',
   });
 
-  moduleSignatureJS = this.createEvent<
-    {file: JSONFileReference},
-    ModuleSignature
-  >({
+  moduleSignatureJS = this.createEvent<{
+    file: JSONFileReference;
+    parseOptions: WorkerParseOptions;
+  }, ModuleSignature>({
     name: 'moduleSignatureJS',
     direction: 'server->client',
   });
 
-  analyzeDependencies = this.createEvent<
-    {file: JSONFileReference},
-    AnalyzeDependencyResult
-  >({
+  analyzeDependencies = this.createEvent<{
+    file: JSONFileReference;
+    parseOptions: WorkerParseOptions;
+  }, AnalyzeDependencyResult>({
     name: 'analyzeDependencies',
     direction: 'server->client',
   });
 
   lint = this.createEvent<{
     file: JSONFileReference;
-    prefetchedModuleSignatures: PrefetchedModuleSignatures;
-    fix: boolean;
+    options: WorkerLintOptions;
+    parseOptions: WorkerParseOptions;
   }, WorkerLintResult>({name: 'lint', direction: 'server->client'});
 
   compileJS = this.createEvent<{
     file: JSONFileReference;
     stage: TransformStageName;
     options: WorkerCompilerOptions;
+    parseOptions: WorkerParseOptions;
   }, CompileResult>({name: 'compileJS', direction: 'server->client'});
 
   parseJS = this.createEvent<{
     file: JSONFileReference;
-    opts: WorkerParseOptions;
+    options: WorkerParseOptions;
   }, Program>({name: 'parseJS', direction: 'server->client'});
 
   updateBuffer = this.createEvent<{
