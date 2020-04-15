@@ -7,7 +7,7 @@
 
 import '@romejs/string-markup';
 import format from '@romejs/pretty-format';
-import test from '@romejs/test';
+import {test} from 'rome';
 import {Dict} from '@romejs/typescript-helpers';
 
 test('strings', (t) => {

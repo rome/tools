@@ -241,7 +241,7 @@ function parseTSDelimitedList<
     }
 
     const element = parseElement(parser);
-    if (element == undefined) {
+    if (element === undefined) {
       break;
     }
 
@@ -657,7 +657,7 @@ function parseTSPropertyOrMethodSignature(
       optional,
       meta,
       key,
-      typeAnnotation,
+      returnType: typeAnnotation,
     });
   } else {
     const typeAnnotation = tryTSParseTypeAnnotation(parser);

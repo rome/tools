@@ -115,7 +115,11 @@ export default createParser(
     void
   > {
     constructor(opts: JSONParserOptions) {
-      super(opts, 'parse/json');
+      super({
+        ...opts,
+        retainCarriageReturn: true,
+      }, 'parse/json');
+
       this.options = opts;
       this.ignoreWhitespaceTokens = true;
 

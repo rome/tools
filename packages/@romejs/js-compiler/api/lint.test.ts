@@ -8,14 +8,13 @@
 // TODO: Shift file into packages/@romejs/js-compiler/transforms/lint/__rtests__
 // after all open linting PRs have been merged.
 
-import test from '@romejs/test';
+import {test, TestHelper} from 'rome';
 import lint from './lint';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
 import {ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
 import {DiagnosticCategory} from '@romejs/diagnostics';
-import {TestAPI} from '@romejs/core';
 import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
 
 type TestLintOptions = {
@@ -26,7 +25,7 @@ type TestLintOptions = {
 };
 
 export async function testLintMultiple(
-  t: TestAPI,
+  t: TestHelper,
   inputs: Array<string>,
   opts: TestLintOptions,
 ) {
@@ -35,7 +34,7 @@ export async function testLintMultiple(
   }
 }
 
-export async function testLint(t: TestAPI, input: string, {
+export async function testLint(t: TestHelper, input: string, {
   syntax = [],
   category,
   format = false,
@@ -68,15 +67,17 @@ export async function testLint(t: TestAPI, input: string, {
     code: input,
   });
 
+  const ast = parseJS({
+    input,
+    sourceType,
+    path: createUnknownFilePath('unknown'),
+    syntax,
+  });
+
   const res = await lint({
     options: {},
     format,
-    ast: parseJS({
-      input,
-      sourceType,
-      path: createUnknownFilePath('unknown'),
-      syntax,
-    }),
+    ast,
     sourceText: input,
     project: {
       folder: undefined,
@@ -96,17 +97,13 @@ export async function testLint(t: TestAPI, input: string, {
     };
   });
 
+  const snapshotName = t.snapshot(printDiagnosticsToString({
+    diagnostics,
+    suppressions: res.suppressions,
+  }));
+
   if (format) {
-    t.snapshot({
-      ...res,
-      diagnostics,
-    });
-  } else {
-    // Nicer snapshot when we don't care about formatting
-    t.snapshot(printDiagnosticsToString({
-      diagnostics,
-      suppressions: res.suppressions,
-    }));
+    t.snapshotNamed(`${snapshotName}: formatted`, res.src);
   }
 
   t.clearAdvice();

@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: ' comment '
       loc: Object {
         filename: 'input.js'
@@ -103,6 +104,7 @@ Program {
           }
           ReferenceIdentifier {
             name: 'b'
+            trailingComments: Array ['0']
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -116,24 +118,6 @@ Program {
                 line: 1
               }
             }
-            trailingComments: Array [
-              CommentBlock {
-                value: ' comment '
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 22
-                    index: 22
-                    line: 1
-                  }
-                  start: Object {
-                    column: 9
-                    index: 9
-                    line: 1
-                  }
-                }
-              }
-            ]
           }
         ]
       }

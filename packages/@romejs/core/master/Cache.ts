@@ -114,7 +114,7 @@ export default class Cache {
     // If we have a loaded memory entry, make sure it's valid compared to the default entry (file changes etc)
     let loaded = this.loadedEntries.get(path);
     if (loaded !== undefined && areEntriesEqual(loaded, emptyEntry)) {
-      return emptyEntry;
+      return loaded;
     }
 
     if (this.disabled) {

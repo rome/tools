@@ -26,6 +26,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' @flow'
       loc: Object {
         filename: 'input.js'
@@ -44,6 +45,7 @@ Program {
   ]
   body: Array [
     ExpressionStatement {
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -57,25 +59,8 @@ Program {
           line: 2
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' @flow'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      ]
       expression: ArrowFunctionExpression {
+        leadingComments: Array ['0']
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -106,24 +91,6 @@ Program {
             }
           }
         }
-        leadingComments: Array [
-          CommentLine {
-            value: ' @flow'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-          }
-        ]
         head: FunctionHead {
           async: true
           hasHoistedVars: false
@@ -132,6 +99,7 @@ Program {
           rest: undefined
           returnType: undefined
           thisType: undefined
+          leadingComments: Array ['0']
           loc: Object {
             filename: 'input.js'
             end: Object {

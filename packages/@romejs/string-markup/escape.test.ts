@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {unescapeTextValue, escapeMarkup} from './escape';
 
 test('should properly escape and then unescape backslashes', (t) => {

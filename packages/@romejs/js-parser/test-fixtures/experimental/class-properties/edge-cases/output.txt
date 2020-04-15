@@ -1062,8 +1062,8 @@ Program {
                   line: 15
                 }
                 start: Object {
-                  column: 6
-                  index: 148
+                  column: 4
+                  index: 146
                   line: 15
                 }
               }
@@ -1229,8 +1229,8 @@ Program {
                   line: 20
                 }
                 start: Object {
-                  column: 6
-                  index: 180
+                  column: 4
+                  index: 178
                   line: 20
                 }
               }
@@ -1472,8 +1472,8 @@ Program {
                   line: 25
                 }
                 start: Object {
-                  column: 5
-                  index: 210
+                  column: 3
+                  index: 208
                   line: 25
                 }
               }
@@ -2102,8 +2102,8 @@ Program {
                   line: 42
                 }
                 start: Object {
-                  column: 9
-                  index: 331
+                  column: 7
+                  index: 329
                   line: 42
                 }
               }
@@ -2269,8 +2269,8 @@ Program {
                   line: 49
                 }
                 start: Object {
-                  column: 4
-                  index: 377
+                  column: 2
+                  index: 375
                   line: 49
                 }
               }

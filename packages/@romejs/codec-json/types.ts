@@ -14,7 +14,7 @@ import {
 import {ConsumeContext} from '@romejs/consume';
 import {DiagnosticCategory} from '@romejs/diagnostics';
 
-export type JSONParserOptions = ParserOptions & {
+export type JSONParserOptions = Omit<ParserOptions, 'retainCarriageReturn'> & {
   consumeDiagnosticCategory?: DiagnosticCategory;
 };
 

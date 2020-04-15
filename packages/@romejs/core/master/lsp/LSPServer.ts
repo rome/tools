@@ -478,7 +478,7 @@ export default class LSPServer {
           return null;
         }
 
-        const res = await this.request.requestWorkerFormat(path);
+        const res = await this.request.requestWorkerFormat(path, {});
         if (res === undefined) {
           // Not a file we support formatting
           return null;

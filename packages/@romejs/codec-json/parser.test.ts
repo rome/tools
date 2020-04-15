@@ -8,7 +8,7 @@
 import '@romejs/core';
 import {descriptions} from '@romejs/diagnostics';
 import {parseJSON} from '@romejs/codec-json';
-import test from '@romejs/test';
+import {test} from 'rome';
 import {ParserOptions} from '@romejs/parser-core';
 import {createUnknownFilePath} from '@romejs/path';
 

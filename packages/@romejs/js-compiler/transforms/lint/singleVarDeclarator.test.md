@@ -6,38 +6,34 @@
 
 ### `0`
 
-```javascript
-Object {
-  src: 'let foo;\nlet bar;\n'
-  suppressions: Array []
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'lint'}]
-      description: Object {
-        category: 'lint/singleVarDeclarator'
-        fixable: true
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Declare each variable separately'}
-      }
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        mtime: undefined
-        sourceText: 'let foo, bar;'
-        sourceType: 'module'
-        end: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-}
+```
+
+ unknown:1 lint/singleVarDeclarator FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Declare each variable separately
+
+    let foo, bar;
+    ^^^^^^^^^^^^^ 
+
+  ℹ Possible fix
+
+    1 │ + let foo;
+      │ - let foo,
+    2 │ + let bar;
+    3 │ + 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+let foo;
+let bar;
+
 ```
 
 ### `1`
@@ -56,10 +52,16 @@ Object {
 
 ## `format enabled in project config should result in regenerated file`
 
-```javascript
-Object {
-  diagnostics: Array []
-  src: 'foobar(\'yes\');\n'
-  suppressions: Array []
-}
+### `0`
+
+```
+✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
+
 ```

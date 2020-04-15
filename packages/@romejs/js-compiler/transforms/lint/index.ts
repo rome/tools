@@ -8,9 +8,11 @@
 // Add imports in alphabetical order.
 import caseSingleStatement from './caseSingleStatement';
 import defaultExportSameBasename from './defaultExportSameBasename';
+import doubleEquals from './doubleEquals';
 import duplicateImportSource from './duplicateImportSource';
 import emptyBlocks from './emptyBlocks';
 import getterReturn from './getterReturn';
+import inconsiderateLanguage from './inconsiderateLanguage';
 import noArguments from './noArguments';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
@@ -49,8 +51,10 @@ export const lintTransforms = [
   defaultExportSameBasename,
   duplicateImportSource,
   caseSingleStatement,
+  doubleEquals,
   emptyBlocks,
   getterReturn,
+  inconsiderateLanguage,
   noArguments,
   noAsyncPromiseExecutor,
   noCompareNegZero,

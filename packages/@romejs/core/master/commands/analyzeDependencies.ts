@@ -43,7 +43,7 @@ export default createMasterCommand({
       source: createUnknownFilePath(args[0]),
     }, {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
 
-    let res = await req.requestWorkerAnalyzeDependencies(filename);
+    let res = await req.requestWorkerAnalyzeDependencies(filename, {});
 
     const {focusSource} = commandFlags;
     if (focusSource !== undefined) {

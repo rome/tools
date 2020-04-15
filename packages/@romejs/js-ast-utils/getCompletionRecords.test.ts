@@ -6,7 +6,7 @@
  */
 
 import getCompletionRecords from './getCompletionRecords';
-import test from '@romejs/test';
+import {test} from 'rome';
 import {parseJS} from '@romejs/js-parser';
 import {functionDeclaration} from '@romejs/js-ast';
 

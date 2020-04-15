@@ -853,6 +853,10 @@ export default class Reporter {
   }
 
   inspect(value: unknown) {
+    if (!this.isEnabled(false)) {
+      return;
+    }
+
     let formatted = value;
 
     if (typeof formatted !== 'number' && typeof formatted !== 'string') {
@@ -1064,6 +1068,10 @@ export default class Reporter {
     args: Array<unknown>,
     opts: LogCategoryOptions,
   ) {
+    if (!this.isEnabled(opts.stderr)) {
+      return;
+    }
+
     const inner = markupTag(opts.markupTag, rawInner);
     const unicodeSuffix = opts.unicodeSuffix === undefined
       ? ''
@@ -1300,8 +1308,7 @@ export default class Reporter {
         });
       },
 
-      setTotal: (total: number,
-      approximate: boolean = false) => {
+      setTotal: (total: number, approximate: boolean = false) => {
         dispatch({
           type: 'PROGRESS_SET_TOTAL',
           total,

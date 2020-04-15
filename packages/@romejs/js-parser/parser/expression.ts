@@ -759,6 +759,7 @@ export function parseSubscripts(
 
   if (base.type === 'ReferenceIdentifier' && base.name === 'async' &&
       parser.state.noArrowAt.includes(startPos.index)) {
+    const argsStart = parser.getPosition();
     const openContext = parser.expectOpening(
       tt.parenL,
       tt.parenR,
@@ -766,7 +767,7 @@ export function parseSubscripts(
     );
     const callee = base;
     const {args} = parseCallExpressionArguments(parser, openContext, false);
-    base = parser.finishNode(startPos, {
+    base = parser.finishNodeWithCommentStarts([argsStart, startPos], {
       type: 'CallExpression',
       callee,
       arguments: args,
@@ -844,7 +845,7 @@ export function parseExpressionSubscript(
   if (parser.match(tt.questionDot)) {
     state.optionalChainMember = true;
 
-    if (noCalls && parser.lookaheadState().tokenType == tt.parenL) {
+    if (noCalls && parser.lookaheadState().tokenType === tt.parenL) {
       state.stop = true;
       return base;
     }
@@ -974,13 +975,17 @@ export function parseExpressionSubscript(
       const typeArguments = parseTypeCallArguments(parser);
 
       if (!noCalls && parser.match(tt.parenL)) {
+        const argsStart = parser.getPosition();
         const openContext = parser.expectOpening(
           tt.parenL,
           tt.parenR,
           'call arguments',
         );
         const {args} = parseCallExpressionArguments(parser, openContext, false);
-        const node: CallExpression = parser.finishNode(startPos, {
+        const node: CallExpression = parser.finishNodeWithCommentStarts([
+          argsStart,
+          startPos,
+        ], {
           type: 'CallExpression',
           arguments: args,
           callee: base,
@@ -1015,6 +1020,7 @@ export function parseExpressionSubscript(
     parser.state.yieldPos = number0;
     parser.state.awaitPos = number0;
 
+    const argsStart = parser.getPosition();
     const openContext = parser.expectOpening(
       tt.parenL,
       tt.parenR,
@@ -1059,7 +1065,7 @@ export function parseExpressionSubscript(
     parser.state.maybeInArrowParameters = oldMaybeInArrowParameters;
     parser.state.commaAfterSpreadAt = oldCommaAfterSpreadAt;
 
-    return parser.finishNode(startPos, {
+    return parser.finishNodeWithCommentStarts([argsStart, startPos], {
       type: 'CallExpression',
       callee,
       arguments: args,
@@ -2634,6 +2640,7 @@ export function parseMethod(parser: JSParser, opts: {
   parser.state.awaitPos = number0;
 
   const allowTSModifiers = isConstructor;
+  const headStart = parser.getPosition();
   const {typeParameters, rest, params} = parseFunctionParams(
     parser,
     kind,
@@ -2641,6 +2648,7 @@ export function parseMethod(parser: JSParser, opts: {
   );
   const start = parser.getPosition();
   const {body, head} = parseFunctionBodyAndFinish(parser, {
+    headStart,
     rest,
     params,
     id: undefined,
@@ -2727,16 +2735,6 @@ isAsync: boolean = false): ArrowFunctionExpression {
 
   const headEnd = parser.getPosition();
 
-  const {body, hasHoistedVars} = parseFunctionBody(parser, {
-    id: undefined,
-    allowBodiless: false,
-    isArrowFunction: true,
-    isMethod: false,
-    isAsync,
-    isGenerator: false,
-    start,
-  });
-
   let params: Array<AnyBindingPattern> = [];
   let rest: undefined | AnyTargetBindingPattern = opts.rest;
 
@@ -2751,6 +2749,31 @@ isAsync: boolean = false): ArrowFunctionExpression {
       'arrow function parameters',
     ));
   }
+
+  let head = parser.finishNodeAt(start, headEnd, createFunctionHead(
+    parser,
+    params,
+    rest,
+    {
+      hasHoistedVars: false,
+      async: isAsync,
+    },
+  ));
+
+  const {body, hasHoistedVars} = parseFunctionBody(parser, {
+    id: undefined,
+    allowBodiless: false,
+    isArrowFunction: true,
+    isMethod: false,
+    isAsync,
+    isGenerator: false,
+    start,
+  });
+
+  head = {
+    ...head,
+    hasHoistedVars,
+  };
 
   checkFunctionNameAndParams(parser, {
     isArrowFunction: true,
@@ -2770,11 +2793,7 @@ isAsync: boolean = false): ArrowFunctionExpression {
   return parser.finishNode(start, {
     type: 'ArrowFunctionExpression',
     body,
-    head: createFunctionHead(parser, params, rest, {
-      loc: parser.finishLocAt(start, headEnd),
-      hasHoistedVars,
-      async: isAsync,
-    }),
+    head,
   });
 }
 
@@ -2802,7 +2821,9 @@ type FunctionBodyParseOpts = {
 
 export function parseFunctionBodyAndFinish(
   parser: JSParser,
-  opts: CheckFunctionNameParamsOpts & FunctionBodyParseOpts,
+  opts: CheckFunctionNameParamsOpts & FunctionBodyParseOpts & {
+    headStart: Position;
+  },
 ): {
   head: FunctionHead;
   body: undefined | ParseFunctionBodyReturn['body'];
@@ -2815,33 +2836,29 @@ export function parseFunctionBodyAndFinish(
     [returnType, predicate] = parseTypeAnnotationAndPredicate(parser);
   }
 
+  const headEnd = parser.getPosition();
+  const head = parser.finishNodeAt(opts.headStart, headEnd, createFunctionHead(
+    parser,
+    opts.params,
+    opts.rest,
+    {
+      generator: opts.isGenerator,
+      async: opts.isAsync,
+      hasHoistedVars: false,
+      returnType,
+      predicate,
+    },
+  ));
+
   if (opts.allowBodiless && !parser.match(tt.braceL) &&
       parser.isLineTerminator()) {
     return {
-      head: createFunctionHead(parser, opts.params, opts.rest, {
-        loc: parser.finishLoc(opts.start),
-        hasHoistedVars: false,
-        generator: opts.isGenerator,
-        async: opts.isAsync,
-        returnType,
-        predicate,
-      }),
+      head,
       body: undefined,
     };
   }
 
-  const headEnd = parser.getPosition();
-
   const {body, hasHoistedVars} = parseFunctionBody(parser, opts);
-
-  const head = createFunctionHead(parser, opts.params, opts.rest, {
-    loc: parser.finishLocAt(opts.start, headEnd),
-    generator: opts.isGenerator,
-    async: opts.isAsync,
-    hasHoistedVars: false,
-    returnType,
-    predicate,
-  });
 
   checkFunctionNameAndParams(parser, {
     isArrowFunction: opts.isArrowFunction,
@@ -3351,7 +3368,6 @@ export function parseYield(parser: JSParser, noIn?: boolean): YieldExpression {
   }
 
   if (parser.state.maybeInArrowParameters && // We only set yieldInPossibleArrowParameters if we haven't already
-
   // found a possible invalid YieldExpression.
   parser.state.yieldInPossibleArrowParameters === undefined) {
     parser.state.yieldInPossibleArrowParameters = start;

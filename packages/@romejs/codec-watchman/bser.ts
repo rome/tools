@@ -12,7 +12,7 @@ import os = require('os');
 // BSER uses the local endianness to reduce byte swapping overheads
 // (the protocol is expressly local IPC only).  We need to tell node
 // to use the native endianness when reading various native values.
-const isBigEndian = os.endianness() == 'BE';
+const isBigEndian = os.endianness() === 'BE';
 
 type Bufferish = Buffer | string;
 
@@ -286,22 +286,15 @@ export class BunserBuf {
   }
 
   // Do something with the buffer to advance our state.
-
   // If we're running synchronously we'll return either
-
   // the value we've decoded or undefined if we don't
-
   // yet have enought data.
-
   // If we're running asynchronously, we'll emit the value
-
   // when it becomes ready and schedule another invocation
-
   // of process on the next tick if we still have data we
-
   // can process.
   process(synchronous: boolean) {
-    if (this.state == ST_NEED_PDU) {
+    if (this.state === ST_NEED_PDU) {
       if (this.acc.readAvail() < 2) {
         return;
       }
@@ -321,7 +314,7 @@ export class BunserBuf {
       this.state = ST_FILL_PDU;
     }
 
-    if (this.state == ST_FILL_PDU) {
+    if (this.state === ST_FILL_PDU) {
       if (this.acc.readAvail() < this.pduLen) {
         // Need more data
         return;
@@ -358,7 +351,7 @@ export class BunserBuf {
 
   expectCode(expected: number): void {
     const code = this.acc.readInt(1);
-    if (code != expected) {
+    if (code !== expected) {
       this.raise(`Expected bser opcode ${expected} but got ${code}`);
     }
   }
@@ -439,7 +432,7 @@ export class BunserBuf {
     for (let i = 0; i < nitems; ++i) {
       const obj: Dict<unknown> = {};
       for (let keyidx = 0; keyidx < keys.length; ++keyidx) {
-        if (this.acc.peekInt(1) == BSER_SKIP) {
+        if (this.acc.peekInt(1) === BSER_SKIP) {
           this.acc.readAdvance(1);
           continue;
         }
@@ -654,7 +647,8 @@ export function dumpToBuffer(val: unknown): Buffer {
 
   // Compute PDU length
   const off = buf.writeOffset;
-  const len = off - 7 /* the header length */;
+  const len = off - 7;
+  /* the header length */
   buf.writeOffset = 3; // The length value to fill in
   buf.writeInt(len, 4); // write the length in the space we reserved
   buf.writeOffset = off;

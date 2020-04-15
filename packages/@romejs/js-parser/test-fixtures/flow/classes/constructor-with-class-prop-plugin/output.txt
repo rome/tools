@@ -214,8 +214,8 @@ Program {
                   line: 2
                 }
                 start: Object {
-                  column: 15
-                  index: 25
+                  column: 13
+                  index: 23
                   line: 2
                 }
               }

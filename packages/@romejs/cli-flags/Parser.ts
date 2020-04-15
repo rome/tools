@@ -339,7 +339,7 @@ export default class Parser<T> {
 
     let definedCommand: undefined | DefinedCommand;
 
-    const rootFlags = await consumer.captureDiagnostics(async (consumer) => {
+    const rootFlags = await consumer.bufferDiagnostics(async (consumer) => {
       for (const shorthandName of this.shorthandFlags) {
         consumer.get(shorthandName).unexpected(
           `Shorthand flags are not supported`,

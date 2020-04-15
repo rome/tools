@@ -6,7 +6,7 @@
  */
 
 import {findClosestStringMatch} from './findClosestStringMatch';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 test('findClosestStringMatch', (t) => {
   t.is(

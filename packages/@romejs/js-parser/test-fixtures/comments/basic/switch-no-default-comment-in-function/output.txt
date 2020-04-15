@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: 'no default'
       loc: Object {
         filename: 'input.js'
@@ -87,8 +88,8 @@ Program {
             line: 1
           }
           start: Object {
-            column: 0
-            index: 0
+            column: 12
+            index: 12
             line: 1
           }
         }
@@ -225,6 +226,7 @@ Program {
                 ]
               }
               SwitchCase {
+                trailingComments: Array ['0']
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
@@ -254,24 +256,6 @@ Program {
                     }
                   }
                 }
-                trailingComments: Array [
-                  CommentLine {
-                    value: 'no default'
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 20
-                        index: 125
-                        line: 7
-                      }
-                      start: Object {
-                        column: 8
-                        index: 113
-                        line: 7
-                      }
-                    }
-                  }
-                ]
                 consequent: Array [
                   BreakStatement {
                     label: undefined

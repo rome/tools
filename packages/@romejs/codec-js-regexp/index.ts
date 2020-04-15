@@ -623,7 +623,7 @@ export const createRegExpParser = createParser(
         const start = this.input.slice(0, get0(token.start));
         this.nextToken();
 
-        if (token.value[token.value.length - 1] != '>') {
+        if (token.value[token.value.length - 1] !== '>') {
           this.addDiagnostic({
             description: descriptions.REGEX_PARSER.UNCLOSED_NAMED_CAPTURE,
             loc: this.finishLocFromToken(token),

@@ -26,6 +26,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: ': string '
       loc: Object {
         filename: 'input.js'
@@ -42,6 +43,7 @@ Program {
       }
     }
     CommentBlock {
+      id: '1'
       value: ': number '
       loc: Object {
         filename: 'input.js'
@@ -105,40 +107,6 @@ Program {
             line: 1
           }
         }
-        leadingComments: Array [
-          CommentBlock {
-            value: ': string '
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 35
-                index: 35
-                line: 1
-              }
-              start: Object {
-                column: 22
-                index: 22
-                line: 1
-              }
-            }
-          }
-          CommentBlock {
-            value: ': number '
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 50
-                index: 50
-                line: 1
-              }
-              start: Object {
-                column: 37
-                index: 37
-                line: 1
-              }
-            }
-          }
-        ]
       }
       head: FunctionHead {
         async: false
@@ -157,14 +125,15 @@ Program {
             line: 1
           }
           start: Object {
-            column: 0
-            index: 0
+            column: 15
+            index: 15
             line: 1
           }
         }
         params: Array [
           BindingIdentifier {
             name: 'param'
+            trailingComments: Array ['0']
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -196,24 +165,6 @@ Program {
                 }
               }
             }
-            trailingComments: Array [
-              CommentBlock {
-                value: ': string '
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 35
-                    index: 35
-                    line: 1
-                  }
-                  start: Object {
-                    column: 22
-                    index: 22
-                    line: 1
-                  }
-                }
-              }
-            ]
           }
         ]
       }

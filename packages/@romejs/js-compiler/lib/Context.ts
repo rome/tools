@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, Program, ConstSourceType} from '@romejs/js-ast';
+import {AnyNode, Program, ConstSourceType, AnyComment} from '@romejs/js-ast';
 import {
   SourceLocation,
   extractSourceLocationRangeFromNodes,
@@ -35,6 +35,7 @@ import {
   extractSuppressionsFromProgram,
   matchesSuppression,
 } from '../suppressions';
+import CommentsConsumer from '@romejs/js-parser/CommentsConsumer';
 
 export type ContextArg = {
   ast: Program;
@@ -43,7 +44,10 @@ export type ContextArg = {
   origin?: DiagnosticOrigin;
 };
 
-type AddDiagnosticResult = {suppressed: boolean};
+type AddDiagnosticResult = {
+  diagnostic: undefined | Diagnostic;
+  suppressed: boolean;
+};
 
 // We only want a Context to create diagnostics that belong to itself
 type ContextDiagnostic = Omit<Diagnostic, 'location' | 'description'>;
@@ -65,12 +69,15 @@ export default class Context {
     this.sourceType = ast.sourceType;
     this.rootScope = new RootScope(this, ast);
 
+    this.comments = new CommentsConsumer(ast.comments);
+
     const {suppressions, diagnostics} = extractSuppressionsFromProgram(ast);
     this.suppressions = suppressions;
     this.diagnostics = new DiagnosticsProcessor();
     this.diagnostics.addDiagnostics(diagnostics);
   }
 
+  comments: CommentsConsumer;
   sourceType: ConstSourceType;
   cacheDependencies: Set<string>;
   records: Array<Record>;
@@ -95,6 +102,10 @@ export default class Context {
         return visitor;
       }
     }));
+  }
+
+  getComments(ids: undefined | Array<string>): Array<AnyComment> {
+    return this.comments.getCommentsFromIds(ids);
   }
 
   hasNodeSuppression(
@@ -156,6 +167,52 @@ export default class Context {
     this.records.push(record);
   }
 
+  addFixableDiagnostic<Old extends AnyNode, New extends TransformExitResult>(
+    nodes: {
+      target?: AnyNode | Array<AnyNode>;
+      old: Old;
+      fixed: New | (() => New);
+    },
+
+    description: DiagnosticDescription,
+    diag: ContextDiagnostic = {},
+  ): TransformExitResult {
+    const {old, fixed} = nodes;
+    const target = nodes.target === undefined ? nodes.old : nodes.target;
+
+    diag = {
+      ...diag,
+      fixable: true,
+    };
+
+    let suppressed = false;
+    if (Array.isArray(target)) {
+      ({suppressed} = this.addNodesRangeDiagnostic(target, description, diag));
+    } else {
+      ({suppressed} = this.addNodeDiagnostic(target, description, diag));
+    }
+
+    if (suppressed) {
+      return old;
+    }
+
+    let result: TransformExitResult;
+    if (typeof fixed === 'function') {
+      result = fixed();
+    } else {
+      result = fixed;
+    }
+
+    if (typeof result !== 'symbol' && !Array.isArray(result)) {
+      result = {
+        ...result,
+        loc: old.loc,
+      };
+    }
+
+    return result;
+  }
+
   addLocDiagnostic(
     loc: undefined | DiagnosticLocation,
     description: DiagnosticDescription,
@@ -175,7 +232,7 @@ export default class Context {
         );
     }
 
-    this.diagnostics.addDiagnostic({
+    const diagnostic = this.diagnostics.addDiagnostic({
       ...diag,
       description,
       location: {
@@ -190,6 +247,7 @@ export default class Context {
     });
 
     return {
+      diagnostic,
       suppressed: this.hasLocSuppression(loc, description.category),
     };
   }

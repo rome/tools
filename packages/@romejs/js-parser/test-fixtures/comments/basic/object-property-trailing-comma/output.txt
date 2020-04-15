@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' comment 1'
       loc: Object {
         filename: 'input.js'
@@ -39,6 +40,7 @@ Program {
       }
     }
     CommentLine {
+      id: '1'
       value: ' comment 2'
       loc: Object {
         filename: 'input.js'
@@ -55,6 +57,7 @@ Program {
       }
     }
     CommentLine {
+      id: '2'
       value: ' comment 3'
       loc: Object {
         filename: 'input.js'
@@ -261,6 +264,7 @@ Program {
                       }
                     }
                   }
+                  leadingComments: Array ['0']
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
@@ -274,24 +278,6 @@ Program {
                       line: 3
                     }
                   }
-                  leadingComments: Array [
-                    CommentLine {
-                      value: ' comment 1'
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 22
-                          index: 34
-                          line: 2
-                        }
-                        start: Object {
-                          column: 10
-                          index: 22
-                          line: 2
-                        }
-                      }
-                    }
-                  ]
                 }
                 ObjectProperty {
                   key: StaticPropertyKey {
@@ -344,6 +330,8 @@ Program {
                       }
                     }
                   }
+                  leadingComments: Array ['1']
+                  trailingComments: Array ['2']
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
@@ -357,42 +345,6 @@ Program {
                       line: 4
                     }
                   }
-                  leadingComments: Array [
-                    CommentLine {
-                      value: ' comment 2'
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 22
-                          index: 57
-                          line: 3
-                        }
-                        start: Object {
-                          column: 10
-                          index: 45
-                          line: 3
-                        }
-                      }
-                    }
-                  ]
-                  trailingComments: Array [
-                    CommentLine {
-                      value: ' comment 3'
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 22
-                          index: 80
-                          line: 4
-                        }
-                        start: Object {
-                          column: 10
-                          index: 68
-                          line: 4
-                        }
-                      }
-                    }
-                  ]
                 }
               ]
             }

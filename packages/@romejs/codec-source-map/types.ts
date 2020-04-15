@@ -11,6 +11,7 @@ export type Mappings = Array<Mapping>;
 
 export type Mapping = {
   generated: {
+    index: Number0;
     line: Number1;
     column: Number0;
   };

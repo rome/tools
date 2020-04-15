@@ -6,7 +6,7 @@
  */
 
 import {createAbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 const relativeTests: Array<[string, string, string]> = [
   // Windows paths

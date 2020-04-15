@@ -17,7 +17,9 @@
     "baseUrl": ".",
     "paths": {
       "@romejs/*": ["packages/@romejs/*"],
-      "@romejs-web/*": ["packages/@romejs-web/*"]
+      "@romejs-web/*": ["packages/@romejs-web/*"],
+      "@romejs-runtime/*": ["packages/@romejs-runtime/*"],
+      "*": ["packages/@romejs-runtime/*"]
     }
   },
 

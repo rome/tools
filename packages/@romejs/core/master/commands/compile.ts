@@ -40,7 +40,7 @@ export default createMasterCommand({
       const bundler = Bundler.createFromMasterRequest(req);
       res = await bundler.compile(resolved.path);
     } else {
-      res = await req.requestWorkerCompile(resolved.path, 'compile');
+      res = await req.requestWorkerCompile(resolved.path, 'compile', {}, {});
     }
 
     const {compiledCode, diagnostics, suppressions}: WorkerCompileResult = res;

@@ -23,8 +23,7 @@ export class TokContext {
     isExpr?: boolean,
     preserveSpace?: boolean,
     override?: TokContextOverride,
-  ) // Takes a Tokenizer as a parser.parameter, and returns void.
-  {
+  ) {
     this.token = token;
     this.isExpr = !!isExpr;
     this.preserveSpace = !!preserveSpace;

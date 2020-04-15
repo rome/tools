@@ -159,9 +159,7 @@ export default class DependencyOrderer {
 
   order(path: AbsoluteFilePath): DependencyOrder {
     this.addFile(path, []);
-    // TODO only enable when bundlerMode === 'modern'
-
-    // this.detectCycles();
+    this.detectCycles();
     return {
       firstTopAwaitLocations: this.firstTopAwaitLocations,
       diagnostics: this.diagnostics,

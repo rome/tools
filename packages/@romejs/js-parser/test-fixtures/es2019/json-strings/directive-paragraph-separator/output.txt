@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: '     ^ That\'s a U+2029 PARAGRAPH SEPARATOR UTF-16 char (between \'before\' and \'after\')'
       loc: Object {
         filename: 'input.js'
@@ -42,6 +43,7 @@ Program {
   directives: Array [
     Directive {
       value: 'before\u2029after'
+      trailingComments: Array ['0']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -55,24 +57,6 @@ Program {
           line: 1
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: '     ^ That\'s a U+2029 PARAGRAPH SEPARATOR UTF-16 char (between \'before\' and \'after\')'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 87
-              index: 103
-              line: 3
-            }
-            start: Object {
-              column: 0
-              index: 16
-              line: 3
-            }
-          }
-        }
-      ]
     }
   ]
 }

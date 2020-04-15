@@ -28,6 +28,7 @@ import crypto = require('crypto');
 
 import {Dict} from '@romejs/typescript-helpers';
 import {Reporter} from '@romejs/cli-reporter';
+import WorkerQueue from '../WorkerQueue';
 
 export type BundleOptions = {
   prefix?: string;
@@ -124,16 +125,21 @@ export default class BundleRequest {
     });
     compilingSpinner.setTotal(paths.length);
 
-    const groupedPaths = await master.fileAllocator.groupPathsByWorker(paths);
-    await Promise.all(groupedPaths.map(async (paths) => {
-      for (const path of paths) {
-        const progressText = `<filelink target="${path.join()}" />`;
-        compilingSpinner.pushText(progressText);
-        await this.compileJS(path);
-        compilingSpinner.tick();
-        compilingSpinner.popText(progressText);
-      }
-    }));
+    const queue: WorkerQueue<void> = new WorkerQueue(master);
+
+    queue.addCallback(async (path) => {
+      const progressText = `<filelink target="${path.join()}" />`;
+      compilingSpinner.pushText(progressText);
+      await this.compileJS(path);
+      compilingSpinner.tick();
+      compilingSpinner.popText(progressText);
+    });
+
+    for (const path of paths) {
+      await queue.pushQueue(path);
+    }
+
+    await queue.spin();
     compilingSpinner.end();
   }
 
@@ -177,13 +183,18 @@ export default class BundleRequest {
       assetPath,
     };
 
+    const lock = await this.bundler.compileLocker.getLock(source);
+
     const res: WorkerCompileResult = await this.bundler.request.requestWorkerCompile(
       path,
       'compileForBundle',
       {
         bundle: opts,
       },
+      {},
     );
+
+    lock.release();
 
     if (!res.cached) {
       this.cached = false;
