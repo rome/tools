@@ -22,6 +22,6 @@ export default createMasterCommand({
       ...req.getResolverOptionsFromFlags(),
       source: createUnknownFilePath(args[0]),
     }, {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
-    reporter.inspect(await req.requestWorkerModuleSignature(filename));
+    reporter.inspect(await req.requestWorkerModuleSignature(filename, {}));
   },
 });

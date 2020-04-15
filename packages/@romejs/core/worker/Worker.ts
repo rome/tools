@@ -147,13 +147,14 @@ export default class Worker {
         convertTransportFileReference(payload.file),
         payload.stage,
         payload.options,
+        payload.parseOptions,
       );
     });
 
     bridge.parseJS.subscribe((payload) => {
       return this.api.parseJS(
         convertTransportFileReference(payload.file),
-        payload.opts,
+        payload.options,
       );
     });
 
@@ -161,20 +162,21 @@ export default class Worker {
       return this.api.lint(
         convertTransportFileReference(payload.file),
         payload.options,
+        payload.parseOptions,
       );
     });
 
     bridge.format.subscribe((payload) => {
       return this.api.format(
         convertTransportFileReference(payload.file),
-        payload.options,
+        payload.parseOptions,
       );
     });
 
     bridge.analyzeDependencies.subscribe((payload) => {
       return this.api.analyzeDependencies(convertTransportFileReference(
         payload.file,
-      ));
+      ), payload.parseOptions);
     });
 
     bridge.evict.subscribe((payload) => {
@@ -185,7 +187,7 @@ export default class Worker {
     bridge.moduleSignatureJS.subscribe((payload) => {
       return this.api.moduleSignatureJS(convertTransportFileReference(
         payload.file,
-      ));
+      ), payload.parseOptions);
     });
 
     bridge.updateProjects.subscribe((payload) => {
@@ -225,6 +227,7 @@ export default class Worker {
   async getTypeCheckProvider(
     projectId: number,
     prefetchedModuleSignatures: PrefetchedModuleSignatures = {},
+    parseOptions: WorkerParseOptions,
   ): Promise<TypeCheckProvider> {
     const libs: Array<Program> = [];
 
@@ -261,7 +264,7 @@ export default class Worker {
         case 'OWNED':
           return this.api.moduleSignatureJS(convertTransportFileReference(
             value.file,
-          ));
+          ), parseOptions);
 
         case 'POINTER':
           return resolveGraph(value.key);
@@ -306,7 +309,7 @@ export default class Worker {
 
   async parseJS(
     ref: FileReference,
-    opts: WorkerParseOptions = {},
+    options: WorkerParseOptions,
   ): Promise<ParseResult> {
     const path = createAbsoluteFilePath(ref.real);
 
@@ -321,16 +324,16 @@ export default class Worker {
 
     // Get syntax
     let syntax: Array<ConstProgramSyntax> = [];
-    if (opts.syntax !== undefined) {
-      syntax = opts.syntax;
+    if (options.syntax !== undefined) {
+      syntax = options.syntax;
     } else if (handler.syntax !== undefined) {
       syntax = handler.syntax;
     }
 
     // Get source type
     let sourceType: undefined | ConstSourceType;
-    if (opts.sourceType !== undefined) {
-      sourceType = opts.sourceType;
+    if (options.sourceType !== undefined) {
+      sourceType = options.sourceType;
     } else if (handler.sourceType !== undefined) {
       sourceType = handler.sourceType;
     } else {
@@ -348,7 +351,7 @@ export default class Worker {
       sourceType = 'module';
     }
 
-    const cacheEnabled = opts.cache !== false;
+    const cacheEnabled = options.cache !== false;
 
     if (cacheEnabled) {
       // Update the lastAccessed of the ast cache and return it, it will be evicted on
@@ -380,6 +383,7 @@ export default class Worker {
       file: ref,
       worker: this,
       project,
+      parseOptions: options,
     });
 
     let manifestPath: undefined | string;
@@ -402,7 +406,7 @@ export default class Worker {
     }
 
     // Sometimes we may want to allow the "fixed" AST
-    const allowDiagnostics = opts.allowDiagnostics === true;
+    const allowDiagnostics = options.allowParserDiagnostics === true;
     if (!allowDiagnostics && ast.diagnostics.length > 0) {
       throw new DiagnosticsError(
         "AST diagnostics aren't allowed",

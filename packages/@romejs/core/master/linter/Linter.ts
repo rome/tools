@@ -172,8 +172,10 @@ class LintRunner {
         fixed,
       } = await this.request.requestWorkerLint(path, {
         fix: this.fix,
-        // TODO add this option?
-        allowParserDiagnostics: false,
+      }, {
+      // TODO add this option?
+
+
       });
       processor.addSuppressions(suppressions);
       processor.addDiagnostics(diagnostics);

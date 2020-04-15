@@ -44,7 +44,9 @@ export type WorkerPartialManifests = Array<{
 }>;
 
 // Omit analyze value as the worker will fetch it itself, skips sending over a large payload that it already has in memory
-export type WorkerCompilerOptions = {bundle?: WorkerBundleCompileOptions};
+export type WorkerCompilerOptions = {
+  bundle?: WorkerBundleCompileOptions;
+};
 
 export type WorkerBundleCompileOptions = Omit<BundleCompileOptions, 'analyze'>;
 
@@ -53,11 +55,7 @@ export type WorkerAnalyzeDependencyResult = AnalyzeDependencyResult & {
   cached: boolean;
 };
 
-export type WorkerFormatOptions = {
-  allowParserDiagnostics: boolean;
-};
-
-export type WorkerLintOptions = WorkerFormatOptions & {
+export type WorkerLintOptions = {
   prefetchedModuleSignatures: PrefetchedModuleSignatures;
   fix: boolean;
 };
@@ -66,7 +64,7 @@ export type WorkerParseOptions = {
   sourceType?: ConstSourceType;
   syntax?: Array<ConstProgramSyntax>;
   cache?: boolean;
-  allowDiagnostics?: boolean;
+  allowParserDiagnostics?: boolean;
 };
 
 export type WorkerStatus = {
@@ -149,24 +147,24 @@ export default class WorkerBridge extends Bridge {
 
   format = this.createEvent<{
     file: JSONFileReference;
-    options: WorkerFormatOptions;
+    parseOptions: WorkerParseOptions;
   }, undefined | WorkerFormatResult>({
     name: 'format',
     direction: 'server->client',
   });
 
-  moduleSignatureJS = this.createEvent<
-    {file: JSONFileReference},
-    ModuleSignature
-  >({
+  moduleSignatureJS = this.createEvent<{
+    file: JSONFileReference;
+    parseOptions: WorkerParseOptions;
+  }, ModuleSignature>({
     name: 'moduleSignatureJS',
     direction: 'server->client',
   });
 
-  analyzeDependencies = this.createEvent<
-    {file: JSONFileReference},
-    AnalyzeDependencyResult
-  >({
+  analyzeDependencies = this.createEvent<{
+    file: JSONFileReference;
+    parseOptions: WorkerParseOptions;
+  }, AnalyzeDependencyResult>({
     name: 'analyzeDependencies',
     direction: 'server->client',
   });
@@ -174,17 +172,19 @@ export default class WorkerBridge extends Bridge {
   lint = this.createEvent<{
     file: JSONFileReference;
     options: WorkerLintOptions;
+    parseOptions: WorkerParseOptions;
   }, WorkerLintResult>({name: 'lint', direction: 'server->client'});
 
   compileJS = this.createEvent<{
     file: JSONFileReference;
     stage: TransformStageName;
     options: WorkerCompilerOptions;
+    parseOptions: WorkerParseOptions;
   }, CompileResult>({name: 'compileJS', direction: 'server->client'});
 
   parseJS = this.createEvent<{
     file: JSONFileReference;
-    opts: WorkerParseOptions;
+    options: WorkerParseOptions;
   }, Program>({name: 'parseJS', direction: 'server->client'});
 
   updateBuffer = this.createEvent<{

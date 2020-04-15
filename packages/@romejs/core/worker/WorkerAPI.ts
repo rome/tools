@@ -19,7 +19,6 @@ import {
   WorkerCompilerOptions,
   WorkerFormatResult,
   WorkerLintResult,
-  WorkerFormatOptions,
   WorkerLintOptions,
 } from '../common/bridges/WorkerBridge';
 import Logger from '../common/utils/Logger';
@@ -89,20 +88,25 @@ export default class WorkerAPI {
     }
   }
 
-  async moduleSignatureJS(ref: FileReference) {
-    const {ast, project} = await this.worker.parseJS(ref);
+  async moduleSignatureJS(ref: FileReference, parseOptions: WorkerParseOptions) {
+    const {ast, project} = await this.worker.parseJS(ref, parseOptions);
 
     this.logger.info(`Generating export types:`, ref.real);
 
     return await jsAnalysis.getModuleSignature({
       ast,
       project,
-      provider: await this.worker.getTypeCheckProvider(ref.project),
+      provider: await this.worker.getTypeCheckProvider(
+        ref.project,
+        {},
+        parseOptions,
+      ),
     });
   }
 
   async analyzeDependencies(
     ref: FileReference,
+    parseOptions: WorkerParseOptions,
   ): Promise<AnalyzeDependencyResult> {
     const project = this.worker.getProject(ref.project);
     const {handler} = getFileHandlerAssert(ref.real, project.config);
@@ -117,12 +121,14 @@ export default class WorkerAPI {
       file: ref,
       project,
       worker: this.worker,
+      parseOptions,
     });
   }
 
   async workerCompilerOptionsToCompilerOptions(
     ref: FileReference,
     workerOptions: WorkerCompilerOptions,
+    parseOptions: WorkerParseOptions,
   ): Promise<CompilerOptions> {
     const {bundle, ...options} = workerOptions;
 
@@ -133,7 +139,7 @@ export default class WorkerAPI {
         ...options,
         bundle: {
           ...bundle,
-          analyze: await this.analyzeDependencies(ref),
+          analyze: await this.analyzeDependencies(ref, parseOptions),
         },
       };
     }
@@ -142,19 +148,24 @@ export default class WorkerAPI {
   async compileJS(
     ref: FileReference,
     stage: TransformStageName,
-    workerOptions: WorkerCompilerOptions,
+    options: WorkerCompilerOptions,
+    parseOptions: WorkerParseOptions,
   ): Promise<CompileResult> {
-    const {ast, project, sourceText, generated} = await this.worker.parseJS(ref);
+    const {ast, project, sourceText, generated} = await this.worker.parseJS(
+      ref,
+      parseOptions,
+    );
     this.logger.info(`Compiling:`, ref.real);
 
-    const options = await this.workerCompilerOptionsToCompilerOptions(
+    const compilerOptions = await this.workerCompilerOptionsToCompilerOptions(
       ref,
-      workerOptions,
+      options,
+      parseOptions,
     );
     return this.interceptAndAddGeneratedToDiagnostics(await compile({
       ast,
       sourceText,
-      options,
+      options: compilerOptions,
       project,
       stage,
     }), generated);
@@ -162,6 +173,7 @@ export default class WorkerAPI {
 
   async parseJS(ref: FileReference, opts: WorkerParseOptions): Promise<Program> {
     let {ast, generated} = await this.worker.parseJS(ref, {
+      ...opts,
       sourceType: opts.sourceType,
       cache: false,
     });
@@ -171,7 +183,7 @@ export default class WorkerAPI {
 
   async format(
     ref: FileReference,
-    opts: WorkerFormatOptions,
+    opts: WorkerParseOptions,
   ): Promise<undefined | WorkerFormatResult> {
     const res = await this._format(ref, opts);
     if (res === undefined) {
@@ -198,7 +210,7 @@ export default class WorkerAPI {
 
   async _format(
     ref: FileReference,
-    options: WorkerFormatOptions,
+    parseOptions: WorkerParseOptions,
   ): Promise<undefined | ExtensionLintResult> {
     const project = this.worker.getProject(ref.project);
     this.logger.info(`Formatting:`, ref.real);
@@ -217,7 +229,7 @@ export default class WorkerAPI {
       file: ref,
       project,
       worker: this.worker,
-      options,
+      parseOptions,
     });
 
     return res;
@@ -226,6 +238,7 @@ export default class WorkerAPI {
   async lint(
     ref: FileReference,
     options: WorkerLintOptions,
+    parseOptions: WorkerParseOptions,
   ): Promise<WorkerLintResult> {
     const project = this.worker.getProject(ref.project);
     this.logger.info(`Linting:`, ref.real);
@@ -248,7 +261,7 @@ export default class WorkerAPI {
       message: 'Caught by WorkerAPI.lint',
     }, () => {
       if (lint === undefined) {
-        return this._format(ref, options);
+        return this._format(ref, parseOptions);
       } else {
         return lint({
           format: this.shouldFormat(ref),
@@ -256,6 +269,7 @@ export default class WorkerAPI {
           project,
           worker: this.worker,
           options,
+          parseOptions,
         });
       }
     });
@@ -300,7 +314,7 @@ export default class WorkerAPI {
 
       // Relint this file without fixing it, we do this to prevent false positive error messages
       return {
-        ...(await this.lint(ref, {...options, fix: false})),
+        ...(await this.lint(ref, {...options, fix: false}, parseOptions)),
         fixed: true,
       };
     }

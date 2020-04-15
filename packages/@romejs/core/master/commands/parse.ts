@@ -42,7 +42,7 @@ export default createMasterCommand({
 
     let ast = await req.requestWorkerParse(filename, {
       sourceType: flags.sourceType,
-      allowDiagnostics: flags.allowDiagnostics,
+      allowParserDiagnostics: flags.allowDiagnostics,
     });
 
     if (flags.compact) {

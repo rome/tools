@@ -189,6 +189,7 @@ export default class BundleRequest {
       {
         bundle: opts,
       },
+      {},
     );
 
     if (!res.cached) {
