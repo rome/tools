@@ -441,6 +441,10 @@ export default class TestAPI implements TestHelper {
     return this.snapshotManager.get(this.testName, snapshotName);
   }
 
+  getOptions(): TestRunnerOptions {
+    return this.options;
+  }
+
   _snapshotNamed(
     name: string,
     expected: unknown,

@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {TestRunnerOptions} from '@romejs/core/master/testing/types';
+
 export type AsyncFunc = () => undefined | Promise<void>;
 
 export type SyncThrower = () => void;
@@ -39,6 +41,7 @@ export interface TestHelper {
   snapshot(expected: unknown, message?: string): string;
   snapshotNamed(name: string, expected: unknown, message?: string): string;
   getSnapshot(snapshotName: string): unknown;
+  getOptions(): TestRunnerOptions;
 }
 
 export type TestName = string | Array<string>;

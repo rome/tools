@@ -138,7 +138,8 @@ const promise = createFixtureTests(
     }
 
     // If we have an output then compare it with the parsed input
-    if (outputContent !== undefined) {
+    const runnerOptions = t.getOptions();
+    if (outputContent !== undefined && !runnerOptions.updateSnapshots) {
       t.is(prettyFormat(ast), outputContent.trim());
     }
 
@@ -154,7 +155,7 @@ const promise = createFixtureTests(
       return;
     }
 
-    if (outputContent === undefined) {
+    if (outputContent === undefined || runnerOptions.updateSnapshots) {
       // If we didn't expect an error to be thrown and we have no expected output AST
 
       // then we should write it
