@@ -20,6 +20,7 @@ import {get0} from '@romejs/ob1';
 import {DiagnosticCategoryPrefix} from './categories';
 import {descriptions} from './descriptions';
 import {matchesSuppression} from '@romejs/js-compiler';
+import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
 
 type UniquePart =
   | 'filename'
@@ -57,11 +58,13 @@ export default class DiagnosticsProcessor {
     this.allowedUnusedSuppressionPrefixes = new Set();
     this.usedSuppressions = new Set();
     this.suppressions = new Set();
+    this.sourceMaps = new SourceMapConsumerCollection();
 
     this.diagnostics = [];
     this.cachedDiagnostics = undefined;
   }
 
+  sourceMaps: SourceMapConsumerCollection;
   unique: UniqueRules;
   includedKeys: Set<string>;
   diagnostics: Diagnostics;
@@ -72,7 +75,6 @@ export default class DiagnosticsProcessor {
   options: CollectorOptions;
   throwAfter: undefined | number;
   origins: Array<DiagnosticOrigin>;
-
   cachedDiagnostics: undefined | Diagnostics;
 
   static createImmediateThrower(
@@ -216,6 +218,99 @@ export default class DiagnosticsProcessor {
     return keys;
   }
 
+  // Normalize a diagnostic by resolving attached source maps
+  normalizeDiagnostic(diag: Diagnostic): Diagnostic {
+    const {sourceMaps} = this;
+
+    // No source maps attached
+    if (!sourceMaps.hasAny()) {
+      return diag;
+    }
+    function check(filename: undefined | string) {
+      return filename !== undefined && sourceMaps.has(filename);
+    }
+    // Check location
+    let {location} = diag;
+    const hasLocation = check(location.filename);
+
+    // Check advice
+    let hasAdvice = false;
+    let {advice} = diag.description;
+    if (advice !== undefined) {
+      for (const item of advice) {
+        if (item.type === 'frame' && check(item.location.filename)) {
+          hasAdvice = true;
+        }
+
+        if (item.type === 'stacktrace') {
+          for (const frame of item.frames) {
+            if (check(frame.filename)) {
+              hasAdvice = true;
+            }
+          }
+        }
+      }
+    }
+
+    // Did not contain anything we need to resolve
+    if (!hasAdvice && !hasLocation) {
+      return diag;
+    }
+
+    if (advice !== undefined && hasAdvice) {
+      advice = advice.map((item) => {
+        if (item.type === 'frame' && check(item.location.filename)) {
+          return {
+            ...item,
+            location: sourceMaps.resolveLocation(item.location),
+          };
+        }
+
+        if (item.type === 'stacktrace') {
+          return {
+            ...item,
+            frames: item.frames.map((frame) => {
+              const {filename, line, column} = frame;
+              if (filename === undefined || line === undefined || column ===
+                  undefined) {
+                return frame;
+              }
+
+              const resolved = sourceMaps.exactOriginalPositionFor(
+                filename,
+                line,
+                column,
+              );
+              if (resolved !== undefined) {
+                return {
+                  ...frame,
+                  filename: resolved.source,
+                  line: resolved.line,
+                  column: resolved.column,
+                };
+              }
+
+              return frame;
+            }),
+          };
+        }
+
+        return item;
+      });
+    }
+
+    diag = {
+      ...diag,
+      location: sourceMaps.resolveLocation(diag.location),
+      description: {
+        ...diag.description,
+        advice,
+      },
+    };
+
+    return diag;
+  }
+
   addDiagnostic(
     diag: Diagnostic,
     origin?: DiagnosticOrigin,
@@ -241,10 +336,12 @@ export default class DiagnosticsProcessor {
     diags = addOriginsToDiagnostics(origins, diags);
 
     // Filter diagnostics
-    diagLoop: for (const diag of diags) {
+    diagLoop: for (let diag of diags) {
       if (max !== undefined && this.diagnostics.length > max) {
         break;
       }
+
+      diag = this.normalizeDiagnostic(diag);
 
       if (this.doesMatchFilter(diag)) {
         continue;

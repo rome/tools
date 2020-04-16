@@ -97,12 +97,11 @@ export default class TestWorkerRunner {
 
   // execute the test file and discover tests
   async discoverTests() {
-    const {code, sourceMap} = this.opts;
+    const {code} = this.opts;
 
     const res = await executeMain({
       path: this.file.real,
       code,
-      sourceMap,
       globals: this.getEnvironment(),
     });
 

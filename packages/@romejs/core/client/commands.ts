@@ -14,6 +14,7 @@ import {createAbsoluteFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
 import {writeFile, exists} from '@romejs/fs';
 import {VERSION} from '../common/constants';
+import {SourceMapConsumer} from '@romejs/codec-source-map';
 
 // rome-suppress-next-line lint/noExplicitAny
 export const localCommands: Map<string, LocalCommand<any>> = new Map();
@@ -200,7 +201,7 @@ localCommands.set('run', {
           const {syntaxError} = await executeMain({
             path: createAbsoluteFilePath(data.get('filename').asString()),
             code: data.get('code').asString(),
-            sourceMap: data.get('map').asAny(),
+            sourceMap: SourceMapConsumer.fromJSON(data.get('map').asAny()),
           });
           if (syntaxError !== undefined) {
             throw createSingleDiagnosticError(syntaxError);

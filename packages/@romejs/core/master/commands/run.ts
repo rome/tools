@@ -38,7 +38,7 @@ export default createMasterCommand(
           type: 'executeCode',
           filename: path.join(),
           code: entry.js.content,
-          map: entry.sourceMap.map,
+          map: entry.sourceMap.map.serialize(),
         };
       }
 

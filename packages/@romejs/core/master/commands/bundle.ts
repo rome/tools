@@ -25,10 +25,7 @@ export default createMasterCommand<Flags>(
       };
     },
 
-    async default(req: MasterRequest, commandFlags: Flags): Promise<{
-      content: string;
-      map: string;
-    }> {
+    async default(req: MasterRequest, commandFlags: Flags): Promise<void> {
       const {flags} = req.client;
       const {args} = req.query;
       const {reporter} = req;
@@ -38,20 +35,21 @@ export default createMasterCommand<Flags>(
       const bundler = Bundler.createFromMasterRequest(req);
 
       const resolution = await bundler.getResolvedEntry(entryFilename);
-      const {files: outFiles, entry} = await bundler.bundleManifest(resolution);
+      const {files: outFiles} = await bundler.bundleManifest(resolution);
 
       const savedList = [];
       const dir = flags.cwd.resolve(outputFolder);
       for (const [filename, {kind, content}] of outFiles) {
+        const buff = content();
         const file = dir.append(filename);
         const loc = file.join();
         savedList.push(
           markup`<filelink target="${loc}">${filename}</filelink> <filesize dim>${Buffer.byteLength(
-            content,
+            buff,
           )}</filesize> <inverse>${kind}</inverse>`,
         );
         await createDirectory(file.getParent(), {recursive: true});
-        await writeFile(file, content);
+        await writeFile(file, buff);
       }
 
       if (commandFlags.quiet) {
@@ -62,11 +60,6 @@ export default createMasterCommand<Flags>(
         );
         reporter.list(savedList);
       }
-
-      return {
-        content: entry.js.content,
-        map: entry.sourceMap.content,
-      };
     },
   },
 );

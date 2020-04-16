@@ -109,7 +109,7 @@ export default class Printer {
 
     this.inputSourceMap = opts.inputSourceMap === undefined
       ? undefined
-      : new SourceMapConsumer(opts.inputSourceMap);
+      : SourceMapConsumer.fromJSON(opts.inputSourceMap);
   }
 
   compact: boolean;
@@ -722,7 +722,9 @@ export default class Printer {
     const {options} = this;
 
     const map = new SourceMapGenerator({
-      file: options.sourceMapTarget,
+      file: options.sourceMapTarget === undefined
+        ? 'unknown'
+        : options.sourceMapTarget,
       sourceRoot: options.sourceRoot,
     });
 
@@ -734,6 +736,6 @@ export default class Printer {
       map.addMapping(mapping);
     }
 
-    return map.toJSON();
+    return map.serialize();
   }
 }
