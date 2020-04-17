@@ -6,7 +6,6 @@
  */
 
 import {Diagnostic} from '@romejs/diagnostics';
-import {SourceMap} from '@romejs/codec-source-map';
 import {TestRunnerOptions} from '../../master/testing/types';
 import {Bridge} from '@romejs/events';
 import {JSONFileReference} from '../types/files';
@@ -22,7 +21,6 @@ export type TestWorkerBridgeRunOptions = {
   projectFolder: string;
   code: string;
   cwd: string;
-  sourceMap: SourceMap;
   options: TestRunnerOptions;
 };
 

@@ -6,7 +6,7 @@
  */
 
 import {Diagnostics} from '@romejs/diagnostics';
-import {SourceMap} from '@romejs/codec-source-map';
+import {SourceMapGenerator} from '@romejs/codec-source-map';
 import {AbsoluteFilePath} from '@romejs/path';
 import {MasterRequest, TestWorkerBridge} from '@romejs/core';
 import {CoverageFile, InspectorClient} from '@romejs/v8';
@@ -14,7 +14,7 @@ import child = require('child_process');
 
 export type TestSource = {
   code: string;
-  sourceMap: SourceMap;
+  sourceMap: SourceMapGenerator;
   path: AbsoluteFilePath;
 };
 

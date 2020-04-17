@@ -133,6 +133,7 @@ export default class MasterRequest {
     this.client = opts.client;
     this.id = requestIdCounter++;
     this.markers = [];
+    this.start = Date.now();
 
     this.normalizedCommandFlags = {
       flags: {},
@@ -140,6 +141,7 @@ export default class MasterRequest {
     };
   }
 
+  start: number;
   client: MasterClient;
   query: MasterQueryRequest;
   master: Master;
@@ -164,6 +166,13 @@ export default class MasterRequest {
   teardown(
     res: undefined | MasterQueryResponse,
   ): undefined | MasterQueryResponse {
+    // Output timing information
+    if (this.query.requestFlags.timing) {
+      const end = Date.now();
+      this.reporter.info(`Request took <duration emphasis>${String(end -
+        this.start)}</duration>`);
+    }
+
     if (res !== undefined) {
       // If the query asked for no data then strip all diagnostics and data values
       if (this.query.noData) {

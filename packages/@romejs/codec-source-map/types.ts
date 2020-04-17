@@ -9,13 +9,12 @@ import {Number1, Number0} from '@romejs/ob1';
 
 export type Mappings = Array<Mapping>;
 
-export type Mapping = {
+export type ParsedMapping = {
   generated: {
-    index: Number0;
     line: Number1;
     column: Number0;
   };
-  original: undefined | {
+  original: {
     line: Number1;
     column: Number0;
   };
@@ -23,16 +22,13 @@ export type Mapping = {
   name: undefined | string;
 };
 
-export type ParsedMapping = {
-  generatedLine: Number1;
-  generatedColumn: Number0;
-  originalLine: Number1;
-  originalColumn: Number0;
-  source?: number;
-  name?: number;
+export type Mapping = Omit<ParsedMapping, 'generated'> & {
+  generated: ParsedMapping['generated'] & {
+    index: Number0;
+  };
 };
 
-export type ParsedMappings = Map<string, ParsedMapping>;
+export type ParsedMappings = Map<string, Mapping | ParsedMapping>;
 
 export type ResolvedLocation = {
   source: string;
@@ -48,7 +44,7 @@ export type SourceMapGeneratorOptions = {
 
 export type SourceMap = {
   version: number;
-  file: undefined | string;
+  file: string;
   names: Array<string>;
   mappings: string;
   sourceRoot: undefined | string;

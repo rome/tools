@@ -297,7 +297,7 @@ export default class Progress extends ProgressBase {
   }
 
   buildBar(stream: ReporterStream) {
-    const {total, current, text, title} = this;
+    const {total, current, title} = this;
 
     // Text ranges that we should make bold
     const boldRanges: BoldRanges = [];
@@ -310,6 +310,8 @@ export default class Progress extends ProgressBase {
       // Only the title should be bold, not the subtext
       boldRanges.push([0, prefix.length - 1]);
     }
+
+    const text = this.getText();
     if (text !== undefined) {
       // Separate a title and it's text with a colon
       if (title !== undefined) {

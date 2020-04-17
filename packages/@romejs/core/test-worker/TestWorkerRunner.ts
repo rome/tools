@@ -97,12 +97,11 @@ export default class TestWorkerRunner {
 
   // execute the test file and discover tests
   async discoverTests() {
-    const {code, sourceMap} = this.opts;
+    const {code} = this.opts;
 
     const res = await executeMain({
       path: this.file.real,
       code,
-      sourceMap,
       globals: this.getEnvironment(),
     });
 
@@ -181,21 +180,18 @@ export default class TestWorkerRunner {
       filename,
       cleanFrames(frames) {
         // TODO we should actually get the frames before module init and do it that way
-
         // Remove everything before the original module factory
         let latestTestWorkerFrame = frames.find((frame, i) => {
           if (frame.typeName === 'global' && frame.methodName === undefined &&
                 frame.functionName ===
                 undefined) {
             // We are the global.<anonymous> frame
-
             // Now check for Script.runInContext
             const nextFrame = frames[i + 1];
             if (nextFrame !== undefined && nextFrame.typeName === 'Script' &&
                   nextFrame.methodName ===
                   'runInContext') {
               // Yes!
-
               // TODO also check for ___$romejs$core$common$utils$executeMain_ts$default (packages/romejs/core/common/utils/executeMain.ts:69:17)
               return true;
             }
@@ -207,8 +203,8 @@ export default class TestWorkerRunner {
         // And if there was no module factory frame, then we must be inside of a test
         if (latestTestWorkerFrame === undefined) {
           latestTestWorkerFrame = frames.find((frame) => {
-            return frame.filename !== undefined && frame.filename.includes(
-              'core/test-worker',
+            return frame.typeName !== undefined && frame.typeName.includes(
+              '$TestWorkerRunner',
             );
           });
         }

@@ -103,6 +103,9 @@ export default async function cli() {
             collectMarkers: c.get('collectMarkers').asBoolean(
               DEFAULT_CLIENT_REQUEST_FLAGS.collectMarkers,
             ),
+            timing: c.get('timing').asBoolean(
+              DEFAULT_CLIENT_REQUEST_FLAGS.timing,
+            ),
             watch: c.get('watch').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.watch),
             fieri: c.get('fieri').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.fieri),
             focus: c.get('focus').asString(DEFAULT_CLIENT_REQUEST_FLAGS.focus),

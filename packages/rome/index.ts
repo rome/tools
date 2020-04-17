@@ -110,11 +110,11 @@ export const compile = wrapForErrors(async function(opts: {
   throwDiagnostics(res.diagnostics);
 
   // Build source map
-  const sourceMapGenerator = new SourceMapGenerator({});
+  const sourceMapGenerator = new SourceMapGenerator({file: 'unknown'});
   for (const mapping of res.mappings) {
     sourceMapGenerator.addMapping(mapping);
   }
-  const sourceMap = sourceMapGenerator.toJSON();
+  const sourceMap = sourceMapGenerator.serialize();
 
   return {
     cacheKey,

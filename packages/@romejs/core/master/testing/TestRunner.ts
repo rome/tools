@@ -98,6 +98,13 @@ export default class TestRunner {
       }),
     );
     this.printer.addDiagnostics(opts.addDiagnostics);
+
+    // Add source maps
+    for (const [filename, {code, sourceMap}] of opts.sources) {
+      const consumer = sourceMap.toConsumer();
+      this.coverageCollector.addSourceMap(filename, code, consumer);
+      this.printer.processor.sourceMaps.add(filename, consumer);
+    }
   }
 
   coverageCollector: CoverageCollector;
@@ -150,12 +157,12 @@ export default class TestRunner {
       }
       const [filename, {path, code, sourceMap}] = item;
 
-      this.coverageCollector.addSourceMap(filename, code, sourceMap);
-
       // Source map locations will always be resolved in the worker, but this is in case we need to resolve them in master in the case of an unresponsive worker
-
       // TODO remove this after test has ran
-      const removeSourceMap = sourceMapManager.addSourceMap(filename, sourceMap);
+      const removeSourceMap = sourceMapManager.addSourceMap(
+        filename,
+        () => sourceMap.toConsumer(),
+      );
 
       const id = this.testFileCounter;
       this.testFileCounter++;
@@ -169,7 +176,6 @@ export default class TestRunner {
             file: req.master.projectManager.getTransportFileReference(path),
             cwd: flags.cwd.join(),
             code,
-            sourceMap,
           },
         );
 
@@ -573,10 +579,15 @@ export default class TestRunner {
   }
 
   printCoverageReport() {
-    const {reporter, master} = this;
+    const {reporter, master, coverageCollector} = this;
+    if (!this.options.coverage) {
+      return;
+    }
+
+    reporter.info('Generating coverage');
 
     // Fetch coverage entries
-    const files = this.coverageCollector.generate();
+    const files = coverageCollector.generate();
     if (files.length === 0) {
       return;
     }
