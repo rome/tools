@@ -40,7 +40,7 @@ export default class SourceMapConsumerCollection {
     }
 
     if (start !== undefined) {
-      const resolved = this.exactOriginalPositionFor(
+      const resolved = this.approxOriginalPositionFor(
         filename,
         start.line,
         start.column,
@@ -56,7 +56,7 @@ export default class SourceMapConsumerCollection {
     }
 
     if (end !== undefined) {
-      const resolved = this.exactOriginalPositionFor(
+      const resolved = this.approxOriginalPositionFor(
         filename,
         end.line,
         end.column,

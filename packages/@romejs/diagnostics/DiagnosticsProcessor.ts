@@ -226,9 +226,11 @@ export default class DiagnosticsProcessor {
     if (!sourceMaps.hasAny()) {
       return diag;
     }
+
     function check(filename: undefined | string) {
       return filename !== undefined && sourceMaps.has(filename);
     }
+
     // Check location
     let {location} = diag;
     const hasLocation = check(location.filename);
@@ -272,11 +274,11 @@ export default class DiagnosticsProcessor {
             frames: item.frames.map((frame) => {
               const {filename, line, column} = frame;
               if (filename === undefined || line === undefined || column ===
-                  undefined) {
+                  undefined || !sourceMaps.has(filename)) {
                 return frame;
               }
 
-              const resolved = sourceMaps.exactOriginalPositionFor(
+              const resolved = sourceMaps.approxOriginalPositionFor(
                 filename,
                 line,
                 column,
