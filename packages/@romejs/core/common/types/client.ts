@@ -27,6 +27,7 @@ export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
   benchmarkIterations: 10,
 
   watch: false,
+  review: false,
   resolverPlatform: undefined,
   resolverScale: undefined,
   resolverMocks: false,
@@ -35,6 +36,7 @@ export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
 
 export type ClientRequestFlags = DiagnosticsPrinterFlags & {
   watch: boolean;
+  review: boolean;
 
   // Debugging
   timing: boolean;

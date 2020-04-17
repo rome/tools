@@ -21,6 +21,8 @@ import {DiagnosticCategoryPrefix} from './categories';
 import {descriptions} from './descriptions';
 import {matchesSuppression} from '@romejs/js-compiler';
 import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
+import DiagnosticsNormalizer from './DiagnosticsNormalizer';
+import {MarkupFormatOptions} from '@romejs/string-markup';
 
 type UniquePart =
   | 'filename'
@@ -33,12 +35,13 @@ type UniqueRule = Array<UniquePart>;
 
 type UniqueRules = Array<UniqueRule>;
 
-export type CollectorOptions = {
+export type DiagnosticsProcessorOptions = {
   filters?: Array<DiagnosticFilterWithTest>;
   unique?: UniqueRules;
   max?: number;
   onDiagnostics?: (diags: Diagnostics) => void;
   origins?: Array<DiagnosticOrigin>;
+  markupOptions?: MarkupFormatOptions;
 };
 
 const DEFAULT_UNIQUE: UniqueRules = [
@@ -48,7 +51,7 @@ const DEFAULT_UNIQUE: UniqueRules = [
 type DiagnosticsByFilename = Map<undefined | string, Diagnostics>;
 
 export default class DiagnosticsProcessor {
-  constructor(options: CollectorOptions = {}) {
+  constructor(options: DiagnosticsProcessorOptions = {}) {
     this.filters = [];
     this.options = options;
     this.includedKeys = new Set();
@@ -59,11 +62,13 @@ export default class DiagnosticsProcessor {
     this.usedSuppressions = new Set();
     this.suppressions = new Set();
     this.sourceMaps = new SourceMapConsumerCollection();
+    this.normalizer = new DiagnosticsNormalizer(this);
 
     this.diagnostics = [];
     this.cachedDiagnostics = undefined;
   }
 
+  normalizer: DiagnosticsNormalizer;
   sourceMaps: SourceMapConsumerCollection;
   unique: UniqueRules;
   includedKeys: Set<string>;
@@ -72,7 +77,7 @@ export default class DiagnosticsProcessor {
   allowedUnusedSuppressionPrefixes: Set<string>;
   usedSuppressions: Set<DiagnosticSuppression>;
   suppressions: Set<DiagnosticSuppression>;
-  options: CollectorOptions;
+  options: DiagnosticsProcessorOptions;
   throwAfter: undefined | number;
   origins: Array<DiagnosticOrigin>;
   cachedDiagnostics: undefined | Diagnostics;
@@ -110,8 +115,14 @@ export default class DiagnosticsProcessor {
     return this.getDiagnostics().length > 0;
   }
 
+  assertEmpty() {
+    if (this.hasDiagnostics()) {
+      throw new Error('Expected no diagnostics for this operation');
+    }
+  }
+
   addAllowedUnusedSuppressionPrefix(prefix: DiagnosticCategoryPrefix) {
-    this.cachedDiagnostics = undefined;
+    this.assertEmpty();
     this.allowedUnusedSuppressionPrefixes.add(prefix);
   }
 
@@ -218,101 +229,6 @@ export default class DiagnosticsProcessor {
     return keys;
   }
 
-  // Normalize a diagnostic by resolving attached source maps
-  normalizeDiagnostic(diag: Diagnostic): Diagnostic {
-    const {sourceMaps} = this;
-
-    // No source maps attached
-    if (!sourceMaps.hasAny()) {
-      return diag;
-    }
-
-    function check(filename: undefined | string) {
-      return filename !== undefined && sourceMaps.has(filename);
-    }
-
-    // Check location
-    let {location} = diag;
-    const hasLocation = check(location.filename);
-
-    // Check advice
-    let hasAdvice = false;
-    let {advice} = diag.description;
-    if (advice !== undefined) {
-      for (const item of advice) {
-        if (item.type === 'frame' && check(item.location.filename)) {
-          hasAdvice = true;
-        }
-
-        if (item.type === 'stacktrace') {
-          for (const frame of item.frames) {
-            if (check(frame.filename)) {
-              hasAdvice = true;
-            }
-          }
-        }
-      }
-    }
-
-    // Did not contain anything we need to resolve
-    if (!hasAdvice && !hasLocation) {
-      return diag;
-    }
-
-    if (advice !== undefined && hasAdvice) {
-      advice = advice.map((item) => {
-        if (item.type === 'frame' && check(item.location.filename)) {
-          return {
-            ...item,
-            location: sourceMaps.resolveLocation(item.location),
-          };
-        }
-
-        if (item.type === 'stacktrace') {
-          return {
-            ...item,
-            frames: item.frames.map((frame) => {
-              const {filename, line, column} = frame;
-              if (filename === undefined || line === undefined || column ===
-                  undefined || !sourceMaps.has(filename)) {
-                return frame;
-              }
-
-              const resolved = sourceMaps.approxOriginalPositionFor(
-                filename,
-                line,
-                column,
-              );
-              if (resolved !== undefined) {
-                return {
-                  ...frame,
-                  filename: resolved.source,
-                  line: resolved.line,
-                  column: resolved.column,
-                };
-              }
-
-              return frame;
-            }),
-          };
-        }
-
-        return item;
-      });
-    }
-
-    diag = {
-      ...diag,
-      location: sourceMaps.resolveLocation(diag.location),
-      description: {
-        ...diag.description,
-        advice,
-      },
-    };
-
-    return diag;
-  }
-
   addDiagnostic(
     diag: Diagnostic,
     origin?: DiagnosticOrigin,
@@ -343,8 +259,14 @@ export default class DiagnosticsProcessor {
         break;
       }
 
-      diag = this.normalizeDiagnostic(diag);
+      // Check before normalization
+      if (this.doesMatchFilter(diag)) {
+        continue;
+      }
 
+      diag = this.normalizer.normalizeDiagnostic(diag);
+
+      // Check after normalization
       if (this.doesMatchFilter(diag)) {
         continue;
       }

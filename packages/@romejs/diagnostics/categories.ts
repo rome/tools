@@ -20,6 +20,7 @@ export type DiagnosticCategory =
   | 'format/disabled'
   | 'internalError/httpServer'
   | 'internalError/request'
+  | 'lint/camelCase'
   | 'lint/caseSingleStatement'
   | 'lint/defaultExportSameBasename'
   | 'lint/disabled'

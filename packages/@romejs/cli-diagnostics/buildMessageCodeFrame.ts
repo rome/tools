@@ -19,11 +19,11 @@ import {
   sub,
   get0,
   number0,
-  coerce1to0,
+  coerce1To0,
   coerce0,
   inc,
   Number0,
-  coerce0to1,
+  coerce0To1,
   number1Neg1,
 } from '@romejs/ob1';
 import {stripMarkupTags} from '@romejs/string-markup';
@@ -39,9 +39,9 @@ export default function buildMessageCodeFrame(
     return CODE_FRAME_INDENT + markerMessage;
   }
 
-  const startLineIndex = coerce1to0(start.line);
+  const startLineIndex = coerce1To0(start.line);
 
-  let endLineIndex = coerce1to0(end.line);
+  let endLineIndex = coerce1To0(end.line);
   let endLineCol = end.column;
 
   let markerOffset = end.column;
@@ -100,7 +100,7 @@ export default function buildMessageCodeFrame(
       }
     }
 
-    const lineNo = coerce0to1(i);
+    const lineNo = coerce0To1(i);
     let gutter = `${String(lineNo)}${GUTTER}`;
 
     if (shouldHighlight) {

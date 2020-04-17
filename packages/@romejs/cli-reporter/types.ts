@@ -12,11 +12,14 @@ export type Package = {
   version?: string;
 };
 
-export type ReporterStream = {
+export type ReporterStreamMeta = {
   type: 'out' | 'error' | 'all';
   columns: number;
   unicode: boolean;
-  format: 'ansi' | 'html' | 'none';
+  format: 'markup' | 'ansi' | 'html' | 'none';
+};
+
+export type ReporterStream = ReporterStreamMeta & {
   write: (chunk: string) => void;
   teardown?: () => void;
 };

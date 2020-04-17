@@ -21,13 +21,9 @@ import {
   AbsoluteFilePathMap,
   AbsoluteFilePathSet,
 } from '@romejs/path';
-import {
-  Diagnostics,
-  DiagnosticsProcessor,
-  DiagnosticLocation,
-} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticLocation} from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
-import {coerce1to0, number0, Number0, inc} from '@romejs/ob1';
+import {coerce1To0, number0, Number0, inc} from '@romejs/ob1';
 import {stripMarkupTags} from '@romejs/string-markup';
 import {
   PartialMasterQueryRequest,
@@ -88,7 +84,7 @@ function convertPositionToLSP(pos: undefined | Position): LSPPosition {
     };
   } else {
     return {
-      line: coerce1to0(pos.line),
+      line: coerce1To0(pos.line),
       character: pos.column,
     };
   }
@@ -388,7 +384,7 @@ export default class LSPServer {
           }
 
           // We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
-          const processor = new DiagnosticsProcessor();
+          const processor = this.request.createDiagnosticsProcessor();
           processor.addFilter({
             category: 'lint/pendingFixes',
           });

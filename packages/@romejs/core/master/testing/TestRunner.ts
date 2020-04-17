@@ -10,7 +10,6 @@ import {
   DiagnosticOrigin,
   deriveDiagnosticFromError,
   descriptions,
-  DiagnosticsProcessor,
 } from '@romejs/diagnostics';
 import {TestRef} from '../../common/bridges/TestWorkerBridge';
 import {Master, MasterRequest, TestWorkerBridge} from '@romejs/core';
@@ -35,7 +34,7 @@ import {
 import fork from '../../common/utils/fork';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
 import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
-import {coerce0to1} from '@romejs/ob1';
+import {coerce0To1} from '@romejs/ob1';
 import {
   TestRunnerConstructorOptions,
   TestRunnerOptions,
@@ -88,7 +87,7 @@ export default class TestRunner {
     this.testFileCounter = 0;
 
     this.printer = opts.request.createDiagnosticsPrinter(
-      new DiagnosticsProcessor({
+      this.request.createDiagnosticsProcessor({
         origins: [
           {
             category: 'test',
@@ -370,7 +369,7 @@ export default class TestRunner {
 
       const resolved = sourceMapManager.resolveLocation(urlToFilename(
         callFrame.get('url').asString(),
-      ), coerce0to1(loc.get('lineNumber').asZeroIndexedNumber()), loc.get(
+      ), coerce0To1(loc.get('lineNumber').asZeroIndexedNumber()), loc.get(
         'columnNumber',
       ).asZeroIndexedNumber());
 

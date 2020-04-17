@@ -67,12 +67,15 @@ import {
   createUnknownFilePath,
 } from '@romejs/path';
 import crypto = require('crypto');
-
 import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
 import {Dict, RequiredProps} from '@romejs/typescript-helpers';
 import {number1, number0, coerce0} from '@romejs/ob1';
 import {MemoryFSGlobOptions} from './fs/MemoryFileSystem';
 import {markup} from '@romejs/string-markup';
+import {
+  DiagnosticsProcessorOptions,
+} from '@romejs/diagnostics/DiagnosticsProcessor';
+import {JSONObject} from '@romejs/codec-json';
 
 type MasterRequestOptions = {
   master: Master;
@@ -114,6 +117,12 @@ export type MasterRequestGetFilesResult = {
 };
 
 export class MasterRequestInvalid extends DiagnosticsError {}
+
+function hash(val: JSONObject): string {
+  return val === undefined || Object.keys(val).length === 0
+    ? 'none'
+    : crypto.createHash('sha256').update(JSON.stringify(val)).digest('hex');
+}
 
 export default class MasterRequest {
   constructor(opts: MasterRequestOptions) {
@@ -223,8 +232,17 @@ export default class MasterRequest {
     );
   }
 
+  createDiagnosticsProcessor(
+    opts: DiagnosticsProcessorOptions = {},
+  ): DiagnosticsProcessor {
+    return new DiagnosticsProcessor({
+      markupOptions: this.reporter.markupOptions,
+      ...opts,
+    });
+  }
+
   createDiagnosticsPrinter(
-    processor: DiagnosticsProcessor = new DiagnosticsProcessor(),
+    processor: DiagnosticsProcessor = this.createDiagnosticsProcessor(),
   ): DiagnosticsPrinter {
     processor.unshiftOrigin({
       category: 'master',
@@ -664,7 +682,10 @@ export default class MasterRequest {
         }
 
         diagnostics.push({
-          location,
+          location: {
+            ...location,
+            marker: `<filelink target="${path.join()}" />`,
+          },
           description: {
             category,
             message: createBlessedDiagnosticMessage(opts.noun === undefined
@@ -672,7 +693,6 @@ export default class MasterRequest {
               : `No files to ${opts.noun} found`),
             advice,
           },
-          marker: `<filelink target="${path.join()}" />`,
         });
       }
 
@@ -792,15 +812,16 @@ export default class MasterRequest {
   async requestWorkerLint(
     path: AbsoluteFilePath,
     optionsWithoutModSigs: Omit<WorkerLintOptions, 'prefetchedModuleSignatures'>,
-
-    parseOptions: WorkerParseOptions,
   ): Promise<
     WorkerLintResult
   > {
     const {cache} = this.master;
     const cacheEntry = await cache.get(path);
-    if (cacheEntry.lint !== undefined) {
-      return cacheEntry.lint;
+
+    const cacheKey = hash(optionsWithoutModSigs);
+    const cached = cacheEntry.lint[cacheKey];
+    if (cached !== undefined) {
+      return cached;
     }
 
     const prefetchedModuleSignatures = await this.maybePrefetchModuleSignatures(
@@ -815,12 +836,15 @@ export default class MasterRequest {
     const res = await this.wrapRequestDiagnostic(
       'lint',
       path,
-      (bridge, file) => bridge.lint.call({file, options, parseOptions}),
+      (bridge, file) => bridge.lint.call({file, options, parseOptions: {}}),
     );
 
-    await cache.update(path, {
-      lint: res,
-    });
+    await cache.update(path, (cacheEntry) => ({
+      lint: {
+        ...cacheEntry.lint,
+        [cacheKey]: res,
+      },
+    }));
 
     return res;
   }
@@ -845,10 +869,7 @@ export default class MasterRequest {
     const {cache} = this.master;
 
     // Create a cache key comprised of the stage and hash of the options
-    const optionsHash = options === undefined
-      ? 'none'
-      : crypto.createHash('sha256').update(JSON.stringify(options)).digest('hex');
-    const cacheKey = `${stage}:${optionsHash}`;
+    const cacheKey = `${stage}:${hash(options)}`;
 
     // Check cache for this stage and options
     const cacheEntry = await cache.get(path);

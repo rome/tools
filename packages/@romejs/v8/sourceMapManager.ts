@@ -7,7 +7,7 @@
 
 import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {ErrorFrame} from '@romejs/v8';
-import {coerce1, coerce1to0, Number1, Number0} from '@romejs/ob1';
+import {coerce1, coerce1To0, Number1, Number0} from '@romejs/ob1';
 import {
   getErrorStructure,
   ERROR_FRAMES_PROP,
@@ -154,7 +154,7 @@ frames: Array<NodeJS.CallSite>): void {
       lineNumber: lineNumber == null ? undefined : coerce1(lineNumber),
 
       // Rome expects 0-indexed columns, V8 provides 1-indexed
-      columnNumber: columnNumber == null ? undefined : coerce1to0(columnNumber),
+      columnNumber: columnNumber == null ? undefined : coerce1To0(columnNumber),
     };
 
     if (frame.filename !== undefined && frame.lineNumber !== undefined &&

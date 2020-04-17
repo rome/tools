@@ -8,7 +8,6 @@
 import SourceMapConsumer from './SourceMapConsumer';
 import {Number1, Number0} from '@romejs/ob1';
 import {ResolvedLocation} from './types';
-import {DiagnosticLocation} from '@romejs/diagnostics';
 
 export default class SourceMapConsumerCollection {
   constructor() {
@@ -21,8 +20,8 @@ export default class SourceMapConsumerCollection {
     return this.maps.size > 0;
   }
 
-  has(file: string): boolean {
-    return this.maps.has(file);
+  has(file: undefined | string): boolean {
+    return file !== undefined && this.maps.has(file);
   }
 
   add(file: string, map: SourceMapConsumer) {
@@ -31,48 +30,6 @@ export default class SourceMapConsumerCollection {
 
   get(file: string): undefined | SourceMapConsumer {
     return this.maps.get(file);
-  }
-
-  resolveLocation(location: DiagnosticLocation): DiagnosticLocation {
-    let {filename, start, end} = location;
-    if (filename === undefined) {
-      return location;
-    }
-
-    if (start !== undefined) {
-      const resolved = this.approxOriginalPositionFor(
-        filename,
-        start.line,
-        start.column,
-      );
-      if (resolved !== undefined) {
-        filename = resolved.source;
-        start = {
-          ...start,
-          line: resolved.line,
-          column: resolved.column,
-        };
-      }
-    }
-
-    if (end !== undefined) {
-      const resolved = this.approxOriginalPositionFor(
-        filename,
-        end.line,
-        end.column,
-      );
-      if (resolved !== undefined) {
-        // TODO confirm this is the same as `start` if it resolved
-        filename = resolved.source;
-        end = {
-          ...end,
-          line: resolved.line,
-          column: resolved.column,
-        };
-      }
-    }
-
-    return {...location, filename, start, end};
   }
 
   approxOriginalPositionFor(

@@ -7,7 +7,7 @@
 
 import {AnyNode, MOCK_PROGRAM} from '@romejs/js-ast';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import {Context, Path, TransformVisitors} from '@romejs/js-compiler';
+import {CompilerContext, Path, TransformVisitors} from '@romejs/js-compiler';
 import {SourceLocation} from '@romejs/parser-core';
 import {JSNodeBase} from '@romejs/js-ast/base';
 
@@ -43,7 +43,7 @@ const removeLocTransform: TransformVisitors = [
 ];
 
 export default function removeLoc(ast: AnyNode) {
-  const context = new Context({
+  const context = new CompilerContext({
     ast: MOCK_PROGRAM,
     project: {
       folder: undefined,

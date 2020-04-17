@@ -14,6 +14,7 @@ import {
 } from '@romejs/string-utils';
 import {formatAnsi, ansiPad} from './ansi';
 import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
+import {escapeMarkup} from './escape';
 
 type FormatReduceCallback = (
   name: MarkupTagName,
@@ -35,26 +36,37 @@ export type MarkupFormatOptions = {
 
 const EMPTY_ATTRIBUTES: Map<string, string> = new Map();
 
+type FormatReduceOptions = {
+  escapeText: boolean;
+};
+
 function formatReduceFromInput(
   input: string,
+  opts: FormatReduceOptions,
   callback: FormatReduceCallback,
 ): string {
-  return formatReduceFromChildren(parseMarkup(input), callback);
+  return formatReduceFromChildren(parseMarkup(input), opts, callback);
 }
 
 function formatReduceFromChildren(
   children: Children,
+  opts: FormatReduceOptions,
   callback: FormatReduceCallback,
 ): string {
   let buff = '';
   for (const child of children) {
     if (child.type === 'Text') {
-      buff += child.value;
+      let text = child.value;
+      if (opts.escapeText) {
+        text = escapeMarkup(text);
+      }
+      buff += text;
     } else if (child.type === 'Tag') {
       const {attributes} = child;
 
       let res = callback(child.name, attributes, formatReduceFromChildren(
         child.children,
+        opts,
         callback,
       ));
 
@@ -80,7 +92,7 @@ function formatFileLink(
   opts: MarkupFormatOptions,
 ): {
   text: string;
-  href: string;
+  filename: string;
 } {
   let text = value;
 
@@ -106,7 +118,7 @@ function formatFileLink(
     }
   }
 
-  return {text, href: `file://${filename}`};
+  return {text, filename};
 }
 
 function formatApprox(attributes: TagAttributes, value: string) {
@@ -156,7 +168,11 @@ export function stripMarkupTags(
   input: string,
   opts: MarkupFormatOptions = {},
 ): string {
-  return formatReduceFromInput(input, (tag, attributes, value) => {
+  return formatReduceFromInput(input, {escapeText: false}, (
+    tag,
+    attributes,
+    value,
+  ) => {
     switch (tag) {
       case 'filelink':
         return formatFileLink(attributes, value, opts).text;
@@ -179,9 +195,48 @@ export function stripMarkupTags(
       case 'command':
         return `\`${value}\``;
 
+      case 'emphasis':
+        return `*${value}*`;
+
+      case 'italic':
+        return `_${value}_`;
+
       default:
         return value;
     }
+  });
+}
+
+export function normalizeMarkup(
+  input: string,
+  opts: MarkupFormatOptions = {},
+): string {
+  return formatReduceFromInput(input, {escapeText: true}, (
+    tag,
+    attributes,
+    value,
+  ) => {
+    // Normalize filename of <filelink target>
+    if (tag === 'filelink') {
+      const {text, filename} = formatFileLink(attributes, value, opts);
+      attributes.set('target', filename);
+      value = text;
+    }
+
+    let attrStr = Array.from(attributes, ([key, value]) => {
+      return `${key}="${value.replace(/"/g, '\\"')}"`;
+    }).join(' ');
+
+    let open = `<${tag}`;
+    if (attrStr !== '') {
+      open += ` ${attrStr}`;
+    }
+
+    if (value === '') {
+      return `${open} />`;
+    }
+
+    return `${open}>${value}</${tag}>`;
   });
 }
 
@@ -189,7 +244,11 @@ export function markupToAnsi(
   input: string,
   opts: MarkupFormatOptions = {},
 ): string {
-  return formatReduceFromInput(input, (tag, attributes, value) => {
+  return formatReduceFromInput(input, {escapeText: false}, (
+    tag,
+    attributes,
+    value,
+  ) => {
     switch (tag) {
       case 'hyperlink': {
         let text = value;
@@ -210,8 +269,8 @@ export function markupToAnsi(
         return formatPad(attributes, value);
 
       case 'filelink': {
-        const {text, href} = formatFileLink(attributes, value, opts);
-        return formatAnsi.hyperlink(text, href);
+        const {text, filename} = formatFileLink(attributes, value, opts);
+        return formatAnsi.hyperlink(text, `file://${filename}`);
       }
 
       case 'inverse':

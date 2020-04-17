@@ -6,7 +6,7 @@
  */
 
 import {AnyNode, Program, MOCK_PARENT} from '@romejs/js-ast';
-import {Context} from '@romejs/js-compiler';
+import {CompilerContext} from '@romejs/js-compiler';
 import {SCOPE_PRIVATE_PREFIX} from '../constants';
 import evaluators from './evaluators/index';
 import * as GLOBALS from './globals';
@@ -222,7 +222,7 @@ const GLOBAL_COMMENT_START = /^([\s+]|)global /;
 const GLOBAL_COMMENT_COLON = /:(.*?)$/;
 
 export class RootScope extends Scope {
-  constructor(context: Context, ast: Program) {
+  constructor(context: CompilerContext, ast: Program) {
     super({
       kind: 'root',
       parentScope: undefined,
@@ -247,7 +247,7 @@ export class RootScope extends Scope {
     ]);
   }
 
-  context: Context;
+  context: CompilerContext;
   uids: Set<string>;
 
   parseGlobalComments(ast: Program): Array<string> {

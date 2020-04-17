@@ -18,7 +18,7 @@ import {
   AnyNode,
   variableDeclarationStatement,
   AnyComment,
-  AnyCommentWithoutId,
+  AnyCommentOptionalId,
 } from '@romejs/js-ast';
 
 type VariableInjectorState = {
@@ -109,7 +109,7 @@ type CommentInjectorState = {
   comments: Array<AnyComment>;
 };
 
-type CommentInjectorArg = AnyCommentWithoutId;
+type CommentInjectorArg = AnyCommentOptionalId;
 
 export const commentInjector = createHook<
   CommentInjectorState,
@@ -122,17 +122,29 @@ export const commentInjector = createHook<
     comments: [],
   },
 
-  call(
-    path: Path,
-    state: CommentInjectorState,
-    commentWithoutId: CommentInjectorArg,
-  ) {
-    const commentWithId = path.context.comments.addComment(commentWithoutId);
+  call(path: Path, state: CommentInjectorState, comment: CommentInjectorArg) {
+    let commentWithId: AnyComment;
+    let comments = state.comments;
+
+    const {id} = comment;
+    if (id === undefined) {
+      commentWithId = path.context.comments.addComment(comment);
+    } else {
+      // This comment already has an id so update it
+      commentWithId = {
+        ...comment,
+        id,
+      };
+      path.context.comments.updateComment(commentWithId);
+
+      // Remove from existing comments
+      comments = comments.filter((comment) => comment.id !== id);
+    }
 
     return {
       value: commentWithId.id,
       state: {
-        comments: [...state.comments, commentWithId],
+        comments: [...comments, commentWithId],
       },
     };
   },
@@ -162,7 +174,7 @@ export const commentInjectorVisitor = {
 
     if (node.type === 'Program') {
       context.comments.setComments(node.comments);
-      path.provideHook(commentInjector);
+      return path.provideHook(commentInjector);
     }
 
     return node;

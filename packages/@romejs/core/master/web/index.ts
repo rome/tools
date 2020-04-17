@@ -103,7 +103,7 @@ export class WebServer {
         columns: 100,
         unicode: true,
         write(chunk) {
-          data.stdoutAnsi += chunk;
+          data.stdoutHTML += chunk;
         },
       };
 

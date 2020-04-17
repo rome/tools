@@ -22,9 +22,13 @@ import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import DependencyGraph from '../dependencies/DependencyGraph';
 import {ReporterProgressOptions, ReporterProgress} from '@romejs/cli-reporter';
 import DependencyNode from '../dependencies/DependencyNode';
-import {areAnalyzeDependencyResultsEqual} from '@romejs/js-compiler';
+import {
+  areAnalyzeDependencyResultsEqual,
+  LintCompilerOptions,
+} from '@romejs/js-compiler';
 import {markup} from '@romejs/string-markup';
 import WorkerQueue from '../WorkerQueue';
+import {Dict} from '@romejs/typescript-helpers';
 
 type LintWatchChanges = Array<{
   filename: undefined | string;
@@ -35,6 +39,7 @@ type LintWatchChanges = Array<{
 export type LinterOptions = {
   fixLocation?: DiagnosticLocation;
   args?: Array<string>;
+  compilerOptionsPerFile?: Dict<LintCompilerOptions>;
 };
 
 type ProgressFactory = (opts: ReporterProgressOptions) => ReporterProgress;
@@ -120,18 +125,18 @@ class LintRunner {
   constructor({
     request,
     graph,
-    fix,
+    options,
     events,
   }: {
     events: WatchEvents;
     request: MasterRequest;
     graph: DependencyGraph;
-    fix: boolean;
+    options: LinterOptions;
   }) {
     this.master = request.master;
     this.graph = graph;
     this.request = request;
-    this.fix = fix;
+    this.options = options;
     this.events = events;
     this.compilerDiagnosticsCache = new AbsoluteFilePathMap();
     this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
@@ -148,7 +153,7 @@ class LintRunner {
   master: Master;
   request: MasterRequest;
   graph: DependencyGraph;
-  fix: boolean;
+  options: LinterOptions;
 
   async runLint({
     evictedPaths: changedPaths,
@@ -157,25 +162,30 @@ class LintRunner {
     let fixedCount = 0;
     const {master} = this.request;
 
+    const {fixLocation, compilerOptionsPerFile} = this.options;
+    const shouldFix = fixLocation !== undefined;
+
     const queue: WorkerQueue<void> = new WorkerQueue(master);
 
     const progress = this.events.createProgress({title: 'Linting'});
     progress.setTotal(changedPaths.size);
 
     queue.addCallback(async (path) => {
-      const text = markup`<filelink target="${path.join()}" />`;
+      const filename = path.join();
+      const text = markup`<filelink target="${filename}" />`;
       progress.pushText(text);
+
+      const compilerOptions = compilerOptionsPerFile === undefined
+        ? undefined
+        : compilerOptionsPerFile[filename];
 
       const {
         diagnostics,
         suppressions,
         fixed,
       } = await this.request.requestWorkerLint(path, {
-        fix: this.fix,
-      }, {
-      // TODO add this option?
-
-
+        fix: shouldFix,
+        compilerOptions,
       });
       processor.addSuppressions(suppressions);
       processor.addDiagnostics(diagnostics);
@@ -380,7 +390,7 @@ export default class Linter {
     evictedPaths: AbsoluteFilePathSet,
     runner: LintRunner,
   ): DiagnosticsProcessor {
-    const processor = new DiagnosticsProcessor({
+    const processor = this.request.createDiagnosticsProcessor({
       origins: [
         {
           category: 'lint',
@@ -416,12 +426,11 @@ export default class Linter {
     );
 
     const {fixLocation} = this.options;
-    const shouldFix = fixLocation !== undefined;
 
     const runner = new LintRunner({
       events,
       request: this.request,
-      fix: shouldFix,
+      options: this.options,
       graph,
     });
 
@@ -458,7 +467,7 @@ export default class Linter {
     const watchEvent = await this.watch({
       onRunStart: () => {
         if (watch) {
-          reporter.clear();
+          reporter.clearScreen();
         }
       },
 
@@ -489,7 +498,7 @@ export default class Linter {
         }
 
         if (watch) {
-          reporter.clear();
+          reporter.clearScreen();
           printer.print();
           printer.footer();
         }

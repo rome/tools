@@ -12,6 +12,7 @@ import {
   BundleCompileOptions,
   CompileResult,
   TransformStageName,
+  LintCompilerOptions,
 } from '@romejs/js-compiler';
 import {Profile} from '@romejs/v8';
 import {ProfilingStartData} from './MasterBridge';
@@ -56,6 +57,7 @@ export type WorkerAnalyzeDependencyResult = AnalyzeDependencyResult & {
 };
 
 export type WorkerLintOptions = {
+  compilerOptions?: LintCompilerOptions;
   prefetchedModuleSignatures: PrefetchedModuleSignatures;
   fix: boolean;
 };

@@ -9,7 +9,8 @@ import {MasterRequest} from '@romejs/core';
 import {ProjectDefinition} from '@romejs/project';
 import {SourceMap} from '@romejs/codec-source-map';
 import Bundler from '../bundler/Bundler';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import {AbsoluteFilePath, createRelativeFilePath} from '@romejs/path';
 
 // This will be dispatched to the client where it has a special case for `executeCode`
@@ -24,8 +25,14 @@ export default createMasterCommand(
   {
     category: commandCategories.PROJECT_MANAGEMENT,
     description: 'TODO',
+    usage: '',
+    examples: [],
 
-    async default(req: MasterRequest): Promise<RunResult> {
+    defineFlags() {
+      return {};
+    },
+
+    async callback(req: MasterRequest): Promise<RunResult> {
       const {args} = req.query;
       const {flags} = req.client;
       const {master} = req;

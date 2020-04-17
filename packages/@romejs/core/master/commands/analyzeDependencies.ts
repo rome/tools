@@ -6,7 +6,8 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import {Consumer} from '@romejs/consume';
 import {createUnknownFilePath} from '@romejs/path';
 import {SourceLocation} from '@romejs/parser-core';
@@ -25,6 +26,8 @@ function removeLoc<T extends {loc?: SourceLocation}>(obj: T): Omit<T, 'loc'> {
 export default createMasterCommand({
   category: commandCategories.SOURCE_CODE,
   description: 'analyze and dump the dependencies of a file',
+  usage: '',
+  examples: [],
 
   defineFlags(c: Consumer): Flags {
     return {
@@ -33,7 +36,7 @@ export default createMasterCommand({
     };
   },
 
-  async default(req: MasterRequest, commandFlags: Flags): Promise<void> {
+  async callback(req: MasterRequest, commandFlags: Flags): Promise<void> {
     const {master, reporter} = req;
     const {args} = req.query;
     req.expectArgumentLength(1);

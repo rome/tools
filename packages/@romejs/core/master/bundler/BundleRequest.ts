@@ -60,7 +60,7 @@ export default class BundleRequest {
     this.resolvedEntryUid = bundler.master.projectManager.getUid(resolvedEntry);
 
       this.diagnostics =
-      new DiagnosticsProcessor(
+      bundler.request.createDiagnosticsProcessor(
         {
           origins: [
             {
