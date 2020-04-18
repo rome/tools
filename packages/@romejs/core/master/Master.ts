@@ -62,6 +62,7 @@ import VirtualModules from './fs/VirtualModules';
 import {
   DiagnosticsProcessorOptions,
 } from '@romejs/diagnostics/DiagnosticsProcessor';
+import {toKebabCase} from '@romejs/string-utils';
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;
 
@@ -767,7 +768,6 @@ export default class Master {
       const defaultCommandFlags: Dict<unknown> = {};
 
       // A type-safe wrapper for retrieving command flags
-
       // TODO perhaps present this as JSON or something if this isn't a request from the CLI?
       const commandFlagsConsumer = consume({
         filePath: createUnknownFilePath('argv'),
@@ -784,6 +784,10 @@ export default class Master {
 
           getOriginalValue: () => {
             return undefined;
+          },
+
+          normalizeKey: (key) => {
+            return toKebabCase(key);
           },
 
           getDiagnosticPointer: (keys: ConsumePath) => {

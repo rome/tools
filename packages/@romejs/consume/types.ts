@@ -28,6 +28,7 @@ export type ConsumeSourceLocationRequestTarget =
 
 export type ConsumeContext = {
   category: DiagnosticCategory;
+  normalizeKey?: (key: string) => string;
   getDiagnosticPointer?: (
     keys: ConsumePath,
     target: ConsumeSourceLocationRequestTarget,
