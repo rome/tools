@@ -370,6 +370,7 @@ export default class MasterRequest {
         ...this.normalizedCommandFlags.defaultFlags,
         clientName: this.client.flags.clientName,
       },
+      incorrectCaseFlags: new Set(),
       shorthandFlags: new Set(),
     }, target);
   }

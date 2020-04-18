@@ -69,35 +69,6 @@ function isComputedPart(part: ConsumeKey): boolean {
   return typeof part === 'number' || !isValidIdentifierName(part);
 }
 
-function joinPath(path: ConsumePath): string {
-  let str = '';
-
-  for (let i = 0; i < path.length; i++) {
-    const part = path[i];
-    const nextPart = path[i + 1];
-
-    // If we are a computed property then wrap in brackets, the previous part would not have inserted a dot
-    if (isComputedPart(part)) {
-      const inner = typeof part === 'number'
-        ? String(part)
-        : escapeString(part, {
-          quote: "'",
-        });
-
-      str += `[${inner}]`;
-    } else {
-      if (nextPart === undefined || isComputedPart(nextPart)) {
-        // Don't append a dot if there are no parts or the next is computed
-        str += part;
-      } else {
-        str += `${part}.`;
-      }
-    }
-  }
-
-  return str;
-}
-
 export default class Consumer {
   constructor(opts: ConsumerOptions) {
     this.path = opts.filePath;
@@ -290,6 +261,41 @@ export default class Consumer {
     return this.getDiagnosticLocation() !== undefined;
   }
 
+  getKeyPathString(path: ConsumePath = this.keyPath): string {
+    const {normalizeKey} = this.context;
+    let str = '';
+
+    for (let i = 0; i < path.length; i++) {
+      let part = path[i];
+      const nextPart = path[i + 1];
+
+      if (typeof part === 'string' && normalizeKey !== undefined) {
+        part = normalizeKey(part);
+      }
+
+      // If we are a computed property then wrap in brackets, the previous part would not have inserted a dot
+      // We allow a computed part at the beginning of a path
+      if (isComputedPart(part) && i > 0) {
+        const inner = typeof part === 'number'
+          ? String(part)
+          : escapeString(part, {
+            quote: "'",
+          });
+
+        str += `[${inner}]`;
+      } else {
+        if (nextPart === undefined || isComputedPart(nextPart)) {
+          // Don't append a dot if there are no parts or the next is computed
+          str += part;
+        } else {
+          str += `${part}.`;
+        }
+      }
+    }
+
+    return str;
+  }
+
   generateUnexpectedMessage(
     msg: string,
     opts: UnexpectedConsumerOptions,
@@ -309,9 +315,9 @@ export default class Consumer {
     }
 
     if (at === 'suffix') {
-      msg += ` at <emphasis>${joinPath(target.keyPath)}</emphasis>`;
+      msg += ` at <emphasis>${target.getKeyPathString()}</emphasis>`;
     } else {
-      msg = `<emphasis>${joinPath(target.keyPath)}</emphasis> ${msg}`;
+      msg = `<emphasis>${target.getKeyPathString()}</emphasis> ${msg}`;
     }
 
     return msg;
@@ -355,7 +361,6 @@ export default class Consumer {
       } while (consumer !== undefined);
 
       // If consumer is undefined and we have no filename then we were not able to find a location,
-
       // in this case, just throw a normal error
       if (consumer === undefined && filename === undefined) {
         throw new Error(msg);
@@ -363,13 +368,13 @@ export default class Consumer {
 
       // Warn that we didn't find this value in the source if it's parent wasn't either
       if (this.parent === undefined || !this.parent.wasInSource()) {
-        advice.push({
-          type: 'log',
-          category: 'warn',
-          message: `This value was expected to be found at <emphasis>${joinPath(
-            this.keyPath,
-          )}</emphasis> but was not in the original source`,
-        });
+        advice.push(
+          {
+            type: 'log',
+            category: 'warn',
+            message: `This value was expected to be found at <emphasis>${this.getKeyPathString()}</emphasis> but was not in the original source`,
+          },
+        );
       }
     }
 
@@ -544,7 +549,9 @@ export default class Consumer {
 
     for (const [key, value] of this.asMap(false, false)) {
       if (!this.usedNames.has(key)) {
-        value.unexpected(`Unknown <emphasis>${key}</emphasis> ${type}`, {
+        value.unexpected(`Unknown <emphasis>${this.getKeyPathString([
+          key,
+        ])}</emphasis> ${type}`, {
           target: 'key',
           at: 'suffix',
           atParent: true,
