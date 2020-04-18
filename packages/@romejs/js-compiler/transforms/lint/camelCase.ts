@@ -38,7 +38,7 @@ function toVariableCamelCase(name: string): string {
   // Remove prefix and suffix
   let slicedName = name.slice(prefix.length);
   if (suffix.length > 0) {
-    slicedName = name.slice(0, -suffix.length);
+    slicedName = slicedName.slice(0, -suffix.length);
   }
 
   return prefix + toCamelCase(slicedName) + suffix;

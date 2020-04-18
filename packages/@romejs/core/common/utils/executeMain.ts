@@ -42,7 +42,7 @@ export default async function executeMain(
 
     process: {
       argv: [process.argv[0], filename],
-      __Proto__: process,
+      __proto__: process,
     },
 
     Buffer,

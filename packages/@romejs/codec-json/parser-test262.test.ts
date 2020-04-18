@@ -859,7 +859,7 @@ test('Tests that parse treats "__proto__" as a regular property name', () => {
   }
 
   // @ts-ignore
-  if (!Array.isArray(x.__Proto__)) {
+  if (!Array.isArray(x.__proto__)) {
     throw new Error('#2: parse did not set "__proto__" as a regular property');
   }
 });
