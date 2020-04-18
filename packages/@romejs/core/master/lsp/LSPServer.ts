@@ -21,14 +21,10 @@ import {
   AbsoluteFilePathMap,
   AbsoluteFilePathSet,
 } from '@romejs/path';
-import {
-  Diagnostics,
-  DiagnosticsProcessor,
-  DiagnosticLocation,
-} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticLocation} from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
-import {coerce1to0, number0, Number0, inc} from '@romejs/ob1';
-import {stripMarkupTags} from '@romejs/string-markup';
+import {coerce1To0, number0, Number0, inc} from '@romejs/ob1';
+import {markupToPlainText} from '@romejs/string-markup';
 import {
   PartialMasterQueryRequest,
   MasterQueryResponse,
@@ -88,7 +84,7 @@ function convertPositionToLSP(pos: undefined | Position): LSPPosition {
     };
   } else {
     return {
-      line: coerce1to0(pos.line),
+      line: coerce1To0(pos.line),
       character: pos.column,
     };
   }
@@ -124,7 +120,7 @@ function convertDiagnosticsToLSP(
           );
           if (abs !== undefined) {
             relatedInformation.push({
-              message: stripMarkupTags(item.message),
+              message: markupToPlainText(item.message),
               location: {
                 uri: `file://${abs.join()}`,
                 range: convertDiagnosticLocationToLSPRange(nextItem.location),
@@ -138,7 +134,7 @@ function convertDiagnosticsToLSP(
     lspDiagnostics.push({
       severity: 1,
       range: convertDiagnosticLocationToLSPRange(location),
-      message: stripMarkupTags(description.message.value),
+      message: markupToPlainText(description.message.value),
       code: description.category,
       source: 'rome',
       relatedInformation,
@@ -388,7 +384,7 @@ export default class LSPServer {
           }
 
           // We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
-          const processor = new DiagnosticsProcessor();
+          const processor = this.request.createDiagnosticsProcessor();
           processor.addFilter({
             category: 'lint/pendingFixes',
           });

@@ -85,17 +85,16 @@ export const number1 = coerce1(1);
 export const number1Neg1 = coerce1(-1);
 
 // Add 1 to a 0-based offset, thus converting it to 1-based.
-export function coerce0to1(x: Number0): Number1 {
+function coerce0To1(x: Number0): Number1 {
   // @ts-ignore
   return (x + 1 as Number1);
 }
-
-// Subtract 1 from a 1-based offset, thus converting it to 0-based.
-export function coerce1to0(x: Number1 | number): Number0 {
+export {coerce0To1};
+function coerce1To0(x: Number1 | number): Number0 {
   // @ts-ignore
   return (x - 1 as Number0);
 }
-
+export {coerce1To0};
 // Increment
 export function inc(a: Number0): Number0;
 export function inc(a: Number1): Number1;

@@ -6,7 +6,7 @@
  */
 
 // lib
-export {default as Context} from './lib/Context';
+export {default as CompilerContext} from './lib/CompilerContext';
 
 export {PathOptions} from './lib/Path';
 export {default as Path} from './lib/Path';

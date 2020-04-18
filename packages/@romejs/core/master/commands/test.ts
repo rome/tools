@@ -8,7 +8,8 @@
 import {MasterRequest} from '@romejs/core';
 import {Diagnostics} from '@romejs/diagnostics';
 import {Consumer} from '@romejs/consume';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import TestRunner from '../testing/TestRunner';
 import Bundler from '../bundler/Bundler';
 import {JS_EXTENSIONS} from '../../common/fileHandlers';
@@ -20,6 +21,8 @@ export default createMasterCommand(
   {
     category: commandCategories.CODE_QUALITY,
     description: 'run tests',
+    usage: '',
+    examples: [],
 
     defineFlags(c: Consumer): Flags {
       return {
@@ -31,7 +34,7 @@ export default createMasterCommand(
       };
     },
 
-    async default(req: MasterRequest, commandFlags: Flags): Promise<void> {
+    async callback(req: MasterRequest, commandFlags: Flags): Promise<void> {
       const {reporter} = req;
 
       const {paths} = await req.getFilesFromArgs(

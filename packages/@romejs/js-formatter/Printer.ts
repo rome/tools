@@ -208,23 +208,9 @@ export default class Printer {
     });
   }
 
-  push(str: string) {
-    if (str === '') {
-      return;
-    }
-
-    if (str[0] !== '\n' && this.options.sourceMaps) {
-      this.mark();
-    }
-
-    this.maybeAddTerminatorlessParen(str);
-
-    // Only output indentation if we aren't compact
-    if (!this.compact && str !== '\n' && this.state.endsWithNewline) {
-      str = this.state.indentString + str;
-    }
-
+  _push(str: string) {
     const {lastUnbrokenGroup} = this;
+    this.buff.push(str);
 
     for (const char of str) {
       this.state.generatedIndex = inc(this.state.generatedIndex);
@@ -243,8 +229,28 @@ export default class Printer {
         this.state.generatedColumn = inc(this.state.generatedColumn);
       }
     }
+  }
+
+  push(str: string) {
+    if (str === '') {
+      return;
+    }
+
+    // Only output indentation if we aren't compact
+    if (!this.compact && str !== '\n' && this.state.endsWithNewline) {
+      this._push(this.state.indentString);
+    }
+
+    if (str[0] !== '\n' && this.options.sourceMaps) {
+      this.mark();
+    }
+
+    this.maybeAddTerminatorlessParen(str);
+
+    this._push(str);
 
     // Determine if we need to line wrap. We skip this when we aren't in pretty mode for better performance.
+    const {lastUnbrokenGroup} = this;
     if (this.lineWrap) {
       if (lastUnbrokenGroup !== undefined && get0(this.state.generatedColumn) >
           MAX_LINE_LENGTH) {
@@ -257,7 +263,6 @@ export default class Printer {
     this.state.endsWithWord = false;
     this.state.endsWithSpace = str[str.length - 1] === ' ';
     this.state.lastBuff = str;
-    this.buff.push(str);
   }
 
   createStateSnapshot({

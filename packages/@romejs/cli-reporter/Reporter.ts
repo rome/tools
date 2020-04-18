@@ -8,7 +8,7 @@
 import {
   MarkupFormatOptions,
   markupToAnsi,
-  stripMarkupTags,
+  markupToPlainText,
   markupTag,
   ansiEscapes,
   stripAnsi,
@@ -21,19 +21,18 @@ import {
   ReporterStream,
   ReporterDerivedStreams,
   ReporterProgressOptions,
+  ReporterStreamMeta,
 } from './types';
 import {humanizeNumber, removeSuffix} from '@romejs/string-utils';
 import Progress from './Progress';
 import {interpolate} from './util';
-
 import prettyFormat from '@romejs/pretty-format';
 import stream = require('stream');
-
 import {CWD_PATH} from '@romejs/path';
 import {Event} from '@romejs/events';
 import readline = require('readline');
-
 import {MarkupTagName} from '@romejs/string-markup/types';
+import select, {SelectOptions, SelectArguments} from './select';
 
 type ListOptions = {
   reverse?: boolean;
@@ -79,15 +78,6 @@ type QuestionOptions = {
   default?: string;
   yes?: boolean;
   normalize?: (value: string) => string;
-};
-
-type SelectOptions = {[key: string]: {label: string}};
-
-type SelectArguments<Options> = {
-  options: Options;
-  defaults?: Array<keyof Options>;
-  radio?: boolean;
-  yes?: boolean;
 };
 
 let remoteProgressIdCounter = 0;
@@ -484,9 +474,11 @@ export default class Reporter {
       options: {
         yes: {
           label: 'Yes',
+          shortcut: 'y',
         },
         no: {
           label: 'No',
+          shortcut: 'n',
         },
       },
     });
@@ -503,203 +495,11 @@ export default class Reporter {
     return Array.from(set)[0];
   }
 
-  async select<Options extends SelectOptions>(message: string, {
-    options,
-    defaults = [],
-    radio = false,
-    yes = false,
-  }: SelectArguments<Options>): Promise<Set<keyof Options>> {
-    const optionNames: Array<keyof Options> = Object.keys(options);
-    const optionCount = optionNames.length;
-    if (optionCount === 0) {
-      return new Set();
-    }
-
-    if (yes) {
-      return new Set(defaults);
-    }
-
-    let prompt = `<brightBlack>❯</brightBlack> <emphasis>${message}</emphasis>`;
-    this.logAll(prompt);
-
-    if (radio) {
-      this.info(
-        'Use arrow keys and then <emphasis>enter</emphasis> to select an option',
-      );
-    } else {
-      this.info(
-        'Use arrow keys and <emphasis>space</emphasis> to select or deselect options and then <emphasis>enter</emphasis> to confirm',
-      );
-    }
-
-    const selectedOptions: Set<keyof Options> = new Set(defaults);
-    let activeOption = 0;
-
-    // Set first option if this is a radio
-    if (radio && !defaults.length) {
-      selectedOptions.add(optionNames[0]);
-    }
-
-    function boundActive() {
-      activeOption = Math.min(activeOption, optionCount - 1);
-      activeOption = Math.max(activeOption, 0);
-
-      if (radio) {
-        selectedOptions.clear();
-        selectedOptions.add(optionNames[activeOption]);
-      }
-    }
-
-    // If we aren't a radio then set the active option to the bottom of any that are enabled
-    if (!radio) {
-      while (selectedOptions.has(optionNames[activeOption])) {
-        activeOption++;
-      }
-    }
-
-    const render = () => {
-      for (let i = 0; i < optionNames.length; i++) {
-        const key = optionNames[i];
-        const {label} = options[key];
-        const formattedLabel = optionNames.indexOf(key) === activeOption
-          ? `<underline>${label}</underline>`
-          : label;
-
-        let symbol = '';
-        if (radio) {
-          symbol = selectedOptions.has(key) ? '\u25c9' : '\u25ef';
-        } else {
-          symbol = selectedOptions.has(key) ? '\u2611' : '\u2610';
-        }
-
-        this.logAll(`  ${symbol} ${formattedLabel}`, {
-          // Don't put a newline on the last option
-          newline: i !== optionNames.length - 1,
-        });
-      }
-    };
-
-    const cleanup = () => {
-      for (let i = 0; i < optionCount; i++) {
-        this.writeAll(ansiEscapes.eraseLine);
-
-        // Don't move above the top line
-        if (i !== optionCount - 1) {
-          this.writeAll(ansiEscapes.cursorUp());
-        }
-      }
-      this.writeAll(ansiEscapes.cursorTo(0));
-    };
-
-    let onkeypress = undefined;
-
-    const stdin = this.getStdin();
-
-    render();
-
-    readline.emitKeypressEvents(stdin);
-
-    if (stdin.isTTY && stdin.setRawMode !== undefined) {
-      stdin.setRawMode(true);
-    }
-
-    stdin.resume();
-
-    await new Promise((resolve) => {
-      const finish = () => {
-        cleanup();
-
-        // Remove initial help message
-        this.writeAll(ansiEscapes.cursorUp());
-        this.writeAll(ansiEscapes.eraseLine);
-
-        // Remove initial log message
-        this.writeAll(ansiEscapes.cursorUp());
-        this.writeAll(ansiEscapes.eraseLine);
-
-        prompt += ': ';
-        if (selectedOptions.size > 0) {
-            prompt +=
-            Array.from(selectedOptions, (key) => options[key].label).join(', ');
-        } else {
-          prompt += '<dim>none</dim>';
-        }
-        this.logAll(prompt);
-
-        resolve();
-      };
-
-      onkeypress = (chunk: Buffer, key: {
-        name: string;
-        ctrl: boolean;
-      }) => {
-        switch (key.name) {
-          case 'up': {
-            activeOption--;
-            break;
-          }
-
-          case 'down': {
-            activeOption++;
-            break;
-          }
-
-          case 'space': {
-            if (!radio) {
-              const optionName = optionNames[activeOption];
-              if (selectedOptions.has(optionName)) {
-                selectedOptions.delete(optionName);
-              } else {
-                selectedOptions.add(optionName);
-              }
-            }
-            break;
-          }
-
-          case 'c': {
-            if (key.ctrl) {
-              this.forceSpacer();
-              this.warn('Cancelled by user');
-              process.exit(1);
-            }
-            return;
-          }
-
-          case 'escape': {
-            this.forceSpacer();
-            this.warn('Cancelled by user');
-            process.exit(1);
-            return;
-          }
-
-          case 'return': {
-            finish();
-            return;
-          }
-
-          default:
-            return;
-        }
-
-        boundActive();
-        cleanup();
-        render();
-      };
-
-      stdin.addListener('keypress', onkeypress);
-    });
-
-    if (onkeypress !== undefined) {
-      stdin.removeListener('keypress', onkeypress);
-    }
-
-    if (stdin.isTTY && stdin.setRawMode !== undefined) {
-      stdin.setRawMode(false);
-    }
-
-    stdin.pause();
-
-    return selectedOptions;
+  async select<Options extends SelectOptions>(
+    message: string,
+    args: SelectArguments<Options>,
+  ): Promise<Set<keyof Options>> {
+    return select(this, message, args);
   }
 
   //# Control
@@ -804,13 +604,13 @@ export default class Reporter {
   //# VISUALISATION
   table(head: Array<string>, rawBody: Array<Array<string | number>>) {
     // Format the head, just treat it like another row
-    head = head.map((field: string): string => markupTag('emphasis', markupTag(
-      'underline',
-      field,
-    )));
+    head = head.map((field: string): string => markupTag('emphasis', field));
 
     // Humanize all number fields
-    const rows: Array<Array<string>> = [head];
+    const rows: Array<Array<string>> = [];
+    if (head.length > 0) {
+      rows.push(head);
+    }
     for (const row of rawBody) {
       rows.push(row.map((field) => {
         if (typeof field === 'number') {
@@ -821,14 +621,22 @@ export default class Reporter {
       }));
     }
 
+    // Get the max number of columns for a row
+    const columnCount = Math.max(...rows.map((columns) => columns.length));
+
     for (const stream of this.getStreams(false)) {
       // Get column widths
       const cols: Array<number> = [];
-      for (let i = 0; i < head.length; i++) {
-        const widths = rows.map((row): number => this.markupifyLength(
-          stream,
-          row[i],
-        ));
+      for (let i = 0; i < columnCount; i++) {
+        const widths = rows.map((row): number => {
+          const str = row[i];
+          if (str === undefined) {
+            // Could be an excessive column
+            return 0;
+          } else {
+            return this.markupifyLength(stream, str);
+          }
+        });
         cols[i] = Math.max(...widths);
       }
 
@@ -904,7 +712,7 @@ export default class Reporter {
     return Date.now() - this.startTime;
   }
 
-  clear() {
+  clearScreen() {
     for (const stream of this.getStreams(false)) {
       if (stream.format === 'ansi') {
         stream.write(ansiEscapes.clearScreen);
@@ -943,7 +751,10 @@ export default class Reporter {
       const prefix = this.markupify(stream, text === undefined
         ? ''
         : ` ${text} `);
-      const prefixLength = this.indentString.length + stripAnsi(prefix).length;
+      const prefixLength = this.indentString.length + this.markupifyLength(
+        stream,
+        prefix,
+      );
       const barLength = Math.max(0, stream.columns - prefixLength);
       this.logOneNoMarkup(stream, prefix + '\u2501'.repeat(barLength));
     }
@@ -1012,7 +823,7 @@ export default class Reporter {
 
   //# LOG
   stripMarkup(str: string) {
-    return stripMarkupTags(str, this.markupOptions);
+    return markupToPlainText(str, this.markupOptions);
   }
 
   markupifyLength(stream: ReporterStream, str: string): number {
@@ -1026,20 +837,30 @@ export default class Reporter {
     return markup.length;
   }
 
-  markupify(stream: ReporterStream, str: string): string {
-    if (stream.format === 'ansi') {
-      return markupToAnsi(str, this.markupOptions);
-    } else if (stream.format === 'html') {
-      // TODO
-      return stripMarkupTags(str);
-    } else {
-      return stripMarkupTags(str);
+  markupify(stream: ReporterStreamMeta, str: string): string {
+    switch (stream.format) {
+      case 'ansi':
+        return markupToAnsi(str, this.markupOptions);
+
+      case 'html':
+      case 'none':
+        // TODO
+        return markupToPlainText(str);
+
+      case 'markup':
+        return str;
     }
   }
 
   logAll(tty: string, opts: LogOptions = {}) {
     for (const stream of this.getStreams(opts.stderr)) {
       this.logOne(stream, tty, opts);
+    }
+  }
+
+  logAllNoMarkup(tty: string, opts: LogOptions = {}) {
+    for (const stream of this.getStreams(opts.stderr)) {
+      this.logOneNoMarkup(stream, tty, opts);
     }
   }
 

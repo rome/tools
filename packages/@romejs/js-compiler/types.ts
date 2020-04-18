@@ -10,10 +10,11 @@ import {Path, REDUCE_REMOVE} from '@romejs/js-compiler';
 import {AnyNode, Program} from '@romejs/js-ast';
 import {ProjectConfig} from '@romejs/project';
 import {REDUCE_SKIP_SUBTREE} from './constants';
-import Context from './lib/Context';
+import CompilerContext from './lib/CompilerContext';
 import {AbsoluteFilePath} from '@romejs/path';
 import {SourceMap} from '@romejs/codec-source-map';
 import {Dict} from '@romejs/typescript-helpers';
+import {DiagnosticCategory} from '@romejs/diagnostics';
 
 //
 export type TransformStageName = 'pre' | 'compile' | 'compileForBundle';
@@ -27,7 +28,7 @@ export type TransformStageFactories = { [key in TransformStageName]: TransformSt
 
 //
 export type Transform = TransformVisitor | ((
-  context: Context,
+  context: CompilerContext,
 ) => TransformVisitor);
 
 export type Transforms = Array<Transform>;
@@ -82,4 +83,16 @@ export type BundleCompileOptions = {
   assetPath: undefined | string;
 };
 
-export type CompilerOptions = {bundle?: BundleCompileOptions};
+export type LintCompilerOptions = {
+  decisionsByLine?: Dict<Array<LintCompilerOptionsDecision>>;
+};
+
+export type LintCompilerOptionsDecision = {
+  action: 'suppress' | 'fix';
+  category: DiagnosticCategory;
+};
+
+export type CompilerOptions = {
+  bundle?: BundleCompileOptions;
+  lint?: LintCompilerOptions;
+};

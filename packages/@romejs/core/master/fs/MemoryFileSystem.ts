@@ -303,7 +303,7 @@ async function createWatchmanWatcher(
     });
 
     const initial: WatchmanSubscriptionValue = await event.wait();
-    if (initial.is_fresh_instance !== true) {
+    if (initial.isFreshInstance !== true) {
       throw new Error('Expected this to be a fresh instance');
     }
     clearTimeout(timeout);
@@ -696,7 +696,7 @@ export default class MemoryFileSystem {
       }
     }
 
-    const diagnostics = new DiagnosticsProcessor({
+    const diagnostics = this.master.createDiagnosticsProcessor({
       origins: [
         {
           category: 'memory-fs',
@@ -809,7 +809,7 @@ export default class MemoryFileSystem {
       }
 
       const manifest = this.getManifest(packagePath);
-      if (manifest !== undefined && manifest.raw.haste_commonjs === true) {
+      if (manifest !== undefined && manifest.raw.hasteCommonjs === true) {
         return false;
       }
     }

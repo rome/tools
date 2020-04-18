@@ -7,7 +7,8 @@
 
 import {MasterRequest} from '@romejs/core';
 import {WorkerCompileResult} from '../../common/bridges/WorkerBridge';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import {DiagnosticsError} from '@romejs/diagnostics';
 import {createUnknownFilePath} from '@romejs/path';
 import {Consumer} from '@romejs/consume';
@@ -18,6 +19,8 @@ type Flags = {bundle: boolean};
 export default createMasterCommand({
   category: commandCategories.SOURCE_CODE,
   description: 'compile a single file',
+  usage: '',
+  examples: [],
 
   defineFlags(c: Consumer): Flags {
     return {
@@ -25,7 +28,7 @@ export default createMasterCommand({
     };
   },
 
-  async default(req: MasterRequest, commandFlags: Flags): Promise<void> {
+  async callback(req: MasterRequest, commandFlags: Flags): Promise<void> {
     const {master, reporter} = req;
     const {args} = req.query;
     req.expectArgumentLength(1);

@@ -6,7 +6,7 @@
  */
 
 import {
-  Context,
+  CompilerContext,
   TransformExitResult,
   PathOptions,
   TransformVisitors,
@@ -126,7 +126,7 @@ function runExit<
 export default function reduce(
   origNode: AnyNode,
   visitors: TransformVisitors,
-  context: Context,
+  context: CompilerContext,
   pathOpts: PathOptions = {},
 ): TransformExitResult {
   // Initialize first path
@@ -198,7 +198,6 @@ export default function reduce(
             // Run transforms on this node
             const newChild = reduce(child, visitors, context, {
               noScopeCreation: pathOpts.noScopeCreation,
-              frozen: pathOpts.frozen,
               parentScope: path.scope,
               ancestryPaths: childAncestryPaths,
               listKey: correctedIndex,
@@ -206,7 +205,7 @@ export default function reduce(
             });
 
             // If this item has been changed then...
-            if (newChild !== child && !pathOpts.frozen) {
+            if (newChild !== child && !context.frozen) {
               // Clone the children array
               children = children.slice();
 
@@ -265,13 +264,12 @@ export default function reduce(
             parentScope: path.scope,
             ancestryPaths: childAncestryPaths,
             noArrays: true,
-            frozen: pathOpts.frozen,
             nodeKey: key,
           },
         );
 
         // If this value has been changed then...
-        if (newVal !== oldVal && !pathOpts.frozen) {
+        if (newVal !== oldVal && !context.frozen) {
           // When replacing a key value, we cannot replace it with an array
           if (Array.isArray(newVal)) {
             throw new Error(

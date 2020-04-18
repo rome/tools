@@ -86,8 +86,8 @@ function resolveGraph(hub: Hub): Diagnostics {
               filename: originLoc.filename,
               start: originLoc.start,
               end: originLoc.end,
+              marker,
             },
-            marker,
           });
         }
       }

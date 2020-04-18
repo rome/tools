@@ -261,6 +261,16 @@ export const descriptions = createMessages(
         message: markup`Undeclared variable <emphasis>${name}</emphasis>`,
       }),
 
+      VARIABLE_CAMEL_CASE: (name: string, camelCaseName: string) => ({
+        category: 'lint/camelCase',
+        message: markup`Variable <emphasis>${name}</emphasis> should be camel cased as <emphasis>${camelCaseName}</emphasis>`,
+      }),
+
+      IDENTIFIER_CAMEL_CASE: (name: string, camelCaseName: string) => ({
+        category: 'lint/camelCase',
+        message: markup`Identifier <emphasis>${name}</emphasis> should be camel cased as <emphasis>${camelCaseName}</emphasis>`,
+      }),
+
       CASE_SINGLE_STATEMENT: {
         category: 'lint/caseSingleStatement',
         message: 'A switch case should only have a single statement. If you want more then wrap it in a block.',
@@ -1384,8 +1394,10 @@ export const descriptions = createMessages(
             message: upper,
           } : {
             type: 'frame',
-            location: originLoc,
-            marker: upper,
+            location: {
+              ...originLoc,
+              marker: upper,
+            },
           },
         ],
       }),

@@ -6,7 +6,8 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import Bundler from '../bundler/Bundler';
 import {createDirectory, writeFile} from '@romejs/fs';
 import {Consumer} from '@romejs/consume';
@@ -18,6 +19,8 @@ export default createMasterCommand<Flags>(
   {
     category: commandCategories.SOURCE_CODE,
     description: 'build a standalone js bundle for a package',
+    usage: '',
+    examples: [],
 
     defineFlags(consumer: Consumer): Flags {
       return {
@@ -25,7 +28,7 @@ export default createMasterCommand<Flags>(
       };
     },
 
-    async default(req: MasterRequest, commandFlags: Flags): Promise<void> {
+    async callback(req: MasterRequest, commandFlags: Flags): Promise<void> {
       const {flags} = req.client;
       const {args} = req.query;
       const {reporter} = req;

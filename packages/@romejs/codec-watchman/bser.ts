@@ -566,16 +566,16 @@ function dumpObject(buf: Accumulator, val: object | null) {
   const keys = Object.keys(val);
 
   // First pass to compute number of defined keys
-  let num_keys = keys.length;
+  let numKeys = keys.length;
   for (let i = 0; i < keys.length; ++i) {
     const key = keys[i];
     const v = val[key];
     if (typeof v === 'undefined') {
-      num_keys--;
+      numKeys--;
     }
   }
 
-  dumpInt(buf, num_keys);
+  dumpInt(buf, numKeys);
 
   for (let i = 0; i < keys.length; ++i) {
     const key = keys[i];

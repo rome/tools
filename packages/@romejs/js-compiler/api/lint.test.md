@@ -5,7 +5,7 @@
 ## `format disabled in project config should not regenerate the file`
 
 ```
-✔ No known problems!
+*✔ *No known problems!
 
 ```
 
@@ -14,7 +14,7 @@
 ### `0`
 
 ```
-✔ No known problems!
+*✔ *No known problems!
 
 ```
 

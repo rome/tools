@@ -27,7 +27,7 @@ import {
   getFilenameTimestamp,
   ClientProfileOptions,
 } from '@romejs/core/client/Client';
-import {commandCategories} from '@romejs/core/commands';
+import {commandCategories} from '@romejs/core/common/commands';
 import {writeFile} from '@romejs/fs';
 import fs = require('fs');
 
@@ -106,6 +106,9 @@ export default async function cli() {
             timing: c.get('timing').asBoolean(
               DEFAULT_CLIENT_REQUEST_FLAGS.timing,
             ),
+            review: c.get('review').asBoolean(
+              DEFAULT_CLIENT_REQUEST_FLAGS.review,
+            ),
             watch: c.get('watch').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.watch),
             fieri: c.get('fieri').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.fieri),
             focus: c.get('focus').asString(DEFAULT_CLIENT_REQUEST_FLAGS.focus),
@@ -136,8 +139,8 @@ export default async function cli() {
   });
 
   let command = '';
-  let overrideClientFlags: Partial<ClientFlags> = {};
-  let overrideRequestFlags: Partial<ClientRequestFlags> = {};
+  let overrideClientFlags: undefined | Partial<ClientFlags>;
+  let overrideRequestFlags: undefined | Partial<ClientRequestFlags>;
   let overrideCLIFlags: Partial<CLIFlags> = {};
   let commandFlags: Dict<unknown> = {};
   let args: Array<string> = [];
@@ -158,10 +161,7 @@ export default async function cli() {
         examples: local.examples,
         usage: local.usage,
         callback(_commandFlags) {
-          if (local.defineFlags !== undefined) {
-            commandFlags = _commandFlags;
-          }
-
+          commandFlags = _commandFlags;
           args = p.getArgs();
           command = cmd;
         },
@@ -180,17 +180,9 @@ export default async function cli() {
         examples: master.examples,
 
         callback(_commandFlags) {
-          if (master.defineFlags !== undefined) {
-            commandFlags = _commandFlags;
-          }
-
-          if (master.overrideClientFlags !== undefined) {
-            overrideClientFlags = master.overrideClientFlags;
-          }
-
-          if (master.overrideRequestFlags !== undefined) {
-            overrideRequestFlags = master.overrideRequestFlags;
-          }
+          commandFlags = _commandFlags;
+          overrideClientFlags = master.overrideClientFlags;
+          overrideRequestFlags = master.overrideRequestFlags;
 
           args = p.getArgs();
           command = cmd;

@@ -168,6 +168,7 @@ export default function renameBindings(
 
   //
   if (replaced.size !== replaceNodesWithName.size) {
+    console.log({replaced, replaceNodesWithName});
     throw new Error('Missed some bindings');
   }
 

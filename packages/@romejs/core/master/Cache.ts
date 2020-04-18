@@ -23,7 +23,7 @@ type CacheEntry = {
   projectDir: string;
   mtime: number;
   compile: {[key: string]: WorkerCompileResult};
-  lint: undefined | WorkerLintResult;
+  lint: {[key: string]: WorkerLintResult};
   analyzeDependencies: undefined | WorkerAnalyzeDependencyResult;
   moduleSignature: undefined | ModuleSignature;
 };
@@ -90,7 +90,7 @@ export default class Cache {
       compile: {},
       analyzeDependencies: undefined,
       moduleSignature: undefined,
-      lint: undefined,
+      lint: {},
     };
 
     return entry;

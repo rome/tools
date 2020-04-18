@@ -178,8 +178,8 @@ function printDiff(
   const {legend} = item;
   if (legend !== undefined) {
     opts.reporter.spacer();
-    opts.reporter.logAll(`<green>+ ${legend.add}</green>`);
-    opts.reporter.logAll(`<red>- ${legend.delete}</red>`);
+    opts.reporter.logAll(`<green>+ ${escapeMarkup(legend.add)}</green>`);
+    opts.reporter.logAll(`<red>- ${escapeMarkup(legend.delete)}</red>`);
     opts.reporter.spacer();
   }
 
@@ -252,8 +252,7 @@ function printFrame(
   opts: AdvicePrintOptions,
 ): PrintAdviceResult {
   const {reporter} = opts;
-  const {marker} = item;
-  const {start, end, filename} = item.location;
+  const {marker, start, end, filename} = item.location;
   let {sourceText} = item.location;
   const path = opts.printer.createFilePath(filename);
 
@@ -312,7 +311,9 @@ function printStacktrace(
       diagnostic.description.advice[0] ===
       item;
   if (!isFirstPart) {
-    opts.reporter.info(item.title === undefined ? 'Stack trace' : item.title);
+    opts.reporter.info(item.title === undefined
+      ? 'Stack trace'
+      : escapeMarkup(item.title));
     opts.reporter.forceSpacer();
   }
 
@@ -385,12 +386,10 @@ function printStacktrace(
 
       const skipped = printFrame({
         type: 'frame',
-        marker: undefined,
         location: {
           language,
           filename,
           sourceType: 'module',
-          mtime: undefined,
           start: pos,
           end: pos,
           sourceText: code,

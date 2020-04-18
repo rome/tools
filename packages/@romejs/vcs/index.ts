@@ -7,14 +7,14 @@
 
 import {AbsoluteFilePath} from '@romejs/path';
 import {exists} from '@romejs/fs';
-import child_process = require('child_process');
+import childProcess = require('child_process');
 
 const TIMEOUT = 10_000;
 
 async function exec(command: string, args: Array<string>): Promise<string> {
   return new Promise(
       (resolve, reject) => {
-        const proc = child_process.spawn(command, args, {timeout: TIMEOUT});
+        const proc = childProcess.spawn(command, args, {timeout: TIMEOUT});
         let stderr = '';
         let stdout = '';
 

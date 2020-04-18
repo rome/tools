@@ -6,13 +6,20 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 
 export default createMasterCommand({
   description: 'evict a file from the memory cache',
   category: commandCategories.INTERNAL,
+  usage: '',
+  examples: [],
 
-  async default(req: MasterRequest): Promise<void> {
+  defineFlags() {
+    return {};
+  },
+
+  async callback(req: MasterRequest): Promise<void> {
     const {
       master,
       reporter,

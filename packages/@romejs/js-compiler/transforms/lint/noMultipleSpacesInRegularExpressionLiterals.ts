@@ -12,7 +12,7 @@ import {
   RegExpQuantified,
   regExpQuantified,
 } from '@romejs/js-ast';
-import {Path, Context, TransformExitResult} from '@romejs/js-compiler';
+import {Path, CompilerContext, TransformExitResult} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
 
 function isSpaceChar(
@@ -24,7 +24,7 @@ function isSpaceChar(
 
 function checkRegex(
   node: RegExpSubExpression,
-  context: Context,
+  context: CompilerContext,
 ): TransformExitResult {
   for (let i = 0; i < node.body.length; i++) {
     const item = node.body[i];

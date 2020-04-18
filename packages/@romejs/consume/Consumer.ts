@@ -560,16 +560,14 @@ export default class Consumer {
     }
   }
 
-  // ARRAY MUTATION
-  pushArray(item: unknown): this {
-    this.concatArray([item]);
-    return this;
-  }
-
-  concatArray(items: Array<unknown>): this {
-    const arr = this.asPlainArray();
-    this.setValue(arr.concat(items));
-    return this;
+  asPossibleParsedJSON(): Consumer {
+    if (typeof this.asUnknown() === 'string') {
+      return this.clone({
+        value: JSON.parse(this.asString()),
+      });
+    } else {
+      return this;
+    }
   }
 
   // JSON

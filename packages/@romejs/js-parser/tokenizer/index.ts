@@ -226,13 +226,13 @@ function readJSXToken(parser: JSParser, code: number): boolean {
   const context = getCurContext(parser);
 
   if (context === ct.jsxInner) {
-    readToken_jsx(parser);
+    readTokenJsx(parser);
     return true;
   }
 
   if (context === ct.jsxOpenTag || context === ct.jsxCloseTag) {
     if (isIdentifierStart(code)) {
-      readToken_jsxWord(parser);
+      readTokenJsxWord(parser);
       return true;
     }
 
@@ -245,7 +245,7 @@ function readJSXToken(parser: JSParser, code: number): boolean {
     if ((code === charCodes.quotationMark || code === charCodes.apostrophe) &&
           context ===
           ct.jsxOpenTag) {
-      readToken_jsxString(parser, code);
+      readTokenJsxString(parser, code);
       return true;
     }
   }
@@ -489,7 +489,7 @@ export function finishToken(
   updateContext(parser, prevType);
 }
 
-function readToken_dot(parser: JSParser): void {
+function readTokenDot(parser: JSParser): void {
   const next = parser.input.charCodeAt(getIndex(parser) + 1);
   if (next >= charCodes.digit0 && next <= charCodes.digit9) {
     readNumber(parser, true);
@@ -506,7 +506,7 @@ function readToken_dot(parser: JSParser): void {
   }
 }
 
-function readToken_slash(parser: JSParser): void {
+function readTokenSlash(parser: JSParser): void {
   const next = parser.input.charCodeAt(getIndex(parser) + 1);
 
   // If this starts with /*:: then it's a Flow comment
@@ -536,7 +536,7 @@ function readToken_slash(parser: JSParser): void {
   }
 }
 
-function readToken_mult_modulo(parser: JSParser, code: number): void {
+function readTokenMultModulo(parser: JSParser, code: number): void {
   let next = parser.input.charCodeAt(getIndex(parser) + 1);
 
   // */ Is the end of a Flow comment
@@ -572,7 +572,7 @@ function readToken_mult_modulo(parser: JSParser, code: number): void {
   finishOp(parser, type, width);
 }
 
-function readToken_pipe_amp(parser: JSParser, code: number): void {
+function readTokenPipeAmp(parser: JSParser, code: number): void {
   // '|&'
   const next = parser.input.charCodeAt(getIndex(parser) + 1);
 
@@ -601,7 +601,7 @@ function readToken_pipe_amp(parser: JSParser, code: number): void {
   );
 }
 
-function readToken_caret(parser: JSParser): void {
+function readTokenCaret(parser: JSParser): void {
   // '^'
   const next = parser.input.charCodeAt(getIndex(parser) + 1);
   if (next === charCodes.equalsTo) {
@@ -611,7 +611,7 @@ function readToken_caret(parser: JSParser): void {
   }
 }
 
-function readToken_plus_min(parser: JSParser, code: number): void {
+function readTokenPlusMin(parser: JSParser, code: number): void {
   // '+-'
   const next = parser.input.charCodeAt(getIndex(parser) + 1);
 
@@ -642,7 +642,7 @@ function readToken_plus_min(parser: JSParser, code: number): void {
   }
 }
 
-function readToken_lt_gt(parser: JSParser, code: number): void {
+function readTokenLtGt(parser: JSParser, code: number): void {
   // '<>'
   const next = parser.input.charCodeAt(getIndex(parser) + 1);
   let size = 1;
@@ -679,7 +679,7 @@ function readToken_lt_gt(parser: JSParser, code: number): void {
   finishOp(parser, tt.relational, size);
 }
 
-function readToken_eq_excl(parser: JSParser, code: number): void {
+function readTokenEqExcl(parser: JSParser, code: number): void {
   // '=!'
   const next = parser.input.charCodeAt(getIndex(parser) + 1);
   if (next === charCodes.equalsTo) {
@@ -700,7 +700,7 @@ function readToken_eq_excl(parser: JSParser, code: number): void {
   finishOp(parser, code === charCodes.equalsTo ? tt.eq : tt.bang, 1);
 }
 
-function readToken_question(parser: JSParser): void {
+function readTokenQuestion(parser: JSParser): void {
   const next = parser.input.charCodeAt(getIndex(parser) + 1);
   const next2 = parser.input.charCodeAt(getIndex(parser) + 2);
   if (next === charCodes.questionMark && !parser.inScope('TYPE')) {
@@ -723,7 +723,7 @@ function readToken_question(parser: JSParser): void {
   }
 }
 
-function readToken_numberSign(parser: JSParser): void {
+function readTokenNumberSign(parser: JSParser): void {
   // Only tokenize a hash if we're inside of a class, or if we're the first character in the file (hashbang indicator)
   if (get0(parser.state.classLevel) > 0 || parser.state.index === number0) {
     bumpIndex(parser);
@@ -766,14 +766,14 @@ function getTokenFromCode(parser: JSParser, code: number): void {
 
   switch (code) {
     case charCodes.numberSign:
-      return readToken_numberSign(parser);
+      return readTokenNumberSign(parser);
 
 
     // The interpretation of a dot depends on whether it is followed
 
     // by a digit or another two dots.
     case charCodes.dot: {
-      readToken_dot(parser);
+      readTokenDot(parser);
       return undefined;
     }
 
@@ -842,7 +842,7 @@ function getTokenFromCode(parser: JSParser, code: number): void {
     }
 
     case charCodes.questionMark: {
-      readToken_question(parser);
+      readTokenQuestion(parser);
       return undefined;
     }
 
@@ -897,42 +897,42 @@ function getTokenFromCode(parser: JSParser, code: number): void {
 
     // of the type given by its first argument.
     case charCodes.slash: {
-      readToken_slash(parser);
+      readTokenSlash(parser);
       return undefined;
     }
 
     case charCodes.percentSign:
     case charCodes.asterisk: {
-      readToken_mult_modulo(parser, code);
+      readTokenMultModulo(parser, code);
       return undefined;
     }
 
     case charCodes.verticalBar:
     case charCodes.ampersand: {
-      readToken_pipe_amp(parser, code);
+      readTokenPipeAmp(parser, code);
       return undefined;
     }
 
     case charCodes.caret: {
-      readToken_caret(parser);
+      readTokenCaret(parser);
       return undefined;
     }
 
     case charCodes.plusSign:
     case charCodes.dash: {
-      readToken_plus_min(parser, code);
+      readTokenPlusMin(parser, code);
       return undefined;
     }
 
     case charCodes.lessThan:
     case charCodes.greaterThan: {
-      readToken_lt_gt(parser, code);
+      readTokenLtGt(parser, code);
       return undefined;
     }
 
     case charCodes.equalsTo:
     case charCodes.exclamationMark: {
-      readToken_eq_excl(parser, code);
+      readTokenEqExcl(parser, code);
       return undefined;
     }
 
@@ -1716,7 +1716,7 @@ function _updateContext(parser: JSParser, prevType: TokenType): void {
 }
 
 // Reads inline JSX contents token.
-function readToken_jsx(parser: JSParser): void {
+function readTokenJsx(parser: JSParser): void {
   let out = '';
   let chunkStart = parser.state.index;
   while (true) {
@@ -1743,14 +1743,14 @@ function readToken_jsx(parser: JSParser): void {
 
     if (code === charCodes.ampersand) {
       out += parser.getRawInput(chunkStart, parser.state.index);
-      out += readToken_jsxEntity(parser);
+      out += readTokenJsxEntity(parser);
       chunkStart = parser.state.index;
       continue;
     }
 
     if (isNewLine(code)) {
       out += parser.getRawInput(chunkStart, parser.state.index);
-      out += readToken_jsxNewLine(parser, true);
+      out += readTokenJsxNewLine(parser, true);
       chunkStart = parser.state.index;
     } else {
       bumpIndex(parser);
@@ -1758,7 +1758,7 @@ function readToken_jsx(parser: JSParser): void {
   }
 }
 
-function readToken_jsxNewLine(parser: JSParser, normalizeCRLF: boolean): string {
+function readTokenJsxNewLine(parser: JSParser, normalizeCRLF: boolean): string {
   const ch = parser.input.charCodeAt(getIndex(parser));
   let out;
   bumpIndex(parser);
@@ -1777,7 +1777,7 @@ function readToken_jsxNewLine(parser: JSParser, normalizeCRLF: boolean): string 
   return out;
 }
 
-function readToken_jsxString(parser: JSParser, quote: number): void {
+function readTokenJsxString(parser: JSParser, quote: number): void {
   let out = '';
   let chunkStart = bumpIndex(parser);
   while (true) {
@@ -1796,11 +1796,11 @@ function readToken_jsxString(parser: JSParser, quote: number): void {
 
     if (ch === charCodes.ampersand) {
       out += parser.getRawInput(chunkStart, parser.state.index);
-      out += readToken_jsxEntity(parser);
+      out += readTokenJsxEntity(parser);
       chunkStart = parser.state.index;
     } else if (isNewLine(ch)) {
       out += parser.getRawInput(chunkStart, parser.state.index);
-      out += readToken_jsxNewLine(parser, false);
+      out += readTokenJsxNewLine(parser, false);
       chunkStart = parser.state.index;
     } else {
       bumpIndex(parser);
@@ -1812,7 +1812,7 @@ function readToken_jsxString(parser: JSParser, quote: number): void {
   return finishToken(parser, tt.string, out);
 }
 
-function readToken_jsxEntity(parser: JSParser): string {
+function readTokenJsxEntity(parser: JSParser): string {
   let str = '';
   let count = 0;
   let entity;
@@ -1858,7 +1858,7 @@ function readToken_jsxEntity(parser: JSParser): string {
 // escape characters and so can be read as single slice.
 // Also assumes that first character was already checked
 // by isIdentifierStart in readToken.
-function readToken_jsxWord(parser: JSParser): void {
+function readTokenJsxWord(parser: JSParser): void {
   let ch;
   const start = parser.state.index;
   do {

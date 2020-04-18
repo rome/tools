@@ -14,7 +14,6 @@ import {
   BundlerMode,
   BundleResultBundle,
 } from '../../common/types/bundler';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import DependencyGraph from '../dependencies/DependencyGraph';
 import BundleRequest, {BundleOptions} from './BundleRequest';
 import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
@@ -130,7 +129,7 @@ export default class Bundler {
     entries = [...entries];
 
     // Seed the dependency graph with all the entries at the same time
-    const processor = new DiagnosticsProcessor({
+    const processor = this.request.createDiagnosticsProcessor({
       origins: [
         {
           category: 'Bundler',
@@ -348,7 +347,7 @@ export default class Bundler {
     const req = this.createBundleRequest(resolvedEntry, options, reporter);
     const res = await req.bundle();
 
-    const processor = new DiagnosticsProcessor({origins: []});
+    const processor = this.request.createDiagnosticsProcessor();
     processor.addDiagnostics(res.diagnostics);
     processor.maybeThrowDiagnosticsError();
 

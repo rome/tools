@@ -42,6 +42,7 @@ Object {
       location: Object {
         filename: 'unknown'
         language: 'js'
+        marker: undefined
         mtime: undefined
         sourceType: 'module'
         end: Object {
