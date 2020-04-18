@@ -8,7 +8,7 @@
 import {
   MarkupFormatOptions,
   markupToAnsi,
-  stripMarkupTags,
+  markupToPlainText,
   markupTag,
   ansiEscapes,
   stripAnsi,
@@ -823,7 +823,7 @@ export default class Reporter {
 
   //# LOG
   stripMarkup(str: string) {
-    return stripMarkupTags(str, this.markupOptions);
+    return markupToPlainText(str, this.markupOptions);
   }
 
   markupifyLength(stream: ReporterStream, str: string): number {
@@ -845,7 +845,7 @@ export default class Reporter {
       case 'html':
       case 'none':
         // TODO
-        return stripMarkupTags(str);
+        return markupToPlainText(str);
 
       case 'markup':
         return str;

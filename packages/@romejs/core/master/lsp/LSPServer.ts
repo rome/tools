@@ -24,7 +24,7 @@ import {
 import {Diagnostics, DiagnosticLocation} from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
 import {coerce1To0, number0, Number0, inc} from '@romejs/ob1';
-import {stripMarkupTags} from '@romejs/string-markup';
+import {markupToPlainText} from '@romejs/string-markup';
 import {
   PartialMasterQueryRequest,
   MasterQueryResponse,
@@ -120,7 +120,7 @@ function convertDiagnosticsToLSP(
           );
           if (abs !== undefined) {
             relatedInformation.push({
-              message: stripMarkupTags(item.message),
+              message: markupToPlainText(item.message),
               location: {
                 uri: `file://${abs.join()}`,
                 range: convertDiagnosticLocationToLSPRange(nextItem.location),
@@ -134,7 +134,7 @@ function convertDiagnosticsToLSP(
     lspDiagnostics.push({
       severity: 1,
       range: convertDiagnosticLocationToLSPRange(location),
-      message: stripMarkupTags(description.message.value),
+      message: markupToPlainText(description.message.value),
       code: description.category,
       source: 'rome',
       relatedInformation,
