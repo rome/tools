@@ -5,7 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, Program, ConstSourceType, AnyComment} from '@romejs/js-ast';
+import {
+  AnyNode,
+  Program,
+  ConstSourceType,
+  AnyComment,
+  program,
+} from '@romejs/js-ast';
 import {
   SourceLocation,
   extractSourceLocationRangeFromNodes,
@@ -30,16 +36,23 @@ import Record from './Record';
 import {RootScope} from '../scope/Scope';
 import reduce from '../methods/reduce';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
-import {TransformProjectDefinition} from '../types';
+import {
+  TransformProjectDefinition,
+  LintCompilerOptionsDecision,
+  TransformVisitor,
+} from '../types';
 import {
   extractSuppressionsFromProgram,
   matchesSuppression,
 } from '../suppressions';
 import CommentsConsumer from '@romejs/js-parser/CommentsConsumer';
+import {get1} from '@romejs/ob1';
+import {hookVisitors} from '../transforms';
 
 export type ContextArg = {
   ast: Program;
   project: TransformProjectDefinition;
+  frozen?: boolean;
   options?: CompilerOptions;
   origin?: DiagnosticOrigin;
 };
@@ -50,17 +63,20 @@ type AddDiagnosticResult = {
 };
 
 // We only want a Context to create diagnostics that belong to itself
-type ContextDiagnostic = Omit<Diagnostic, 'location' | 'description'>;
+type ContextDiagnostic = Omit<Diagnostic, 'location' | 'description'> & {
+  marker?: string;
+};
 
-export default class Context {
+export default class CompilerContext {
   constructor(arg: ContextArg) {
-    const {ast, project, options = {}, origin} = arg;
+    const {ast, project, frozen = false, options = {}, origin} = arg;
 
     this.records = [];
 
     this.path = createUnknownFilePath(ast.filename);
     this.filename = ast.filename;
 
+    this.frozen = frozen;
     this.mtime = ast.mtime;
     this.project = project;
     this.options = options;
@@ -75,6 +91,7 @@ export default class Context {
     this.suppressions = suppressions;
     this.diagnostics = new DiagnosticsProcessor();
     this.diagnostics.addDiagnostics(diagnostics);
+    this.fixableDiagnostics = new Set();
   }
 
   comments: CommentsConsumer;
@@ -83,13 +100,12 @@ export default class Context {
   records: Array<Record>;
   diagnostics: DiagnosticsProcessor;
   suppressions: DiagnosticSuppressions;
-
+  fixableDiagnostics: Set<Diagnostic>;
+  frozen: boolean;
   rootScope: undefined | RootScope;
-
   filename: undefined | string;
   path: undefined | UnknownFilePath;
   mtime: undefined | number;
-
   project: TransformProjectDefinition;
   origin: undefined | DiagnosticOrigin;
   options: CompilerOptions;
@@ -106,17 +122,6 @@ export default class Context {
 
   getComments(ids: undefined | Array<string>): Array<AnyComment> {
     return this.comments.getCommentsFromIds(ids);
-  }
-
-  hasNodeSuppression(
-    node: undefined | {loc?: SourceLocation},
-    category: DiagnosticCategory,
-  ): boolean {
-    if (node === undefined) {
-      return false;
-    }
-
-    return this.hasLocSuppression(node.loc, category);
   }
 
   hasLocSuppression(
@@ -155,16 +160,57 @@ export default class Context {
     this.cacheDependencies.add(filename);
   }
 
+  reduceRoot(
+    ast: Program,
+    visitors: TransformVisitor | TransformVisitors,
+    pathOpts?: PathOptions,
+  ): Program {
+    return program.assert(reduce(ast, [
+      ...hookVisitors,
+      ...(Array.isArray(visitors) ? visitors : [visitors]),
+    ], this, pathOpts));
+  }
+
   reduce(
     ast: AnyNode,
-    visitors: TransformVisitors,
+    visitors: TransformVisitor | TransformVisitors,
     pathOpts?: PathOptions,
   ): TransformExitResult {
-    return reduce(ast, visitors, this, pathOpts);
+    return reduce(
+      ast,
+      Array.isArray(visitors) ? visitors : [visitors],
+      this,
+      pathOpts,
+    );
   }
 
   record(record: Record) {
     this.records.push(record);
+  }
+
+  findLintDecisions(
+    loc: undefined | DiagnosticLocation,
+  ): undefined | Array<LintCompilerOptionsDecision> {
+    if (loc === undefined) {
+      return undefined;
+    }
+
+    const {lint} = this.options;
+    if (lint === undefined) {
+      return undefined;
+    }
+
+    const {start} = loc;
+    if (start === undefined) {
+      return undefined;
+    }
+
+    const {decisionsByLine: decisions} = lint;
+    if (decisions === undefined) {
+      return undefined;
+    }
+
+    return decisions[get1(start.line)];
   }
 
   addFixableDiagnostic<Old extends AnyNode, New extends TransformExitResult>(
@@ -185,15 +231,28 @@ export default class Context {
       fixable: true,
     };
 
+    let diagnostic;
     let suppressed = false;
     if (Array.isArray(target)) {
-      ({suppressed} = this.addNodesRangeDiagnostic(target, description, diag));
+      ({suppressed, diagnostic} = this.addNodesRangeDiagnostic(
+        target,
+        description,
+        diag,
+      ));
     } else {
-      ({suppressed} = this.addNodeDiagnostic(target, description, diag));
+      ({suppressed, diagnostic} = this.addNodeDiagnostic(
+        target,
+        description,
+        diag,
+      ));
     }
 
     if (suppressed) {
       return old;
+    }
+
+    if (diagnostic !== undefined) {
+      this.fixableDiagnostics.add(diagnostic);
     }
 
     let result: TransformExitResult;
@@ -216,14 +275,14 @@ export default class Context {
   addLocDiagnostic(
     loc: undefined | DiagnosticLocation,
     description: DiagnosticDescription,
-    diag: ContextDiagnostic = {},
+    contextDiag: ContextDiagnostic = {},
   ): AddDiagnosticResult {
     let origins: Array<DiagnosticOrigin> = [];
     if (this.origin !== undefined) {
       origins.push(this.origin);
     }
-    if (diag.origins !== undefined) {
-      origins = origins.concat(diag.origins);
+    if (contextDiag.origins !== undefined) {
+      origins = origins.concat(contextDiag.origins);
     }
 
     if (loc !== undefined && loc.filename !== this.filename) {
@@ -232,10 +291,13 @@ export default class Context {
         );
     }
 
+    const {marker, ...diag} = contextDiag;
+
     const diagnostic = this.diagnostics.addDiagnostic({
       ...diag,
       description,
       location: {
+        marker,
         mtime: this.mtime,
         filename: this.filename,
         start: loc === undefined ? undefined : loc.start,
@@ -246,9 +308,28 @@ export default class Context {
       origins,
     });
 
+    let suppressed = this.hasLocSuppression(loc, description.category);
+
+    // If we've been passed lint decisions then consider it suppressed unless we have been specifically
+    // told to fix it
+    const diagCategory = description.category;
+    if (this.options.lint !== undefined && this.options.lint.decisionsByLine !==
+        undefined) {
+      suppressed = true;
+
+      const decisions = this.findLintDecisions(loc);
+      if (decisions !== undefined) {
+        for (const {category, action} of decisions) {
+          if (category === diagCategory && action === 'fix') {
+            suppressed = false;
+          }
+        }
+      }
+    }
+
     return {
       diagnostic,
-      suppressed: this.hasLocSuppression(loc, description.category),
+      suppressed,
     };
   }
 

@@ -6,8 +6,8 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand, commandCategories} from '../../commands';
-
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import {modifyProjectConfig, assertHardMeta} from '@romejs/project';
 import {createUnknownFilePath} from '@romejs/path';
 import {markup} from '@romejs/string-markup';
@@ -30,7 +30,11 @@ export default createMasterCommand(
       },
     ],
 
-    async default(req: MasterRequest): Promise<void> {
+    defineFlags() {
+      return {};
+    },
+
+    async callback(req: MasterRequest): Promise<void> {
       const {reporter} = req;
       req.expectArgumentLength(2, 3);
 

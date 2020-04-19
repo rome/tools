@@ -338,8 +338,8 @@ Program {
                       line: 1
                     }
                     start: Object {
-                      column: 35
-                      index: 35
+                      column: 43
+                      index: 43
                       line: 1
                     }
                   }

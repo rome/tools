@@ -10,7 +10,6 @@ import {
   DiagnosticOrigin,
   deriveDiagnosticFromError,
   descriptions,
-  DiagnosticsProcessor,
 } from '@romejs/diagnostics';
 import {TestRef} from '../../common/bridges/TestWorkerBridge';
 import {Master, MasterRequest, TestWorkerBridge} from '@romejs/core';
@@ -35,7 +34,7 @@ import {
 import fork from '../../common/utils/fork';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
 import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
-import {coerce0to1} from '@romejs/ob1';
+import {coerce0To1} from '@romejs/ob1';
 import {
   TestRunnerConstructorOptions,
   TestRunnerOptions,
@@ -88,7 +87,7 @@ export default class TestRunner {
     this.testFileCounter = 0;
 
     this.printer = opts.request.createDiagnosticsPrinter(
-      new DiagnosticsProcessor({
+      this.request.createDiagnosticsProcessor({
         origins: [
           {
             category: 'test',
@@ -98,6 +97,13 @@ export default class TestRunner {
       }),
     );
     this.printer.addDiagnostics(opts.addDiagnostics);
+
+    // Add source maps
+    for (const [filename, {code, sourceMap}] of opts.sources) {
+      const consumer = sourceMap.toConsumer();
+      this.coverageCollector.addSourceMap(filename, code, consumer);
+      this.printer.processor.sourceMaps.add(filename, consumer);
+    }
   }
 
   coverageCollector: CoverageCollector;
@@ -150,12 +156,12 @@ export default class TestRunner {
       }
       const [filename, {path, code, sourceMap}] = item;
 
-      this.coverageCollector.addSourceMap(filename, code, sourceMap);
-
       // Source map locations will always be resolved in the worker, but this is in case we need to resolve them in master in the case of an unresponsive worker
-
       // TODO remove this after test has ran
-      const removeSourceMap = sourceMapManager.addSourceMap(filename, sourceMap);
+      const removeSourceMap = sourceMapManager.addSourceMap(
+        filename,
+        () => sourceMap.toConsumer(),
+      );
 
       const id = this.testFileCounter;
       this.testFileCounter++;
@@ -169,7 +175,6 @@ export default class TestRunner {
             file: req.master.projectManager.getTransportFileReference(path),
             cwd: flags.cwd.join(),
             code,
-            sourceMap,
           },
         );
 
@@ -364,7 +369,7 @@ export default class TestRunner {
 
       const resolved = sourceMapManager.resolveLocation(urlToFilename(
         callFrame.get('url').asString(),
-      ), coerce0to1(loc.get('lineNumber').asZeroIndexedNumber()), loc.get(
+      ), coerce0To1(loc.get('lineNumber').asZeroIndexedNumber()), loc.get(
         'columnNumber',
       ).asZeroIndexedNumber());
 
@@ -573,10 +578,15 @@ export default class TestRunner {
   }
 
   printCoverageReport() {
-    const {reporter, master} = this;
+    const {reporter, master, coverageCollector} = this;
+    if (!this.options.coverage) {
+      return;
+    }
+
+    reporter.info('Generating coverage');
 
     // Fetch coverage entries
-    const files = this.coverageCollector.generate();
+    const files = coverageCollector.generate();
     if (files.length === 0) {
       return;
     }

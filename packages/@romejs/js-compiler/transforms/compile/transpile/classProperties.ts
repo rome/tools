@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Context, Path, Scope} from '@romejs/js-compiler';
+import {CompilerContext, Path, Scope} from '@romejs/js-compiler';
 import {
   AnyNode,
   AnyStatement,
@@ -69,7 +69,7 @@ function isSuperCall(node: AnyNode): node is CallExpression {
 function transformClass(
   node: ClassDeclaration,
   scope: Scope,
-  context: Context,
+  context: CompilerContext,
 ): {
   newClass: ClassDeclaration;
   className: string;

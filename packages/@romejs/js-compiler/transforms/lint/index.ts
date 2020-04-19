@@ -6,6 +6,7 @@
  */
 
 // Add imports in alphabetical order.
+import camelCase from './camelCase';
 import caseSingleStatement from './caseSingleStatement';
 import defaultExportSameBasename from './defaultExportSameBasename';
 import doubleEquals from './doubleEquals';
@@ -48,6 +49,7 @@ import unusedVariables from './unusedVariables';
 
 // Add transforms in alphabetical order.
 export const lintTransforms = [
+  camelCase,
   defaultExportSameBasename,
   duplicateImportSource,
   caseSingleStatement,

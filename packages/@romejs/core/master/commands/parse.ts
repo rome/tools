@@ -7,7 +7,8 @@
 
 import {MasterRequest} from '@romejs/core';
 import {Consumer} from '@romejs/consume';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import {createUnknownFilePath} from '@romejs/path';
 import {ConstSourceType, program} from '@romejs/js-ast';
 import {removeLoc} from '@romejs/js-ast-utils';
@@ -21,6 +22,8 @@ type Flags = {
 export default createMasterCommand({
   category: commandCategories.SOURCE_CODE,
   description: 'parse a single file and dump its ast',
+  usage: '',
+  examples: [],
 
   defineFlags(c: Consumer): Flags {
     return {
@@ -30,7 +33,7 @@ export default createMasterCommand({
     };
   },
 
-  async default(req: MasterRequest, flags: Flags): Promise<void> {
+  async callback(req: MasterRequest, flags: Flags): Promise<void> {
     const {master, reporter} = req;
     const {args} = req.query;
     req.expectArgumentLength(1);

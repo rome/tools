@@ -177,8 +177,8 @@ Program {
                   line: 1
                 }
                 start: Object {
-                  column: 24
-                  index: 24
+                  column: 22
+                  index: 22
                   line: 1
                 }
               }
@@ -292,8 +292,8 @@ Program {
                   line: 1
                 }
                 start: Object {
-                  column: 44
-                  index: 44
+                  column: 42
+                  index: 42
                   line: 1
                 }
               }

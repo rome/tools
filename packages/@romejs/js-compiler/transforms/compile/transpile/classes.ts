@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Context, Path, TransformExitResult} from '@romejs/js-compiler';
+import {CompilerContext, Path, TransformExitResult} from '@romejs/js-compiler';
 import {
   AnyNode,
   functionHead,
@@ -35,7 +35,7 @@ import {descriptions} from '@romejs/diagnostics';
 function transformClass(
   node: ClassDeclaration | ClassExpression,
   path: Path,
-  context: Context,
+  context: CompilerContext,
 ): {
   _constructor: FunctionDeclaration;
   prependDeclarations: Array<AnyStatement>;

@@ -340,8 +340,8 @@ Program {
                   line: 5
                 }
                 start: Object {
-                  column: 28
-                  index: 63
+                  column: 13
+                  index: 48
                   line: 5
                 }
               }
@@ -840,8 +840,8 @@ Program {
                   line: 10
                 }
                 start: Object {
-                  column: 10
-                  index: 116
+                  column: 7
+                  index: 113
                   line: 10
                 }
               }
@@ -1072,8 +1072,8 @@ Program {
                   line: 11
                 }
                 start: Object {
-                  column: 15
-                  index: 150
+                  column: 7
+                  index: 142
                   line: 11
                 }
               }
@@ -1337,8 +1337,8 @@ Program {
                   line: 13
                 }
                 start: Object {
-                  column: 10
-                  index: 182
+                  column: 7
+                  index: 179
                   line: 13
                 }
               }
@@ -1569,8 +1569,8 @@ Program {
                   line: 14
                 }
                 start: Object {
-                  column: 15
-                  index: 216
+                  column: 7
+                  index: 208
                   line: 14
                 }
               }
@@ -1859,8 +1859,8 @@ Program {
                   line: 16
                 }
                 start: Object {
-                  column: 12
-                  index: 250
+                  column: 8
+                  index: 246
                   line: 16
                 }
               }
@@ -2353,8 +2353,8 @@ Program {
                   line: 18
                 }
                 start: Object {
-                  column: 13
-                  index: 312
+                  column: 10
+                  index: 309
                   line: 18
                 }
               }

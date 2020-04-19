@@ -33,6 +33,7 @@ import WorkerQueue from '../WorkerQueue';
 export type BundleOptions = {
   prefix?: string;
   interpreter?: string;
+  deferredSourceMaps?: boolean;
 };
 
 export default class BundleRequest {
@@ -49,8 +50,8 @@ export default class BundleRequest {
     resolvedEntry: AbsoluteFilePath;
     options: BundleOptions;
   }) {
+    this.options = options;
     this.reporter = reporter;
-    this.interpreter = options.interpreter;
     this.bundler = bundler;
     this.cached = true;
     this.mode = mode;
@@ -59,7 +60,7 @@ export default class BundleRequest {
     this.resolvedEntryUid = bundler.master.projectManager.getUid(resolvedEntry);
 
       this.diagnostics =
-      new DiagnosticsProcessor(
+      bundler.request.createDiagnosticsProcessor(
         {
           origins: [
             {
@@ -79,7 +80,7 @@ export default class BundleRequest {
     });
   }
 
-  interpreter: undefined | string;
+  options: BundleOptions;
   cached: boolean;
   reporter: Reporter;
   bundler: Bundler;
@@ -207,11 +208,26 @@ export default class BundleRequest {
     return res;
   }
 
-  async stepCombine(order: DependencyOrder): Promise<BundleRequestResult> {
+  stepCombine(
+    order: DependencyOrder,
+    forceSourceMaps: boolean,
+  ): BundleRequestResult {
     const {files} = order;
     const {inlineSourceMap} = this.bundler.config;
     const {graph} = this.bundler;
     const {resolvedEntry, mode, sourceMap} = this;
+
+    // We allow deferring the generation of source maps. We don't do this by default as it's slower than generating them upfront
+    // which is what most callers need. But for things like tests, we want to lazily compute the source map only when diagnostics
+    // are present.
+    let deferredSourceMaps = !forceSourceMaps &&
+        this.options.deferredSourceMaps ===
+        true;
+    if (deferredSourceMaps) {
+      sourceMap.addMaterializer(() => {
+        this.stepCombine(order, true);
+      });
+    }
 
     let content: string = '';
     let lineOffset: number = 0;
@@ -219,9 +235,11 @@ export default class BundleRequest {
     function push(str: string) {
       str += '\n';
       content += str;
-      for (let cha of str) {
-        if (cha === '\n') {
-          lineOffset++;
+      if (!deferredSourceMaps) {
+        for (let cha of str) {
+          if (cha === '\n') {
+            lineOffset++;
+          }
         }
       }
     }
@@ -231,6 +249,10 @@ export default class BundleRequest {
       sourceContent: string,
       mappings: Mappings,
     ) {
+      if (deferredSourceMaps) {
+        return;
+      }
+
       sourceMap.setSourceContent(filename, sourceContent);
       for (const mapping of mappings) {
         sourceMap.addMapping({
@@ -243,7 +265,7 @@ export default class BundleRequest {
       }
     }
 
-    const {interpreter} = this;
+    const {interpreter} = this.options;
     if (interpreter !== undefined) {
       push(`#!${interpreter}\n`);
     }
@@ -349,7 +371,7 @@ export default class BundleRequest {
     return {
       diagnostics: this.diagnostics.getDiagnostics(),
       content,
-      map: sourceMap.toJSON(),
+      sourceMap: this.sourceMap,
       cached: this.cached,
       assets: this.assets,
     };
@@ -361,7 +383,7 @@ export default class BundleRequest {
 
   abort(): BundleRequestResult {
     return {
-      map: this.sourceMap.toJSON(),
+      sourceMap: this.sourceMap,
       content: '',
       diagnostics: this.diagnostics.getDiagnostics(),
       cached: false,
@@ -382,6 +404,6 @@ export default class BundleRequest {
     }
 
     // Combine
-    return await this.stepCombine(order);
+    return await this.stepCombine(order, false);
   }
 }

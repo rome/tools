@@ -15,6 +15,7 @@ import master from '../master';
 import testWorker from '../testWorker';
 import worker from '../worker';
 import {readFileTextSync} from '@romejs/fs';
+import {SourceMapConsumer} from '@romejs/codec-source-map';
 
 async function main() {
   switch (process.env.ROME_PROCESS_VERSION === VERSION &&
@@ -34,8 +35,8 @@ async function main() {
 }
 
 sourceMapManager.init();
-sourceMapManager.addSourceMapFactory(BIN.join(), () => JSON.parse(
-  readFileTextSync(MAP),
+sourceMapManager.addSourceMap(BIN.join(), () => SourceMapConsumer.fromJSON(
+  JSON.parse(readFileTextSync(MAP)),
 ));
 
 main().catch((err) => {

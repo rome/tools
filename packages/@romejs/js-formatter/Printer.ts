@@ -109,7 +109,7 @@ export default class Printer {
 
     this.inputSourceMap = opts.inputSourceMap === undefined
       ? undefined
-      : new SourceMapConsumer(opts.inputSourceMap);
+      : SourceMapConsumer.fromJSON(opts.inputSourceMap);
   }
 
   compact: boolean;
@@ -208,23 +208,9 @@ export default class Printer {
     });
   }
 
-  push(str: string) {
-    if (str === '') {
-      return;
-    }
-
-    if (str[0] !== '\n' && this.options.sourceMaps) {
-      this.mark();
-    }
-
-    this.maybeAddTerminatorlessParen(str);
-
-    // Only output indentation if we aren't compact
-    if (!this.compact && str !== '\n' && this.state.endsWithNewline) {
-      str = this.state.indentString + str;
-    }
-
+  _push(str: string) {
     const {lastUnbrokenGroup} = this;
+    this.buff.push(str);
 
     for (const char of str) {
       this.state.generatedIndex = inc(this.state.generatedIndex);
@@ -243,8 +229,28 @@ export default class Printer {
         this.state.generatedColumn = inc(this.state.generatedColumn);
       }
     }
+  }
+
+  push(str: string) {
+    if (str === '') {
+      return;
+    }
+
+    // Only output indentation if we aren't compact
+    if (!this.compact && str !== '\n' && this.state.endsWithNewline) {
+      this._push(this.state.indentString);
+    }
+
+    if (str[0] !== '\n' && this.options.sourceMaps) {
+      this.mark();
+    }
+
+    this.maybeAddTerminatorlessParen(str);
+
+    this._push(str);
 
     // Determine if we need to line wrap. We skip this when we aren't in pretty mode for better performance.
+    const {lastUnbrokenGroup} = this;
     if (this.lineWrap) {
       if (lastUnbrokenGroup !== undefined && get0(this.state.generatedColumn) >
           MAX_LINE_LENGTH) {
@@ -257,7 +263,6 @@ export default class Printer {
     this.state.endsWithWord = false;
     this.state.endsWithSpace = str[str.length - 1] === ' ';
     this.state.lastBuff = str;
-    this.buff.push(str);
   }
 
   createStateSnapshot({
@@ -722,7 +727,9 @@ export default class Printer {
     const {options} = this;
 
     const map = new SourceMapGenerator({
-      file: options.sourceMapTarget,
+      file: options.sourceMapTarget === undefined
+        ? 'unknown'
+        : options.sourceMapTarget,
       sourceRoot: options.sourceRoot,
     });
 
@@ -734,6 +741,6 @@ export default class Printer {
       map.addMapping(mapping);
     }
 
-    return map.toJSON();
+    return map.serialize();
   }
 }

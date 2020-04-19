@@ -157,14 +157,14 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 14
-                        index: 38
+                        column: 11
+                        index: 35
                         line: 2
                       }
                       start: Object {
-                        column: 0
-                        index: 39
-                        line: 3
+                        column: 12
+                        index: 36
+                        line: 2
                       }
                     }
                     meta: PatternMeta {
@@ -172,14 +172,14 @@ Program {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
-                          column: 14
-                          index: 38
+                          column: 11
+                          index: 35
                           line: 2
                         }
                         start: Object {
-                          column: 0
-                          index: 39
-                          line: 3
+                          column: 12
+                          index: 36
+                          line: 2
                         }
                       }
                       typeAnnotation: StringKeywordTypeAnnotation {

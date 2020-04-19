@@ -18,7 +18,7 @@ import {
   TopLevelAwaitRecord,
   ImportUsageRecord,
 } from './records';
-import {Context, Cache} from '@romejs/js-compiler';
+import {CompilerContext, Cache} from '@romejs/js-compiler';
 import transform from '../../methods/transform';
 import visitors from './visitors/index';
 import {
@@ -45,7 +45,7 @@ export default async function analyzeDependencies(
     return cached;
   }
 
-  const context = new Context({
+  const context = new CompilerContext({
     ast,
     project,
     origin: {

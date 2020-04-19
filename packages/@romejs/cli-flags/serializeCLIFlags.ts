@@ -16,6 +16,7 @@ type SerializeCLIData = {
   args: Array<string>;
   defaultFlags: Dict<unknown>;
   flags: Dict<unknown>;
+  incorrectCaseFlags: Set<string>;
   shorthandFlags: Set<string>;
 };
 
@@ -104,7 +105,7 @@ export function serializeCLIFlags(
     }
 
     const flagPrefix = data.shorthandFlags.has(key) ? '-' : '--';
-    const kebabKey = toKebabCase(key);
+    const kebabKey = data.incorrectCaseFlags.has(key) ? key : toKebabCase(key);
     if (val === false) {
       code += `${flagPrefix}no-${kebabKey} `;
     } else {

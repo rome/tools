@@ -9,11 +9,11 @@ import {
   MasterQueryResponse,
   PartialMasterQueryRequest,
 } from '../common/bridges/MasterBridge';
-import {LocalCommand} from '../commands';
+import {LocalCommand, localCommands} from './commands';
 import Client from './Client';
 import {consumeUnknown} from '@romejs/consume';
 import {BridgeError} from '@romejs/events';
-import {localCommands} from './commands';
+
 export type ClientRequestType = 'local' | 'master';
 
 export default class ClientRequest {
@@ -68,15 +68,15 @@ export default class ClientRequest {
       ));
     }
 
-    const success = await localCommand.callback(this, flags);
-    if (success) {
+    const res = await localCommand.callback(this, flags);
+    if (res === true) {
       return {
         type: 'SUCCESS',
         data: undefined,
         hasData: false,
         markers: [],
       };
-    } else {
+    } else if (res === false) {
       return {
         type: 'ERROR',
         fatal: false,
@@ -86,6 +86,8 @@ export default class ClientRequest {
         message: 'Command was not successful',
         stack: undefined,
       };
+    } else {
+      return res;
     }
   }
 

@@ -6,29 +6,15 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand, commandCategories} from '../../commands';
 import Linter, {LinterOptions} from '../linter/Linter';
-
-import {Consumer} from '@romejs/consume';
 import {markup} from '@romejs/string-markup';
+import {createMasterCommand} from '../commands';
+import lintCommand, {LintCommandFlags} from '../../client/commands/lint';
 
-type Flags = {
-  fix: boolean;
-  changed: undefined | string;
-};
+export default createMasterCommand<LintCommandFlags>({
+  ...lintCommand,
 
-export default createMasterCommand<Flags>({
-  category: commandCategories.CODE_QUALITY,
-  description: 'run lint against a set of files',
-
-  defineFlags(consumer: Consumer): Flags {
-    return {
-      fix: consumer.get('fix').asBoolean(false),
-      changed: consumer.get('changed').asStringOrVoid(),
-    };
-  },
-
-  async default(req: MasterRequest, flags: Flags): Promise<void> {
+  async callback(req: MasterRequest, flags: LintCommandFlags): Promise<void> {
     const {reporter} = req;
 
     const fixLocation = flags.fix === false
@@ -60,6 +46,7 @@ export default createMasterCommand<Flags>({
     }
 
     const opts: LinterOptions = {
+      compilerOptionsPerFile: flags.compilerOptionsPerFile,
       fixLocation,
       args,
     };

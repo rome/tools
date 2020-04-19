@@ -12,7 +12,7 @@ import {
   CoverageLocationRange,
   CoverageRangeWithMetadata,
 } from '@romejs/v8';
-import {SourceMap, SourceMapConsumer} from '@romejs/codec-source-map';
+import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {Position} from '@romejs/parser-core';
 import {urlToFilename} from './utils';
 import {
@@ -47,10 +47,10 @@ export default class CoverageCollector {
   sourceMaps: Map<string, {
     code: string;
     ranges: Array<CoverageRangeWithMetadata>;
-    map: SourceMap;
+    map: SourceMapConsumer;
   }>;
 
-  addSourceMap(filename: string, code: string, map: SourceMap) {
+  addSourceMap(filename: string, code: string, map: SourceMapConsumer) {
     this.sourceMaps.set(filename, {
       ranges: [],
       map,
@@ -145,12 +145,11 @@ export default class CoverageCollector {
       }
 
       //
-      const sourceMap = new SourceMapConsumer(map);
       for (const {kind, startOffset, endOffset, count} of ranges) {
         const originalStart = findIndex(coerce0(startOffset));
         const originalEnd = findIndex(coerce0(endOffset));
 
-        const sourceStart = sourceMap.approxOriginalPositionFor(
+        const sourceStart = map.approxOriginalPositionFor(
           originalStart.line,
           originalStart.column,
         );
@@ -158,7 +157,7 @@ export default class CoverageCollector {
           continue;
         }
 
-        const sourceEnd = sourceMap.approxOriginalPositionFor(
+        const sourceEnd = map.approxOriginalPositionFor(
           originalEnd.line,
           originalEnd.column,
         );

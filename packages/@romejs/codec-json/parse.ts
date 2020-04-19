@@ -788,6 +788,11 @@ export default createParser(
           return {
             context: {
               category: this.consumeDiagnosticCategory,
+
+              normalizeKey(path) {
+                return getContext().normalizeKey(path);
+              },
+
               getOriginalValue(path) {
                 return getContext().getOriginalValue(path);
               },
@@ -834,6 +839,8 @@ export default createParser(
 
       const context: Required<ConsumeContext> = {
         category: this.consumeDiagnosticCategory,
+
+        normalizeKey: (key) => key,
 
         getDiagnosticPointer: (
           keys: ConsumePath,

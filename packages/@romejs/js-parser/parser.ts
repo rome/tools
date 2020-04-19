@@ -225,6 +225,17 @@ const createJSParser = createParser(
         return node;
       }
 
+      // Sometimes we want to pretend we're in different locations to consume the comments of other nodes
+      finishNodeWithCommentStarts<T extends AnyNode>(
+        starts: Array<Position>,
+        node: T,
+      ): T {
+        for (const start of starts) {
+          node = this.finishNode(start, node);
+        }
+        return node;
+      }
+
       finishNode<T extends AnyNode>(start: Position, node: T): T {
         return this.finishNodeAt(start, this.getLastEndPosition(), node);
       }

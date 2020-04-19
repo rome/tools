@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyCommentWithoutId} from '@romejs/js-ast';
+import {AnyComment, AnyCommentOptionalId} from '@romejs/js-ast';
 
 export default class CommentsConsumer {
   constructor(seedComments: Array<AnyComment> = []) {
@@ -74,7 +74,7 @@ export default class CommentsConsumer {
     this.idToComment.delete(id);
   }
 
-  addComment(withoutId: AnyCommentWithoutId): AnyComment {
+  addComment(withoutId: AnyCommentOptionalId): AnyComment {
     const withId: AnyComment = {
       ...withoutId,
       id: this.getNextId(),

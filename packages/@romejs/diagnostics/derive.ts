@@ -129,14 +129,13 @@ export function deriveRootAdviceFromDiagnostic(diag: Diagnostic, opts: {
       advice.push({
         type: 'frame',
         location: diag.location,
-        marker: diag.marker,
       });
-    } else if (diag.marker !== undefined) {
+    } else if (location.marker !== undefined) {
       // If we have no start/end, but we do have a marker then output is a log error
       advice.push({
         type: 'log',
         category: 'error',
-        message: diag.marker,
+        message: location.marker,
       });
     }
   }

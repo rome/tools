@@ -39,6 +39,7 @@ export type DiagnosticFilterWithTest = DiagnosticFilter & {
 export type DiagnosticLocation = {
   sourceText?: string;
   mtime?: number;
+  marker?: string;
   language?: DiagnosticLanguage;
   sourceType?: DiagnosticSourceType;
   filename?: string;
@@ -67,7 +68,6 @@ export type Diagnostic = {
     filename: string;
     mtime: number;
   }>;
-  marker?: string;
 };
 
 export type Diagnostics = Array<Diagnostic>;
@@ -129,7 +129,6 @@ export type DiagnosticAdviceCode = {
 export type DiagnosticAdviceFrame = {
   type: 'frame';
   location: DiagnosticLocation;
-  marker?: string;
 };
 
 export type DiagnosticAdviceDiff = {

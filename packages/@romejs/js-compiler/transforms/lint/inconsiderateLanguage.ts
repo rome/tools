@@ -14,6 +14,9 @@ import {descriptions} from '@romejs/diagnostics';
 import terms from './inconsiderateLanguage.json';
 import {preserveCasing} from '@romejs/string-utils';
 
+// Fast regex for checking if we need to validate a string
+const regex = new RegExp(terms.map((term) => term.word).join('|'), 'gi');
+
 type CheckResult = {
   loc: SourceLocation;
   word: string;
@@ -28,23 +31,14 @@ function check(loc: SourceLocation, input: string): {
   results: Array<CheckResult>;
 } {
   let fixed = input;
-  const lower = input.toLowerCase();
-
-  // Quick check to see if the string contains any of these terms
-  let check = false;
-  for (const {word} of terms) {
-    if (lower.includes(word)) {
-      check = true;
-      break;
-    }
-  }
-  if (!check) {
+  if (!regex.test(input)) {
     return {
       fixed,
       results: [],
     };
   }
 
+  const lower = input.toLowerCase();
   const tracker = new PositionTracker(lower, loc.start);
   const results: Array<CheckResult> = [];
 

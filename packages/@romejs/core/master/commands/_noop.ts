@@ -6,13 +6,20 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 
 export default createMasterCommand({
   category: commandCategories.INTERNAL,
   description: 'TODO',
+  usage: '',
+  examples: [],
 
-  async default(req: MasterRequest): Promise<void> {
+  defineFlags() {
+    return {};
+  },
+
+  async callback(req: MasterRequest): Promise<void> {
     req;
   },
 });

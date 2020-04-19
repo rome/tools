@@ -891,13 +891,13 @@ function parseImportSpecifier(
 
   let isBinding = false;
   if (parser.isContextual('as') && !parser.isLookaheadContextual('as')) {
-    const as_ident = parseIdentifier(parser, true);
+    const asIdent = parseIdentifier(parser, true);
     if (importKind !== undefined && !parser.match(tt.name) &&
           parser.state.tokenType.keyword ===
           undefined) {
       // `import {type as ,` or `import {type as }`
-      imported = as_ident;
-      local = toBindingIdentifier(parser, parser.cloneNode(as_ident));
+      imported = asIdent;
+      local = toBindingIdentifier(parser, parser.cloneNode(asIdent));
     } else {
       // `import {type as foo`
       imported = firstIdent;

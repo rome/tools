@@ -20,6 +20,9 @@ import {get0} from '@romejs/ob1';
 import {DiagnosticCategoryPrefix} from './categories';
 import {descriptions} from './descriptions';
 import {matchesSuppression} from '@romejs/js-compiler';
+import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
+import DiagnosticsNormalizer from './DiagnosticsNormalizer';
+import {MarkupFormatOptions} from '@romejs/string-markup';
 
 type UniquePart =
   | 'filename'
@@ -32,12 +35,13 @@ type UniqueRule = Array<UniquePart>;
 
 type UniqueRules = Array<UniqueRule>;
 
-export type CollectorOptions = {
+export type DiagnosticsProcessorOptions = {
   filters?: Array<DiagnosticFilterWithTest>;
   unique?: UniqueRules;
   max?: number;
   onDiagnostics?: (diags: Diagnostics) => void;
   origins?: Array<DiagnosticOrigin>;
+  markupOptions?: MarkupFormatOptions;
 };
 
 const DEFAULT_UNIQUE: UniqueRules = [
@@ -47,7 +51,7 @@ const DEFAULT_UNIQUE: UniqueRules = [
 type DiagnosticsByFilename = Map<undefined | string, Diagnostics>;
 
 export default class DiagnosticsProcessor {
-  constructor(options: CollectorOptions = {}) {
+  constructor(options: DiagnosticsProcessorOptions = {}) {
     this.filters = [];
     this.options = options;
     this.includedKeys = new Set();
@@ -57,11 +61,15 @@ export default class DiagnosticsProcessor {
     this.allowedUnusedSuppressionPrefixes = new Set();
     this.usedSuppressions = new Set();
     this.suppressions = new Set();
+    this.sourceMaps = new SourceMapConsumerCollection();
+    this.normalizer = new DiagnosticsNormalizer(this);
 
     this.diagnostics = [];
     this.cachedDiagnostics = undefined;
   }
 
+  normalizer: DiagnosticsNormalizer;
+  sourceMaps: SourceMapConsumerCollection;
   unique: UniqueRules;
   includedKeys: Set<string>;
   diagnostics: Diagnostics;
@@ -69,10 +77,9 @@ export default class DiagnosticsProcessor {
   allowedUnusedSuppressionPrefixes: Set<string>;
   usedSuppressions: Set<DiagnosticSuppression>;
   suppressions: Set<DiagnosticSuppression>;
-  options: CollectorOptions;
+  options: DiagnosticsProcessorOptions;
   throwAfter: undefined | number;
   origins: Array<DiagnosticOrigin>;
-
   cachedDiagnostics: undefined | Diagnostics;
 
   static createImmediateThrower(
@@ -108,8 +115,14 @@ export default class DiagnosticsProcessor {
     return this.getDiagnostics().length > 0;
   }
 
+  assertEmpty() {
+    if (this.hasDiagnostics()) {
+      throw new Error('Expected no diagnostics for this operation');
+    }
+  }
+
   addAllowedUnusedSuppressionPrefix(prefix: DiagnosticCategoryPrefix) {
-    this.cachedDiagnostics = undefined;
+    this.assertEmpty();
     this.allowedUnusedSuppressionPrefixes.add(prefix);
   }
 
@@ -241,11 +254,19 @@ export default class DiagnosticsProcessor {
     diags = addOriginsToDiagnostics(origins, diags);
 
     // Filter diagnostics
-    diagLoop: for (const diag of diags) {
+    diagLoop: for (let diag of diags) {
       if (max !== undefined && this.diagnostics.length > max) {
         break;
       }
 
+      // Check before normalization
+      if (this.doesMatchFilter(diag)) {
+        continue;
+      }
+
+      diag = this.normalizer.normalizeDiagnostic(diag);
+
+      // Check after normalization
       if (this.doesMatchFilter(diag)) {
         continue;
       }

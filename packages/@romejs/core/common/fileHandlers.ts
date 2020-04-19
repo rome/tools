@@ -337,7 +337,9 @@ function buildJSHandler(
 
         // Run the compiler in lint-mode which is where all the rules are actually ran
         const res = await compiler.lint({
-          options: {},
+          options: {
+            lint: options.compilerOptions,
+          },
           ast,
           project,
           sourceText,

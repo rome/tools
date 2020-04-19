@@ -7,7 +7,8 @@
 
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import {MasterRequest} from '@romejs/core';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import lint from './lint';
 import test from './test';
 import {Consumer} from '@romejs/consume';
@@ -40,6 +41,8 @@ type Flags = {
 export default createMasterCommand({
   category: commandCategories.CODE_QUALITY,
   description: 'run lint and tests',
+  usage: '',
+  examples: [],
 
   defineFlags(consumer: Consumer): Flags {
     return {
@@ -47,12 +50,13 @@ export default createMasterCommand({
     };
   },
 
-  async default(req: MasterRequest, flags: Flags): Promise<void> {
+  async callback(req: MasterRequest, flags: Flags): Promise<void> {
     const {reporter} = req;
 
     reporter.heading('Running lint');
     await runChildCommand(req, async () => {
-      await lint.default(req, {
+      await lint.callback(req, {
+        compilerOptionsPerFile: {},
         fix: flags.fix,
         changed: undefined,
       });
@@ -60,7 +64,7 @@ export default createMasterCommand({
 
     reporter.heading('Running tests');
     await runChildCommand(req, async () => {
-      await test.default(req, {
+      await test.callback(req, {
         coverage: true,
         freezeSnapshots: !flags.fix,
         updateSnapshots: flags.fix,

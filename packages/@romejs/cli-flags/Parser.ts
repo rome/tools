@@ -70,6 +70,8 @@ export default class Parser<T> {
     this.opts = opts;
 
     this.shorthandFlags = new Set();
+    this.incorrectCaseFlags = new Set();
+
     this.declaredFlags = new Map();
     this.defaultFlags = new Map();
     this.flags = new Map();
@@ -121,6 +123,7 @@ export default class Parser<T> {
   reporter: Reporter;
   opts: ParserOptions<T>;
 
+  incorrectCaseFlags: Set<string>;
   shorthandFlags: Set<string>;
   flags: Map<string, string | boolean>;
   defaultFlags: Map<string, unknown>;
@@ -139,6 +142,17 @@ export default class Parser<T> {
     return flag !== undefined && flag[0] === '-';
   }
 
+  toCamelCase(name: string): string {
+    const camelName = toCamelCase(name);
+
+    // Don't allow passing in straight camelcased names
+    if (toKebabCase(name) !== name) {
+      this.incorrectCaseFlags.add(name);
+    }
+
+    return camelName;
+  }
+
   consumeRawArgs(rawArgs: Array<string>) {
     while (rawArgs.length > 0) {
       const arg: string = String(rawArgs.shift());
@@ -153,50 +167,39 @@ export default class Parser<T> {
 
         // Flags beginning with no- are always false
         if (name.startsWith('no-')) {
-          this.flags.set(name.slice(3), false);
+          const camelName = this.toCamelCase(name.slice(3));
+          this.flags.set(camelName, false);
           continue;
         }
 
         // Allow for arguments to be passed as --foo=bar
         const equalsIndex = name.indexOf('=');
         if (equalsIndex !== -1) {
-          const cleanName = name.slice(0, equalsIndex);
+          const cleanName = this.toCamelCase(name.slice(0, equalsIndex));
           const value = name.slice(equalsIndex + 1);
           this.flags.set(cleanName, value);
           continue;
         }
 
+        const camelName = this.toCamelCase(name);
+
         // If the next argument is a flag or we're at the end of the args then just set it to `true`
         if (rawArgs.length === 0 || this.looksLikeFlag(rawArgs[0])) {
-          this.flags.set(name, true);
+          this.flags.set(camelName, true);
         } else {
           // Otherwise, take that value
-          this.flags.set(name, String(rawArgs.shift()));
+          this.flags.set(camelName, String(rawArgs.shift()));
         }
 
-        this.flagToArgIndex.set(name, this.args.length);
+        this.flagToArgIndex.set(camelName, this.args.length);
 
         if (arg[0] === '-' && arg[1] !== '-') {
-          this.shorthandFlags.add(name);
+          this.shorthandFlags.add(camelName);
         }
       } else {
         // Not a flag and hasn't been consumed already by a previous arg so it must be a file
         this.args.push(arg);
       }
-    }
-  }
-
-  setFlagAlias(key: string, alias: string) {
-    const value = this.flags.get(key);
-    if (value !== undefined) {
-      this.flags.delete(key);
-      this.flags.set(alias, value);
-    }
-
-    const argIndex = this.flagToArgIndex.get(key);
-    if (argIndex !== undefined) {
-      this.flagToArgIndex.set(alias, argIndex);
-      this.flagToArgIndex.delete(key);
     }
   }
 
@@ -227,6 +230,13 @@ export default class Parser<T> {
           valueConsumer.setValue('');
         }
 
+        this.declareArgument({
+          name: key,
+          command: this.currentCommand,
+          definition: def,
+        });
+        defaultFlags[key] = def.default;
+
         // We've parsed arguments like `--foo bar` as `{foo: 'bar}`
         // However, --foo may be a boolean flag, so `bar` needs to be correctly added to args
         if (def.type === 'boolean' && value !== true && value !== false &&
@@ -246,20 +256,19 @@ export default class Parser<T> {
           //
           valueConsumer.setValue(true);
         }
-
-        this.declareArgument({
-          name: key,
-          command: this.currentCommand,
-          definition: def,
-        });
-        defaultFlags[key] = def.default;
       },
 
       context: {
         category: 'flags/invalid',
+
+        normalizeKey: (key) => {
+          return this.incorrectCaseFlags.has(key) ? key : toKebabCase(key);
+        },
+
         getOriginalValue: (keys: ConsumePath) => {
           return flags[keys[0]];
         },
+
         getDiagnosticPointer: (
           keys: ConsumePath,
           target: ConsumeSourceLocationRequestTarget,
@@ -275,6 +284,7 @@ export default class Parser<T> {
             args: this.args,
             defaultFlags,
             flags,
+            incorrectCaseFlags: this.incorrectCaseFlags,
             shorthandFlags: this.shorthandFlags,
           }, {
             type: 'flag',
@@ -302,7 +312,6 @@ export default class Parser<T> {
     }
 
     // Declare argument
-    this.setFlagAlias(toKebabCase(key), key);
     this.declaredFlags.set(key, decl);
     this.defaultFlags.set(key, decl.definition.default);
   }
@@ -339,29 +348,48 @@ export default class Parser<T> {
 
     let definedCommand: undefined | DefinedCommand;
 
-    const rootFlags = await consumer.bufferDiagnostics(async (consumer) => {
-      for (const shorthandName of this.shorthandFlags) {
-        consumer.get(shorthandName).unexpected(
-          `Shorthand flags are not supported`,
-        );
-      }
-
-      const rootFlags = this.opts.defineFlags(consumer);
-
-      for (const key of this.commands.keys()) {
-        const defined = await this.maybeDefineCommand(key, consumer);
-        if (defined) {
-          this.currentCommand = key;
-          definedCommand = defined;
-          break;
+    const rootFlags = await consumer.bufferDiagnostics(
+      async (consumer) => {
+        for (const shorthandName of this.shorthandFlags) {
+          consumer.get(shorthandName).unexpected(
+            `Shorthand flags are not supported`,
+          );
         }
-      }
 
-      consumer.enforceUsedProperties('flag', false);
-      this.currentCommand = undefined;
+        for (const incorrectName of this.incorrectCaseFlags) {
+          consumer.get(incorrectName).unexpected(
+            `Incorrect cased flag name`,
+            {
+              advice: [
+                {
+                  type: 'log',
+                  category: 'info',
+                  message: markup`Use <emphasis>${toKebabCase(incorrectName)}</emphasis> instead`,
+                },
+              ],
+            },
+          );
+        }
 
-      return rootFlags;
-    });
+        const rootFlags = this.opts.defineFlags(consumer);
+
+        for (const key of this.commands.keys()) {
+          const defined = await this.maybeDefineCommand(key, consumer);
+          if (defined) {
+            this.currentCommand = key;
+            definedCommand = defined;
+            break;
+          }
+        }
+
+        if (!this.helpMode) {
+          consumer.enforceUsedProperties('flag', false);
+        }
+        this.currentCommand = undefined;
+
+        return rootFlags;
+      },
+    );
 
     // Show help for --help
     if (this.helpMode) {
@@ -518,15 +546,6 @@ export default class Parser<T> {
     }
 
     const {description, usage, examples, programName} = this.opts;
-
-    const {consumer} = this.getFlagsConsumer().capture();
-
-    // Supress diagnostics
-    await this.opts.defineFlags(consumer);
-
-    for (const key of this.commands.keys()) {
-      await this.defineCommandFlags(key, consumer);
-    }
 
     this.showUsageHelp(description, usage);
 
