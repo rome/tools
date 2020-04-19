@@ -79,9 +79,9 @@ export default class SnapshotManager {
     for (const filename of filenames) {
       const stats = await lstat(filename);
       if (stats.isFile() && filename.join().endsWith('.test.md')) {
-        await this.loadSnapshot(filename);
+        this.loadSnapshot(filename);
       } else if (stats.isDirectory()) {
-        await this.loadSnapshotFixtures(filename);
+        this.loadSnapshotFixtures(filename);
       }
     }
   }
@@ -89,12 +89,12 @@ export default class SnapshotManager {
   async load() {
     const {path: snapshotFile} = this;
     if (await exists(snapshotFile)) {
-      await this.loadSnapshot(snapshotFile);
+      this.loadSnapshot(snapshotFile);
     } else {
       // checks if there are fixtures and load them
       const fixtureDir = snapshotFile.getParent().append('test-fixtures');
       if (await exists(fixtureDir)) {
-        await this.loadSnapshotFixtures(fixtureDir);
+        this.loadSnapshotFixtures(fixtureDir);
       }
     }
   }
