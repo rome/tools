@@ -46,6 +46,9 @@ import {
 } from './types';
 import {percentInsideCoverageFolder, formatPercent, sortMapKeys} from './utils';
 import {escapeMarkup, markup} from '@romejs/string-markup';
+import {MAX_WORKER_COUNT} from '@romejs/core/common/constants';
+import {TestWorkerFlags} from '@romejs/core/test-worker/TestWorker';
+import net = require('net');
 
 class BridgeStructuredError extends NativeStructuredError {
   constructor(struct: Partial<StructuredError>, bridge: Bridge) {
@@ -60,6 +63,25 @@ function getProgressTestRefText(ref: TestRef) {
   return markup`<filelink target="${ref.filename}" />: ${escapeMarkup(
     ref.testName,
   )}`;
+}
+
+function findAvailablePort(): Promise<number> {
+  return new Promise((resolve, reject) => {
+    // When you create a server without specifying a port then the OS will choose a port number for you!
+    const server = net.createServer();
+    server.unref();
+    server.on('error', reject);
+    server.listen(undefined, () => {
+      const address = server.address();
+      if (address == null || typeof address === 'string') {
+        throw new Error('Invalid address value');
+      }
+
+      server.close(() => {
+        resolve(address.port);
+      });
+    });
+  });
 }
 
 export default class TestRunner {
@@ -221,10 +243,10 @@ export default class TestRunner {
     }
   }
 
-  async spawnWorker(): Promise<TestWorkerContainer> {
+  async spawnWorker(flags: TestWorkerFlags): Promise<TestWorkerContainer> {
     const proc = fork('test-worker', {
       stdio: 'pipe',
-    });
+    }, ['--inspector-port', String(flags.inspectorPort)]);
 
     const {stdout, stderr} = proc;
     if (stdout == null || stderr == null) {
@@ -283,7 +305,14 @@ export default class TestRunner {
   }
 
   async setupWorkers(): Promise<TestWorkerContainers> {
-    const containers: TestWorkerContainers = [await this.spawnWorker()];
+    // TODO some smarter logic. we may not need all these workers
+    const containerPromises: Array<Promise<TestWorkerContainer>> = [];
+    for (let i = 0; i < MAX_WORKER_COUNT; i++) {
+      const inspectorPort = await findAvailablePort();
+      containerPromises.push(this.spawnWorker({inspectorPort}));
+    }
+
+    const containers: TestWorkerContainers = await Promise.all(containerPromises);
 
     // Every 5 seconds, ping the worker and wait a max of 5 seconds, if we receive no response then consider the worker dead
     for (const container of containers) {
@@ -473,7 +502,7 @@ export default class TestRunner {
 
     const progress = this.request.reporter.progress({
       persistent: true,
-      title: 'Running tests',
+      title: 'Running',
     });
 
     for (let i = 0; i < workers.length; i++) {

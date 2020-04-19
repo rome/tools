@@ -976,6 +976,44 @@ export default class Consumer {
     return coerce1(this.asNumber());
   }
 
+  asNumberFromString(def?: number): number {
+    this.declareDefinition({
+      type: 'number',
+      default: def,
+      required: true,
+    });
+    return this._asNumberFromString(def);
+  }
+
+  asNumberFromStringOrVoid(def?: number): undefined | number {
+    this.declareDefinition({
+      type: 'number',
+      default: def,
+      required: false,
+    });
+
+    if (this.exists()) {
+      return this._asNumberFromString(def);
+    } else {
+      return undefined;
+    }
+  }
+
+  _asNumberFromString(def?: number): number {
+    if (def !== undefined && !this.exists()) {
+      return def;
+    }
+
+    const str = this._asString();
+    const num = Number(str);
+    if (isNaN(num)) {
+      this.unexpected('Expected valid number');
+      return NaN;
+    } else {
+      return num;
+    }
+  }
+
   asNumber(def?: number): number {
     this.declareDefinition({
       type: 'number',
