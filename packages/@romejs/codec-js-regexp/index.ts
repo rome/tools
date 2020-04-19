@@ -184,14 +184,9 @@ export const createRegExpParser = createParser(
               value: '\f',
             }, end);
 
-          case 'b':
-            return this.finishComplexToken('Character', {
-              escaped: false,
-              value: '\b',
-            }, end);
-
           case 'd':
           case 'D':
+          case 'b':
           case 'B':
           case 's':
           case 'S':
