@@ -23,6 +23,7 @@ import {
   DiagnosticsPrinter,
   DiagnosticsFileReader,
   readDiagnosticsFileLocal,
+  printDiagnostics,
 } from '@romejs/cli-diagnostics';
 import {consume, ConsumePath, Consumer} from '@romejs/consume';
 import {Event, EventSubscription} from '@romejs/events';
@@ -310,12 +311,16 @@ export default class Master {
     this.connectedReporters.error(
       'Generated diagnostics without a current request',
     );
-    const printer = new DiagnosticsPrinter({
-      reporter: this.connectedReporters,
-      readFile: this.readDiagnosticsPrinterFile.bind(this),
+
+    printDiagnostics({
+      diagnostics,
+      suppressions: [],
+      printerOptions: {
+        processor: this.createDiagnosticsProcessor(),
+        reporter: this.connectedReporters,
+        readFile: this.readDiagnosticsPrinterFile.bind(this),
+      },
     });
-    printer.addDiagnostics(diagnostics);
-    printer.print();
   }
 
   readDiagnosticsPrinterFile(
@@ -902,7 +907,7 @@ export default class Master {
           ],
         }),
       );
-      printer.addDiagnostics(diagnostics);
+      printer.processor.addDiagnostics(diagnostics);
       err = printer;
     }
 
@@ -938,7 +943,7 @@ export default class Master {
       category: 'internalError/request',
       error: err,
     });
-    printer.addDiagnostic({
+    printer.processor.addDiagnostic({
       ...errorDiag,
       description: {
         ...errorDiag.description,

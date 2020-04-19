@@ -21,10 +21,7 @@ import {
   ROME_CONFIG_FILENAMES,
   ProjectDefinition,
 } from '@romejs/project';
-import {
-  DiagnosticsProcessor,
-  getDiagnosticsFromError,
-} from '@romejs/diagnostics';
+import {DiagnosticsProcessor, catchDiagnostics} from '@romejs/diagnostics';
 import {Reporter} from '@romejs/cli-reporter';
 import {
   createWatchmanClient,
@@ -845,16 +842,14 @@ export default class MemoryFileSystem {
 
   // This is a wrapper around _declareManifest as it can produce diagnostics
   async declareManifest(opts: DeclareManifestOpts): Promise<undefined | string> {
-    try {
-      return await this._declareManifest(opts);
-    } catch (err) {
-      const diagnostics = getDiagnosticsFromError(err);
+    const {value, diagnostics} = await catchDiagnostics(() => {
+      return this._declareManifest(opts);
+    });
 
-      if (diagnostics === undefined) {
-        throw err;
-      } else {
-        opts.diagnostics.addDiagnostics(diagnostics);
-      }
+    if (diagnostics === undefined) {
+      return value;
+    } else {
+      opts.diagnostics.addDiagnostics(diagnostics);
       return undefined;
     }
   }

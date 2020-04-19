@@ -96,7 +96,7 @@ export default class TestRunner {
         ],
       }),
     );
-    this.printer.addDiagnostics(opts.addDiagnostics);
+    this.printer.processor.addDiagnostics(opts.addDiagnostics);
 
     // Add source maps
     for (const [filename, {code, sourceMap}] of opts.sources) {
@@ -191,7 +191,7 @@ export default class TestRunner {
     } catch (err) {
       if (err instanceof BridgeError || err instanceof BridgeStructuredError) {
         if (!this.ignoreBridgeEndError.has(err.bridge)) {
-          this.printer.addDiagnostic(deriveDiagnosticFromError({
+          this.printer.processor.addDiagnostic(deriveDiagnosticFromError({
             category: 'tests/timeout',
             error: err,
           }));
@@ -508,7 +508,7 @@ export default class TestRunner {
               error,
             });
 
-            this.printer.addDiagnostic({
+            this.printer.processor.addDiagnostic({
               ...errDiag,
 
               description: {
@@ -518,7 +518,7 @@ export default class TestRunner {
               },
             });
           } else {
-            this.printer.addDiagnostic({
+            this.printer.processor.addDiagnostic({
               label: ref.testName,
               description: descriptions.TESTS.CANCELLED,
               location: {
@@ -561,7 +561,7 @@ export default class TestRunner {
             progress.tick();
           }
 
-          this.printer.addDiagnostic(data.diagnostic, origin);
+          this.printer.processor.addDiagnostic(data.diagnostic, origin);
         },
       );
 

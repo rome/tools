@@ -11,11 +11,11 @@ import {
   Diagnostic,
   DiagnosticsError,
   DiagnosticLocation,
-  getDiagnosticsFromError,
   DiagnosticCategory,
   buildSuggestionAdvice,
   createBlessedDiagnosticMessage,
   createSingleDiagnosticError,
+  catchDiagnosticsSync,
 } from '@romejs/diagnostics';
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
@@ -143,16 +143,11 @@ export default class Consumer {
     if (this.handleUnexpected === undefined) {
       callback();
     } else {
-      try {
-        callback();
-      } catch (err) {
-        const diags = getDiagnosticsFromError(err);
-        if (diags === undefined) {
-          throw err;
-        } else {
-          for (const diag of diags) {
-            this.handleUnexpected(diag);
-          }
+      const {diagnostics} = catchDiagnosticsSync(callback);
+
+      if (diagnostics !== undefined) {
+        for (const diag of diagnostics) {
+          this.handleUnexpected(diag);
         }
       }
     }
