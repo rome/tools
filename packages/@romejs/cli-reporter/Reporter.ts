@@ -210,6 +210,29 @@ export default class Reporter {
     };
   }
 
+  attachCaptureStream(format: ReporterStream['format'] = 'none'): {
+    read: () => string;
+  } {
+    let buff = '';
+
+    this.addStream({
+      format,
+      type: 'all',
+      columns: Reporter.DEFAULT_COLUMNS,
+      unicode: true,
+
+      write(chunk) {
+        buff += chunk;
+      },
+    });
+
+    return {
+      read() {
+        return buff;
+      },
+    };
+  }
+
   static fromProcess(opts: ReporterOptions = {}): Reporter {
     const reporter = new Reporter({
       ...opts,

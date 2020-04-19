@@ -256,10 +256,7 @@ export default class WorkerAPI {
     }
 
     // Catch any diagnostics, in the case of syntax errors etc
-    const res = await catchDiagnostics({
-      category: 'lint',
-      message: 'Caught by WorkerAPI.lint',
-    }, () => {
+    const res = await catchDiagnostics(() => {
       if (lint === undefined) {
         return this._format(ref, parseOptions);
       } else {
@@ -272,6 +269,9 @@ export default class WorkerAPI {
           parseOptions,
         });
       }
+    }, {
+      category: 'lint',
+      message: 'Caught by WorkerAPI.lint',
     });
 
     // These are fatal diagnostics

@@ -9,12 +9,12 @@ import {UnknownObject} from '@romejs/typescript-helpers';
 import {
   DiagnosticAdvice,
   Diagnostic,
-  getDiagnosticsFromError,
   INTERNAL_ERROR_LOG_ADVICE,
   createSingleDiagnosticError,
   descriptions,
   createBlessedDiagnosticMessage,
   deriveDiagnosticFromError,
+  catchDiagnostics,
 } from '@romejs/diagnostics';
 import {
   TestCallback,
@@ -379,26 +379,9 @@ export default class TestWorkerRunner {
 
   async wrap(callback: () => Promise<void>): Promise<void> {
     try {
-      await callback();
-    } catch (err) {
-      const diagnostics = getDiagnosticsFromError(err);
-      if (diagnostics === undefined) {
-        this.onError(
-          undefined,
-          {
-            error: err,
-            firstAdvice: [],
-            lastAdvice: [
-              {
-                type: 'log',
-                category: 'info',
-                message: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
-              },
-              INTERNAL_ERROR_LOG_ADVICE,
-            ],
-          },
-        );
-      } else {
+      const {diagnostics} = await catchDiagnostics(callback);
+
+      if (diagnostics !== undefined) {
         for (const diagnostic of diagnostics) {
           await this.bridge.testError.call({
             ref: undefined,
@@ -406,6 +389,22 @@ export default class TestWorkerRunner {
           });
         }
       }
+    } catch (err) {
+      this.onError(
+        undefined,
+        {
+          error: err,
+          firstAdvice: [],
+          lastAdvice: [
+            {
+              type: 'log',
+              category: 'info',
+              message: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
+            },
+            INTERNAL_ERROR_LOG_ADVICE,
+          ],
+        },
+      );
     }
   }
 

@@ -21,62 +21,42 @@ export * from './constants';
 
 export * from './types';
 
-// Simple wrappers around DiagnosticsPrinter
-export async function printDiagnostics(
-  diagnostics: Diagnostics,
-  opts: DiagnosticsPrinterOptions,
-): Promise<DiagnosticsPrinter> {
-  const printer = new DiagnosticsPrinter(opts);
-  printer.addDiagnostics(diagnostics);
-  await printer.print();
-  return printer;
-}
-
-export function printDiagnosticsSync(
-  diagnostics: Diagnostics,
-  opts: DiagnosticsPrinterOptions,
-): DiagnosticsPrinter {
-  const printer = new DiagnosticsPrinter(opts);
-  printer.addDiagnostics(diagnostics);
-  printer.print();
-  return printer;
-}
-
-export function printDiagnosticsToString({
+export function printDiagnostics({
   diagnostics,
-  suppressions = [],
-  format = 'none',
-  printerOptions = {},
+  suppressions,
+  printerOptions,
+  excludeFooter,
 }: {
   diagnostics: Diagnostics;
-  suppressions?: DiagnosticSuppressions;
-  printerOptions?: Omit<DiagnosticsPrinterOptions, 'reporter'>;
-  format?: ReporterStream['format'];
-}): string {
-  let buff = '';
-
-  const reporter = new Reporter({
-    streams: [
-      {
-        type: 'all',
-        format,
-        unicode: true,
-        columns: 400,
-        write(chunk) {
-          buff += chunk;
-        },
-      },
-    ],
-  });
-
-  const printer = new DiagnosticsPrinter({
-    ...printerOptions,
-    reporter,
-  });
-
+  suppressions: DiagnosticSuppressions;
+  printerOptions: DiagnosticsPrinterOptions;
+  excludeFooter?: boolean;
+}): DiagnosticsPrinter {
+  const printer = new DiagnosticsPrinter(printerOptions);
+  printer.processor.addDiagnostics(diagnostics);
   printer.processor.addSuppressions(suppressions);
-  printer.addDiagnostics(diagnostics);
   printer.print();
-  printer.footer();
-  return buff;
+  if (!excludeFooter) {
+    printer.footer();
+  }
+  return printer;
+}
+
+export function printDiagnosticsToString(opts: {
+  diagnostics: Diagnostics;
+  suppressions: DiagnosticSuppressions;
+  printerOptions?: DiagnosticsPrinterOptions;
+  format?: ReporterStream['format'];
+  excludeFooter?: boolean;
+}): string {
+  const reporter = new Reporter();
+  const stream = reporter.attachCaptureStream(opts.format);
+  printDiagnostics({
+    ...opts,
+    printerOptions: {
+      reporter,
+      ...opts.printerOptions,
+    },
+  });
+  return stream.read();
 }
