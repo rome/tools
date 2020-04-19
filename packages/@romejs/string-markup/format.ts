@@ -233,9 +233,6 @@ export function markupToPlainText(
         case 'command':
           return `\`${value}\``;
 
-        case 'emphasis':
-          return `*${value}*`;
-
         case 'italic':
           return `_${value}_`;
 

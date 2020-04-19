@@ -6,34 +6,34 @@
 
 ```
 
- unknown:1:1 *lint/noDuplicateGroupNamesInRegularExpressions* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:1 lint/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  *✖ *Duplicate group name *month* in regular expression
-
-    /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/
-     *^^^^^^^^^^^^^^^* 
-
-  *ℹ *Defined already here
-
- unknown:1:17 *lint/noDuplicateGroupNamesInRegularExpressions* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  *✖ *Duplicate group name *year* in regular expression
+  ✖ Duplicate group name month in regular expression
 
     /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/
-                     *^^^^^^^^^^^^^^* 
+     ^^^^^^^^^^^^^^^ 
 
-  *ℹ *Defined already here
+  ℹ Defined already here
+
+ unknown:1:17 lint/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Duplicate group name year in regular expression
+
+    /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/
+                     ^^^^^^^^^^^^^^ 
+
+  ℹ Defined already here
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-*✖ *Found *2* problems
+✖ Found 2 problems
 
 ```
 
 ## `format disabled in project config should not regenerate the file`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 
@@ -42,7 +42,7 @@
 ### `0`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 

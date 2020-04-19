@@ -6,24 +6,24 @@
 
 ```
 
- unknown:1 *lint/noVar* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/noVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  *✖ *Variable declarations using `var` are disallowed, use `let` or `const` instead.
+  ✖ Variable declarations using `var` are disallowed, use `let` or `const` instead.
 
-  *> 1 │ *var foobar;
-     * │ **^^^^^^^^^^^* 
-  *  2 │ *foobar
+  > 1 │ var foobar;
+      │ ^^^^^^^^^^^ 
+    2 │ foobar
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-*✖ *Found *1* problem
+✖ Found 1 problem
 
 ```
 
 ## `format disabled in project config should not regenerate the file`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 
@@ -32,7 +32,7 @@
 ### `0`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 

@@ -8,32 +8,32 @@
 
 ```
 
- unknown:1:4 *lint/noMultipleSpacesInRegularExpressionLiterals* FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:4 lint/noMultipleSpacesInRegularExpressionLiterals FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  *✖ *Unclear multiple spaces in regular expression
+  ✖ Unclear multiple spaces in regular expression
 
     /foo  bar/
-        *^* 
+        ^ 
 
-  *ℹ *It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {3}/
+  ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {3}/
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-*✖ *Found *1* problem
+✖ Found 1 problem
 
 ```
 
 ### `1`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 
 ## `format disabled in project config should not regenerate the file`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 
@@ -42,7 +42,7 @@
 ### `0`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 

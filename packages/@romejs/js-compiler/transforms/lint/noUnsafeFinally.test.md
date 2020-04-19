@@ -8,20 +8,20 @@
 
 ```
 
- unknown:8:12 *lint/noUnsafeFinally* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:8:12 lint/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  *✖ *Unsafe usage of ReturnStatement.
+  ✖ Unsafe usage of ReturnStatement.
 
-  *   6 │ *            throw err;
-  *   7 │ *        } finally {
-  * > 8 │ *            return 1;
-      * │ *            *^^^^^^^^^* 
-  *   9 │ *        }
-  *  10 │ *      }
+     6 │             throw err;
+     7 │         } finally {
+   > 8 │             return 1;
+       │             ^^^^^^^^^ 
+     9 │         }
+    10 │       }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-*✖ *Found *1* problem
+✖ Found 1 problem
 
 ```
 
@@ -29,20 +29,20 @@
 
 ```
 
- unknown:8:12 *lint/noUnsafeFinally* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:8:12 lint/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  *✖ *Unsafe usage of BreakStatement.
+  ✖ Unsafe usage of BreakStatement.
 
-  *   6 │ *            throw err;
-  *   7 │ *        } finally {
-  * > 8 │ *            break;
-      * │ *            *^^^^^^* 
-  *   9 │ *        }
-  *  10 │ *      }
+     6 │             throw err;
+     7 │         } finally {
+   > 8 │             break;
+       │             ^^^^^^ 
+     9 │         }
+    10 │       }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-*✖ *Found *1* problem
+✖ Found 1 problem
 
 ```
 
@@ -50,20 +50,20 @@
 
 ```
 
- unknown:8:12 *lint/noUnsafeFinally* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:8:12 lint/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  *✖ *Unsafe usage of ContinueStatement.
+  ✖ Unsafe usage of ContinueStatement.
 
-  *   6 │ *            throw err;
-  *   7 │ *        } finally {
-  * > 8 │ *            continue;
-      * │ *            *^^^^^^^^^* 
-  *   9 │ *        }
-  *  10 │ *      }
+     6 │             throw err;
+     7 │         } finally {
+   > 8 │             continue;
+       │             ^^^^^^^^^ 
+     9 │         }
+    10 │       }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-*✖ *Found *1* problem
+✖ Found 1 problem
 
 ```
 
@@ -71,27 +71,27 @@
 
 ```
 
- unknown:8:12 *lint/noUnsafeFinally* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:8:12 lint/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  *✖ *Unsafe usage of ThrowStatement.
+  ✖ Unsafe usage of ThrowStatement.
 
-  *   6 │ *            throw err;
-  *   7 │ *        } finally {
-  * > 8 │ *            throw new Error("Finally");
-      * │ *            *^^^^^^^^^^^^^^^^^^^^^^^^^^^* 
-  *   9 │ *        }
-  *  10 │ *      }
+     6 │             throw err;
+     7 │         } finally {
+   > 8 │             throw new Error("Finally");
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+     9 │         }
+    10 │       }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-*✖ *Found *1* problem
+✖ Found 1 problem
 
 ```
 
 ## `format disabled in project config should not regenerate the file`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 
@@ -100,7 +100,7 @@
 ### `0`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 
