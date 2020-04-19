@@ -81,12 +81,6 @@ function formatReduceFromChildren(
       attributes.delete('dim');
 
       const applyTags: Array<TagNode> = [];
-      if (attributes.size > 0 || attributes.size === 0 && !shouldIgnoreTag(
-          child.name,
-          opts,
-        )) {
-        applyTags.push(child);
-      }
       if (emphasis) {
         applyTags.push({
           type: 'Tag',
@@ -102,6 +96,12 @@ function formatReduceFromChildren(
           attributes: EMPTY_ATTRIBUTES,
           children: [],
         });
+      }
+      if (attributes.size > 0 || attributes.size === 0 && !shouldIgnoreTag(
+          child.name,
+          opts,
+        )) {
+        applyTags.push(child);
       }
 
       let res = formatReduceFromChildren(child.children, {
@@ -232,9 +232,6 @@ export function markupToPlainText(
 
         case 'command':
           return `\`${value}\``;
-
-        case 'emphasis':
-          return `*${value}*`;
 
         case 'italic':
           return `_${value}_`;

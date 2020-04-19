@@ -6,27 +6,27 @@
 
 ```
 
- unknown:3:4 *lint/duplicateImportSource* FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:4 lint/duplicateImportSource FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  *✖ *This module has already been imported
+  ✖ This module has already been imported
 
-  *  2 │ *    import foo from './testdummy.ts';
-  *> 3 │ *    import {bar} from './testdummy.ts';
-     * │ *    *^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^* 
-  *  4 │ *    import type {fooType} from './testdummy.ts';
+    2 │     import foo from './testdummy.ts';
+  > 3 │     import {bar} from './testdummy.ts';
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+    4 │     import type {fooType} from './testdummy.ts';
 
-  *ℹ *Previously imported here
+  ℹ Previously imported here
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-*✖ *Found *1* problem
+✖ Found 1 problem
 
 ```
 
 ## `format disabled in project config should not regenerate the file`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 
@@ -35,7 +35,7 @@
 ### `0`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 

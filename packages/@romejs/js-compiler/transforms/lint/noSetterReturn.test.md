@@ -5,7 +5,7 @@
 ## `format disabled in project config should not regenerate the file`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 
@@ -14,7 +14,7 @@
 ### `0`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 
@@ -31,20 +31,20 @@ foobar('yes');
 
 ```
 
- unknown:5:10 *lint/noSetterReturn* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:5:10 lint/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  *✖ *Setter cannot return a value
+  ✖ Setter cannot return a value
 
-  *  3 │ *      set name(value) {
-  *  4 │ *        if (!value) {
-  *> 5 │ *          return 'wrong';
-     * │ *          *^^^^^^^^^^^^^^^* 
-  *  6 │ *        }
-  *  7 │ *      }
+    3 │       set name(value) {
+    4 │         if (!value) {
+  > 5 │           return 'wrong';
+      │           ^^^^^^^^^^^^^^^ 
+    6 │         }
+    7 │       }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-*✖ *Found *1* problem
+✖ Found 1 problem
 
 ```
 
@@ -52,20 +52,20 @@ foobar('yes');
 
 ```
 
- unknown:5:10 *lint/noSetterReturn* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:5:10 lint/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  *✖ *Setter cannot return a value
+  ✖ Setter cannot return a value
 
-  *  3 │ *      static set name(value) {
-  *  4 │ *        if (!value) {
-  *> 5 │ *          return 'wrong';
-     * │ *          *^^^^^^^^^^^^^^^* 
-  *  6 │ *        }
-  *  7 │ *      }
+    3 │       static set name(value) {
+    4 │         if (!value) {
+  > 5 │           return 'wrong';
+      │           ^^^^^^^^^^^^^^^ 
+    6 │         }
+    7 │       }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-*✖ *Found *1* problem
+✖ Found 1 problem
 
 ```
 
@@ -73,26 +73,26 @@ foobar('yes');
 
 ```
 
- unknown:5:10 *lint/noSetterReturn* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:5:10 lint/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  *✖ *Setter cannot return a value
+  ✖ Setter cannot return a value
 
-  *  3 │ *      set name(value) {
-  *  4 │ *        if (!value) {
-  *> 5 │ *          return 'wrong';
-     * │ *          *^^^^^^^^^^^^^^^* 
-  *  6 │ *        }
-  *  7 │ *      }
+    3 │       set name(value) {
+    4 │         if (!value) {
+  > 5 │           return 'wrong';
+      │           ^^^^^^^^^^^^^^^ 
+    6 │         }
+    7 │       }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-*✖ *Found *1* problem
+✖ Found 1 problem
 
 ```
 
 ### `3`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```

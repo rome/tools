@@ -5,7 +5,7 @@
 ## `format disabled in project config should not regenerate the file`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 
@@ -14,7 +14,7 @@
 ### `0`
 
 ```
-*✔ *No known problems!
+✔ No known problems!
 
 ```
 
@@ -29,20 +29,20 @@ foobar('yes');
 
 ```
 
- unknown:3:4 *lint/noDuplicateKeys* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:4 lint/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  *✖ *Duplicate key *test*
+  ✖ Duplicate key test
 
-  *  2 │ *  const foo = {
-  *> 3 │ *    test: true,
-     * │ *    *^^^^^^^^^^* 
-  *  4 │ *    test2: true,
-  *  5 │ *    test: false,
+    2 │   const foo = {
+  > 3 │     test: true,
+      │     ^^^^^^^^^^ 
+    4 │     test2: true,
+    5 │     test: false,
 
-  *ℹ *Defined already here
+  ℹ Defined already here
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-*✖ *Found *1* problem
+✖ Found 1 problem
 
 ```
