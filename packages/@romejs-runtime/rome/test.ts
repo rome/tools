@@ -37,7 +37,12 @@ export interface TestHelper {
   regex(contents: string, regex: RegExp, message?: string): void;
   notRegex(contents: string, regex: RegExp, message?: string): void;
   snapshot(expected: unknown, message?: string, fileName?: string): string;
-  snapshotNamed(name: string, expected: unknown, message?: string, fileName?: string): string;
+  snapshotNamed(
+    name: string,
+    expected: unknown,
+    message?: string,
+    fileName?: string,
+  ): string;
   getSnapshot(snapshotName: string): unknown;
 }
 

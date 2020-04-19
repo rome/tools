@@ -24,8 +24,7 @@ import {
   SyncThrower,
   ExpectedError,
 } from '@romejs-runtime/rome/test';
-import { maybeCreateAbsoluteFilePath, createAbsoluteFilePath } from '@romejs/path';
-import { existsSync } from '@romejs/fs';
+import {createAbsoluteFilePath} from '@romejs/path';
 
 function formatExpectedError(expected: ExpectedError): string {
   if (typeof expected === 'string') {
@@ -435,7 +434,12 @@ export default class TestAPI implements TestHelper {
     return this._snapshotNamed(String(id), expected, message, 2, fileName);
   }
 
-  snapshotNamed(name: string, expected: unknown, message?: string, fileName?: string): string {
+  snapshotNamed(
+    name: string,
+    expected: unknown,
+    message?: string,
+    fileName?: string,
+  ): string {
     return this._snapshotNamed(name, expected, message, 1, fileName);
   }
 
@@ -443,15 +447,12 @@ export default class TestAPI implements TestHelper {
     return this.snapshotManager.get(this.testName, snapshotName);
   }
 
-  getOptions(): TestRunnerOptions {
-    return this.options;
-  }
-
   _normalizeFileName(fileName: string): string {
     if (!fileName.endsWith('test.md')) {
       const lastIndex = fileName.lastIndexOf('.');
       let baseName = undefined;
-      if (lastIndex === - 1) { // extensionless file
+      if (lastIndex === -1) {
+        // extensionless file
         baseName = fileName;
       } else {
         baseName = fileName.substring(0, lastIndex);
@@ -483,9 +484,13 @@ export default class TestAPI implements TestHelper {
       fileName = this._normalizeFileName(fileName);
       snapshotFile = createAbsoluteFilePath(fileName);
     }
-  
+
     // Get the current snapshot
-    const existingSnapshot = this.snapshotManager.get(this.testName, name, snapshotFile);
+    const existingSnapshot = this.snapshotManager.get(
+      this.testName,
+      name,
+      snapshotFile,
+    );
     if (existingSnapshot === undefined) {
       // No snapshot exists, let's save this one!
       this.snapshotManager.set({

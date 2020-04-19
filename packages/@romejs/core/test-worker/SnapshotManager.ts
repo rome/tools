@@ -5,8 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath, AbsoluteFilePathSet, createAbsoluteFilePath} from '@romejs/path';
-import {writeFile, readFileText, exists, unlink, readdir, lstat} from '@romejs/fs';
+import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
+import {
+  writeFile,
+  readFileText,
+  exists,
+  unlink,
+  readdir,
+  lstat,
+} from '@romejs/fs';
 import {TestRunnerOptions} from '../master/testing/types';
 import TestWorkerRunner from './TestWorkerRunner';
 import {descriptions, DiagnosticDescription} from '@romejs/diagnostics';
@@ -25,8 +32,8 @@ function cleanHeading(key: string): string {
 }
 
 type SnapshotEntry = Map<string, Map<string, {
-    language: undefined | string;
-    value: string;
+  language: undefined | string;
+  value: string;
 }>>;
 
 export default class SnapshotManager {
@@ -80,13 +87,13 @@ export default class SnapshotManager {
   }
 
   async load() {
-    const { path: snapshotFile } = this;
-    if ((await exists(snapshotFile))) {
+    const {path: snapshotFile} = this;
+    if (await exists(snapshotFile)) {
       await this.loadSnapshot(snapshotFile);
     } else {
       // checks if there are fixtures and load them
       const fixtureDir = snapshotFile.getParent().append('test-fixtures');
-      if ((await exists(fixtureDir))) {
+      if (await exists(fixtureDir)) {
         await this.loadSnapshotFixtures(fixtureDir);
       }
     }
@@ -234,7 +241,6 @@ export default class SnapshotManager {
   }
 
   async save() {
-
     // If there'a s focused test then we don't write or validate a snapshot
     if (this.runner.hasFocusedTest) {
       return;
@@ -280,13 +286,17 @@ export default class SnapshotManager {
     }
   }
 
-  get(testName: string, snapshotName: string, snapshotFile?: AbsoluteFilePath): undefined | string {
+  get(
+    testName: string,
+    snapshotName: string,
+    snapshotFile?: AbsoluteFilePath,
+  ): undefined | string {
     if (snapshotFile === undefined) {
       snapshotFile = this.path;
     }
-    const entriesByFiles = this.entries.get(snapshotFile.join());
-    if (entriesByFiles !== undefined) {
-      const entries = entriesByFiles.get(testName);
+    const snapshotsForFile = this.entries.get(snapshotFile.join());
+    if (snapshotsForFile !== undefined) {
+      const entries = snapshotsForFile.get(testName);
       if (entries !== undefined) {
         const entry = entries.get(snapshotName);
         if (entry !== undefined) {
@@ -327,7 +337,7 @@ export default class SnapshotManager {
     }
 
     entries.set(snapshotName, {value, language});
-    
+
     if (!this.outputFiles.has(snapshotFileName)) {
       this.outputFiles.set(snapshotFileName, snapshotFile);
     }
