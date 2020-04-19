@@ -24,6 +24,8 @@ import {
   SyncThrower,
   ExpectedError,
 } from '@romejs-runtime/rome/test';
+import { maybeCreateAbsoluteFilePath, createAbsoluteFilePath } from '@romejs/path';
+import { existsSync } from '@romejs/fs';
 
 function formatExpectedError(expected: ExpectedError): string {
   if (typeof expected === 'string') {
@@ -428,13 +430,13 @@ export default class TestAPI implements TestHelper {
     throw new Error('unimplemented');
   }
 
-  snapshot(expected: unknown, message?: string): string {
+  snapshot(expected: unknown, message?: string, fileName?: string): string {
     const id = this.snapshotCounter++;
-    return this._snapshotNamed(String(id), expected, message, 2);
+    return this._snapshotNamed(String(id), expected, message, 2, fileName);
   }
 
-  snapshotNamed(name: string, expected: unknown, message?: string): string {
-    return this._snapshotNamed(name, expected, message, 1);
+  snapshotNamed(name: string, expected: unknown, message?: string, fileName?: string): string {
+    return this._snapshotNamed(name, expected, message, 1, fileName);
   }
 
   getSnapshot(snapshotName: string): unknown {
@@ -445,11 +447,26 @@ export default class TestAPI implements TestHelper {
     return this.options;
   }
 
+  _normalizeFileName(fileName: string): string {
+    if (!fileName.endsWith('test.md')) {
+      const lastIndex = fileName.lastIndexOf('.');
+      let baseName = undefined;
+      if (lastIndex === - 1) { // extensionless file
+        baseName = fileName;
+      } else {
+        baseName = fileName.substring(0, lastIndex);
+      }
+      return `${baseName}.test.md`;
+    }
+    return fileName;
+  }
+
   _snapshotNamed(
     name: string,
     expected: unknown,
     message?: string,
     framesToPop?: number,
+    fileName?: string,
   ): string {
     let language: undefined | string;
 
@@ -461,8 +478,14 @@ export default class TestAPI implements TestHelper {
       formatted = prettyFormat(expected);
     }
 
+    let snapshotFile = undefined;
+    if (fileName !== undefined) {
+      fileName = this._normalizeFileName(fileName);
+      snapshotFile = createAbsoluteFilePath(fileName);
+    }
+  
     // Get the current snapshot
-    const existingSnapshot = this.snapshotManager.get(this.testName, name);
+    const existingSnapshot = this.snapshotManager.get(this.testName, name, snapshotFile);
     if (existingSnapshot === undefined) {
       // No snapshot exists, let's save this one!
       this.snapshotManager.set({
@@ -470,6 +493,7 @@ export default class TestAPI implements TestHelper {
         snapshotName: String(name),
         value: formatted,
         language,
+        snapshotFile,
       });
       return name;
     }
