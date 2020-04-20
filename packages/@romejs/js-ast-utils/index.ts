@@ -27,6 +27,7 @@ export {default as renameBindings} from './renameBindings';
 export {default as template} from './template';
 export {default as isInTypeAnnotation} from './isInTypeAnnotation';
 export {default as removeLoc} from './removeLoc';
+export {default as removeShallowLoc} from './removeShallowLoc';
 export {default as inheritLoc} from './inheritLoc';
 export {default as getRequireSource} from './getRequireSource';
 export {default as isIdentifierish} from './isIdentifierish';
