@@ -53,6 +53,21 @@ async function exec(command: string, args: Array<string>): Promise<string> {
     );
 }
 
+function extractFileList(out: string): Array<string> {
+  const lines = out.trim().split('\n');
+
+  const files: Array<string> = [];
+
+  for (const line of lines) {
+    const match = line.match(/^[AM]\s+(.*?)$/);
+    if (match != null) {
+      files.push(match[1]);
+    }
+  }
+
+  return files;
+}
+
 export class VCSClient {
   constructor(root: AbsoluteFilePath) {
     this.root = root;
@@ -65,6 +80,10 @@ export class VCSClient {
   getModifiedFiles(branch: string): Promise<Array<string>> {
     throw new Error('unimplemented');
   }
+
+  getUncommittedFiles(): Promise<Array<string>> {
+    throw new Error('unimplemented');
+  }
 }
 
 class GitVCSClient extends VCSClient {
@@ -73,20 +92,14 @@ class GitVCSClient extends VCSClient {
     this.trunkBranch = 'master';
   }
 
+  async getUncommittedFiles(): Promise<Array<string>> {
+    const out = await exec('git', ['status', '--short']);
+    return extractFileList(out);
+  }
+
   async getModifiedFiles(branch: string): Promise<Array<string>> {
     const out = await exec('git', ['diff', '--name-status', branch]);
-    const lines = out.trim().split('\n');
-
-    const files: Array<string> = [];
-
-    for (const line of lines) {
-      const match = line.match(/^[AM]\s+(.*?)$/);
-      if (match != null) {
-        files.push(match[1]);
-      }
-    }
-
-    return files;
+    return extractFileList(out);
   }
 }
 

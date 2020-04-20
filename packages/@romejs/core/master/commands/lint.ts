@@ -17,6 +17,10 @@ export default createMasterCommand<LintCommandFlags>({
   async callback(req: MasterRequest, flags: LintCommandFlags): Promise<void> {
     const {reporter} = req;
 
+    if (req.query.requestFlags.review || flags.fix) {
+      await req.assertCleanVSC();
+    }
+
     const fixLocation = flags.fix === false
       ? undefined
       : req.getDiagnosticPointerFromFlags({
@@ -30,9 +34,7 @@ export default createMasterCommand<LintCommandFlags>({
       // No arguments expected when using this flag
       req.expectArgumentLength(0);
 
-      const client = await req.master.projectManager.getVCSClient(
-        await req.assertClientCwdProject(),
-      );
+      const client = await req.getVCSClient();
       const target = flags.changed === '' ? client.trunkBranch : flags.changed;
       args = await client.getModifiedFiles(target);
 

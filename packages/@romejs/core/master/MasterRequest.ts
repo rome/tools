@@ -17,9 +17,10 @@ import {
   DiagnosticsError,
   DiagnosticCategory,
   Diagnostic,
-  createBlessedDiagnosticMessage,
   DiagnosticsProcessor,
   Diagnostics,
+  DiagnosticDescription,
+  descriptions,
 } from '@romejs/diagnostics';
 import {
   DiagnosticsPrinterFlags,
@@ -76,6 +77,7 @@ import {
   DiagnosticsProcessorOptions,
 } from '@romejs/diagnostics/DiagnosticsProcessor';
 import {JSONObject} from '@romejs/codec-json';
+import {VCSClient} from '@romejs/vcs';
 
 type MasterRequestOptions = {
   master: Master;
@@ -116,7 +118,14 @@ export type MasterRequestGetFilesResult = {
   paths: AbsoluteFilePathSet;
 };
 
-export class MasterRequestInvalid extends DiagnosticsError {}
+export class MasterRequestInvalid extends DiagnosticsError {
+  constructor(message: string, diagnostics: Diagnostics, showHelp: boolean) {
+    super(message, diagnostics);
+    this.showHelp = showHelp;
+  }
+
+  showHelp: boolean;
+}
 
 function hash(val: JSONObject): string {
   return val === undefined || Object.keys(val).length === 0
@@ -201,6 +210,7 @@ export default class MasterRequest {
           res = {
             type: 'INVALID_REQUEST',
             diagnostics: [],
+            showHelp: res.showHelp,
           };
         }
       }
@@ -230,6 +240,38 @@ export default class MasterRequest {
       this.client.flags.cwd,
       location,
     );
+  }
+
+  async getVCSClient(): Promise<VCSClient> {
+    return this.master.projectManager.getVCSClient(
+      await this.assertClientCwdProject(),
+    );
+  }
+
+  async maybeGetVCSClient(): Promise<undefined | VCSClient> {
+    return this.master.projectManager.maybeGetVCSClient(
+      await this.assertClientCwdProject(),
+    );
+  }
+
+  async assertCleanVSC() {
+    if (this.query.requestFlags.allowDirty) {
+      return;
+    }
+
+    const vsc = await this.maybeGetVCSClient();
+    if (vsc === undefined) {
+      return;
+    }
+
+    const files = await vsc.getUncommittedFiles();
+    if (files.length > 0) {
+      this.throwDiagnosticFlagError({
+        description: descriptions.FLAGS.DIRTY_VSC(files),
+        target: {type: 'command'},
+        showHelp: false,
+      });
+    }
   }
 
   createDiagnosticsProcessor(
@@ -299,41 +341,44 @@ export default class MasterRequest {
     }
 
     if (message !== undefined) {
-      this.throwDiagnosticFlagError(excessive
-        ? 'Too many arguments'
-        : 'Missing arguments', {
-        type: 'arg-range',
-        from: min,
-        to: max,
-      }, [
-        {
-          type: 'log',
-          category: 'info',
-          message,
+      this.throwDiagnosticFlagError({
+        target: {
+          type: 'arg-range',
+          from: min,
+          to: max,
         },
-      ]);
+        description: descriptions.FLAGS.INCORRECT_ARG_COUNT(excessive, message),
+      });
     }
   }
 
-  throwDiagnosticFlagError(
-    message: string,
-    target: SerializeCLITarget = {type: 'none'},
-    advice?: DiagnosticAdvice,
-  ) {
+  throwDiagnosticFlagError({
+    description,
+    target = {type: 'none'},
+    showHelp = true,
+  }: {
+    description: RequiredProps<Partial<DiagnosticDescription>, 'message'>;
+    target?: SerializeCLITarget;
+    showHelp?: boolean;
+  }) {
     const location = this.getDiagnosticPointerFromFlags(target);
+
+    let {category} = description;
+    if (category === undefined) {
+      category = target.type === 'arg' || target.type === 'arg-range'
+        ? 'args/invalid'
+        : 'flags/invalid';
+    }
 
     const diag: Diagnostic = {
       description: {
-        message: createBlessedDiagnosticMessage(message),
-        category: target.type === 'arg' || target.type === 'arg-range'
-          ? 'args/invalid'
-          : 'flags/invalid',
-        advice,
+        ...description,
+        category,
       },
       location,
     };
 
-    throw new MasterRequestInvalid(message, [diag]);
+    throw new MasterRequestInvalid(description.message.value, [diag], showHelp);
   }
 
   getDiagnosticPointerForClientCwd(): DiagnosticLocation {
@@ -354,22 +399,31 @@ export default class MasterRequest {
     };
   }
 
+  getDefaultFlags(): Dict<unknown> {
+    return {
+      ...DEFAULT_CLIENT_FLAGS,
+      ...DEFAULT_CLIENT_REQUEST_FLAGS,
+      ...this.normalizedCommandFlags.defaultFlags,
+      clientName: this.client.flags.clientName,
+    };
+  }
+
+  getFlags(): Dict<unknown> {
+    return ({
+      ...this.client.flags,
+      ...this.query.requestFlags,
+      ...this.normalizedCommandFlags.flags,
+    } as Dict<unknown>);
+  }
+
   getDiagnosticPointerFromFlags(target: SerializeCLITarget): DiagnosticLocation {
     const {query} = this;
     return serializeCLIFlags({
-      prefix: `rome ${query.commandName}`,
-      flags: ({
-        ...this.client.flags,
-        ...query.requestFlags,
-        ...this.normalizedCommandFlags.flags,
-      } as Dict<unknown>),
+      programName: 'rome',
+      commandName: query.commandName,
+      flags: this.getFlags(),
       args: query.args,
-      defaultFlags: {
-        ...DEFAULT_CLIENT_FLAGS,
-        ...DEFAULT_CLIENT_REQUEST_FLAGS,
-        ...this.normalizedCommandFlags.defaultFlags,
-        clientName: this.client.flags.clientName,
-      },
+      defaultFlags: this.getDefaultFlags(),
       incorrectCaseFlags: new Set(),
       shorthandFlags: new Set(),
     }, target);
@@ -688,10 +742,8 @@ export default class MasterRequest {
             marker: `<filelink target="${path.join()}" />`,
           },
           description: {
+            ...descriptions.FLAGS.NO_FILES_FOUND(opts.noun),
             category,
-            message: createBlessedDiagnosticMessage(opts.noun === undefined
-              ? 'No files found'
-              : `No files to ${opts.noun} found`),
             advice,
           },
         });

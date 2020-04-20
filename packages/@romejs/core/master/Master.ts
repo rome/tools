@@ -17,6 +17,7 @@ import {
   getDiagnosticsFromError,
   deriveDiagnosticFromError,
   DiagnosticsProcessor,
+  descriptions,
 } from '@romejs/diagnostics';
 import {MasterCommand, masterCommands} from './commands';
 import {
@@ -25,7 +26,7 @@ import {
   readDiagnosticsFileLocal,
   printDiagnostics,
 } from '@romejs/cli-diagnostics';
-import {consume, ConsumePath, Consumer} from '@romejs/consume';
+import {consume, ConsumePath} from '@romejs/consume';
 import {Event, EventSubscription} from '@romejs/events';
 import MasterRequest, {MasterRequestInvalid} from './MasterRequest';
 import ProjectManager from './project/ProjectManager';
@@ -35,7 +36,6 @@ import FileAllocator from './fs/FileAllocator';
 import Logger from '../common/utils/Logger';
 import MemoryFileSystem from './fs/MemoryFileSystem';
 import Cache from './Cache';
-
 import {Reporter, ReporterStream} from '@romejs/cli-reporter';
 import {Profiler} from '@romejs/v8';
 import {
@@ -99,38 +99,44 @@ export type MasterMarker = MasterUnfinishedMarker & {
   end: number;
 };
 
-function validateRequestFlags(
+const disallowedFlagsWhenReviewing: Array<keyof ClientRequestFlags> = ['watch'];
+
+async function validateRequestFlags(
+  req: MasterRequest,
   masterCommand: MasterCommand<Dict<unknown>>,
-  flagsConsumer: Consumer,
 ) {
+  const {requestFlags} = req.query;
+
   // Commands need to explicitly allow these flags
-  validateAllowedRequestFlag('watch', masterCommand, flagsConsumer);
-  validateAllowedRequestFlag('review', masterCommand, flagsConsumer);
+  validateAllowedRequestFlag(req, 'watch', masterCommand);
+  validateAllowedRequestFlag(req, 'review', masterCommand);
+  validateAllowedRequestFlag(req, 'allowDirty', masterCommand);
 
   // Don't allow review in combination with other flags
-  if (flagsConsumer.has('review')) {
-    const disallowedFlagsWhenReviewing = ['watch'];
+  if (requestFlags.review) {
     for (const key of disallowedFlagsWhenReviewing) {
-      if (flagsConsumer.has(key)) {
-        throw flagsConsumer.get(key).unexpected(
-            `Flag <emphasis>${key}</emphasis> is not allowed with <emphasis>${key}</emphasis>`,
-          );
+      if (requestFlags[key]) {
+        throw req.throwDiagnosticFlagError({
+          description: descriptions.FLAGS.DISALLOWED_REVIEW_FLAG(key),
+          target: {type: 'flag', key},
+        });
       }
     }
   }
 }
 
 function validateAllowedRequestFlag(
+  req: MasterRequest,
   flagKey: NonNullable<MasterCommand<Dict<unknown>>['allowRequestFlags']>[number],
 
   masterCommand: MasterCommand<Dict<unknown>>,
-  flagsConsumer: Consumer,
 ) {
   const allowRequestFlags = masterCommand.allowRequestFlags || [];
-  if (flagsConsumer.has(flagKey) && !allowRequestFlags.includes(flagKey)) {
-    throw flagsConsumer.unexpected(
-      `This command does not support the <emphasis>${flagKey}</emphasis> flag`,
-    );
+  if (req.query.requestFlags && !allowRequestFlags.includes(flagKey)) {
+    throw req.throwDiagnosticFlagError({
+      description: descriptions.FLAGS.DISALLOWED_REQUEST_FLAG(flagKey),
+      target: {type: 'flag', key: flagKey},
+    });
   }
 }
 
@@ -774,16 +780,18 @@ export default class Master {
 
       // A type-safe wrapper for retrieving command flags
       // TODO perhaps present this as JSON or something if this isn't a request from the CLI?
-      const commandFlagsConsumer = consume({
+      const flagsConsumer = consume({
         filePath: createUnknownFilePath('argv'),
         parent: undefined,
         value: query.commandFlags,
+
         onDefinition(def) {
           // objectPath should only have a depth of 1
           defaultCommandFlags[def.objectPath[0]] = def.default;
         },
 
         objectPath: [],
+
         context: {
           category: 'flags/invalid',
 
@@ -823,11 +831,11 @@ export default class Master {
           this.warnedCacheClients.add(bridge);
         }
 
-        validateRequestFlags(masterCommand, commandFlagsConsumer);
+        await validateRequestFlags(req, masterCommand);
 
         let commandFlags;
         if (masterCommand.defineFlags !== undefined) {
-          commandFlags = masterCommand.defineFlags(commandFlagsConsumer);
+          commandFlags = masterCommand.defineFlags(flagsConsumer);
         }
 
         req.setNormalizedCommandFlags({
@@ -880,6 +888,7 @@ export default class Master {
           return {
             type: 'INVALID_REQUEST',
             diagnostics,
+            showHelp: err.showHelp,
           };
         } else {
           return {
@@ -917,7 +926,11 @@ export default class Master {
 
       // Only print when the bridge is alive and we aren't in review mode
       // When we're in review mode we don't expect to show any diagnostics because they'll be intercepted in the client command
-      if (req.bridge.alive && !req.query.requestFlags.review) {
+      // We will always print invalid request errors
+      const shouldPrint = req.bridge.alive && (rawErr instanceof
+        MasterRequestInvalid || !req.query.requestFlags.review);
+
+      if (shouldPrint) {
         printer.print();
 
         // Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
