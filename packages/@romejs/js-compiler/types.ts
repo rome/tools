@@ -88,7 +88,7 @@ export type LintCompilerOptions = {
 };
 
 export type LintCompilerOptionsDecision = {
-  action: 'suppress' | 'fix';
+  action: 'suppress' | 'fix' | 'ignore';
   category: DiagnosticCategory;
 };
 
