@@ -132,7 +132,7 @@ function validateAllowedRequestFlag(
   masterCommand: MasterCommand<Dict<unknown>>,
 ) {
   const allowRequestFlags = masterCommand.allowRequestFlags || [];
-  if (req.query.requestFlags && !allowRequestFlags.includes(flagKey)) {
+  if (req.query.requestFlags[flagKey] && !allowRequestFlags.includes(flagKey)) {
     throw req.throwDiagnosticFlagError({
       description: descriptions.FLAGS.DISALLOWED_REQUEST_FLAG(flagKey),
       target: {type: 'flag', key: flagKey},
