@@ -72,7 +72,7 @@ export default class ProgressBase implements ReporterProgress {
 
   getText(): undefined | string {
     const {text} = this;
-    if (text === undefined) {
+    if (text === undefined || text === '') {
       return undefined;
     } else {
       return this.reporter.stripMarkup(text);

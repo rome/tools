@@ -292,10 +292,7 @@ export default class DependencyGraph {
         return;
       }
 
-      const {diagnostics} = await catchDiagnostics({
-        category: 'DependencyGraph',
-        message: 'Caught by resolve',
-      }, async () => {
+      const {diagnostics} = await catchDiagnostics(async () => {
         const resolved = await master.resolver.resolveAssert({
           ...this.resolverOpts,
           origin,
@@ -310,6 +307,9 @@ export default class DependencyGraph {
         });
 
         node.addDependency(source, resolved.path, dep);
+      }, {
+        category: 'DependencyGraph',
+        message: 'Caught by resolve',
       });
 
       if (diagnostics !== undefined && !optional) {

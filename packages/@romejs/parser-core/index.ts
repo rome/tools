@@ -19,7 +19,6 @@ import {
   ComplexToken,
 } from './types';
 import {
-  getDiagnosticsFromError,
   createSingleDiagnosticError,
   Diagnostic,
   DiagnosticCategory,
@@ -27,6 +26,7 @@ import {
   DiagnosticsError,
   createBlessedDiagnosticMessage,
   descriptions,
+  catchDiagnosticsSync,
 } from '@romejs/diagnostics';
 import {
   Number1,
@@ -78,19 +78,19 @@ export function tryParseWithOptionalOffsetPosition<
   getOffsetPosition: () => Position;
   parse: (opts: Opts) => Ret;
 }): Ret {
-  try {
+  const {value} = catchDiagnosticsSync(() => {
     return opts.parse(parserOpts);
-  } catch (err) {
-    const diagnostics = getDiagnosticsFromError(err);
-    if (diagnostics === undefined) {
-      throw err;
-    } else {
-      opts.parse({
-        ...parserOpts,
-        offsetPosition: opts.getOffsetPosition(),
-      });
-      throw new Error('Expected error');
-    }
+  });
+
+  if (value === undefined) {
+    // Diagnostics must be present
+    opts.parse({
+      ...parserOpts,
+      offsetPosition: opts.getOffsetPosition(),
+    });
+    throw new Error('Expected error');
+  } else {
+    return value;
   }
 }
 
@@ -202,23 +202,22 @@ export class ParserCore<Tokens extends TokensShape, State> {
   // Run the tokenizer over all tokens
   tokenizeAll(): Array<TokenValues<Tokens>> {
     const tokens: Array<TokenValues<Tokens>> = [];
-    try {
+
+    const {diagnostics} = catchDiagnosticsSync(() => {
       while (!this.matchToken('EOF')) {
         tokens.push(this.getToken());
         this.nextToken();
       }
-    } catch (err) {
-      const diagnostics = getDiagnosticsFromError(err);
-      if (diagnostics === undefined) {
-        throw err;
-      } else {
-        tokens.push({
-          type: 'Invalid',
-          start: this.nextTokenIndex,
-          end: this.length,
-        });
-      }
+    });
+
+    if (diagnostics !== undefined) {
+      tokens.push({
+        type: 'Invalid',
+        start: this.nextTokenIndex,
+        end: this.length,
+      });
     }
+
     return tokens;
   }
 

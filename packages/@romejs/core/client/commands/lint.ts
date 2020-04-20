@@ -12,7 +12,7 @@ import {
   LintCompilerOptions,
   LintCompilerOptionsDecision,
 } from '@romejs/js-compiler';
-import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
+import {printDiagnostics} from '@romejs/cli-diagnostics';
 import {get1} from '@romejs/ob1';
 import {commandCategories} from '@romejs/core/common/commands';
 import {Consumer} from '@romejs/consume';
@@ -111,12 +111,14 @@ export default createLocalCommand<LintCommandFlags>(
 
         reporter.clearScreen();
 
-        // Print the diagnostic, fetch it's markup, then format it in the master, and print it out
-        const printer = new DiagnosticsPrinter({
-          reporter,
+        printDiagnostics({
+          diagnostics: [diag],
+          suppressions: [],
+          excludeFooter: true,
+          printerOptions: {
+            reporter,
+          },
         });
-        printer.addDiagnostic(diag);
-        printer.print();
 
         const answer = await reporter.radio(
           'How do you want to resolve this?',

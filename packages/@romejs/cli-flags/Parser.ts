@@ -661,7 +661,6 @@ export default class Parser<T> {
       );
     } else {
       // TODO command name is not sanitized for markup
-
       // TODO produce a diagnostic instead
       this.reporter.error(
         `Unknown command <emphasis>${this.args.join(' ')}</emphasis>. Run --help to see available commands.`,

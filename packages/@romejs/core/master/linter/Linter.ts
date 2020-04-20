@@ -494,7 +494,7 @@ export default class Linter {
 
         // Print all diagnostics
         for (const diagnostics of diagnosticsByFilename.values()) {
-          printer.addDiagnostics(diagnostics);
+          printer.processor.addDiagnostics(diagnostics);
         }
 
         if (watch) {

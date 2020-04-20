@@ -106,7 +106,7 @@ export default class WebRequest {
             ],
           }),
         );
-        printer.addDiagnostics(diagnostics);
+        printer.processor.addDiagnostics(diagnostics);
         await printer.print();
       } catch (err) {
         this.reporter.warn('Failed trying to print diagnostics');

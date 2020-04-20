@@ -11,11 +11,11 @@ import {
   Diagnostic,
   DiagnosticsError,
   DiagnosticLocation,
-  getDiagnosticsFromError,
   DiagnosticCategory,
   buildSuggestionAdvice,
   createBlessedDiagnosticMessage,
   createSingleDiagnosticError,
+  catchDiagnosticsSync,
 } from '@romejs/diagnostics';
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
@@ -143,16 +143,11 @@ export default class Consumer {
     if (this.handleUnexpected === undefined) {
       callback();
     } else {
-      try {
-        callback();
-      } catch (err) {
-        const diags = getDiagnosticsFromError(err);
-        if (diags === undefined) {
-          throw err;
-        } else {
-          for (const diag of diags) {
-            this.handleUnexpected(diag);
-          }
+      const {diagnostics} = catchDiagnosticsSync(callback);
+
+      if (diagnostics !== undefined) {
+        for (const diag of diagnostics) {
+          this.handleUnexpected(diag);
         }
       }
     }
@@ -979,6 +974,44 @@ export default class Consumer {
 
   asOneIndexedNumber(): Number1 {
     return coerce1(this.asNumber());
+  }
+
+  asNumberFromString(def?: number): number {
+    this.declareDefinition({
+      type: 'number',
+      default: def,
+      required: true,
+    });
+    return this._asNumberFromString(def);
+  }
+
+  asNumberFromStringOrVoid(def?: number): undefined | number {
+    this.declareDefinition({
+      type: 'number',
+      default: def,
+      required: false,
+    });
+
+    if (this.exists()) {
+      return this._asNumberFromString(def);
+    } else {
+      return undefined;
+    }
+  }
+
+  _asNumberFromString(def?: number): number {
+    if (def !== undefined && !this.exists()) {
+      return def;
+    }
+
+    const str = this._asString();
+    const num = Number(str);
+    if (isNaN(num)) {
+      this.unexpected('Expected valid number');
+      return NaN;
+    } else {
+      return num;
+    }
   }
 
   asNumber(def?: number): number {

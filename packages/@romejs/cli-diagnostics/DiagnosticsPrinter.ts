@@ -8,7 +8,6 @@
 import {
   Diagnostics,
   Diagnostic,
-  DiagnosticOrigin,
   DiagnosticLanguage,
   DiagnosticSourceType,
   DiagnosticAdvice,
@@ -375,18 +374,6 @@ export default class DiagnosticsPrinter extends Error {
         this.addFileSource(dep, stats);
       }
     }
-  }
-
-  addDiagnostic(partialDiagnostic: Diagnostic, origin?: DiagnosticOrigin) {
-    this.addDiagnostics([partialDiagnostic], origin);
-  }
-
-  addDiagnostics(partials: Diagnostics, origin?: DiagnosticOrigin) {
-    if (partials.length === 0) {
-      return;
-    }
-
-    this.processor.addDiagnostics(partials, origin);
   }
 
   print() {
