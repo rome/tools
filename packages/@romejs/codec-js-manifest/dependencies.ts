@@ -15,6 +15,7 @@ import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
 import {createUnknownFilePath, UnknownFilePath} from '@romejs/path';
 import {normalizeName} from './name';
 import {add} from '@romejs/ob1';
+import {descriptions} from '@romejs/diagnostics';
 
 export type DependencyPattern =
   | HostedGitPattern
@@ -77,7 +78,7 @@ function explodeHashUrl(pattern: string, consumer: Consumer): UrlWithHash {
   const parts = pattern.split('#');
 
   if (parts.length > 2) {
-    consumer.unexpected('Too many hashes');
+    consumer.unexpected(descriptions.MANIFEST.TOO_MANY_HASH_PARTS);
   }
 
   return {
@@ -131,18 +132,18 @@ function parseHostedGit(
 
   const parts = pattern.split('/');
   if (parts.length > 2) {
-    consumer.unexpected('Expected only 2 parts');
+    consumer.unexpected(descriptions.MANIFEST.TOO_MANY_HOSTED_GIT_PARTS);
   }
 
   let user = parts[0];
   if (user === undefined) {
-    consumer.unexpected('We are missing a user!');
+    consumer.unexpected(descriptions.MANIFEST.MISSING_HOSTED_GIT_USER);
     user = 'unknown';
   }
 
   let repo = parts[1];
   if (repo === undefined) {
-    consumer.unexpected('We are missing a repo!');
+    consumer.unexpected(descriptions.MANIFEST.MISSING_HOSTED_GIT_REPO);
     repo = 'unknown';
   }
 
@@ -297,7 +298,7 @@ function parseNpm(
   pattern = pattern.slice(NPM_PREFIX.length);
 
   if (pattern === '') {
-    consumer.unexpected('Missing rest of pattern');
+    consumer.unexpected(descriptions.MANIFEST.EMPTY_NPM_PATTERN);
     return {
       type: 'npm',
       name: 'unknown',
@@ -323,15 +324,14 @@ function parseNpm(
   rangeRaw = parts.shift();
 
   if (parts.length > 0) {
-    consumer.unexpected('Too many @ signs');
+    consumer.unexpected(descriptions.MANIFEST.TOO_MANY_NPM_PARTS);
   }
 
   const name = normalizeName({
     name: nameRaw,
     loose,
-    unexpected({message, at, start, end, advice}) {
-      consumer.unexpected(message, {
-        advice,
+    unexpected({description, at, start, end}) {
+      consumer.unexpected(description, {
         at,
         loc: start === undefined
           ? undefined
@@ -454,10 +454,9 @@ export function normalizeDependencies(
     normalizeName({
       name,
       loose,
-      unexpected: ({message, at, advice}) => {
-        value.unexpected(message, {
+      unexpected: ({description, at}) => {
+        value.unexpected(description, {
           at,
-          advice,
           target: 'key',
         });
       },

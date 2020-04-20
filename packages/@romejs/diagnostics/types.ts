@@ -78,6 +78,12 @@ export type DiagnosticDescription = {
   advice?: DiagnosticAdvice;
 };
 
+export type DiagnosticDescriptionOptionalCategory = {
+  category?: DiagnosticCategory;
+  message: DiagnosticBlessedMessage;
+  advice?: DiagnosticAdvice;
+};
+
 // TS doesn't have opaque types so we need to use an intermediate object
 export type DiagnosticBlessedMessage = {
   type: 'PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE';

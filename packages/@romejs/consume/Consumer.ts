@@ -11,11 +11,11 @@ import {
   Diagnostic,
   DiagnosticsError,
   DiagnosticLocation,
-  DiagnosticCategory,
-  buildSuggestionAdvice,
   createBlessedDiagnosticMessage,
   createSingleDiagnosticError,
   catchDiagnosticsSync,
+  DiagnosticDescriptionOptionalCategory,
+  descriptions,
 } from '@romejs/diagnostics';
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
@@ -57,10 +57,8 @@ import {
 } from '@romejs/path';
 
 type UnexpectedConsumerOptions = {
-  category?: DiagnosticCategory;
   loc?: SourceLocation;
   target?: ConsumeSourceLocationRequestTarget;
-  advice?: DiagnosticAdvice;
   at?: 'suffix' | 'prefix' | 'none';
   atParent?: boolean;
 };
@@ -319,7 +317,7 @@ export default class Consumer {
   }
 
   unexpected(
-    msg: string,
+    description: DiagnosticDescriptionOptionalCategory = descriptions.CONSUME.INVALID,
     opts: UnexpectedConsumerOptions = {},
   ): DiagnosticsError {
     const {target = 'value'} = opts;
@@ -328,9 +326,16 @@ export default class Consumer {
     let location = this.getDiagnosticLocation(target);
     const fromSource = location !== undefined;
 
-    msg = this.generateUnexpectedMessage(msg, opts);
+    const message = this.generateUnexpectedMessage(
+      description.message.value,
+      opts,
+    );
+    description = {
+      ...description,
+      message: createBlessedDiagnosticMessage(message),
+    };
 
-    const advice: DiagnosticAdvice = [...(opts.advice || [])];
+    const advice: DiagnosticAdvice = [...(description.advice || [])];
 
     // Make the errors more descriptive
     if (fromSource) {
@@ -358,7 +363,7 @@ export default class Consumer {
       // If consumer is undefined and we have no filename then we were not able to find a location,
       // in this case, just throw a normal error
       if (consumer === undefined && filename === undefined) {
-        throw new Error(msg);
+        throw new Error(message);
       }
 
       // Warn that we didn't find this value in the source if it's parent wasn't either
@@ -378,15 +383,13 @@ export default class Consumer {
     }
 
     if (location === undefined) {
-      throw new Error(msg);
+      throw new Error(message);
     }
 
     const diagnostic: Diagnostic = {
       description: {
-        category: opts.category === undefined
-          ? this.context.category
-          : opts.category,
-        message: createBlessedDiagnosticMessage(msg),
+        category: this.context.category,
+        ...description,
         advice,
       },
       location: {
@@ -411,9 +414,7 @@ export default class Consumer {
   }
 
   // Only dispatch a single error for the current consumer, and suppress any if we have a parent consumer with errors
-
   // We do this since we could be producing redundant stale errors based on
-
   // results we've normalized to allow us to continue
   shouldDispatchUnexpected(): boolean {
     if (this.hasHandledUnexpected) {
@@ -505,7 +506,7 @@ export default class Consumer {
     if (parentValue === undefined || parentValue === null ||
           typeof parentValue !==
           'object') {
-      throw parent.unexpected('Attempted to set a property on a non-object');
+      throw parent.unexpected(descriptions.CONSUME.SET_PROPERTY_NON_OBJECT);
     }
 
     // Mutate the parent
@@ -544,15 +545,14 @@ export default class Consumer {
 
     for (const [key, value] of this.asMap(false, false)) {
       if (!this.usedNames.has(key)) {
-        value.unexpected(`Unknown <emphasis>${this.getKeyPathString([
-          key,
-        ])}</emphasis> ${type}`, {
+        value.unexpected(descriptions.CONSUME.UNUSED_PROPERTY(
+          this.getKeyPathString([key]),
+          type,
+          knownProperties,
+        ), {
           target: 'key',
           at: 'suffix',
           atParent: true,
-          advice: buildSuggestionAdvice(key, knownProperties, {
-            ignoreCase: true,
-          }),
         });
       }
 
@@ -595,7 +595,7 @@ export default class Consumer {
       return this.asJSONObject();
     }
 
-    this.unexpected('Expected a JSON value');
+    this.unexpected(descriptions.CONSUME.EXPECTED_JSON_VALUE);
     return '';
   }
 
@@ -652,7 +652,7 @@ export default class Consumer {
 
     const {value} = this;
     if (!this.isObject()) {
-      this.unexpected('Expected object');
+      this.unexpected(descriptions.CONSUME.EXPECTED_OBJECT);
       return {};
     }
 
@@ -706,7 +706,7 @@ export default class Consumer {
     const {value} = this;
 
     if (!Array.isArray(value)) {
-      this.unexpected('Expected array');
+      this.unexpected(descriptions.CONSUME.EXPECTED_ARRAY);
       return [];
     }
 
@@ -757,7 +757,7 @@ export default class Consumer {
   _asDate(def?: Date): Date {
     const value = this.getValue(def);
     if (!(value instanceof Date)) {
-      this.unexpected('Expected a date');
+      this.unexpected(descriptions.CONSUME.EXPECTED_DATE);
       return new Date();
     }
     return value;
@@ -789,7 +789,7 @@ export default class Consumer {
   _asBoolean(def?: boolean): boolean {
     const value = this.getValue(def);
     if (typeof value !== 'boolean') {
-      this.unexpected('Expected a boolean');
+      this.unexpected(descriptions.CONSUME.EXPECTED_BOOLEAN);
       return false;
     }
     return value;
@@ -822,7 +822,7 @@ export default class Consumer {
   _asString(def?: string): string {
     const value = this.getValue(def);
     if (typeof value !== 'string') {
-      this.unexpected('Expected a string');
+      this.unexpected(descriptions.CONSUME.EXPECTED_STRING);
       return '';
     }
     return value;
@@ -839,19 +839,9 @@ export default class Consumer {
       // @ts-ignore
       return value;
     } else {
-      this.unexpected(`Invalid value <emphasis>${value}</emphasis>`, {
+      this.unexpected(descriptions.CONSUME.INVALID_STRING_SET_VALUE(value, ( // rome-suppress-next-line lint/noExplicitAny
+      (validValues as any) as Array<string>)), {
         target: 'value',
-        advice: [
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Possible values are',
-          },
-          {
-            type: 'list',
-            list: validValues.map((str) => String(str)),
-          },
-        ],
       });
       return validValues[0];
     }
@@ -901,7 +891,7 @@ export default class Consumer {
       return value;
     }
 
-    this.unexpected('Expected a bigint');
+    this.unexpected(descriptions.CONSUME.EXPECTED_BIGINT);
     return BigInt('0');
   }
 
@@ -911,7 +901,7 @@ export default class Consumer {
     if (path.isURL()) {
       return path.assertURL();
     } else {
-      this.unexpected('Expected a URL');
+      this.unexpected(descriptions.CONSUME.EXPECTED_URL);
       return createURLFilePath('unknown://').append(path);
     }
   }
@@ -925,7 +915,7 @@ export default class Consumer {
     if (path.isAbsolute()) {
       return path.assertAbsolute();
     } else {
-      this.unexpected('Expected an absolute file path');
+      this.unexpected(descriptions.CONSUME.EXPECTED_ABSOLUTE_PATH);
       return createAbsoluteFilePath('/').append(path);
     }
   }
@@ -935,7 +925,7 @@ export default class Consumer {
     if (path.isRelative()) {
       return path.assertRelative();
     } else {
-      this.unexpected('Expected a relative file path');
+      this.unexpected(descriptions.CONSUME.EXPECTED_RELATIVE_PATH);
       return path.toExplicitRelative();
     }
   }
@@ -946,9 +936,7 @@ export default class Consumer {
     if (path.isExplicitRelative()) {
       return path;
     } else {
-      this.unexpected(
-        'Expected an explicit relative file path. This is one that starts with <emphasis>./</emphasis> or <emphasis>../</emphasis>',
-      );
+      this.unexpected(descriptions.CONSUME.EXPECTED_EXPLICIT_RELATIVE_PATH);
       return path.toExplicitRelative();
     }
   }
@@ -1007,7 +995,7 @@ export default class Consumer {
     const str = this._asString();
     const num = Number(str);
     if (isNaN(num)) {
-      this.unexpected('Expected valid number');
+      this.unexpected(descriptions.CONSUME.EXPECTED_VALID_NUMBER);
       return NaN;
     } else {
       return num;
@@ -1038,12 +1026,11 @@ export default class Consumer {
   }): Number1
 
   asNumberInRange(opts: {
-    min?: Number0 | Number1 | number;
-    max?: Number0 | Number1 | number;
-    default?: Number0 | Number1 | number;
+    min?: UnknownNumber;
+    max?: UnknownNumber;
+    default?: UnknownNumber;
   }): UnknownNumber {
     const num = this._asNumber(opts.default);
-
     const {min, max} = opts;
 
     this.declareDefinition({
@@ -1057,16 +1044,16 @@ export default class Consumer {
 
     // Nice error message when both min and max are specified
     if (min !== undefined && max !== undefined && (num < min || num > max)) {
-      this.unexpected(`Expected number between ${min} and ${max}`);
+      this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_BETWEEN(min, max));
       return num;
     }
 
     if (min !== undefined && num < min) {
-      this.unexpected(`Expected number higher than ${min}`);
+      this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_HIGHER(min));
     }
 
     if (max !== undefined && num > max) {
-      this.unexpected(`Expected number lower than ${max}`);
+      this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_LOWER(max));
     }
 
     return num;
@@ -1075,7 +1062,7 @@ export default class Consumer {
   _asNumber(def?: UnknownNumber): number {
     const value = this.getValue(def);
     if (typeof value !== 'number') {
-      this.unexpected('Expected a number');
+      this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER);
       return 0;
     }
     return value;

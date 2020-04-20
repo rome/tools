@@ -11,6 +11,7 @@ import {createMasterCommand} from '../commands';
 import {modifyProjectConfig, assertHardMeta} from '@romejs/project';
 import {createUnknownFilePath} from '@romejs/path';
 import {markup} from '@romejs/string-markup';
+import {descriptions} from '@romejs/diagnostics';
 
 export default createMasterCommand(
   {
@@ -96,9 +97,12 @@ export default createMasterCommand(
         }
 
         default:
-          throw req.throwDiagnosticFlagError(`Unknown action ${action}`, {
-            type: 'arg',
-            key: 0,
+          throw req.throwDiagnosticFlagError({
+            description: descriptions.FLAGS.UNKNOWN_ACTION(action),
+            target: {
+              type: 'arg',
+              key: 0,
+            },
           });
       }
 

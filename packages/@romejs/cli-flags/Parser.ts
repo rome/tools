@@ -18,6 +18,7 @@ import {toKebabCase, toCamelCase, naturalCompare} from '@romejs/string-utils';
 import {createUnknownFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
 import {markup} from '@romejs/string-markup';
+import {descriptions} from '@romejs/diagnostics';
 
 export type Examples = Array<{
   description: string;
@@ -274,13 +275,10 @@ export default class Parser<T> {
           target: ConsumeSourceLocationRequestTarget,
         ) => {
           const {programName} = this.opts;
-          const prefixParts = [programName];
-          if (this.currentCommand !== undefined) {
-            prefixParts.push(this.currentCommand);
-          }
 
           return serializeCLIFlags({
-            prefix: prefixParts.join(' '),
+            programName,
+            commandName: this.currentCommand,
             args: this.args,
             defaultFlags,
             flags,
@@ -348,48 +346,37 @@ export default class Parser<T> {
 
     let definedCommand: undefined | DefinedCommand;
 
-    const rootFlags = await consumer.bufferDiagnostics(
-      async (consumer) => {
-        for (const shorthandName of this.shorthandFlags) {
-          consumer.get(shorthandName).unexpected(
-            `Shorthand flags are not supported`,
-          );
+    const rootFlags = await consumer.bufferDiagnostics(async (consumer) => {
+      for (const shorthandName of this.shorthandFlags) {
+        consumer.get(shorthandName).unexpected(
+          descriptions.FLAGS.UNSUPPORTED_SHORTHANDS,
+        );
+      }
+
+      for (const incorrectName of this.incorrectCaseFlags) {
+        consumer.get(incorrectName).unexpected(
+          descriptions.FLAGS.INCORRECT_CASED_FLAG(incorrectName),
+        );
+      }
+
+      const rootFlags = this.opts.defineFlags(consumer);
+
+      for (const key of this.commands.keys()) {
+        const defined = await this.maybeDefineCommand(key, consumer);
+        if (defined) {
+          this.currentCommand = key;
+          definedCommand = defined;
+          break;
         }
+      }
 
-        for (const incorrectName of this.incorrectCaseFlags) {
-          consumer.get(incorrectName).unexpected(
-            `Incorrect cased flag name`,
-            {
-              advice: [
-                {
-                  type: 'log',
-                  category: 'info',
-                  message: markup`Use <emphasis>${toKebabCase(incorrectName)}</emphasis> instead`,
-                },
-              ],
-            },
-          );
-        }
+      if (!this.helpMode) {
+        consumer.enforceUsedProperties('flag', false);
+      }
+      this.currentCommand = undefined;
 
-        const rootFlags = this.opts.defineFlags(consumer);
-
-        for (const key of this.commands.keys()) {
-          const defined = await this.maybeDefineCommand(key, consumer);
-          if (defined) {
-            this.currentCommand = key;
-            definedCommand = defined;
-            break;
-          }
-        }
-
-        if (!this.helpMode) {
-          consumer.enforceUsedProperties('flag', false);
-        }
-        this.currentCommand = undefined;
-
-        return rootFlags;
-      },
-    );
+      return rootFlags;
+    });
 
     // Show help for --help
     if (this.helpMode) {
@@ -537,18 +524,14 @@ export default class Parser<T> {
         }
       });
     }
+
+    reporter.section('Global Flags', () => {
+      reporter.info('To view global flags run');
+      reporter.command('rome --help');
+    });
   }
 
-  async showHelp(commandName: undefined | string = this.ranCommand) {
-    if (commandName !== undefined) {
-      this.showFocusedCommandHelp(commandName);
-      return;
-    }
-
-    const {description, usage, examples, programName} = this.opts;
-
-    this.showUsageHelp(description, usage);
-
+  showGlobalFlags() {
     const {reporter} = this;
     reporter.section('Global Flags', () => {
       // Show options not attached to any commands
@@ -563,6 +546,19 @@ export default class Parser<T> {
         reporter.logAll(line);
       }
     });
+  }
+
+  async showHelp(commandName: undefined | string = this.ranCommand) {
+    if (commandName !== undefined) {
+      this.showFocusedCommandHelp(commandName);
+      return;
+    }
+
+    const {reporter} = this;
+    const {description, usage, examples, programName} = this.opts;
+
+    this.showUsageHelp(description, usage);
+    this.showGlobalFlags();
 
     // Sort commands into their appropriate categories for output
     const commandsByCategory: Map<undefined | string, Array<AnyCommandOptions>> = new Map();
@@ -624,7 +620,7 @@ export default class Parser<T> {
     const {programName} = this.opts;
     const {reporter} = this;
 
-    if (examples === undefined) {
+    if (examples === undefined || examples.length === 0) {
       return;
     }
 

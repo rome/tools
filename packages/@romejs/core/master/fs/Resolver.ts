@@ -155,11 +155,14 @@ const QUERY_RESPONSE_MISSING: ResolverQueryResponseMissing = {
   source: undefined,
 };
 
-export type ResolverQueryResponse =
-  | ResolverQueryResponseFound
+export type ResolverQueryResponseNotFound =
   | ResolverQueryResponseMissing
   | ResolverQueryResponseFetchError
   | ResolverQueryResponseUnsupported;
+
+export type ResolverQueryResponse =
+  | ResolverQueryResponseFound
+  | ResolverQueryResponseNotFound;
 
 function shouldReturnQueryResponse(res: ResolverQueryResponse): boolean {
   return res.type === 'FOUND' || res.source !== undefined;

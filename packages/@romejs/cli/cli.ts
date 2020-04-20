@@ -109,6 +109,9 @@ export default async function cli() {
             review: c.get('review').asBoolean(
               DEFAULT_CLIENT_REQUEST_FLAGS.review,
             ),
+            allowDirty: c.get('allowDirty').asBoolean(
+              DEFAULT_CLIENT_REQUEST_FLAGS.allowDirty,
+            ),
             watch: c.get('watch').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.watch),
             fieri: c.get('fieri').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.fieri),
             focus: c.get('focus').asString(DEFAULT_CLIENT_REQUEST_FLAGS.focus),
@@ -351,7 +354,9 @@ export default async function cli() {
     }
 
     case 'INVALID_REQUEST': {
-      await p.showHelp();
+      if (res.showHelp) {
+        await p.showHelp();
+      }
       process.exit(1);
       break;
     }

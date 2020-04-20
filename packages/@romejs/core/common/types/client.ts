@@ -22,6 +22,7 @@ export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
   collectMarkers: false,
   timing: false,
+  allowDirty: false,
 
   benchmark: false,
   benchmarkIterations: 10,
@@ -37,6 +38,7 @@ export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
 export type ClientRequestFlags = DiagnosticsPrinterFlags & {
   watch: boolean;
   review: boolean;
+  allowDirty: boolean;
 
   // Debugging
   timing: boolean;

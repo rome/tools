@@ -260,11 +260,19 @@ export function normalizeMarkup(
       return escapeMarkup(text);
     },
     formatTag: (tag, attributes, value) => {
-      // Normalize filename of <filelink target>
-      if (tag === 'filelink') {
-        const {text, filename} = formatFileLink(attributes, value, opts);
-        attributes.set('target', filename);
-        value = text;
+      switch (tag) {
+        case // Normalize filename of <filelink target>
+        'filelink': {
+          const {text, filename} = formatFileLink(attributes, value, opts);
+          attributes.set('target', filename);
+          value = text;
+          break;
+        }
+
+        // We don't technically need to normalize this but it's one less tag to have to support
+        // if other tools need to consume it
+        case 'grammarNumber':
+          return formatGrammarNumber(attributes, value);
       }
 
       let attrStr = Array.from(attributes, ([key, value]) => {

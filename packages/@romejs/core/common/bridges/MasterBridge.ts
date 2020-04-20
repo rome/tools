@@ -60,6 +60,7 @@ export type MasterQueryResponseDiagnostics = {
 export type MasterQueryResponseInvalid = {
   type: 'INVALID_REQUEST';
   diagnostics: Diagnostics;
+  showHelp: boolean;
 };
 
 export type MasterQueryResponse =

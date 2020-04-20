@@ -46,7 +46,7 @@ export default createLocalCommand<LintCommandFlags>(
   {
     category: commandCategories.CODE_QUALITY,
     description: 'run lint against a set of files',
-    allowRequestFlags: ['watch', 'review'],
+    allowRequestFlags: ['watch', 'review', 'allowDirty'],
     usage: '',
     examples: [],
 
@@ -219,6 +219,9 @@ export default createLocalCommand<LintCommandFlags>(
         commandFlags: {
           fix: true,
           compilerOptions: lintOptionsPerFile,
+        },
+        requestFlags: {
+          allowDirty: true,
         },
       }, 'master');
       return res2;

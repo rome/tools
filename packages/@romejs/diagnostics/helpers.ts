@@ -11,6 +11,7 @@ import diff from '@romejs/string-diff';
 import {Position} from '@romejs/parser-core';
 import {get1} from '@romejs/ob1';
 import {NEWLINE} from '@romejs/js-parser-utils';
+import {markup, escapeMarkup} from '@romejs/string-markup';
 
 type BuildSuggestionAdviceOptions = {
   minRating?: number;
@@ -58,14 +59,14 @@ export function buildSuggestionAdvice(
       {
         type: 'log',
         category: 'info',
-        message: `Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
+        message: markup`Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
       },
     );
   } else {
     advice.push({
       type: 'log',
       category: 'info',
-      message: `Did you mean <emphasis>${topRatingFormatted}</emphasis>?`,
+      message: markup`Did you mean <emphasis>${topRatingFormatted}</emphasis>?`,
     });
 
     advice.push({
@@ -82,7 +83,7 @@ export function buildSuggestionAdvice(
 
       advice.push({
         type: 'list',
-        list: strings,
+        list: strings.map((str) => escapeMarkup(str)),
         truncate: true,
       });
     }

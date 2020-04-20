@@ -156,9 +156,13 @@ const createStringMarkupParser = createParser(
 
           const end = add(stringValueEnd, 1);
           return {
-            state,
-            token: this.finishValueToken('String', value, end),
-          };
+              state,
+              token: this.finishValueToken(
+                'String',
+                unescapeTextValue(value),
+                end,
+              ),
+            };
         }
 
         if (char === '>') {

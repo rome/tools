@@ -104,6 +104,7 @@ export type DiagnosticCategory =
   | 'typeCheck/undeclaredVariable'
   | 'typeCheck/unknownImport'
   | 'typeCheck/unknownProperty'
+  | 'vsc/dirty'
   | 'v8/syntaxError';
 
 export type DiagnosticCategoryPrefix =
