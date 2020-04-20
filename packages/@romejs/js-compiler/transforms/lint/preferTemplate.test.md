@@ -33,7 +33,7 @@ foobar('yes');
 
  unknown:1:31 lint/preferTemplate FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ You're using string concatenation when template literals are preferred
+  ✖ Template literals are preferred over string concatenation
 
     const foo = 'bar'; console.log(foo + 'baz')
                                    ^^^^^^^^^^^ 
@@ -50,7 +50,7 @@ foobar('yes');
 
  unknown:1:12 lint/preferTemplate FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ You're using string concatenation when template literals are preferred
+  ✖ Template literals are preferred over string concatenation
 
     console.log((1 * 2) + 'baz')
                 ^^^^^^^^^^^^^^^ 
