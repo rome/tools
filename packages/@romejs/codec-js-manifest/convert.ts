@@ -32,24 +32,26 @@ export function convertManifestToJSON(manifest: Manifest): JSONManifest {
     bugs: manifest.bugs,
 
     main: manifest.main,
-    exports: exportsToObject(manifest.exports),
+
+    // TODO we now support fallbacks which means manifest.exports is lossy
+    //exports: exportsToObject(manifest.exports),
+    // rome-suppress-next-line lint/noExplicitAny
+    exports: (manifest.raw.exports as any),
 
     author: manifest.author,
     contributors: manifest.contributors,
     maintainers: manifest.maintainers,
 
-    version:
-      manifest.version === undefined
-        ? undefined
-        : stringifySemver(manifest.version),
-    license:
-      manifest.license === undefined
-        ? undefined
-        : stringifySPDXLicense(manifest.license),
+    version: manifest.version === undefined
+      ? undefined
+      : stringifySemver(manifest.version),
+    license: manifest.license === undefined
+      ? undefined
+      : stringifySPDXLicense(manifest.license),
 
-    files: maybeArray(
-      manifest.files.map(pattern => stringifyPathPattern(pattern)),
-    ),
+    files: maybeArray(manifest.files.map((pattern) => stringifyPathPattern(
+      pattern,
+    ))),
     keywords: maybeArray(manifest.keywords),
     cpu: maybeArray(manifest.cpu),
     os: maybeArray(manifest.os),
@@ -104,6 +106,7 @@ function exportsToObject(
 
   return obj;
 }
+exportsToObject;
 
 function maybeArray<T>(items: Array<T>): undefined | Array<T> {
   if (items.length === 0) {

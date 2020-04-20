@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -123,8 +124,8 @@ Program {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
-                          column: 20
-                          index: 20
+                          column: 19
+                          index: 19
                           line: 1
                         }
                         start: Object {
@@ -138,8 +139,8 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 20
-                            index: 20
+                            column: 19
+                            index: 19
                             line: 1
                           }
                           start: Object {
@@ -149,7 +150,7 @@ Program {
                           }
                         }
                         typeAnnotation: FlowGenericTypeAnnotation {
-                          id: Identifier {
+                          id: ReferenceIdentifier {
                             name: 'Object'
                             loc: Object {
                               filename: 'input.js'
@@ -227,7 +228,7 @@ Program {
                             }
                           }
                           typeAnnotation: FlowGenericTypeAnnotation {
-                            id: Identifier {
+                            id: ReferenceIdentifier {
                               name: 'Object'
                               loc: Object {
                                 filename: 'input.js'
@@ -466,8 +467,8 @@ Program {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
-                          column: 21
-                          index: 79
+                          column: 20
+                          index: 78
                           line: 2
                         }
                         start: Object {
@@ -481,8 +482,8 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 21
-                            index: 79
+                            column: 20
+                            index: 78
                             line: 2
                           }
                           start: Object {
@@ -492,7 +493,7 @@ Program {
                           }
                         }
                         typeAnnotation: FlowGenericTypeAnnotation {
-                          id: Identifier {
+                          id: ReferenceIdentifier {
                             name: 'Object'
                             loc: Object {
                               filename: 'input.js'
@@ -570,7 +571,7 @@ Program {
                             }
                           }
                           typeAnnotation: FlowGenericTypeAnnotation {
-                            id: Identifier {
+                            id: ReferenceIdentifier {
                               name: 'Object'
                               loc: Object {
                                 filename: 'input.js'

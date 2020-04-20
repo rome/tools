@@ -14,7 +14,7 @@ import {
   AnyComment,
   ConstProgramSyntax,
 } from '../index';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics} from '@romejs/diagnostics';
 import {createBuilder} from '../utils';
 
 export type Program = JSNodeBase & {
@@ -24,8 +24,9 @@ export type Program = JSNodeBase & {
   filename: string;
   interpreter: undefined | InterpreterDirective;
   mtime: undefined | number;
+  corrupt: boolean;
   sourceType: ConstSourceType;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   comments: Array<AnyComment>;
   syntax: Array<ConstProgramSyntax>;
   hasHoistedVars: boolean;
@@ -38,6 +39,7 @@ export const MOCK_PROGRAM: Program = {
   filename: 'unknown',
   mtime: undefined,
   interpreter: undefined,
+  corrupt: false,
   sourceType: 'module',
   diagnostics: [],
   comments: [],

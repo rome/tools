@@ -7,10 +7,9 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
-import {SerialTypeFactory} from './T';
+import T, {SerialTypeFactory} from './T';
 import {Scope} from '../scopes';
 import {HumanBuilder} from '../Utils';
-import T from './T';
 
 export default class UnionT extends T {
   constructor(scope: Scope, originNode: undefined | AnyNode, types: Array<T>) {
@@ -23,7 +22,7 @@ export default class UnionT extends T {
 
   serialize(addType: SerialTypeFactory): HydrateData {
     return {
-      types: this.types.map(type => addType(type)),
+      types: this.types.map((type) => addType(type)),
     };
   }
 
@@ -33,11 +32,9 @@ export default class UnionT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new UnionT(
-      scope,
-      originNode,
-      Array(data.types).map(id => getType(id)),
-    );
+    return new UnionT(scope, originNode, Array(data.types).map((id) => getType(
+      id,
+    )));
   }
 
   reduce(): T {
@@ -114,12 +111,13 @@ export default class UnionT extends T {
       return true;
     } else {
       // create custom error with the types that weren't in the opposing one
+
       //return new MissingUnionE(this.scope, otherType.originNode, otherType, this, missing);
       return false;
     }
   }
 
   humanize(builder: HumanBuilder): string {
-    return this.types.map(type => builder.humanize(type)).join(' | ');
+    return this.types.map((type) => builder.humanize(type)).join(' | ');
   }
 }

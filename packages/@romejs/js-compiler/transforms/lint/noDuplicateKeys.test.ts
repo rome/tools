@@ -5,42 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
-test('no duplicate keys', async t => {
-  const res = await testLint(
-    `
-    const foo = {
-      test: true,
-      test2: true,
-      test: false,
-    }
+test('no duplicate keys', async (t) => {
+  await testLint(t, `
+  const foo = {
+    test: true,
+    test2: true,
+    test: false,
+  }
 
-    // mark const as used
-    console.log(foo);
-    `,
-  );
-
-  t.looksLike(res.diagnostics, [
-    {
-      category: 'lint/noDuplicateKeys',
-      filename: 'unknown',
-      language: 'js',
-      message: 'Duplicate key <emphasis>test</emphasis>',
-      mtime: undefined,
-      sourceType: 'module',
-      origins: [{category: 'lint'}],
-      end: {
-        column: 17,
-        index: 73,
-        line: 5,
-      },
-      start: {
-        column: 6,
-        index: 62,
-        line: 5,
-      },
-    },
-  ]);
+  // mark const as used
+  console.log(foo);
+  `, {category: 'lint/noDuplicateKeys'});
 });

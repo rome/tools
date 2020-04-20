@@ -5,27 +5,36 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
-test('prefer function declarations', async t => {
+test('prefer function declarations', async (t) => {
   // Should complain on these
-  t.snapshot(await testLint('const foo = function () {};', true));
-  t.snapshot(await testLint('const foo = () => {};', true));
+  await testLint(t, 'const foo = function () {};', {
+    category: 'lint/preferFunctionDeclarations',
+    format: true,
+  });
+  await testLint(t, 'const foo = () => {};', {
+    category: 'lint/preferFunctionDeclarations',
+    format: true,
+  });
 
   // Should allow arrow functions when they have this
-  t.snapshot(await testLint('const foo = () => {this;};', true));
+  await testLint(t, 'const foo = () => {this;};', {
+    category: 'lint/preferFunctionDeclarations',
+    format: true,
+  });
 
   // But only if it refers to the actual arrow function
-  t.snapshot(
-    await testLint('const foo = () => {function bar() {this;}};', true),
-  );
+  await testLint(t, 'const foo = () => {function bar() {this;}};', {
+    category: 'lint/preferFunctionDeclarations',
+    format: true,
+  });
 
   // Should ignore functions with return types since you can't express that with a declaration
-  t.snapshot(
-    await testLint('const foo: string = function () {};', true, 'module', [
-      'ts',
-      'flow',
-    ]),
-  );
+  await testLint(t, 'const foo: string = function () {};', {
+    category: 'lint/preferFunctionDeclarations',
+    format: true,
+    syntax: ['ts'],
+  });
 });

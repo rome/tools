@@ -5,22 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
+import {Path, Binding, TransformExitResult} from '@romejs/js-compiler';
 import {
   AnyNode,
   ImportDeclaration,
   jsxIdentifier,
   bindingIdentifier,
   referenceIdentifier,
-  AnyImportSpecifier,
   identifier,
   importDeclaration,
   importSpecifier,
   importSpecifierLocal,
+  ImportSpecifier,
 } from '@romejs/js-ast';
-import {Binding} from '@romejs/js-compiler';
 import {isIdentifierish} from '@romejs/js-ast-utils';
-import {TransformExitResult} from '@romejs/js-compiler';
 
 // TODO: Remove this. This contains React for the following reason:
 //   A user may write: import * as React from 'react';
@@ -30,7 +28,7 @@ const IGNORED_NAMES = ['React', 'react'];
 
 function getName(node: AnyNode): undefined | string {
   if (node.type !== 'MemberExpression' && node.type !== 'JSXMemberExpression') {
-    return;
+    return undefined;
   }
 
   const {property} = node;
@@ -44,6 +42,8 @@ function getName(node: AnyNode): undefined | string {
       return property.name;
     }
   }
+
+  return undefined;
 }
 
 export default {
@@ -56,33 +56,25 @@ export default {
     }
 
     // Check if we have any wildcard imports
-    const wildcardImports: Map<
-      string,
-      {
-        binding: Binding;
-        names: Set<string>;
-        mappings: Map<string, string>;
-        references: Set<AnyNode>;
-      }
-    > = new Map();
+    const wildcardImports: Map<string, {
+      binding: Binding;
+      names: Set<string>;
+      mappings: Map<string, string>;
+      references: Set<AnyNode>;
+    }> = new Map();
     const wildcardImportNodeToLocal: Map<ImportDeclaration, string> = new Map();
     for (const child of node.body) {
-      if (
-        child.type === 'ImportDeclaration' &&
-        !IGNORED_NAMES.includes(child.source.value) &&
-        child.specifiers !== undefined
-      ) {
-        for (const specifier of child.specifiers) {
-          if (specifier.type === 'ImportNamespaceSpecifier') {
-            wildcardImports.set(specifier.local.name.name, {
-              binding: path.scope.getBindingAssert(specifier.local.name.name),
-              names: new Set(),
-              mappings: new Map(),
-              references: new Set(),
-            });
-            wildcardImportNodeToLocal.set(child, specifier.local.name.name);
-          }
-        }
+      if (child.type === 'ImportDeclaration' && !IGNORED_NAMES.includes(
+          child.source.value,
+        ) && child.namespaceSpecifier !== undefined) {
+        const specifier = child.namespaceSpecifier;
+        wildcardImports.set(specifier.local.name.name, {
+          binding: path.scope.getBindingAssert(specifier.local.name.name),
+          names: new Set(),
+          mappings: new Map(),
+          references: new Set(),
+        });
+        wildcardImportNodeToLocal.set(child, specifier.local.name.name);
       }
     }
     if (wildcardImports.size === 0) {
@@ -90,8 +82,9 @@ export default {
     }
 
     // - Find all imported names from this namespace
+
     // - Remove the namespaces that have computed property access
-    path.traverse('optimizeImportsWildcardCollector', path => {
+    path.traverse('optimizeImportsWildcardCollector', (path) => {
       const {node, parent} = path;
       if (node.type !== 'ReferenceIdentifier') {
         return;
@@ -108,13 +101,10 @@ export default {
         return;
       }
 
-      const isComputed =
-        parent.type === 'MemberExpression' &&
-        parent.object === node &&
-        getName(parent) === undefined;
-      const isUnboxed =
-        parent.type !== 'MemberExpression' &&
-        parent.type !== 'JSXMemberExpression';
+      const isComputed = parent.type === 'MemberExpression' && parent.object ===
+        node && getName(parent) === undefined;
+      const isUnboxed = parent.type !== 'MemberExpression' && parent.type !==
+        'JSXMemberExpression';
 
       if (isComputed || isUnboxed) {
         // Deopt as we can't follow this
@@ -145,11 +135,8 @@ export default {
         const {node} = path;
 
         // Replace all member expressions with their uids
-        if (
-          (node.type === 'MemberExpression' ||
-            node.type === 'JSXMemberExpression') &&
-          isIdentifierish(node.object)
-        ) {
+        if ((node.type === 'MemberExpression' || node.type ===
+            'JSXMemberExpression') && isIdentifierish(node.object)) {
           const wildcardInfo = wildcardImports.get(node.object.name);
           if (wildcardInfo !== undefined && wildcardInfo.references.has(node)) {
             const name = getName(node);
@@ -171,10 +158,9 @@ export default {
         }
 
         // Add new specifiers to wildcard import declarations
-        if (
-          node.type === 'ImportDeclaration' &&
-          wildcardImportNodeToLocal.has(node)
-        ) {
+        if (node.type === 'ImportDeclaration' && wildcardImportNodeToLocal.has(
+            node,
+          )) {
           const local = wildcardImportNodeToLocal.get(node);
           if (local === undefined) {
             throw new Error('Expected local');
@@ -187,35 +173,23 @@ export default {
           }
 
           // Remove wildcard specifier
-          let specifiers: ImportDeclaration['specifiers'] = [];
-          if (node.specifiers !== undefined) {
-            specifiers = node.specifiers.filter(
-              (specifier: AnyImportSpecifier) => {
-                if (
-                  specifier.type === 'ImportNamespaceSpecifier' &&
-                  specifier.local.name.name === local
-                ) {
-                  return false;
-                } else {
-                  return true;
-                }
-              },
-            );
-          }
+          let namedSpecifiers: Array<ImportSpecifier> = [
+            ...(node.namedSpecifiers || []),
+          ];
 
           // Add on our new mappings
           for (const [imported, local] of wildcardInfo.mappings) {
-            specifiers.push(
-              importSpecifier.create({
-                imported: identifier.quick(imported),
-                local: importSpecifierLocal.quick(
-                  bindingIdentifier.quick(local),
-                ),
-              }),
-            );
+            namedSpecifiers.push(importSpecifier.create({
+              imported: identifier.quick(imported),
+              local: importSpecifierLocal.quick(bindingIdentifier.quick(local)),
+            }));
           }
 
-          return importDeclaration.create({specifiers, source: node.source});
+          return importDeclaration.create({
+            ...node,
+            namespaceSpecifier: undefined,
+            namedSpecifiers,
+          });
         }
 
         return node;

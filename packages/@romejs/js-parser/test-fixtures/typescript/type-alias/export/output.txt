@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -22,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' `export default type` is not valid.'
       loc: Object {
         filename: 'input.ts'
@@ -42,6 +44,7 @@ Program {
     ExportLocalDeclaration {
       exportKind: 'type'
       specifiers: undefined
+      trailingComments: Array ['0']
       loc: Object {
         filename: 'input.ts'
         end: Object {
@@ -55,24 +58,6 @@ Program {
           line: 1
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' `export default type` is not valid.'
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 38
-              index: 62
-              line: 2
-            }
-            start: Object {
-              column: 0
-              index: 24
-              line: 2
-            }
-          }
-        }
-      ]
       declaration: TypeAliasTypeAnnotation {
         id: BindingIdentifier {
           name: 'T'

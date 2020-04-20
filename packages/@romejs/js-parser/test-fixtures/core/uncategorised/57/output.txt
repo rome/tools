@@ -1,5 +1,6 @@
 Program {
   body: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -8,6 +9,8 @@ Program {
   mtime: undefined
   sourceType: 'script'
   syntax: Array []
+  trailingComments: Array []
+  innerComments: Array ['0']
   loc: Object {
     filename: 'input.js'
     end: Object {
@@ -23,6 +26,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' Hello, world!'
       loc: Object {
         filename: 'input.js'

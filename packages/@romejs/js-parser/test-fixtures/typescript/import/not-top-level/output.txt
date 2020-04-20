@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -70,7 +71,9 @@ Program {
         }
         body: Array [
           ImportDeclaration {
+            defaultSpecifier: undefined
             importKind: undefined
+            namedSpecifiers: Array []
             loc: Object {
               filename: 'input.ts'
               end: Object {
@@ -100,39 +103,23 @@ Program {
                 }
               }
             }
-            specifiers: Array [
-              ImportNamespaceSpecifier {
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 17
-                    index: 38
-                    line: 2
-                  }
-                  start: Object {
-                    column: 4
-                    index: 25
-                    line: 2
-                  }
+            namespaceSpecifier: ImportNamespaceSpecifier {
+              loc: Object {
+                filename: 'input.ts'
+                end: Object {
+                  column: 17
+                  index: 38
+                  line: 2
                 }
-                local: ImportSpecifierLocal {
-                  name: BindingIdentifier {
-                    name: 'a'
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 17
-                        index: 38
-                        line: 2
-                      }
-                      start: Object {
-                        column: 16
-                        index: 37
-                        line: 2
-                      }
-                    }
-                  }
-                  importKind: undefined
+                start: Object {
+                  column: 4
+                  index: 25
+                  line: 2
+                }
+              }
+              local: ImportSpecifierLocal {
+                name: BindingIdentifier {
+                  name: 'a'
                   loc: Object {
                     filename: 'input.ts'
                     end: Object {
@@ -147,8 +134,22 @@ Program {
                     }
                   }
                 }
+                importKind: undefined
+                loc: Object {
+                  filename: 'input.ts'
+                  end: Object {
+                    column: 17
+                    index: 38
+                    line: 2
+                  }
+                  start: Object {
+                    column: 16
+                    index: 37
+                    line: 2
+                  }
+                }
               }
-            ]
+            }
           }
         ]
       }

@@ -11,7 +11,6 @@ import {AnyNode} from '@romejs/js-ast';
 import {ModuleSignature} from './index';
 import ImportT from './types/ImportT';
 import Intrinsics from './Intrinsics';
-import {assertNodeTypeSet} from '@romejs/js-ast';
 import Graph from './Graph';
 import Hub from './Hub';
 import {Scope} from './scopes';
@@ -22,9 +21,8 @@ import types from './types/index';
 import evaluators from './evaluators/index';
 import {ModuleSignatureType} from './types';
 
-assertNodeTypeSet(evaluators, 'evaluators');
-
 export type HydrateTypeFactory = (id: unknown) => T;
+
 export type HydrateData = JSONObject;
 
 export type GetModuleSignature = (
@@ -96,35 +94,28 @@ export class ModuleSignatureManager {
 
       if (type === undefined) {
         throw new Error(
-          `${
-            graph.filename
-          }: Expected type of id ${id} but it doesn't exist, serialized data: ${String(
-            JSON.stringify(currGetType),
-          )}`,
-        );
+            `${graph.filename}: Expected type of id ${id} but it doesn't exist, serialized data: ${String(
+              JSON.stringify(currGetType),
+            )}`,
+          );
       }
 
       return type;
     };
 
     // Fetch the graphs of `export *` dependencies, future calls to `this.getModuleSignature` will fetch from 'cache
-    await Promise.all(
-      graph.exports.map(def => {
-        if (def.type === 'all') {
-          return this.getModuleSignature(def.source, graph.filename);
-        } else {
-          return undefined;
-        }
-      }),
-    );
+    await Promise.all(graph.exports.map((def) => {
+      if (def.type === 'all') {
+        return this.getModuleSignature(def.source, graph.filename);
+      } else {
+        return undefined;
+      }
+    }));
 
     // Resolve all exports
     for (const def of graph.exports) {
       if (def.type === 'all') {
-        const manager = await this.getModuleSignature(
-          def.source,
-          graph.filename,
-        );
+        const manager = await this.getModuleSignature(def.source, graph.filename);
         if (manager !== undefined) {
           this.addAll(manager);
         }
@@ -152,6 +143,7 @@ export class ModuleSignatureManager {
       }
 
       // Create the type
+
       // @ts-ignore
       const realT = TConstructor.hydrate(
         this.topScope,
@@ -168,7 +160,7 @@ export class ModuleSignatureManager {
     }
   }
 
-  link(importedName: string, type: ImportT) {
+  link(importedName: string, type: ImportT): void {
     const graph = this.graph;
 
     // Get type id for this export
@@ -181,7 +173,7 @@ export class ModuleSignatureManager {
         source: graph.filename,
       });
       error.shouldMatch(type);
-      return undefined;
+      return;
     }
 
     // Retrieve the open type
@@ -195,16 +187,14 @@ export class ModuleSignatureManager {
   }
 }
 
-type Export =
-  | {
-      type: 'local';
-      name: string;
-      value: T;
-    }
-  | {
-      type: 'all';
-      source: string;
-    };
+type Export = {
+  type: 'local';
+  name: string;
+  value: T;
+} | {
+  type: 'all';
+  source: string;
+};
 
 export default class Evaluator {
   constructor(hub: Hub, filename: string) {
@@ -271,8 +261,8 @@ export default class Evaluator {
     const type = this.nodeToType.get(node);
     if (type === undefined) {
       throw new Error(
-        'getTypeFromEvaluatedNode() called on a node that has not been validated yet',
-      );
+          'getTypeFromEvaluatedNode() called on a node that has not been validated yet',
+        );
     } else {
       return type;
     }
@@ -293,14 +283,11 @@ export default class Evaluator {
     });
   }
 
-  addImport(
-    t: ImportT,
-    opts: {
-      importedName: undefined | string;
-      source: string;
-      relative: string;
-    },
-  ) {
+  addImport(t: ImportT, opts: {
+    importedName: undefined | string;
+    source: string;
+    relative: string;
+  }) {
     this.imports.push({
       relative: opts.relative,
       importedName: opts.importedName,

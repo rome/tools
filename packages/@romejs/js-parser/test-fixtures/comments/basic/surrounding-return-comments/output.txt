@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -22,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: ' before '
       loc: Object {
         filename: 'input.js'
@@ -38,6 +40,7 @@ Program {
       }
     }
     CommentBlock {
+      id: '1'
       value: ' after '
       loc: Object {
         filename: 'input.js'
@@ -75,9 +78,9 @@ Program {
       loc: Object {
         filename: 'input.js'
         end: Object {
-          column: 0
-          index: 62
-          line: 6
+          column: 1
+          index: 61
+          line: 5
         }
         start: Object {
           column: 0
@@ -103,8 +106,8 @@ Program {
             line: 1
           }
           start: Object {
-            column: 0
-            index: 0
+            column: 10
+            index: 10
             line: 1
           }
         }
@@ -127,6 +130,8 @@ Program {
         body: Array [
           ReturnStatement {
             argument: undefined
+            leadingComments: Array ['0']
+            trailingComments: Array ['1']
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -140,42 +145,6 @@ Program {
                 line: 3
               }
             }
-            leadingComments: Array [
-              CommentBlock {
-                value: ' before '
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 16
-                    index: 31
-                    line: 2
-                  }
-                  start: Object {
-                    column: 4
-                    index: 19
-                    line: 2
-                  }
-                }
-              }
-            ]
-            trailingComments: Array [
-              CommentBlock {
-                value: ' after '
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 15
-                    index: 59
-                    line: 4
-                  }
-                  start: Object {
-                    column: 4
-                    index: 48
-                    line: 4
-                  }
-                }
-              }
-            ]
           }
         ]
       }

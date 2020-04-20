@@ -15,13 +15,12 @@ export default {
   enter(path: Path) {
     const {node} = path;
 
-    if (
-      node.type === 'MemberExpression' &&
-      node.property.value.type === 'Identifier' &&
-      node.property.value.name === 'NODE_ENV' &&
-      !path.scope.hasBinding('process') &&
-      doesNodeMatchPattern(node, 'process.env.NODE_ENV')
-    ) {
+    if (node.type === 'MemberExpression' && node.property.value.type ===
+          'Identifier' && node.property.value.name === 'NODE_ENV' &&
+        !path.scope.hasBinding('process') && doesNodeMatchPattern(
+        node,
+        'process.env.NODE_ENV',
+      )) {
       return stringLiteral.create({
         value: 'development',
       });

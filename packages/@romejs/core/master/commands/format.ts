@@ -6,87 +6,52 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand} from '../../commands';
-import {commandCategories} from '../../commands';
-import {AbsoluteFilePathSet} from '@romejs/path';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
-import {FORMATTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
+import {createMasterCommand} from '../commands';
+import {commandCategories} from '../../common/commands';
+import {createUnknownFilePath} from '@romejs/path';
+import {Consumer} from '@romejs/consume';
 
-export default createMasterCommand({
-  category: commandCategories.INTERNAL,
-  description: 'TODO',
+type Flags = {
+  allowDiagnostics: boolean;
+};
 
-  async default(req: MasterRequest): Promise<void> {
-    const {reporter, master} = req;
+export default createMasterCommand(
+  {
+    category: commandCategories.INTERNAL,
+    description: 'TODO',
+    usage: '',
+    examples: [],
 
-    const paths: AbsoluteFilePathSet = await req.getFilesFromArgs({
-      getProjectIgnore: project => ({
-        patterns: project.config.format.ignore,
-        source: master.projectManager.findProjectConfigConsumer(
-          project,
-          consumer =>
-            consumer.has('format') && consumer.get('format').has('ignore')
-              ? consumer.get('format').get('ignore')
-              : undefined,
-        ),
-      }),
-      getProjectEnabled: project => ({
-        enabled: project.config.format.enabled,
-        source: master.projectManager.findProjectConfigConsumer(
-          project,
-          consumer =>
-            consumer.has('format')
-              ? consumer.get('format').get('enabled')
-              : undefined,
-        ),
-      }),
-      noun: 'formatting',
-      verb: 'linting',
-      configCategory: 'format',
-      extensions: FORMATTABLE_EXTENSIONS,
-    });
+    defineFlags(c: Consumer): Flags {
+      return {
+        allowDiagnostics: c.get('allowDiagnostics').asBoolean(false),
+      };
+    },
 
-    if (paths.size === 0) {
-      reporter.warn('No files formatted');
-      return;
-    }
+    async callback(
+      req: MasterRequest,
+      flags: Flags,
+    ): Promise<undefined | string> {
+      const {reporter, master} = req;
+      const {args} = req.query;
+      req.expectArgumentLength(1);
 
-    const pathsByWorker = await req.master.fileAllocator.groupPathsByWorker(
-      paths,
-    );
+      const filename = await master.resolver.resolveEntryAssertPath({
+        ...req.getResolverOptionsFromFlags(),
+        source: createUnknownFilePath(args[0]),
+      }, {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
 
-    const progress = reporter.progress();
-    progress.setTotal(paths.size);
-    progress.setTitle('Formatting');
+      const res = await req.requestWorkerFormat(filename, {
+        allowParserDiagnostics: flags.allowDiagnostics,
+      });
 
-    const diagnosticsProcessor = new DiagnosticsProcessor({});
-
-    // TODO probably add the same logic in CompilerLinter if the project config disables formatting
-
-    await Promise.all(
-      pathsByWorker.map(async paths => {
-        for (const path of paths) {
-          progress.setText(`<filelink target="${path.join()}" />`);
-          progress.tick();
-
-          const res = await req.requestWorkerFormat(path);
-          if (res === undefined) {
-            continue;
-          }
-
-          if (res.diagnostics.length > 0) {
-            diagnosticsProcessor.addDiagnostics(res.diagnostics);
-            continue;
-          }
-
-          //await writeFile(path, res.formatted);
-        }
-      }),
-    );
-
-    diagnosticsProcessor.maybeThrowDiagnosticsError();
-    reporter.success(
-      `<number>${paths.size}</number> files formatted successfully`,
-    );
+      if (res === undefined) {
+        reporter.error('No formatter for this file');
+        return undefined;
+      } else {
+        reporter.writeAll(res.formatted);
+        return res.formatted;
+      }
+    },
   },
-});
+);

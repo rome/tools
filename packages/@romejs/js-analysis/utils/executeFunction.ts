@@ -6,9 +6,8 @@
  */
 
 import {AnyFunction} from '@romejs/js-ast';
-import {Scope} from '../scopes';
+import {Scope, FunctionScope} from '../scopes';
 import T from '../types/T';
-import {FunctionScope} from '../scopes';
 import executeAtom from './executeAtom';
 import FunctionT from '../types/FunctionT';
 import MaybeT from '../types/MaybeT';
@@ -27,15 +26,12 @@ export default function executeFunction(
   const returns = new OpenT(scope, head.returnType ? head.returnType : node);
 
   // type check the body
-  const bodyScope = new FunctionScope(
-    {
-      parentScope: scope,
-    },
-    {
-      thisContext: thisContext ? thisContext : new VoidT(scope, undefined),
-      returnType: returns,
-    },
-  );
+  const bodyScope = new FunctionScope({
+    parentScope: scope,
+  }, {
+    thisContext: thisContext ? thisContext : new VoidT(scope, undefined),
+    returnType: returns,
+  });
   if (head.typeParameters) {
     bodyScope.evaluate(head.typeParameters);
   }
@@ -44,18 +40,16 @@ export default function executeFunction(
   const params = [];
   let rest;
   for (let paramNode of head.params) {
-    let optional =
-      paramNode.meta !== undefined && paramNode.meta.optional === true;
+    let optional = paramNode.meta !== undefined && paramNode.meta.optional ===
+      true;
     if (paramNode.type === 'BindingAssignmentPattern') {
       optional = false;
       paramNode = paramNode.left;
     }
 
     let paramType;
-    if (
-      paramNode.meta !== undefined &&
-      paramNode.meta.typeAnnotation !== undefined
-    ) {
+    if (paramNode.meta !== undefined && paramNode.meta.typeAnnotation !==
+        undefined) {
       paramType = scope.evaluate(paramNode.meta.typeAnnotation);
     } else {
       paramType = new OpenT(scope, paramNode);
@@ -76,6 +70,7 @@ export default function executeFunction(
   // if no types have flowed into the return type then it'll return undefined
   if (returns.hasConnections() === false) {
     //const ret = new VoidT(scope, node);
+
     //returns.shouldMatch(ret);
   }
 

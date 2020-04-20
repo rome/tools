@@ -15,53 +15,20 @@ export const bindingKeys: Map<string, Array<string>> = new Map();
 export const visitorKeys: Map<string, Array<string>> = new Map();
 export const nodeNames: Set<string> = new Set();
 
-export function assertNodeTypeSet(names: Map<string, unknown>, desc: string) {
-  const set: Set<string> = new Set(names.keys());
+type JustNodeKeysProp<K, V> = V extends NodeBase | Array<NodeBase> | Array<
+  | undefined
+  | NodeBase> ? K : never;
 
-  const errors = [];
-
-  // Verify that all names in `set` are valid
-  for (const name of set) {
-    if (name[0] === '_') {
-      continue;
-    }
-
-    if (nodeNames.has(name) === false) {
-      errors.push(`${name} is not a valid node`);
-    }
-  }
-
-  // Verify all nodes
-  for (const name of nodeNames) {
-    if (set.has(name) === false) {
-      errors.push(`${name} does not appear`);
-    }
-  }
-
-  if (errors.length > 0) {
-    throw new Error(`${desc}: ${errors.join('\n')}`);
-  }
-}
-
-type JustNodeKeysProp<K, V> = V extends
-  | NodeBase
-  | Array<NodeBase>
-  | Array<undefined | NodeBase>
-  ? K
-  : never;
-
-type JustNodeKeys<T> = ExcludeCoreNodeKeys<
-  {
-    // Only include properties that are node-like
-    [K in keyof T]: JustNodeKeysProp<K, NonNullable<T[K]>>;
-  }[keyof T]
->;
+type JustNodeKeys<T> = ExcludeCoreNodeKeys<{ [K in keyof T]: JustNodeKeysProp<
+  K,
+  NonNullable<T[K]>
+> }[keyof T]>;
 
 type ExcludeCoreNodeKeys<T> = Exclude<T, keyof JSNodeBase>;
 
-type VisitorKeys<T> = {[K in JustNodeKeys<T>]: true};
+type VisitorKeys<T> = { [K in JustNodeKeys<T>]: true };
 
-type BindingKeys<T> = {[K in JustNodeKeys<T>]?: true};
+type BindingKeys<T> = { [K in JustNodeKeys<T>]?: true };
 
 type CreateBuilderOptions<Node> = {
   bindingKeys: BindingKeys<Node>;
@@ -94,10 +61,9 @@ export function createQuickBuilder<
   return new QuickBuilder(type, opts.visitorKeys, quickKey);
 }
 
-export function createBuilder<Node extends AnyNode>(
-  type: string,
-  opts: CreateBuilderOptions<Node>,
-): Builder<Node> {
+export function createBuilder<
+  Node extends AnyNode
+>(type: string, opts: CreateBuilderOptions<Node>): Builder<Node> {
   declareBuilder(type, opts);
 
   return new Builder(type, opts.visitorKeys);
@@ -128,6 +94,8 @@ class Builder<Node extends AnyNode> {
   normalize(node: undefined | AnyNode): undefined | Node {
     if (this.is(node)) {
       return node;
+    } else {
+      return undefined;
     }
   }
 
@@ -159,18 +127,12 @@ class QuickBuilder<Node extends AnyNode, Arg> extends Builder<Node> {
 
   quickKey: keyof Node;
 
-  quick(
-    arg: Arg,
-    opts?: Partial<Omit<Node, 'type'>>,
-    inheritNode?: Node,
-  ): Node {
-    return this.create(
-      // @ts-ignore
-      {
-        ...opts,
-        [this.quickKey]: arg,
-      },
-      inheritNode,
-    );
+  quick(arg: Arg, opts?: Partial<Omit<Node, 'type'>>, inheritNode?: Node): Node {
+    const node = ({
+      ...opts,
+      [this.quickKey]: arg,
+    } as Node);
+
+    return this.create(node, inheritNode);
   }
 }

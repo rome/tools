@@ -27,7 +27,7 @@ export default class OpenT extends T {
       return new UnknownT(this.scope, this.originNode);
     }
 
-    const values = node.lines.map(line => this.utils.reduce(line.value));
+    const values = node.lines.map((line) => this.utils.reduce(line.value));
     return this.scope.createUnion(values, this.originNode);
   }
 }

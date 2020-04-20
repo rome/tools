@@ -7,7 +7,7 @@
 
 export function hrTime(): number {
   const hrtime = process.hrtime(); // [seconds, nanoseconds]
-  const ts = hrtime[0] * 1000000 + Math.round(hrtime[1] / 1000); // microseconds
+  const ts = hrtime[0] * 1_000_000 + Math.round(hrtime[1] / 1_000); // microseconds
   return ts;
 }
 

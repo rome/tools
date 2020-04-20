@@ -13,9 +13,10 @@ export type TSExternalModuleReference = JSNodeBase & {
   expression: StringLiteral;
 };
 
-export const tsExternalModuleReference = createBuilder<
-  TSExternalModuleReference
->('TSExternalModuleReference', {
-  bindingKeys: {},
-  visitorKeys: {expression: true},
-});
+export const tsExternalModuleReference = createBuilder<TSExternalModuleReference>(
+  'TSExternalModuleReference',
+  {
+    bindingKeys: {},
+    visitorKeys: {expression: true},
+  },
+);

@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -22,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' Copy of modifiers-methods with \'async\''
       loc: Object {
         filename: 'input.ts'
@@ -57,12 +59,13 @@ Program {
         }
       }
       abstract: true
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.ts'
         end: Object {
-          column: 0
-          index: 257
-          line: 12
+          column: 1
+          index: 256
+          line: 11
         }
         start: Object {
           column: 0
@@ -72,6 +75,7 @@ Program {
       }
       meta: ClassHead {
         implements: undefined
+        leadingComments: undefined
         superClass: undefined
         superTypeParameters: undefined
         typeParameters: undefined
@@ -88,24 +92,6 @@ Program {
             line: 2
           }
         }
-        leadingComments: Array [
-          CommentLine {
-            value: ' Copy of modifiers-methods with \'async\''
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 41
-                index: 41
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-          }
-        ]
         body: Array [
           TSDeclareMethod {
             kind: 'method'
@@ -145,9 +131,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 4
-                index: 89
-                line: 4
+                column: 23
+                index: 84
+                line: 3
               }
               start: Object {
                 column: 4
@@ -168,13 +154,13 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 4
-                  index: 89
-                  line: 4
-                }
-                start: Object {
                   column: 22
                   index: 83
+                  line: 3
+                }
+                start: Object {
+                  column: 20
+                  index: 81
                   line: 3
                 }
               }
@@ -243,9 +229,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 4
-                index: 113
-                line: 5
+                column: 23
+                index: 108
+                line: 4
               }
               start: Object {
                 column: 4
@@ -288,8 +274,8 @@ Program {
                   line: 4
                 }
                 start: Object {
-                  column: 21
-                  index: 106
+                  column: 18
+                  index: 103
                   line: 4
                 }
               }
@@ -359,9 +345,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 4
-                index: 146
-                line: 6
+                column: 32
+                index: 141
+                line: 5
               }
               start: Object {
                 column: 4
@@ -382,13 +368,13 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 4
-                  index: 146
-                  line: 6
-                }
-                start: Object {
                   column: 31
                   index: 140
+                  line: 5
+                }
+                start: Object {
+                  column: 29
+                  index: 138
                   line: 5
                 }
               }
@@ -457,9 +443,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 4
-                index: 180
-                line: 8
+                column: 32
+                index: 174
+                line: 6
               }
               start: Object {
                 column: 4
@@ -502,8 +488,8 @@ Program {
                   line: 6
                 }
                 start: Object {
-                  column: 30
-                  index: 172
+                  column: 27
+                  index: 169
                   line: 6
                 }
               }
@@ -572,9 +558,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 4
-                index: 205
-                line: 9
+                column: 24
+                index: 200
+                line: 8
               }
               start: Object {
                 column: 4
@@ -617,8 +603,8 @@ Program {
                   line: 8
                 }
                 start: Object {
-                  column: 22
-                  index: 198
+                  column: 19
+                  index: 195
                   line: 8
                 }
               }
@@ -687,9 +673,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 4
-                index: 233
-                line: 10
+                column: 27
+                index: 228
+                line: 9
               }
               start: Object {
                 column: 4
@@ -732,8 +718,8 @@ Program {
                   line: 9
                 }
                 start: Object {
-                  column: 25
-                  index: 226
+                  column: 22
+                  index: 223
                   line: 9
                 }
               }
@@ -802,9 +788,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 0
-                index: 255
-                line: 11
+                column: 25
+                index: 254
+                line: 10
               }
               start: Object {
                 column: 4
@@ -847,8 +833,8 @@ Program {
                   line: 10
                 }
                 start: Object {
-                  column: 23
-                  index: 252
+                  column: 20
+                  index: 249
                   line: 10
                 }
               }

@@ -6,54 +6,63 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import Bundler from '../bundler/Bundler';
-import {commandCategories} from '../../commands';
 import {createDirectory, writeFile} from '@romejs/fs';
+import {Consumer} from '@romejs/consume';
+import {markup} from '@romejs/string-markup';
 
-export default createMasterCommand({
-  category: commandCategories.SOURCE_CODE,
-  description: 'build a standalone js bundle for a package',
+type Flags = {quiet: boolean};
 
-  async default(
-    req: MasterRequest,
-  ): Promise<{
-    content: string;
-    map: string;
-  }> {
-    const {flags} = req.client;
-    const {args} = req.query;
-    const {reporter} = req;
-    req.expectArgumentLength(2);
+export default createMasterCommand<Flags>(
+  {
+    category: commandCategories.SOURCE_CODE,
+    description: 'build a standalone js bundle for a package',
+    usage: '',
+    examples: [],
 
-    const [entryFilename, outputFolder] = args;
-    const bundler = Bundler.createFromMasterRequest(req);
+    defineFlags(consumer: Consumer): Flags {
+      return {
+        quiet: consumer.get('quiet').asBoolean(false),
+      };
+    },
 
-    const resolution = await bundler.getResolvedEntry(entryFilename);
-    const {files: outFiles, entry} = await bundler.bundleManifest(resolution);
+    async callback(req: MasterRequest, commandFlags: Flags): Promise<void> {
+      const {flags} = req.client;
+      const {args} = req.query;
+      const {reporter} = req;
+      req.expectArgumentLength(2);
 
-    const savedList = [];
-    const dir = flags.cwd.resolve(outputFolder);
-    for (const [filename, {kind, content}] of outFiles) {
-      const file = dir.append(filename);
-      const loc = file.join();
-      savedList.push(
-        `<filelink target="${loc}">${filename}</filelink> <filesize dim>${Buffer.byteLength(
-          content,
-        )}</filesize> <inverse>${kind}</inverse>`,
-      );
-      await createDirectory(file.getParent(), {recursive: true});
-      await writeFile(file, content);
-    }
+      const [entryFilename, outputFolder] = args;
+      const bundler = Bundler.createFromMasterRequest(req);
 
-    reporter.success(
-      `Saved the following files to <filelink target="${dir.join()}" />`,
-    );
-    reporter.list(savedList);
+      const resolution = await bundler.getResolvedEntry(entryFilename);
+      const {files: outFiles} = await bundler.bundleManifest(resolution);
 
-    return {
-      content: entry.js.content,
-      map: entry.sourceMap.content,
-    };
+      const savedList = [];
+      const dir = flags.cwd.resolve(outputFolder);
+      for (const [filename, {kind, content}] of outFiles) {
+        const buff = content();
+        const file = dir.append(filename);
+        const loc = file.join();
+        savedList.push(
+          markup`<filelink target="${loc}">${filename}</filelink> <filesize dim>${Buffer.byteLength(
+            buff,
+          )}</filesize> <inverse>${kind}</inverse>`,
+        );
+        await createDirectory(file.getParent(), {recursive: true});
+        await writeFile(file, buff);
+      }
+
+      if (commandFlags.quiet) {
+        reporter.success(markup`Saved to <filelink target="${dir.join()}" />`);
+      } else {
+        reporter.success(
+          markup`Saved the following files to <filelink target="${dir.join()}" />`,
+        );
+        reporter.list(savedList);
+      }
+    },
   },
-});
+);

@@ -25,11 +25,9 @@ function generatedPositionAfter(mappingA: Mapping, mappingB: Mapping): boolean {
   const lineB = mappingB.generated.line;
   const columnA = mappingA.generated.column;
   const columnB = mappingB.generated.column;
-  return (
-    lineB > lineA ||
-    (lineB == lineA && columnB >= columnA) ||
-    compareByGeneratedPositionsInflated(mappingA, mappingB) <= 0
-  );
+  return lineB > lineA || lineB === lineA && columnB >= columnA ||
+      compareByGeneratedPositionsInflated(mappingA, mappingB) <=
+      0;
 }
 
 /**
@@ -42,7 +40,7 @@ export default class MappingList {
     this.array = [];
     this.sorted = true;
     this.last = {
-      generated: {line: number1Neg1, column: number0},
+      generated: {index: number0, line: number1Neg1, column: number0},
       // TODO: original: undefined
       original: {line: number1Neg1, column: number0},
       source: undefined,

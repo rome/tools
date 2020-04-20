@@ -5,10 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SourceMap} from '@romejs/codec-source-map';
-import {ErrorFrame} from '@romejs/v8';
 import {SourceMapConsumer} from '@romejs/codec-source-map';
-import {coerce1, coerce1to0, Number1, Number0} from '@romejs/ob1';
+import {ErrorFrame} from '@romejs/v8';
+import {coerce1, coerce1To0, Number1, Number0} from '@romejs/ob1';
 import {
   getErrorStructure,
   ERROR_FRAMES_PROP,
@@ -27,7 +26,7 @@ let inited: boolean = false;
 const maps: Map<string, SourceMapConsumer> = new Map();
 
 // In case we want to defer the reading of a source map completely (parsing is always deferred)
-const factories: Map<string, () => SourceMap> = new Map();
+const factories: Map<string, () => SourceMapConsumer> = new Map();
 
 function prepareStackTrace(err: Error, frames: Array<NodeJS.CallSite>) {
   try {
@@ -98,11 +97,9 @@ function buildStackString(err: Error): string {
 
     if (isNative) {
       parts.push('native');
-    } else if (
-      filename !== undefined &&
-      lineNumber !== undefined &&
-      columnNumber !== undefined
-    ) {
+    } else if (filename !== undefined && lineNumber !== undefined &&
+          columnNumber !==
+          undefined) {
       parts.push(`(${filename}:${lineNumber}:${columnNumber})`);
     }
 
@@ -124,74 +121,69 @@ function noNull<T>(val: null | T): undefined | T {
   }
 }
 
-function addErrorFrames(
-  err: Error & {
-    [ERROR_FRAMES_PROP]?: unknown;
-    [ERROR_POP_FRAMES_PROP]?: unknown;
-  },
-  frames: Array<NodeJS.CallSite>,
-) {
+function addErrorFrames(err: Error & {
+  [ERROR_FRAMES_PROP]?: unknown;
+  [ERROR_POP_FRAMES_PROP]?: unknown;
+},
+frames: Array<NodeJS.CallSite>): void {
   if (err[ERROR_FRAMES_PROP]) {
-    return undefined;
+    return;
   }
 
-  let builtFrames = frames.map(
-    (frameApi): ErrorFrame => {
-      const filename = frameApi.getFileName();
-      const lineNumber = frameApi.getLineNumber();
-      const columnNumber = frameApi.getColumnNumber();
+  let builtFrames = frames.map((frameApi): ErrorFrame => {
+    const filename = frameApi.getFileName();
+    const lineNumber = frameApi.getLineNumber();
+    const columnNumber = frameApi.getColumnNumber();
 
-      const frame: ErrorFrame = {
-        typeName: noNull(frameApi.getTypeName()),
-        functionName: noNull(frameApi.getFunctionName()),
-        methodName: noNull(frameApi.getMethodName()),
+    const frame: ErrorFrame = {
+      typeName: noNull(frameApi.getTypeName()),
+      functionName: noNull(frameApi.getFunctionName()),
+      methodName: noNull(frameApi.getMethodName()),
 
-        isTopLevel: frameApi.isToplevel(),
-        isEval: frameApi.isEval(),
-        isNative: frameApi.isNative(),
-        isConstructor: frameApi.isConstructor(),
+      isTopLevel: frameApi.isToplevel(),
+      isEval: frameApi.isEval(),
+      isNative: frameApi.isNative(),
+      isConstructor: frameApi.isConstructor(),
 
-        // TODO frameApi.isAsync
-        isAsync: false,
+      // TODO frameApi.isAsync
+      isAsync: false,
 
-        resolvedLocation: true,
+      resolvedLocation: true,
 
-        filename: noNull(filename),
-        lineNumber: lineNumber == null ? undefined : coerce1(lineNumber),
+      filename: noNull(filename),
+      lineNumber: lineNumber == null ? undefined : coerce1(lineNumber),
 
-        // Rome expects 0-indexed columns, V8 provides 1-indexed
-        columnNumber:
-          columnNumber == null ? undefined : coerce1to0(columnNumber),
+      // Rome expects 0-indexed columns, V8 provides 1-indexed
+      columnNumber: columnNumber == null ? undefined : coerce1To0(columnNumber),
+    };
+
+    if (frame.filename !== undefined && frame.lineNumber !== undefined &&
+          frame.columnNumber !==
+          undefined) {
+      const {found, line, column, filename, name} = resolveLocation(
+        frame.filename,
+        frame.lineNumber,
+        frame.columnNumber,
+      );
+
+      return {
+        ...frame,
+        functionName: frame.functionName === undefined
+          ? name
+          : frame.functionName,
+        methodName: frame.methodName === undefined ? name : frame.methodName,
+        resolvedLocation: found,
+        lineNumber: line,
+        columnNumber: column,
+        filename,
       };
-
-      if (
-        frame.filename !== undefined &&
-        frame.lineNumber !== undefined &&
-        frame.columnNumber !== undefined
-      ) {
-        const {found, line, column, filename, name} = resolveLocation(
-          frame.filename,
-          frame.lineNumber,
-          frame.columnNumber,
-        );
-
-        return {
-          ...frame,
-          functionName:
-            frame.functionName === undefined ? name : frame.functionName,
-          methodName: frame.methodName === undefined ? name : frame.methodName,
-          resolvedLocation: found,
-          lineNumber: line,
-          columnNumber: column,
-          filename,
-        };
-      } else {
-        return frame;
-      }
-    },
-  );
+    } else {
+      return frame;
+    }
+  });
 
   // This is a property that an error object can define that will remove that amount of frames
+
   // This is useful for removing levels of indirection, for example, an invariant error
   const framesToProp = err[ERROR_POP_FRAMES_PROP];
   if (typeof framesToProp === 'number') {
@@ -237,19 +229,15 @@ export function resolveLocation(
   };
 }
 
-export function addSourceMap(filename: string, map: SourceMap) {
-  return addSourceMapFactory(filename, () => map);
-}
-
 // Add a source map factory. We jump through some hoops to return a function to remove the source map.
 // We make sure not to remove the source map if it's been subsequently added by another call.
-export function addSourceMapFactory(
+export function addSourceMap(
   filename: string,
-  factory: () => SourceMap,
+  factory: () => SourceMapConsumer,
 ): () => void {
   init();
 
-  let map: undefined | SourceMap;
+  let map: undefined | SourceMapConsumer;
   function factoryCapture() {
     map = factory();
     return map;
@@ -277,8 +265,9 @@ export function getSourceMap(filename: string): undefined | SourceMapConsumer {
   if (factory !== undefined) {
     factories.delete(filename);
     const map = factory();
-    const consumer = new SourceMapConsumer(map);
-    maps.set(filename, consumer);
-    return consumer;
+    maps.set(filename, map);
+    return map;
   }
+
+  return undefined;
 }

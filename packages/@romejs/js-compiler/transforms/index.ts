@@ -34,7 +34,10 @@ import metaPropertyTransform from './compileForBundle/metaPropertyTransform';
 import scopedRomeTransform from './compileForBundle/scopedRomeTransform';
 import asyncImportTransform from './compileForBundle/asyncImportTransform';
 import inlineEnv from './compileForBundle/inlineEnv';
-import {variableInjectorVisitor} from './defaultHooks/index';
+import {
+  variableInjectorVisitor,
+  commentInjectorVisitor,
+} from './defaultHooks/index';
 
 export const stageOrder: Array<TransformStageName> = [
   'pre',
@@ -42,7 +45,10 @@ export const stageOrder: Array<TransformStageName> = [
   'compileForBundle',
 ];
 
-export const hookVisitors: TransformVisitors = [variableInjectorVisitor];
+export const hookVisitors: TransformVisitors = [
+  variableInjectorVisitor,
+  commentInjectorVisitor,
+];
 
 export const stageTransforms: TransformStageFactories = {
   // These may effect dependency analysis
@@ -56,10 +62,7 @@ export const stageTransforms: TransformStageFactories = {
     templateLiterals,
     callSpread,
   ],
-  compileForBundle: (
-    projectConfig: ProjectConfig,
-    options: CompilerOptions,
-  ) => {
+  compileForBundle: (projectConfig: ProjectConfig, options: CompilerOptions) => {
     const opts = options.bundle;
     if (opts === undefined) {
       throw new Error('Expected bundle options for compileForBundle stage');
@@ -77,9 +80,9 @@ export const stageTransforms: TransformStageFactories = {
 
     if (opts.mode === 'modern') {
       transforms.push(requireRewriteTransform);
-      transforms.push(
-        opts.analyze.moduleType === 'cjs' ? cjsRootTransform : esToRefTransform,
-      );
+      transforms.push(opts.analyze.moduleType === 'cjs'
+        ? cjsRootTransform
+        : esToRefTransform);
     } else {
       transforms.push(inlineRequiresTransform);
       transforms.push(esToCJSTransform);

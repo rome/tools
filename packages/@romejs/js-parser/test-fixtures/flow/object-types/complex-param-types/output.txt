@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -169,7 +170,7 @@ Program {
                       }
                       types: Array [
                         FlowGenericTypeAnnotation {
-                          id: Identifier {
+                          id: ReferenceIdentifier {
                             name: 'int'
                             loc: Object {
                               filename: 'input.js'

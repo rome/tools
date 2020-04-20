@@ -14,10 +14,7 @@ import {
 import FunctionT from '../../types/FunctionT';
 import MaybeT from '../../types/MaybeT';
 
-export default function FlowFunctionTypeAnnotation(
-  node: AnyNode,
-  scope: Scope,
-) {
+export default function FlowFunctionTypeAnnotation(node: AnyNode, scope: Scope) {
   node = flowFunctionTypeAnnotation.assert(node);
 
   const bodyScope = scope.fork();

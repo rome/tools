@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -171,6 +172,7 @@ Program {
                     }
                   }
                   BindingAssignmentPattern {
+                    operator: '='
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
@@ -231,7 +233,7 @@ Program {
                           }
                         }
                         typeAnnotation: FlowGenericTypeAnnotation {
-                          id: Identifier {
+                          id: ReferenceIdentifier {
                             name: 'Object'
                             loc: Object {
                               filename: 'input.js'

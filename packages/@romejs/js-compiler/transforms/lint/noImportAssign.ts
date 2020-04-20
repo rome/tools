@@ -7,9 +7,9 @@
 
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
-import {markup} from '@romejs/string-markup';
+import {descriptions} from '@romejs/diagnostics';
 
-function isAssignment(path: Path) {
+function isAssignment(path: Path): boolean {
   switch (path.parentPath.node.type) {
     case 'AssignmentExpression':
     case 'AssignmentArrayPattern':
@@ -18,6 +18,9 @@ function isAssignment(path: Path) {
     case 'AssignmentObjectPattern':
     case 'ForInStatement':
       return true;
+
+    default:
+      return false;
   }
 }
 
@@ -26,17 +29,15 @@ export default {
   enter(path: Path): AnyNode {
     const {node, scope} = path;
 
-    if (
-      (node.type === 'AssignmentIdentifier' && isAssignment(path)) ||
-      (node.type === 'ReferenceIdentifier' &&
-        path.parentPath.node.type === 'UpdateExpression')
-    ) {
-      let binding = scope.getBinding(node.name);
-      if (binding !== undefined && binding.kind === 'import')
-        path.context.addNodeDiagnostic(node, {
-          category: 'lint/noImportAssign',
-          message: markup`<emphasis>${node.name}</emphasis> is read-only`,
-        });
+    if (node.type === 'AssignmentIdentifier' && isAssignment(path) ||
+            node.type ===
+            'ReferenceIdentifier' &&
+          path.parentPath.node.type === 'UpdateExpression') {
+      const binding = scope.getBinding(node.name);
+      if (binding !== undefined && binding.kind === 'import') path.context.addNodeDiagnostic(
+        node,
+        descriptions.LINT.NO_IMPORT_ASSIGN(node.name),
+      );
     }
 
     return node;

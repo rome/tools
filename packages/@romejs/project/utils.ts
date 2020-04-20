@@ -6,19 +6,14 @@
  */
 
 import {Consumer} from '@romejs/consume';
-import {PathPatterns} from '@romejs/path-match';
-import {parsePathPattern} from '@romejs/path-match';
+import {PathPatterns, parsePathPattern} from '@romejs/path-match';
 import {AbsoluteFilePathSet, AbsoluteFilePath} from '@romejs/path';
 import {ProjectConfigMeta, ProjectConfigMetaHard} from './types';
 import {ROME_CONFIG_FILENAMES, ROME_CONFIG_FOLDER} from './constants';
 
 export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
   const {configPath, projectFolder: folder, consumer} = meta;
-  if (
-    configPath === undefined ||
-    folder === undefined ||
-    consumer === undefined
-  ) {
+  if (configPath === undefined || folder === undefined || consumer === undefined) {
     throw new Error('This is not a disk project');
   }
 
@@ -32,7 +27,7 @@ export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
 
 export function arrayOfStrings(consumer: Consumer): Array<string> {
   if (consumer.exists()) {
-    return consumer.asArray().map(item => item.asString());
+    return consumer.asArray().map((item) => item.asString());
   } else {
     return [];
   }
@@ -40,7 +35,7 @@ export function arrayOfStrings(consumer: Consumer): Array<string> {
 
 export function arrayOfPatterns(consumer: Consumer): PathPatterns {
   // TODO consumer.handleThrownDiagnostics
-  return consumer.asArray().map(item => {
+  return consumer.asArray().map((item) => {
     return parsePathPattern({
       path: consumer.filename,
       input: item.asString(),
@@ -49,10 +44,9 @@ export function arrayOfPatterns(consumer: Consumer): PathPatterns {
   });
 }
 
-export function mergeArrays<T>(
-  a: undefined | Array<T>,
-  b: undefined | Array<T>,
-): undefined | Array<T> {
+export function mergeArrays<
+  T
+>(a: undefined | Array<T>, b: undefined | Array<T>): undefined | Array<T> {
   if (a === undefined) {
     return a;
   }

@@ -8,12 +8,9 @@
 import {AnyNode, AnyIdentifier} from '@romejs/js-ast';
 
 export default function isIdentifierish(node: AnyNode): node is AnyIdentifier {
-  return (
-    node.type === 'Identifier' ||
-    node.type === 'JSXIdentifier' ||
-    node.type === 'JSXReferenceIdentifier' ||
-    node.type === 'BindingIdentifier' ||
-    node.type === 'AssignmentIdentifier' ||
-    node.type === 'ReferenceIdentifier'
-  );
+  return node.type === 'Identifier' || node.type === 'JSXIdentifier' ||
+        node.type ===
+        'JSXReferenceIdentifier' || node.type === 'BindingIdentifier' ||
+      node.type ===
+      'AssignmentIdentifier' || node.type === 'ReferenceIdentifier';
 }

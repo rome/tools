@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -102,7 +103,7 @@ Program {
                   }
                   types: Array [
                     FlowGenericTypeAnnotation {
-                      id: Identifier {
+                      id: ReferenceIdentifier {
                         name: 'Foo'
                         loc: Object {
                           filename: 'input.js'
@@ -147,7 +148,7 @@ Program {
                         }
                         params: Array [
                           FlowGenericTypeAnnotation {
-                            id: Identifier {
+                            id: ReferenceIdentifier {
                               name: 'T'
                               loc: Object {
                                 filename: 'input.js'

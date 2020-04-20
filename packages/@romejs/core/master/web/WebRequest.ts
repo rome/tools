@@ -64,8 +64,8 @@ export default class WebRequest {
     req.setEncoding('utf8');
     let rawBody = '';
 
-    return new Promise(resolve => {
-      req.on('data', chunk => {
+    return new Promise((resolve) => {
+      req.on('data', (chunk) => {
         rawBody += chunk;
       });
 
@@ -97,10 +97,16 @@ export default class WebRequest {
 
       //this.request.reporter.clear();
       try {
-        const printer = this.masterRequest.createDiagnosticsPrinter({
-          category: 'WebRequest',
-        });
-        printer.addDiagnostics(diagnostics);
+        const printer = this.masterRequest.createDiagnosticsPrinter(
+          this.master.createDiagnosticsProcessor({
+            origins: [
+              {
+                category: 'WebRequest',
+              },
+            ],
+          }),
+        );
+        printer.processor.addDiagnostics(diagnostics);
         await printer.print();
       } catch (err) {
         this.reporter.warn('Failed trying to print diagnostics');
@@ -117,9 +123,10 @@ export default class WebRequest {
     body;
 
     switch (pathname) {
-      case '/favicon.ico':
+      case '/favicon.ico': {
         res.end('');
         break;
+      }
 
       case '/__rome__/websocket':
         return this.handleFrontendWebsocket();
@@ -127,7 +134,7 @@ export default class WebRequest {
       case '/__rome__/script.js':
         return this.handleFrontendScript();
 
-      case '/__rome__':
+      case '/__rome__': {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.end(`
           <!doctype html>
@@ -144,6 +151,7 @@ export default class WebRequest {
           </html>
         `);
         break;
+      }
 
       case '/hot':
         return this.handleDeviceWebsocket();
@@ -184,15 +192,11 @@ export default class WebRequest {
   ): Promise<boolean> {
     project;
 
-    const possibleStaticPath = await this.server.pathnameToAbsolutePath(
-      pathname,
-    );
+    const possibleStaticPath = await this.server.pathnameToAbsolutePath(pathname);
 
     // TODO check if it is a file
-    if (
-      possibleStaticPath !== undefined &&
-      (await this.master.memoryFs.existsHard(possibleStaticPath))
-    ) {
+    if (possibleStaticPath !== undefined &&
+        (await this.master.memoryFs.existsHard(possibleStaticPath))) {
       return true;
     }
 
@@ -264,13 +268,13 @@ export default class WebRequest {
     const socket = new WebSocketInterface('server', req.socket);
     this.server.deviceWebsockets.add(socket);
 
-    req.socket.on('error', err => {
+    req.socket.on('error', (err) => {
       console.log(err.stack);
     });
 
     this.reporter.success(`Device websocket client connected`);
 
-    socket.completeFrameEvent.subscribe(frame => {
+    socket.completeFrameEvent.subscribe((frame) => {
       const text = frame.payload.toString();
       try {
         const json = JSON.parse(text);
@@ -285,7 +289,7 @@ export default class WebRequest {
       }
     });
 
-    socket.errorEvent.subscribe(err => {
+    socket.errorEvent.subscribe((err) => {
       console.log(err);
     });
 

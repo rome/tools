@@ -6,11 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {
-  AssignmentExpression,
-  assignmentExpression,
-  AnyNode,
-} from '@romejs/js-ast';
+import {assignmentExpression, AnyNode} from '@romejs/js-ast';
 import SideEffectT from '../../types/SideEffectT';
 
 export default function AssignmentExpression(node: AnyNode, scope: Scope) {
@@ -25,5 +21,6 @@ export default function AssignmentExpression(node: AnyNode, scope: Scope) {
     return new SideEffectT(scope, node, rightType);
   } else {
     // TODO!
+    return undefined;
   }
 }

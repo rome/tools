@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostic} from '@romejs/diagnostics';
-import {SourceMap} from '@romejs/codec-source-map';
+import {Diagnostic} from '@romejs/diagnostics';
 import {TestRunnerOptions} from '../../master/testing/types';
 import {Bridge} from '@romejs/events';
 import {JSONFileReference} from '../types/files';
@@ -22,7 +21,6 @@ export type TestWorkerBridgeRunOptions = {
   projectFolder: string;
   code: string;
   cwd: string;
-  sourceMap: SourceMap;
   options: TestRunnerOptions;
 };
 
@@ -44,29 +42,26 @@ export default class TestWorkerBridge extends Bridge {
     direction: 'server->client',
   });
 
-  testsFound = this.createEvent<
-    Array<{ref: TestRef; isSkipped: boolean}>,
-    void
-  >({
+  testsFound = this.createEvent<Array<{
+    ref: TestRef;
+    isSkipped: boolean;
+  }>, void>({
     name: 'onTestFounds',
     direction: 'server<-client',
   });
 
-  testStart = this.createEvent<
-    {ref: TestRef; timeout: undefined | number},
-    void
-  >({
+  testStart = this.createEvent<{
+    ref: TestRef;
+    timeout: undefined | number;
+  }, void>({
     name: 'onTestStart',
     direction: 'server<-client',
   });
 
-  testError = this.createEvent<
-    {
-      ref: undefined | TestRef;
-      diagnostic: PartialDiagnostic;
-    },
-    void
-  >({name: 'onTestError', direction: 'server<-client'});
+  testError = this.createEvent<{
+    ref: undefined | TestRef;
+    diagnostic: Diagnostic;
+  }, void>({name: 'onTestError', direction: 'server<-client'});
 
   testSuccess = this.createEvent<{ref: TestRef}, void>({
     name: 'onTestSuccess',

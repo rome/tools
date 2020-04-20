@@ -6,18 +6,35 @@
  */
 
 import {Program, AnyComment} from '@romejs/js-ast';
-import {DiagnosticSuppressions, PartialDiagnostics} from '@romejs/diagnostics';
-import {markup} from '@romejs/string-markup';
+import {
+  DiagnosticSuppressions,
+  Diagnostics,
+  descriptions,
+  DiagnosticSuppressionType,
+  DiagnosticLocation,
+  DiagnosticSuppression,
+} from '@romejs/diagnostics';
+import {Dict} from '@romejs/typescript-helpers';
+import {add} from '@romejs/ob1';
 
-const SUPPRESSION_START = 'rome-suppress';
-const PREFIX_MISTAKES = ['@rome-suppress', 'rome-ignore', '@rome-ignore'];
+export const SUPPRESSION_NEXT_LINE_START = 'rome-suppress-next-line';
+const SUPPRESSION_CURRENT_LINE_START = 'rome-suppress-current-line';
+
+const SUPPRESSION_PREFIX_MISTAKES: Dict<string> = {
+  'rome-suppress': SUPPRESSION_NEXT_LINE_START,
+  '@rome-suppress': SUPPRESSION_NEXT_LINE_START,
+  'rome-ignore': SUPPRESSION_NEXT_LINE_START,
+  '@rome-ignore': SUPPRESSION_NEXT_LINE_START,
+  '@rome-suppression-next-line': SUPPRESSION_NEXT_LINE_START,
+  '@rome-suppression-current-line': SUPPRESSION_CURRENT_LINE_START,
+};
 
 type ExtractedSuppressions = {
   suppressions: DiagnosticSuppressions;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
 };
 
-function extractSuppressionsFromComment(
+export function extractSuppressionsFromComment(
   comment: AnyComment,
 ): undefined | ExtractedSuppressions {
   const {loc} = comment;
@@ -26,41 +43,55 @@ function extractSuppressionsFromComment(
   }
 
   const suppressedCategories: Set<string> = new Set();
-  const diagnostics: PartialDiagnostics = [];
+  const diagnostics: Diagnostics = [];
   const suppressions: DiagnosticSuppressions = [];
 
   const lines = comment.value.split('\n');
-  const cleanLines = lines.map(line => {
+  const cleanLines = lines.map((line) => {
     // Trim line and remove leading star
     return line.trim().replace(/\*[\s]/, '');
   });
 
   for (const line of cleanLines) {
-    if (!line.startsWith(SUPPRESSION_START)) {
-      for (const prefix of PREFIX_MISTAKES) {
+    // Find suppression start
+    let suppressionType: undefined | DiagnosticSuppressionType;
+    let matchedPrefix: undefined | string;
+    if (line.startsWith(SUPPRESSION_CURRENT_LINE_START)) {
+      matchedPrefix = SUPPRESSION_CURRENT_LINE_START;
+      suppressionType = 'current';
+    }
+    if (line.startsWith(SUPPRESSION_NEXT_LINE_START)) {
+      matchedPrefix = SUPPRESSION_NEXT_LINE_START;
+      suppressionType = 'next';
+    }
+
+    if (suppressionType === undefined || matchedPrefix === undefined) {
+      for (const prefix in SUPPRESSION_PREFIX_MISTAKES) {
+        const suggestion = SUPPRESSION_PREFIX_MISTAKES[prefix];
         if (line.startsWith(prefix)) {
           diagnostics.push({
-            category: 'suppressions/incorrectPrefix',
-            message: `Invalid suppression prefix <emphasis>${prefix}</emphasis>`,
-            advice: [
-              {
-                type: 'log',
-                category: 'info',
-                message: `Did you mean <emphasis>${SUPPRESSION_START}</emphasis>?`,
-              },
-            ],
-            ...loc,
+            description: descriptions.SUPPRESSIONS.PREFIX_TYPO(
+              prefix,
+              suggestion,
+            ),
+            location: loc,
           });
         }
       }
       continue;
     }
 
-    const categories = line
-      .slice(SUPPRESSION_START.length)
-      .trim()
-      .split(' ');
-    const cleanCategories = categories.map(category => category.trim());
+    const lineWithoutPrefix = line.slice(matchedPrefix.length);
+    if (lineWithoutPrefix[0] !== ' ') {
+      diagnostics.push({
+        description: descriptions.SUPPRESSIONS.MISSING_SPACE,
+        location: loc,
+      });
+      continue;
+    }
+
+    const categories = lineWithoutPrefix.trim().split(' ');
+    const cleanCategories = categories.map((category) => category.trim());
 
     for (let category of cleanCategories) {
       if (category === '') {
@@ -76,14 +107,14 @@ function extractSuppressionsFromComment(
 
       if (suppressedCategories.has(category)) {
         diagnostics.push({
-          category: 'suppressions/duplicate',
-          message: markup`Duplicate suppression category <emphasis>${category}</emphasis>`,
-          ...loc,
+          description: descriptions.SUPPRESSIONS.DUPLICATE(category),
+          location: loc,
         });
       } else {
         suppressedCategories.add(category);
 
         suppressions.push({
+          type: suppressionType,
           category,
           loc,
         });
@@ -105,7 +136,7 @@ function extractSuppressionsFromComment(
 export function extractSuppressionsFromComments(
   comments: Array<AnyComment>,
 ): ExtractedSuppressions {
-  let diagnostics: PartialDiagnostics = [];
+  let diagnostics: Diagnostics = [];
   let suppressions: DiagnosticSuppressions = [];
 
   for (const comment of comments) {
@@ -123,4 +154,20 @@ export function extractSuppressionsFromProgram(
   ast: Program,
 ): ExtractedSuppressions {
   return extractSuppressionsFromComments(ast.comments);
+}
+
+export function matchesSuppression(
+  loc: DiagnosticLocation,
+  suppression: DiagnosticSuppression,
+): boolean {
+  const targetLine = suppression.type === 'current'
+    ? suppression.loc.end.line
+    : add(suppression.loc.end.line, 1);
+
+  if (loc.filename !== undefined && loc.start !== undefined && loc.filename ===
+      suppression.loc.filename && loc.start.line === targetLine) {
+    return true;
+  }
+
+  return false;
 }

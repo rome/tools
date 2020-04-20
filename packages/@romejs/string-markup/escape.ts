@@ -5,13 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {isTagChar} from './parse';
-import {coerce0} from '@romejs/ob1';
+import {Dict} from '@romejs/typescript-helpers';
+import {MarkupTagName} from './types';
 
 // A tagged template literal helper that will escape all interpolated strings, ensuring only markup works
 export function markup(
-  strs: TemplateStringsArray,
-  ...values: Array<unknown>
+  strs: TemplateStringsArray,...values: Array<unknown>
 ): string {
   let out = '';
 
@@ -46,16 +45,61 @@ export function safeMarkup(input: string): SafeMarkup {
   return new SafeMarkup(input);
 }
 
+// Escape all \ and >
 export function escapeMarkup(input: string): string {
   let escaped = '';
   for (let i = 0; i < input.length; i++) {
     const char = input[i];
 
-    if (isTagChar(coerce0(i), input)) {
+    if (char === '<') {
       escaped += '\\<';
+    } else if (char === '\\') {
+      escaped += '\\\\';
     } else {
       escaped += char;
     }
   }
   return escaped;
+}
+
+export function markupTag(
+  tagName: MarkupTagName,
+  text: string,
+  attrs?: Dict<string | number>,
+): string {
+  let ret = `<${tagName}`;
+
+  if (attrs !== undefined) {
+    for (const key in attrs) {
+      const value = attrs[key];
+      ret += markup` ${key}="${String(value)}"`;
+    }
+  }
+
+  ret += `>${text}</${tagName}>`;
+
+  return ret;
+}
+
+export function unescapeTextValue(str: string): string {
+  let unescaped = '';
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+
+    // Unescape \\< to just <
+    // Unescape \\\\ to just \\
+    if (char === '\\') {
+      const nextChar = str[i + 1];
+      if (nextChar === '<' || nextChar === '\\') {
+        i++;
+        unescaped += nextChar;
+        continue;
+      }
+    }
+
+    unescaped += char;
+  }
+
+  return unescaped;
 }

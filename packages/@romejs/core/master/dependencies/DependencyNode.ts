@@ -10,14 +10,13 @@ import {BundleCompileResolvedImports} from '@romejs/js-compiler';
 import {ConstImportModuleKind} from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
 import {
-  PartialDiagnostics,
-  PartialDiagnosticAdvice,
-  PartialDiagnostic,
-  buildSuggestionAdvice,
+  Diagnostics,
+  Diagnostic,
+  descriptions,
+  DiagnosticLocation,
 } from '@romejs/diagnostics';
 import {ProjectDefinition} from '@romejs/project';
-import {DependencyOrder} from './DependencyOrderer';
-import DependencyOrderer from './DependencyOrderer';
+import DependencyOrderer, {DependencyOrder} from './DependencyOrderer';
 import {WorkerAnalyzeDependencyResult} from '../../common/bridges/WorkerBridge';
 import {AbsoluteFilePath, AbsoluteFilePathMap} from '@romejs/path';
 import {getFileHandler, ExtensionHandler} from '../../common/fileHandlers';
@@ -26,7 +25,9 @@ import {
   AnalyzeDependency,
   AnalyzeDependencyName,
   AnalyzeExportLocal,
+  AnyAnalyzeExport,
 } from '@romejs/core';
+import {FileReference} from '@romejs/core/common/types/files';
 
 type ResolvedImportFound = {
   type: 'FOUND';
@@ -44,14 +45,13 @@ type ResolvedImportNotFound = {
 type ResolvedImport = ResolvedImportFound | ResolvedImportNotFound;
 
 function equalKind(
-  producer: AnalyzeExportLocal,
+  producer: AnyAnalyzeExport,
   consumerKind: ConstImportModuleKind,
 ): boolean {
   // Allow importing functions and classes as `type` and `typeof`
-  if (
-    (producer.valueType === 'class' || producer.valueType === 'function') &&
-    (consumerKind === 'type' || consumerKind === 'typeof')
-  ) {
+  if (producer.type === 'local' && (producer.valueType === 'class' ||
+        producer.valueType ===
+        'function') && (consumerKind === 'type' || consumerKind === 'typeof')) {
     return true;
   }
 
@@ -73,18 +73,23 @@ type DependencyNodeDependency = {
   path: AbsoluteFilePath;
 };
 
+type ResolveImportsResult = {
+  diagnostics: Diagnostics;
+  resolved: BundleCompileResolvedImports;
+};
+
 export default class DependencyNode {
   constructor(
     graph: DependencyGraph,
-    id: string,
-    path: AbsoluteFilePath,
+    ref: FileReference,
     res: WorkerAnalyzeDependencyResult,
   ) {
     this.graph = graph;
 
-    this.project = graph.master.projectManager.assertProjectExisting(path);
-    this.path = path;
-    this.id = id;
+    this.project = graph.master.projectManager.assertProjectExisting(ref.real);
+    this.uid = ref.uid;
+    this.path = ref.real;
+    this.ref = ref;
     this.type = res.moduleType;
 
     this.usedAsync = false;
@@ -94,7 +99,7 @@ export default class DependencyNode {
 
     this.analyze = res;
 
-    const {handler} = getFileHandler(path, this.project.config);
+    const {handler} = getFileHandler(ref.real, this.project.config);
     this.handler = handler;
   }
 
@@ -105,10 +110,12 @@ export default class DependencyNode {
   type: AnalyzeModuleType;
   project: ProjectDefinition;
   path: AbsoluteFilePath;
-  id: string;
+  uid: string;
+  ref: FileReference;
   all: boolean;
   usedAsync: boolean;
   handler: undefined | ExtensionHandler;
+  resolveImportsCache: undefined | ResolveImportsResult;
 
   getMtime(): number {
     return this.graph.master.memoryFs.getMtime(this.path);
@@ -205,6 +212,27 @@ export default class DependencyNode {
     return orderer.order(this.path);
   }
 
+  // Get a list of all DependencyNodes where exports could be resolved. eg. `export *`
+  getExportedModules(
+    chain: Set<DependencyNode> = new Set(),
+  ): Set<DependencyNode> {
+    if (chain.has(this)) {
+      return new Set();
+    } else {
+      chain.add(this);
+    }
+
+    for (const exp of this.analyze.exports) {
+      if (exp.type === 'externalAll' && this.relativeToAbsolutePath.has(
+          exp.source,
+        )) {
+        this.getNodeFromRelativeDependency(exp.source).getExportedModules(chain);
+      }
+    }
+
+    return chain;
+  }
+
   getExportedNames(
     kind: ConstImportModuleKind,
     seen: Set<DependencyNode> = new Set(),
@@ -218,27 +246,42 @@ export default class DependencyNode {
     let names: Set<string> = new Set();
 
     for (const exp of this.analyze.exports) {
-      if (exp.type === 'local' && equalKind(exp, kind)) {
-        names.add(exp.name);
+      if (!equalKind(exp, kind)) {
+        continue;
       }
 
-      if (exp.type === 'external') {
-        const resolved = this.getNodeFromRelativeDependency(
-          exp.source,
-        ).resolveImport(exp.imported, exp.loc);
-        if (resolved.type === 'FOUND' && equalKind(resolved.record, kind)) {
-          names.add(exp.exported);
+      switch (exp.type) {
+        case 'local': {
+          names.add(exp.name);
+          break;
         }
-      }
 
-      if (exp.type === 'externalAll') {
-        names = new Set([
-          ...names,
-          ...this.getNodeFromRelativeDependency(exp.source).getExportedNames(
-            kind,
-            seen,
-          ),
-        ]);
+        case 'external': {
+          const resolved = this.getNodeFromRelativeDependency(exp.source).resolveImport(
+            exp.imported,
+            exp.loc,
+          );
+          if (resolved.type === 'FOUND' && equalKind(resolved.record, kind)) {
+            names.add(exp.exported);
+          }
+          break;
+        }
+
+        case 'externalNamespace': {
+          names.add(exp.exported);
+          break;
+        }
+
+        case 'externalAll': {
+          names = new Set([
+            ...names,
+            ...this.getNodeFromRelativeDependency(exp.source).getExportedNames(
+              kind,
+              seen,
+            ),
+          ]);
+          break;
+        }
       }
     }
 
@@ -248,107 +291,103 @@ export default class DependencyNode {
   buildDiagnosticForUnknownExport(
     kind: ConstImportModuleKind,
     resolved: ResolvedImportNotFound,
-  ): PartialDiagnostic {
-    const resolvedFileLink = `<filelink emphasis target="${resolved.node.id}" />`;
+  ): Diagnostic {
+    const location: DiagnosticLocation = {
+      ...resolved.loc,
+      mtime: this.getMtime(),
+    };
 
-    const message = `Couldn't find export <emphasis>${resolved.name}</emphasis> in ${resolvedFileLink}`;
-    let advice: PartialDiagnosticAdvice = [];
+    const expectedName = resolved.name;
+    const fromSource = resolved.node.uid;
 
-    if (resolved.node.analyze.exports.length === 0) {
-      advice.push({
-        type: 'log',
-        category: 'info',
-        message: "This file doesn't have any exports",
-      });
-    } else {
-      // Provide suggestion on unknown import
-      const exportedNames = resolved.node.getExportedNames(kind);
+    // Check if there was a matching local in any of the exported modules
+    for (const mod of resolved.node.getExportedModules()) {
+      // We use an object as a hash map so need to check for pollution
+      if (Object.prototype.hasOwnProperty.call(
+          mod.analyze.topLevelLocalBindings,
+          expectedName,
+        )) {
+        const localLoc = mod.analyze.topLevelLocalBindings[expectedName];
+        if (localLoc !== undefined) {
+          return {
+              description: descriptions.RESOLVER.UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL(
+                expectedName,
+                fromSource,
+                localLoc,
+              ),
+              location,
+            };
+        }
+      }
+    }
 
-      advice = advice.concat(
-        buildSuggestionAdvice(resolved.name, Array.from(exportedNames), {
-          formatItem: name => {
+    return {
+        description: descriptions.RESOLVER.UNKNOWN_EXPORT(
+          expectedName,
+          fromSource,
+          Array.from(resolved.node.getExportedNames(kind)),
+          (name: string) => {
             const exportInfo = resolved.node.resolveImport(name, undefined);
 
             if (exportInfo.type === 'NOT_FOUND') {
               throw new Error(
-                `mod.resolveImport returned NOT_FOUND for an export ${name} in ${exportInfo.node.path} despite being returned by getExportedNames`,
-              );
+                  `mod.resolveImport returned NOT_FOUND for an export ${name} in ${exportInfo.node.path} despite being returned by getExportedNames`,
+                );
             }
 
-            const {record} = exportInfo;
-
-            const {loc} = record;
-            if (loc !== undefined) {
-              name = `<filelink target="${loc.filename}" line="${loc.start.line}" column="${loc.start.column}">${name}</filelink>`;
-
-              if (exportInfo.node !== resolved.node) {
-                name += ` <dim>(from <filelink target="${exportInfo.node.path.join()}" />)</dim>`;
-              }
-            }
-
-            return name;
+            return {
+              location: exportInfo.record.loc,
+              source: exportInfo.node === resolved.node
+                ? undefined
+                : exportInfo.node.path.join(),
+            };
           },
-        }),
-      );
-    }
-
-    return {
-      category: 'bundler/unknownExport',
-      ...resolved.loc,
-      message,
-      advice,
-      mtime: this.getMtime(),
-    };
+        ),
+        location,
+      };
   }
 
   buildDiagnosticForTypeMismatch(
     resolved: ResolvedImportFound,
     node: DependencyNode,
     nameInfo: AnalyzeDependencyName,
-  ): PartialDiagnostic {
+  ): Diagnostic {
     const {name, kind, loc} = nameInfo;
-    const advice: PartialDiagnosticAdvice = [];
-
     const {record} = resolved;
 
-    if (record.loc !== undefined) {
-      advice.push({
-        type: 'log',
-        category: 'info',
-        message: `Export was defined here in <filelink emphasis target="${record.loc.filename}" />`,
-      });
-
-      advice.push({
-        type: 'frame',
-        ...record.loc,
-      });
-    }
-
     return {
-      category: 'bundler/importTypeMismatch',
-      ...loc,
-      message: `The export <emphasis>${name}</emphasis> in <filelink emphasis target="${node.id}" /> was incorrectly imported as a <emphasis>${kind}</emphasis> when it's actually a <emphasis>${record.kind}</emphasis>`,
-      advice,
-      mtime: this.getMtime(),
+      description: descriptions.RESOLVER.IMPORT_TYPE_MISMATCH(
+        name,
+        node.uid,
+        kind,
+        record.kind,
+        record.loc,
+      ),
+
+      location: {
+        ...loc,
+        mtime: this.getMtime(),
+      },
     };
   }
 
-  resolveImports(): {
-    diagnostics: PartialDiagnostics;
-    resolved: BundleCompileResolvedImports;
-  } {
+  resolveImports(): ResolveImportsResult {
+    const cached = this.resolveImportsCache;
+    if (cached !== undefined) {
+      return cached;
+    }
+
     const {graph} = this;
-    const deps = this.relativeToAbsolutePath;
 
     // Build up a map of any forwarded imports
     const resolvedImports: BundleCompileResolvedImports = {};
 
     // Diagnostics for unknown imports
-    const diagnostics: PartialDiagnostics = [];
+    const diagnostics: Diagnostics = [];
 
     // Go through all of our dependencies and check if they have any external exports to forward
     const allowTypeImportsAsValue = this.analyze.syntax.includes('ts');
-    for (const absolute of deps.values()) {
+    for (const absolute of this.relativeToAbsolutePath.values()) {
       const mod = graph.getNode(absolute);
 
       // We can't follow CJS names
@@ -356,8 +395,7 @@ export default class DependencyNode {
         continue;
       }
 
-      const usedNames = this.getDependencyInfoFromAbsolute(absolute).analyze
-        .names;
+      const usedNames = this.getDependencyInfoFromAbsolute(absolute).analyze.names;
 
       // Try to resolve these exports
       for (const nameInfo of usedNames) {
@@ -371,34 +409,36 @@ export default class DependencyNode {
 
         // Unknown import
         if (resolved.type === 'NOT_FOUND') {
-          diagnostics.push(
-            this.buildDiagnosticForUnknownExport(kind, resolved),
-          );
+          diagnostics.push(this.buildDiagnosticForUnknownExport(kind, resolved));
           continue;
         }
 
         // Flag imports of the wrong type
         if (!allowTypeImportsAsValue && !equalKind(resolved.record, kind)) {
-          diagnostics.push(
-            this.buildDiagnosticForTypeMismatch(resolved, mod, nameInfo),
-          );
+          diagnostics.push(this.buildDiagnosticForTypeMismatch(
+            resolved,
+            mod,
+            nameInfo,
+          ));
           continue;
         }
 
         // If the resolved target isn't the same as the file then forward it
-        if (resolved.node.id !== mod.id) {
-          resolvedImports[`${mod.id}:${name}`] = {
-            id: resolved.node.id,
+        if (resolved.node.uid !== mod.uid) {
+          resolvedImports[`${mod.uid}:${name}`] = {
+            id: resolved.node.uid,
             name: resolved.record.name,
           };
         }
       }
     }
 
-    return {
+    const result: ResolveImportsResult = {
       resolved: resolvedImports,
       diagnostics,
     };
+    this.resolveImportsCache = result;
+    return result;
   }
 
   resolveImport(
@@ -423,18 +463,12 @@ export default class DependencyNode {
 
     for (const record of exports) {
       // When resolving exportAll we never want to include the default export of those modules
-      if (
-        record.type === 'local' &&
-        record.name === 'default' &&
-        ignoreDefault
-      ) {
+      if (record.type === 'local' && record.name === 'default' && ignoreDefault) {
         continue;
       }
 
-      if (
-        record.type === 'local' &&
-        (record.name === name || record.name === '*')
-      ) {
+      if (record.type === 'local' && (record.name === name || record.name ===
+          '*')) {
         return {
           type: 'FOUND',
           node: this,
@@ -452,9 +486,12 @@ export default class DependencyNode {
       }
 
       if (record.type === 'externalAll') {
-        const resolved = this.getNodeFromRelativeDependency(
-          record.source,
-        ).resolveImport(name, record.loc, true, subAncestry);
+        const resolved = this.getNodeFromRelativeDependency(record.source).resolveImport(
+          name,
+          record.loc,
+          true,
+          subAncestry,
+        );
 
         if (resolved.type === 'FOUND') {
           return resolved;

@@ -12,6 +12,10 @@ import {createBridgeFromParentProcess} from '@romejs/events';
 import TestWorkerRunner from './TestWorkerRunner';
 import inspector = require('inspector');
 
+export type TestWorkerFlags = {
+  inspectorPort: number;
+};
+
 export default class TestWorker {
   constructor() {
     this.bridge = this.buildBridge();
@@ -21,9 +25,8 @@ export default class TestWorker {
   runners: Map<number, TestWorkerRunner>;
   bridge: TestWorkerBridge;
 
-  async init() {
-    // TODO randomly generate an open port
-    inspector.open();
+  async init(flags: TestWorkerFlags) {
+    inspector.open(flags.inspectorPort);
 
     await this.bridge.handshake();
   }
@@ -33,7 +36,7 @@ export default class TestWorker {
       type: 'server',
     });
 
-    process.on('unhandledRejection', err => {
+    process.on('unhandledRejection', (err) => {
       bridge.testError.send({
         ref: undefined,
         diagnostic: deriveDiagnosticFromError({
@@ -49,7 +52,7 @@ export default class TestWorker {
       };
     });
 
-    bridge.prepareTest.subscribe(data => {
+    bridge.prepareTest.subscribe((data) => {
       return this.prepareTest(data);
     });
 

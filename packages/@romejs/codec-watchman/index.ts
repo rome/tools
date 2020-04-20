@@ -8,13 +8,16 @@
 import {dumpToBuffer, BunserBuf} from './bser';
 import {Reporter} from '@romejs/cli-reporter';
 import {Event} from '@romejs/events';
-import child_process = require('child_process');
+import childProcess = require('child_process');
+
 import util = require('util');
+
 import net = require('net');
+
 import {Consumer, consumeUnknown} from '@romejs/consume';
 import {Dict} from '@romejs/typescript-helpers';
 
-const exec = util.promisify(child_process.exec);
+const exec = util.promisify(childProcess.exec);
 
 export type WatchmanSubscriptionValue = {
   'state-enter': undefined | string;
@@ -29,15 +32,13 @@ export type WatchmanSubscriptionValue = {
     name: string;
     mtime: number;
   }>;
-  is_fresh_instance: boolean;
+  isFreshInstance: boolean;
   version: string;
   since: string;
   clock: string;
 };
 
-function normalizeWatchmanSubscription(
-  res: Consumer,
-): WatchmanSubscriptionValue {
+function normalizeWatchmanSubscription(res: Consumer): WatchmanSubscriptionValue {
   return {
     'state-enter': res.get('state-enter').asStringOrVoid(),
     'state-leave': res.get('state-leave').asStringOrVoid(),
@@ -48,7 +49,7 @@ function normalizeWatchmanSubscription(
     // This can be a massive array... We should still probably efficiently validate it though somehow
     files: res.get('files').asAny(),
 
-    is_fresh_instance: res.get('is_fresh_instance').asBoolean(),
+    isFreshInstance: res.get('is_fresh_instance').asBoolean(),
     version: res.get('version').asString(),
     since: res.get('since').asString(),
     clock: res.get('clock').asString(),
@@ -90,11 +91,11 @@ export class WatchmanClient {
 
     const bunser = new BunserBuf();
 
-    bunser.valueEvent.subscribe(obj => {
+    bunser.valueEvent.subscribe((obj) => {
       this.processResponse(consumeUnknown(obj, 'parse/json'));
     });
 
-    socket.on('data', chunk => {
+    socket.on('data', (chunk) => {
       bunser.append(chunk);
     });
 
@@ -163,7 +164,7 @@ export class WatchmanClient {
     if (consumer.has('relative_path')) {
       opts = {
         ...opts,
-        relative_root: consumer.get('relative_path').asString(),
+        relativeRoot: consumer.get('relative_path').asString(),
       };
     }
 
@@ -201,18 +202,17 @@ export async function getWatchmanSocketLocation(): Promise<string> {
       const data = JSON.parse(stdout);
 
       // Validate JSON result
-      if (
-        typeof data !== 'object' ||
-        data == null ||
-        typeof data.sockname !== 'string'
-      ) {
+      if (typeof data !== 'object' || data == null || typeof data.sockname !==
+          'string') {
         throw new Error(
-          `Watchman returned JSON payload that wasnt an object with a sockname property`,
-        );
+            `Watchman returned JSON payload that wasnt an object with a sockname property`,
+          );
       }
 
       return data.sockname;
-    } catch (err) {
+    } catch (_err) {
+      let err = _err;
+
       // Better error message for syntatically invalid JSON
       if (err instanceof SyntaxError) {
         err = new Error(`Watchman returned malformed JSON payload`);
@@ -239,7 +239,7 @@ export async function createWatchmanClient(
   const socket = net.createConnection(sockname);
 
   return new Promise((resolve, reject) => {
-    socket.on('error', err => {
+    socket.on('error', (err) => {
       reject(err);
     });
 

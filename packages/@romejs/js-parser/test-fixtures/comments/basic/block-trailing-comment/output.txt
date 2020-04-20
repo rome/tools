@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -22,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: 'comment'
       loc: Object {
         filename: 'input.js'
@@ -56,6 +58,7 @@ Program {
       }
       body: Array [
         ExpressionStatement {
+          trailingComments: Array ['0']
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -69,24 +72,6 @@ Program {
               line: 2
             }
           }
-          trailingComments: Array [
-            CommentLine {
-              value: 'comment'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 13
-                  index: 24
-                  line: 3
-                }
-                start: Object {
-                  column: 4
-                  index: 15
-                  line: 3
-                }
-              }
-            }
-          ]
           expression: CallExpression {
             arguments: Array []
             loc: Object {

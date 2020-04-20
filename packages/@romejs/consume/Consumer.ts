@@ -6,14 +6,16 @@
  */
 
 import {
-  PartialDiagnosticAdvice,
-  PartialDiagnostics,
-  PartialDiagnostic,
+  DiagnosticAdvice,
+  Diagnostics,
+  Diagnostic,
   DiagnosticsError,
-  DiagnosticPointer,
-  getDiagnosticsFromError,
+  DiagnosticLocation,
   DiagnosticCategory,
   buildSuggestionAdvice,
+  createBlessedDiagnosticMessage,
+  createSingleDiagnosticError,
+  catchDiagnosticsSync,
 } from '@romejs/diagnostics';
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
@@ -58,43 +60,13 @@ type UnexpectedConsumerOptions = {
   category?: DiagnosticCategory;
   loc?: SourceLocation;
   target?: ConsumeSourceLocationRequestTarget;
-  advice?: PartialDiagnosticAdvice;
+  advice?: DiagnosticAdvice;
   at?: 'suffix' | 'prefix' | 'none';
   atParent?: boolean;
 };
 
 function isComputedPart(part: ConsumeKey): boolean {
   return typeof part === 'number' || !isValidIdentifierName(part);
-}
-
-function joinPath(path: ConsumePath): string {
-  let str = '';
-
-  for (let i = 0; i < path.length; i++) {
-    const part = path[i];
-    const nextPart = path[i + 1];
-
-    // If we are a computed property then wrap in brackets, the previous part would not have inserted a dot
-    if (isComputedPart(part)) {
-      const inner =
-        typeof part === 'number'
-          ? String(part)
-          : escapeString(part, {
-              quote: "'",
-            });
-
-      str += `[${inner}]`;
-    } else {
-      if (nextPart === undefined || isComputedPart(nextPart)) {
-        // Don't append a dot if there are no parts or the next is computed
-        str += part;
-      } else {
-        str += `${part}.`;
-      }
-    }
-  }
-
-  return str;
 }
 
 export default class Consumer {
@@ -132,43 +104,50 @@ export default class Consumer {
   hasHandledUnexpected: boolean;
   forceDiagnosticTarget: undefined | ConsumeSourceLocationRequestTarget;
 
-  async capture<T>(
-    callback: (consumer: Consumer) => Promise<T> | T,
-  ): Promise<{
-    result: T;
+  capture<T>(): {
+    consumer: Consumer;
     definitions: Array<ConsumePropertyDefinition>;
-    diagnostics: PartialDiagnostics;
-  }> {
-    let diagnostics: PartialDiagnostics = [];
+    diagnostics: Diagnostics;
+  } {
+    let diagnostics: Diagnostics = [];
     const definitions: Array<ConsumePropertyDefinition> = [];
 
     const consumer = this.clone({
-      onDefinition(def) {
+      onDefinition: (def, consumer) => {
+        if (this.onDefinition !== undefined) {
+          this.onDefinition(def, consumer);
+        }
+
         definitions.push(def);
       },
+
       handleUnexpectedDiagnostic(diag) {
         diagnostics.push(diag);
       },
     });
+    return {consumer, definitions, diagnostics};
+  }
 
+  async bufferDiagnostics<T>(
+    callback: (consumer: Consumer) => Promise<T> | T,
+  ): Promise<T> {
+    const {diagnostics, consumer} = await this.capture();
     const result = await callback(consumer);
-    return {result, definitions, diagnostics};
+    if (result === undefined || diagnostics.length > 0) {
+      throw new DiagnosticsError('Captured diagnostics', diagnostics);
+    }
+    return result;
   }
 
   handleThrownDiagnostics(callback: () => void) {
     if (this.handleUnexpected === undefined) {
       callback();
     } else {
-      try {
-        callback();
-      } catch (err) {
-        const diags = getDiagnosticsFromError(err);
-        if (diags === undefined) {
-          throw err;
-        } else {
-          for (const diag of diags) {
-            this.handleUnexpected(diag);
-          }
+      const {diagnostics} = catchDiagnosticsSync(callback);
+
+      if (diagnostics !== undefined) {
+        for (const diag of diagnostics) {
+          this.handleUnexpected(diag);
         }
       }
     }
@@ -178,20 +157,20 @@ export default class Consumer {
     def: Omit<ConsumePropertyDefinition, 'objectPath' | 'metadata'>,
   ) {
     if (this.onDefinition !== undefined) {
-      this.onDefinition({
+      this.onDefinition(({
         ...def,
         objectPath: this.keyPath,
         metadata: this.propertyMetadata,
-      } as ConsumePropertyDefinition);
+      } as ConsumePropertyDefinition), this);
     }
   }
 
-  getDiagnosticPointer(
+  getDiagnosticLocation(
     target: ConsumeSourceLocationRequestTarget = 'all',
-  ): undefined | DiagnosticPointer {
+  ): DiagnosticLocation {
     const {getDiagnosticPointer} = this.context;
     if (getDiagnosticPointer === undefined) {
-      return undefined;
+      return {};
     }
 
     const {forceDiagnosticTarget} = this;
@@ -202,8 +181,10 @@ export default class Consumer {
   }
 
   getLocation(target?: ConsumeSourceLocationRequestTarget): SourceLocation {
-    const pointer = this.getDiagnosticPointer(target);
-    if (pointer === undefined) {
+    const location = this.getDiagnosticLocation(target);
+    if (location === undefined || location.start === undefined ||
+          location.end ===
+          undefined) {
       return {
         filename: this.filename,
         start: UNKNOWN_POSITION,
@@ -211,9 +192,9 @@ export default class Consumer {
       };
     } else {
       return {
-        filename: pointer.filename,
-        start: pointer.start,
-        end: pointer.end,
+        filename: location.filename,
+        start: location.start,
+        end: location.end,
       };
     }
   }
@@ -272,7 +253,42 @@ export default class Consumer {
   }
 
   wasInSource() {
-    return this.getDiagnosticPointer() !== undefined;
+    return this.getDiagnosticLocation() !== undefined;
+  }
+
+  getKeyPathString(path: ConsumePath = this.keyPath): string {
+    const {normalizeKey} = this.context;
+    let str = '';
+
+    for (let i = 0; i < path.length; i++) {
+      let part = path[i];
+      const nextPart = path[i + 1];
+
+      if (typeof part === 'string' && normalizeKey !== undefined) {
+        part = normalizeKey(part);
+      }
+
+      // If we are a computed property then wrap in brackets, the previous part would not have inserted a dot
+      // We allow a computed part at the beginning of a path
+      if (isComputedPart(part) && i > 0) {
+        const inner = typeof part === 'number'
+          ? String(part)
+          : escapeString(part, {
+            quote: "'",
+          });
+
+        str += `[${inner}]`;
+      } else {
+        if (nextPart === undefined || isComputedPart(nextPart)) {
+          // Don't append a dot if there are no parts or the next is computed
+          str += part;
+        } else {
+          str += `${part}.`;
+        }
+      }
+    }
+
+    return str;
   }
 
   generateUnexpectedMessage(
@@ -294,9 +310,9 @@ export default class Consumer {
     }
 
     if (at === 'suffix') {
-      msg += ` at <emphasis>${joinPath(target.keyPath)}</emphasis>`;
+      msg += ` at <emphasis>${target.getKeyPathString()}</emphasis>`;
     } else {
-      msg = `<emphasis>${joinPath(target.keyPath)}</emphasis> ${msg}`;
+      msg = `<emphasis>${target.getKeyPathString()}</emphasis> ${msg}`;
     }
 
     return msg;
@@ -307,33 +323,33 @@ export default class Consumer {
     opts: UnexpectedConsumerOptions = {},
   ): DiagnosticsError {
     const {target = 'value'} = opts;
-    let {loc} = opts;
 
     const {filename} = this;
-    let pointer = this.getDiagnosticPointer(target);
-    const fromSource = pointer !== undefined;
+    let location = this.getDiagnosticLocation(target);
+    const fromSource = location !== undefined;
 
     msg = this.generateUnexpectedMessage(msg, opts);
 
-    const advice: PartialDiagnosticAdvice = [...(opts.advice || [])];
+    const advice: DiagnosticAdvice = [...(opts.advice || [])];
 
     // Make the errors more descriptive
     if (fromSource) {
       if (this.hasChangedFromSource()) {
-        advice.push({
-          type: 'log',
-          category: 'warn',
-          message:
-            'Our internal value has been modified since we read the original source',
-        });
+        advice.push(
+          {
+            type: 'log',
+            category: 'warn',
+            message: 'Our internal value has been modified since we read the original source',
+          },
+        );
       }
     } else {
       // Go up the consumer tree and take the position from the first consumer found in the source
       let consumer: undefined | Consumer = this;
       do {
-        const possiblePointer = consumer.getDiagnosticPointer(target);
-        if (possiblePointer !== undefined) {
-          pointer = possiblePointer;
+        const possibleLocation = consumer.getDiagnosticLocation(target);
+        if (possibleLocation !== undefined) {
+          location = possibleLocation;
           break;
         }
         consumer = consumer.parent;
@@ -347,42 +363,39 @@ export default class Consumer {
 
       // Warn that we didn't find this value in the source if it's parent wasn't either
       if (this.parent === undefined || !this.parent.wasInSource()) {
-        advice.push({
-          type: 'log',
-          category: 'warn',
-          message: `This value was expected to be found at <emphasis>${joinPath(
-            this.keyPath,
-          )}</emphasis> but was not in the original source`,
-        });
+        advice.push(
+          {
+            type: 'log',
+            category: 'warn',
+            message: `This value was expected to be found at <emphasis>${this.getKeyPathString()}</emphasis> but was not in the original source`,
+          },
+        );
       }
     }
 
-    if (pointer === undefined) {
+    if (opts.loc !== undefined) {
+      location = opts.loc;
+    }
+
+    if (location === undefined) {
       throw new Error(msg);
     }
 
-    if (loc === undefined) {
-      loc = {
-        filename: pointer.filename,
-        start: pointer.start,
-        end: pointer.end,
-      };
-    }
-
-    const diagnostic: PartialDiagnostic = {
-      category:
-        opts.category === undefined ? this.context.category : opts.category,
-      filename: this.filename,
-      message: msg,
-      ...loc,
-      language: pointer.language,
-      mtime: pointer.mtime,
-      sourceText: pointer.sourceText,
-      advice,
+    const diagnostic: Diagnostic = {
+      description: {
+        category: opts.category === undefined
+          ? this.context.category
+          : opts.category,
+        message: createBlessedDiagnosticMessage(msg),
+        advice,
+      },
+      location: {
+        ...location,
+        filename: this.filename,
+      },
     };
 
-    const errMsg = `Error occurred while consuming at ${loc.filename} (${loc.start.line}:${loc.start.column}): ${msg}`;
-    const err = new DiagnosticsError(errMsg, [diagnostic]);
+    const err = createSingleDiagnosticError(diagnostic);
 
     if (this.handleUnexpected === undefined) {
       throw err;
@@ -398,7 +411,9 @@ export default class Consumer {
   }
 
   // Only dispatch a single error for the current consumer, and suppress any if we have a parent consumer with errors
+
   // We do this since we could be producing redundant stale errors based on
+
   // results we've normalized to allow us to continue
   shouldDispatchUnexpected(): boolean {
     if (this.hasHandledUnexpected) {
@@ -434,12 +449,10 @@ export default class Consumer {
   ) {
     // We require this cache as we sometimes want to store state about a forked property such as used items
     const cached = this.forkCache.get(String(key));
-    if (
-      cached !== undefined &&
-      cached.value === value &&
-      (cached.propertyMetadata === undefined ||
-        cached.propertyMetadata === propertyMetadata)
-    ) {
+    if (cached !== undefined && cached.value === value &&
+        (cached.propertyMetadata ===
+            undefined ||
+          cached.propertyMetadata === propertyMetadata)) {
       return cached;
     }
 
@@ -489,11 +502,9 @@ export default class Consumer {
 
     // Validate the parent is an object
     const parentValue = parent.asUnknown();
-    if (
-      parentValue === undefined ||
-      parentValue === null ||
-      typeof parentValue !== 'object'
-    ) {
+    if (parentValue === undefined || parentValue === null ||
+          typeof parentValue !==
+          'object') {
       throw parent.unexpected('Attempted to set a property on a non-object');
     }
 
@@ -507,7 +518,7 @@ export default class Consumer {
   }
 
   has(key: string): boolean {
-    return this.get(key).asUnknown() !== undefined;
+    return this.get(key).asUnknown() != null;
   }
 
   setProperty(key: string, value: unknown): Consumer {
@@ -533,7 +544,9 @@ export default class Consumer {
 
     for (const [key, value] of this.asMap(false, false)) {
       if (!this.usedNames.has(key)) {
-        value.unexpected(`Unknown <emphasis>${key}</emphasis> ${type}`, {
+        value.unexpected(`Unknown <emphasis>${this.getKeyPathString([
+          key,
+        ])}</emphasis> ${type}`, {
           target: 'key',
           at: 'suffix',
           atParent: true,
@@ -549,21 +562,17 @@ export default class Consumer {
     }
   }
 
-  // ARRAY MUTATION
-
-  pushArray(item: unknown): this {
-    this.concatArray([item]);
-    return this;
-  }
-
-  concatArray(items: Array<unknown>): this {
-    const arr = this.asPlainArray();
-    this.setValue(arr.concat(items));
-    return this;
+  asPossibleParsedJSON(): Consumer {
+    if (typeof this.asUnknown() === 'string') {
+      return this.clone({
+        value: JSON.parse(this.asString()),
+      });
+    } else {
+      return this;
+    }
   }
 
   // JSON
-
   asJSONValue(): JSONValue {
     const {value} = this;
 
@@ -615,22 +624,17 @@ export default class Consumer {
   }
 
   //
-
   exists() {
-    return this.value !== undefined;
+    return this.value != null;
   }
 
   isObject(): boolean {
     const {value} = this;
-    return (
-      typeof value === 'object' &&
-      value !== null &&
-      value.constructor === Object
-    );
+    return typeof value === 'object' && value !== null && value.constructor ===
+      Object;
   }
 
   // OBJECTS
-
   keys(optional?: boolean): Array<string> {
     return Object.keys(this.asUnknownObject(optional));
   }
@@ -669,7 +673,6 @@ export default class Consumer {
   }
 
   // ARRAY-LIKES
-
   asSet(optional?: boolean): Set<Consumer> {
     const arr = this.asArray(optional);
     const setVals: Set<unknown> = new Set();
@@ -729,7 +732,6 @@ export default class Consumer {
   }
 
   // DATES
-
   asDateOrVoid(def?: Date): undefined | Date {
     this.declareDefinition({
       type: 'date',
@@ -762,7 +764,6 @@ export default class Consumer {
   }
 
   // BOOLEANS
-
   asBooleanOrVoid(def?: boolean): undefined | boolean {
     this.declareDefinition({
       type: 'boolean',
@@ -795,7 +796,6 @@ export default class Consumer {
   }
 
   // STRINGS
-
   asStringOrVoid(def?: string): undefined | string {
     this.declareDefinition({
       type: 'string',
@@ -804,7 +804,7 @@ export default class Consumer {
     });
 
     if (this.exists()) {
-      return this.asString(def);
+      return this._asString(def);
     } else {
       return undefined;
     }
@@ -849,7 +849,7 @@ export default class Consumer {
           },
           {
             type: 'list',
-            list: validValues.map(str => String(str)),
+            list: validValues.map((str) => String(str)),
           },
         ],
       });
@@ -868,7 +868,6 @@ export default class Consumer {
   }
 
   // BIGINT
-
   asBigIntOrVoid(def?: number | bigint): undefined | bigint {
     this.declareDefinition({
       type: 'bigint',
@@ -907,7 +906,6 @@ export default class Consumer {
   }
 
   // PATHS
-
   asURLFilePath(): URLFilePath {
     const path = this.asUnknownFilePath();
     if (path.isURL()) {
@@ -956,7 +954,6 @@ export default class Consumer {
   }
 
   // NUMBER
-
   asNumberOrVoid(def?: number): undefined | number {
     this.declareDefinition({
       type: 'number',
@@ -979,6 +976,44 @@ export default class Consumer {
     return coerce1(this.asNumber());
   }
 
+  asNumberFromString(def?: number): number {
+    this.declareDefinition({
+      type: 'number',
+      default: def,
+      required: true,
+    });
+    return this._asNumberFromString(def);
+  }
+
+  asNumberFromStringOrVoid(def?: number): undefined | number {
+    this.declareDefinition({
+      type: 'number',
+      default: def,
+      required: false,
+    });
+
+    if (this.exists()) {
+      return this._asNumberFromString(def);
+    } else {
+      return undefined;
+    }
+  }
+
+  _asNumberFromString(def?: number): number {
+    if (def !== undefined && !this.exists()) {
+      return def;
+    }
+
+    const str = this._asString();
+    const num = Number(str);
+    if (isNaN(num)) {
+      this.unexpected('Expected valid number');
+      return NaN;
+    } else {
+      return num;
+    }
+  }
+
   asNumber(def?: number): number {
     this.declareDefinition({
       type: 'number',
@@ -988,19 +1023,19 @@ export default class Consumer {
     return this._asNumber(def);
   }
 
-  asNumberInRange(opts: {min?: number; max?: number; default?: number}): number;
+  asNumberInRange(opts: {min?: number; max?: number; default?: number}): number
 
   asNumberInRange(opts: {
     min: Number0;
     max?: Number0;
     default?: Number0;
-  }): Number0;
+  }): Number0
 
   asNumberInRange(opts: {
     min: Number1;
     max?: Number1;
     default?: Number1;
-  }): Number1;
+  }): Number1
 
   asNumberInRange(opts: {
     min?: Number0 | Number1 | number;
@@ -1047,12 +1082,11 @@ export default class Consumer {
   }
 
   //
-
   asUnknown(): unknown {
     return this.value;
   }
 
-  // rome-suppress lint/noExplicitAny
+  // rome-suppress-next-line lint/noExplicitAny
   asAny(): any {
     return this.value;
   }

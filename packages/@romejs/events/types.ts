@@ -26,9 +26,7 @@ export type EventOptions = {
   serial?: boolean;
 };
 
-export type EventSubscription = {
-  unsubscribe: () => void;
-};
+export type EventSubscription = {unsubscribe: () => void};
 
 export type BridgeHandshakeMessage = {
   type: 'handshake';

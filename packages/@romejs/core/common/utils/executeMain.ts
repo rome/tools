@@ -6,14 +6,17 @@
  */
 
 import {UnknownObject} from '@romejs/typescript-helpers';
-import {SourceMap} from '@romejs/codec-source-map';
+import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {sourceMapManager} from '@romejs/v8';
 import internalModule = require('module');
+
 import vm = require('vm');
+
 import {
-  PartialDiagnostic,
+  Diagnostic,
   truncateSourceText,
   INTERNAL_ERROR_LOG_ADVICE,
+  descriptions,
 } from '@romejs/diagnostics';
 import {AbsoluteFilePath} from '@romejs/path';
 import {Position} from '@romejs/parser-core';
@@ -22,15 +25,13 @@ import {number0Neg1, coerce1, number0} from '@romejs/ob1';
 type ExecuteMainOptions = {
   path: AbsoluteFilePath;
   code: string;
-  sourceMap: SourceMap;
+  sourceMap?: SourceMapConsumer;
   globals?: UnknownObject;
 };
 
 export default async function executeMain(
   opts: ExecuteMainOptions,
-): Promise<{
-  syntaxError: undefined | PartialDiagnostic;
-}> {
+): Promise<{syntaxError: undefined | Diagnostic}> {
   const {path, code, sourceMap, globals} = opts;
 
   const filename = path.join();
@@ -83,14 +84,17 @@ export default async function executeMain(
         line: coerce1(line),
       };
 
-      const syntaxError: PartialDiagnostic = {
-        message: err.message,
-        category: 'v8/syntaxError',
-        start: pos,
-        end: pos,
-        filename,
-        sourceText: truncateSourceText(code, pos, pos),
-        advice: [INTERNAL_ERROR_LOG_ADVICE],
+      const syntaxError: Diagnostic = {
+        description: {
+          ...descriptions.V8.SYNTAX_ERROR(err.message),
+          advice: [INTERNAL_ERROR_LOG_ADVICE],
+        },
+        location: {
+          start: pos,
+          end: pos,
+          filename,
+          sourceText: truncateSourceText(code, pos, pos),
+        },
       };
       return {syntaxError};
     }
@@ -99,7 +103,9 @@ export default async function executeMain(
   }
 
   // Execute the script if there was no syntax error
-  sourceMapManager.addSourceMap(filename, sourceMap);
+  if (sourceMap !== undefined) {
+    sourceMapManager.addSourceMap(filename, () => sourceMap);
+  }
   await script.runInContext(context);
   return {syntaxError: undefined};
 }

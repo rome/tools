@@ -12,24 +12,22 @@ import {
 } from '@romejs/core';
 import {
   Diagnostics,
-  PartialDiagnostics,
   INTERNAL_ERROR_LOG_ADVICE,
   DiagnosticOrigin,
+  getDiagnosticsFromError,
+  deriveDiagnosticFromError,
+  DiagnosticsProcessor,
 } from '@romejs/diagnostics';
-import {MasterCommand} from '../commands';
+import {MasterCommand, masterCommands} from './commands';
 import {
   DiagnosticsPrinter,
   DiagnosticsFileReader,
   readDiagnosticsFileLocal,
+  printDiagnostics,
 } from '@romejs/cli-diagnostics';
-import {consume, ConsumePath} from '@romejs/consume';
+import {consume, ConsumePath, Consumer} from '@romejs/consume';
 import {Event, EventSubscription} from '@romejs/events';
 import MasterRequest, {MasterRequestInvalid} from './MasterRequest';
-import {
-  getDiagnosticsFromError,
-  deriveDiagnosticFromError,
-} from '@romejs/diagnostics';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import ProjectManager from './project/ProjectManager';
 import WorkerManager from './WorkerManager';
 import Resolver from './fs/Resolver';
@@ -37,14 +35,13 @@ import FileAllocator from './fs/FileAllocator';
 import Logger from '../common/utils/Logger';
 import MemoryFileSystem from './fs/MemoryFileSystem';
 import Cache from './Cache';
-import {masterCommands} from './commands/index';
-import {Reporter} from '@romejs/cli-reporter';
+
+import {Reporter, ReporterStream} from '@romejs/cli-reporter';
 import {Profiler} from '@romejs/v8';
 import {
   ProfilingStartData,
   PartialMasterQueryRequest,
 } from '../common/bridges/MasterBridge';
-import {ReporterStream} from '@romejs/cli-reporter';
 import {
   ClientFlags,
   DEFAULT_CLIENT_REQUEST_FLAGS,
@@ -60,8 +57,15 @@ import {
   createUnknownFilePath,
 } from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
+import LSPServer from './lsp/LSPServer';
+import MasterReporter from './MasterReporter';
+import VirtualModules from './fs/VirtualModules';
+import {
+  DiagnosticsProcessorOptions,
+} from '@romejs/diagnostics/DiagnosticsProcessor';
+import {toKebabCase} from '@romejs/string-utils';
 
-const STDOUT_MAX_CHUNK_LENGTH = 100000;
+const STDOUT_MAX_CHUNK_LENGTH = 100_000;
 
 export type MasterClient = {
   id: number;
@@ -94,6 +98,41 @@ export type MasterMarker = MasterUnfinishedMarker & {
   // End time in milliseconds
   end: number;
 };
+
+function validateRequestFlags(
+  masterCommand: MasterCommand<Dict<unknown>>,
+  flagsConsumer: Consumer,
+) {
+  // Commands need to explicitly allow these flags
+  validateAllowedRequestFlag('watch', masterCommand, flagsConsumer);
+  validateAllowedRequestFlag('review', masterCommand, flagsConsumer);
+
+  // Don't allow review in combination with other flags
+  if (flagsConsumer.has('review')) {
+    const disallowedFlagsWhenReviewing = ['watch'];
+    for (const key of disallowedFlagsWhenReviewing) {
+      if (flagsConsumer.has(key)) {
+        throw flagsConsumer.get(key).unexpected(
+            `Flag <emphasis>${key}</emphasis> is not allowed with <emphasis>${key}</emphasis>`,
+          );
+      }
+    }
+  }
+}
+
+function validateAllowedRequestFlag(
+  flagKey: NonNullable<MasterCommand<Dict<unknown>>['allowRequestFlags']>[number],
+
+  masterCommand: MasterCommand<Dict<unknown>>,
+  flagsConsumer: Consumer,
+) {
+  const allowRequestFlags = masterCommand.allowRequestFlags || [];
+  if (flagsConsumer.has(flagKey) && !allowRequestFlags.includes(flagKey)) {
+    throw flagsConsumer.unexpected(
+      `This command does not support the <emphasis>${flagKey}</emphasis> flag`,
+    );
+  }
+}
 
 export default class Master {
   constructor(opts: MasterOptions) {
@@ -130,35 +169,54 @@ export default class Master {
       serial: true,
     });
 
-    this.logger = new Logger(
-      'master',
-      () => {
-        return (
-          this.logEvent.hasSubscribers() ||
-          this.connectedClientsListeningForLogs.size > 0
-        );
-      },
-      {
-        streams: [
-          {
-            type: 'all',
-            format: 'none',
-            columns: 0,
-            write: chunk => {
-              this.emitMasterLog(chunk);
-            },
+    this.logger = new Logger('master', () => {
+      return this.logEvent.hasSubscribers() ||
+          this.connectedClientsListeningForLogs.size >
+          0;
+    }, {
+      streams: [
+        {
+          type: 'all',
+          format: 'none',
+          columns: 0,
+          unicode: true,
+          write: (chunk) => {
+            this.emitMasterLog(chunk);
           },
-        ],
-      },
-    );
+        },
+      ],
+      markupOptions: {
+        humanizeFilename: (filename) => {
+          const path = createUnknownFilePath(filename);
+          if (path.isAbsolute()) {
+            const remote = this.projectManager.getRemoteFromLocalPath(
+              path.assertAbsolute(),
+            );
+            if (remote !== undefined) {
+              return remote.join();
+            }
+          }
+          return undefined;
+        },
 
-    this.connectedReporters = new Reporter({
-      wrapperFactory: this.wrapFatal.bind(this),
+        normalizeFilename: (filename: string): string => {
+          const path = this.projectManager.getFilePathFromUid(filename);
+          if (path === undefined) {
+            return filename;
+          } else {
+            return path.join();
+          }
+        },
+      },
     });
 
+    this.connectedReporters = new MasterReporter(this);
+
     this.connectedClientsListeningForLogs = new Set();
+    this.connectedLSPServers = new Set();
     this.connectedClients = new Set();
 
+    this.virtualModules = new VirtualModules(this);
     this.memoryFs = new MemoryFileSystem(this);
     this.projectManager = new ProjectManager(this);
     this.workerManager = new WorkerManager(this);
@@ -166,7 +224,7 @@ export default class Master {
     this.resolver = new Resolver(this);
     this.cache = new Cache(this);
 
-    this.memoryFs.deletedFileEvent.subscribe(path => {
+    this.memoryFs.deletedFileEvent.subscribe((path) => {
       return this.handleFileDelete(path);
     });
 
@@ -202,15 +260,17 @@ export default class Master {
 
   warnedCacheClients: WeakSet<MasterBridge>;
   memoryFs: MemoryFileSystem;
+  virtualModules: VirtualModules;
   resolver: Resolver;
   projectManager: ProjectManager;
   workerManager: WorkerManager;
   fileAllocator: FileAllocator;
   cache: Cache;
-  connectedReporters: Reporter;
+  connectedReporters: MasterReporter;
   logger: Logger;
 
   connectedClients: Set<MasterClient>;
+  connectedLSPServers: Set<LSPServer>;
   connectedClientsListeningForLogs: Set<MasterClient>;
 
   emitMasterLog(chunk: string) {
@@ -223,17 +283,18 @@ export default class Master {
 
   onFatalError(err: Error) {
     const message = `<emphasis>Fatal error occurred</emphasis>: ${escapeMarkup(
-      err.stack || err.message,
+        err.stack ||
+        err.message,
     )}`;
     this.logger.error(message);
     this.connectedReporters.error(message);
     process.exit();
   }
 
-  // rome-suppress lint/noExplicitAny
+  // rome-suppress-next-line lint/noExplicitAny
   wrapFatal<T extends (...args: Array<any>) => any>(callback: T): T {
-    // rome-suppress lint/noExplicitAny
-    return ((...args: Array<any>): any => {
+    // rome-suppress-next-line lint/noExplicitAny
+    return (((...args: Array<any>): any => {
       try {
         const res = callback(...args);
         if (res instanceof Promise) {
@@ -243,20 +304,23 @@ export default class Master {
       } catch (err) {
         throw this.onFatalError(err);
       }
-    }) as T;
+    }) as T);
   }
 
-  async handleDisconnectedDiagnostics(diagnostics: PartialDiagnostics) {
+  async handleDisconnectedDiagnostics(diagnostics: Diagnostics) {
     this.connectedReporters.error(
       'Generated diagnostics without a current request',
     );
-    const printer = new DiagnosticsPrinter({
-      origins: [],
-      reporter: this.connectedReporters,
-      readFile: this.readDiagnosticsPrinterFile.bind(this),
+
+    printDiagnostics({
+      diagnostics,
+      suppressions: [],
+      printerOptions: {
+        processor: this.createDiagnosticsProcessor(),
+        reporter: this.connectedReporters,
+        readFile: this.readDiagnosticsPrinterFile.bind(this),
+      },
     });
-    printer.addDiagnostics(diagnostics);
-    await printer.print();
   }
 
   readDiagnosticsPrinterFile(
@@ -271,11 +335,20 @@ export default class Master {
     }
   }
 
+  createDiagnosticsProcessor(
+    opts: DiagnosticsProcessorOptions = {},
+  ): DiagnosticsProcessor {
+    return new DiagnosticsProcessor({
+      markupOptions: this.logger.markupOptions,
+      ...opts,
+    });
+  }
+
   createDisconnectedDiagnosticsProcessor(
     origins: Array<DiagnosticOrigin>,
   ): DiagnosticsProcessor {
-    return new DiagnosticsProcessor({
-      onDiagnostics: (diagnostics: PartialDiagnostics) => {
+    return this.createDiagnosticsProcessor({
+      onDiagnostics: (diagnostics: Diagnostics) => {
         this.handleDisconnectedDiagnostics(diagnostics);
       },
       origins: [
@@ -293,7 +366,7 @@ export default class Master {
       return;
     }
 
-    const teardown = setupGlobalErrorHandlers(err => {
+    const teardown = setupGlobalErrorHandlers((err) => {
       this.onFatalError(err);
     });
 
@@ -309,6 +382,7 @@ export default class Master {
     this.fileAllocator.init();
     this.resolver.init();
     await this.cache.init();
+    await this.virtualModules.init();
     await this.workerManager.init();
   }
 
@@ -326,6 +400,7 @@ export default class Master {
     let profiler: undefined | Profiler;
 
     // If we aren't a dedicated process then we should only expect a single connection
+
     // and when that ends. End the Master.
     if (this.options.dedicated === false) {
       bridge.endEvent.subscribe(() => {
@@ -333,7 +408,7 @@ export default class Master {
       });
     }
 
-    bridge.profilingStart.subscribe(async data => {
+    bridge.profilingStart.subscribe(async (data) => {
       if (profiler !== undefined) {
         throw new Error('Expected no profiler to be running');
       }
@@ -363,7 +438,7 @@ export default class Master {
       return ids;
     });
 
-    bridge.profilingStopWorker.subscribe(async id => {
+    bridge.profilingStopWorker.subscribe(async (id) => {
       const worker = this.workerManager.getWorkerAssert(id);
       return await worker.bridge.profilingStop.call();
     });
@@ -381,11 +456,11 @@ export default class Master {
       return;
     }
 
-    await this.clientStartEvent.callOptional(client);
-
-    bridge.query.subscribe(async request => {
+    bridge.query.subscribe(async (request) => {
       return await this.handleRequest(client, request);
     });
+
+    await this.clientStartEvent.callOptional(client);
   }
 
   async createClient(bridge: MasterBridge): Promise<MasterClient> {
@@ -394,6 +469,7 @@ export default class Master {
       useRemoteReporter,
       hasClearScreen,
       columns,
+      unicode,
       format,
       version,
     } = await bridge.getClientInfo.call();
@@ -408,6 +484,7 @@ export default class Master {
       type: 'out',
       columns,
       format,
+      unicode,
       write(chunk: string) {
         if (flags.silent === true) {
           return;
@@ -435,7 +512,7 @@ export default class Master {
       },
     };
 
-    bridge.setColumns.subscribe(columns => {
+    bridge.setColumns.subscribe((columns) => {
       reporter.setStreamColumns([outStream, errStream], columns);
     });
 
@@ -445,43 +522,26 @@ export default class Master {
       wrapperFactory: this.wrapFatal.bind(this),
       streams: [outStream, errStream],
       verbose: flags.verbose,
-      silent: flags.silent,
       markupOptions: {
         cwd: flags.cwd,
-        humanizeFilename: filename => {
-          const path = createUnknownFilePath(filename);
-          if (path.isAbsolute()) {
-            const remote = this.projectManager.getRemoteFromLocalPath(
-              path.assertAbsolute(),
-            );
-            if (remote !== undefined) {
-              return remote.join();
-            }
-          }
-        },
-        normalizeFilename: filename => {
-          const path = this.projectManager.getFilePathFromUid(filename);
-          if (path === undefined) {
-            return filename;
-          } else {
-            return path.join();
-          }
-        },
+        ...this.logger.markupOptions,
       },
       useRemoteProgressBars: useRemoteReporter,
     });
 
-    reporter.sendRemoteClientMessage.subscribe(msg => {
+    reporter.sendRemoteClientMessage.subscribe((msg) => {
       bridge.reporterRemoteServerMessage.send(msg);
     });
 
-    bridge.reporterRemoteClientMessage.subscribe(msg => {
+    bridge.reporterRemoteClientMessage.subscribe((msg) => {
       reporter.receivedRemoteServerMessage(msg);
     });
 
     // Add reporter to connected set, important logs may be output to these
+    if (!flags.silent) {
+      this.connectedReporters.addStream(outStream);
+    }
     this.connectedReporters.addStream(errStream);
-    this.connectedReporters.addStream(outStream);
 
     const client: MasterClient = {
       id: this.clientIdCounter++,
@@ -494,6 +554,7 @@ export default class Master {
     this.connectedClients.add(client);
 
     // When enableWorkerLogs is called we setup subscriptions to the worker logs
+
     // Logs are never transported from workers to the master unless there is a subscription
     let subscribedWorkers = false;
     bridge.enableWorkerLogs.subscribe(() => {
@@ -514,12 +575,12 @@ export default class Master {
       }
 
       // Listen for logs for any workers that start later
-      this.workerManager.workerStartEvent.subscribe(worker => {
+      this.workerManager.workerStartEvent.subscribe((worker) => {
         bridge.attachEndSubscriptionRemoval(worker.log.subscribe(onLog));
       });
     });
 
-    bridge.updatedListenersEvent.subscribe(listeners => {
+    bridge.updatedListenersEvent.subscribe((listeners) => {
       if (listeners.has('log')) {
         this.connectedClientsListeningForLogs.add(client);
       } else {
@@ -547,6 +608,31 @@ export default class Master {
     this.fileChangeEvent.send(path);
   }
 
+  async handleRequestStart(req: MasterRequest) {
+    this.logger.info(`[Master] Handling CLI request:`, req.query);
+
+    // Hook used by the web server to track and collect master requests
+    await this.requestStartEvent.callOptional(req);
+
+    // Track the amount of running queries for terminateWhenIdle
+    this.requestRunningCounter++;
+
+    // Sometimes we'll want to terminate the process once all queries have finished
+    if (req.query.terminateWhenIdle) {
+      this.terminateWhenIdle = true;
+    }
+  }
+
+  handleRequestEnd(req: MasterRequest) {
+    this.requestRunningCounter--;
+    this.logger.info(`[Master] Replying to CLI request:`, req.query);
+
+    // If we're waiting to terminate ourselves when idle, then do so when there's no running requests
+    if (this.terminateWhenIdle && this.requestRunningCounter === 0) {
+      this.end();
+    }
+  }
+
   async handleRequest(
     client: MasterClient,
     partialQuery: PartialMasterQueryRequest,
@@ -563,19 +649,17 @@ export default class Master {
       requestFlags,
       silent: partialQuery.silent === true || requestFlags.benchmark,
       terminateWhenIdle: partialQuery.terminateWhenIdle === true,
-      commandFlags:
-        partialQuery.commandFlags === undefined
-          ? {}
-          : partialQuery.commandFlags,
+      commandFlags: partialQuery.commandFlags === undefined
+        ? {}
+        : partialQuery.commandFlags,
     };
 
     const {bridge} = client;
-    this.logger.info(`[Master] Handling CLI request:`, query);
 
     // Create a promise for the client dying so we can race it later
     let bridgeEndEvent: undefined | EventSubscription;
     const bridgeEndPromise: Promise<void> = new Promise((resolve, reject) => {
-      bridgeEndEvent = bridge.endEvent.subscribe(err => {
+      bridgeEndEvent = bridge.endEvent.subscribe((err) => {
         reject(err);
       });
     });
@@ -591,70 +675,36 @@ export default class Master {
       });
     }
 
-    // Create master request wrapper which is just a bucket of objects
     const req = new MasterRequest({
       client,
       query,
       master: this,
-      reporter,
-      bridge,
     });
 
-    // Hook used by the web server to track and collect master requests
-    await this.requestStartEvent.callOptional(req);
-
-    // Track the amount of running queries for terminateWhenIdle
-    this.requestRunningCounter++;
-
-    // Sometimes we'll want to terminate the process once all queries have finished
-    if (query.terminateWhenIdle) {
-      this.terminateWhenIdle = true;
-    }
+    await req.init();
 
     try {
-      const res: MasterQueryResponse = await this.dispatchRequest(
+      let res: undefined | MasterQueryResponse = await this.dispatchRequest(
         req,
         bridgeEndPromise,
         [],
       );
 
-      req.teardown(res);
+      res = req.teardown(res);
 
-      // If the query asked for no data then strip all diagnostics and data values
-      if (query.noData) {
-        if (res.type === 'SUCCESS') {
-          return {
-            type: 'SUCCESS',
-            hasData: res.data !== undefined,
-            data: undefined,
-            markers: res.markers,
-          };
-        } else if (res.type === 'DIAGNOSTICS') {
-          return {
-            type: 'DIAGNOSTICS',
-            diagnostics: [],
-          };
-        } else if (res.type === 'INVALID_REQUEST') {
-          return {
-            type: 'INVALID_REQUEST',
-            diagnostics: [],
-          };
-        }
+      if (res === undefined) {
+        throw new Error(
+          'teardown should have returned a normalized MasterQueryResponse',
+        );
       }
 
       return res;
+    } catch (err) {
+      req.teardown(undefined);
+      throw err;
     } finally {
-      this.requestRunningCounter--;
-
-      this.logger.info(`[Master] Replying to CLI request:`, query);
-
       // We no longer care if the client dies
       bridgeEndEvent.unsubscribe();
-
-      // If we're waiting to terminate ourselves when idle, then do so when there's no running requests
-      if (this.terminateWhenIdle && this.requestRunningCounter === 0) {
-        this.end();
-      }
     }
   }
 
@@ -674,8 +724,7 @@ export default class Master {
     const warmupTook = Date.now() - warmupStart;
 
     // Benchmark
-    const progress = client.reporter.progress();
-    progress.setTitle('Running benchmark');
+    const progress = client.reporter.progress({title: 'Running benchmark'});
     progress.setTotal(benchmarkIterations);
     const benchmarkStart = Date.now();
     for (let i = 0; i < benchmarkIterations; i++) {
@@ -685,21 +734,25 @@ export default class Master {
     progress.end();
     const benchmarkTook = Date.now() - benchmarkStart;
 
-    reporter.section('Benchmark results', () => {
-      reporter.info(
-        'Request artifacts may have been cached after the first run, artificially decreasing subsequent run time',
-      );
-      reporter.heading('Query');
-      reporter.inspect(req.query);
-      reporter.heading('Stats');
-      reporter.list([
-        `Warmup took <duration emphasis>${warmupTook}</duration>`,
-        `<number emphasis>${benchmarkIterations}</number> runs`,
-        `<duration emphasis>${benchmarkTook}</duration> total`,
-        `<duration emphasis approx>${benchmarkTook /
-          benchmarkIterations}</duration> per run`,
-      ]);
-    });
+    reporter.section(
+      'Benchmark results',
+      () => {
+        reporter.info(
+          'Request artifacts may have been cached after the first run, artificially decreasing subsequent run time',
+        );
+        reporter.heading('Query');
+        reporter.inspect(req.query);
+        reporter.heading('Stats');
+        reporter.list(
+          [
+            `Warmup took <duration emphasis>${warmupTook}</duration>`,
+            `<number emphasis>${benchmarkIterations}</number> runs`,
+            `<duration emphasis>${benchmarkTook}</duration> total`,
+            `<duration emphasis approx>${benchmarkTook / benchmarkIterations}</duration> per run`,
+          ],
+        );
+      },
+    );
 
     return result;
   }
@@ -710,17 +763,10 @@ export default class Master {
     origins: Array<string>,
   ): Promise<MasterQueryResponse> {
     const {query, reporter, bridge} = req;
+    const {requestFlags} = query;
 
-    if (query.requestFlags.benchmark && !origins.includes('benchmark')) {
+    if (requestFlags.benchmark && !origins.includes('benchmark')) {
       return this.dispatchBenchmarkRequest(req, bridgeEndPromise);
-    }
-
-    const markers: Array<MasterMarker> = [];
-
-    if (query.requestFlags.collectMarkers) {
-      req.markerEvent.subscribe(marker => {
-        markers.push(marker);
-      });
     }
 
     try {
@@ -736,12 +782,17 @@ export default class Master {
           // objectPath should only have a depth of 1
           defaultCommandFlags[def.objectPath[0]] = def.default;
         },
+
         objectPath: [],
         context: {
           category: 'flags/invalid',
 
           getOriginalValue: () => {
             return undefined;
+          },
+
+          normalizeKey: (key) => {
+            return toKebabCase(key);
           },
 
           getDiagnosticPointer: (keys: ConsumePath) => {
@@ -758,24 +809,25 @@ export default class Master {
       let promises: Array<Promise<unknown> | undefined> = [bridgeEndPromise];
 
       // Get command
-      const commandOpts:
-        | undefined
-        | MasterCommand<Dict<unknown>> = masterCommands.get(query.commandName);
-      if (commandOpts) {
+      const masterCommand: undefined | MasterCommand<Dict<unknown>> = masterCommands.get(
+        query.commandName,
+      );
+      if (masterCommand) {
         // Warn about disabled disk caching
-        if (
-          process.env.ROME_CACHE === '0' &&
-          !this.warnedCacheClients.has(bridge)
-        ) {
+        if (process.env.ROME_CACHE === '0' && !this.warnedCacheClients.has(
+            bridge,
+          )) {
           reporter.warn(
             'Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable',
           );
           this.warnedCacheClients.add(bridge);
         }
 
+        validateRequestFlags(masterCommand, commandFlagsConsumer);
+
         let commandFlags;
-        if (commandOpts.defineFlags !== undefined) {
-          commandFlags = commandOpts.defineFlags(commandFlagsConsumer);
+        if (masterCommand.defineFlags !== undefined) {
+          commandFlags = masterCommand.defineFlags(commandFlagsConsumer);
         }
 
         req.setNormalizedCommandFlags({
@@ -784,7 +836,7 @@ export default class Master {
         });
 
         // @ts-ignore
-        const commandPromise = commandOpts.default(req, commandFlags);
+        const commandPromise = masterCommand.callback(req, commandFlags);
         promises.push(commandPromise);
 
         await Promise.race(promises);
@@ -795,13 +847,13 @@ export default class Master {
           type: 'SUCCESS',
           hasData: data !== undefined,
           data,
-          markers,
+          markers: [],
         };
       } else {
         throw new Error(`Unknown command ${String(query.commandName)}`);
       }
     } catch (err) {
-      let diagnostics: undefined | Diagnostics = await this.handleRequestError(
+      let diagnostics: undefined | Diagnostics = this.handleRequestError(
         req,
         err,
       );
@@ -821,7 +873,7 @@ export default class Master {
           type: 'SUCCESS',
           hasData: false,
           data: undefined,
-          markers,
+          markers: [],
         };
       } else {
         if (err instanceof MasterRequestInvalid) {
@@ -839,20 +891,23 @@ export default class Master {
     }
   }
 
-  async handleRequestError(
-    req: MasterRequest,
-    rawErr: Error,
-  ): Promise<undefined | Diagnostics> {
+  handleRequestError(req: MasterRequest, rawErr: Error): undefined | Diagnostics {
     let err = rawErr;
 
     // If we can derive diagnostics from the error then create a diagnostics printer
     const diagnostics = getDiagnosticsFromError(err);
     if (diagnostics !== undefined) {
-      const printer = req.createDiagnosticsPrinter({
-        category: 'internal',
-        message: 'Derived diagnostics from thrown error',
-      });
-      printer.addDiagnostics(diagnostics);
+      const printer = req.createDiagnosticsPrinter(
+        req.createDiagnosticsProcessor({
+          origins: [
+            {
+              category: 'internal',
+              message: 'Derived diagnostics from thrown error',
+            },
+          ],
+        }),
+      );
+      printer.processor.addDiagnostics(diagnostics);
       err = printer;
     }
 
@@ -860,7 +915,7 @@ export default class Master {
     if (err instanceof DiagnosticsPrinter) {
       const printer = err;
       if (req.bridge.alive) {
-        await printer.print();
+        printer.print();
 
         // Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
         if (!(rawErr instanceof MasterRequestInvalid)) {
@@ -871,25 +926,38 @@ export default class Master {
     }
 
     if (!req.bridge.alive) {
-      return;
+      return undefined;
     }
 
-    const printer = req.createDiagnosticsPrinter({
-      category: 'internal',
-      message: 'Error captured and converted into a diagnostic',
-    });
+    const printer = req.createDiagnosticsPrinter(req.createDiagnosticsProcessor(
+      {
+        origins: [
+          {
+            category: 'internal',
+            message: 'Error captured and converted into a diagnostic',
+          },
+        ],
+      },
+    ));
     const errorDiag = deriveDiagnosticFromError({
       category: 'internalError/request',
       error: err,
     });
-    printer.addDiagnostic({
+    printer.processor.addDiagnostic({
       ...errorDiag,
-      advice: [...(errorDiag.advice || []), INTERNAL_ERROR_LOG_ADVICE],
+      description: {
+        ...errorDiag.description,
+        advice: [
+          ...(errorDiag.description.advice || []),
+          INTERNAL_ERROR_LOG_ADVICE,
+        ],
+      },
     });
-    await printer.print();
+    printer.print();
 
     // We could probably return printer.getDiagnostics() but we just want to print to the console
+
     // We will still want to send the `error` property
-    return;
+    return undefined;
   }
 }

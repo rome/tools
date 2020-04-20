@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -22,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: 'bar'
       loc: Object {
         filename: 'input.js'
@@ -68,43 +70,9 @@ Program {
             line: 1
           }
         }
-        right: ReferenceIdentifier {
-          name: 'baz'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 4
-              index: 16
-              line: 2
-            }
-            start: Object {
-              column: 1
-              index: 13
-              line: 2
-            }
-          }
-          leadingComments: Array [
-            CommentLine {
-              value: 'bar'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
         left: ReferenceIdentifier {
           name: 'foo'
-          leadingComments: undefined
+          trailingComments: Array ['0']
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -118,24 +86,23 @@ Program {
               line: 1
             }
           }
-          trailingComments: Array [
-            CommentLine {
-              value: 'bar'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
+        }
+        right: ReferenceIdentifier {
+          name: 'baz'
+          leadingComments: Array ['0']
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 4
+              index: 16
+              line: 2
             }
-          ]
+            start: Object {
+              column: 1
+              index: 13
+              line: 2
+            }
+          }
         }
       }
     }

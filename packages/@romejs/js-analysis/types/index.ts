@@ -50,6 +50,7 @@ import {Class} from '@romejs/typescript-helpers';
 
 const types: Map<string, Class<T>> = new Map();
 export default types;
+
 types.set('AnyT', AnyT);
 types.set('BooleanLiteralT', BooleanLiteralT);
 types.set('BooleanT', BooleanT);

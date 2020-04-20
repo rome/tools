@@ -5,7 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-function getMap<Key, Value>(
+function getMap<
+  Key,
+  Value
+>(
   map: Map<Key, NonNullable<Value>>,
   key: Key,
   defaultValue?: NonNullable<Value>,
@@ -27,7 +30,6 @@ function getMap<Key, Value>(
 /**
  * Forked from the project https://github.com/aceakash/string-similarity by Akash K, licensed under ISC
  */
-
 export function compareTwoStrings(aStr: string, bStr: string): number {
   const a = aStr.replace(/\s+/g, '');
   const b = bStr.replace(/\s+/g, '');
@@ -86,7 +88,7 @@ export function compareTwoStrings(aStr: string, bStr: string): number {
     }
   }
 
-  return (2.0 * intersectionSize) / (a.length + b.length - 2);
+  return 2 * intersectionSize / (a.length + b.length - 2);
 }
 
 export type Rating = {
@@ -101,6 +103,7 @@ type OrderBySimilarityOptions = {
   formatItem?: (str: string) => string;
   ignoreCase?: boolean;
 };
+
 export function orderBySimilarity(
   compareStr: string,
   targets: Array<string>,
@@ -111,37 +114,32 @@ export function orderBySimilarity(
   }
 
   // Calculate the rating for each target string
-  const ratings: Ratings = Array.from(
-    targets,
-    (target: string): Rating => {
-      let compareTarget = target;
-      if (formatItem !== undefined) {
-        compareTarget = formatItem(target);
-      }
+  const ratings: Ratings = Array.from(targets, (target: string): Rating => {
+    let compareTarget = target;
+    if (formatItem !== undefined) {
+      compareTarget = formatItem(target);
+    }
 
-      if (ignoreCase) {
-        return {
-          target,
-          rating: compareTwoStrings(
-            compareStr.toLowerCase(),
-            compareTarget.toLowerCase(),
-          ),
-        };
-      }
-
+    if (ignoreCase) {
       return {
         target,
-        rating: compareTwoStrings(compareStr, compareTarget),
+        rating: compareTwoStrings(
+          compareStr.toLowerCase(),
+          compareTarget.toLowerCase(),
+        ),
       };
-    },
-  );
+    }
+
+    return {
+      target,
+      rating: compareTwoStrings(compareStr, compareTarget),
+    };
+  });
 
   // Sort ratings, with the highest at the beginning
-  const sortedRatings: Ratings = ratings
-    .sort((a, b) => {
-      return b.rating - a.rating;
-    })
-    .filter(item => minRating === undefined || item.rating >= minRating);
+  const sortedRatings: Ratings = ratings.sort((a, b) => {
+    return b.rating - a.rating;
+  }).filter((item) => minRating === undefined || item.rating >= minRating);
 
   return sortedRatings;
 }

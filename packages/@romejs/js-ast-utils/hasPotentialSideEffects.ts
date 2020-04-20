@@ -32,30 +32,32 @@ export default function hasPotentialSideEffects(
       return false;
 
     case 'ClassDeclaration':
-      return (
-        node.meta.superClass !== undefined ||
-        !hasPotentialSideEffects(node.meta.superClass, scope)
+      return node.meta.superClass !== undefined || !hasPotentialSideEffects(
+        node.meta.superClass,
+        scope,
       );
 
     case 'ReferenceIdentifier':
       // Variables that aren't in scope and aren't registered globals could trigger a getter
+
       // Unlikely but let's aim for 100% correctness
-      return (
-        scope.getRootScope().isGlobal(node.name) || scope.hasBinding(node.name)
+      return scope.getRootScope().isGlobal(node.name) || scope.hasBinding(
+        node.name,
       );
 
-    case 'VariableDeclaration':
+    case 'VariableDeclaration': {
       for (const declarator of node.declarations) {
         if (hasPotentialSideEffects(declarator, scope)) {
           return true;
         }
       }
       return false;
+    }
 
     case 'VariableDeclarator':
-      return (
-        hasPotentialSideEffects(node.id, scope) ||
-        hasPotentialSideEffects(node.init, scope)
+      return hasPotentialSideEffects(node.id, scope) || hasPotentialSideEffects(
+        node.init,
+        scope,
       );
 
     case 'SpreadProperty':
@@ -66,13 +68,14 @@ export default function hasPotentialSideEffects(
       return hasPotentialSideEffects(node.right, scope);
 
     case 'ObjectExpression':
-    case 'BindingObjectPattern':
+    case 'BindingObjectPattern': {
       for (const prop of node.properties) {
         if (hasPotentialSideEffects(prop, scope)) {
           return true;
         }
       }
       return false;
+    }
 
     case 'StaticPropertyKey':
       return false;
@@ -82,19 +85,18 @@ export default function hasPotentialSideEffects(
 
     case 'BindingObjectPatternProperty':
     case 'ObjectProperty':
-      return (
-        hasPotentialSideEffects(node.key, scope) ||
-        hasPotentialSideEffects(node.value, scope)
-      );
+      return hasPotentialSideEffects(node.key, scope) ||
+        hasPotentialSideEffects(node.value, scope);
 
     case 'BindingArrayPattern':
-    case 'ArrayExpression':
+    case 'ArrayExpression': {
       for (const elem of node.elements) {
         if (hasPotentialSideEffects(elem, scope)) {
           return true;
         }
       }
       return false;
+    }
 
     case 'StringLiteral':
     case 'NumericLiteral':

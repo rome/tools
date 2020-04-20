@@ -6,16 +6,16 @@
  */
 
 import {removePrefix} from './removePrefix';
-import test from '@romejs/test';
+import {test} from 'rome';
 
-test('removePrefix', t => {
+test('removePrefix', (t) => {
   const testCases = [
     {firstInput: 'romeTest', secondInput: 'rome', expected: 'Test'},
     {firstInput: 'Testrome', secondInput: 'rome', expected: 'Testrome'},
     {firstInput: 'romeTest', secondInput: '123', expected: 'romeTest'},
   ];
 
-  testCases.forEach(td => {
+  testCases.forEach((td) => {
     t.is(removePrefix(td.firstInput, td.secondInput), td.expected);
   });
 });

@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -108,9 +109,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 31
-                line: 6
+                column: 7
+                index: 27
+                line: 4
               }
               start: Object {
                 column: 2
@@ -153,8 +154,8 @@ Program {
                   line: 4
                 }
                 start: Object {
-                  column: 5
-                  index: 25
+                  column: 2
+                  index: 22
                   line: 4
                 }
               }
@@ -223,9 +224,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 51
-                line: 10
+                column: 8
+                index: 47
+                line: 8
               }
               start: Object {
                 column: 2
@@ -293,8 +294,8 @@ Program {
                   line: 8
                 }
                 start: Object {
-                  column: 6
-                  index: 45
+                  column: 2
+                  index: 41
                   line: 8
                 }
               }
@@ -372,9 +373,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 74
-                line: 13
+                column: 7
+                index: 70
+                line: 11
               }
               start: Object {
                 column: 2
@@ -417,8 +418,8 @@ Program {
                   line: 11
                 }
                 start: Object {
-                  column: 5
-                  index: 68
+                  column: 2
+                  index: 65
                   line: 11
                 }
               }
@@ -487,9 +488,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 87
-                line: 16
+                column: 7
+                index: 83
+                line: 14
               }
               start: Object {
                 column: 2
@@ -532,8 +533,8 @@ Program {
                   line: 14
                 }
                 start: Object {
-                  column: 5
-                  index: 81
+                  column: 2
+                  index: 78
                   line: 14
                 }
               }
@@ -602,9 +603,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 104
-                line: 20
+                column: 7
+                index: 100
+                line: 18
               }
               start: Object {
                 column: 2
@@ -647,8 +648,8 @@ Program {
                   line: 18
                 }
                 start: Object {
-                  column: 5
-                  index: 98
+                  column: 2
+                  index: 95
                   line: 18
                 }
               }
@@ -717,9 +718,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 132
-                line: 25
+                column: 7
+                index: 128
+                line: 23
               }
               start: Object {
                 column: 2
@@ -762,8 +763,8 @@ Program {
                   line: 23
                 }
                 start: Object {
-                  column: 5
-                  index: 126
+                  column: 2
+                  index: 123
                   line: 23
                 }
               }
@@ -832,9 +833,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 161
-                line: 30
+                column: 8
+                index: 157
+                line: 28
               }
               start: Object {
                 column: 2
@@ -902,8 +903,8 @@ Program {
                   line: 28
                 }
                 start: Object {
-                  column: 6
-                  index: 155
+                  column: 2
+                  index: 151
                   line: 28
                 }
               }
@@ -981,9 +982,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 193
-                line: 34
+                column: 7
+                index: 189
+                line: 32
               }
               start: Object {
                 column: 2
@@ -1026,8 +1027,8 @@ Program {
                   line: 32
                 }
                 start: Object {
-                  column: 5
-                  index: 187
+                  column: 2
+                  index: 184
                   line: 32
                 }
               }
@@ -1096,9 +1097,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 215
-                line: 38
+                column: 7
+                index: 211
+                line: 36
               }
               start: Object {
                 column: 2
@@ -1141,8 +1142,8 @@ Program {
                   line: 36
                 }
                 start: Object {
-                  column: 5
-                  index: 209
+                  column: 2
+                  index: 206
                   line: 36
                 }
               }
@@ -1211,9 +1212,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 0
-                index: 238
-                line: 42
+                column: 7
+                index: 237
+                line: 41
               }
               start: Object {
                 column: 2
@@ -1256,8 +1257,8 @@ Program {
                   line: 41
                 }
                 start: Object {
-                  column: 5
-                  index: 235
+                  column: 2
+                  index: 232
                   line: 41
                 }
               }

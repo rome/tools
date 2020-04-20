@@ -6,7 +6,7 @@
  */
 
 import {AnyNode, Program, MOCK_PARENT} from '@romejs/js-ast';
-import {Context} from '@romejs/js-compiler';
+import {CompilerContext} from '@romejs/js-compiler';
 import {SCOPE_PRIVATE_PREFIX} from '../constants';
 import evaluators from './evaluators/index';
 import * as GLOBALS from './globals';
@@ -86,6 +86,7 @@ export default class Scope {
         scope = scope.parentScope;
       }
     }
+    return undefined;
   }
 
   getRootScope(): RootScope {
@@ -221,7 +222,7 @@ const GLOBAL_COMMENT_START = /^([\s+]|)global /;
 const GLOBAL_COMMENT_COLON = /:(.*?)$/;
 
 export class RootScope extends Scope {
-  constructor(context: Context, ast: Program) {
+  constructor(context: CompilerContext, ast: Program) {
     super({
       kind: 'root',
       parentScope: undefined,
@@ -246,7 +247,7 @@ export class RootScope extends Scope {
     ]);
   }
 
-  context: Context;
+  context: CompilerContext;
   uids: Set<string>;
 
   parseGlobalComments(ast: Program): Array<string> {
@@ -282,7 +283,9 @@ export class RootScope extends Scope {
           const value = match[1].trim();
 
           // Other tools would flag these as unavailable and remove them from the master set
+
           // We don't do that, we might want to later though?
+
           // Also, we should maybe validate the value to only true/false
           if (value === 'false') {
             break;
@@ -309,7 +312,6 @@ export class RootScope extends Scope {
     }
 
     // TODO find some way to remove the possibility of user bindings colliding with our private prefix
-
     let counter = 0;
 
     while (true) {

@@ -5,59 +5,33 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
-test('disallow unnecessary boolean casts', async t => {
-  const ifTest = await testLint(
-    `
+test('disallow unnecessary boolean casts', async (t) => {
+  await testLint(t, `
     if (Boolean(foo)) {
       return foo;
     }
-    `,
-  );
+    `, {category: 'lint/noExtraBooleanCast'});
 
-  t.truthy(
-    ifTest.diagnostics.find(d => d.message === `Redundant double negation.`),
-  );
-
-  const whileTest = await testLint(
-    `
+  await testLint(t, `
     while (!!foo) {
       return foo;
     }
-    `,
-  );
+    `, {category: 'lint/noExtraBooleanCast'});
 
-  t.truthy(
-    whileTest.diagnostics.find(d => d.message === `Redundant double negation.`),
-  );
-
-  const doWhileTest = await testLint(
-    `
+  await testLint(t, `
     let x = 1;
 
     do {
         1+1;
     } while (Boolean(x));
-    `,
-  );
+    `, {category: 'lint/noExtraBooleanCast'});
 
-  t.truthy(
-    doWhileTest.diagnostics.find(
-      d => d.message === `Redundant double negation.`,
-    ),
-  );
-
-  const forTest = await testLint(
-    `
+  await testLint(t, `
     for (; !!foo; ) {
       return 1+1;
     }
-    `,
-  );
-
-  t.truthy(
-    forTest.diagnostics.find(d => d.message === `Redundant double negation.`),
-  );
+    `, {category: 'lint/noExtraBooleanCast'});
 });

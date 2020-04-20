@@ -6,7 +6,7 @@
  */
 
 import {createAbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 const relativeTests: Array<[string, string, string]> = [
   // Windows paths
@@ -53,7 +53,7 @@ const relativeTests: Array<[string, string, string]> = [
 for (let i = 0; i < relativeTests.length; i++) {
   const [absolute, arg, expected] = relativeTests[i];
 
-  test(`relative ${i}: ${absolute}`, t => {
+  test(`relative ${i}: ${absolute}`, (t) => {
     t.addToAdvice({
       type: 'log',
       category: 'info',
@@ -89,7 +89,7 @@ const segmentTests: Array<[string, Array<string>]> = [
 for (let i = 0; i < segmentTests.length; i++) {
   const [loc, expectedSegments] = segmentTests[i];
 
-  test(`segments: ${i}: ${loc}`, t => {
+  test(`segments: ${i}: ${loc}`, (t) => {
     t.looksLike(createUnknownFilePath(loc).getRawSegments(), expectedSegments);
   });
 }

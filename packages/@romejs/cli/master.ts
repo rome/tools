@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterBridge, SOCKET_PATH, CLI_SOCKET_PATH} from '@romejs/core';
+import {Master, MasterBridge, SOCKET_PATH, CLI_SOCKET_PATH} from '@romejs/core';
 import {createBridgeFromSocket} from '@romejs/events';
 import setProcessTitle from './utils/setProcessTitle';
-import {Master} from '@romejs/core';
 import net = require('net');
+
 import {unlink, exists} from '@romejs/fs';
 
 export default async function master() {
@@ -38,7 +38,7 @@ export default async function master() {
       socket.end();
     });
 
-    socket.on('error', err => {
+    socket.on('error', (err) => {
       // Socket error occured, cli could have died before it caught us
       err;
       console.log(err);

@@ -6,9 +6,9 @@
  */
 
 import {toCamelCase} from './toCamelCase';
-import test from '@romejs/test';
+import {test} from 'rome';
 
-test('toCamelCase', t => {
+test('toCamelCase', (t) => {
   const testCases = [
     {input: 'rometest', expected: 'rometest'},
     {input: 'rome test', expected: 'romeTest'},
@@ -16,7 +16,7 @@ test('toCamelCase', t => {
     {input: 'ROME TEST', expected: 'ROMETEST'},
   ];
 
-  testCases.forEach(td => {
+  testCases.forEach((td) => {
     t.is(toCamelCase(td.input), td.expected);
   });
 });

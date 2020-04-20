@@ -4,30 +4,41 @@
 
 ## `disallow var`
 
-```javascript
-Object {
-  src: 'var foobar;\nfoobar'
-  suppressions: Array []
-  diagnostics: Array [
-    Object {
-      category: 'lint/noVar'
-      filename: 'unknown'
-      language: 'js'
-      message: 'Variable declarations using `var` are disallowed, use `let` or `const` instead.'
-      mtime: undefined
-      sourceType: 'module'
-      origins: Array [Object {category: 'lint'}]
-      end: Object {
-        column: 11
-        index: 11
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-  ]
-}
+```
+
+ unknown:1 lint/noVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Variable declarations using `var` are disallowed, use `let` or `const` instead.
+
+  > 1 │ var foobar;
+      │ ^^^^^^^^^^^ 
+    2 │ foobar
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+## `format disabled in project config should not regenerate the file`
+
+```
+✔ No known problems!
+
+```
+
+## `format enabled in project config should result in regenerated file`
+
+### `0`
+
+```
+✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
+
 ```

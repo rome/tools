@@ -19,6 +19,7 @@ export type AmbiguousFlowTypeCastExpression = JSNodeBase & {
   typeAnnotation?: AnyPrimaryType;
 
   // This is for js-parser so that we can convert type casts to parameters
+
   // We should figure out some way to remove this
   optional?: boolean;
 };

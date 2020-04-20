@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -88,6 +89,7 @@ Program {
           }
           params: Array [
             BindingAssignmentPattern {
+              operator: '='
               loc: Object {
                 filename: 'input.ts'
                 end: Object {

@@ -22,17 +22,22 @@ export type AnyExportExternalSpecifier =
 
 export type ExportExternalDeclaration = JSNodeBase & {
   type: 'ExportExternalDeclaration';
-  specifiers?: Array<AnyExportExternalSpecifier>;
+  defaultSpecifier?: ExportDefaultSpecifier;
+  namespaceSpecifier?: ExportNamespaceSpecifier;
+  namedSpecifiers: Array<ExportExternalSpecifier>;
   source: StringLiteral;
   exportKind?: ConstExportModuleKind;
 };
 
-export const exportExternalDeclaration = createBuilder<
-  ExportExternalDeclaration
->('ExportExternalDeclaration', {
-  bindingKeys: {},
-  visitorKeys: {
-    specifiers: true,
-    source: true,
+export const exportExternalDeclaration = createBuilder<ExportExternalDeclaration>(
+  'ExportExternalDeclaration',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      defaultSpecifier: true,
+      namespaceSpecifier: true,
+      namedSpecifiers: true,
+      source: true,
+    },
   },
-});
+);

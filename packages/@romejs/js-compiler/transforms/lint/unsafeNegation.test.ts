@@ -5,11 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
-test('unsafe negation', async t => {
-  const res = await testLint(`!1 in [1,2]`);
-
-  t.snapshot(res);
+test('unsafe negation', async (t) => {
+  await testLint(t, `!1 in [1,2]`, {category: 'lint/unsafeNegation'});
 });

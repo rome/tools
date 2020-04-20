@@ -5,17 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
-test('prefer template', async t => {
-  const template1 = await testLint(
-    `const foo = 'bar'; console.log(foo + 'baz')`,
-  );
+test('prefer template', async (t) => {
+  await testLint(t, `const foo = 'bar'; console.log(foo + 'baz')`, {
+    category: 'lint/preferTemplate',
+  });
 
-  t.snapshot(template1);
-
-  const template2 = await testLint(`console.log((1 * 2) + 'baz')`);
-
-  t.snapshot(template2);
+  await testLint(t, `console.log((1 * 2) + 'baz')`, {
+    category: 'lint/preferTemplate',
+  });
 });

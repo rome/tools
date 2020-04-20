@@ -6,7 +6,7 @@
  */
 
 // lib
-export {default as Context} from './lib/Context';
+export {default as CompilerContext} from './lib/CompilerContext';
 
 export {PathOptions} from './lib/Path';
 export {default as Path} from './lib/Path';
@@ -28,9 +28,18 @@ export * from './scope/bindings';
 
 // utils
 export * from './constants';
-export {getPrefixedNamespace as getPrefixedBundleNamespace} from './transforms/compileForBundle/_utils';
+
+export {
+  areAnalyzeDependencyResultsEqual,
+} from './api/analyzeDependencies/utils';
+export {
+  getPrefixedNamespace as getPrefixedBundleNamespace,
+} from './transforms/compileForBundle/_utils';
 export {default as createHook} from './api/createHook';
-export {extractSuppressionsFromProgram} from './suppressions';
+export {
+  extractSuppressionsFromProgram,
+  matchesSuppression,
+} from './suppressions';
 
 // types
 export {LintResult} from './api/lint';

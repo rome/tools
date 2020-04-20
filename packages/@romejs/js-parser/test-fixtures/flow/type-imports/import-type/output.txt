@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -27,6 +28,8 @@ Program {
   body: Array [
     ImportDeclaration {
       importKind: 'type'
+      namedSpecifiers: Array []
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -56,39 +59,23 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ImportDefaultSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 16
-              index: 16
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
+      defaultSpecifier: ImportDefaultSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 16
+            index: 16
+            line: 1
           }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'Def1'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 16
-                  index: 16
-                  line: 1
-                }
-                start: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-              }
-            }
-            importKind: 'type'
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        local: ImportSpecifierLocal {
+          name: BindingIdentifier {
+            name: 'Def1'
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -103,11 +90,27 @@ Program {
               }
             }
           }
+          importKind: 'type'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 16
+              index: 16
+              line: 1
+            }
+            start: Object {
+              column: 12
+              index: 12
+              line: 1
+            }
+          }
         }
-      ]
+      }
     }
     ImportDeclaration {
+      defaultSpecifier: undefined
       importKind: 'type'
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -137,7 +140,7 @@ Program {
           }
         }
       }
-      specifiers: Array [
+      namedSpecifiers: Array [
         ImportSpecifier {
           loc: Object {
             filename: 'input.js'
@@ -205,6 +208,7 @@ Program {
     }
     ImportDeclaration {
       importKind: 'type'
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -234,39 +238,23 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ImportDefaultSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 16
-              index: 78
-              line: 3
-            }
-            start: Object {
-              column: 0
-              index: 62
-              line: 3
-            }
+      defaultSpecifier: ImportDefaultSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 16
+            index: 78
+            line: 3
           }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'Def2'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 16
-                  index: 78
-                  line: 3
-                }
-                start: Object {
-                  column: 12
-                  index: 74
-                  line: 3
-                }
-              }
-            }
-            importKind: 'type'
+          start: Object {
+            column: 0
+            index: 62
+            line: 3
+          }
+        }
+        local: ImportSpecifierLocal {
+          name: BindingIdentifier {
+            name: 'Def2'
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -281,7 +269,23 @@ Program {
               }
             }
           }
+          importKind: 'type'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 16
+              index: 78
+              line: 3
+            }
+            start: Object {
+              column: 12
+              index: 74
+              line: 3
+            }
+          }
         }
+      }
+      namedSpecifiers: Array [
         ImportSpecifier {
           loc: Object {
             filename: 'input.js'
@@ -349,6 +353,8 @@ Program {
     }
     ImportDeclaration {
       importKind: 'type'
+      namedSpecifiers: Array []
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -378,39 +384,23 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ImportDefaultSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 19
-              index: 120
-              line: 4
-            }
-            start: Object {
-              column: 0
-              index: 101
-              line: 4
-            }
+      defaultSpecifier: ImportDefaultSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 19
+            index: 120
+            line: 4
           }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'switch1'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 19
-                  index: 120
-                  line: 4
-                }
-                start: Object {
-                  column: 12
-                  index: 113
-                  line: 4
-                }
-              }
-            }
-            importKind: 'type'
+          start: Object {
+            column: 0
+            index: 101
+            line: 4
+          }
+        }
+        local: ImportSpecifierLocal {
+          name: BindingIdentifier {
+            name: 'switch1'
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -425,11 +415,27 @@ Program {
               }
             }
           }
+          importKind: 'type'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 19
+              index: 120
+              line: 4
+            }
+            start: Object {
+              column: 12
+              index: 113
+              line: 4
+            }
+          }
         }
-      ]
+      }
     }
     ImportDeclaration {
+      defaultSpecifier: undefined
       importKind: 'type'
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -459,13 +465,13 @@ Program {
           }
         }
       }
-      specifiers: Array [
+      namedSpecifiers: Array [
         ImportSpecifier {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 22
-              index: 155
+              column: 21
+              index: 154
               line: 5
             }
             start: Object {
@@ -511,8 +517,8 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 22
-                index: 155
+                column: 21
+                index: 154
                 line: 5
               }
               start: Object {
@@ -526,7 +532,9 @@ Program {
       ]
     }
     ImportDeclaration {
+      defaultSpecifier: undefined
       importKind: 'type'
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -556,7 +564,7 @@ Program {
           }
         }
       }
-      specifiers: Array [
+      namedSpecifiers: Array [
         ImportSpecifier {
           loc: Object {
             filename: 'input.js'
@@ -624,8 +632,8 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 25
-              index: 194
+              column: 24
+              index: 193
               line: 6
             }
             start: Object {
@@ -671,8 +679,8 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 25
-                index: 194
+                column: 24
+                index: 193
                 line: 6
               }
               start: Object {
@@ -687,6 +695,8 @@ Program {
     }
     ImportDeclaration {
       importKind: undefined
+      namedSpecifiers: Array []
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -716,39 +726,23 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ImportDefaultSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 11
-              index: 219
-              line: 7
-            }
-            start: Object {
-              column: 0
-              index: 208
-              line: 7
-            }
+      defaultSpecifier: ImportDefaultSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 11
+            index: 219
+            line: 7
           }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'type'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 11
-                  index: 219
-                  line: 7
-                }
-                start: Object {
-                  column: 7
-                  index: 215
-                  line: 7
-                }
-              }
-            }
-            importKind: undefined
+          start: Object {
+            column: 0
+            index: 208
+            line: 7
+          }
+        }
+        local: ImportSpecifierLocal {
+          name: BindingIdentifier {
+            name: 'type'
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -763,11 +757,27 @@ Program {
               }
             }
           }
+          importKind: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 11
+              index: 219
+              line: 7
+            }
+            start: Object {
+              column: 7
+              index: 215
+              line: 7
+            }
+          }
         }
-      ]
+      }
     }
     ImportDeclaration {
       importKind: 'typeof'
+      namedSpecifiers: Array []
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -797,39 +807,23 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ImportDefaultSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 18
-              index: 250
-              line: 8
-            }
-            start: Object {
-              column: 0
-              index: 232
-              line: 8
-            }
+      defaultSpecifier: ImportDefaultSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 18
+            index: 250
+            line: 8
           }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'foo3'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 18
-                  index: 250
-                  line: 8
-                }
-                start: Object {
-                  column: 14
-                  index: 246
-                  line: 8
-                }
-              }
-            }
-            importKind: 'typeof'
+          start: Object {
+            column: 0
+            index: 232
+            line: 8
+          }
+        }
+        local: ImportSpecifierLocal {
+          name: BindingIdentifier {
+            name: 'foo3'
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -844,11 +838,27 @@ Program {
               }
             }
           }
+          importKind: 'typeof'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 18
+              index: 250
+              line: 8
+            }
+            start: Object {
+              column: 14
+              index: 246
+              line: 8
+            }
+          }
         }
-      ]
+      }
     }
     ImportDeclaration {
       importKind: 'typeof'
+      namedSpecifiers: Array []
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -878,39 +888,23 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ImportDefaultSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 21
-              index: 284
-              line: 9
-            }
-            start: Object {
-              column: 0
-              index: 263
-              line: 9
-            }
+      defaultSpecifier: ImportDefaultSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 21
+            index: 284
+            line: 9
           }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'switch4'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 21
-                  index: 284
-                  line: 9
-                }
-                start: Object {
-                  column: 14
-                  index: 277
-                  line: 9
-                }
-              }
-            }
-            importKind: 'typeof'
+          start: Object {
+            column: 0
+            index: 263
+            line: 9
+          }
+        }
+        local: ImportSpecifierLocal {
+          name: BindingIdentifier {
+            name: 'switch4'
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -925,11 +919,27 @@ Program {
               }
             }
           }
+          importKind: 'typeof'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 21
+              index: 284
+              line: 9
+            }
+            start: Object {
+              column: 14
+              index: 277
+              line: 9
+            }
+          }
         }
-      ]
+      }
     }
     ImportDeclaration {
+      defaultSpecifier: undefined
       importKind: 'typeof'
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -959,13 +969,13 @@ Program {
           }
         }
       }
-      specifiers: Array [
+      namedSpecifiers: Array [
         ImportSpecifier {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 24
-              index: 321
+              column: 23
+              index: 320
               line: 10
             }
             start: Object {
@@ -1011,8 +1021,8 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 24
-                index: 321
+                column: 23
+                index: 320
                 line: 10
               }
               start: Object {
@@ -1026,7 +1036,9 @@ Program {
       ]
     }
     ImportDeclaration {
+      defaultSpecifier: undefined
       importKind: 'typeof'
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -1056,13 +1068,13 @@ Program {
           }
         }
       }
-      specifiers: Array [
+      namedSpecifiers: Array [
         ImportSpecifier {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 28
-              index: 363
+              column: 27
+              index: 362
               line: 11
             }
             start: Object {
@@ -1108,8 +1120,8 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 28
-                index: 363
+                column: 27
+                index: 362
                 line: 11
               }
               start: Object {
@@ -1123,7 +1135,9 @@ Program {
       ]
     }
     ImportDeclaration {
+      defaultSpecifier: undefined
       importKind: 'typeof'
+      namedSpecifiers: Array []
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -1153,39 +1167,23 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ImportNamespaceSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 22
-              index: 399
-              line: 12
-            }
-            start: Object {
-              column: 0
-              index: 377
-              line: 12
-            }
+      namespaceSpecifier: ImportNamespaceSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 22
+            index: 399
+            line: 12
           }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'ns7'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 22
-                  index: 399
-                  line: 12
-                }
-                start: Object {
-                  column: 19
-                  index: 396
-                  line: 12
-                }
-              }
-            }
-            importKind: 'typeof'
+          start: Object {
+            column: 0
+            index: 377
+            line: 12
+          }
+        }
+        local: ImportSpecifierLocal {
+          name: BindingIdentifier {
+            name: 'ns7'
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -1200,11 +1198,27 @@ Program {
               }
             }
           }
+          importKind: 'typeof'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 22
+              index: 399
+              line: 12
+            }
+            start: Object {
+              column: 19
+              index: 396
+              line: 12
+            }
+          }
         }
-      ]
+      }
     }
     ImportDeclaration {
+      defaultSpecifier: undefined
       importKind: 'typeof'
+      namedSpecifiers: Array []
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -1234,39 +1248,23 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ImportNamespaceSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 26
-              index: 438
-              line: 13
-            }
-            start: Object {
-              column: 0
-              index: 412
-              line: 13
-            }
+      namespaceSpecifier: ImportNamespaceSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 26
+            index: 438
+            line: 13
           }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'switch8'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 26
-                  index: 438
-                  line: 13
-                }
-                start: Object {
-                  column: 19
-                  index: 431
-                  line: 13
-                }
-              }
-            }
-            importKind: 'typeof'
+          start: Object {
+            column: 0
+            index: 412
+            line: 13
+          }
+        }
+        local: ImportSpecifierLocal {
+          name: BindingIdentifier {
+            name: 'switch8'
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -1281,8 +1279,22 @@ Program {
               }
             }
           }
+          importKind: 'typeof'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 26
+              index: 438
+              line: 13
+            }
+            start: Object {
+              column: 19
+              index: 431
+              line: 13
+            }
+          }
         }
-      ]
+      }
     }
   ]
 }

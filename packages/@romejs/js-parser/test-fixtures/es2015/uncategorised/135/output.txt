@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -108,8 +109,8 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 30
-                index: 30
+                column: 29
+                index: 29
                 line: 1
               }
               start: Object {
@@ -153,8 +154,8 @@ Program {
                   line: 1
                 }
                 start: Object {
-                  column: 27
-                  index: 27
+                  column: 24
+                  index: 24
                   line: 1
                 }
               }
@@ -223,8 +224,8 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 51
-                index: 51
+                column: 50
+                index: 50
                 line: 1
               }
               start: Object {
@@ -293,8 +294,8 @@ Program {
                   line: 1
                 }
                 start: Object {
-                  column: 48
-                  index: 48
+                  column: 44
+                  index: 44
                   line: 1
                 }
               }
@@ -372,8 +373,8 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 64
-                index: 64
+                column: 63
+                index: 63
                 line: 1
               }
               start: Object {
@@ -417,8 +418,8 @@ Program {
                   line: 1
                 }
                 start: Object {
-                  column: 61
-                  index: 61
+                  column: 58
+                  index: 58
                   line: 1
                 }
               }
@@ -557,8 +558,8 @@ Program {
                   line: 1
                 }
                 start: Object {
-                  column: 75
-                  index: 75
+                  column: 71
+                  index: 71
                   line: 1
                 }
               }

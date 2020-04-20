@@ -7,13 +7,13 @@
 
 import '@romejs/string-markup';
 import {parsePathPattern, PathPattern} from '@romejs/path-match';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 function _parsePathPattern(input: string): PathPattern {
   return parsePathPattern({input});
 }
 
-test('pattern', t => {
+test('pattern', (t) => {
   // Negate and wildcard
   t.snapshot(_parsePathPattern('!foo'));
   t.snapshot(_parsePathPattern(''));

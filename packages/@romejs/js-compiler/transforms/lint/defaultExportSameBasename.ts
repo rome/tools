@@ -16,13 +16,12 @@ import {toCamelCase} from '@romejs/string-utils';
 import {UnknownFilePath} from '@romejs/path';
 import {renameBindings} from '@romejs/js-ast-utils';
 import {TransformExitResult} from '@romejs/js-compiler/types';
+import {descriptions} from '@romejs/diagnostics';
 
 function isValidDeclaration(
   node: AnyNode,
 ): node is FunctionDeclaration | ClassDeclaration {
-  return (
-    node.type === 'FunctionDeclaration' || node.type === 'ClassDeclaration'
-  );
+  return node.type === 'FunctionDeclaration' || node.type === 'ClassDeclaration';
 }
 
 function filenameToId(path: UnknownFilePath, capitalize: boolean): string {
@@ -50,46 +49,32 @@ export default {
         }
       }
 
-      if (
-        defaultExport !== undefined &&
-        isValidDeclaration(defaultExport.declaration)
-      ) {
+      if (defaultExport !== undefined && isValidDeclaration(
+          defaultExport.declaration,
+        )) {
         const {declaration} = defaultExport;
 
         // Get the export default id
         const id = declaration.id;
         if (id !== undefined && context.path !== undefined) {
-          const type =
-            declaration.type === 'FunctionDeclaration' ? 'function' : 'class';
+          const type = declaration.type === 'FunctionDeclaration'
+            ? 'function'
+            : 'class';
           const basename = filenameToId(context.path, type === 'class');
 
           if (basename !== id.name) {
             const correctFilename = id.name + context.path.getExtensions();
 
-            let adviceMessage = '';
-
-            if (id.name === '*default*') {
-              adviceMessage += 'The';
-            } else {
-              adviceMessage += `Filename should be <emphasis>${correctFilename}</emphasis> or the`;
-            }
-
-            adviceMessage += ` ${type} name should be <emphasis>${basename}</emphasis>`;
-
-            context.addNodeDiagnostic(id, {
-              fixable: true,
-              category: 'lint/defaultExportSameBasename',
-              message: `Filename and the name of a default ${type} should match`,
-              advice: [
-                {
-                  type: 'log',
-                  category: 'info',
-                  message: adviceMessage,
-                },
-              ],
-            });
-
-            return renameBindings(path, new Map([[id.name, basename]]));
+            return context.addFixableDiagnostic({
+              target: id,
+              old: node,
+              fixed: () => renameBindings(path, new Map([[id.name, basename]])),
+            }, descriptions.LINT.DEFAULT_EXPORT_SAME_BASENAME({
+              defaultName: id.name,
+              defaultType: type,
+              actualFilename: basename,
+              correctFilename,
+            }));
           }
         }
       }

@@ -5,21 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  JSNodeBase,
-  BindingIdentifier,
-  BindingObjectPattern,
-  BindingArrayPattern,
-  AnyPrimaryType,
-} from '../index';
+import {JSNodeBase, BindingIdentifier, AnyPrimaryType} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSIndexSignature = JSNodeBase & {
   type: 'TSIndexSignature';
   readonly?: boolean;
-  parameters: Array<
-    BindingIdentifier | BindingObjectPattern | BindingArrayPattern
-  >;
+  key: BindingIdentifier;
   typeAnnotation: undefined | AnyPrimaryType;
 };
 
@@ -27,11 +19,11 @@ export const tsIndexSignature = createBuilder<TSIndexSignature>(
   'TSIndexSignature',
   {
     bindingKeys: {
-      parameters: true,
+      key: true,
     },
     visitorKeys: {
       typeAnnotation: true,
-      parameters: true,
+      key: true,
     },
   },
 );

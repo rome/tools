@@ -6,14 +6,20 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand} from '../../commands';
-import {commandCategories} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 
 export default createMasterCommand({
   description: 'evict a file from the memory cache',
   category: commandCategories.INTERNAL,
+  usage: '',
+  examples: [],
 
-  async default(req: MasterRequest): Promise<void> {
+  defineFlags() {
+    return {};
+  },
+
+  async callback(req: MasterRequest): Promise<void> {
     const {
       master,
       reporter,
@@ -21,8 +27,9 @@ export default createMasterCommand({
       query: {args},
     } = req;
 
-    const files =
-      args.length === 0 ? master.fileAllocator.getAllOwnedFilenames() : args;
+    const files = args.length === 0
+      ? master.fileAllocator.getAllOwnedFilenames()
+      : args;
 
     for (const file of files) {
       await master.fileAllocator.evict(client.flags.cwd.resolve(file));

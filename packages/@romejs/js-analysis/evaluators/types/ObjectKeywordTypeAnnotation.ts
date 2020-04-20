@@ -12,10 +12,7 @@ import {
   AnyNode,
 } from '@romejs/js-ast';
 
-export default function ObjectKeywordTypeAnnotation(
-  node: AnyNode,
-  scope: Scope,
-) {
+export default function ObjectKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
   node = objectKeywordTypeAnnotation.assert(node);
   scope;
   throw new Error('unimplemented');

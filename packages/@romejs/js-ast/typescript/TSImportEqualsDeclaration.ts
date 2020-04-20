@@ -15,11 +15,12 @@ export type TSImportEqualsDeclaration = JSNodeBase & {
   isExport?: boolean;
 };
 
-export const tsImportEqualsDeclaration = createBuilder<
-  TSImportEqualsDeclaration
->('TSImportEqualsDeclaration', {
-  bindingKeys: {
-    id: true,
+export const tsImportEqualsDeclaration = createBuilder<TSImportEqualsDeclaration>(
+  'TSImportEqualsDeclaration',
+  {
+    bindingKeys: {
+      id: true,
+    },
+    visitorKeys: {id: true, moduleReference: true},
   },
-  visitorKeys: {id: true, moduleReference: true},
-});
+);

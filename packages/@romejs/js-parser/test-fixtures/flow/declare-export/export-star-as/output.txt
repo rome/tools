@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -27,6 +28,7 @@ Program {
   body: Array [
     FlowDeclareExportNamed {
       exportKind: undefined
+      namedSpecifiers: Array []
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -56,39 +58,6 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ExportNamespaceSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 24
-              index: 24
-              line: 1
-            }
-            start: Object {
-              column: 15
-              index: 15
-              line: 1
-            }
-          }
-          exported: Identifier {
-            name: 'test'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 24
-                index: 24
-                line: 1
-              }
-              start: Object {
-                column: 20
-                index: 20
-                line: 1
-              }
-            }
-          }
-        }
-      ]
     }
   ]
 }

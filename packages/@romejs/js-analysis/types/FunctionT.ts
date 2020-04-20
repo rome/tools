@@ -7,25 +7,20 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
-import {SerialTypeFactory} from './T';
+import T, {SerialTypeFactory} from './T';
 import {Scope} from '../scopes';
 import {HumanBuilder} from '../Utils';
 import ObjT from './ObjT';
-import T from './T';
 
 export default class FunctionT extends ObjT {
-  constructor(
-    scope: Scope,
-    originNode: undefined | AnyNode,
-    opts: {
-      params: Array<T>;
-      rest: undefined | T;
-      returns: T;
-      props?: Array<T>;
-      proto?: T;
-      body?: T;
-    },
-  ) {
+  constructor(scope: Scope, originNode: undefined | AnyNode, opts: {
+    params: Array<T>;
+    rest: undefined | T;
+    returns: T;
+    props?: Array<T>;
+    proto?: T;
+    body?: T;
+  }) {
     super(scope, originNode, {
       props: opts.props,
       proto: opts.proto,
@@ -46,12 +41,12 @@ export default class FunctionT extends ObjT {
 
   serialize(addType: SerialTypeFactory): HydrateData {
     return {
-      params: this.params.map(type => addType(type)),
+      params: this.params.map((type) => addType(type)),
       rest: this.rest ? addType(this.rest) : undefined,
       returns: addType(this.returns),
       proto: this.proto === undefined ? undefined : addType(this.proto),
       body: this.body === undefined ? undefined : addType(this.body),
-      props: this.props.map(type => addType(type)),
+      props: this.props.map((type) => addType(type)),
     };
   }
 
@@ -62,19 +57,19 @@ export default class FunctionT extends ObjT {
     getType: HydrateTypeFactory,
   ): T {
     return new FunctionT(scope, originNode, {
-      params: Array(data.params).map(id => getType(id)),
+      params: Array(data.params).map((id) => getType(id)),
       rest: data.rest === undefined ? undefined : getType(data.rest),
       returns: getType(data.returns),
-      props: Array(data.props).map(id => getType(id)),
+      props: Array(data.props).map((id) => getType(id)),
       proto: data.proto === undefined ? undefined : getType(data.proto),
       body: data.body === undefined ? undefined : getType(data.body),
     });
   }
 
   humanize(builder: HumanBuilder): string {
-    return `(${this.params
-      .map(param => builder.humanize(param))
-      .join(', ')}) => ${builder.humanize(this.returns)}`;
+    return `(${this.params.map((param) => builder.humanize(param)).join(', ')}) => ${builder.humanize(
+        this.returns,
+      )}`;
   }
 
   reduce(): T {

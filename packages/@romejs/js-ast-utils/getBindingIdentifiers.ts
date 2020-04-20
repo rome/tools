@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, BindingIdentifier} from '@romejs/js-ast';
-import {bindingKeys} from '@romejs/js-ast/utils';
+import {AnyNode, BindingIdentifier, bindingKeys} from '@romejs/js-ast';
 
 export default function getBindingIdentifiers(
   node: AnyNode | Array<AnyNode>,
@@ -33,7 +32,7 @@ export default function getBindingIdentifiers(
     }
 
     for (const key of keys) {
-      // rome-suppress lint/noExplicitAny
+      // rome-suppress-next-line lint/noExplicitAny
       const val = (node as any)[key];
       if (val === undefined) {
         continue;

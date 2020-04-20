@@ -6,18 +6,16 @@
  */
 
 import {Program} from '@romejs/js-ast';
-import {PartialDiagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {TransformRequest, TransformVisitors} from '../types';
-import {program} from '@romejs/js-ast';
-import {stageTransforms, stageOrder, hookVisitors} from '../transforms/index';
+import {stageTransforms, stageOrder} from '../transforms/index';
 import {Cache} from '@romejs/js-compiler';
-import Context from '../lib/Context';
-import {extractSuppressionsFromProgram} from '../suppressions';
+import CompilerContext from '../lib/CompilerContext';
 
 type TransformResult = {
   ast: Program;
   suppressions: DiagnosticSuppressions;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   cacheDependencies: Array<string>;
 };
 
@@ -44,7 +42,7 @@ export default async function transform(
     return cached;
   }
 
-  let prevStageDiagnostics: PartialDiagnostics = [];
+  let prevStageDiagnostics: Diagnostics = [];
   let prevStageCacheDeps: Array<string> = [];
 
   // Run the previous stage
@@ -55,7 +53,7 @@ export default async function transform(
     ast = prevStage.ast;
   }
 
-  const context = new Context({
+  const context = new CompilerContext({
     ast,
     project,
     options,
@@ -67,21 +65,15 @@ export default async function transform(
   const transformFactory = stageTransforms[stage];
   const transforms = transformFactory(project.config, options);
 
-  let visitors: TransformVisitors = [
-    ...hookVisitors,
-    ...(await context.normalizeTransforms(transforms)),
-  ];
+  let visitors: TransformVisitors = await context.normalizeTransforms(transforms);
 
-  const compiledAst = program.assert(context.reduce(ast, visitors));
-
-  const extractedSuppressions = extractSuppressionsFromProgram(ast);
+  const compiledAst = context.reduceRoot(ast, visitors);
 
   const res: TransformResult = {
-    suppressions: extractedSuppressions.suppressions,
+    suppressions: context.suppressions,
     diagnostics: [
       ...prevStageDiagnostics,
-      ...context.diagnostics,
-      ...extractedSuppressions.diagnostics,
+      ...context.diagnostics.getDiagnostics(),
     ],
     cacheDependencies: [
       ...prevStageCacheDeps,

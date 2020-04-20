@@ -16,12 +16,9 @@ export default {
     const {node} = path;
     const options = getOptions(path.context);
 
-    if (
-      node.type === 'ExportDefaultDeclaration' &&
-      node.declaration.type === 'StringLiteral' &&
-      node.declaration.value === ASSET_EXPORT_TEMPORARY_VALUE &&
-      options.assetPath !== undefined
-    ) {
+    if (node.type === 'ExportDefaultDeclaration' && node.declaration.type ===
+        'StringLiteral' && node.declaration.value ===
+        ASSET_EXPORT_TEMPORARY_VALUE && options.assetPath !== undefined) {
       return {
         ...node,
         declaration: {

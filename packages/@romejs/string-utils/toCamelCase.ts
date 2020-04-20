@@ -21,7 +21,7 @@ export function toCamelCase(str: string, forceCapitalize?: boolean): string {
   str = str.replace(/[_.\- ]+(\w|$)/g, (_, p1) => p1.toUpperCase());
 
   // Capitalize characters after a number
-  str = str.replace(/\d+(\w|$)/g, m => m.toUpperCase());
+  str = str.replace(/\d+(\w|$)/g, (m) => m.toUpperCase());
 
   // Force capitalize if necessary
   if (forceCapitalize) {

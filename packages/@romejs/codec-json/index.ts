@@ -5,12 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONParserOptions, PathToComments, Tokens} from './types';
+import {JSONParserOptions, PathToComments, Tokens, JSONValue} from './types';
 import createParser from './parse';
 import {Consumer, consume} from '@romejs/consume';
 import {stringifyRootConsumer} from './stringify';
 import {TokenValues} from '@romejs/parser-core';
-import {JSONValue} from './types';
 
 export {
   JSONParserOptions,
@@ -63,5 +62,3 @@ export function stringifyJSON(opts: {
 }): string {
   return stringifyRootConsumer(opts.consumer, opts.comments);
 }
-
-export {default as messages} from './messages';

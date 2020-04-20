@@ -34,39 +34,30 @@ export default {
     if (node.type === 'CallExpression') {
       const {callee, arguments: args} = node;
 
-      const isRequire: boolean =
-        callee.type === 'ReferenceIdentifier' &&
-        callee.name === 'require' &&
-        path.scope.hasBinding('require') === false;
+      const isRequire: boolean = callee.type === 'ReferenceIdentifier' &&
+          callee.name ===
+          'require' && path.scope.hasBinding('require') === false;
       const sourceArg = args[0];
 
-      if (
-        isRequire &&
-        args.length === 1 &&
-        sourceArg.type === 'StringLiteral'
-      ) {
-        context.record(
-          new ImportRecord({
-            type: 'cjs',
-            kind: 'value',
-            optional: isOptional(path),
-            loc: node.loc,
-            source: sourceArg.value,
-            names: [],
-            all: true,
-            async: false,
-          }),
-        );
+      if (isRequire && args.length === 1 && sourceArg.type === 'StringLiteral') {
+        context.record(new ImportRecord({
+          type: 'cjs',
+          kind: 'value',
+          optional: isOptional(path),
+          loc: node.loc,
+          source: sourceArg.value,
+          names: [],
+          all: true,
+          async: false,
+        }));
       }
     }
 
     // Detect assignments to exports and module.exports as definitely being an CJS module
     if (node.type === 'AssignmentExpression') {
-      const isModuleExports =
-        path.scope.getBinding('module') === undefined &&
+      const isModuleExports = path.scope.getBinding('module') === undefined &&
         doesNodeMatchPattern(node.left, 'module.exports', true);
-      const isExports =
-        path.scope.getBinding('exports') === undefined &&
+      const isExports = path.scope.getBinding('exports') === undefined &&
         doesNodeMatchPattern(node.left, 'exports', true);
 
       if (isModuleExports || isExports) {
@@ -77,23 +68,18 @@ export default {
         const {right} = node;
 
         if (objectExpression.is(right)) {
-          context.record(
-            new ExportRecord({
-              type: 'local',
-              loc: getDeclarationLoc(scope, node.right),
-              valueType: getAnalyzeExportValueType(scope, node.right),
-              kind: 'value',
-              name: 'default',
-            }),
-          );
+          context.record(new ExportRecord({
+            type: 'local',
+            loc: getDeclarationLoc(scope, node.right),
+            valueType: getAnalyzeExportValueType(scope, node.right),
+            kind: 'value',
+            name: 'default',
+          }));
 
           for (const prop of right.properties) {
             // Don't allow spread, unknown, or computed properties
-            if (
-              prop.type === 'SpreadProperty' ||
-              (prop.key.type === 'ComputedPropertyKey' &&
-                prop.key.value.type !== 'StringLiteral')
-            ) {
+            if (prop.type === 'SpreadProperty' || prop.key.type ===
+                'ComputedPropertyKey' && prop.key.value.type !== 'StringLiteral') {
               context.record(new EscapedCJSRefRecord(prop));
               continue;
             }
@@ -112,48 +98,40 @@ export default {
 
             let target = prop.type === 'ObjectMethod' ? prop : prop.value;
 
-            context.record(
-              new ExportRecord({
-                type: 'local',
-                loc: getDeclarationLoc(scope, target),
-                valueType: getAnalyzeExportValueType(scope, target),
-                kind: 'value',
-                name,
-              }),
-            );
+            context.record(new ExportRecord({
+              type: 'local',
+              loc: getDeclarationLoc(scope, target),
+              valueType: getAnalyzeExportValueType(scope, target),
+              kind: 'value',
+              name,
+            }));
           }
         } else {
           const source = getRequireSource(node.right, scope);
           if (source === undefined) {
-            context.record(
-              new ExportRecord({
-                type: 'local',
-                loc: getDeclarationLoc(scope, node.right),
-                valueType: getAnalyzeExportValueType(scope, node.right),
-                kind: 'value',
-                name: 'default',
-              }),
-            );
+            context.record(new ExportRecord({
+              type: 'local',
+              loc: getDeclarationLoc(scope, node.right),
+              valueType: getAnalyzeExportValueType(scope, node.right),
+              kind: 'value',
+              name: 'default',
+            }));
           } else {
-            context.record(
-              new ExportRecord({
-                type: 'externalAll',
-                loc: getDeclarationLoc(scope, node.right),
-                kind: 'value',
-                source,
-              }),
-            );
+            context.record(new ExportRecord({
+              type: 'externalAll',
+              loc: getDeclarationLoc(scope, node.right),
+              kind: 'value',
+              source,
+            }));
 
-            context.record(
-              new ExportRecord({
-                type: 'external',
-                kind: 'value',
-                loc: getDeclarationLoc(scope, node.right),
-                imported: 'default',
-                exported: 'default',
-                source: source,
-              }),
-            );
+            context.record(new ExportRecord({
+              type: 'external',
+              kind: 'value',
+              loc: getDeclarationLoc(scope, node.right),
+              imported: 'default',
+              exported: 'default',
+              source,
+            }));
           }
         }
       }
@@ -164,15 +142,13 @@ export default {
         // parts[0] is exports
         const name = parts[1];
 
-        context.record(
-          new ExportRecord({
-            type: 'local',
-            loc: getDeclarationLoc(scope, node.right),
-            valueType: getAnalyzeExportValueType(scope, node.right),
-            kind: 'value',
-            name,
-          }),
-        );
+        context.record(new ExportRecord({
+          type: 'local',
+          loc: getDeclarationLoc(scope, node.right),
+          valueType: getAnalyzeExportValueType(scope, node.right),
+          kind: 'value',
+          name,
+        }));
       }
     }
 
@@ -181,19 +157,16 @@ export default {
 
       // Detect references to exports and module
       if (binding === undefined) {
-        if (
-          node.name === '__filename' ||
-          node.name === '__dirname' ||
-          node.name === 'require' ||
-          node.name === 'module' ||
-          node.name === 'exports'
-        ) {
+        if (node.name === '__filename' || node.name === '__dirname' ||
+              node.name ===
+              'require' || node.name === 'module' || node.name === 'exports') {
           context.record(new CJSVarRefRecord(node));
         }
 
         if (node.name === 'module' || node.name === 'exports') {
-          const inMemberExpression =
-            parent.type === 'MemberExpression' && parent.object === node;
+          const inMemberExpression = parent.type === 'MemberExpression' &&
+              parent.object ===
+              node;
           if (!inMemberExpression) {
             context.record(new EscapedCJSRefRecord(node));
           }

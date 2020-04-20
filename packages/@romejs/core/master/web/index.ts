@@ -10,15 +10,15 @@ import Bundler from '../bundler/Bundler';
 import {WebSocketInterface} from '@romejs/codec-websocket';
 import prettyFormat from '@romejs/pretty-format';
 import http = require('http');
+
 import {escapeMarkup} from '@romejs/string-markup';
-import {Reporter} from '@romejs/cli-reporter';
+import {Reporter, ReporterStream} from '@romejs/cli-reporter';
 import {
   MasterQueryRequest,
   MasterQueryResponse,
 } from '../../common/bridges/MasterBridge';
-import {ReporterStream} from '@romejs/cli-reporter';
 import {MasterMarker} from '../Master';
-import {ClientFlags} from '../../common/types/client';
+import {ClientFlagsJSON} from '../../common/types/client';
 import WebRequest, {stripBundleSuffix} from './WebRequest';
 import {BundlerConfig} from '../../common/types/bundler';
 import {AbsoluteFilePath} from '@romejs/path';
@@ -33,7 +33,7 @@ export type WebMasterTime = {
 
 export type WebMasterClient = WebMasterTime & {
   id: number;
-  flags: ClientFlags;
+  flags: ClientFlagsJSON;
   stdoutAnsi: string;
   stdoutHTML: string;
 };
@@ -68,14 +68,17 @@ export class WebServer {
       webRequest.dispatch();
     });
 
-    master.clientStartEvent.subscribe(client => {
+    master.clientStartEvent.subscribe((client) => {
       if (!this.savingRequests) {
         return;
       }
 
       const data: WebMasterClient = {
         id: client.id,
-        flags: client.flags,
+        flags: {
+          ...client.flags,
+          cwd: client.flags.cwd.join(),
+        },
         startTime: Date.now(),
         endTime: undefined,
         stdoutAnsi: '',
@@ -88,6 +91,7 @@ export class WebServer {
         type: 'all',
         format: 'ansi',
         columns: 100,
+        unicode: true,
         write(chunk) {
           data.stdoutAnsi += chunk;
         },
@@ -97,8 +101,9 @@ export class WebServer {
         type: 'all',
         format: 'html',
         columns: 100,
+        unicode: true,
         write(chunk) {
-          data.stdoutAnsi += chunk;
+          data.stdoutHTML += chunk;
         },
       };
 
@@ -117,7 +122,7 @@ export class WebServer {
       });
     });
 
-    master.requestStartEvent.subscribe(request => {
+    master.requestStartEvent.subscribe((request) => {
       if (!this.savingRequests) {
         return;
       }
@@ -134,12 +139,12 @@ export class WebServer {
       this.clientRequestHistory.set(request.id, data);
       this.refreshRequests();
 
-      request.markerEvent.subscribe(marker => {
+      request.markerEvent.subscribe((marker) => {
         data.markers.push(marker);
         this.refreshRequests();
       });
 
-      request.endEvent.subscribe(response => {
+      request.endEvent.subscribe((response) => {
         // Update completion fields
         data.response = response;
         data.endTime = Date.now();
@@ -183,11 +188,8 @@ export class WebServer {
     this.server.listen(port);
 
     //this.reporter.clear();
-
     const url = `http://localhost:${String(port)}`;
-    this.reporter.success(
-      `Listening on <hyperlink emphasis>${url}</hyperlink>`,
-    );
+    this.reporter.success(`Listening on <hyperlink emphasis>${url}</hyperlink>`);
     this.reporter.info(
       `Web console available at <hyperlink emphasis>${url}/__rome__</hyperlink>`,
     );
@@ -196,29 +198,30 @@ export class WebServer {
   printConsoleLog(msg: HmrClientLogMessage) {
     const {reporter} = this.masterRequest;
 
-    let buf = msg.data
-      .map(arg => {
-        if (typeof arg === 'string') {
-          return escapeMarkup(arg);
-        } else {
-          return prettyFormat(arg, {escapeMarkup: true, color: true});
-        }
-      })
-      .join(' ');
+    let buf = msg.data.map((arg) => {
+      if (typeof arg === 'string') {
+        return escapeMarkup(arg);
+      } else {
+        return prettyFormat(arg, {markup: true});
+      }
+    }).join(' ');
 
     switch (msg.level) {
-      case 'info':
+      case 'info': {
         reporter.info(buf);
         break;
+      }
 
-      case 'warn':
+      case 'warn': {
         reporter.warn(buf);
         break;
+      }
 
       case 'log':
-      case 'trace':
+      case 'trace': {
         reporter.verboseForce(buf);
         break;
+      }
 
       case 'group':
       case 'groupCollapsed':
@@ -236,6 +239,8 @@ export class WebServer {
     // This check makes sure that files outside of the project directory cannot be served
     if (possibleStaticPath.isRelativeTo(project.folder)) {
       return possibleStaticPath;
+    } else {
+      return undefined;
     }
   }
 
@@ -246,9 +251,7 @@ export class WebServer {
     }
   }
 
-  async getBundler(
-    url: ConsumableUrl,
-  ): Promise<{
+  async getBundler(url: ConsumableUrl): Promise<{
     bundler: Bundler;
     path: AbsoluteFilePath;
   }> {
@@ -259,14 +262,11 @@ export class WebServer {
       throw new Error('Pathname is attempting to escalate out of cwd');
     }
 
-    const pathPointer = url.path.getDiagnosticPointer();
-    const path = await this.master.resolver.resolveEntryAssertPath(
-      {
-        origin: this.masterRequest.client.flags.cwd,
-        source: absolute,
-      },
-      pathPointer === undefined ? undefined : {pointer: pathPointer},
-    );
+    const pathPointer = url.path.getDiagnosticLocation();
+    const path = await this.master.resolver.resolveEntryAssertPath({
+      origin: this.masterRequest.client.flags.cwd,
+      source: absolute,
+    }, pathPointer === undefined ? undefined : {location: pathPointer});
 
     const platform = url.query.get('platform').asStringSetOrVoid(PLATFORMS);
     const cacheKey = JSON.stringify({
@@ -285,13 +285,7 @@ export class WebServer {
     );
 
     const bundler = new Bundler(this.masterRequest, bundlerConfig);
-
-    bundler.graph.watch(async () => {
-      // TODO HMR
-    });
-
     this.bundlerCache.set(cacheKey, bundler);
-
     return {bundler, path};
   }
 }

@@ -13,10 +13,7 @@ import {
 } from '@romejs/js-ast';
 import MaybeT from '../../types/MaybeT';
 
-export default function FlowNullableTypeAnnotation(
-  node: AnyNode,
-  scope: Scope,
-) {
+export default function FlowNullableTypeAnnotation(node: AnyNode, scope: Scope) {
   node = flowNullableTypeAnnotation.assert(node);
   return new MaybeT(scope, node, scope.evaluate(node.typeAnnotation));
 }

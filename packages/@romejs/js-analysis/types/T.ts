@@ -5,10 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {HydrateTypeFactory, HydrateData} from '../Evaluator';
+import Evaluator, {HydrateTypeFactory, HydrateData} from '../Evaluator';
 import {SourceLocation} from '@romejs/parser-core';
 import {AnyNode} from '@romejs/js-ast';
-import Evaluator from '../Evaluator';
 import Graph from '../Graph';
 import {Scope} from '../scopes';
 import Hub from '../Hub';
@@ -18,13 +17,11 @@ let counter = 0;
 
 export type SerialTypeFactory = (type: T) => string;
 
-export type TypeCompatibilityReturn =
-  | {type: 'compatible'}
-  | {
-      type: 'incompatible';
-      lower: T;
-      upper: T;
-    };
+export type TypeCompatibilityReturn = {type: 'compatible'} | {
+  type: 'incompatible';
+  lower: T;
+  upper: T;
+};
 
 export default class T {
   constructor(scope: Scope, originNode: undefined | AnyNode) {

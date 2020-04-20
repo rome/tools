@@ -5,16 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
-import {testLint} from '../../api/lint.test';
-import {PartialDiagnostic} from '@romejs/diagnostics/types';
+import {test} from 'rome';
+import {testLintMultiple} from '../../api/lint.test';
 
-test('no function reassignment', async t => {
-  function checkCategory(diagnostic: PartialDiagnostic): Boolean {
-    return diagnostic.category === 'lint/noFunctionAssign';
-  }
-
-  const validTestCases = [
+test('no function reassignment', async (t) => {
+  await testLintMultiple(t, [
+    // VALID
     'function foo() { var foo = bar; }',
     'function foo(foo) { foo = bar; }',
     'function foo() { var foo; foo = bar; }',
@@ -22,9 +18,8 @@ test('no function reassignment', async t => {
     'var foo = function() {}; foo = bar;',
     'var foo = function() { foo = bar; };',
     `import bar from 'bar'; function foo() { var foo = bar; }`,
-  ];
 
-  const invalidTestCases = [
+    // INVALID
     'function foo() {}; foo = bar;',
     'function foo() { foo = bar; }',
     'foo = bar; function foo() { };',
@@ -32,15 +27,5 @@ test('no function reassignment', async t => {
     '({x: foo = 0} = bar); function foo() { };',
     'function foo() { [foo] = bar; }',
     '(function() { ({x: foo = 0} = bar); function foo() { }; })();',
-  ];
-
-  for (const testCase of validTestCases) {
-    const {diagnostics} = await testLint(testCase);
-    t.falsy(diagnostics.find(checkCategory));
-  }
-
-  for (const testCase of invalidTestCases) {
-    const {diagnostics} = await testLint(testCase);
-    t.truthy(diagnostics.find(checkCategory));
-  }
+  ], {category: 'lint/noFunctionAssign'});
 });

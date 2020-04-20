@@ -58,7 +58,7 @@ export default class Event<Param, Ret = void> {
   send(param: Param) {
     const {rootSubscription} = this;
     if (rootSubscription === undefined) {
-      return undefined;
+      return;
     }
 
     rootSubscription(param);
@@ -102,7 +102,7 @@ export default class Event<Param, Ret = void> {
       } else {
         const res = await Promise.all([
           rootSubscription(param),
-          ...Array.from(subscriptions, callback => callback(param)),
+          ...Array.from(subscriptions, (callback) => callback(param)),
         ]);
 
         // Return the root subscription value
@@ -123,13 +123,13 @@ export default class Event<Param, Ret = void> {
         timeoutId = setTimeout(() => {
           timedOut = true;
           listener.unsubscribe();
-          reject(
-            new Error(`Timed out after waiting ${timeout}ms for ${this.name}`),
-          );
+          reject(new Error(
+            `Timed out after waiting ${timeout}ms for ${this.name}`,
+          ));
         }, timeout);
       }
 
-      const listener = this.subscribe(param => {
+      const listener = this.subscribe((param) => {
         if (timedOut) {
           return val;
         }
@@ -161,10 +161,7 @@ export default class Event<Param, Ret = void> {
       throw new Error(`Event ${this.name} only allows a single subscription`);
     }
 
-    if (
-      this.rootSubscription === callback ||
-      this.subscriptions.has(callback)
-    ) {
+    if (this.rootSubscription === callback || this.subscriptions.has(callback)) {
       throw new Error('Cannot double subscribe a callback');
     }
 

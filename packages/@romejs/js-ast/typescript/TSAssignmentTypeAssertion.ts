@@ -14,9 +14,10 @@ export type TSAssignmentTypeAssertion = JSNodeBase & {
   expression: AnyTargetAssignmentPattern;
 };
 
-export const tsAssignmentTypeAssertion = createBuilder<
-  TSAssignmentTypeAssertion
->('TSAssignmentTypeAssertion', {
-  bindingKeys: {},
-  visitorKeys: {expression: true, typeAnnotation: true},
-});
+export const tsAssignmentTypeAssertion = createBuilder<TSAssignmentTypeAssertion>(
+  'TSAssignmentTypeAssertion',
+  {
+    bindingKeys: {},
+    visitorKeys: {expression: true, typeAnnotation: true},
+  },
+);

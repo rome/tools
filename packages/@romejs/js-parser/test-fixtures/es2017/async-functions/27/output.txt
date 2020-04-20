@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: true
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -22,22 +23,26 @@ Program {
   }
   diagnostics: Array [
     Object {
-      advice: Array []
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Unexpected token, expected ","'
-      mtime: undefined
-      sourceType: 'script'
       origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 22
-        index: 22
-        line: 1
+      description: Object {
+        advice: Array []
+        category: 'parse/js'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ,'}
       }
-      start: Object {
-        column: 21
-        index: 21
-        line: 1
+      location: Object {
+        filename: 'input.js'
+        mtime: undefined
+        sourceType: 'script'
+        end: Object {
+          column: 22
+          index: 22
+          line: 1
+        }
+        start: Object {
+          column: 21
+          index: 21
+          line: 1
+        }
       }
     }
   ]

@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -25,6 +26,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '1'
       value: ' this is a comment '
       loc: Object {
         filename: 'input.js'
@@ -105,7 +107,7 @@ Program {
               }
             }
             expression: JSXEmptyExpression {
-              leadingComments: undefined
+              trailingComments: Array ['1']
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -119,24 +121,6 @@ Program {
                   line: 1
                 }
               }
-              trailingComments: Array [
-                CommentBlock {
-                  value: ' this is a comment '
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 27
-                      index: 27
-                      line: 1
-                    }
-                    start: Object {
-                      column: 4
-                      index: 4
-                      line: 1
-                    }
-                  }
-                }
-              ]
             }
           }
         ]

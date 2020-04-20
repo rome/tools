@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -22,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' foo'
       loc: Object {
         filename: 'input.js'
@@ -38,6 +40,7 @@ Program {
       }
     }
     CommentLine {
+      id: '1'
       value: ' falls through'
       loc: Object {
         filename: 'input.js'
@@ -75,9 +78,9 @@ Program {
       loc: Object {
         filename: 'input.js'
         end: Object {
-          column: 0
-          index: 142
-          line: 10
+          column: 1
+          index: 141
+          line: 9
         }
         start: Object {
           column: 0
@@ -102,8 +105,8 @@ Program {
             line: 1
           }
           start: Object {
-            column: 0
-            index: 0
+            column: 12
+            index: 12
             line: 1
           }
         }
@@ -192,7 +195,7 @@ Program {
             cases: Array [
               SwitchCase {
                 consequent: Array []
-                leadingComments: undefined
+                trailingComments: Array ['1']
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
@@ -206,26 +209,9 @@ Program {
                     line: 4
                   }
                 }
-                trailingComments: Array [
-                  CommentLine {
-                    value: ' falls through'
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 28
-                        index: 97
-                        line: 5
-                      }
-                      start: Object {
-                        column: 12
-                        index: 81
-                        line: 5
-                      }
-                    }
-                  }
-                ]
                 test: NumericLiteral {
                   value: 1
+                  leadingComments: Array ['0']
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
@@ -239,24 +225,6 @@ Program {
                       line: 4
                     }
                   }
-                  leadingComments: Array [
-                    CommentLine {
-                      value: ' foo'
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 14
-                          index: 52
-                          line: 3
-                        }
-                        start: Object {
-                          column: 8
-                          index: 46
-                          line: 3
-                        }
-                      }
-                    }
-                  ]
                 }
               }
               SwitchCase {
@@ -275,6 +243,7 @@ Program {
                 }
                 test: NumericLiteral {
                   value: 2
+                  leadingComments: Array ['1']
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
@@ -288,24 +257,6 @@ Program {
                       line: 6
                     }
                   }
-                  leadingComments: Array [
-                    CommentLine {
-                      value: ' falls through'
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 28
-                          index: 97
-                          line: 5
-                        }
-                        start: Object {
-                          column: 12
-                          index: 81
-                          line: 5
-                        }
-                      }
-                    }
-                  ]
                 }
                 consequent: Array [
                   ExpressionStatement {

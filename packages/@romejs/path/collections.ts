@@ -10,10 +10,8 @@ import {AbsoluteFilePath, UnknownFilePath, RelativeFilePath} from '.';
 // Sometimes we don't want to have to deal with what a FilePath serializes into
 // For those purposes we have these wrappers around Map and Set. Here we can add some custom logic
 // to speed up the usage of FilePaths in these scenarios.
-
 // The API here attempts to match what is expected from the native classes, however we may deviate from it
 // to avoid the usage of getters and generator/symbol indirection for iteration.
-
 class FilePathMap<FilePath extends UnknownFilePath, Value> {
   constructor(entries?: Array<[FilePath, Value]>) {
     this.joinedToValue = new Map();
@@ -76,7 +74,7 @@ class FilePathMap<FilePath extends UnknownFilePath, Value> {
   }
 
   set(path: FilePath, value: Value) {
-    const uniq = path.getUnique() as FilePath;
+    const uniq = (path.getUnique() as FilePath);
     const joined = uniq.join();
     this.joinedToValue.set(joined, value);
     this.joinedToPath.set(joined, uniq);

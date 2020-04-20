@@ -17,6 +17,7 @@ import {
   ProjectConfigMeta,
   ProjectConfigTarget,
   ProjectConfigMetaHard,
+  DEFAULT_PROJECT_CONFIG,
 } from './types';
 import {parsePathPattern} from '@romejs/path-match';
 import {
@@ -26,12 +27,12 @@ import {
   mergeAbsoluteFilePathSets,
   getParentConfigDependencies,
 } from './utils';
-import {DEFAULT_PROJECT_CONFIG} from './types';
 import {consumeJSONExtra, ConsumeJSONResult} from '@romejs/codec-json';
 import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
 import {coerce1, number0, add, inc} from '@romejs/ob1';
 import {existsSync, readFileTextSync, readdirSync, lstatSync} from '@romejs/fs';
 import crypto = require('crypto');
+
 import {ROME_CONFIG_PACKAGE_JSON_FIELD} from './constants';
 import {parseSemverRange} from '@romejs/codec-semver';
 
@@ -45,17 +46,18 @@ function categoryExists(consumer: Consumer): boolean {
 
   const value = consumer.asUnknown();
   if (typeof value === 'boolean') {
-    consumer.unexpected(`Expected an object here but got a boolean`, {
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          message: `You likely wanted \`{"enabled": ${String(
-            value,
-          )}}\` instead`,
-        },
-      ],
-    });
+    consumer.unexpected(
+      `Expected an object here but got a boolean`,
+      {
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: `You likely wanted \`{"enabled": ${String(value)}}\` instead`,
+          },
+        ],
+      },
+    );
     return false;
   }
 
@@ -76,27 +78,28 @@ export function loadCompleteProjectConfig(
   // Produce a defaultConfig with some folder specific values
   const defaultConfig: ProjectConfig = {
     ...DEFAULT_PROJECT_CONFIG,
-    vsc: {
+    vcs: {
+      ...DEFAULT_PROJECT_CONFIG.vcs,
       root: projectFolder,
-      ...DEFAULT_PROJECT_CONFIG.vsc,
     },
   };
 
-  const name = consumer
-    .get('name')
-    .asString(`project-${projectFolder.getBasename()}`);
+  const name = consumer.get('name').asString(
+    `project-${projectFolder.getBasename()}`,
+  );
 
   const config: ProjectConfig = {
     ...DEFAULT_PROJECT_CONFIG,
     name,
-    root:
-      partial.root === undefined ? DEFAULT_PROJECT_CONFIG.root : partial.root,
+    root: partial.root === undefined
+      ? DEFAULT_PROJECT_CONFIG.root
+      : partial.root,
     ...mergePartialConfig(defaultConfig, partial),
   };
 
   // Infer VCS ignore files as lint ignore rules
   for (const filename of IGNORE_FILENAMES) {
-    const possiblePath = config.vsc.root.append(filename);
+    const possiblePath = config.vcs.root.append(filename);
     meta.configDependencies.add(possiblePath);
 
     if (existsSync(possiblePath)) {
@@ -133,11 +136,12 @@ export function loadCompleteProjectConfig(
 
   // Set fs.watchman=true when the file .watchmanconfig is present and no fs.watchman config was set
   if (partial.files.watchman === undefined) {
-    // Try the project and vsc.root folder for a .watchmanconfig
-    // We do the Set magic to only visit the projectFolder once if it is also the vsc.root
+    // Try the project and vcs.root folder for a .watchmanconfig
+
+    // We do the Set magic to only visit the projectFolder once if it is also the vcs.root
     for (const dir of new AbsoluteFilePathSet([
       projectFolder,
-      config.vsc.root,
+      config.vcs.root,
     ])) {
       const watchmanConfigPath = dir.append(WATCHMAN_CONFIG_FILENAME);
       meta.configDependencies.add(watchmanConfigPath);
@@ -188,10 +192,7 @@ export function normalizeProjectConfig(
     configSourceSubKey = ROME_CONFIG_PACKAGE_JSON_FIELD;
   }
 
-  const hash = crypto
-    .createHash('sha256')
-    .update(configFile)
-    .digest('hex');
+  const hash = crypto.createHash('sha256').update(configFile).digest('hex');
 
   const config: PartialProjectConfig = {
     compiler: {},
@@ -205,7 +206,7 @@ export function normalizeProjectConfig(
     format: {},
     tests: {},
     files: {},
-    vsc: {},
+    vcs: {},
     dependencies: {},
     targets: new Map(),
   };
@@ -220,7 +221,7 @@ export function normalizeProjectConfig(
     consumer,
     consumersChain: [consumer],
     configHashes: [hash],
-    configSourceSubKey: configSourceSubKey,
+    configSourceSubKey,
     configDependencies: getParentConfigDependencies(projectFolder),
   };
 
@@ -258,9 +259,8 @@ export function normalizeProjectConfig(
   const bundler = consumer.get('bundler');
   if (categoryExists(bundler)) {
     if (bundler.has('mode')) {
-      config.bundler.mode = bundler
-        .get('mode')
-        .asStringSet(['modern', 'legacy']);
+        config.bundler.mode =
+        bundler.get('mode').asStringSet(['modern', 'legacy']);
     }
   }
 
@@ -282,10 +282,9 @@ export function normalizeProjectConfig(
     }
 
     if (typeChecking.has('libs')) {
-      const libs = normalizeTypeCheckingLibs(
-        projectFolder,
-        typeChecking.get('libs'),
-      );
+      const libs = normalizeTypeCheckingLibs(projectFolder, typeChecking.get(
+        'libs',
+      ));
       config.typeCheck.libs = libs.files;
       meta.configDependencies = new AbsoluteFilePathSet([
         ...meta.configDependencies,
@@ -298,9 +297,7 @@ export function normalizeProjectConfig(
   const dependencies = consumer.get('dependencies');
   if (categoryExists(dependencies)) {
     if (dependencies.has('enabled')) {
-      config.dependencies.enabled = dependencies
-        .get('dependencies')
-        .asBoolean();
+      config.dependencies.enabled = dependencies.get('dependencies').asBoolean();
     }
   }
 
@@ -365,17 +362,18 @@ export function normalizeProjectConfig(
     }
 
     if (files.has('assetExtensions')) {
-      config.files.assetExtensions = files
-        .get('assetExtensions')
-        .asArray()
-        .map(item => item.asString());
+      config.files.assetExtensions = files.get('assetExtensions').asArray().map(
+        (
+          item,
+        ) => item.asString(),
+      );
     }
   }
 
-  const vsc = consumer.get('vsc');
-  if (categoryExists(vsc)) {
-    if (vsc.has('root')) {
-      config.vsc.root = projectFolder.resolve(vsc.get('root').asString());
+  const vcs = consumer.get('vcs');
+  if (categoryExists(vcs)) {
+    if (vcs.has('root')) {
+      config.vcs.root = projectFolder.resolve(vcs.get('root').asString());
     }
   }
 
@@ -388,10 +386,9 @@ export function normalizeProjectConfig(
   if (categoryExists(targets)) {
     for (const [name, object] of targets.asMap()) {
       const target: ProjectConfigTarget = {
-        constraints: object
-          .get('constraints')
-          .asImplicitArray()
-          .map(item => item.asString()),
+        constraints: object.get('constraints').asImplicitArray().map(
+          (item) => item.asString(),
+        ),
       };
       object.enforceUsedProperties('config target property');
       config.targets.set(name, target);
@@ -400,9 +397,7 @@ export function normalizeProjectConfig(
 
   // Complain about common misspellings
   if (consumer.has('linter')) {
-    consumer
-      .get('linter')
-      .unexpected(`Did you mean <emphasis>lint</emphasis>?`);
+    consumer.get('linter').unexpected(`Did you mean <emphasis>lint</emphasis>?`);
   }
 
   // Need to get this before enforceUsedProperties so it will be flagged
@@ -431,9 +426,9 @@ function normalizeTypeCheckingLibs(
   const libFiles: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
   // Normalize library folders
-  const folders: Array<AbsoluteFilePath> = arrayOfStrings(
-    consumer,
-  ).map(libFolder => projectFolder.resolve(libFolder));
+  const folders: Array<AbsoluteFilePath> = arrayOfStrings(consumer).map((
+    libFolder,
+  ) => projectFolder.resolve(libFolder));
 
   // Crawl library folders and add their files
   for (const folder of folders) {
@@ -496,10 +491,7 @@ function extendProjectConfig(
     merged.haste.ignore = hasteIgnore;
   }
 
-  const testingIgnore = mergeArrays(
-    extendsObj.tests.ignore,
-    config.tests.ignore,
-  );
+  const testingIgnore = mergeArrays(extendsObj.tests.ignore, config.tests.ignore);
   if (testingIgnore !== undefined) {
     merged.tests.ignore = testingIgnore;
   }
@@ -530,7 +522,7 @@ function extendProjectConfig(
 type MergedPartialConfig<
   A extends PartialProjectConfig,
   B extends PartialProjectConfig
-> = {[Key in keyof ProjectConfigObjects]: A[Key] & B[Key]};
+> = { [Key in keyof ProjectConfigObjects]: A[Key] & B[Key] };
 
 function mergePartialConfig<
   A extends PartialProjectConfig,
@@ -585,9 +577,9 @@ function mergePartialConfig<
       ...a.files,
       ...b.files,
     },
-    vsc: {
-      ...a.vsc,
-      ...b.vsc,
+    vcs: {
+      ...a.vcs,
+      ...b.vcs,
     },
     targets: new Map([...a.targets.entries(), ...b.targets.entries()]),
   };

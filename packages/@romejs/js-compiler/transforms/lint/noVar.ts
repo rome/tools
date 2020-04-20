@@ -7,21 +7,15 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noVar',
   enter(path: Path): AnyNode {
     const {context, node: declaration} = path;
 
-    if (
-      declaration.type === 'VariableDeclaration' &&
-      declaration.kind === 'var'
-    ) {
-      context.addNodeDiagnostic(declaration, {
-        category: 'lint/noVar',
-        message:
-          'Variable declarations using `var` are disallowed, use `let` or `const` instead.',
-      });
+    if (declaration.type === 'VariableDeclaration' && declaration.kind === 'var') {
+      context.addNodeDiagnostic(declaration, descriptions.LINT.NO_VAR);
     }
 
     return declaration;

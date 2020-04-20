@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -23,8 +24,10 @@ Program {
   }
   body: Array [
     ImportDeclaration {
+      defaultSpecifier: undefined
       importKind: undefined
-      specifiers: Array []
+      namedSpecifiers: Array []
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {

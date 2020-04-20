@@ -5,10 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyStatement} from '@romejs/js-ast';
+import {AnyStatement, Program} from '@romejs/js-ast';
 import {CheckProvider} from '../types';
 import {ModuleSignatureManager} from '../Evaluator';
-import {Program} from '@romejs/js-ast';
 import Hub from '../Hub';
 import {TransformProjectDefinition} from '@romejs/js-compiler';
 
@@ -76,17 +75,15 @@ export default async function buildGraph(opts: {
 
     // seed graphs
     const seedCache: Set<string> = new Set();
-    await Promise.all(
-      evaluator.imports.map(({source, relative}) => {
-        const cacheKey = `${source}:${relative}`;
-        if (seedCache.has(cacheKey)) {
-          return undefined;
-        }
+    await Promise.all(evaluator.imports.map(({source, relative}) => {
+      const cacheKey = `${source}:${relative}`;
+      if (seedCache.has(cacheKey)) {
+        return undefined;
+      }
 
-        seedCache.add(cacheKey);
-        return getModuleSignature(source, relative);
-      }),
-    );
+      seedCache.add(cacheKey);
+      return getModuleSignature(source, relative);
+    }));
 
     // link imports
     for (const {source, importedName, relative, type} of evaluator.imports) {

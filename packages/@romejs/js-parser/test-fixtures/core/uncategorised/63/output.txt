@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -22,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' Hello, world!'
       loc: Object {
         filename: 'input.js'
@@ -38,6 +40,7 @@ Program {
       }
     }
     CommentLine {
+      id: '1'
       value: '   Another hello'
       loc: Object {
         filename: 'input.js'
@@ -56,6 +59,10 @@ Program {
   ]
   body: Array [
     ExpressionStatement {
+      leadingComments: Array [
+        '0'
+        '1'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -86,40 +93,6 @@ Program {
           }
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' Hello, world!'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 16
-              index: 16
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        CommentLine {
-          value: '   Another hello'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 18
-              index: 36
-              line: 3
-            }
-            start: Object {
-              column: 0
-              index: 18
-              line: 3
-            }
-          }
-        }
-      ]
     }
   ]
 }

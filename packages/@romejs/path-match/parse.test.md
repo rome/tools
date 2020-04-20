@@ -15,7 +15,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 1
-      index: 4
+      index: 1
       line: 1
     }
     start: Object {
@@ -30,7 +30,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 1
-          index: 4
+          index: 1
           line: 1
         }
         start: Object {
@@ -46,7 +46,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 1
-              index: 4
+              index: 1
               line: 1
             }
             start: Object {
@@ -97,7 +97,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 6
-      index: 9
+      index: 6
       line: 1
     }
     start: Object {
@@ -177,7 +177,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 6
-          index: 9
+          index: 6
           line: 1
         }
         start: Object {
@@ -193,7 +193,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 6
-              index: 9
+              index: 6
               line: 1
             }
             start: Object {
@@ -220,7 +220,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 7
-      index: 10
+      index: 7
       line: 1
     }
     start: Object {
@@ -283,7 +283,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 7
-          index: 10
+          index: 7
           line: 1
         }
         start: Object {
@@ -299,7 +299,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 7
-              index: 10
+              index: 7
               line: 1
             }
             start: Object {
@@ -326,7 +326,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 5
-      index: 8
+      index: 5
       line: 1
     }
     start: Object {
@@ -374,7 +374,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 5
-          index: 8
+          index: 5
           line: 1
         }
         start: Object {
@@ -405,7 +405,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 5
-              index: 8
+              index: 5
               line: 1
             }
             start: Object {
@@ -432,7 +432,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 7
-      index: 8
+      index: 7
       line: 1
     }
     start: Object {
@@ -480,7 +480,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 7
-          index: 8
+          index: 7
           line: 1
         }
         start: Object {
@@ -511,7 +511,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 7
-              index: 8
+              index: 7
               line: 1
             }
             start: Object {
@@ -538,7 +538,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 8
-      index: 9
+      index: 8
       line: 1
     }
     start: Object {
@@ -586,7 +586,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 8
-          index: 9
+          index: 8
           line: 1
         }
         start: Object {
@@ -632,7 +632,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 8
-              index: 9
+              index: 8
               line: 1
             }
             start: Object {
@@ -659,7 +659,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 9
-      index: 13
+      index: 9
       line: 1
     }
     start: Object {
@@ -707,7 +707,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 9
-          index: 13
+          index: 9
           line: 1
         }
         start: Object {
@@ -769,7 +769,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 9
-              index: 13
+              index: 9
               line: 1
             }
             start: Object {
@@ -911,7 +911,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 4
-      index: 15
+      index: 4
       line: 1
     }
     start: Object {
@@ -959,7 +959,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 4
-          index: 15
+          index: 4
           line: 1
         }
         start: Object {
@@ -975,7 +975,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 4
-              index: 15
+              index: 4
               line: 1
             }
             start: Object {
@@ -1002,7 +1002,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 4
-      index: 12
+      index: 4
       line: 1
     }
     start: Object {
@@ -1050,7 +1050,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 4
-          index: 12
+          index: 4
           line: 1
         }
         start: Object {
@@ -1066,7 +1066,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 4
-              index: 12
+              index: 4
               line: 1
             }
             start: Object {
@@ -1093,7 +1093,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 5
-      index: 8
+      index: 5
       line: 1
     }
     start: Object {
@@ -1141,7 +1141,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 5
-          index: 8
+          index: 5
           line: 1
         }
         start: Object {
@@ -1157,7 +1157,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 5
-              index: 8
+              index: 5
               line: 1
             }
             start: Object {
@@ -1184,7 +1184,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 7
-      index: 10
+      index: 7
       line: 1
     }
     start: Object {
@@ -1232,7 +1232,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 7
-          index: 10
+          index: 7
           line: 1
         }
         start: Object {
@@ -1248,7 +1248,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 7
-              index: 10
+              index: 7
               line: 1
             }
             start: Object {
@@ -1275,7 +1275,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 8
-      index: 11
+      index: 8
       line: 1
     }
     start: Object {
@@ -1323,7 +1323,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 8
-          index: 11
+          index: 8
           line: 1
         }
         start: Object {
@@ -1339,7 +1339,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 8
-              index: 11
+              index: 8
               line: 1
             }
             start: Object {
@@ -1366,7 +1366,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 9
-      index: 12
+      index: 9
       line: 1
     }
     start: Object {
@@ -1414,7 +1414,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 9
-          index: 12
+          index: 9
           line: 1
         }
         start: Object {
@@ -1430,7 +1430,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 9
-              index: 12
+              index: 9
               line: 1
             }
             start: Object {
@@ -1457,7 +1457,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 10
-      index: 13
+      index: 10
       line: 1
     }
     start: Object {
@@ -1520,7 +1520,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 10
-          index: 13
+          index: 10
           line: 1
         }
         start: Object {
@@ -1536,7 +1536,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 10
-              index: 13
+              index: 10
               line: 1
             }
             start: Object {
@@ -1563,7 +1563,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 7
-      index: 12
+      index: 7
       line: 1
     }
     start: Object {
@@ -1611,7 +1611,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 7
-          index: 12
+          index: 7
           line: 1
         }
         start: Object {
@@ -1627,7 +1627,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 7
-              index: 12
+              index: 7
               line: 1
             }
             start: Object {
@@ -1654,7 +1654,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 6
-      index: 9
+      index: 6
       line: 1
     }
     start: Object {
@@ -1702,7 +1702,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 6
-          index: 9
+          index: 6
           line: 1
         }
         start: Object {
@@ -1718,7 +1718,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 6
-              index: 9
+              index: 6
               line: 1
             }
             start: Object {
@@ -1745,7 +1745,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 7
-      index: 10
+      index: 7
       line: 1
     }
     start: Object {
@@ -1793,7 +1793,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 7
-          index: 10
+          index: 7
           line: 1
         }
         start: Object {
@@ -1809,7 +1809,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 7
-              index: 10
+              index: 7
               line: 1
             }
             start: Object {
@@ -1836,7 +1836,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 8
-      index: 11
+      index: 8
       line: 1
     }
     start: Object {
@@ -1899,7 +1899,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 8
-          index: 11
+          index: 8
           line: 1
         }
         start: Object {
@@ -1915,7 +1915,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 8
-              index: 11
+              index: 8
               line: 1
             }
             start: Object {
@@ -1942,7 +1942,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 0
-      index: 3
+      index: 0
       line: 1
     }
     start: Object {
@@ -1957,7 +1957,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 0
-          index: 3
+          index: 0
           line: 1
         }
         start: Object {
@@ -1973,7 +1973,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 0
-              index: 3
+              index: 0
               line: 1
             }
             start: Object {
@@ -2000,7 +2000,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 3
-      index: 4
+      index: 3
       line: 1
     }
     start: Object {
@@ -2015,7 +2015,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 3
-          index: 4
+          index: 3
           line: 1
         }
         start: Object {
@@ -2058,7 +2058,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 4
-      index: 7
+      index: 4
       line: 1
     }
     start: Object {
@@ -2106,7 +2106,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 4
-          index: 7
+          index: 4
           line: 1
         }
         start: Object {
@@ -2122,7 +2122,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 4
-              index: 7
+              index: 4
               line: 1
             }
             start: Object {
@@ -2149,7 +2149,7 @@ PathPattern {
     filename: undefined
     end: Object {
       column: 5
-      index: 8
+      index: 5
       line: 1
     }
     start: Object {
@@ -2197,7 +2197,7 @@ PathPattern {
         filename: undefined
         end: Object {
           column: 5
-          index: 8
+          index: 5
           line: 1
         }
         start: Object {
@@ -2213,7 +2213,7 @@ PathPattern {
             filename: undefined
             end: Object {
               column: 5
-              index: 8
+              index: 5
               line: 1
             }
             start: Object {

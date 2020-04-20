@@ -7,9 +7,22 @@
 
 import setProcessTitle from './utils/setProcessTitle';
 import {TestWorker} from '@romejs/core';
+import {parseCLIFlagsFromProcess} from '@romejs/cli-flags';
+import {TestWorkerFlags} from '@romejs/core/test-worker/TestWorker';
 
-export default function testWorker() {
+export default async function testWorker() {
   setProcessTitle('test-worker');
+
+  const parser = parseCLIFlagsFromProcess({
+    programName: 'rome test-worker',
+    defineFlags(c): TestWorkerFlags {
+      return {
+        inspectorPort: c.get('inspectorPort').asNumberFromString(),
+      };
+    },
+  });
+  const flags: TestWorkerFlags = await parser.init();
+
   const worker = new TestWorker();
-  worker.init();
+  worker.init(flags);
 }

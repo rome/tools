@@ -10,7 +10,7 @@ on:
 jobs:
   typescript:
     runs-on: ubuntu-latest
-    name: TypeScript Check
+    name: TypeScript check
 
     steps:
       - uses: actions/checkout@v2
@@ -20,8 +20,8 @@ jobs:
       - name: Run TypeScript
         run: node ./node_modules/.bin/tsc --noEmit
 
-  ci:
-    name: Lint & Tests
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
 
     steps:
@@ -29,15 +29,41 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '13.x'
-      - name: Check Prettier formatting
-        run: ./scripts/prettier-check
-      - name: Run Rome ci
-        run: ./scripts/dev-rome ci
+      - name: Run Rome lint
+        run: node scripts/dev-rome lint
+
+  generated:
+    name: Generated files check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+      - name: Check if generated files need to be updated
+        run: node scripts/assert-generated
+
+  tests:
+    name: Tests
+    needs: [typescript, lint]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+      - name: Run Rome test
+        run: node scripts/dev-rome test --freeze-snapshots
 
   build:
     name: Build
     runs-on: ubuntu-latest
-    needs: [typescript, ci]
+    needs: [tests]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -45,7 +71,7 @@ jobs:
           node-version: '13.x'
 
       - name: Build release
-        run: ./scripts/build-release dist
+        run: node scripts/build-release dist
 
       - name: Create tarball
         run: tar -C dist -czvf dist.tar.gz .

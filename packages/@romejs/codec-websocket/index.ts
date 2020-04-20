@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Frame, BuildFrameOpts} from './types';
-import {OPCODES, GUID} from './types';
+import {Frame, BuildFrameOpts, OPCODES, GUID} from './types';
 import {parseFrame, buildFrame, unmaskPayload, isCompleteFrame} from './frame';
 import {Event} from '@romejs/events';
 import crypto = require('crypto');
+
 import url = require('url');
+
 import http = require('http');
+
 import net = require('net');
+
 import {Reporter} from '@romejs/cli-reporter';
 
 export function createKey(key: string): string {
-  return crypto
-    .createHash('sha1')
-    .update(`${key}${GUID}`)
-    .digest('base64');
+  return crypto.createHash('sha1').update(`${key}${GUID}`).digest('base64');
 }
 
 type WebSocketType = 'client' | 'server';
@@ -41,7 +41,7 @@ export class WebSocketInterface {
     this.errorEvent = new Event({name: 'WebSocketInterface.error'});
     this.endEvent = new Event({name: 'WebSocketInterface.end', serial: true});
 
-    socket.on('data', buff => {
+    socket.on('data', (buff) => {
       this.addBuffer(buff);
     });
 
@@ -112,7 +112,7 @@ export class WebSocketInterface {
     this.socket.write(buildFrame(frameOpts, this.type === 'client'));
   }
 
-  completeFrame(frame: Frame) {
+  completeFrame(frame: Frame): void {
     // If we have an unfinished frame then only allow continuations
     const {unfinishedFrame} = this;
     if (unfinishedFrame !== undefined) {
@@ -130,7 +130,7 @@ export class WebSocketInterface {
           this.unfinishedFrame = undefined;
           this.completeFrame(unfinishedFrame);
         }
-        return undefined;
+        return;
       } else {
         // Silently ignore the previous frame...
         this.unfinishedFrame = undefined;
@@ -188,12 +188,12 @@ export class WebSocketInterface {
     }
   }
 
-  addBuffer(buff: Buffer) {
+  addBuffer(buff: Buffer): void {
     // Check if we're still waiting for the rest of a payload
     const {incompleteFrame} = this;
     if (incompleteFrame !== undefined) {
       this.addBufferToIncompleteFrame(incompleteFrame, buff);
-      return undefined;
+      return;
     }
 
     const frame = parseFrame(buff);
@@ -207,58 +207,61 @@ export class WebSocketInterface {
   }
 }
 
-export async function createClient(
-  rawUrl: string,
-): Promise<WebSocketInterface> {
+export async function createClient(rawUrl: string): Promise<WebSocketInterface> {
   const parts = url.parse(rawUrl);
 
-  return new Promise((resolve, reject) => {
-    const key = crypto.randomBytes(16).toString('base64');
-    const digest = createKey(key);
+  return new Promise(
+      (resolve, reject) => {
+        const key = crypto.randomBytes(16).toString('base64');
+        const digest = createKey(key);
 
-    const req = http.request({
-      hostname: parts.hostname,
-      port: parts.port,
-      path: parts.path,
-      method: 'GET',
-      headers: {
-        Connection: 'Upgrade',
-        Upgrade: 'websocket',
-        'Sec-WebSocket-Key': key,
-        'Sec-WebSocket-Version': '13',
-      },
-    });
+        const req = http.request({
+          hostname: parts.hostname,
+          port: parts.port,
+          path: parts.path,
+          method: 'GET',
+          headers: {
+            Connection: 'Upgrade',
+            Upgrade: 'websocket',
+            'Sec-WebSocket-Key': key,
+            'Sec-WebSocket-Version': '13',
+          },
+        });
 
-    req.on('response', res => {
-      if (res.statusCode && res.statusCode >= 400) {
-        process.stderr.write(`Unexpected HTTP code: ${res.statusCode}\n`);
-        res.pipe(process.stderr);
-      } else {
-        res.pipe(process.stderr);
-      }
-    });
+        req.on('response', (res) => {
+          if (res.statusCode && res.statusCode >= 400) {
+            process.stderr.write(`Unexpected HTTP code: ${res.statusCode}\n`);
+            res.pipe(process.stderr);
+          } else {
+            res.pipe(process.stderr);
+          }
+        });
 
-    req.on('upgrade', (res, socket, head) => {
-      if (res.headers['sec-websocket-accept'] !== digest) {
-        socket.end();
-        reject(
-          new Error(
-            `Digest mismatch ${digest} !== ${res.headers['sec-websocket-accept']}`,
-          ),
+        req.on(
+          'upgrade',
+          (res, socket, head) => {
+            if (res.headers['sec-websocket-accept'] !== digest) {
+              socket.end();
+              reject(
+                new Error(
+                  `Digest mismatch ${digest} !== ${res.headers['sec-websocket-accept']}`,
+                ),
+              );
+              return;
+            }
+
+            const client = new WebSocketInterface('client', socket);
+            //client.addBuffer(head);
+            head;
+            resolve(client);
+          },
         );
-        return undefined;
-      }
 
-      const client = new WebSocketInterface('client', socket);
-      //client.addBuffer(head);
-      head;
-      resolve(client);
-    });
+        req.on('error', (err) => {
+          reject(err);
+        });
 
-    req.on('error', err => {
-      reject(err);
-    });
-
-    req.end();
-  });
+        req.end();
+      },
+    );
 }

@@ -6,15 +6,15 @@
  */
 
 import {ModuleSignature, TypeCheckProvider} from '@romejs/js-analysis';
-import {
+import WorkerBridge, {
   WorkerProjects,
   PrefetchedModuleSignatures,
   WorkerPartialManifest,
   WorkerPartialManifests,
+  WorkerParseOptions,
 } from '../common/bridges/WorkerBridge';
 import {Program, ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
 import Logger from '../common/utils/Logger';
-import WorkerBridge from '../common/bridges/WorkerBridge';
 import {parseJS} from '@romejs/js-parser';
 import {Profiler} from '@romejs/v8';
 import WorkerAPI from './WorkerAPI';
@@ -22,14 +22,15 @@ import {Reporter} from '@romejs/cli-reporter';
 import setupGlobalErrorHandlers from '../common/utils/setupGlobalErrorHandlers';
 import {UserConfig, loadUserConfig} from '../common/userConfig';
 import {hydrateJSONProjectConfig} from '@romejs/project';
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticsError} from '@romejs/diagnostics';
 import {
   createUnknownFilePath,
   AbsoluteFilePath,
+  AbsoluteFilePathMap,
   UnknownFilePathMap,
   createAbsoluteFilePath,
 } from '@romejs/path';
-import {lstat, writeFile} from '@romejs/fs';
+import {lstat, writeFile, readFileText} from '@romejs/fs';
 import {
   FileReference,
   convertTransportFileReference,
@@ -58,8 +59,9 @@ export default class Worker {
     this.userConfig = loadUserConfig();
     this.partialManifests = new Map();
     this.projects = new Map();
-    this.astCache = new UnknownFilePathMap();
+    this.astCache = new AbsoluteFilePathMap();
     this.moduleSignatureCache = new UnknownFilePathMap();
+    this.buffers = new AbsoluteFilePathMap();
 
     this.logger = new Logger('worker', () => opts.bridge.log.hasSubscribers(), {
       streams: [
@@ -67,6 +69,7 @@ export default class Worker {
           type: 'all',
           format: 'none',
           columns: Reporter.DEFAULT_COLUMNS,
+          unicode: true,
           write(chunk) {
             opts.bridge.log.send(chunk.toString());
           },
@@ -78,7 +81,7 @@ export default class Worker {
     this.api = new WorkerAPI(this);
 
     if (opts.globalErrorHandlers) {
-      setupGlobalErrorHandlers(err => {
+      setupGlobalErrorHandlers((err) => {
         // TODO
         err;
       });
@@ -93,8 +96,9 @@ export default class Worker {
 
   partialManifests: Map<number, WorkerPartialManifest>;
   projects: Map<number, TransformProjectDefinition>;
-  astCache: UnknownFilePathMap<ParseResult>;
+  astCache: AbsoluteFilePathMap<ParseResult>;
   moduleSignatureCache: UnknownFilePathMap<ModuleSignature>;
+  buffers: AbsoluteFilePathMap<string>;
 
   getPartialManifest(id: number): WorkerPartialManifest {
     const manifest = this.partialManifests.get(id);
@@ -106,6 +110,7 @@ export default class Worker {
 
   end() {
     // This will only actually be called when a Worker is created inside of the Master
+
     // Clear internal maps for memory, in case the Worker instance sticks around
     this.astCache.clear();
     this.projects.clear();
@@ -120,7 +125,7 @@ export default class Worker {
     });
 
     let profiler: undefined | Profiler;
-    bridge.profilingStart.subscribe(async data => {
+    bridge.profilingStart.subscribe(async (data) => {
       if (profiler !== undefined) {
         throw new Error('Expected no profiler to be running');
       }
@@ -137,55 +142,59 @@ export default class Worker {
       return workerProfile;
     });
 
-    bridge.compileJS.subscribe(payload => {
+    bridge.compileJS.subscribe((payload) => {
       return this.api.compileJS(
         convertTransportFileReference(payload.file),
         payload.stage,
         payload.options,
+        payload.parseOptions,
       );
     });
 
-    bridge.parseJS.subscribe(payload => {
+    bridge.parseJS.subscribe((payload) => {
       return this.api.parseJS(
         convertTransportFileReference(payload.file),
-        payload.opts,
+        payload.options,
       );
     });
 
-    bridge.lint.subscribe(payload => {
+    bridge.lint.subscribe((payload) => {
       return this.api.lint(
         convertTransportFileReference(payload.file),
-        payload.prefetchedModuleSignatures,
-        payload.fix,
+        payload.options,
+        payload.parseOptions,
       );
     });
 
-    bridge.format.subscribe(payload => {
-      return this.api.format(convertTransportFileReference(payload.file));
-    });
-
-    bridge.analyzeDependencies.subscribe(payload => {
-      return this.api.analyzeDependencies(
+    bridge.format.subscribe((payload) => {
+      return this.api.format(
         convertTransportFileReference(payload.file),
+        payload.parseOptions,
       );
     });
 
-    bridge.evict.subscribe(payload => {
+    bridge.analyzeDependencies.subscribe((payload) => {
+      return this.api.analyzeDependencies(convertTransportFileReference(
+        payload.file,
+      ), payload.parseOptions);
+    });
+
+    bridge.evict.subscribe((payload) => {
       this.evict(createAbsoluteFilePath(payload.filename));
       return undefined;
     });
 
-    bridge.moduleSignatureJS.subscribe(payload => {
-      return this.api.moduleSignatureJS(
-        convertTransportFileReference(payload.file),
-      );
+    bridge.moduleSignatureJS.subscribe((payload) => {
+      return this.api.moduleSignatureJS(convertTransportFileReference(
+        payload.file,
+      ), payload.parseOptions);
     });
 
-    bridge.updateProjects.subscribe(payload => {
+    bridge.updateProjects.subscribe((payload) => {
       return this.updateProjects(payload.projects);
     });
 
-    bridge.updateManifests.subscribe(payload => {
+    bridge.updateManifests.subscribe((payload) => {
       return this.updateManifests(payload.manifests);
     });
 
@@ -197,15 +206,33 @@ export default class Worker {
         uptime: process.uptime(),
       };
     });
+
+    bridge.updateBuffer.subscribe((payload) => {
+      return this.updateBuffer(
+        convertTransportFileReference(payload.file),
+        payload.content,
+      );
+    });
+  }
+
+  async updateBuffer(ref: FileReference, content: string) {
+    const path = ref.real;
+    this.buffers.set(path, content);
+
+    // Now outdated
+    this.astCache.delete(path);
+    this.moduleSignatureCache.delete(path);
   }
 
   async getTypeCheckProvider(
     projectId: number,
     prefetchedModuleSignatures: PrefetchedModuleSignatures = {},
+    parseOptions: WorkerParseOptions,
   ): Promise<TypeCheckProvider> {
     const libs: Array<Program> = [];
 
     // TODO Figure out how to get the uids for the libraries, probably adding some additional stuff to ProjectConfig?
+
     /*
     const projectConfig = this.getProjectConfig(projectId);
     for (const filename of projectConfig.typeChecking.libs) {
@@ -218,7 +245,6 @@ export default class Worker {
       }
     }
     */
-
     const resolveGraph = async (
       key: string,
     ): Promise<undefined | ModuleSignature> => {
@@ -228,31 +254,32 @@ export default class Worker {
       }
 
       switch (value.type) {
-        case 'RESOLVED':
-          this.moduleSignatureCache.set(
-            createUnknownFilePath(value.graph.filename),
-            value.graph,
-          );
+        case 'RESOLVED': {
+          this.moduleSignatureCache.set(createUnknownFilePath(
+            value.graph.filename,
+          ), value.graph);
           return value.graph;
+        }
 
         case 'OWNED':
-          return this.api.moduleSignatureJS(
-            convertTransportFileReference(value.file),
-          );
+          return this.api.moduleSignatureJS(convertTransportFileReference(
+            value.file,
+          ), parseOptions);
 
         case 'POINTER':
           return resolveGraph(value.key);
 
-        case 'USE_CACHED':
-          const cached = this.moduleSignatureCache.get(
-            createUnknownFilePath(value.filename),
-          );
+        case 'USE_CACHED': {
+          const cached = this.moduleSignatureCache.get(createUnknownFilePath(
+            value.filename,
+          ));
           if (cached === undefined) {
             throw new Error(
-              `Master told us we have the export types for ${value.filename} cached but we dont!`,
-            );
+                `Master told us we have the export types for ${value.filename} cached but we dont!`,
+              );
           }
           return cached;
+        }
       }
     };
 
@@ -267,19 +294,22 @@ export default class Worker {
     };
   }
 
-  populateDiagnosticsMtime(
-    diagnostics: PartialDiagnostics,
-  ): PartialDiagnostics {
+  populateDiagnosticsMtime(diagnostics: Diagnostics): Diagnostics {
     return diagnostics;
+  }
+
+  async readFile(path: AbsoluteFilePath): Promise<string> {
+    const buffer = this.buffers.get(path);
+    if (buffer === undefined) {
+      return await readFileText(path);
+    } else {
+      return buffer;
+    }
   }
 
   async parseJS(
     ref: FileReference,
-    opts: {
-      sourceType?: ConstSourceType;
-      syntax?: Array<ConstProgramSyntax>;
-      cache?: boolean;
-    } = {},
+    options: WorkerParseOptions,
   ): Promise<ParseResult> {
     const path = createAbsoluteFilePath(ref.real);
 
@@ -294,16 +324,16 @@ export default class Worker {
 
     // Get syntax
     let syntax: Array<ConstProgramSyntax> = [];
-    if (opts.syntax !== undefined) {
-      syntax = opts.syntax;
+    if (options.syntax !== undefined) {
+      syntax = options.syntax;
     } else if (handler.syntax !== undefined) {
       syntax = handler.syntax;
     }
 
     // Get source type
     let sourceType: undefined | ConstSourceType;
-    if (opts.sourceType !== undefined) {
-      sourceType = opts.sourceType;
+    if (options.sourceType !== undefined) {
+      sourceType = options.sourceType;
     } else if (handler.sourceType !== undefined) {
       sourceType = handler.sourceType;
     } else {
@@ -321,17 +351,27 @@ export default class Worker {
       sourceType = 'module';
     }
 
-    const cacheEnabled = opts.cache !== false;
+    const cacheEnabled = options.cache !== false;
+
     if (cacheEnabled) {
       // Update the lastAccessed of the ast cache and return it, it will be evicted on
+
       // any file change
       const cachedResult: undefined | ParseResult = this.astCache.get(path);
-      if (cachedResult && cachedResult.ast.sourceType === sourceType) {
-        this.astCache.set(path, {
-          ...cachedResult,
-          lastAccessed: Date.now(),
-        });
-        return cachedResult;
+      if (cachedResult !== undefined) {
+        let useCached = true;
+
+        if (cachedResult.ast.sourceType !== sourceType) {
+          useCached = false;
+        }
+
+        if (useCached) {
+          this.astCache.set(path, {
+            ...cachedResult,
+            lastAccessed: Date.now(),
+          });
+          return cachedResult;
+        }
       }
     }
 
@@ -343,6 +383,7 @@ export default class Worker {
       file: ref,
       worker: this,
       project,
+      parseOptions: options,
     });
 
     let manifestPath: undefined | string;
@@ -358,6 +399,20 @@ export default class Worker {
       sourceType,
       syntax,
     });
+
+    // If the AST is corrupt then we don't under any circumstance allow it
+    if (ast.corrupt) {
+      throw new DiagnosticsError('Corrupt AST', ast.diagnostics);
+    }
+
+    // Sometimes we may want to allow the "fixed" AST
+    const allowDiagnostics = options.allowParserDiagnostics === true;
+    if (!allowDiagnostics && ast.diagnostics.length > 0) {
+      throw new DiagnosticsError(
+        "AST diagnostics aren't allowed",
+        ast.diagnostics,
+      );
+    }
 
     const res: ParseResult = {
       ast,
@@ -385,17 +440,17 @@ export default class Worker {
     return config;
   }
 
-  async writeFile(filename: AbsoluteFilePath, content: string): Promise<void> {
+  async writeFile(path: AbsoluteFilePath, content: string): Promise<void> {
     // Write the file out
-    await writeFile(filename, content);
+    await writeFile(path, content);
 
     // We just wrote the file but the server watcher hasn't had time to notify us
-    this.evict(filename);
+    this.evict(path);
   }
 
-  evict(filename: AbsoluteFilePath) {
-    this.astCache.delete(filename);
-    this.moduleSignatureCache.delete(filename);
+  evict(path: AbsoluteFilePath) {
+    this.astCache.delete(path);
+    this.moduleSignatureCache.delete(path);
   }
 
   updateManifests(manifests: WorkerPartialManifests) {

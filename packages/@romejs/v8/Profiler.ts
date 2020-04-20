@@ -45,7 +45,7 @@ export default class Profiler {
       return Promise.reject(new Error('No current profiler session'));
     } else {
       return new Promise((resolve, reject) => {
-        session.post(method, params, err => {
+        session.post(method, params, (err) => {
           if (err === null) {
             resolve();
           } else {
@@ -75,17 +75,18 @@ export default class Profiler {
 
     const {memorySamples} = this;
 
-    const res: inspector.Profiler.StopReturnType = await new Promise(
-      (resolve, reject) => {
-        session.post('Profiler.stop', (err, params) => {
-          if (err === null) {
-            resolve(params);
-          } else {
-            reject(err);
-          }
-        });
-      },
-    );
+    const res: inspector.Profiler.StopReturnType = await new Promise((
+      resolve,
+      reject,
+    ) => {
+      session.post('Profiler.stop', (err, params) => {
+        if (err === null) {
+          resolve(params);
+        } else {
+          reject(err);
+        }
+      });
+    });
 
     this.destroy();
 

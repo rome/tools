@@ -9,6 +9,7 @@ import {Scope} from '../../scopes';
 import E, {ErrorDefinition} from './E';
 import T from '../T';
 import {AnyNode} from '@romejs/js-ast';
+import {descriptions} from '@romejs/diagnostics';
 
 export default class MissingUnionE extends E {
   constructor(
@@ -31,10 +32,9 @@ export default class MissingUnionE extends E {
 
   getError(): ErrorDefinition {
     return {
-      category: 'typeCheck/missingCondition',
-      message: `Missing the conditions ${this.missing
-        .map(type => this.utils.humanize(type))
-        .join(', ')}`,
+      description: descriptions.TYPE_CHECK.MISSING_CONDITION(this.missing.map((
+        type,
+      ) => this.utils.humanize(type))),
       lowerTarget: this.target,
     };
   }

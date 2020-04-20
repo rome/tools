@@ -12,10 +12,12 @@ import {
   program,
   stringLiteral,
   ClassExpression,
-  ExportLocalDeclaration,
-  ExportExternalDeclaration,
 } from '@romejs/js-ast';
-import {template, getBindingIdentifiers} from '@romejs/js-ast-utils';
+import {
+  template,
+  getBindingIdentifiers,
+  getImportSpecifiers,
+} from '@romejs/js-ast-utils';
 import {getOptions, getModuleId} from '../_utils';
 import {Path, FunctionBinding} from '@romejs/js-compiler';
 
@@ -47,8 +49,8 @@ export default {
           value: moduleId,
         });
 
-        const {specifiers} = bodyNode;
-        if (specifiers === undefined || specifiers.length === 0) {
+        const specifiers = getImportSpecifiers(bodyNode);
+        if (specifiers.length === 0) {
           topBody.push(template.statement`Rome.requireNamespace(${source});`);
         } else {
           for (const specifier of specifiers) {
@@ -79,26 +81,35 @@ export default {
         continue;
       }
 
-      if (
-        bodyNode.type === 'ExportLocalDeclaration' ||
-        bodyNode.type === 'ExportExternalDeclaration'
-      ) {
-        // Ignore typed exports
+      if (bodyNode.type === 'ExportExternalDeclaration') {
         if (bodyNode.exportKind === 'type') {
           continue;
         }
 
-        let declaration: undefined | ExportLocalDeclaration['declaration'];
-        let source: undefined | ExportExternalDeclaration['source'];
-        const {specifiers} = bodyNode;
+        const {source} = bodyNode;
 
-        if (bodyNode.type === 'ExportExternalDeclaration') {
-          source = bodyNode.source;
+        // TODO defaultSpecifier and namespaceSpecifier
+        for (const specifier of bodyNode.namedSpecifiers) {
+          topBody.push(
+            template.statement`Object.defineProperty(exports, ${stringLiteral.create(
+              {
+                value: specifier.exported.name,
+              },
+            )}, {
+                get: function() {
+                  return Rome.requireNamespace(${source}).${specifier.local};
+                },
+              })`,
+          );
+        }
+      }
+
+      if (bodyNode.type === 'ExportLocalDeclaration') {
+        if (bodyNode.exportKind === 'type') {
+          continue;
         }
 
-        if (bodyNode.type === 'ExportLocalDeclaration') {
-          declaration = bodyNode.declaration;
-        }
+        const {declaration, specifiers} = bodyNode;
 
         if (declaration !== undefined) {
           // Hoist function declarations
@@ -111,24 +122,20 @@ export default {
           }
 
           // Handle type declarations (these have no runtime ordering implications)
-          if (
-            declaration.type === 'TSModuleDeclaration' ||
-            declaration.type === 'TSEnumDeclaration' ||
-            declaration.type === 'FlowInterfaceDeclaration' ||
-            declaration.type === 'TypeAliasTypeAnnotation' ||
-            declaration.type === 'TSInterfaceDeclaration' ||
-            declaration.type === 'TSDeclareFunction' ||
-            declaration.type === 'FlowOpaqueType'
-          ) {
+          if (declaration.type === 'TSModuleDeclaration' || declaration.type ===
+              'TSEnumDeclaration' || declaration.type ===
+              'FlowInterfaceDeclaration' || declaration.type ===
+              'TypeAliasTypeAnnotation' || declaration.type ===
+              'TSInterfaceDeclaration' || declaration.type ===
+              'TSDeclareFunction' || declaration.type === 'FlowOpaqueType') {
             bottomBody.push(declaration);
             continue;
           }
 
           // Handle variables and classes
-          if (
-            declaration.type === 'VariableDeclarationStatement' ||
-            declaration.type === 'ClassDeclaration'
-          ) {
+          if (declaration.type === 'VariableDeclarationStatement' ||
+                declaration.type ===
+                'ClassDeclaration') {
             bottomBody.push(declaration);
 
             for (const id of getBindingIdentifiers(declaration)) {
@@ -140,49 +147,19 @@ export default {
 
         if (specifiers !== undefined) {
           for (const specifier of specifiers) {
-            if (specifier.type === 'ExportDefaultSpecifier') {
-              // TODO only allowed for `source`
-            }
+            const binding = path.scope.getBinding(specifier.local.name);
 
-            if (specifier.type === 'ExportNamespaceSpecifier') {
-              // TODO only allowed for `source`
-            }
-
-            // TODO skip type exports
-            if (
-              specifier.type === 'ExportLocalSpecifier' ||
-              specifier.type === 'ExportExternalSpecifier'
-            ) {
-              if (source === undefined) {
-                const binding = path.scope.getBinding(specifier.local.name);
-
-                if (binding instanceof FunctionBinding) {
-                  topBody.push(
-                    template.statement`exports.${specifier.exported} = ${specifier.local};`,
-                  );
-                } else {
-                  topBody.push(
-                    template.statement`exports.${specifier.exported} = undefined;`,
-                  );
-                  bottomBody.push(
-                    template.statement`exports.${specifier.exported} = ${specifier.local};`,
-                  );
-                }
-              } else {
-                topBody.push(
-                  template.statement`Object.defineProperty(exports, ${stringLiteral.create(
-                    {
-                      value: specifier.exported.name,
-                    },
-                  )}, {
-                    get: function() {
-                      return Rome.requireNamespace(${source}).${
-                    specifier.local
-                  };
-                    },
-                  })`,
-                );
-              }
+            if (binding instanceof FunctionBinding) {
+              topBody.push(
+                template.statement`exports.${specifier.exported} = ${specifier.local};`,
+              );
+            } else {
+              topBody.push(
+                template.statement`exports.${specifier.exported} = undefined;`,
+              );
+              bottomBody.push(
+                template.statement`exports.${specifier.exported} = ${specifier.local};`,
+              );
             }
           }
         }
@@ -231,11 +208,8 @@ export default {
         }
 
         // Handle type declarations (these have no runtime ordering implications)
-        if (
-          declaration.type === 'FlowDeclareOpaqueType' ||
-          declaration.type === 'TSInterfaceDeclaration' ||
-          declaration.type === 'TSDeclareFunction'
-        ) {
+        if (declaration.type === 'FlowDeclareOpaqueType' || declaration.type ===
+            'TSInterfaceDeclaration' || declaration.type === 'TSDeclareFunction') {
           // Maybe we should keep them? Not sure what they would desugar to
           continue;
         }

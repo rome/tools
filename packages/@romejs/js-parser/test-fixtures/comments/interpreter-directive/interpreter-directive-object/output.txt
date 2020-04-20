@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -37,6 +38,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: 'usr/bin/env babel-node'
       loc: Object {
         filename: 'input.js'
@@ -55,6 +57,7 @@ Program {
   ]
   body: Array [
     VariableDeclarationStatement {
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -68,24 +71,6 @@ Program {
           line: 3
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: 'usr/bin/env babel-node'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 25
-              index: 25
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-        }
-      ]
       declaration: VariableDeclaration {
         kind: 'var'
         leadingComments: undefined

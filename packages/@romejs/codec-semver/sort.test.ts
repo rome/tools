@@ -7,9 +7,9 @@
 
 import '@romejs/string-markup';
 import {sortSemverVersions, stringifySemver} from '@romejs/codec-semver';
-import test from '@romejs/test';
+import {test} from 'rome';
 
-test('sort', t => {
+test('sort', (t) => {
   const sorted = sortSemverVersions(['5.3.6', '1.2.3', '3.2.1', '1.2.4']);
 
   t.is(stringifySemver(sorted[0]), '1.2.3');

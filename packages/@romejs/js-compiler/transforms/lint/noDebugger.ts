@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from '@romejs/js-compiler';
-import {REDUCE_REMOVE} from '@romejs/js-compiler';
+import {descriptions} from '@romejs/diagnostics';
+import {REDUCE_REMOVE, Path, TransformExitResult} from '@romejs/js-compiler';
 
 export default {
   name: 'noDebugger',
@@ -14,13 +14,10 @@ export default {
     const {node} = path;
 
     if (node.type === 'DebuggerStatement') {
-      path.context.addNodeDiagnostic(node, {
-        fixable: true,
-        category: 'lint/noDebugger',
-        message: "Unexpected 'debugger' statement",
-      });
-
-      return REDUCE_REMOVE;
+      return path.context.addFixableDiagnostic(
+        {old: node, fixed: REDUCE_REMOVE},
+        descriptions.LINT.NO_DEBUGGER,
+      );
     }
 
     return node;

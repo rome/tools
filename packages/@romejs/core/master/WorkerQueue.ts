@@ -17,124 +17,104 @@ type WorkerQueueItem<M> = {
 };
 
 type Callback<M> = (
-  filename: AbsoluteFilePath,
+  path: AbsoluteFilePath,
   metadata: M,
 ) => undefined | Promise<void>;
 
 export default class WorkerQueue<M> {
-  constructor(master: Master) {
+  constructor(master: Master, maxPer: number = 2) {
     this.master = master;
-    this.queue = [];
     this.callbacks = [];
-    this.promises = [];
+    this.runningWorkers = [];
     this.workers = new Map();
     this.open = true;
+    this.maxPer = maxPer;
   }
 
   master: Master;
-  queue: Queue<M>;
-  promises: Array<Promise<void>>;
+  maxPer: number;
+  runningWorkers: Array<Promise<void>>;
   callbacks: Array<Callback<M>>;
   workers: Map<WorkerContainer, WorkerQueueItem<M>>;
   open: boolean;
 
-  pushQueue(filename: AbsoluteFilePath, metadata: M) {
+  async pushQueue(path: AbsoluteFilePath, metadata: M) {
     if (!this.open) {
       throw new Error('WorkerQueue has already closed');
     }
 
-    this.queue.push([filename, metadata]);
+    if (this.callbacks.length === 0) {
+      throw new Error('No callbacks attached to queue');
+    }
+
+    const workerContainer = await this.master.fileAllocator.getOrAssignOwner(
+      path,
+    );
+
+    // Populate the worker queue for this item
+    let worker = this.workers.get(workerContainer);
+    if (worker === undefined) {
+      worker = {
+        running: false,
+        queue: [],
+      };
+      this.workers.set(workerContainer, worker);
+    }
+    worker.queue.push([path, metadata]);
+
+    // Start this worker if it isn't already
+    if (worker.running === false) {
+      const promise = this.processWorker(worker);
+      // Add a `catch` so that we aren't considered an unhandled promise if it rejects before a handler is attached
+      promise.catch(() => {});
+      this.runningWorkers.push(promise);
+    }
   }
 
   addCallback(callback: Callback<M>) {
     this.callbacks.push(callback);
   }
 
-  // Take all the root queue items, assign them to a worker, and start the worker queue if it's not running
-  async updateWorkerQueues() {
-    const {queue} = this;
+  async processWorker(worker: WorkerQueueItem<M>) {
+    worker.running = true;
 
-    while (queue.length > 0) {
+    const {queue} = worker;
+
+    const next = async () => {
       const item = queue.shift();
       if (item === undefined) {
-        throw new Error('Already validated queue.length above');
-      }
-
-      const path = item[0];
-      const workerContainer = await this.master.fileAllocator.getOrAssignOwner(
-        path,
-      );
-
-      // Populate the worker queue for this item
-      let worker = this.workers.get(workerContainer);
-      if (worker === undefined) {
-        worker = {
-          running: false,
-          queue: [],
-        };
-        this.workers.set(workerContainer, worker);
-      }
-      worker.queue.push(item);
-
-      // Start this worker if it isn't already
-      if (worker.running === false) {
-        const promise = this.processWorker(worker);
-        // Add a `catch` so that we aren't considered an unhandled promise if it rejects before a handler is attached
-        promise.catch(() => {});
-        this.promises.push(promise);
-      }
-    }
-  }
-
-  async processWorker(item: WorkerQueueItem<M>) {
-    item.running = true;
-
-    const {queue} = item;
-
-    while (queue.length > 0) {
-      const item = queue.shift();
-      if (item === undefined) {
-        throw new Error('Already validated queue.length above');
+        // Exhausted queue
+        return;
       }
 
       const [filename, metadata] = item;
       for (const callback of this.callbacks) {
         await callback(filename, metadata);
       }
-      await this.updateWorkerQueues();
+      await next();
+    };
+
+    while (queue.length > 0) {
+      // "threads"
+      const threads = [];
+      for (let i = 0; i < this.maxPer; i++) {
+        threads.push(next());
+      }
+      await Promise.all(threads);
     }
 
-    item.running = false;
+    worker.running = false;
   }
 
   async spin() {
-    const {queue} = this;
-
-    // Create the initial queue
-    await this.updateWorkerQueues();
-
-    // Keep consuming all the promises until we're exhausted
-    while (this.promises.length > 0) {
-      const {promises} = this;
-      this.promises = [];
-      await Promise.all(promises);
+    while ( // Keep consuming all the promises until we're exhausted
+    this.runningWorkers.length > 0) {
+      const {runningWorkers} = this;
+      this.runningWorkers = [];
+      await Promise.all(runningWorkers);
     }
 
     // Ensure we never receive anymore queue items
     this.open = false;
-
-    // Ensure main queue has been drained
-    if (queue.length > 0) {
-      throw new Error('Expected no queue items to remain');
-    }
-
-    // Ensure worker queues have been drained
-    for (const [worker, {queue}] of this.workers) {
-      if (queue.length > 0) {
-        throw new Error(
-          `Expected no queue items to remain for worker ${worker.id}`,
-        );
-      }
-    }
   }
 }

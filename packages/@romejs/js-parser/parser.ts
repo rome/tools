@@ -21,21 +21,23 @@ import {
 } from '@romejs/parser-core';
 import {JSParserOptions} from './options';
 import {
-  PartialDiagnosticAdvice,
-  PartialDiagnostics,
+  Diagnostics,
   DiagnosticFilter,
+  DiagnosticDescription,
+  descriptions,
+  DiagnosticsProcessor,
+  DiagnosticLocation,
 } from '@romejs/diagnostics';
-import {State} from './tokenizer/state';
 import ParserBranchFinder from './ParserBranchFinder';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import {Token, nextToken} from './tokenizer/index';
 import {types as tt, TokenType} from './tokenizer/types';
 import {lineBreak} from '@romejs/js-parser-utils';
 import {parseTopLevel} from './parser/index';
-import {createInitialState} from './tokenizer/state';
+import {createInitialState, State} from './tokenizer/state';
 import {sub, Number0, number0} from '@romejs/ob1';
-import {Dict} from '@romejs/typescript-helpers';
+import {Dict, OptionalProps} from '@romejs/typescript-helpers';
 import {attachComments} from './parser/comments';
+import CommentsConsumer from './CommentsConsumer';
 
 const TOKEN_MISTAKES: Dict<string> = {
   ';': ':',
@@ -92,8 +94,8 @@ const SCOPE_TYPES: Array<ScopeType> = [
 ];
 
 const createJSParser = createParser(
-  (ParserCore, ParserWithRequiredPath) =>
-    // rome-suppress lint/noExplicitAny
+  (ParserCore, ParserWithRequiredPath) => {
+    // rome-suppress-next-line lint/noExplicitAny
     class JSParser extends ParserWithRequiredPath<any, State> {
       constructor(options: JSParserOptions) {
         const state = createInitialState();
@@ -111,16 +113,18 @@ const createJSParser = createParser(
 
         this.sourceType = options.sourceType;
         this.options = options;
-        this.inModule =
-          this.options.sourceType === 'template' ||
-          this.options.sourceType === 'module';
+        this.inModule = this.options.sourceType === 'template' ||
+            this.options.sourceType ===
+            'module';
         this.parenthesized = new Set();
+        this.comments = new CommentsConsumer();
 
         // Turn options.syntax into a Set, probably faster than doing `includes` on the array
         // We may also push stuff to it as we read comments such as `@\flow`
         this.syntax = new Set(options.syntax);
       }
 
+      comments: CommentsConsumer;
       options: JSParserOptions;
       sourceType: ConstSourceType;
       syntax: Set<ConstProgramSyntax>;
@@ -180,13 +184,16 @@ const createJSParser = createParser(
 
       setState(newState: State) {
         // Verify that this new state doesn't exceed any previous maxDiagnostic cap
+
         // maxDiagnostics will be at -1 when it's own limit has been exceeded, in
+
         // this case, we are likely replacing the State with another that's valid
+
         // and doesn't exceed
         const maxDiagnostics = this.getLastScope('MAX_NEW_DIAGNOSTICS');
         if (typeof maxDiagnostics === 'number' && maxDiagnostics !== -1) {
-          const diff =
-            newState.diagnostics.length - this.state.diagnostics.length;
+          const diff = newState.diagnostics.length -
+            this.state.diagnostics.length;
           if (diff > maxDiagnostics) {
             throw new DiagnosticsFatalError();
           }
@@ -208,11 +215,29 @@ const createJSParser = createParser(
         branch.add(fn, {maxNewDiagnostics: 0});
         if (branch.hasBranch()) {
           return branch.pickOptional();
+        } else {
+          return undefined;
         }
       }
 
+      finalizeNode<T extends AnyNode>(node: T): T {
+        attachComments(this, node);
+        return node;
+      }
+
+      // Sometimes we want to pretend we're in different locations to consume the comments of other nodes
+      finishNodeWithCommentStarts<T extends AnyNode>(
+        starts: Array<Position>,
+        node: T,
+      ): T {
+        for (const start of starts) {
+          node = this.finishNode(start, node);
+        }
+        return node;
+      }
+
       finishNode<T extends AnyNode>(start: Position, node: T): T {
-        return this.finishNodeAt(start, this.getEndPosition(), node);
+        return this.finishNodeAt(start, this.getLastEndPosition(), node);
       }
 
       finishNodeAt<T extends AnyNode>(
@@ -225,15 +250,15 @@ const createJSParser = createParser(
           ...node,
           loc: this.finishLocAt(start, end),
         };
-        attachComments(this, newNode);
-        return newNode;
+        return this.finalizeNode(newNode);
       }
 
       createUnknownIdentifier(
         reason: string,
         start: Position = this.getPosition(),
-        end: Position = this.getEndPosition(),
+        end: Position = this.getLastEndPosition(),
       ): Identifier {
+        this.state.corrupt = true;
         return {
           type: 'Identifier',
           name: 'INVALID_PLACEHOLDER',
@@ -244,8 +269,9 @@ const createJSParser = createParser(
       createUnknownStringLiteral(
         reason: string,
         start: Position = this.getPosition(),
-        end: Position = this.getEndPosition(),
+        end: Position = this.getLastEndPosition(),
       ): StringLiteral {
+        this.state.corrupt = true;
         return {
           type: 'StringLiteral',
           value: 'INVALID_PLACEHOLDER',
@@ -253,26 +279,29 @@ const createJSParser = createParser(
         };
       }
 
-      assertNoSpace(message: string = 'Unexpected space'): void {
+      assertNoSpace(
+        _metadata: Omit<DiagnosticDescription, 'category'> = descriptions.JS_PARSER.UNEXPECTED_SPACE,
+      ): void {
         const {state} = this;
 
         if (state.startPos.index > state.lastEndPos.index) {
           this.addDiagnostic({
             start: state.lastEndPos,
             end: state.lastEndPos,
-            message,
+            description: _metadata,
           });
         }
       }
 
-      getDiagnostics(): PartialDiagnostics {
+      getDiagnostics(): Diagnostics {
         const collector = new DiagnosticsProcessor({
           origins: [
             {
               category: 'js-parser',
             },
-          ],
+          ]
           //unique: ['start.line'],
+          ,
         });
 
         for (const filter of this.state.diagnosticFilters) {
@@ -280,7 +309,6 @@ const createJSParser = createParser(
         }
 
         // TODO remove any trailing "eof" diagnostic
-
         return collector.addDiagnostics(this.state.diagnostics).slice(0, 1);
       }
 
@@ -288,7 +316,7 @@ const createJSParser = createParser(
         this.state.diagnosticFilters.push(diag);
       }
 
-      addCompleteDiagnostic(diags: PartialDiagnostics) {
+      addCompleteDiagnostic(diags: Diagnostics) {
         this.state.diagnostics = [...this.state.diagnostics, ...diags];
       }
 
@@ -316,24 +344,24 @@ const createJSParser = createParser(
         if (lastToken !== undefined) {
           if (token.loc.start.index < lastToken.loc.end.index) {
             throw new Error(
-              'Trying to push a token that appears before the last pushed token',
-            );
+                'Trying to push a token that appears before the last pushed token',
+              );
           }
         }
 
         this.state.tokens.push(token);
       }
 
-      addDiagnostic(diag: {
-        message: string;
+      addDiagnostic(opts: {
+        description: Omit<DiagnosticDescription, 'category'>;
         start?: Position;
         end?: Position;
         loc?: SourceLocation;
         index?: Number0;
-        advice?: PartialDiagnosticAdvice;
-      }) {
+        location?: DiagnosticLocation;
+      }): void {
         if (this.isLookahead) {
-          return undefined;
+          return;
         }
 
         let maxDiagnostics = this.getLastScope('MAX_NEW_DIAGNOSTICS');
@@ -350,22 +378,27 @@ const createJSParser = createParser(
           //return;
         }
 
-        let {start, end} = diag;
+        let {start, end} = opts;
 
-        if (diag.index !== undefined) {
-          start = this.getPositionFromIndex(diag.index);
+        if (opts.index !== undefined) {
+          start = this.getPositionFromIndex(opts.index);
           end = start;
         }
 
-        if (diag.loc !== undefined) {
-          start = diag.loc.start;
-          end = diag.loc.end;
+        if (opts.location !== undefined) {
+          start = opts.location.start;
+          end = opts.location.end;
+        }
+
+        if (start === undefined && end === undefined && opts.loc !== undefined) {
+          start = opts.loc.start;
+          end = opts.loc.end;
         }
 
         // If we weren't given a start then default to the provided end, or the current token start
         if (start === undefined && end === undefined) {
           start = this.getPosition();
-          end = this.getEndPosition();
+          end = this.getLastEndPosition();
         }
 
         if (start === undefined && end !== undefined) {
@@ -377,14 +410,17 @@ const createJSParser = createParser(
         }
 
         this.state.diagnostics.push({
-          filename: this.filename,
-          sourceType: this.sourceType,
-          mtime: this.mtime,
-          message: diag.message,
-          advice: diag.advice,
-          start,
-          end,
-          category: 'parse/js',
+          description: {
+            category: 'parse/js',
+            ...opts.description,
+          },
+          location: {
+            filename: this.filename,
+            sourceType: this.sourceType,
+            mtime: this.mtime,
+            start,
+            end,
+          },
         });
       }
 
@@ -399,7 +435,7 @@ const createJSParser = createParser(
       expectSyntaxEnabled(syntax: ConstProgramSyntax) {
         if (!this.isSyntaxEnabled(syntax)) {
           this.addDiagnostic({
-            message: `Expected ${syntax} to be enabled`,
+            description: descriptions.JS_PARSER.EXPECTED_ENABLE_SYNTAX(syntax),
           });
         }
       }
@@ -413,7 +449,7 @@ const createJSParser = createParser(
           return true;
         } else {
           this.addDiagnostic({
-            message: 'Expected relational operator',
+            description: descriptions.JS_PARSER.EXPECTED_RELATIONAL_OPERATOR,
           });
           return false;
         }
@@ -421,14 +457,14 @@ const createJSParser = createParser(
 
       isLookaheadRelational(op: '<' | '>'): boolean {
         const l = this.lookaheadState();
-        return l.tokenType == tt.relational && l.tokenValue == op;
+        return l.tokenType === tt.relational && l.tokenValue === op;
       }
 
       banUnicodeEscape(index: undefined | Number0, name: string) {
         if (index !== undefined) {
           this.addDiagnostic({
             index,
-            message: `${name} can't contain a unicode escape`,
+            description: descriptions.JS_PARSER.ESCAPE_SEQUENCE_IN_WORD(name),
           });
         }
       }
@@ -445,20 +481,16 @@ const createJSParser = createParser(
 
       // Tests whether parsed token is a contextual keyword.
       isContextual(name: string): boolean {
-        return (
-          this.match(tt.name) &&
-          this.state.tokenValue === name &&
-          this.state.escapePosition === undefined
-        );
+        return this.match(tt.name) && this.state.tokenValue === name &&
+            this.state.escapePosition ===
+            undefined;
       }
 
       isLookaheadContextual(name: string): boolean {
         const l = this.lookaheadState();
-        return (
-          l.tokenType === tt.name &&
-          l.tokenValue === name &&
-          l.escapePosition === undefined
-        );
+        return l.tokenType === tt.name && l.tokenValue === name &&
+            l.escapePosition ===
+            undefined;
       }
 
       // Consumes contextual keyword if possible.
@@ -474,13 +506,15 @@ const createJSParser = createParser(
       // Asserts that following token is given contextual keyword.
       expectContextual(
         name: string,
-        message: string = `Expected keyword ${name}`,
+        _metadata: OptionalProps<DiagnosticDescription, 'category'> = descriptions.JS_PARSER.EXPECTED_KEYWORD(
+          name,
+        ),
       ): boolean {
         if (this.eatContextual(name)) {
           return true;
         } else {
           this.addDiagnostic({
-            message,
+            description: _metadata,
           });
           return false;
         }
@@ -488,20 +522,15 @@ const createJSParser = createParser(
 
       // Test whether a semicolon can be inserted at the current position.
       canInsertSemicolon(): boolean {
-        return (
-          this.match(tt.eof) ||
-          this.match(tt.braceR) ||
-          this.hasPrecedingLineBreak()
-        );
+        return this.match(tt.eof) || this.match(tt.braceR) ||
+          this.hasPrecedingLineBreak();
       }
 
       hasPrecedingLineBreak(): boolean {
-        return lineBreak.test(
-          this.getRawInput(
-            this.state.lastEndPos.index,
-            this.state.startPos.index,
-          ),
-        );
+        return lineBreak.test(this.getRawInput(
+          this.state.lastEndPos.index,
+          this.state.startPos.index,
+        ));
       }
 
       isLineTerminator(): boolean {
@@ -509,16 +538,20 @@ const createJSParser = createParser(
       }
 
       // Consume a semicolon, or, failing that, see if we are allowed to
+
       // pretend that there is a semicolon at this position.
       semicolon(): void {
         if (!this.isLineTerminator()) {
-          this.addDiagnostic({
-            message: 'Expected a semicolon or a line terminator',
-          });
+          this.addDiagnostic(
+            {
+              description: descriptions.JS_PARSER.EXPECTED_SEMI_OR_LINE_TERMINATOR,
+            },
+          );
         }
       }
 
       // Expect a token of a given type. If found, consume it, otherwise,
+
       // raise an unexpected token error at given pos.
       expect(type: TokenType, pos?: Position): boolean {
         if (this.eat(type)) {
@@ -548,100 +581,68 @@ const createJSParser = createParser(
 
       expectClosing(context: OpeningContext) {
         if (this.match(context.close)) {
-          if (this.state.indentLevel !== context.indent) {
-            this.state.possibleIncorrectOpenParens.push(context);
-          }
           this.next();
           return true;
         } else {
           const currPos = this.getPosition();
 
-          const advice: PartialDiagnosticAdvice = [
-            {
-              type: 'log',
-              category: 'info',
-              message: `We expected to find the closing character <emphasis>${context.close.label}</emphasis> here`,
-            },
-            {
-              type: 'frame',
-              filename: this.filename,
-              start: currPos,
-              end: currPos,
-            },
-          ];
-
-          const possibleThief = this.state.possibleIncorrectOpenParens.shift();
-          if (possibleThief !== undefined) {
-            advice.push({
-              type: 'log',
-              category: 'info',
-              message: `We found this ${possibleThief.name} that looks suspicious. It could be the real culprit that's unclosed.`,
-            });
-
-            advice.push({
-              type: 'frame',
-              filename: this.filename,
-              start: possibleThief.start,
-              end: possibleThief.start,
-            });
-          }
-
           this.addDiagnostic({
-            message: `Unclosed ${context.name}`,
+            description: descriptions.JS_PARSER.EXPECTED_CLOSING(
+              context.name,
+              context.close.label,
+              {
+                filename: this.filename,
+                start: currPos,
+                end: currPos,
+              },
+            ),
             start: context.start,
             end: context.start,
-            advice,
           });
+
           return false;
         }
       }
 
       // Raise an unexpected token error. Can take the expected token type
+
       // instead of a message string.
       unexpectedToken(pos?: Position, tokenType?: TokenType) {
-        const advice: PartialDiagnosticAdvice = [];
-        let message = 'Unexpected token'; // + new Error().stack;
+        let expectedToken: undefined | string;
+        let possibleShiftMistake: boolean = false;
 
         if (tokenType !== undefined) {
-          message += `, expected "${tokenType.label}"`;
+          expectedToken = tokenType.label;
 
           const possibleMistake = TOKEN_MISTAKES[tokenType.label];
-          if (
-            possibleMistake !== undefined &&
-            possibleMistake === this.state.tokenType.label
-          ) {
-            advice.push({
-              type: 'log',
-              category: 'info',
-              message: `Did you accidently hold shift?`,
-            });
-          }
+          possibleShiftMistake = possibleMistake !== undefined &&
+              possibleMistake ===
+              this.state.tokenType.label;
         }
 
         this.addDiagnostic({
-          message,
+          description: descriptions.JS_PARSER.UNEXPECTED_TOKEN(
+            expectedToken,
+            possibleShiftMistake,
+          ),
           start: pos === undefined ? this.state.startPos : pos,
           end: pos === undefined ? this.state.endPos : pos,
-          advice,
         });
       }
 
-      unexpected() {
+      unexpected(): never {
         throw new Error(
-          'js-parser should never throw an exception, use addDiagnostic or unexpectedToken instead',
-        );
+            'js-parser should never throw an exception, use addDiagnostic or unexpectedToken instead',
+          );
       }
 
-      tokenize() {
+      tokenize(): never {
         throw new Error('js-parser does not use the parser-core tokenizer');
       }
 
       cloneNode<T extends AnyNode>(node: T): T {
-        if (
-          node.leadingComments === undefined &&
-          node.trailingComments === undefined &&
-          node.innerComments === undefined
-        ) {
+        if (node.leadingComments === undefined && node.trailingComments ===
+            undefined && node.innerComments === undefined) {
           // Do we really need to clone this?
           return {...node};
         } else {
@@ -729,8 +730,8 @@ const createJSParser = createParser(
         return this.state.startPos;
       }
 
-      // Overrides ParserCore#getEndPosition
-      getEndPosition(): Position {
+      // Overrides ParserCore#getLastEndPosition
+      getLastEndPosition(): Position {
         return this.state.lastEndPos;
       }
 
@@ -773,8 +774,12 @@ const createJSParser = createParser(
 
         return program;
       }
-    },
+    }
+
+    return JSParser;
+  },
 );
 
 export type JSParser = ReturnType<typeof createJSParser>;
+
 export default createJSParser;

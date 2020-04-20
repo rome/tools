@@ -9,11 +9,11 @@ import {
   MasterQueryResponse,
   PartialMasterQueryRequest,
 } from '../common/bridges/MasterBridge';
-import {LocalCommand} from '../commands';
+import {LocalCommand, localCommands} from './commands';
 import Client from './Client';
 import {consumeUnknown} from '@romejs/consume';
 import {BridgeError} from '@romejs/events';
-import {localCommands} from './commands';
+
 export type ClientRequestType = 'local' | 'master';
 
 export default class ClientRequest {
@@ -56,28 +56,27 @@ export default class ClientRequest {
     }
   }
 
-  async initFromLocal(
-    // rome-suppress lint/noExplicitAny
-    localCommand: LocalCommand<any>,
-  ): Promise<MasterQueryResponse> {
+  async initFromLocal( // rome-suppress-next-line lint/noExplicitAny
+  localCommand: LocalCommand<any>): Promise<MasterQueryResponse> {
     const {query} = this;
 
     let flags;
     if (localCommand.defineFlags !== undefined) {
-      flags = localCommand.defineFlags(
-        consumeUnknown(query.commandFlags, 'flags/invalid'),
-      );
+      flags = localCommand.defineFlags(consumeUnknown(
+        query.commandFlags,
+        'flags/invalid',
+      ));
     }
 
-    const success = await localCommand.callback(this, flags);
-    if (success) {
+    const res = await localCommand.callback(this, flags);
+    if (res === true) {
       return {
         type: 'SUCCESS',
         data: undefined,
         hasData: false,
         markers: [],
       };
-    } else {
+    } else if (res === false) {
       return {
         type: 'ERROR',
         fatal: false,
@@ -87,6 +86,8 @@ export default class ClientRequest {
         message: 'Command was not successful',
         stack: undefined,
       };
+    } else {
+      return res;
     }
   }
 
@@ -99,14 +100,13 @@ export default class ClientRequest {
     } catch (err) {
       if (err instanceof BridgeError) {
         return {
-          type: 'ERROR',
-          fatal: true,
-          handled: false,
-          name: 'Error',
-          message:
-            'Server died while processing command. Results may be incomplete.',
-          stack: undefined,
-        };
+            type: 'ERROR',
+            fatal: true,
+            handled: false,
+            name: 'Error',
+            message: 'Server died while processing command. Results may be incomplete.',
+            stack: undefined,
+          };
       } else {
         throw err;
       }

@@ -7,9 +7,12 @@
 
 import {ProjectConfig} from '@romejs/project';
 import {FileReference} from '@romejs/core';
-import {PrefetchedModuleSignatures} from '../common/bridges/WorkerBridge';
+import {
+  WorkerParseOptions,
+  WorkerLintOptions,
+} from '../common/bridges/WorkerBridge';
 import Worker, {ParseResult} from '../worker/Worker';
-import {PartialDiagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import * as compiler from '@romejs/js-compiler';
 import {check as typeCheck} from '@romejs/js-analysis';
 import {parseJSON, stringifyJSON, consumeJSONExtra} from '@romejs/codec-json';
@@ -23,9 +26,7 @@ import {
   AnalyzeDependencyResult,
   UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
 } from './types/analyzeDependencies';
-import {readFileText} from '@romejs/fs';
-import {generateJS} from '@romejs/js-generator';
-import {TransformProjectDefinition} from '@romejs/js-compiler';
+import {formatJS} from '@romejs/js-formatter';
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
 
@@ -55,10 +56,7 @@ export function getFileHandler(
   let handler = DEFAULT_HANDLERS.get(ext);
 
   // Allow setting custom assert extensions in the project config
-  if (
-    handler === undefined &&
-    projectConfig.files.assetExtensions.includes(ext)
-  ) {
+  if (handler === undefined && projectConfig.files.assetExtensions.includes(ext)) {
     handler = assetHandler;
   }
 
@@ -79,36 +77,33 @@ export function getFileHandlerAssert(
 }
 
 export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
-  prefetchedModuleSignatures: PrefetchedModuleSignatures;
+  options: WorkerLintOptions;
   format: boolean;
 };
 
 export type ExtensionLintResult = {
   sourceText: string;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   formatted: string;
   suppressions: DiagnosticSuppressions;
 };
 
 export type ExtensionHandlerMethodInfo = {
+  parseOptions: WorkerParseOptions;
   file: FileReference;
-  project: TransformProjectDefinition;
+  project: compiler.TransformProjectDefinition;
   worker: Worker;
 };
 
 export type ExtensionHandler = {
   sourceType?: ConstSourceType;
   syntax?: Array<ConstProgramSyntax>;
-
   hasteMode?: 'ext' | 'noext';
   isAsset?: boolean;
   canHaveScale?: boolean;
-
   lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
   format?: (info: ExtensionHandlerMethodInfo) => Promise<ExtensionLintResult>;
-  toJavaScript?: (
-    opts: ExtensionHandlerMethodInfo,
-  ) => Promise<{
+  toJavaScript?: (opts: ExtensionHandlerMethodInfo) => Promise<{
     generated: boolean;
     sourceText: string;
   }>;
@@ -121,7 +116,9 @@ const textHandler: ExtensionHandler = {
   sourceType: 'module',
 
   // Mock a single default export
+
   // We could always just pass this through to analyzeDependencies and get the same result due to the toJavaScript call below,
+
   // but the return value is predictable so we inline it
   async analyzeDependencies() {
     return {
@@ -140,8 +137,8 @@ const textHandler: ExtensionHandler = {
     };
   },
 
-  async toJavaScript({file}) {
-    const src = await readFileText(file.real);
+  async toJavaScript({file, worker}) {
+    const src = await worker.readFile(file.real);
     const serial = JSON.stringify(src);
     return {
       sourceText: `export default ${serial};`,
@@ -161,6 +158,7 @@ const assetHandler: ExtensionHandler = {
 
   async toJavaScript() {
     // This exists just so analyzeDependencies has something to look at
+
     // When bundling we'll have custom logic in the compiler to handle assets and inject the correct string
     return {
       generated: true,
@@ -176,34 +174,36 @@ const jsonHandler: ExtensionHandler = {
   hasteMode: 'noext',
 
   async format(info: ExtensionHandlerMethodInfo): Promise<ExtensionLintResult> {
-    const {file: ref, project} = info;
-    const {uid} = ref;
+    const {file, project, worker} = info;
+    const {uid} = file;
 
-    const real = createAbsoluteFilePath(ref.real);
-    const sourceText = await readFileText(real);
+    const real = createAbsoluteFilePath(file.real);
+    const sourceText = await worker.readFile(real);
     const path = createUnknownFilePath(uid);
 
     let formatted: string = sourceText;
 
     if (project.config.format.enabled) {
-      if (sourceText.length > 50000) {
+      if (sourceText.length > 50_000) {
         // Fast path for big JSON files
         parseJSON({
-          path: path,
+          path,
           input: sourceText,
         });
       } else {
         const {consumer, comments, hasExtensions} = consumeJSONExtra({
           input: sourceText,
-          path: path,
+          path,
         });
 
         if (hasExtensions) {
           formatted = stringifyJSON({consumer, comments});
         } else {
-          formatted = String(
-            JSON.stringify(consumer.asUnknown(), undefined, '  '),
-          );
+          formatted = String(JSON.stringify(
+            consumer.asUnknown(),
+            undefined,
+            '  ',
+          ));
         }
       }
     }
@@ -216,8 +216,8 @@ const jsonHandler: ExtensionHandler = {
     };
   },
 
-  async toJavaScript({file}) {
-    const src = await readFileText(file.real);
+  async toJavaScript({file, worker}) {
+    const src = await worker.readFile(file.real);
 
     // Parse the JSON to make sure it's valid
     const obj = parseJSON({
@@ -242,7 +242,7 @@ const jsonHandler: ExtensionHandler = {
 // should be required everywhere.
 // TypeScript is unfortunately included here as it produces an error if you use an
 // import source with ".ts"
-export const IMPLICIT_JS_EXTENSIONS = ['js', 'json', 'ts', 'tsx'];
+export const IMPLICIT_JS_EXTENSIONS = ['js', 'ts', 'tsx', 'json'];
 
 // Extensions that have a `lint` handler
 export const LINTABLE_EXTENSIONS: Array<string> = [];
@@ -273,122 +273,112 @@ function buildJSHandler(
   JS_EXTENSIONS.push(ext);
 
   return {
-    hasteMode: 'ext',
-    syntax,
-    sourceType,
+      hasteMode: 'ext',
+      syntax,
+      sourceType,
 
-    async analyzeDependencies({file, worker}) {
-      const {ast, sourceText, project, generated} = await worker.parseJS(file);
-      worker.logger.info(`Analyzing:`, file.real);
+      async analyzeDependencies({file, worker, parseOptions}) {
+        const {ast, sourceText, project, generated} = await worker.parseJS(
+          file,
+          parseOptions,
+        );
+        worker.logger.info(`Analyzing:`, file.real);
 
-      return worker.api.interceptAndAddGeneratedToDiagnostics(
-        await compiler.analyzeDependencies({
-          ast,
-          sourceText,
-          project,
-          options: {},
-        }),
-        generated,
-      );
-    },
+        return worker.api.interceptAndAddGeneratedToDiagnostics(
+          await compiler.analyzeDependencies({
+            ast,
+            sourceText,
+            project,
+            options: {},
+          }),
+          generated,
+        );
+      },
 
-    async toJavaScript({file}) {
-      return {
-        sourceText: await readFileText(file.real),
-        generated: false,
-      };
-    },
+      async toJavaScript({file, worker}) {
+        return {
+          sourceText: await worker.readFile(file.real),
+          generated: false,
+        };
+      },
 
-    async format(
-      info: ExtensionHandlerMethodInfo,
-    ): Promise<ExtensionLintResult> {
-      const {file: ref, worker} = info;
+      async format(
+        info: ExtensionHandlerMethodInfo,
+      ): Promise<ExtensionLintResult> {
+        const {file: ref, parseOptions, worker} = info;
 
-      const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
-        ref,
-      );
+        const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
+          ref,
+          parseOptions,
+        );
 
-      const res = generateJS(ast, {
-        typeAnnotations: true,
-      });
+        const res = formatJS(ast, {
+          typeAnnotations: true,
+          format: 'pretty',
+        });
 
-      const extractedSuppressions = compiler.extractSuppressionsFromProgram(
-        ast,
-      );
-
-      return worker.api.interceptAndAddGeneratedToDiagnostics(
-        {
+        return worker.api.interceptAndAddGeneratedToDiagnostics({
           formatted: res.getCode(),
           sourceText,
-          suppressions: extractedSuppressions.suppressions,
-          diagnostics: [
-            ...ast.diagnostics,
-            ...extractedSuppressions.diagnostics,
-          ],
-        },
-        generated,
-      );
-    },
+          suppressions: [],
+          diagnostics: ast.diagnostics,
+        }, generated);
+      },
 
-    async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {
-      const {
-        file: ref,
-        project,
-        format,
-        prefetchedModuleSignatures,
-        worker,
-      } = info;
+      async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {
+        const {file: ref, project, format, parseOptions, options, worker} = info;
 
-      const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
-        ref,
-      );
-
-      worker.logger.info(`Linting: `, ref.real);
-
-      // Run the compiler in lint-mode which is where all the rules are actually ran
-      const res = await compiler.lint({
-        options: {},
-        ast,
-        project,
-        sourceText,
-        format,
-      });
-
-      // Extract lint diagnostics
-      let {diagnostics} = res;
-
-      // Only enable typechecking if enabled in .romeconfig
-      let typeCheckingEnabled = project.config.typeCheck.enabled === true;
-      if (project.config.typeCheck.libs.has(ref.real)) {
-        // don't typecheck lib files
-        typeCheckingEnabled = false;
-      }
-
-      // Run type checking if necessary
-      if (typeCheckingEnabled) {
-        const typeCheckProvider = await worker.getTypeCheckProvider(
-          ref.project,
-          prefetchedModuleSignatures,
+        const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
+          ref,
+          parseOptions,
         );
-        const typeDiagnostics = await typeCheck({
-          ast,
-          provider: typeCheckProvider,
-          project,
-        });
-        diagnostics = [...diagnostics, ...typeDiagnostics];
-      }
 
-      return worker.api.interceptAndAddGeneratedToDiagnostics(
-        {
+        worker.logger.info(`Linting: `, ref.real);
+
+        // Run the compiler in lint-mode which is where all the rules are actually ran
+        const res = await compiler.lint({
+          options: {
+            lint: options.compilerOptions,
+          },
+          ast,
+          project,
+          sourceText,
+          format,
+        });
+
+        // Extract lint diagnostics
+        let {diagnostics} = res;
+
+        // Only enable typechecking if enabled in .romeconfig
+        let typeCheckingEnabled = project.config.typeCheck.enabled === true;
+        if (project.config.typeCheck.libs.has(ref.real)) {
+          // don't typecheck lib files
+          typeCheckingEnabled = false;
+        }
+
+        // Run type checking if necessary
+        if (typeCheckingEnabled) {
+          const typeCheckProvider = await worker.getTypeCheckProvider(
+            ref.project,
+            options.prefetchedModuleSignatures,
+            parseOptions,
+          );
+          const typeDiagnostics = await typeCheck({
+            ast,
+            provider: typeCheckProvider,
+            project,
+          });
+          diagnostics = [...diagnostics, ...typeDiagnostics];
+        }
+
+        return worker.api.interceptAndAddGeneratedToDiagnostics({
           suppressions: res.suppressions,
           diagnostics,
           sourceText,
           formatted: res.src,
-        },
-        generated,
-      );
-    },
-  };
+        }, generated);
+      },
+    };
 }
 
 const DEFAULT_HANDLERS: ExtensionsMap = new Map();

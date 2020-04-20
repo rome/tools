@@ -6,5 +6,11 @@
  */
 
 export * from './parse';
+
 export * from './format';
+
 export * from './escape';
+
+export * from './ansi';
+
+export * from './ansiSplit';

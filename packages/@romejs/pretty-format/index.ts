@@ -5,38 +5,33 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UnknownObject} from '@romejs/typescript-helpers';
-import {formatAnsi} from '@romejs/string-ansi';
+import {UnknownObject, isIterable} from '@romejs/typescript-helpers';
 import {escapeString} from '@romejs/string-escape';
 import {humanizeNumber, naturalCompare} from '@romejs/string-utils';
-import {isIterable} from '@romejs/typescript-helpers';
-import {escapeMarkup} from '@romejs/string-markup';
+import {escapeMarkup, markupTag} from '@romejs/string-markup';
 
 type RecursiveStack = Array<unknown>;
 
 type FormatOptions = {
-  color: boolean;
+  markup: boolean;
   indent: string;
   stack: RecursiveStack;
   depth: number;
   maxDepth: number;
   compact: boolean;
-  escapeMarkup: boolean;
 };
 
 type FormatPartialOptions = {
   maxDepth?: number;
-  color?: boolean;
+  markup?: boolean;
   indent?: string;
   stack?: RecursiveStack;
   compact?: boolean;
-  escapeMarkup?: boolean;
 };
 
 const DEFAULT_OPTIONS: FormatOptions = {
-  escapeMarkup: false,
   maxDepth: Infinity,
-  color: false,
+  markup: false,
   indent: '',
   depth: 0,
   stack: [],
@@ -46,7 +41,7 @@ const DEFAULT_OPTIONS: FormatOptions = {
 const INDENT = '  ';
 
 function maybeEscapeMarkup(str: string, opts: FormatOptions): string {
-  if (opts.escapeMarkup) {
+  if (opts.markup) {
     return escapeMarkup(str);
   } else {
     return str;
@@ -71,35 +66,35 @@ export default function prettyFormat(
   switch (typeof obj) {
     case 'symbol': {
       const val = maybeEscapeMarkup(formatSymbol(obj), opts);
-      return opts.color ? formatAnsi.green(val) : val;
+      return opts.markup ? markupTag('green', val) : val;
     }
 
     case 'string': {
       const val = maybeEscapeMarkup(formatString(obj), opts);
-      return opts.color ? formatAnsi.green(val) : val;
+      return opts.markup ? markupTag('green', val) : val;
     }
 
     case 'bigint':
     case 'number': {
       const val = formatNumber(obj);
-      return opts.color ? formatAnsi.yellow(val) : val;
+      return opts.markup ? markupTag('yellow', val) : val;
     }
 
     case 'boolean': {
       const val = formatBoolean(obj);
-      return opts.color ? formatAnsi.yellow(val) : val;
+      return opts.markup ? markupTag('yellow', val) : val;
     }
 
     case 'undefined': {
       const val = formatUndefined();
-      return opts.color ? formatAnsi.brightBlack(val) : val;
+      return opts.markup ? markupTag('brightBlack', val) : val;
     }
 
     case 'function':
       return formatFunction(obj, opts);
 
     case 'object':
-      return formatObjectish(obj as Objectish, opts);
+      return formatObjectish((obj as Objectish), opts);
 
     default:
       throw new Error('Unknown type');
@@ -166,8 +161,7 @@ function formatBoolean(val: boolean): string {
 }
 
 function formatFunction(val: Function, opts: FormatOptions): string {
-  const name =
-    val.name === '' ? 'anonymous' : maybeEscapeMarkup(val.name, opts);
+  const name = val.name === '' ? 'anonymous' : maybeEscapeMarkup(val.name, opts);
   let label = `Function ${name}`;
 
   if (isNativeFunction(val)) {
@@ -178,14 +172,11 @@ function formatFunction(val: Function, opts: FormatOptions): string {
     return label;
   }
 
-  // rome-suppress lint/noExplicitAny
-  return formatObject(label, val as any, opts, []);
+  // rome-suppress-next-line lint/noExplicitAny
+  return formatObject(label, (val as any), opts, []);
 }
 
-function getExtraObjectProps(
-  obj: Objectish,
-  opts: FormatOptions,
-): {
+function getExtraObjectProps(obj: Objectish, opts: FormatOptions): {
   props: Array<string>;
   ignoreKeys: UnknownObject;
 } {
@@ -194,10 +185,9 @@ function getExtraObjectProps(
 
   if (obj instanceof Map) {
     for (const [key, val] of obj) {
-      const formattedKey =
-        typeof key === 'string'
-          ? formatKey(key, opts)
-          : prettyFormat(key, opts);
+      const formattedKey = typeof key === 'string'
+        ? formatKey(key, opts)
+        : prettyFormat(key, opts);
       props.push(`${formattedKey} => ${prettyFormat(val, opts)}`);
     }
   } else if (isIterable(obj)) {
@@ -232,9 +222,7 @@ type KeyInfo = {
 };
 
 function sortKeys(obj: Objectish): Array<KeyInfo> {
-  const sortedKeys: Set<string> = new Set(
-    Object.keys(obj).sort(naturalCompare),
-  );
+  const sortedKeys: Set<string> = new Set(Object.keys(obj).sort(naturalCompare));
 
   const priorityKeys: Array<KeyInfo> = [];
   const otherKeys: Array<KeyInfo> = [];
@@ -287,7 +275,7 @@ function formatObject(
   const {stack} = opts;
   if (stack.length > 0 && stack.includes(obj)) {
     label = `Circular ${label} ${stack.indexOf(obj)}`;
-    return opts.color ? formatAnsi.cyan(label) : label;
+    return opts.markup ? markupTag('cyan', label) : label;
   }
 
   //
@@ -356,7 +344,7 @@ function formatObject(
     }
   }
 
-  label = opts.color ? formatAnsi.cyan(label) : label;
+  label = opts.markup ? markupTag('cyan', label) : label;
   return `${label} ${open}${inner}${close}`;
 }
 
@@ -376,17 +364,17 @@ type Objectish = {
 function formatObjectish(val: null | Objectish, opts: FormatOptions): string {
   if (val === null) {
     const val = formatNull();
-    return opts.color ? formatAnsi.bold(val) : val;
+    return opts.markup ? markupTag('emphasis', val) : val;
   }
 
   if (val instanceof RegExp) {
     const str = formatRegExp(val);
-    return opts.color ? formatAnsi.red(str) : str;
+    return opts.markup ? markupTag('red', str) : str;
   }
 
   if (val instanceof Date) {
     const str = formatDate(val);
-    return opts.color ? formatAnsi.magenta(str) : str;
+    return opts.markup ? markupTag('magenta', str) : str;
   }
 
   let label = 'null';

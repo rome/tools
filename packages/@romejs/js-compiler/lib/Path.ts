@@ -6,9 +6,9 @@
  */
 
 import {AnyNode, MOCK_PARENT} from '@romejs/js-ast';
-import {Scope} from '@romejs/js-compiler';
 import {
-  Context,
+  Scope,
+  CompilerContext,
   TransformVisitor,
   TransformVisitors,
 } from '@romejs/js-compiler';
@@ -17,7 +17,6 @@ import {
   AnyHookDescriptor,
   HookDescriptor,
 } from '../api/createHook';
-import {PartialDiagnostic} from '@romejs/diagnostics';
 import reduce from '../methods/reduce';
 import {TransformExitResult} from '../types';
 
@@ -27,7 +26,6 @@ export type PathOptions = {
   listKey?: number;
   parentScope?: Scope;
   scope?: Scope;
-  frozen?: boolean;
   noArrays?: boolean;
   noScopeCreation?: boolean;
   hooks?: Handlers;
@@ -37,7 +35,7 @@ export type PathOptions = {
 type Handlers = Array<HookInstance>;
 
 export default class Path {
-  constructor(node: AnyNode, context: Context, opts: PathOptions) {
+  constructor(node: AnyNode, context: CompilerContext, opts: PathOptions) {
     const ancestryPaths = opts.ancestryPaths || [];
     this.ancestryPaths = ancestryPaths;
 
@@ -55,10 +53,9 @@ export default class Path {
     this.parent = this.parentPath.node;
     this.context = context;
 
-    const parentScope =
-      opts.parentScope === undefined
-        ? context.getRootScope()
-        : opts.parentScope;
+    const parentScope = opts.parentScope === undefined
+      ? context.getRootScope()
+      : opts.parentScope;
 
     let scope = opts.scope;
     if (scope === undefined) {
@@ -79,7 +76,7 @@ export default class Path {
     this.hooks = opts.hooks === undefined ? [] : opts.hooks;
   }
 
-  context: Context;
+  context: CompilerContext;
   node: AnyNode;
   parent: AnyNode;
   scope: Scope;
@@ -94,7 +91,7 @@ export default class Path {
   listKey: undefined | number;
 
   callHook<CallArg, CallReturn>(
-    // rome-suppress lint/noExplicitAny
+    // rome-suppress-next-line lint/noExplicitAny
     descriptor: HookDescriptor<any, CallArg, CallReturn>,
     arg: CallArg,
     optionalRet?: CallReturn,
@@ -123,11 +120,8 @@ export default class Path {
     }
   }
 
-  provideHook<State>(
-    // rome-suppress lint/noExplicitAny
-    descriptor: HookDescriptor<State, any, any>,
-    state?: State,
-  ): AnyNode {
+  provideHook<State>( // rome-suppress-next-line lint/noExplicitAny
+  descriptor: HookDescriptor<State, any, any>, state?: State): AnyNode {
     this.hooks.push({
       state: {
         ...descriptor.initialState,
@@ -142,7 +136,10 @@ export default class Path {
   findHook(
     descriptor: AnyHookDescriptor,
     requiredDepth: number = 0,
-  ): undefined | {ref: HookInstance; depth: number} {
+  ): undefined | {
+    ref: HookInstance;
+    depth: number;
+  } {
     let depth = 0;
     for (const {hooks} of this.ancestryPaths) {
       for (const hook of hooks) {
@@ -155,6 +152,7 @@ export default class Path {
         }
       }
     }
+    return undefined;
   }
 
   findAncestry(callback: (path: Path) => boolean): undefined | Path {
@@ -163,10 +161,11 @@ export default class Path {
         return path;
       }
     }
+    return undefined;
   }
 
   getChildPath(key: string): Path {
-    // rome-suppress lint/noExplicitAny
+    // rome-suppress-next-line lint/noExplicitAny
     const node = (this.node as any)[key];
     if (node === undefined) {
       throw new Error(
@@ -182,7 +181,7 @@ export default class Path {
   }
 
   getChildPaths(key: string): Array<Path> {
-    // rome-suppress lint/noExplicitAny
+    // rome-suppress-next-line lint/noExplicitAny
     const nodes = (this.node as any)[key];
 
     if (nodes === undefined) {
@@ -230,11 +229,12 @@ export default class Path {
 
   getPathOptions(): PathOptions {
     return {
-      ...this.opts,
-      hooks: this.hooks,
-      parentScope:
-        this.scope === undefined ? undefined : this.scope.parentScope,
-    };
+        ...this.opts,
+        hooks: this.hooks,
+        parentScope: this.scope === undefined
+          ? undefined
+          : this.scope.parentScope,
+      };
   }
 
   traverse(name: string, callback: (path: Path) => void) {
@@ -257,9 +257,5 @@ export default class Path {
       this.context,
       {...this.getPathOptions(), ...opts},
     );
-  }
-
-  addDiagnostic(opts: PartialDiagnostic) {
-    return this.context.addNodeDiagnostic(this.node, opts);
   }
 }

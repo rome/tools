@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -25,6 +26,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' bounds'
       loc: Object {
         filename: 'input.js'
@@ -41,6 +43,7 @@ Program {
       }
     }
     CommentLine {
+      id: '1'
       value: ' builtins'
       loc: Object {
         filename: 'input.js'
@@ -57,6 +60,7 @@ Program {
       }
     }
     CommentLine {
+      id: '2'
       value: ' literal type annotations'
       loc: Object {
         filename: 'input.js'
@@ -92,6 +96,7 @@ Program {
         }
       }
       typeParameters: undefined
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -120,24 +125,6 @@ Program {
           }
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' bounds'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      ]
     }
     TypeAliasTypeAnnotation {
       id: BindingIdentifier {
@@ -204,6 +191,7 @@ Program {
         }
       }
       typeParameters: undefined
+      trailingComments: Array ['1']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -232,24 +220,6 @@ Program {
           }
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' builtins'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 11
-              index: 70
-              line: 5
-            }
-            start: Object {
-              column: 0
-              index: 59
-              line: 5
-            }
-          }
-        }
-      ]
     }
     TypeAliasTypeAnnotation {
       id: BindingIdentifier {
@@ -269,6 +239,7 @@ Program {
         }
       }
       typeParameters: undefined
+      leadingComments: Array ['1']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -297,24 +268,6 @@ Program {
           }
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' builtins'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 11
-              index: 70
-              line: 5
-            }
-            start: Object {
-              column: 0
-              index: 59
-              line: 5
-            }
-          }
-        }
-      ]
     }
     TypeAliasTypeAnnotation {
       id: BindingIdentifier {
@@ -475,6 +428,7 @@ Program {
         }
       }
       typeParameters: undefined
+      trailingComments: Array ['2']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -503,24 +457,6 @@ Program {
           }
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' literal type annotations'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 27
-              index: 185
-              line: 11
-            }
-            start: Object {
-              column: 0
-              index: 158
-              line: 11
-            }
-          }
-        }
-      ]
     }
     TypeAliasTypeAnnotation {
       id: BindingIdentifier {
@@ -540,6 +476,7 @@ Program {
         }
       }
       typeParameters: undefined
+      leadingComments: Array ['2']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -568,24 +505,6 @@ Program {
           }
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' literal type annotations'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 27
-              index: 185
-              line: 11
-            }
-            start: Object {
-              column: 0
-              index: 158
-              line: 11
-            }
-          }
-        }
-      ]
     }
     TypeAliasTypeAnnotation {
       id: BindingIdentifier {

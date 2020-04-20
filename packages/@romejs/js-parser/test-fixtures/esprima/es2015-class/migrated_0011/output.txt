@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -42,9 +43,9 @@ Program {
       loc: Object {
         filename: 'input.js'
         end: Object {
-          column: 0
-          index: 59
-          line: 2
+          column: 58
+          index: 58
+          line: 1
         }
         start: Object {
           column: 0
@@ -108,8 +109,8 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 22
-                index: 22
+                column: 21
+                index: 21
                 line: 1
               }
               start: Object {
@@ -153,8 +154,8 @@ Program {
                   line: 1
                 }
                 start: Object {
-                  column: 19
-                  index: 19
+                  column: 17
+                  index: 17
                   line: 1
                 }
               }
@@ -223,8 +224,8 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 39
-                index: 39
+                column: 38
+                index: 38
                 line: 1
               }
               start: Object {
@@ -268,8 +269,8 @@ Program {
                   line: 1
                 }
                 start: Object {
-                  column: 36
-                  index: 36
+                  column: 34
+                  index: 34
                   line: 1
                 }
               }
@@ -338,8 +339,8 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 57
-                index: 57
+                column: 56
+                index: 56
                 line: 1
               }
               start: Object {
@@ -408,8 +409,8 @@ Program {
                   line: 1
                 }
                 start: Object {
-                  column: 54
-                  index: 54
+                  column: 51
+                  index: 51
                   line: 1
                 }
               }

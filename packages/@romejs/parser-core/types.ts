@@ -8,20 +8,16 @@
 import {Number0, Number1, coerce1, number0Neg1} from '@romejs/ob1';
 
 //# Node types
-
 export type NodeBase = {
   type: string;
   loc?: SourceLocation;
 };
 
-export type SimpleNode<Type extends string> = NodeBase & {
+export type SimpleNode<Type extends string> = NodeBase & {type: Type};
+
+export type ComplexNode<Type extends string, Data> = NodeBase & Data & {
   type: Type;
 };
-
-export type ComplexNode<Type extends string, Data> = NodeBase &
-  Data & {
-    type: Type;
-  };
 
 export type ValueNode<Type extends string, Value> = NodeBase & {
   type: Type;
@@ -29,7 +25,6 @@ export type ValueNode<Type extends string, Value> = NodeBase & {
 };
 
 //# Token types
-
 export type TokenBase = {
   type: string;
   start: Number0;
@@ -43,14 +38,11 @@ export type TokensShape = {
   [type: string]: TokenBase;
 };
 
-export type SimpleToken<Type extends string> = TokenBase & {
+export type SimpleToken<Type extends string> = TokenBase & {type: Type};
+
+export type ComplexToken<Type extends string, Data> = TokenBase & Data & {
   type: Type;
 };
-
-export type ComplexToken<Type extends string, Data> = TokenBase &
-  Data & {
-    type: Type;
-  };
 
 export type ValueToken<Type extends string, Value> = TokenBase & {
   type: Type;
@@ -70,7 +62,6 @@ export type BaseTokens = {
 };
 
 //# Other types
-
 export type SourceLocation = {
   filename?: string;
   identifierName?: string;

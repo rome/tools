@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -25,6 +26,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' comment1'
       loc: Object {
         filename: 'input.js'
@@ -41,6 +43,7 @@ Program {
       }
     }
     CommentBlock {
+      id: '1'
       value: ' comment2 '
       loc: Object {
         filename: 'input.js'
@@ -89,6 +92,10 @@ Program {
         children: Array [
           JSXText {
             value: '\n  '
+            leadingComments: Array [
+              '0'
+              '1'
+            ]
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -102,40 +109,6 @@ Program {
                 line: 4
               }
             }
-            leadingComments: Array [
-              CommentLine {
-                value: ' comment1'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 11
-                    index: 13
-                    line: 2
-                  }
-                  start: Object {
-                    column: 0
-                    index: 2
-                    line: 2
-                  }
-                }
-              }
-              CommentBlock {
-                value: ' comment2 '
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 14
-                    index: 28
-                    line: 3
-                  }
-                  start: Object {
-                    column: 0
-                    index: 14
-                    line: 3
-                  }
-                }
-              }
-            ]
           }
           JSXElement {
             name: JSXIdentifier {
