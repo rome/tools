@@ -7,19 +7,16 @@
 
 import Resolver, {
   ResolverLocalQuery,
-  ResolverQueryResponseMissing,
   ResolverQuerySource,
   isPathLike,
-  ResolverQueryResponseUnsupported,
-  ResolverQueryResponseFetchError,
+  ResolverQueryResponseNotFound,
   ResolverRemoteQuery,
 } from './Resolver';
 import {
   DiagnosticAdvice,
   buildSuggestionAdvice,
   createSingleDiagnosticError,
-  DiagnosticCategory,
-  createBlessedDiagnosticMessage,
+  descriptions,
 } from '@romejs/diagnostics';
 import {orderBySimilarity} from '@romejs/string-utils';
 import {createUnknownFilePath, AbsoluteFilePath} from '@romejs/path';
@@ -29,11 +26,7 @@ import {markup} from '@romejs/string-markup';
 export default function resolverSuggest(
   resolver: Resolver,
   query: ResolverRemoteQuery,
-  resolved:
-    | ResolverQueryResponseFetchError
-    | ResolverQueryResponseMissing
-    | ResolverQueryResponseUnsupported,
-
+  resolved: ResolverQueryResponseNotFound,
   origQuerySource?: ResolverQuerySource,
 ): Error {
   let errMsg = '';
@@ -231,31 +224,15 @@ export default function resolverSuggest(
   const source = querySource.source === undefined
     ? query.source.join()
     : querySource.source;
-  let message = '';
-  let category: DiagnosticCategory = 'resolver/notFound';
-
-  if (resolved.type === 'UNSUPPORTED') {
-    message = `Unsupported`;
-    category = 'resolver/unsupported';
-  } else if (resolved.type === 'MISSING') {
-    message = `Cannot find`;
-  } else if (resolved.type === 'FETCH_ERROR') {
-    message = 'Failed to fetch';
-    category = 'resolver/fetchFailed';
-  }
 
   if (resolved.advice !== undefined) {
     advice = advice.concat(resolved.advice);
   }
 
-    message +=
-    markup` <emphasis>${source}</emphasis> from <filelink emphasis target="${location.filename}" />`;
-
   throw createSingleDiagnosticError({
     location,
     description: {
-      category,
-      message: createBlessedDiagnosticMessage(message),
+      ...descriptions.RESOLVER.NOT_FOUND(resolved.type, source, location),
       advice,
     },
   });

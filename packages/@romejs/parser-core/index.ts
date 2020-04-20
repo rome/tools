@@ -24,7 +24,6 @@ import {
   DiagnosticCategory,
   DiagnosticDescription,
   DiagnosticsError,
-  createBlessedDiagnosticMessage,
   descriptions,
   catchDiagnosticsSync,
 } from '@romejs/diagnostics';
@@ -40,7 +39,6 @@ import {
   sub,
   dec,
 } from '@romejs/ob1';
-import {escapeMarkup} from '@romejs/string-markup';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 import {Class, OptionalProps} from '@romejs/typescript-helpers';
 import {removeCarriageReturn} from '@romejs/string-utils';
@@ -422,23 +420,17 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
     // Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
     if (metadata === undefined) {
-      let message;
       if (currentToken !== undefined && start !== undefined && start.index ===
           currentToken.start) {
-        message = createBlessedDiagnosticMessage(
-          `Unexpected ${currentToken.type}`,
-        );
+        metadata = descriptions.PARSER_CORE.UNEXPECTED(currentToken.type);
       } else {
         if (this.isEOF(start.index)) {
-          message = createBlessedDiagnosticMessage('Unexpected end of file');
+          metadata = descriptions.PARSER_CORE.UNEXPECTED_EOF;
         } else {
           const char = this.input[get0(start.index)];
-          message = createBlessedDiagnosticMessage(
-            `Unexpected character <emphasis>${escapeMarkup(char)}</emphasis>`,
-          );
+          metadata = descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(char);
         }
       }
-      metadata = {message};
     }
 
     const metadataWithCategory: DiagnosticDescription = {

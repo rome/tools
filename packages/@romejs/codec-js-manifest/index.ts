@@ -21,7 +21,7 @@ import {
 } from './types';
 import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
 import {normalizeName} from './name';
-import {Diagnostics} from '@romejs/diagnostics';
+import {Diagnostics, descriptions} from '@romejs/diagnostics';
 import {
   AbsoluteFilePath,
   createRelativeFilePath,
@@ -136,9 +136,7 @@ function normalizeBin(
   const obj = consumer.get('bin');
   if (typeof obj.asUnknown() === 'string') {
     if (name === undefined) {
-      obj.unexpected(
-        'A string bin is only allowed if the manifest has a name property',
-      );
+      obj.unexpected(descriptions.MANIFEST.STRING_BIN_WITHOUT_NAME);
     } else {
       map.set(name, obj.asString());
       return map;
@@ -382,7 +380,7 @@ function normalizeRepo(
       }
 
       if (looseUrl === undefined) {
-        consumer.unexpected('No url found');
+        consumer.unexpected(descriptions.MANIFEST.MISSING_REPO_URL);
         url = '';
       } else {
         url = looseUrl;
@@ -438,9 +436,7 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
     // If it's not a relative path then it's a platform for the root
     if (relative[0] !== '.') {
       if (exports.size > 0) {
-        value.unexpected(
-          'Cannot mix a root conditional export with relative paths',
-        );
+        value.unexpected(descriptions.MANIFEST.MIXED_EXPORTS_PATHS);
       }
 
       if (dotConditions.size === 0) {
@@ -455,9 +451,7 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
     }
 
     if (dotConditions.size > 0) {
-      value.unexpected(
-        'Cannot mix a root conditional export with relative paths',
-      );
+      value.unexpected(descriptions.MANIFEST.MIXED_EXPORTS_PATHS);
     }
 
     const conditions = normalizeExportsConditions(value);
@@ -542,9 +536,8 @@ function normalizeRootName(consumer: Consumer, loose: boolean): MString {
   return normalizeName({
     name: prop.asString(),
     loose,
-    unexpected: ({message, at, start, end, advice}) => {
-      prop.unexpected(message, {
-        advice,
+    unexpected: ({description, at, start, end}) => {
+      prop.unexpected(description, {
         at,
         loc: start === undefined
           ? undefined
@@ -575,21 +568,19 @@ function checkDependencyKeyTypo(key: string, prop: Consumer) {
     // Check for casing issues
     const lowerKey = key.toLowerCase();
     if (lowerKey === depKey) {
-      prop.unexpected(`${key} has incorrect casing, should be ${depKey}`);
+      prop.unexpected(descriptions.MANIFEST.INCORRECT_CAMEL_CASING(key, depKey));
     }
 
     // Check for common suffix misspellings
     for (const suffix of INCORRECT_DEPENDENCIES_SUFFIXES) {
       if (lowerKey === `${depPrefixKey}${suffix}`) {
-        prop.unexpected(`${key} has a typo, should be ${depKey}`);
+        prop.unexpected(descriptions.MANIFEST.TYPO(key, depKey));
       }
     }
 
     // Check for kebab casing
     if (toCamelCase(depKey) === lowerKey) {
-      prop.unexpected(
-        `${key} isn't correctly camel cased when it should be ${depKey}`,
-      );
+      prop.unexpected(descriptions.MANIFEST.INCORRECT_CAMEL_CASING(key, depKey));
     }
   }
 }
@@ -619,7 +610,7 @@ export async function normalizeManifest(
       // Check for other typos
       const correctKey = TYPO_KEYS.get(key);
       if (correctKey !== undefined) {
-        prop.unexpected(`${key} is a typo of ${correctKey}`);
+        prop.unexpected(descriptions.MANIFEST.TYPO(key, correctKey));
       }
     }
   }

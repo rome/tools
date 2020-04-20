@@ -12,7 +12,6 @@ import {
 } from '@romejs/diagnostics';
 import Consumer from './Consumer';
 import {UnknownFilePath} from '@romejs/path';
-import {Number0, Number1} from '@romejs/ob1';
 
 export type ConsumeComments = Array<string>;
 
@@ -60,8 +59,8 @@ type ConsumePropertyPrimitiveDefinition =
 
 type ConsumePropertyNumberRangeDefinition = ConsumePropertyDefinitionBase & {
   type: 'number-range';
-  min: undefined | Number0 | Number1 | number;
-  max: undefined | Number0 | Number1 | number;
+  min: undefined | number;
+  max: undefined | number;
 };
 
 export type ConsumePropertyDefinition =

@@ -62,6 +62,13 @@ export function get1(x: undefined | Number1): undefined | number {
   return x;
 }
 
+export function get(x: UnknownNumber): number;
+export function get(x: undefined): undefined;
+export function get(x: undefined | UnknownNumber): undefined | number {
+  // @ts-ignore
+  return x;
+}
+
 // Coerce a number into a 0-offset
 export function coerce0(x: number): Number0;
 export function coerce0(x: undefined): undefined;

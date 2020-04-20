@@ -36,7 +36,7 @@ const promise = createFixtureTests(
     const sourceTypeProp = options.get('sourceType');
     const sourceType = sourceTypeProp.asString('script');
     if (sourceType !== 'module' && sourceType !== 'script') {
-      throw sourceTypeProp.unexpected('Expected either script or module');
+      throw sourceTypeProp.unexpected();
     }
 
     const allowReturnOutsideFunction = options.get('allowReturnOutsideFunction').asBoolean(

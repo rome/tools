@@ -11,10 +11,14 @@ import {
   DiagnosticLocation,
   DiagnosticAdvice,
 } from './types';
-import {markup} from '@romejs/string-markup';
+import {markup, escapeMarkup} from '@romejs/string-markup';
 import stringDiff from '@romejs/string-diff';
 import {buildSuggestionAdvice, buildDuplicateLocationAdvice} from './helpers';
 import {SourceLocation} from '@romejs/parser-core';
+import {DiagnosticCategory} from './categories';
+import {ResolverQueryResponseNotFound} from '@romejs/core/master/fs/Resolver';
+import {UnknownNumber} from '@romejs/ob1';
+import {toKebabCase} from '@romejs/string-utils';
 
 type DiagnosticMetadataString =
   & Omit<Partial<DiagnosticDescription>, 'message'>
@@ -130,13 +134,85 @@ function buildJSXOpeningAdvice(
 
 export const descriptions = createMessages(
   {
+    FLAGS: {
+      UNSUPPORTED_SHORTHANDS: `Shorthand flags are not supported`,
+
+      INCORRECT_CASED_FLAG: (flag: string) => ({
+        message: `Incorrect cased flag name`,
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: markup`Use <emphasis>${toKebabCase(flag)}</emphasis> instead`,
+          },
+        ],
+      }),
+
+      DIRTY_VSC: (files: Array<string>) => ({
+        message: 'You have uncommitted files. This operation can modify files. For your safety we recommend committing before running this command.',
+        category: 'vsc/dirty',
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: 'If you really want to do this then you can bypass this restriction with the <command>--allow-dirty</command> flag',
+          },
+          {
+            type: 'log',
+            category: 'warn',
+            message: 'These files are uncommitted',
+          },
+          {
+            type: 'list',
+            list: files.map(
+              (filename) => markup`<filelink target="${filename}" />`,
+            ),
+          },
+        ],
+      }),
+
+      INCORRECT_ARG_COUNT: (excessive: boolean, message: string) => ({
+        message: excessive ? 'Too many arguments' : 'Missing arguments',
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message,
+          },
+        ],
+      }),
+
+      DISALLOWED_REVIEW_FLAG: (key: string) => ({
+        message: `Flag <emphasis>${key}</emphasis> is not allowed with <emphasis>review</emphasis>`,
+      }),
+
+      DISALLOWED_REQUEST_FLAG: (key: string) => ({
+        message: `This command does not support the <emphasis>${key}</emphasis> flag`,
+      }),
+
+      UNKNOWN_ACTION: (action: string) => ({
+        message: `Unknown action ${action}`,
+      }),
+
+      NO_FILES_FOUND: (noun: undefined | string) => ({
+        message: noun === undefined
+          ? 'No files found'
+          : `No files to ${noun} found`,
+      }),
+    },
+
     // @romejs/parser-core
     PARSER_CORE: {
       EXPECTED_SPACE: 'Expected no space between',
       EXPECTED_EOF: 'Expected end of file',
+      UNEXPECTED_EOF: 'Unexpected end of file',
+
+      UNEXPECTED: (type: string) => ({
+        message: markup`Unexpected ${type}`,
+      }),
 
       UNEXPECTED_CHARACTER: (char: string) => ({
-        message: markup`Unexpected character ${char}`,
+        message: markup`Unexpected character <emphasis>${char}</emphasis>`,
       }),
 
       EXPECTED_TOKEN: (got: string, expected: string) => {
@@ -785,6 +861,38 @@ export const descriptions = createMessages(
     },
 
     RESOLVER: {
+      NOT_FOUND: (
+        responseType: ResolverQueryResponseNotFound['type'],
+        source: string,
+        location: DiagnosticLocation,
+      ) => {
+        let messagePrefix = '';
+        let category: DiagnosticCategory = 'resolver/notFound';
+
+        switch (responseType) {
+          case 'UNSUPPORTED': {
+            messagePrefix = `Unsupported`;
+            category = 'resolver/unsupported';
+            break;
+          }
+          case 'MISSING': {
+            messagePrefix = `Cannot find`;
+            break;
+          }
+          case 'FETCH_ERROR': {
+            messagePrefix = 'Failed to fetch';
+            category = 'resolver/fetchFailed';
+            break;
+          }
+        }
+
+        return {
+            message: messagePrefix +
+              markup` <emphasis>${source}</emphasis> from <filelink emphasis target="${location.filename}" />`,
+            category,
+          };
+      },
+
       IMPORT_TYPE_MISMATCH: (
         exportName: string,
         source: string,
@@ -1434,6 +1542,113 @@ export const descriptions = createMessages(
         category: 'typeCheck/missingCondition',
         message: `Missing the conditions ${missing.join(', ')}`,
       }),
+    },
+
+    // @romejs/consume
+    CONSUME: {
+      SET_PROPERTY_NON_OBJECT: 'Attempted to set a property on a non-object',
+      EXPECTED_JSON_VALUE: 'Expected a JSON value',
+      EXPECTED_OBJECT: 'Expected object',
+      EXPECTED_ARRAY: 'Expected array',
+      EXPECTED_DATE: 'Expected a date',
+      EXPECTED_BOOLEAN: 'Expected a boolean',
+      EXPECTED_STRING: 'Expected a string',
+      EXPECTED_BIGINT: 'Expected a bigint',
+      EXPECTED_NUMBER: 'Expected a number',
+      EXPECTED_URL: 'Expected a URL',
+      EXPECTED_VALID_NUMBER: 'Expected valid number',
+      EXPECTED_ABSOLUTE_PATH: 'Expected an absolute file path',
+      EXPECTED_RELATIVE_PATH: 'Expected a relative file path',
+      EXPECTED_EXPLICIT_RELATIVE_PATH: 'Expected an explicit relative file path. This is one that starts with <emphasis>./</emphasis> or <emphasis>../</emphasis>',
+      INVALID: 'Invalid value',
+
+      EXPECTED_NUMBER_BETWEEN: (min: UnknownNumber, max: UnknownNumber) => ({
+        message: `Expected number between ${min} and ${max}`,
+      }),
+
+      EXPECTED_NUMBER_HIGHER: (num: UnknownNumber) => ({
+        message: `Expected number higher than ${num}`,
+      }),
+
+      EXPECTED_NUMBER_LOWER: (num: UnknownNumber) => ({
+        message: `Expected number lower than ${num}`,
+      }),
+
+      INVALID_STRING_SET_VALUE: (value: string, validValues: Array<string>) => ({
+        message: markup`Invalid value <emphasis>${value}</emphasis>`,
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: 'Possible values are',
+          },
+          {
+            type: 'list',
+            list: validValues.map((str) => escapeMarkup(str)),
+          },
+        ],
+      }),
+
+      UNUSED_PROPERTY: (
+        key: string,
+        type: string,
+        knownProperties: Array<string>,
+      ) => ({
+        message: markup`Unknown <emphasis>${key}</emphasis> ${type}`,
+        advice: buildSuggestionAdvice(key, knownProperties, {
+          ignoreCase: true,
+        }),
+      }),
+    },
+
+    // @romejs/codec-js-manifest
+    MANIFEST: {
+      TOO_MANY_HASH_PARTS: 'Too many hashes',
+      MISSING_HOSTED_GIT_USER: 'Missing user',
+      MISSING_HOSTED_GIT_REPO: 'Missing repo',
+      TOO_MANY_HOSTED_GIT_PARTS: 'Expected only 2 parts',
+      EMPTY_NPM_PATTERN: 'Missing rest of npm dependency pattern',
+      TOO_MANY_NPM_PARTS: 'Too many @ signs',
+      STRING_BIN_WITHOUT_NAME: 'A string bin is only allowed if the manifest has a name property',
+      MISSING_REPO_URL: 'Missing repo URL',
+      MIXED_EXPORTS_PATHS: 'Cannot mix a root conditional export with relative paths',
+      NAME_EXCEEDS: `cannot exceed 214 characters`,
+      INVALID_NAME_START: `cannot start with a dot or underscore`,
+      ORG_WITH_NO_PACKAGE_NAME: `contains an org but no package name`,
+      ORG_TOO_MANY_PARTS: `contains too many name separators`,
+      REDUNDANT_ORG_NAME_START: 'Redundant <emphasis>@</emphasis> in org name',
+
+      INVALID_NAME_CHAR: (char: string) => ({
+        message: markup`The character <emphasis>${char}</emphasis> isn't allowed`,
+      }),
+
+      INCORRECT_CASING: (typoKey: string, correctKey: string) => ({
+        message: `${typoKey} has incorrect casing, should be ${correctKey}`,
+      }),
+
+      INCORRECT_CAMEL_CASING: (typoKey: string, correctKey: string) => ({
+        message: `${typoKey} isn't correctly camel cased when it should be ${correctKey}`,
+      }),
+
+      TYPO: (typoKey: string, correctKey: string) => ({
+        message: `${typoKey} is a typo of ${correctKey}`,
+      }),
+    },
+
+    // @romejs/project
+    PROJECT_CONFIG: {
+      BOOLEAN_CATEGORY: (enabled: boolean) => ({
+        message: `Expected an object here but got a boolean`,
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: `You likely wanted \`{"enabled": ${String(enabled)}}\` instead`,
+          },
+        ],
+      }),
+
+      RECURSIVE_CONFIG: 'Recursive config',
     },
   },
 );
