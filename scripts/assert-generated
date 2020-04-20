@@ -17,7 +17,7 @@ require('./runtime-modules/update.cjs');
 require('./ast/update.cjs');
 
 // Autofix them
-execDev(['lint', '--fix']);
+execDev(['lint', '--fix', '--allow-dirty']);
 
 // Check that `git status` is fine
 const out = child_process
