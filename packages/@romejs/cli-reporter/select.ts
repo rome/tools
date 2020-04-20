@@ -9,13 +9,15 @@ import {ansiEscapes} from '@romejs/string-markup';
 import Reporter from './Reporter';
 import readline = require('readline');
 
+type SelectOption = {
+  label: string;
+  shortcut?: string;
+  disabled?: boolean;
+  disabledReason?: string;
+};
+
 export type SelectOptions = {
-  [key: string]: {
-    label: string;
-    shortcut?: string;
-    disabled?: boolean;
-    disabledReason?: string;
-  };
+  [key: string]: SelectOption;
 };
 
 export type SelectArguments<Options> = {
@@ -24,6 +26,14 @@ export type SelectArguments<Options> = {
   radio?: boolean;
   yes?: boolean;
 };
+
+function formatShortcut({shortcut}: SelectOption): string {
+  if (shortcut === undefined) {
+    return '';
+  } else {
+    return ` <dim>(shortcut ${shortcut})</dim>`;
+  }
+}
 
 export default async function select<
   Options extends SelectOptions
@@ -89,22 +99,14 @@ export default async function select<
       activeOption++;
     }
   }
+
   function render() {
     const optionNames = Object.keys(options);
     for (let i = 0; i < optionNames.length; i++) {
       const key = optionNames[i];
-      let {label, disabled, disabledReason, shortcut} = options[key];
-
-      let shortcutSuffix = '';
-
-      if (shortcut !== undefined) {
-        if (label[0].toLowerCase() === shortcut) {
-          // First letter of label is the same as the shortcut so make it more presentable
-          label = `<emphasis>${label[0]}</emphasis>${label.slice(1)}`;
-        } else {
-          shortcutSuffix = ` (${shortcut})`;
-        }
-      }
+      const option = options[key];
+      const {label, disabled, disabledReason} = option;
+      const shortcut = formatShortcut(option);
 
       let formattedLabel = optionNames.indexOf(key) === activeOption
         ? `<underline>${label}</underline>`
@@ -117,7 +119,7 @@ export default async function select<
         symbol = selectedOptions.has(key) ? '\u2611' : '\u2610';
       }
 
-      let line = `${symbol} ${formattedLabel}${shortcutSuffix}`;
+      let line = `${formattedLabel}${shortcut}`;
 
       if (disabled) {
         line = `<strike>${line}</strike>`;
@@ -127,7 +129,7 @@ export default async function select<
         }
       }
 
-      reporter.logAll(`  ${line}`, {
+      reporter.logAll(`  ${symbol} ${line}`, {
         // Don't put a newline on the last option
         newline: i !== optionNames.length - 1,
       });
