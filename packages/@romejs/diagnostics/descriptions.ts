@@ -243,7 +243,7 @@ export const descriptions = createMessages(
 
       PREFER_TEMPLATE: {
         category: 'lint/preferTemplate',
-        message: "You're using string concatenation when template literals are preferred",
+        message: 'Template literals are preferred over string concatenation',
       },
 
       UNSAFE_NEGATION: {

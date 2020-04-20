@@ -63,6 +63,7 @@ type WatchResults = {
 };
 
 type LintRunOptions = {
+  firstRun: boolean;
   evictedPaths: AbsoluteFilePathSet;
   processor: DiagnosticsProcessor;
 };
@@ -211,6 +212,7 @@ class LintRunner {
   async runGraph({
     evictedPaths,
     processor,
+    firstRun,
   }: LintRunOptions): Promise<AbsoluteFilePathSet> {
     const {graph} = this;
 
@@ -226,7 +228,7 @@ class LintRunner {
 
     // Refresh only the evicted paths
     const progress = this.events.createProgress({
-      title: 'Analyzing changed files',
+      title: firstRun ? 'Analyzing files' : 'Analyzing changed files',
     });
     await graph.seed({
       paths: Array.from(evictedPaths),
@@ -434,6 +436,8 @@ export default class Linter {
       graph,
     });
 
+    let firstRun = true;
+
     return this.request.watchFilesFromArgs(this.getFileArgOptions(), async (
       {paths: evictedPaths, projects},
       initial,
@@ -451,8 +455,9 @@ export default class Linter {
         }
       }
 
-      const result = await runner.run({evictedPaths, processor});
+      const result = await runner.run({firstRun, evictedPaths, processor});
       events.onChanges(result, initial, runner);
+      firstRun = false;
     });
   }
 

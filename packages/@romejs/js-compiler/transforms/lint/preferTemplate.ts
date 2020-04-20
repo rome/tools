@@ -13,6 +13,7 @@ import {
 } from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 import {TransformExitResult} from '@romejs/js-compiler/types';
+import {removeShallowLoc} from '@romejs/js-ast-utils';
 
 export default {
   name: 'preferTemplate',
@@ -37,7 +38,7 @@ export default {
             cooked: node.right.value,
           }),
         ];
-        const expressions = [node.left];
+        const expressions = [removeShallowLoc(node.left)];
         autofix = templateLiteral.create({
           expressions,
           quasis,
@@ -56,7 +57,10 @@ export default {
             cooked: '',
           }),
         ];
-        const expressions = [node.right];
+
+        // We need to remove the location or else if we were to show a preview the source map would resolve to the end of
+        // this node
+        const expressions = [removeShallowLoc(node.right)];
         autofix = templateLiteral.create({
           expressions,
           quasis,

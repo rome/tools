@@ -63,12 +63,18 @@ function formatReduceFromChildren(
 ): string {
   const {formatTag, formatText} = opts;
 
+  // Sometimes we'll populate the inner text of a tag with no children
+  if (children.length === 0) {
+    return formatText('', opts.ancestry);
+  }
+
   let buff = '';
   for (const child of children) {
     if (child.type === 'Text') {
       buff += formatText(child.value, opts.ancestry);
     } else if (child.type === 'Tag') {
-      const {attributes} = child;
+      // Clone it since we'll be deleting attributes
+      const attributes = new Map(child.attributes.entries());
 
       let emphasis = attributes.get('emphasis') === 'true' && !shouldIgnoreTag(
         'emphasis',
@@ -198,7 +204,8 @@ function formatPad(attributes: TagAttributes, value: string) {
   const left = attributes.get('dir') !== 'right';
   const count = Number(attributes.get('count') || 0);
   const char = attributes.get('char');
-  return ansiPad(left ? 'left' : 'right', value, count, char);
+  const padded = ansiPad(left ? 'left' : 'right', value, count, char);
+  return padded;
 }
 
 export function markupToPlainText(
@@ -284,11 +291,12 @@ export function markupToAnsi(
 ): string {
   return formatReduceFromInput(input, {
     ancestry: [],
+    formatTag: ansiFormatTag,
     formatText: (value, tags) => {
       // Format tags in reverse
       for (let i = tags.length - 1; i >= 0; i--) {
         const tag = tags[i];
-        value = ansiFormatTag(tag, value, opts);
+        value = ansiFormatText(tag, value, opts);
       }
 
       return formatAnsi.reset(value);
@@ -297,6 +305,23 @@ export function markupToAnsi(
 }
 
 function ansiFormatTag(
+  tagName: MarkupTagName,
+  attributes: TagAttributes,
+  value: string,
+): string {
+  switch (tagName) {
+    case 'pad':
+      return formatPad(attributes, value);
+
+    case 'command':
+      return '`' + value + '`';
+
+    default:
+      return value;
+  }
+}
+
+function ansiFormatText(
   {name: tagName, attributes}: TagNode,
   value: string,
   opts: MarkupFormatOptions,
@@ -318,7 +343,7 @@ function ansiFormatTag(
     }
 
     case 'pad':
-      return formatPad(attributes, value);
+      return value;
 
     case 'filelink': {
       const {text, filename} = formatFileLink(attributes, value, opts);
@@ -452,7 +477,7 @@ function ansiFormatTag(
       return formatAnsi.bgBrightWhite(value);
 
     case 'command':
-      return '`' + formatAnsi.italic(value) + '`';
+      return formatAnsi.italic(value);
   }
 }
 

@@ -914,7 +914,10 @@ export default class Master {
     // Print it!
     if (err instanceof DiagnosticsPrinter) {
       const printer = err;
-      if (req.bridge.alive) {
+
+      // Only print when the bridge is alive and we aren't in review mode
+      // When we're in review mode we don't expect to show any diagnostics because they'll be intercepted in the client command
+      if (req.bridge.alive && !req.query.requestFlags.review) {
         printer.print();
 
         // Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
@@ -922,6 +925,7 @@ export default class Master {
           printer.footer();
         }
       }
+
       return printer.getDiagnostics();
     }
 
