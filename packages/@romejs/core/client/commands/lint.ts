@@ -30,7 +30,7 @@ function consumerToLintCompilerOptions(consumer: Consumer): LintCompilerOptions 
   for (const [line, actions] of consumer.get('decisionsByLine').asMap()) {
     decisionsByLine[line] = actions.asArray().map((action) => {
       return {
-        action: action.get('action').asStringSet(['suppress', 'fix']),
+        action: action.get('action').asStringSet(['suppress', 'fix', 'ignore']),
         category: (action.get('category').asString() as DiagnosticCategory),
       };
     });
@@ -70,7 +70,10 @@ export default createLocalCommand<LintCommandFlags>(
     async callback(req: ClientRequest) {
       const {client} = req;
 
-      const res = await client.query(req.query, 'master');
+      const res = await client.query({
+        ...req.query,
+        noData: false,
+      }, 'master');
 
       const {requestFlags} = req.query;
       if (requestFlags === undefined || !requestFlags.review) {
@@ -125,24 +128,36 @@ export default createLocalCommand<LintCommandFlags>(
           {
             options: {
               ignore: {
-                label: 'Ignore',
-                shortcut: 'i',
+                label: 'Do nothing',
+                shortcut: 'n',
               },
               fix: {
                 disabled: !diag.fixable,
                 disabledReason: 'Not fixable',
-                label: 'Fix',
+                label: 'Apply fix',
                 shortcut: 'f',
               },
               suppress: {
-                label: 'Suppress',
+                label: 'Add suppression comment',
                 shortcut: 's',
+              },
+              stop: {
+                label: 'Save all changes and exit',
+              },
+              exit: {
+                label: 'Exit without saving',
+                shortcut: 'escape',
               },
             },
           },
         );
-        if (answer === 'ignore') {
-          continue;
+
+        if (answer === 'exit') {
+          return false;
+        }
+
+        if (answer === 'stop') {
+          break;
         }
 
         const action: LintCompilerOptionsDecision['action'] = answer;
@@ -158,22 +173,36 @@ export default createLocalCommand<LintCommandFlags>(
         });
       }
 
+      if (Object.keys(lintOptionsPerFile).length === 0) {
+        reporter.warn('No files');
+        return false;
+      }
+
       reporter.clearScreen();
       reporter.info('The following changes will be applied');
 
       for (let filename in lintOptionsPerFile) {
         const decisions = lintOptionsPerFile[filename].decisionsByLine;
         reporter.section(`<filelink target="${filename}" />`, () => {
-          reporter.table(['Line', 'Decisions'], Object.entries(decisions).map((
-            [line, actions],
-          ) => {
-            return [
-              `<dim>${line}</dim>`,
-              actions.map(({action, category}) => `${action} ${category}`).join(
-                ', ',
+          if (Object.keys(decisions).length === 0) {
+            reporter.info('File will be formatted');
+          } else {
+            reporter.table(
+              ['Line', 'Changes'],
+              Object.entries(decisions).map(
+                (
+                  [line, actions],
+                ) => {
+                  return [
+                      `<dim>${line}</dim>`,
+                      actions.map(
+                        ({action, category}) => `${action} ${category}`,
+                      ).join(', '),
+                    ];
+                },
               ),
-            ];
-          }));
+            );
+          }
         });
       }
 
@@ -192,7 +221,6 @@ export default createLocalCommand<LintCommandFlags>(
           compilerOptions: lintOptionsPerFile,
         },
       }, 'master');
-      console.log(JSON.stringify(res2, null, '  '));
       return res2;
     },
   },
