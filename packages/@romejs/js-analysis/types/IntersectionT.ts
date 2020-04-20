@@ -7,10 +7,9 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
-import {SerialTypeFactory, TypeCompatibilityReturn} from './T';
+import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
 import {Scope} from '../scopes';
 import {HumanBuilder} from '../Utils';
-import T from './T';
 
 export default class IntersectionT extends T {
   constructor(scope: Scope, originNode: undefined | AnyNode, types: Array<T>) {
@@ -23,7 +22,7 @@ export default class IntersectionT extends T {
 
   serialize(addType: SerialTypeFactory): HydrateData {
     return {
-      types: this.types.map(type => addType(type)),
+      types: this.types.map((type) => addType(type)),
     };
   }
 
@@ -33,11 +32,9 @@ export default class IntersectionT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new IntersectionT(
-      scope,
-      originNode,
-      Array(data.types).map(id => getType(id)),
-    );
+    return new IntersectionT(scope, originNode, Array(data.types).map(
+      (id) => getType(id),
+    ));
   }
 
   compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
@@ -51,6 +48,6 @@ export default class IntersectionT extends T {
   }
 
   humanize(builder: HumanBuilder): string {
-    return this.types.map(type => builder.humanize(type)).join(' & ');
+    return this.types.map((type) => builder.humanize(type)).join(' & ');
   }
 }

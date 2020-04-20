@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -171,9 +172,9 @@ Program {
       loc: Object {
         filename: 'input.js'
         end: Object {
-          column: 0
-          index: 156
-          line: 10
+          column: 1
+          index: 155
+          line: 9
         }
         start: Object {
           column: 0
@@ -199,8 +200,8 @@ Program {
             line: 2
           }
           start: Object {
-            column: 0
-            index: 23
+            column: 11
+            index: 34
             line: 2
           }
         }
@@ -241,9 +242,9 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 2
-                index: 146
-                line: 8
+                column: 3
+                index: 142
+                line: 6
               }
               start: Object {
                 column: 2
@@ -308,9 +309,9 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 4
-                      index: 98
-                      line: 5
+                      column: 41
+                      index: 93
+                      line: 4
                     }
                     start: Object {
                       column: 4
@@ -336,8 +337,8 @@ Program {
                         line: 4
                       }
                       start: Object {
-                        column: 18
-                        index: 70
+                        column: 15
+                        index: 67
                         line: 4
                       }
                     }
@@ -456,9 +457,9 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 2
-                      index: 141
-                      line: 6
+                      column: 44
+                      index: 138
+                      line: 5
                     }
                     start: Object {
                       column: 4
@@ -509,8 +510,8 @@ Program {
                         line: 5
                       }
                       start: Object {
-                        column: 23
-                        index: 117
+                        column: 15
+                        index: 109
                         line: 5
                       }
                     }

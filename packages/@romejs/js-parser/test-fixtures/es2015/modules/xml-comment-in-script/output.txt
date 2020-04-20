@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -22,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: 'bar'
       loc: Object {
         filename: 'input.js'
@@ -40,6 +42,7 @@ Program {
   ]
   body: Array [
     ExpressionStatement {
+      trailingComments: Array ['0']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -53,27 +56,9 @@ Program {
           line: 1
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: 'bar'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-            start: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-          }
-        }
-      ]
       expression: ReferenceIdentifier {
         name: 'foo'
-        leadingComments: undefined
+        trailingComments: undefined
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -87,24 +72,6 @@ Program {
             line: 1
           }
         }
-        trailingComments: Array [
-          CommentLine {
-            value: 'bar'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 11
-                index: 11
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-          }
-        ]
       }
     }
   ]

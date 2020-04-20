@@ -19,10 +19,8 @@ function shouldHoistExecute(node: undefined | AnyNode): boolean {
     return true;
   }
 
-  if (
-    node.type === 'ExportLocalDeclaration' ||
-    node.type === 'ExportDefaultDeclaration'
-  ) {
+  if (node.type === 'ExportLocalDeclaration' || node.type ===
+      'ExportDefaultDeclaration') {
     return shouldHoistExecute(node.declaration);
   }
 

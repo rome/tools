@@ -1,5 +1,7 @@
 Program {
   comments: Array []
+  corrupt: false
+  diagnostics: Array []
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -20,27 +22,6 @@ Program {
       line: 1
     }
   }
-  diagnostics: Array [
-    Object {
-      advice: undefined
-      category: 'parse/js'
-      filename: 'input.js'
-      message: 'Illegal \'use strict\' directive in function with non-simple parameter list'
-      mtime: undefined
-      sourceType: 'script'
-      origins: Array [Object {category: 'js-parser'}]
-      end: Object {
-        column: 29
-        index: 29
-        line: 1
-      }
-      start: Object {
-        column: 16
-        index: 16
-        line: 1
-      }
-    }
-  ]
   body: Array [
     FunctionDeclaration {
       id: BindingIdentifier {
@@ -123,8 +104,8 @@ Program {
             line: 1
           }
           start: Object {
-            column: 0
-            index: 0
+            column: 10
+            index: 10
             line: 1
           }
         }

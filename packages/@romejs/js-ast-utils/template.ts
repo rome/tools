@@ -10,12 +10,11 @@ import {
   AnyExpression,
   AnyStatement,
   AnyIdentifier,
+  program,
 } from '@romejs/js-ast';
-import {Path} from '@romejs/js-compiler';
+import {Path, CompilerContext} from '@romejs/js-compiler';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import {program} from '@romejs/js-ast';
 import removeLoc from './removeLoc';
-import {Context} from '@romejs/js-compiler';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import isIdentifierish from './isIdentifierish';
@@ -87,7 +86,8 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
     }
     return node;
   }
-  const context = new Context({
+
+  const context = new CompilerContext({
     ast,
     project: {
       folder: undefined,
@@ -129,8 +129,7 @@ function createIdentifier(
 }
 
 export default function template(
-  strs: TemplateStringsArray,
-  ...substitutions: TemplateSubstitions
+  strs: TemplateStringsArray,...substitutions: TemplateSubstitions
 ): AnyNode {
   const {ast, placeholderPaths} = getTemplate(strs);
 
@@ -150,7 +149,7 @@ export default function template(
     const {type, path} = placeholderPaths[i];
 
     const substitute: AnyNode = createIdentifier(substitutions[i], type);
-    // rome-suppress lint/noExplicitAny
+    // rome-suppress-next-line lint/noExplicitAny
     let target: any = newAst;
 
     for (let i = 0; i < path.length; i++) {
@@ -176,8 +175,7 @@ export default function template(
 }
 
 template.expression = (
-  strs: TemplateStringsArray,
-  ...substitutions: TemplateSubstitions
+  strs: TemplateStringsArray,...substitutions: TemplateSubstitions
 ): AnyExpression => {
   const first = template.statement(strs, ...substitutions);
 
@@ -190,8 +188,7 @@ template.expression = (
 };
 
 template.statement = (
-  strs: TemplateStringsArray,
-  ...substitutions: TemplateSubstitions
+  strs: TemplateStringsArray,...substitutions: TemplateSubstitions
 ): AnyStatement => {
   // Parse the template, with caching
   const ast = program.assert(template(strs, ...substitutions));

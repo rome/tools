@@ -6,16 +6,16 @@
  */
 
 import {removeSuffix} from './removeSuffix';
-import test from '@romejs/test';
+import {test} from 'rome';
 
-test('removeSuffix', t => {
+test('removeSuffix', (t) => {
   const testCases = [
     {firstInput: 'romeTest', secondInput: 'Test', expected: 'rome'},
     {firstInput: 'romeTest', secondInput: 'rome', expected: 'romeTest'},
     {firstInput: 'romeTest', secondInput: '123', expected: 'romeTest'},
   ];
 
-  testCases.forEach(td => {
+  testCases.forEach((td) => {
     t.is(removeSuffix(td.firstInput, td.secondInput), td.expected);
   });
 });

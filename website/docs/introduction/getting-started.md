@@ -13,13 +13,13 @@ as much or as little as you like.
 First, navigate into your project folder:
 
 ```bash
-$ cd my_existing_project
+cd my_existing_project
 ```
 Now, create a Rome configuration for your project. When prompted,
 use the recommended settings:
 
 ```bash
-$ rome init
+rome init
 ```
 
 ## What did we do?
@@ -47,7 +47,7 @@ The `rome run` command will run whatever file is passed to
 it. Use this command with your project's main file, for example:
 
 ```bash
-$ rome run index.js
+rome run index.js
 ```
 
 Rome is still under active development and may not be able to properly
@@ -62,7 +62,7 @@ This command will lint a file with a set of default lints and display the produc
 When ran with no arguments, all JavaScript files in a project are linted. For example:
 
 ```bash
-$ rome lint file.js
+rome lint file.js
 ```
 
 ### `compile`
@@ -70,7 +70,7 @@ $ rome lint file.js
 This command will compile a file with a set of default transforms. There is currently no options for this command to specify a subset of transforms.
 
 ```
-$ rome compile file.js
+rome compile file.js
 ```
 
 ### `parse`
@@ -78,5 +78,5 @@ $ rome compile file.js
 This command will parse a file and output a pretty formatted AST.
 
 ```
-$ rome parse file.js
+rome parse file.js
 ```

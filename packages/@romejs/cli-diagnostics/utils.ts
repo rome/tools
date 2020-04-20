@@ -5,29 +5,34 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {stripAnsi} from '@romejs/string-ansi';
-import ansiHighlightCode, {AnsiHighlightOptions} from './ansiHighlightCode';
+import {stripAnsi} from '@romejs/string-markup';
+import highlightCode, {AnsiHighlightOptions} from './highlightCode';
 import {NEWLINE} from '@romejs/js-parser-utils';
 
 export function showInvisibles(str: string): string {
   let ret = '';
   for (const cha of str) {
     switch (cha) {
-      case ' ':
-        ret += '·'; // Middle Dot, \u00B7
+      case ' ': {
+        ret += '\xb7'; // Middle Dot, \u00B7
         break;
-      case '\r':
-        ret += '␍\r';
+      }
+      case '\r': {
+        ret += '\u240d';
         break;
-      case '\n':
-        ret += '⏎\n'; // Return Symbol, \u23ce
+      }
+      case '\n': {
+        ret += '\u23ce'; // Return Symbol, \u23ce
         break;
-      case '\t':
-        ret += '↹'; // Left Arrow To Bar Over Right Arrow To Bar, \u21b9
+      }
+      case '\t': {
+        ret += '\u21b9'; // Left Arrow To Bar Over Right Arrow To Bar, \u21b9
         break;
-      default:
+      }
+      default: {
         ret += cha;
         break;
+      }
     }
   }
   return ret;
@@ -54,7 +59,7 @@ export function splitLines(src: string): Array<string> {
 }
 
 export function toLines(opts: AnsiHighlightOptions): Array<string> {
-  const highlighted = ansiHighlightCode(opts);
+  const highlighted = highlightCode(opts);
   const lines = splitLines(highlighted);
   return lines;
 }

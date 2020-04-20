@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -23,7 +24,9 @@ Program {
   }
   body: Array [
     ImportDeclaration {
+      defaultSpecifier: undefined
       importKind: 'type'
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -53,13 +56,13 @@ Program {
           }
         }
       }
-      specifiers: Array [
+      namedSpecifiers: Array [
         ImportSpecifier {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 18
-              index: 18
+              column: 17
+              index: 17
               line: 1
             }
             start: Object {
@@ -105,8 +108,8 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 18
-                index: 18
+                column: 17
+                index: 17
                 line: 1
               }
               start: Object {
@@ -121,6 +124,8 @@ Program {
     }
     ImportDeclaration {
       importKind: 'typeof'
+      namedSpecifiers: Array []
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -150,39 +155,23 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ImportDefaultSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 18
-              index: 47
-              line: 2
-            }
-            start: Object {
-              column: 0
-              index: 29
-              line: 2
-            }
+      defaultSpecifier: ImportDefaultSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 18
+            index: 47
+            line: 2
           }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'Foo2'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 18
-                  index: 47
-                  line: 2
-                }
-                start: Object {
-                  column: 14
-                  index: 43
-                  line: 2
-                }
-              }
-            }
-            importKind: 'typeof'
+          start: Object {
+            column: 0
+            index: 29
+            line: 2
+          }
+        }
+        local: ImportSpecifierLocal {
+          name: BindingIdentifier {
+            name: 'Foo2'
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -197,8 +186,22 @@ Program {
               }
             }
           }
+          importKind: 'typeof'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 18
+              index: 47
+              line: 2
+            }
+            start: Object {
+              column: 14
+              index: 43
+              line: 2
+            }
+          }
         }
-      ]
+      }
     }
   ]
 }

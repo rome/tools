@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -27,6 +28,7 @@ Program {
   body: Array [
     ImportDeclaration {
       importKind: 'type'
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -56,39 +58,23 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ImportDefaultSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
+      defaultSpecifier: ImportDefaultSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 11
+            index: 11
+            line: 1
           }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'type'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-                start: Object {
-                  column: 7
-                  index: 7
-                  line: 1
-                }
-              }
-            }
-            importKind: 'type'
+          start: Object {
+            column: 0
+            index: 0
+            line: 1
+          }
+        }
+        local: ImportSpecifierLocal {
+          name: BindingIdentifier {
+            name: 'type'
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -103,13 +89,29 @@ Program {
               }
             }
           }
+          importKind: 'type'
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 11
+              index: 11
+              line: 1
+            }
+            start: Object {
+              column: 7
+              index: 7
+              line: 1
+            }
+          }
         }
+      }
+      namedSpecifiers: Array [
         ImportSpecifier {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 19
-              index: 19
+              column: 18
+              index: 18
               line: 1
             }
             start: Object {
@@ -155,8 +157,8 @@ Program {
             loc: Object {
               filename: 'input.js'
               end: Object {
-                column: 19
-                index: 19
+                column: 18
+                index: 18
                 line: 1
               }
               start: Object {

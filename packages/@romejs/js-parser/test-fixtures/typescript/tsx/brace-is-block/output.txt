@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.tsx'
@@ -25,6 +26,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation.'
       loc: Object {
         filename: 'input.tsx'
@@ -45,6 +47,7 @@ Program {
     ClassDeclaration {
       id: BindingIdentifier {
         name: 'C'
+        leadingComments: undefined
         loc: Object {
           filename: 'input.tsx'
           end: Object {
@@ -58,31 +61,14 @@ Program {
             line: 2
           }
         }
-        leadingComments: Array [
-          CommentLine {
-            value: ' Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation.'
-            loc: Object {
-              filename: 'input.tsx'
-              end: Object {
-                column: 98
-                index: 98
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-          }
-        ]
       }
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.tsx'
         end: Object {
-          column: 0
-          index: 123
-          line: 3
+          column: 23
+          index: 122
+          line: 2
         }
         start: Object {
           column: 0
@@ -93,6 +79,7 @@ Program {
       meta: ClassHead {
         body: Array []
         implements: undefined
+        leadingComments: undefined
         typeParameters: undefined
         loc: Object {
           filename: 'input.tsx'
@@ -123,24 +110,6 @@ Program {
             }
           }
         }
-        leadingComments: Array [
-          CommentLine {
-            value: ' Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation.'
-            loc: Object {
-              filename: 'input.tsx'
-              end: Object {
-                column: 98
-                index: 98
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-          }
-        ]
         superTypeParameters: TSTypeParameterInstantiation {
           loc: Object {
             filename: 'input.tsx'

@@ -68,7 +68,6 @@ export function encode(number: number): string {
 //   |    |
 //   V    V
 //   101011
-
 const VLQ_BASE_SHIFT = 5;
 
 // binary: 100000
@@ -115,6 +114,7 @@ export function encodeVLQ(value: number): string {
     vlq >>>= VLQ_BASE_SHIFT;
     if (vlq > 0) {
       // There are still more digits in this value, so we must make sure the
+
       // continuation bit is marked.
       digit |= VLQ_CONTINUATION_BIT;
     }
@@ -131,16 +131,12 @@ export function encodeVLQ(value: number): string {
 export function decode(charCode: number): number {
   const uppercaseA = 65; // 'A'
   const uppercaseZ = 90; // 'Z'
-
   const lowercaseA = 97; // 'a'
   const lowercaseZ = 122; // 'z'
-
   const zero = 48; // '0'
   const nine = 57; // '9'
-
   const plus = 43; // '+'
   const slash = 47; // '/'
-
   const lowercaseOffset = 26;
   const numberOffset = 52;
 

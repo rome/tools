@@ -7,7 +7,8 @@
 
 import {MasterRequest} from '@romejs/core';
 import {WorkerStatus} from '../../common/bridges/WorkerBridge';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 
 type StatusResult = {
   master: {
@@ -16,9 +17,7 @@ type StatusResult = {
     uptime: number;
   };
   workers: Array<StatusWorkerResult>;
-  projects: Array<{
-    id: number;
-  }>;
+  projects: Array<{id: number}>;
 };
 
 type StatusWorkerResult = {
@@ -33,24 +32,28 @@ type StatusWorkerResult = {
 export default createMasterCommand({
   category: commandCategories.PROCESS_MANAGEMENT,
   description: 'dump memory and process info of master and workers',
+  usage: '',
+  examples: [],
 
-  async default({master}: MasterRequest): Promise<StatusResult> {
-    const workers = await Promise.all(
-      master.workerManager.getWorkers().map(
-        async (worker): Promise<StatusWorkerResult> => {
-          const workerStatus: WorkerStatus = await worker.bridge.status.call();
+  defineFlags() {
+    return {};
+  },
 
-          return {
-            astCacheSize: workerStatus.astCacheSize,
-            heapTotal: workerStatus.memoryUsage.heapTotal,
-            pid: workerStatus.pid,
-            uptime: workerStatus.uptime,
-            ownedBytes: worker.byteCount,
-            ownedFileCount: worker.fileCount,
-          };
-        },
-      ),
-    );
+  async callback({master}: MasterRequest): Promise<StatusResult> {
+    const workers = await Promise.all(master.workerManager.getWorkers().map(
+      async (worker): Promise<StatusWorkerResult> => {
+        const workerStatus: WorkerStatus = await worker.bridge.status.call();
+
+        return {
+          astCacheSize: workerStatus.astCacheSize,
+          heapTotal: workerStatus.memoryUsage.heapTotal,
+          pid: workerStatus.pid,
+          uptime: workerStatus.uptime,
+          ownedBytes: worker.byteCount,
+          ownedFileCount: worker.fileCount,
+        };
+      },
+    ));
 
     const {heapTotal} = process.memoryUsage();
     return {
@@ -60,7 +63,7 @@ export default createMasterCommand({
         uptime: process.uptime(),
       },
       workers,
-      projects: master.projectManager.getProjects().map(project => {
+      projects: master.projectManager.getProjects().map((project) => {
         return {
           id: project.id,
         };

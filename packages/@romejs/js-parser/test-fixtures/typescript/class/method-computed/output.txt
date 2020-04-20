@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -42,9 +43,9 @@ Program {
       loc: Object {
         filename: 'input.ts'
         end: Object {
-          column: 0
-          index: 75
-          line: 5
+          column: 1
+          index: 74
+          line: 4
         }
         start: Object {
           column: 0
@@ -155,9 +156,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 4
-                index: 45
-                line: 3
+                column: 30
+                index: 40
+                line: 2
               }
               start: Object {
                 column: 4
@@ -203,13 +204,13 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 4
-                  index: 45
-                  line: 3
+                  column: 29
+                  index: 39
+                  line: 2
                 }
                 start: Object {
-                  column: 23
-                  index: 33
+                  column: 21
+                  index: 31
                   line: 2
                 }
               }
@@ -314,9 +315,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 0
-                index: 73
-                line: 4
+                column: 31
+                index: 72
+                line: 3
               }
               start: Object {
                 column: 4
@@ -362,13 +363,13 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 0
-                  index: 73
-                  line: 4
+                  column: 30
+                  index: 71
+                  line: 3
                 }
                 start: Object {
-                  column: 24
-                  index: 65
+                  column: 22
+                  index: 63
                   line: 3
                 }
               }

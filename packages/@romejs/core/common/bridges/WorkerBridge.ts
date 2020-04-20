@@ -5,16 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BundleCompileOptions} from '@romejs/js-compiler';
 import {ModuleSignature} from '@romejs/js-analysis';
 import {Manifest} from '@romejs/codec-js-manifest';
-import {Program, ConstSourceType} from '@romejs/js-ast';
-import {CompileResult, TransformStageName} from '@romejs/js-compiler';
+import {Program, ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
+import {
+  BundleCompileOptions,
+  CompileResult,
+  TransformStageName,
+  LintCompilerOptions,
+} from '@romejs/js-compiler';
 import {Profile} from '@romejs/v8';
 import {ProfilingStartData} from './MasterBridge';
-import {PartialDiagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {
+  Diagnostics,
+  DiagnosticSuppressions,
+  DiagnosticsError,
+} from '@romejs/diagnostics';
 import {ProjectConfigJSON} from '@romejs/project';
-import {DiagnosticsError} from '@romejs/diagnostics';
 import {Bridge} from '@romejs/events';
 import {JSONFileReference} from '../types/files';
 import {AnalyzeDependencyResult} from '../types/analyzeDependencies';
@@ -25,9 +32,7 @@ export type WorkerProjects = Array<{
   config: undefined | ProjectConfigJSON;
 }>;
 
-export type WorkerCompileResult = CompileResult & {
-  cached: boolean;
-};
+export type WorkerCompileResult = CompileResult & {cached: boolean};
 
 export type WorkerPartialManifest = {
   path: string;
@@ -40,7 +45,6 @@ export type WorkerPartialManifests = Array<{
 }>;
 
 // Omit analyze value as the worker will fetch it itself, skips sending over a large payload that it already has in memory
-
 export type WorkerCompilerOptions = {
   bundle?: WorkerBundleCompileOptions;
 };
@@ -48,14 +52,21 @@ export type WorkerCompilerOptions = {
 export type WorkerBundleCompileOptions = Omit<BundleCompileOptions, 'analyze'>;
 
 //
-
 export type WorkerAnalyzeDependencyResult = AnalyzeDependencyResult & {
   cached: boolean;
 };
 
+export type WorkerLintOptions = {
+  compilerOptions?: LintCompilerOptions;
+  prefetchedModuleSignatures: PrefetchedModuleSignatures;
+  fix: boolean;
+};
+
 export type WorkerParseOptions = {
-  compact: boolean;
-  sourceType: undefined | ConstSourceType;
+  sourceType?: ConstSourceType;
+  syntax?: Array<ConstProgramSyntax>;
+  cache?: boolean;
+  allowParserDiagnostics?: boolean;
 };
 
 export type WorkerStatus = {
@@ -71,32 +82,30 @@ export type WorkerStatus = {
 };
 
 export type PrefetchedModuleSignatures = {
-  [key: string]:
-    | {
-        type: 'USE_CACHED';
-        filename: string;
-      }
-    | {
-        type: 'RESOLVED';
-        graph: ModuleSignature;
-      }
-    | {
-        type: 'OWNED';
-        file: JSONFileReference;
-      }
-    | {
-        type: 'POINTER';
-        key: string;
-      };
+  [key: string]: {
+    type: 'USE_CACHED';
+    filename: string;
+  } | {
+    type: 'RESOLVED';
+    graph: ModuleSignature;
+  } | {
+    type: 'OWNED';
+    file: JSONFileReference;
+  } | {
+    type: 'POINTER';
+    key: string;
+  };
 };
 
 export type WorkerFormatResult = {
+  original: string;
   formatted: string;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
 };
 
 export type WorkerLintResult = {
-  diagnostics: PartialDiagnostics;
+  fixed: boolean;
+  diagnostics: Diagnostics;
   suppressions: DiagnosticSuppressions;
 };
 
@@ -138,55 +147,55 @@ export default class WorkerBridge extends Bridge {
     direction: 'server->client',
   });
 
-  format = this.createEvent<
-    {file: JSONFileReference},
-    undefined | WorkerFormatResult
-  >({
+  format = this.createEvent<{
+    file: JSONFileReference;
+    parseOptions: WorkerParseOptions;
+  }, undefined | WorkerFormatResult>({
     name: 'format',
     direction: 'server->client',
   });
 
-  moduleSignatureJS = this.createEvent<
-    {file: JSONFileReference},
-    ModuleSignature
-  >({
+  moduleSignatureJS = this.createEvent<{
+    file: JSONFileReference;
+    parseOptions: WorkerParseOptions;
+  }, ModuleSignature>({
     name: 'moduleSignatureJS',
     direction: 'server->client',
   });
 
-  analyzeDependencies = this.createEvent<
-    {file: JSONFileReference},
-    AnalyzeDependencyResult
-  >({
+  analyzeDependencies = this.createEvent<{
+    file: JSONFileReference;
+    parseOptions: WorkerParseOptions;
+  }, AnalyzeDependencyResult>({
     name: 'analyzeDependencies',
     direction: 'server->client',
   });
 
-  lint = this.createEvent<
-    {
-      file: JSONFileReference;
-      prefetchedModuleSignatures: PrefetchedModuleSignatures;
-      fix: boolean;
-    },
-    WorkerLintResult
-  >({name: 'lint', direction: 'server->client'});
+  lint = this.createEvent<{
+    file: JSONFileReference;
+    options: WorkerLintOptions;
+    parseOptions: WorkerParseOptions;
+  }, WorkerLintResult>({name: 'lint', direction: 'server->client'});
 
-  compileJS = this.createEvent<
-    {
-      file: JSONFileReference;
-      stage: TransformStageName;
-      options: WorkerCompilerOptions;
-    },
-    CompileResult
-  >({name: 'compileJS', direction: 'server->client'});
+  compileJS = this.createEvent<{
+    file: JSONFileReference;
+    stage: TransformStageName;
+    options: WorkerCompilerOptions;
+    parseOptions: WorkerParseOptions;
+  }, CompileResult>({name: 'compileJS', direction: 'server->client'});
 
-  parseJS = this.createEvent<
-    {
-      file: JSONFileReference;
-      opts: WorkerParseOptions;
-    },
-    Program
-  >({name: 'parseJS', direction: 'server->client'});
+  parseJS = this.createEvent<{
+    file: JSONFileReference;
+    options: WorkerParseOptions;
+  }, Program>({name: 'parseJS', direction: 'server->client'});
+
+  updateBuffer = this.createEvent<{
+    file: JSONFileReference;
+    content: string;
+  }, void>({
+    name: 'updateBuffer',
+    direction: 'server->client',
+  });
 
   init() {
     this.addErrorTransport('DiagnosticsError', {
@@ -199,12 +208,10 @@ export default class WorkerBridge extends Bridge {
           diagnostic: err.diagnostics,
         };
       },
+
       hydrate(err, data) {
-        return new DiagnosticsError(
-          String(err.message),
-          // rome-suppress lint/noExplicitAny
-          data.diagnostics as any,
-        );
+        return new DiagnosticsError(String(err.message), ( // rome-suppress-next-line lint/noExplicitAny
+        data.diagnostics as any));
       },
     });
   }

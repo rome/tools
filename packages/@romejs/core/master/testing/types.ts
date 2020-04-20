@@ -5,18 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {CoverageFile} from '@romejs/v8';
-import {PartialDiagnostics} from '@romejs/diagnostics';
-import {SourceMap} from '@romejs/codec-source-map';
+import {Diagnostics} from '@romejs/diagnostics';
+import {SourceMapGenerator} from '@romejs/codec-source-map';
 import {AbsoluteFilePath} from '@romejs/path';
-import {MasterRequest} from '@romejs/core';
-import {TestWorkerBridge} from '@romejs/core';
-import {InspectorClient} from '@romejs/v8';
+import {MasterRequest, TestWorkerBridge} from '@romejs/core';
+import {CoverageFile, InspectorClient} from '@romejs/v8';
 import child = require('child_process');
 
 export type TestSource = {
   code: string;
-  sourceMap: SourceMap;
+  sourceMap: SourceMapGenerator;
   path: AbsoluteFilePath;
 };
 
@@ -25,7 +23,7 @@ export type TestSources = Map<string, TestSource>;
 export type TestRunnerConstructorOptions = {
   sources: TestSources;
   request: MasterRequest;
-  addDiagnostics: PartialDiagnostics;
+  addDiagnostics: Diagnostics;
   options: TestRunnerOptions;
 };
 

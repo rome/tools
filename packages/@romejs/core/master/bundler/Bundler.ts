@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Master} from '@romejs/core';
+import {Master, MasterRequest} from '@romejs/core';
 import {Reporter} from '@romejs/cli-reporter';
 import {
   BundlerConfig,
@@ -14,8 +14,6 @@ import {
   BundlerMode,
   BundleResultBundle,
 } from '../../common/types/bundler';
-import {MasterRequest} from '@romejs/core';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
 import DependencyGraph from '../dependencies/DependencyGraph';
 import BundleRequest, {BundleOptions} from './BundleRequest';
 import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
@@ -28,6 +26,8 @@ import {WorkerCompileResult} from '../../common/bridges/WorkerBridge';
 import {Dict} from '@romejs/typescript-helpers';
 import {readFile} from '@romejs/fs';
 import {flipPathPatterns} from '@romejs/path-match';
+import {markup} from '@romejs/string-markup';
+import Locker from '@romejs/core/common/utils/Locker';
 
 export type BundlerEntryResoluton = {
   manifestDef: undefined | ManifestDefinition;
@@ -43,9 +43,11 @@ export default class Bundler {
 
     this.entries = [];
 
+    this.compileLocker = new Locker();
     this.graph = new DependencyGraph(req, config.resolver);
   }
 
+  compileLocker: Locker<string>;
   graph: DependencyGraph;
   master: Master;
   request: MasterRequest;
@@ -78,10 +80,8 @@ export default class Bundler {
       requestedType: 'package',
       source: createUnknownFilePath(unresolvedEntry),
     });
-    const manifestRoot: undefined | AbsoluteFilePath =
-      manifestRootResolved.type === 'FOUND'
-        ? manifestRootResolved.path
-        : undefined;
+    const manifestRoot: undefined | AbsoluteFilePath = manifestRootResolved.type ===
+      'FOUND' ? manifestRootResolved.path : undefined;
     let manifestDef;
     if (manifestRoot !== undefined) {
       const def = master.memoryFs.getManifestDefinition(manifestRoot);
@@ -123,12 +123,13 @@ export default class Bundler {
   // This will take multiple entry points and do some magic to make them more efficient to build in parallel
   async bundleMultiple(
     entries: Array<AbsoluteFilePath>,
+    options: BundleOptions = {},
   ): Promise<Map<AbsoluteFilePath, BundleResult>> {
     // Clone so we can mess with it
     entries = [...entries];
 
     // Seed the dependency graph with all the entries at the same time
-    const processor = new DiagnosticsProcessor({
+    const processor = this.request.createDiagnosticsProcessor({
       origins: [
         {
           category: 'Bundler',
@@ -136,13 +137,13 @@ export default class Bundler {
         },
       ],
     });
-    const entryUids = entries.map(entry =>
-      this.master.projectManager.getUid(entry),
-    );
+    const entryUids = entries.map((entry) => this.master.projectManager.getUid(
+      entry,
+    ));
     const analyzeProgress = this.reporter.progress({
       name: `bundler:analyze:${entryUids.join(',')}`,
+      title: 'Analyzing',
     });
-    analyzeProgress.setTitle('Analyzing');
     processor.setThrowAfter(100);
     await this.graph.seed({
       paths: entries,
@@ -156,12 +157,11 @@ export default class Bundler {
     // Now actually bundle them
     const map: Map<AbsoluteFilePath, BundleResult> = new Map();
 
-    const progress = this.reporter.progress();
-    progress.setTitle('Bundling');
+    const progress = this.reporter.progress({title: 'Bundling'});
     progress.setTotal(entries.length);
 
     const silentReporter = this.reporter.fork({
-      silent: true,
+      streams: [],
     });
 
     const promises: Set<Promise<void>> = new Set();
@@ -174,9 +174,9 @@ export default class Bundler {
       }
 
       const promise = (async () => {
-        const text = `<filelink target="${entry.join()}" />`;
+        const text = markup`<filelink target="${entry.join()}" />`;
         progress.pushText(text);
-        map.set(entry, await this.bundle(entry, {}, silentReporter));
+        map.set(entry, await this.bundle(entry, options, silentReporter));
         progress.popText(text);
         progress.tick();
       })();
@@ -219,11 +219,10 @@ export default class Bundler {
     const bundleBuddyStats = this.graph.getBundleBuddyStats(this.entries);
     files.set('bundlebuddy.json', {
       kind: 'stats',
-      content: JSON.stringify(bundleBuddyStats, null, '  '),
+      content: () => JSON.stringify(bundleBuddyStats, null, '  '),
     });
 
     // TODO ensure that __dirname is relative to the project root
-
     if (manifestDef !== undefined) {
       const newManifest = await this.deriveManifest(
         manifestDef,
@@ -233,7 +232,7 @@ export default class Bundler {
           if (!files.has(relative)) {
             files.set(relative, {
               kind: 'file',
-              content: buffer,
+              content: () => buffer,
             });
           }
         },
@@ -242,7 +241,7 @@ export default class Bundler {
       // Add a package.json with updated values
       files.set('package.json', {
         kind: 'manifest',
-        content: JSON.stringify(newManifest, undefined, '  '),
+        content: () => JSON.stringify(newManifest, undefined, '  '),
       });
     }
 
@@ -260,8 +259,11 @@ export default class Bundler {
       resolvedSegment: AbsoluteFilePath,
       options: BundleOptions,
     ) => Promise<BundleResultBundle>,
+
     addFile: (relative: string, buffer: Buffer | string) => void,
-  ): Promise<JSONManifest> {
+  ): Promise<
+    JSONManifest
+  > {
     // TODO figure out some way to use bundleMultiple here
     const manifest = manifestDef.manifest;
 
@@ -307,21 +309,17 @@ export default class Bundler {
       const isBinShorthand = typeof binConsumer.asUnknown() === 'string';
 
       for (const [binName, relative] of manifest.bin) {
-        const pointer = (isBinShorthand
+        const location = (isBinShorthand
           ? binConsumer
-          : binConsumer.get(binName)
-        ).getDiagnosticPointer('inner-value');
+          : binConsumer.get(binName)).getDiagnosticLocation('inner-value');
 
-        const absolute = await this.master.resolver.resolveAssert(
-          {
-            ...this.config.resolver,
-            origin: manifestDef.folder,
-            source: createUnknownFilePath(relative).toExplicitRelative(),
-          },
-          {
-            pointer,
-          },
-        );
+        const absolute = await this.master.resolver.resolveAssert({
+          ...this.config.resolver,
+          origin: manifestDef.folder,
+          source: createUnknownFilePath(relative).toExplicitRelative(),
+        }, {
+          location,
+        });
 
         const res = await createBundle(absolute.path, {
           prefix: `bin/${binName}`,
@@ -343,21 +341,19 @@ export default class Bundler {
     reporter: Reporter = this.reporter,
   ): Promise<BundleResult> {
     reporter.info(
-      `Bundling <filelink emphasis target="${resolvedEntry.join()}" />`,
+      markup`Bundling <filelink emphasis target="${resolvedEntry.join()}" />`,
     );
 
     const req = this.createBundleRequest(resolvedEntry, options, reporter);
     const res = await req.bundle();
 
-    const processor = new DiagnosticsProcessor({origins: []});
+    const processor = this.request.createDiagnosticsProcessor();
     processor.addDiagnostics(res.diagnostics);
     processor.maybeThrowDiagnosticsError();
 
     if (res.cached) {
       reporter.warn('Bundle was built completely from cache');
     }
-
-    const serialMap = JSON.stringify(res.map);
 
     const prefix = options.prefix === undefined ? '' : `${options.prefix}/`;
     const jsPath = `${prefix}index.js`;
@@ -366,17 +362,18 @@ export default class Bundler {
     const files: BundlerFiles = new Map();
     files.set(jsPath, {
       kind: 'entry',
-      content: res.content,
+      content: () => res.content,
     });
+
     files.set(mapPath, {
       kind: 'sourcemap',
-      content: serialMap,
+      content: () => res.sourceMap.toJSON(),
     });
 
     for (const [relative, buffer] of res.assets) {
       files.set(relative, {
         kind: 'asset',
-        content: buffer,
+        content: () => buffer,
       });
     }
 
@@ -387,8 +384,7 @@ export default class Bundler {
       },
       sourceMap: {
         path: mapPath,
-        map: res.map,
-        content: serialMap,
+        map: res.sourceMap,
       },
     };
     return {

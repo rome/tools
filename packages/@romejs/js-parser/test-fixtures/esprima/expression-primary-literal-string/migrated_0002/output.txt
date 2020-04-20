@@ -1,6 +1,7 @@
 Program {
   body: Array []
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   filename: 'input.js'
   hasHoistedVars: false

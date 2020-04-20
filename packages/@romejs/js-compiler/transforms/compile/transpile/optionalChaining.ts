@@ -26,12 +26,12 @@ export default {
 
     if (node.type === 'OptionalCallExpression') {
       // TODO assign `node.callee` to a variable and use it as a reference
-      return template.expression`${
-        node.callee
-      } == null ? undefined : ${callExpression.create({
-        callee: node.callee,
-        arguments: node.arguments,
-      })}`;
+      return template.expression`${node.callee} == null ? undefined : ${callExpression.create(
+          {
+            callee: node.callee,
+            arguments: node.arguments,
+          },
+        )}`;
     }
 
     return node;

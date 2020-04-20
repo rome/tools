@@ -15,13 +15,11 @@ export default {
   build(node: FunctionExpression, parent: AnyNode, scope: Scope) {
     const newScope = scope.fork('function', node);
     if (node.id !== undefined) {
-      newScope.addBinding(
-        new LetBinding({
-          node: node.id,
-          name: node.id.name,
-          scope,
-        }),
-      );
+      newScope.addBinding(new LetBinding({
+        node: node.id,
+        name: node.id.name,
+        scope,
+      }));
     }
     addFunctionBindings(newScope, node);
     return newScope;

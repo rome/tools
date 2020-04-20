@@ -6,28 +6,26 @@
  */
 
 import {
-  AnyNode,
   RegExpCharacter,
   RegExpSubExpression,
   AnyRegExpBodyItem,
   RegExpQuantified,
   regExpQuantified,
 } from '@romejs/js-ast';
-import {Path, Context} from '@romejs/js-compiler';
-import {extractSourceLocationRangeFromNodes} from '@romejs/parser-core';
+import {Path, CompilerContext, TransformExitResult} from '@romejs/js-compiler';
+import {descriptions} from '@romejs/diagnostics';
 
 function isSpaceChar(
   node: undefined | AnyRegExpBodyItem,
 ): node is RegExpCharacter {
-  return (
-    node !== undefined && node.type === 'RegExpCharacter' && node.value === ' '
-  );
+  return node !== undefined && node.type === 'RegExpCharacter' && node.value ===
+    ' ';
 }
 
 function checkRegex(
   node: RegExpSubExpression,
-  context: Context,
-): RegExpSubExpression {
+  context: CompilerContext,
+): TransformExitResult {
   for (let i = 0; i < node.body.length; i++) {
     const item = node.body[i];
 
@@ -49,19 +47,6 @@ function checkRegex(
       }
     }
 
-    context.addLocDiagnostic(extractSourceLocationRangeFromNodes(spaceNodes), {
-      fixable: true,
-      category: 'lint/noMultipleSpacesInRegularExpressionLiterals',
-      message: 'Unclear multiple spaces in regular expression',
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          message: `It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {${spaceNodes.length}}/`,
-        },
-      ],
-    });
-
     const quantifiedSpace: RegExpQuantified = regExpQuantified.create({
       min: spaceNodes.length,
       max: spaceNodes.length,
@@ -80,7 +65,11 @@ function checkRegex(
       ],
     };
 
-    return checkRegex(newRegex, context);
+    return context.addFixableDiagnostic({
+      target: spaceNodes,
+      old: node,
+      fixed: checkRegex(newRegex, context),
+    }, descriptions.LINT.NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(spaceNodes.length));
   }
 
   return node;
@@ -88,7 +77,7 @@ function checkRegex(
 
 export default {
   name: 'noMultipleSpacesInRegularExpressionLiterals',
-  enter(path: Path): AnyNode {
+  enter(path: Path): TransformExitResult {
     const {context, node} = path;
 
     if (node.type === 'RegExpSubExpression') {

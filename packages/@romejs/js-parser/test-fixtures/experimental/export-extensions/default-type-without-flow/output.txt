@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -24,6 +25,8 @@ Program {
   body: Array [
     ExportExternalDeclaration {
       exportKind: undefined
+      namedSpecifiers: Array []
+      namespaceSpecifier: undefined
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -53,8 +56,22 @@ Program {
           }
         }
       }
-      specifiers: Array [
-        ExportDefaultSpecifier {
+      defaultSpecifier: ExportDefaultSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 11
+            index: 11
+            line: 1
+          }
+          start: Object {
+            column: 7
+            index: 7
+            line: 1
+          }
+        }
+        exported: Identifier {
+          name: 'type'
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -68,24 +85,8 @@ Program {
               line: 1
             }
           }
-          exported: Identifier {
-            name: 'type'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 11
-                index: 11
-                line: 1
-              }
-              start: Object {
-                column: 7
-                index: 7
-                line: 1
-              }
-            }
-          }
         }
-      ]
+      }
     }
   ]
 }

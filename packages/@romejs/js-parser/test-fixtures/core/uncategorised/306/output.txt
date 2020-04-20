@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -22,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: ' Multiline\nComment '
       loc: Object {
         filename: 'input.js'
@@ -87,7 +89,7 @@ Program {
         body: Array [
           ContinueStatement {
             label: undefined
-            leadingComments: undefined
+            trailingComments: Array ['0']
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -101,26 +103,9 @@ Program {
                 line: 1
               }
             }
-            trailingComments: Array [
-              CommentBlock {
-                value: ' Multiline\nComment '
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 10
-                    index: 47
-                    line: 2
-                  }
-                  start: Object {
-                    column: 24
-                    index: 24
-                    line: 1
-                  }
-                }
-              }
-            ]
           }
           ExpressionStatement {
+            leadingComments: Array ['0']
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -134,26 +119,9 @@ Program {
                 line: 2
               }
             }
-            leadingComments: Array [
-              CommentBlock {
-                value: ' Multiline\nComment '
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 10
-                    index: 47
-                    line: 2
-                  }
-                  start: Object {
-                    column: 24
-                    index: 24
-                    line: 1
-                  }
-                }
-              }
-            ]
             expression: ReferenceIdentifier {
               name: 'there'
+              leadingComments: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -167,24 +135,6 @@ Program {
                   line: 2
                 }
               }
-              leadingComments: Array [
-                CommentBlock {
-                  value: ' Multiline\nComment '
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 10
-                      index: 47
-                      line: 2
-                    }
-                    start: Object {
-                      column: 24
-                      index: 24
-                      line: 1
-                    }
-                  }
-                }
-              ]
             }
           }
         ]

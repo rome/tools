@@ -53,7 +53,7 @@ export default function isValidIdentifierName(name: string): boolean {
   while (i < name.length) {
     const code = getFullCharCodeAt(name, i);
     if (isIdentifierChar(code)) {
-      i += code <= 0xffff ? 1 : 2;
+      i += code <= 65_535 ? 1 : 2;
     } else {
       return false;
     }

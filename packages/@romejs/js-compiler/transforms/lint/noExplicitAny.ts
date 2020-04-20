@@ -7,6 +7,7 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noExplicitAny',
@@ -14,10 +15,7 @@ export default {
     const {context, node} = path;
 
     if (node.type === 'AnyKeywordTypeAnnotation') {
-      context.addNodeDiagnostic(node, {
-        category: 'lint/noExplicitAny',
-        message: 'Unexpected any. Specify a different type.',
-      });
+      context.addNodeDiagnostic(node, descriptions.LINT.NO_EXPLICIT_ANY);
     }
 
     return node;

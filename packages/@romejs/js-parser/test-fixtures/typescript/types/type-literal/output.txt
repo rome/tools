@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -22,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' Type literals have the same body syntax as interfaces, so see `interface` directory for that.'
       loc: Object {
         filename: 'input.ts'
@@ -40,6 +42,7 @@ Program {
   ]
   body: Array [
     VariableDeclarationStatement {
+      trailingComments: Array ['0']
       loc: Object {
         filename: 'input.ts'
         end: Object {
@@ -53,24 +56,6 @@ Program {
           line: 1
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' Type literals have the same body syntax as interfaces, so see `interface` directory for that.'
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 96
-              index: 120
-              line: 2
-            }
-            start: Object {
-              column: 0
-              index: 24
-              line: 2
-            }
-          }
-        }
-      ]
       declaration: VariableDeclaration {
         kind: 'let'
         trailingComments: undefined

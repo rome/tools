@@ -13,7 +13,7 @@ import {JSONPropertyValue} from '@romejs/codec-json';
 import {DiagnosticCategory} from './categories';
 
 export type DiagnosticFilter = {
-  category?: string;
+  category?: DiagnosticCategory;
   message?: string;
   filename?: string;
   start?: Position;
@@ -22,7 +22,10 @@ export type DiagnosticFilter = {
 
 export type DiagnosticFilters = Array<DiagnosticFilter>;
 
+export type DiagnosticSuppressionType = 'current' | 'next';
+
 export type DiagnosticSuppression = {
+  type: DiagnosticSuppressionType;
   category: string;
   loc: SourceLocation;
 };
@@ -30,13 +33,18 @@ export type DiagnosticSuppression = {
 export type DiagnosticSuppressions = Array<DiagnosticSuppression>;
 
 export type DiagnosticFilterWithTest = DiagnosticFilter & {
-  test?: (diagnostic: PartialDiagnostic) => boolean;
+  test?: (diagnostic: Diagnostic) => boolean;
 };
 
-export type DiagnosticPointer = SourceLocation & {
+export type DiagnosticLocation = {
   sourceText?: string;
   mtime?: number;
+  marker?: string;
   language?: DiagnosticLanguage;
+  sourceType?: DiagnosticSourceType;
+  filename?: string;
+  start?: Position;
+  end?: Position;
 };
 
 export type DiagnosticOrigin = {
@@ -44,213 +52,111 @@ export type DiagnosticOrigin = {
   message?: string;
 };
 
-//# FULL
-
 export type DiagnosticLogCategory = 'none' | 'info' | 'warn' | 'error';
 
 export type DiagnosticLanguage = 'json' | 'js' | 'url' | 'shell' | 'unknown';
 
 export type DiagnosticSourceType = 'unknown' | ConstSourceType;
 
-export type DiagnosticAdviceItemLog = {
-  type: 'log';
-  category: DiagnosticLogCategory;
-  message: string;
-  compact: boolean;
-};
-
-export type DiagnosticAdviceItemList = {
-  type: 'list';
-  list: Array<string>;
-  truncate: boolean;
-  reverse: boolean;
-  ordered: boolean;
-};
-
-export type DiagnosticAdviceItemCode = {
-  type: 'code';
-  code: string;
-  language: DiagnosticLanguage;
-  sourceType: DiagnosticSourceType;
-};
-
-export type DiagnosticAdviceItemFrame = {
-  type: 'frame';
-  language: DiagnosticLanguage;
-  sourceType: DiagnosticSourceType;
-  sourceText: undefined | string;
-  marker: undefined | string;
-
-  filename: string;
-  mtime: undefined | number;
-  start: Position;
-  end: Position;
-};
-
-export type DiagnosticAdviceItemInspect = {
-  type: 'inspect';
-  data: JSONPropertyValue;
-};
-
-export type DiagnosticAdviceItemDiff = {
-  type: 'diff';
-  diff: Diffs;
-};
-
-export type DiagnosticAdviceItemStacktrace = {
-  type: 'stacktrace';
-  title: undefined | string;
-  frames: Array<DiagnosticAdviceStackFrame>;
-  truncate: boolean;
-};
-
-export type DiagnosticAdviceItem =
-  | DiagnosticAdviceItemLog
-  | DiagnosticAdviceItemList
-  | DiagnosticAdviceItemCode
-  | DiagnosticAdviceItemFrame
-  | DiagnosticAdviceItemInspect
-  | DiagnosticAdviceItemDiff
-  | DiagnosticAdviceItemStacktrace;
-
-export type DiagnosticAdvice = Array<DiagnosticAdviceItem>;
-
-export type DiagnosticDependency = {
-  filename: string;
-  mtime: number;
-};
-
-export type DiagnosticDependencies = Array<DiagnosticDependency>;
-
 export type Diagnostic = {
-  category: DiagnosticCategory;
-  message: string;
-  label: undefined | string;
-  filename: undefined | string;
-
-  origins: Array<DiagnosticOrigin>;
-  mtime: undefined | number;
-  dependencies: DiagnosticDependencies;
-
-  sourceType: DiagnosticSourceType;
-  language: DiagnosticLanguage;
-  sourceText: undefined | string;
-  start: undefined | Position;
-  end: undefined | Position;
-
-  marker: undefined | string;
-  fixable: boolean;
-
-  advice: DiagnosticAdvice;
+  description: DiagnosticDescription;
+  location: DiagnosticLocation;
+  fixable?: boolean;
+  label?: string;
+  origins?: Array<DiagnosticOrigin>;
+  dependencies?: Array<{
+    filename: string;
+    mtime: number;
+  }>;
 };
 
 export type Diagnostics = Array<Diagnostic>;
 
-export type DiagnosticAdviceStackFrame = {
-  suffix: undefined | string;
-  prefix: undefined | string;
-  object: undefined | string;
-  property: undefined | string;
-
-  filename: undefined | string;
-  line: undefined | Number1;
-  column: undefined | Number0;
-
-  language: DiagnosticLanguage;
-  sourceText: undefined | string;
-};
-
-//# PARTIAL
-
-export type PartialDiagnostic = {
+export type DiagnosticDescription = {
   category: DiagnosticCategory;
-  label?: string;
-  message: string;
-
-  origins?: Array<DiagnosticOrigin>;
-  dependencies?: Array<{
-    filename: string;
-    mtime: string;
-  }>;
-
-  filename?: string;
-  mtime?: number;
-  sourceType?: DiagnosticSourceType;
-  language?: DiagnosticLanguage;
-  fixable?: boolean;
-  sourceText?: string;
-
-  marker?: string;
-  start?: Position;
-  end?: Position;
-
-  advice?: PartialDiagnosticAdvice;
+  message: DiagnosticBlessedMessage;
+  advice?: DiagnosticAdvice;
 };
 
-export type PartialDiagnostics = Array<PartialDiagnostic>;
+// TS doesn't have opaque types so we need to use an intermediate object
+export type DiagnosticBlessedMessage = {
+  type: 'PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE';
+  value: string;
+};
 
-export type PartialDiagnosticAdviceItem =
-  | {
-      type: 'log';
-      category: DiagnosticLogCategory;
-      message: string;
-      compact?: boolean;
-    }
-  | {
-      type: 'list';
-      list: Array<string>;
-      truncate?: boolean;
-      reverse?: boolean;
-      ordered?: boolean;
-    }
-  | {
-      type: 'inspect';
-      data: JSONPropertyValue;
-    }
-  | {
-      type: 'code';
-      code: string;
-      sourceType?: ConstSourceType;
-      language?: DiagnosticLanguage;
-    }
-  | {
-      type: 'frame';
-      mtime?: number;
-      language?: DiagnosticLanguage;
-      sourceType?: ConstSourceType;
-      sourceText?: string;
-      marker?: string;
+export type DiagnosticAdviceItem =
+  | DiagnosticAdviceLog
+  | DiagnosticAdviceList
+  | DiagnosticAdviceInspect
+  | DiagnosticAdviceCode
+  | DiagnosticAdviceFrame
+  | DiagnosticAdviceDiff
+  | DiagnosticAdviceStacktrace
+  | DiagnosticAdviceCommand;
 
-      filename?: string;
-      start: Position;
-      end: Position;
+export type DiagnosticAdviceCommand = {
+  type: 'command';
+  command: string;
+};
 
-      // From SourceLocation, will never appear in the final diagnostic, makes it easy to spread
-      identifierName?: string;
-    }
-  | {
-      type: 'diff';
-      diff: Diffs;
-    }
-  | {
-      type: 'stacktrace';
-      title?: string;
-      truncate?: boolean;
-      frames: Array<PartialDiagnosticAdviceStackFrame>;
-    };
+export type DiagnosticAdviceLog = {
+  type: 'log';
+  category: DiagnosticLogCategory;
+  message: string;
+  compact?: boolean;
+};
 
-export type PartialDiagnosticAdvice = Array<PartialDiagnosticAdviceItem>;
+export type DiagnosticAdviceList = {
+  type: 'list';
+  list: Array<string>;
+  truncate?: boolean;
+  reverse?: boolean;
+  ordered?: boolean;
+};
 
-export type PartialDiagnosticAdviceStackFrame = {
+export type DiagnosticAdviceInspect = {
+  type: 'inspect';
+  data: JSONPropertyValue;
+};
+
+export type DiagnosticAdviceCode = {
+  type: 'code';
+  code: string;
+  sourceType?: ConstSourceType;
+  language?: DiagnosticLanguage;
+};
+
+export type DiagnosticAdviceFrame = {
+  type: 'frame';
+  location: DiagnosticLocation;
+};
+
+export type DiagnosticAdviceDiff = {
+  type: 'diff';
+  diff: Diffs;
+  legend?: {
+    add: string;
+    delete: string;
+  };
+};
+
+export type DiagnosticAdviceStacktrace = {
+  type: 'stacktrace';
+  title?: string;
+  truncate?: boolean;
+  frames: Array<DiagnosticAdviceStackFrame>;
+};
+
+export type DiagnosticAdvice = Array<DiagnosticAdviceItem>;
+
+export type DiagnosticAdviceStackFrame = {
   prefix?: string;
   suffix?: string;
   object?: string;
   property?: string;
-
   filename?: string;
   line?: Number1;
   column?: Number0;
-
   language?: DiagnosticLanguage;
   sourceText?: string;
 };

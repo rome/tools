@@ -7,22 +7,17 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {HydrateTypeFactory, HydrateData} from '../Evaluator';
-import {SerialTypeFactory, TypeCompatibilityReturn} from './T';
+import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
 import {Scope} from '../scopes';
 import {HumanBuilder} from '../Utils';
 import ObjPropT from './ObjPropT';
-import T from './T';
 
 export default class ObjT extends T {
-  constructor(
-    scope: Scope,
-    originNode: undefined | AnyNode,
-    opts: {
-      props?: Array<T>;
-      proto: undefined | T;
-      calls?: Array<T>;
-    },
-  ) {
+  constructor(scope: Scope, originNode: undefined | AnyNode, opts: {
+    props?: Array<T>;
+    proto: undefined | T;
+    calls?: Array<T>;
+  }) {
     super(scope, originNode);
     this.calls = opts.calls === undefined ? [] : opts.calls;
     this.props = opts.props === undefined ? [] : opts.props;
@@ -37,14 +32,14 @@ export default class ObjT extends T {
   serialize(addType: SerialTypeFactory): HydrateData {
     if (this.constructor !== ObjT) {
       throw new Error(
-        'Expected ObjT to be constructor, youve likely forgot to define this method in the type subclass',
-      );
+          'Expected ObjT to be constructor, youve likely forgot to define this method in the type subclass',
+        );
     }
 
     return {
-      calls: this.calls.map(type => addType(type)),
+      calls: this.calls.map((type) => addType(type)),
       proto: this.proto === undefined ? undefined : addType(this.proto),
-      props: this.props.map(type => addType(type)),
+      props: this.props.map((type) => addType(type)),
     };
   }
 
@@ -55,9 +50,9 @@ export default class ObjT extends T {
     getType: HydrateTypeFactory,
   ): T {
     return new ObjT(scope, originNode, {
-      props: Array(data.props).map(id => getType(id)),
+      props: Array(data.props).map((id) => getType(id)),
       proto: data.proto === undefined ? undefined : getType(data.proto),
-      calls: Array(data.calls).map(id => getType(id)),
+      calls: Array(data.calls).map((id) => getType(id)),
     });
   }
 
@@ -110,10 +105,10 @@ export default class ObjT extends T {
     } else {
       return [
         '{',
-        ...this.props.map(prop => {
+        ...this.props.map((prop) => {
           const val = builder.humanize(prop);
           let lines = val.split('\n');
-          lines = lines.map(line => `  ${line}`);
+          lines = lines.map((line) => `  ${line}`);
           return `${lines.join('\n')},`;
         }),
         '}',

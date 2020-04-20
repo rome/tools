@@ -19,10 +19,9 @@ import {
   ThisExpression,
 } from '@romejs/js-ast';
 import {isFunctionNode} from '@romejs/js-ast-utils';
+import {descriptions} from '@romejs/diagnostics';
 
-type State = {
-  declarators: Array<VariableDeclarator>;
-};
+type State = {declarators: Array<VariableDeclarator>};
 
 type Arg = {
   declarator: VariableDeclarator;
@@ -43,7 +42,7 @@ const hook = createHook<State, Arg, ThisExpression>({
       bubble: !state.declarators.includes(declarator),
       value: node,
       state: {
-        declarators: state.declarators.filter(decl => decl !== declarator),
+        declarators: state.declarators.filter((decl) => decl !== declarator),
       },
     };
   },
@@ -68,7 +67,7 @@ const hook = createHook<State, Arg, ThisExpression>({
       declaration: {
         ...node.declaration,
         declarations: node.declaration.declarations.filter(
-          decl => !state.declarators.includes(decl),
+          (decl) => !state.declarators.includes(decl),
         ),
       },
     };
@@ -83,35 +82,31 @@ const hook = createHook<State, Arg, ThisExpression>({
       const id = bindingIdentifier.assert(decl.id);
       const {init} = decl;
 
-      if (
-        init === undefined ||
-        (init.type !== 'FunctionExpression' &&
-          init.type !== 'ArrowFunctionExpression')
-      ) {
+      if (init === undefined || init.type !== 'FunctionExpression' &&
+            init.type !==
+            'ArrowFunctionExpression') {
         throw new Error('Invalid declarator put into state');
       }
 
-      path.context.addNodeDiagnostic(init, {
-        category: 'lint/preferFunctionDeclarations',
-        message: 'Use a function declaration instead of a const function',
-        fixable: true,
-      });
+      // TODO if this is suppressed then don't transform
+      path.context.addNodeDiagnostic(
+        init,
+        descriptions.LINT.PREFER_FUNCTION_DECLARATIONS,
+        {fixable: true},
+      );
 
       // Convert arrow function body if necessary
-      const body =
-        init.body.type === 'BlockStatement'
-          ? init.body
-          : blockStatement.create({
-              body: [returnStatement.quick(init.body)],
-            });
+      const body = init.body.type === 'BlockStatement'
+        ? init.body
+        : blockStatement.create({
+          body: [returnStatement.quick(init.body)],
+        });
 
-      nodes.push(
-        functionDeclaration.create({
-          id,
-          head: init.head,
-          body,
-        }),
-      );
+      nodes.push(functionDeclaration.create({
+        id,
+        head: init.head,
+        body,
+      }));
     }
 
     return nodes;
@@ -123,20 +118,17 @@ export default {
   enter(path: Path): AnyNode {
     const {node} = path;
 
-    if (
-      node.type === 'VariableDeclarationStatement' &&
-      node.declaration.kind === 'const'
-    ) {
+    if (node.type === 'VariableDeclarationStatement' &&
+          node.declaration.kind ===
+          'const') {
       // Get all declarators that are function expressions, have no type annotation, and have a binding identifier id
-      const declarators = node.declaration.declarations.filter(decl => {
-        return (
-          decl.id.type === 'BindingIdentifier' &&
-          (decl.id.meta === undefined ||
-            decl.id.meta.typeAnnotation === undefined) &&
-          decl.init !== undefined &&
-          (decl.init.type === 'FunctionExpression' ||
-            decl.init.type === 'ArrowFunctionExpression')
-        );
+      const declarators = node.declaration.declarations.filter((decl) => {
+        return decl.id.type === 'BindingIdentifier' && (decl.id.meta ===
+            undefined || decl.id.meta.typeAnnotation === undefined) &&
+            decl.init !==
+            undefined && (decl.init.type === 'FunctionExpression' ||
+            decl.init.type ===
+            'ArrowFunctionExpression');
       });
       if (declarators.length > 0) {
         return path.provideHook(hook, {
@@ -149,7 +141,7 @@ export default {
     // it valid
     if (node.type === 'ThisExpression') {
       // Try to find the arrow function owner, or stop if we get to another function
-      const func = path.findAncestry(path => {
+      const func = path.findAncestry((path) => {
         if (path.node.type === 'ArrowFunctionExpression') {
           return path.parent.type === 'VariableDeclarator';
         }
@@ -163,14 +155,10 @@ export default {
 
       // We'll only return an ArrowFunctionExpression if it was inside of a VariableDeclarator
       if (func !== undefined && func.node.type === 'ArrowFunctionExpression') {
-        return path.callHook(
-          hook,
-          {
-            declarator: variableDeclarator.assert(func.parent),
-            node,
-          },
+        return path.callHook(hook, {
+          declarator: variableDeclarator.assert(func.parent),
           node,
-        );
+        }, node);
       }
     }
 

@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, Identifier} from '../index';
+import {JSNodeBase, ReferenceIdentifier, Identifier} from '../index';
 import {createBuilder} from '../utils';
 
 export type FlowQualifiedTypeIdentifier = JSNodeBase & {
   type: 'FlowQualifiedTypeIdentifier';
   id: Identifier;
-  qualification: Identifier | FlowQualifiedTypeIdentifier;
+  qualification: ReferenceIdentifier | FlowQualifiedTypeIdentifier;
 };
 
 export const flowQualifiedTypeIdentifier = createBuilder<

@@ -7,7 +7,7 @@
 
 import '@romejs/core';
 import {stringifyJSON, consumeJSONExtra} from '@romejs/codec-json';
-import test from '@romejs/test';
+import {test} from 'rome';
 import {ParserOptions} from '@romejs/parser-core';
 import {createUnknownFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
@@ -19,7 +19,7 @@ function consumeExtJSON(opts: ParserOptions) {
   });
 }
 
-test('arrays', t => {
+test('arrays', (t) => {
   t.is(stringifyJSON(consumeExtJSON({input: '[]'})), '[]');
   t.is(stringifyJSON(consumeExtJSON({input: '[1]'})), '[1]');
   t.is(stringifyJSON(consumeExtJSON({input: '[1,]'})), '[1]');
@@ -29,12 +29,12 @@ test('arrays', t => {
   );
 });
 
-test('booleans', t => {
+test('booleans', (t) => {
   t.is(stringifyJSON(consumeExtJSON({input: 'true'})), 'true');
   t.is(stringifyJSON(consumeExtJSON({input: 'false'})), 'false');
 });
 
-test('numbers', t => {
+test('numbers', (t) => {
   t.is(stringifyJSON(consumeExtJSON({input: '1'})), '1');
   t.is(stringifyJSON(consumeExtJSON({input: '12'})), '12');
   t.is(stringifyJSON(consumeExtJSON({input: '123'})), '123');
@@ -49,7 +49,7 @@ test('numbers', t => {
   );
 });
 
-test('null', t => {
+test('null', (t) => {
   t.is(stringifyJSON(consumeExtJSON({input: 'null'})), 'null');
 
   const funcToNull = consumeExtJSON({input: '1'});
@@ -65,7 +65,7 @@ test('null', t => {
   t.is(stringifyJSON(NaNToNull), 'NaN');
 });
 
-test('objects', t => {
+test('objects', (t) => {
   t.is(stringifyJSON(consumeExtJSON({input: '{}'})), '{}');
   t.is(stringifyJSON(consumeExtJSON({input: '{"foo":"bar"}'})), 'foo: "bar"');
   t.is(stringifyJSON(consumeExtJSON({input: '{"foo":"bar",}'})), 'foo: "bar"');
@@ -97,126 +97,84 @@ hello: [
   2
   3.53
 ]`;
-test('complex', t => {
+test('complex', (t) => {
   const consumer = consumeExtJSON({input: complexTest});
   t.is(stringifyJSON(consumer), complexTest);
 });
 
-test('comments', t => {
+test('comments', (t) => {
   t.is(stringifyJSON(consumeExtJSON({input: '// foo\ntrue'})), '// foo\ntrue');
   t.is(stringifyJSON(consumeExtJSON({input: 'true\n// foo'})), '// foo\ntrue');
 
   //# Comments - loose
+
   // comments at end of object
-  t.is(
-    stringifyJSON(
-      consumeExtJSON({
-        input: `{
+  t.is(stringifyJSON(consumeExtJSON({
+    input: `{
     "foo": "bar",
     // end comment
   }`,
-      }),
-    ),
-    'foo: "bar"\n// end comment',
-  );
+  })), 'foo: "bar"\n// end comment');
   // comments at end of array
-  t.is(
-    stringifyJSON(
-      consumeExtJSON({
-        input: `[
+  t.is(stringifyJSON(consumeExtJSON({
+    input: `[
     "foobar",
     // end comment
   ]`,
-      }),
-    ),
-    '[\n  "foobar"\n  // end comment\n]',
-  );
+  })), '[\n  "foobar"\n  // end comment\n]');
   // comments in empty array
-  t.is(
-    stringifyJSON(
-      consumeExtJSON({
-        input: `[
+  t.is(stringifyJSON(consumeExtJSON({
+    input: `[
     // inner comment
   ]`,
-      }),
-    ),
-    '[\n  // inner comment\n]',
-  );
+  })), '[\n  // inner comment\n]');
   // comments in empty object
-  t.is(
-    stringifyJSON(
-      consumeExtJSON({
-        input: `{
+  t.is(stringifyJSON(consumeExtJSON({
+    input: `{
     // inner comment
   }`,
-      }),
-    ),
-    '{\n  // inner comment\n}',
-  );
+  })), '{\n  // inner comment\n}');
 
   //# Comments - object property
+
   // before property
-  t.is(
-    stringifyJSON(
-      consumeExtJSON({
-        input: `{
+  t.is(stringifyJSON(consumeExtJSON({
+    input: `{
     /* bar */
     "foo": "bar",
   }`,
-      }),
-    ),
-    '/* bar */\nfoo: "bar"',
-  );
+  })), '/* bar */\nfoo: "bar"');
   // before value
-  t.is(
-    stringifyJSON(
-      consumeExtJSON({
-        input: `{
+  t.is(stringifyJSON(consumeExtJSON({
+    input: `{
     "foo": /* bar */ "bar",
   }`,
-      }),
-    ),
-    '/* bar */\nfoo: "bar"',
-  );
+  })), '/* bar */\nfoo: "bar"');
   // after value
-  t.is(
-    stringifyJSON(
-      consumeExtJSON({
-        input: `{
+  t.is(stringifyJSON(consumeExtJSON({
+    input: `{
     "foo": "bar" /* bar */,
   }`,
-      }),
-    ),
-    '/* bar */\nfoo: "bar"',
-  );
+  })), '/* bar */\nfoo: "bar"');
 
   //# Comments - array element
+
   // before element
-  t.is(
-    stringifyJSON(
-      consumeExtJSON({
-        input: `[
+  t.is(stringifyJSON(consumeExtJSON({
+    input: `[
     /* bar */
     "foo",
   ]`,
-      }),
-    ),
-    '[\n  /* bar */\n  "foo"\n]',
-  );
+  })), '[\n  /* bar */\n  "foo"\n]');
   // after value
-  t.is(
-    stringifyJSON(
-      consumeExtJSON({
-        input: `[
+  t.is(stringifyJSON(consumeExtJSON({
+    input: `[
     "foo" /* bar */,
   ]`,
-      }),
-    ),
-    '[\n  /* bar */\n  "foo"\n]',
-  );
+  })), '[\n  /* bar */\n  "foo"\n]');
 });
 
-test('recursion', t => {
+test('recursion', (t) => {
   t.throws(() => {
     const ret = consumeExtJSON({input: '{}'});
     const foo: Dict<unknown> = {};

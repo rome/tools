@@ -22,10 +22,8 @@ export default function FlowDeclareClass(node: AnyNode, scope: Scope) {
 
   for (const propNode of node.body.properties) {
     const prop = bodyScope.evaluate(propNode);
-    if (
-      propNode.type !== 'FlowObjectTypeSpreadProperty' &&
-      propNode.static === true
-    ) {
+    if (propNode.type !== 'FlowObjectTypeSpreadProperty' && propNode.static ===
+        true) {
       statics.push(prop);
     } else if (propNode.type === 'FlowObjectTypeCallProperty') {
       calls.push(scope.evaluate(propNode));

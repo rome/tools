@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {ClassScope} from '../../scopes';
+import {Scope, ClassScope} from '../../scopes';
 import {ClassExpression, classExpression, AnyNode} from '@romejs/js-ast';
 import InstanceT from '../../types/InstanceT';
 import ClassT from '../../types/ClassT';
@@ -24,13 +23,10 @@ export default function ClassExpression(node: AnyNode, scope: Scope) {
   const classId = new OpenT(scope, node);
 
   //
-  const bodyScope = new ClassScope(
-    {parentScope: scope},
-    {
-      instance: classInstance,
-      static: classId,
-    },
-  );
+  const bodyScope = new ClassScope({parentScope: scope}, {
+    instance: classInstance,
+    static: classId,
+  });
 
   if (node.id !== undefined) {
     bodyScope.addBinding(node.id.name, classId);
@@ -48,10 +44,7 @@ export default function ClassExpression(node: AnyNode, scope: Scope) {
     if (bodyNode.type === 'ClassMethod' && bodyNode.kind === 'constructor') {
       _constructor = type;
     } else {
-      if (
-        bodyNode.type !== 'TSIndexSignature' &&
-        bodyNode.meta.static === true
-      ) {
+      if (bodyNode.type !== 'TSIndexSignature' && bodyNode.meta.static === true) {
         statics.push(type);
       } else {
         instances.push(type);

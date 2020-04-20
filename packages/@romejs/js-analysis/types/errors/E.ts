@@ -6,18 +6,13 @@
  */
 
 import {Scope} from '../../scopes';
-import {
-  PartialDiagnosticAdviceItem,
-  DiagnosticCategory,
-} from '@romejs/diagnostics';
+import {DiagnosticDescription} from '@romejs/diagnostics';
 import {AnyNode} from '@romejs/js-ast';
 import AnyT from '../AnyT';
 import T from '../T';
 
 export type ErrorDefinition = {
-  category: DiagnosticCategory;
-  advice?: Array<PartialDiagnosticAdviceItem>;
-  message: string;
+  description: DiagnosticDescription;
   lowerTarget: T;
   upperTarget?: T;
 };
@@ -30,7 +25,7 @@ export default class E extends T {
   }
 
   humanize(): string {
-    return this.getError().message;
+    return this.getError().description.message.value;
   }
 
   getError(): ErrorDefinition {

@@ -56,6 +56,7 @@ function getLastCompletionRecordFromNodes(
       return records;
     }
   }
+  return undefined;
 }
 
 function _getCompletionRecords(node: AnyNode): undefined | Records {
@@ -108,12 +109,9 @@ function _getCompletionRecords(node: AnyNode): undefined | Records {
     ];
   }
 
-  if (
-    node.type === 'ReturnStatement' ||
-    node.type === 'ContinueStatement' ||
-    node.type === 'BreakStatement' ||
-    node.type === 'ThrowStatement'
-  ) {
+  if (node.type === 'ReturnStatement' || node.type === 'ContinueStatement' ||
+        node.type ===
+        'BreakStatement' || node.type === 'ThrowStatement') {
     return [
       {
         type: 'COMPLETION',
@@ -121,6 +119,8 @@ function _getCompletionRecords(node: AnyNode): undefined | Records {
       },
     ];
   }
+
+  return undefined;
 }
 
 export default function getCompletionRecords(node: AnyNode): Records {

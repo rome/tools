@@ -1,5 +1,6 @@
 Program {
   body: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -7,6 +8,11 @@ Program {
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
+  trailingComments: Array []
+  innerComments: Array [
+    '0'
+    '1'
+  ]
   syntax: Array [
     'jsx'
     'flow'
@@ -26,6 +32,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' TODO: declare export syntax'
       loc: Object {
         filename: 'input.js'
@@ -42,6 +49,7 @@ Program {
       }
     }
     CommentLine {
+      id: '1'
       value: ' declare export function foo(x: number, string): void;'
       loc: Object {
         filename: 'input.js'

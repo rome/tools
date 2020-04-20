@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {FunctionScope} from '../../scopes';
+import {Scope, FunctionScope} from '../../scopes';
 import {ReturnStatement, returnStatement, AnyNode} from '@romejs/js-ast';
 
 export default function ReturnStatement(node: AnyNode, scope: Scope) {

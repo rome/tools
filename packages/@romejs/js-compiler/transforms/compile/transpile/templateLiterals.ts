@@ -6,8 +6,12 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {AnyNode, AnyExpression} from '@romejs/js-ast';
-import {stringLiteral, binaryExpression} from '@romejs/js-ast';
+import {
+  AnyNode,
+  AnyExpression,
+  stringLiteral,
+  binaryExpression,
+} from '@romejs/js-ast';
 
 export default {
   name: 'templateLiterals',
@@ -18,21 +22,17 @@ export default {
       // TODO
     }
 
-    if (
-      node.type === 'TemplateLiteral' &&
-      parent.type !== 'TaggedTemplateExpression'
-    ) {
+    if (node.type === 'TemplateLiteral' && parent.type !==
+        'TaggedTemplateExpression') {
       const nodes: Array<AnyExpression> = [];
       const {expressions, quasis} = node;
 
       let index = 0;
       for (const elem of quasis) {
         if (elem.cooked) {
-          nodes.push(
-            stringLiteral.create({
-              value: elem.cooked,
-            }),
-          );
+          nodes.push(stringLiteral.create({
+            value: elem.cooked,
+          }));
         }
 
         if (index < expressions.length) {
@@ -48,10 +48,7 @@ export default {
       }
 
       // Since `+` is left-to-right associative, nsure the first node is a string if first/second isn't
-      if (
-        nodes[0].type !== 'StringLiteral' &&
-        nodes[1].type !== 'StringLiteral'
-      ) {
+      if (nodes[0].type !== 'StringLiteral' && nodes[1].type !== 'StringLiteral') {
         nodes.unshift(stringLiteral.quick(''));
       }
 

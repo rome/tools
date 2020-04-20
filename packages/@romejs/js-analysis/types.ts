@@ -27,16 +27,14 @@ export type ModuleSignatureType = {
   data: HydrateData;
 };
 
-export type ModuleSignatureExport =
-  | {
-      type: 'local';
-      name: string;
-      value: string;
-    }
-  | {
-      type: 'all';
-      source: string;
-    };
+export type ModuleSignatureExport = {
+  type: 'local';
+  name: string;
+  value: string;
+} | {
+  type: 'all';
+  source: string;
+};
 
 export type ModuleSignature = {
   filename: string;

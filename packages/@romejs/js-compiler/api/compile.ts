@@ -6,15 +6,15 @@
  */
 
 import {Mappings} from '@romejs/codec-source-map';
-import {PartialDiagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {CompileRequest} from '../types';
 import {Cache} from '@romejs/js-compiler';
-import {generateJS} from '@romejs/js-generator';
+import {formatJS} from '@romejs/js-formatter';
 import transform from '../methods/transform';
 
 export type CompileResult = {
   mappings: Mappings;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   suppressions: DiagnosticSuppressions;
   cacheDependencies: Array<string>;
   compiledCode: string;
@@ -41,17 +41,15 @@ export default async function compile(
     suppressions,
     cacheDependencies,
   } = await transform(req);
-  const generator = generateJS(
-    transformedAst,
-    {
-      typeAnnotations: false,
-      indent: req.stage === 'compileForBundle' ? 1 : 0,
-      sourceMapTarget: filename,
-      sourceFileName: filename,
-      inputSourceMap: req.inputSourceMap,
-    },
+  const generator = formatJS(transformedAst, {
+    typeAnnotations: false,
+    indent: req.stage === 'compileForBundle' ? 1 : 0,
+    sourceMapTarget: filename,
+    sourceFileName: filename,
+    inputSourceMap: req.inputSourceMap,
+    sourceMaps: true,
     sourceText,
-  );
+  });
 
   const res: CompileResult = {
     compiledCode: generator.getCode(),

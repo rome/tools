@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {ClassScope, ThisScope} from '../../scopes';
+import {Scope, ClassScope, ThisScope} from '../../scopes';
 import {ClassProperty, classProperty, AnyNode} from '@romejs/js-ast';
 import AnyT from '../../types/AnyT';
 import ObjPropT from '../../types/ObjPropT';
@@ -20,10 +19,7 @@ export default function ClassProperty(node: AnyNode, scope: Scope) {
   }
 
   const classScope = scope.find(ClassScope);
-  const funcScope = new ThisScope(
-    {parentScope: scope},
-    classScope.meta.instance,
-  );
+  const funcScope = new ThisScope({parentScope: scope}, classScope.meta.instance);
 
   let annotatedType;
   let inferredType;
@@ -45,8 +41,7 @@ export default function ClassProperty(node: AnyNode, scope: Scope) {
     inferredType = new AnyT(scope, node);
   }
 
-  const actualValue =
-    annotatedType === undefined ? inferredType : annotatedType;
+  const actualValue = annotatedType === undefined ? inferredType : annotatedType;
   if (actualValue === undefined) {
     throw new Error('Expected actual value');
   }

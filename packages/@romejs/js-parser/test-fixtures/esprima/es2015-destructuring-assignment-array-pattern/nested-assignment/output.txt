@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -100,6 +101,7 @@ Program {
               }
             }
             AssignmentAssignmentPattern {
+              operator: '='
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -147,6 +149,7 @@ Program {
               }
             }
             AssignmentAssignmentPattern {
+              operator: '='
               loc: Object {
                 filename: 'input.js'
                 end: Object {

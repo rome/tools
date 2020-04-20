@@ -6,15 +6,14 @@
  */
 
 import {
-  Diagnostic,
   Diagnostics,
-  PartialDiagnostics,
-  PartialDiagnostic,
-  DiagnosticAdvice,
-  DiagnosticOrigin,
+  Diagnostic,
   DiagnosticLanguage,
   DiagnosticSourceType,
-  PartialDiagnosticAdvice,
+  DiagnosticAdvice,
+  DiagnosticsProcessor,
+  deriveRootAdviceFromDiagnostic,
+  getDiagnosticHeader,
 } from '@romejs/diagnostics';
 import {Reporter} from '@romejs/cli-reporter';
 import {
@@ -23,16 +22,15 @@ import {
   DiagnosticsFileReader,
   DiagnosticsFileReaderStats,
 } from './types';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
+
 import {
-  normalizeDiagnosticAdviceItem,
-  deriveRootAdviceFromDiagnostic,
-  getDiagnosticHeader,
-} from '@romejs/diagnostics';
-import {humanizeMarkupFilename} from '@romejs/string-markup';
+  humanizeMarkupFilename,
+  formatAnsi,
+  markup,
+} from '@romejs/string-markup';
 import {toLines} from './utils';
 import printAdvice from './printAdvice';
-import {formatAnsi} from '@romejs/string-ansi';
+
 import successBanner from './banners/success.json';
 import errorBanner from './banners/error.json';
 import {
@@ -54,7 +52,10 @@ type Banner = {
   rows: Array<Array<number | Array<number>>>;
 };
 
-type PositionLike = {line: undefined | Number1; column: undefined | Number0};
+type PositionLike = {
+  line?: undefined | Number1;
+  column?: undefined | Number0;
+};
 
 export function readDiagnosticsFileLocal(
   path: AbsoluteFilePath,
@@ -83,7 +84,7 @@ function equalPosition(
   return true;
 }
 
-type BeforeFooterPrintFn = (reporter: Reporter) => void;
+type BeforeFooterPrintFn = (reporter: Reporter, error: boolean) => void;
 
 export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
   grep: '',
@@ -107,13 +108,16 @@ type ReferenceFileDependency = {
   type: 'reference';
   path: UnknownFilePath;
   mtime: undefined | number;
-  sourceType: DiagnosticSourceType;
-  language: DiagnosticLanguage;
+  sourceType: undefined | DiagnosticSourceType;
+  language: undefined | DiagnosticLanguage;
 };
 
 type FileDependency = ChangeFileDependency | ReferenceFileDependency;
 
-export type DiagnosticsPrinterFileSources = UnknownFilePathMap<Array<string>>;
+export type DiagnosticsPrinterFileSources = UnknownFilePathMap<{
+  sourceText: string;
+  lines: Array<string>;
+}>;
 
 export type DiagnosticsPrinterFileMtimes = UnknownFilePathMap<number>;
 
@@ -126,19 +130,20 @@ export default class DiagnosticsPrinter extends Error {
 
     this.reporter = reporter;
     this.flags = flags;
-    this.readFile =
-      opts.readFile === undefined ? readDiagnosticsFileLocal : opts.readFile;
+    this.readFile = opts.readFile === undefined
+      ? readDiagnosticsFileLocal
+      : opts.readFile;
     this.cwd = cwd === undefined ? createAbsoluteFilePath(process.cwd()) : cwd;
-    this.processor = new DiagnosticsProcessor({
-      filters: opts.filters,
-      origins: opts.origins,
-    });
+    this.processor = opts.processor === undefined
+      ? new DiagnosticsProcessor()
+      : opts.processor;
 
     this.displayedCount = 0;
     this.problemCount = 0;
     this.filteredCount = 0;
     this.truncatedCount = 0;
 
+    this.hasTruncatedDiagnostics = false;
     this.missingFileSources = new AbsoluteFilePathSet();
     this.fileSources = new UnknownFilePathMap();
     this.fileMtimes = new UnknownFilePathMap();
@@ -152,6 +157,7 @@ export default class DiagnosticsPrinter extends Error {
   cwd: AbsoluteFilePath;
   readFile: DiagnosticsFileReader;
 
+  hasTruncatedDiagnostics: boolean;
   missingFileSources: AbsoluteFilePathSet;
   fileSources: DiagnosticsPrinterFileSources;
   fileMtimes: DiagnosticsPrinterFileMtimes;
@@ -160,6 +166,20 @@ export default class DiagnosticsPrinter extends Error {
   problemCount: number;
   filteredCount: number;
   truncatedCount: number;
+
+  createFilePath(filename: undefined | string): UnknownFilePath {
+    if (filename === undefined) {
+      filename = 'unknown';
+    }
+
+    const {normalizeFilename} = this.reporter.markupOptions;
+
+    if (normalizeFilename === undefined) {
+      return createUnknownFilePath(filename);
+    } else {
+      return createUnknownFilePath(normalizeFilename(filename));
+    }
+  }
 
   throwIfAny() {
     if (this.hasDiagnostics()) {
@@ -176,10 +196,8 @@ export default class DiagnosticsPrinter extends Error {
   }
 
   shouldTruncate(): boolean {
-    if (
-      !this.flags.showAllDiagnostics &&
-      this.displayedCount > this.flags.maxDiagnostics
-    ) {
+    if (!this.flags.showAllDiagnostics && this.displayedCount >
+        this.flags.maxDiagnostics) {
       return true;
     } else {
       return false;
@@ -187,16 +205,14 @@ export default class DiagnosticsPrinter extends Error {
   }
 
   getDiagnostics(): Diagnostics {
-    return this.processor.getCompleteSortedDiagnostics(
-      this.reporter.markupOptions,
-    );
+    return this.processor.getSortedDiagnostics();
   }
 
   isFocused(diag: Diagnostic): boolean {
     const focusFlag = this.flags.focus;
     const focusEnabled = focusFlag !== undefined && focusFlag !== '';
 
-    const {filename, start, end} = diag;
+    const {filename, start, end} = diag.location;
 
     // If focus is enabled, exclude locationless errors
     if (focusEnabled && (filename === undefined || start === undefined)) {
@@ -206,7 +222,7 @@ export default class DiagnosticsPrinter extends Error {
     // If focus is enabled, check if we should ignore this message
     if (filename !== undefined && start !== undefined && end !== undefined) {
       const niceFilename = humanizeMarkupFilename(
-        [filename],
+        filename,
         this.reporter.markupOptions,
       );
       const focusId = getDiagnosticHeader({
@@ -236,7 +252,8 @@ export default class DiagnosticsPrinter extends Error {
     }
 
     // Match against the supplied grep pattern
-    let ignored = diag.message.toLowerCase().includes(grep) === false;
+    let ignored = diag.description.message.value.toLowerCase().includes(grep) ===
+      false;
     if (inverseGrep) {
       ignored = !ignored;
     }
@@ -250,15 +267,15 @@ export default class DiagnosticsPrinter extends Error {
     this.fileMtimes.set(info.path, stats.mtime);
 
     if (info.type === 'reference') {
-      this.fileSources.set(
-        info.path,
-        toLines({
+      this.fileSources.set(info.path, {
+        sourceText: stats.content,
+        lines: toLines({
           path: info.path,
           input: stats.content,
           sourceType: info.sourceType,
           language: info.language,
         }),
-      );
+      });
     }
   }
 
@@ -268,44 +285,45 @@ export default class DiagnosticsPrinter extends Error {
     const deps: Array<FileDependency> = [];
 
     for (const {
-      advice,
-      filename,
       dependencies,
-      language,
-      sourceType,
-      mtime,
+      description: {advice},
+      location: {language, sourceType, mtime, filename},
     } of diagnostics) {
       if (filename !== undefined) {
         deps.push({
           type: 'reference',
-          path: createUnknownFilePath(filename),
+          path: this.createFilePath(filename),
           mtime,
           language,
           sourceType,
         });
       }
 
-      for (const {filename, mtime} of dependencies) {
-        deps.push({
-          type: 'change',
-          path: createUnknownFilePath(filename),
-          mtime,
-        });
+      if (dependencies !== undefined) {
+        for (const {filename, mtime} of dependencies) {
+          deps.push({
+            type: 'change',
+            path: this.createFilePath(filename),
+            mtime,
+          });
+        }
       }
 
-      for (const item of advice) {
-        if (
-          item.type === 'frame' &&
-          item.filename !== undefined &&
-          item.sourceText === undefined
-        ) {
-          deps.push({
-            type: 'reference',
-            path: createUnknownFilePath(item.filename),
-            language: item.language,
-            sourceType: item.sourceType,
-            mtime: item.mtime,
-          });
+      if (advice !== undefined) {
+        for (const item of advice) {
+          if (item.type === 'frame') {
+            const {location} = item;
+            if (location.filename !== undefined && location.sourceText ===
+                undefined) {
+              deps.push({
+                type: 'reference',
+                path: this.createFilePath(location.filename),
+                language: location.language,
+                sourceType: location.sourceType,
+                mtime: location.mtime,
+              });
+            }
+          }
         }
       }
     }
@@ -358,21 +376,6 @@ export default class DiagnosticsPrinter extends Error {
     }
   }
 
-  addDiagnostic(
-    partialDiagnostic: PartialDiagnostic,
-    origin?: DiagnosticOrigin,
-  ) {
-    this.addDiagnostics([partialDiagnostic], origin);
-  }
-
-  addDiagnostics(partials: PartialDiagnostics, origin?: DiagnosticOrigin) {
-    if (partials.length === 0) {
-      return;
-    }
-
-    this.processor.addDiagnostics(partials, origin);
-  }
-
   print() {
     const filteredDiagnostics = this.filterDiagnostics();
     this.fetchFileSources(filteredDiagnostics);
@@ -389,20 +392,22 @@ export default class DiagnosticsPrinter extends Error {
 
   displayDiagnostic(diag: Diagnostic) {
     const {reporter} = this;
-    const {start, end, filename} = diag;
+    const {start, end, filename} = diag.location;
+    const {advice} = diag.description;
 
     // Determine if we should skip showing the frame at the top of the diagnostic output
+
     // We check if there are any frame advice entries that match us exactly, this is
+
     // useful for stuff like reporting call stacks
     let skipFrame = false;
-    if (start !== undefined && end !== undefined) {
-      adviceLoop: for (const item of diag.advice) {
-        if (
-          item.type === 'frame' &&
-          item.filename === filename &&
-          equalPosition(item.start, start) &&
-          equalPosition(item.end, end)
-        ) {
+    if (start !== undefined && end !== undefined && advice !== undefined) {
+      adviceLoop: for (const item of advice) {
+        if (item.type === 'frame' && item.location.filename === filename &&
+            equalPosition(item.location.start, start) && equalPosition(
+            item.location.end,
+            end,
+          )) {
           skipFrame = true;
           break;
         }
@@ -425,39 +430,38 @@ export default class DiagnosticsPrinter extends Error {
       mtime: expectedMtime,
     } of this.getDependenciesFromDiagnostics([diag])) {
       const mtime = this.fileMtimes.get(path);
-      if (
-        mtime !== undefined &&
-        expectedMtime !== undefined &&
-        mtime > expectedMtime
-      ) {
+      if (mtime !== undefined && expectedMtime !== undefined && mtime >
+          expectedMtime) {
         outdatedFiles.add(path);
       }
     }
 
-    const outdatedAdvice: PartialDiagnosticAdvice = [];
+    const outdatedAdvice: DiagnosticAdvice = [];
     const isOutdated = outdatedFiles.size > 0;
     if (isOutdated) {
-      const outdatedFilesArr = Array.from(outdatedFiles, path => path.join());
+      const outdatedFilesArr = Array.from(outdatedFiles, (path) => path.join());
 
       if (outdatedFilesArr.length === 1 && outdatedFilesArr[0] === filename) {
-        outdatedAdvice.push({
-          type: 'log',
-          category: 'warn',
-          message:
-            'This file has been changed since the diagnostic was produced and may be out of date',
-        });
+        outdatedAdvice.push(
+          {
+            type: 'log',
+            category: 'warn',
+            message: 'This file has been changed since the diagnostic was produced and may be out of date',
+          },
+        );
       } else {
-        outdatedAdvice.push({
-          type: 'log',
-          category: 'warn',
-          message:
-            'This diagnostic may be out of date as it relies on the following files that have been changed since the diagnostic was generated',
-        });
+        outdatedAdvice.push(
+          {
+            type: 'log',
+            category: 'warn',
+            message: 'This diagnostic may be out of date as it relies on the following files that have been changed since the diagnostic was generated',
+          },
+        );
 
         outdatedAdvice.push({
           type: 'list',
           list: outdatedFilesArr.map(
-            filename => `<filelink target="${filename}" />`,
+            (filename) => markup`<filelink target="${filename}" />`,
           ),
         });
       }
@@ -473,25 +477,27 @@ export default class DiagnosticsPrinter extends Error {
 
     reporter.indent(() => {
       // Concat all the advice together
-      const derivedAdvice: DiagnosticAdvice = [
+      const advice: DiagnosticAdvice = [
         ...derived.advice,
         ...outdatedAdvice,
-      ].map(item =>
-        normalizeDiagnosticAdviceItem(diag, item, this.reporter.markupOptions),
-      );
-      const advice: DiagnosticAdvice = derivedAdvice.concat(diag.advice);
+        ...(diag.description.advice || []),
+      ];
 
       // Print advice
       for (const item of advice) {
-        const noSpacer = printAdvice(item, {
+        const res = printAdvice(item, {
+          printer: this,
           flags: this.flags,
           missingFileSources: this.missingFileSources,
           fileSources: this.fileSources,
           diagnostic: diag,
           reporter,
         });
-        if (!noSpacer) {
+        if (res.printed) {
           reporter.spacer();
+        }
+        if (res.truncated) {
+          this.hasTruncatedDiagnostics = true;
         }
       }
 
@@ -499,20 +505,17 @@ export default class DiagnosticsPrinter extends Error {
       if (this.flags.verboseDiagnostics) {
         const {origins} = diag;
 
-        if (origins.length > 0) {
+        if (origins !== undefined && origins.length > 0) {
           reporter.spacer();
           reporter.info('Why are you seeing this diagnostic?');
           reporter.forceSpacer();
-          reporter.list(
-            origins.map(origin => {
-              let res = `<emphasis>${origin.category}</emphasis>`;
-              if (origin.message !== undefined) {
-                res += `: ${origin.message}`;
-              }
-              return res;
-            }),
-            {ordered: true},
-          );
+          reporter.list(origins.map((origin) => {
+            let res = `<emphasis>${origin.category}</emphasis>`;
+            if (origin.message !== undefined) {
+              res += `: ${origin.message}`;
+            }
+            return res;
+          }), {ordered: true});
         }
       }
     });
@@ -545,15 +548,23 @@ export default class DiagnosticsPrinter extends Error {
   footer() {
     const {reporter, problemCount} = this;
 
-    if (problemCount > 0) {
+    const isError = problemCount > 0;
+
+    if (isError) {
       reporter.hr();
     }
 
-    for (const handler of this.beforeFooterPrint) {
-      handler(reporter);
+    if (this.hasTruncatedDiagnostics) {
+      reporter.warn(
+        'Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.',
+      );
     }
 
-    if (problemCount > 0) {
+    for (const handler of this.beforeFooterPrint) {
+      handler(reporter, isError);
+    }
+
+    if (isError) {
       this.footerError();
     } else {
       this.footerSuccess();
@@ -573,11 +584,11 @@ export default class DiagnosticsPrinter extends Error {
           }
 
           const pallete = banner.palettes[palleteIndex];
-          stream.write(
-            formatAnsi
-              .bgRgb(' ', {r: pallete[0], g: pallete[1], b: pallete[2]})
-              .repeat(times),
-          );
+          stream.write(formatAnsi.bgRgb(' ', {
+            r: pallete[0],
+            g: pallete[1],
+            b: pallete[2],
+          }).repeat(times));
         }
         stream.write('\n');
       }
@@ -603,12 +614,12 @@ export default class DiagnosticsPrinter extends Error {
 
     const displayableProblems = this.getDisplayedProblemsCount();
     let str = `Found <number emphasis>${displayableProblems}</number> problem`;
-    if (displayableProblems > 1 || displayableProblems == 0) {
+    if (displayableProblems > 1 || displayableProblems === 0) {
       str += 's';
     }
 
     if (filteredCount > 0) {
-      str += formatAnsi.brightBlack(` (${filteredCount} filtered)`);
+      str += `<brightBlack> (${filteredCount} filtered)</brightBlack>`;
     }
 
     reporter.error(str);

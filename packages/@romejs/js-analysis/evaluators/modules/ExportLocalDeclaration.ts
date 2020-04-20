@@ -7,11 +7,7 @@
 
 import {Scope} from '../../scopes';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
-import {
-  ExportLocalDeclaration,
-  exportLocalDeclaration,
-  AnyNode,
-} from '@romejs/js-ast';
+import {exportLocalDeclaration, AnyNode} from '@romejs/js-ast';
 import ImportT from '../../types/ImportT';
 import Hub from '../../Hub';
 
@@ -23,6 +19,7 @@ export default function ExportLocalDeclaration(
   node = exportLocalDeclaration.assert(node);
 
   // export const foo = 'bar';
+
   // export default function foo() {}
   const decl = node.declaration;
   if (decl !== undefined) {
@@ -30,15 +27,16 @@ export default function ExportLocalDeclaration(
 
     switch (decl.type) {
       case 'FunctionDeclaration':
-      case 'ClassDeclaration':
+      case 'ClassDeclaration': {
         const id = decl.id;
         if (id === undefined) {
           throw new Error(`Expected id`);
         }
         evaluator.addExport(id.name, declType);
         break;
+      }
 
-      case 'VariableDeclarationStatement':
+      case 'VariableDeclarationStatement': {
         for (const id of getBindingIdentifiers(decl)) {
           const type = scope.getBinding(id.name);
           if (type === undefined) {
@@ -47,29 +45,30 @@ export default function ExportLocalDeclaration(
           evaluator.addExport(id.name, type);
         }
         break;
+      }
 
-      case 'TypeAliasTypeAnnotation':
+      case 'TypeAliasTypeAnnotation': {
         const type = scope.getBinding(decl.id.name);
         if (type === undefined) {
           throw new Error(`Couldn't find binding type for ${decl.id.name}`);
         }
         evaluator.addExport(decl.id.name, type);
         break;
+      }
     }
 
     return declType;
   }
 
   // export {foo, bar};
+
   // export {foo, bar} from './foo';
   const source = undefined; // TODO node.source === undefined ? undefined : node.source.value;
   const {specifiers} = node;
   if (specifiers !== undefined) {
     for (const specifier of specifiers) {
-      if (
-        specifier.type === 'ExportLocalSpecifier' ||
-        specifier.type === 'ExportExternalSpecifier'
-      ) {
+      if (specifier.type === 'ExportLocalSpecifier' || specifier.type ===
+          'ExportExternalSpecifier') {
         let type;
         if (source === undefined) {
           type = scope.evaluate(specifier.local);
@@ -83,4 +82,6 @@ export default function ExportLocalDeclaration(
       }
     }
   }
+
+  return undefined;
 }

@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -70,8 +71,8 @@ Program {
             line: 1
           }
           start: Object {
-            column: 0
-            index: 0
+            column: 12
+            index: 12
             line: 1
           }
         }
@@ -195,6 +196,7 @@ Program {
                   }
                   params: Array [
                     BindingAssignmentPattern {
+                      operator: '='
                       loc: Object {
                         filename: 'input.js'
                         end: Object {

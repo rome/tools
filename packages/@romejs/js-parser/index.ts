@@ -35,12 +35,10 @@ export function tokenizeJS(
   // If we have any diagnostics, then mark anything from the first as invalid
   if (diagnostics.length > 0) {
     const firstDiag = diagnostics[0];
-    const invalidStart = firstDiag.start;
-    const invalidEnd = firstDiag.end;
+    const invalidStart = firstDiag.location.start;
+    const invalidEnd = firstDiag.location.end;
     if (invalidStart === undefined || invalidEnd === undefined) {
-      throw new Error(
-        'All parser diagnostics are expected to have a start/end',
-      );
+      throw new Error('All parser diagnostics are expected to have a start/end');
     }
 
     const invalidStartIndex = invalidStart.index;
@@ -57,7 +55,7 @@ export function tokenizeJS(
     };
 
     // Remove all tokens after our invalid one
-    tokens = tokens.filter(token => {
+    tokens = tokens.filter((token) => {
       return token.loc.start.index >= invalidStartIndex;
     });
 
@@ -68,6 +66,8 @@ export function tokenizeJS(
 }
 
 export {Token};
+
 export {tokTypes};
+
 export {keywords as keywordTokTypes} from './tokenizer/types';
 export * from './xhtmlEntities';

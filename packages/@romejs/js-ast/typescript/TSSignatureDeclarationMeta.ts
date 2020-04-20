@@ -18,8 +18,9 @@ import {createBuilder} from '../utils';
 export type TSSignatureDeclarationMeta = JSNodeBase & {
   type: 'TSSignatureDeclarationMeta';
   parameters: Array<
-    BindingIdentifier | BindingObjectPattern | BindingArrayPattern
-  >;
+    | BindingIdentifier
+    | BindingObjectPattern
+    | BindingArrayPattern>;
   rest: undefined | AnyTargetBindingPattern;
   typeParameters: undefined | TSTypeParameterDeclaration;
 };

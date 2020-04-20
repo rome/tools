@@ -12,10 +12,9 @@ import {
   CoverageLocationRange,
   CoverageRangeWithMetadata,
 } from '@romejs/v8';
-import {SourceMap} from '@romejs/codec-source-map';
+import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {Position} from '@romejs/parser-core';
 import {urlToFilename} from './utils';
-import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {
   Number1,
   number1,
@@ -36,7 +35,7 @@ function createCoverageFileStats(
     uncovered,
     covered,
     total,
-    percent: total === 0 ? 100 : (100 / total) * covered,
+    percent: total === 0 ? 100 : 100 / total * covered,
   };
 }
 
@@ -45,16 +44,13 @@ export default class CoverageCollector {
     this.sourceMaps = new Map();
   }
 
-  sourceMaps: Map<
-    string,
-    {
-      code: string;
-      ranges: Array<CoverageRangeWithMetadata>;
-      map: SourceMap;
-    }
-  >;
+  sourceMaps: Map<string, {
+    code: string;
+    ranges: Array<CoverageRangeWithMetadata>;
+    map: SourceMapConsumer;
+  }>;
 
-  addSourceMap(filename: string, code: string, map: SourceMap) {
+  addSourceMap(filename: string, code: string, map: SourceMapConsumer) {
     this.sourceMaps.set(filename, {
       ranges: [],
       map,
@@ -72,20 +68,19 @@ export default class CoverageCollector {
       }
 
       for (const {ranges, functionName, isBlockCoverage} of entry.functions) {
-        data.ranges = data.ranges.concat(
-          ranges.map(range => {
-            let kind: LocationRangeKind = 'expression';
-            if (functionName !== '') {
-              kind = 'function';
-            } else if (isBlockCoverage) {
-              kind = 'branch';
-            }
-            return {
-              kind,
-              ...range,
-            };
-          }),
-        );
+        data.ranges = data.ranges.concat(ranges.map((range) => {
+          let kind: LocationRangeKind = 'expression';
+          if (functionName !== '') {
+            kind = 'function';
+          } else if (isBlockCoverage) {
+            kind = 'branch';
+          }
+
+          return {
+            kind,
+            ...range,
+          };
+        }));
       }
     }
   }
@@ -150,12 +145,11 @@ export default class CoverageCollector {
       }
 
       //
-      const sourceMap = new SourceMapConsumer(map);
       for (const {kind, startOffset, endOffset, count} of ranges) {
         const originalStart = findIndex(coerce0(startOffset));
         const originalEnd = findIndex(coerce0(endOffset));
 
-        const sourceStart = sourceMap.approxOriginalPositionFor(
+        const sourceStart = map.approxOriginalPositionFor(
           originalStart.line,
           originalStart.column,
         );
@@ -163,7 +157,7 @@ export default class CoverageCollector {
           continue;
         }
 
-        const sourceEnd = sourceMap.approxOriginalPositionFor(
+        const sourceEnd = map.approxOriginalPositionFor(
           originalEnd.line,
           originalEnd.column,
         );
@@ -173,8 +167,8 @@ export default class CoverageCollector {
 
         if (sourceStart.source !== sourceEnd.source) {
           throw new Error(
-            `Expected the same source for start and end: ${sourceStart.source} !== ${sourceEnd.source}`,
-          );
+              `Expected the same source for start and end: ${sourceStart.source} !== ${sourceEnd.source}`,
+            );
         }
 
         const key = `${sourceStart.source}:${String(startOffset)}-${String(
@@ -268,11 +262,9 @@ export default class CoverageCollector {
       }
 
       // No point showing fully covered files
-      if (
-        uncoveredLines.size === 0 &&
-        uncoveredBranches.size === 0 &&
-        uncoveredFunctions.size === 0
-      ) {
+      if (uncoveredLines.size === 0 && uncoveredBranches.size === 0 &&
+            uncoveredFunctions.size ===
+            0) {
         continue;
       }
 

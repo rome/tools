@@ -11,15 +11,18 @@
  * http://opensource.org/licenses/BSD-3-Clause
  */
 
-import {Mapping, SourceMap} from './types';
+import {Mapping, SourceMap, Mappings, ParsedMappings} from './types';
 import * as base64 from './base64';
 import {compareByGeneratedPositionsInflated, toRelativeUrl} from './util';
 import ArraySet from './ArraySet';
 import MappingList from './MappingList';
 import {Number1, Number0, get1, get0, number0, number1, inc} from '@romejs/ob1';
+import SourceMapConsumer, {getParsedMappingKey} from './SourceMapConsumer';
+
+type MaterializeCallback = () => void;
 
 export default class SourceMapGenerator {
-  constructor(args: {file?: string; sourceRoot?: string}) {
+  constructor(args: {file: string; sourceRoot?: string}) {
     this.file = args.file;
     this.sourceRoot = args.sourceRoot;
 
@@ -28,9 +31,11 @@ export default class SourceMapGenerator {
     this.sources = new ArraySet();
     this.names = new ArraySet();
     this.mappings = new MappingList();
+    this.materializeCallbacks = [];
   }
 
-  file: undefined | string;
+  file: string;
+  materializeCallbacks: Array<MaterializeCallback>;
   sourceRoot: undefined | string;
   sources: ArraySet;
   names: ArraySet;
@@ -41,9 +46,13 @@ export default class SourceMapGenerator {
   assertUnlocked() {
     if (this.map !== undefined) {
       throw new Error(
-        'Source map has already been materialized, toJSON() should be your final call',
-      );
+          'Source map has already been materialized, serialize() should be your final call',
+        );
     }
+  }
+
+  addMaterializer(fn: MaterializeCallback) {
+    this.materializeCallbacks.push(fn);
   }
 
   /**
@@ -146,9 +155,9 @@ export default class SourceMapGenerator {
         next += ',';
       }
 
-      next += base64.encodeVLQ(
-        get0(mapping.generated.column) - get0(previousGeneratedColumn),
-      );
+      next += base64.encodeVLQ(get0(mapping.generated.column) - get0(
+        previousGeneratedColumn,
+      ));
       previousGeneratedColumn = mapping.generated.column;
 
       if (mapping.source !== undefined) {
@@ -157,14 +166,14 @@ export default class SourceMapGenerator {
         previousSource = sourceIdx;
 
         if (mapping.original) {
-          next += base64.encodeVLQ(
-            get1(mapping.original.line) - get1(previousOriginalLine),
-          );
+          next += base64.encodeVLQ(get1(mapping.original.line) - get1(
+            previousOriginalLine,
+          ));
           previousOriginalLine = mapping.original.line;
 
-          next += base64.encodeVLQ(
-            get0(mapping.original.column) - get0(previousOriginalColumn),
-          );
+          next += base64.encodeVLQ(get0(mapping.original.column) - get0(
+            previousOriginalColumn,
+          ));
           previousOriginalColumn = mapping.original.column;
 
           if (mapping.name !== undefined) {
@@ -173,10 +182,11 @@ export default class SourceMapGenerator {
             previousName = nameIdx;
           }
         }
+
         // TODO: else, assert mapping.name is undefined since it can't be encoded without an original position
       }
-      // TODO: else, assert mapping.original is undefined since it can't be encoded without a source
 
+      // TODO: else, assert mapping.original is undefined since it can't be encoded without a source
       result += next;
     }
 
@@ -187,7 +197,7 @@ export default class SourceMapGenerator {
     sources: Array<string>,
     sourceRoot: undefined | string,
   ): Array<string> {
-    return sources.map(source => {
+    return sources.map((source) => {
       if (sourceRoot !== undefined) {
         source = toRelativeUrl(sourceRoot, source);
       }
@@ -199,13 +209,22 @@ export default class SourceMapGenerator {
     });
   }
 
+  materialize() {
+    for (const fn of this.materializeCallbacks) {
+      fn();
+    }
+    this.materializeCallbacks = [];
+  }
+
   /**
    * Externalize the source map.
    */
-  toJSON(): SourceMap {
+  serialize(): SourceMap {
     if (this.map !== undefined) {
       return this.map;
     }
+
+    this.materialize();
 
     const sources = this.sources.toArray();
     this.map = {
@@ -221,16 +240,33 @@ export default class SourceMapGenerator {
   }
 
   toComment(): string {
-    const jsonMap = this.toString();
+    const jsonMap = this.toJSON();
     const base64Map = new Buffer(jsonMap).toString('base64');
     const comment = `//# sourceMappingURL=data:application/json;charset=utf-8;base64,${base64Map}`;
     return comment;
   }
 
-  /**
-   * Render the source map being generated to a string.
-   */
-  toString(): string {
-    return JSON.stringify(this.toJSON());
+  toConsumer(): SourceMapConsumer {
+    return new SourceMapConsumer(this.file, () => {
+      const parsedMappings: ParsedMappings = new Map();
+
+      for (const mapping of this.getMappings()) {
+        parsedMappings.set(getParsedMappingKey(
+          mapping.generated.line,
+          mapping.generated.column,
+        ), mapping);
+      }
+
+      return parsedMappings;
+    });
+  }
+
+  getMappings(): Mappings {
+    this.materialize();
+    return this.mappings.toArray();
+  }
+
+  toJSON(): string {
+    return JSON.stringify(this.serialize());
   }
 }

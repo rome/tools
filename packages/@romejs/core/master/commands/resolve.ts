@@ -6,15 +6,21 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand} from '../../commands';
-import {commandCategories} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import {createUnknownFilePath} from '@romejs/path';
 
 export default createMasterCommand({
   category: commandCategories.SOURCE_CODE,
   description: 'resolve a file',
+  usage: '',
+  examples: [],
 
-  async default(req: MasterRequest): Promise<string> {
+  defineFlags() {
+    return {};
+  },
+
+  async callback(req: MasterRequest): Promise<string> {
     const {master, reporter} = req;
     const {args} = req.query;
     const {flags} = req.client;
@@ -41,7 +47,7 @@ export default createMasterCommand({
     };
 
     const resolved = await master.resolver.resolveEntryAssert(query, {
-      pointer: req.getDiagnosticPointerFromFlags({type: 'arg', key}),
+      location: req.getDiagnosticPointerFromFlags({type: 'arg', key}),
     });
     const filename = resolved.ref.real.join();
     reporter.logAll(filename);

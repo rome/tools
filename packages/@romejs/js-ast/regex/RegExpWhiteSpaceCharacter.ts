@@ -12,9 +12,10 @@ export type RegExpWhiteSpaceCharacter = JSNodeBase & {
   type: 'RegExpWhiteSpaceCharacter';
 };
 
-export const regExpWhiteSpaceCharacter = createBuilder<
-  RegExpWhiteSpaceCharacter
->('RegExpWhiteSpaceCharacter', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const regExpWhiteSpaceCharacter = createBuilder<RegExpWhiteSpaceCharacter>(
+  'RegExpWhiteSpaceCharacter',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

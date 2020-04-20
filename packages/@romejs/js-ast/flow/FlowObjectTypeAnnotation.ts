@@ -22,8 +22,7 @@ export type FlowObjectTypeAnnotation = JSNodeBase & {
     | FlowObjectTypeSpreadProperty
     | FlowObjectTypeIndexer
     | FlowObjectTypeCallProperty
-    | FlowObjectTypeInternalSlot
-  >;
+    | FlowObjectTypeInternalSlot>;
   exact?: boolean;
   inexact?: boolean;
 };

@@ -5,38 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
-test('disallows comparing negative zero', async t => {
-  const sourceTextA = '(1 >= -0)';
-
-  const sourceTextB = '(1 >= 0)';
-
-  const res1 = await testLint(sourceTextA);
-  t.looksLike(res1.diagnostics, [
-    {
-      category: 'lint/noCompareNegZero',
-      filename: 'unknown',
-      fixable: true,
-      language: 'js',
-      message: "Do not use the '>=' operator to compare against -0",
-      mtime: undefined,
-      sourceType: 'module',
-      origins: [{category: 'lint'}],
-      end: {
-        column: 8,
-        index: 8,
-        line: 1,
-      },
-      start: {
-        column: 1,
-        index: 1,
-        line: 1,
-      },
-    },
-  ]);
-
-  const res2 = await testLint(sourceTextB);
-  t.looksLike(res2.diagnostics, []);
+test('disallows comparing negative zero', async (t) => {
+  await testLint(t, '(1 >= -0)', {category: 'lint/noCompareNegZero'});
+  await testLint(t, '(1 >= 0)', {category: 'lint/noCompareNegZero'});
 });

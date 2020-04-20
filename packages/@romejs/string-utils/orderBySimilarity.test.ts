@@ -6,9 +6,9 @@
  */
 
 import {compareTwoStrings, orderBySimilarity} from './orderBySimilarity';
-import test from '@romejs/test';
+import {test} from 'rome';
 
-test('compareTwoStrings', t => {
+test('compareTwoStrings', (t) => {
   const testData = [
     {first: 'french', second: 'quebec', expected: 0},
     {first: 'france', second: 'france', expected: 1},
@@ -53,12 +53,12 @@ test('compareTwoStrings', t => {
     {first: 'iphone', second: 'iphone x', expected: 0.9090909090909091},
   ];
 
-  testData.forEach(td => {
+  testData.forEach((td) => {
     t.is(compareTwoStrings(td.first, td.second), td.expected);
   });
 });
 
-test('orderBySimilarity', t => {
+test('orderBySimilarity', (t) => {
   t.looksLike(
     orderBySimilarity('french', ['quebec', '123', 'france', 'french']),
     [
@@ -75,32 +75,32 @@ test('orderBySimilarity', t => {
     {target: 'ipod', rating: 0.25},
   ]);
 
-  t.looksLike(
-    orderBySimilarity('french', ['quebec', '123', 'france', 'french'], {
+  t.looksLike(orderBySimilarity(
+    'french',
+    ['quebec', '123', 'france', 'french'],
+    {
       minRating: 0.5,
-    }),
-    [{target: 'french', rating: 1}],
-  );
+    },
+  ), [{target: 'french', rating: 1}]);
 
-  t.looksLike(
-    orderBySimilarity('iphone', ['ipod', 'iphone 5s', 'iphone x', 'IPHONE'], {
-      minRating: 0.5,
-    }),
-    [
-      {target: 'iphone x', rating: 0.9090909090909091},
-      {target: 'iphone 5s', rating: 0.8333333333333334},
-    ],
-  );
+  t.looksLike(orderBySimilarity('iphone', [
+    'ipod',
+    'iphone 5s',
+    'iphone x',
+    'IPHONE',
+  ], {
+    minRating: 0.5,
+  }), [
+    {target: 'iphone x', rating: 0.9090909090909091},
+    {target: 'iphone 5s', rating: 0.8333333333333334},
+  ]);
 
-  t.looksLike(
-    orderBySimilarity('iphone', ['IPHONE', 'iphone 5s', 'iphone x'], {
-      minRating: 0.5,
-      ignoreCase: true,
-    }),
-    [
-      {target: 'IPHONE', rating: 1},
-      {target: 'iphone x', rating: 0.9090909090909091},
-      {target: 'iphone 5s', rating: 0.8333333333333334},
-    ],
-  );
+  t.looksLike(orderBySimilarity('iphone', ['IPHONE', 'iphone 5s', 'iphone x'], {
+    minRating: 0.5,
+    ignoreCase: true,
+  }), [
+    {target: 'IPHONE', rating: 1},
+    {target: 'iphone x', rating: 0.9090909090909091},
+    {target: 'iphone 5s', rating: 0.8333333333333334},
+  ]);
 });

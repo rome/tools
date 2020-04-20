@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticPointer} from '@romejs/diagnostics';
+import {DiagnosticLocation} from '@romejs/diagnostics';
 import {toKebabCase} from '@romejs/string-utils';
 import {ConsumeSourceLocationRequestTarget} from '@romejs/consume';
 import {Number0, coerce0, number1, number0Neg1} from '@romejs/ob1';
@@ -16,27 +16,22 @@ type SerializeCLIData = {
   args: Array<string>;
   defaultFlags: Dict<unknown>;
   flags: Dict<unknown>;
+  incorrectCaseFlags: Set<string>;
   shorthandFlags: Set<string>;
 };
 
-export type SerializeCLITarget =
-  | {
-      type: 'flag';
-      key: string;
-      target?: ConsumeSourceLocationRequestTarget;
-    }
-  | {
-      type: 'arg';
-      key: number;
-    }
-  | {
-      type: 'arg-range';
-      from: number;
-      to?: number;
-    }
-  | {
-      type: 'none';
-    };
+export type SerializeCLITarget = {
+  type: 'flag';
+  key: string;
+  target?: ConsumeSourceLocationRequestTarget;
+} | {
+  type: 'arg';
+  key: number;
+} | {
+  type: 'arg-range';
+  from: number;
+  to?: number;
+} | {type: 'none'};
 
 function normalizeFlagValue(val: unknown): unknown {
   if (val === 'true') {
@@ -51,7 +46,7 @@ function normalizeFlagValue(val: unknown): unknown {
 export function serializeCLIFlags(
   data: SerializeCLIData,
   cliTarget: SerializeCLITarget,
-): DiagnosticPointer {
+): DiagnosticLocation {
   const {args, flags, defaultFlags} = data;
 
   let code = `$ `;
@@ -82,11 +77,10 @@ export function serializeCLIFlags(
     let isEndTarget = isTarget;
 
     // We are the end target if we're within the from-to range or we're greater than from with no to
-    if (
-      cliTarget.type === 'arg-range' &&
-      i > cliTarget.from &&
-      (cliTarget.to === undefined || cliTarget.to <= i)
-    ) {
+    if (cliTarget.type === 'arg-range' && i > cliTarget.from &&
+        (cliTarget.to ===
+            undefined ||
+          cliTarget.to <= i)) {
       isEndTarget = true;
     }
 
@@ -111,7 +105,7 @@ export function serializeCLIFlags(
     }
 
     const flagPrefix = data.shorthandFlags.has(key) ? '-' : '--';
-    const kebabKey = toKebabCase(key);
+    const kebabKey = data.incorrectCaseFlags.has(key) ? key : toKebabCase(key);
     if (val === false) {
       code += `${flagPrefix}no-${kebabKey} `;
     } else {
@@ -121,11 +115,9 @@ export function serializeCLIFlags(
     // Booleans are always indicated with just their flag
     if (typeof val !== 'boolean') {
       // Only point to the value for flags that specify it
-      if (
-        isTarget &&
-        cliTarget.type === 'flag' &&
-        (cliTarget.target === 'value' || cliTarget.target === 'inner-value')
-      ) {
+      if (isTarget && cliTarget.type === 'flag' &&
+          (cliTarget.target === 'value' ||
+            cliTarget.target === 'inner-value')) {
         startColumn = coerce0(code.length);
       }
 

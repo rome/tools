@@ -5,13 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics} from '@romejs/diagnostics';
 import {
   ConstExportModuleKind,
   ConstImportModuleKind,
   ConstProgramSyntax,
 } from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
+import {Dict} from '@romejs/typescript-helpers';
 
 export type AnalyzeModuleType = 'es' | 'cjs' | 'unknown';
 
@@ -31,22 +32,25 @@ export type AnalyzeExportLocal = {
   name: string;
 };
 
-export type AnyAnalyzeExport =
-  | AnalyzeExportLocal
-  | {
-      type: 'external';
-      kind: ConstImportModuleKind;
-      loc?: SourceLocation;
-      imported: string;
-      exported: string;
-      source: string;
-    }
-  | {
-      type: 'externalAll';
-      loc?: SourceLocation;
-      kind: ConstImportModuleKind;
-      source: string;
-    };
+export type AnyAnalyzeExport = AnalyzeExportLocal | {
+  type: 'externalNamespace';
+  kind: ConstImportModuleKind;
+  loc?: SourceLocation;
+  exported: string;
+  source: string;
+} | {
+  type: 'external';
+  kind: ConstImportModuleKind;
+  loc?: SourceLocation;
+  imported: string;
+  exported: string;
+  source: string;
+} | {
+  type: 'externalAll';
+  loc?: SourceLocation;
+  kind: ConstImportModuleKind;
+  source: string;
+};
 
 export type AnalyzeDependency = {
   names: Array<AnalyzeDependencyName>;
@@ -71,10 +75,15 @@ export type AnalyzeDependencyImportFirstUsage = Array<
   AnalyzeDependencyImportUsageItem
 >;
 
+export type AnalyzeDependencyTopLevelLocalBindings = Dict<
+  | undefined
+  | SourceLocation>;
+
 export type AnalyzeDependencyResult = {
+  topLevelLocalBindings: AnalyzeDependencyTopLevelLocalBindings;
   moduleType: AnalyzeModuleType;
   syntax: Array<ConstProgramSyntax>;
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   firstTopAwaitLocation: undefined | SourceLocation;
   importFirstUsage: AnalyzeDependencyImportFirstUsage;
   exports: Array<AnyAnalyzeExport>;
@@ -82,6 +91,7 @@ export type AnalyzeDependencyResult = {
 };
 
 export const UNKNOWN_ANALYZE_DEPENDENCIES_RESULT: AnalyzeDependencyResult = {
+  topLevelLocalBindings: {},
   moduleType: 'unknown',
   syntax: [],
   diagnostics: [],

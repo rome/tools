@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -72,7 +73,9 @@ Program {
         }
         body: Array [
           FlowDeclareExportNamed {
+            defaultSpecifier: undefined
             exportKind: undefined
+            namespaceSpecifier: undefined
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -102,7 +105,7 @@ Program {
                 }
               }
             }
-            specifiers: Array [
+            namedSpecifiers: Array [
               ExportExternalSpecifier {
                 loc: Object {
                   filename: 'input.js'

@@ -1,6 +1,6 @@
 Program {
   comments: Array []
-  diagnostics: Array []
+  corrupt: false
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
@@ -21,6 +21,30 @@ Program {
       line: 1
     }
   }
+  diagnostics: Array [
+    Object {
+      origins: Array [Object {category: 'js-parser'}]
+      description: Object {
+        category: 'parse/regex'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Range values reversed. Start char code is greater than end char code'}
+      }
+      location: Object {
+        filename: 'input.js'
+        mtime: undefined
+        sourceType: 'script'
+        end: Object {
+          column: 21
+          index: 21
+          line: 1
+        }
+        start: Object {
+          column: 8
+          index: 8
+          line: 1
+        }
+      }
+    }
+  ]
   body: Array [
     ExpressionStatement {
       loc: Object {
@@ -77,7 +101,7 @@ Program {
                 filename: 'input.js'
                 end: Object {
                   column: 30
-                  index: 31
+                  index: 30
                   line: 1
                 }
                 start: Object {
@@ -88,12 +112,12 @@ Program {
               }
               body: Array [
                 RegExpCharacter {
-                  value: 'u'
+                  value: '\ud834'
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 4
-                      index: 4
+                      column: 8
+                      index: 8
                       line: 1
                     }
                     start: Object {
@@ -103,155 +127,43 @@ Program {
                     }
                   }
                 }
-                RegExpCharacter {
-                  value: 'D'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 5
-                      index: 5
-                      line: 1
-                    }
-                    start: Object {
-                      column: 4
-                      index: 4
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: '8'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 6
-                      index: 6
-                      line: 1
-                    }
-                    start: Object {
-                      column: 5
-                      index: 5
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: '3'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 7
-                      index: 7
-                      line: 1
-                    }
-                    start: Object {
-                      column: 6
-                      index: 6
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: '4'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 8
-                      index: 8
-                      line: 1
-                    }
-                    start: Object {
-                      column: 7
-                      index: 7
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: 'u'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 10
-                      index: 10
-                      line: 1
-                    }
-                    start: Object {
-                      column: 8
-                      index: 8
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: 'D'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 11
-                      index: 11
-                      line: 1
-                    }
-                    start: Object {
-                      column: 10
-                      index: 10
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: 'F'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 12
-                      index: 12
-                      line: 1
-                    }
-                    start: Object {
-                      column: 11
-                      index: 11
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: '0'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 13
-                      index: 13
-                      line: 1
-                    }
-                    start: Object {
-                      column: 12
-                      index: 12
-                      line: 1
-                    }
-                  }
-                }
                 RegExpCharSetRange {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 17
-                      index: 17
+                      column: 21
+                      index: 21
                       line: 1
                     }
                     start: Object {
-                      column: 13
-                      index: 13
+                      column: 8
+                      index: 8
                       line: 1
                     }
                   }
                   end: RegExpCharacter {
-                    value: 'u'
+                    value: '\udf06'
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 17
-                        index: 17
+                        column: 14
+                        index: 14
+                        line: 1
+                      }
+                      start: Object {
+                        column: 8
+                        index: 8
+                        line: 1
+                      }
+                    }
+                  }
+                  start: RegExpCharacter {
+                    value: '\ud834'
+                    loc: Object {
+                      filename: 'input.js'
+                      end: Object {
+                        column: 21
+                        index: 21
                         line: 1
                       }
                       start: Object {
@@ -261,153 +173,9 @@ Program {
                       }
                     }
                   }
-                  start: RegExpCharacter {
-                    value: '6'
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 14
-                        index: 14
-                        line: 1
-                      }
-                      start: Object {
-                        column: 13
-                        index: 13
-                        line: 1
-                      }
-                    }
-                  }
                 }
                 RegExpCharacter {
-                  value: 'D'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 18
-                      index: 18
-                      line: 1
-                    }
-                    start: Object {
-                      column: 17
-                      index: 17
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: '8'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 19
-                      index: 19
-                      line: 1
-                    }
-                    start: Object {
-                      column: 18
-                      index: 18
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: '3'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 20
-                      index: 20
-                      line: 1
-                    }
-                    start: Object {
-                      column: 19
-                      index: 19
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: '4'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 21
-                      index: 21
-                      line: 1
-                    }
-                    start: Object {
-                      column: 20
-                      index: 20
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: 'u'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 23
-                      index: 23
-                      line: 1
-                    }
-                    start: Object {
-                      column: 21
-                      index: 21
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: 'D'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 24
-                      index: 24
-                      line: 1
-                    }
-                    start: Object {
-                      column: 23
-                      index: 23
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: 'F'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 25
-                      index: 25
-                      line: 1
-                    }
-                    start: Object {
-                      column: 24
-                      index: 24
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: '0'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 26
-                      index: 26
-                      line: 1
-                    }
-                    start: Object {
-                      column: 25
-                      index: 25
-                      line: 1
-                    }
-                  }
-                }
-                RegExpCharacter {
-                  value: '8'
+                  value: '\udf08'
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
@@ -416,8 +184,8 @@ Program {
                       line: 1
                     }
                     start: Object {
-                      column: 26
-                      index: 26
+                      column: 21
+                      index: 21
                       line: 1
                     }
                   }

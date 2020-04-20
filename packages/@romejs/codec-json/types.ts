@@ -14,7 +14,7 @@ import {
 import {ConsumeContext} from '@romejs/consume';
 import {DiagnosticCategory} from '@romejs/diagnostics';
 
-export type JSONParserOptions = ParserOptions & {
+export type JSONParserOptions = Omit<ParserOptions, 'retainCarriageReturn'> & {
   consumeDiagnosticCategory?: DiagnosticCategory;
 };
 
@@ -60,7 +60,6 @@ export type Tokens = BaseTokens & {
 };
 
 //
-
 export type JSONValue =
   | null
   | string
@@ -71,8 +70,6 @@ export type JSONValue =
 
 export type JSONPropertyValue = undefined | void | JSONValue;
 
-export type JSONObject = {
-  [x: string]: JSONPropertyValue;
-};
+export type JSONObject = {[x: string]: JSONPropertyValue};
 
 export type JSONArray = Array<JSONValue>;

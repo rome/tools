@@ -5,10 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
-test('disallow multiple spaces in regular expression literals', async t => {
-  t.snapshot(await testLint(`/foo  bar/`));
-  t.snapshot(await testLint(`/foo {2}bar/`));
+test('disallow multiple spaces in regular expression literals', async (t) => {
+  await testLint(t, `/foo  bar/`, {
+    category: 'lint/noMultipleSpacesInRegularExpressionLiterals',
+  });
+
+  await testLint(t, `/foo {2}bar/`, {
+    category: 'lint/noMultipleSpacesInRegularExpressionLiterals',
+  });
 });

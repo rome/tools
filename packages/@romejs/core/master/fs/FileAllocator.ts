@@ -9,21 +9,26 @@ import {Master} from '@romejs/core';
 import {Stats} from './MemoryFileSystem';
 import {WorkerContainer} from '../WorkerManager';
 import Locker from '../../common/utils/Locker';
-import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
+import {AbsoluteFilePath} from '@romejs/path';
+import {Event} from '@romejs/events';
 
 export default class FileAllocator {
   constructor(master: Master) {
     this.master = master;
     this.fileToWorker = new Map();
     this.locker = new Locker();
+    this.evictEvent = new Event({
+      name: 'evict',
+    });
   }
 
+  evictEvent: Event<AbsoluteFilePath, void>;
   master: Master;
   locker: Locker<string>;
   fileToWorker: Map<string, number>;
 
   init() {
-    this.master.memoryFs.deletedFileEvent.subscribe(path => {
+    this.master.memoryFs.deletedFileEvent.subscribe((path) => {
       return this.handleDeleted(path);
     });
 
@@ -52,8 +57,8 @@ export default class FileAllocator {
 
     if (stats.size > maxSize) {
       throw new Error(
-        `The file ${path.join()} exceeds the project config max size of ${maxSize} bytes`,
-      );
+          `The file ${path.join()} exceeds the project config max size of ${maxSize} bytes`,
+        );
     }
   }
 
@@ -83,28 +88,6 @@ export default class FileAllocator {
     }
   }
 
-  async groupPathsByWorker(
-    paths: AbsoluteFilePathSet | Array<AbsoluteFilePath>,
-  ): Promise<Array<Array<AbsoluteFilePath>>> {
-    const pathsByWorker: Map<number, Array<AbsoluteFilePath>> = new Map();
-
-    // Populate our queues
-    await Promise.all(
-      Array.from(paths, async path => {
-        const worker = await this.getOrAssignOwner(path);
-
-        let queue = pathsByWorker.get(worker.id);
-        if (queue === undefined) {
-          queue = [];
-          pathsByWorker.set(worker.id, queue);
-        }
-        queue.push(path);
-      }),
-    );
-
-    return Array.from(pathsByWorker.values());
-  }
-
   async evict(path: AbsoluteFilePath) {
     // Find owner
     const workerId = this.getOwnerId(path);
@@ -118,6 +101,7 @@ export default class FileAllocator {
     await worker.bridge.evict.call({
       filename,
     });
+    this.evictEvent.send(path);
 
     this.master.logger.info(`[FileAllocator] Evicted %s`, filename);
   }
@@ -165,14 +149,12 @@ export default class FileAllocator {
       // Add on the new size, and remove the old
       if (oldStats === undefined) {
         throw new Error(
-          'File already has an owner so expected to have old stats but had none',
-        );
+            'File already has an owner so expected to have old stats but had none',
+          );
       }
       workerManager.disown(workerId, oldStats);
       workerManager.own(workerId, newStats);
-    } else if (
-      await this.master.projectManager.maybeEvictPossibleConfig(path)
-    ) {
+    } else if (await this.master.projectManager.maybeEvictPossibleConfig(path)) {
       logger.info(
         `[FileAllocator] Evicted the project belonging to config %s`,
         filename,

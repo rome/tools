@@ -22,9 +22,9 @@ export type ClassHead = JSNodeBase & {
   body: Array<AnyClassMember>;
   typeParameters?: AnyTypeParameter;
   superTypeParameters?: AnyTypeArguments;
-  implements?:
-    | undefined
-    | Array<FlowClassImplements | TSExpressionWithTypeArguments>;
+  implements?: undefined | Array<
+    | FlowClassImplements
+    | TSExpressionWithTypeArguments>;
 };
 
 export const classHead = createQuickBuilder<ClassHead, 'body'>(

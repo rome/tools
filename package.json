@@ -9,18 +9,18 @@
   "dependencies": {},
   "///": "Only used for static type checking",
   "devDependencies": {
+    "@types/vscode": "^1.43.0",
     "@types/node": "^13.7.7",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.5",
-    "typescript": "^3.7.0",
-    "prettier": "^1.19.1"
+    "typescript": "^3.7.0"
   },
-  "prettier": {
-    "trailingComma": "all",
-    "tabWidth": 2,
-    "singleQuote": true,
-    "bracketSpacing": false,
-    "jsxBracketSameLine": true
+  "romeLSPBin": "./scripts/vendor-rome",
+  "scripts": {
+    "dev-rome": "node ./scripts/dev-rome",
+    "test": "node ./scripts/dev-rome test",
+    "lint": "node ./scripts/dev-rome lint",
+    "fix": "node ./scripts/dev-rome --fix"
   },
   "rome": {
     "root": true,
@@ -28,6 +28,9 @@
       "mode": "modern"
     },
     "tests": {
+      "enabled": true
+    },
+    "format": {
       "enabled": true
     },
     "lint": {
@@ -45,7 +48,9 @@
         "lib/modules.js",
         "prelude.ts",
         "website",
-        "@romejs-web"
+        "@romejs-web",
+        "out",
+        "vscode/node_modules"
       ]
     }
   }

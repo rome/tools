@@ -109,17 +109,17 @@ export default function escapeString(
     // Handle surrogate pairs in non-JSON mode
     if (!json) {
       const charCode = str.charCodeAt(index);
-      const isHighSurrogate = charCode >= 0xd800 && charCode <= 0xdbff;
+      const isHighSurrogate = charCode >= 55_296 && charCode <= 56_319;
       const hasNextCodePoint = str.length > index + 1;
       const isSurrogatePairStart = isHighSurrogate && hasNextCodePoint;
 
       if (isSurrogatePairStart) {
         const nextCharCode = str.charCodeAt(index + 1);
-        const isLowSurrogate = nextCharCode >= 0xdc00 && nextCharCode <= 0xdfff;
+        const isLowSurrogate = nextCharCode >= 56_320 && nextCharCode <= 57_343;
         if (isLowSurrogate) {
           // https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
-          const codePoint =
-            (charCode - 0xd800) * 0x400 + nextCharCode - 0xdc00 + 0x10000;
+          const codePoint = (charCode - 55_296) * 1_024 + nextCharCode - 56_320 +
+            65_536;
           const hex = codePoint.toString(16);
           result += `\\u{${hex}}`;
           index++;
@@ -131,31 +131,32 @@ export default function escapeString(
     //
     if (PRINTABLE_ASCII.test(char)) {
       // It’s a printable ASCII character that is not `"`, `'` or `\`,
+
       // so don’t escape it.
       result += char;
       continue;
     }
 
     // Escape double quotes
-    if (char == DOUBLE_QUOTE) {
-      result += quote == char ? '\\"' : char;
+    if (char === DOUBLE_QUOTE) {
+      result += quote === char ? '\\"' : char;
       continue;
     }
 
     // Escape single quotes
-    if (char == SINGLE_QUOTE) {
-      result += quote == char ? "\\'" : char;
+    if (char === SINGLE_QUOTE) {
+      result += quote === char ? "\\'" : char;
       continue;
     }
 
     // Escape back tick
-    if (char == TICK_QUOTE) {
-      result += quote == char ? '\\`' : char;
+    if (char === TICK_QUOTE) {
+      result += quote === char ? '\\`' : char;
       continue;
     }
 
     // Null escape
-    if (char == '\0' && !json && !isDigit(str[index + 1])) {
+    if (char === '\0' && !json && !isDigit(str[index + 1])) {
       result += '\\0';
       continue;
     }

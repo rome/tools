@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PartialDiagnostics, DiagnosticFilters} from '@romejs/diagnostics';
-import {OpeningContext, ScopeType} from '../parser';
+import {Diagnostics, DiagnosticFilters} from '@romejs/diagnostics';
+import {ScopeType} from '../parser';
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {types as ct, TokContext} from './context';
 import {types as tt, TokenTypes} from './types';
@@ -14,16 +14,15 @@ import {AnyComment, AnyNode} from '@romejs/js-ast';
 import {Token} from '..';
 import {Number1, number1, number0, Number0, number0Neg1} from '@romejs/ob1';
 
-type Scopes = {[K in ScopeType]?: Array<unknown>};
+type Scopes = { [K in ScopeType]?: Array<unknown> };
 
 export type State = {
-  diagnostics: PartialDiagnostics;
+  diagnostics: Diagnostics;
   diagnosticFilters: DiagnosticFilters;
   isIterator: boolean;
   tokens: Array<Token>;
   hasHoistedVars: boolean;
-
-  possibleIncorrectOpenParens: Array<OpeningContext>;
+  corrupt: boolean;
   indentLevel: Number0;
   lineStart: boolean;
 
@@ -114,9 +113,7 @@ export type State = {
   // Names of exports store. `default` is stored as a name for both
   // `export default foo;` and `export { foo as default };`.
   exportedIdentifiers: Map<string, SourceLocation>;
-
   invalidTemplateEscapePosition: undefined | Number0;
-
   scopes: Scopes;
 };
 
@@ -124,6 +121,7 @@ export type LabelKind = undefined | 'loop' | 'switch';
 
 export type Label = {
   kind: LabelKind;
+  loc?: SourceLocation;
   name?: string;
   statementStart?: Number0;
 };
@@ -140,6 +138,7 @@ export function createInitialState(): State {
     diagnostics: [],
     diagnosticFilters: [],
     hasHoistedVars: false,
+    corrupt: false,
     tokens: [],
     potentialArrowAt: number0Neg1,
     commaAfterSpreadAt: number0Neg1,
@@ -174,7 +173,6 @@ export function createInitialState(): State {
     octalPosition: undefined,
     invalidTemplateEscapePosition: undefined,
     exportedIdentifiers: new Map(),
-    possibleIncorrectOpenParens: [],
     lineStart: true,
     indentLevel: number0,
   };

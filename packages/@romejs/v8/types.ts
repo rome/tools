@@ -9,6 +9,7 @@ import {Position} from '@romejs/parser-core';
 import {Number1, Number0} from '@romejs/ob1';
 import {JSONPropertyValue} from '@romejs/codec-json';
 import inspector = require('inspector');
+
 import {InterfaceToObject} from '@romejs/typescript-helpers';
 
 export type CPUProfile = InterfaceToObject<inspector.Profiler.Profile>;

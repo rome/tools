@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -42,9 +43,9 @@ Program {
       loc: Object {
         filename: 'input.ts'
         end: Object {
-          column: 0
-          index: 30
-          line: 4
+          column: 1
+          index: 29
+          line: 3
         }
         start: Object {
           column: 0
@@ -108,9 +109,9 @@ Program {
             loc: Object {
               filename: 'input.ts'
               end: Object {
-                column: 0
-                index: 28
-                line: 3
+                column: 17
+                index: 27
+                line: 2
               }
               start: Object {
                 column: 4
@@ -178,8 +179,8 @@ Program {
                   line: 2
                 }
                 start: Object {
-                  column: 8
-                  index: 18
+                  column: 6
+                  index: 16
                   line: 2
                 }
               }

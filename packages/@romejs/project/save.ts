@@ -10,7 +10,7 @@ import {Consumer} from '@romejs/consume';
 import {readFileText, writeFile} from '@romejs/fs';
 import {consumeJSONExtra, stringifyJSON} from '@romejs/codec-json';
 import {normalizeProjectConfig} from './load';
-import {getDiagnosticsFromError, DiagnosticsError} from '@romejs/diagnostics';
+import {DiagnosticsError, catchDiagnosticsSync} from '@romejs/diagnostics';
 import {assertHardMeta} from './utils';
 
 export async function modifyProjectConfig(
@@ -48,7 +48,7 @@ export async function modifyProjectConfig(
   }
 
   // Test if this project config doesn't result in errors
-  try {
+  let {diagnostics} = catchDiagnosticsSync(() => {
     // Reconsume with new stringified config
     const res = consumeJSONExtra({
       path: configPath,
@@ -57,20 +57,18 @@ export async function modifyProjectConfig(
 
     // Validate the new config
     normalizeProjectConfig(res, configPath, stringified, meta.projectFolder);
-  } catch (err) {
-    let diagnostics = getDiagnosticsFromError(err);
-    if (diagnostics === undefined) {
-      throw err;
-    }
+  });
 
+  if (diagnostics !== undefined) {
     // Set the `code` property on relevant diagnostics since our changes don't exist on disk
-    diagnostics = diagnostics.map(diag => {
-      return diag.filename === configPath.join()
-        ? {
-            ...diag,
-            sourceText: stringified,
-          }
-        : diag;
+    diagnostics = diagnostics.map((diag) => {
+      return diag.location.filename === configPath.join() ? {
+        ...diag,
+        location: {
+          ...diag.location,
+          sourceText: stringified,
+        },
+      } : diag;
     });
 
     throw new DiagnosticsError(

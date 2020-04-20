@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -72,7 +73,7 @@ Program {
         }
         extends: Array [
           FlowInterfaceExtends {
-            id: Identifier {
+            id: ReferenceIdentifier {
               name: 'X'
               loc: Object {
                 filename: 'input.js'
@@ -104,7 +105,7 @@ Program {
             }
           }
           FlowInterfaceExtends {
-            id: Identifier {
+            id: ReferenceIdentifier {
               name: 'Y'
               loc: Object {
                 filename: 'input.js'

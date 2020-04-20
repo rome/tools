@@ -7,19 +7,25 @@
 
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
-  PartialDiagnosticAdvice,
-  PartialDiagnostic,
-  getDiagnosticsFromError,
+  DiagnosticAdvice,
+  Diagnostic,
   INTERNAL_ERROR_LOG_ADVICE,
   createSingleDiagnosticError,
+  descriptions,
+  createBlessedDiagnosticMessage,
+  deriveDiagnosticFromError,
+  catchDiagnostics,
 } from '@romejs/diagnostics';
-import {TestCallback, TestOptions} from '@romejs/test';
+import {
+  TestCallback,
+  TestOptions,
+  GlobalTestOptions,
+} from '@romejs-runtime/rome/test';
 import {
   default as TestWorkerBridge,
   TestWorkerBridgeRunOptions,
 } from '../common/bridges/TestWorkerBridge';
 import {TestRunnerOptions} from '../master/testing/types';
-import {deriveDiagnosticFromError} from '@romejs/diagnostics';
 import SnapshotManager from './SnapshotManager';
 import TestAPI, {OnTimeout} from './TestAPI';
 import executeMain from '../common/utils/executeMain';
@@ -27,8 +33,8 @@ import {
   FileReference,
   convertTransportFileReference,
 } from '../common/types/files';
-import {GlobalTestOptions} from '@romejs/test';
 import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
+import {markup, escapeMarkup} from '@romejs/string-markup';
 
 const MAX_RUNNING_TESTS = 20;
 
@@ -41,23 +47,19 @@ export default class TestWorkerRunner {
     this.bridge = bridge;
     this.projectFolder = createAbsoluteFilePath(opts.projectFolder);
 
-    this.snapshotManager = new SnapshotManager(
-      this,
-      createAbsoluteFilePath(opts.file.real),
-    );
+    this.snapshotManager = new SnapshotManager(this, createAbsoluteFilePath(
+      opts.file.real,
+    ));
 
     this.hasFocusedTest = false;
     this.foundTests = new Map();
   }
 
-  foundTests: Map<
-    string,
-    {
-      callsiteError: Error;
-      options: TestOptions;
-      callback: undefined | TestCallback;
-    }
-  >;
+  foundTests: Map<string, {
+    callsiteError: Error;
+    options: TestOptions;
+    callback: undefined | TestCallback;
+  }>;
   hasFocusedTest: boolean;
 
   bridge: TestWorkerBridge;
@@ -86,7 +88,7 @@ export default class TestWorkerRunner {
     };
   }
 
-  async emitDiagnostic(diagnostic: PartialDiagnostic) {
+  async emitDiagnostic(diagnostic: Diagnostic) {
     await this.bridge.testError.call({
       ref: undefined,
       diagnostic,
@@ -95,23 +97,28 @@ export default class TestWorkerRunner {
 
   // execute the test file and discover tests
   async discoverTests() {
-    const {code, sourceMap} = this.opts;
+    const {code} = this.opts;
 
     const res = await executeMain({
       path: this.file.real,
       code,
-      sourceMap,
       globals: this.getEnvironment(),
     });
 
     if (res.syntaxError !== undefined) {
-      const message = `A bundle was generated that contained a syntax error: ${res.syntaxError.message}`;
+      const message = `A bundle was generated that contained a syntax error: ${res.syntaxError.description.message.value}`;
 
       throw createSingleDiagnosticError({
         ...res.syntaxError,
-        message,
-        filename: this.file.uid,
-        advice: [INTERNAL_ERROR_LOG_ADVICE],
+        description: {
+          ...res.syntaxError.description,
+          message: createBlessedDiagnosticMessage(message),
+          advice: [INTERNAL_ERROR_LOG_ADVICE],
+        },
+        location: {
+          ...res.syntaxError.location,
+          filename: this.file.uid,
+        },
       });
     }
   }
@@ -149,14 +156,11 @@ export default class TestWorkerRunner {
     }
   }
 
-  onError(
-    testName: undefined | string,
-    opts: {
-      error: Error;
-      firstAdvice: PartialDiagnosticAdvice;
-      lastAdvice: PartialDiagnosticAdvice;
-    },
-  ) {
+  onError(testName: undefined | string, opts: {
+    error: Error;
+    firstAdvice: DiagnosticAdvice;
+    lastAdvice: DiagnosticAdvice;
+  }) {
     const filename = this.file.real.join();
 
     let ref = undefined;
@@ -169,29 +173,24 @@ export default class TestWorkerRunner {
       };
     }
 
-    let diagnostic: PartialDiagnostic = deriveDiagnosticFromError({
+    let diagnostic: Diagnostic = deriveDiagnosticFromError({
       error: opts.error,
       category: 'tests/failure',
-      label: testName,
+      label: escapeMarkup(testName),
       filename,
       cleanFrames(frames) {
         // TODO we should actually get the frames before module init and do it that way
-
         // Remove everything before the original module factory
         let latestTestWorkerFrame = frames.find((frame, i) => {
-          if (
-            frame.typeName === 'global' &&
-            frame.methodName === undefined &&
-            frame.functionName === undefined
-          ) {
+          if (frame.typeName === 'global' && frame.methodName === undefined &&
+                frame.functionName ===
+                undefined) {
             // We are the global.<anonymous> frame
             // Now check for Script.runInContext
             const nextFrame = frames[i + 1];
-            if (
-              nextFrame !== undefined &&
-              nextFrame.typeName === 'Script' &&
-              nextFrame.methodName === 'runInContext'
-            ) {
+            if (nextFrame !== undefined && nextFrame.typeName === 'Script' &&
+                  nextFrame.methodName ===
+                  'runInContext') {
               // Yes!
               // TODO also check for ___$romejs$core$common$utils$executeMain_ts$default (packages/romejs/core/common/utils/executeMain.ts:69:17)
               return true;
@@ -203,10 +202,9 @@ export default class TestWorkerRunner {
 
         // And if there was no module factory frame, then we must be inside of a test
         if (latestTestWorkerFrame === undefined) {
-          latestTestWorkerFrame = frames.find(frame => {
-            return (
-              frame.filename !== undefined &&
-              frame.filename.includes('core/test-worker')
+          latestTestWorkerFrame = frames.find((frame) => {
+            return frame.typeName !== undefined && frame.typeName.includes(
+              '$TestWorkerRunner',
             );
           });
         }
@@ -221,11 +219,14 @@ export default class TestWorkerRunner {
 
     diagnostic = {
       ...diagnostic,
-      advice: [
-        ...opts.firstAdvice,
-        ...(diagnostic.advice || []),
-        ...opts.lastAdvice,
-      ],
+      description: {
+        ...diagnostic.description,
+        advice: [
+          ...opts.firstAdvice,
+          ...(diagnostic.description.advice || []),
+          ...opts.lastAdvice,
+        ],
+      },
     };
 
     this.bridge.testError.send({
@@ -240,17 +241,20 @@ export default class TestWorkerRunner {
     try {
       await api.teardownEvent.callOptional();
     } catch (err) {
-      this.onError(testName, {
-        error: err,
-        firstAdvice: [],
-        lastAdvice: [
-          {
-            type: 'log',
-            category: 'info',
-            message: `Error occured while running <emphasis>teardown</emphasis> for test <emphasis>${testName}</emphasis>`,
-          },
-        ],
-      });
+      this.onError(
+        testName,
+        {
+          error: err,
+          firstAdvice: [],
+          lastAdvice: [
+            {
+              type: 'log',
+              category: 'info',
+              message: `Error occured while running <emphasis>teardown</emphasis> for test <emphasis>${testName}</emphasis>`,
+            },
+          ],
+        },
+      );
     }
   }
 
@@ -306,9 +310,10 @@ export default class TestWorkerRunner {
       this.bridge.testError.send({
         ref: undefined,
         diagnostic: {
-          filename: this.file.uid,
-          message: 'No tests declared in this file',
-          category: 'tests/noneDeclared',
+          location: {
+            filename: this.file.uid,
+          },
+          description: descriptions.TESTS.UNDECLARED,
         },
       });
     }
@@ -374,23 +379,9 @@ export default class TestWorkerRunner {
 
   async wrap(callback: () => Promise<void>): Promise<void> {
     try {
-      await callback();
-    } catch (err) {
-      const diagnostics = getDiagnosticsFromError(err);
-      if (diagnostics === undefined) {
-        this.onError(undefined, {
-          error: err,
-          firstAdvice: [],
-          lastAdvice: [
-            {
-              type: 'log',
-              category: 'info',
-              message: `Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
-            },
-            INTERNAL_ERROR_LOG_ADVICE,
-          ],
-        });
-      } else {
+      const {diagnostics} = await catchDiagnostics(callback);
+
+      if (diagnostics !== undefined) {
         for (const diagnostic of diagnostics) {
           await this.bridge.testError.call({
             ref: undefined,
@@ -398,6 +389,22 @@ export default class TestWorkerRunner {
           });
         }
       }
+    } catch (err) {
+      this.onError(
+        undefined,
+        {
+          error: err,
+          firstAdvice: [],
+          lastAdvice: [
+            {
+              type: 'log',
+              category: 'info',
+              message: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
+            },
+            INTERNAL_ERROR_LOG_ADVICE,
+          ],
+        },
+      );
     }
   }
 

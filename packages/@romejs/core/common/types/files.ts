@@ -15,9 +15,7 @@ export type FileReference = {
   remote: boolean;
 };
 
-export type JSONFileReference = Omit<FileReference, 'real'> & {
-  real: string;
-};
+export type JSONFileReference = Omit<FileReference, 'real'> & {real: string};
 
 export function convertTransportFileReference(
   ref: JSONFileReference,

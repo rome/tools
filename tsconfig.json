@@ -11,12 +11,15 @@
     "downlevelIteration": true,
     "noUnusedLocals": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
     "typeRoots": ["./node_modules/@types"],
     "lib": ["dom", "es2020"],
     "baseUrl": ".",
     "paths": {
       "@romejs/*": ["packages/@romejs/*"],
-      "@romejs-web/*": ["packages/@romejs-web/*"]
+      "@romejs-web/*": ["packages/@romejs-web/*"],
+      "@romejs-runtime/*": ["packages/@romejs-runtime/*"],
+      "*": ["packages/@romejs-runtime/*"]
     }
   },
 

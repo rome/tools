@@ -1,4 +1,5 @@
 Program {
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -25,6 +26,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: ': string '
       loc: Object {
         filename: 'input.js'
@@ -41,6 +43,7 @@ Program {
       }
     }
     CommentBlock {
+      id: '1'
       value: ': number '
       loc: Object {
         filename: 'input.js'
@@ -78,9 +81,9 @@ Program {
       loc: Object {
         filename: 'input.js'
         end: Object {
-          column: 0
-          index: 55
-          line: 3
+          column: 1
+          index: 54
+          line: 2
         }
         start: Object {
           column: 0
@@ -104,40 +107,6 @@ Program {
             line: 1
           }
         }
-        leadingComments: Array [
-          CommentBlock {
-            value: ': string '
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 35
-                index: 35
-                line: 1
-              }
-              start: Object {
-                column: 22
-                index: 22
-                line: 1
-              }
-            }
-          }
-          CommentBlock {
-            value: ': number '
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 50
-                index: 50
-                line: 1
-              }
-              start: Object {
-                column: 37
-                index: 37
-                line: 1
-              }
-            }
-          }
-        ]
       }
       head: FunctionHead {
         async: false
@@ -156,15 +125,15 @@ Program {
             line: 1
           }
           start: Object {
-            column: 0
-            index: 0
+            column: 15
+            index: 15
             line: 1
           }
         }
         params: Array [
           BindingIdentifier {
             name: 'param'
-            leadingComments: undefined
+            trailingComments: Array ['0']
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -178,26 +147,9 @@ Program {
                 line: 1
               }
             }
-            trailingComments: Array [
-              CommentBlock {
-                value: ': string '
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 35
-                    index: 35
-                    line: 1
-                  }
-                  start: Object {
-                    column: 22
-                    index: 22
-                    line: 1
-                  }
-                }
-              }
-            ]
             meta: PatternMeta {
               optional: undefined
+              trailingComments: undefined
               typeAnnotation: undefined
               loc: Object {
                 filename: 'input.js'
@@ -212,24 +164,6 @@ Program {
                   line: 1
                 }
               }
-              trailingComments: Array [
-                CommentBlock {
-                  value: ': string '
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 35
-                      index: 35
-                      line: 1
-                    }
-                    start: Object {
-                      column: 22
-                      index: 22
-                      line: 1
-                    }
-                  }
-                }
-              ]
             }
           }
         ]

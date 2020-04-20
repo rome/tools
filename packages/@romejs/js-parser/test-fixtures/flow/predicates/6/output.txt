@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.js'
@@ -122,7 +123,7 @@ Program {
                     }
                   }
                   bound: FlowGenericTypeAnnotation {
-                    id: Identifier {
+                    id: ReferenceIdentifier {
                       name: '$Pred'
                       loc: Object {
                         filename: 'input.js'
@@ -189,7 +190,7 @@ Program {
               ]
             }
             returnType: FlowGenericTypeAnnotation {
-              id: Identifier {
+              id: ReferenceIdentifier {
                 name: 'Array'
                 loc: Object {
                   filename: 'input.js'
@@ -234,7 +235,7 @@ Program {
                 }
                 params: Array [
                   FlowGenericTypeAnnotation {
-                    id: Identifier {
+                    id: ReferenceIdentifier {
                       name: '$Refine'
                       loc: Object {
                         filename: 'input.js'
@@ -279,7 +280,7 @@ Program {
                       }
                       params: Array [
                         FlowGenericTypeAnnotation {
-                          id: Identifier {
+                          id: ReferenceIdentifier {
                             name: 'T'
                             loc: Object {
                               filename: 'input.js'
@@ -311,7 +312,7 @@ Program {
                           }
                         }
                         FlowGenericTypeAnnotation {
-                          id: Identifier {
+                          id: ReferenceIdentifier {
                             name: 'P'
                             loc: Object {
                               filename: 'input.js'
@@ -411,7 +412,7 @@ Program {
                     }
                   }
                   typeAnnotation: FlowGenericTypeAnnotation {
-                    id: Identifier {
+                    id: ReferenceIdentifier {
                       name: 'Array'
                       loc: Object {
                         filename: 'input.js'
@@ -456,7 +457,7 @@ Program {
                       }
                       params: Array [
                         FlowGenericTypeAnnotation {
-                          id: Identifier {
+                          id: ReferenceIdentifier {
                             name: 'T'
                             loc: Object {
                               filename: 'input.js'
@@ -538,7 +539,7 @@ Program {
                     }
                   }
                   typeAnnotation: FlowGenericTypeAnnotation {
-                    id: Identifier {
+                    id: ReferenceIdentifier {
                       name: 'P'
                       loc: Object {
                         filename: 'input.js'

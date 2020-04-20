@@ -12,25 +12,30 @@ import {
   UserVersions,
   RangeNode,
 } from './types';
-import {SemverParserOptions} from './parse';
 import satisfiesFromAst from './satisfies';
 import compareFromAst from './compare';
-import {parseSemverRange, parseSemverVersion} from './parse';
+import {
+  parseSemverRange,
+  parseSemverVersion,
+  SemverParserOptions,
+} from './parse';
 import {normalizeUserRange, normalizeUserVersion} from './utils';
 import {DiagnosticsError} from '@romejs/diagnostics';
 
 // export some simple types that don't expose too much internal terminology
 export type SemverRangeNode = RangeNode;
+
 export type SemverVersionNode = AbsoluteVersionNode;
 
 export {parseSemverRange, parseSemverVersion};
+
 export {default as stringifySemver} from './stringify';
 
 export function sortSemverVersions(
   rawVersions: UserVersions,
   opts?: SemverParserOptions,
 ): Array<AbsoluteVersionNode> {
-  const versions = rawVersions.map(ver => normalizeUserVersion(ver, opts));
+  const versions = rawVersions.map((ver) => normalizeUserVersion(ver, opts));
   return versions.sort((a, b) => compareFromAst(a, b));
 }
 

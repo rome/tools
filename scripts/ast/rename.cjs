@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+require('../_setup.cjs');
+
 const path = require('path');
 const fs = require('fs');
 
@@ -17,31 +19,30 @@ if (fromType === undefined || toType === undefined) {
 
 function rename(src, dest) {
   fs.mkdirSync(path.dirname(dest), {recursive: true});
-  console.log(
-    path.relative(process.cwd(), src),
-    '->',
-    path.relative(process.cwd(), dest),
-  );
+  console.log(path.relative(process.cwd(), src), '->', path.relative(
+    process.cwd(),
+    dest,
+  ));
   fs.renameSync(src, dest);
 }
 
 const {
-  generatorsFolder,
+  formatterFolder,
   analysisFolder,
   astFolder,
 } = require('../_constants.cjs');
 
-rename(
-  path.join(generatorsFolder, `${fromType}.ts`),
-  path.join(generatorsFolder, `${toType}ts`),
-);
-rename(
-  path.join(analysisFolder, `${fromType}ts`),
-  path.join(analysisFolder, `${toType}ts`),
-);
-rename(
-  path.join(astFolder, `${fromType}.ts`),
-  path.join(astFolder, `${toType}.ts`),
-);
+rename(path.join(formatterFolder, `${fromType}.ts`), path.join(
+  formatterFolder,
+  `${toType}ts`,
+));
+rename(path.join(analysisFolder, `${fromType}ts`), path.join(
+  analysisFolder,
+  `${toType}ts`,
+));
+rename(path.join(astFolder, `${fromType}.ts`), path.join(
+  astFolder,
+  `${toType}.ts`,
+));
 
 require('./update.cjs');

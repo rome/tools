@@ -5,31 +5,40 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterQueryResponse} from '@romejs/core';
-import {Event} from '@romejs/events';
-import {ClientFlags} from '../common/types/client';
-import {ClientRequestType} from './ClientRequest';
-import {Reporter} from '@romejs/cli-reporter';
-import {DEFAULT_CLIENT_FLAGS} from '../common/types/client';
-import ClientRequest from './ClientRequest';
+import {
+  ClientFlags,
+  ClientFlagsJSON,
+  DEFAULT_CLIENT_FLAGS,
+} from '../common/types/client';
+import ClientRequest, {ClientRequestType} from './ClientRequest';
 import Master from '../master/Master';
-import {MasterBridge, SOCKET_PATH, CLI_SOCKET_PATH} from '@romejs/core';
+import {
+  MasterBridge,
+  MasterQueryResponse,
+  SOCKET_PATH,
+  CLI_SOCKET_PATH,
+} from '@romejs/core';
 import fork from '../common/utils/fork';
-import {createBridgeFromLocal, createBridgeFromSocket} from '@romejs/events';
-import {ReporterDerivedStreams} from '@romejs/cli-reporter';
+import {
+  Event,
+  createBridgeFromLocal,
+  createBridgeFromSocket,
+} from '@romejs/events';
+import {Reporter, ReporterDerivedStreams} from '@romejs/cli-reporter';
 import prettyFormat from '@romejs/pretty-format';
 import {VERSION} from '../common/constants';
 import {TarWriter} from '@romejs/codec-tar';
 import {Trace, Profiler, Profile, TraceEvent} from '@romejs/v8';
-import {
-  PartialMasterQueryRequest,
-  MasterBridgeJSONFlags,
-} from '../common/bridges/MasterBridge';
+import {PartialMasterQueryRequest} from '../common/bridges/MasterBridge';
 import {loadUserConfig, UserConfig} from '../common/userConfig';
 import stream = require('stream');
+
 import net = require('net');
+
 import zlib = require('zlib');
+
 import fs = require('fs');
+
 import {unlink} from '@romejs/fs';
 import {JSONValue} from '@romejs/codec-json';
 import child = require('child_process');
@@ -38,16 +47,14 @@ export function getFilenameTimestamp(): string {
   return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, '');
 }
 
-const NEW_SERVER_INIT_TIMEOUT = 10000;
+const NEW_SERVER_INIT_TIMEOUT = 10_000;
 
 type ClientOptions = {
   globalErrorHandlers?: boolean;
   stdout?: stream.Writable;
   stderr?: stream.Writable;
   stdin?: NodeJS.ReadStream;
-  flags: Partial<Omit<ClientFlags, 'clientName'>> & {
-    clientName: string;
-  };
+  flags: Partial<Omit<ClientFlags, 'clientName'>>;
 };
 
 export type ClientProfileOptions = {
@@ -88,18 +95,20 @@ export default class Client {
 
     this.reporter = new Reporter({
       stdin: opts.stdin,
-      silent:
-        this.flags.silent === true ||
-        opts.stdout === undefined ||
-        opts.stderr === undefined,
       verbose: this.flags.verbose === true,
       markupOptions: {
         cwd: this.flags.cwd,
       },
     });
 
+    // Suppress stdout when silent is set
+    const isSilent = this.flags.silent === true || opts.stdout === undefined ||
+        opts.stderr ===
+        undefined;
+    const stdout = isSilent ? undefined : opts.stdout;
+
     this.derivedReporterStreams = this.reporter.attachStdoutStreams(
-      opts.stdout,
+      stdout,
       opts.stderr,
     );
 
@@ -119,7 +128,18 @@ export default class Client {
   requestResponseEvent: Event<ClientRequestResponseResult, void>;
   endEvent: Event<void, void>;
 
-  getBridgeJSONFlags(): MasterBridgeJSONFlags {
+  setFlags(flags: Partial<ClientFlags>) {
+    if (this.bridgeStatus !== undefined) {
+      throw new Error('Already connected to bridge. Cannot change client flags.');
+    }
+
+    this.flags = {
+      ...this.flags,
+      ...flags,
+    };
+  }
+
+  getClientJSONFlags(): ClientFlagsJSON {
     return {
       ...this.flags,
       cwd: this.flags.cwd.join(),
@@ -137,7 +157,7 @@ export default class Client {
     // Start server and start profiling
     const bridge = await this.findOrStartMaster();
     await bridge.profilingStart.call({
-      samplingInterval: samplingInterval,
+      samplingInterval,
     });
 
     // Start cli profiling
@@ -159,6 +179,7 @@ export default class Client {
 
     const stopProfile = async (isTimeout: boolean) => {
       // This is to prevent stopping the profile multiple times via the timeout and then at the end
+
       // It's a promise so that the final stopProfile call will block until the first has finished
       if (hasProfiled) {
         return hasProfiled;
@@ -210,9 +231,8 @@ export default class Client {
       }
 
       // Fetch profiles
-      const progress = this.reporter.progress();
+      const progress = this.reporter.progress({title: 'Fetching profiles'});
       progress.setTotal(fetchers.length);
-      progress.setTitle('Fetching profiles');
       for (const [text, callback] of fetchers) {
         progress.setText(text);
         const profile = await callback();
@@ -248,6 +268,7 @@ export default class Client {
     bridge.log.subscribe(({origin, chunk}) => {
       if (origin === 'worker' && !includeWorkerLogs) {
         // We allow multiple calls to bridge.enableWorkerLogs
+
         // Filter the event if necessary if it wasn't requested by this log subscription
         return;
       }
@@ -264,21 +285,23 @@ export default class Client {
     }
 
     let logs = '';
-    await this.subscribeLogs(true, chunk => {
+    await this.subscribeLogs(true, (chunk) => {
       logs += chunk;
     });
 
     // Collect CPU profile
+
     // Callback will be called later once it has been collected
+
     // Initial async work is just connecting to the processes and setting up handlers
     let profileEvents: Array<TraceEvent> = [];
-    await this.profile(profileOpts, async _profileEvents => {
+    await this.profile(profileOpts, async (_profileEvents) => {
       profileEvents = _profileEvents;
     });
 
     // Collect all responses
     const responses: Array<ClientRequestResponseResult> = [];
-    this.requestResponseEvent.subscribe(result => {
+    this.requestResponseEvent.subscribe((result) => {
       responses.push(result);
     });
 
@@ -300,18 +323,18 @@ export default class Client {
       }
 
       // Add client flags
-      writer.append(
-        {name: 'clientFlags.json'},
-        stringify(this.getBridgeJSONFlags()),
-      );
+      writer.append({name: 'clientFlags.json'}, stringify(
+        this.getClientJSONFlags(),
+      ));
 
       function stringify(val: JSONValue): string {
         return JSON.stringify(val, null, '  ');
       }
 
       function indent(val: unknown): string {
-        const str =
-          typeof val === 'string' ? val : prettyFormat(val, {compact: true});
+        const str = typeof val === 'string' ? val : prettyFormat(val, {
+          compact: true,
+        });
         const lines = str.trim().split('\n');
         const indented = lines.join('\n  ');
         return `\n  ${indented}`;
@@ -332,10 +355,9 @@ export default class Client {
           command: 'status',
         });
         if (status.type === 'SUCCESS') {
-          writer.append(
-            {name: 'status.txt'},
-            `${prettyFormat(status.data, {compact: true})}\n`,
-          );
+          writer.append({name: 'status.txt'}, `${prettyFormat(status.data, {
+            compact: true,
+          })}\n`);
         }
       }
 
@@ -377,19 +399,19 @@ export default class Client {
 
     this.bridgeStatus = {bridge, dedicated};
 
-    bridge.stderr.subscribe(chunk => {
+    bridge.stderr.subscribe((chunk) => {
       stderr.write(chunk);
     });
 
-    bridge.stdout.subscribe(chunk => {
+    bridge.stdout.subscribe((chunk) => {
       stdout.write(chunk);
     });
 
-    bridge.reporterRemoteServerMessage.subscribe(msg => {
+    bridge.reporterRemoteServerMessage.subscribe((msg) => {
       this.reporter.processRemoteClientMessage(msg);
     });
 
-    this.reporter.sendRemoteServerMessage.subscribe(msg => {
+    this.reporter.sendRemoteServerMessage.subscribe((msg) => {
       bridge.reporterRemoteClientMessage.send(msg);
     });
 
@@ -402,10 +424,11 @@ export default class Client {
       bridge.getClientInfo.wait({
         version: VERSION,
         format: stdout.format,
+        unicode: stdout.unicode,
         hasClearScreen: this.reporter.hasClearScreen,
         columns: stdout.columns,
         useRemoteReporter: true,
-        flags: this.getBridgeJSONFlags(),
+        flags: this.getClientJSONFlags(),
       }),
 
       bridge.handshake(),
@@ -469,7 +492,7 @@ export default class Client {
     let exited = false;
     let proc: undefined | child.ChildProcess;
 
-    const newDaemon: undefined | MasterBridge = await new Promise(resolve => {
+    const newDaemon: undefined | MasterBridge = await new Promise((resolve) => {
       const timeout = setTimeout(() => {
         reporter.error('Daemon connection timed out');
         cleanup();
@@ -478,7 +501,13 @@ export default class Client {
 
       const socketServer = net.createServer(() => {
         cleanup();
-        resolve(this.tryConnectToNewDaemon());
+
+        resolve(this.tryConnectToExistingDaemon().then((bridge) => {
+          if (bridge !== undefined) {
+            this.reporter.success(`Started daemon!`);
+          }
+          return bridge;
+        }));
       });
 
       function listen() {
@@ -520,43 +549,29 @@ export default class Client {
       proc.kill();
     }
 
-    console.log('ughhh???');
     return undefined;
   }
 
-  async tryConnectToNewDaemon(): Promise<undefined | MasterBridge> {
-    const bridge = await this.tryConnectToExistingDaemon();
-    if (bridge !== undefined) {
-      this.reporter.success(`Started daemon!`);
-      return bridge;
-    }
-  }
-
   async tryConnectToExistingDaemon(): Promise<undefined | MasterBridge> {
-    const promise: Promise<undefined | net.Socket> = new Promise(
-      (resolve, reject) => {
-        const socket = net.createConnection(
-          {
-            path: SOCKET_PATH.join(),
-          },
-          () => {
-            resolve(socket);
-          },
-        );
+    const promise: Promise<undefined | net.Socket> = new Promise((
+      resolve,
+      reject,
+    ) => {
+      const socket = net.createConnection({
+        path: SOCKET_PATH.join(),
+      }, () => {
+        resolve(socket);
+      });
 
-        socket.on('error', (err: NodeJS.ErrnoException) => {
-          if (
-            err.code === 'ENOENT' ||
-            err.code === 'ECONNREFUSED' ||
-            err.code === 'EADDRINUSE'
-          ) {
-            resolve();
-          } else {
-            reject(err);
-          }
-        });
-      },
-    );
+      socket.on('error', (err: NodeJS.ErrnoException) => {
+        if (err.code === 'ENOENT' || err.code === 'ECONNREFUSED' || err.code ===
+            'EADDRINUSE') {
+          resolve();
+        } else {
+          reject(err);
+        }
+      });
+    });
 
     const socket = await promise;
     if (socket === undefined) {

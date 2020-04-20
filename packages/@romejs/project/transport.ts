@@ -18,13 +18,13 @@ export function serializeJSONProjectConfig(
 
   return {
     ...config,
-    vsc: {
-      ...config.vsc,
-      root: config.vsc.root.join(),
+    vcs: {
+      ...config.vcs,
+      root: config.vcs.root.join(),
     },
     typeCheck: {
       ...config.typeCheck,
-      libs: Array.from(config.typeCheck.libs, path => path.join()),
+      libs: Array.from(config.typeCheck.libs, (path) => path.join()),
     },
     files: {
       ...config.files,
@@ -43,15 +43,15 @@ export function hydrateJSONProjectConfig(
       ...config.files,
       vendorPath: createAbsoluteFilePath(config.files.vendorPath),
     },
-    vsc: {
-      ...config.vsc,
-      root: createAbsoluteFilePath(config.vsc.root),
+    vcs: {
+      ...config.vcs,
+      root: createAbsoluteFilePath(config.vcs.root),
     },
     typeCheck: {
       ...config.typeCheck,
-      libs: new AbsoluteFilePathSet(
-        config.typeCheck.libs.map(str => createAbsoluteFilePath(str)),
-      ),
+      libs: new AbsoluteFilePathSet(config.typeCheck.libs.map(
+        (str) => createAbsoluteFilePath(str),
+      )),
     },
     targets: new Map(Object.entries(config.targets)),
   };

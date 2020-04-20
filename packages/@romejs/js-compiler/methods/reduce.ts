@@ -6,15 +6,16 @@
  */
 
 import {
-  Context,
+  CompilerContext,
   TransformExitResult,
   PathOptions,
   TransformVisitors,
+  Path,
+  REDUCE_SKIP_SUBTREE,
+  REDUCE_REMOVE,
 } from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {visitorKeys as allVisitorKeys} from '@romejs/js-ast';
+import {AnyNode, visitorKeys as allVisitorKeys} from '@romejs/js-ast';
 import {isNodeLike} from '@romejs/js-ast-utils';
-import {Path, REDUCE_SKIP_SUBTREE, REDUCE_REMOVE} from '@romejs/js-compiler';
 
 const BAIL_EXIT: 'BAIL' = 'BAIL';
 const KEEP_EXIT: 'KEEP' = 'KEEP';
@@ -35,18 +36,17 @@ function validateTransformReturn(
   // If this function hits a symbol then it's invalid as we would have dealt with it before if it were a valid constant
   if (typeof node === 'symbol') {
     throw new Error(
-      `Returned a symbol from transform ${transformName} that doesn't correspond to any reduce constant`,
-    );
+        `Returned a symbol from transform ${transformName} that doesn't correspond to any reduce constant`,
+      );
   }
 
   // Verify common mistake of forgetting to return something
   if (typeof node === 'undefined') {
     throw new Error(
-      'Returned `undefined` from transform ' +
-        transformName +
-        '. If you meant to delete this node then use `return' +
-        ' REDUCE_REMOVE`, otherwise if you want to keep it then use `return path.node;`',
-    );
+            'Returned `undefined` from transform ' + transformName +
+            '. If you meant to delete this node then use `return' +
+          ' REDUCE_REMOVE`, otherwise if you want to keep it then use `return path.node;`',
+      );
   }
 
   // Handle returning an array of nodes
@@ -54,8 +54,8 @@ function validateTransformReturn(
     // keyed nodes cannot be replaced with an array of nodes
     if (path.opts.noArrays === true) {
       throw new Error(
-        `Cannot replace this keyed node ${path.parent.type}[${path.opts.nodeKey}] with an array of nodes - originated from transform ${transformName}`,
-      );
+          `Cannot replace this keyed node ${path.parent.type}[${path.opts.nodeKey}] with an array of nodes - originated from transform ${transformName}`,
+        );
     }
     return;
   }
@@ -63,8 +63,8 @@ function validateTransformReturn(
   // Verify that it's a valid node
   if (!isNodeLike(node)) {
     throw new Error(
-      `Expected a return value of a plain object with a \`type\` property or a reduce constant - originated from 'transform ${transformName}`,
-    );
+        `Expected a return value of a plain object with a \`type\` property or a reduce constant - originated from 'transform ${transformName}`,
+      );
   }
 }
 
@@ -96,7 +96,9 @@ function shouldBailReduce(
  * Run an exit handler. We will return a tuple marking whether we should bail
  * with the returned value.
  */
-function runExit<State>(
+function runExit<
+  State
+>(
   path: Path,
   name: string,
   callback: (path: Path, state: State) => TransformExitResult,
@@ -124,7 +126,7 @@ function runExit<State>(
 export default function reduce(
   origNode: AnyNode,
   visitors: TransformVisitors,
-  context: Context,
+  context: CompilerContext,
   pathOpts: PathOptions = {},
 ): TransformExitResult {
   // Initialize first path
@@ -169,7 +171,7 @@ export default function reduce(
 
     // Reduce the children
     for (const key of visitorKeys) {
-      // rome-suppress lint/noExplicitAny
+      // rome-suppress-next-line lint/noExplicitAny
       const oldVal = (node as any)[key];
 
       if (Array.isArray(oldVal)) {
@@ -196,7 +198,6 @@ export default function reduce(
             // Run transforms on this node
             const newChild = reduce(child, visitors, context, {
               noScopeCreation: pathOpts.noScopeCreation,
-              frozen: pathOpts.frozen,
               parentScope: path.scope,
               ancestryPaths: childAncestryPaths,
               listKey: correctedIndex,
@@ -204,16 +205,15 @@ export default function reduce(
             });
 
             // If this item has been changed then...
-            if (newChild !== child && !pathOpts.frozen) {
+            if (newChild !== child && !context.frozen) {
               // Clone the children array
               children = children.slice();
 
               // Check if the item is to be deleted
               // REDUCE_REMOVE or an empty array are considered equivalent
-              if (
-                newChild === REDUCE_REMOVE ||
-                (Array.isArray(newChild) && newChild.length === 0)
-              ) {
+              if (newChild === REDUCE_REMOVE || Array.isArray(newChild) &&
+                    newChild.length ===
+                    0) {
                 // Remove the item from the array
                 children.splice(correctedIndex, 1);
 
@@ -243,7 +243,7 @@ export default function reduce(
               }
 
               // Mutate the original node - funky typing since Flow doesn't understand the mutation
-              node = {...node, [key]: children} as AnyNode;
+              node = ({...node, [key]: children} as AnyNode);
 
               // Create a new node path
               path = path.fork(node);
@@ -264,13 +264,12 @@ export default function reduce(
             parentScope: path.scope,
             ancestryPaths: childAncestryPaths,
             noArrays: true,
-            frozen: pathOpts.frozen,
             nodeKey: key,
           },
         );
 
         // If this value has been changed then...
-        if (newVal !== oldVal && !pathOpts.frozen) {
+        if (newVal !== oldVal && !context.frozen) {
           // When replacing a key value, we cannot replace it with an array
           if (Array.isArray(newVal)) {
             throw new Error(
@@ -284,7 +283,7 @@ export default function reduce(
           }
 
           // Mutate the original object - funky typing since Flow doesn't understand the mutation
-          node = {...node, [key]: newVal} as AnyNode;
+          node = ({...node, [key]: newVal} as AnyNode);
 
           // Create a new node path for it
           path = path.fork(node);

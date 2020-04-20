@@ -5,34 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
-test('disallow var', async t => {
-  const res = await testLint('var foobar;\nfoobar');
-  t.snapshot(res);
-
-  // Redundant because of the snapshot above, but this is what we actually care about
-  t.looksLike(res.diagnostics, [
-    {
-      category: 'lint/noVar',
-      filename: 'unknown',
-      language: 'js',
-      message:
-        'Variable declarations using `var` are disallowed, use `let` or `const` instead.',
-      mtime: undefined,
-      sourceType: 'module',
-      origins: [{category: 'lint'}],
-      end: {
-        column: 11,
-        index: 11,
-        line: 1,
-      },
-      start: {
-        column: 0,
-        index: 0,
-        line: 1,
-      },
-    },
-  ]);
+test('disallow var', async (t) => {
+  await testLint(t, 'var foobar;\nfoobar', {category: 'lint/noVar'});
 });

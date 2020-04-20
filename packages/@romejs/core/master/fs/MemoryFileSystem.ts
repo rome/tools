@@ -6,25 +6,30 @@
  */
 
 import Master from '../Master';
-import {Manifest, ManifestDefinition} from '@romejs/codec-js-manifest';
-import {PathPatterns, parsePathPattern} from '@romejs/path-match';
+import {
+  Manifest,
+  ManifestDefinition,
+  normalizeManifest,
+} from '@romejs/codec-js-manifest';
+import {
+  PathPatterns,
+  matchPathPatterns,
+  parsePathPattern,
+} from '@romejs/path-match';
 import {
   ProjectConfig,
   ROME_CONFIG_FILENAMES,
   ProjectDefinition,
 } from '@romejs/project';
-import {
-  DiagnosticsProcessor,
-  getDiagnosticsFromError,
-} from '@romejs/diagnostics';
+import {DiagnosticsProcessor, catchDiagnostics} from '@romejs/diagnostics';
 import {Reporter} from '@romejs/cli-reporter';
-import {createWatchmanClient} from '@romejs/codec-watchman';
+import {
+  createWatchmanClient,
+  WatchmanSubscriptionValue,
+} from '@romejs/codec-watchman';
 import {Event} from '@romejs/events';
 import {consumeJSON} from '@romejs/codec-json';
-import {normalizeManifest} from '@romejs/codec-js-manifest';
 import {humanizeNumber} from '@romejs/string-utils';
-import {matchPathPatterns} from '@romejs/path-match';
-import {WatchmanSubscriptionValue} from '@romejs/codec-watchman';
 import {WorkerPartialManifest} from '../../common/bridges/WorkerBridge';
 import {
   AbsoluteFilePath,
@@ -33,12 +38,14 @@ import {
 } from '@romejs/path';
 import {lstat, readFileText, exists, readdir, watch} from '@romejs/fs';
 import crypto = require('crypto');
+
 import fs = require('fs');
+
 import {
   getFileHandler,
   getFileHandlerExtensions,
 } from '../../common/fileHandlers';
-import {ProjectConfigSource} from '../project/ProjectManager';
+import {markup} from '@romejs/string-markup';
 
 const DEFAULT_DENYLIST = ['.hg', '.git'];
 
@@ -61,6 +68,44 @@ function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
   return [...GLOB_IGNORE, ...patterns];
 }
 
+function isValidManifest(path: AbsoluteFilePath): boolean {
+  if (path.getBasename() !== 'package.json') {
+    return false;
+  }
+
+  // If a manifest is in node_modules, then make sure we're directly inside
+  // a folder in node_modules.
+  //
+  // For unscoped package, the segments should be:
+  //   -1: package.json
+  //   -2: module folder
+  //   -3: node_modules
+  //
+  // For scoped package (@scope/some-module), the segments should be:
+  //   -1: package.json
+  //   -2: module folder
+  //   -3: scope folder
+  //   -4: node_modules
+  const segments = path.getSegments();
+  if (segments.includes('node_modules')) {
+    // Unscoped package
+    if (segments[segments.length - 3] === 'node_modules') {
+      return true;
+    }
+
+    // Scoped module
+    if (segments[segments.length - 4] === 'node_modules' &&
+        segments[segments.length -
+          3].startsWith('@')) {
+      return true;
+    }
+
+    return false;
+  }
+
+  return true;
+}
+
 // Whenever we're performing an operation on a set of files, always do these first as they may influence how the rest are processed
 const PRIORITY_FILES = new Set(ROME_CONFIG_FILENAMES);
 
@@ -75,8 +120,8 @@ type DeclareManifestOpts = {
 type CrawlOptions = {
   diagnostics: DiagnosticsProcessor;
   crawl: boolean;
-  onFoundDirectory?: (filename: AbsoluteFilePath) => void;
-  tick?: (filename: AbsoluteFilePath) => void;
+  onFoundDirectory?: (path: AbsoluteFilePath) => void;
+  tick?: (path: AbsoluteFilePath) => void;
 };
 
 export type StatsType = 'unknown' | 'directory' | 'file';
@@ -92,18 +137,8 @@ export type WatcherClose = () => void;
 export type MemoryFSGlobOptions = {
   extensions?: Array<string>;
   overrideIgnore?: PathPatterns;
-  getProjectIgnore?: (
-    project: ProjectDefinition,
-  ) => {
-    patterns: PathPatterns;
-    source?: ProjectConfigSource;
-  };
-  getProjectEnabled?: (
-    project: ProjectDefinition,
-  ) => {
-    enabled: boolean;
-    source?: ProjectConfigSource;
-  };
+  getProjectIgnore?: (project: ProjectDefinition) => PathPatterns;
+  getProjectEnabled?: (project: ProjectDefinition) => boolean;
   test?: (path: AbsoluteFilePath) => boolean;
 };
 
@@ -123,9 +158,9 @@ async function createRegularWatcher(
 
   // Create activity spinners for all connected reporters
   const activity = memoryFs.master.connectedReporters.progress({
-    initDelay: 1000,
+    initDelay: 1_000,
+    title: `Adding project ${projectFolder}`,
   });
-  activity.setTitle(`Adding project ${projectFolder}`);
 
   const watchers: AbsoluteFilePathMap<fs.FSWatcher> = new AbsoluteFilePathMap();
 
@@ -145,7 +180,10 @@ async function createRegularWatcher(
       const watcher = watch(
         folderPath,
         {recursive: true, persistent: false},
-        (eventType, filename) => {
+        (
+          eventType,
+          filename,
+        ) => {
           if (filename === null) {
             // TODO not sure how we want to handle this?
             return;
@@ -153,9 +191,8 @@ async function createRegularWatcher(
 
           const path = folderPath.resolve(filename);
 
-          memoryFs
-            .stat(path)
-            .then(newStats => {
+          memoryFs.stat(path).then(
+            (newStats) => {
               const diagnostics = memoryFs.master.createDisconnectedDiagnosticsProcessor(
                 [
                   {
@@ -177,14 +214,14 @@ async function createRegularWatcher(
                   onFoundDirectory,
                 });
               }
-            })
-            .catch(err => {
-              if (err.code === 'ENOENT') {
-                memoryFs.handleDeletion(path);
-              } else {
-                throw err;
-              }
-            });
+            },
+          ).catch((err) => {
+            if (err.code === 'ENOENT') {
+              memoryFs.handleDeletion(path);
+            } else {
+              throw err;
+            }
+          });
         },
       );
       watchers.set(folderPath, watcher);
@@ -224,23 +261,27 @@ async function createWatchmanWatcher(
   const projectFolder = projectFolderPath.join();
   const {connectedReporters} = memoryFs.master;
 
-  const activity = connectedReporters.progress();
-  activity.setTitle(`Adding project ${projectFolder} with watchman`);
+  const activity = connectedReporters.progress({
+    title: `Adding project ${projectFolder} with watchman`,
+  });
 
   let timeout;
 
   function queueCallout() {
-    timeout = setTimeout(
-      memoryFs.master.wrapFatal(() => {
-        connectedReporters.warn(
-          'Watchman is taking a while to respond. Watchman may have just started and is still crawling the disk.',
-        );
+      timeout =
+      setTimeout(
+        memoryFs.master.wrapFatal(
+          () => {
+            connectedReporters.warn(
+              'Watchman is taking a while to respond. Watchman may have just started and is still crawling the disk.',
+            );
 
-        // Show an even more aggressive message when watchman takes longer
-        queueCallout();
-      }),
-      5000,
-    );
+            // Show an even more aggressive message when watchman takes longer
+            queueCallout();
+          },
+        ),
+        5_000,
+      );
   }
 
   // Show a message when watchman takes too long
@@ -259,7 +300,7 @@ async function createWatchmanWatcher(
     });
 
     const initial: WatchmanSubscriptionValue = await event.wait();
-    if (initial.is_fresh_instance !== true) {
+    if (initial.isFreshInstance !== true) {
       throw new Error('Expected this to be a fresh instance');
     }
     clearTimeout(timeout);
@@ -272,9 +313,9 @@ async function createWatchmanWatcher(
         return;
       }
 
-      // rome-suppress lint/noExplicitAny
+      // rome-suppress-next-line lint/noExplicitAny
       const dirs: Array<[AbsoluteFilePath, any]> = [];
-      // rome-suppress lint/noExplicitAny
+      // rome-suppress-next-line lint/noExplicitAny
       const files: Array<[AbsoluteFilePath, any]> = [];
 
       for (const file of data.files) {
@@ -298,41 +339,33 @@ async function createWatchmanWatcher(
         }
       }
 
-      await Promise.all(
-        dirs.map(async ([path, info]) => {
-          await memoryFs.addDirectory(
-            path,
-            {
-              size: info.size,
-              mtime: info.mtime,
-              type: 'directory',
-            },
-            {diagnostics, crawl: false},
-          );
-        }),
-      );
+      await Promise.all(dirs.map(async ([path, info]) => {
+        await memoryFs.addDirectory(path, {
+          size: info.size,
+          mtime: info.mtime,
+          type: 'directory',
+        }, {diagnostics, crawl: false});
+      }));
 
-      await Promise.all(
-        files.map(async ([path, info]) => {
-          const stats: Stats = {
-            size: info.size,
-            mtime: info.mtime,
-            type: 'file',
-          };
+      await Promise.all(files.map(async ([path, info]) => {
+        const stats: Stats = {
+          size: info.size,
+          mtime: info.mtime,
+          type: 'file',
+        };
 
-          if (memoryFs.files.has(path)) {
-            await memoryFs.handleFileChange(path, stats, {
-              diagnostics,
-              crawl: false,
-            });
-          } else {
-            await memoryFs.addFile(path, stats, {
-              diagnostics,
-              crawl: false,
-            });
-          }
-        }),
-      );
+        if (memoryFs.files.has(path)) {
+          await memoryFs.handleFileChange(path, stats, {
+            diagnostics,
+            crawl: false,
+          });
+        } else {
+          await memoryFs.addFile(path, stats, {
+            diagnostics,
+            crawl: false,
+          });
+        }
+      }));
     }
 
     activity.setText(`Processing results`);
@@ -401,26 +434,21 @@ export default class MemoryFileSystem {
   files: AbsoluteFilePathMap<Stats>;
   manifests: AbsoluteFilePathMap<ManifestDefinition>;
 
-  watchers: Map<
-    string,
-    {
-      path: AbsoluteFilePath;
-      close: WatcherClose;
-    }
-  >;
+  watchers: Map<string, {
+    path: AbsoluteFilePath;
+    close: WatcherClose;
+  }>;
 
-  watchPromises: Map<
-    string,
-    {
-      promise: Promise<WatcherClose>;
-      path: AbsoluteFilePath;
-    }
-  >;
+  watchPromises: Map<string, {
+    promise: Promise<WatcherClose>;
+    path: AbsoluteFilePath;
+  }>;
 
-  changedFileEvent: Event<
-    {path: AbsoluteFilePath; oldStats: undefined | Stats; newStats: Stats},
-    void
-  >;
+  changedFileEvent: Event<{
+    path: AbsoluteFilePath;
+    oldStats: undefined | Stats;
+    newStats: Stats;
+  }, void>;
   deletedFileEvent: Event<AbsoluteFilePath, void>;
 
   init() {}
@@ -436,7 +464,9 @@ export default class MemoryFileSystem {
     watcher.close();
 
     // Go through and clear all files and directories from our internal maps
+
     // NOTE: We deliberately do not call 'deletedFileEvent' as the code that
+
     // calls us will already be cleaning up
     let queue: Array<AbsoluteFilePath> = [dirPath];
     while (queue.length > 0) {
@@ -472,12 +502,12 @@ export default class MemoryFileSystem {
     }
   }
 
-  isDirectory(filename: AbsoluteFilePath): boolean {
-    return this.directories.has(filename);
+  isDirectory(path: AbsoluteFilePath): boolean {
+    return this.directories.has(path);
   }
 
-  isFile(filename: AbsoluteFilePath): boolean {
-    return this.files.has(filename);
+  isFile(path: AbsoluteFilePath): boolean {
+    return this.files.has(path);
   }
 
   getFiles(): Array<Stats> {
@@ -506,6 +536,7 @@ export default class MemoryFileSystem {
         return def;
       }
     }
+    return undefined;
   }
 
   getPartialManifest(def: ManifestDefinition): WorkerPartialManifest {
@@ -515,7 +546,7 @@ export default class MemoryFileSystem {
     };
   }
 
-  addFileToDirectoryListing(path: AbsoluteFilePath) {
+  addFileToDirectoryListing(path: AbsoluteFilePath): void {
     const dirname = path.getParent();
     let listing = this.directoryListings.get(dirname);
     if (listing === undefined) {
@@ -525,7 +556,7 @@ export default class MemoryFileSystem {
     listing.set(path, path);
   }
 
-  handleDeletion(path: AbsoluteFilePath) {
+  handleDeletion(path: AbsoluteFilePath): void {
     // If a folder then evict all children
     const folderInfo = this.directories.get(path);
     if (folderInfo !== undefined) {
@@ -562,10 +593,10 @@ export default class MemoryFileSystem {
     this.deletedFileEvent.send(path);
   }
 
-  handleDeletedHaste(path: AbsoluteFilePath) {
+  handleDeletedHaste(path: AbsoluteFilePath): void {
     const hasteName = this.getHasteName(path);
     if (hasteName === undefined) {
-      return undefined;
+      return;
     }
 
     const projects = this.master.projectManager.getHierarchyFromFilename(path);
@@ -577,7 +608,7 @@ export default class MemoryFileSystem {
     }
   }
 
-  handleDeletedManifest(path: AbsoluteFilePath) {
+  handleDeletedManifest(path: AbsoluteFilePath): void {
     const folder = path.getParent();
     const def = this.manifests.get(folder);
     if (def !== undefined) {
@@ -599,12 +630,32 @@ export default class MemoryFileSystem {
     return changed;
   }
 
+  async waitIfInitializingWatch(
+    projectFolderPath: AbsoluteFilePath,
+  ): Promise<void> {
+    // Defer if we're initializing a parent folder
+    for (const {promise, path} of this.watchPromises.values()) {
+      if (projectFolderPath.isRelativeTo(path)) {
+        await promise;
+        return;
+      }
+    }
+
+    // Wait if we're initializing descendents
+    for (const {path, promise} of this.watchPromises.values()) {
+      if (path.isRelativeTo(projectFolderPath)) {
+        await promise;
+      }
+    }
+  }
+
   async watch(
     projectFolderPath: AbsoluteFilePath,
     projectConfig: ProjectConfig,
   ): Promise<void> {
     const {logger} = this.master;
     const projectFolder = projectFolderPath.join();
+    const folderLink = markup`<filelink target="${projectFolder}" />`;
 
     // Defer if we're already currently initializing this project
     const cached = this.watchPromises.get(projectFolder);
@@ -622,31 +673,17 @@ export default class MemoryFileSystem {
     for (const {path} of this.watchers.values()) {
       if (projectFolderPath.isRelativeTo(path)) {
         logger.info(
-          `[MemoryFileSystem] Skipped crawl for ${projectFolder} because we're already watching the parent directory ${path.join()}`,
+          `[MemoryFileSystem] Skipped crawl for ${folderLink} because we're already watching the parent directory ${path.join()}`,
         );
         return undefined;
       }
     }
 
-    // Defer if we're initializing a parent folder
-    for (const {promise, path} of this.watchPromises.values()) {
-      if (projectFolderPath.isRelativeTo(path)) {
-        await promise;
-        return undefined;
-      }
-    }
-
-    // Wait if we're initializing descendents
-    for (const {path, promise} of this.watchPromises.values()) {
-      if (path.isRelativeTo(projectFolderPath)) {
-        await promise;
-      }
-    }
+    // Wait for other initializations
+    await this.waitIfInitializingWatch(projectFolderPath);
 
     // New watch target
-    logger.info(
-      `[MemoryFileSystem] Adding new project folder ${projectFolder}`,
-    );
+    logger.info(`[MemoryFileSystem] Adding new project folder ${folderLink}`);
 
     // Remove watchers that are descedents of this folder as this watcher will handle them
     for (const [loc, {close, path}] of this.watchers) {
@@ -656,7 +693,7 @@ export default class MemoryFileSystem {
       }
     }
 
-    const diagnostics = new DiagnosticsProcessor({
+    const diagnostics = this.master.createDiagnosticsProcessor({
       origins: [
         {
           category: 'memory-fs',
@@ -667,7 +704,7 @@ export default class MemoryFileSystem {
 
     let promise;
     if (projectConfig.files.watchman) {
-      logger.info(`[MemoryFileSystem] Watching ${projectFolder} with watchman`);
+      logger.info(`[MemoryFileSystem] Watching ${folderLink} with watchman`);
       promise = createWatchmanWatcher(
         this,
         diagnostics,
@@ -675,7 +712,7 @@ export default class MemoryFileSystem {
         projectConfig,
       );
     } else {
-      logger.info(`[MemoryFileSystem] Watching ${projectFolder} with fs.watch`);
+      logger.info(`[MemoryFileSystem] Watching ${folderLink} with fs.watch`);
       promise = createRegularWatcher(this, diagnostics, projectFolderPath);
     }
     this.watchPromises.set(projectFolder, {
@@ -710,25 +747,23 @@ export default class MemoryFileSystem {
     };
   }
 
-  getMtime(filename: AbsoluteFilePath) {
-    const stats = this.getFileStats(filename);
+  getMtime(path: AbsoluteFilePath) {
+    const stats = this.getFileStats(path);
     if (stats === undefined) {
-      throw new Error(
-        `File ${filename.join()} not in database, cannot get mtime`,
-      );
+      throw new Error(`File ${path.join()} not in database, cannot get mtime`);
     } else {
       return stats.mtime;
     }
   }
 
-  getFileStats(filename: AbsoluteFilePath): undefined | Stats {
-    return this.files.get(filename);
+  getFileStats(path: AbsoluteFilePath): undefined | Stats {
+    return this.files.get(path);
   }
 
-  getFileStatsAssert(filename: AbsoluteFilePath): Stats {
-    const stats = this.getFileStats(filename);
+  getFileStatsAssert(path: AbsoluteFilePath): Stats {
+    const stats = this.getFileStats(path);
     if (stats === undefined) {
-      throw new Error(`Expected file stats for ${filename}`);
+      throw new Error(`Expected file stats for ${path}`);
     }
     return stats;
   }
@@ -771,7 +806,7 @@ export default class MemoryFileSystem {
       }
 
       const manifest = this.getManifest(packagePath);
-      if (manifest !== undefined && manifest.raw.haste_commonjs === true) {
+      if (manifest !== undefined && manifest.raw.hasteCommonjs === true) {
         return false;
       }
     }
@@ -791,11 +826,10 @@ export default class MemoryFileSystem {
 
     if (handler.hasteMode === 'ext') {
       ext = `.${ext}`; // we also want to remove the dot suffix from the haste name
-
       if (!filename.endsWith(ext)) {
         throw new Error(
-          `Expected ${filename} to end with ${ext} as it was returned as the extension name`,
-        );
+            `Expected ${filename} to end with ${ext} as it was returned as the extension name`,
+          );
       }
 
       return basename.slice(0, -ext.length);
@@ -807,19 +841,15 @@ export default class MemoryFileSystem {
   }
 
   // This is a wrapper around _declareManifest as it can produce diagnostics
-  async declareManifest(
-    opts: DeclareManifestOpts,
-  ): Promise<undefined | string> {
-    try {
-      return await this._declareManifest(opts);
-    } catch (err) {
-      const diagnostics = getDiagnosticsFromError(err);
+  async declareManifest(opts: DeclareManifestOpts): Promise<undefined | string> {
+    const {value, diagnostics} = await catchDiagnostics(() => {
+      return this._declareManifest(opts);
+    });
 
-      if (diagnostics === undefined) {
-        throw err;
-      } else {
-        opts.diagnostics.addDiagnostics(diagnostics);
-      }
+    if (diagnostics === undefined) {
+      return value;
+    } else {
+      opts.diagnostics.addDiagnostics(diagnostics);
       return undefined;
     }
   }
@@ -831,13 +861,10 @@ export default class MemoryFileSystem {
   }: DeclareManifestOpts): Promise<undefined | string> {
     // Fetch the manifest
     const manifestRaw = await readFileText(path);
-    const hash = crypto
-      .createHash('sha256')
-      .update(manifestRaw)
-      .digest('hex');
+    const hash = crypto.createHash('sha256').update(manifestRaw).digest('hex');
 
     const consumer = consumeJSON({
-      path: path,
+      path,
       input: manifestRaw,
       consumeDiagnosticCategory: 'parse/manifest',
     });
@@ -857,7 +884,7 @@ export default class MemoryFileSystem {
     const manifestId = this.manifestCounter++;
     const def: ManifestDefinition = {
       id: manifestId,
-      path: path,
+      path,
       folder,
       consumer,
       manifest,
@@ -876,12 +903,7 @@ export default class MemoryFileSystem {
     const {projectManager} = this.master;
     const project = projectManager.findProjectExisting(path);
     if (project !== undefined) {
-      projectManager.declareManifest(
-        project,
-        isProjectPackage,
-        def,
-        diagnostics,
-      );
+      projectManager.declareManifest(project, isProjectPackage, def, diagnostics);
     }
 
     // Tell all workers of our discovery
@@ -926,10 +948,7 @@ export default class MemoryFileSystem {
       if (getProjectIgnore !== undefined) {
         const projectIgnore = ignoresByProject.get(project);
         if (projectIgnore === undefined) {
-          ignore = concatGlobIgnore([
-            ...ignore,
-            ...getProjectIgnore(project).patterns,
-          ]);
+          ignore = concatGlobIgnore([...ignore, ...getProjectIgnore(project)]);
           ignoresByProject.set(project, ignore);
         } else {
           ignore = projectIgnore;
@@ -945,10 +964,7 @@ export default class MemoryFileSystem {
 
       // Add if a matching file
       if (this.files.has(path) && ignoreMatched === 'NO_MATCH') {
-        if (
-          getProjectEnabled !== undefined &&
-          !getProjectEnabled(project).enabled
-        ) {
+        if (getProjectEnabled !== undefined && !getProjectEnabled(project)) {
           continue;
         }
 
@@ -975,6 +991,7 @@ export default class MemoryFileSystem {
       }
 
       // Crawl if we're a folder
+
       // NOTE: We still continue crawling on implicit matches
       const listing = this.directoryListings.get(path);
       if (listing !== undefined) {
@@ -1019,8 +1036,8 @@ export default class MemoryFileSystem {
     return count;
   }
 
-  hasStatsChanged(filename: AbsoluteFilePath, newStats: Stats): boolean {
-    const oldStats = this.directories.get(filename) || this.files.get(filename);
+  hasStatsChanged(path: AbsoluteFilePath, newStats: Stats): boolean {
+    const oldStats = this.directories.get(path) || this.files.get(path);
     return oldStats === undefined || newStats.mtime !== oldStats.mtime;
   }
 
@@ -1146,7 +1163,7 @@ export default class MemoryFileSystem {
     }
 
     // If this is a package.json then declare this module and setup the correct haste variables
-    if (basename === 'package.json') {
+    if (isValidManifest(path)) {
       hasteName = await this.declareManifest({
         diagnostics: opts.diagnostics,
         dirname,

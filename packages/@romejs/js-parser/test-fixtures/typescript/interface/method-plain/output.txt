@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   directives: Array []
   filename: 'input.ts'
@@ -103,7 +104,7 @@ Program {
               }
             }
             optional: false
-            typeAnnotation: undefined
+            returnType: undefined
             loc: Object {
               filename: 'input.ts'
               end: Object {
@@ -183,7 +184,7 @@ Program {
                 line: 3
               }
             }
-            typeAnnotation: VoidKeywordTypeAnnotation {
+            returnType: VoidKeywordTypeAnnotation {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {

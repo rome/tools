@@ -8,20 +8,17 @@
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
 import {FunctionBinding} from '@romejs/js-compiler/scope/bindings';
+import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'noFunctionAssign',
   enter(path: Path): AnyNode {
     const {node, scope} = path;
 
-    if (
-      node.type === 'AssignmentIdentifier' &&
-      scope.getBinding(node.name) instanceof FunctionBinding
-    ) {
-      path.context.addNodeDiagnostic(node, {
-        category: 'lint/noFunctionAssign',
-        message: 'Reassignment of function declaration',
-      });
+    if (node.type === 'AssignmentIdentifier' &&
+          scope.getBinding(node.name) instanceof
+          FunctionBinding) {
+      path.context.addNodeDiagnostic(node, descriptions.LINT.NO_FUNCTION_ASSIGN);
     }
 
     return node;

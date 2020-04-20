@@ -11,6 +11,7 @@ import {
   isAlpha,
   isEscaped,
   TokenValues,
+  Position,
 } from '@romejs/parser-core';
 import {
   Tokens,
@@ -18,15 +19,19 @@ import {
   TagNode,
   ChildNode,
   Children,
-  TagName,
+  MarkupTagName,
 } from './types';
 import {inc, Number0, add, get0} from '@romejs/ob1';
+import {descriptions} from '@romejs/diagnostics';
+import {unescapeTextValue} from './escape';
 
 const globalAttributes: Array<string> = ['emphasis', 'dim'];
 
 const tags: Map<string, Array<string>> = new Map();
+tags.set('pad', ['dir', 'char', 'count']);
 tags.set('emphasis', []);
-tags.set('number', ['approx']);
+tags.set('number', ['approx', 'pluralSuffix', 'singularSuffix']);
+tags.set('grammarNumber', ['plural', 'singular', 'none']);
 tags.set('hyperlink', ['target']);
 tags.set('filelink', ['target', 'column', 'line']);
 tags.set('inverse', []);
@@ -71,12 +76,7 @@ tags.set('bgBrightWhite', []);
 tags.set('command', []);
 
 //
-
-function isStringValueChar(
-  char: string,
-  index: Number0,
-  input: string,
-): boolean {
+function isStringValueChar(char: string, index: Number0, input: string): boolean {
   if (char === '"' && !isEscaped(index, input)) {
     return false;
   }
@@ -85,260 +85,265 @@ function isStringValueChar(
 }
 
 function isTextChar(char: string, index: Number0, input: string): boolean {
-  return !isTagChar(index, input);
+  return !isTagStartChar(index, input);
 }
 
-export function isTagChar(index: Number0, input: string): boolean {
+export function isTagStartChar(index: Number0, input: string): boolean {
   const i = get0(index);
-  return (
-    input[i] === '<' &&
-    !isEscaped(index, input) &&
-    (isAlpha(input[i + 1]) || input[i + 1] === '/')
-  );
+  return input[i] === '<' && !isEscaped(index, input);
 }
 
-type State = {
-  inTagHead: boolean;
-};
+type State = {inTagHead: boolean};
 
 type StringMarkupParserOptions = ParserOptions;
 
 const createStringMarkupParser = createParser(
-  ParserCore =>
-    class StringMarkupParser extends ParserCore<Tokens, State> {
-      constructor(opts: StringMarkupParserOptions) {
-        super(opts, 'parse/stringMarkup', {inTagHead: false});
-      }
+  (ParserCore) => class StringMarkupParser extends ParserCore<Tokens, State> {
+    constructor(opts: StringMarkupParserOptions) {
+      super(opts, 'parse/stringMarkup', {inTagHead: false});
+    }
 
-      tokenizeWithState(
-        index: Number0,
-        input: string,
-        state: State,
-      ): undefined | {token: TokenValues<Tokens>; state: State} {
-        const escaped = isEscaped(index, input);
-        const char = input[get0(index)];
+    tokenizeWithState(
+      index: Number0,
+      input: string,
+      state: State,
+    ): undefined | {
+      token: TokenValues<Tokens>;
+      state: State;
+    } {
+      const escaped = isEscaped(index, input);
+      const char = input[get0(index)];
 
-        if (!escaped && state.inTagHead) {
-          if (char === ' ') {
-            return this.lookahead(inc(index));
-          }
-
-          if (char === '=') {
-            return {
-              state,
-              token: this.finishToken('Equals'),
-            };
-          }
-
-          if (char === '/') {
-            return {
-              state,
-              token: this.finishToken('Slash'),
-            };
-          }
-
-          if (isAlpha(char)) {
-            const [value, end] = this.readInputFrom(index, isAlpha);
-            return {
-              state,
-              token: this.finishValueToken('Word', value, end),
-            };
-          }
-
-          if (char === '"') {
-            const [value, stringValueEnd, unclosed] = this.readInputFrom(
-              inc(index),
-              isStringValueChar,
-            );
-
-            if (unclosed) {
-              throw this.unexpected({
-                message: 'Unclosed string',
-                start: this.getPositionFromIndex(stringValueEnd),
-              });
-            }
-
-            const end = add(stringValueEnd, 1);
-            return {
-              state,
-              token: this.finishValueToken('String', value, end),
-            };
-          }
-
-          if (char === '>') {
-            return {
-              state: {
-                inTagHead: false,
-              },
-              token: this.finishToken('Greater'),
-            };
-          }
+      if (!escaped && state.inTagHead) {
+        if (char === ' ') {
+          return this.lookahead(inc(index));
         }
 
-        if (isTagChar(index, input)) {
+        if (char === '=') {
+          return {
+            state,
+            token: this.finishToken('Equals'),
+          };
+        }
+
+        if (char === '/') {
+          return {
+            state,
+            token: this.finishToken('Slash'),
+          };
+        }
+
+        if (isAlpha(char)) {
+          const [value, end] = this.readInputFrom(index, isAlpha);
+          return {
+            state,
+            token: this.finishValueToken('Word', value, end),
+          };
+        }
+
+        if (char === '"') {
+          const [value, stringValueEnd, unclosed] = this.readInputFrom(
+            inc(index),
+            isStringValueChar,
+          );
+
+          if (unclosed) {
+            throw this.unexpected({
+              description: descriptions.STRING_MARKUP.UNCLOSED_STRING,
+              start: this.getPositionFromIndex(stringValueEnd),
+            });
+          }
+
+          const end = add(stringValueEnd, 1);
+          return {
+            state,
+            token: this.finishValueToken('String', value, end),
+          };
+        }
+
+        if (char === '>') {
           return {
             state: {
-              inTagHead: true,
+              inTagHead: false,
             },
-            token: this.finishToken('Less'),
+            token: this.finishToken('Greater'),
           };
         }
+      }
 
-        // Keep eating text until we hit a <
-        const [value, end] = this.readInputFrom(index, isTextChar);
+      if (isTagStartChar(index, input)) {
         return {
-          state,
-          token: {
-            type: 'Text',
-            value: normalizeTextValue(value),
-            start: index,
-            end,
+          state: {
+            inTagHead: true,
           },
+          token: this.finishToken('Less'),
         };
       }
 
-      atTagEnd(): boolean {
-        return (
-          this.matchToken('Less') && this.lookahead().token.type === 'Slash'
-        );
+      // Keep eating text until we hit a <
+      const [value, end] = this.readInputFrom(index, isTextChar);
+      return {
+        state,
+        token: {
+          type: 'Text',
+          value: unescapeTextValue(value),
+          start: index,
+          end,
+        },
+      };
+    }
+
+    atTagEnd(): boolean {
+      return this.matchToken('Less') && this.lookahead().token.type === 'Slash';
+    }
+
+    parseTag(headStart: Position): TagNode {
+      const nameToken = this.expectToken('Word');
+      const rawName = nameToken.value;
+
+      const allowedAttributes = tags.get(rawName);
+      if (allowedAttributes === undefined) {
+        throw this.unexpected({
+          description: descriptions.STRING_MARKUP.UNKNOWN_TAG_NAME(rawName),
+          start: this.getPositionFromIndex(nameToken.start),
+        });
       }
 
-      parseTag(): TagNode {
-        const nameToken = this.expectToken('Word');
-        const rawName = nameToken.value;
+      // rome-suppress-next-line lint/noExplicitAny
+      const tagName: MarkupTagName = (rawName as any);
+      const attributes: TagAttributes = new Map();
+      const children: Children = [];
+      let selfClosing = false;
 
-        const allowedAttributes = tags.get(rawName);
-        if (allowedAttributes === undefined) {
-          throw this.unexpected({
-            message: `Unknown tag name <emphasis>${rawName}</emphasis>`,
-            start: this.getPositionFromIndex(nameToken.start),
-          });
-        }
+      // Parse attributes
+      while (!this.matchToken('EOF') && !this.matchToken('Greater')) {
+        const keyToken = this.getToken();
 
-        // rome-suppress lint/noExplicitAny
-        const tagName: TagName = rawName as any;
-        const attributes: TagAttributes = new Map();
-        const children: Children = [];
-        let selfClosing = false;
+        let key;
+        if (keyToken.type === 'Word') {
+          key = keyToken.value;
 
-        // Parse attributes
-        while (!this.matchToken('EOF') && !this.matchToken('Greater')) {
-          const keyToken = this.getToken();
-
-          let key;
-          if (keyToken.type === 'Word') {
-            key = keyToken.value;
-
-            if (
-              !allowedAttributes.includes(key) &&
-              !globalAttributes.includes(key)
-            ) {
-              throw this.unexpected({
-                message: `${key} is not a valid attribute name for <${tagName}>`,
-              });
-            }
-
-            this.nextToken();
-
-            // Shorthand properties
-            if (
-              this.matchToken('Word') ||
-              this.matchToken('Slash') ||
-              this.matchToken('Greater')
-            ) {
-              attributes.set(key, 'true');
-              continue;
-            }
-
-            this.expectToken('Equals');
-
-            const valueToken = this.expectToken('String');
-            if (valueToken.type !== 'String') {
-              throw new Error('Expected String');
-            }
-            const value = valueToken.value;
-
-            attributes.set(key, value);
-          } else if (keyToken.type === 'Slash') {
-            this.nextToken();
-            selfClosing = true;
-          } else {
-            throw this.unexpected({
-              message: 'Expected attribute name',
-            });
-          }
-        }
-
-        this.expectToken('Greater');
-
-        // Verify closing tag
-        if (!selfClosing) {
-          // Build children
-          while (!this.matchToken('EOF') && !this.atTagEnd()) {
-            children.push(this.parseChild());
+          if (!allowedAttributes.includes(key) &&
+              !globalAttributes.includes(key)) {
+            throw this.unexpected(
+                {
+                  description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
+                    tagName,
+                    key,
+                  ),
+                },
+              );
           }
 
-          if (this.matchToken('EOF')) {
-            throw this.unexpected({
-              message: `Unclosed ${tagName} tag`,
-            });
-          } else {
-            this.expectToken('Less');
-            this.expectToken('Slash');
+          this.nextToken();
 
-            const name = this.getToken();
-            if (name.type === 'Word') {
-              if (name.value !== tagName) {
-                throw this.unexpected({
-                  message: `Expected to close ${tagName} but found ${name.value}`,
-                });
-              }
-
-              this.nextToken();
-            } else {
-              throw this.unexpected({
-                message: 'Expected closing tag name',
-              });
-            }
-
-            this.expectToken('Greater');
+          // Shorthand properties
+          if (this.matchToken('Word') || this.matchToken('Slash') ||
+              this.matchToken('Greater')) {
+            attributes.set(key, 'true');
+            continue;
           }
-        }
 
-        return {
-          type: 'Tag',
-          attributes,
-          name: tagName,
-          children,
-        };
-      }
+          this.expectToken('Equals');
 
-      parseChild(): ChildNode {
-        const token = this.getToken();
-        this.nextToken();
+          const valueToken = this.expectToken('String');
+          if (valueToken.type !== 'String') {
+            throw new Error('Expected String');
+          }
+          const value = valueToken.value;
 
-        if (token.type === 'Text') {
-          return {
-            type: 'Text',
-            value: token.value,
-          };
-        } else if (token.type === 'Less') {
-          return this.parseTag();
+          attributes.set(key, value);
+        } else if (keyToken.type === 'Slash') {
+          this.nextToken();
+          selfClosing = true;
         } else {
           throw this.unexpected({
-            message: 'Unknown child start',
+            description: descriptions.STRING_MARKUP.EXPECTED_ATTRIBUTE_NAME,
           });
         }
       }
 
-      parse(): Children {
-        const children: Children = [];
-        while (!this.matchToken('EOF')) {
+      this.expectToken('Greater');
+
+      const headEnd = this.getPosition();
+
+      // Verify closing tag
+      if (!selfClosing) {
+        while ( // Build children
+        !this.matchToken('EOF') && !this.atTagEnd()) {
           children.push(this.parseChild());
         }
-        return children;
+
+        if (this.matchToken('EOF')) {
+          throw this.unexpected({
+            description: descriptions.STRING_MARKUP.UNCLOSED_TAG(
+              tagName,
+              this.finishLocAt(headStart, headEnd),
+            ),
+          });
+        } else {
+          this.expectToken('Less');
+          this.expectToken('Slash');
+
+          const name = this.getToken();
+          if (name.type === 'Word') {
+            if (name.value !== tagName) {
+              throw this.unexpected(
+                  {
+                    description: descriptions.STRING_MARKUP.INCORRECT_CLOSING_TAG_NAME(
+                      tagName,
+                      name.value,
+                    ),
+                  },
+                );
+            }
+
+            this.nextToken();
+          } else {
+            throw this.unexpected({
+              description: descriptions.STRING_MARKUP.EXPECTED_CLOSING_TAG_NAME,
+            });
+          }
+
+          this.expectToken('Greater');
+        }
       }
-    },
+
+      return {
+        type: 'Tag',
+        attributes,
+        name: tagName,
+        children,
+      };
+    }
+
+    parseChild(): ChildNode {
+      const start = this.getPosition();
+      const token = this.getToken();
+      this.nextToken();
+
+      if (token.type === 'Text') {
+        return {
+          type: 'Text',
+          value: token.value,
+        };
+      } else if (token.type === 'Less') {
+        return this.parseTag(start);
+      } else {
+        throw this.unexpected({
+          description: descriptions.STRING_MARKUP.UNKNOWN_START,
+        });
+      }
+    }
+
+    parse(): Children {
+      const children: Children = [];
+      while (!this.matchToken('EOF')) {
+        children.push(this.parseChild());
+      }
+      return children;
+    }
+  },
 );
 
 export function parseMarkup(input: string) {
@@ -347,8 +352,4 @@ export function parseMarkup(input: string) {
   } catch (err) {
     throw err;
   }
-}
-
-function normalizeTextValue(str: string): string {
-  return str.replace(/\\<([a-zA-Z\/])/g, '<$1');
 }

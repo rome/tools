@@ -10,4 +10,5 @@ export {default as buildGraph} from './api/buildGraph';
 export {default as check} from './api/check';
 
 export * from './types/index';
+
 export * from './types';

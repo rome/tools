@@ -27,8 +27,9 @@ import {
 import {WorkerContainer} from '../WorkerManager';
 import {
   DiagnosticsProcessor,
-  DiagnosticPointer,
+  DiagnosticLocation,
   createSingleDiagnosticError,
+  descriptions,
 } from '@romejs/diagnostics';
 import {matchPathPatterns} from '@romejs/path-match';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
@@ -38,6 +39,8 @@ import {
   URLFilePath,
   AbsoluteFilePathMap,
   UnknownFilePathMap,
+  createAbsoluteFilePath,
+  AbsoluteFilePathSet,
 } from '@romejs/path';
 import {JSONFileReference, FileReference} from '../../common/types/files';
 import {
@@ -48,6 +51,7 @@ import {
 import {createDirectory, readFileText} from '@romejs/fs';
 import {Consumer} from '@romejs/consume';
 import {consumeJSON} from '@romejs/codec-json';
+import {VCSClient, getVCSClient} from '@romejs/vcs';
 
 function cleanUidParts(parts: Array<string>): string {
   let uid = '';
@@ -64,7 +68,12 @@ function cleanUidParts(parts: Array<string>): string {
       sharedPrefix += part[i];
     }
 
-    uid += part.slice(sharedPrefix.length);
+    const partWithoutExtension = part.split('.')[0];
+    if (sharedPrefix === partWithoutExtension) {
+      uid += part;
+    } else {
+      uid += part.slice(sharedPrefix.length);
+    }
 
     lastPart = part;
   }
@@ -152,7 +161,7 @@ export default class ProjectManager {
   projectFolderToId: AbsoluteFilePathMap<number>;
 
   async init() {
-    this.master.memoryFs.deletedFileEvent.subscribe(path => {
+    this.master.memoryFs.deletedFileEvent.subscribe((path) => {
       this.handleDeleted(path);
     });
 
@@ -192,6 +201,51 @@ export default class ProjectManager {
     return this.uidToFilename.get(uid);
   }
 
+  getFilePathFromUidOrAbsolute(
+    uid: undefined | string,
+  ): undefined | AbsoluteFilePath {
+    if (uid === undefined) {
+      return undefined;
+    }
+
+    const uidToPath = this.getFilePathFromUid(uid);
+    if (uidToPath !== undefined) {
+      return uidToPath;
+    }
+
+    const path = createAbsoluteFilePath(uid);
+    if (path.isAbsolute()) {
+      return path.assertAbsolute();
+    }
+
+    return undefined;
+  }
+
+  normalizeFilenamesToFilePaths(filenames: Iterable<undefined | string>): {
+    absolutes: AbsoluteFilePathSet;
+    others: Set<undefined | string>;
+  } {
+    const others: Set<undefined | string> = new Set();
+    const absolutes = new AbsoluteFilePathSet();
+
+    for (const filename of filenames) {
+      if (filename === undefined) {
+        others.add(undefined);
+        continue;
+      }
+
+      const absolute = this.getFilePathFromUidOrAbsolute(filename);
+      if (absolute === undefined) {
+        // Relative path
+        others.add(filename);
+      } else {
+        absolutes.add(absolute);
+      }
+    }
+
+    return {absolutes, others};
+  }
+
   setUid(path: AbsoluteFilePath, uid: string) {
     const filename = path.join();
 
@@ -223,14 +277,16 @@ export default class ProjectManager {
     const project = this.assertProjectExisting(path);
 
     // For haste projects, use the haste name as the uid. If the user has multiple projects
+
     // with colliding uids then that's fine, it will just cause more cache misses as we compare
+
     // mtime, project config hash etc stored in the cache.
     if (this.isHasteDeclared(path, project)) {
       const hasteName = this.master.memoryFs.getHasteName(path);
       if (hasteName === undefined) {
         throw new Error(
-          'isHasteDeclared returned true so this should always return a valid name',
-        );
+            'isHasteDeclared returned true so this should always return a valid name',
+          );
       }
       this.setUid(path, hasteName);
       return hasteName;
@@ -285,10 +341,7 @@ export default class ProjectManager {
     };
   }
 
-  getURLFileReference(
-    local: AbsoluteFilePath,
-    url: URLFilePath,
-  ): FileReference {
+  getURLFileReference(local: AbsoluteFilePath, url: URLFilePath): FileReference {
     if (!this.remoteToLocalPath.has(url)) {
       this.remoteToLocalPath.set(url, local);
       this.localPathToRemote.set(local, url);
@@ -328,8 +381,8 @@ export default class ProjectManager {
       const project = this.projects.get(evictProjectId);
       if (project === undefined) {
         throw new Error(
-          `Expected project of id ${evictProjectId} since it was declared in projectConfigLocsToId`,
-        );
+            `Expected project of id ${evictProjectId} since it was declared in projectConfigLocsToId`,
+          );
       }
 
       // Add all parent projects
@@ -378,7 +431,7 @@ export default class ProjectManager {
 
       // Evict packages
       bridge.updateManifests.send({
-        manifests: Array.from(project.manifests.values(), def => ({
+        manifests: Array.from(project.manifests.values(), (def) => ({
           id: def.id,
           manifest: undefined,
         })),
@@ -397,9 +450,9 @@ export default class ProjectManager {
         ownedFiles.push(path);
       }
     }
-    await Promise.all(
-      ownedFiles.map(path => this.master.fileAllocator.evict(path)),
-    );
+    await Promise.all(ownedFiles.map((path) => this.master.fileAllocator.evict(
+      path,
+    )));
 
     // Tell the MemoryFileSystem to stop watching and clear it's maps
     this.master.memoryFs.unwatch(project.folder);
@@ -421,7 +474,7 @@ export default class ProjectManager {
 
     // If we're currently adding a project then add it to the queue
     if (this.isAddingProject) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         this.pendingAddProjects.push({projectFolder, configPath, resolve});
       });
     }
@@ -439,8 +492,7 @@ export default class ProjectManager {
       project: ProjectDefinition;
       resolve: (project: ProjectDefinition) => void;
     }> = [];
-    for (const {projectFolder, configPath, resolve} of this
-      .pendingAddProjects) {
+    for (const {projectFolder, configPath, resolve} of this.pendingAddProjects) {
       // Check if the project has already been resolved
       const existing = resolvedProjectsByDir.get(projectFolder.join());
       if (existing !== undefined) {
@@ -476,18 +528,45 @@ export default class ProjectManager {
 
   findProjectConfigConsumer(
     def: ProjectDefinition,
-    test: (consumer: Consumer) => undefined | Consumer,
+    test: (consumer: Consumer) => undefined | false | Consumer,
   ): ProjectConfigSource {
     const meta = assertHardMeta(def.meta);
 
     for (const consumer of meta.consumersChain) {
       const value = test(consumer);
-      if (value !== undefined && value.exists()) {
+      if (value !== undefined && value !== false && value.exists()) {
         return {value, consumer: meta.consumer};
       }
     }
 
     return {value: undefined, consumer: meta.consumer};
+  }
+
+  async getVCSClient(project: ProjectDefinition): Promise<VCSClient> {
+    const client = await getVCSClient(project.config.vcs.root);
+
+    if (client === undefined) {
+      const {
+        value: rootConfigConsumer,
+        consumer,
+      } = this.findProjectConfigConsumer(project, (consumer) => consumer.has(
+        'vsc',
+      ) && consumer.get('vsc').get('root'));
+
+      const rootConfigLocation: undefined | DiagnosticLocation = rootConfigConsumer ===
+        undefined ? undefined : rootConfigConsumer.getDiagnosticLocation();
+
+      const location: DiagnosticLocation = rootConfigLocation === undefined
+        ? consumer.getDiagnosticLocation()
+        : rootConfigLocation;
+
+      throw createSingleDiagnosticError({
+        description: descriptions.PROJECT_MANAGER.NO_VCS(rootConfigLocation),
+        location,
+      });
+    } else {
+      return client;
+    }
   }
 
   async addProject(
@@ -583,19 +662,17 @@ export default class ProjectManager {
           continue;
         }
 
-        diagnostics.addDiagnostic({
-          category: 'projectManager/nameCollision',
-          filename: def.path.join(),
-          message: `Duplicate package name <emphasis>${name}</emphasis>`,
-          ...def.consumer.get('name').getDiagnosticPointer('inner-value'),
-          advice: [
-            {
-              type: 'log',
-              category: 'info',
-              message: `Defined already by <filelink target="${existingPackage.path}" />`,
-            },
-          ],
-        });
+        diagnostics.addDiagnostic(
+          {
+            description: descriptions.PROJECT_MANAGER.DUPLICATE_PACKAGE(
+              name,
+              existingPackage.path.join(),
+            ),
+            location: def.consumer.get('name').getDiagnosticLocation(
+              'inner-value',
+            ),
+          },
+        );
         return;
       }
     }
@@ -659,24 +736,20 @@ export default class ProjectManager {
         });
 
         // If both resolve to the same location then this isn't a collision and we should just ignore it
-        if (
-          existingResolved.type === 'FOUND' &&
-          hastePath.equal(existingResolved.ref.real)
-        ) {
+        if (existingResolved.type === 'FOUND' && hastePath.equal(
+            existingResolved.ref.real,
+          )) {
           continue;
         }
 
         diagnostics.addDiagnostic({
-          category: 'projectManager/nameCollision',
-          filename: hastePath.join(),
-          message: `Found a haste collision for <emphasis>${hasteName}</emphasis>`,
-          advice: [
-            {
-              type: 'log',
-              category: 'info',
-              message: `Defined already by <filelink emphasis target="${existing}" />`,
-            },
-          ],
+          description: descriptions.PROJECT_MANAGER.HASTE_COLLISION(
+            hasteName,
+            existing.join(),
+          ),
+          location: {
+            filename: hastePath.join(),
+          },
         });
         continue;
       }
@@ -716,9 +789,9 @@ export default class ProjectManager {
       promises.push(
         worker.bridge.updateProjects.call({projects: projectsSerial}),
       );
-      promises.push(
-        worker.bridge.updateManifests.call({manifests: manifestsSerial}),
-      );
+      promises.push(worker.bridge.updateManifests.call({
+        manifests: manifestsSerial,
+      }));
     }
 
     await Promise.all(promises);
@@ -726,7 +799,7 @@ export default class ProjectManager {
 
   async assertProject(
     path: AbsoluteFilePath,
-    pointer?: DiagnosticPointer,
+    location?: DiagnosticLocation,
   ): Promise<ProjectDefinition> {
     // We won't recurse up and check a parent project if we've already visited it
     const syncProject = this.findProjectExisting(path);
@@ -734,6 +807,7 @@ export default class ProjectManager {
 
     if (project) {
       // Continue searching for projects up the directory
+
       // We don't do this for root projects since it would be a waste, but there's no implications other than some unnecessary work if we did
       if (project.config.root === false && syncProject === undefined) {
         await this.findProject(project.folder.getParent());
@@ -742,26 +816,15 @@ export default class ProjectManager {
       return project;
     }
 
-    if (pointer === undefined) {
+    if (location === undefined) {
       throw new Error(
-        `Couldn't find a project. Checked ${ROME_CONFIG_FILENAMES.join(
-          ' or ',
-        )} for ${path.join()}`,
-      );
+          `Couldn't find a project. Checked ${ROME_CONFIG_FILENAMES.join(' or ')} for ${path.join()}`,
+        );
     }
 
     throw createSingleDiagnosticError({
-      ...pointer,
-      category: 'projectManager/missing',
-      message: `Couldn't find a project`,
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          message:
-            'Run <command>rome init</command> in this folder to initialize a project',
-        },
-      ],
+      location,
+      description: descriptions.PROJECT_MANAGER.NOT_FOUND,
     });
   }
 
@@ -775,10 +838,8 @@ export default class ProjectManager {
     }
   }
 
-  getHierarchyFromFilename(
-    filename: AbsoluteFilePath,
-  ): Array<ProjectDefinition> {
-    const project = this.findProjectExisting(filename);
+  getHierarchyFromFilename(path: AbsoluteFilePath): Array<ProjectDefinition> {
+    const project = this.findProjectExisting(path);
     if (project === undefined) {
       return [];
     } else {
@@ -786,9 +847,7 @@ export default class ProjectManager {
     }
   }
 
-  getHierarchyFromProject(
-    project: ProjectDefinition,
-  ): Array<ProjectDefinition> {
+  getHierarchyFromProject(project: ProjectDefinition): Array<ProjectDefinition> {
     const projects: Array<ProjectDefinition> = [];
 
     let currProject: undefined | ProjectDefinition = project;
@@ -856,15 +915,16 @@ export default class ProjectManager {
       for (const configFilename of ROME_CONFIG_FILENAMES) {
         // Check in root
         const configPath = dir.append(configFilename);
+
         const hasProject = await this.master.memoryFs.existsHard(configPath);
         if (hasProject) {
           return this.queueAddProject(dir, configPath);
         }
 
         // Check a .config folder
-        const configPathNested = dir
-          .append(ROME_CONFIG_FOLDER)
-          .append(configFilename);
+        const configPathNested = dir.append(ROME_CONFIG_FOLDER).append(
+          configFilename,
+        );
         const hasProjectNested = await this.master.memoryFs.existsHard(
           configPathNested,
         );
@@ -917,11 +977,12 @@ export default class ProjectManager {
     diagnostics: DiagnosticsProcessor,
   ) {
     diagnostics.addDiagnostic({
-      category: 'projectManager/incorrectConfigFilename',
-      filename: path.join(),
-      message: `Invalid rome config filename, <emphasis>${ROME_CONFIG_FILENAMES.join(
-        ' or ',
-      )}</emphasis> are the only valid filename`,
+      description: descriptions.PROJECT_MANAGER.INCORRECT_CONFIG_FILENAME(
+        ROME_CONFIG_FILENAMES,
+      ),
+      location: {
+        filename: path.join(),
+      },
     });
   }
 }

@@ -5,16 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {RefineScope} from '../../scopes';
+import {Scope, RefineScope} from '../../scopes';
 import {IfStatement, ifStatement, AnyNode} from '@romejs/js-ast';
 import BooleanT from '../../types/BooleanT';
 import ExhaustiveT from '../../types/ExhaustiveT';
 import UnionT from '../../types/UnionT';
 
 export default function IfStatement(node: AnyNode, scope: Scope) {
-  node =
-    node.type === 'ConditionalExpression' ? node : ifStatement.assert(node);
+  node = node.type === 'ConditionalExpression' ? node : ifStatement.assert(node);
 
   const test = scope.evaluate(node.test);
   new ExhaustiveT(scope, node, test, new BooleanT(scope, undefined));
@@ -42,7 +40,6 @@ export default function IfStatement(node: AnyNode, scope: Scope) {
         alternateScope.addBinding(name, opposite);
       }
     }*/
-
     return new UnionT(scope, undefined, [
       consequent,
       alternateScope.evaluate(node.alternate),

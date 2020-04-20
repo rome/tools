@@ -22,10 +22,8 @@ type CacheEntry = {
   configHash: string;
   projectDir: string;
   mtime: number;
-  compile: {
-    [key: string]: WorkerCompileResult;
-  };
-  lint: undefined | WorkerLintResult;
+  compile: {[key: string]: WorkerCompileResult};
+  lint: {[key: string]: WorkerLintResult};
   analyzeDependencies: undefined | WorkerAnalyzeDependencyResult;
   moduleSignature: undefined | ModuleSignature;
 };
@@ -64,7 +62,7 @@ export default class Cache {
   cachePath: AbsoluteFilePath;
 
   async init() {
-    this.master.memoryFs.deletedFileEvent.subscribe(filename => {
+    this.master.memoryFs.deletedFileEvent.subscribe((filename) => {
       return this.master.cache.handleDeleted(filename);
     });
 
@@ -73,15 +71,13 @@ export default class Cache {
     await memoryFs.watch(this.cachePath, DEFAULT_PROJECT_CONFIG);
   }
 
-  async createEmptyEntry(filename: AbsoluteFilePath): Promise<CacheEntry> {
+  async createEmptyEntry(path: AbsoluteFilePath): Promise<CacheEntry> {
     const {projectManager, memoryFs} = this.master;
 
-    const project: ProjectDefinition = await projectManager.assertProject(
-      filename,
-    );
+    const project: ProjectDefinition = await projectManager.assertProject(path);
 
     const configHashes = [...project.meta.configHashes];
-    const pkg = this.master.memoryFs.getOwnedManifest(filename);
+    const pkg = this.master.memoryFs.getOwnedManifest(path);
     if (pkg !== undefined) {
       configHashes.push(pkg.hash);
     }
@@ -90,47 +86,47 @@ export default class Cache {
       version: VERSION,
       projectDir: project.folder.join(),
       configHash: configHashes.join(';'),
-      mtime: memoryFs.getMtime(filename),
+      mtime: memoryFs.getMtime(path),
       compile: {},
       analyzeDependencies: undefined,
       moduleSignature: undefined,
-      lint: undefined,
+      lint: {},
     };
 
     return entry;
   }
 
-  getCacheFilename(filename: AbsoluteFilePath): AbsoluteFilePath {
-    const uid = this.master.projectManager.getUid(filename);
+  getCacheFilename(path: AbsoluteFilePath): AbsoluteFilePath {
+    const uid = this.master.projectManager.getUid(path);
     return this.cachePath.append(uid);
   }
 
-  async handleDeleted(filename: AbsoluteFilePath) {
+  async handleDeleted(path: AbsoluteFilePath) {
     // Handle the file not existing
-    const cacheFilename = this.getCacheFilename(filename);
+    const cacheFilename = this.getCacheFilename(path);
     await unlink(cacheFilename);
-    this.loadedEntries.delete(filename);
+    this.loadedEntries.delete(path);
   }
 
-  async get(filename: AbsoluteFilePath): Promise<CacheEntry> {
-    const emptyEntry = await this.createEmptyEntry(filename);
+  async get(path: AbsoluteFilePath): Promise<CacheEntry> {
+    const emptyEntry = await this.createEmptyEntry(path);
 
     // If we have a loaded memory entry, make sure it's valid compared to the default entry (file changes etc)
-    let loaded = this.loadedEntries.get(filename);
+    let loaded = this.loadedEntries.get(path);
     if (loaded !== undefined && areEntriesEqual(loaded, emptyEntry)) {
-      return emptyEntry;
+      return loaded;
     }
 
     if (this.disabled) {
       return emptyEntry;
     }
 
-    const cacheFilename = this.getCacheFilename(filename);
+    const cacheFilename = this.getCacheFilename(path);
     const entry = await this.checkPossibleDiskCacheEntry(
       cacheFilename,
       emptyEntry,
     );
-    this.loadedEntries.set(filename, entry);
+    this.loadedEntries.set(path, entry);
     return entry;
   }
 
@@ -162,16 +158,14 @@ export default class Cache {
   }
 
   async update(
-    filename: AbsoluteFilePath,
-    partialEntryCallback:
-      | Partial<CacheEntry>
-      | ((entry: CacheEntry) => Partial<CacheEntry>),
+    path: AbsoluteFilePath,
+    partialEntryCallback: Partial<CacheEntry> | ((
+      entry: CacheEntry,
+    ) => Partial<CacheEntry>),
   ) {
-    const currEntry = await this.get(filename);
-    const partialEntry: Partial<CacheEntry> =
-      typeof partialEntryCallback === 'function'
-        ? partialEntryCallback(currEntry)
-        : partialEntryCallback;
+    const currEntry = await this.get(path);
+    const partialEntry: Partial<CacheEntry> = typeof partialEntryCallback ===
+      'function' ? partialEntryCallback(currEntry) : partialEntryCallback;
 
     const entry: CacheEntry = {
       ...currEntry,
@@ -179,8 +173,8 @@ export default class Cache {
     };
 
     // TODO should batch these and write during idle time
-    const cacheFilename = this.getCacheFilename(filename);
-    this.loadedEntries.set(filename, entry);
+    const cacheFilename = this.getCacheFilename(path);
+    this.loadedEntries.set(path, entry);
 
     if (this.disabled) {
       return;

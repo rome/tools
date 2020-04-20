@@ -1,5 +1,6 @@
 Program {
   comments: Array []
+  corrupt: false
   diagnostics: Array []
   filename: 'input.js'
   hasHoistedVars: true
@@ -195,8 +196,8 @@ Program {
                         line: 1
                       }
                       start: Object {
-                        column: 33
-                        index: 33
+                        column: 29
+                        index: 29
                         line: 1
                       }
                     }
