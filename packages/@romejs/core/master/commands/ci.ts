@@ -65,10 +65,10 @@ export default createMasterCommand({
     reporter.heading('Running tests');
     await runChildCommand(req, async () => {
       await test.callback(req, {
-        coverage: true,
+        coverage: false,
         freezeSnapshots: !flags.fix,
         updateSnapshots: flags.fix,
-        showAllCoverage: true,
+        showAllCoverage: false,
         syncTests: false,
       });
     });
