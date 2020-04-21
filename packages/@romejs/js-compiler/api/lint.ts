@@ -71,27 +71,7 @@ function addSuppressions(context: CompilerContext, ast: Program): Program {
     return ast;
   }
 
-  const firstNodePerLine: Map<Number1, AnyNode> = new Map();
-
-  // Find the best node to attach comments to. This is generally the node with the largest range per line.
-  context.reduce(ast, {
-    name: 'suppressionVisitor',
-    enter(path: Path): AnyNode {
-      const {node} = path;
-
-      const line = getStartLine(node);
-      if (line === undefined) {
-        return node;
-      }
-
-      let existing = firstNodePerLine.get(line);
-      if (existing === undefined) {
-        firstNodePerLine.set(line, node);
-      }
-
-      return node;
-    },
-  });
+  const visitedLines: Set<Number1> = new Set();
 
   function addComment(
     path: Path,
@@ -152,19 +132,19 @@ function addSuppressions(context: CompilerContext, ast: Program): Program {
     return node;
   }
 
-  // Add suppressions
+  // Find the best node to attach comments to. This is generally the node with the largest range per line.
   return context.reduceRoot(ast, {
     name: 'suppressionVisitor',
-    enter(path: Path): AnyNode {
+    enter(path: Path) {
       const {node} = path;
 
-      const line = getStartLine(node);
-      if (line === undefined) {
+      // Don't allow attaching suppression comments to a comment...
+      if (node.type === 'CommentBlock' || node.type === 'CommentLine') {
         return node;
       }
 
-      const first = firstNodePerLine.get(line);
-      if (first === undefined || first !== node) {
+      const line = getStartLine(node);
+      if (line === undefined || visitedLines.has(line)) {
         return node;
       }
 
@@ -173,6 +153,7 @@ function addSuppressions(context: CompilerContext, ast: Program): Program {
         return node;
       }
 
+      visitedLines.add(line);
       return addComment(path, node, decisions);
     },
   });
