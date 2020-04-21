@@ -275,6 +275,11 @@ export const descriptions = createMessages(
         fixable: true,
       },
 
+      NO_EX_ASSIGN: {
+        category: 'lint/noExAssign',
+        message: 'Cannot reassign exception parameter of a catch block',
+      },
+
       NO_VAR: {
         category: 'lint/noVar',
         message: 'Variable declarations using `var` are disallowed, use `let` or `const` instead.',

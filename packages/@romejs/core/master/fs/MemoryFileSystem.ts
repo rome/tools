@@ -97,7 +97,8 @@ function isValidManifest(path: AbsoluteFilePath): boolean {
 
     // Scoped module
     if (segments[segments.length - 4] === 'node_modules' &&
-      segments[segments.length - 3].startsWith('@')) {
+        segments[segments.length -
+          3].startsWith('@')) {
       return true;
     }
 
