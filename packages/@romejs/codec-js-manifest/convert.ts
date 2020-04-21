@@ -16,13 +16,14 @@ import {
 import {stringifySemver} from '@romejs/codec-semver';
 import {Dict} from '@romejs/typescript-helpers';
 import {stringifyPathPattern} from '@romejs/path-match';
+import {manifestNameToString} from './name';
 
 export function convertManifestToJSON(manifest: Manifest): JSONManifest {
   return {
     // Include unknown properties from the initial package.json
     ...manifest.raw,
 
-    name: manifest.name,
+    name: manifestNameToString(manifest.name),
     description: manifest.description,
     private: manifest.private,
     type: manifest.type,
@@ -136,8 +137,11 @@ function dependencyMapToObject(
   }
 
   const obj: Dict<string> = {};
-  for (const [key, pattern] of map) {
-    obj[key] = stringifyDependencyPattern(pattern);
+  for (const [name, pattern] of map) {
+    const key = manifestNameToString(name);
+    if (key !== undefined) {
+      obj[key] = stringifyDependencyPattern(pattern);
+    }
   }
   return obj;
 }

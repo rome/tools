@@ -10,6 +10,7 @@ import {
   Manifest,
   ManifestDefinition,
   normalizeManifest,
+  manifestNameToString,
 } from '@romejs/codec-js-manifest';
 import {
   PathPatterns,
@@ -895,7 +896,7 @@ export default class MemoryFileSystem {
 
     // Set haste name and haste location to the directory itself
     if (manifest.name !== undefined) {
-      hasteName = manifest.name;
+      hasteName = manifestNameToString(manifest.name);
     }
 
     // If we aren't in node_modules then this is a project package
