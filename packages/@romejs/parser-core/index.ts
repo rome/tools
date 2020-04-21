@@ -30,14 +30,14 @@ import {
 import {
   Number1,
   Number0,
-  number1,
-  number0,
-  inc,
-  coerce0,
-  get0,
-  add,
-  sub,
-  dec,
+  ob1Number1,
+  ob1Number0,
+  ob1Inc,
+  ob1Coerce0,
+  ob1Get0,
+  ob1Add,
+  ob1Sub,
+  ob1Dec,
 } from '@romejs/ob1';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 import {Class, OptionalProps} from '@romejs/typescript-helpers';
@@ -94,8 +94,8 @@ export function tryParseWithOptionalOffsetPosition<
 
 const SOF_TOKEN: SOFToken = {
   type: 'SOF',
-  start: number0,
-  end: number0,
+  start: ob1Number0,
+  end: ob1Number0,
 };
 
 type ParserSnapshot<Tokens extends TokensShape, State> = {
@@ -130,23 +130,25 @@ export class ParserCore<Tokens extends TokensShape, State> {
     this.filename = this.path === undefined ? undefined : this.path.join();
     this.mtime = mtime;
     this.input = normalizeInput(opts);
-    this.length = coerce0(this.input.length);
+    this.length = ob1Coerce0(this.input.length);
 
     this.eofToken = {
       type: 'EOF',
-      start: coerce0(this.input.length),
-      end: coerce0(this.input.length),
+      start: ob1Coerce0(this.input.length),
+      end: ob1Coerce0(this.input.length),
     };
 
     // Parser/tokenizer state
     this.offsetPosition = offsetPosition;
     this.diagnosticCategory = diagnosticCategory;
     this.tokenizing = false;
-    this.currLine = offsetPosition === undefined ? number1 : offsetPosition.line;
+    this.currLine = offsetPosition === undefined
+      ? ob1Number1
+      : offsetPosition.line;
     this.currColumn = offsetPosition === undefined
-      ? number0
+      ? ob1Number0
       : offsetPosition.column;
-    this.nextTokenIndex = number0;
+    this.nextTokenIndex = ob1Number0;
     this.currentToken = SOF_TOKEN;
     this.prevToken = SOF_TOKEN;
     this.state = initialState;
@@ -242,12 +244,12 @@ export class ParserCore<Tokens extends TokensShape, State> {
     state: State;
   } {
     if (this.ignoreWhitespaceTokens) {
-      switch (input[get0(index)]) {
+      switch (input[ob1Get0(index)]) {
         case ' ':
         case '\t':
         case '\r':
         case '\n':
-          return this.lookahead(inc(index));
+          return this.lookahead(ob1Inc(index));
       }
     }
 
@@ -414,7 +416,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
     }
 
     // Sometimes the end position may be empty as it hasn't been filled yet
-    if (end.index === number0) {
+    if (end.index === ob1Number0) {
       end = start;
     }
 
@@ -427,7 +429,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
         if (this.isEOF(start.index)) {
           metadata = descriptions.PARSER_CORE.UNEXPECTED_EOF;
         } else {
-          const char = this.input[get0(start.index)];
+          const char = this.input[ob1Get0(start.index)];
           metadata = descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(char);
         }
       }
@@ -481,7 +483,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
   // Check if we're at the end of the input
   isEOF(index: Number0): boolean {
-    return get0(index) >= this.input.length;
+    return ob1Get0(index) >= this.input.length;
   }
 
   // Check if the current token matches the input type
@@ -522,13 +524,14 @@ export class ParserCore<Tokens extends TokensShape, State> {
     let value = '';
 
     while (true) {
-      if (get0(index) >= input.length) {
+      if (ob1Get0(index) >= input.length) {
         return [value, index, true];
       }
 
-      if (callback === undefined || callback(input[get0(index)], index, input)) {
-        value += input[get0(index)];
-        index = inc(index);
+      if (callback === undefined ||
+          callback(input[ob1Get0(index)], index, input)) {
+        value += input[ob1Get0(index)];
+        index = ob1Inc(index);
       } else {
         break;
       }
@@ -539,7 +542,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
   // Get the string between the specified range
   getRawInput(start: Number0, end: Number0): string {
-    return this.input.slice(get0(start), get0(end));
+    return this.input.slice(ob1Get0(start), ob1Get0(end));
   }
 
   //# Utility methods to make it easy to construct nodes or tokens
@@ -553,7 +556,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
   finishToken<Type extends string>(
     type: Type,
-    end: Number0 = inc(this.nextTokenIndex),
+    end: Number0 = ob1Inc(this.nextTokenIndex),
   ): SimpleToken<Type> {
     return {
       type,
@@ -565,7 +568,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   finishValueToken<Type extends string, Value>(
     type: Type,
     value: Value,
-    end: Number0 = inc(this.nextTokenIndex),
+    end: Number0 = ob1Inc(this.nextTokenIndex),
   ): ValueToken<Type, Value> {
     return {
       type,
@@ -578,7 +581,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   finishComplexToken<Type extends string, Data>(
     type: Type,
     data: Data,
-    end: Number0 = inc(this.nextTokenIndex),
+    end: Number0 = ob1Inc(this.nextTokenIndex),
   ): ComplexToken<Type, Data> {
     return {
       type,
@@ -638,9 +641,9 @@ type GetPosition = () => Position;
 
 export class PositionTracker {
   constructor(input: string, offsetPosition: Position = {
-    line: number1,
-    column: number0,
-    index: number0,
+    line: ob1Number1,
+    column: ob1Number0,
+    index: ob1Number0,
   }, getPosition?: GetPosition) {
     this.getPosition = getPosition;
     this.input = input;
@@ -656,11 +659,11 @@ export class PositionTracker {
   getPosition: undefined | GetPosition;
 
   addOffset(index: Number0): Number0 {
-    return add(index, this.offsetPosition.index);
+    return ob1Add(index, this.offsetPosition.index);
   }
 
   removeOffset(index: Number0): Number0 {
-    return sub(index, this.offsetPosition.index);
+    return ob1Sub(index, this.offsetPosition.index);
   }
 
   getPositionFromIndex(index: Number0): Position {
@@ -669,8 +672,8 @@ export class PositionTracker {
       return cached;
     }
 
-    let line: Number1 = number1;
-    let column: Number0 = number0;
+    let line: Number1 = ob1Number1;
+    let column: Number0 = ob1Number0;
     let indexSearchWithoutOffset: number = 0;
 
     const indexWithOffset = this.addOffset(index);
@@ -684,22 +687,23 @@ export class PositionTracker {
         currPosition.index < indexWithOffset) {
       line = currPosition.line;
       column = currPosition.column;
-      indexSearchWithoutOffset = get0(this.removeOffset(currPosition.index));
+      indexSearchWithoutOffset = ob1Get0(this.removeOffset(currPosition.index));
     } else if (latestPosition.index < indexWithOffset) {
       line = latestPosition.line;
       column = latestPosition.column;
-      indexSearchWithoutOffset = get0(this.removeOffset(latestPosition.index));
+        indexSearchWithoutOffset =
+        ob1Get0(this.removeOffset(latestPosition.index));
     }
 
     // Read the rest of the input until we hit the index
-    for (let i = indexSearchWithoutOffset; i < get0(index); i++) {
+    for (let i = indexSearchWithoutOffset; i < ob1Get0(index); i++) {
       const char = this.input[i];
 
       if (char === '\n') {
-        line = inc(line);
-        column = number0;
+        line = ob1Inc(line);
+        column = ob1Number0;
       } else {
-        column = inc(column);
+        column = ob1Inc(column);
       }
     }
 
@@ -740,10 +744,10 @@ export function isESIdentifierStart(char: undefined | string): boolean {
 }
 
 export function isEscaped(index: Number0, input: string): boolean {
-  const prevChar = input[get0(index) - 1];
+  const prevChar = input[ob1Get0(index) - 1];
 
   if (prevChar === '\\') {
-    return !isEscaped(dec(index), input);
+    return !isEscaped(ob1Dec(index), input);
   } else {
     return false;
   }

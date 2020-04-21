@@ -14,7 +14,7 @@ import {
   PathPatternNode,
 } from './types';
 import {ParserOptions, createParser} from '@romejs/parser-core';
-import {Number0, add, number0, get0, coerce0} from '@romejs/ob1';
+import {Number0, ob1Add, ob1Number0, ob1Get0, ob1Coerce0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 
 type ParseMode = 'path' | 'pattern';
@@ -31,8 +31,8 @@ const createPathMatchParser = createParser(
     mode: ParseMode;
 
     isWordCharacter(char: string, index: Number0, input: string): boolean {
-      const prevChar = input[get0(index) - 1];
-      const nextChar = input[get0(index) + 1];
+      const prevChar = input[ob1Get0(index) - 1];
+      const nextChar = input[ob1Get0(index) + 1];
 
       // Windows separator
       if (char === '\\' && nextChar === '\\') {
@@ -65,17 +65,17 @@ const createPathMatchParser = createParser(
     }
 
     tokenize(index: Number0, input: string) {
-      const char = input[get0(index)];
-      const nextChar = input[get0(index) + 1];
+      const char = input[ob1Get0(index)];
+      const nextChar = input[ob1Get0(index) + 1];
 
       if (this.mode === 'pattern') {
         if (char === '*') {
           if (nextChar === '*') {
-            return this.finishToken('DoubleStar', add(index, 2));
+            return this.finishToken('DoubleStar', ob1Add(index, 2));
           } else {
             return this.finishToken('Star');
           }
-        } else if (index === number0 && char === '!') {
+        } else if (index === ob1Number0 && char === '!') {
           return this.finishToken('Exclamation');
         } else if (char === '#') {
           return this.finishToken('Hash');
@@ -85,7 +85,7 @@ const createPathMatchParser = createParser(
       if (char === '/') {
         return this.finishToken('Separator');
       } else if (char === '\\' && nextChar === '\\') {
-        return this.finishToken('Separator', add(index, 2));
+        return this.finishToken('Separator', ob1Add(index, 2));
       }
 
       const [value, end] = this.readInputFrom(index, this.isWordCharacter.bind(
@@ -228,7 +228,7 @@ const createPathMatchParser = createParser(
       // Get a trailing comment
       let comment = '';
       if (this.eatToken('Hash')) {
-        comment = this.getRawInput(this.getToken().start, coerce0(
+        comment = this.getRawInput(this.getToken().start, ob1Coerce0(
           this.input.length,
         ));
       }

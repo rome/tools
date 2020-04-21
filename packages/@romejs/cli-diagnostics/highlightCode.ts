@@ -6,7 +6,7 @@
  */
 
 import {tokenizeJS} from '@romejs/js-parser';
-import {get0, Number0} from '@romejs/ob1';
+import {ob1Get0, Number0} from '@romejs/ob1';
 import {DiagnosticLanguage, DiagnosticSourceType} from '@romejs/diagnostics';
 import {ConstSourceType} from '@romejs/js-ast';
 import {tokenizeJSON} from '@romejs/codec-json';
@@ -56,8 +56,8 @@ function reduce<
   let buff = '';
 
   for (const token of tokens) {
-    const start = get0(token.start);
-    const end = get0(token.end);
+    const start = ob1Get0(token.start);
+    const end = ob1Get0(token.end);
     let value = input.slice(start, end);
 
     // Add on text between tokens

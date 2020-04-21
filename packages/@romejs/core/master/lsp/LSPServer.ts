@@ -23,7 +23,7 @@ import {
 } from '@romejs/path';
 import {Diagnostics, DiagnosticLocation} from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
-import {coerce1To0, number0, Number0, inc} from '@romejs/ob1';
+import {ob1Coerce1To0, ob1Number0, Number0, ob1Inc} from '@romejs/ob1';
 import {markupToPlainText} from '@romejs/string-markup';
 import {
   PartialMasterQueryRequest,
@@ -79,12 +79,12 @@ function parseHeaders(buffer: string): Headers {
 function convertPositionToLSP(pos: undefined | Position): LSPPosition {
   if (pos === undefined) {
     return {
-      line: number0,
-      character: number0,
+      line: ob1Number0,
+      character: ob1Number0,
     };
   } else {
     return {
-      line: coerce1To0(pos.line),
+      line: ob1Coerce1To0(pos.line),
       character: pos.column,
     };
   }
@@ -153,16 +153,16 @@ function diffTextEdits(original: string, desired: string): Array<LSPTextEdit> {
 
   const diffs: Diffs = stringDiff(original, desired);
 
-  let currLine: Number0 = number0;
-  let currChar: Number0 = number0;
+  let currLine: Number0 = ob1Number0;
+  let currChar: Number0 = ob1Number0;
 
   function advance(str: string) {
     for (const char of str) {
       if (char === '\n') {
-        currLine = inc(currLine);
-        currChar = number0;
+        currLine = ob1Inc(currLine);
+        currChar = ob1Number0;
       } else {
-        currChar = inc(currChar);
+        currChar = ob1Inc(currChar);
       }
     }
   }

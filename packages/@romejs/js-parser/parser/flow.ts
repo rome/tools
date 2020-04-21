@@ -80,7 +80,7 @@ import {
   toBindingIdentifier,
   parseTypeLiteralAnnotation,
 } from './index';
-import {get0} from '@romejs/ob1';
+import {ob1Get0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 import {parseReferenceIdentifier} from './expression';
 
@@ -198,9 +198,9 @@ function parseFlowPredicate(
   parser.expectContextual('checks');
 
   // Force '%' and 'checks' to be adjacent
-  if (moduloPos.line !== checksPos.line || get0(moduloPos.column) !== get0(
-      checksPos.column,
-    ) - 1) {
+  if (moduloPos.line !== checksPos.line || ob1Get0(moduloPos.column) !==
+        ob1Get0(checksPos.column) -
+        1) {
     parser.addDiagnostic({
       start: moduloPos,
       description: descriptions.JS_PARSER.FLOW_SPACE_BETWEEN_PERCENT_CHECKS,

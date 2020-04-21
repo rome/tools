@@ -31,7 +31,7 @@ import {
   AnyRegExpExpression,
 } from '@romejs/js-ast';
 import {Diagnostics, descriptions} from '@romejs/diagnostics';
-import {Number0, get0, add, coerce0} from '@romejs/ob1';
+import {Number0, ob1Get0, ob1Add, ob1Coerce0} from '@romejs/ob1';
 
 type Operator =
   | '^'
@@ -109,7 +109,7 @@ function readOctalCode(input: string, index: Number0, nextChar: string): {
 } {
   let char = nextChar;
   let octal = '';
-  let nextIndex: Number0 = add(index, 1);
+  let nextIndex: Number0 = ob1Add(index, 1);
   while (isDigit(char)) {
     octal += char;
     // stop at max octal ascii in case of octal escape
@@ -117,8 +117,8 @@ function readOctalCode(input: string, index: Number0, nextChar: string): {
       octal = octal.slice(0, octal.length - 1);
       break;
     }
-    nextIndex = add(nextIndex, 1);
-    char = input[get0(nextIndex)];
+    nextIndex = ob1Add(nextIndex, 1);
+    char = input[ob1Get0(nextIndex)];
   }
   if (octal === '') {
     return {octalValue: undefined, end: nextIndex};
@@ -147,12 +147,12 @@ export const createRegExpParser = createParser(
     }
 
     tokenize(index: Number0, input: string): TokenValues<Tokens> {
-      const char = input[get0(index)];
+      const char = input[ob1Get0(index)];
 
       if (char === '\\') {
-        let end = add(index, 2);
+        let end = ob1Add(index, 2);
 
-        const nextChar = input[get0(index) + 1];
+        const nextChar = input[ob1Get0(index) + 1];
         switch (nextChar) {
           case 't':
             return this.finishComplexToken('Character', {
@@ -198,7 +198,7 @@ export const createRegExpParser = createParser(
             if (this.unicode) {
               // named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
               let namedBackReference = '';
-              let namedBackReferenceIndex = get0(index) + 2;
+              let namedBackReferenceIndex = ob1Get0(index) + 2;
               let namedBackReferenceChar = input[namedBackReferenceIndex];
               if (namedBackReferenceChar === '<') {
                 namedBackReferenceChar = input[namedBackReferenceIndex];
@@ -216,7 +216,7 @@ export const createRegExpParser = createParser(
                 return this.finishComplexToken('NamedBackReferenceCharacter', {
                   value: namedBackReference,
                   escaped: true,
-                }, coerce0(namedBackReferenceIndex));
+                }, ob1Coerce0(namedBackReferenceIndex));
               }
             }
 
@@ -275,11 +275,12 @@ export const createRegExpParser = createParser(
           }
 
           case 'x': {
-            const possibleHex = input.slice(get0(index) + 1, get0(index) + 3);
+            const possibleHex = input.slice(ob1Get0(index) + 1, ob1Get0(index) +
+              3);
 
             // \xhh
             if (possibleHex.length === 2 && isHex(possibleHex)) {
-              end = add(end, 2);
+              end = ob1Add(end, 2);
 
               return this.finishComplexToken('Character', {
                 value: String.fromCharCode(parseInt(possibleHex, 16)),
@@ -295,11 +296,12 @@ export const createRegExpParser = createParser(
 
           case 'u': {
             // Get the next 4 characters after \u
-            const possibleHex = input.slice(get0(index) + 2, get0(index) + 6);
+            const possibleHex = input.slice(ob1Get0(index) + 2, ob1Get0(index) +
+              6);
 
             // \uhhhh
             if (possibleHex.length === 4 && isHex(possibleHex)) {
-              end = add(end, 4);
+              end = ob1Add(end, 4);
 
               return this.finishComplexToken('Character', {
                 value: String.fromCharCode(parseInt(possibleHex, 16)),
@@ -353,7 +355,7 @@ export const createRegExpParser = createParser(
                 );
               } else {
                 backReference = backReference.slice(0, backReference.length - 1);
-                referenceEnd = add(referenceEnd, -1);
+                referenceEnd = ob1Add(referenceEnd, -1);
                 if (isOct(backReference)) {
                   return this.finishComplexToken('Character', {
                     value: String.fromCharCode(parseInt(backReference, 8)),
@@ -615,7 +617,7 @@ export const createRegExpParser = createParser(
       }
 
       if (token.type === 'NamedBackReferenceCharacter') {
-        const start = this.input.slice(0, get0(token.start));
+        const start = this.input.slice(0, ob1Get0(token.start));
         this.nextToken();
 
         if (token.value[token.value.length - 1] !== '>') {

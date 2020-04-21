@@ -13,14 +13,14 @@ import {
 } from './types';
 import {decodeVLQ} from './base64';
 import {
-  number0,
-  number1,
-  add,
+  ob1Number0,
+  ob1Number1,
+  ob1Add,
   Number1,
   Number0,
-  inc,
-  get0,
-  dec,
+  ob1Inc,
+  ob1Get0,
+  ob1Dec,
 } from '@romejs/ob1';
 import {Dict} from '@romejs/typescript-helpers';
 
@@ -57,10 +57,10 @@ export default class SourceMapConsumer {
     const rawStr: string = sourceMap.mappings;
     const map: ParsedMappings = new Map();
 
-    let generatedLine = number1;
-    let previousGeneratedColumn = number0;
-    let previousOriginalLine = number1;
-    let previousOriginalColumn = number0;
+    let generatedLine = ob1Number1;
+    let previousGeneratedColumn = ob1Number0;
+    let previousOriginalLine = ob1Number1;
+    let previousOriginalColumn = ob1Number0;
     let previousSource = 0;
     let previousName = 0;
     let length = rawStr.length;
@@ -71,20 +71,20 @@ export default class SourceMapConsumer {
     while (index < length) {
       const char = rawStr[index];
       if (char === ';') {
-        generatedLine = inc(generatedLine);
+        generatedLine = ob1Inc(generatedLine);
         index++;
-        previousGeneratedColumn = number0;
+        previousGeneratedColumn = ob1Number0;
       } else if (char === ',') {
         index++;
       } else {
         const mapping: ParsedMapping = {
           generated: {
             line: generatedLine,
-            column: number0,
+            column: ob1Number0,
           },
           original: {
-            line: number1,
-            column: number0,
+            line: ob1Number1,
+            column: ob1Number0,
           },
           source: undefined,
           name: undefined,
@@ -125,7 +125,7 @@ export default class SourceMapConsumer {
         }
 
         // Generated column
-        mapping.generated.column = add(previousGeneratedColumn, segment[0]);
+        mapping.generated.column = ob1Add(previousGeneratedColumn, segment[0]);
         previousGeneratedColumn = mapping.generated.column;
 
         if (segment.length > 1) {
@@ -134,14 +134,14 @@ export default class SourceMapConsumer {
           previousSource += segment[1];
 
           // Original line
-          const newOriginalLine = add(previousOriginalLine, segment[2]);
+          const newOriginalLine = ob1Add(previousOriginalLine, segment[2]);
           previousOriginalLine = newOriginalLine;
 
           // Lines are stored 0-based
-          mapping.original.line = add(newOriginalLine, 1);
+          mapping.original.line = ob1Add(newOriginalLine, 1);
 
           // Original column
-          const newOriginalColumn = add(previousOriginalColumn, segment[3]);
+          const newOriginalColumn = ob1Add(previousOriginalColumn, segment[3]);
           mapping.original.column = newOriginalColumn;
           previousOriginalColumn = newOriginalColumn;
 
@@ -176,10 +176,10 @@ export default class SourceMapConsumer {
     line: Number1,
     column: Number0,
   ): undefined | ResolvedLocation {
-    while (get0(column) >= 0) {
+    while (ob1Get0(column) >= 0) {
       const mapping = this.exactOriginalPositionFor(line, column);
       if (mapping === undefined) {
-        column = dec(column);
+        column = ob1Dec(column);
         continue;
       } else {
         return mapping;

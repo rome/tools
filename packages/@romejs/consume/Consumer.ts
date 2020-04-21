@@ -39,10 +39,10 @@ import {UNKNOWN_POSITION, SourceLocation} from '@romejs/parser-core';
 import {
   Number0,
   Number1,
-  coerce0,
-  coerce1,
+  ob1Coerce0,
+  ob1Coerce1,
   UnknownNumber,
-  add,
+  ob1Add,
 } from '@romejs/ob1';
 import {isValidIdentifierName} from '@romejs/js-ast-utils';
 import {escapeString} from '@romejs/string-escape';
@@ -218,13 +218,13 @@ export default class Consumer {
       ...loc,
       start: {
         ...start,
-        column: add(start.column, startIndex),
-        index: add(start.index, startIndex),
+        column: ob1Add(start.column, startIndex),
+        index: ob1Add(start.index, startIndex),
       },
       end: {
         ...start,
-        column: add(start.column, endIndex),
-        index: add(start.index, endIndex),
+        column: ob1Add(start.column, endIndex),
+        index: ob1Add(start.index, endIndex),
       },
     };
   }
@@ -957,11 +957,11 @@ export default class Consumer {
   }
 
   asZeroIndexedNumber(): Number0 {
-    return coerce0(this.asNumber());
+    return ob1Coerce0(this.asNumber());
   }
 
   asOneIndexedNumber(): Number1 {
-    return coerce1(this.asNumber());
+    return ob1Coerce1(this.asNumber());
   }
 
   asNumberFromString(def?: number): number {

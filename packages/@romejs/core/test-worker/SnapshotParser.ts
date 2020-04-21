@@ -13,7 +13,7 @@ import {
   ValueToken,
   isEscaped,
 } from '@romejs/parser-core';
-import {add, get0, Number0} from '@romejs/ob1';
+import {ob1Add, ob1Get0, Number0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 
 type Tokens = BaseTokens & {
@@ -49,9 +49,9 @@ function isHash(char: string): boolean {
 }
 
 function isCodeBlockEnd(index: Number0, input: string): boolean {
-  return input[get0(index)] === '`' && !isEscaped(index, input) && input[get0(
-    add(index, 1),
-  )] === '`' && input[get0(add(index, 2))] === '`';
+  return input[ob1Get0(index)] === '`' && !isEscaped(index, input) &&
+      input[ob1Get0(ob1Add(index, 1))] ===
+      '`' && input[ob1Get0(ob1Add(index, 2))] === '`';
 }
 
 function isInCodeBlock(char: string, index: Number0, input: string): boolean {
@@ -74,24 +74,24 @@ export default createParser(
     }
 
     tokenize(index: Number0, input: string) {
-      const char = input[get0(index)];
+      const char = input[ob1Get0(index)];
 
       switch (char) {
         case '#': {
           const [hashes] = this.readInputFrom(index, isHash);
           const level = hashes.length;
-          return this.finishValueToken('Hashes', level, add(index, level));
+          return this.finishValueToken('Hashes', level, ob1Add(index, level));
         }
 
         case '`': {
-          const nextChar = input[get0(add(index, 1))];
-          const nextNextChar = input[get0(add(index, 2))];
+          const nextChar = input[ob1Get0(ob1Add(index, 1))];
+          const nextNextChar = input[ob1Get0(ob1Add(index, 2))];
 
           if (nextChar === '`' && nextNextChar === '`') {
-            let codeOffset = add(index, 3);
+            let codeOffset = ob1Add(index, 3);
 
             let language: undefined | string;
-            if (input[get0(codeOffset)] !== '\n') {
+            if (input[ob1Get0(codeOffset)] !== '\n') {
               [language, codeOffset] = this.readInputFrom(
                 codeOffset,
                 isntNewline,
@@ -99,9 +99,9 @@ export default createParser(
             }
 
             // Expect the first offset character to be a newline
-            if (input[get0(codeOffset)] === '\n') {
+            if (input[ob1Get0(codeOffset)] === '\n') {
               // Skip leading newline
-              codeOffset = add(codeOffset, 1);
+              codeOffset = ob1Add(codeOffset, 1);
             } else {
               throw this.unexpected(
                   {
@@ -113,7 +113,7 @@ export default createParser(
 
             let [code] = this.readInputFrom(codeOffset, isInCodeBlock);
 
-            let end = add(codeOffset, code.length);
+            let end = ob1Add(codeOffset, code.length);
 
             if (isCodeBlockEnd(end, input)) {
               // Check for trailing newline
@@ -122,7 +122,7 @@ export default createParser(
                 code = code.slice(0, -1);
 
                 // Skip closing ticks
-                end = add(end, 3);
+                end = ob1Add(end, 3);
 
                 return this.finishValueToken('CodeBlock', {
                   language,

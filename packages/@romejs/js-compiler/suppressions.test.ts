@@ -8,13 +8,13 @@
 import {test} from 'rome';
 import {extractSuppressionsFromComments} from './suppressions';
 import {CommentBlock} from '@romejs/js-ast';
-import {number0, coerce1} from '@romejs/ob1';
+import {ob1Number0, ob1Coerce1} from '@romejs/ob1';
 
 function generateComment(value: string, line: number): CommentBlock {
   const pos = {
-    index: number0,
-    column: number0,
-    line: coerce1(line),
+    index: ob1Number0,
+    column: ob1Number0,
+    line: ob1Coerce1(line),
   };
 
   return {

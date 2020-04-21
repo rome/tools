@@ -46,7 +46,7 @@ import {
   matchesSuppression,
 } from '../suppressions';
 import CommentsConsumer from '@romejs/js-parser/CommentsConsumer';
-import {get1} from '@romejs/ob1';
+import {ob1Get1} from '@romejs/ob1';
 import {hookVisitors} from '../transforms';
 
 export type ContextArg = {
@@ -210,7 +210,7 @@ export default class CompilerContext {
       return undefined;
     }
 
-    return decisions[get1(start.line)];
+    return decisions[ob1Get1(start.line)];
   }
 
   addFixableDiagnostic<Old extends AnyNode, New extends TransformExitResult>(

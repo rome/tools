@@ -13,7 +13,7 @@ import {
   LintCompilerOptionsDecision,
 } from '@romejs/js-compiler';
 import {printDiagnostics} from '@romejs/cli-diagnostics';
-import {get1} from '@romejs/ob1';
+import {ob1Get1} from '@romejs/ob1';
 import {commandCategories} from '@romejs/core/common/commands';
 import {Consumer} from '@romejs/consume';
 import {DiagnosticCategory} from '@romejs/diagnostics';
@@ -162,10 +162,10 @@ export default createLocalCommand<LintCommandFlags>(
 
         const action: LintCompilerOptionsDecision['action'] = answer;
 
-        let decisionsByLine = options.decisionsByLine[get1(start.line)];
+        let decisionsByLine = options.decisionsByLine[ob1Get1(start.line)];
         if (decisionsByLine === undefined) {
           decisionsByLine = [];
-          options.decisionsByLine[get1(start.line)] = decisionsByLine;
+          options.decisionsByLine[ob1Get1(start.line)] = decisionsByLine;
         }
         decisionsByLine.push({
           action,

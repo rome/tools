@@ -45,7 +45,7 @@ import {
   hasTSModifier,
 } from './index';
 import {descriptions} from '@romejs/diagnostics';
-import {get0} from '@romejs/ob1';
+import {ob1Get0} from '@romejs/ob1';
 import {
   parseBindingIdentifier,
   toAssignmentIdentifier,
@@ -731,7 +731,7 @@ export function parseSpread(
     refNeedsArrowPos,
   );
 
-  if (get0(parser.state.commaAfterSpreadAt) === -1 && parser.match(tt.comma)) {
+  if (ob1Get0(parser.state.commaAfterSpreadAt) === -1 && parser.match(tt.comma)) {
     parser.state.commaAfterSpreadAt = parser.state.index;
   }
 
@@ -1147,7 +1147,7 @@ export function raiseRestNotLast(
 }
 
 export function checkCommaAfterRestFromSpread(parser: JSParser): void {
-  if (get0(parser.state.commaAfterSpreadAt) > -1) {
+  if (ob1Get0(parser.state.commaAfterSpreadAt) > -1) {
     raiseRestNotLast(parser, undefined, parser.getPositionFromIndex(
       parser.state.commaAfterSpreadAt,
     ));

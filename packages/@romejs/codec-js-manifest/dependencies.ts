@@ -14,7 +14,7 @@ import {
 import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
 import {createUnknownFilePath, UnknownFilePath} from '@romejs/path';
 import {normalizeName} from './name';
-import {add} from '@romejs/ob1';
+import {ob1Add} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 
 export type DependencyPattern =
@@ -335,9 +335,9 @@ function parseNpm(
         at,
         loc: start === undefined
           ? undefined
-          : consumer.getLocationRange(add(start, offset), end === undefined
+          : consumer.getLocationRange(ob1Add(start, offset), end === undefined
             ? undefined
-            : add(end, offset), 'inner-value'),
+            : ob1Add(end, offset), 'inner-value'),
       });
     },
   });
@@ -357,7 +357,7 @@ function parseNpm(
         const pos = consumer.getLocation('inner-value').start;
         return {
           ...pos,
-          column: add(pos.column, offset),
+          column: ob1Add(pos.column, offset),
         };
       },
       parse: (opts) => parseSemverRange(opts),

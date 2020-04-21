@@ -20,7 +20,7 @@ import {
 } from '@romejs/diagnostics';
 import {AbsoluteFilePath} from '@romejs/path';
 import {Position} from '@romejs/parser-core';
-import {number0Neg1, coerce1, number0} from '@romejs/ob1';
+import {ob1Number0Neg1, ob1Coerce1, ob1Number0} from '@romejs/ob1';
 
 type ExecuteMainOptions = {
   path: AbsoluteFilePath;
@@ -79,9 +79,9 @@ export default async function executeMain(
       const line = Number(lineMatch[2]);
 
       const pos: Position = {
-        index: number0Neg1,
-        column: number0,
-        line: coerce1(line),
+        index: ob1Number0Neg1,
+        column: ob1Number0,
+        line: ob1Coerce1(line),
       };
 
       const syntaxError: Diagnostic = {

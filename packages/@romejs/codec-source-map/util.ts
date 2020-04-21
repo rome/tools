@@ -12,7 +12,7 @@
  */
 
 import {Mapping} from './types';
-import {get1, get0} from '@romejs/ob1';
+import {ob1Get1, ob1Get0} from '@romejs/ob1';
 
 function strcmp(a: undefined | string, b: undefined | string): number {
   if (a === b) {
@@ -42,13 +42,14 @@ export function compareByGeneratedPositionsInflated(
   mappingA: Mapping,
   mappingB: Mapping,
 ): number {
-  let cmp: number = get1(mappingA.generated.line) -
-    get1(mappingB.generated.line);
+  let cmp: number = ob1Get1(mappingA.generated.line) - ob1Get1(
+    mappingB.generated.line,
+  );
   if (cmp !== 0) {
     return cmp;
   }
 
-  cmp = get0(mappingA.generated.column) - get0(mappingB.generated.column);
+  cmp = ob1Get0(mappingA.generated.column) - ob1Get0(mappingB.generated.column);
   if (cmp !== 0) {
     return cmp;
   }
@@ -65,12 +66,12 @@ export function compareByGeneratedPositionsInflated(
   } else if (mappingB.original == null) {
     return -1;
   } else {
-    cmp = get1(mappingA.original.line) - get1(mappingB.original.line);
+    cmp = ob1Get1(mappingA.original.line) - ob1Get1(mappingB.original.line);
     if (cmp !== 0) {
       return cmp;
     }
 
-    cmp = get0(mappingA.original.column) - get0(mappingB.original.column);
+    cmp = ob1Get0(mappingA.original.column) - ob1Get0(mappingB.original.column);
     if (cmp !== 0) {
       return cmp;
     }

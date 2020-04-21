@@ -16,7 +16,7 @@ import {Program, AnyComment, AnyNode} from '@romejs/js-ast';
 import {Cache, CompilerContext} from '@romejs/js-compiler';
 import {formatJS} from '@romejs/js-formatter';
 import {Mappings, Mapping} from '@romejs/codec-source-map';
-import {get0, Number0, Number1, get1} from '@romejs/ob1';
+import {ob1Get0, Number0, Number1, ob1Get1} from '@romejs/ob1';
 import stringDiff from '@romejs/string-diff';
 import Path from '../lib/Path';
 import {SUPPRESSION_NEXT_LINE_START} from '../suppressions';
@@ -168,7 +168,7 @@ function addSuppressions(context: CompilerContext, ast: Program): Program {
         return node;
       }
 
-      const decisions = decisionsByLine[get1(line)];
+      const decisions = decisionsByLine[ob1Get1(line)];
       if (decisions === undefined) {
         return node;
       }
@@ -255,8 +255,10 @@ export default async function lint(req: FormatRequest): Promise<LintResult> {
       }
 
       // Get the source text to compare
-      const oldCode = req.sourceText.slice(get0(start.index), get0(end.index));
-      const newCode = formattedCode.slice(get0(newStart.index), get0(
+      const oldCode = req.sourceText.slice(ob1Get0(start.index), ob1Get0(
+        end.index,
+      ));
+      const newCode = formattedCode.slice(ob1Get0(newStart.index), ob1Get0(
         newEnd.index,
       ));
 

@@ -34,7 +34,7 @@ import {
 import fork from '../../common/utils/fork';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
 import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
-import {coerce0To1} from '@romejs/ob1';
+import {ob1Coerce0To1} from '@romejs/ob1';
 import {
   TestRunnerConstructorOptions,
   TestRunnerOptions,
@@ -398,7 +398,7 @@ export default class TestRunner {
 
       const resolved = sourceMapManager.resolveLocation(urlToFilename(
         callFrame.get('url').asString(),
-      ), coerce0To1(loc.get('lineNumber').asZeroIndexedNumber()), loc.get(
+      ), ob1Coerce0To1(loc.get('lineNumber').asZeroIndexedNumber()), loc.get(
         'columnNumber',
       ).asZeroIndexedNumber());
 

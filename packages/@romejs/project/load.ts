@@ -29,7 +29,7 @@ import {
 } from './utils';
 import {consumeJSONExtra, ConsumeJSONResult} from '@romejs/codec-json';
 import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
-import {coerce1, number0, add, inc} from '@romejs/ob1';
+import {ob1Coerce1, ob1Number0, ob1Add, ob1Inc} from '@romejs/ob1';
 import {existsSync, readFileTextSync, readdirSync, lstatSync} from '@romejs/fs';
 import crypto = require('crypto');
 
@@ -96,7 +96,7 @@ export function loadCompleteProjectConfig(
       const file = readFileTextSync(possiblePath);
       const lines: Array<string> = file.split('\n');
 
-      let index = number0;
+      let index = ob1Number0;
 
       consumer.handleThrownDiagnostics(() => {
         const patterns = lines.map((line, i) => {
@@ -105,15 +105,15 @@ export function loadCompleteProjectConfig(
             path: possiblePath,
             offsetPosition: {
               index,
-              line: coerce1(i),
-              column: number0,
+              line: ob1Coerce1(i),
+              column: ob1Number0,
             },
           });
 
-          index = add(index, line.length);
+          index = ob1Add(index, line.length);
 
           // Newline char
-          index = inc(index);
+          index = ob1Inc(index);
 
           return pattern;
         });
