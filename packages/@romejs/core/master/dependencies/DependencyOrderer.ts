@@ -94,7 +94,6 @@ export default class DependencyOrderer {
   }
 
   // We detect cycles by determining if there were any references to imports at the top level that
-
   // are for a module that will be initialized before
   detectCycles() {
     const flatOrder = Array.from(this.orderedNodes);

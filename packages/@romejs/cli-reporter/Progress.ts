@@ -13,7 +13,7 @@ import {
   ReporterProgressOptions,
 } from './types';
 import ProgressBase from './ProgressBase';
-import {markupTag, ansiEscapes, escapeMarkup} from '@romejs/string-markup';
+import {ansiEscapes, formatAnsi} from '@romejs/string-markup';
 
 type BoldRanges = Array<[number, number]>;
 
@@ -250,7 +250,7 @@ export default class Progress extends ProgressBase {
   splitCharacters(str: string, boldRanges: BoldRanges): SplitBar {
     return str.split('').map((char, i) => {
       if (this.isBoldCharacter(i, boldRanges)) {
-        return [i, markupTag('emphasis', char)];
+        return [i, formatAnsi.bold(char)];
       } else {
         return [i, char];
       }
@@ -261,17 +261,16 @@ export default class Progress extends ProgressBase {
     let start = this.getBouncerPosition(stream);
     let fullBar = '';
     for (const [i, char] of bar) {
-      const escaped = escapeMarkup(char);
       const isBounce = i >= start && i < start + BOUNCER_WIDTH;
 
       if (isBounce) {
         if (this.paused) {
-          fullBar += markupTag('inverse', escaped);
+          fullBar += formatAnsi.inverse(char);
         } else {
-          fullBar += markupTag('white', markupTag('bgYellow', escaped));
+          fullBar += formatAnsi.white(formatAnsi.bgYellow(char));
         }
       } else {
-        fullBar += escaped;
+        fullBar += char;
       }
     }
     return fullBar;
@@ -285,9 +284,9 @@ export default class Progress extends ProgressBase {
     for (const [i, char] of bar) {
       if (i < completeLength) {
         if (this.paused) {
-          fullBar += markupTag('inverse', char);
+          fullBar += formatAnsi.inverse(char);
         } else {
-          fullBar += markupTag('white', markupTag('bgGreen', char));
+          fullBar += formatAnsi.white(formatAnsi.bgGreen(char));
         }
       } else {
         fullBar += char;
@@ -405,7 +404,7 @@ export default class Progress extends ProgressBase {
     for (const stream of this.reporter.getStreams(false)) {
       if (stream.format === 'ansi') {
         stream.write(ansiEscapes.cursorTo(0));
-        stream.write(this.reporter.markupify(stream, this.buildBar(stream)));
+        stream.write(this.buildBar(stream));
       }
     }
   }

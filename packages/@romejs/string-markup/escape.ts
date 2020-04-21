@@ -65,7 +65,7 @@ export function escapeMarkup(input: string): string {
 export function markupTag(
   tagName: MarkupTagName,
   text: string,
-  attrs?: Dict<string | number>,
+  attrs?: Dict<string | number | boolean>,
 ): string {
   let ret = `<${tagName}`;
 

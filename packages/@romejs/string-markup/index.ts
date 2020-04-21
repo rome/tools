@@ -7,7 +7,16 @@
 
 export * from './parse';
 
-export * from './format';
+export {
+  MarkupFormatFilenameNormalizer,
+  MarkupFormatFilenameHumanizer,
+  MarkupFormatOptions,
+  markupToPlainText,
+  normalizeMarkup,
+  humanizeMarkupFilename,
+} from './format';
+
+export * from './formatAnsi';
 
 export * from './escape';
 

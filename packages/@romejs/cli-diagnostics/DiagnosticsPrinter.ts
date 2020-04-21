@@ -619,7 +619,7 @@ export default class DiagnosticsPrinter extends Error {
     }
 
     if (filteredCount > 0) {
-      str += `<brightBlack> (${filteredCount} filtered)</brightBlack>`;
+      str += `<dim> (${filteredCount} filtered)</dim>`;
     }
 
     reporter.error(str);

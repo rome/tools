@@ -78,7 +78,7 @@ function reduce<
 }
 
 function invalidHighlight(line: string): string {
-  return markupTag('emphasis', markupTag('bgRed', line));
+  return markupTag('emphasis', markupTag('color', line, {bg: 'red'}));
 }
 
 function highlightJSON(path: UnknownFilePath, input: string): string {
@@ -93,20 +93,20 @@ function highlightJSON(path: UnknownFilePath, input: string): string {
     switch (token.type) {
       case 'BlockComment':
       case 'LineComment':
-        return markupTag('brightBlack', value);
+        return markupTag('color', value, {fg: 'brightBlack'});
 
       case 'String':
-        return markupTag('green', value);
+        return markupTag('color', value, {fg: 'green'});
 
       case 'Number':
-        return markupTag('magenta', value);
+        return markupTag('color', value, {fg: 'magenta'});
 
       case 'Word':
         switch (token.value) {
           case 'true':
           case 'false':
           case 'null':
-            return markupTag('cyan', value);
+            return markupTag('color', value, {fg: 'cyan'});
 
           default:
             return value;
@@ -115,7 +115,7 @@ function highlightJSON(path: UnknownFilePath, input: string): string {
       case 'Comma':
       case 'Colon':
       case 'Dot':
-        return markupTag('yellow', value);
+        return markupTag('color', value, {fg: 'yellow'});
 
       case 'BracketOpen':
       case 'BracketClose':
@@ -183,25 +183,25 @@ function highlightJS(input: string, sourceType: ConstSourceType): string {
       case 'typeof':
       case 'void':
       case 'delete':
-        return markupTag('cyan', value);
+        return markupTag('color', value, {fg: 'cyan'});
 
       case 'num':
       case 'bigint':
-        return markupTag('magenta', value);
+        return markupTag('color', value, {fg: 'magenta'});
 
       case 'regexp':
-        return markupTag('magenta', value);
+        return markupTag('color', value, {fg: 'magenta'});
 
       case 'string':
       case 'template':
       case '`':
-        return markupTag('green', value);
+        return markupTag('color', value, {fg: 'green'});
 
       case 'invalid':
         return invalidHighlight(value);
 
       case 'comment':
-        return markupTag('brightBlack', value);
+        return markupTag('color', value, {fg: 'brightBlack'});
 
       case ',':
       case ';':
@@ -211,7 +211,7 @@ function highlightJS(input: string, sourceType: ConstSourceType): string {
       case '.':
       case '?':
       case '?.':
-        return markupTag('yellow', value);
+        return markupTag('color', value, {fg: 'yellow'});
 
       case '[':
       case ']':

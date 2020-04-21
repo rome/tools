@@ -410,7 +410,7 @@ export default class Reporter {
 
     const stdin = this.getStdin();
 
-    const origPrompt = `<brightBlack emphasis>?</brightBlack> <emphasis>${message}</emphasis>`;
+    const origPrompt = `<dim emphasis>?</dim> <emphasis>${message}</emphasis>`;
     let prompt = origPrompt;
     if (hint !== undefined) {
       prompt += ` <dim>${hint}</dim>`;
@@ -964,13 +964,13 @@ export default class Reporter {
     this.logAllWithCategory(msg, args, {
       unicodePrefix: '\u2714 ',
       rawPrefix: '\u221a ',
-      markupTag: 'green',
+      markupTag: 'success',
     });
   }
 
   error(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
-      markupTag: 'red',
+      markupTag: 'error',
       unicodePrefix: '\u2716 ',
       rawPrefix: '\xd7 ',
       stderr: true,
@@ -985,7 +985,7 @@ export default class Reporter {
     this.logAllWithCategory(msg, args, {
       unicodePrefix: '\u2139 ',
       rawPrefix: 'i ',
-      markupTag: 'blue',
+      markupTag: 'info',
     });
   }
 
@@ -994,7 +994,7 @@ export default class Reporter {
       unicodePrefix: '\u26a0 ',
       rawPrefix: '! ',
       unicodeSuffix: ' \u26a0',
-      markupTag: 'yellow',
+      markupTag: 'warn',
       stderr: true,
     });
   }
@@ -1009,7 +1009,7 @@ export default class Reporter {
     this.logAllWithCategory(msg, args, {
       unicodePrefix: '\u26a1 ',
       rawPrefix: '* ',
-      markupTag: 'brightBlack',
+      markupTag: 'dim',
     });
   }
 

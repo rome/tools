@@ -165,7 +165,7 @@ export default function buildMessageCodeFrame(
   }
 
   const pointerLength: number = Math.max(get0(markerSize), 1);
-  const pointer: string = `<red><emphasis>${'^'.repeat(pointerLength)}</emphasis></red>`;
+  const pointer: string = `<error><emphasis>${'^'.repeat(pointerLength)}</emphasis></error>`;
   const pointerIndent: string = ' '.repeat(get0(markerOffset));
 
   // If the marker is just pointing to the first character and we have no message, no point showing it
