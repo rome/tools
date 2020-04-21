@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
 test('no ex-assign', async (t) => {
-  const res = await testLint(`
+  const res = await testLint(t, `
     try {
-      console.log('hello);
+      console.log('hello');
     } catch (e) {
       e = 10;
     }
-  `);
+  `, {category: 'lint/noExAssign'});
 
   t.snapshot(res);
 });

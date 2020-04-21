@@ -16,7 +16,7 @@ export default {
 
     if (node.type === 'CatchClause') {
       for (const bodyNode of node.body.body) {
-        if (bodyNode.type === 'ExpressionStatement' &&
+        if (bodyNode.type === 'ExpressionStatement' && node.param &&
                   bodyNode.expression.type ===
                   'AssignmentExpression' && node.param.type ===
                 'BindingIdentifier' &&
