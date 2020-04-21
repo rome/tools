@@ -18,9 +18,9 @@ import {markupTag, escapeMarkup} from '@romejs/string-markup';
 function formatDiffLine(diffs: Diffs) {
   return diffs.map(([type, text]) => {
     if (type === diffConstants.DELETE) {
-      return markupTag('red', escapeMarkup(showInvisibles(text)));
+      return markupTag('error', escapeMarkup(showInvisibles(text)));
     } else if (type === diffConstants.ADD) {
-      return markupTag('green', escapeMarkup(showInvisibles(text)));
+      return markupTag('success', escapeMarkup(showInvisibles(text)));
     } else {
       // type === diffConstants.EQUAL
       return escapeMarkup(text);
@@ -28,8 +28,8 @@ function formatDiffLine(diffs: Diffs) {
   }).join('');
 }
 
-const DELETE_MARKER = markupTag('red', '-');
-const ADD_MARKER = markupTag('green', '+');
+const DELETE_MARKER = markupTag('error', '-');
+const ADD_MARKER = markupTag('success', '+');
 
 export default function buildPatchCodeFrame(
   rawDiffs: Diffs,

@@ -55,4 +55,5 @@ export type MarkupTagName =
   | 'success'
   | 'warn'
   | 'info'
-  | 'highlight';
+  | 'highlight'
+  | 'color';

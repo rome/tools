@@ -178,8 +178,8 @@ function printDiff(
   const {legend} = item;
   if (legend !== undefined) {
     opts.reporter.spacer();
-    opts.reporter.logAll(`<success>+ ${escapeMarkup(legend.add)}</success>`);
     opts.reporter.logAll(`<error>- ${escapeMarkup(legend.delete)}</error>`);
+    opts.reporter.logAll(`<success>+ ${escapeMarkup(legend.add)}</success>`);
     opts.reporter.spacer();
   }
 

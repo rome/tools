@@ -1009,7 +1009,7 @@ export default class Reporter {
     this.logAllWithCategory(msg, args, {
       unicodePrefix: '\u26a1 ',
       rawPrefix: '* ',
-      markupTag: 'brightBlack',
+      markupTag: 'dim',
     });
   }
 

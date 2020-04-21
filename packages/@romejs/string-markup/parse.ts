@@ -46,6 +46,7 @@ tags.set('success', []);
 tags.set('warn', []);
 tags.set('info', []);
 tags.set('command', []);
+tags.set('color', ['fg', 'bg']);
 tags.set('highlight', ['i']);
 
 //
