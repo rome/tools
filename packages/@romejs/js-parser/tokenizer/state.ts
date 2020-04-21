@@ -12,7 +12,13 @@ import {types as ct, TokContext} from './context';
 import {types as tt, TokenTypes} from './types';
 import {AnyComment, AnyNode} from '@romejs/js-ast';
 import {Token} from '..';
-import {Number1, number1, number0, Number0, number0Neg1} from '@romejs/ob1';
+import {
+  Number1,
+  ob1Number1,
+  ob1Number0,
+  Number0,
+  ob1Number0Neg1,
+} from '@romejs/ob1';
 
 type Scopes = { [K in ScopeType]?: Array<unknown> };
 
@@ -127,9 +133,9 @@ export type Label = {
 };
 
 const EMPTY_POS: Position = {
-  line: number1,
-  column: number0,
-  index: number0,
+  line: ob1Number1,
+  column: ob1Number0,
+  index: ob1Number0,
 };
 
 export function createInitialState(): State {
@@ -140,16 +146,16 @@ export function createInitialState(): State {
     hasHoistedVars: false,
     corrupt: false,
     tokens: [],
-    potentialArrowAt: number0Neg1,
-    commaAfterSpreadAt: number0Neg1,
-    yieldPos: number0,
-    awaitPos: number0,
+    potentialArrowAt: ob1Number0Neg1,
+    commaAfterSpreadAt: ob1Number0Neg1,
+    yieldPos: ob1Number0,
+    awaitPos: ob1Number0,
     noArrowAt: [],
     noArrowParamsConversionAt: [],
     maybeInArrowParameters: false,
     isIterator: false,
     noAnonFunctionType: false,
-    classLevel: number0,
+    classLevel: ob1Number0,
     labels: [],
     yieldInPossibleArrowParameters: undefined,
     comments: [],
@@ -157,9 +163,9 @@ export function createInitialState(): State {
     leadingComments: [],
     commentStack: [],
     commentPreviousNode: undefined,
-    index: number0,
-    lineStartIndex: number0,
-    curLine: number1,
+    index: ob1Number0,
+    lineStartIndex: ob1Number0,
+    curLine: ob1Number1,
     tokenType: tt.eof,
     tokenValue: undefined,
     startPos: EMPTY_POS,
@@ -174,6 +180,6 @@ export function createInitialState(): State {
     invalidTemplateEscapePosition: undefined,
     exportedIdentifiers: new Map(),
     lineStart: true,
-    indentLevel: number0,
+    indentLevel: ob1Number0,
   };
 }

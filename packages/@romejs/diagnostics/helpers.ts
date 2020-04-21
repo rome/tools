@@ -9,7 +9,7 @@ import {DiagnosticAdvice, DiagnosticLocation} from './types';
 import {orderBySimilarity} from '@romejs/string-utils';
 import diff from '@romejs/string-diff';
 import {Position} from '@romejs/parser-core';
-import {get1} from '@romejs/ob1';
+import {ob1Get1} from '@romejs/ob1';
 import {NEWLINE} from '@romejs/js-parser-utils';
 import {markup, escapeMarkup} from '@romejs/string-markup';
 
@@ -111,8 +111,8 @@ export function truncateSourceText(
   const lines = code.split(NEWLINE);
 
   // Pad the starting and ending lines by 10
-  const fromLine = Math.max(get1(start.line) - 10, 0);
-  const toLine = Math.max(get1(end.line) + 10, lines.length);
+  const fromLine = Math.max(ob1Get1(start.line) - 10, 0);
+  const toLine = Math.max(ob1Get1(end.line) + 10, lines.length);
 
   const capturedLines = lines.slice(fromLine, toLine);
   return '\n'.repeat(fromLine) + capturedLines.join('\n');

@@ -22,7 +22,7 @@ import {
 
 import {DiagnosticsProcessor, descriptions} from '@romejs/diagnostics';
 import {AbsoluteFilePath} from '@romejs/path';
-import {add} from '@romejs/ob1';
+import {ob1Add} from '@romejs/ob1';
 import {readFile} from '@romejs/fs';
 import crypto = require('crypto');
 
@@ -259,7 +259,7 @@ export default class BundleRequest {
           ...mapping,
           generated: {
             ...mapping.generated,
-            line: add(lineOffset, mapping.generated.line),
+            line: ob1Add(lineOffset, mapping.generated.line),
           },
         });
       }

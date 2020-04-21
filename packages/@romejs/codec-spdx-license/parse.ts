@@ -17,7 +17,7 @@ import {
 } from '@romejs/parser-core';
 import {getSPDXLicense, licenseNames} from './index';
 import {descriptions} from '@romejs/diagnostics';
-import {inc, Number0, get0} from '@romejs/ob1';
+import {ob1Inc, Number0, ob1Get0} from '@romejs/ob1';
 
 //# Tokens
 type Tokens = BaseTokens & {
@@ -66,7 +66,7 @@ const createSPDXLicenseParser = createParser(
 
     // For some reason Flow will throw an error without the type casts...
     tokenize(index: Number0, input: string) {
-      const char = input[get0(index)];
+      const char = input[ob1Get0(index)];
 
       if (char === '+') {
         return this.finishToken('Plus');
@@ -82,7 +82,7 @@ const createSPDXLicenseParser = createParser(
 
       // Skip spaces
       if (char === ' ') {
-        return this.lookaheadToken(inc(index));
+        return this.lookaheadToken(ob1Inc(index));
       }
 
       if (isWordChar(char)) {

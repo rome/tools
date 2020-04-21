@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {number0, Number0, coerce0, inc, add} from '@romejs/ob1';
+import {ob1Number0, Number0, ob1Coerce0, ob1Inc, ob1Add} from '@romejs/ob1';
 import {
   DiagnosticDescriptionOptionalCategory,
   descriptions,
@@ -43,7 +43,7 @@ function validateNamePart(
     if (isOrg && char === '@' && i === 0) {
       unexpected({
         description: descriptions.MANIFEST.REDUNDANT_ORG_NAME_START,
-        start: add(offset, i),
+        start: ob1Add(offset, i),
       });
     } else if (!isOrgPart && char === '/') {
       /*unexpected({
@@ -72,7 +72,7 @@ function validateNamePart(
     } else {
       unexpected({
         description: descriptions.MANIFEST.INVALID_NAME_CHAR(char),
-        start: add(offset, i),
+        start: ob1Add(offset, i),
       });
     }
   }
@@ -96,7 +96,7 @@ export function normalizeName(opts: NormalizeNameOptions): string {
     unexpected({
       at: 'prefix',
       description: descriptions.MANIFEST.INVALID_NAME_START,
-      start: number0,
+      start: ob1Number0,
     });
     name = name.slice(1);
   }
@@ -106,7 +106,7 @@ export function normalizeName(opts: NormalizeNameOptions): string {
     const [org, packageName, ...other] = name.slice(1).split('/');
 
     // Leading @
-    let offset: Number0 = coerce0(1);
+    let offset: Number0 = ob1Coerce0(1);
 
     // Org
     const sanitizedOrg = validateNamePart(opts, {
@@ -115,7 +115,7 @@ export function normalizeName(opts: NormalizeNameOptions): string {
       name: org,
       offset,
     });
-    offset = add(offset, org.length);
+    offset = ob1Add(offset, org.length);
 
     if (packageName === undefined) {
       unexpected({
@@ -127,7 +127,7 @@ export function normalizeName(opts: NormalizeNameOptions): string {
       name = `@${sanitizedOrg}/unknown`;
     } else {
       // Forward slashSeparator
-      offset = inc(offset);
+      offset = ob1Inc(offset);
 
       // Package name
       const sanitizedPackageName = validateNamePart(opts, {
@@ -136,7 +136,7 @@ export function normalizeName(opts: NormalizeNameOptions): string {
         name: packageName,
         offset,
       });
-      offset = add(offset, packageName.length);
+      offset = ob1Add(offset, packageName.length);
 
       // Complain on excess separators
       if (other.length > 0) {
@@ -152,7 +152,7 @@ export function normalizeName(opts: NormalizeNameOptions): string {
   } else {
     name = validateNamePart(opts, {
       name,
-      offset: number0,
+      offset: ob1Number0,
       isOrg: false,
       isOrgPart: false,
     });

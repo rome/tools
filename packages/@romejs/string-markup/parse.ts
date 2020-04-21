@@ -21,7 +21,7 @@ import {
   Children,
   MarkupTagName,
 } from './types';
-import {inc, Number0, add, get0} from '@romejs/ob1';
+import {ob1Inc, Number0, ob1Add, ob1Get0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 import {unescapeTextValue} from './escape';
 
@@ -63,7 +63,7 @@ function isTextChar(char: string, index: Number0, input: string): boolean {
 }
 
 export function isTagStartChar(index: Number0, input: string): boolean {
-  const i = get0(index);
+  const i = ob1Get0(index);
   return input[i] === '<' && !isEscaped(index, input);
 }
 
@@ -86,11 +86,11 @@ const createStringMarkupParser = createParser(
       state: State;
     } {
       const escaped = isEscaped(index, input);
-      const char = input[get0(index)];
+      const char = input[ob1Get0(index)];
 
       if (!escaped && state.inTagHead) {
         if (char === ' ') {
-          return this.lookahead(inc(index));
+          return this.lookahead(ob1Inc(index));
         }
 
         if (char === '=') {
@@ -116,10 +116,9 @@ const createStringMarkupParser = createParser(
         }
 
         if (char === '"') {
-          const [value, stringValueEnd, unclosed] = this.readInputFrom(
-            inc(index),
-            isStringValueChar,
-          );
+          const [value, stringValueEnd, unclosed] = this.readInputFrom(ob1Inc(
+            index,
+          ), isStringValueChar);
 
           if (unclosed) {
             throw this.unexpected({
@@ -128,7 +127,7 @@ const createStringMarkupParser = createParser(
             });
           }
 
-          const end = add(stringValueEnd, 1);
+          const end = ob1Add(stringValueEnd, 1);
           return {
               state,
               token: this.finishValueToken(

@@ -8,7 +8,7 @@
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
 import {SourceLocation, PositionTracker} from '@romejs/parser-core';
-import {coerce0} from '@romejs/ob1';
+import {ob1Coerce0} from '@romejs/ob1';
 import {isIdentifierish} from '@romejs/js-ast-utils';
 import {descriptions} from '@romejs/diagnostics';
 import terms from './inconsiderateLanguage.json';
@@ -61,8 +61,8 @@ function check(loc: SourceLocation, input: string): {
           // Calculate the actual location of this
           loc: {
             ...loc,
-            start: tracker.getPositionFromIndex(coerce0(i)),
-            end: tracker.getPositionFromIndex(coerce0(i + word.length)),
+            start: tracker.getPositionFromIndex(ob1Coerce0(i)),
+            end: tracker.getPositionFromIndex(ob1Coerce0(i + word.length)),
           },
         });
 

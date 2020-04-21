@@ -49,7 +49,7 @@ import {
   maybeParseTypeArguments,
   parseClassImplements,
 } from './index';
-import {inc, dec} from '@romejs/ob1';
+import {ob1Inc, ob1Dec} from '@romejs/ob1';
 import {parseBindingIdentifier, toBindingIdentifier} from './expression';
 import {descriptions} from '@romejs/diagnostics';
 
@@ -194,7 +194,7 @@ type ClassBodyState = {hadConstructor: boolean};
 function parseClassBody(parser: JSParser): Array<AnyClassMember> {
   // class bodies are implicitly strict
   parser.pushScope('STRICT', true);
-  parser.state.classLevel = inc(parser.state.classLevel);
+  parser.state.classLevel = ob1Inc(parser.state.classLevel);
 
   const state: ClassBodyState = {hadConstructor: false};
 
@@ -219,7 +219,7 @@ function parseClassBody(parser: JSParser): Array<AnyClassMember> {
 
   parser.expectClosing(openContext);
 
-  parser.state.classLevel = dec(parser.state.classLevel);
+  parser.state.classLevel = ob1Dec(parser.state.classLevel);
   parser.popScope('STRICT');
 
   return body;

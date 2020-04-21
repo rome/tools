@@ -8,7 +8,7 @@
 import {DiagnosticLocation} from '@romejs/diagnostics';
 import {toKebabCase} from '@romejs/string-utils';
 import {ConsumeSourceLocationRequestTarget} from '@romejs/consume';
-import {Number0, coerce0, number1, number0Neg1} from '@romejs/ob1';
+import {Number0, ob1Coerce0, ob1Number1, ob1Number0Neg1} from '@romejs/ob1';
 import {Dict} from '@romejs/typescript-helpers';
 
 type SerializeCLIData = {
@@ -50,20 +50,20 @@ export function serializeCLIFlags(
 ): DiagnosticLocation {
   const {args, flags, programName, commandName, defaultFlags} = data;
 
-  let startColumn: Number0 = number0Neg1;
-  let endColumn: Number0 = number0Neg1;
+  let startColumn: Number0 = ob1Number0Neg1;
+  let endColumn: Number0 = ob1Number0Neg1;
   let code = `$ `;
 
   function setStartColumn() {
-    startColumn = coerce0(code.length);
+    startColumn = ob1Coerce0(code.length);
   }
 
   function setEndColumn() {
     // Never point to a space
     if (code[code.length - 1] === ' ') {
-      endColumn = coerce0(code.length - 1);
+      endColumn = ob1Coerce0(code.length - 1);
     } else {
-      endColumn = coerce0(code.length);
+      endColumn = ob1Coerce0(code.length);
     }
   }
 
@@ -151,7 +151,7 @@ export function serializeCLIFlags(
       if (isTarget && target.type === 'flag' && (target.target === 'value' ||
             target.target ===
             'inner-value')) {
-        startColumn = coerce0(code.length);
+        startColumn = ob1Coerce0(code.length);
       }
 
       // Number or string
@@ -163,8 +163,8 @@ export function serializeCLIFlags(
     }
   }
 
-  if (startColumn === number0Neg1 || endColumn === number0Neg1) {
-    startColumn = coerce0(code.length - 1);
+  if (startColumn === ob1Number0Neg1 || endColumn === ob1Number0Neg1) {
+    startColumn = ob1Coerce0(code.length - 1);
     endColumn = startColumn;
   }
 
@@ -174,12 +174,12 @@ export function serializeCLIFlags(
     sourceText: code,
     filename: 'argv',
     start: {
-      line: number1,
+      line: ob1Number1,
       column: startColumn,
       index: startColumn,
     },
     end: {
-      line: number1,
+      line: ob1Number1,
       column: endColumn,
       index: endColumn,
     },

@@ -8,7 +8,7 @@
 import {consumeUnknown, Consumer, consume} from '@romejs/consume';
 import url = require('url');
 
-import {number0, number1, coerce0} from '@romejs/ob1';
+import {ob1Number0, ob1Number1, ob1Coerce0} from '@romejs/ob1';
 
 export type ConsumableUrl = {
   path: Consumer;
@@ -32,14 +32,14 @@ export function consumeUrl(rawUrl: string): ConsumableUrl {
           sourceText: rawUrl,
           filename: 'url',
           start: {
-            index: number0,
-            line: number1,
-            column: number0,
+            index: ob1Number0,
+            line: ob1Number1,
+            column: ob1Number0,
           },
           end: {
-            index: coerce0(rawUrl.length - 1),
-            line: number1,
-            column: coerce0(rawUrl.length - 1),
+            index: ob1Coerce0(rawUrl.length - 1),
+            line: ob1Number1,
+            column: ob1Coerce0(rawUrl.length - 1),
           },
         };
       },

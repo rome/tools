@@ -34,7 +34,7 @@ import {types as tt, TokenType} from './tokenizer/types';
 import {lineBreak} from '@romejs/js-parser-utils';
 import {parseTopLevel} from './parser/index';
 import {createInitialState, State} from './tokenizer/state';
-import {sub, Number0, number0} from '@romejs/ob1';
+import {ob1Sub, Number0, ob1Number0} from '@romejs/ob1';
 import {Dict, OptionalProps} from '@romejs/typescript-helpers';
 import {attachComments} from './parser/comments';
 import CommentsConsumer from './CommentsConsumer';
@@ -136,7 +136,7 @@ const createJSParser = createParser(
       resetTokenizerLine() {
         this.state.lineStartIndex = this.state.index;
         this.state.lineStart = true;
-        this.state.indentLevel = number0;
+        this.state.indentLevel = ob1Number0;
       }
 
       getScope(type: ScopeType) {
@@ -741,7 +741,7 @@ const createJSParser = createParser(
         return {
           index: state.index,
           line: state.curLine,
-          column: sub(state.index, state.lineStartIndex),
+          column: ob1Sub(state.index, state.lineStartIndex),
         };
       }
 

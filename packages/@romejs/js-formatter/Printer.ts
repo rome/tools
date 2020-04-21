@@ -31,11 +31,11 @@ import {
 import {
   Number1,
   Number0,
-  number0,
-  number1,
-  get0,
-  inc,
-  coerce0,
+  ob1Number0,
+  ob1Number1,
+  ob1Get0,
+  ob1Inc,
+  ob1Coerce0,
 } from '@romejs/ob1';
 import {SourceLocation} from '@romejs/parser-core';
 
@@ -94,9 +94,9 @@ export default class Printer {
       endsWithInteger: false,
       endsWithNewline: true,
       endsWithWord: false,
-      generatedIndex: number0,
-      generatedColumn: number0,
-      generatedLine: number1,
+      generatedIndex: ob1Number0,
+      generatedColumn: ob1Number0,
+      generatedLine: ob1Number1,
     };
 
     this.compact = this.options.format === 'compact';
@@ -213,7 +213,7 @@ export default class Printer {
     this.buff.push(str);
 
     for (const char of str) {
-      this.state.generatedIndex = inc(this.state.generatedIndex);
+      this.state.generatedIndex = ob1Inc(this.state.generatedIndex);
 
       if (char === '\n') {
         // Determine if we need to line wrap. We skip this when we aren't in pretty mode for better performance.
@@ -223,10 +223,10 @@ export default class Printer {
             throw new BreakGroupError(lastUnbrokenGroup);
           }
         }
-        this.state.generatedColumn = number0;
-        this.state.generatedLine = inc(this.state.generatedLine);
+        this.state.generatedColumn = ob1Number0;
+        this.state.generatedLine = ob1Inc(this.state.generatedLine);
       } else {
-        this.state.generatedColumn = inc(this.state.generatedColumn);
+        this.state.generatedColumn = ob1Inc(this.state.generatedColumn);
       }
     }
   }
@@ -252,8 +252,9 @@ export default class Printer {
     // Determine if we need to line wrap. We skip this when we aren't in pretty mode for better performance.
     const {lastUnbrokenGroup} = this;
     if (this.lineWrap) {
-      if (lastUnbrokenGroup !== undefined && get0(this.state.generatedColumn) >
-          MAX_LINE_LENGTH) {
+      if (lastUnbrokenGroup !== undefined &&
+            ob1Get0(this.state.generatedColumn) >
+            MAX_LINE_LENGTH) {
         throw new BreakGroupError(lastUnbrokenGroup);
       }
     }
@@ -314,7 +315,7 @@ export default class Printer {
   trimCharacter(str: string): boolean {
     const {buff} = this;
     if (buff[buff.length - 1] === str) {
-      this.state.generatedColumn = coerce0(Math.max(0, get0(
+      this.state.generatedColumn = ob1Coerce0(Math.max(0, ob1Get0(
         this.state.generatedColumn,
       ) - 1));
       buff.pop();

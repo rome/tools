@@ -26,7 +26,7 @@ import {
   isDigit,
 } from '@romejs/parser-core';
 
-import {Number0, add, get0} from '@romejs/ob1';
+import {Number0, ob1Add, ob1Get0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 
 type ParseMode = 'version' | 'range';
@@ -47,14 +47,14 @@ const createSemverParser = createParser(
 
     // For some reason Flow will throw an error without the type casts...
     tokenize(index: Number0, input: string): undefined | TokenValues<Tokens> {
-      const char = input[get0(index)];
-      const nextChar = input[get0(index) + 1];
+      const char = input[ob1Get0(index)];
+      const nextChar = input[ob1Get0(index) + 1];
 
       if (char === '<' && nextChar === '=' || char === '>' && nextChar === '=' ||
           char === '~' && nextChar === '>') {
         // @ts-ignore: TS doesn't infer the possible combinations
         const value: ComparatorOperator = char + nextChar;
-        return this.finishValueToken('Operator', value, add(index, 2));
+        return this.finishValueToken('Operator', value, ob1Add(index, 2));
       }
 
       if (char === '^' || char === '<' || char === '>' || char === '~' ||
@@ -65,14 +65,14 @@ const createSemverParser = createParser(
       }
 
       if (char === '|' && nextChar === '|') {
-        return this.finishToken('Pipe', add(index, 2));
+        return this.finishToken('Pipe', ob1Add(index, 2));
       }
 
       if (char === '*') {
         return this.finishToken('Star');
       }
 
-      if (input[get0(index) - 1] === ' ' && char === '-' && nextChar === ' ') {
+      if (input[ob1Get0(index) - 1] === ' ' && char === '-' && nextChar === ' ') {
         return this.finishToken('RangeDash');
       }
 
@@ -90,7 +90,7 @@ const createSemverParser = createParser(
 
       if (isDigit(char)) {
         const [value] = this.readInputFrom(index, isDigit);
-        return this.finishValueToken('Number', Number(value), add(
+        return this.finishValueToken('Number', Number(value), ob1Add(
           index,
           value.length,
         ));
@@ -98,7 +98,7 @@ const createSemverParser = createParser(
 
       if (isAlpha(char)) {
         const [value] = this.readInputFrom(index, isAlpha);
-        return this.finishValueToken('Word', value, add(index, value.length));
+        return this.finishValueToken('Word', value, ob1Add(index, value.length));
       }
 
       if (char === ' ' || char === '\t') {

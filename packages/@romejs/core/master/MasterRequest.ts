@@ -70,7 +70,7 @@ import {
 import crypto = require('crypto');
 import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
 import {Dict, RequiredProps} from '@romejs/typescript-helpers';
-import {number1, number0, coerce0} from '@romejs/ob1';
+import {ob1Number1, ob1Number0, ob1Coerce0} from '@romejs/ob1';
 import {MemoryFSGlobOptions} from './fs/MemoryFileSystem';
 import {markup} from '@romejs/string-markup';
 import {
@@ -386,14 +386,14 @@ export default class MasterRequest {
     return {
       sourceText: cwd,
       start: {
-        index: number0,
-        line: number1,
-        column: number0,
+        index: ob1Number0,
+        line: ob1Number1,
+        column: ob1Number0,
       },
       end: {
-        index: coerce0(cwd.length),
-        line: number1,
-        column: coerce0(cwd.length),
+        index: ob1Coerce0(cwd.length),
+        line: ob1Number1,
+        column: ob1Coerce0(cwd.length),
       },
       filename: 'cwd',
     };

@@ -25,7 +25,7 @@ import buildPatchCodeFrame from './buildPatchCodeFrame';
 import buildMessageCodeFrame from './buildMessageCodeFrame';
 import {escapeMarkup, markupTag} from '@romejs/string-markup';
 import {DiagnosticsPrinterFlags} from './types';
-import {number0Neg1} from '@romejs/ob1';
+import {ob1Number0Neg1} from '@romejs/ob1';
 import DiagnosticsPrinter, {
   DiagnosticsPrinterFileSources,
 } from './DiagnosticsPrinter';
@@ -359,7 +359,7 @@ function printStacktrace(
       const header = getDiagnosticHeader({
         filename,
         start: {
-          index: number0Neg1,
+          index: ob1Number0Neg1,
           line,
           column,
         },
@@ -379,7 +379,7 @@ function printStacktrace(
           column !==
           undefined) {
       const pos: Position = {
-        index: number0Neg1,
+        index: ob1Number0Neg1,
         line,
         column,
       };

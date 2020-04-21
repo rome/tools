@@ -16,7 +16,7 @@ import {
 import {addOriginsToDiagnostics} from './derive';
 import {naturalCompare} from '@romejs/string-utils';
 import {DiagnosticsError} from './errors';
-import {get0} from '@romejs/ob1';
+import {ob1Get0} from '@romejs/ob1';
 import {DiagnosticCategoryPrefix} from './categories';
 import {descriptions} from './descriptions';
 import {matchesSuppression} from '@romejs/js-compiler';
@@ -376,7 +376,7 @@ export default class DiagnosticsProcessor {
         if (aStart === undefined || bStart === undefined) {
           return 0;
         } else {
-          return get0(aStart.index) - get0(bStart.index);
+          return ob1Get0(aStart.index) - ob1Get0(bStart.index);
         }
       });
 
