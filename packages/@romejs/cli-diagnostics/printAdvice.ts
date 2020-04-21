@@ -178,8 +178,8 @@ function printDiff(
   const {legend} = item;
   if (legend !== undefined) {
     opts.reporter.spacer();
-    opts.reporter.logAll(`<green>+ ${escapeMarkup(legend.add)}</green>`);
-    opts.reporter.logAll(`<red>- ${escapeMarkup(legend.delete)}</red>`);
+    opts.reporter.logAll(`<success>+ ${escapeMarkup(legend.add)}</success>`);
+    opts.reporter.logAll(`<error>- ${escapeMarkup(legend.delete)}</error>`);
     opts.reporter.spacer();
   }
 
@@ -340,10 +340,10 @@ function printStacktrace(
     // Build path
     const objParts = [];
     if (object !== undefined) {
-      objParts.push(markupTag('magenta', escapeMarkup(object)));
+      objParts.push(markupTag('highlight', escapeMarkup(object), {i: 0}));
     }
     if (property !== undefined) {
-      objParts.push(markupTag('cyan', escapeMarkup(property)));
+      objParts.push(markupTag('highlight', escapeMarkup(property), {i: 1}));
     }
     if (objParts.length > 0) {
       logParts.push(objParts.join('.'));
@@ -351,7 +351,7 @@ function printStacktrace(
 
     // Add suffix
     if (suffix !== undefined) {
-      logParts.push(markupTag('green', escapeMarkup(suffix)));
+      logParts.push(markupTag('success', escapeMarkup(suffix)));
     }
 
     // Add source

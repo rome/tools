@@ -823,9 +823,9 @@ export const descriptions = createMessages(
         function formatPart(part: string, index?: number): string {
           const tagged = `<filelink target="${part}" />`;
           if (part === culprit) {
-            return `<magenta>${tagged}</magenta><dim>[1]</dim>`;
+            return `<highlight i="0" legend>${tagged}</highlight>`;
           } else if (part === target) {
-            return `<cyan>${tagged}</cyan><dim>[2]</dim>`;
+            return `<highlight i="1" legend>${tagged}</highlight>`;
           } else if (index === 0) {
             return `${tagged} <inverse>ENTRY</inverse>`;
           } else {

@@ -463,7 +463,7 @@ export default class Parser<T> {
     // Output options
     for (const {arg, description} of optionOutput) {
       lines.push(
-        markup`<brightBlack><pad count="${argColumnLength}" dir="right">${arg}</pad></brightBlack>  ${description}`,
+        markup`<dim><pad count="${argColumnLength}" dir="right">${arg}</pad></dim>  ${description}`,
       );
     }
 

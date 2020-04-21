@@ -62,7 +62,7 @@ export default async function select<
     return new Set(defaults);
   }
 
-  let prompt = `<brightBlack>❯</brightBlack> <emphasis>${message}</emphasis>`;
+  let prompt = `<dim>❯</dim> <emphasis>${message}</emphasis>`;
   reporter.logAll(prompt);
 
   if (radio) {

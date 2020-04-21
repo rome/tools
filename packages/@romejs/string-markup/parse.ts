@@ -27,7 +27,7 @@ import {unescapeTextValue} from './escape';
 
 const globalAttributes: Array<string> = ['emphasis', 'dim'];
 
-const tags: Map<string, Array<string>> = new Map();
+const tags: Map<MarkupTagName, Array<string>> = new Map();
 tags.set('pad', ['dir', 'char', 'count']);
 tags.set('emphasis', []);
 tags.set('number', ['approx', 'pluralSuffix', 'singularSuffix']);
@@ -41,39 +41,12 @@ tags.set('duration', ['approx']);
 tags.set('italic', []);
 tags.set('underline', []);
 tags.set('strike', []);
-tags.set('black', []);
-tags.set('brightBlack', []);
-tags.set('red', []);
-tags.set('brightRed', []);
-tags.set('green', []);
-tags.set('brightGreen', []);
-tags.set('yellow', []);
-tags.set('brightYellow', []);
-tags.set('blue', []);
-tags.set('brightBlue', []);
-tags.set('magenta', []);
-tags.set('brightMagenta', []);
-tags.set('cyan', []);
-tags.set('brightCyan', []);
-tags.set('white', []);
-tags.set('brightWhite', []);
-tags.set('bgBlack', []);
-tags.set('bgBrightBlack', []);
-tags.set('bgRed', []);
-tags.set('bgBrightRed', []);
-tags.set('bgGreen', []);
-tags.set('bgBrightGreen', []);
-tags.set('bgYellow', []);
-tags.set('bgBrightYellow', []);
-tags.set('bgBlue', []);
-tags.set('bgBrightBlue', []);
-tags.set('bgMagenta', []);
-tags.set('bgBrightMagenta', []);
-tags.set('bgCyan', []);
-tags.set('bgBrightCyan', []);
-tags.set('bgWhite', []);
-tags.set('bgBrightWhite', []);
+tags.set('error', []);
+tags.set('success', []);
+tags.set('warn', []);
+tags.set('info', []);
 tags.set('command', []);
+tags.set('highlight', ['i']);
 
 //
 function isStringValueChar(char: string, index: Number0, input: string): boolean {
@@ -203,18 +176,16 @@ const createStringMarkupParser = createParser(
 
     parseTag(headStart: Position): TagNode {
       const nameToken = this.expectToken('Word');
-      const rawName = nameToken.value;
+      const tagName = (nameToken.value as MarkupTagName);
 
-      const allowedAttributes = tags.get(rawName);
+      const allowedAttributes = tags.get(tagName);
       if (allowedAttributes === undefined) {
         throw this.unexpected({
-          description: descriptions.STRING_MARKUP.UNKNOWN_TAG_NAME(rawName),
+          description: descriptions.STRING_MARKUP.UNKNOWN_TAG_NAME(tagName),
           start: this.getPositionFromIndex(nameToken.start),
         });
       }
 
-      // rome-suppress-next-line lint/noExplicitAny
-      const tagName: MarkupTagName = (rawName as any);
       const attributes: TagAttributes = new Map();
       const children: Children = [];
       let selfClosing = false;

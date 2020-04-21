@@ -37,7 +37,7 @@ Array [
 
 ```javascript
 Array [
-  Text {value: '  <blue>[MemoryFileSystem] Adding new project folder C:\\Users\\Sebastian\\rome\\</blue>\n        '}
+  Text {value: '  <info>[MemoryFileSystem] Adding new project folder C:\\Users\\Sebastian\\rome\\</info>\n        '}
   Tag {
     name: 'red'
     attributes: Map []

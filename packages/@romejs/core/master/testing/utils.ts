@@ -24,11 +24,11 @@ export function sortMapKeys<T>(map: Map<string, T>): Map<string, T> {
 export function formatPercent(num: number): string {
   const str = String(Math.floor(num));
   if (num > 80) {
-    return `<green>${str}</green>`;
+    return `<success>${str}</success>`;
   } else if (num > 40) {
-    return `<yellow>${str}</yellow>`;
+    return `<warn>${str}</warn>`;
   } else {
-    return `<red>${str}</red>`;
+    return `<error>${str}</error>`;
   }
 }
 

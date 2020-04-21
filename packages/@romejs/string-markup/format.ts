@@ -276,7 +276,12 @@ export function normalizeMarkup(
       }
 
       let attrStr = Array.from(attributes, ([key, value]) => {
-        return `${key}="${value.replace(/"/g, '\\"')}"`;
+        if (value === 'true') {
+          return key;
+        } else {
+          const escapedValue = escapeMarkup(value);
+          return `${key}="${escapedValue}"`;
+        }
       }).join(' ');
 
       let open = `<${tag}`;
@@ -388,106 +393,39 @@ function ansiFormatText(
     case 'strike':
       return formatAnsi.strikethrough(value);
 
-    case 'black':
-      return formatAnsi.black(value);
-
-    case 'brightBlack':
-      return formatAnsi.brightBlack(value);
-
-    case 'red':
+    case 'error':
       return formatAnsi.red(value);
 
-    case 'brightRed':
-      return formatAnsi.brightRed(value);
-
-    case 'green':
+    case 'success':
       return formatAnsi.green(value);
 
-    case 'brightGreen':
-      return formatAnsi.brightGreen(value);
-
-    case 'yellow':
+    case 'warn':
       return formatAnsi.yellow(value);
 
-    case 'brightYellow':
-      return formatAnsi.brightYellow(value);
-
-    case 'blue':
+    case 'info':
       return formatAnsi.blue(value);
-
-    case 'brightBlue':
-      return formatAnsi.brightBlue(value);
-
-    case 'magenta':
-      return formatAnsi.magenta(value);
-
-    case 'brightMagenta':
-      return formatAnsi.brightMagenta(value);
-
-    case 'cyan':
-      return formatAnsi.cyan(value);
-
-    case 'brightCyan':
-      return formatAnsi.brightCyan(value);
-
-    case 'white':
-      return formatAnsi.white(value);
-
-    case 'brightWhite':
-      return formatAnsi.brightWhite(value);
-
-    case 'bgBlack':
-      return formatAnsi.bgBlack(value);
-
-    case 'bgBrightBlack':
-      return formatAnsi.bgBrightBlack(value);
-
-    case 'bgRed':
-      return formatAnsi.bgRed(value);
-
-    case 'bgBrightRed':
-      return formatAnsi.bgBrightRed(value);
-
-    case 'bgGreen':
-      return formatAnsi.bgGreen(value);
-
-    case 'bgBrightGreen':
-      return formatAnsi.bgBrightGreen(value);
-
-    case 'bgYellow':
-      return formatAnsi.bgYellow(value);
-
-    case 'bgBrightYellow':
-      return formatAnsi.bgBrightYellow(value);
-
-    case 'bgBlue':
-      return formatAnsi.bgBlue(value);
-
-    case 'bgBrightBlue':
-      return formatAnsi.bgBrightBlue(value);
-
-    case 'bgMagenta':
-      return formatAnsi.bgMagenta(value);
-
-    case 'bgBrightMagenta':
-      return formatAnsi.bgBrightMagenta(value);
-
-    case 'bgCyan':
-      return formatAnsi.bgCyan(value);
-
-    case 'bgBrightCyan':
-      return formatAnsi.bgBrightCyan(value);
-
-    case 'bgWhite':
-      return formatAnsi.bgWhite(value);
-
-    case 'bgBrightWhite':
-      return formatAnsi.bgBrightWhite(value);
 
     case 'command':
       return formatAnsi.italic(value);
+
+    case 'highlight': {
+      const index = Math.min(0, Number(attributes.get('i')) || 0);
+      const showLegend = attributes.get('legend') === 'true';
+      const fn = ansiHighlightFactories[index % ansiHighlightFactories.length];
+      let formatted = fn(value);
+      if (showLegend) {
+        formatted += formatAnsi.dim(`[${String(index + 1)}]`);
+      }
+      return formatted;
+    }
   }
 }
+
+// TODO fill this
+const ansiHighlightFactories: Array<(str: string) => string> = [
+  formatAnsi.magenta,
+  formatAnsi.cyan,
+];
 
 export function humanizeMarkupFilename(
   filename: string,
