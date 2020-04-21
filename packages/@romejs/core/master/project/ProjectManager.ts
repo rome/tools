@@ -68,7 +68,12 @@ function cleanUidParts(parts: Array<string>): string {
       sharedPrefix += part[i];
     }
 
-    uid += part.slice(sharedPrefix.length);
+    const partWithoutExtension = part.split('.')[0];
+    if (sharedPrefix === partWithoutExtension) {
+      uid += part;
+    } else {
+      uid += part.slice(sharedPrefix.length);
+    }
 
     lastPart = part;
   }
@@ -538,7 +543,7 @@ export default class ProjectManager {
   }
 
   async getVCSClient(project: ProjectDefinition): Promise<VCSClient> {
-    const client = await getVCSClient(project.config.vcs.root);
+    const client = await this.maybeGetVCSClient(project);
 
     if (client === undefined) {
       const {
@@ -562,6 +567,12 @@ export default class ProjectManager {
     } else {
       return client;
     }
+  }
+
+  async maybeGetVCSClient(
+    project: ProjectDefinition,
+  ): Promise<undefined | VCSClient> {
+    return await getVCSClient(project.config.vcs.root);
   }
 
   async addProject(

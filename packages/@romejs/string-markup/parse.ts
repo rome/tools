@@ -23,6 +23,7 @@ import {
 } from './types';
 import {inc, Number0, add, get0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
+import {unescapeTextValue} from './escape';
 
 const globalAttributes: Array<string> = ['emphasis', 'dim'];
 
@@ -155,9 +156,13 @@ const createStringMarkupParser = createParser(
 
           const end = add(stringValueEnd, 1);
           return {
-            state,
-            token: this.finishValueToken('String', value, end),
-          };
+              state,
+              token: this.finishValueToken(
+                'String',
+                unescapeTextValue(value),
+                end,
+              ),
+            };
         }
 
         if (char === '>') {
@@ -351,25 +356,4 @@ export function parseMarkup(input: string) {
   } catch (err) {
     throw err;
   }
-}
-
-function unescapeTextValue(str: string): string {
-  let unescaped = '';
-
-  for (let i = 0; i < str.length; i++) {
-    const char = str[i];
-
-    if (char === '\\') {
-      const nextChar = str[i + 1];
-      if (nextChar === '<') {
-        i++;
-        unescaped += '<';
-        continue;
-      }
-    }
-
-    unescaped += char;
-  }
-
-  return unescaped;
 }

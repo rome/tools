@@ -26,6 +26,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: '*\n * @flow\n '
       loc: Object {
         filename: 'input.js'
@@ -61,6 +62,7 @@ Program {
         }
       }
       typeParameters: undefined
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -74,24 +76,6 @@ Program {
           line: 5
         }
       }
-      leadingComments: Array [
-        CommentBlock {
-          value: '*\n * @flow\n '
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 3
-              index: 16
-              line: 3
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      ]
       right: UnionTypeAnnotation {
         loc: Object {
           filename: 'input.js'

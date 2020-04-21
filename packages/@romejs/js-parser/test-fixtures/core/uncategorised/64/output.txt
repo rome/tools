@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' Some comment'
       loc: Object {
         filename: 'input.js'
@@ -88,6 +89,7 @@ Program {
         }
         body: Array [
           ExpressionStatement {
+            leadingComments: Array ['0']
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -101,24 +103,6 @@ Program {
                 line: 2
               }
             }
-            leadingComments: Array [
-              CommentLine {
-                value: ' Some comment'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 24
-                    index: 24
-                    line: 1
-                  }
-                  start: Object {
-                    column: 9
-                    index: 9
-                    line: 1
-                  }
-                }
-              }
-            ]
             expression: CallExpression {
               arguments: Array []
               leadingComments: undefined

@@ -23,7 +23,7 @@ type CacheEntry = {
   projectDir: string;
   mtime: number;
   compile: {[key: string]: WorkerCompileResult};
-  lint: undefined | WorkerLintResult;
+  lint: {[key: string]: WorkerLintResult};
   analyzeDependencies: undefined | WorkerAnalyzeDependencyResult;
   moduleSignature: undefined | ModuleSignature;
 };
@@ -90,7 +90,7 @@ export default class Cache {
       compile: {},
       analyzeDependencies: undefined,
       moduleSignature: undefined,
-      lint: undefined,
+      lint: {},
     };
 
     return entry;
@@ -114,7 +114,7 @@ export default class Cache {
     // If we have a loaded memory entry, make sure it's valid compared to the default entry (file changes etc)
     let loaded = this.loadedEntries.get(path);
     if (loaded !== undefined && areEntriesEqual(loaded, emptyEntry)) {
-      return emptyEntry;
+      return loaded;
     }
 
     if (this.disabled) {

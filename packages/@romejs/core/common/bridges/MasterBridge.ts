@@ -60,6 +60,7 @@ export type MasterQueryResponseDiagnostics = {
 export type MasterQueryResponseInvalid = {
   type: 'INVALID_REQUEST';
   diagnostics: Diagnostics;
+  showHelp: boolean;
 };
 
 export type MasterQueryResponse =
@@ -75,6 +76,7 @@ export type MasterBridgeInfo = {
   columns: number;
   hasClearScreen: boolean;
   useRemoteReporter: boolean;
+  unicode: boolean;
   format: ReporterStream['format'];
   flags: ClientFlagsJSON;
 };

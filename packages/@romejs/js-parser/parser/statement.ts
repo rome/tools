@@ -110,12 +110,9 @@ export function parseTopLevel(parser: JSParser): Program {
   const interpreter = parsePossibleInterpreterDirective(parser);
   const {body, directives} = parseBlockBody(parser, true, true, openContext);
 
-  const loc = parser.finishLoc(start);
-
-  return {
+  return parser.finishNode(start, {
     type: 'Program',
     corrupt: parser.state.corrupt,
-    loc,
     body,
     directives,
     mtime: parser.mtime,
@@ -126,7 +123,7 @@ export function parseTopLevel(parser: JSParser): Program {
     interpreter,
     syntax: Array.from(parser.syntax),
     hasHoistedVars: parser.state.hasHoistedVars,
-  };
+  });
 }
 
 export function parsePossibleInterpreterDirective(
@@ -281,7 +278,7 @@ export function parseStatement(
     case tt._for:
       return parseForStatement(parser, start);
 
-    case tt._function:
+    case tt._function: {
       if (parser.lookaheadState().tokenType === tt.dot) {
         // MetaProperty: eg. function.sent
         break;
@@ -311,6 +308,7 @@ export function parseStatement(
       }
 
       return result;
+    }
 
     case tt._class: {
       if (context !== undefined) {
@@ -335,7 +333,7 @@ export function parseStatement(
       return parseTryStatement(parser, start);
 
     case tt._const:
-    case tt._var:
+    case tt._var: {
       kind = kind === undefined
         ? assertVarKind(String(parser.state.tokenValue))
         : kind;
@@ -347,6 +345,7 @@ export function parseStatement(
         );
       }
       return parseVarStatement(parser, start, kind);
+    }
 
     case tt._while:
       return parseWhileStatement(parser, start);
@@ -370,7 +369,7 @@ export function parseStatement(
       parser.next();
 
       let result: ParseExportResult | ParseImportResult;
-      if (startType == tt._import) {
+      if (startType === tt._import) {
         result = parseImport(parser, start);
       } else {
         result = parseExport(parser, start);
@@ -975,9 +974,9 @@ export function parseLabeledStatement(
   }
   const body = parseStatement(parser, statementContext);
 
-  if (body.type == 'ClassDeclaration' || body.type ==
+  if (body.type === 'ClassDeclaration' || body.type ===
         'VariableDeclarationStatement' && body.declaration.kind !== 'var' ||
-          body.type ==
+          body.type ===
           'FunctionDeclaration' &&
         (parser.inScope('STRICT') || body.head.generator === true ||
             body.head.async ===
@@ -1438,6 +1437,7 @@ export function parseFunction(parser: JSParser, opts: {
     id = parseFunctionId(parser, false);
   }
 
+  const headStart = parser.getPosition();
   const {params, rest, typeParameters} = parseFunctionParams(parser);
   const {head, body} = parseFunctionBodyAndFinish(parser, {
     allowBodiless: isStatement,
@@ -1448,6 +1448,7 @@ export function parseFunction(parser: JSParser, opts: {
     isMethod: false,
     isAsync,
     isGenerator,
+    headStart,
     start,
   });
 

@@ -13,7 +13,7 @@ import {
   ReporterProgressOptions,
 } from './types';
 import ProgressBase from './ProgressBase';
-import {markupTag, ansiEscapes} from '@romejs/string-markup';
+import {markupTag, ansiEscapes, escapeMarkup} from '@romejs/string-markup';
 
 type BoldRanges = Array<[number, number]>;
 
@@ -261,16 +261,17 @@ export default class Progress extends ProgressBase {
     let start = this.getBouncerPosition(stream);
     let fullBar = '';
     for (const [i, char] of bar) {
+      const escaped = escapeMarkup(char);
       const isBounce = i >= start && i < start + BOUNCER_WIDTH;
 
       if (isBounce) {
         if (this.paused) {
-          fullBar += markupTag('inverse', char);
+          fullBar += markupTag('inverse', escaped);
         } else {
-          fullBar += markupTag('white', markupTag('bgYellow', char));
+          fullBar += markupTag('white', markupTag('bgYellow', escaped));
         }
       } else {
-        fullBar += char;
+        fullBar += escaped;
       }
     }
     return fullBar;
@@ -296,7 +297,7 @@ export default class Progress extends ProgressBase {
   }
 
   buildBar(stream: ReporterStream) {
-    const {total, current, text, title} = this;
+    const {total, current, title} = this;
 
     // Text ranges that we should make bold
     const boldRanges: BoldRanges = [];
@@ -309,6 +310,8 @@ export default class Progress extends ProgressBase {
       // Only the title should be bold, not the subtext
       boldRanges.push([0, prefix.length - 1]);
     }
+
+    const text = this.getText();
     if (text !== undefined) {
       // Separate a title and it's text with a colon
       if (title !== undefined) {

@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: 'a\nc'
       loc: Object {
         filename: 'input.js'
@@ -41,6 +42,7 @@ Program {
   ]
   body: Array [
     ExpressionStatement {
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -71,24 +73,6 @@ Program {
           }
         }
       }
-      leadingComments: Array [
-        CommentBlock {
-          value: 'a\nc'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 3
-              index: 7
-              line: 2
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      ]
     }
   ]
 }

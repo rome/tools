@@ -404,10 +404,11 @@ export function parseTypeExpressionStatement(
       // TODO perform some lookahead to make sure we want to do this
       return parseTypeAlias(parser, start);
 
-    case 'opaque':
+    case 'opaque': {
       // TODO perform some lookahead to make sure we want to do this
       addFlowDiagnostic(parser, 'opaque type', start);
       return parseFlowOpaqueType(parser, start, false);
+    }
 
     case 'abstract':
       if (parser.match(tt._class)) {
@@ -437,14 +438,14 @@ export function parseTypeExpressionStatement(
         break;
       }
 
-    case 'namespace':
+    case 'namespace': {
       if (!parser.match(tt.name)) {
         return undefined;
       }
 
       addTSDiagnostic(parser, 'module or namespace declaration', start);
       return parseTSModuleOrNamespaceDeclaration(parser, start);
-
+    }
 
     // TODO abstract this into typescript.js
     case 'global':

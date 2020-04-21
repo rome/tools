@@ -158,13 +158,13 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 38
-                  index: 48
+                  column: 37
+                  index: 47
                   line: 2
                 }
                 start: Object {
-                  column: 37
-                  index: 47
+                  column: 15
+                  index: 25
                   line: 2
                 }
               }
@@ -352,13 +352,13 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 38
-                  index: 87
+                  column: 37
+                  index: 86
                   line: 3
                 }
                 start: Object {
-                  column: 37
-                  index: 86
+                  column: 15
+                  index: 64
                   line: 3
                 }
               }
@@ -567,8 +567,8 @@ Program {
                   line: 4
                 }
                 start: Object {
-                  column: 32
-                  index: 120
+                  column: 15
+                  index: 103
                   line: 4
                 }
               }

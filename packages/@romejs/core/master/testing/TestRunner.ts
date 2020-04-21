@@ -10,7 +10,6 @@ import {
   DiagnosticOrigin,
   deriveDiagnosticFromError,
   descriptions,
-  DiagnosticsProcessor,
 } from '@romejs/diagnostics';
 import {TestRef} from '../../common/bridges/TestWorkerBridge';
 import {Master, MasterRequest, TestWorkerBridge} from '@romejs/core';
@@ -35,7 +34,7 @@ import {
 import fork from '../../common/utils/fork';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
 import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
-import {coerce0to1} from '@romejs/ob1';
+import {coerce0To1} from '@romejs/ob1';
 import {
   TestRunnerConstructorOptions,
   TestRunnerOptions,
@@ -46,7 +45,10 @@ import {
   CoverageFolder,
 } from './types';
 import {percentInsideCoverageFolder, formatPercent, sortMapKeys} from './utils';
-import {escapeMarkup} from '@romejs/string-markup';
+import {escapeMarkup, markup} from '@romejs/string-markup';
+import {MAX_WORKER_COUNT} from '@romejs/core/common/constants';
+import {TestWorkerFlags} from '@romejs/core/test-worker/TestWorker';
+import net = require('net');
 
 class BridgeStructuredError extends NativeStructuredError {
   constructor(struct: Partial<StructuredError>, bridge: Bridge) {
@@ -58,7 +60,28 @@ class BridgeStructuredError extends NativeStructuredError {
 }
 
 function getProgressTestRefText(ref: TestRef) {
-  return `<filelink target="${ref.filename}" />: ${escapeMarkup(ref.testName)}`;
+  return markup`<filelink target="${ref.filename}" />: ${escapeMarkup(
+    ref.testName,
+  )}`;
+}
+
+function findAvailablePort(): Promise<number> {
+  return new Promise((resolve, reject) => {
+    // When you create a server without specifying a port then the OS will choose a port number for you!
+    const server = net.createServer();
+    server.unref();
+    server.on('error', reject);
+    server.listen(undefined, () => {
+      const address = server.address();
+      if (address == null || typeof address === 'string') {
+        throw new Error('Invalid address value');
+      }
+
+      server.close(() => {
+        resolve(address.port);
+      });
+    });
+  });
 }
 
 export default class TestRunner {
@@ -86,7 +109,7 @@ export default class TestRunner {
     this.testFileCounter = 0;
 
     this.printer = opts.request.createDiagnosticsPrinter(
-      new DiagnosticsProcessor({
+      this.request.createDiagnosticsProcessor({
         origins: [
           {
             category: 'test',
@@ -95,7 +118,14 @@ export default class TestRunner {
         ],
       }),
     );
-    this.printer.addDiagnostics(opts.addDiagnostics);
+    this.printer.processor.addDiagnostics(opts.addDiagnostics);
+
+    // Add source maps
+    for (const [filename, {code, sourceMap}] of opts.sources) {
+      const consumer = sourceMap.toConsumer();
+      this.coverageCollector.addSourceMap(filename, code, consumer);
+      this.printer.processor.sourceMaps.add(filename, consumer);
+    }
   }
 
   coverageCollector: CoverageCollector;
@@ -148,12 +178,12 @@ export default class TestRunner {
       }
       const [filename, {path, code, sourceMap}] = item;
 
-      this.coverageCollector.addSourceMap(filename, code, sourceMap);
-
       // Source map locations will always be resolved in the worker, but this is in case we need to resolve them in master in the case of an unresponsive worker
-
       // TODO remove this after test has ran
-      const removeSourceMap = sourceMapManager.addSourceMap(filename, sourceMap);
+      const removeSourceMap = sourceMapManager.addSourceMap(
+        filename,
+        () => sourceMap.toConsumer(),
+      );
 
       const id = this.testFileCounter;
       this.testFileCounter++;
@@ -167,7 +197,6 @@ export default class TestRunner {
             file: req.master.projectManager.getTransportFileReference(path),
             cwd: flags.cwd.join(),
             code,
-            sourceMap,
           },
         );
 
@@ -184,7 +213,7 @@ export default class TestRunner {
     } catch (err) {
       if (err instanceof BridgeError || err instanceof BridgeStructuredError) {
         if (!this.ignoreBridgeEndError.has(err.bridge)) {
-          this.printer.addDiagnostic(deriveDiagnosticFromError({
+          this.printer.processor.addDiagnostic(deriveDiagnosticFromError({
             category: 'tests/timeout',
             error: err,
           }));
@@ -214,10 +243,10 @@ export default class TestRunner {
     }
   }
 
-  async spawnWorker(): Promise<TestWorkerContainer> {
+  async spawnWorker(flags: TestWorkerFlags): Promise<TestWorkerContainer> {
     const proc = fork('test-worker', {
       stdio: 'pipe',
-    });
+    }, ['--inspector-port', String(flags.inspectorPort)]);
 
     const {stdout, stderr} = proc;
     if (stdout == null || stderr == null) {
@@ -276,7 +305,14 @@ export default class TestRunner {
   }
 
   async setupWorkers(): Promise<TestWorkerContainers> {
-    const containers: TestWorkerContainers = [await this.spawnWorker()];
+    // TODO some smarter logic. we may not need all these workers
+    const containerPromises: Array<Promise<TestWorkerContainer>> = [];
+    for (let i = 0; i < MAX_WORKER_COUNT; i++) {
+      const inspectorPort = await findAvailablePort();
+      containerPromises.push(this.spawnWorker({inspectorPort}));
+    }
+
+    const containers: TestWorkerContainers = await Promise.all(containerPromises);
 
     // Every 5 seconds, ping the worker and wait a max of 5 seconds, if we receive no response then consider the worker dead
     for (const container of containers) {
@@ -362,7 +398,7 @@ export default class TestRunner {
 
       const resolved = sourceMapManager.resolveLocation(urlToFilename(
         callFrame.get('url').asString(),
-      ), coerce0to1(loc.get('lineNumber').asZeroIndexedNumber()), loc.get(
+      ), coerce0To1(loc.get('lineNumber').asZeroIndexedNumber()), loc.get(
         'columnNumber',
       ).asZeroIndexedNumber());
 
@@ -466,7 +502,7 @@ export default class TestRunner {
 
     const progress = this.request.reporter.progress({
       persistent: true,
-      title: 'Running tests',
+      title: 'Running',
     });
 
     for (let i = 0; i < workers.length; i++) {
@@ -501,7 +537,7 @@ export default class TestRunner {
               error,
             });
 
-            this.printer.addDiagnostic({
+            this.printer.processor.addDiagnostic({
               ...errDiag,
 
               description: {
@@ -511,7 +547,7 @@ export default class TestRunner {
               },
             });
           } else {
-            this.printer.addDiagnostic({
+            this.printer.processor.addDiagnostic({
               label: ref.testName,
               description: descriptions.TESTS.CANCELLED,
               location: {
@@ -548,13 +584,13 @@ export default class TestRunner {
               createAbsoluteFilePath(ref.filename),
             );
               origin.message =
-              `Generated from the file <filelink target="${uid}" /> and test name "${ref.testName}"`;
+              markup`Generated from the file <filelink target="${uid}" /> and test name "${ref.testName}"`;
             this.onTestFinished(ref);
             progress.popText(getProgressTestRefText(ref));
             progress.tick();
           }
 
-          this.printer.addDiagnostic(data.diagnostic, origin);
+          this.printer.processor.addDiagnostic(data.diagnostic, origin);
         },
       );
 
@@ -571,10 +607,15 @@ export default class TestRunner {
   }
 
   printCoverageReport() {
-    const {reporter, master} = this;
+    const {reporter, master, coverageCollector} = this;
+    if (!this.options.coverage) {
+      return;
+    }
+
+    reporter.info('Generating coverage');
 
     // Fetch coverage entries
-    const files = this.coverageCollector.generate();
+    const files = coverageCollector.generate();
     if (files.length === 0) {
       return;
     }
@@ -689,12 +730,15 @@ export default class TestRunner {
           absolute = absolutePath.join();
         }
 
-        rows.push([
-          fileIndent + `<filelink target="${absolute}">${name}</filelink>`,
-          formatPercent(file.functions.percent),
-          formatPercent(file.branches.percent),
-          formatPercent(file.lines.percent),
-        ]);
+        rows.push(
+          [
+              fileIndent +
+              markup`<filelink target="${absolute}">${name}</filelink>`,
+            formatPercent(file.functions.percent),
+            formatPercent(file.branches.percent),
+            formatPercent(file.lines.percent),
+          ],
+        );
       }
 
       for (const subFolder of sortMapKeys(folder.folders).values()) {

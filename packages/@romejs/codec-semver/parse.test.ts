@@ -7,7 +7,7 @@
 
 import '@romejs/string-markup';
 import {parseSemverRange, parseSemverVersion} from '@romejs/codec-semver';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 test('parse', (t) => {
   // versions in version mode

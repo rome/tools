@@ -17,7 +17,7 @@ import {
 import {Dict} from '@romejs/typescript-helpers';
 import {add} from '@romejs/ob1';
 
-const SUPPRESSION_NEXT_LINE_START = 'rome-suppress-next-line';
+export const SUPPRESSION_NEXT_LINE_START = 'rome-suppress-next-line';
 const SUPPRESSION_CURRENT_LINE_START = 'rome-suppress-current-line';
 
 const SUPPRESSION_PREFIX_MISTAKES: Dict<string> = {
@@ -34,7 +34,7 @@ type ExtractedSuppressions = {
   diagnostics: Diagnostics;
 };
 
-function extractSuppressionsFromComment(
+export function extractSuppressionsFromComment(
   comment: AnyComment,
 ): undefined | ExtractedSuppressions {
   const {loc} = comment;

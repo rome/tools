@@ -6,13 +6,20 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 
 export default createMasterCommand({
   category: commandCategories.PROCESS_MANAGEMENT,
   description: 'stop daemon',
+  usage: '',
+  examples: [],
 
-  async default({master}: MasterRequest) {
+  defineFlags() {
+    return {};
+  },
+
+  async callback({master}: MasterRequest) {
     master.end();
   },
 });

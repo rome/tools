@@ -19,14 +19,13 @@ import {
   ComplexToken,
 } from './types';
 import {
-  getDiagnosticsFromError,
   createSingleDiagnosticError,
   Diagnostic,
   DiagnosticCategory,
   DiagnosticDescription,
   DiagnosticsError,
-  createBlessedDiagnosticMessage,
   descriptions,
+  catchDiagnosticsSync,
 } from '@romejs/diagnostics';
 import {
   Number1,
@@ -38,14 +37,16 @@ import {
   get0,
   add,
   sub,
+  dec,
 } from '@romejs/ob1';
-import {escapeMarkup} from '@romejs/string-markup';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 import {Class, OptionalProps} from '@romejs/typescript-helpers';
+import {removeCarriageReturn} from '@romejs/string-utils';
 
 export * from './types';
 
 export type ParserOptions = {
+  retainCarriageReturn?: boolean;
   path?: string | UnknownFilePath;
   mtime?: number;
   input?: string;
@@ -75,19 +76,19 @@ export function tryParseWithOptionalOffsetPosition<
   getOffsetPosition: () => Position;
   parse: (opts: Opts) => Ret;
 }): Ret {
-  try {
+  const {value} = catchDiagnosticsSync(() => {
     return opts.parse(parserOpts);
-  } catch (err) {
-    const diagnostics = getDiagnosticsFromError(err);
-    if (diagnostics === undefined) {
-      throw err;
-    } else {
-      opts.parse({
-        ...parserOpts,
-        offsetPosition: opts.getOffsetPosition(),
-      });
-      throw new Error('Expected error');
-    }
+  });
+
+  if (value === undefined) {
+    // Diagnostics must be present
+    opts.parse({
+      ...parserOpts,
+      offsetPosition: opts.getOffsetPosition(),
+    });
+    throw new Error('Expected error');
+  } else {
+    return value;
   }
 }
 
@@ -104,19 +105,31 @@ type ParserSnapshot<Tokens extends TokensShape, State> = {
   state: State;
 };
 
+function normalizeInput(opts: ParserOptions): string {
+  const {input} = opts;
+
+  if (input === undefined) {
+    return '';
+  } else if (opts.retainCarriageReturn) {
+    return input;
+  } else {
+    return removeCarriageReturn(input);
+  }
+}
+
 export class ParserCore<Tokens extends TokensShape, State> {
   constructor(
     opts: ParserOptions,
     diagnosticCategory: DiagnosticCategory,
     initialState: State,
   ) {
-    const {path, mtime, input, offsetPosition} = opts;
+    const {path, mtime, offsetPosition} = opts;
 
     // Input information
     this.path = path === undefined ? undefined : createUnknownFilePath(path);
     this.filename = this.path === undefined ? undefined : this.path.join();
     this.mtime = mtime;
-    this.input = input === undefined ? '' : input;
+    this.input = normalizeInput(opts);
     this.length = coerce0(this.input.length);
 
     this.eofToken = {
@@ -133,39 +146,29 @@ export class ParserCore<Tokens extends TokensShape, State> {
     this.currColumn = offsetPosition === undefined
       ? number0
       : offsetPosition.column;
-    this.offsetIndex = offsetPosition === undefined
-      ? number0
-      : offsetPosition.index;
-    this.startLine = this.currLine;
-    this.startColumn = this.currColumn;
     this.nextTokenIndex = number0;
     this.currentToken = SOF_TOKEN;
     this.prevToken = SOF_TOKEN;
     this.state = initialState;
     this.ignoreWhitespaceTokens = false;
 
-    this.latestPosition = {
-      index: number0, // TODO this.offsetIndex
-      line: this.currLine,
-      column: this.currColumn,
-    };
-    this.cachedPositions = new Map();
+    this.indexTracker = new PositionTracker(
+      this.input,
+      offsetPosition,
+      this.getPosition.bind(this),
+    );
   }
 
+  indexTracker: PositionTracker;
   offsetPosition: undefined | Position;
-  startLine: Number1;
-  startColumn: Number0;
-  offsetIndex: Number0;
   diagnosticCategory: DiagnosticCategory;
   tokenizing: boolean;
   nextTokenIndex: Number0;
   state: State;
   prevToken: TokenValues<Tokens>;
   currentToken: TokenValues<Tokens>;
-  latestPosition: Position;
   eofToken: EOFToken;
   ignoreWhitespaceTokens: boolean;
-  cachedPositions: Map<Number0, Position>;
 
   path: undefined | UnknownFilePath;
   filename: undefined | string;
@@ -197,23 +200,22 @@ export class ParserCore<Tokens extends TokensShape, State> {
   // Run the tokenizer over all tokens
   tokenizeAll(): Array<TokenValues<Tokens>> {
     const tokens: Array<TokenValues<Tokens>> = [];
-    try {
+
+    const {diagnostics} = catchDiagnosticsSync(() => {
       while (!this.matchToken('EOF')) {
         tokens.push(this.getToken());
         this.nextToken();
       }
-    } catch (err) {
-      const diagnostics = getDiagnosticsFromError(err);
-      if (diagnostics === undefined) {
-        throw err;
-      } else {
-        tokens.push({
-          type: 'Invalid',
-          start: this.nextTokenIndex,
-          end: this.length,
-        });
-      }
+    });
+
+    if (diagnostics !== undefined) {
+      tokens.push({
+        type: 'Invalid',
+        start: this.nextTokenIndex,
+        end: this.length,
+      });
     }
+
     return tokens;
   }
 
@@ -322,17 +324,17 @@ export class ParserCore<Tokens extends TokensShape, State> {
   getPosition(): Position {
     const index = this.currentToken.start;
 
-    const cached = this.cachedPositions.get(index);
+    const cached = this.indexTracker.cachedPositions.get(index);
     if (cached !== undefined) {
       return cached;
     }
 
     const pos: Position = {
-      index: this.addOffset(index),
+      index: this.indexTracker.addOffset(index),
       line: this.currLine,
       column: this.currColumn,
     };
-    this.cachedPositions.set(index, pos);
+    this.indexTracker.cachedPositions.set(index, pos);
     return pos;
   }
 
@@ -378,64 +380,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
     return nextToken;
   }
 
-  addOffset(index: Number0): Number0 {
-    return add(index, this.offsetIndex);
-  }
-
-  removeOffset(index: Number0): Number0 {
-    return sub(index, this.offsetIndex);
-  }
-
   getPositionFromIndex(index: Number0): Position {
-    const cached = this.cachedPositions.get(index);
-    if (cached !== undefined) {
-      return cached;
-    }
-
-    let line: Number1 = number1;
-    let column: Number0 = number0;
-    let indexSearchOffset: number = 0;
-
-    const indexWithOffset = this.addOffset(index);
-
-    // Reuse existing line information if possible
-    const {latestPosition} = this;
-    const currPosition = this.getPosition();
-    if (currPosition.index > latestPosition.index && currPosition.index <
-        indexWithOffset) {
-      line = currPosition.line;
-      column = currPosition.column;
-      indexSearchOffset = get0(this.removeOffset(currPosition.index));
-    } else if (latestPosition.index < indexWithOffset) {
-      line = latestPosition.line;
-      column = latestPosition.column;
-      indexSearchOffset = get0(this.removeOffset(latestPosition.index));
-    }
-
-    // Read the rest of the input until we hit the index
-    for (let i = indexSearchOffset; i < get0(index); i++) {
-      const char = this.input[i];
-
-      if (char === '\n') {
-        line = inc(line);
-        column = number0;
-      } else {
-        column = inc(column);
-      }
-    }
-
-    const pos: Position = {
-      index: indexWithOffset,
-      line,
-      column,
-    };
-
-    if (latestPosition === undefined || pos.index > latestPosition.index) {
-      this.latestPosition = pos;
-    }
-
-    this.cachedPositions.set(index, pos);
-    return pos;
+    return this.indexTracker.getPositionFromIndex(index);
   }
 
   createDiagnostic(opts: ParserUnexpectedOptions = {}): Diagnostic {
@@ -474,23 +420,17 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
     // Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
     if (metadata === undefined) {
-      let message;
       if (currentToken !== undefined && start !== undefined && start.index ===
           currentToken.start) {
-        message = createBlessedDiagnosticMessage(
-          `Unexpected ${currentToken.type}`,
-        );
+        metadata = descriptions.PARSER_CORE.UNEXPECTED(currentToken.type);
       } else {
         if (this.isEOF(start.index)) {
-          message = createBlessedDiagnosticMessage('Unexpected end of file');
+          metadata = descriptions.PARSER_CORE.UNEXPECTED_EOF;
         } else {
           const char = this.input[get0(start.index)];
-          message = createBlessedDiagnosticMessage(
-            `Unexpected character <emphasis>${escapeMarkup(char)}</emphasis>`,
-          );
+          metadata = descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(char);
         }
       }
-      metadata = {message};
     }
 
     const metadataWithCategory: DiagnosticDescription = {
@@ -694,6 +634,90 @@ export class ParserWithRequiredPath<Tokens extends TokensShape, State> extends P
   filename: string;
 }
 
+type GetPosition = () => Position;
+
+export class PositionTracker {
+  constructor(input: string, offsetPosition: Position = {
+    line: number1,
+    column: number0,
+    index: number0,
+  }, getPosition?: GetPosition) {
+    this.getPosition = getPosition;
+    this.input = input;
+    this.offsetPosition = offsetPosition;
+    this.latestPosition = offsetPosition;
+    this.cachedPositions = new Map();
+  }
+
+  input: string;
+  latestPosition: Position;
+  offsetPosition: Position;
+  cachedPositions: Map<Number0, Position>;
+  getPosition: undefined | GetPosition;
+
+  addOffset(index: Number0): Number0 {
+    return add(index, this.offsetPosition.index);
+  }
+
+  removeOffset(index: Number0): Number0 {
+    return sub(index, this.offsetPosition.index);
+  }
+
+  getPositionFromIndex(index: Number0): Position {
+    const cached = this.cachedPositions.get(index);
+    if (cached !== undefined) {
+      return cached;
+    }
+
+    let line: Number1 = number1;
+    let column: Number0 = number0;
+    let indexSearchWithoutOffset: number = 0;
+
+    const indexWithOffset = this.addOffset(index);
+
+    // Reuse existing line information if possible
+    const {latestPosition} = this;
+    const currPosition = this.getPosition === undefined
+      ? undefined
+      : this.getPosition();
+    if (currPosition !== undefined && currPosition.index > latestPosition.index &&
+        currPosition.index < indexWithOffset) {
+      line = currPosition.line;
+      column = currPosition.column;
+      indexSearchWithoutOffset = get0(this.removeOffset(currPosition.index));
+    } else if (latestPosition.index < indexWithOffset) {
+      line = latestPosition.line;
+      column = latestPosition.column;
+      indexSearchWithoutOffset = get0(this.removeOffset(latestPosition.index));
+    }
+
+    // Read the rest of the input until we hit the index
+    for (let i = indexSearchWithoutOffset; i < get0(index); i++) {
+      const char = this.input[i];
+
+      if (char === '\n') {
+        line = inc(line);
+        column = number0;
+      } else {
+        column = inc(column);
+      }
+    }
+
+    const pos: Position = {
+      index: indexWithOffset,
+      line,
+      column,
+    };
+
+    if (latestPosition === undefined || pos.index > latestPosition.index) {
+      this.latestPosition = pos;
+    }
+
+    this.cachedPositions.set(index, pos);
+    return pos;
+  }
+}
+
 //# Helpers methods for basic token parsing
 export function isDigit(char: undefined | string): boolean {
   return char !== undefined && /[0-9]/.test(char);
@@ -715,11 +739,14 @@ export function isESIdentifierStart(char: undefined | string): boolean {
   return char !== undefined && /[A-Fa-z_$]/.test(char);
 }
 
-export function isEscaped(index: Number0, input: string) {
+export function isEscaped(index: Number0, input: string): boolean {
   const prevChar = input[get0(index) - 1];
-  const prevPrevChar = input[get0(index) - 2];
-  const isEscaped = prevChar === '\\' && prevPrevChar !== '\\';
-  return isEscaped;
+
+  if (prevChar === '\\') {
+    return !isEscaped(dec(index), input);
+  } else {
+    return false;
+  }
 }
 
 export function readUntilLineBreak(char: string): boolean {

@@ -137,7 +137,7 @@ function parseJSXAttributeValue(
 ): StringLiteral | JSXElement | JSXFragment | JSXExpressionContainer {
   let node;
   switch (parser.state.tokenType) {
-    case tt.braceL:
+    case tt.braceL: {
       node = parseJSXExpressionContainer(parser);
       if (node.expression.type === 'JSXEmptyExpression') {
         parser.addDiagnostic({
@@ -146,6 +146,7 @@ function parseJSXAttributeValue(
         });
       }
       return node;
+    }
 
     case tt.jsxTagStart:
       return parseJSXElement(parser);
@@ -362,19 +363,21 @@ function parseJSXElementAt(
           break;
         }
 
-        case tt.jsxText:
+        case tt.jsxText: {
           children.push(parseJSXText(parser));
           break;
+        }
 
-        case tt.braceL:
+        case tt.braceL: {
           if (parser.lookaheadState().tokenType === tt.ellipsis) {
             children.push(parseJSXSpreadChild(parser));
           } else {
             children.push(parseJSXExpressionContainer(parser));
           }
           break;
+        }
 
-        case tt.eof:
+        case tt.eof: {
           parser.addDiagnostic({
             description: descriptions.JS_PARSER.JSX_UNCLOSED_ELEMENT(
               getQualifiedJSXName(openingDef.name),
@@ -382,8 +385,9 @@ function parseJSXElementAt(
             ),
           });
           break contents;
+        }
 
-        default:
+        default: {
           parser.addDiagnostic({
             description: descriptions.JS_PARSER.JSX_UNKNOWN_CHILD_START(
               getQualifiedJSXName(openingDef.name),
@@ -395,6 +399,7 @@ function parseJSXElementAt(
           recoverFromUnclosedJSX(parser);
 
           break contents;
+        }
       }
     }
 

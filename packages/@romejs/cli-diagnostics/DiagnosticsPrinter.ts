@@ -8,7 +8,6 @@
 import {
   Diagnostics,
   Diagnostic,
-  DiagnosticOrigin,
   DiagnosticLanguage,
   DiagnosticSourceType,
   DiagnosticAdvice,
@@ -24,7 +23,11 @@ import {
   DiagnosticsFileReaderStats,
 } from './types';
 
-import {humanizeMarkupFilename, formatAnsi} from '@romejs/string-markup';
+import {
+  humanizeMarkupFilename,
+  formatAnsi,
+  markup,
+} from '@romejs/string-markup';
 import {toLines} from './utils';
 import printAdvice from './printAdvice';
 
@@ -373,18 +376,6 @@ export default class DiagnosticsPrinter extends Error {
     }
   }
 
-  addDiagnostic(partialDiagnostic: Diagnostic, origin?: DiagnosticOrigin) {
-    this.addDiagnostics([partialDiagnostic], origin);
-  }
-
-  addDiagnostics(partials: Diagnostics, origin?: DiagnosticOrigin) {
-    if (partials.length === 0) {
-      return;
-    }
-
-    this.processor.addDiagnostics(partials, origin);
-  }
-
   print() {
     const filteredDiagnostics = this.filterDiagnostics();
     this.fetchFileSources(filteredDiagnostics);
@@ -470,7 +461,7 @@ export default class DiagnosticsPrinter extends Error {
         outdatedAdvice.push({
           type: 'list',
           list: outdatedFilesArr.map(
-            (filename) => `<filelink target="${filename}" />`,
+            (filename) => markup`<filelink target="${filename}" />`,
           ),
         });
       }
@@ -623,7 +614,7 @@ export default class DiagnosticsPrinter extends Error {
 
     const displayableProblems = this.getDisplayedProblemsCount();
     let str = `Found <number emphasis>${displayableProblems}</number> problem`;
-    if (displayableProblems > 1 || displayableProblems == 0) {
+    if (displayableProblems > 1 || displayableProblems === 0) {
       str += 's';
     }
 

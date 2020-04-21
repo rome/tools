@@ -6,7 +6,7 @@
  */
 
 import {toKebabCase} from './toKebabCase';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 test('toKebabCase', (t) => {
   const testCases = [

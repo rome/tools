@@ -6,29 +6,20 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand, commandCategories} from '../../commands';
 import Linter, {LinterOptions} from '../linter/Linter';
+import {markup} from '@romejs/string-markup';
+import {createMasterCommand} from '../commands';
+import lintCommand, {LintCommandFlags} from '../../client/commands/lint';
 
-import {Consumer} from '@romejs/consume';
+export default createMasterCommand<LintCommandFlags>({
+  ...lintCommand,
 
-type Flags = {
-  fix: boolean;
-  changed: undefined | string;
-};
-
-export default createMasterCommand<Flags>({
-  category: commandCategories.CODE_QUALITY,
-  description: 'run lint against a set of files',
-
-  defineFlags(consumer: Consumer): Flags {
-    return {
-      fix: consumer.get('fix').asBoolean(false),
-      changed: consumer.get('changed').asStringOrVoid(),
-    };
-  },
-
-  async default(req: MasterRequest, flags: Flags): Promise<void> {
+  async callback(req: MasterRequest, flags: LintCommandFlags): Promise<void> {
     const {reporter} = req;
+
+    if (req.query.requestFlags.review || flags.fix) {
+      await req.assertCleanVSC();
+    }
 
     const fixLocation = flags.fix === false
       ? undefined
@@ -43,9 +34,7 @@ export default createMasterCommand<Flags>({
       // No arguments expected when using this flag
       req.expectArgumentLength(0);
 
-      const client = await req.master.projectManager.getVCSClient(
-        await req.assertClientCwdProject(),
-      );
+      const client = await req.getVCSClient();
       const target = flags.changed === '' ? client.trunkBranch : flags.changed;
       args = await client.getModifiedFiles(target);
 
@@ -53,12 +42,13 @@ export default createMasterCommand<Flags>({
         reporter.warn(`No files changed from <emphasis>${target}</emphasis>`);
       } else {
         reporter.info(`Files changed from <emphasis>${target}</emphasis>`);
-        reporter.list(args.map((arg) => `<filelink target="${arg}" />`));
+        reporter.list(args.map((arg) => markup`<filelink target="${arg}" />`));
         reporter.hr();
       }
     }
 
     const opts: LinterOptions = {
+      compilerOptionsPerFile: flags.compilerOptionsPerFile,
       fixLocation,
       args,
     };

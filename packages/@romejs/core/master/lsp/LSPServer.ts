@@ -21,14 +21,10 @@ import {
   AbsoluteFilePathMap,
   AbsoluteFilePathSet,
 } from '@romejs/path';
-import {
-  Diagnostics,
-  DiagnosticsProcessor,
-  DiagnosticLocation,
-} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticLocation} from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
-import {coerce1to0, number0, Number0, inc} from '@romejs/ob1';
-import {stripMarkupTags} from '@romejs/string-markup';
+import {coerce1To0, number0, Number0, inc} from '@romejs/ob1';
+import {markupToPlainText} from '@romejs/string-markup';
 import {
   PartialMasterQueryRequest,
   MasterQueryResponse,
@@ -88,7 +84,7 @@ function convertPositionToLSP(pos: undefined | Position): LSPPosition {
     };
   } else {
     return {
-      line: coerce1to0(pos.line),
+      line: coerce1To0(pos.line),
       character: pos.column,
     };
   }
@@ -124,7 +120,7 @@ function convertDiagnosticsToLSP(
           );
           if (abs !== undefined) {
             relatedInformation.push({
-              message: stripMarkupTags(item.message),
+              message: markupToPlainText(item.message),
               location: {
                 uri: `file://${abs.join()}`,
                 range: convertDiagnosticLocationToLSPRange(nextItem.location),
@@ -138,7 +134,7 @@ function convertDiagnosticsToLSP(
     lspDiagnostics.push({
       severity: 1,
       range: convertDiagnosticLocationToLSPRange(location),
-      message: stripMarkupTags(description.message.value),
+      message: markupToPlainText(description.message.value),
       code: description.category,
       source: 'rome',
       relatedInformation,
@@ -180,7 +176,7 @@ function diffTextEdits(original: string, desired: string): Array<LSPTextEdit> {
 
   for (const [type, text] of diffs) {
     switch (type) {
-      case diffConstants.ADD:
+      case diffConstants.ADD: {
         const pos = getPosition();
         edits.push({
           range: {
@@ -190,8 +186,9 @@ function diffTextEdits(original: string, desired: string): Array<LSPTextEdit> {
           newText: text,
         });
         break;
+      }
 
-      case diffConstants.DELETE:
+      case diffConstants.DELETE: {
         const start: LSPPosition = getPosition();
         advance(text);
         const end: LSPPosition = getPosition();
@@ -203,10 +200,12 @@ function diffTextEdits(original: string, desired: string): Array<LSPTextEdit> {
           newText: '',
         });
         break;
+      }
 
-      case diffConstants.EQUAL:
+      case diffConstants.EQUAL: {
         advance(text);
         break;
+      }
     }
   }
 
@@ -385,7 +384,7 @@ export default class LSPServer {
           }
 
           // We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
-          const processor = new DiagnosticsProcessor();
+          const processor = this.request.createDiagnosticsProcessor();
           processor.addFilter({
             category: 'lint/pendingFixes',
           });
@@ -434,7 +433,7 @@ export default class LSPServer {
     params: Consumer,
   ): Promise<JSONPropertyValue> {
     switch (method) {
-      case 'initialize':
+      case 'initialize': {
         const rootUri = params.get('rootUri');
         if (rootUri.exists()) {
           this.watchProject(createAbsoluteFilePath(rootUri.asString()));
@@ -464,8 +463,9 @@ export default class LSPServer {
             name: 'rome',
           },
         };
+      }
 
-      case 'textDocument/formatting':
+      case 'textDocument/formatting': {
         const path = getPathFromTextDocument(params.get('textDocument'));
 
         const project = this.master.projectManager.findProjectExisting(path);
@@ -474,17 +474,19 @@ export default class LSPServer {
           return null;
         }
 
-        const res = await this.request.requestWorkerFormat(path);
+        const res = await this.request.requestWorkerFormat(path, {});
         if (res === undefined) {
           // Not a file we support formatting
           return null;
         }
 
         return diffTextEdits(res.original, res.formatted);
+      }
 
-      case 'shutdown':
+      case 'shutdown': {
         this.shutdown();
         break;
+      }
     }
 
     return null;
@@ -492,7 +494,7 @@ export default class LSPServer {
 
   async handleNotification(method: string, params: Consumer): Promise<void> {
     switch (method) {
-      case 'workspace/didChangeWorkspaceFolders':
+      case 'workspace/didChangeWorkspaceFolders': {
         for (const elem of params.get('added').asArray()) {
           this.watchProject(getPathFromTextDocument(elem));
         }
@@ -500,12 +502,14 @@ export default class LSPServer {
           this.unwatchProject(getPathFromTextDocument(elem));
         }
         break;
+      }
 
-      case 'textDocument/didChange':
+      case 'textDocument/didChange': {
         const path = getPathFromTextDocument(params.get('textDocument'));
         const content = params.get('contentChanges').asArray()[0].get('text').asString();
         await this.request.requestWorkerUpdateBuffer(path, content);
         break;
+      }
     }
   }
 
@@ -564,14 +568,15 @@ export default class LSPServer {
 
   process() {
     switch (this.status) {
-      case 'IDLE':
+      case 'IDLE': {
         if (this.buffer.length > 0) {
           this.status = 'WAITING_FOR_HEADERS_END';
           this.process();
         }
         break;
+      }
 
-      case 'WAITING_FOR_HEADERS_END':
+      case 'WAITING_FOR_HEADERS_END': {
         const endIndex = this.buffer.indexOf(HEADERS_END);
         if (endIndex !== -1) {
           // Parse headers
@@ -584,8 +589,9 @@ export default class LSPServer {
           this.process();
         }
         break;
+      }
 
-      case 'WAITING_FOR_RESPONSE_END':
+      case 'WAITING_FOR_RESPONSE_END': {
         const headers = this.nextHeaders;
         if (headers === undefined) {
           throw new Error('Expected headers due to our status');
@@ -603,6 +609,7 @@ export default class LSPServer {
           this.process();
         }
         break;
+      }
     }
   }
 

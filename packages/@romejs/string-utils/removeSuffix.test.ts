@@ -6,7 +6,7 @@
  */
 
 import {removeSuffix} from './removeSuffix';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 test('removeSuffix', (t) => {
   const testCases = [

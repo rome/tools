@@ -90586,7 +90586,7 @@ class ___R$project$rome$$romejs$core$master$dependencies$DependencyOrderer_ts$de
       this.addFile(path, []);
       // TODO only enable when bundlerMode === 'modern'
 
-      // this.detectCycles();
+      this.detectCycles();
       return (
         {
           firstTopAwaitLocations: this.firstTopAwaitLocations,

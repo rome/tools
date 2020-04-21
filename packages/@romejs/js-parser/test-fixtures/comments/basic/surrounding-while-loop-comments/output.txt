@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: ' infinite '
       loc: Object {
         filename: 'input.js'
@@ -39,6 +40,7 @@ Program {
       }
     }
     CommentBlock {
+      id: '1'
       value: ' bar '
       loc: Object {
         filename: 'input.js'
@@ -104,8 +106,8 @@ Program {
             line: 1
           }
           start: Object {
-            column: 0
-            index: 0
+            column: 10
+            index: 10
             line: 1
           }
         }
@@ -142,6 +144,7 @@ Program {
             }
             test: BooleanLiteral {
               value: true
+              leadingComments: Array ['0']
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -155,28 +158,11 @@ Program {
                   line: 1
                 }
               }
-              leadingComments: Array [
-                CommentBlock {
-                  value: ' infinite '
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 29
-                      index: 29
-                      line: 1
-                    }
-                    start: Object {
-                      column: 15
-                      index: 15
-                      line: 1
-                    }
-                  }
-                }
-              ]
             }
             body: BlockStatement {
               body: Array []
               directives: Array []
+              trailingComments: Array ['1']
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -190,27 +176,10 @@ Program {
                   line: 1
                 }
               }
-              trailingComments: Array [
-                CommentBlock {
-                  value: ' bar '
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 56
-                      index: 56
-                      line: 1
-                    }
-                    start: Object {
-                      column: 47
-                      index: 47
-                      line: 1
-                    }
-                  }
-                }
-              ]
             }
           }
           VariableDeclarationStatement {
+            leadingComments: Array ['1']
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -224,24 +193,6 @@ Program {
                 line: 1
               }
             }
-            leadingComments: Array [
-              CommentBlock {
-                value: ' bar '
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 56
-                    index: 56
-                    line: 1
-                  }
-                  start: Object {
-                    column: 47
-                    index: 47
-                    line: 1
-                  }
-                }
-              }
-            ]
             declaration: VariableDeclaration {
               kind: 'var'
               leadingComments: undefined

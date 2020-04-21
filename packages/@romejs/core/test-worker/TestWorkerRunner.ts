@@ -9,14 +9,18 @@ import {UnknownObject} from '@romejs/typescript-helpers';
 import {
   DiagnosticAdvice,
   Diagnostic,
-  getDiagnosticsFromError,
   INTERNAL_ERROR_LOG_ADVICE,
   createSingleDiagnosticError,
   descriptions,
   createBlessedDiagnosticMessage,
   deriveDiagnosticFromError,
+  catchDiagnostics,
 } from '@romejs/diagnostics';
-import {TestCallback, TestOptions, GlobalTestOptions} from '@romejs/test';
+import {
+  TestCallback,
+  TestOptions,
+  GlobalTestOptions,
+} from '@romejs-runtime/rome/test';
 import {
   default as TestWorkerBridge,
   TestWorkerBridgeRunOptions,
@@ -30,6 +34,7 @@ import {
   convertTransportFileReference,
 } from '../common/types/files';
 import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
+import {markup, escapeMarkup} from '@romejs/string-markup';
 
 const MAX_RUNNING_TESTS = 20;
 
@@ -92,12 +97,11 @@ export default class TestWorkerRunner {
 
   // execute the test file and discover tests
   async discoverTests() {
-    const {code, sourceMap} = this.opts;
+    const {code} = this.opts;
 
     const res = await executeMain({
       path: this.file.real,
       code,
-      sourceMap,
       globals: this.getEnvironment(),
     });
 
@@ -172,25 +176,22 @@ export default class TestWorkerRunner {
     let diagnostic: Diagnostic = deriveDiagnosticFromError({
       error: opts.error,
       category: 'tests/failure',
-      label: testName,
+      label: escapeMarkup(testName),
       filename,
       cleanFrames(frames) {
         // TODO we should actually get the frames before module init and do it that way
-
         // Remove everything before the original module factory
         let latestTestWorkerFrame = frames.find((frame, i) => {
           if (frame.typeName === 'global' && frame.methodName === undefined &&
                 frame.functionName ===
                 undefined) {
             // We are the global.<anonymous> frame
-
             // Now check for Script.runInContext
             const nextFrame = frames[i + 1];
             if (nextFrame !== undefined && nextFrame.typeName === 'Script' &&
                   nextFrame.methodName ===
                   'runInContext') {
               // Yes!
-
               // TODO also check for ___$romejs$core$common$utils$executeMain_ts$default (packages/romejs/core/common/utils/executeMain.ts:69:17)
               return true;
             }
@@ -202,8 +203,8 @@ export default class TestWorkerRunner {
         // And if there was no module factory frame, then we must be inside of a test
         if (latestTestWorkerFrame === undefined) {
           latestTestWorkerFrame = frames.find((frame) => {
-            return frame.filename !== undefined && frame.filename.includes(
-              'core/test-worker',
+            return frame.typeName !== undefined && frame.typeName.includes(
+              '$TestWorkerRunner',
             );
           });
         }
@@ -378,26 +379,9 @@ export default class TestWorkerRunner {
 
   async wrap(callback: () => Promise<void>): Promise<void> {
     try {
-      await callback();
-    } catch (err) {
-      const diagnostics = getDiagnosticsFromError(err);
-      if (diagnostics === undefined) {
-        this.onError(
-          undefined,
-          {
-            error: err,
-            firstAdvice: [],
-            lastAdvice: [
-              {
-                type: 'log',
-                category: 'info',
-                message: `Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
-              },
-              INTERNAL_ERROR_LOG_ADVICE,
-            ],
-          },
-        );
-      } else {
+      const {diagnostics} = await catchDiagnostics(callback);
+
+      if (diagnostics !== undefined) {
         for (const diagnostic of diagnostics) {
           await this.bridge.testError.call({
             ref: undefined,
@@ -405,6 +389,22 @@ export default class TestWorkerRunner {
           });
         }
       }
+    } catch (err) {
+      this.onError(
+        undefined,
+        {
+          error: err,
+          firstAdvice: [],
+          lastAdvice: [
+            {
+              type: 'log',
+              category: 'info',
+              message: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
+            },
+            INTERNAL_ERROR_LOG_ADVICE,
+          ],
+        },
+      );
     }
   }
 

@@ -58,7 +58,7 @@ function getRestProperty(
     case 'VariableDeclarationStatement':
       return getRestProperty(node.declaration);
 
-    case 'VariableDeclaration':
+    case 'VariableDeclaration': {
       for (const declarator of node.declarations) {
         const rest = getRestProperty(declarator);
         if (rest !== undefined) {
@@ -66,6 +66,7 @@ function getRestProperty(
         }
       }
       return undefined;
+    }
 
     case 'BindingObjectPattern':
       return node.rest;

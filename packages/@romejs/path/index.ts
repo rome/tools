@@ -656,7 +656,7 @@ function parsePathSegments(segments: PathSegments): ParsedPath {
           (segment) => decodeURIComponent(segment),
         ));
 
-      default:
+      default: {
         const absoluteSegments = segments.slice(0, 3);
         return {
           segments: normalizeSegments(
@@ -667,6 +667,7 @@ function parsePathSegments(segments: PathSegments): ParsedPath {
           absoluteType: 'url',
           absoluteTarget,
         };
+      }
     }
   }
 

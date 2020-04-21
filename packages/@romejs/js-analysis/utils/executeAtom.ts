@@ -18,15 +18,17 @@ export default function executeAtom(
   scope: Scope,
 ) {
   switch (leftNode.type) {
-    case 'BindingIdentifier':
+    case 'BindingIdentifier': {
       scope.addBinding(leftNode.name, rightType);
       break;
+    }
 
-    case 'BindingObjectPattern':
+    case 'BindingObjectPattern': {
       for (const prop of leftNode.properties) {
         executeAtom(prop, rightType, scope);
       }
       break;
+    }
 
     case 'BindingObjectPatternProperty': {
       const {key} = leftNode;
@@ -40,7 +42,7 @@ export default function executeAtom(
       break;
     }
 
-    case 'BindingArrayPattern':
+    case 'BindingArrayPattern': {
       for (let i = 0; i < leftNode.elements.length; i++) {
         const elem = leftNode.elements[i];
         if (elem === undefined) {
@@ -52,9 +54,11 @@ export default function executeAtom(
         executeAtom(elem, getProp, scope);
       }
       break;
+    }
 
-    case 'BindingAssignmentPattern':
+    case 'BindingAssignmentPattern': {
       executeAtom(leftNode.left, rightType, scope);
       break;
+    }
   }
 }

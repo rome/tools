@@ -35,6 +35,7 @@ import crypto = require('crypto');
 
 import {ROME_CONFIG_PACKAGE_JSON_FIELD} from './constants';
 import {parseSemverRange} from '@romejs/codec-semver';
+import {descriptions} from '@romejs/diagnostics';
 
 const WATCHMAN_CONFIG_FILENAME = '.watchmanconfig';
 const IGNORE_FILENAMES = ['.gitignore', '.hgignore'];
@@ -46,18 +47,7 @@ function categoryExists(consumer: Consumer): boolean {
 
   const value = consumer.asUnknown();
   if (typeof value === 'boolean') {
-    consumer.unexpected(
-      `Expected an object here but got a boolean`,
-      {
-        advice: [
-          {
-            type: 'log',
-            category: 'info',
-            message: `You likely wanted \`{"enabled": ${String(value)}}\` instead`,
-          },
-        ],
-      },
-    );
+    consumer.unexpected(descriptions.PROJECT_CONFIG.BOOLEAN_CATEGORY(value));
     return false;
   }
 
@@ -395,11 +385,6 @@ export function normalizeProjectConfig(
     }
   }
 
-  // Complain about common misspellings
-  if (consumer.has('linter')) {
-    consumer.get('linter').unexpected(`Did you mean <emphasis>lint</emphasis>?`);
-  }
-
   // Need to get this before enforceUsedProperties so it will be flagged
   const _extends = consumer.get('extends');
 
@@ -470,7 +455,9 @@ function extendProjectConfig(
   // Check for recursive config
   for (const path of extendsMeta.configDependencies) {
     if (path.equal(extendsPath)) {
-      throw extendsStrConsumer.unexpected('Recursive config value');
+      throw extendsStrConsumer.unexpected(
+        descriptions.PROJECT_CONFIG.RECURSIVE_CONFIG,
+      );
     }
   }
 

@@ -138,25 +138,25 @@ export default function escapeString(
     }
 
     // Escape double quotes
-    if (char == DOUBLE_QUOTE) {
-      result += quote == char ? '\\"' : char;
+    if (char === DOUBLE_QUOTE) {
+      result += quote === char ? '\\"' : char;
       continue;
     }
 
     // Escape single quotes
-    if (char == SINGLE_QUOTE) {
-      result += quote == char ? "\\'" : char;
+    if (char === SINGLE_QUOTE) {
+      result += quote === char ? "\\'" : char;
       continue;
     }
 
     // Escape back tick
-    if (char == TICK_QUOTE) {
-      result += quote == char ? '\\`' : char;
+    if (char === TICK_QUOTE) {
+      result += quote === char ? '\\`' : char;
       continue;
     }
 
     // Null escape
-    if (char == '\0' && !json && !isDigit(str[index + 1])) {
+    if (char === '\0' && !json && !isDigit(str[index + 1])) {
       result += '\\0';
       continue;
     }

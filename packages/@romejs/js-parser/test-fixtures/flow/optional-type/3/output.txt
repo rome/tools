@@ -143,14 +143,14 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 36
-                        index: 36
+                        column: 33
+                        index: 33
                         line: 1
                       }
                       start: Object {
-                        column: 0
-                        index: 37
-                        line: 2
+                        column: 34
+                        index: 34
+                        line: 1
                       }
                     }
                     meta: PatternMeta {
@@ -159,14 +159,14 @@ Program {
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
-                          column: 36
-                          index: 36
+                          column: 33
+                          index: 33
                           line: 1
                         }
                         start: Object {
-                          column: 0
-                          index: 37
-                          line: 2
+                          column: 34
+                          index: 34
+                          line: 1
                         }
                       }
                     }
