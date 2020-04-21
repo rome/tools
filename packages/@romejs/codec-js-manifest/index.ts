@@ -18,6 +18,7 @@ import {
   ManifestRepository,
   ManifestExports,
   ManifestExportConditions,
+  ManifestName,
 } from './types';
 import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
 import {normalizeName} from './name';
@@ -33,6 +34,8 @@ import {PathPatterns, parsePathPattern} from '@romejs/path-match';
 export * from './types';
 
 export * from './convert';
+
+export {manifestNameToString} from './name';
 
 const TYPO_KEYS: Map<string, string> = new Map([
   ['autohr', 'author'],
@@ -526,9 +529,12 @@ function normalizeBugs(
   }
 }
 
-function normalizeRootName(consumer: Consumer, loose: boolean): MString {
+function normalizeRootName(consumer: Consumer, loose: boolean): ManifestName {
   if (!consumer.has('name')) {
-    return;
+    return {
+      packageName: undefined,
+      org: undefined,
+    };
   }
 
   const prop = consumer.get('name');
@@ -625,7 +631,7 @@ export async function normalizeManifest(
     license: normalizeLicense(consumer, loose),
     type: consumer.get('type').asStringSetOrVoid(['module', 'commonjs']),
 
-    bin: normalizeBin(consumer, name, loose),
+    bin: normalizeBin(consumer, name.packageName, loose),
     scripts: normalizeStringMap(consumer, 'scripts', loose),
     homepage: normalizeString(consumer, 'homepage'),
     repository: normalizeRepo(consumer.get('repository'), loose),

@@ -16,6 +16,7 @@ import {createUnknownFilePath, UnknownFilePath} from '@romejs/path';
 import {normalizeName} from './name';
 import {ob1Add} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
+import {ManifestName} from './types';
 
 export type DependencyPattern =
   | HostedGitPattern
@@ -27,7 +28,7 @@ export type DependencyPattern =
   | NpmPattern
   | LinkPattern;
 
-export type ManifestDependencies = Map<string, DependencyPattern>;
+export type ManifestDependencies = Map<ManifestName, DependencyPattern>;
 
 type UrlWithHash = {
   url: string;
@@ -284,7 +285,7 @@ const NPM_PREFIX = 'npm:';
 
 type NpmPattern = {
   type: 'npm';
-  name: string;
+  name: ManifestName;
   range: undefined | SemverRangeNode;
 };
 
@@ -301,7 +302,10 @@ function parseNpm(
     consumer.unexpected(descriptions.MANIFEST.EMPTY_NPM_PATTERN);
     return {
       type: 'npm',
-      name: 'unknown',
+      name: {
+        org: undefined,
+        packageName: undefined,
+      },
       range: undefined,
     };
   }
@@ -343,7 +347,7 @@ function parseNpm(
   });
 
   // Increase offset passed name
-  offset += name.length;
+  offset += nameRaw.length;
   offset++;
 
   let range: undefined | SemverRangeNode;
@@ -450,9 +454,9 @@ export function normalizeDependencies(
     return map;
   }
 
-  for (const [name, value] of consumer.asMap()) {
-    normalizeName({
-      name,
+  for (const [rawName, value] of consumer.asMap()) {
+    const name = normalizeName({
+      name: rawName,
       loose,
       unexpected: ({description, at}) => {
         value.unexpected(description, {

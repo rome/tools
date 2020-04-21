@@ -32,7 +32,10 @@ import {
   descriptions,
 } from '@romejs/diagnostics';
 import {matchPathPatterns} from '@romejs/path-match';
-import {ManifestDefinition} from '@romejs/codec-js-manifest';
+import {
+  ManifestDefinition,
+  manifestNameToString,
+} from '@romejs/codec-js-manifest';
 import {
   AbsoluteFilePath,
   UnknownFilePath,
@@ -304,7 +307,7 @@ export default class ProjectManager {
       if (pkg === undefined || pkg.folder.equal(project.folder)) {
         break;
       } else {
-        const name = pkg.manifest.name;
+        const name = manifestNameToString(pkg.manifest.name);
         if (name !== undefined) {
           parts.unshift(name);
 
@@ -654,7 +657,7 @@ export default class ProjectManager {
     def: ManifestDefinition,
     diagnostics: DiagnosticsProcessor,
   ) {
-    const {name} = def.manifest;
+    const name = manifestNameToString(def.manifest.name);
 
     // Declare this package in all projects
     const projects = this.getHierarchyFromProject(project);
