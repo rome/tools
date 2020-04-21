@@ -26,7 +26,7 @@ Array [
 ```javascript
 Array [
   Tag {
-    name: 'blue'
+    name: 'info'
     attributes: Map []
     children: Array [Text {value: '[MemoryFileSystem] Adding new project folder C:\\Users\\sebmck\\rome'}]
   }
@@ -39,7 +39,7 @@ Array [
 Array [
   Text {value: '  <info>[MemoryFileSystem] Adding new project folder C:\\Users\\Sebastian\\rome\\</info>\n        '}
   Tag {
-    name: 'red'
+    name: 'error'
     attributes: Map []
     children: Array [
       Tag {
