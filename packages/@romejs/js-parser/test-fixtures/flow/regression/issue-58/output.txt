@@ -49,6 +49,7 @@ Program {
   ]
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' Valid lhs value inside parentheses'
       loc: Object {
         filename: 'input.js'
@@ -65,6 +66,7 @@ Program {
       }
     }
     CommentLine {
+      id: '1'
       value: ' a ? b : (c => d)'
       loc: Object {
         filename: 'input.js'
@@ -81,6 +83,7 @@ Program {
       }
     }
     CommentLine {
+      id: '2'
       value: ' a ? ((b): c => d) : e'
       loc: Object {
         filename: 'input.js'
@@ -97,6 +100,7 @@ Program {
       }
     }
     CommentLine {
+      id: '3'
       value: ' a ? b : ((c): d => e)'
       loc: Object {
         filename: 'input.js'
@@ -113,6 +117,7 @@ Program {
       }
     }
     CommentLine {
+      id: '4'
       value: ' Nested arrow function inside parentheses'
       loc: Object {
         filename: 'input.js'
@@ -129,6 +134,7 @@ Program {
       }
     }
     CommentLine {
+      id: '5'
       value: ' a ? (b = (c) => d) : (e => f)'
       loc: Object {
         filename: 'input.js'
@@ -145,6 +151,7 @@ Program {
       }
     }
     CommentLine {
+      id: '6'
       value: ' a ? ((b = (c) => d): e => f) : g'
       loc: Object {
         filename: 'input.js'
@@ -161,6 +168,7 @@ Program {
       }
     }
     CommentLine {
+      id: '7'
       value: ' Nested conditional expressions'
       loc: Object {
         filename: 'input.js'
@@ -177,6 +185,7 @@ Program {
       }
     }
     CommentLine {
+      id: '8'
       value: ' b ? (c ? ((d): e => f) : g) : h'
       loc: Object {
         filename: 'input.js'
@@ -193,6 +202,7 @@ Program {
       }
     }
     CommentLine {
+      id: '9'
       value: ' a ? (b ? (c ? d : (e => f)) : g) : h'
       loc: Object {
         filename: 'input.js'
@@ -209,6 +219,7 @@ Program {
       }
     }
     CommentLine {
+      id: '10'
       value: ' a ? (b ? c : ((d): e => f)) : g'
       loc: Object {
         filename: 'input.js'
@@ -225,6 +236,7 @@ Program {
       }
     }
     CommentLine {
+      id: '11'
       value: ' Multiple arrow functions'
       loc: Object {
         filename: 'input.js'
@@ -241,6 +253,7 @@ Program {
       }
     }
     CommentLine {
+      id: '12'
       value: ' a ? ((b): c => d) : ((e): f => g)'
       loc: Object {
         filename: 'input.js'
@@ -257,6 +270,7 @@ Program {
       }
     }
     CommentLine {
+      id: '13'
       value: ' Multiple nested arrow functions (<T> is needed to avoid ambiguities)'
       loc: Object {
         filename: 'input.js'
@@ -273,6 +287,7 @@ Program {
       }
     }
     CommentLine {
+      id: '14'
       value: ' a ? ((b): c => ((d): e => f)) : g'
       loc: Object {
         filename: 'input.js'
@@ -289,6 +304,7 @@ Program {
       }
     }
     CommentLine {
+      id: '15'
       value: ' a ? b : (c => (<T>(d): e => f))'
       loc: Object {
         filename: 'input.js'
@@ -305,6 +321,7 @@ Program {
       }
     }
     CommentLine {
+      id: '16'
       value: ' a ? (<T>(b): c => d) : (e => f)'
       loc: Object {
         filename: 'input.js'
@@ -321,6 +338,7 @@ Program {
       }
     }
     CommentLine {
+      id: '17'
       value: ' Invalid lhs value inside parentheses'
       loc: Object {
         filename: 'input.js'
@@ -337,6 +355,7 @@ Program {
       }
     }
     CommentLine {
+      id: '18'
       value: ' a ? (b => c) : (d => e)'
       loc: Object {
         filename: 'input.js'
@@ -353,6 +372,7 @@ Program {
       }
     }
     CommentLine {
+      id: '19'
       value: ' a ? (b ? (c => d) : (e => f)) : g'
       loc: Object {
         filename: 'input.js'
@@ -369,6 +389,7 @@ Program {
       }
     }
     CommentLine {
+      id: '20'
       value: ' Invalid lhs value inside parentheses inside arrow function'
       loc: Object {
         filename: 'input.js'
@@ -385,6 +406,7 @@ Program {
       }
     }
     CommentLine {
+      id: '21'
       value: ' a ? ((b): c => (d => e)) : (f => g)'
       loc: Object {
         filename: 'input.js'
@@ -401,6 +423,7 @@ Program {
       }
     }
     CommentLine {
+      id: '22'
       value: ' a ? (b ? (c => d) : (e => (f => g))) : (h => i)'
       loc: Object {
         filename: 'input.js'
@@ -417,6 +440,7 @@ Program {
       }
     }
     CommentLine {
+      id: '23'
       value: ' Function as type annotation'
       loc: Object {
         filename: 'input.js'
@@ -433,6 +457,7 @@ Program {
       }
     }
     CommentLine {
+      id: '24'
       value: ' a ? ((b): (c => d) => e) : f'
       loc: Object {
         filename: 'input.js'
@@ -449,6 +474,7 @@ Program {
       }
     }
     CommentLine {
+      id: '25'
       value: ' Async functions or calls'
       loc: Object {
         filename: 'input.js'
@@ -465,6 +491,7 @@ Program {
       }
     }
     CommentLine {
+      id: '26'
       value: ' a ? (async(b)) : (c => d)'
       loc: Object {
         filename: 'input.js'
@@ -481,6 +508,7 @@ Program {
       }
     }
     CommentLine {
+      id: '27'
       value: ' a ? (async (b): c => d) : e'
       loc: Object {
         filename: 'input.js'
@@ -497,6 +525,7 @@ Program {
       }
     }
     CommentLine {
+      id: '28'
       value: ' a ? (async(b => c)) : (d => e)'
       loc: Object {
         filename: 'input.js'
@@ -513,6 +542,7 @@ Program {
       }
     }
     CommentLine {
+      id: '29'
       value: ' a ? (async (b) => c => d) : (e => f)'
       loc: Object {
         filename: 'input.js'
@@ -529,6 +559,7 @@ Program {
       }
     }
     CommentLine {
+      id: '30'
       value: ' https://github.com/prettier/prettier/issues/2194'
       loc: Object {
         filename: 'input.js'
@@ -547,6 +578,8 @@ Program {
   ]
   body: Array [
     ExpressionStatement {
+      leadingComments: Array ['0']
+      trailingComments: Array ['1']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -560,42 +593,6 @@ Program {
           line: 2
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' Valid lhs value inside parentheses'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 37
-              index: 37
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? b : (c => d)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 37
-              index: 75
-              line: 2
-            }
-            start: Object {
-              column: 18
-              index: 56
-              line: 2
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         trailingComments: undefined
@@ -750,6 +747,8 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array ['1']
+      trailingComments: Array ['2']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -763,42 +762,6 @@ Program {
           line: 3
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? b : (c => d)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 37
-              index: 75
-              line: 2
-            }
-            start: Object {
-              column: 18
-              index: 56
-              line: 2
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? ((b): c => d) : e'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 46
-              index: 122
-              line: 3
-            }
-            start: Object {
-              column: 22
-              index: 98
-              line: 3
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         loc: Object {
@@ -951,6 +914,11 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array ['2']
+      trailingComments: Array [
+        '3'
+        '4'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -964,58 +932,6 @@ Program {
           line: 4
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? ((b): c => d) : e'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 46
-              index: 122
-              line: 3
-            }
-            start: Object {
-              column: 22
-              index: 98
-              line: 3
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? b : ((c): d => e)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 48
-              index: 171
-              line: 4
-            }
-            start: Object {
-              column: 24
-              index: 147
-              line: 4
-            }
-          }
-        }
-        CommentLine {
-          value: ' Nested arrow function inside parentheses'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 43
-              index: 216
-              line: 6
-            }
-            start: Object {
-              column: 0
-              index: 173
-              line: 6
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         loc: Object {
@@ -1168,6 +1084,11 @@ Program {
       }
     }
     ExpressionStatement {
+      trailingComments: Array ['5']
+      leadingComments: Array [
+        '3'
+        '4'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -1181,58 +1102,6 @@ Program {
           line: 7
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? (b = (c) => d) : (e => f)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 61
-              index: 278
-              line: 7
-            }
-            start: Object {
-              column: 29
-              index: 246
-              line: 7
-            }
-          }
-        }
-      ]
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? b : ((c): d => e)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 48
-              index: 171
-              line: 4
-            }
-            start: Object {
-              column: 24
-              index: 147
-              line: 4
-            }
-          }
-        }
-        CommentLine {
-          value: ' Nested arrow function inside parentheses'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 43
-              index: 216
-              line: 6
-            }
-            start: Object {
-              column: 0
-              index: 173
-              line: 6
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         trailingComments: undefined
@@ -1473,6 +1342,11 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array ['5']
+      trailingComments: Array [
+        '6'
+        '7'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -1486,58 +1360,6 @@ Program {
           line: 8
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? (b = (c) => d) : (e => f)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 61
-              index: 278
-              line: 7
-            }
-            start: Object {
-              column: 29
-              index: 246
-              line: 7
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? ((b = (c) => d): e => f) : g'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 68
-              index: 347
-              line: 8
-            }
-            start: Object {
-              column: 33
-              index: 312
-              line: 8
-            }
-          }
-        }
-        CommentLine {
-          value: ' Nested conditional expressions'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 33
-              index: 382
-              line: 10
-            }
-            start: Object {
-              column: 0
-              index: 349
-              line: 10
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         loc: Object {
@@ -1776,6 +1598,11 @@ Program {
       }
     }
     ExpressionStatement {
+      trailingComments: Array ['8']
+      leadingComments: Array [
+        '6'
+        '7'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -1789,58 +1616,6 @@ Program {
           line: 11
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' b ? (c ? ((d): e => f) : g) : h'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 70
-              index: 453
-              line: 11
-            }
-            start: Object {
-              column: 36
-              index: 419
-              line: 11
-            }
-          }
-        }
-      ]
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? ((b = (c) => d): e => f) : g'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 68
-              index: 347
-              line: 8
-            }
-            start: Object {
-              column: 33
-              index: 312
-              line: 8
-            }
-          }
-        }
-        CommentLine {
-          value: ' Nested conditional expressions'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 33
-              index: 382
-              line: 10
-            }
-            start: Object {
-              column: 0
-              index: 349
-              line: 10
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         loc: Object {
@@ -2040,6 +1815,8 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array ['8']
+      trailingComments: Array ['9']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -2053,42 +1830,6 @@ Program {
           line: 12
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' b ? (c ? ((d): e => f) : g) : h'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 70
-              index: 453
-              line: 11
-            }
-            start: Object {
-              column: 36
-              index: 419
-              line: 11
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? (b ? (c ? d : (e => f)) : g) : h'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 75
-              index: 529
-              line: 12
-            }
-            start: Object {
-              column: 36
-              index: 490
-              line: 12
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         trailingComments: undefined
@@ -2337,6 +2078,11 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array ['9']
+      trailingComments: Array [
+        '10'
+        '11'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -2350,58 +2096,6 @@ Program {
           line: 14
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? (b ? (c ? d : (e => f)) : g) : h'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 75
-              index: 529
-              line: 12
-            }
-            start: Object {
-              column: 36
-              index: 490
-              line: 12
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? (b ? c : ((d): e => f)) : g'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 68
-              index: 599
-              line: 14
-            }
-            start: Object {
-              column: 34
-              index: 565
-              line: 14
-            }
-          }
-        }
-        CommentLine {
-          value: ' Multiple arrow functions'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 27
-              index: 628
-              line: 16
-            }
-            start: Object {
-              column: 0
-              index: 601
-              line: 16
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         loc: Object {
@@ -2601,6 +2295,14 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array [
+        '10'
+        '11'
+      ]
+      trailingComments: Array [
+        '12'
+        '13'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -2614,74 +2316,6 @@ Program {
           line: 17
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? (b ? c : ((d): e => f)) : g'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 68
-              index: 599
-              line: 14
-            }
-            start: Object {
-              column: 34
-              index: 565
-              line: 14
-            }
-          }
-        }
-        CommentLine {
-          value: ' Multiple arrow functions'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 27
-              index: 628
-              line: 16
-            }
-            start: Object {
-              column: 0
-              index: 601
-              line: 16
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? ((b): c => d) : ((e): f => g)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 69
-              index: 698
-              line: 17
-            }
-            start: Object {
-              column: 33
-              index: 662
-              line: 17
-            }
-          }
-        }
-        CommentLine {
-          value: ' Multiple nested arrow functions (<T> is needed to avoid ambiguities)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 71
-              index: 771
-              line: 19
-            }
-            start: Object {
-              column: 0
-              index: 700
-              line: 19
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         loc: Object {
@@ -2919,6 +2553,11 @@ Program {
       }
     }
     ExpressionStatement {
+      trailingComments: Array ['14']
+      leadingComments: Array [
+        '12'
+        '13'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -2932,58 +2571,6 @@ Program {
           line: 20
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? ((b): c => ((d): e => f)) : g'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 69
-              index: 841
-              line: 20
-            }
-            start: Object {
-              column: 33
-              index: 805
-              line: 20
-            }
-          }
-        }
-      ]
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? ((b): c => d) : ((e): f => g)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 69
-              index: 698
-              line: 17
-            }
-            start: Object {
-              column: 33
-              index: 662
-              line: 17
-            }
-          }
-        }
-        CommentLine {
-          value: ' Multiple nested arrow functions (<T> is needed to avoid ambiguities)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 71
-              index: 771
-              line: 19
-            }
-            start: Object {
-              column: 0
-              index: 700
-              line: 19
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         loc: Object {
@@ -3221,6 +2808,8 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array ['14']
+      trailingComments: Array ['15']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -3234,42 +2823,6 @@ Program {
           line: 21
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? ((b): c => ((d): e => f)) : g'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 69
-              index: 841
-              line: 20
-            }
-            start: Object {
-              column: 33
-              index: 805
-              line: 20
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? b : (c => (<T>(d): e => f))'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 66
-              index: 908
-              line: 21
-            }
-            start: Object {
-              column: 32
-              index: 874
-              line: 21
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         trailingComments: undefined
@@ -3545,6 +3098,11 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array ['15']
+      trailingComments: Array [
+        '16'
+        '17'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -3558,58 +3116,6 @@ Program {
           line: 22
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? b : (c => (<T>(d): e => f))'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 66
-              index: 908
-              line: 21
-            }
-            start: Object {
-              column: 32
-              index: 874
-              line: 21
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? (<T>(b): c => d) : (e => f)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 66
-              index: 975
-              line: 22
-            }
-            start: Object {
-              column: 32
-              index: 941
-              line: 22
-            }
-          }
-        }
-        CommentLine {
-          value: ' Invalid lhs value inside parentheses'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 39
-              index: 1_016
-              line: 24
-            }
-            start: Object {
-              column: 0
-              index: 977
-              line: 24
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         trailingComments: undefined
@@ -3885,6 +3391,11 @@ Program {
       }
     }
     ExpressionStatement {
+      trailingComments: Array ['18']
+      leadingComments: Array [
+        '16'
+        '17'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -3898,58 +3409,6 @@ Program {
           line: 25
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? (b => c) : (d => e)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 49
-              index: 1_066
-              line: 25
-            }
-            start: Object {
-              column: 23
-              index: 1_040
-              line: 25
-            }
-          }
-        }
-      ]
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? (<T>(b): c => d) : (e => f)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 66
-              index: 975
-              line: 22
-            }
-            start: Object {
-              column: 32
-              index: 941
-              line: 22
-            }
-          }
-        }
-        CommentLine {
-          value: ' Invalid lhs value inside parentheses'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 39
-              index: 1_016
-              line: 24
-            }
-            start: Object {
-              column: 0
-              index: 977
-              line: 24
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         trailingComments: undefined
@@ -4055,13 +3514,13 @@ Program {
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
-                    column: 21
-                    index: 1_038
+                    column: 19
+                    index: 1_036
                     line: 25
                   }
                   start: Object {
-                    column: 21
-                    index: 1_038
+                    column: 20
+                    index: 1_037
                     line: 25
                   }
                 }
@@ -4104,6 +3563,11 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array ['18']
+      trailingComments: Array [
+        '19'
+        '20'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -4117,58 +3581,6 @@ Program {
           line: 26
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? (b => c) : (d => e)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 49
-              index: 1_066
-              line: 25
-            }
-            start: Object {
-              column: 23
-              index: 1_040
-              line: 25
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? (b ? (c => d) : (e => f)) : g'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 67
-              index: 1_134
-              line: 26
-            }
-            start: Object {
-              column: 31
-              index: 1_098
-              line: 26
-            }
-          }
-        }
-        CommentLine {
-          value: ' Invalid lhs value inside parentheses inside arrow function'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 61
-              index: 1_197
-              line: 28
-            }
-            start: Object {
-              column: 0
-              index: 1_136
-              line: 28
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         trailingComments: undefined
@@ -4320,13 +3732,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 25
-                      index: 1_092
+                      column: 23
+                      index: 1_090
                       line: 26
                     }
                     start: Object {
-                      column: 26
-                      index: 1_093
+                      column: 24
+                      index: 1_091
                       line: 26
                     }
                   }
@@ -4370,6 +3782,11 @@ Program {
       }
     }
     ExpressionStatement {
+      trailingComments: Array ['21']
+      leadingComments: Array [
+        '19'
+        '20'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -4383,58 +3800,6 @@ Program {
           line: 29
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? ((b): c => (d => e)) : (f => g)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 72
-              index: 1_270
-              line: 29
-            }
-            start: Object {
-              column: 34
-              index: 1_232
-              line: 29
-            }
-          }
-        }
-      ]
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? (b ? (c => d) : (e => f)) : g'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 67
-              index: 1_134
-              line: 26
-            }
-            start: Object {
-              column: 31
-              index: 1_098
-              line: 26
-            }
-          }
-        }
-        CommentLine {
-          value: ' Invalid lhs value inside parentheses inside arrow function'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 61
-              index: 1_197
-              line: 28
-            }
-            start: Object {
-              column: 0
-              index: 1_136
-              line: 28
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         trailingComments: undefined
@@ -4624,13 +3989,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 32
-                      index: 1_230
+                      column: 30
+                      index: 1_228
                       line: 29
                     }
                     start: Object {
-                      column: 32
-                      index: 1_230
+                      column: 31
+                      index: 1_229
                       line: 29
                     }
                   }
@@ -4674,6 +4039,11 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array ['21']
+      trailingComments: Array [
+        '24'
+        '25'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -4687,58 +4057,6 @@ Program {
           line: 30
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? ((b): c => (d => e)) : (f => g)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 72
-              index: 1_270
-              line: 29
-            }
-            start: Object {
-              column: 34
-              index: 1_232
-              line: 29
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? ((b): (c => d) => e) : f'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 60
-              index: 1_457
-              line: 33
-            }
-            start: Object {
-              column: 29
-              index: 1_426
-              line: 33
-            }
-          }
-        }
-        CommentLine {
-          value: ' Async functions or calls'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 27
-              index: 1_486
-              line: 35
-            }
-            start: Object {
-              column: 0
-              index: 1_459
-              line: 35
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         loc: Object {
@@ -4772,6 +4090,10 @@ Program {
           }
         }
         alternate: ConditionalExpression {
+          leadingComments: Array [
+            '22'
+            '23'
+          ]
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -4818,40 +4140,6 @@ Program {
               }
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: ' a ? (b ? (c => d) : (e => (f => g))) : (h => i)'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 93
-                  index: 1_364
-                  line: 30
-                }
-                start: Object {
-                  column: 43
-                  index: 1_314
-                  line: 30
-                }
-              }
-            }
-            CommentLine {
-              value: ' Function as type annotation'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 30
-                  index: 1_396
-                  line: 32
-                }
-                start: Object {
-                  column: 0
-                  index: 1_366
-                  line: 32
-                }
-              }
-            }
-          ]
           consequent: ArrowFunctionExpression {
             loc: Object {
               filename: 'input.js'
@@ -5036,6 +4324,10 @@ Program {
           }
         }
         consequent: ConditionalExpression {
+          trailingComments: Array [
+            '22'
+            '23'
+          ]
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -5082,40 +4374,6 @@ Program {
               }
             }
           }
-          trailingComments: Array [
-            CommentLine {
-              value: ' a ? (b ? (c => d) : (e => (f => g))) : (h => i)'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 93
-                  index: 1_364
-                  line: 30
-                }
-                start: Object {
-                  column: 43
-                  index: 1_314
-                  line: 30
-                }
-              }
-            }
-            CommentLine {
-              value: ' Function as type annotation'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 30
-                  index: 1_396
-                  line: 32
-                }
-                start: Object {
-                  column: 0
-                  index: 1_366
-                  line: 32
-                }
-              }
-            }
-          ]
           consequent: ArrowFunctionExpression {
             loc: Object {
               filename: 'input.js'
@@ -5155,13 +4413,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 41
-                      index: 1_312
+                      column: 23
+                      index: 1_294
                       line: 30
                     }
                     start: Object {
-                      column: 41
-                      index: 1_312
+                      column: 24
+                      index: 1_295
                       line: 30
                     }
                   }
@@ -5255,13 +4513,13 @@ Program {
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
-                        column: 41
-                        index: 1_312
+                        column: 39
+                        index: 1_310
                         line: 30
                       }
                       start: Object {
-                        column: 41
-                        index: 1_312
+                        column: 40
+                        index: 1_311
                         line: 30
                       }
                     }
@@ -5306,6 +4564,11 @@ Program {
       }
     }
     ExpressionStatement {
+      trailingComments: Array ['26']
+      leadingComments: Array [
+        '24'
+        '25'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -5319,58 +4582,6 @@ Program {
           line: 36
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? (async(b)) : (c => d)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 52
-              index: 1_539
-              line: 36
-            }
-            start: Object {
-              column: 24
-              index: 1_511
-              line: 36
-            }
-          }
-        }
-      ]
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? ((b): (c => d) => e) : f'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 60
-              index: 1_457
-              line: 33
-            }
-            start: Object {
-              column: 29
-              index: 1_426
-              line: 33
-            }
-          }
-        }
-        CommentLine {
-          value: ' Async functions or calls'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 27
-              index: 1_486
-              line: 35
-            }
-            start: Object {
-              column: 0
-              index: 1_459
-              line: 35
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         trailingComments: undefined
@@ -5524,6 +4735,8 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array ['26']
+      trailingComments: Array ['27']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -5537,42 +4750,6 @@ Program {
           line: 37
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? (async(b)) : (c => d)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 52
-              index: 1_539
-              line: 36
-            }
-            start: Object {
-              column: 24
-              index: 1_511
-              line: 36
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? (async (b): c => d) : e'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 58
-              index: 1_598
-              line: 37
-            }
-            start: Object {
-              column: 28
-              index: 1_568
-              line: 37
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         loc: Object {
@@ -5724,6 +4901,8 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array ['27']
+      trailingComments: Array ['28']
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -5737,42 +4916,6 @@ Program {
           line: 38
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? (async (b): c => d) : e'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 58
-              index: 1_598
-              line: 37
-            }
-            start: Object {
-              column: 28
-              index: 1_568
-              line: 37
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? (async(b => c)) : (d => e)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 62
-              index: 1_661
-              line: 38
-            }
-            start: Object {
-              column: 29
-              index: 1_628
-              line: 38
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         trailingComments: undefined
@@ -5877,13 +5020,13 @@ Program {
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
-                    column: 27
-                    index: 1_626
+                    column: 25
+                    index: 1_624
                     line: 38
                   }
                   start: Object {
-                    column: 27
-                    index: 1_626
+                    column: 26
+                    index: 1_625
                     line: 38
                   }
                 }
@@ -5926,6 +5069,11 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array ['28']
+      trailingComments: Array [
+        '29'
+        '30'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -5939,58 +5087,6 @@ Program {
           line: 39
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? (async(b => c)) : (d => e)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 62
-              index: 1_661
-              line: 38
-            }
-            start: Object {
-              column: 29
-              index: 1_628
-              line: 38
-            }
-          }
-        }
-      ]
-      trailingComments: Array [
-        CommentLine {
-          value: ' a ? (async (b) => c => d) : (e => f)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 75
-              index: 1_737
-              line: 39
-            }
-            start: Object {
-              column: 36
-              index: 1_698
-              line: 39
-            }
-          }
-        }
-        CommentLine {
-          value: ' https://github.com/prettier/prettier/issues/2194'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 51
-              index: 1_790
-              line: 41
-            }
-            start: Object {
-              column: 0
-              index: 1_739
-              line: 41
-            }
-          }
-        }
-      ]
       expression: ConditionalExpression {
         leadingComments: undefined
         trailingComments: undefined
@@ -6148,13 +5244,13 @@ Program {
                   loc: Object {
                     filename: 'input.js'
                     end: Object {
-                      column: 34
-                      index: 1_696
+                      column: 32
+                      index: 1_694
                       line: 39
                     }
                     start: Object {
-                      column: 34
-                      index: 1_696
+                      column: 33
+                      index: 1_695
                       line: 39
                     }
                   }
@@ -6198,6 +5294,10 @@ Program {
       }
     }
     VariableDeclarationStatement {
+      leadingComments: Array [
+        '29'
+        '30'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -6211,40 +5311,6 @@ Program {
           line: 42
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' a ? (async (b) => c => d) : (e => f)'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 75
-              index: 1_737
-              line: 39
-            }
-            start: Object {
-              column: 36
-              index: 1_698
-              line: 39
-            }
-          }
-        }
-        CommentLine {
-          value: ' https://github.com/prettier/prettier/issues/2194'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 51
-              index: 1_790
-              line: 41
-            }
-            start: Object {
-              column: 0
-              index: 1_739
-              line: 41
-            }
-          }
-        }
-      ]
       declaration: VariableDeclaration {
         kind: 'let'
         leadingComments: undefined
@@ -6462,13 +5528,13 @@ Program {
                         loc: Object {
                           filename: 'input.js'
                           end: Object {
-                            column: 35
-                            index: 1_929
+                            column: 8
+                            index: 1_902
                             line: 44
                           }
                           start: Object {
-                            column: 35
-                            index: 1_929
+                            column: 9
+                            index: 1_903
                             line: 44
                           }
                         }

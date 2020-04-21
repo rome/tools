@@ -6,14 +6,15 @@
  */
 
 import {number0, Number0, coerce0, inc, add} from '@romejs/ob1';
-import {escapeMarkup} from '@romejs/string-markup';
-import {DiagnosticAdvice} from '@romejs/diagnostics';
+import {
+  DiagnosticDescriptionOptionalCategory,
+  descriptions,
+} from '@romejs/diagnostics';
 
 type NormalizeNameUnexpected = (opts: {
-  message: string;
+  description: DiagnosticDescriptionOptionalCategory;
   start?: Number0;
   end?: Number0;
-  advice?: DiagnosticAdvice;
   at?: 'prefix';
 }) => void;
 
@@ -41,7 +42,7 @@ function validateNamePart(
 
     if (isOrg && char === '@' && i === 0) {
       unexpected({
-        message: 'Redundant <emphasis>@</emphasis> in org name',
+        description: descriptions.MANIFEST.REDUNDANT_ORG_NAME_START,
         start: add(offset, i),
       });
     } else if (!isOrgPart && char === '/') {
@@ -69,12 +70,10 @@ function validateNamePart(
     } else if (char.match(/[A-Za-z0-9\-_.]/)) {
       normalizedName += char;
     } else {
-      unexpected(
-        {
-          message: `The character <emphasis>${escapeMarkup(char)}</emphasis> isn't allowed`,
-          start: add(offset, i),
-        },
-      );
+      unexpected({
+        description: descriptions.MANIFEST.INVALID_NAME_CHAR(char),
+        start: add(offset, i),
+      });
     }
   }
 
@@ -88,7 +87,7 @@ export function normalizeName(opts: NormalizeNameOptions): string {
   if (name.length > 214) {
     unexpected({
       at: 'prefix',
-      message: `cannot exceed 214 characters`,
+      description: descriptions.MANIFEST.NAME_EXCEEDS,
     });
     name = name.slice(0, 214);
   }
@@ -96,7 +95,7 @@ export function normalizeName(opts: NormalizeNameOptions): string {
   if (name[0] === '.' || name[0] === '_') {
     unexpected({
       at: 'prefix',
-      message: `cannot start with a dot or underscore`,
+      description: descriptions.MANIFEST.INVALID_NAME_START,
       start: number0,
     });
     name = name.slice(1);
@@ -121,7 +120,7 @@ export function normalizeName(opts: NormalizeNameOptions): string {
     if (packageName === undefined) {
       unexpected({
         at: 'prefix',
-        message: `contains an org but no package name`,
+        description: descriptions.MANIFEST.ORG_WITH_NO_PACKAGE_NAME,
         start: offset,
       });
 
@@ -143,7 +142,7 @@ export function normalizeName(opts: NormalizeNameOptions): string {
       if (other.length > 0) {
         unexpected({
           at: 'prefix',
-          message: `contains too many name separators`,
+          description: descriptions.MANIFEST.ORG_TOO_MANY_PARTS,
           start: offset,
         });
       }

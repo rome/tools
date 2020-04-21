@@ -11,10 +11,14 @@ import {
   DiagnosticLocation,
   DiagnosticAdvice,
 } from './types';
-import {markup} from '@romejs/string-markup';
+import {markup, escapeMarkup} from '@romejs/string-markup';
 import stringDiff from '@romejs/string-diff';
 import {buildSuggestionAdvice, buildDuplicateLocationAdvice} from './helpers';
 import {SourceLocation} from '@romejs/parser-core';
+import {DiagnosticCategory} from './categories';
+import {ResolverQueryResponseNotFound} from '@romejs/core/master/fs/Resolver';
+import {UnknownNumber} from '@romejs/ob1';
+import {toKebabCase} from '@romejs/string-utils';
 
 type DiagnosticMetadataString =
   & Omit<Partial<DiagnosticDescription>, 'message'>
@@ -130,13 +134,85 @@ function buildJSXOpeningAdvice(
 
 export const descriptions = createMessages(
   {
+    FLAGS: {
+      UNSUPPORTED_SHORTHANDS: `Shorthand flags are not supported`,
+
+      INCORRECT_CASED_FLAG: (flag: string) => ({
+        message: `Incorrect cased flag name`,
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: markup`Use <emphasis>${toKebabCase(flag)}</emphasis> instead`,
+          },
+        ],
+      }),
+
+      DIRTY_VSC: (files: Array<string>) => ({
+        message: 'You have uncommitted files. This operation can modify files. For your safety we recommend committing before running this command.',
+        category: 'vsc/dirty',
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: 'If you really want to do this then you can bypass this restriction with the <command>--allow-dirty</command> flag',
+          },
+          {
+            type: 'log',
+            category: 'warn',
+            message: 'These files are uncommitted',
+          },
+          {
+            type: 'list',
+            list: files.map(
+              (filename) => markup`<filelink target="${filename}" />`,
+            ),
+          },
+        ],
+      }),
+
+      INCORRECT_ARG_COUNT: (excessive: boolean, message: string) => ({
+        message: excessive ? 'Too many arguments' : 'Missing arguments',
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message,
+          },
+        ],
+      }),
+
+      DISALLOWED_REVIEW_FLAG: (key: string) => ({
+        message: `Flag <emphasis>${key}</emphasis> is not allowed with <emphasis>review</emphasis>`,
+      }),
+
+      DISALLOWED_REQUEST_FLAG: (key: string) => ({
+        message: `This command does not support the <emphasis>${key}</emphasis> flag`,
+      }),
+
+      UNKNOWN_ACTION: (action: string) => ({
+        message: `Unknown action ${action}`,
+      }),
+
+      NO_FILES_FOUND: (noun: undefined | string) => ({
+        message: noun === undefined
+          ? 'No files found'
+          : `No files to ${noun} found`,
+      }),
+    },
+
     // @romejs/parser-core
     PARSER_CORE: {
       EXPECTED_SPACE: 'Expected no space between',
       EXPECTED_EOF: 'Expected end of file',
+      UNEXPECTED_EOF: 'Unexpected end of file',
+
+      UNEXPECTED: (type: string) => ({
+        message: markup`Unexpected ${type}`,
+      }),
 
       UNEXPECTED_CHARACTER: (char: string) => ({
-        message: markup`Unexpected character ${char}`,
+        message: markup`Unexpected character <emphasis>${char}</emphasis>`,
       }),
 
       EXPECTED_TOKEN: (got: string, expected: string) => {
@@ -157,6 +233,7 @@ export const descriptions = createMessages(
       UNCLOSED_CHAR_SET: 'Unclosed character set',
       DUPLICATE_FLAG: 'Duplicate regular expression flag',
       INVALID_FLAG: 'Invalid regular expression flag',
+      REVERSED_QUANTIFIER_RANGE: 'Quantifier minimum is greater than maximum',
       NO_TARGET_QUANTIFIER: 'Nothing to repeat',
       INVALID_NAMED_CAPTURE: 'Invalid named capture referenced',
       UNCLOSED_NAMED_CAPTURE: 'Unclosed named capture',
@@ -210,17 +287,21 @@ export const descriptions = createMessages(
     LINT: {
       PENDING_FIXES: (original: string, formatted: string) => ({
         category: 'lint/pendingFixes',
-        message: 'Pending fixes',
+        message: 'Pending autofixes and formatting',
         advice: [
           {
             type: 'diff',
             diff: stringDiff(original, formatted),
           },
+          {
+            type: 'log',
+            category: 'info',
+            message: 'Run <command>rome lint --fix</command> to apply',
+          },
         ],
       }),
 
       DUPLICATE_IMPORT_SOURCE: (seenLocation: DiagnosticLocation) => ({
-        fixable: true,
         category: 'lint/duplicateImportSource',
         message: 'This module has already been imported',
         advice: [
@@ -238,11 +319,10 @@ export const descriptions = createMessages(
 
       PREFER_TEMPLATE: {
         category: 'lint/preferTemplate',
-        message: "You're using string concatenation when template literals are preferred",
+        message: 'Template literals are preferred over string concatenation',
       },
 
       UNSAFE_NEGATION: {
-        fixable: true,
         category: 'lint/unsafeNegation',
         message: 'Unsafe usage of negation operator in left side of binary expression',
       },
@@ -257,14 +337,72 @@ export const descriptions = createMessages(
         message: markup`Undeclared variable <emphasis>${name}</emphasis>`,
       }),
 
+      VARIABLE_CAMEL_CASE: (name: string, camelCaseName: string) => ({
+        category: 'lint/camelCase',
+        message: markup`Variable <emphasis>${name}</emphasis> should be camel cased as <emphasis>${camelCaseName}</emphasis>`,
+      }),
+
+      IDENTIFIER_CAMEL_CASE: (name: string, camelCaseName: string) => ({
+        category: 'lint/camelCase',
+        message: markup`Identifier <emphasis>${name}</emphasis> should be camel cased as <emphasis>${camelCaseName}</emphasis>`,
+      }),
+
+      CASE_SINGLE_STATEMENT: {
+        category: 'lint/caseSingleStatement',
+        message: 'A switch case should only have a single statement. If you want more then wrap it in a block.',
+      },
+
+      INCONSIDERATE_LANGUAGE: (
+        description: string,
+        word: string,
+        suggestion: string,
+      ) => ({
+        category: 'lint/inconsiderateLanguage',
+        message: description,
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: markup`Instead of <emphasis>${word}</emphasis> use <emphasis>${suggestion}</emphasis>`,
+          },
+        ],
+      }),
+
+      DOUBLE_EQUALS: {
+        category: 'lint/doubleEquals',
+        message: 'Use === instead of ==',
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: '== is only allowed when comparing against null',
+          },
+        ],
+      },
+
+      NEGATE_DOUBLE_EQUALS: {
+        category: 'lint/doubleEquals',
+        message: 'Use !== instead of !=',
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: '!= is only allowed when comparing against null',
+          },
+        ],
+      },
+
+      NO_CATCH_ASSIGN: {
+        category: 'lint/noCatchAssign',
+        message: "Don't reassign catch parameters",
+      },
+
       SPARSE_ARRAY: {
-        fixable: true,
         category: 'lint/sparseArray',
         message: 'Your array contains an empty slot',
       },
 
       SINGLE_VAR_DECLARATOR: {
-        fixable: true,
         category: 'lint/singleVarDeclarator',
         message: 'Declare each variable separately',
       },
@@ -272,7 +410,6 @@ export const descriptions = createMessages(
       PREFER_FUNCTION_DECLARATIONS: {
         category: 'lint/preferFunctionDeclarations',
         message: 'Use a function declaration instead of a const function',
-        fixable: true,
       },
 
       NO_VAR: {
@@ -281,7 +418,6 @@ export const descriptions = createMessages(
       },
 
       NO_SHORTHAND_ARRAY_TYPE: {
-        fixable: true,
         category: 'lint/noShorthandArrayType',
         message: 'Use Array<T> instead of shorthand T[]',
       },
@@ -309,7 +445,6 @@ export const descriptions = createMessages(
       }),
 
       NO_MULTIPLE_SPACES_IN_REGEX_LITERAL: (count: number) => ({
-        fixable: true,
         category: 'lint/noMultipleSpacesInRegularExpressionLiterals',
         message: 'Unclear multiple spaces in regular expression',
         advice: [
@@ -349,7 +484,6 @@ export const descriptions = createMessages(
       },
 
       NO_EMPTY_CHAR_SET: {
-        fixable: true,
         category: 'lint/noEmptyCharacterClass',
         message: 'Empty character classes in regular expressions are not allowed',
       },
@@ -375,7 +509,6 @@ export const descriptions = createMessages(
       },
 
       NO_DEBUGGER: {
-        fixable: true,
         category: 'lint/noDebugger',
         message: "Unexpected 'debugger' statement",
       },
@@ -401,6 +534,11 @@ export const descriptions = createMessages(
         message: `Expected a 'return' at end of a getter method but got ${got}`,
       }),
 
+      NO_SETTER_RETURN: {
+        category: 'lint/noSetterReturn',
+        message: `Setter cannot return a value`,
+      },
+
       EMPTY_BLOCKS: {
         category: 'lint/emptyBlocks',
         message: 'Empty block',
@@ -411,13 +549,9 @@ export const descriptions = createMessages(
         message: "Use the rest parameters instead of 'arguments'",
       },
 
-      DUPLICATE_REGEX_GROUP_NAME: (
-        name: string,
-        locations: Array<undefined | DiagnosticLocation>,
-      ) => ({
+      DUPLICATE_REGEX_GROUP_NAME: (name: string) => ({
         category: 'lint/noDuplicateGroupNamesInRegularExpressions',
         message: `Duplicate group name <emphasis>${name}</emphasis> in regular expression`,
-        advice: buildDuplicateLocationAdvice(locations),
       }),
 
       NO_REFERENCE_TO_NON_EXISTING_GROUP: (name: string) => ({
@@ -446,7 +580,6 @@ export const descriptions = createMessages(
           ` ${defaultType} name should be <emphasis>${actualFilename}</emphasis>`;
 
         return {
-            fixable: true,
             category: 'lint/defaultExportSameBasename',
             message: `Filename and the name of a default ${defaultType} should match`,
             advice: [
@@ -496,7 +629,7 @@ export const descriptions = createMessages(
           {
             type: 'log',
             category: 'info',
-            message: `Defined already by <filelink target="${existing}" />`,
+            message: markup`Defined already by <filelink target="${existing}" />`,
           },
         ],
       }),
@@ -508,7 +641,7 @@ export const descriptions = createMessages(
           {
             type: 'log',
             category: 'info',
-            message: `Defined already by <filelink emphasis target="${existing}" />`,
+            message: markup`Defined already by <filelink emphasis target="${existing}" />`,
           },
         ],
       }),
@@ -527,7 +660,7 @@ export const descriptions = createMessages(
 
       INCORRECT_CONFIG_FILENAME: (validFilenames: Array<string>) => ({
         category: 'projectManager/incorrectConfigFilename',
-        message: `Invalid rome config filename, <emphasis>${validFilenames.join(
+        message: markup`Invalid rome config filename, <emphasis>${validFilenames.join(
           ' or ',
         )}</emphasis> are the only valid filename`,
       }),
@@ -728,6 +861,38 @@ export const descriptions = createMessages(
     },
 
     RESOLVER: {
+      NOT_FOUND: (
+        responseType: ResolverQueryResponseNotFound['type'],
+        source: string,
+        location: DiagnosticLocation,
+      ) => {
+        let messagePrefix = '';
+        let category: DiagnosticCategory = 'resolver/notFound';
+
+        switch (responseType) {
+          case 'UNSUPPORTED': {
+            messagePrefix = `Unsupported`;
+            category = 'resolver/unsupported';
+            break;
+          }
+          case 'MISSING': {
+            messagePrefix = `Cannot find`;
+            break;
+          }
+          case 'FETCH_ERROR': {
+            messagePrefix = 'Failed to fetch';
+            category = 'resolver/fetchFailed';
+            break;
+          }
+        }
+
+        return {
+            message: messagePrefix +
+              markup` <emphasis>${source}</emphasis> from <filelink emphasis target="${location.filename}" />`,
+            category,
+          };
+      },
+
       IMPORT_TYPE_MISMATCH: (
         exportName: string,
         source: string,
@@ -781,15 +946,16 @@ export const descriptions = createMessages(
                 if (location !== undefined) {
                   if (location.start === undefined) {
                       name =
-                      `<filelink target="${location.filename}">${name}</filelink>`;
+                      markup`<filelink target="${location.filename}">${name}</filelink>`;
                   } else {
                       name =
-                      `<filelink target="${location.filename}" line="${location.start.line}" column="${location.start.column}">${name}</filelink>`;
+                      markup`<filelink target="${location.filename}" line="${location.start.line}" column="${location.start.column}">${name}</filelink>`;
                   }
                 }
 
                 if (source !== undefined) {
-                  name += ` <dim>(from <filelink target="${source}" />)</dim>`;
+                    name +=
+                    markup` <dim>(from <filelink target="${source}" />)</dim>`;
                 }
 
                 return name;
@@ -1336,8 +1502,10 @@ export const descriptions = createMessages(
             message: upper,
           } : {
             type: 'frame',
-            location: originLoc,
-            marker: upper,
+            location: {
+              ...originLoc,
+              marker: upper,
+            },
           },
         ],
       }),
@@ -1374,6 +1542,113 @@ export const descriptions = createMessages(
         category: 'typeCheck/missingCondition',
         message: `Missing the conditions ${missing.join(', ')}`,
       }),
+    },
+
+    // @romejs/consume
+    CONSUME: {
+      SET_PROPERTY_NON_OBJECT: 'Attempted to set a property on a non-object',
+      EXPECTED_JSON_VALUE: 'Expected a JSON value',
+      EXPECTED_OBJECT: 'Expected object',
+      EXPECTED_ARRAY: 'Expected array',
+      EXPECTED_DATE: 'Expected a date',
+      EXPECTED_BOOLEAN: 'Expected a boolean',
+      EXPECTED_STRING: 'Expected a string',
+      EXPECTED_BIGINT: 'Expected a bigint',
+      EXPECTED_NUMBER: 'Expected a number',
+      EXPECTED_URL: 'Expected a URL',
+      EXPECTED_VALID_NUMBER: 'Expected valid number',
+      EXPECTED_ABSOLUTE_PATH: 'Expected an absolute file path',
+      EXPECTED_RELATIVE_PATH: 'Expected a relative file path',
+      EXPECTED_EXPLICIT_RELATIVE_PATH: 'Expected an explicit relative file path. This is one that starts with <emphasis>./</emphasis> or <emphasis>../</emphasis>',
+      INVALID: 'Invalid value',
+
+      EXPECTED_NUMBER_BETWEEN: (min: UnknownNumber, max: UnknownNumber) => ({
+        message: `Expected number between ${min} and ${max}`,
+      }),
+
+      EXPECTED_NUMBER_HIGHER: (num: UnknownNumber) => ({
+        message: `Expected number higher than ${num}`,
+      }),
+
+      EXPECTED_NUMBER_LOWER: (num: UnknownNumber) => ({
+        message: `Expected number lower than ${num}`,
+      }),
+
+      INVALID_STRING_SET_VALUE: (value: string, validValues: Array<string>) => ({
+        message: markup`Invalid value <emphasis>${value}</emphasis>`,
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: 'Possible values are',
+          },
+          {
+            type: 'list',
+            list: validValues.map((str) => escapeMarkup(str)),
+          },
+        ],
+      }),
+
+      UNUSED_PROPERTY: (
+        key: string,
+        type: string,
+        knownProperties: Array<string>,
+      ) => ({
+        message: markup`Unknown <emphasis>${key}</emphasis> ${type}`,
+        advice: buildSuggestionAdvice(key, knownProperties, {
+          ignoreCase: true,
+        }),
+      }),
+    },
+
+    // @romejs/codec-js-manifest
+    MANIFEST: {
+      TOO_MANY_HASH_PARTS: 'Too many hashes',
+      MISSING_HOSTED_GIT_USER: 'Missing user',
+      MISSING_HOSTED_GIT_REPO: 'Missing repo',
+      TOO_MANY_HOSTED_GIT_PARTS: 'Expected only 2 parts',
+      EMPTY_NPM_PATTERN: 'Missing rest of npm dependency pattern',
+      TOO_MANY_NPM_PARTS: 'Too many @ signs',
+      STRING_BIN_WITHOUT_NAME: 'A string bin is only allowed if the manifest has a name property',
+      MISSING_REPO_URL: 'Missing repo URL',
+      MIXED_EXPORTS_PATHS: 'Cannot mix a root conditional export with relative paths',
+      NAME_EXCEEDS: `cannot exceed 214 characters`,
+      INVALID_NAME_START: `cannot start with a dot or underscore`,
+      ORG_WITH_NO_PACKAGE_NAME: `contains an org but no package name`,
+      ORG_TOO_MANY_PARTS: `contains too many name separators`,
+      REDUNDANT_ORG_NAME_START: 'Redundant <emphasis>@</emphasis> in org name',
+
+      INVALID_NAME_CHAR: (char: string) => ({
+        message: markup`The character <emphasis>${char}</emphasis> isn't allowed`,
+      }),
+
+      INCORRECT_CASING: (typoKey: string, correctKey: string) => ({
+        message: `${typoKey} has incorrect casing, should be ${correctKey}`,
+      }),
+
+      INCORRECT_CAMEL_CASING: (typoKey: string, correctKey: string) => ({
+        message: `${typoKey} isn't correctly camel cased when it should be ${correctKey}`,
+      }),
+
+      TYPO: (typoKey: string, correctKey: string) => ({
+        message: `${typoKey} is a typo of ${correctKey}`,
+      }),
+    },
+
+    // @romejs/project
+    PROJECT_CONFIG: {
+      BOOLEAN_CATEGORY: (enabled: boolean) => ({
+        message: `Expected an object here but got a boolean`,
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            message: `You likely wanted \`{"enabled": ${String(enabled)}}\` instead`,
+          },
+        ],
+      }),
+
+      RECURSIVE_CONFIG: 'Recursive config',
     },
   },
 );

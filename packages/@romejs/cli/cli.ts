@@ -27,11 +27,11 @@ import {
   getFilenameTimestamp,
   ClientProfileOptions,
 } from '@romejs/core/client/Client';
-import {commandCategories} from '@romejs/core/commands';
+import {commandCategories} from '@romejs/core/common/commands';
 import {writeFile} from '@romejs/fs';
 import fs = require('fs');
 
-import {stripAnsi} from '@romejs/string-markup';
+import {stripAnsi, markup} from '@romejs/string-markup';
 import {Dict} from '@romejs/typescript-helpers';
 
 type CLIFlags = {
@@ -103,6 +103,15 @@ export default async function cli() {
             collectMarkers: c.get('collectMarkers').asBoolean(
               DEFAULT_CLIENT_REQUEST_FLAGS.collectMarkers,
             ),
+            timing: c.get('timing').asBoolean(
+              DEFAULT_CLIENT_REQUEST_FLAGS.timing,
+            ),
+            review: c.get('review').asBoolean(
+              DEFAULT_CLIENT_REQUEST_FLAGS.review,
+            ),
+            allowDirty: c.get('allowDirty').asBoolean(
+              DEFAULT_CLIENT_REQUEST_FLAGS.allowDirty,
+            ),
             watch: c.get('watch').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.watch),
             fieri: c.get('fieri').asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.fieri),
             focus: c.get('focus').asString(DEFAULT_CLIENT_REQUEST_FLAGS.focus),
@@ -133,8 +142,8 @@ export default async function cli() {
   });
 
   let command = '';
-  let overrideClientFlags: Partial<ClientFlags> = {};
-  let overrideRequestFlags: Partial<ClientRequestFlags> = {};
+  let overrideClientFlags: undefined | Partial<ClientFlags>;
+  let overrideRequestFlags: undefined | Partial<ClientRequestFlags>;
   let overrideCLIFlags: Partial<CLIFlags> = {};
   let commandFlags: Dict<unknown> = {};
   let args: Array<string> = [];
@@ -155,10 +164,7 @@ export default async function cli() {
         examples: local.examples,
         usage: local.usage,
         callback(_commandFlags) {
-          if (local.defineFlags !== undefined) {
-            commandFlags = _commandFlags;
-          }
-
+          commandFlags = _commandFlags;
           args = p.getArgs();
           command = cmd;
         },
@@ -177,17 +183,9 @@ export default async function cli() {
         examples: master.examples,
 
         callback(_commandFlags) {
-          if (master.defineFlags !== undefined) {
-            commandFlags = _commandFlags;
-          }
-
-          if (master.overrideClientFlags !== undefined) {
-            overrideClientFlags = master.overrideClientFlags;
-          }
-
-          if (master.overrideRequestFlags !== undefined) {
-            overrideRequestFlags = master.overrideRequestFlags;
-          }
+          commandFlags = _commandFlags;
+          overrideClientFlags = master.overrideClientFlags;
+          overrideRequestFlags = master.overrideRequestFlags;
 
           args = p.getArgs();
           command = cmd;
@@ -281,7 +279,7 @@ export default async function cli() {
             await writeFile(resolvedProfilePath, str);
 
             client.reporter.success(
-              `Wrote CPU profile to <filelink emphasis target="${resolvedProfilePath.join()}" />`,
+              markup`Wrote CPU profile to <filelink emphasis target="${resolvedProfilePath.join()}" />`,
             );
           },
         );
@@ -340,31 +338,37 @@ export default async function cli() {
       await writeFile(markersPath, JSON.stringify(res.markers, null, '  '));
 
       client.reporter.success(
-        `Wrote markers to <filelink emphasis target="${markersPath.join()}" />`,
+        markup`Wrote markers to <filelink emphasis target="${markersPath.join()}" />`,
       );
     }
   }
 
   switch (res.type) {
-    case 'ERROR':
+    case 'ERROR': {
       if (!res.handled) {
         console.error('Unhandled CLI query error');
         console.error(res.stack);
       }
       process.exit(1);
       break;
+    }
 
-    case 'INVALID_REQUEST':
-      await p.showHelp();
+    case 'INVALID_REQUEST': {
+      if (res.showHelp) {
+        await p.showHelp();
+      }
       process.exit(1);
       break;
+    }
 
-    case 'DIAGNOSTICS':
+    case 'DIAGNOSTICS': {
       process.exit(1);
       break;
+    }
 
-    case 'SUCCESS':
+    case 'SUCCESS': {
       process.exit(0);
       break;
+    }
   }
 }

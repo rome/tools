@@ -7,14 +7,13 @@
 
 import {MasterRequest} from '@romejs/core';
 import {Diagnostics} from '@romejs/diagnostics';
-import {SourceMap} from '@romejs/codec-source-map';
 import {Consumer} from '@romejs/consume';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import TestRunner from '../testing/TestRunner';
 import Bundler from '../bundler/Bundler';
-import {AbsoluteFilePath} from '@romejs/path';
 import {JS_EXTENSIONS} from '../../common/fileHandlers';
-import {TestRunnerOptions} from '../testing/types';
+import {TestRunnerOptions, TestSources} from '../testing/types';
 
 type Flags = Omit<TestRunnerOptions, 'verboseDiagnostics'>;
 
@@ -22,10 +21,12 @@ export default createMasterCommand(
   {
     category: commandCategories.CODE_QUALITY,
     description: 'run tests',
+    usage: '',
+    examples: [],
 
     defineFlags(c: Consumer): Flags {
       return {
-        coverage: c.get('coverage').asBoolean(true),
+        coverage: c.get('coverage').asBoolean(false),
         showAllCoverage: c.get('showAllCoverage').asBoolean(false),
         updateSnapshots: c.get('updateSnapshots').asBoolean(false),
         freezeSnapshots: c.get('freezeSnapshots').asBoolean(false),
@@ -33,7 +34,7 @@ export default createMasterCommand(
       };
     },
 
-    async default(req: MasterRequest, commandFlags: Flags): Promise<void> {
+    async callback(req: MasterRequest, commandFlags: Flags): Promise<void> {
       const {reporter} = req;
 
       const {paths} = await req.getFilesFromArgs(
@@ -63,17 +64,18 @@ export default createMasterCommand(
 
       let addDiagnostics: Diagnostics = [];
 
-      const tests: Map<string, {
-        code: string;
-        sourceMap: SourceMap;
-        path: AbsoluteFilePath;
-      }> = new Map();
+      const tests: TestSources = new Map();
 
       const bundler = new Bundler(req, req.getBundlerConfigFromFlags({
         mocks: true,
       }));
 
-      for (const [path, res] of await bundler.bundleMultiple(Array.from(paths))) {
+      for (const [path, res] of await bundler.bundleMultiple(
+        Array.from(paths),
+        {
+          deferredSourceMaps: true,
+        },
+      )) {
         tests.set(path.join(), {
           code: res.entry.js.content,
           sourceMap: res.entry.sourceMap.map,

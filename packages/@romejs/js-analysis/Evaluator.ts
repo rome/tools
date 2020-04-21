@@ -7,7 +7,7 @@
 
 import {JSONObject} from '@romejs/codec-json';
 import T from './types/T';
-import {AnyNode, assertNodeTypeSet} from '@romejs/js-ast';
+import {AnyNode} from '@romejs/js-ast';
 import {ModuleSignature} from './index';
 import ImportT from './types/ImportT';
 import Intrinsics from './Intrinsics';
@@ -20,8 +20,6 @@ import OpenT from './types/OpenT';
 import types from './types/index';
 import evaluators from './evaluators/index';
 import {ModuleSignatureType} from './types';
-
-assertNodeTypeSet(evaluators, 'evaluators');
 
 export type HydrateTypeFactory = (id: unknown) => T;
 

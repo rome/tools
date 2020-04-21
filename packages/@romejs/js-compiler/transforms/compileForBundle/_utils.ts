@@ -7,9 +7,9 @@
 
 import {SCOPE_PRIVATE_PREFIX} from '@romejs/js-compiler';
 import {BundleCompileOptions} from '../../types';
-import Context from '../../lib/Context';
+import CompilerContext from '../../lib/CompilerContext';
 
-export function getOptions(context: Context): BundleCompileOptions {
+export function getOptions(context: CompilerContext): BundleCompileOptions {
   const opts = context.options.bundle;
   if (opts === undefined) {
     throw new Error('No bundle options found');

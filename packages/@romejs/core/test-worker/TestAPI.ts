@@ -16,15 +16,14 @@ import {Event} from '@romejs/events';
 import diff from '@romejs/string-diff';
 import {createErrorFromStructure} from '@romejs/v8';
 import prettyFormat from '@romejs/pretty-format';
-import {Class} from '@romejs/typescript-helpers';
 import {FileReference} from '../common/types/files';
 import {markup} from '@romejs/string-markup';
-
-type AsyncFunc = () => undefined | Promise<void>;
-
-type SyncThrower = () => void;
-
-type ExpectedError = undefined | string | RegExp | Class<Error>;
+import {
+  TestHelper,
+  AsyncFunc,
+  SyncThrower,
+  ExpectedError,
+} from '@romejs-runtime/rome/test';
 
 function formatExpectedError(expected: ExpectedError): string {
   if (typeof expected === 'string') {
@@ -64,7 +63,7 @@ function matchExpectedError(error: Error, expected: ExpectedError): boolean {
 
 export type OnTimeout = (time: number) => void;
 
-export default class TestAPI {
+export default class TestAPI implements TestHelper {
   constructor({
     testName,
     onTimeout,
@@ -197,6 +196,10 @@ export default class TestAPI {
     this.advice.push(item);
   }
 
+  clearAdvice() {
+    this.advice = [];
+  }
+
   onTeardown(callback: AsyncFunc): void {
     this.teardownEvent.subscribe(callback);
   }
@@ -251,6 +254,7 @@ export default class TestAPI {
   ): never {
     throw createErrorFromStructure({
       message,
+      markupMessage: message,
       advice,
       framesToPop: framesToPop + 1,
     });
@@ -424,13 +428,13 @@ export default class TestAPI {
     throw new Error('unimplemented');
   }
 
-  snapshot(expected: unknown, message?: string): void {
+  snapshot(expected: unknown, message?: string): string {
     const id = this.snapshotCounter++;
-    this._snapshotNamed(String(id), expected, message, 2);
+    return this._snapshotNamed(String(id), expected, message, 2);
   }
 
-  snapshotNamed(name: string, expected: unknown, message?: string): void {
-    this._snapshotNamed(name, expected, message, 1);
+  snapshotNamed(name: string, expected: unknown, message?: string): string {
+    return this._snapshotNamed(name, expected, message, 1);
   }
 
   getSnapshot(snapshotName: string): unknown {
@@ -442,7 +446,7 @@ export default class TestAPI {
     expected: unknown,
     message?: string,
     framesToPop?: number,
-  ): void {
+  ): string {
     let language: undefined | string;
 
     let formatted = '';
@@ -463,7 +467,7 @@ export default class TestAPI {
         value: formatted,
         language,
       });
-      return;
+      return name;
     }
 
     // Compare the snapshots
@@ -485,7 +489,7 @@ export default class TestAPI {
           {
             type: 'log',
             category: 'info',
-            message: `Snapshot can be found at <filelink emphasis target="${this.snapshotManager.path.join()}" />`,
+            message: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.path.join()}" />`,
           },
         );
       }
@@ -500,5 +504,7 @@ export default class TestAPI {
 
       this.fail(message, advice, framesToPop);
     }
+
+    return name;
   }
 }

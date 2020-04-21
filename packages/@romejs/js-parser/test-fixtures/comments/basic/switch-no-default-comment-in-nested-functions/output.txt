@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' no default'
       loc: Object {
         filename: 'input.js'
@@ -163,8 +164,8 @@ Program {
                 line: 1
               }
               start: Object {
-                column: 17
-                index: 17
+                column: 25
+                index: 25
                 line: 1
               }
             }
@@ -267,8 +268,8 @@ Program {
                       line: 3
                     }
                     start: Object {
-                      column: 4
-                      index: 42
+                      column: 23
+                      index: 61
                       line: 3
                     }
                   }
@@ -402,6 +403,7 @@ Program {
                       }
                       cases: Array [
                         SwitchCase {
+                          trailingComments: Array ['0']
                           loc: Object {
                             filename: 'input.js'
                             end: Object {
@@ -431,24 +433,6 @@ Program {
                               }
                             }
                           }
-                          trailingComments: Array [
-                            CommentLine {
-                              value: ' no default'
-                              loc: Object {
-                                filename: 'input.js'
-                                end: Object {
-                                  column: 25
-                                  index: 245
-                                  line: 7
-                                }
-                                start: Object {
-                                  column: 12
-                                  index: 232
-                                  line: 7
-                                }
-                              }
-                            }
-                          ]
                           consequent: Array [
                             ReturnStatement {
                               trailingComments: undefined

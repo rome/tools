@@ -6,10 +6,9 @@
  */
 
 import {NodeBase} from '@romejs/parser-core';
-import {AnyComment} from './index';
 
 export type JSNodeBase = NodeBase & {
-  leadingComments?: Array<AnyComment>;
-  trailingComments?: Array<AnyComment>;
-  innerComments?: Array<AnyComment>;
+  leadingComments?: Array<string>;
+  trailingComments?: Array<string>;
+  innerComments?: Array<string>;
 };

@@ -18,7 +18,7 @@ import {
   TopLevelAwaitRecord,
   ImportUsageRecord,
 } from './records';
-import {Context, Cache} from '@romejs/js-compiler';
+import {CompilerContext, Cache} from '@romejs/js-compiler';
 import transform from '../../methods/transform';
 import visitors from './visitors/index';
 import {
@@ -37,7 +37,7 @@ const analyzeCache: Cache<AnalyzeDependencyResult> = new Cache();
 export default async function analyzeDependencies(
   req: TransformRequest,
 ): Promise<AnalyzeDependencyResult> {
-  const {ast, project} = req;
+  let {ast, project} = req;
 
   const query = Cache.buildQuery(req);
   const cached: undefined | AnalyzeDependencyResult = analyzeCache.get(query);
@@ -45,15 +45,15 @@ export default async function analyzeDependencies(
     return cached;
   }
 
-  const context = new Context({
+  const context = new CompilerContext({
     ast,
     project,
     origin: {
       category: 'analyzeDependencies',
     },
   });
-  const {ast: transformedAst} = await transform({...req, stage: 'pre'});
-  context.reduce(transformedAst, visitors);
+  ({ast} = await transform({...req, stage: 'pre'}));
+  context.reduce(ast, visitors);
 
   //
   const importFirstUsage: AnalyzeDependencyImportFirstUsage = [];
@@ -156,11 +156,8 @@ export default async function analyzeDependencies(
         };
 
         // Map ordering is by insertion time, so in the case where the previous import was a type import
-
         // then we don't want to place our combined record in that position, it should be at the end.
-
         // Inserting a type import statement at the top of the file shouldn't change the execution order
-
         // if it was imported later
         if (existing.kind === 'type' && data.kind === 'value') {
           dependenciesBySource.delete(data.source);
@@ -187,7 +184,6 @@ export default async function analyzeDependencies(
           record.data.kind ===
           'value') {
       // Track the first reference to a value import that's not in a function
-
       // This is used to detect module cycles
       const {data} = record;
       const key = `${data.source}:${data.imported}`;
@@ -267,7 +263,7 @@ export default async function analyzeDependencies(
     dependencies,
     importFirstUsage,
     syntax: ast.syntax,
-    diagnostics: [...ast.diagnostics, ...context.diagnostics],
+    diagnostics: [...ast.diagnostics, ...context.diagnostics.getDiagnostics()],
   };
   analyzeCache.set(query, res);
   return res;

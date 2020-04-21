@@ -5,10 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
 test('disallow var', async (t) => {
-  const res = await testLint('var foobar;\nfoobar');
-  t.snapshot(res);
+  await testLint(t, 'var foobar;\nfoobar', {category: 'lint/noVar'});
 });

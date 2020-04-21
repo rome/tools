@@ -13,21 +13,26 @@ export function showInvisibles(str: string): string {
   let ret = '';
   for (const cha of str) {
     switch (cha) {
-      case ' ':
+      case ' ': {
         ret += '\xb7'; // Middle Dot, \u00B7
         break;
-      case '\r':
+      }
+      case '\r': {
         ret += '\u240d';
         break;
-      case '\n':
+      }
+      case '\n': {
         ret += '\u23ce'; // Return Symbol, \u23ce
         break;
-      case '\t':
+      }
+      case '\t': {
         ret += '\u21b9'; // Left Arrow To Bar Over Right Arrow To Bar, \u21b9
         break;
-      default:
+      }
+      default: {
         ret += cha;
         break;
+      }
     }
   }
   return ret;

@@ -23,8 +23,7 @@ export class TokContext {
     isExpr?: boolean,
     preserveSpace?: boolean,
     override?: TokContextOverride,
-  ) // Takes a Tokenizer as a parser.parameter, and returns void.
-  {
+  ) {
     this.token = token;
     this.isExpr = !!isExpr;
     this.preserveSpace = !!preserveSpace;
@@ -127,7 +126,7 @@ tt._function.updateContext = function(parser, prevType) {
           parser.state.startPos.index,
         ))) && !((prevType === tt.colon || prevType === tt.braceL) &&
         getCurContext(parser) ===
-        types.b_stat)) {
+        types.bStat)) {
     parser.state.context.push(types.functionExpression);
   } else {
     parser.state.context.push(types.functionStatement);

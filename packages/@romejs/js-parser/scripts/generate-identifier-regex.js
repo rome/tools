@@ -19,7 +19,7 @@ let last = -1;
 const cont = [8_204, 8_205].concat(require(
   `unicode-${version}/Binary_Property/ID_Continue/code-points.js`,
 ).filter(function(ch) {
-  return ch > 127 && search(start, ch, last + 1) == -1;
+  return ch > 127 && search(start, ch, last + 1) === -1;
 }));
 
 function search(arr, ch, starting) {
@@ -45,12 +45,12 @@ function generate(chars) {
   for (let i = 0, at = 65_536; i < chars.length; i++) {
     const from = chars[i];
     let to = from;
-    while (i < chars.length - 1 && chars[i + 1] == to + 1) {
+    while (i < chars.length - 1 && chars[i + 1] === to + 1) {
       i++;
       to++;
     }
     if (to <= 65_535) {
-      if (from == to) re += esc(from); else if (from + 1 == to) re +=
+      if (from === to) re += esc(from); else if (from + 1 === to) re +=
           esc(from) +
           esc(to); else re += `${esc(from)}-esc(to)`;
     } else {

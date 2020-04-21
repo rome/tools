@@ -12,6 +12,10 @@ import {createBridgeFromParentProcess} from '@romejs/events';
 import TestWorkerRunner from './TestWorkerRunner';
 import inspector = require('inspector');
 
+export type TestWorkerFlags = {
+  inspectorPort: number;
+};
+
 export default class TestWorker {
   constructor() {
     this.bridge = this.buildBridge();
@@ -21,9 +25,8 @@ export default class TestWorker {
   runners: Map<number, TestWorkerRunner>;
   bridge: TestWorkerBridge;
 
-  async init() {
-    // TODO randomly generate an open port
-    inspector.open();
+  async init(flags: TestWorkerFlags) {
+    inspector.open(flags.inspectorPort);
 
     await this.bridge.handshake();
   }

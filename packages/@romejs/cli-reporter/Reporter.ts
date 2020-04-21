@@ -8,7 +8,7 @@
 import {
   MarkupFormatOptions,
   markupToAnsi,
-  stripMarkupTags,
+  markupToPlainText,
   markupTag,
   ansiEscapes,
   stripAnsi,
@@ -21,19 +21,18 @@ import {
   ReporterStream,
   ReporterDerivedStreams,
   ReporterProgressOptions,
+  ReporterStreamMeta,
 } from './types';
 import {humanizeNumber, removeSuffix} from '@romejs/string-utils';
 import Progress from './Progress';
 import {interpolate} from './util';
-
 import prettyFormat from '@romejs/pretty-format';
 import stream = require('stream');
-
 import {CWD_PATH} from '@romejs/path';
 import {Event} from '@romejs/events';
 import readline = require('readline');
-
 import {MarkupTagName} from '@romejs/string-markup/types';
+import select, {SelectOptions, SelectArguments} from './select';
 
 type ListOptions = {
   reverse?: boolean;
@@ -66,9 +65,10 @@ export type LogOptions = {
 };
 
 export type LogCategoryOptions = LogOptions & {
-  prefix: string;
+  unicodePrefix: string;
+  rawPrefix: string;
   markupTag: MarkupTagName;
-  suffix?: string;
+  unicodeSuffix?: string;
 };
 
 type QuestionValidateResult<T> = [false, string] | [true, T];
@@ -78,15 +78,6 @@ type QuestionOptions = {
   default?: string;
   yes?: boolean;
   normalize?: (value: string) => string;
-};
-
-type SelectOptions = {[key: string]: {label: string}};
-
-type SelectArguments<Options> = {
-  options: Options;
-  defaults?: Array<keyof Options>;
-  radio?: boolean;
-  yes?: boolean;
 };
 
 let remoteProgressIdCounter = 0;
@@ -163,10 +154,14 @@ export default class Reporter {
       name: 'columnsUpdated',
     });
 
+    // Windows terminals are awful
+    const unicode = process.platform !== 'win32';
+
     const outStream: ReporterStream = {
       type: 'out',
       format: getStreamFormat(stdout),
       columns,
+      unicode,
       write(chunk) {
         if (stdout !== undefined) {
           stdout.write(chunk);
@@ -180,6 +175,7 @@ export default class Reporter {
       type: 'error',
       format: getStreamFormat(stderr),
       columns,
+      unicode,
       write(chunk) {
         if (stderr !== undefined) {
           stderr.write(chunk);
@@ -211,6 +207,29 @@ export default class Reporter {
       columnsUpdated,
       stdout: outStream,
       stderr: errStream,
+    };
+  }
+
+  attachCaptureStream(format: ReporterStream['format'] = 'none'): {
+    read: () => string;
+  } {
+    let buff = '';
+
+    this.addStream({
+      format,
+      type: 'all',
+      columns: Reporter.DEFAULT_COLUMNS,
+      unicode: true,
+
+      write(chunk) {
+        buff += chunk;
+      },
+    });
+
+    return {
+      read() {
+        return buff;
+      },
     };
   }
 
@@ -292,11 +311,12 @@ export default class Reporter {
   receivedRemoteServerMessage(msg: RemoteReporterServerMessage) {
     // Currently the only message a remote Reporter can send is that it has ended
     switch (msg.type) {
-      case 'ENDED':
+      case 'ENDED': {
         const progress = this.remoteServerProgressBars.get(msg.id);
         if (progress !== undefined) {
           progress.end();
         }
+      }
     }
   }
 
@@ -477,9 +497,11 @@ export default class Reporter {
       options: {
         yes: {
           label: 'Yes',
+          shortcut: 'y',
         },
         no: {
           label: 'No',
+          shortcut: 'n',
         },
       },
     });
@@ -496,197 +518,11 @@ export default class Reporter {
     return Array.from(set)[0];
   }
 
-  async select<Options extends SelectOptions>(message: string, {
-    options,
-    defaults = [],
-    radio = false,
-    yes = false,
-  }: SelectArguments<Options>): Promise<Set<keyof Options>> {
-    const optionNames: Array<keyof Options> = Object.keys(options);
-    const optionCount = optionNames.length;
-    if (optionCount === 0) {
-      return new Set();
-    }
-
-    if (yes) {
-      return new Set(defaults);
-    }
-
-    let prompt = `<brightBlack>❯</brightBlack> <emphasis>${message}</emphasis>`;
-    this.logAll(prompt);
-
-    if (radio) {
-      this.info(
-        'Use arrow keys and then <emphasis>enter</emphasis> to select an option',
-      );
-    } else {
-      this.info(
-        'Use arrow keys and <emphasis>space</emphasis> to select or deselect options and then <emphasis>enter</emphasis> to confirm',
-      );
-    }
-
-    const selectedOptions: Set<keyof Options> = new Set(defaults);
-    let activeOption = 0;
-
-    // Set first option if this is a radio
-    if (radio && !defaults.length) {
-      selectedOptions.add(optionNames[0]);
-    }
-
-    function boundActive() {
-      activeOption = Math.min(activeOption, optionCount - 1);
-      activeOption = Math.max(activeOption, 0);
-
-      if (radio) {
-        selectedOptions.clear();
-        selectedOptions.add(optionNames[activeOption]);
-      }
-    }
-
-    // If we aren't a radio then set the active option to the bottom of any that are enabled
-    if (!radio) {
-      while (selectedOptions.has(optionNames[activeOption])) {
-        activeOption++;
-      }
-    }
-
-    const render = () => {
-      for (let i = 0; i < optionNames.length; i++) {
-        const key = optionNames[i];
-        const {label} = options[key];
-        const formattedLabel = optionNames.indexOf(key) === activeOption
-          ? `<underline>${label}</underline>`
-          : label;
-
-        let symbol = '';
-        if (radio) {
-          symbol = selectedOptions.has(key) ? '\u25c9' : '\u25ef';
-        } else {
-          symbol = selectedOptions.has(key) ? '\u2611' : '\u2610';
-        }
-
-        this.logAll(`  ${symbol} ${formattedLabel}`, {
-          // Don't put a newline on the last option
-          newline: i !== optionNames.length - 1,
-        });
-      }
-    };
-
-    const cleanup = () => {
-      for (let i = 0; i < optionCount; i++) {
-        this.writeAll(ansiEscapes.eraseLine);
-
-        // Don't move above the top line
-        if (i !== optionCount - 1) {
-          this.writeAll(ansiEscapes.cursorUp());
-        }
-      }
-      this.writeAll(ansiEscapes.cursorTo(0));
-    };
-
-    let onkeypress = undefined;
-
-    const stdin = this.getStdin();
-
-    render();
-
-    readline.emitKeypressEvents(stdin);
-
-    if (stdin.isTTY && stdin.setRawMode !== undefined) {
-      stdin.setRawMode(true);
-    }
-
-    stdin.resume();
-
-    await new Promise((resolve) => {
-      const finish = () => {
-        cleanup();
-
-        // Remove initial help message
-        this.writeAll(ansiEscapes.cursorUp());
-        this.writeAll(ansiEscapes.eraseLine);
-
-        // Remove initial log message
-        this.writeAll(ansiEscapes.cursorUp());
-        this.writeAll(ansiEscapes.eraseLine);
-
-        prompt += ': ';
-        if (selectedOptions.size > 0) {
-            prompt +=
-            Array.from(selectedOptions, (key) => options[key].label).join(', ');
-        } else {
-          prompt += '<dim>none</dim>';
-        }
-        this.logAll(prompt);
-
-        resolve();
-      };
-
-      onkeypress = (chunk: Buffer, key: {
-        name: string;
-        ctrl: boolean;
-      }) => {
-        switch (key.name) {
-          case 'up':
-            activeOption--;
-            break;
-
-          case 'down':
-            activeOption++;
-            break;
-
-          case 'space':
-            if (!radio) {
-              const optionName = optionNames[activeOption];
-              if (selectedOptions.has(optionName)) {
-                selectedOptions.delete(optionName);
-              } else {
-                selectedOptions.add(optionName);
-              }
-            }
-            break;
-
-          case 'c':
-            if (key.ctrl) {
-              this.forceSpacer();
-              this.warn('Cancelled by user');
-              process.exit(1);
-            }
-            return;
-
-          case 'escape':
-            this.forceSpacer();
-            this.warn('Cancelled by user');
-            process.exit(1);
-            return;
-
-          case 'return':
-            finish();
-            return;
-
-          default:
-            return;
-        }
-
-        boundActive();
-        cleanup();
-        render();
-      };
-
-      stdin.addListener('keypress', onkeypress);
-    });
-
-    if (onkeypress !== undefined) {
-      stdin.removeListener('keypress', onkeypress);
-    }
-
-    if (stdin.isTTY && stdin.setRawMode !== undefined) {
-      stdin.setRawMode(false);
-    }
-
-    stdin.pause();
-
-    return selectedOptions;
+  async select<Options extends SelectOptions>(
+    message: string,
+    args: SelectArguments<Options>,
+  ): Promise<Set<keyof Options>> {
+    return select(this, message, args);
   }
 
   //# Control
@@ -791,13 +627,13 @@ export default class Reporter {
   //# VISUALISATION
   table(head: Array<string>, rawBody: Array<Array<string | number>>) {
     // Format the head, just treat it like another row
-    head = head.map((field: string): string => markupTag('emphasis', markupTag(
-      'underline',
-      field,
-    )));
+    head = head.map((field: string): string => markupTag('emphasis', field));
 
     // Humanize all number fields
-    const rows: Array<Array<string>> = [head];
+    const rows: Array<Array<string>> = [];
+    if (head.length > 0) {
+      rows.push(head);
+    }
     for (const row of rawBody) {
       rows.push(row.map((field) => {
         if (typeof field === 'number') {
@@ -808,25 +644,37 @@ export default class Reporter {
       }));
     }
 
-    // Get column widths
-    const cols: Array<number> = [];
-    for (let i = 0; i < head.length; i++) {
-      const widths = rows.map((row): number => stripAnsi(row[i]).length);
-      cols[i] = Math.max(...widths);
-    }
+    // Get the max number of columns for a row
+    const columnCount = Math.max(...rows.map((columns) => columns.length));
 
-    // Format all rows
-    const builtRows = rows.map((row): string => {
-      for (let i = 0; i < row.length; i++) {
-        const field = row[i];
-        const padding = cols[i] - stripAnsi(field).length;
-
-        row[i] = field + ' '.repeat(padding);
+    for (const stream of this.getStreams(false)) {
+      // Get column widths
+      const cols: Array<number> = [];
+      for (let i = 0; i < columnCount; i++) {
+        const widths = rows.map((row): number => {
+          const str = row[i];
+          if (str === undefined) {
+            // Could be an excessive column
+            return 0;
+          } else {
+            return this.markupifyLength(stream, str);
+          }
+        });
+        cols[i] = Math.max(...widths);
       }
-      return row.join(' ');
-    });
 
-    this.logAll(builtRows.join('\n'));
+      // Format all rows
+      const builtRows = rows.map((row): string => {
+        for (let i = 0; i < row.length; i++) {
+          const field = row[i];
+          const padding = cols[i] - this.markupifyLength(stream, field);
+          row[i] = field + ' '.repeat(padding);
+        }
+        return row.join(' ');
+      });
+
+      this.logOne(stream, builtRows.join('\n'));
+    }
   }
 
   verboseInspect(val: unknown) {
@@ -836,6 +684,10 @@ export default class Reporter {
   }
 
   inspect(value: unknown) {
+    if (!this.isEnabled(false)) {
+      return;
+    }
+
     let formatted = value;
 
     if (typeof formatted !== 'number' && typeof formatted !== 'string') {
@@ -883,7 +735,7 @@ export default class Reporter {
     return Date.now() - this.startTime;
   }
 
-  clear() {
+  clearScreen() {
     for (const stream of this.getStreams(false)) {
       if (stream.format === 'ansi') {
         stream.write(ansiEscapes.clearScreen);
@@ -922,7 +774,10 @@ export default class Reporter {
       const prefix = this.markupify(stream, text === undefined
         ? ''
         : ` ${text} `);
-      const prefixLength = this.indentString.length + stripAnsi(prefix).length;
+      const prefixLength = this.indentString.length + this.markupifyLength(
+        stream,
+        prefix,
+      );
       const barLength = Math.max(0, stream.columns - prefixLength);
       this.logOneNoMarkup(stream, prefix + '\u2501'.repeat(barLength));
     }
@@ -991,23 +846,44 @@ export default class Reporter {
 
   //# LOG
   stripMarkup(str: string) {
-    return stripMarkupTags(str, this.markupOptions);
+    return markupToPlainText(str, this.markupOptions);
   }
 
-  markupify(stream: ReporterStream, str: string): string {
+  markupifyLength(stream: ReporterStream, str: string): number {
+    const markup = this.markupify(stream, str);
+
     if (stream.format === 'ansi') {
-      return markupToAnsi(str, this.markupOptions);
-    } else if (stream.format === 'html') {
-      // TODO
-      return stripMarkupTags(str);
-    } else {
-      return stripMarkupTags(str);
+      return stripAnsi(markup).length;
+    }
+
+    // TODO html
+    return markup.length;
+  }
+
+  markupify(stream: ReporterStreamMeta, str: string): string {
+    switch (stream.format) {
+      case 'ansi':
+        return markupToAnsi(str, this.markupOptions);
+
+      case 'html':
+      case 'none':
+        // TODO
+        return markupToPlainText(str);
+
+      case 'markup':
+        return str;
     }
   }
 
   logAll(tty: string, opts: LogOptions = {}) {
     for (const stream of this.getStreams(opts.stderr)) {
       this.logOne(stream, tty, opts);
+    }
+  }
+
+  logAllNoMarkup(tty: string, opts: LogOptions = {}) {
+    for (const stream of this.getStreams(opts.stderr)) {
+      this.logOneNoMarkup(stream, tty, opts);
     }
   }
 
@@ -1036,20 +912,31 @@ export default class Reporter {
     args: Array<unknown>,
     opts: LogCategoryOptions,
   ) {
-    const prefix = markupTag('emphasis', markupTag(
-      opts.markupTag,
-        this.getMessagePrefix() +
-        opts.prefix,
-    ));
+    if (!this.isEnabled(opts.stderr)) {
+      return;
+    }
+
     const inner = markupTag(opts.markupTag, rawInner);
-    const suffix = opts.suffix === undefined
+    const unicodeSuffix = opts.unicodeSuffix === undefined
       ? ''
-      : markupTag('emphasis', markupTag(opts.markupTag, opts.suffix));
+      : markupTag('emphasis', markupTag(opts.markupTag, opts.unicodeSuffix));
 
     for (const stream of this.getStreams(opts.stderr)) {
+      // Format the prefix, selecting it depending on if we're a unicode stream
+      const prefixInner = stream.unicode ? opts.unicodePrefix : opts.rawPrefix;
+      const prefix = markupTag('emphasis', markupTag(
+        opts.markupTag,
+          this.getMessagePrefix() +
+          prefixInner,
+      ));
+
       const prefixMarkup = this.markupify(stream, prefix);
       const innerMarkup = this.markupify(stream, inner);
-      const suffixMarkup = this.markupify(stream, suffix);
+
+      // Ignore suffix unless we're a unicode stream
+      const suffixMarkup = stream.unicode
+        ? this.markupify(stream, unicodeSuffix)
+        : '';
 
       // Format with string-markup, we only do the first message rather than the interpolated string so you can pass in any data and not have to worry about escaping it
       const formatted = prefixMarkup + innerMarkup + suffixMarkup;
@@ -1075,7 +962,8 @@ export default class Reporter {
 
   success(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
-      prefix: '\u2714 ',
+      unicodePrefix: '\u2714 ',
+      rawPrefix: '\u221a ',
       markupTag: 'green',
     });
   }
@@ -1083,7 +971,8 @@ export default class Reporter {
   error(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
       markupTag: 'red',
-      prefix: '\u2716 ',
+      unicodePrefix: '\u2716 ',
+      rawPrefix: '\xd7 ',
       stderr: true,
     });
   }
@@ -1094,15 +983,17 @@ export default class Reporter {
 
   info(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
-      prefix: '\u2139 ',
+      unicodePrefix: '\u2139 ',
+      rawPrefix: 'i ',
       markupTag: 'blue',
     });
   }
 
   warn(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
-      prefix: '\u26a0 ',
-      suffix: ' \u26a0',
+      unicodePrefix: '\u26a0 ',
+      rawPrefix: '! ',
+      unicodeSuffix: ' \u26a0',
       markupTag: 'yellow',
       stderr: true,
     });
@@ -1116,7 +1007,8 @@ export default class Reporter {
 
   verboseForce(msg: string, ...args: Array<unknown>) {
     this.logAllWithCategory(msg, args, {
-      prefix: '\u26a1 ',
+      unicodePrefix: '\u26a1 ',
+      rawPrefix: '* ',
       markupTag: 'brightBlack',
     });
   }
@@ -1260,8 +1152,7 @@ export default class Reporter {
         });
       },
 
-      setTotal: (total: number,
-      approximate: boolean = false) => {
+      setTotal: (total: number, approximate: boolean = false) => {
         dispatch({
           type: 'PROGRESS_SET_TOTAL',
           total,

@@ -6,7 +6,7 @@
  */
 
 import {compareTwoStrings, orderBySimilarity} from './orderBySimilarity';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 test('compareTwoStrings', (t) => {
   const testData = [

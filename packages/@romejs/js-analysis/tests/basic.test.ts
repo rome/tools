@@ -7,7 +7,7 @@
 
 import {Diagnostics} from '@romejs/diagnostics';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import test from '@romejs/test';
+import {test} from 'rome';
 import {check} from '@romejs/js-analysis';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';

@@ -6,31 +6,52 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {createMasterCommand, commandCategories} from '../../commands';
-
+import {createMasterCommand} from '../commands';
+import {commandCategories} from '../../common/commands';
 import {createUnknownFilePath} from '@romejs/path';
+import {Consumer} from '@romejs/consume';
 
-export default createMasterCommand({
-  category: commandCategories.INTERNAL,
-  description: 'TODO',
+type Flags = {
+  allowDiagnostics: boolean;
+};
 
-  async default(req: MasterRequest): Promise<undefined | string> {
-    const {reporter, master} = req;
-    const {args} = req.query;
-    req.expectArgumentLength(1);
+export default createMasterCommand(
+  {
+    category: commandCategories.INTERNAL,
+    description: 'TODO',
+    usage: '',
+    examples: [],
 
-    const filename = await master.resolver.resolveEntryAssertPath({
-      ...req.getResolverOptionsFromFlags(),
-      source: createUnknownFilePath(args[0]),
-    }, {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
+    defineFlags(c: Consumer): Flags {
+      return {
+        allowDiagnostics: c.get('allowDiagnostics').asBoolean(false),
+      };
+    },
 
-    const res = await req.requestWorkerFormat(filename);
-    if (res === undefined) {
-      reporter.error('No formatter for this file');
-      return undefined;
-    } else {
-      reporter.writeAll(res.formatted);
-      return res.formatted;
-    }
+    async callback(
+      req: MasterRequest,
+      flags: Flags,
+    ): Promise<undefined | string> {
+      const {reporter, master} = req;
+      const {args} = req.query;
+      req.expectArgumentLength(1);
+
+      const filename = await master.resolver.resolveEntryAssertPath({
+        ...req.getResolverOptionsFromFlags(),
+        source: createUnknownFilePath(args[0]),
+      }, {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
+
+      const res = await req.requestWorkerFormat(filename, {
+        allowParserDiagnostics: flags.allowDiagnostics,
+      });
+
+      if (res === undefined) {
+        reporter.error('No formatter for this file');
+        return undefined;
+      } else {
+        reporter.writeAll(res.formatted);
+        return res.formatted;
+      }
+    },
   },
-});
+);

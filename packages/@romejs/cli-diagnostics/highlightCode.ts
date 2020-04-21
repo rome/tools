@@ -30,13 +30,13 @@ export default function highlightCode(opts: AnsiHighlightOptions): string {
 
   if (opts.language === 'js') {
     // js-parser does not accept an "unknown" sourceType
-    return ansiHighlightJS(opts.input, opts.sourceType === undefined ||
+    return highlightJS(opts.input, opts.sourceType === undefined ||
         opts.sourceType ===
         'unknown' ? 'script' : opts.sourceType);
   }
 
   if (opts.language === 'json') {
-    return ansiHighlightJSON(opts.path, opts.input);
+    return highlightJSON(opts.path, opts.input);
   }
 
   return escapeMarkup(opts.input);
@@ -61,7 +61,7 @@ function reduce<
     let value = input.slice(start, end);
 
     // Add on text between tokens
-    buff += input.slice(prevEnd, start);
+    buff += escapeMarkup(input.slice(prevEnd, start));
     prevEnd = end;
 
     // We need to break up the token text into lines, so that we can easily split the highlighted newlines and have the ansi codes be unbroken
@@ -81,7 +81,7 @@ function invalidHighlight(line: string): string {
   return markupTag('emphasis', markupTag('bgRed', line));
 }
 
-function ansiHighlightJSON(path: UnknownFilePath, input: string): string {
+function highlightJSON(path: UnknownFilePath, input: string): string {
   const tokens = tokenizeJSON({
     input,
     // Wont be used anywhere but activates JSON extensions if necessary
@@ -137,7 +137,7 @@ function ansiHighlightJSON(path: UnknownFilePath, input: string): string {
   });
 }
 
-function ansiHighlightJS(input: string, sourceType: ConstSourceType): string {
+function highlightJS(input: string, sourceType: ConstSourceType): string {
   const tokens = tokenizeJS(input, {
     sourceType,
     // js-parser requires a filename. Doesn't really matter since we'll never be producing an AST or diagnostics

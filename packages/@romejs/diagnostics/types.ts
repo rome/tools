@@ -39,6 +39,7 @@ export type DiagnosticFilterWithTest = DiagnosticFilter & {
 export type DiagnosticLocation = {
   sourceText?: string;
   mtime?: number;
+  marker?: string;
   language?: DiagnosticLanguage;
   sourceType?: DiagnosticSourceType;
   filename?: string;
@@ -60,20 +61,25 @@ export type DiagnosticSourceType = 'unknown' | ConstSourceType;
 export type Diagnostic = {
   description: DiagnosticDescription;
   location: DiagnosticLocation;
+  fixable?: boolean;
   label?: string;
   origins?: Array<DiagnosticOrigin>;
   dependencies?: Array<{
     filename: string;
     mtime: number;
   }>;
-  marker?: string;
 };
 
 export type Diagnostics = Array<Diagnostic>;
 
 export type DiagnosticDescription = {
-  fixable?: boolean;
   category: DiagnosticCategory;
+  message: DiagnosticBlessedMessage;
+  advice?: DiagnosticAdvice;
+};
+
+export type DiagnosticDescriptionOptionalCategory = {
+  category?: DiagnosticCategory;
   message: DiagnosticBlessedMessage;
   advice?: DiagnosticAdvice;
 };
@@ -129,7 +135,6 @@ export type DiagnosticAdviceCode = {
 export type DiagnosticAdviceFrame = {
   type: 'frame';
   location: DiagnosticLocation;
-  marker?: string;
 };
 
 export type DiagnosticAdviceDiff = {

@@ -16,12 +16,11 @@ export default {
     const newScope = scope.fork('block', node);
     if (node.param !== undefined) {
       for (const id of getBindingIdentifiers(node.param)) {
-        // TODO maybe add a `catch` binding type?
         newScope.addBinding(new LetBinding({
           node: id,
           name: id.name,
           scope: newScope,
-        }));
+        }, 'catch'));
       }
     }
     return newScope;

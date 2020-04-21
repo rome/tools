@@ -76,12 +76,11 @@ export default class SnapshotManager {
     }
 
     const file = await readFileText(snapshotFilename);
-    this.raw = file;
-
     const parser = createSnapshotParser({
       path: snapshotFilename,
       input: file,
     });
+    this.raw = parser.input;
 
     const nodes = parser.parse();
 

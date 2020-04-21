@@ -68,11 +68,12 @@ export default function BinaryExpression(node: AnyNode, scope: Scope) {
     case '<':
     case '<=':
     case '>':
-    case '>=':
+    case '>=': {
       const num = new NumericT(scope, undefined);
       new ExhaustiveT(scope, node, left, num);
       new ExhaustiveT(scope, node, right, num);
       break;
+    }
   }
 
   // Refinements

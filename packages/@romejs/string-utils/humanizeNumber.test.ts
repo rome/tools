@@ -6,7 +6,7 @@
  */
 
 import {humanizeNumber} from './humanizeNumber';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 test('humanizeNumber', (t) => {
   t.is(humanizeNumber(0), '0');

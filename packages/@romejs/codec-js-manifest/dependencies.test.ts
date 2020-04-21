@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {parseDependencyPattern} from './dependencies';
 import {consumeUnknown} from '@romejs/consume';
 

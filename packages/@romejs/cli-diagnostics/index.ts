@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from '@romejs/diagnostics';
+import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {DiagnosticsPrinterOptions} from './types';
 import {Reporter, ReporterStream} from '@romejs/cli-reporter';
 import DiagnosticsPrinter from './DiagnosticsPrinter';
@@ -21,52 +21,42 @@ export * from './constants';
 
 export * from './types';
 
-// Simple wrappers around DiagnosticsPrinter
-export async function printDiagnostics(
-  diagnostics: Diagnostics,
-  opts: DiagnosticsPrinterOptions,
-): Promise<DiagnosticsPrinter> {
-  const printer = new DiagnosticsPrinter(opts);
-  printer.addDiagnostics(diagnostics);
-  await printer.print();
-  return printer;
-}
-
-export function printDiagnosticsSync(
-  diagnostics: Diagnostics,
-  opts: DiagnosticsPrinterOptions,
-): DiagnosticsPrinter {
-  const printer = new DiagnosticsPrinter(opts);
-  printer.addDiagnostics(diagnostics);
+export function printDiagnostics({
+  diagnostics,
+  suppressions,
+  printerOptions,
+  excludeFooter,
+}: {
+  diagnostics: Diagnostics;
+  suppressions: DiagnosticSuppressions;
+  printerOptions: DiagnosticsPrinterOptions;
+  excludeFooter?: boolean;
+}): DiagnosticsPrinter {
+  const printer = new DiagnosticsPrinter(printerOptions);
+  printer.processor.addDiagnostics(diagnostics);
+  printer.processor.addSuppressions(suppressions);
   printer.print();
+  if (!excludeFooter) {
+    printer.footer();
+  }
   return printer;
 }
 
-export function printDiagnosticsToString(
-  diagnostics: Diagnostics,
-  opts: Omit<DiagnosticsPrinterOptions, 'reporter'> = {},
-  format: ReporterStream['format'] = 'none',
-): string {
-  let buff = '';
-
-  const reporter = new Reporter({
-    streams: [
-      {
-        type: 'all',
-        format,
-        columns: 400,
-        write(chunk) {
-          buff += chunk;
-        },
-      },
-    ],
-  });
-
-  const printer = new DiagnosticsPrinter({
+export function printDiagnosticsToString(opts: {
+  diagnostics: Diagnostics;
+  suppressions: DiagnosticSuppressions;
+  printerOptions?: DiagnosticsPrinterOptions;
+  format?: ReporterStream['format'];
+  excludeFooter?: boolean;
+}): string {
+  const reporter = new Reporter();
+  const stream = reporter.attachCaptureStream(opts.format);
+  printDiagnostics({
     ...opts,
-    reporter,
+    printerOptions: {
+      reporter,
+      ...opts.printerOptions,
+    },
   });
-  printer.addDiagnostics(diagnostics);
-  printer.print();
-  return buff;
+  return stream.read();
 }

@@ -5,12 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
 test('enforce single var declarator', async (t) => {
-  t.snapshot(await testLint(`let foo, bar;`, true));
+  // Autofix
+  await testLint(t, `let foo, bar;`, {
+    category: 'lint/singleVarDeclarator',
+    format: true,
+  });
 
   // Ignores loop heads
-  t.snapshot(await testLint(`for (let i = 0, x = 1; i < arr.length; i++) {}`));
+  await testLint(t, `for (let i = 0, x = 1; i < arr.length; i++) {}`, {
+    category: 'lint/singleVarDeclarator',
+  });
 });

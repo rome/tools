@@ -16,10 +16,16 @@ import {
 } from '@romejs/path';
 import {readFileTextSync, existsSync} from '@romejs/fs';
 
-export type UserConfig = {cachePath: AbsoluteFilePath};
+export type UserConfig = {
+  runtimeModulesPath: AbsoluteFilePath;
+  cachePath: AbsoluteFilePath;
+};
+
+const VERSION_PATH = TEMP_PATH.append(`rome-${VERSION}`);
 
 export const DEFAULT_USER_CONFIG: UserConfig = {
-  cachePath: TEMP_PATH.append(`rome-${VERSION}`),
+  runtimeModulesPath: VERSION_PATH.append('runtime'),
+  cachePath: VERSION_PATH.append('cache'),
 };
 
 export function loadUserConfig(): UserConfig {
@@ -44,6 +50,12 @@ export function loadUserConfig(): UserConfig {
       userConfig.cachePath = createAbsoluteFilePath(
         consumer.get('cachePath').asString(),
       );
+    }
+
+    if (consumer.has('runtimeModulesPath')) {
+      userConfig.runtimeModulesPath = createAbsoluteFilePath(consumer.get(
+        'runtimeModulesPath',
+      ).asString());
     }
 
     consumer.enforceUsedProperties('config property');

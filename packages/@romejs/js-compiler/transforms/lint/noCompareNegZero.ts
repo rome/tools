@@ -25,12 +25,16 @@ export default {
     if (node.type === 'BinaryExpression' && OPERATORS_TO_CHECK.includes(
         node.operator,
       ) && (isNegZero(node.left) || isNegZero(node.right))) {
-      const {suppressed} = path.context.addNodeDiagnostic(
-        node,
-        descriptions.LINT.NO_COMPARE_NEG_ZERO(node.operator),
-      );
-      if (!suppressed && node.operator === '===') {
-        return template.expression`Object.is(${node.left}, ${node.right})`;
+      if (node.operator === '===') {
+        return path.context.addFixableDiagnostic({
+          old: node,
+          fixed: template.expression`Object.is(${node.left}, ${node.right})`,
+        }, descriptions.LINT.NO_COMPARE_NEG_ZERO(node.operator));
+      } else {
+        path.context.addNodeDiagnostic(
+          node,
+          descriptions.LINT.NO_COMPARE_NEG_ZERO(node.operator),
+        );
       }
     }
 

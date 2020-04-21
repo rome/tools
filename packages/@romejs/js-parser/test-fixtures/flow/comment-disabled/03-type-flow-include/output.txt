@@ -8,6 +8,8 @@ Program {
   interpreter: undefined
   mtime: undefined
   sourceType: 'module'
+  trailingComments: Array []
+  innerComments: Array ['0']
   syntax: Array [
     'jsx'
     'flow'
@@ -27,6 +29,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: ' flow-include\ntype Foo = {\n  foo: number,\n  bar: boolean,\n  baz: string\n};\n'
       loc: Object {
         filename: 'input.js'

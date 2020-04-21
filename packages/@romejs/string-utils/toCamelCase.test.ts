@@ -6,7 +6,7 @@
  */
 
 import {toCamelCase} from './toCamelCase';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 test('toCamelCase', (t) => {
   const testCases = [

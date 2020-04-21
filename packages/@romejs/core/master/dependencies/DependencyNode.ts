@@ -73,6 +73,11 @@ type DependencyNodeDependency = {
   path: AbsoluteFilePath;
 };
 
+type ResolveImportsResult = {
+  diagnostics: Diagnostics;
+  resolved: BundleCompileResolvedImports;
+};
+
 export default class DependencyNode {
   constructor(
     graph: DependencyGraph,
@@ -110,6 +115,7 @@ export default class DependencyNode {
   all: boolean;
   usedAsync: boolean;
   handler: undefined | ExtensionHandler;
+  resolveImportsCache: undefined | ResolveImportsResult;
 
   getMtime(): number {
     return this.graph.master.memoryFs.getMtime(this.path);
@@ -245,11 +251,12 @@ export default class DependencyNode {
       }
 
       switch (exp.type) {
-        case 'local':
+        case 'local': {
           names.add(exp.name);
           break;
+        }
 
-        case 'external':
+        case 'external': {
           const resolved = this.getNodeFromRelativeDependency(exp.source).resolveImport(
             exp.imported,
             exp.loc,
@@ -258,12 +265,14 @@ export default class DependencyNode {
             names.add(exp.exported);
           }
           break;
+        }
 
-        case 'externalNamespace':
+        case 'externalNamespace': {
           names.add(exp.exported);
           break;
+        }
 
-        case 'externalAll':
+        case 'externalAll': {
           names = new Set([
             ...names,
             ...this.getNodeFromRelativeDependency(exp.source).getExportedNames(
@@ -272,6 +281,7 @@ export default class DependencyNode {
             ),
           ]);
           break;
+        }
       }
     }
 
@@ -361,10 +371,12 @@ export default class DependencyNode {
     };
   }
 
-  resolveImports(): {
-    diagnostics: Diagnostics;
-    resolved: BundleCompileResolvedImports;
-  } {
+  resolveImports(): ResolveImportsResult {
+    const cached = this.resolveImportsCache;
+    if (cached !== undefined) {
+      return cached;
+    }
+
     const {graph} = this;
 
     // Build up a map of any forwarded imports
@@ -421,10 +433,12 @@ export default class DependencyNode {
       }
     }
 
-    return {
+    const result: ResolveImportsResult = {
       resolved: resolvedImports,
       diagnostics,
     };
+    this.resolveImportsCache = result;
+    return result;
   }
 
   resolveImport(

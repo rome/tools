@@ -6,51 +6,49 @@
 
 ### `0`
 
-```javascript
-Object {
-  src: '/foo  bar/'
-  suppressions: Array []
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'lint'}]
-      description: Object {
-        category: 'lint/noMultipleSpacesInRegularExpressionLiterals'
-        fixable: true
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unclear multiple spaces in regular expression'}
-        advice: Array [
-          log {
-            category: 'info'
-            message: 'It\'s hard to visually count the amount of spaces, it\'s clearer if you use a quantifier instead. eg / {3}/'
-          }
-        ]
-      }
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-        start: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-      }
-    }
-  ]
-}
+```
+
+ unknown:1:4 lint/noMultipleSpacesInRegularExpressionLiterals FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unclear multiple spaces in regular expression
+
+    /foo  bar/
+        ^ 
+
+  ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {3}/
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```
 
 ### `1`
 
-```javascript
-Object {
-  diagnostics: Array []
-  src: '/foo {2}bar/'
-  suppressions: Array []
-}
+```
+✔ No known problems!
+
+```
+
+## `format disabled in project config should not regenerate the file`
+
+```
+✔ No known problems!
+
+```
+
+## `format enabled in project config should result in regenerated file`
+
+### `0`
+
+```
+✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
+
 ```

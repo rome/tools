@@ -70,8 +70,17 @@ export default class ProgressBase implements ReporterProgress {
     }
   }
 
+  getText(): undefined | string {
+    const {text} = this;
+    if (text === undefined || text === '') {
+      return undefined;
+    } else {
+      return this.reporter.stripMarkup(text);
+    }
+  }
+
   setText(text: string) {
-    this.text = this.reporter.stripMarkup(text);
+    this.text = text;
     this.queueRender();
   }
 

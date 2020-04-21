@@ -26,6 +26,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' This looks A LOT like an async arrow function, but it isn\'t because'
       loc: Object {
         filename: 'input.js'
@@ -42,6 +43,7 @@ Program {
       }
     }
     CommentLine {
+      id: '1'
       value: ' T + U isn\'t a valid type parameter.'
       loc: Object {
         filename: 'input.js'
@@ -60,6 +62,10 @@ Program {
   ]
   body: Array [
     ExpressionStatement {
+      trailingComments: Array [
+        '0'
+        '1'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -73,40 +79,6 @@ Program {
           line: 1
         }
       }
-      trailingComments: Array [
-        CommentLine {
-          value: ' This looks A LOT like an async arrow function, but it isn\'t because'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 70
-              index: 95
-              line: 3
-            }
-            start: Object {
-              column: 0
-              index: 25
-              line: 3
-            }
-          }
-        }
-        CommentLine {
-          value: ' T + U isn\'t a valid type parameter.'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 38
-              index: 134
-              line: 4
-            }
-            start: Object {
-              column: 0
-              index: 96
-              line: 4
-            }
-          }
-        }
-      ]
       expression: BinaryExpression {
         operator: '>'
         loc: Object {
@@ -254,6 +226,10 @@ Program {
       }
     }
     ExpressionStatement {
+      leadingComments: Array [
+        '0'
+        '1'
+      ]
       loc: Object {
         filename: 'input.js'
         end: Object {
@@ -267,40 +243,6 @@ Program {
           line: 5
         }
       }
-      leadingComments: Array [
-        CommentLine {
-          value: ' This looks A LOT like an async arrow function, but it isn\'t because'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 70
-              index: 95
-              line: 3
-            }
-            start: Object {
-              column: 0
-              index: 25
-              line: 3
-            }
-          }
-        }
-        CommentLine {
-          value: ' T + U isn\'t a valid type parameter.'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 38
-              index: 134
-              line: 4
-            }
-            start: Object {
-              column: 0
-              index: 96
-              line: 4
-            }
-          }
-        }
-      ]
       expression: FlowTypeCastExpression {
         loc: Object {
           filename: 'input.js'

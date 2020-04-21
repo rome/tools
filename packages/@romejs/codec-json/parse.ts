@@ -115,7 +115,11 @@ export default createParser(
     void
   > {
     constructor(opts: JSONParserOptions) {
-      super(opts, 'parse/json');
+      super({
+        ...opts,
+        retainCarriageReturn: true,
+      }, 'parse/json');
+
       this.options = opts;
       this.ignoreWhitespaceTokens = true;
 
@@ -201,7 +205,7 @@ export default createParser(
 
       // Single character token starters
       switch (char) {
-        case '"':
+        case '"': {
           const [value] = this.readInputFrom(inc(index), isStringValueChar);
 
           // Check for closed string (index is the current token index + string length + closing quote + 1 for the end char)
@@ -234,6 +238,7 @@ export default createParser(
           });
 
           return this.finishValueToken('String', unescaped, end);
+        }
 
         case "'":
           throw this.unexpected({
@@ -681,9 +686,10 @@ export default createParser(
       const token = this.getToken();
 
       switch (token.type) {
-        case 'String':
+        case 'String': {
           this.nextToken();
           return token.value;
+        }
 
         case 'Word':
           if (this.hasExtensions) {
@@ -734,9 +740,10 @@ export default createParser(
         case 'BracketOpen':
           return this.parseArray();
 
-        case 'BraceOpen':
+        case 'BraceOpen': {
           this.nextToken();
           return this.parseObject();
+        }
 
         default:
           throw this.unexpected();
@@ -781,6 +788,11 @@ export default createParser(
           return {
             context: {
               category: this.consumeDiagnosticCategory,
+
+              normalizeKey(path) {
+                return getContext().normalizeKey(path);
+              },
+
               getOriginalValue(path) {
                 return getContext().getOriginalValue(path);
               },
@@ -827,6 +839,8 @@ export default createParser(
 
       const context: Required<ConsumeContext> = {
         category: this.consumeDiagnosticCategory,
+
+        normalizeKey: (key) => key,
 
         getDiagnosticPointer: (
           keys: ConsumePath,

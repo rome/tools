@@ -6,10 +6,14 @@
  */
 
 // Add imports in alphabetical order.
+import camelCase from './camelCase';
+import caseSingleStatement from './caseSingleStatement';
 import defaultExportSameBasename from './defaultExportSameBasename';
+import doubleEquals from './doubleEquals';
 import duplicateImportSource from './duplicateImportSource';
 import emptyBlocks from './emptyBlocks';
 import getterReturn from './getterReturn';
+import inconsiderateLanguage from './inconsiderateLanguage';
 import noArguments from './noArguments';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
 import noCompareNegZero from './noCompareNegZero';
@@ -27,26 +31,32 @@ import noFunctionAssign from './noFunctionAssign';
 import noImportAssign from './noImportAssign';
 import noLabelVar from './noLabelVar';
 import noMultipleSpacesInRegularExpressionLiterals from './noMultipleSpacesInRegularExpressionLiterals';
+import noReferenceToNonExistingGroup from './noReferenceToNonExistingGroup';
+import noSetterReturn from './noSetterReturn';
 import noShadowRestrictedNames from './noShadowRestrictedNames';
+import noShorthandArrayType from './noShorthandArrayType';
 import noTemplateCurlyInString from './noTemplateCurlyInString';
 import noUnsafeFinally from './noUnsafeFinally';
+import noCatchAssign from './noCatchAssign';
 import noVar from './noVar';
 import preferFunctionDeclarations from './preferFunctionDeclarations';
 import preferTemplate from './preferTemplate';
+import singleVarDeclarator from './singleVarDeclarator';
 import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
-import singleVarDeclarator from './singleVarDeclarator';
-import noReferenceToNonExistingGroup from './noReferenceToNonExistingGroup';
-import noShorthandArrayType from './noShorthandArrayType';
 
 // Add transforms in alphabetical order.
 export const lintTransforms = [
+  camelCase,
   defaultExportSameBasename,
   duplicateImportSource,
+  caseSingleStatement,
+  doubleEquals,
   emptyBlocks,
   getterReturn,
+  inconsiderateLanguage,
   noArguments,
   noAsyncPromiseExecutor,
   noCompareNegZero,
@@ -63,19 +73,20 @@ export const lintTransforms = [
   noFunctionAssign,
   noImportAssign,
   noLabelVar,
-  noReferenceToNonExistingGroup,
   noMultipleSpacesInRegularExpressionLiterals,
+  noReferenceToNonExistingGroup,
+  noSetterReturn,
   noShadowRestrictedNames,
   noShorthandArrayType,
   noTemplateCurlyInString,
   noUnsafeFinally,
+  noCatchAssign,
   noVar,
   preferFunctionDeclarations,
   preferTemplate,
+  singleVarDeclarator,
   sparseArray,
   undeclaredVariables,
   unsafeNegation,
   unusedVariables,
-  noDuplicateGroupNamesInRegularExpressions,
-  singleVarDeclarator,
 ];

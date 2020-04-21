@@ -71,8 +71,8 @@ Program {
             line: 1
           }
           start: Object {
-            column: 0
-            index: 0
+            column: 13
+            index: 13
             line: 1
           }
         }
@@ -141,8 +141,8 @@ Program {
                   line: 1
                 }
                 start: Object {
-                  column: 18
-                  index: 18
+                  column: 32
+                  index: 32
                   line: 1
                 }
               }

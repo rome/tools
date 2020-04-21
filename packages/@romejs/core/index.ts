@@ -12,7 +12,7 @@ export {getFileHandler} from './common/fileHandlers';
 // API
 export {default as Client} from './client/Client';
 export {localCommands} from './client/commands';
-export {masterCommands} from './master/commands/index';
+export {masterCommands} from './master/commands';
 
 // Types
 export * from './common/types/platform';

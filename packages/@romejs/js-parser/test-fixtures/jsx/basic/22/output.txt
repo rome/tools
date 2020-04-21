@@ -25,6 +25,7 @@ Program {
   }
   comments: Array [
     CommentBlock {
+      id: '0'
       value: '* @jsx mdx '
       loc: Object {
         filename: 'input.mjs'
@@ -80,6 +81,7 @@ Program {
       defaultSpecifier: undefined
       importKind: undefined
       namespaceSpecifier: undefined
+      leadingComments: Array ['0']
       loc: Object {
         filename: 'input.mjs'
         end: Object {
@@ -109,24 +111,6 @@ Program {
           }
         }
       }
-      leadingComments: Array [
-        CommentBlock {
-          value: '* @jsx mdx '
-          loc: Object {
-            filename: 'input.mjs'
-            end: Object {
-              column: 15
-              index: 15
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      ]
       namedSpecifiers: Array [
         ImportSpecifier {
           leadingComments: undefined
@@ -261,8 +245,8 @@ Program {
               line: 4
             }
             start: Object {
-              column: 15
-              index: 68
+              column: 34
+              index: 87
               line: 4
             }
           }

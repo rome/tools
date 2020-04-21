@@ -5,21 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
-test('no shorthand array type', async (t) => {
-  // TypeScript
-  const ts = await testLint(`
-    let valid: Array<foo>;
-    let invalid = bar[];
-  `, true, 'module', ['ts']);
-  t.snapshot(ts);
+test(
+  'no shorthand array type',
+  async (t) => {
+    // TypeScript
+    await testLint(t, `
+        let valid: Array<foo>;
+        let invalid = bar[];
+      `, {category: 'lint/noShorthandArrayType', format: true, syntax: ['ts']});
 
-  // Flow
-  const flow = await testLint(`
-    let valid: Array<foo>;
-    let invalid = bar[];
-  `, true, 'module', ['flow']);
-  t.snapshot(flow);
-});
+    // Flow
+    await testLint(t, `
+        let valid: Array<foo>;
+        let invalid = bar[];
+      `, {category: 'lint/noShorthandArrayType', format: true, syntax: ['flow']});
+  },
+);

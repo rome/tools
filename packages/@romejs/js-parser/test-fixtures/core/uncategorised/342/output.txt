@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: 'bar'
       loc: Object {
         filename: 'input.js'
@@ -71,6 +72,7 @@ Program {
         }
         left: ReferenceIdentifier {
           name: 'foo'
+          trailingComments: Array ['0']
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -84,27 +86,10 @@ Program {
               line: 1
             }
           }
-          trailingComments: Array [
-            CommentLine {
-              value: 'bar'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-          ]
         }
         right: ReferenceIdentifier {
           name: 'baz'
+          leadingComments: Array ['0']
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -118,24 +103,6 @@ Program {
               line: 2
             }
           }
-          leadingComments: Array [
-            CommentLine {
-              value: 'bar'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-          ]
         }
       }
     }

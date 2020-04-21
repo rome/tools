@@ -23,6 +23,7 @@ Program {
   }
   comments: Array [
     CommentLine {
+      id: '0'
       value: ' actually put.'
       loc: Object {
         filename: 'input.ts'
@@ -166,6 +167,7 @@ Program {
                     body: Array []
                     directives: Array []
                     trailingComments: Array []
+                    innerComments: Array ['0']
                     loc: Object {
                       filename: 'input.ts'
                       end: Object {
@@ -179,24 +181,6 @@ Program {
                         line: 2
                       }
                     }
-                    innerComments: Array [
-                      CommentLine {
-                        value: ' actually put.'
-                        loc: Object {
-                          filename: 'input.ts'
-                          end: Object {
-                            column: 20
-                            index: 80
-                            line: 3
-                          }
-                          start: Object {
-                            column: 4
-                            index: 64
-                            line: 3
-                          }
-                        }
-                      }
-                    ]
                   }
                   head: FunctionHead {
                     async: false
@@ -214,8 +198,8 @@ Program {
                         line: 2
                       }
                       start: Object {
-                        column: 42
-                        index: 58
+                        column: 31
+                        index: 47
                         line: 2
                       }
                     }

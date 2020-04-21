@@ -28,6 +28,7 @@ export default function CallExpression(builder: Builder, node: AnyNode): Tokens 
   return [
     concat(tokens),
     operator('('),
+    ...builder.tokenizeInnerComments(node),
     builder.tokenizeCommaList(node.arguments, node, {
       trailing: true,
     }),

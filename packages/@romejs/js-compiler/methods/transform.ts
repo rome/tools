@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Program, program} from '@romejs/js-ast';
+import {Program} from '@romejs/js-ast';
 import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
 import {TransformRequest, TransformVisitors} from '../types';
-import {stageTransforms, stageOrder, hookVisitors} from '../transforms/index';
+import {stageTransforms, stageOrder} from '../transforms/index';
 import {Cache} from '@romejs/js-compiler';
-import Context from '../lib/Context';
+import CompilerContext from '../lib/CompilerContext';
 
 type TransformResult = {
   ast: Program;
@@ -53,7 +53,7 @@ export default async function transform(
     ast = prevStage.ast;
   }
 
-  const context = new Context({
+  const context = new CompilerContext({
     ast,
     project,
     options,
@@ -65,16 +65,16 @@ export default async function transform(
   const transformFactory = stageTransforms[stage];
   const transforms = transformFactory(project.config, options);
 
-  let visitors: TransformVisitors = [
-    ...hookVisitors,
-    ...(await context.normalizeTransforms(transforms)),
-  ];
+  let visitors: TransformVisitors = await context.normalizeTransforms(transforms);
 
-  const compiledAst = program.assert(context.reduce(ast, visitors));
+  const compiledAst = context.reduceRoot(ast, visitors);
 
   const res: TransformResult = {
     suppressions: context.suppressions,
-    diagnostics: [...prevStageDiagnostics, ...context.diagnostics],
+    diagnostics: [
+      ...prevStageDiagnostics,
+      ...context.diagnostics.getDiagnostics(),
+    ],
     cacheDependencies: [
       ...prevStageCacheDeps,
       ...context.getCacheDependencies(),

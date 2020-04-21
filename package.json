@@ -17,10 +17,10 @@
   },
   "romeLSPBin": "./scripts/vendor-rome",
   "scripts": {
-    "dev-rome": "./scripts/dev-rome",
-    "test": "./scripts/dev-rome test",
-    "lint": "./scripts/dev-rome lint",
-    "fix": "./scripts/dev-rome --fix"
+    "dev-rome": "node ./scripts/dev-rome",
+    "test": "node ./scripts/dev-rome test",
+    "lint": "node ./scripts/dev-rome lint",
+    "fix": "node ./scripts/dev-rome --fix"
   },
   "rome": {
     "root": true,
