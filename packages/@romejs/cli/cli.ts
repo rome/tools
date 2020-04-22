@@ -16,6 +16,7 @@ import {
   localCommands,
 } from '@romejs/core';
 import setProcessTitle from './utils/setProcessTitle';
+import {VERSION} from "./utils/getRomeVersion";
 import {parseCLIFlagsFromProcess} from '@romejs/cli-flags';
 import {
   createAbsoluteFilePath,
@@ -51,10 +52,10 @@ type CLIFlags = {
 
 export default async function cli() {
   setProcessTitle('cli');
-
   const p = parseCLIFlagsFromProcess({
     programName: 'rome',
     usage: '[command] [flags]',
+    version: `v${VERSION}`,
     defineFlags(c: Consumer): {
       cliFlags: CLIFlags;
       clientFlags: ClientFlags;
@@ -324,7 +325,6 @@ export default async function cli() {
     // We don't use the data result, so no point transporting it over the bridge
     noData: true,
   });
-
   await client.end();
 
   if (res.type === 'SUCCESS') {
