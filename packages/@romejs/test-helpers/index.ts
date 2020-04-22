@@ -7,15 +7,15 @@
 
 import {Consumer, consumeUnknown} from '@romejs/consume';
 import {consumeJSON} from '@romejs/codec-json';
-import {test, TestHelper, testOptions} from '@romejs-runtime/rome';
+import {TestHelper, test, testOptions} from '@romejs-runtime/rome';
 
 import {
   AbsoluteFilePath,
-  createAbsoluteFilePath,
   AbsoluteFilePathSet,
   UnknownFilePath,
+  createAbsoluteFilePath,
 } from '@romejs/path';
-import {readFileText, lstat, exists, readFile, readdir} from '@romejs/fs';
+import {exists, lstat, readFile, readFileText, readdir} from '@romejs/fs';
 
 const dirname = testOptions.dirname === undefined ? '' : testOptions.dirname;
 

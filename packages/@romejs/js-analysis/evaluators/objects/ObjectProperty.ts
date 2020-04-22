@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {ObjectProperty, objectProperty, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ObjectProperty, objectProperty} from '@romejs/js-ast';
 
 export default function ObjectProperty(node: AnyNode, scope: Scope) {
   node = objectProperty.assert(node);

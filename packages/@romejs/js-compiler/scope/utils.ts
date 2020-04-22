@@ -7,8 +7,8 @@
 
 import Scope from './Scope';
 import {
-  LetBinding,
   ArgumentsBinding,
+  LetBinding,
   REDUCE_SKIP_SUBTREE,
 } from '@romejs/js-compiler';
 import {getBindingIdentifiers, isFunctionNode} from '@romejs/js-ast-utils';

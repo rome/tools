@@ -7,7 +7,7 @@
 
 import Scope from '../Scope';
 import {FunctionBinding} from '@romejs/js-compiler';
-import {FunctionDeclaration, AnyNode} from '@romejs/js-ast';
+import {AnyNode, FunctionDeclaration} from '@romejs/js-ast';
 import {addFunctionBindings} from '../utils';
 
 export default {

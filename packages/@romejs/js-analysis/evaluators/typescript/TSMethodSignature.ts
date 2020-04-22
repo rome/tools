@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {TSMethodSignature, tsMethodSignature, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSMethodSignature, tsMethodSignature} from '@romejs/js-ast';
 
 export default function TSMethodSignature(node: AnyNode, scope: Scope) {
   node = tsMethodSignature.assert(node);

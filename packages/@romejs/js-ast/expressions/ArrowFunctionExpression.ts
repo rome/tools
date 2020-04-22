@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, FunctionHead} from '../index';
+import {FunctionHead, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 import {BlockStatement} from '../statements/BlockStatement';
 import {AnyExpression} from '../unions';

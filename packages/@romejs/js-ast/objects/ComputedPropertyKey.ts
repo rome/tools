@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, FlowVariance, AnyExpression} from '../index';
+import {AnyExpression, FlowVariance, JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type ComputedPropertyKey = JSNodeBase & {

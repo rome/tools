@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, concat} from '../../tokens';
-import {metaProperty, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, operator} from '../../tokens';
+import {AnyNode, metaProperty} from '@romejs/js-ast';
 
 export default function MetaProperty(builder: Builder, node: AnyNode): Tokens {
   node = metaProperty.assert(node);

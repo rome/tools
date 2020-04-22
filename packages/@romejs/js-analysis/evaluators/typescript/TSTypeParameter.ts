@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {TSTypeParameter, tsTypeParameter, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSTypeParameter, tsTypeParameter} from '@romejs/js-ast';
 
 export default function TSTypeParameter(node: AnyNode, scope: Scope) {
   node = tsTypeParameter.assert(node);

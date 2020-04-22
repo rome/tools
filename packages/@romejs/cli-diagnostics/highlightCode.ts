@@ -6,7 +6,7 @@
  */
 
 import {tokenizeJS} from '@romejs/js-parser';
-import {ob1Get0, Number0} from '@romejs/ob1';
+import {Number0, ob1Get0} from '@romejs/ob1';
 import {DiagnosticLanguage, DiagnosticSourceType} from '@romejs/diagnostics';
 import {ConstSourceType} from '@romejs/js-ast';
 import {tokenizeJSON} from '@romejs/codec-json';

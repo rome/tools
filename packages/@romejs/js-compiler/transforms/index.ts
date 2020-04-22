@@ -8,8 +8,8 @@
 import {ProjectConfig} from '@romejs/project';
 import {
   CompilerOptions,
-  TransformStageName,
   TransformStageFactories,
+  TransformStageName,
   TransformVisitors,
   Transforms,
 } from '../types';
@@ -35,8 +35,8 @@ import scopedRomeTransform from './compileForBundle/scopedRomeTransform';
 import asyncImportTransform from './compileForBundle/asyncImportTransform';
 import inlineEnv from './compileForBundle/inlineEnv';
 import {
-  variableInjectorVisitor,
   commentInjectorVisitor,
+  variableInjectorVisitor,
 } from './defaultHooks/index';
 
 export const stageOrder: Array<TransformStageName> = [

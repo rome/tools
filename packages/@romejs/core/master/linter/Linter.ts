@@ -5,26 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest, Master} from '@romejs/core';
+import {Master, MasterRequest} from '@romejs/core';
 import {LINTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
 import {
   DiagnosticLocation,
-  descriptions,
+  DiagnosticSuppressions,
   Diagnostics,
   DiagnosticsProcessor,
-  DiagnosticSuppressions,
+  descriptions,
 } from '@romejs/diagnostics';
 import {FileReference} from '@romejs/core/common/types/files';
 import {EventSubscription} from '@romejs/events';
 import {MasterRequestGetFilesOptions} from '../MasterRequest';
-import {AbsoluteFilePathSet, AbsoluteFilePathMap} from '@romejs/path';
+import {AbsoluteFilePathMap, AbsoluteFilePathSet} from '@romejs/path';
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import DependencyGraph from '../dependencies/DependencyGraph';
-import {ReporterProgressOptions, ReporterProgress} from '@romejs/cli-reporter';
+import {ReporterProgress, ReporterProgressOptions} from '@romejs/cli-reporter';
 import DependencyNode from '../dependencies/DependencyNode';
 import {
-  areAnalyzeDependencyResultsEqual,
   LintCompilerOptions,
+  areAnalyzeDependencyResultsEqual,
 } from '@romejs/js-compiler';
 import {markup} from '@romejs/string-markup';
 import WorkerQueue from '../WorkerQueue';

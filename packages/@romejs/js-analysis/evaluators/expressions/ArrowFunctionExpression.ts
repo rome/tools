@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope, FunctionScope} from '../../scopes';
+import {FunctionScope, Scope} from '../../scopes';
 import {
+  AnyNode,
   ArrowFunctionExpression,
   arrowFunctionExpression,
-  AnyNode,
 } from '@romejs/js-ast';
 import executeFunction from '../../utils/executeFunction';
 

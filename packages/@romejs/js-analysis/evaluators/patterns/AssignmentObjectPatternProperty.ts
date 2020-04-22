@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   AssignmentObjectPatternProperty,
   assignmentObjectPatternProperty,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function AssignmentObjectPatternProperty(node: AnyNode) {

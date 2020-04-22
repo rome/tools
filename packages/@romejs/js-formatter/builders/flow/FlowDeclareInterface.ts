@@ -6,11 +6,11 @@
  */
 
 import Builder from '../../Builder';
-import {word, space, Tokens} from '../../tokens';
+import {Tokens, space, word} from '../../tokens';
 import {
+  AnyNode,
   FlowDeclareInterface,
   flowDeclareInterface,
-  AnyNode,
 } from '@romejs/js-ast';
 import FlowInterfaceDeclaration from './FlowInterfaceDeclaration';
 

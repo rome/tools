@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {ObjectExpression, objectExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ObjectExpression, objectExpression} from '@romejs/js-ast';
 import ObjPropT from '../../types/ObjPropT';
 import ObjT from '../../types/ObjT';
 

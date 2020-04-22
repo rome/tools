@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {CallExpression, callExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, CallExpression, callExpression} from '@romejs/js-ast';
 import CallT from '../../types/CallT';
 
 export default function CallExpression(node: AnyNode, scope: Scope) {

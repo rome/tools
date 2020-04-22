@@ -5,27 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Worker, FileReference} from '@romejs/core';
+import {FileReference, Worker} from '@romejs/core';
 import {Program} from '@romejs/js-ast';
-import {Diagnostics, descriptions, catchDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics, catchDiagnostics, descriptions} from '@romejs/diagnostics';
 import {
-  TransformStageName,
   CompileResult,
   CompilerOptions,
+  TransformStageName,
   compile,
 } from '@romejs/js-compiler';
 import {
-  WorkerParseOptions,
   WorkerCompilerOptions,
   WorkerFormatResult,
-  WorkerLintResult,
   WorkerLintOptions,
+  WorkerLintResult,
+  WorkerParseOptions,
 } from '../common/bridges/WorkerBridge';
 import Logger from '../common/utils/Logger';
 import * as jsAnalysis from '@romejs/js-analysis';
 import {
-  getFileHandlerAssert,
   ExtensionLintResult,
+  getFileHandlerAssert,
 } from '../common/fileHandlers';
 import {
   AnalyzeDependencyResult,

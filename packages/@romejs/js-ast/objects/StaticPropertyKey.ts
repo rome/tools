@@ -6,12 +6,12 @@
  */
 
 import {
-  JSNodeBase,
   FlowVariance,
   Identifier,
+  JSNodeBase,
+  NumericLiteral,
   PrivateName,
   StringLiteral,
-  NumericLiteral,
 } from '../index';
 import {createQuickBuilder} from '../utils';
 

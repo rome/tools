@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, space, concat} from '../../tokens';
-import {objectProperty, AnyNode, AnyObjectPropertyKey} from '@romejs/js-ast';
+import {Tokens, concat, operator, space} from '../../tokens';
+import {AnyNode, AnyObjectPropertyKey, objectProperty} from '@romejs/js-ast';
 
 function isShorthand(key: AnyObjectPropertyKey, value: AnyNode): boolean {
   return key.type === 'StaticPropertyKey' && key.value.type === 'Identifier' &&

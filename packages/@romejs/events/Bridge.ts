@@ -6,23 +6,23 @@
  */
 
 import {
-  BridgeMessage,
   BridgeErrorResponseMessage,
-  BridgeRequestMessage,
-  BridgeSuccessResponseMessage,
+  BridgeMessage,
   BridgeOptions,
+  BridgeRequestMessage,
   BridgeResponseMessage,
+  BridgeSuccessResponseMessage,
   BridgeType,
   EventSubscription,
 } from './types';
-import {JSONPropertyValue, JSONObject} from '@romejs/codec-json';
+import {JSONObject, JSONPropertyValue} from '@romejs/codec-json';
 import BridgeError from './BridgeError';
 import BridgeEvent, {BridgeEventOptions} from './BridgeEvent';
 import Event from './Event';
 import {
-  getErrorStructure,
   StructuredError,
   createErrorFromStructure,
+  getErrorStructure,
 } from '@romejs/v8';
 
 type ErrorJSON = {

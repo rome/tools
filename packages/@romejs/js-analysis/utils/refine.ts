@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../scopes';
-import {AnyNode, UnaryExpression, ReferenceIdentifier} from '@romejs/js-ast';
+import {AnyNode, ReferenceIdentifier, UnaryExpression} from '@romejs/js-ast';
 import T from '../types/T';
 import Evaluator from '../Evaluator';
 import RefinedT from '../types/RefinedT';

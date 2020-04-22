@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSMappedType, tsMappedType, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSMappedType, tsMappedType} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, word, operator, space} from '../../tokens';
+import {Tokens, operator, space, word} from '../../tokens';
 
 export default function TSMappedType(builder: Builder, node: AnyNode): Tokens {
   node = tsMappedType.assert(node);

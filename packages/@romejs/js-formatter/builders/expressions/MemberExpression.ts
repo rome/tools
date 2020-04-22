@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens, concat} from '../../tokens';
-import {memberExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, memberExpression} from '@romejs/js-ast';
 
 export default function MemberExpression(
   builder: Builder,

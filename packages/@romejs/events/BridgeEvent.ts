@@ -7,10 +7,10 @@
 
 import {JSONPropertyValue} from '@romejs/codec-json';
 import {
-  EventOptions,
-  BridgeSuccessResponseMessage,
   BridgeErrorResponseMessage,
+  BridgeSuccessResponseMessage,
   BridgeType,
+  EventOptions,
 } from './types';
 import Bridge from './Bridge';
 import BridgeError from './BridgeError';

@@ -6,8 +6,8 @@
  */
 
 import {
-  JSNodeBase,
   AnyTSEntityName,
+  JSNodeBase,
   TSTypeParameterInstantiation,
 } from '../index';
 import {createBuilder} from '../utils';

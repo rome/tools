@@ -7,7 +7,7 @@
 
 import Scope from '../Scope';
 import {addFunctionBindings} from '../utils';
-import {ObjectMethod, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ObjectMethod} from '@romejs/js-ast';
 
 export default {
   creator: true,

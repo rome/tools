@@ -7,9 +7,9 @@
 
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {DiagnosticAdvice} from '@romejs/diagnostics';
-import {ErrorFrames, ErrorFrame} from './types';
+import {ErrorFrame, ErrorFrames} from './types';
 import {isPlainObject} from '@romejs/typescript-helpers';
-import {ob1Number1, ob1Number0, ob1Number0Neg1} from '@romejs/ob1';
+import {ob1Number0, ob1Number0Neg1, ob1Number1} from '@romejs/ob1';
 
 export * from './types';
 

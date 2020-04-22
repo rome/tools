@@ -6,9 +6,9 @@
  */
 
 import {Program} from '@romejs/js-ast';
-import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
 import {TransformRequest, TransformVisitors} from '../types';
-import {stageTransforms, stageOrder} from '../transforms/index';
+import {stageOrder, stageTransforms} from '../transforms/index';
 import {Cache} from '@romejs/js-compiler';
 import CompilerContext from '../lib/CompilerContext';
 

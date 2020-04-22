@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyObjectPropertyKey, AnyPrimaryType} from '../index';
+import {AnyObjectPropertyKey, AnyPrimaryType, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSPropertySignature = JSNodeBase & {

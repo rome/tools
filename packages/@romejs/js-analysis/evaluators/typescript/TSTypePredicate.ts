@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {TSTypePredicate, tsTypePredicate, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSTypePredicate, tsTypePredicate} from '@romejs/js-ast';
 
 export default function TSTypePredicate(node: AnyNode, scope: Scope) {
   node = tsTypePredicate.assert(node);

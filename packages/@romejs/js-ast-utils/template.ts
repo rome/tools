@@ -6,13 +6,13 @@
  */
 
 import {
-  AnyNode,
   AnyExpression,
-  AnyStatement,
   AnyIdentifier,
+  AnyNode,
+  AnyStatement,
   program,
 } from '@romejs/js-ast';
-import {Path, CompilerContext} from '@romejs/js-compiler';
+import {CompilerContext, Path} from '@romejs/js-compiler';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
 import removeLoc from './removeLoc';
 import {parseJS} from '@romejs/js-parser';

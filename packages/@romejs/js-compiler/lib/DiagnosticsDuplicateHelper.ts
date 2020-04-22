@@ -6,10 +6,10 @@
  */
 
 import {
-  DiagnosticLocation,
-  DiagnosticDescription,
-  buildDuplicateLocationAdvice,
   DiagnosticCategory,
+  DiagnosticDescription,
+  DiagnosticLocation,
+  buildDuplicateLocationAdvice,
 } from '@romejs/diagnostics';
 import CompilerContext from './CompilerContext';
 

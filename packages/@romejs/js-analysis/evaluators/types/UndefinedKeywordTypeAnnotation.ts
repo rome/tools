@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   UndefinedKeywordTypeAnnotation,
   undefinedKeywordTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function UndefinedKeywordTypeAnnotation(node: AnyNode) {

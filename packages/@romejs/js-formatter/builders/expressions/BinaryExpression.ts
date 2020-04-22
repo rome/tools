@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {binaryExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, binaryExpression} from '@romejs/js-ast';
 import AssignmentExpression from './AssignmentExpression';
 
 export default function BinaryExpression(

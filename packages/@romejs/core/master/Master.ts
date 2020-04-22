@@ -7,26 +7,26 @@
 
 import {
   MasterBridge,
-  MasterQueryResponse,
   MasterQueryRequest,
+  MasterQueryResponse,
 } from '@romejs/core';
 import {
-  Diagnostics,
-  INTERNAL_ERROR_LOG_ADVICE,
   DiagnosticOrigin,
-  getDiagnosticsFromError,
-  deriveDiagnosticFromError,
+  Diagnostics,
   DiagnosticsProcessor,
+  INTERNAL_ERROR_LOG_ADVICE,
+  deriveDiagnosticFromError,
   descriptions,
+  getDiagnosticsFromError,
 } from '@romejs/diagnostics';
 import {MasterCommand, masterCommands} from './commands';
 import {
-  DiagnosticsPrinter,
   DiagnosticsFileReader,
-  readDiagnosticsFileLocal,
+  DiagnosticsPrinter,
   printDiagnostics,
+  readDiagnosticsFileLocal,
 } from '@romejs/cli-diagnostics';
-import {consume, ConsumePath} from '@romejs/consume';
+import {ConsumePath, consume} from '@romejs/consume';
 import {Event, EventSubscription} from '@romejs/events';
 import MasterRequest, {MasterRequestInvalid} from './MasterRequest';
 import ProjectManager from './project/ProjectManager';
@@ -39,13 +39,13 @@ import Cache from './Cache';
 import {Reporter, ReporterStream} from '@romejs/cli-reporter';
 import {Profiler} from '@romejs/v8';
 import {
-  ProfilingStartData,
   PartialMasterQueryRequest,
+  ProfilingStartData,
 } from '../common/bridges/MasterBridge';
 import {
   ClientFlags,
-  DEFAULT_CLIENT_REQUEST_FLAGS,
   ClientRequestFlags,
+  DEFAULT_CLIENT_REQUEST_FLAGS,
 } from '../common/types/client';
 import {VERSION} from '../common/constants';
 import {escapeMarkup} from '@romejs/string-markup';

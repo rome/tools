@@ -7,24 +7,24 @@
 
 import Builder, {BuilderMethod} from '../Builder';
 import {
+  AnyBindingPattern,
+  AnyNode,
+  ClassMethod,
+  ObjectMethod,
+  PatternMeta,
+  TSDeclareMethod,
   awaitExpression,
   forOfStatement,
-  AnyNode,
   throwStatement,
-  TSDeclareMethod,
-  ObjectMethod,
-  AnyBindingPattern,
-  ClassMethod,
-  PatternMeta,
 } from '@romejs/js-ast';
 import {
   Tokens,
-  operator,
-  word,
-  space,
-  terminatorless,
   breakGroup,
   concat,
+  operator,
+  space,
+  terminatorless,
+  word,
 } from '../tokens';
 
 export function buildForXStatementBuilder(op: 'of' | 'in'): BuilderMethod {

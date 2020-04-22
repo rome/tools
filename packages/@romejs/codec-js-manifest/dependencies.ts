@@ -8,11 +8,11 @@
 import {Consumer} from '@romejs/consume';
 import {
   SemverRangeNode,
-  stringifySemver,
   parseSemverRange,
+  stringifySemver,
 } from '@romejs/codec-semver';
 import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
-import {createUnknownFilePath, UnknownFilePath} from '@romejs/path';
+import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 import {normalizeName} from './name';
 import {ob1Add} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';

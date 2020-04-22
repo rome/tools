@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {FlowInterface, flowInterface, AnyNode} from '@romejs/js-ast';
+import {AnyNode, FlowInterface, flowInterface} from '@romejs/js-ast';
 
 export default function FlowInterface(node: AnyNode, scope: Scope) {
   node = flowInterface.assert(node);

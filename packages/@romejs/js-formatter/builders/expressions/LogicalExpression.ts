@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {logicalExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, logicalExpression} from '@romejs/js-ast';
 import AssignmentExpression from './AssignmentExpression';
 
 export default function LogicalExpression(

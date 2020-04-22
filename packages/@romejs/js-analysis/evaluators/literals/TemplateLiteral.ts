@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {TemplateLiteral, templateLiteral, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TemplateLiteral, templateLiteral} from '@romejs/js-ast';
 import ExhaustiveT from '../../types/ExhaustiveT';
 import StringT from '../../types/StringT';
 

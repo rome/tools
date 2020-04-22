@@ -6,43 +6,43 @@
  */
 
 import {
-  isStrictBindReservedWord,
   IndexTracker,
   createIndexTracker,
+  isStrictBindReservedWord,
 } from '@romejs/js-parser-utils';
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {types as tt} from '../tokenizer/types';
 import {
+  AmbiguousFlowTypeCastExpression,
+  AnyAssignmentPattern,
+  AnyAuxiliary,
+  AnyBindingPattern,
   AnyExpression,
   AnyNode,
-  AnyBindingPattern,
-  AnyAssignmentPattern,
-  SpreadElement,
-  BindingAssignmentPattern,
-  SpreadProperty,
+  AnyParamBindingPattern,
+  AnyTargetAssignmentPattern,
+  AnyTargetBindingPattern,
+  AssignmentIdentifier,
+  AssignmentObjectPatternProperty,
   BindingArrayPattern,
+  BindingAssignmentPattern,
+  BindingIdentifier,
+  BindingObjectPattern,
+  BindingObjectPatternProperty,
   ConstTSAccessibility,
   FlowTypeCastExpression,
-  BindingObjectPattern,
-  BindingIdentifier,
-  AnyTargetBindingPattern,
-  AssignmentObjectPatternProperty,
-  AnyAuxiliary,
-  AnyTargetAssignmentPattern,
-  BindingObjectPatternProperty,
-  AssignmentIdentifier,
-  AnyParamBindingPattern,
   ReferenceIdentifier,
-  AmbiguousFlowTypeCastExpression,
+  SpreadElement,
+  SpreadProperty,
 } from '@romejs/js-ast';
 import {JSParser, OpeningContext} from '../parser';
 import {
+  ambiguousTypeCastToParameter,
+  hasTSModifier,
   parseMaybeAssign,
   parseObjectPattern,
-  ambiguousTypeCastToParameter,
   parsePrimaryTypeAnnotation,
   parseTSAccessModifier,
-  hasTSModifier,
 } from './index';
 import {descriptions} from '@romejs/diagnostics';
 import {ob1Get0} from '@romejs/ob1';

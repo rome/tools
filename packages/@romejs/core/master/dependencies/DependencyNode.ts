@@ -10,21 +10,21 @@ import {BundleCompileResolvedImports} from '@romejs/js-compiler';
 import {ConstImportModuleKind} from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
 import {
-  Diagnostics,
   Diagnostic,
-  descriptions,
   DiagnosticLocation,
+  Diagnostics,
+  descriptions,
 } from '@romejs/diagnostics';
 import {ProjectDefinition} from '@romejs/project';
 import DependencyOrderer, {DependencyOrder} from './DependencyOrderer';
 import {WorkerAnalyzeDependencyResult} from '../../common/bridges/WorkerBridge';
 import {AbsoluteFilePath, AbsoluteFilePathMap} from '@romejs/path';
-import {getFileHandler, ExtensionHandler} from '../../common/fileHandlers';
+import {ExtensionHandler, getFileHandler} from '../../common/fileHandlers';
 import {
-  AnalyzeModuleType,
   AnalyzeDependency,
   AnalyzeDependencyName,
   AnalyzeExportLocal,
+  AnalyzeModuleType,
   AnyAnalyzeExport,
 } from '@romejs/core';
 import {FileReference} from '@romejs/core/common/types/files';

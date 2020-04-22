@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BaseTokens, ValueToken, SimpleToken} from '@romejs/parser-core';
+import {BaseTokens, SimpleToken, ValueToken} from '@romejs/parser-core';
 
 export type Tokens = BaseTokens & {
   Text: ValueToken<'Text', string>;

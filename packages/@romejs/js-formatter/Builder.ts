@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyComment} from '@romejs/js-ast';
+import {AnyComment, AnyNode} from '@romejs/js-ast';
 import builderFunctions from './builders/index';
 import * as n from './node/index';
-import {isTypeNode, isTypeExpressionWrapperNode} from '@romejs/js-ast-utils';
+import {isTypeExpressionWrapperNode, isTypeNode} from '@romejs/js-ast-utils';
 import {SourceMap} from '@romejs/codec-source-map';
 import {
-  Tokens,
   GroupToken,
-  operator,
-  space,
-  newline,
+  Tokens,
+  comment,
+  concat,
   derivedNewline,
   indent,
-  comment,
+  newline,
+  operator,
   positionMarker,
-  concat,
+  space,
 } from './tokens';
 import CommentsConsumer from '@romejs/js-parser/CommentsConsumer';
 

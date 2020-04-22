@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyDeclaration} from '@romejs/js-ast';
+import {AnyDeclaration, AnyNode} from '@romejs/js-ast';
 
 export default function isDeclaration(
   node: undefined | AnyNode,

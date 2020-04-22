@@ -7,7 +7,7 @@
 
 import Scope from '../Scope';
 import {addFunctionBindings} from '../utils';
-import {ArrowFunctionExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ArrowFunctionExpression} from '@romejs/js-ast';
 
 export default {
   creator: true,

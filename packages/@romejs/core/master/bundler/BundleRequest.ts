@@ -15,8 +15,8 @@ import {
 } from '../../common/bridges/WorkerBridge';
 import {DependencyOrder} from '../dependencies/DependencyOrderer';
 import {
-  CompileResult,
   BundleCompileResolvedImports,
+  CompileResult,
   getPrefixedBundleNamespace,
 } from '@romejs/js-compiler';
 

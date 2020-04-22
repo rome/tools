@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {FunctionHead, functionHead, AnyNode} from '@romejs/js-ast';
+import {AnyNode, FunctionHead, functionHead} from '@romejs/js-ast';
 
 export default function FunctionHead(node: AnyNode, scope: Scope) {
   node = functionHead.assert(node);

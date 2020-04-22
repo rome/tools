@@ -7,9 +7,9 @@
 
 import '@romejs/string-markup';
 import {
+  PathPattern,
   matchPath,
   matchPathPatterns,
-  PathPattern,
   parsePathPattern,
 } from '@romejs/path-match';
 import {test} from 'rome';

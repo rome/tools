@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowObjectTypeProperty,
   flowObjectTypeProperty,
-  AnyNode,
 } from '@romejs/js-ast';
 import ObjPropT from '../../types/ObjPropT';
 

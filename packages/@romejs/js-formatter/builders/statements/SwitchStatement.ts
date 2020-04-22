@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, space, operator, concat} from '../../tokens';
-import {switchStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, operator, space, word} from '../../tokens';
+import {AnyNode, switchStatement} from '@romejs/js-ast';
 
 export default function SwitchStatement(builder: Builder, node: AnyNode): Tokens {
   node = switchStatement.assert(node);

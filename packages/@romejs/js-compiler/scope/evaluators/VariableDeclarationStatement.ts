@@ -6,7 +6,7 @@
  */
 
 import Scope from '../Scope';
-import {VariableDeclarationStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, VariableDeclarationStatement} from '@romejs/js-ast';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 
 export default {

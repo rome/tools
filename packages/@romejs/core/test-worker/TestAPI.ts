@@ -19,10 +19,10 @@ import prettyFormat from '@romejs/pretty-format';
 import {FileReference} from '../common/types/files';
 import {markup} from '@romejs/string-markup';
 import {
-  TestHelper,
   AsyncFunc,
-  SyncThrower,
   ExpectedError,
+  SyncThrower,
+  TestHelper,
 } from '@romejs-runtime/rome/test';
 
 function formatExpectedError(expected: ExpectedError): string {

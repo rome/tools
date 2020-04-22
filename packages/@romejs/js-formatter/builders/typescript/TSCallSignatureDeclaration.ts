@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   TSCallSignatureDeclaration,
   tsCallSignatureDeclaration,
-  AnyNode,
 } from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, operator, space} from '../../tokens';

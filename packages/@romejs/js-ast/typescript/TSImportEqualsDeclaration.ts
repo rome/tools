@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, BindingIdentifier, AnyTSModuleReference} from '../index';
+import {AnyTSModuleReference, BindingIdentifier, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSImportEqualsDeclaration = JSNodeBase & {

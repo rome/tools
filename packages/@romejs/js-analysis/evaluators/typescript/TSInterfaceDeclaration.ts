@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   TSInterfaceDeclaration,
   tsInterfaceDeclaration,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TSInterfaceDeclaration(node: AnyNode, scope: Scope) {

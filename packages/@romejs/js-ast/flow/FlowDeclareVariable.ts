@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, BindingIdentifier} from '../index';
+import {BindingIdentifier, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type FlowDeclareVariable = JSNodeBase & {

@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, verbatim, concat} from '../../tokens';
+import {Tokens, concat, verbatim} from '../../tokens';
 import {AnyNode, regExpGroupNonCapture} from '@romejs/js-ast';
 
 export default function RegExpGroupNonCapture(builder: Builder, node: AnyNode) {

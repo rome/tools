@@ -8,9 +8,9 @@
 import Builder from '../../Builder';
 import {Tokens, word} from '../../tokens';
 import {
+  AnyNode,
   BooleanLiteralTypeAnnotation,
   booleanLiteralTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function BooleanLiteralTypeAnnotation(

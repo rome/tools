@@ -6,14 +6,14 @@
  */
 
 import {
-  DiagnosticDescription,
-  DiagnosticBlessedMessage,
-  DiagnosticLocation,
   DiagnosticAdvice,
+  DiagnosticBlessedMessage,
+  DiagnosticDescription,
+  DiagnosticLocation,
 } from './types';
-import {markup, escapeMarkup} from '@romejs/string-markup';
+import {escapeMarkup, markup} from '@romejs/string-markup';
 import stringDiff from '@romejs/string-diff';
-import {buildSuggestionAdvice, buildDuplicateLocationAdvice} from './helpers';
+import {buildDuplicateLocationAdvice, buildSuggestionAdvice} from './helpers';
 import {SourceLocation} from '@romejs/parser-core';
 import {DiagnosticCategory} from './categories';
 import {ResolverQueryResponseNotFound} from '@romejs/core/master/fs/Resolver';

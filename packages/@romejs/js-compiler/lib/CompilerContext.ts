@@ -6,10 +6,10 @@
  */
 
 import {
-  AnyNode,
-  Program,
-  ConstSourceType,
   AnyComment,
+  AnyNode,
+  ConstSourceType,
+  Program,
   program,
 } from '@romejs/js-ast';
 import {
@@ -17,28 +17,28 @@ import {
   extractSourceLocationRangeFromNodes,
 } from '@romejs/parser-core';
 import {
+  CompilerOptions,
   PathOptions,
   TransformExitResult,
   TransformVisitors,
   Transforms,
-  CompilerOptions,
 } from '@romejs/js-compiler';
 import {
   Diagnostic,
-  DiagnosticOrigin,
-  DiagnosticDescription,
-  DiagnosticSuppressions,
   DiagnosticCategory,
-  DiagnosticsProcessor,
+  DiagnosticDescription,
   DiagnosticLocation,
+  DiagnosticOrigin,
+  DiagnosticSuppressions,
+  DiagnosticsProcessor,
 } from '@romejs/diagnostics';
 import Record from './Record';
 import {RootScope} from '../scope/Scope';
 import reduce from '../methods/reduce';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 import {
-  TransformProjectDefinition,
   LintCompilerOptionsDecision,
+  TransformProjectDefinition,
   TransformVisitor,
 } from '../types';
 import {

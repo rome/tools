@@ -7,7 +7,7 @@
 
 import Scope from '../Scope';
 import {TypeBinding} from '@romejs/js-compiler';
-import {TypeAliasTypeAnnotation, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TypeAliasTypeAnnotation} from '@romejs/js-ast';
 
 export default {
   creator: false,

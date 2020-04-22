@@ -6,14 +6,14 @@
  */
 
 import {
-  CODE_FRAME_INDENT,
   CODE_FRAME_CONTEXT_LINES,
+  CODE_FRAME_INDENT,
   GUTTER,
   MAX_PATCH_LINES,
 } from './constants';
 import {showInvisibles} from './utils';
 import {Diffs, diffConstants, groupDiffByLines} from '@romejs/string-diff';
-import {markupTag, escapeMarkup} from '@romejs/string-markup';
+import {escapeMarkup, markupTag} from '@romejs/string-markup';
 
 function formatDiffLine(diffs: Diffs) {
   return diffs.map(([type, text]) => {

@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens, operator} from '../../tokens';
-import {jsxText, AnyNode} from '@romejs/js-ast';
+import {AnyNode, jsxText} from '@romejs/js-ast';
 import {escapeXHTMLEntities} from '@romejs/js-parser';
 
 export default function JSXText(builder: Builder, node: AnyNode): Tokens {

@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   ComputedMemberProperty,
   computedMemberProperty,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function ComputedMemberProperty(node: AnyNode, scope: Scope) {

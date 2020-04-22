@@ -9,14 +9,14 @@ import {Path} from '@romejs/js-compiler';
 import {template} from '@romejs/js-ast-utils';
 import {bindingInjector} from '../../defaultHooks/index';
 import {
-  nullLiteral,
-  arrayExpression,
-  sequenceExpression,
   CallExpression,
+  NullLiteral,
+  ReferenceIdentifier,
+  arrayExpression,
   assignmentExpression,
   memberExpression,
-  ReferenceIdentifier,
-  NullLiteral,
+  nullLiteral,
+  sequenceExpression,
 } from '@romejs/js-ast';
 
 export default {

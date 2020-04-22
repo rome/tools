@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {PrivateName, privateName, AnyNode} from '@romejs/js-ast';
+import {AnyNode, PrivateName, privateName} from '@romejs/js-ast';
 
 export default function PrivateName(node: AnyNode, scope: Scope) {
   node = privateName.assert(node);

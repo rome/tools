@@ -6,7 +6,7 @@
  */
 
 import Scope from '../Scope';
-import {SwitchStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, SwitchStatement} from '@romejs/js-ast';
 
 export default {
   creator: false,

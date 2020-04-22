@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
-  FlowTypeParameterDeclaration,
-  FlowFunctionTypeParam,
   AnyFlowPrimary,
+  FlowFunctionTypeParam,
+  FlowTypeParameterDeclaration,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 

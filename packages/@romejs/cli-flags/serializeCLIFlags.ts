@@ -8,7 +8,7 @@
 import {DiagnosticLocation} from '@romejs/diagnostics';
 import {toKebabCase} from '@romejs/string-utils';
 import {ConsumeSourceLocationRequestTarget} from '@romejs/consume';
-import {Number0, ob1Coerce0, ob1Number1, ob1Number0Neg1} from '@romejs/ob1';
+import {Number0, ob1Coerce0, ob1Number0Neg1, ob1Number1} from '@romejs/ob1';
 import {Dict} from '@romejs/typescript-helpers';
 
 type SerializeCLIData = {

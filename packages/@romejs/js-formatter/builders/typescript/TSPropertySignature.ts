@@ -6,12 +6,12 @@
  */
 
 import {
+  AnyNode,
   TSPropertySignature,
   tsPropertySignature,
-  AnyNode,
 } from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, word, operator, space} from '../../tokens';
+import {Tokens, operator, space, word} from '../../tokens';
 
 export default function TSPropertySignature(
   builder: Builder,

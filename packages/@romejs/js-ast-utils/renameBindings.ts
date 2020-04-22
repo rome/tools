@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, Binding} from '@romejs/js-compiler';
+import {Binding, Path} from '@romejs/js-compiler';
 import inheritLoc from './inheritLoc';
 import {
   AnyNode,
-  exportLocalSpecifier,
   exportLocalDeclaration,
+  exportLocalSpecifier,
   identifier,
   referenceIdentifier,
 } from '@romejs/js-ast';

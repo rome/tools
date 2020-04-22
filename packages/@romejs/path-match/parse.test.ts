@@ -6,7 +6,7 @@
  */
 
 import '@romejs/string-markup';
-import {parsePathPattern, PathPattern} from '@romejs/path-match';
+import {PathPattern, parsePathPattern} from '@romejs/path-match';
 import {test} from 'rome';
 
 function _parsePathPattern(input: string): PathPattern {

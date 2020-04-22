@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {AnyNode, templateLiteral, templateElement} from '@romejs/js-ast';
+import {AnyNode, templateElement, templateLiteral} from '@romejs/js-ast';
 import {operator} from '@romejs/js-formatter/tokens';
 
 export default function TemplateElement(

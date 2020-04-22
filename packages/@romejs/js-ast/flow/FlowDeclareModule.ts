@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
   BindingIdentifier,
-  StringLiteral,
   BlockStatement,
+  JSNodeBase,
+  StringLiteral,
 } from '../index';
 import {createBuilder} from '../utils';
 

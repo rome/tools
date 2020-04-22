@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowFunctionTypeAnnotation,
   flowFunctionTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 import FunctionT from '../../types/FunctionT';
 import MaybeT from '../../types/MaybeT';

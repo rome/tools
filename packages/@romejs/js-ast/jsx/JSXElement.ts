@@ -6,18 +6,18 @@
  */
 
 import {
-  JSNodeBase,
-  JSXText,
-  JSXExpressionContainer,
-  JSXSpreadChild,
-  JSXFragment,
-  JSXReferenceIdentifier,
-  JSXNamespacedName,
-  JSXMemberExpression,
-  JSXSpreadAttribute,
-  JSXAttribute,
   AnyTypeArguments,
+  JSNodeBase,
+  JSXAttribute,
+  JSXExpressionContainer,
+  JSXFragment,
   JSXIdentifier,
+  JSXMemberExpression,
+  JSXNamespacedName,
+  JSXReferenceIdentifier,
+  JSXSpreadAttribute,
+  JSXSpreadChild,
+  JSXText,
 } from '../index';
 import {createBuilder} from '../utils';
 

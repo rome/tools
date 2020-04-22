@@ -6,13 +6,13 @@
  */
 
 import {
-  JSNodeBase,
-  Directive,
-  AnyStatement,
-  InterpreterDirective,
-  ConstSourceType,
   AnyComment,
+  AnyStatement,
   ConstProgramSyntax,
+  ConstSourceType,
+  Directive,
+  InterpreterDirective,
+  JSNodeBase,
 } from '../index';
 import {Diagnostics} from '@romejs/diagnostics';
 import {createBuilder} from '../utils';

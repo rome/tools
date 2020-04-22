@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {variableDeclarator, AnyNode} from '@romejs/js-ast';
-import {operator, space, concat} from '@romejs/js-formatter/tokens';
+import {AnyNode, variableDeclarator} from '@romejs/js-ast';
+import {concat, operator, space} from '@romejs/js-formatter/tokens';
 
 export default function VariableDeclarator(builder: Builder, node: AnyNode) {
   node = variableDeclarator.assert(node);

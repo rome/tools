@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens, concat} from '../../tokens';
-import {regExpLiteral, AnyNode} from '@romejs/js-ast';
+import {AnyNode, regExpLiteral} from '@romejs/js-ast';
 import {operator} from '@romejs/js-formatter/tokens';
 
 export default function RegExpLiteral(builder: Builder, node: AnyNode): Tokens {

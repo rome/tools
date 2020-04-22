@@ -11,26 +11,26 @@
 
 import {Consumer} from '@romejs/consume';
 import {
-  ProjectConfig,
-  PartialProjectConfig,
-  ProjectConfigObjects,
-  ProjectConfigMeta,
-  ProjectConfigTarget,
-  ProjectConfigMetaHard,
   DEFAULT_PROJECT_CONFIG,
+  PartialProjectConfig,
+  ProjectConfig,
+  ProjectConfigMeta,
+  ProjectConfigMetaHard,
+  ProjectConfigObjects,
+  ProjectConfigTarget,
 } from './types';
 import {parsePathPattern} from '@romejs/path-match';
 import {
-  arrayOfStrings,
   arrayOfPatterns,
-  mergeArrays,
-  mergeAbsoluteFilePathSets,
+  arrayOfStrings,
   getParentConfigDependencies,
+  mergeAbsoluteFilePathSets,
+  mergeArrays,
 } from './utils';
-import {consumeJSONExtra, ConsumeJSONResult} from '@romejs/codec-json';
+import {ConsumeJSONResult, consumeJSONExtra} from '@romejs/codec-json';
 import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
-import {ob1Coerce1, ob1Number0, ob1Add, ob1Inc} from '@romejs/ob1';
-import {existsSync, readFileTextSync, readdirSync, lstatSync} from '@romejs/fs';
+import {ob1Add, ob1Coerce1, ob1Inc, ob1Number0} from '@romejs/ob1';
+import {existsSync, lstatSync, readFileTextSync, readdirSync} from '@romejs/fs';
 import crypto = require('crypto');
 
 import {ROME_CONFIG_PACKAGE_JSON_FIELD} from './constants';

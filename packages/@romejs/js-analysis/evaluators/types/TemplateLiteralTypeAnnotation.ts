@@ -8,8 +8,8 @@
 import {Scope} from '../../scopes';
 import {
   AnyNode,
-  templateLiteralTypeAnnotation,
   TemplateLiteralTypeAnnotation,
+  templateLiteralTypeAnnotation,
 } from '@romejs/js-ast';
 
 export default function TemplateLiteralTypeAnnotation(

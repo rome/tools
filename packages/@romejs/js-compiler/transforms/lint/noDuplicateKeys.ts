@@ -6,7 +6,7 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {ObjectProperty, ObjectMethod, SpreadProperty} from '@romejs/js-ast';
+import {ObjectMethod, ObjectProperty, SpreadProperty} from '@romejs/js-ast';
 import {TransformExitResult} from '@romejs/js-compiler/types';
 import {descriptions} from '@romejs/diagnostics';
 import {DiagnosticsDuplicateHelper} from '../../lib/DiagnosticsDuplicateHelper';

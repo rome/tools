@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {assignmentIdentifier, AnyNode} from '@romejs/js-ast';
+import {AnyNode, assignmentIdentifier} from '@romejs/js-ast';
 
 export default function AssignmentIdentifier(node: AnyNode, scope: Scope) {
   node = assignmentIdentifier.assert(node);

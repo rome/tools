@@ -6,35 +6,35 @@
  */
 
 import {
-  ConstSourceType,
   AnyNode,
-  Program,
   ConstProgramSyntax,
+  ConstSourceType,
   Identifier,
+  Program,
   StringLiteral,
 } from '@romejs/js-ast';
 import {
-  SourceLocation,
-  Position,
   ParserOptionsWithRequiredPath,
+  Position,
+  SourceLocation,
   createParser,
 } from '@romejs/parser-core';
 import {JSParserOptions} from './options';
 import {
-  Diagnostics,
-  DiagnosticFilter,
   DiagnosticDescription,
-  descriptions,
-  DiagnosticsProcessor,
+  DiagnosticFilter,
   DiagnosticLocation,
+  Diagnostics,
+  DiagnosticsProcessor,
+  descriptions,
 } from '@romejs/diagnostics';
 import ParserBranchFinder from './ParserBranchFinder';
 import {Token, nextToken} from './tokenizer/index';
-import {types as tt, TokenType} from './tokenizer/types';
+import {TokenType, types as tt} from './tokenizer/types';
 import {lineBreak} from '@romejs/js-parser-utils';
 import {parseTopLevel} from './parser/index';
-import {createInitialState, State} from './tokenizer/state';
-import {ob1Sub, Number0, ob1Number0} from '@romejs/ob1';
+import {State, createInitialState} from './tokenizer/state';
+import {Number0, ob1Number0, ob1Sub} from '@romejs/ob1';
 import {Dict, OptionalProps} from '@romejs/typescript-helpers';
 import {attachComments} from './parser/comments';
 import CommentsConsumer from './CommentsConsumer';

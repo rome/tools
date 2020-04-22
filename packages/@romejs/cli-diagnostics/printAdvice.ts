@@ -8,19 +8,19 @@
 import {Reporter} from '@romejs/cli-reporter';
 import {
   Diagnostic,
-  DiagnosticAdviceItem,
-  DiagnosticAdviceLog,
-  DiagnosticAdviceList,
   DiagnosticAdviceCode,
+  DiagnosticAdviceCommand,
+  DiagnosticAdviceDiff,
   DiagnosticAdviceFrame,
   DiagnosticAdviceInspect,
-  DiagnosticAdviceDiff,
+  DiagnosticAdviceItem,
+  DiagnosticAdviceList,
+  DiagnosticAdviceLog,
   DiagnosticAdviceStacktrace,
-  DiagnosticAdviceCommand,
   getDiagnosticHeader,
 } from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
-import {toLines, showInvisibles} from './utils';
+import {showInvisibles, toLines} from './utils';
 import buildPatchCodeFrame from './buildPatchCodeFrame';
 import buildMessageCodeFrame from './buildMessageCodeFrame';
 import {escapeMarkup, markupTag} from '@romejs/string-markup';

@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, concat} from '../../tokens';
-import {computedPropertyKey, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, operator} from '../../tokens';
+import {AnyNode, computedPropertyKey} from '@romejs/js-ast';
 
 export default function ComputedPropertyKey(
   builder: Builder,

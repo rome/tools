@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, operator, space, concat} from '../../tokens';
-import {whileStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, operator, space, word} from '../../tokens';
+import {AnyNode, whileStatement} from '@romejs/js-ast';
 
 export default function WhileStatement(builder: Builder, node: AnyNode): Tokens {
   node = whileStatement.assert(node);

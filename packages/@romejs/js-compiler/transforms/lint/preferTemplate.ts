@@ -7,9 +7,9 @@
 
 import {Path} from '@romejs/js-compiler';
 import {
-  templateLiteral,
-  templateElement,
   TemplateLiteral,
+  templateElement,
+  templateLiteral,
 } from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 import {TransformExitResult} from '@romejs/js-compiler/types';

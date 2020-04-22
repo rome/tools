@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyExpression, JSXEmptyExpression} from '../index';
+import {AnyExpression, JSNodeBase, JSXEmptyExpression} from '../index';
 import {createBuilder} from '../utils';
 
 export type JSXExpressionContainer = JSNodeBase & {

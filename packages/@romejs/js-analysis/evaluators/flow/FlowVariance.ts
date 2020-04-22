@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {FlowVariance, flowVariance, AnyNode} from '@romejs/js-ast';
+import {AnyNode, FlowVariance, flowVariance} from '@romejs/js-ast';
 
 export default function FlowVariance(node: AnyNode, scope: Scope) {
   node = flowVariance.assert(node);

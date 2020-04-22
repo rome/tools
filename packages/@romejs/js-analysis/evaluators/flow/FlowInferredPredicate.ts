@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowInferredPredicate,
   flowInferredPredicate,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowInferredPredicate(node: AnyNode, scope: Scope) {

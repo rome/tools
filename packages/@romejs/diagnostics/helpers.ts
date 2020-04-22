@@ -11,7 +11,7 @@ import diff from '@romejs/string-diff';
 import {Position} from '@romejs/parser-core';
 import {ob1Get1} from '@romejs/ob1';
 import {NEWLINE} from '@romejs/js-parser-utils';
-import {markup, escapeMarkup} from '@romejs/string-markup';
+import {escapeMarkup, markup} from '@romejs/string-markup';
 
 type BuildSuggestionAdviceOptions = {
   minRating?: number;

@@ -8,7 +8,7 @@
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
 import {printMethod} from '../utils';
-import {ObjectMethod, objectMethod, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ObjectMethod, objectMethod} from '@romejs/js-ast';
 
 export default function ObjectMethod(builder: Builder, node: AnyNode): Tokens {
   node = objectMethod.assert(node);

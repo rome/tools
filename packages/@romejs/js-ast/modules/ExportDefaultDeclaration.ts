@@ -6,12 +6,12 @@
  */
 
 import {
-  JSNodeBase,
   AnyExpression,
-  FlowDeclareOpaqueType,
-  TSInterfaceDeclaration,
-  FunctionDeclaration,
   ClassDeclaration,
+  FlowDeclareOpaqueType,
+  FunctionDeclaration,
+  JSNodeBase,
+  TSInterfaceDeclaration,
 } from '../index';
 import {createBuilder} from '../utils';
 import {TSDeclareFunction} from '../typescript/TSDeclareFunction';

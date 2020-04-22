@@ -9,8 +9,8 @@ import {humanizeNumber, humanizeTime} from '@romejs/string-utils';
 import {Reporter} from '@romejs/cli-reporter';
 import {
   RemoteReporterClientMessage,
-  ReporterStream,
   ReporterProgressOptions,
+  ReporterStream,
 } from './types';
 import ProgressBase from './ProgressBase';
 import {ansiEscapes, formatAnsi} from '@romejs/string-markup';

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {ImportSpecifier, importSpecifier, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ImportSpecifier, importSpecifier} from '@romejs/js-ast';
 
 export default function ImportSpecifier(node: AnyNode, scope: Scope) {
   node = importSpecifier.assert(node);

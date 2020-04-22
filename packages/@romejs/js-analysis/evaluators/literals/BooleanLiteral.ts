@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {BooleanLiteral, booleanLiteral, AnyNode} from '@romejs/js-ast';
+import {AnyNode, BooleanLiteral, booleanLiteral} from '@romejs/js-ast';
 import BooleanLiteralT from '../../types/BooleanLiteralT';
 
 export default function BooleanLiteral(node: AnyNode, scope: Scope) {

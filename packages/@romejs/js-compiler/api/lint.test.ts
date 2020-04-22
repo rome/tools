@@ -8,12 +8,12 @@
 // TODO: Shift file into packages/@romejs/js-compiler/transforms/lint/__rtests__
 // after all open linting PRs have been merged.
 
-import {test, TestHelper} from 'rome';
+import {TestHelper, test} from 'rome';
 import lint from './lint';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import {ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
+import {ConstProgramSyntax, ConstSourceType} from '@romejs/js-ast';
 import {DiagnosticCategory} from '@romejs/diagnostics';
 import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
 

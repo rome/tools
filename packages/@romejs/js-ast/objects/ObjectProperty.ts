@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
-  StaticPropertyKey,
   AnyExpression,
   ComputedPropertyKey,
+  JSNodeBase,
+  StaticPropertyKey,
 } from '../index';
 import {createBuilder} from '../utils';
 

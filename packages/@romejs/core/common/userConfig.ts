@@ -9,12 +9,12 @@ import {consumeJSON} from '@romejs/codec-json';
 import {VERSION} from './constants';
 import {ROME_CONFIG_FILENAMES} from '@romejs/project';
 import {
-  HOME_PATH,
   AbsoluteFilePath,
-  createAbsoluteFilePath,
+  HOME_PATH,
   TEMP_PATH,
+  createAbsoluteFilePath,
 } from '@romejs/path';
-import {readFileTextSync, existsSync} from '@romejs/fs';
+import {existsSync, readFileTextSync} from '@romejs/fs';
 
 export type UserConfig = {
   runtimeModulesPath: AbsoluteFilePath;

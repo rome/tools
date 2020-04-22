@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {program, AnyNode} from '@romejs/js-ast';
-import {Tokens, newline, concat} from '@romejs/js-formatter/tokens';
+import {AnyNode, program} from '@romejs/js-ast';
+import {Tokens, concat, newline} from '@romejs/js-formatter/tokens';
 
 export default function Program(builder: Builder, node: AnyNode): Tokens {
   node = program.assert(node);

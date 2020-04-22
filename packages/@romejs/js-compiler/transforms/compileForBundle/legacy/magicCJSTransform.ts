@@ -7,11 +7,11 @@
 
 import {Path} from '@romejs/js-compiler';
 import {
-  functionExpression,
-  blockStatement,
-  stringLiteral,
   AnyNode,
   FunctionExpression,
+  blockStatement,
+  functionExpression,
+  stringLiteral,
 } from '@romejs/js-ast';
 import {template} from '@romejs/js-ast-utils';
 import {getOptions} from '../_utils';

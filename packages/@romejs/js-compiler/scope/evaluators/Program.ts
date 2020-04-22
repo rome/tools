@@ -7,7 +7,7 @@
 
 import Scope from '../Scope';
 import {addVarBindings} from '../utils';
-import {Program, AnyNode} from '@romejs/js-ast';
+import {AnyNode, Program} from '@romejs/js-ast';
 
 export default {
   creator: true,

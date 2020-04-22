@@ -6,7 +6,7 @@
  */
 
 import Scope from '../Scope';
-import {ExportDefaultDeclaration, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ExportDefaultDeclaration} from '@romejs/js-ast';
 
 export default {
   creator: false,

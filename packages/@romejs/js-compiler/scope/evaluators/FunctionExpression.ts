@@ -8,7 +8,7 @@
 import Scope from '../Scope';
 import {LetBinding} from '@romejs/js-compiler';
 import {addFunctionBindings} from '../utils';
-import {FunctionExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, FunctionExpression} from '@romejs/js-ast';
 
 export default {
   creator: true,

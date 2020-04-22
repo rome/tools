@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSEnumMember, tsEnumMember, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSEnumMember, tsEnumMember} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, space, operator} from '../../tokens';
+import {Tokens, operator, space} from '../../tokens';
 
 export default function TSEnumMember(builder: Builder, node: AnyNode): Tokens {
   node = tsEnumMember.assert(node);

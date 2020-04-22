@@ -14,13 +14,13 @@ import vm = require('vm');
 
 import {
   Diagnostic,
-  truncateSourceText,
   INTERNAL_ERROR_LOG_ADVICE,
   descriptions,
+  truncateSourceText,
 } from '@romejs/diagnostics';
 import {AbsoluteFilePath} from '@romejs/path';
 import {Position} from '@romejs/parser-core';
-import {ob1Number0Neg1, ob1Coerce1, ob1Number0} from '@romejs/ob1';
+import {ob1Coerce1, ob1Number0, ob1Number0Neg1} from '@romejs/ob1';
 
 type ExecuteMainOptions = {
   path: AbsoluteFilePath;

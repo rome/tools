@@ -6,9 +6,9 @@
  */
 
 import {
-  DiagnosticLocation,
   Diagnostic,
   DiagnosticCategory,
+  DiagnosticLocation,
 } from '@romejs/diagnostics';
 import Consumer from './Consumer';
 import {UnknownFilePath} from '@romejs/path';

@@ -8,9 +8,9 @@
 import Builder from '../../Builder';
 import {Tokens, operator, space} from '../../tokens';
 import {
+  AnyNode,
   TSAssignmentTypeAssertion,
   tsAssignmentTypeAssertion,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TSAssignmentTypeAssertion(

@@ -7,19 +7,19 @@
 
 import {Manifest, ManifestDefinition} from '@romejs/codec-js-manifest';
 import Master from '../Master';
-import {Platform, PLATFORM_ALIASES} from '../../common/types/platform';
-import {ProjectDefinition, DEFAULT_PROJECT_CONFIG} from '@romejs/project';
+import {PLATFORM_ALIASES, Platform} from '../../common/types/platform';
+import {DEFAULT_PROJECT_CONFIG, ProjectDefinition} from '@romejs/project';
 import {FileReference} from '../../common/types/files';
 import resolverSuggest from './resolverSuggest';
 import {
   AbsoluteFilePath,
-  UnknownFilePath,
-  URLFilePath,
-  createRelativeFilePath,
   RelativeFilePath,
+  URLFilePath,
+  UnknownFilePath,
   createFilePathFromSegments,
+  createRelativeFilePath,
 } from '@romejs/path';
-import {DiagnosticLocation, DiagnosticAdvice} from '@romejs/diagnostics';
+import {DiagnosticAdvice, DiagnosticLocation} from '@romejs/diagnostics';
 import {IMPLICIT_JS_EXTENSIONS} from '../../common/fileHandlers';
 import {writeFile} from '@romejs/fs';
 import https = require('https');

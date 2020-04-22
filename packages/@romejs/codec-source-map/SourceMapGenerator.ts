@@ -11,19 +11,19 @@
  * http://opensource.org/licenses/BSD-3-Clause
  */
 
-import {Mapping, SourceMap, Mappings, ParsedMappings} from './types';
+import {Mapping, Mappings, ParsedMappings, SourceMap} from './types';
 import * as base64 from './base64';
 import {compareByGeneratedPositionsInflated, toRelativeUrl} from './util';
 import ArraySet from './ArraySet';
 import MappingList from './MappingList';
 import {
-  Number1,
   Number0,
-  ob1Get1,
+  Number1,
   ob1Get0,
+  ob1Get1,
+  ob1Inc,
   ob1Number0,
   ob1Number1,
-  ob1Inc,
 } from '@romejs/ob1';
 import SourceMapConsumer, {getParsedMappingKey} from './SourceMapConsumer';
 

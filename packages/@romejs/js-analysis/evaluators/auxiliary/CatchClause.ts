@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {CatchClause, catchClause, AnyNode} from '@romejs/js-ast';
+import {AnyNode, CatchClause, catchClause} from '@romejs/js-ast';
 
 export default function CatchClause(node: AnyNode, scope: Scope) {
   node = catchClause.assert(node);

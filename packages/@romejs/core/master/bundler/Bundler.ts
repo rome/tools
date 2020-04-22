@@ -8,19 +8,19 @@
 import {Master, MasterRequest} from '@romejs/core';
 import {Reporter} from '@romejs/cli-reporter';
 import {
-  BundlerConfig,
   BundleResult,
+  BundleResultBundle,
+  BundlerConfig,
   BundlerFiles,
   BundlerMode,
-  BundleResultBundle,
 } from '../../common/types/bundler';
 import DependencyGraph from '../dependencies/DependencyGraph';
 import BundleRequest, {BundleOptions} from './BundleRequest';
 import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
 import {
+  JSONManifest,
   ManifestDefinition,
   convertManifestToJSON,
-  JSONManifest,
 } from '@romejs/codec-js-manifest';
 import {WorkerCompileResult} from '../../common/bridges/WorkerBridge';
 import {Dict} from '@romejs/typescript-helpers';

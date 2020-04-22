@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   TSNonNullExpression,
   tsNonNullExpression,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TSNonNullExpression(node: AnyNode, scope: Scope) {

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyExpression, AnyPrimaryType} from '../index';
+import {AnyExpression, AnyPrimaryType, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type FlowTypeCastExpression = JSNodeBase & {

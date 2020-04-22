@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {descriptions, DiagnosticDescription} from '@romejs/diagnostics';
+import {DiagnosticDescription, descriptions} from '@romejs/diagnostics';
 
 const VALID_REGEX_FLAGS: Array<string> = 'gmsiyu'.split('');
 

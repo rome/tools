@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   JSXExpressionContainer,
   jsxExpressionContainer,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function JSXExpressionContainer(node: AnyNode, scope: Scope) {

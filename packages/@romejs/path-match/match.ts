@@ -6,10 +6,10 @@
  */
 
 import {
-  PatternPartNode,
   PathPatternNode,
-  PatternSegments,
+  PatternPartNode,
   PatternSegmentNode,
+  PatternSegments,
 } from './types';
 import {PathSegments} from '@romejs/path';
 

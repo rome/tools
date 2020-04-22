@@ -6,10 +6,10 @@
  */
 
 import {AbsoluteFilePath} from '@romejs/path';
-import {writeFile, readFileText, exists, unlink} from '@romejs/fs';
+import {exists, readFileText, unlink, writeFile} from '@romejs/fs';
 import {TestRunnerOptions} from '../master/testing/types';
 import TestWorkerRunner from './TestWorkerRunner';
-import {descriptions, DiagnosticDescription} from '@romejs/diagnostics';
+import {DiagnosticDescription, descriptions} from '@romejs/diagnostics';
 import createSnapshotParser from './SnapshotParser';
 
 function cleanHeading(key: string): string {

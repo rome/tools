@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics, DiagnosticFilters} from '@romejs/diagnostics';
+import {DiagnosticFilters, Diagnostics} from '@romejs/diagnostics';
 import {ScopeType} from '../parser';
 import {Position, SourceLocation} from '@romejs/parser-core';
-import {types as ct, TokContext} from './context';
-import {types as tt, TokenTypes} from './types';
+import {TokContext, types as ct} from './context';
+import {TokenTypes, types as tt} from './types';
 import {AnyComment, AnyNode} from '@romejs/js-ast';
 import {Token} from '..';
 import {
-  Number1,
-  ob1Number1,
-  ob1Number0,
   Number0,
+  Number1,
+  ob1Number0,
   ob1Number0Neg1,
+  ob1Number1,
 } from '@romejs/ob1';
 
 type Scopes = { [K in ScopeType]?: Array<unknown> };

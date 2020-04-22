@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
-  PatternMeta,
   AnyExpression,
   AnyTargetBindingPattern,
+  JSNodeBase,
+  PatternMeta,
 } from '../index';
 import {createBuilder} from '../utils';
 

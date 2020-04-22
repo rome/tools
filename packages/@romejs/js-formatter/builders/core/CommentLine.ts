@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {CommentLine, commentLine, AnyNode} from '@romejs/js-ast';
+import {AnyNode, CommentLine, commentLine} from '@romejs/js-ast';
 
 export default function CommentLine(builder: Builder, node: AnyNode): Tokens {
   node = commentLine.assert(node);

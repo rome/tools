@@ -6,7 +6,7 @@
  */
 
 import {Mappings} from '@romejs/codec-source-map';
-import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
 import {CompileRequest} from '../types';
 import {Cache} from '@romejs/js-compiler';
 import {formatJS} from '@romejs/js-formatter';

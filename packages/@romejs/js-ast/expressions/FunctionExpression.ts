@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, BindingIdentifier, FunctionHead} from '../index';
+import {BindingIdentifier, FunctionHead, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 import {BlockStatement} from '../statements/BlockStatement';
 

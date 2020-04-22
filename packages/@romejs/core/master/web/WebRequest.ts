@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WebBridge, Master, MasterRequest} from '@romejs/core';
+import {Master, MasterRequest, WebBridge} from '@romejs/core';
 import {
-  getDiagnosticsFromError,
   deriveDiagnosticFromError,
+  getDiagnosticsFromError,
 } from '@romejs/diagnostics';
-import {removeSuffix, removePrefix} from '@romejs/string-utils';
+import {removePrefix, removeSuffix} from '@romejs/string-utils';
 import Bundler from '../bundler/Bundler';
 import {WebSocketInterface, createKey} from '@romejs/codec-websocket';
 import {Reporter} from '@romejs/cli-reporter';
@@ -19,7 +19,7 @@ import {createUnknownFilePath} from '@romejs/path';
 import {WebServer} from './index';
 import {ProjectDefinition} from '@romejs/project';
 import {HmrClientMessage} from './hmr';
-import {consumeUrl, ConsumableUrl} from '@romejs/codec-url';
+import {ConsumableUrl, consumeUrl} from '@romejs/codec-url';
 import http = require('http');
 
 const waitForever = new Promise(() => {});

@@ -8,7 +8,7 @@
 import {Path} from '@romejs/js-compiler';
 import {template} from '@romejs/js-ast-utils';
 import {AnyNode, stringLiteral} from '@romejs/js-ast';
-import {getOptions, getModuleId} from '../_utils';
+import {getModuleId, getOptions} from '../_utils';
 
 export default {
   name: 'asyncImportTransform',

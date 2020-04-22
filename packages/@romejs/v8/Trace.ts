@@ -8,7 +8,7 @@
 import {Profile, TraceEvent} from './types';
 import * as sourceMapManager from './sourceMapManager';
 import {urlToFilename} from './utils';
-import {ob1Coerce0To1, ob1Coerce1To0, ob1Get0, ob1Coerce0} from '@romejs/ob1';
+import {ob1Coerce0, ob1Coerce0To1, ob1Coerce1To0, ob1Get0} from '@romejs/ob1';
 
 export default class Trace {
   constructor() {

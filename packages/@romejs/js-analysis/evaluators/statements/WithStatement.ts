@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {WithStatement, withStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, WithStatement, withStatement} from '@romejs/js-ast';
 
 export default function WithStatement(node: AnyNode, scope: Scope) {
   node = withStatement.assert(node);

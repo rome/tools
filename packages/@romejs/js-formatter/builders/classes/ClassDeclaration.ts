@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, operator, word, concat} from '../../tokens';
-import {classDeclaration, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, operator, space, word} from '../../tokens';
+import {AnyNode, classDeclaration} from '@romejs/js-ast';
 
 export default function ClassDeclaration(
   builder: Builder,

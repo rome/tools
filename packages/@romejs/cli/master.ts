@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Master, MasterBridge, SOCKET_PATH, CLI_SOCKET_PATH} from '@romejs/core';
+import {CLI_SOCKET_PATH, Master, MasterBridge, SOCKET_PATH} from '@romejs/core';
 import {createBridgeFromSocket} from '@romejs/events';
 import setProcessTitle from './utils/setProcessTitle';
 import net = require('net');
 
-import {unlink, exists} from '@romejs/fs';
+import {exists, unlink} from '@romejs/fs';
 
 export default async function master() {
   setProcessTitle('master');

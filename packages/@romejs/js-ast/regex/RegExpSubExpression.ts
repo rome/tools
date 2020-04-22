@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyRegExpBodyItem} from '../index';
+import {AnyRegExpBodyItem, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type RegExpSubExpression = JSNodeBase & {

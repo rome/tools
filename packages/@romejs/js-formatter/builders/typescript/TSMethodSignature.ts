@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSMethodSignature, tsMethodSignature, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSMethodSignature, tsMethodSignature} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator, space, concat} from '../../tokens';
+import {Tokens, concat, operator, space} from '../../tokens';
 
 export default function TSMethodSignature(
   builder: Builder,

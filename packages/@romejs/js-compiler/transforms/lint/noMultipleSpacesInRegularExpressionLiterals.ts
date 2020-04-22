@@ -6,13 +6,13 @@
  */
 
 import {
-  RegExpCharacter,
-  RegExpSubExpression,
   AnyRegExpBodyItem,
+  RegExpCharacter,
   RegExpQuantified,
+  RegExpSubExpression,
   regExpQuantified,
 } from '@romejs/js-ast';
-import {Path, CompilerContext, TransformExitResult} from '@romejs/js-compiler';
+import {CompilerContext, Path, TransformExitResult} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
 
 function isSpaceChar(

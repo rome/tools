@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, ClassHead, BindingIdentifier} from '../index';
+import {BindingIdentifier, ClassHead, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ClassExpression = JSNodeBase & {

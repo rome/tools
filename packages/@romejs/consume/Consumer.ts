@@ -6,54 +6,54 @@
  */
 
 import {
-  DiagnosticAdvice,
-  Diagnostics,
   Diagnostic,
-  DiagnosticsError,
+  DiagnosticAdvice,
+  DiagnosticDescriptionOptionalCategory,
   DiagnosticLocation,
+  Diagnostics,
+  DiagnosticsError,
+  catchDiagnosticsSync,
   createBlessedDiagnosticMessage,
   createSingleDiagnosticError,
-  catchDiagnosticsSync,
-  DiagnosticDescriptionOptionalCategory,
   descriptions,
 } from '@romejs/diagnostics';
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
-  JSONValue,
-  JSONPropertyValue,
-  JSONObject,
   JSONArray,
+  JSONObject,
+  JSONPropertyValue,
+  JSONValue,
 } from '@romejs/codec-json';
 import {
-  ConsumerOptions,
-  ConsumePath,
   ConsumeContext,
   ConsumeKey,
-  ConsumerHandleUnexpected,
-  ConsumeSourceLocationRequestTarget,
-  ConsumerOnDefinition,
+  ConsumePath,
   ConsumePropertyDefinition,
   ConsumePropertyMetadata,
+  ConsumeSourceLocationRequestTarget,
+  ConsumerHandleUnexpected,
+  ConsumerOnDefinition,
+  ConsumerOptions,
 } from './types';
-import {UNKNOWN_POSITION, SourceLocation} from '@romejs/parser-core';
+import {SourceLocation, UNKNOWN_POSITION} from '@romejs/parser-core';
 import {
   Number0,
   Number1,
-  ob1Coerce0,
-  ob1Coerce1,
   UnknownNumber,
   ob1Add,
+  ob1Coerce0,
+  ob1Coerce1,
 } from '@romejs/ob1';
 import {isValidIdentifierName} from '@romejs/js-ast-utils';
 import {escapeString} from '@romejs/string-escape';
 import {
-  UnknownFilePath,
+  AbsoluteFilePath,
   RelativeFilePath,
   URLFilePath,
-  createUnknownFilePath,
-  AbsoluteFilePath,
-  createURLFilePath,
+  UnknownFilePath,
   createAbsoluteFilePath,
+  createURLFilePath,
+  createUnknownFilePath,
 } from '@romejs/path';
 
 type UnexpectedConsumerOptions = {

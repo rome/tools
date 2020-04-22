@@ -8,19 +8,19 @@
 import {ProjectConfig} from '@romejs/project';
 import {FileReference} from '@romejs/core';
 import {
-  WorkerParseOptions,
   WorkerLintOptions,
+  WorkerParseOptions,
 } from '../common/bridges/WorkerBridge';
 import Worker, {ParseResult} from '../worker/Worker';
-import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
 import * as compiler from '@romejs/js-compiler';
 import {check as typeCheck} from '@romejs/js-analysis';
-import {parseJSON, stringifyJSON, consumeJSONExtra} from '@romejs/codec-json';
-import {ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
+import {consumeJSONExtra, parseJSON, stringifyJSON} from '@romejs/codec-json';
+import {ConstProgramSyntax, ConstSourceType} from '@romejs/js-ast';
 import {
-  createUnknownFilePath,
-  createAbsoluteFilePath,
   UnknownFilePath,
+  createAbsoluteFilePath,
+  createUnknownFilePath,
 } from '@romejs/path';
 import {
   AnalyzeDependencyResult,

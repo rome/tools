@@ -9,8 +9,8 @@ import {
   AnyNode,
   FlowTypeCastExpression,
   TSAsExpression,
-  TSTypeAssertion,
   TSNonNullExpression,
+  TSTypeAssertion,
 } from '@romejs/js-ast';
 
 export default function isTypeExpressionWrapperNode(

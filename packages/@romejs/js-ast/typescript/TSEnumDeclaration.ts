@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, BindingIdentifier, TSEnumMember} from '../index';
+import {BindingIdentifier, JSNodeBase, TSEnumMember} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSEnumDeclaration = JSNodeBase & {

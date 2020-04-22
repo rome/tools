@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyExpression, SwitchCase} from '../index';
+import {AnyExpression, JSNodeBase, SwitchCase} from '../index';
 import {createBuilder} from '../utils';
 
 export type SwitchStatement = JSNodeBase & {

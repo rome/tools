@@ -6,11 +6,11 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, newline, operator} from '../../tokens';
+import {Tokens, newline, operator, space} from '../../tokens';
 import {
+  AnyNode,
   IntersectionTypeAnnotation,
   intersectionTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function IntersectionTypeAnnotation(

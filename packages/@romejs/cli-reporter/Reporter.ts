@@ -7,20 +7,20 @@
 
 import {
   MarkupFormatOptions,
+  ansiEscapes,
+  lineWrapAnsi,
+  markupTag,
   markupToAnsi,
   markupToPlainText,
-  markupTag,
-  ansiEscapes,
   stripAnsi,
-  lineWrapAnsi,
 } from '@romejs/string-markup';
 import {
-  ReporterProgress,
   RemoteReporterClientMessage,
   RemoteReporterReceiveMessage as RemoteReporterServerMessage,
-  ReporterStream,
   ReporterDerivedStreams,
+  ReporterProgress,
   ReporterProgressOptions,
+  ReporterStream,
   ReporterStreamMeta,
 } from './types';
 import {humanizeNumber, removeSuffix} from '@romejs/string-utils';
@@ -32,7 +32,7 @@ import {CWD_PATH} from '@romejs/path';
 import {Event} from '@romejs/events';
 import readline = require('readline');
 import {MarkupTagName} from '@romejs/string-markup/types';
-import select, {SelectOptions, SelectArguments} from './select';
+import select, {SelectArguments, SelectOptions} from './select';
 
 type ListOptions = {
   reverse?: boolean;

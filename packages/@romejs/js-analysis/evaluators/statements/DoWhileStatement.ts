@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {DoWhileStatement, doWhileStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, DoWhileStatement, doWhileStatement} from '@romejs/js-ast';
 
 export default function DoWhileStatement(node: AnyNode, scope: Scope) {
   node = doWhileStatement.assert(node);

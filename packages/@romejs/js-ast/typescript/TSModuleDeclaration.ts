@@ -6,8 +6,8 @@
  */
 
 import {
-  JSNodeBase,
   BindingIdentifier,
+  JSNodeBase,
   StringLiteral,
   TSModuleBlock,
 } from '../index';
