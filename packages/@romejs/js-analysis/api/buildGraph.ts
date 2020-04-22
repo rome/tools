@@ -7,9 +7,53 @@
 
 import {AnyStatement, Program} from '@romejs/js-ast';
 import {CheckProvider} from '../types';
-import {ModuleSignatureManager} from '../Evaluator';
+import Evaluator, {ModuleSignatureManager} from '../Evaluator';
 import Hub from '../Hub';
 import {TransformProjectDefinition} from '@romejs/js-compiler';
+
+async function getModuleSignature(
+  graphs: Map<string, undefined | ModuleSignatureManager>,
+  provider: CheckProvider,
+  evaluator: Evaluator,
+  source: string,
+  relative: string,
+): Promise<undefined | ModuleSignatureManager> {
+  const graphKey = `${relative}:${source}`;
+  if (graphs.has(graphKey)) {
+    // already prepared graph
+    return graphs.get(graphKey);
+  }
+
+  // query the provider for the export types
+  const graph = await provider.getExportTypes(relative, source);
+
+  // check if the resolved graph even exists
+  if (graph === undefined) {
+    // TODO unknown module, create an error
+    graphs.set(graphKey, undefined);
+    return undefined;
+  }
+
+  // check if we've already initialised this graph before, in the case of different relative URLs
+  if (graphs.has(graph.filename)) {
+    // TODO this is pretty inefficient, we shouldn't even receive it
+    const manager = graphs.get(graph.filename);
+    graphs.set(graphKey, manager);
+    return manager;
+  }
+
+  // create the graph
+  const manager = evaluator.initModuleSignature(graph, getModuleSignature.bind(
+    null,
+    graphs,
+    provider,
+    evaluator,
+  ));
+  graphs.set(graphKey, manager);
+  graphs.set(graph.filename, manager);
+  await manager.init();
+  return manager;
+}
 
 export default async function buildGraph(opts: {
   ast: Program;
@@ -37,41 +81,6 @@ export default async function buildGraph(opts: {
   if (connected) {
     // create graphs
     const graphs: Map<string, undefined | ModuleSignatureManager> = new Map();
-    async function getModuleSignature(
-      source: string,
-      relative: string,
-    ): Promise<undefined | ModuleSignatureManager> {
-      const graphKey = `${relative}:${source}`;
-      if (graphs.has(graphKey)) {
-        // already prepared graph
-        return graphs.get(graphKey);
-      }
-
-      // query the provider for the export types
-      const graph = await provider.getExportTypes(relative, source);
-
-      // check if the resolved graph even exists
-      if (graph === undefined) {
-        // TODO unknown module, create an error
-        graphs.set(graphKey, undefined);
-        return undefined;
-      }
-
-      // check if we've already initialised this graph before, in the case of different relative URLs
-      if (graphs.has(graph.filename)) {
-        // TODO this is pretty inefficient, we shouldn't even receive it
-        const manager = graphs.get(graph.filename);
-        graphs.set(graphKey, manager);
-        return manager;
-      }
-
-      // create the graph
-      const manager = evaluator.initModuleSignature(graph, getModuleSignature);
-      graphs.set(graphKey, manager);
-      graphs.set(graph.filename, manager);
-      await manager.init();
-      return manager;
-    }
 
     // seed graphs
     const seedCache: Set<string> = new Set();
@@ -82,7 +91,7 @@ export default async function buildGraph(opts: {
       }
 
       seedCache.add(cacheKey);
-      return getModuleSignature(source, relative);
+      return getModuleSignature(graphs, provider, evaluator, source, relative);
     }));
 
     // link imports
