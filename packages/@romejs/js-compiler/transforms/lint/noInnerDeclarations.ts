@@ -18,7 +18,12 @@ export default {
       // The first parent is either `program` or `block` no matter where we are
       // that is why we need to go one more step backward.
       const parentScopeKind = path.parentPath.parentPath.scope.kind;
-      if (parentScopeKind !== 'block' && parentScopeKind !== 'loop') {
+      // We need this to detect root level blocks
+      const isInsideRootLevelBlock = path.parentPath.scope.kind === 'block' &&
+          parentScopeKind ===
+          'program';
+      if (parentScopeKind !== 'block' && parentScopeKind !== 'loop' &&
+          !isInsideRootLevelBlock) {
         return node;
       }
       const upperFunction = path.findAncestry((p) => p.scope.kind === 'function');
