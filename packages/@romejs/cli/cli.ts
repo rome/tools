@@ -16,7 +16,7 @@ import {
   localCommands,
 } from '@romejs/core';
 import setProcessTitle from './utils/setProcessTitle';
-import {VERSION} from "./utils/getRomeVersion";
+import {VERSION} from './utils/getRomeVersion';
 import {parseCLIFlagsFromProcess} from '@romejs/cli-flags';
 import {
   createAbsoluteFilePath,
