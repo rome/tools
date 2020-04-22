@@ -26,6 +26,14 @@ import {
 } from '@romejs/ob1';
 import inspector = require('inspector');
 
+type FindIndexParams = {
+  code: string;
+  indexCache: Map<Number0, Position>;
+  index: Number0;
+  column: Number0;
+  line: Number1;
+};
+
 function createCoverageFileStats(
   covered: number,
   uncovered: number,
@@ -89,6 +97,45 @@ export default class CoverageCollector {
     const insertedLocs: Map<string, CoverageLocationRange> = new Map();
     const locs: Array<CoverageLocationRange> = [];
 
+    function findIndex(
+      newIndex: Number0,
+      {code, indexCache, index, column, line}: FindIndexParams,
+    ): Position {
+      const cached = indexCache.get(newIndex);
+      if (cached !== undefined) {
+        return cached;
+      }
+
+      if (newIndex < index) {
+        throw new Error(`Expected newIndex(${newIndex}) >= index(${index})`);
+      }
+
+      if (ob1Get0(newIndex) > code.length) {
+        throw new Error(
+          `Expected newIndex(${newIndex}) <= code.length(${code.length})`,
+        );
+      }
+
+      while (index < newIndex) {
+        const char = code[ob1Get0(index)];
+        if (char === '\n') {
+          line = ob1Inc(line);
+          column = ob1Number0;
+        } else {
+          column = ob1Inc(column);
+        }
+        index = ob1Inc(index);
+      }
+
+      const pos: Position = {
+        index: newIndex,
+        line,
+        column,
+      };
+      indexCache.set(newIndex, pos);
+      return pos;
+    }
+
     for (const data of this.sourceMaps.values()) {
       const {ranges, code, map} = data;
 
@@ -97,41 +144,14 @@ export default class CoverageCollector {
       let column: Number0 = ob1Number0;
       let index: Number0 = ob1Number0;
       const indexCache: Map<Number0, Position> = new Map();
-      function findIndex(newIndex: Number0): Position {
-        const cached = indexCache.get(newIndex);
-        if (cached !== undefined) {
-          return cached;
-        }
 
-        if (newIndex < index) {
-          throw new Error(`Expected newIndex(${newIndex}) >= index(${index})`);
-        }
-
-        if (ob1Get0(newIndex) > code.length) {
-          throw new Error(
-            `Expected newIndex(${newIndex}) <= code.length(${code.length})`,
-          );
-        }
-
-        while (index < newIndex) {
-          const char = code[ob1Get0(index)];
-          if (char === '\n') {
-            line = ob1Inc(line);
-            column = ob1Number0;
-          } else {
-            column = ob1Inc(column);
-          }
-          index = ob1Inc(index);
-        }
-
-        const pos: Position = {
-          index: newIndex,
-          line,
-          column,
-        };
-        indexCache.set(newIndex, pos);
-        return pos;
-      }
+      const findIndexParams: FindIndexParams = {
+        code,
+        line,
+        column,
+        index,
+        indexCache,
+      };
 
       // Prefetch all sorted indexes
       const offsets: Array<Number0> = [];
@@ -139,15 +159,15 @@ export default class CoverageCollector {
         offsets.push(ob1Coerce0(startOffset));
         offsets.push(ob1Coerce0(endOffset));
       }
+
       offsets.sort((a, b) => ob1Get0(a) - ob1Get0(b));
       for (const index of offsets) {
-        findIndex(index);
+        findIndex(index, findIndexParams);
       }
 
-      //
       for (const {kind, startOffset, endOffset, count} of ranges) {
-        const originalStart = findIndex(ob1Coerce0(startOffset));
-        const originalEnd = findIndex(ob1Coerce0(endOffset));
+        const originalStart = findIndex(ob1Coerce0(startOffset), findIndexParams);
+        const originalEnd = findIndex(ob1Coerce0(endOffset), findIndexParams);
 
         const sourceStart = map.approxOriginalPositionFor(
           originalStart.line,
