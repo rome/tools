@@ -591,6 +591,16 @@ export const descriptions = createMessages(
             ],
           };
       },
+
+      SORT_EXPORT_SPECIFIERS: {
+        category: 'lint/sortImportExportSpecifiers',
+        message: `Specifiers of the export declaration should be sorted alphabetically.`,
+      },
+
+      SORT_IMPORT_SPECIFIERS: {
+        category: 'lint/sortImportExportSpecifiers',
+        message: `Specifiers of the import declaration should be sorted alphabetically.`,
+      },
     },
 
     PROJECT_MANAGER: {
