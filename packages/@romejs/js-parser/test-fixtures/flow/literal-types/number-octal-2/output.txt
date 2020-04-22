@@ -89,6 +89,7 @@ Program {
                 }
                 typeAnnotation: NumericLiteralTypeAnnotation {
                   value: 123
+                  format: 'octal'
                   loc: Object {
                     filename: 'input.js'
                     end: Object {

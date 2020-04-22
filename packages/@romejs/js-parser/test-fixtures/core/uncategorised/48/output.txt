@@ -78,6 +78,7 @@ Program {
       }
       expression: NumericLiteral {
         value: 42
+        format: undefined
         trailingComments: undefined
         loc: Object {
           filename: 'input.js'

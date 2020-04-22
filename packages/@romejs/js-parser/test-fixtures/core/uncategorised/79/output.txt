@@ -39,6 +39,7 @@ Program {
       }
       expression: NumericLiteral {
         value: 16
+        format: 'hex'
         loc: Object {
           filename: 'input.js'
           end: Object {

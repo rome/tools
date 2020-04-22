@@ -89,6 +89,7 @@ Program {
                 }
                 typeAnnotation: NumericLiteralTypeAnnotation {
                   value: 123
+                  format: 'binary'
                   loc: Object {
                     filename: 'input.js'
                     end: Object {

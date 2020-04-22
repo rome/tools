@@ -55,6 +55,7 @@ import {
   toTargetAssignmentPattern,
 } from './index';
 import {descriptions} from '@romejs/diagnostics';
+import {NumberTokenValue} from '../tokenizer';
 
 export function isTypeSystemEnabled(parser: JSParser): boolean {
   return parser.isSyntaxEnabled('flow') || parser.isSyntaxEnabled('ts');
@@ -76,11 +77,17 @@ export function parseTypeLiteralAnnotation(
     }
 
     case tt.num: {
-      const value = Number(parser.state.tokenValue);
+      const {tokenValue} = parser.state;
+      if (!(tokenValue instanceof NumberTokenValue)) {
+        throw new Error('Expected NumberTokenValue');
+      }
+
+      const {value, format} = tokenValue;
       parser.next();
       return parser.finishNode(start, {
         type: 'NumericLiteralTypeAnnotation',
         value,
+        format,
       });
     }
 
@@ -95,7 +102,8 @@ export function parseTypeLiteralAnnotation(
     }
 
     case tt.plusMin: {
-      if (parser.state.tokenValue === '-') {
+      const {tokenValue} = parser.state;
+      if (tokenValue === '-') {
         parser.next();
 
         if (!parser.match(tt.num)) {
@@ -109,7 +117,12 @@ export function parseTypeLiteralAnnotation(
           });
         }
 
-        const value = Number(parser.state.tokenValue);
+        const {tokenValue} = parser.state;
+        if (!(tokenValue instanceof NumberTokenValue)) {
+          throw new Error('Expected NumberTokenValue');
+        }
+
+        const {value, format} = tokenValue;
         parser.next();
         return parser.finishNode(start, {
           type: 'NumericLiteralTypeAnnotation',

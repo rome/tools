@@ -56,6 +56,7 @@ Program {
         }
         body: NumericLiteral {
           value: 123
+          format: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -160,6 +161,7 @@ Program {
         }
         body: NumericLiteral {
           value: 123
+          format: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -281,6 +283,7 @@ Program {
         }
         body: NumericLiteral {
           value: 123
+          format: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -499,6 +502,7 @@ Program {
               }
               expression: NumericLiteral {
                 value: 123
+                format: undefined
                 loc: Object {
                   filename: 'input.js'
                   end: Object {

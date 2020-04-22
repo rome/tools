@@ -11,6 +11,7 @@ import {createBuilder} from '../utils';
 export type NumericLiteral = JSNodeBase & {
   type: 'NumericLiteral';
   value: number;
+  format?: 'octal' | 'binary' | 'hex';
 };
 
 export const numericLiteral = createBuilder<NumericLiteral>('NumericLiteral', {

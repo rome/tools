@@ -39,6 +39,7 @@ Program {
       }
       expression: NumericLiteral {
         value: 10
+        format: 'octal'
         loc: Object {
           filename: 'input.js'
           end: Object {

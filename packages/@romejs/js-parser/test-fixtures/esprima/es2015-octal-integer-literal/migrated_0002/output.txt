@@ -126,6 +126,7 @@ Program {
             }
             expression: NumericLiteral {
               value: 0
+              format: 'octal'
               loc: Object {
                 filename: 'input.js'
                 end: Object {

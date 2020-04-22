@@ -91,6 +91,7 @@ Program {
               key: StaticPropertyKey {
                 value: NumericLiteral {
                   value: 123
+                  format: undefined
                   loc: Object {
                     filename: 'input.js'
                     end: Object {

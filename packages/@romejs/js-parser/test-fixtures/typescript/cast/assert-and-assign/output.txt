@@ -54,6 +54,7 @@ Program {
         }
         right: NumericLiteral {
           value: 42
+          format: undefined
           loc: Object {
             filename: 'input.ts'
             end: Object {

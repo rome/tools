@@ -432,6 +432,7 @@ Program {
               }
               expression: NumericLiteral {
                 value: 10
+                format: undefined
                 loc: Object {
                   filename: 'input.ts'
                   end: Object {
@@ -607,6 +608,7 @@ Program {
                 }
                 argument: NumericLiteral {
                   value: 10
+                  format: undefined
                   loc: Object {
                     filename: 'input.ts'
                     end: Object {
@@ -751,6 +753,7 @@ Program {
                 }
                 argument: NumericLiteral {
                   value: 10
+                  format: undefined
                   loc: Object {
                     filename: 'input.ts'
                     end: Object {
@@ -847,6 +850,7 @@ Program {
               }
               expression: NumericLiteral {
                 value: 10
+                format: undefined
                 loc: Object {
                   filename: 'input.ts'
                   end: Object {
@@ -1022,6 +1026,7 @@ Program {
                 }
                 argument: NumericLiteral {
                   value: 10
+                  format: undefined
                   loc: Object {
                     filename: 'input.ts'
                     end: Object {
@@ -1546,6 +1551,7 @@ Program {
                 elements: Array [
                   NumericLiteral {
                     value: 1
+                    format: undefined
                     loc: Object {
                       filename: 'input.ts'
                       end: Object {
@@ -1562,6 +1568,7 @@ Program {
                   }
                   NumericLiteral {
                     value: 2
+                    format: undefined
                     loc: Object {
                       filename: 'input.ts'
                       end: Object {
@@ -1578,6 +1585,7 @@ Program {
                   }
                   NumericLiteral {
                     value: 3
+                    format: undefined
                     loc: Object {
                       filename: 'input.ts'
                       end: Object {
@@ -1722,6 +1730,7 @@ Program {
                 elements: Array [
                   NumericLiteral {
                     value: 10
+                    format: undefined
                     loc: Object {
                       filename: 'input.ts'
                       end: Object {
@@ -1927,6 +1936,7 @@ Program {
                       elements: Array [
                         NumericLiteral {
                           value: 1
+                          format: undefined
                           loc: Object {
                             filename: 'input.ts'
                             end: Object {
@@ -1943,6 +1953,7 @@ Program {
                         }
                         NumericLiteral {
                           value: 2
+                          format: undefined
                           loc: Object {
                             filename: 'input.ts'
                             end: Object {
@@ -1959,6 +1970,7 @@ Program {
                         }
                         NumericLiteral {
                           value: 3
+                          format: undefined
                           loc: Object {
                             filename: 'input.ts'
                             end: Object {
@@ -2060,6 +2072,7 @@ Program {
               elements: Array [
                 NumericLiteral {
                   value: 1
+                  format: undefined
                   loc: Object {
                     filename: 'input.ts'
                     end: Object {
@@ -2076,6 +2089,7 @@ Program {
                 }
                 NumericLiteral {
                   value: 2
+                  format: undefined
                   loc: Object {
                     filename: 'input.ts'
                     end: Object {
@@ -2092,6 +2106,7 @@ Program {
                 }
                 NumericLiteral {
                   value: 3
+                  format: undefined
                   loc: Object {
                     filename: 'input.ts'
                     end: Object {
@@ -2602,6 +2617,7 @@ Program {
                     }
                     value: NumericLiteral {
                       value: 10
+                      format: undefined
                       loc: Object {
                         filename: 'input.ts'
                         end: Object {
@@ -2665,6 +2681,7 @@ Program {
                     }
                     value: NumericLiteral {
                       value: 20
+                      format: undefined
                       loc: Object {
                         filename: 'input.ts'
                         end: Object {
@@ -2856,6 +2873,7 @@ Program {
                     }
                     value: NumericLiteral {
                       value: 1
+                      format: undefined
                       loc: Object {
                         filename: 'input.ts'
                         end: Object {
@@ -2919,6 +2937,7 @@ Program {
                     }
                     value: NumericLiteral {
                       value: 2
+                      format: undefined
                       loc: Object {
                         filename: 'input.ts'
                         end: Object {
@@ -2982,6 +3001,7 @@ Program {
                     }
                     value: NumericLiteral {
                       value: 3
+                      format: undefined
                       loc: Object {
                         filename: 'input.ts'
                         end: Object {
@@ -3166,6 +3186,7 @@ Program {
                     }
                     value: NumericLiteral {
                       value: 4
+                      format: undefined
                       loc: Object {
                         filename: 'input.ts'
                         end: Object {
@@ -3867,6 +3888,7 @@ Program {
                     }
                     value: NumericLiteral {
                       value: 10
+                      format: undefined
                       loc: Object {
                         filename: 'input.ts'
                         end: Object {
@@ -4013,6 +4035,7 @@ Program {
                             }
                             right: NumericLiteral {
                               value: 20
+                              format: undefined
                               loc: Object {
                                 filename: 'input.ts'
                                 end: Object {
@@ -4180,6 +4203,7 @@ Program {
               }
               expression: NumericLiteral {
                 value: 10
+                format: undefined
                 loc: Object {
                   filename: 'input.ts'
                   end: Object {
@@ -4355,6 +4379,7 @@ Program {
                 }
                 argument: NumericLiteral {
                   value: 10
+                  format: undefined
                   loc: Object {
                     filename: 'input.ts'
                     end: Object {
@@ -4498,6 +4523,7 @@ Program {
                 elements: Array [
                   NumericLiteral {
                     value: 10
+                    format: undefined
                     loc: Object {
                       filename: 'input.ts'
                       end: Object {
@@ -4687,6 +4713,7 @@ Program {
                             elements: Array [
                               NumericLiteral {
                                 value: 10
+                                format: undefined
                                 loc: Object {
                                   filename: 'input.ts'
                                   end: Object {
@@ -4870,6 +4897,7 @@ Program {
                     }
                     value: NumericLiteral {
                       value: 10
+                      format: undefined
                       loc: Object {
                         filename: 'input.ts'
                         end: Object {
@@ -4948,6 +4976,7 @@ Program {
                       elements: Array [
                         NumericLiteral {
                           value: 20
+                          format: undefined
                           loc: Object {
                             filename: 'input.ts'
                             end: Object {
@@ -4964,6 +4993,7 @@ Program {
                         }
                         NumericLiteral {
                           value: 30
+                          format: undefined
                           loc: Object {
                             filename: 'input.ts'
                             end: Object {
@@ -5125,6 +5155,7 @@ Program {
                                 }
                                 value: NumericLiteral {
                                   value: 42
+                                  format: undefined
                                   loc: Object {
                                     filename: 'input.ts'
                                     end: Object {
@@ -5268,6 +5299,7 @@ Program {
               }
               expression: NumericLiteral {
                 value: 10
+                format: undefined
                 loc: Object {
                   filename: 'input.ts'
                   end: Object {
@@ -5696,6 +5728,7 @@ Program {
                 elements: Array [
                   NumericLiteral {
                     value: 1
+                    format: undefined
                     loc: Object {
                       filename: 'input.ts'
                       end: Object {
@@ -5712,6 +5745,7 @@ Program {
                   }
                   NumericLiteral {
                     value: 2
+                    format: undefined
                     loc: Object {
                       filename: 'input.ts'
                       end: Object {
@@ -5728,6 +5762,7 @@ Program {
                   }
                   NumericLiteral {
                     value: 3
+                    format: undefined
                     loc: Object {
                       filename: 'input.ts'
                       end: Object {
@@ -5905,6 +5940,7 @@ Program {
                     }
                     value: NumericLiteral {
                       value: 10
+                      format: undefined
                       loc: Object {
                         filename: 'input.ts'
                         end: Object {
@@ -5968,6 +6004,7 @@ Program {
                     }
                     value: NumericLiteral {
                       value: 20
+                      format: undefined
                       loc: Object {
                         filename: 'input.ts'
                         end: Object {

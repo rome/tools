@@ -136,6 +136,7 @@ Program {
                       }
                       right: NumericLiteral {
                         value: 17
+                        format: undefined
                         loc: Object {
                           filename: 'input.js'
                           end: Object {

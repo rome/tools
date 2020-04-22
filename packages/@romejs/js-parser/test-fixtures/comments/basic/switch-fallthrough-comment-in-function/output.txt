@@ -211,6 +211,7 @@ Program {
                 }
                 test: NumericLiteral {
                   value: 1
+                  format: undefined
                   leadingComments: Array ['0']
                   loc: Object {
                     filename: 'input.js'
@@ -243,6 +244,7 @@ Program {
                 }
                 test: NumericLiteral {
                   value: 2
+                  format: undefined
                   leadingComments: Array ['1']
                   loc: Object {
                     filename: 'input.js'

@@ -7,7 +7,12 @@
 
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {JSParser, OpeningContext} from '../parser';
-import {RegExpTokenValue, readRegexp, finishToken} from '../tokenizer/index';
+import {
+  RegExpTokenValue,
+  readRegexp,
+  finishToken,
+  NumberTokenValue,
+} from '../tokenizer/index';
 import * as charCodes from '@romejs/string-charcodes';
 import {types as tt} from '../tokenizer/types';
 import {
@@ -3425,10 +3430,16 @@ function parseBigIntLiteral(parser: JSParser): BigIntLiteral {
 
 export function parseNumericLiteral(parser: JSParser): NumericLiteral {
   const start = parser.getPosition();
-  const value = Number(parser.state.tokenValue);
+  const {tokenValue} = parser.state;
+  if (!(tokenValue instanceof NumberTokenValue)) {
+    throw new Error('Expected NumberTokenValue');
+  }
+
+  const {value, format} = tokenValue;
   parser.next();
   return parser.finishNode(start, {
     type: 'NumericLiteral',
+    format,
     value,
   });
 }

@@ -157,6 +157,7 @@ Program {
                 types: Array [
                   NumericLiteralTypeAnnotation {
                     value: 1
+                    format: undefined
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
@@ -173,6 +174,7 @@ Program {
                   }
                   NumericLiteralTypeAnnotation {
                     value: 2
+                    format: undefined
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
@@ -238,6 +240,7 @@ Program {
                 types: Array [
                   NumericLiteralTypeAnnotation {
                     value: 3
+                    format: undefined
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
@@ -254,6 +257,7 @@ Program {
                   }
                   NumericLiteralTypeAnnotation {
                     value: 4
+                    format: undefined
                     loc: Object {
                       filename: 'input.js'
                       end: Object {

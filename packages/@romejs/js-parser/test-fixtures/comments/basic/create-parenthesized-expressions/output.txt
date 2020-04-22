@@ -110,6 +110,7 @@ Program {
       }
       expression: NumericLiteral {
         value: 1
+        format: undefined
         leadingComments: undefined
         loc: Object {
           filename: 'input.js'
@@ -143,6 +144,7 @@ Program {
       }
       expression: NumericLiteral {
         value: 2
+        format: undefined
         leadingComments: undefined
         loc: Object {
           filename: 'input.js'
@@ -175,6 +177,7 @@ Program {
       }
       expression: NumericLiteral {
         value: 3
+        format: undefined
         leadingComments: Array ['2']
         loc: Object {
           filename: 'input.js'
@@ -207,6 +210,7 @@ Program {
       }
       expression: NumericLiteral {
         value: 4
+        format: undefined
         leadingComments: Array ['3']
         loc: Object {
           filename: 'input.js'

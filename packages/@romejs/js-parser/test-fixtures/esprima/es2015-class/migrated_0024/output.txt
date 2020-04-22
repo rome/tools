@@ -72,6 +72,7 @@ Program {
           }
           superClass: NumericLiteral {
             value: 0
+            format: undefined
             loc: Object {
               filename: 'input.js'
               end: Object {

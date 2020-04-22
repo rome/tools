@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment} from '@romejs/js-ast';
+import {AnyComment, NumericLiteral} from '@romejs/js-ast';
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {JSParser} from '../parser';
 import {xhtmlEntityNameToChar} from '../xhtmlEntities';
@@ -130,6 +130,16 @@ export class RegExpTokenValue {
 
   pattern: string;
   flags: Set<string>;
+}
+
+export class NumberTokenValue {
+  constructor(value: number, format: NumericLiteral['format']) {
+    this.value = value;
+    this.format = format;
+  }
+
+  value: number;
+  format: NumericLiteral['format'];
 }
 
 // ## Tokenizer
@@ -748,19 +758,19 @@ function getTokenFromCode(parser: JSParser, code: number): void {
 
     // '0x', '0X' - hex number
     if (next === charCodes.lowercaseX || next === charCodes.uppercaseX) {
-      readRadixNumber(parser, 16);
+      readRadixNumber(parser, 16, 'hex');
       return undefined;
     }
 
     // '0o', '0O' - octal number
     if (next === charCodes.lowercaseO || next === charCodes.uppercaseO) {
-      readRadixNumber(parser, 8);
+      readRadixNumber(parser, 8, 'octal');
       return undefined;
     }
 
     // '0b', '0B' - binary number
     if (next === charCodes.lowercaseB || next === charCodes.uppercaseB) {
-      readRadixNumber(parser, 2);
+      readRadixNumber(parser, 2, 'binary');
       return undefined;
     }
   }
@@ -1140,17 +1150,22 @@ function readInt(
   return total;
 }
 
-function readRadixNumber(parser: JSParser, radix: number): void {
+function readRadixNumber(
+  parser: JSParser,
+  radix: number,
+  format: NumericLiteral['format'],
+): void {
   const start = parser.state.index;
   let isBigInt = false;
 
   parser.state.index = ob1Add(parser.state.index, 2); // 0x
-  const val = readInt(parser, radix);
+  let val = readInt(parser, radix);
   if (val === undefined) {
     parser.addDiagnostic({
       index: ob1Add(start, 2),
       description: descriptions.JS_PARSER.EXPECTED_NUMBER_IN_RADIX(radix),
     });
+    val = 0;
   }
 
   if (parser.input.charCodeAt(getIndex(parser)) === charCodes.lowercaseN) {
@@ -1174,7 +1189,7 @@ function readRadixNumber(parser: JSParser, radix: number): void {
     return undefined;
   }
 
-  finishToken(parser, tt.num, val);
+  finishToken(parser, tt.num, new NumberTokenValue(val, format));
 }
 
 // Read an integer, octal integer, or floating-point number.
@@ -1271,8 +1286,10 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
     return undefined;
   }
 
-  const val = isOctal ? parseInt(str, 8) : parseFloat(str);
-  finishToken(parser, tt.num, val);
+  const num = isOctal ? parseInt(str, 8) : parseFloat(str);
+  finishToken(parser, tt.num, new NumberTokenValue(num, isOctal
+    ? 'octal'
+    : undefined));
 }
 
 // Read a string value, interpreting backslash-escapes.
