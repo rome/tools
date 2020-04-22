@@ -29,6 +29,7 @@ import noExplicitAny from './noExplicitAny';
 import noExtraBooleanCast from './noExtraBooleanCast';
 import noFunctionAssign from './noFunctionAssign';
 import noImportAssign from './noImportAssign';
+import noInnerDeclarations from './noInnerDeclarations';
 import noLabelVar from './noLabelVar';
 import noMultipleSpacesInRegularExpressionLiterals from './noMultipleSpacesInRegularExpressionLiterals';
 import noReferenceToNonExistingGroup from './noReferenceToNonExistingGroup';
@@ -72,6 +73,7 @@ export const lintTransforms = [
   noExtraBooleanCast,
   noFunctionAssign,
   noImportAssign,
+  noInnerDeclarations,
   noLabelVar,
   noMultipleSpacesInRegularExpressionLiterals,
   noReferenceToNonExistingGroup,

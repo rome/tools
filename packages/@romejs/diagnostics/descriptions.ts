@@ -422,6 +422,11 @@ export const descriptions = createMessages(
         message: 'Use Array<T> instead of shorthand T[]',
       },
 
+      NO_INNER_DECLARATIONS: (body: string) => ({
+        category: 'lint/noInnerDeclarations',
+        message: `Move function declaration to the ${body} root.`,
+      }),
+
       NO_UNSAFE_FINALLY: (type: string) => ({
         category: 'lint/noUnsafeFinally',
         message: markup`Unsafe usage of ${type}.`,
