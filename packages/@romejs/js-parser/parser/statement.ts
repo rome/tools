@@ -89,6 +89,12 @@ import {
 import {ob1Number0, ob1Get0, ob1Add, ob1Inc} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 
+type CurrentStatement = undefined | {
+  start: Position;
+  test: undefined | AnyExpression;
+  consequent: Array<AnyStatement>;
+};
+
 const loopLabel: Label = {kind: 'loop'};
 const switchLabel: Label = {kind: 'switch'};
 
@@ -686,6 +692,24 @@ export function parseReturnStatement(
   });
 }
 
+function pushCase(
+  cases: Array<SwitchCase>,
+  parser: JSParser,
+  cur: CurrentStatement,
+) {
+  if (cur === undefined) {
+    return;
+  }
+
+  cases.push(parser.finishNode(cur.start, {
+    type: 'SwitchCase',
+    test: cur.test,
+    consequent: cur.consequent,
+  }));
+
+  cur = undefined;
+}
+
 export function parseSwitchStatement(
   parser: JSParser,
   start: Position,
@@ -704,25 +728,7 @@ export function parseSwitchStatement(
 
     // adding statements to.
 
-    let cur: undefined | {
-      start: Position;
-      test: undefined | AnyExpression;
-      consequent: Array<AnyStatement>;
-    };
-
-    function pushCase() {
-      if (cur === undefined) {
-        return;
-      }
-
-      cases.push(parser.finishNode(cur.start, {
-        type: 'SwitchCase',
-        test: cur.test,
-        consequent: cur.consequent,
-      }));
-
-      cur = undefined;
-    }
+    let cur: CurrentStatement;
 
     let sawDefault;
 
@@ -732,7 +738,7 @@ export function parseSwitchStatement(
       }
 
       if (parser.match(tt._case) || parser.match(tt._default)) {
-        pushCase();
+        pushCase(cases, parser, cur);
 
         const isCase = parser.match(tt._case);
 
@@ -772,7 +778,7 @@ export function parseSwitchStatement(
       }
     }
 
-    pushCase();
+    pushCase(cases, parser, cur);
   }
 
   parser.expectClosing(openContext);
