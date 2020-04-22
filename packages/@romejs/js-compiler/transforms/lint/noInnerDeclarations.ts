@@ -15,6 +15,8 @@ export default {
     const {node} = path;
 
     if (node.type === 'FunctionDeclaration') {
+      // The first parent is either `program` or `block` no matter where we are
+      // that is why we need to go one more step backward.
       const parentScopeKind = path.parentPath.parentPath.scope.kind;
       if (parentScopeKind !== 'block' && parentScopeKind !== 'loop') {
         return node;
