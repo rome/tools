@@ -165,69 +165,69 @@ async function createRegularWatcher(
 
   const watchers: AbsoluteFilePathMap<fs.FSWatcher> = new AbsoluteFilePathMap();
 
-  try {
-    function onFoundDirectory(folderPath: AbsoluteFilePath) {
-      if (watchers.has(folderPath)) {
-        return;
-      }
-
-      if (process.platform === 'linux') {
-        // Node on Linux doesn't support recursive directory watching so we need an fs.watch for every directory...
-      } else if (!folderPath.equal(projectFolderPath)) {
-        // If we're on any other platform then only watch the root project folder
-        return;
-      }
-
-      const watcher = watch(
-        folderPath,
-        {recursive: true, persistent: false},
-        (
-          eventType,
-          filename,
-        ) => {
-          if (filename === null) {
-            // TODO not sure how we want to handle this?
-            return;
-          }
-
-          const path = folderPath.resolve(filename);
-
-          memoryFs.stat(path).then(
-            (newStats) => {
-              const diagnostics = memoryFs.master.createDisconnectedDiagnosticsProcessor(
-                [
-                  {
-                    category: 'memory-fs',
-                    message: 'Processing fs.watch changes',
-                  },
-                ],
-              );
-
-              if (newStats.type === 'file') {
-                memoryFs.handleFileChange(path, newStats, {
-                  diagnostics,
-                  crawl: true,
-                });
-              } else if (newStats.type === 'directory') {
-                memoryFs.addDirectory(path, newStats, {
-                  crawl: true,
-                  diagnostics,
-                  onFoundDirectory,
-                });
-              }
-            },
-          ).catch((err) => {
-            if (err.code === 'ENOENT') {
-              memoryFs.handleDeletion(path);
-            } else {
-              throw err;
-            }
-          });
-        },
-      );
-      watchers.set(folderPath, watcher);
+  function onFoundDirectory(folderPath: AbsoluteFilePath) {
+    if (watchers.has(folderPath)) {
+      return;
     }
 
+    if (process.platform === 'linux') {
+      // Node on Linux doesn't support recursive directory watching so we need an fs.watch for every directory...
+    } else if (!folderPath.equal(projectFolderPath)) {
+      // If we're on any other platform then only watch the root project folder
+      return;
+    }
+
+    const watcher = watch(
+      folderPath,
+      {recursive: true, persistent: false},
+      (
+        eventType,
+        filename,
+      ) => {
+        if (filename === null) {
+          // TODO not sure how we want to handle this?
+          return;
+        }
+
+        const path = folderPath.resolve(filename);
+
+        memoryFs.stat(path).then(
+          (newStats) => {
+            const diagnostics = memoryFs.master.createDisconnectedDiagnosticsProcessor(
+              [
+                {
+                  category: 'memory-fs',
+                  message: 'Processing fs.watch changes',
+                },
+              ],
+            );
+
+            if (newStats.type === 'file') {
+              memoryFs.handleFileChange(path, newStats, {
+                diagnostics,
+                crawl: true,
+              });
+            } else if (newStats.type === 'directory') {
+              memoryFs.addDirectory(path, newStats, {
+                crawl: true,
+                diagnostics,
+                onFoundDirectory,
+              });
+            }
+          },
+        ).catch((err) => {
+          if (err.code === 'ENOENT') {
+            memoryFs.handleDeletion(path);
+          } else {
+            throw err;
+          }
+        });
+      },
+    );
+    watchers.set(folderPath, watcher);
+  }
+
+  try {
     // No need to call watch() on the projectFolder since it will call us
 
     // Perform an initial crawl
@@ -288,6 +288,69 @@ async function createWatchmanWatcher(
   // Show a message when watchman takes too long
   queueCallout();
 
+  async function processChanges(
+    data: WatchmanSubscriptionValue,
+    diagnostics: DiagnosticsProcessor,
+  ) {
+    if (data['state-enter'] || data['state-leave']) {
+      return;
+    }
+
+    // rome-suppress-next-line lint/noExplicitAny
+    const dirs: Array<[AbsoluteFilePath, any]> = [];
+    // rome-suppress-next-line lint/noExplicitAny
+    const files: Array<[AbsoluteFilePath, any]> = [];
+
+    for (const file of data.files) {
+      const path = projectFolderPath.append(file.name);
+
+      if (file.exists === false) {
+        memoryFs.handleDeletion(path);
+        continue;
+      }
+
+      if (file.type === 'f') {
+        const basename = path.getBasename();
+
+        if (PRIORITY_FILES.has(basename)) {
+          files.unshift([path, file]);
+        } else {
+          files.push([path, file]);
+        }
+      } else if (file.type === 'd') {
+        dirs.push([path, file]);
+      }
+    }
+
+    await Promise.all(dirs.map(async ([path, info]) => {
+      await memoryFs.addDirectory(path, {
+        size: info.size,
+        mtime: info.mtime,
+        type: 'directory',
+      }, {diagnostics, crawl: false});
+    }));
+
+    await Promise.all(files.map(async ([path, info]) => {
+      const stats: Stats = {
+        size: info.size,
+        mtime: info.mtime,
+        type: 'file',
+      };
+
+      if (memoryFs.files.has(path)) {
+        await memoryFs.handleFileChange(path, stats, {
+          diagnostics,
+          crawl: false,
+        });
+      } else {
+        await memoryFs.addFile(path, stats, {
+          diagnostics,
+          crawl: false,
+        });
+      }
+    }));
+  }
+
   try {
     const client = await createWatchmanClient(Reporter.fromProcess());
 
@@ -305,69 +368,6 @@ async function createWatchmanWatcher(
       throw new Error('Expected this to be a fresh instance');
     }
     clearTimeout(timeout);
-
-    async function processChanges(
-      data: WatchmanSubscriptionValue,
-      diagnostics: DiagnosticsProcessor,
-    ) {
-      if (data['state-enter'] || data['state-leave']) {
-        return;
-      }
-
-      // rome-suppress-next-line lint/noExplicitAny
-      const dirs: Array<[AbsoluteFilePath, any]> = [];
-      // rome-suppress-next-line lint/noExplicitAny
-      const files: Array<[AbsoluteFilePath, any]> = [];
-
-      for (const file of data.files) {
-        const path = projectFolderPath.append(file.name);
-
-        if (file.exists === false) {
-          memoryFs.handleDeletion(path);
-          continue;
-        }
-
-        if (file.type === 'f') {
-          const basename = path.getBasename();
-
-          if (PRIORITY_FILES.has(basename)) {
-            files.unshift([path, file]);
-          } else {
-            files.push([path, file]);
-          }
-        } else if (file.type === 'd') {
-          dirs.push([path, file]);
-        }
-      }
-
-      await Promise.all(dirs.map(async ([path, info]) => {
-        await memoryFs.addDirectory(path, {
-          size: info.size,
-          mtime: info.mtime,
-          type: 'directory',
-        }, {diagnostics, crawl: false});
-      }));
-
-      await Promise.all(files.map(async ([path, info]) => {
-        const stats: Stats = {
-          size: info.size,
-          mtime: info.mtime,
-          type: 'file',
-        };
-
-        if (memoryFs.files.has(path)) {
-          await memoryFs.handleFileChange(path, stats, {
-            diagnostics,
-            crawl: false,
-          });
-        } else {
-          await memoryFs.addFile(path, stats, {
-            diagnostics,
-            crawl: false,
-          });
-        }
-      }));
-    }
 
     activity.setText(`Processing results`);
     await processChanges(initial, diagnostics);
