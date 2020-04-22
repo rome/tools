@@ -118,5 +118,5 @@ export function toRelativeUrl(root: string, path: string): string {
   }
 
   // Make sure we add a '../' for each component we removed from the root.
-  return Array(level + 1).join('../') + path.substr(root.length + 1);
+  return '../'.repeat(level) + path.substr(root.length + 1);
 }
