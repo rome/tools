@@ -383,7 +383,7 @@ function buildJSHandler(
 
 const DEFAULT_HANDLERS: ExtensionsMap = new Map();
 
-const DEFUALT_ASSET_EXTENSIONS = [
+const DEFAULT_ASSET_EXTENSIONS = [
   // Images
   'png',
   'jpg',
@@ -407,7 +407,8 @@ const DEFUALT_ASSET_EXTENSIONS = [
   'ttf',
   'otf',
 ];
-for (const ext of DEFUALT_ASSET_EXTENSIONS) {
+
+for (const ext of DEFAULT_ASSET_EXTENSIONS) {
   setHandler(ext, assetHandler);
 }
 
