@@ -127,6 +127,7 @@ export function parseTypeLiteralAnnotation(
         return parser.finishNode(start, {
           type: 'NumericLiteralTypeAnnotation',
           value: -value,
+          format,
         });
       } else {
         parser.addDiagnostic({
