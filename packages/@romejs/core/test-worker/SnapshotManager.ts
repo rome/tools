@@ -253,7 +253,7 @@ export default class SnapshotManager {
       if (this.options.freezeSnapshots) {
         if (!used) {
           await this.emitDiagnostic(descriptions.SNAPSHOTS.REDUNDANT);
-        } else if (exists) {
+        } else if (!exists) {
           await this.emitDiagnostic(descriptions.SNAPSHOTS.MISSING);
         } else if (formatted !== raw) {
           await this.emitDiagnostic(descriptions.SNAPSHOTS.INCORRECT(
