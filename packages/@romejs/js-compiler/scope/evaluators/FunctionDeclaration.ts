@@ -8,7 +8,6 @@
 import Scope from '../Scope';
 import {FunctionBinding} from '@romejs/js-compiler';
 import {FunctionDeclaration, AnyNode} from '@romejs/js-ast';
-import {addFunctionBindings} from '../utils';
 
 export default {
   creator: false,
@@ -20,9 +19,5 @@ export default {
         scope,
       }));
     }
-
-    const newScope = scope.fork('function', node);
-    addFunctionBindings(newScope, node);
-    return newScope;
   },
 };

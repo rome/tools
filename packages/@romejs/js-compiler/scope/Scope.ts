@@ -11,7 +11,11 @@ import {SCOPE_PRIVATE_PREFIX} from '../constants';
 import evaluators from './evaluators/index';
 import * as GLOBALS from './globals';
 import {Binding} from './bindings';
-import {isValidIdentifierName} from '@romejs/js-ast-utils';
+import {
+  isValidIdentifierName,
+  isVariableIdentifier,
+} from '@romejs/js-ast-utils';
+import Path from '../lib/Path';
 
 let scopeCounter = 0;
 
@@ -165,8 +169,18 @@ export default class Scope {
     return this.bindings.get(name);
   }
 
+  getBindingFromPath(path: Path): undefined | Binding {
+    const {node} = path;
+    if (isVariableIdentifier(node)) {
+      // TODO we can do some isInTypeAnnotation magic to get the proper "type" binding
+      return this.getBinding(node.name);
+    } else {
+      return undefined;
+    }
+  }
+
   getBinding(name: string): undefined | Binding {
-    const binding = this.getOwnBinding(name);
+    const binding = this.bindings.get(name);
     if (binding !== undefined) {
       return binding;
     }

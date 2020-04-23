@@ -54,6 +54,7 @@ export default {
         NODE_VARIABLES.includes(name);
 
       if (!isDefined) {
+        scope.dump();
         path.context.addNodeDiagnostic(
           node,
           descriptions.LINT.UNDECLARED_VARIABLES(name),
