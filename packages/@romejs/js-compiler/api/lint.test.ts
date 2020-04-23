@@ -97,7 +97,7 @@ export async function testLint(t: TestHelper, input: string, {
     };
   });
 
-  const snapshotName = t.snapshot(printDiagnosticsToString({
+  const snapshotName = await t.snapshot(printDiagnosticsToString({
     diagnostics,
     suppressions: res.suppressions,
   }));
