@@ -69,12 +69,10 @@ const promise = createFixtureTests(
       syntax,
     });
 
-    const outputFile = createAbsoluteFilePath(
-      inputFile.absolute.getParent().append(
-        `${inputFile.absolute.getExtensionlessBasename()}.test.md`,
-      ).join(),
-    );
-    t.snapshot(ast, undefined, outputFile.join());
+    const outputFile = inputFile.absolute.getParent().append(
+      `${inputFile.absolute.getExtensionlessBasename()}.test.md`,
+    ).join();
+    t.snapshot(ast, undefined, outputFile);
   },
 );
 

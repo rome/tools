@@ -429,37 +429,37 @@ export default class TestAPI implements TestHelper {
     throw new Error('unimplemented');
   }
 
-  snapshot(expected: unknown, message?: string, fileName?: string): string {
+  snapshot(expected: unknown, message?: string, filename?: string): string {
     const id = this.snapshotCounter++;
-    return this._snapshotNamed(String(id), expected, message, 2, fileName);
+    return this._snapshotNamed(String(id), expected, message, 2, filename);
   }
 
   snapshotNamed(
     name: string,
     expected: unknown,
     message?: string,
-    fileName?: string,
+    filename?: string,
   ): string {
-    return this._snapshotNamed(name, expected, message, 1, fileName);
+    return this._snapshotNamed(name, expected, message, 1, filename);
   }
 
   getSnapshot(snapshotName: string): unknown {
     return this.snapshotManager.get(this.testName, snapshotName);
   }
 
-  _normalizeFileName(fileName: string): string {
-    if (!fileName.endsWith('test.md')) {
-      const lastIndex = fileName.lastIndexOf('.');
+  _normalizeFileName(filename: string): string {
+    if (!filename.endsWith('test.md')) {
+      const lastIndex = filename.lastIndexOf('.');
       let baseName = undefined;
       if (lastIndex === -1) {
         // extensionless file
-        baseName = fileName;
+        baseName = filename;
       } else {
-        baseName = fileName.substring(0, lastIndex);
+        baseName = filename.substring(0, lastIndex);
       }
       return `${baseName}.test.md`;
     }
-    return fileName;
+    return filename;
   }
 
   _snapshotNamed(
@@ -467,7 +467,7 @@ export default class TestAPI implements TestHelper {
     expected: unknown,
     message?: string,
     framesToPop?: number,
-    fileName?: string,
+    filename?: string,
   ): string {
     let language: undefined | string;
 
@@ -480,9 +480,9 @@ export default class TestAPI implements TestHelper {
     }
 
     let snapshotFile = undefined;
-    if (fileName !== undefined) {
-      fileName = this._normalizeFileName(fileName);
-      snapshotFile = createAbsoluteFilePath(fileName);
+    if (filename !== undefined) {
+      filename = this._normalizeFileName(filename);
+      snapshotFile = createAbsoluteFilePath(filename);
     }
 
     // Get the current snapshot
