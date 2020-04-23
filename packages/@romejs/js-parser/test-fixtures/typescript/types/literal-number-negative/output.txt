@@ -86,6 +86,7 @@ Program {
                 }
                 typeAnnotation: NumericLiteralTypeAnnotation {
                   value: -1
+                  format: undefined
                   loc: Object {
                     filename: 'input.ts'
                     end: Object {

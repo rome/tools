@@ -112,7 +112,17 @@ foobar('yes');
 ### `2`
 
 ```
-✔ No known problems!
+
+ unknown:1:26 lint/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Reassignment of function declaration
+
+    function foo() { var foo; foo = bar; }
+                              ^^^ 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 

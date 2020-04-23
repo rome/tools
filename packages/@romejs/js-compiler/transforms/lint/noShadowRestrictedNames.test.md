@@ -68,38 +68,14 @@ foobar('yes');
 ### `2`
 
 ```
-
- unknown:1:10 lint/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Shadowing of global property Array
-
-    !function Array() {}
-              ^^^^^ 
-
-  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
 ### `3`
 
 ```
-
- unknown:1:14 lint/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Shadowing of global property JSON
-
-    function test(JSON) {}
-                  ^^^^ 
-
-  ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
