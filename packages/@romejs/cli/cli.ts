@@ -14,7 +14,7 @@ import {
   DEFAULT_CLIENT_FLAGS,
   masterCommands,
   localCommands,
-  VERSION
+  VERSION,
 } from '@romejs/core';
 import setProcessTitle from './utils/setProcessTitle';
 import {parseCLIFlagsFromProcess} from '@romejs/cli-flags';
