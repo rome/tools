@@ -36,14 +36,16 @@ export interface TestHelper {
   notThrowsAsync(nonThrower: AsyncFunc, message?: string): Promise<void>;
   regex(contents: string, regex: RegExp, message?: string): void;
   notRegex(contents: string, regex: RegExp, message?: string): void;
-  snapshot(expected: unknown, message?: string, fileName?: string): string;
+  snapshot(expected: unknown, message?: string, fileName?: string): Promise<
+    string
+  >;
   snapshotNamed(
     name: string,
     expected: unknown,
     message?: string,
-    fileName?: string,
-  ): string;
-  getSnapshot(snapshotName: string): unknown;
+    filename?: string,
+  ): Promise<string>;
+  getSnapshot(snapshotName: string): Promise<unknown>;
 }
 
 export type TestName = string | Array<string>;
