@@ -14,9 +14,9 @@ import {
   DEFAULT_CLIENT_FLAGS,
   masterCommands,
   localCommands,
+  VERSION
 } from '@romejs/core';
 import setProcessTitle from './utils/setProcessTitle';
-import {VERSION} from './utils/getRomeVersion';
 import {parseCLIFlagsFromProcess} from '@romejs/cli-flags';
 import {
   createAbsoluteFilePath,
@@ -55,7 +55,7 @@ export default async function cli() {
   const p = parseCLIFlagsFromProcess({
     programName: 'rome',
     usage: '[command] [flags]',
-    version: `v${VERSION}`,
+    version: VERSION,
     defineFlags(c: Consumer): {
       cliFlags: CLIFlags;
       clientFlags: ClientFlags;
