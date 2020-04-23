@@ -338,7 +338,7 @@ export default class Parser<T> {
   async init(): Promise<T> {
     // Show help for --version
     if (this.flags.has('version')) {
-      this.reporter.logAll(String(this.opts.version));
+      this.reporter.logAll(`v${String(this.opts.version)}`);
       process.exit(0);
     }
 
