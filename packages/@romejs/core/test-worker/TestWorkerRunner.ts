@@ -411,7 +411,7 @@ export default class TestWorkerRunner {
   async prepare(): Promise<void> {
     return this.wrap(async () => {
       // Setup
-      await this.snapshotManager.load();
+      await this.snapshotManager.init();
       await this.discoverTests();
       await this.emitFoundTests();
 

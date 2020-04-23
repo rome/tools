@@ -64,6 +64,13 @@ function matchExpectedError(error: Error, expected: ExpectedError): boolean {
 
 export type OnTimeout = (time: number) => void;
 
+type SnapshotOptions = {
+  entryName: string;
+  expected: unknown;
+  message?: string;
+  optionalFilename?: string;
+};
+
 export default class TestAPI implements TestHelper {
   constructor({
     testName,
@@ -82,9 +89,19 @@ export default class TestAPI implements TestHelper {
     this.options = options;
     this.snapshotManager = snapshotManager;
     this.snapshotCounter = 0;
+    this.loadingSnapshots = 0;
     this.file = file;
 
     this.teardownEvent = new Event({name: 'TestAPI.teardown'});
+    this.onTeardown(
+      async () => {
+        if (this.loadingSnapshots) {
+          throw new Error(
+              `Test finished while we were still loading snapshots. Did you forget an await before t.snapshot?`,
+            );
+        }
+      },
+    );
 
     this.startTime = Date.now();
     this.onTimeout = onTimeout;
@@ -107,6 +124,7 @@ export default class TestAPI implements TestHelper {
   advice: DiagnosticAdvice;
   teardownEvent: Event<void, void>;
   testName: string;
+  loadingSnapshots: number;
   snapshotCounter: number;
   snapshotManager: SnapshotManager;
 
@@ -429,25 +447,40 @@ export default class TestAPI implements TestHelper {
     throw new Error('unimplemented');
   }
 
-  snapshot(expected: unknown, message?: string, filename?: string): string {
+  snapshot(
+    expected: unknown,
+    message?: string,
+    optionalFilename?: string,
+  ): Promise<string> {
     const id = this.snapshotCounter++;
-    return this._snapshotNamed(String(id), expected, message, 2, filename);
+    return this.catchNamedSnapshot({
+      entryName: String(id),
+      expected,
+      message,
+      optionalFilename,
+    });
   }
 
   snapshotNamed(
-    name: string,
+    entryName: string,
     expected: unknown,
     message?: string,
-    filename?: string,
-  ): string {
-    return this._snapshotNamed(name, expected, message, 1, filename);
+    optionalFilename?: string,
+  ): Promise<string> {
+    return this.catchNamedSnapshot({
+      entryName,
+      expected,
+      message,
+      optionalFilename,
+    });
   }
 
-  getSnapshot(snapshotName: string): unknown {
-    return this.snapshotManager.get(this.testName, snapshotName);
+  async getSnapshot(entryName: string): Promise<unknown> {
+    // TODO add `filename`
+    return this.snapshotManager.get(this.testName, entryName);
   }
 
-  _normalizeFileName(filename: string): string {
+  _normalizeSnapshotFilename(filename: string): string {
     if (!filename.endsWith('test.md')) {
       const lastIndex = filename.lastIndexOf('.');
       let baseName = undefined;
@@ -462,13 +495,19 @@ export default class TestAPI implements TestHelper {
     return filename;
   }
 
-  _snapshotNamed(
-    name: string,
-    expected: unknown,
-    message?: string,
-    framesToPop?: number,
-    filename?: string,
-  ): string {
+  catchNamedSnapshot(opts: SnapshotOptions): Promise<string> {
+    this.loadingSnapshots++;
+    return this.compareNamedSnapshot(opts).finally(() => {
+      this.loadingSnapshots--;
+    });
+  }
+
+  async compareNamedSnapshot({
+    entryName,
+    message,
+    expected,
+    optionalFilename,
+  }: SnapshotOptions): Promise<string> {
     let language: undefined | string;
 
     let formatted = '';
@@ -479,28 +518,28 @@ export default class TestAPI implements TestHelper {
       formatted = prettyFormat(expected);
     }
 
-    let snapshotFile = undefined;
-    if (filename !== undefined) {
-      filename = this._normalizeFileName(filename);
-      snapshotFile = createAbsoluteFilePath(filename);
+    let snapshotPath = undefined;
+    if (optionalFilename !== undefined) {
+      optionalFilename = this._normalizeSnapshotFilename(optionalFilename);
+      snapshotPath = createAbsoluteFilePath(optionalFilename);
     }
 
     // Get the current snapshot
-    const existingSnapshot = this.snapshotManager.get(
+    const existingSnapshot = await this.snapshotManager.get(
       this.testName,
-      name,
-      snapshotFile,
+      entryName,
+      snapshotPath,
     );
     if (existingSnapshot === undefined) {
       // No snapshot exists, let's save this one!
       this.snapshotManager.set({
         testName: this.testName,
-        snapshotName: String(name),
+        entryName,
         value: formatted,
         language,
-        snapshotFile,
+        snapshotPath,
       });
-      return name;
+      return entryName;
     }
 
     // Compare the snapshots
@@ -516,13 +555,13 @@ export default class TestAPI implements TestHelper {
 
       if (message === undefined) {
           message =
-          markup`Snapshot ${name} at <filelink emphasis target="${this.snapshotManager.path.join()}" /> doesn't match`;
+          markup`Snapshot ${entryName} at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" /> doesn't match`;
       } else {
         advice.push(
           {
             type: 'log',
             category: 'info',
-            message: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.path.join()}" />`,
+            message: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" />`,
           },
         );
       }
@@ -535,9 +574,10 @@ export default class TestAPI implements TestHelper {
         },
       );
 
-      this.fail(message, advice, framesToPop);
+      // Ignore the original t.snapshot call and caughtNamedSnapshot
+      this.fail(message, advice, 2);
     }
 
-    return name;
+    return entryName;
   }
 }

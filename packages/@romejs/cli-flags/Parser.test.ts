@@ -31,7 +31,7 @@ async function testParser<T>(t: TestHelper, {
 
   const {diagnostics} = await catchDiagnostics(async () => {
     const flags = await parser.init();
-    t.snapshotNamed('flags', flags);
+    await t.snapshotNamed('flags', flags);
     if (callback !== undefined) {
       callback(parser, flags);
     }
@@ -47,11 +47,11 @@ async function testParser<T>(t: TestHelper, {
     });
   }
 
-  t.snapshotNamed('output', stream.read());
+  await t.snapshotNamed('output', stream.read());
 
   const helpStream = reporter.attachCaptureStream();
   await parser.showHelp();
-  t.snapshotNamed('help', helpStream.read());
+  await t.snapshotNamed('help', helpStream.read());
 }
 
 test('does not allow shorthands', async (t) => {

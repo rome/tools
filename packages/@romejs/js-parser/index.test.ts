@@ -9,10 +9,9 @@ import {parseJS} from '@romejs/js-parser';
 import {createFixtureTests} from '@romejs/test-helpers';
 import {ConstProgramSyntax} from '@romejs/js-ast';
 import {removeCarriageReturn} from '@romejs/string-utils';
-import {createAbsoluteFilePath} from '@romejs/path';
 
 const promise = createFixtureTests(
-  (fixture, t) => {
+  async (fixture, t) => {
     const {options, files} = fixture;
 
     // Get the input JS
@@ -72,7 +71,7 @@ const promise = createFixtureTests(
     const outputFile = inputFile.absolute.getParent().append(
       `${inputFile.absolute.getExtensionlessBasename()}.test.md`,
     ).join();
-    t.snapshot(ast, undefined, outputFile);
+    await t.snapshot(ast, undefined, outputFile);
   },
 );
 

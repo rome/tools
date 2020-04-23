@@ -29,8 +29,8 @@ function generateComment(value: string, line: number): CommentBlock {
   };
 }
 
-test('single category', (t) => {
-  t.snapshot(extractSuppressionsFromComments([
+test('single category', async (t) => {
+  await t.snapshot(extractSuppressionsFromComments([
     generateComment('rome-suppress foo', 1),
     generateComment('* rome-suppress foo', 2),
     generateComment(' * rome-suppress foo', 3),
@@ -38,8 +38,8 @@ test('single category', (t) => {
   ]));
 });
 
-test('multiple categories', (t) => {
-  t.snapshot(extractSuppressionsFromComments([
+test('multiple categories', async (t) => {
+  await t.snapshot(extractSuppressionsFromComments([
     generateComment('rome-suppress foo bar', 1),
     generateComment('* rome-suppress foo bar', 2),
     generateComment(' * rome-suppress foo bar', 3),
@@ -50,14 +50,14 @@ test('multiple categories', (t) => {
   ]));
 });
 
-test('typos', (t) => {
-  t.snapshot(extractSuppressionsFromComments([
+test('typos', async (t) => {
+  await t.snapshot(extractSuppressionsFromComments([
     generateComment('rome-ignore foo bar', 1),
   ]));
 });
 
-test('duplicates', (t) => {
-  t.snapshot(extractSuppressionsFromComments([
+test('duplicates', async (t) => {
+  await t.snapshot(extractSuppressionsFromComments([
     generateComment('rome-suppress foo foo', 1),
   ]));
 });

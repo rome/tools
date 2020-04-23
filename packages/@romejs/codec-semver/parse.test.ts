@@ -9,7 +9,7 @@ import '@romejs/string-markup';
 import {parseSemverRange, parseSemverVersion} from '@romejs/codec-semver';
 import {test} from 'rome';
 
-test('parse', (t) => {
+test('parse', async (t) => {
   // versions in version mode
   const versionTests = [
     '1.2.3',
@@ -24,13 +24,13 @@ test('parse', (t) => {
     '1.2.3-45pre.42yes+45build',
   ];
   for (const str of versionTests) {
-    t.snapshot(parseSemverVersion({input: str}));
+    await t.snapshot(parseSemverVersion({input: str}));
   }
 
   // loose mode
   const looseRangeTests = ['* - 1.2.3', 'v1.2.3', '||', '', '1.2.3prerelease'];
   for (const str of looseRangeTests) {
-    t.snapshot(parseSemverRange({input: str, loose: true}));
+    await t.snapshot(parseSemverRange({input: str, loose: true}));
 
     t.throws(() => {
       parseSemverRange({input: str, loose: false});
@@ -90,7 +90,7 @@ test('parse', (t) => {
 
   // run range tests
   for (const str of rangeTests) {
-    t.snapshot(parseSemverRange({input: str}));
+    await t.snapshot(parseSemverRange({input: str}));
   }
 
   // ensure ranges throw in version mode
