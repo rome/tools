@@ -146,6 +146,7 @@ Program {
             }
             argument: NumericLiteral {
               value: 55
+              format: undefined
               leadingComments: undefined
               loc: Object {
                 filename: 'input.js'

@@ -54,6 +54,7 @@ Program {
         arguments: Array [
           NumericLiteral {
             value: 10
+            format: undefined
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -85,6 +86,7 @@ Program {
           }
           object: NumericLiteral {
             value: 123
+            format: undefined
             loc: Object {
               filename: 'input.js'
               end: Object {

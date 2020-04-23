@@ -99,6 +99,7 @@ Program {
           arguments: Array [
             NumericLiteral {
               value: 14
+              format: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -115,6 +116,7 @@ Program {
             }
             NumericLiteral {
               value: 3
+              format: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -131,6 +133,7 @@ Program {
             }
             NumericLiteral {
               value: 77
+              format: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -224,6 +227,7 @@ Program {
               arguments: Array [
                 NumericLiteral {
                   value: 42
+                  format: undefined
                   loc: Object {
                     filename: 'input.js'
                     end: Object {

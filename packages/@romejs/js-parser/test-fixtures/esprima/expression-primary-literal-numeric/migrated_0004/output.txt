@@ -39,6 +39,7 @@ Program {
       }
       expression: NumericLiteral {
         value: 0.14
+        format: undefined
         loc: Object {
           filename: 'input.js'
           end: Object {

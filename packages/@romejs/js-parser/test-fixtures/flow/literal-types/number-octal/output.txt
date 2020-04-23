@@ -89,6 +89,7 @@ Program {
                 }
                 typeAnnotation: NumericLiteralTypeAnnotation {
                   value: 123
+                  format: 'hex'
                   loc: Object {
                     filename: 'input.js'
                     end: Object {

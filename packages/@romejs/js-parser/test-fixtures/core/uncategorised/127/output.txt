@@ -54,6 +54,7 @@ Program {
         arguments: Array [
           NumericLiteral {
             value: 2_014
+            format: undefined
             loc: Object {
               filename: 'input.js'
               end: Object {

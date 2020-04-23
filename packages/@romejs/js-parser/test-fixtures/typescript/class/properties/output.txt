@@ -349,6 +349,7 @@ Program {
             }
             value: NumericLiteral {
               value: 1
+              format: undefined
               loc: Object {
                 filename: 'input.ts'
                 end: Object {

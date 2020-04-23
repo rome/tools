@@ -310,6 +310,7 @@ Program {
           }
           expression: NumericLiteral {
             value: 1
+            format: undefined
             loc: Object {
               filename: 'input.ts'
               end: Object {

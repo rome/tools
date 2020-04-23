@@ -109,6 +109,7 @@ Program {
           }
           NumericLiteralTypeAnnotation {
             value: 0
+            format: undefined
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -125,6 +126,7 @@ Program {
           }
           NumericLiteralTypeAnnotation {
             value: 1
+            format: undefined
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -268,6 +270,7 @@ Program {
               }
               argument: NumericLiteral {
                 value: 1
+                format: undefined
                 loc: Object {
                   filename: 'input.js'
                   end: Object {

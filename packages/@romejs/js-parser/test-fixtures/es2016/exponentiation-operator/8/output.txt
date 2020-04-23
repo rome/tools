@@ -54,6 +54,7 @@ Program {
         }
         right: NumericLiteral {
           value: 2
+          format: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -85,6 +86,7 @@ Program {
           }
           left: NumericLiteral {
             value: 2
+            format: undefined
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -117,6 +119,7 @@ Program {
             }
             argument: NumericLiteral {
               value: 1
+              format: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {

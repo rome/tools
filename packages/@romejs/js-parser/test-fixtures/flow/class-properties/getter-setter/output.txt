@@ -483,6 +483,7 @@ Program {
             kind: 'get'
             key: NumericLiteral {
               value: 1
+              format: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -552,6 +553,7 @@ Program {
             kind: 'set'
             key: NumericLiteral {
               value: 2
+              format: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {

@@ -51,8 +51,25 @@ Program {
             line: 1
           }
         }
+        test: BooleanLiteral {
+          value: true
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 4
+              index: 4
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+        }
         alternate: NumericLiteral {
           value: 0
+          format: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -69,6 +86,7 @@ Program {
         }
         consequent: NumericLiteral {
           value: 0.3
+          format: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -79,22 +97,6 @@ Program {
             start: Object {
               column: 5
               index: 5
-              line: 1
-            }
-          }
-        }
-        test: BooleanLiteral {
-          value: true
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
               line: 1
             }
           }
@@ -129,8 +131,25 @@ Program {
             line: 3
           }
         }
+        test: BooleanLiteral {
+          value: true
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 4
+              index: 15
+              line: 3
+            }
+            start: Object {
+              column: 0
+              index: 11
+              line: 3
+            }
+          }
+        }
         alternate: NumericLiteral {
           value: 0
+          format: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -147,6 +166,7 @@ Program {
         }
         consequent: NumericLiteral {
           value: 0.3
+          format: undefined
           loc: Object {
             filename: 'input.js'
             end: Object {
@@ -157,22 +177,6 @@ Program {
             start: Object {
               column: 7
               index: 18
-              line: 3
-            }
-          }
-        }
-        test: BooleanLiteral {
-          value: true
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 4
-              index: 15
-              line: 3
-            }
-            start: Object {
-              column: 0
-              index: 11
               line: 3
             }
           }

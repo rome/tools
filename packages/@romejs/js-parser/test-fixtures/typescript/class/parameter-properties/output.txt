@@ -385,6 +385,7 @@ Program {
                   }
                   right: NumericLiteral {
                     value: 0
+                    format: undefined
                     loc: Object {
                       filename: 'input.ts'
                       end: Object {
@@ -467,22 +468,6 @@ Program {
                       line: 10
                     }
                   }
-                  right: NumericLiteral {
-                    value: 0
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 29
-                        index: 251
-                        line: 10
-                      }
-                      start: Object {
-                        column: 28
-                        index: 250
-                        line: 10
-                      }
-                    }
-                  }
                   meta: PatternMeta {
                     accessibility: 'public'
                     readonly: false
@@ -496,6 +481,23 @@ Program {
                       start: Object {
                         column: 8
                         index: 230
+                        line: 10
+                      }
+                    }
+                  }
+                  right: NumericLiteral {
+                    value: 0
+                    format: undefined
+                    loc: Object {
+                      filename: 'input.ts'
+                      end: Object {
+                        column: 29
+                        index: 251
+                        line: 10
+                      }
+                      start: Object {
+                        column: 28
+                        index: 250
                         line: 10
                       }
                     }
