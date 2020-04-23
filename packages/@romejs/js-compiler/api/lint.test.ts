@@ -103,7 +103,7 @@ export async function testLint(t: TestHelper, input: string, {
   }));
 
   if (format) {
-    t.snapshotNamed(`${snapshotName}: formatted`, res.src);
+    await t.snapshotNamed(`${snapshotName}: formatted`, res.src);
   }
 
   t.clearAdvice();
