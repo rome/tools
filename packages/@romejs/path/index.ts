@@ -11,6 +11,8 @@ type FilePathOptions<Super> = {
   filename?: string;
   ext?: string;
   parent?: Super;
+  isDirectory?: boolean;
+  isFile?: boolean;
 };
 
 type FilePathOrString = string | UnknownFilePath;
@@ -39,6 +41,9 @@ class BaseFilePath<Super extends UnknownFilePath> {
     this.absoluteTarget = parsed.absoluteTarget;
     this.absoluteType = parsed.absoluteType;
 
+    this.isDirectory = opts.isDirectory;
+    this.isFile = opts.isFile;
+
     // Memoized
     this.memoizedUnique = undefined;
     this.memoizedParent = opts.parent;
@@ -59,6 +64,9 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
   absoluteType: ParsedPathAbsoluteType;
   absoluteTarget: undefined | string;
+
+  isDirectory: undefined | boolean;
+  isFile: undefined | boolean;
 
   getParsed(): ParsedPath {
     return {

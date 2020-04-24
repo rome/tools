@@ -102,16 +102,22 @@ export function writeFileSync(
 // readdir
 function createReaddirReturn(
   folder: AbsoluteFilePath,
-  files: Array<string>,
+  files: Array<fs.Dirent>,
 ): AbsoluteFilePathSet {
   return new AbsoluteFilePathSet(files.map((basename) => {
-    return folder.append(basename);
+    const path = folder.append(basename.name);
+    return new AbsoluteFilePath(path.getParsed(), {
+      ext: path.memoizedExtension,
+      filename: path.memoizedFilename,
+      isFile: basename.isFile(),
+      isDirectory: basename.isDirectory()
+    });
   }));
 }
 
 export function readdir(path: AbsoluteFilePath): Promise<AbsoluteFilePathSet> {
   return new Promise((resolve, reject) => {
-    fs.readdir(path.join(), (err, files) => {
+    fs.readdir(path.join(), {withFileTypes: true}, (err, files) => {
       if (err === null) {
         resolve(createReaddirReturn(path, files));
       } else {
@@ -122,7 +128,9 @@ export function readdir(path: AbsoluteFilePath): Promise<AbsoluteFilePathSet> {
 }
 
 export function readdirSync(path: AbsoluteFilePath): AbsoluteFilePathSet {
-  return createReaddirReturn(path, fs.readdirSync(path.join()));
+  return createReaddirReturn(path, fs.readdirSync(path.join(), {
+    withFileTypes: true,
+  }));
 }
 
 // lstat
