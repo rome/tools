@@ -41,6 +41,7 @@ import noCatchAssign from './noCatchAssign';
 import noVar from './noVar';
 import preferFunctionDeclarations from './preferFunctionDeclarations';
 import preferTemplate from './preferTemplate';
+import restrictedGlobals from './restrictedGlobals';
 import singleVarDeclarator from './singleVarDeclarator';
 import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
@@ -84,6 +85,7 @@ export const lintTransforms = [
   noVar,
   preferFunctionDeclarations,
   preferTemplate,
+  restrictedGlobals,
   singleVarDeclarator,
   sparseArray,
   undeclaredVariables,
