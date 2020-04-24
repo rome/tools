@@ -19,7 +19,11 @@ exports.unlink = function(loc, isFile, isDirectory) {
     fs.unlinkSync(loc);
   } else if (isDirectory) {
     for (const filename of fs.readdirSync(loc, {withFileTypes: true})) {
-      exports.unlink(path.join(loc, filename.name), filename.isFile(), filename.isDirectory());
+      exports.unlink(
+        path.join(loc, filename.name),
+        filename.isFile(),
+        filename.isDirectory(),
+      );
     }
     fs.rmdirSync(loc);
   }

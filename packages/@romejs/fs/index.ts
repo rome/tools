@@ -110,7 +110,7 @@ function createReaddirReturn(
       ext: path.memoizedExtension,
       filename: path.memoizedFilename,
       isFile: basename.isFile(),
-      isDirectory: basename.isDirectory()
+      isDirectory: basename.isDirectory(),
     });
   }));
 }
