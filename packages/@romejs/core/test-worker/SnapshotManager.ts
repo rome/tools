@@ -104,7 +104,7 @@ export default class SnapshotManager {
     const snapshot: Snapshot = {
       exists: true,
       used: false,
-      raw: content,
+      raw: parser.input,
       entries: new Map(),
     };
     this.snapshots.set(path, snapshot);
