@@ -96,7 +96,7 @@ export function parseExport(
     const defStart = parser.getPosition();
     const defExported = parseIdentifier(parser, true);
 
-    let namedSpecifiers: Array<ExportExternalSpecifier> = [];
+    let namedSpecifiers: Array<ExportLocalSpecifier> = [];
     let defaultSpecifier: ExportDefaultSpecifier = parser.finishNode(defStart, {
       type: 'ExportDefaultSpecifier',
       exported: defExported,
@@ -114,10 +114,7 @@ export function parseExport(
         exported,
       });
     } else {
-      namedSpecifiers = convertLocalToExternalSpecifiers(
-        parser,
-        parseExportLocalSpecifiersMaybe(parser),
-      );
+      namedSpecifiers = parseExportLocalSpecifiersMaybe(parser);
     }
 
     const source = parseExportFromExpect(parser);
@@ -132,7 +129,11 @@ export function parseExport(
   } else if (parser.eat(tt._default)) {
     // export default ...
     const declaration = parseExportDefaultExpression(parser);
-    checkExport(parser, localSpecifiers, declaration, true, true);
+    checkExport(parser, {
+      specifiers: localSpecifiers,
+      declaration,
+      isDefault: true,
+    });
 
     const node: ExportDefaultDeclaration = parser.finishNode(start, {
       type: 'ExportDefaultDeclaration',
@@ -160,7 +161,7 @@ export function parseExport(
         start,
         undefined,
         undefined,
-        convertLocalToExternalSpecifiers(parser, localSpecifiers),
+        localSpecifiers === undefined ? [] : localSpecifiers,
         source,
         exportKind,
       );
@@ -188,13 +189,17 @@ export function parseExport(
         start,
         undefined,
         undefined,
-        convertLocalToExternalSpecifiers(parser, localSpecifiers),
+        localSpecifiers,
         source,
       );
     }
   }
 
-  checkExport(parser, localSpecifiers, declaration, true, false);
+  checkExport(parser, {
+    specifiers: localSpecifiers,
+    declaration,
+    isDefault: false,
+  });
 
   if (declaration !== undefined) {
     if (declaration.type !== 'VariableDeclarationStatement' &&
@@ -232,26 +237,33 @@ function createExportExternalDeclaration(
   start: Position,
   defaultSpecifier: undefined | ExportDefaultSpecifier,
   namespaceSpecifier: undefined | ExportNamespaceSpecifier,
-  namedSpecifiers: Array<ExportExternalSpecifier>,
+  namedSpecifiers: Array<ExportLocalSpecifier>,
   source: StringLiteral,
   exportKind?: ConstExportModuleKind,
 ): ExportExternalDeclaration {
-  checkExport(
-    parser,
-    [defaultSpecifier, namespaceSpecifier, ...namedSpecifiers],
-    undefined,
-    true,
-    false,
-  );
+  checkExport(parser, {
+    specifiers: [defaultSpecifier, namespaceSpecifier, ...namedSpecifiers],
+    declaration: undefined,
+    isDefault: false,
+    localIsExternal: true,
+  });
 
-  return parser.finishNode(start, {
+  const node = parser.finishNode(start, {
     type: 'ExportExternalDeclaration',
     exportKind,
     source,
-    namedSpecifiers,
+    namedSpecifiers: [],
     defaultSpecifier,
     namespaceSpecifier,
   });
+
+  // We convert the specifiers after we've finished the ExportExternalDeclaration node
+  // as the comment attachment logic may mess with the specifiers and so we need to
+  // clone them after
+  return {
+    ...node,
+    namedSpecifiers: convertLocalToExternalSpecifiers(parser, namedSpecifiers),
+  };
 }
 
 function convertLocalToExternalSpecifiers(
@@ -531,19 +543,21 @@ function shouldParseExportDeclaration(parser: JSParser): boolean {
 
 function checkExport(
   parser: JSParser,
-  specifiers: undefined | Array<
-    | undefined
-    | ExportLocalSpecifier
-    | AnyExportExternalSpecifier>,
-
-  declaration: undefined | AnyNode,
-  checkNames: boolean = false,
-  isDefault: boolean = false,
+  {
+    specifiers,
+    declaration,
+    localIsExternal = false,
+    isDefault = false,
+  }: {
+    localIsExternal?: boolean;
+    specifiers?: Array<
+      | undefined
+      | ExportLocalSpecifier
+      | AnyExportExternalSpecifier>;
+    declaration?: AnyNode;
+    isDefault: boolean;
+  },
 ): void {
-  if (checkNames === false) {
-    return undefined;
-  }
-
   // Check for duplicate exports
   if (isDefault) {
     // Default exports
@@ -587,7 +601,7 @@ function checkExport(
 
       checkDuplicateExports(parser, specifier, specifier.exported.name);
 
-      if (specifier.type === 'ExportLocalSpecifier') {
+      if (specifier.type === 'ExportLocalSpecifier' && !localIsExternal) {
         const {local} = specifier;
         if (local !== undefined) {
           // check for keywords used as local names
