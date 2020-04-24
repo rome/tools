@@ -11,6 +11,17 @@
 
 ```
 
+### `0: formatted`
+
+```
+switch (foo) {
+  case true:
+  case false:
+    return 'yes';
+}
+
+```
+
 ### `1`
 
 ```
@@ -18,10 +29,28 @@
 
 ```
 
+### `1: formatted`
+
+```
+switch (foo) {
+  case true: {}
+}
+
+```
+
 ### `2`
 
 ```
 ✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+switch (foo) {
+  case true:
+}
 
 ```
 
@@ -36,16 +65,44 @@
     switch (foo) {case true: case false: let foo = ''; foo;}
                                        ^^^^^^^^^^^^^^^^^^^^ 
 
+  ℹ Possible fix
+
+    1 │ + case·false: {
+    2 │ + ····let foo = '';
+    3 │ + ··· foo;
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
 
 ```
 
+### `3: formatted`
+
+```
+switch (foo) {
+  case true:
+  case false: {
+    let foo = '';
+    foo;
+  }
+}
+
+```
+
 ## `format disabled in project config should not regenerate the file`
+
+### `0`
 
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 

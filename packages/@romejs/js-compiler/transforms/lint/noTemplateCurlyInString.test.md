@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -27,6 +36,8 @@ foobar('yes');
 
 ## `no template curly in string`
 
+### `0`
+
 ```
 
  unknown:3:26 lint/noTemplateCurlyInString ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -42,5 +53,16 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+const user = 'Faustina';
+const helloUser = 'Hello, ${user}!';
+
+// mark consts as used
+console.log(user, helloUser);
 
 ```

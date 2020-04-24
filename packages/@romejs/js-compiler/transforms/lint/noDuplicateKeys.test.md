@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -27,6 +36,8 @@ foobar('yes');
 
 ## `no duplicate keys`
 
+### `0`
+
 ```
 
  unknown:3:4 lint/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -44,5 +55,19 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+const foo = {
+  test: true,
+  test2: true,
+  test: false,
+};
+
+// mark const as used
+console.log(foo);
 
 ```

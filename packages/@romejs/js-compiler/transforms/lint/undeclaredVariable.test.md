@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -27,6 +36,8 @@ foobar('yes');
 
 ## `undeclared variable`
 
+### `0`
+
 ```
 
  unknown:1 lint/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -39,5 +50,12 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+foobar;
 
 ```

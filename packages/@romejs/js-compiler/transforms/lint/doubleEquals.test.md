@@ -11,10 +11,24 @@
 
 ```
 
+### `0: formatted`
+
+```
+foo == null;
+
+```
+
 ### `1`
 
 ```
 ✔ No known problems!
+
+```
+
+### `1: formatted`
+
+```
+foo != null;
 
 ```
 
@@ -25,10 +39,24 @@
 
 ```
 
+### `2: formatted`
+
+```
+null == foo;
+
+```
+
 ### `3`
 
 ```
 ✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+null != foo;
 
 ```
 
@@ -51,10 +79,26 @@
 
 ```
 
+### `4: formatted`
+
+```
+foo == bar;
+
+```
+
 ## `format disabled in project config should not regenerate the file`
+
+### `0`
 
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 

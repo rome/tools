@@ -21,6 +21,13 @@
 
 ```
 
+### `0: formatted`
+
+```
+1 >= -0;
+
+```
+
 ### `1`
 
 ```
@@ -28,10 +35,26 @@
 
 ```
 
+### `1: formatted`
+
+```
+1 >= 0;
+
+```
+
 ## `format disabled in project config should not regenerate the file`
+
+### `0`
 
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 

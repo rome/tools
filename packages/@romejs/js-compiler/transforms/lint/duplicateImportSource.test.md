@@ -4,6 +4,8 @@
 
 ## `duplicate import source`
 
+### `0`
+
 ```
 
  unknown:3:4 lint/duplicateImportSource FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -23,10 +25,33 @@
 
 ```
 
+### `0: formatted`
+
+```
+import foo, {bar} from './testdummy.ts';
+
+import type {fooType} from './testdummy.ts';
+
+const typedFoo: fooType = {
+  type: 'foo',
+};
+console.log(typedFoo, foo, bar);
+
+```
+
 ## `format disabled in project config should not regenerate the file`
+
+### `0`
 
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 

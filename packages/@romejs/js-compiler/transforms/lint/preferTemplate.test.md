@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -38,9 +47,22 @@ foobar('yes');
     const foo = 'bar'; console.log(foo + 'baz')
                                    ^^^^^^^^^^^ 
 
+  ℹ Possible fix
+
+  - foo·+·'baz'
+  + `${foo}baz`
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+const foo = 'bar';
+console.log(`${foo}baz`);
 
 ```
 
@@ -55,8 +77,20 @@ foobar('yes');
     console.log((1 * 2) + 'baz')
                 ^^^^^^^^^^^^^^^ 
 
+  ℹ Possible fix
+
+  - (1 * 2)·+·'baz'
+  + `${1 * 2}baz`
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
+console.log(`${1 * 2}baz`);
 
 ```

@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -46,9 +55,25 @@ foobar('yes');
 
 ```
 
+### `0: formatted`
+
+```
+const x = 'test';
+x: const y = 'test';
+
+```
+
 ### `1`
 
 ```
 ✔ No known problems!
+
+```
+
+### `1: formatted`
+
+```
+const x = 'test';
+z: const y = 'test';
 
 ```

@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -34,6 +43,14 @@ foobar('yes');
 
 ```
 
+### `0: formatted`
+
+```
+let foo = /^abc[a-zA-Z]/;
+foo;
+
+```
+
 ### `1`
 
 ```
@@ -48,10 +65,26 @@ foobar('yes');
 
 ```
 
+### `10: formatted`
+
+```
+let foo = /[]]/s;
+foo;
+
+```
+
 ### `11`
 
 ```
 ✔ No known problems!
+
+```
+
+### `11: formatted`
+
+```
+let foo = /\[\]/;
+foo;
 
 ```
 
@@ -72,6 +105,14 @@ foobar('yes');
 
 ```
 
+### `12: formatted`
+
+```
+let foo = /^abc/;
+foo;
+
+```
+
 ### `13`
 
 ```
@@ -86,6 +127,14 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `13: formatted`
+
+```
+let foo = /foobar/;
+foo;
 
 ```
 
@@ -106,6 +155,16 @@ foobar('yes');
 
 ```
 
+### `14: formatted`
+
+```
+let foo = '';
+if (foo.match(/^abc/)) {
+  foo;
+}
+
+```
+
 ### `15`
 
 ```
@@ -120,6 +179,14 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `15: formatted`
+
+```
+let foo = /\]/;
+foo;
 
 ```
 
@@ -140,6 +207,14 @@ foobar('yes');
 
 ```
 
+### `16: formatted`
+
+```
+let foo = /\[/;
+foo;
+
+```
+
 ### `17`
 
 ```
@@ -157,10 +232,34 @@ foobar('yes');
 
 ```
 
+### `17: formatted`
+
+```
+let foo = /\[\[\]a-z/;
+foo;
+
+```
+
+### `1: formatted`
+
+```
+let regExp = new RegExp('^abc[]');
+regExp;
+
+```
+
 ### `2`
 
 ```
 ✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+let foo = /^abc/;
+foo;
 
 ```
 
@@ -171,10 +270,26 @@ foobar('yes');
 
 ```
 
+### `3: formatted`
+
+```
+let foo = /[[]/;
+foo;
+
+```
+
 ### `4`
 
 ```
 ✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+let foo = /[]]/;
+foo;
 
 ```
 
@@ -185,10 +300,26 @@ foobar('yes');
 
 ```
 
+### `5: formatted`
+
+```
+let foo = /[a-zA-Z[]/;
+foo;
+
+```
+
 ### `6`
 
 ```
 ✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+let foo = /[[]/;
+foo;
 
 ```
 
@@ -199,6 +330,14 @@ foobar('yes');
 
 ```
 
+### `7: formatted`
+
+```
+let foo = /[[a-z[]\]/;
+foo;
+
+```
+
 ### `8`
 
 ```
@@ -206,9 +345,25 @@ foobar('yes');
 
 ```
 
+### `8: formatted`
+
+```
+let foo = /[\-[]\/{}()*+?.\\^$|]/g;
+foo;
+
+```
+
 ### `9`
 
 ```
 ✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+let foo = /[]]/yu;
+foo;
 
 ```

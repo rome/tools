@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -34,6 +43,13 @@ foobar('yes');
 
 ```
 
+### `0: formatted`
+
+```
+new Promise(() => {});
+
+```
+
 ### `1`
 
 ```
@@ -41,10 +57,25 @@ foobar('yes');
 
 ```
 
+### `1: formatted`
+
+```
+new Promise(() => {}, async function unrelated() {});
+
+```
+
 ### `2`
 
 ```
 ✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+class Foo {}
+new Foo(async () => {});
 
 ```
 
@@ -65,6 +96,13 @@ foobar('yes');
 
 ```
 
+### `3: formatted`
+
+```
+new Promise(async function foo() {});
+
+```
+
 ### `4`
 
 ```
@@ -82,6 +120,13 @@ foobar('yes');
 
 ```
 
+### `4: formatted`
+
+```
+new Promise(async () => {});
+
+```
+
 ### `5`
 
 ```
@@ -96,5 +141,12 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+new Promise(async () => {});
 
 ```

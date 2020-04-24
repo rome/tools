@@ -17,9 +17,18 @@
 
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {3}/
 
+  ℹ Possible fix
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+/fo {3}ar/;
 
 ```
 
@@ -30,10 +39,26 @@
 
 ```
 
+### `1: formatted`
+
+```
+/foo {2}bar/;
+
+```
+
 ## `format disabled in project config should not regenerate the file`
+
+### `0`
 
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 

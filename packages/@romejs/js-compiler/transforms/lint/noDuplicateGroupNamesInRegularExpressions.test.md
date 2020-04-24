@@ -4,6 +4,8 @@
 
 ## `disallow duplicate group names in regular expression`
 
+### `0`
+
 ```
 
  unknown:1:1 lint/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -30,10 +32,26 @@
 
 ```
 
+### `0: formatted`
+
+```
+/(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/;
+
+```
+
 ## `format disabled in project config should not regenerate the file`
+
+### `0`
 
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 

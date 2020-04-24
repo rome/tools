@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -47,6 +56,16 @@ foobar('yes');
 
 ```
 
+### `0: formatted`
+
+```
+function f() {
+  console.log(arguments);
+}
+f();
+
+```
+
 ### `1`
 
 ```
@@ -64,6 +83,15 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
+(function() {
+  console.log(arguments);
+})();
 
 ```
 
@@ -88,6 +116,18 @@ foobar('yes');
 
 ```
 
+### `2: formatted`
+
+```
+class C {
+  fn() {
+    console.log(arguments);
+  }
+}
+new C().fn();
+
+```
+
 ### `3`
 
 ```
@@ -106,5 +146,17 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `3: formatted`
+
+```
+const o = {
+  fn() {
+    console.log(arguments);
+  },
+};
+o.fn();
 
 ```
