@@ -31,6 +31,7 @@ type CommandOptions<T extends Dict<unknown>> = {
   description?: string;
   usage?: string;
   examples?: Examples;
+  ignoreFlags?: Array<string>;
   defineFlags?: (consumer: Consumer) => T;
   callback: (flags: T) => void | Promise<void>;
 };
@@ -54,6 +55,7 @@ export type ParserOptions<T> = {
   usage?: string;
   description?: string;
   version?: string;
+  ignoreFlags?: Array<string>;
   defineFlags: (consumer: Consumer) => T;
 };
 
@@ -72,7 +74,6 @@ export default class Parser<T> {
 
     this.shorthandFlags = new Set();
     this.incorrectCaseFlags = new Set();
-
     this.declaredFlags = new Map();
     this.defaultFlags = new Map();
     this.flags = new Map();
@@ -335,10 +336,42 @@ export default class Parser<T> {
     return await this.defineCommandFlags(commandName, consumer);
   }
 
+  checkBadFlags(consumer: Consumer, definedCommand: undefined | DefinedCommand) {
+    if (this.helpMode) {
+      return;
+    }
+
+    // Ignore flags from command and root parser options
+    const ignoreFlags: Array<string> = [
+      ...(definedCommand !== undefined && definedCommand.command.ignoreFlags ||
+        []),
+      ...(this.opts.ignoreFlags || []),
+    ];
+    for (const key of ignoreFlags) {
+      this.shorthandFlags.delete(key);
+      this.incorrectCaseFlags.delete(key);
+      consumer.markUsedProperty(key);
+    }
+
+    for (const shorthandName of this.shorthandFlags) {
+      consumer.get(shorthandName).unexpected(
+        descriptions.FLAGS.UNSUPPORTED_SHORTHANDS,
+      );
+    }
+
+    for (const incorrectName of this.incorrectCaseFlags) {
+      consumer.get(incorrectName).unexpected(
+        descriptions.FLAGS.INCORRECT_CASED_FLAG(incorrectName),
+      );
+    }
+
+    consumer.enforceUsedProperties('flag', false);
+  }
+
   async init(): Promise<T> {
     // Show help for --version
     if (this.flags.has('version')) {
-      this.reporter.logAll(`v${String(this.opts.version)}`);
+      this.reporter.logAll(String(this.opts.version));
       process.exit(0);
     }
 
@@ -347,18 +380,6 @@ export default class Parser<T> {
     let definedCommand: undefined | DefinedCommand;
 
     const rootFlags = await consumer.bufferDiagnostics(async (consumer) => {
-      for (const shorthandName of this.shorthandFlags) {
-        consumer.get(shorthandName).unexpected(
-          descriptions.FLAGS.UNSUPPORTED_SHORTHANDS,
-        );
-      }
-
-      for (const incorrectName of this.incorrectCaseFlags) {
-        consumer.get(incorrectName).unexpected(
-          descriptions.FLAGS.INCORRECT_CASED_FLAG(incorrectName),
-        );
-      }
-
       const rootFlags = this.opts.defineFlags(consumer);
 
       for (const key of this.commands.keys()) {
@@ -370,9 +391,7 @@ export default class Parser<T> {
         }
       }
 
-      if (!this.helpMode) {
-        consumer.enforceUsedProperties('flag', false);
-      }
+      this.checkBadFlags(consumer, definedCommand);
       this.currentCommand = undefined;
 
       return rootFlags;
@@ -463,7 +482,7 @@ export default class Parser<T> {
     // Output options
     for (const {arg, description} of optionOutput) {
       lines.push(
-        markup`<dim><pad count="${argColumnLength}" dir="right">${arg}</pad></dim>  ${description}`,
+        markup`<brightBlack><pad count="${argColumnLength}" dir="right">${arg}</pad></brightBlack>  ${description}`,
       );
     }
 

@@ -8,7 +8,6 @@
 import {commandCategories} from '../../common/commands';
 import {createLocalCommand} from '../commands';
 import ClientRequest from '../ClientRequest';
-import {Consumer} from '@romejs/consume';
 
 export default createLocalCommand({
   description: 'connect to an lsp',
@@ -16,10 +15,10 @@ export default createLocalCommand({
   usage: '',
   examples: [],
 
-  defineFlags(consumer: Consumer) {
-    // vscode-languageclient adds these on
-    consumer.get('stdio').asBooleanOrVoid();
-    consumer.get('clientProcessId').asStringOrVoid();
+  // vscode-languageclient adds these on
+  ignoreFlags: ['stdio', 'clientProcessId'],
+
+  defineFlags() {
     return {};
   },
 
