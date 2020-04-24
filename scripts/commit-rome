@@ -26,4 +26,4 @@ fs.copyFileSync(
   `${VENDOR_ROME}.map`,
 );
 
-unlink(TEMP_DIR);
+unlink(TEMP_DIR, false, true);
