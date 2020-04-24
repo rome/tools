@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
-  VariableDeclaration,
   AnyExpression,
   AnyStatement,
+  JSNodeBase,
+  VariableDeclaration,
 } from '../index';
 import {createBuilder} from '../utils';
 

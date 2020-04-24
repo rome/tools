@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {LabeledStatement, labeledStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, LabeledStatement, labeledStatement} from '@romejs/js-ast';
 
 export default function LabeledStatement(node: AnyNode, scope: Scope) {
   node = labeledStatement.assert(node);

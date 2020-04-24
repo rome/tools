@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, concat} from '../../tokens';
-import {spreadProperty, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, operator} from '../../tokens';
+import {AnyNode, spreadProperty} from '@romejs/js-ast';
 
 export default function SpreadProperty(builder: Builder, node: AnyNode): Tokens {
   node = spreadProperty.assert(node);

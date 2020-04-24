@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   BindingArrayPattern,
   bindingArrayPattern,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function BindingArrayPattern(node: AnyNode, scope: Scope) {

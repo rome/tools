@@ -5,43 +5,38 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
+import {Path, TransformExitResult} from '@romejs/js-compiler';
 import {
-  AnyNode,
   VariableDeclarationStatement,
-  variableDeclarationStatement,
   variableDeclaration,
+  variableDeclarationStatement,
 } from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'singleVarDeclarator',
-  enter(path: Path): AnyNode | Array<VariableDeclarationStatement> {
+  enter(path: Path): TransformExitResult {
     const {node} = path;
 
     if (node.type === 'VariableDeclarationStatement' &&
           node.declaration.declarations.length >
           1) {
-      const {suppressed} = path.context.addNodeDiagnostic(
-        node,
+      const fixed: Array<VariableDeclarationStatement> = [];
+      const {kind} = node.declaration;
+
+      for (const declarator of node.declaration.declarations) {
+        fixed.push(variableDeclarationStatement.quick(
+          variableDeclaration.create({
+            kind,
+            declarations: [declarator],
+          }),
+        ));
+      }
+
+      return path.context.addFixableDiagnostic(
+        {old: node, fixed},
         descriptions.LINT.SINGLE_VAR_DECLARATOR,
       );
-
-      if (!suppressed) {
-        const nodes: Array<VariableDeclarationStatement> = [];
-        const {kind} = node.declaration;
-
-        for (const declarator of node.declaration.declarations) {
-          nodes.push(variableDeclarationStatement.quick(
-            variableDeclaration.create({
-              kind,
-              declarations: [declarator],
-            }),
-          ));
-        }
-
-        return nodes;
-      }
     }
 
     return node;

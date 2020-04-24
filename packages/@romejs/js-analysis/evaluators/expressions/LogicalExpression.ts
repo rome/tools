@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {LogicalExpression, logicalExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, LogicalExpression, logicalExpression} from '@romejs/js-ast';
 import T from '../../types/T';
 import UnionT from '../../types/UnionT';
 

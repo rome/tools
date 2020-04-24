@@ -6,8 +6,8 @@
  */
 
 import '@romejs/core';
-import {stringifyJSON, consumeJSONExtra} from '@romejs/codec-json';
-import test from '@romejs/test';
+import {consumeJSONExtra, stringifyJSON} from '@romejs/codec-json';
+import {test} from 'rome';
 import {ParserOptions} from '@romejs/parser-core';
 import {createUnknownFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';

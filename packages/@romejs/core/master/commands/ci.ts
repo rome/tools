@@ -7,9 +7,11 @@
 
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
 import {MasterRequest} from '@romejs/core';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import lint from './lint';
 import test from './test';
+import {Consumer} from '@romejs/consume';
 
 async function runChildCommand(
   req: MasterRequest,
@@ -32,28 +34,46 @@ async function runChildCommand(
   }
 }
 
+type Flags = {
+  fix: boolean;
+};
+
 export default createMasterCommand({
   category: commandCategories.CODE_QUALITY,
   description: 'run lint and tests',
+  usage: '',
+  examples: [],
+  allowRequestFlags: ['allowDirty'],
 
-  async default(req: MasterRequest): Promise<void> {
+  defineFlags(consumer: Consumer): Flags {
+    return {
+      fix: consumer.get('fix').asBoolean(false),
+    };
+  },
+
+  async callback(req: MasterRequest, flags: Flags): Promise<void> {
     const {reporter} = req;
+
+    if (flags.fix) {
+      await req.assertCleanVSC();
+    }
 
     reporter.heading('Running lint');
     await runChildCommand(req, async () => {
-      await lint.default(req, {
-        fix: false,
+      await lint.callback(req, {
+        compilerOptionsPerFile: {},
+        fix: flags.fix,
         changed: undefined,
       });
     });
 
     reporter.heading('Running tests');
     await runChildCommand(req, async () => {
-      await test.default(req, {
-        coverage: true,
-        freezeSnapshots: true,
-        updateSnapshots: false,
-        showAllCoverage: true,
+      await test.callback(req, {
+        coverage: false,
+        freezeSnapshots: !flags.fix,
+        updateSnapshots: flags.fix,
+        showAllCoverage: false,
         syncTests: false,
       });
     });

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {SpreadElement, spreadElement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, SpreadElement, spreadElement} from '@romejs/js-ast';
 
 export default function SpreadElement(node: AnyNode, scope: Scope) {
   node = spreadElement.assert(node);

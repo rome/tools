@@ -6,9 +6,9 @@
  */
 
 import {
+  FlowTypeParameterInstantiation,
   JSNodeBase,
   ReferenceIdentifier,
-  FlowTypeParameterInstantiation,
 } from '../index';
 import {createBuilder} from '../utils';
 

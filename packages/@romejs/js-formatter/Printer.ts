@@ -6,29 +6,37 @@
  */
 
 import {
-  Tokens,
-  Token,
-  LinkedGroupsToken,
+  CommentToken,
+  ConcatToken,
+  DerivedNewlineToken,
   GroupToken,
   IndentToken,
-  DerivedNewlineToken,
+  LinkedGroupsToken,
   NumberToken,
-  TerminatorlessToken,
-  CommentToken,
-  WordToken,
   OperatorToken,
-  VerbatimToken,
   PositionMarkerToken,
-  ConcatToken,
+  TerminatorlessToken,
+  Token,
+  Tokens,
+  VerbatimToken,
+  WordToken,
 } from './tokens';
 import {BuilderOptions} from './Builder';
 import {
   Mappings,
+  SourceMap,
   SourceMapConsumer,
   SourceMapGenerator,
-  SourceMap,
 } from '@romejs/codec-source-map';
-import {Number1, Number0, number0, number1, get0, inc, dec} from '@romejs/ob1';
+import {
+  Number0,
+  Number1,
+  ob1Coerce0,
+  ob1Get0,
+  ob1Inc,
+  ob1Number0,
+  ob1Number1,
+} from '@romejs/ob1';
 import {SourceLocation} from '@romejs/parser-core';
 
 type TerminatorState = {printed: boolean};
@@ -42,6 +50,7 @@ type State = {
   endsWithNewline: boolean;
   endsWithWord: boolean;
   generatedLine: Number1;
+  generatedIndex: Number0;
   generatedColumn: Number0;
   terminator?: TerminatorState;
   sourceLocation?: SourceLocation;
@@ -85,8 +94,9 @@ export default class Printer {
       endsWithInteger: false,
       endsWithNewline: true,
       endsWithWord: false,
-      generatedColumn: number0,
-      generatedLine: number1,
+      generatedIndex: ob1Number0,
+      generatedColumn: ob1Number0,
+      generatedLine: ob1Number1,
     };
 
     this.compact = this.options.format === 'compact';
@@ -99,7 +109,7 @@ export default class Printer {
 
     this.inputSourceMap = opts.inputSourceMap === undefined
       ? undefined
-      : new SourceMapConsumer(opts.inputSourceMap);
+      : SourceMapConsumer.fromJSON(opts.inputSourceMap);
   }
 
   compact: boolean;
@@ -142,14 +152,19 @@ export default class Printer {
     return;
   }
 
-  mark() {
-    const {sourceLocation, generatedLine, generatedColumn} = this.state;
+  mark(prop: 'start' | 'end' = 'start') {
+    const {
+      sourceLocation,
+      generatedIndex,
+      generatedLine,
+      generatedColumn,
+    } = this.state;
     if (sourceLocation === undefined) {
       return;
     }
 
-    let originalLine = sourceLocation.start.line;
-    let originalColumn = sourceLocation.start.column;
+    let originalLine = sourceLocation[prop].line;
+    let originalColumn = sourceLocation[prop].column;
 
     // If this mapping points to the same source location as the last one, we can ignore it since
     // the previous one covers it.
@@ -179,16 +194,51 @@ export default class Printer {
     }
 
     this.mappings.push({
-      generated: {line: generatedLine, column: generatedColumn},
-      original: {line: originalLine, column: originalColumn},
+      generated: {
+        index: generatedIndex,
+        line: generatedLine,
+        column: generatedColumn,
+      },
+      original: {
+        line: originalLine,
+        column: originalColumn,
+      },
       name: sourceLocation.identifierName,
       source: sourceLocation.filename,
     });
   }
 
+  _push(str: string) {
+    const {lastUnbrokenGroup} = this;
+    this.buff.push(str);
+
+    for (const char of str) {
+      this.state.generatedIndex = ob1Inc(this.state.generatedIndex);
+
+      if (char === '\n') {
+        // Determine if we need to line wrap. We skip this when we aren't in pretty mode for better performance.
+        if (this.lineWrap) {
+          if (lastUnbrokenGroup !== undefined &&
+              lastUnbrokenGroup.breakOnNewline) {
+            throw new BreakGroupError(lastUnbrokenGroup);
+          }
+        }
+        this.state.generatedColumn = ob1Number0;
+        this.state.generatedLine = ob1Inc(this.state.generatedLine);
+      } else {
+        this.state.generatedColumn = ob1Inc(this.state.generatedColumn);
+      }
+    }
+  }
+
   push(str: string) {
     if (str === '') {
       return;
+    }
+
+    // Only output indentation if we aren't compact
+    if (!this.compact && str !== '\n' && this.state.endsWithNewline) {
+      this._push(this.state.indentString);
     }
 
     if (str[0] !== '\n' && this.options.sourceMaps) {
@@ -197,30 +247,14 @@ export default class Printer {
 
     this.maybeAddTerminatorlessParen(str);
 
-    // Only output indentation if we aren't compact
-    if (!this.compact && str !== '\n' && this.state.endsWithNewline) {
-      str = this.state.indentString + str;
-    }
+    this._push(str);
 
     // Determine if we need to line wrap. We skip this when we aren't in pretty mode for better performance.
+    const {lastUnbrokenGroup} = this;
     if (this.lineWrap) {
-      const {lastUnbrokenGroup} = this;
-
-      for (const char of str) {
-        if (char === '\n') {
-          if (lastUnbrokenGroup !== undefined &&
-              lastUnbrokenGroup.breakOnNewline) {
-            throw new BreakGroupError(lastUnbrokenGroup);
-          }
-          this.state.generatedColumn = number0;
-          this.state.generatedLine = inc(this.state.generatedLine);
-        } else {
-          this.state.generatedColumn = inc(this.state.generatedColumn);
-        }
-      }
-
-      if (lastUnbrokenGroup !== undefined && get0(this.state.generatedColumn) >
-          MAX_LINE_LENGTH) {
+      if (lastUnbrokenGroup !== undefined &&
+            ob1Get0(this.state.generatedColumn) >
+            MAX_LINE_LENGTH) {
         throw new BreakGroupError(lastUnbrokenGroup);
       }
     }
@@ -230,7 +264,6 @@ export default class Printer {
     this.state.endsWithWord = false;
     this.state.endsWithSpace = str[str.length - 1] === ' ';
     this.state.lastBuff = str;
-    this.buff.push(str);
   }
 
   createStateSnapshot({
@@ -282,7 +315,9 @@ export default class Printer {
   trimCharacter(str: string): boolean {
     const {buff} = this;
     if (buff[buff.length - 1] === str) {
-      this.state.generatedColumn = dec(this.state.generatedColumn);
+      this.state.generatedColumn = ob1Coerce0(Math.max(0, ob1Get0(
+        this.state.generatedColumn,
+      ) - 1));
       buff.pop();
       return true;
     } else {
@@ -513,11 +548,12 @@ export default class Printer {
       for (let token of stack) {
         switch (token.type) {
           case 'LinkedGroups':
-          case 'Group':
+          case 'Group': {
             if (!this.isGroupBroken(token)) {
               return token;
             }
             break;
+          }
 
           case 'ConcatToken':
           case 'Indent':
@@ -580,9 +616,12 @@ export default class Printer {
     const origSourceLocation = state.sourceLocation;
     state.sourceLocation = token.location;
 
-    this.print(token.tokens);
-
-    state.sourceLocation = origSourceLocation;
+    try {
+      this.print(token.tokens);
+      this.mark('end');
+    } finally {
+      state.sourceLocation = origSourceLocation;
+    }
   }
 
   printConcatToken(token: ConcatToken) {
@@ -600,61 +639,75 @@ export default class Printer {
       const token: Token = tokens[i];
 
       switch (token.type) {
-        case 'Terminatorless':
+        case 'Terminatorless': {
           this.printTerminatorlessToken(token);
           break;
+        }
 
-        case 'Indent':
+        case 'Indent': {
           this.printIndentToken(token);
           break;
+        }
 
-        case 'DerivedNewline':
+        case 'DerivedNewline': {
           this.printDerivedNewlineToken(token);
           break;
+        }
 
-        case 'Newline':
+        case 'Newline': {
           this.printNewlineToken();
           break;
+        }
 
-        case 'Space':
+        case 'Space': {
           this.printSpaceToken();
           break;
+        }
 
-        case 'Comment':
+        case 'Comment': {
           this.printCommentToken(token);
           break;
+        }
 
-        case 'Number':
+        case 'Number': {
           this.printNumberToken(token);
           break;
+        }
 
-        case 'Word':
+        case 'Word': {
           this.printWordToken(token);
           break;
+        }
 
-        case 'Operator':
+        case 'Operator': {
           this.printOperatorToken(token);
           break;
+        }
 
-        case 'Group':
+        case 'Group': {
           ({abort} = this.printGroupToken(token, tokens, i));
           break;
+        }
 
-        case 'LinkedGroups':
+        case 'LinkedGroups': {
           ({abort} = this.printLinkedGroupsToken(token, tokens, i));
           break;
+        }
 
-        case 'Verbatim':
+        case 'Verbatim': {
           this.printVerbatimToken(token);
           break;
+        }
 
-        case 'PositionMarker':
+        case 'PositionMarker': {
           this.printPositionMarkerToken(token);
           break;
+        }
 
-        case 'ConcatToken':
+        case 'ConcatToken': {
           this.printConcatToken(token);
           break;
+        }
       }
 
       if (abort) {
@@ -675,7 +728,9 @@ export default class Printer {
     const {options} = this;
 
     const map = new SourceMapGenerator({
-      file: options.sourceMapTarget,
+      file: options.sourceMapTarget === undefined
+        ? 'unknown'
+        : options.sourceMapTarget,
       sourceRoot: options.sourceRoot,
     });
 
@@ -687,6 +742,6 @@ export default class Printer {
       map.addMapping(mapping);
     }
 
-    return map.toJSON();
+    return map.serialize();
   }
 }

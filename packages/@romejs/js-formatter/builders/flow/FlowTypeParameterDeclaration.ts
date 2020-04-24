@@ -8,9 +8,9 @@
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
 import {
+  AnyNode,
   FlowTypeParameterDeclaration,
   flowTypeParameterDeclaration,
-  AnyNode,
 } from '@romejs/js-ast';
 import FlowTypeParameterInstantiation from './FlowTypeParameterInstantiation';
 

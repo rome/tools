@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyExpression, AnyTSPrimary} from '../index';
+import {AnyExpression, AnyTSPrimary, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSTypeAssertion = JSNodeBase & {

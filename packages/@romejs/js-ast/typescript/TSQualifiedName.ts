@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyTSEntityName, Identifier} from '../index';
+import {AnyTSEntityName, Identifier, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSQualifiedName = JSNodeBase & {

@@ -11,6 +11,7 @@ import {createBuilder} from '../utils';
 export type CommentBlock = JSNodeBase & {
   type: 'CommentBlock';
   value: string;
+  id: string;
 };
 
 export const commentBlock = createBuilder<CommentBlock>('CommentBlock', {

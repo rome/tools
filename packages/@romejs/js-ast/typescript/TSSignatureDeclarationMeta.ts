@@ -6,11 +6,11 @@
  */
 
 import {
-  JSNodeBase,
+  AnyTargetBindingPattern,
+  BindingArrayPattern,
   BindingIdentifier,
   BindingObjectPattern,
-  BindingArrayPattern,
-  AnyTargetBindingPattern,
+  JSNodeBase,
   TSTypeParameterDeclaration,
 } from '../index';
 import {createBuilder} from '../utils';

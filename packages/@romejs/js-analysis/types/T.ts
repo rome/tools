@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Evaluator, {HydrateTypeFactory, HydrateData} from '../Evaluator';
+import Evaluator, {HydrateData, HydrateTypeFactory} from '../Evaluator';
 import {SourceLocation} from '@romejs/parser-core';
 import {AnyNode} from '@romejs/js-ast';
 import Graph from '../Graph';

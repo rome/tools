@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
-  PatternMeta,
   AnyAssignmentPattern,
   AnyTargetAssignmentPattern,
+  JSNodeBase,
+  PatternMeta,
 } from '../index';
 import {createBuilder} from '../utils';
 

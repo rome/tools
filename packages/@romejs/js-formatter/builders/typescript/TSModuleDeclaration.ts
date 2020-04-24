@@ -6,10 +6,10 @@
  */
 
 import {
-  TSModuleDeclaration,
-  tsModuleDeclaration,
   AnyNode,
   TSModuleBlock,
+  TSModuleDeclaration,
+  tsModuleDeclaration,
 } from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, operator, space, word} from '../../tokens';

@@ -8,9 +8,9 @@
 import Builder from '../../Builder';
 import {Tokens, operator} from '../../tokens';
 import {
+  AnyNode,
   FlowArrayTypeAnnotation,
   flowArrayTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowArrayTypeAnnotation(

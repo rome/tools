@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {StringLiteral, stringLiteral, AnyNode} from '@romejs/js-ast';
+import {AnyNode, StringLiteral, stringLiteral} from '@romejs/js-ast';
 import StringLiteralT from '../../types/StringLiteralT';
 
 export default function StringLiteral(node: AnyNode, scope: Scope) {

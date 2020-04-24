@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, ConstTSAccessibility} from '../index';
+import {ConstTSAccessibility, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ClassPropertyMeta = JSNodeBase & {

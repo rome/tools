@@ -6,14 +6,21 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import LSPServer from '../lsp/LSPServer';
 
 export default createMasterCommand({
   category: commandCategories.PROJECT_MANAGEMENT,
   description: 'TODO',
+  usage: '',
+  examples: [],
 
-  async default(req: MasterRequest): Promise<void> {
+  defineFlags() {
+    return {};
+  },
+
+  async callback(req: MasterRequest): Promise<void> {
     const {master, bridge} = req;
 
     const lspServer = new LSPServer(req);

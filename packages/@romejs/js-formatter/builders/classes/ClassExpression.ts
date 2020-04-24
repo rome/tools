@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {classExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, classExpression} from '@romejs/js-ast';
 import ClassDeclaration from './ClassDeclaration';
 
 export default function ClassExpression(builder: Builder, node: AnyNode): Tokens {

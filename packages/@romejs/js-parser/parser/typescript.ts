@@ -9,86 +9,86 @@ import {Position} from '@romejs/parser-core';
 import {JSParser} from '../parser';
 import {TokenType, types as tt} from '../tokenizer/types';
 import {
-  parseExpressionAtom,
-  parseIdentifierName,
-  parseMaybeUnary,
-  parseIdentifier,
-  parseTemplate,
-  parseMaybeAssign,
-  parseVarStatement,
-  parseObjectPropertyKey,
-  parseBindingListNonEmpty,
-  hasCommaAfterRest,
-  parseBlockOrModuleBlockBody,
-  parseExpression,
-  parseTypeExpressionStatement,
-  parseStringLiteral,
   assertVarKind,
+  hasCommaAfterRest,
   parseBindingIdentifier,
-  parseReferenceIdentifier,
-  toBindingIdentifier,
-  toReferenceIdentifier,
+  parseBindingListNonEmpty,
+  parseBlockOrModuleBlockBody,
   parseClassDeclaration,
   parseExportDefaultClassDeclaration,
+  parseExpression,
+  parseExpressionAtom,
   parseFunctionDeclaration,
+  parseIdentifier,
+  parseIdentifierName,
+  parseMaybeAssign,
+  parseMaybeUnary,
+  parseObjectPropertyKey,
+  parseReferenceIdentifier,
+  parseStringLiteral,
+  parseTemplate,
+  parseTypeExpressionStatement,
   parseTypeLiteralAnnotation,
+  parseVarStatement,
+  toBindingIdentifier,
+  toReferenceIdentifier,
 } from './index';
 import {
-  VariableDeclarationKind,
-  TSMappedTypeBoolean,
+  AnyExpression,
+  AnyNode,
+  AnyTSEntityName,
+  AnyTSKeywordTypeAnnotation,
+  AnyTSModuleReference,
+  AnyTSPrimary,
+  AnyTSTypeElement,
+  AnyTargetBindingPattern,
+  ClassDeclaration,
+  ConstTSAccessibility,
+  ConstTSModifier,
+  FunctionDeclaration,
   Identifier,
   StringLiteral,
-  AnyExpression,
-  ConstTSModifier,
-  TSImportType,
-  AnyTSEntityName,
-  TSTypeReference,
-  TSThisType,
-  TSTypePredicate,
-  TSTypeQuery,
-  TSTypeParameter,
-  TSTypeParameterDeclaration,
-  AnyNode,
-  AnyTargetBindingPattern,
-  TSConstructSignatureDeclaration,
   TSCallSignatureDeclaration,
-  TSIndexSignature,
-  TSPropertySignature,
-  TSMethodSignature,
-  AnyTSTypeElement,
-  TSTypeLiteral,
-  TSMappedType,
-  TSTupleType,
-  TSParenthesizedType,
-  TSFunctionType,
+  TSConstructSignatureDeclaration,
   TSConstructorType,
-  TSTypeOperator,
-  TSSignatureDeclarationMeta,
-  TSInferType,
-  TSTypeAssertion,
-  TSExpressionWithTypeArguments,
-  TSInterfaceDeclaration,
-  TSInterfaceBody,
-  TypeAliasTypeAnnotation,
-  TSEnumMember,
+  TSDeclareFunction,
   TSEnumDeclaration,
+  TSEnumMember,
+  TSExportAssignment,
+  TSExpressionWithTypeArguments,
+  TSExternalModuleReference,
+  TSFunctionType,
+  TSImportEqualsDeclaration,
+  TSImportType,
+  TSIndexSignature,
+  TSInferType,
+  TSInterfaceBody,
+  TSInterfaceDeclaration,
+  TSMappedType,
+  TSMappedTypeBoolean,
+  TSMethodSignature,
   TSModuleBlock,
   TSModuleDeclaration,
-  TSImportEqualsDeclaration,
-  AnyTSModuleReference,
-  TSExternalModuleReference,
-  FunctionDeclaration,
-  ClassDeclaration,
-  VariableDeclarationStatement,
-  TSDeclareFunction,
-  TSTypeParameterInstantiation,
-  ConstTSAccessibility,
-  TSExportAssignment,
   TSNamespaceExportDeclaration,
-  AnyTSPrimary,
-  AnyTSKeywordTypeAnnotation,
-  TemplateLiteralTypeAnnotation,
   TSOptionalType,
+  TSParenthesizedType,
+  TSPropertySignature,
+  TSSignatureDeclarationMeta,
+  TSThisType,
+  TSTupleType,
+  TSTypeAssertion,
+  TSTypeLiteral,
+  TSTypeOperator,
+  TSTypeParameter,
+  TSTypeParameterDeclaration,
+  TSTypeParameterInstantiation,
+  TSTypePredicate,
+  TSTypeQuery,
+  TSTypeReference,
+  TemplateLiteralTypeAnnotation,
+  TypeAliasTypeAnnotation,
+  VariableDeclarationKind,
+  VariableDeclarationStatement,
 } from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 
@@ -241,7 +241,7 @@ function parseTSDelimitedList<
     }
 
     const element = parseElement(parser);
-    if (element == undefined) {
+    if (element === undefined) {
       break;
     }
 
@@ -468,21 +468,24 @@ export function tsCheckLiteralForConstantContext(
     case 'ObjectExpression':
       break;
 
-    case 'ArrayExpression':
+    case 'ArrayExpression': {
       for (const elem of node.elements) {
         if (elem) {
           tsCheckLiteralForConstantContext(parser, elem);
         }
       }
       break;
+    }
 
-    case 'ObjectProperty':
+    case 'ObjectProperty': {
       tsCheckLiteralForConstantContext(parser, node.value);
       break;
+    }
 
-    case 'UnaryExpression':
+    case 'UnaryExpression': {
       tsCheckLiteralForConstantContext(parser, node.argument);
       break;
+    }
 
     default:
       parser.addDiagnostic({
@@ -654,7 +657,7 @@ function parseTSPropertyOrMethodSignature(
       optional,
       meta,
       key,
-      typeAnnotation,
+      returnType: typeAnnotation,
     });
   } else {
     const typeAnnotation = tryTSParseTypeAnnotation(parser);
@@ -1105,12 +1108,13 @@ function tsCheckTypeAnnotationForReadOnly(parser: JSParser, node: AnyTSPrimary) 
     case 'TSArrayType':
       return;
 
-    default:
+    default: {
       parser.addDiagnostic({
         loc: node.loc,
         description: descriptions.JS_PARSER.TS_INVALID_READONLY_MODIFIER,
       });
       break;
+    }
   }
 }
 
@@ -1811,7 +1815,7 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
       };
 
     case tt._const:
-    case tt._var:
+    case tt._var: {
       kind = kind === undefined
         ? assertVarKind(String(parser.state.tokenValue))
         : kind;
@@ -1819,6 +1823,7 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
         declare: true,
         ...parseVarStatement(parser, start, kind),
       };
+    }
 
     case tt.name: {
       const value = String(parser.state.tokenValue);

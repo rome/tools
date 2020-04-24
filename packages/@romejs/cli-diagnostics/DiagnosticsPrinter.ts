@@ -6,25 +6,28 @@
  */
 
 import {
-  Diagnostics,
   Diagnostic,
-  DiagnosticOrigin,
+  DiagnosticAdvice,
   DiagnosticLanguage,
   DiagnosticSourceType,
-  DiagnosticAdvice,
+  Diagnostics,
   DiagnosticsProcessor,
   deriveRootAdviceFromDiagnostic,
   getDiagnosticHeader,
 } from '@romejs/diagnostics';
 import {Reporter} from '@romejs/cli-reporter';
 import {
-  DiagnosticsPrinterFlags,
-  DiagnosticsPrinterOptions,
   DiagnosticsFileReader,
   DiagnosticsFileReaderStats,
+  DiagnosticsPrinterFlags,
+  DiagnosticsPrinterOptions,
 } from './types';
 
-import {humanizeMarkupFilename, formatAnsi} from '@romejs/string-markup';
+import {
+  formatAnsi,
+  humanizeMarkupFilename,
+  markup,
+} from '@romejs/string-markup';
 import {toLines} from './utils';
 import printAdvice from './printAdvice';
 
@@ -32,15 +35,15 @@ import successBanner from './banners/success.json';
 import errorBanner from './banners/error.json';
 import {
   AbsoluteFilePath,
-  createAbsoluteFilePath,
-  createUnknownFilePath,
+  AbsoluteFilePathSet,
   UnknownFilePath,
   UnknownFilePathMap,
   UnknownFilePathSet,
-  AbsoluteFilePathSet,
+  createAbsoluteFilePath,
+  createUnknownFilePath,
 } from '@romejs/path';
-import {Number1, Number0} from '@romejs/ob1';
-import {existsSync, readFileTextSync, lstatSync} from '@romejs/fs';
+import {Number0, Number1} from '@romejs/ob1';
+import {existsSync, lstatSync, readFileTextSync} from '@romejs/fs';
 
 type Banner = {
   // Array<number> should really be [number, number, number], but TypeScript widens the imported types
@@ -373,18 +376,6 @@ export default class DiagnosticsPrinter extends Error {
     }
   }
 
-  addDiagnostic(partialDiagnostic: Diagnostic, origin?: DiagnosticOrigin) {
-    this.addDiagnostics([partialDiagnostic], origin);
-  }
-
-  addDiagnostics(partials: Diagnostics, origin?: DiagnosticOrigin) {
-    if (partials.length === 0) {
-      return;
-    }
-
-    this.processor.addDiagnostics(partials, origin);
-  }
-
   print() {
     const filteredDiagnostics = this.filterDiagnostics();
     this.fetchFileSources(filteredDiagnostics);
@@ -470,7 +461,7 @@ export default class DiagnosticsPrinter extends Error {
         outdatedAdvice.push({
           type: 'list',
           list: outdatedFilesArr.map(
-            (filename) => `<filelink target="${filename}" />`,
+            (filename) => markup`<filelink target="${filename}" />`,
           ),
         });
       }
@@ -623,12 +614,12 @@ export default class DiagnosticsPrinter extends Error {
 
     const displayableProblems = this.getDisplayedProblemsCount();
     let str = `Found <number emphasis>${displayableProblems}</number> problem`;
-    if (displayableProblems > 1 || displayableProblems == 0) {
+    if (displayableProblems > 1 || displayableProblems === 0) {
       str += 's';
     }
 
     if (filteredCount > 0) {
-      str += `<brightBlack> (${filteredCount} filtered)</brightBlack>`;
+      str += `<dim> (${filteredCount} filtered)</dim>`;
     }
 
     reporter.error(str);

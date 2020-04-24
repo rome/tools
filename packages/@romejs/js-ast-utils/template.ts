@@ -6,13 +6,13 @@
  */
 
 import {
-  AnyNode,
   AnyExpression,
-  AnyStatement,
   AnyIdentifier,
+  AnyNode,
+  AnyStatement,
   program,
 } from '@romejs/js-ast';
-import {Path, Context} from '@romejs/js-compiler';
+import {CompilerContext, Path} from '@romejs/js-compiler';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
 import removeLoc from './removeLoc';
 import {parseJS} from '@romejs/js-parser';
@@ -87,7 +87,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
     return node;
   }
 
-  const context = new Context({
+  const context = new CompilerContext({
     ast,
     project: {
       folder: undefined,

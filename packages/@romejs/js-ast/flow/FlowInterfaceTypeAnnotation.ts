@@ -6,9 +6,9 @@
  */
 
 import {
-  JSNodeBase,
   FlowInterfaceExtends,
   FlowObjectTypeAnnotation,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 

@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath} from '@romejs/path';
-import {writeFile, readFileText, exists, unlink} from '@romejs/fs';
+import {AbsoluteFilePath, AbsoluteFilePathMap} from '@romejs/path';
+import {exists, readFileText, unlink, writeFile} from '@romejs/fs';
 import {TestRunnerOptions} from '../master/testing/types';
 import TestWorkerRunner from './TestWorkerRunner';
-import {descriptions, DiagnosticDescription} from '@romejs/diagnostics';
+import {DiagnosticDescription, descriptions} from '@romejs/diagnostics';
 import createSnapshotParser from './SnapshotParser';
 
 function cleanHeading(key: string): string {
@@ -24,66 +24,90 @@ function cleanHeading(key: string): string {
   return key.trim();
 }
 
+type SnapshotEntry = {
+  testName: string;
+  entryName: string;
+  language: undefined | string;
+  value: string;
+};
+
+type Snapshot = {
+  exists: boolean;
+  used: boolean;
+  raw: string;
+  entries: Map<string, SnapshotEntry>;
+};
+
+function buildEntriesKey(testName: string, entryName: string): string {
+  return `${testName}#${entryName}`;
+}
+
 export default class SnapshotManager {
   constructor(runner: TestWorkerRunner, testPath: AbsoluteFilePath) {
-    this.path = testPath.getParent().append(
+    this.defaultSnapshotPath = testPath.getParent().append(
       `${testPath.getExtensionlessBasename()}.test.md`,
     );
     this.testPath = testPath;
 
     this.runner = runner;
     this.options = runner.options;
-
-    this.exists = false;
-    this.raw = '';
-
-    this.entries = new Map();
+    this.snapshots = new AbsoluteFilePathMap();
+    this.loadingSnapshotCount = 0;
   }
 
+  loadingSnapshotCount: number;
   testPath: AbsoluteFilePath;
-  path: AbsoluteFilePath;
-  entries: Map<string, Map<string, {
-    language: undefined | string;
-    value: string;
-  }>>;
+  defaultSnapshotPath: AbsoluteFilePath;
+
+  snapshots: AbsoluteFilePathMap<Snapshot>;
 
   runner: TestWorkerRunner;
   options: TestRunnerOptions;
 
-  raw: string;
-  exists: boolean;
+  teardown() {
+    if (this.loadingSnapshotCount > 0) {
+      throw new Error();
+    }
+  }
+
+  async init() {
+    await this.loadSnapshot(this.defaultSnapshotPath);
+  }
 
   async emitDiagnostic(metadata: DiagnosticDescription) {
     await this.runner.emitDiagnostic({
       description: metadata,
       location: {
-        filename: this.path.join(),
+        filename: this.defaultSnapshotPath.join(),
       },
     });
   }
 
-  async load() {
-    const {path: snapshotFilename} = this;
-    if (!(await exists(snapshotFilename))) {
+  async loadSnapshot(path: AbsoluteFilePath): Promise<undefined | Snapshot> {
+    if (!(await exists(path))) {
       return;
     }
-
-    this.exists = true;
 
     // If we're force updating, pretend that no snapshots exist on disk
     if (this.options.updateSnapshots) {
       return;
     }
 
-    const file = await readFileText(snapshotFilename);
-    this.raw = file;
-
+    const content = await readFileText(path);
     const parser = createSnapshotParser({
-      path: snapshotFilename,
-      input: file,
+      path,
+      input: content,
     });
 
     const nodes = parser.parse();
+
+    const snapshot: Snapshot = {
+      exists: true,
+      used: false,
+      raw: content,
+      entries: new Map(),
+    };
+    this.snapshots.set(path, snapshot);
 
     while (nodes.length > 0) {
       const node = nodes.shift();
@@ -105,7 +129,7 @@ export default class SnapshotManager {
           if (node.type === 'Heading' && node.level === 3) {
             nodes.shift();
 
-            const snapshotName = cleanHeading(node.text);
+            const entryName = cleanHeading(node.text);
 
             const codeBlock = nodes.shift();
             if (codeBlock === undefined || codeBlock.type !== 'CodeBlock') {
@@ -117,21 +141,22 @@ export default class SnapshotManager {
                 );
             }
 
-            this.set({
+            snapshot.entries.set(buildEntriesKey(testName, entryName), {
               testName,
-              snapshotName,
+              entryName,
               language: codeBlock.language,
               value: codeBlock.text,
             });
+
             continue;
           }
 
           if (node.type === 'CodeBlock') {
             nodes.shift();
 
-            this.set({
+            snapshot.entries.set(buildEntriesKey(testName, '0'), {
               testName,
-              snapshotName: '0',
+              entryName: '0',
               language: node.language,
               value: node.text,
             });
@@ -143,29 +168,11 @@ export default class SnapshotManager {
         continue;
       }
     }
+
+    return snapshot;
   }
 
-  async save() {
-    const {path} = this;
-
-    // If there'a s focused test then we don't write or validate a snapshot
-    if (this.runner.hasFocusedTest) {
-      return;
-    }
-
-    // No point producing an empty snapshot file
-    if (this.entries.size === 0) {
-      if (this.exists) {
-        if (this.options.freezeSnapshots) {
-          await this.emitDiagnostic(descriptions.SNAPSHOTS.REDUNDANT);
-        } else {
-          // Remove the snapshot file as there were none ran
-          await unlink(path);
-        }
-      }
-      return;
-    }
-
+  buildSnapshot(entries: Iterable<SnapshotEntry>): Array<string> {
     // Build the snapshot
     let lines: Array<string> = [];
 
@@ -183,11 +190,21 @@ export default class SnapshotManager {
     );
     pushNewline();
 
+    const testNameToEntries: Map<string, Map<string, SnapshotEntry>> = new Map();
+    for (const entry of entries) {
+      let entriesByTestName = testNameToEntries.get(entry.testName);
+      if (entriesByTestName === undefined) {
+        entriesByTestName = new Map();
+        testNameToEntries.set(entry.testName, entriesByTestName);
+      }
+      entriesByTestName.set(entry.entryName, entry);
+    }
+
     // Get test names and sort them so they are in a predictable
-    const testNames = Array.from(this.entries.keys()).sort();
+    const testNames = Array.from(testNameToEntries.keys()).sort();
 
     for (const testName of testNames) {
-      const entries = this.entries.get(testName);
+      const entries = testNameToEntries.get(testName);
       if (entries === undefined) {
         throw new Error('Impossible');
       }
@@ -195,9 +212,9 @@ export default class SnapshotManager {
       lines.push(`## \`${testName}\``);
       pushNewline();
 
-      const snapshotNames = Array.from(entries.keys()).sort();
+      const entryNames = Array.from(entries.keys()).sort();
 
-      for (const snapshotName of snapshotNames) {
+      for (const snapshotName of entryNames) {
         const entry = entries.get(snapshotName);
         if (entry === undefined) {
           throw new Error('Impossible');
@@ -207,7 +224,7 @@ export default class SnapshotManager {
         const language = entry.language === undefined ? '' : entry.language;
 
         // If the test only has one snapshot then omit the heading
-        const skipHeading = snapshotName === '0' && snapshotNames.length === 1;
+        const skipHeading = snapshotName === '0' && entryNames.length === 1;
         if (!skipHeading) {
           lines.push(`### \`${snapshotName}\``);
         }
@@ -220,52 +237,96 @@ export default class SnapshotManager {
         pushNewline();
       }
     }
+    return lines;
+  }
 
-    const formatted = lines.join('\n');
+  async save() {
+    // If there'a s focused test then we don't write or validate a snapshot
+    if (this.runner.hasFocusedTest) {
+      return;
+    }
 
-    if (this.options.freezeSnapshots) {
-      if (!this.exists) {
-        await this.emitDiagnostic(descriptions.SNAPSHOTS.MISSING);
-      } else if (formatted !== this.raw) {
-        await this.emitDiagnostic(descriptions.SNAPSHOTS.INCORRECT(
-          this.raw,
-          formatted,
-        ));
+    for (const [path, {used, exists, raw, entries}] of this.snapshots) {
+      const lines = this.buildSnapshot(entries.values());
+      const formatted = lines.join('\n');
+
+      if (this.options.freezeSnapshots) {
+        if (!used) {
+          await this.emitDiagnostic(descriptions.SNAPSHOTS.REDUNDANT);
+        } else if (!exists) {
+          await this.emitDiagnostic(descriptions.SNAPSHOTS.MISSING);
+        } else if (formatted !== raw) {
+          await this.emitDiagnostic(descriptions.SNAPSHOTS.INCORRECT(
+            raw,
+            formatted,
+          ));
+        }
+      } else {
+        if (exists && !used) {
+          // If a snapshot wasn't used or is empty then delete it!
+          await unlink(path);
+        } else if (used && formatted !== raw) {
+          // Fresh snapshot!
+          await writeFile(path, formatted);
+        }
       }
-    } else if (formatted !== this.raw) {
-      // Save the file
-      await writeFile(path, formatted);
     }
   }
 
-  get(testName: string, snapshotName: string): undefined | string {
-    const entries = this.entries.get(testName);
-    if (entries !== undefined) {
-      const entry = entries.get(snapshotName);
-      if (entry !== undefined) {
-        return entry.value;
-      }
+  async get(
+    testName: string,
+    entryName: string,
+    snapshotPath: AbsoluteFilePath = this.defaultSnapshotPath,
+  ): Promise<undefined | string> {
+    let snapshot = this.snapshots.get(snapshotPath);
+
+    if (snapshot === undefined) {
+      snapshot = await this.loadSnapshot(snapshotPath);
     }
-    return undefined;
+
+    if (snapshot === undefined) {
+      return undefined;
+    }
+
+    snapshot.used = true;
+
+    const entry = snapshot.entries.get(buildEntriesKey(testName, entryName));
+    if (entry === undefined) {
+      return undefined;
+    } else {
+      return entry.value;
+    }
   }
 
   set({
+    testName,
+    entryName,
     value,
     language,
-    testName,
-    snapshotName,
+    snapshotPath = this.defaultSnapshotPath,
   }: {
+    testName: string;
+    entryName: string;
     value: string;
     language: undefined | string;
-    testName: string;
-    snapshotName: string;
+    snapshotPath: undefined | AbsoluteFilePath;
   }) {
-    let entries = this.entries.get(testName);
-    if (entries === undefined) {
-      entries = new Map();
-      this.entries.set(testName, entries);
+    let snapshot = this.snapshots.get(snapshotPath);
+    if (snapshot === undefined) {
+      snapshot = {
+        raw: '',
+        exists: false,
+        used: true,
+        entries: new Map(),
+      };
+      this.snapshots.set(snapshotPath, snapshot);
     }
 
-    entries.set(snapshotName, {value, language});
+    snapshot.entries.set(buildEntriesKey(testName, entryName), {
+      testName,
+      entryName,
+      language,
+      value,
+    });
   }
 }

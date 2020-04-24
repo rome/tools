@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {jsxReferenceIdentifier, AnyNode} from '@romejs/js-ast';
+import {AnyNode, jsxReferenceIdentifier} from '@romejs/js-ast';
 
 export default function JSXReferenceIdentifier(
   builder: Builder,

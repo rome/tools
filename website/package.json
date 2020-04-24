@@ -1,6 +1,5 @@
 {
   "name": "rome-website",
-  "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "docusaurus start",

@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens, concat} from '../../tokens';
-import {computedMemberProperty, AnyNode} from '@romejs/js-ast';
+import {AnyNode, computedMemberProperty} from '@romejs/js-ast';
 import {operator} from '@romejs/js-formatter/tokens';
 
 export default function ComputedMemberProperty(

@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   EmptyKeywordTypeAnnotation,
   emptyKeywordTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function EmptyKeywordTypeAnnotation(node: AnyNode, scope: Scope) {

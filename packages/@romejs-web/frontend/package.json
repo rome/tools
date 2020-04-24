@@ -3,7 +3,6 @@
   "private": true,
   "type": "module",
   "main": "index.tsx",
-  "version": "0.0.0",
   "dependencies": {
     "@emotion/core": "^10.0.14",
     "emotion": "^10.0.14",

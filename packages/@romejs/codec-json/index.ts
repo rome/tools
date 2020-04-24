@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONParserOptions, PathToComments, Tokens, JSONValue} from './types';
+import {JSONParserOptions, JSONValue, PathToComments, Tokens} from './types';
 import createParser from './parse';
 import {Consumer, consume} from '@romejs/consume';
 import {stringifyRootConsumer} from './stringify';
 import {TokenValues} from '@romejs/parser-core';
 
 export {
-  JSONParserOptions,
-  JSONValue,
-  JSONPropertyValue,
-  JSONObject,
   JSONArray,
+  JSONObject,
+  JSONParserOptions,
+  JSONPropertyValue,
+  JSONValue,
 } from './types';
 
 export type ConsumeJSONResult = {

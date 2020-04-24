@@ -7,8 +7,8 @@
 
 import {
   AnyNode,
-  ExportDefaultDeclaration,
   ClassDeclaration,
+  ExportDefaultDeclaration,
   FunctionDeclaration,
 } from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
@@ -65,19 +65,16 @@ export default {
           if (basename !== id.name) {
             const correctFilename = id.name + context.path.getExtensions();
 
-            const {suppressed} = context.addNodeDiagnostic(
-              id,
-              descriptions.LINT.DEFAULT_EXPORT_SAME_BASENAME({
-                defaultName: id.name,
-                defaultType: type,
-                actualFilename: basename,
-                correctFilename,
-              }),
-            );
-
-            if (!suppressed) {
-              return renameBindings(path, new Map([[id.name, basename]]));
-            }
+            return context.addFixableDiagnostic({
+              target: id,
+              old: node,
+              fixed: () => renameBindings(path, new Map([[id.name, basename]])),
+            }, descriptions.LINT.DEFAULT_EXPORT_SAME_BASENAME({
+              defaultName: id.name,
+              defaultType: type,
+              actualFilename: basename,
+              correctFilename,
+            }));
           }
         }
       }

@@ -8,11 +8,11 @@
 import {Scope} from '../../scopes';
 import {
   AnyNode,
-  ReferenceIdentifier,
-  FlowQualifiedTypeIdentifier,
   FlowGenericTypeAnnotation,
-  flowGenericTypeAnnotation,
+  FlowQualifiedTypeIdentifier,
   Identifier,
+  ReferenceIdentifier,
+  flowGenericTypeAnnotation,
 } from '@romejs/js-ast';
 import GenericT from '../../types/GenericT';
 

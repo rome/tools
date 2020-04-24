@@ -6,7 +6,6 @@
  */
 
 import {Diagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
-import {escapeMarkup, stripAnsi} from '@romejs/string-markup';
 import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
 import {Diagnostic, DiagnosticSuppressions} from './types';
 
@@ -21,12 +20,9 @@ export class DiagnosticsError extends Error {
     }
 
     message += '\n';
-    message += stripAnsi(printDiagnosticsToString(diagnostics));
-    message += stripAnsi(diagnostics.map(
-      (diag) => `- ${diag.description.message.value}`,
-    ).join('\n'));
+    message += printDiagnosticsToString({diagnostics, suppressions});
 
-    super(escapeMarkup(message));
+    super(message);
     this.diagnostics = diagnostics;
     this.suppressions = suppressions;
     this.name = 'DiagnosticsError';

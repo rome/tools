@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest, Master, WebBridge} from '@romejs/core';
+import {Master, MasterRequest, WebBridge} from '@romejs/core';
 import Bundler from '../bundler/Bundler';
 import {WebSocketInterface} from '@romejs/codec-websocket';
 import prettyFormat from '@romejs/pretty-format';
@@ -91,6 +91,7 @@ export class WebServer {
         type: 'all',
         format: 'ansi',
         columns: 100,
+        unicode: true,
         write(chunk) {
           data.stdoutAnsi += chunk;
         },
@@ -100,8 +101,9 @@ export class WebServer {
         type: 'all',
         format: 'html',
         columns: 100,
+        unicode: true,
         write(chunk) {
-          data.stdoutAnsi += chunk;
+          data.stdoutHTML += chunk;
         },
       };
 
@@ -205,18 +207,21 @@ export class WebServer {
     }).join(' ');
 
     switch (msg.level) {
-      case 'info':
+      case 'info': {
         reporter.info(buf);
         break;
+      }
 
-      case 'warn':
+      case 'warn': {
         reporter.warn(buf);
         break;
+      }
 
       case 'log':
-      case 'trace':
+      case 'trace': {
         reporter.verboseForce(buf);
         break;
+      }
 
       case 'group':
       case 'groupCollapsed':

@@ -6,7 +6,7 @@
  */
 
 import {Scope, ThisScope} from '../../scopes';
-import {thisExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, thisExpression} from '@romejs/js-ast';
 import OpenT from '../../types/OpenT';
 
 export default function ThisExpression(node: AnyNode, scope: Scope) {

@@ -7,8 +7,8 @@
 
 import Scope from './Scope';
 import {
-  LetBinding,
   ArgumentsBinding,
+  LetBinding,
   REDUCE_SKIP_SUBTREE,
 } from '@romejs/js-compiler';
 import {getBindingIdentifiers, isFunctionNode} from '@romejs/js-ast-utils';
@@ -24,10 +24,9 @@ export function addFunctionBindings(
   // Add type parameters
   scope.evaluate(head.typeParameters);
 
-  const params = head.rest === undefined ? head.params : [
-    ...head.params,
-    head.rest,
-  ];
+  const params = head.rest === undefined
+    ? head.params
+    : [...head.params, head.rest];
 
   // Add parameters
   for (const param of params) {

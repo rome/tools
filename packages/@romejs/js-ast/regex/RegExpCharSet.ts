@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyRegExpEscapedCharacter,
   JSNodeBase,
   RegExpCharSetRange,
-  AnyRegExpEscapedCharacter,
 } from '../index';
 import {createBuilder} from '../utils';
 

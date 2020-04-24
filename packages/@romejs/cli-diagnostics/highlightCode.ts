@@ -6,7 +6,7 @@
  */
 
 import {tokenizeJS} from '@romejs/js-parser';
-import {get0, Number0} from '@romejs/ob1';
+import {Number0, ob1Get0} from '@romejs/ob1';
 import {DiagnosticLanguage, DiagnosticSourceType} from '@romejs/diagnostics';
 import {ConstSourceType} from '@romejs/js-ast';
 import {tokenizeJSON} from '@romejs/codec-json';
@@ -30,13 +30,13 @@ export default function highlightCode(opts: AnsiHighlightOptions): string {
 
   if (opts.language === 'js') {
     // js-parser does not accept an "unknown" sourceType
-    return ansiHighlightJS(opts.input, opts.sourceType === undefined ||
+    return highlightJS(opts.input, opts.sourceType === undefined ||
         opts.sourceType ===
         'unknown' ? 'script' : opts.sourceType);
   }
 
   if (opts.language === 'json') {
-    return ansiHighlightJSON(opts.path, opts.input);
+    return highlightJSON(opts.path, opts.input);
   }
 
   return escapeMarkup(opts.input);
@@ -56,12 +56,12 @@ function reduce<
   let buff = '';
 
   for (const token of tokens) {
-    const start = get0(token.start);
-    const end = get0(token.end);
+    const start = ob1Get0(token.start);
+    const end = ob1Get0(token.end);
     let value = input.slice(start, end);
 
     // Add on text between tokens
-    buff += input.slice(prevEnd, start);
+    buff += escapeMarkup(input.slice(prevEnd, start));
     prevEnd = end;
 
     // We need to break up the token text into lines, so that we can easily split the highlighted newlines and have the ansi codes be unbroken
@@ -78,10 +78,10 @@ function reduce<
 }
 
 function invalidHighlight(line: string): string {
-  return markupTag('emphasis', markupTag('bgRed', line));
+  return markupTag('emphasis', markupTag('color', line, {bg: 'red'}));
 }
 
-function ansiHighlightJSON(path: UnknownFilePath, input: string): string {
+function highlightJSON(path: UnknownFilePath, input: string): string {
   const tokens = tokenizeJSON({
     input,
     // Wont be used anywhere but activates JSON extensions if necessary
@@ -93,20 +93,20 @@ function ansiHighlightJSON(path: UnknownFilePath, input: string): string {
     switch (token.type) {
       case 'BlockComment':
       case 'LineComment':
-        return markupTag('brightBlack', value);
+        return markupTag('color', value, {fg: 'brightBlack'});
 
       case 'String':
-        return markupTag('green', value);
+        return markupTag('color', value, {fg: 'green'});
 
       case 'Number':
-        return markupTag('magenta', value);
+        return markupTag('color', value, {fg: 'magenta'});
 
       case 'Word':
         switch (token.value) {
           case 'true':
           case 'false':
           case 'null':
-            return markupTag('cyan', value);
+            return markupTag('color', value, {fg: 'cyan'});
 
           default:
             return value;
@@ -115,7 +115,7 @@ function ansiHighlightJSON(path: UnknownFilePath, input: string): string {
       case 'Comma':
       case 'Colon':
       case 'Dot':
-        return markupTag('yellow', value);
+        return markupTag('color', value, {fg: 'yellow'});
 
       case 'BracketOpen':
       case 'BracketClose':
@@ -137,7 +137,7 @@ function ansiHighlightJSON(path: UnknownFilePath, input: string): string {
   });
 }
 
-function ansiHighlightJS(input: string, sourceType: ConstSourceType): string {
+function highlightJS(input: string, sourceType: ConstSourceType): string {
   const tokens = tokenizeJS(input, {
     sourceType,
     // js-parser requires a filename. Doesn't really matter since we'll never be producing an AST or diagnostics
@@ -183,25 +183,25 @@ function ansiHighlightJS(input: string, sourceType: ConstSourceType): string {
       case 'typeof':
       case 'void':
       case 'delete':
-        return markupTag('cyan', value);
+        return markupTag('color', value, {fg: 'cyan'});
 
       case 'num':
       case 'bigint':
-        return markupTag('magenta', value);
+        return markupTag('color', value, {fg: 'magenta'});
 
       case 'regexp':
-        return markupTag('magenta', value);
+        return markupTag('color', value, {fg: 'magenta'});
 
       case 'string':
       case 'template':
       case '`':
-        return markupTag('green', value);
+        return markupTag('color', value, {fg: 'green'});
 
       case 'invalid':
         return invalidHighlight(value);
 
       case 'comment':
-        return markupTag('brightBlack', value);
+        return markupTag('color', value, {fg: 'brightBlack'});
 
       case ',':
       case ';':
@@ -211,7 +211,7 @@ function ansiHighlightJS(input: string, sourceType: ConstSourceType): string {
       case '.':
       case '?':
       case '?.':
-        return markupTag('yellow', value);
+        return markupTag('color', value, {fg: 'yellow'});
 
       case '[':
       case ']':

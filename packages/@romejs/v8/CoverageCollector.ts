@@ -6,23 +6,23 @@
  */
 
 import {
-  CoverageFileStats,
-  LocationRangeKind,
   CoverageFile,
+  CoverageFileStats,
   CoverageLocationRange,
   CoverageRangeWithMetadata,
+  LocationRangeKind,
 } from '@romejs/v8';
-import {SourceMap, SourceMapConsumer} from '@romejs/codec-source-map';
+import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {Position} from '@romejs/parser-core';
 import {urlToFilename} from './utils';
 import {
-  Number1,
-  number1,
-  number0,
   Number0,
-  get0,
-  inc,
-  coerce0,
+  Number1,
+  ob1Coerce0,
+  ob1Get0,
+  ob1Inc,
+  ob1Number0,
+  ob1Number1,
 } from '@romejs/ob1';
 import inspector = require('inspector');
 
@@ -47,10 +47,10 @@ export default class CoverageCollector {
   sourceMaps: Map<string, {
     code: string;
     ranges: Array<CoverageRangeWithMetadata>;
-    map: SourceMap;
+    map: SourceMapConsumer;
   }>;
 
-  addSourceMap(filename: string, code: string, map: SourceMap) {
+  addSourceMap(filename: string, code: string, map: SourceMapConsumer) {
     this.sourceMaps.set(filename, {
       ranges: [],
       map,
@@ -93,9 +93,9 @@ export default class CoverageCollector {
       const {ranges, code, map} = data;
 
       // Turn an index into a position in the compiled source
-      let line: Number1 = number1;
-      let column: Number0 = number0;
-      let index: Number0 = number0;
+      let line: Number1 = ob1Number1;
+      let column: Number0 = ob1Number0;
+      let index: Number0 = ob1Number0;
       const indexCache: Map<Number0, Position> = new Map();
       function findIndex(newIndex: Number0): Position {
         const cached = indexCache.get(newIndex);
@@ -107,21 +107,21 @@ export default class CoverageCollector {
           throw new Error(`Expected newIndex(${newIndex}) >= index(${index})`);
         }
 
-        if (get0(newIndex) > code.length) {
+        if (ob1Get0(newIndex) > code.length) {
           throw new Error(
             `Expected newIndex(${newIndex}) <= code.length(${code.length})`,
           );
         }
 
         while (index < newIndex) {
-          const char = code[get0(index)];
+          const char = code[ob1Get0(index)];
           if (char === '\n') {
-            line = inc(line);
-            column = number0;
+            line = ob1Inc(line);
+            column = ob1Number0;
           } else {
-            column = inc(column);
+            column = ob1Inc(column);
           }
-          index = inc(index);
+          index = ob1Inc(index);
         }
 
         const pos: Position = {
@@ -136,21 +136,20 @@ export default class CoverageCollector {
       // Prefetch all sorted indexes
       const offsets: Array<Number0> = [];
       for (const {startOffset, endOffset} of ranges) {
-        offsets.push(coerce0(startOffset));
-        offsets.push(coerce0(endOffset));
+        offsets.push(ob1Coerce0(startOffset));
+        offsets.push(ob1Coerce0(endOffset));
       }
-      offsets.sort((a, b) => get0(a) - get0(b));
+      offsets.sort((a, b) => ob1Get0(a) - ob1Get0(b));
       for (const index of offsets) {
         findIndex(index);
       }
 
       //
-      const sourceMap = new SourceMapConsumer(map);
       for (const {kind, startOffset, endOffset, count} of ranges) {
-        const originalStart = findIndex(coerce0(startOffset));
-        const originalEnd = findIndex(coerce0(endOffset));
+        const originalStart = findIndex(ob1Coerce0(startOffset));
+        const originalEnd = findIndex(ob1Coerce0(endOffset));
 
-        const sourceStart = sourceMap.approxOriginalPositionFor(
+        const sourceStart = map.approxOriginalPositionFor(
           originalStart.line,
           originalStart.column,
         );
@@ -158,7 +157,7 @@ export default class CoverageCollector {
           continue;
         }
 
-        const sourceEnd = sourceMap.approxOriginalPositionFor(
+        const sourceEnd = map.approxOriginalPositionFor(
           originalEnd.line,
           originalEnd.column,
         );
@@ -186,12 +185,12 @@ export default class CoverageCollector {
           filename: sourceStart.source,
           count,
           start: {
-            index: coerce0(startOffset),
+            index: ob1Coerce0(startOffset),
             line: sourceStart.line,
             column: sourceStart.column,
           },
           end: {
-            index: coerce0(endOffset),
+            index: ob1Coerce0(endOffset),
             line: sourceEnd.line,
             column: sourceEnd.column,
           },
@@ -224,7 +223,7 @@ export default class CoverageCollector {
 
       for (const {count, kind, start, end} of ranges) {
         // Fill in lines
-        for (let i = start.line; i <= end.line; i = inc(i)) {
+        for (let i = start.line; i <= end.line; i = ob1Inc(i)) {
           if (count === 0) {
             uncoveredLines.add(i);
           } else {

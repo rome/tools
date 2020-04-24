@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {functionHead, AnyNode} from '@romejs/js-ast';
+import {AnyNode, functionHead} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {printBindingPatternParams} from '../utils';
 import {
-  space,
-  operator,
   Tokens,
-  linkedGroups,
   concat,
+  linkedGroups,
+  operator,
+  space,
 } from '@romejs/js-formatter/tokens';
 
 export default function FunctionHead(builder: Builder, node: AnyNode): Tokens {

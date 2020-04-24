@@ -6,8 +6,8 @@
  */
 
 import {
-  DiagnosticsPrinterFlags,
   DEFAULT_PRINTER_FLAGS,
+  DiagnosticsPrinterFlags,
 } from '@romejs/cli-diagnostics';
 import {Platform} from './platform';
 import {AbsoluteFilePath, CWD_PATH} from '@romejs/path';
@@ -21,11 +21,14 @@ export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 
 export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
   collectMarkers: false,
+  timing: false,
+  allowDirty: false,
 
   benchmark: false,
   benchmarkIterations: 10,
 
   watch: false,
+  review: false,
   resolverPlatform: undefined,
   resolverScale: undefined,
   resolverMocks: false,
@@ -34,8 +37,11 @@ export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
 
 export type ClientRequestFlags = DiagnosticsPrinterFlags & {
   watch: boolean;
+  review: boolean;
+  allowDirty: boolean;
 
   // Debugging
+  timing: boolean;
   collectMarkers: boolean;
   benchmark: boolean;
   benchmarkIterations: number;

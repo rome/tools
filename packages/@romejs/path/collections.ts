@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath, UnknownFilePath, RelativeFilePath} from '.';
+import {AbsoluteFilePath, RelativeFilePath, UnknownFilePath} from '.';
 
 // Sometimes we don't want to have to deal with what a FilePath serializes into
 // For those purposes we have these wrappers around Map and Set. Here we can add some custom logic

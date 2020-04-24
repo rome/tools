@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word, concat} from '../../tokens';
-import {classMethod, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, space, word} from '../../tokens';
+import {AnyNode, classMethod} from '@romejs/js-ast';
 import {printMethod} from '../utils';
 
 export default function ClassMethod(builder: Builder, node: AnyNode): Tokens {

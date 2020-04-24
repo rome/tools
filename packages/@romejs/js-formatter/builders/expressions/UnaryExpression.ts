@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word, operator, concat} from '../../tokens';
-import {unaryExpression, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, operator, space, word} from '../../tokens';
+import {AnyNode, unaryExpression} from '@romejs/js-ast';
 
 export default function UnaryExpression(builder: Builder, node: AnyNode): Tokens {
   node = unaryExpression.assert(node);

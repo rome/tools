@@ -8,9 +8,9 @@
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
 import {
+  AnyNode,
   AssignmentArrayPattern,
   assignmentArrayPattern,
-  AnyNode,
 } from '@romejs/js-ast';
 import ArrayExpression from '../expressions/ArrayExpression';
 

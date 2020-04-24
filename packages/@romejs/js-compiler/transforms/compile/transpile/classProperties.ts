@@ -5,29 +5,29 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Context, Path, Scope} from '@romejs/js-compiler';
+import {CompilerContext, Path, Scope} from '@romejs/js-compiler';
 import {
+  AnyExpression,
   AnyNode,
   AnyStatement,
-  ClassMethod,
-  ClassExpression,
-  AnyExpression,
-  ClassDeclaration,
-  functionHead,
-  classPropertyMeta,
-  bindingIdentifier,
-  referenceIdentifier,
-  staticPropertyKey,
-  FunctionHead,
   CallExpression,
-  classMethod,
-  identifier,
-  sequenceExpression,
-  expressionStatement,
-  callExpression,
+  ClassDeclaration,
+  ClassExpression,
+  ClassMethod,
+  FunctionHead,
   arrowFunctionExpression,
+  bindingIdentifier,
   blockStatement,
+  callExpression,
+  classMethod,
+  classPropertyMeta,
+  expressionStatement,
+  functionHead,
+  identifier,
+  referenceIdentifier,
   returnStatement,
+  sequenceExpression,
+  staticPropertyKey,
 } from '@romejs/js-ast';
 import {template} from '@romejs/js-ast-utils';
 
@@ -69,7 +69,7 @@ function isSuperCall(node: AnyNode): node is CallExpression {
 function transformClass(
   node: ClassDeclaration,
   scope: Scope,
-  context: Context,
+  context: CompilerContext,
 ): {
   newClass: ClassDeclaration;
   className: string;

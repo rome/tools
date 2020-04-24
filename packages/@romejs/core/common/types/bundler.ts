@@ -6,7 +6,7 @@
  */
 
 import {Diagnostics} from '@romejs/diagnostics';
-import {SourceMap} from '@romejs/codec-source-map';
+import {SourceMapGenerator} from '@romejs/codec-source-map';
 import {AbsoluteFilePath} from '@romejs/path';
 import {ResolverOptions} from '../../master/fs/Resolver';
 
@@ -24,7 +24,7 @@ export type BundleRequestResult = {
   cached: boolean;
   diagnostics: Diagnostics;
   content: string;
-  map: SourceMap;
+  sourceMap: SourceMapGenerator;
   assets: Map<string, Buffer>;
 };
 
@@ -37,14 +37,13 @@ export type BundleBuddyGraphNode = {
 
 export type BundlerFiles = Map<string, {
   kind: 'asset' | 'entry' | 'sourcemap' | 'stats' | 'manifest' | 'file';
-  content: string | Buffer;
+  content: () => string | Buffer;
 }>;
 
 export type BundleResultBundle = {
   sourceMap: {
     path: string;
-    map: SourceMap;
-    content: string;
+    map: SourceMapGenerator;
   };
   js: {
     path: string;

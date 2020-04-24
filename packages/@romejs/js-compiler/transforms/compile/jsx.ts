@@ -6,45 +6,45 @@
  */
 
 import {
-  AnyNode,
   AnyExpression,
-  ObjectProperty,
+  AnyNode,
+  CallExpression,
+  JSXAttribute,
+  JSXElement,
+  JSXExpressionContainer,
   JSXIdentifier,
   JSXNamespacedName,
-  JSXAttribute,
-  ObjectProperties,
   MemberExpression,
-  ThisExpression,
-  StringLiteral,
-  JSXElement,
-  staticPropertyKey,
+  ObjectProperties,
+  ObjectProperty,
   ReferenceIdentifier,
-  referenceIdentifier,
-  computedMemberProperty,
-  staticMemberProperty,
-  jsxNamespacedName,
-  objectExpression,
-  objectProperty,
-  stringLiteral,
-  identifier,
-  memberExpression,
-  thisExpression,
+  StringLiteral,
+  ThisExpression,
   booleanLiteral,
-  nullLiteral,
   callExpression,
-  jsxIdentifier,
+  computedMemberProperty,
+  computedPropertyKey,
+  identifier,
   jsxElement,
   jsxExpressionContainer,
-  computedPropertyKey,
-  JSXExpressionContainer,
-  CallExpression,
+  jsxIdentifier,
+  jsxNamespacedName,
+  memberExpression,
+  nullLiteral,
+  objectExpression,
+  objectProperty,
+  referenceIdentifier,
   spreadElement,
+  staticMemberProperty,
+  staticPropertyKey,
+  stringLiteral,
+  thisExpression,
 } from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 import {
-  template,
-  isValidIdentifierName,
   inheritLoc,
+  isValidIdentifierName,
+  template,
 } from '@romejs/js-ast-utils';
 import {descriptions} from '@romejs/diagnostics';
 
@@ -227,7 +227,7 @@ function cleanJSXElementLiteralChild(value: string): undefined | StringLiteral {
     }
   }
 
-  if (str != '') {
+  if (str !== '') {
     return stringLiteral.quick(str);
   } else {
     return undefined;

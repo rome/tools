@@ -7,41 +7,13 @@
 
 import {NodeBase} from '@romejs/parser-core';
 import {AnyNode} from './index';
-import {inheritLoc, assertSingleNode} from '@romejs/js-ast-utils';
+import {assertSingleNode, inheritLoc} from '@romejs/js-ast-utils';
 import {JSNodeBase} from './base';
 import {TransformExitResult} from '@romejs/js-compiler';
 
 export const bindingKeys: Map<string, Array<string>> = new Map();
 export const visitorKeys: Map<string, Array<string>> = new Map();
 export const nodeNames: Set<string> = new Set();
-
-export function assertNodeTypeSet(names: Map<string, unknown>, desc: string) {
-  const set: Set<string> = new Set(names.keys());
-
-  const errors = [];
-
-  // Verify that all names in `set` are valid
-  for (const name of set) {
-    if (name[0] === '_') {
-      continue;
-    }
-
-    if (nodeNames.has(name) === false) {
-      errors.push(`${name} is not a valid node`);
-    }
-  }
-
-  // Verify all nodes
-  for (const name of nodeNames) {
-    if (set.has(name) === false) {
-      errors.push(`${name} does not appear`);
-    }
-  }
-
-  if (errors.length > 0) {
-    throw new Error(`${desc}: ${errors.join('\n')}`);
-  }
-}
 
 type JustNodeKeysProp<K, V> = V extends NodeBase | Array<NodeBase> | Array<
   | undefined

@@ -7,12 +7,12 @@
 
 import {
   JSNodeBase,
+  JSXElement,
+  JSXExpressionContainer,
+  JSXFragment,
   JSXIdentifier,
   JSXNamespacedName,
-  JSXElement,
-  JSXFragment,
   StringLiteral,
-  JSXExpressionContainer,
 } from '../index';
 import {createBuilder} from '../utils';
 

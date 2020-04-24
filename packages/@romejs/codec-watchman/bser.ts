@@ -6,13 +6,13 @@
  */
 
 import {Event} from '@romejs/events';
-import {isPlainObject, Dict} from '@romejs/typescript-helpers';
+import {Dict, isPlainObject} from '@romejs/typescript-helpers';
 import os = require('os');
 
 // BSER uses the local endianness to reduce byte swapping overheads
 // (the protocol is expressly local IPC only).  We need to tell node
 // to use the native endianness when reading various native values.
-const isBigEndian = os.endianness() == 'BE';
+const isBigEndian = os.endianness() === 'BE';
 
 type Bufferish = Buffer | string;
 
@@ -170,25 +170,28 @@ export class Accumulator {
   writeInt(value: number, size: number) {
     this.reserve(size);
     switch (size) {
-      case 1:
+      case 1: {
         this.buffer.writeInt8(value, this.writeOffset);
         break;
+      }
 
-      case 2:
+      case 2: {
         if (isBigEndian) {
           this.buffer.writeInt16BE(value, this.writeOffset);
         } else {
           this.buffer.writeInt16LE(value, this.writeOffset);
         }
         break;
+      }
 
-      case 4:
+      case 4: {
         if (isBigEndian) {
           this.buffer.writeInt32BE(value, this.writeOffset);
         } else {
           this.buffer.writeInt32LE(value, this.writeOffset);
         }
         break;
+      }
 
       default:
         throw new Error(`unsupported integer size ${size}`);
@@ -283,22 +286,15 @@ export class BunserBuf {
   }
 
   // Do something with the buffer to advance our state.
-
   // If we're running synchronously we'll return either
-
   // the value we've decoded or undefined if we don't
-
   // yet have enought data.
-
   // If we're running asynchronously, we'll emit the value
-
   // when it becomes ready and schedule another invocation
-
   // of process on the next tick if we still have data we
-
   // can process.
   process(synchronous: boolean) {
-    if (this.state == ST_NEED_PDU) {
+    if (this.state === ST_NEED_PDU) {
       if (this.acc.readAvail() < 2) {
         return;
       }
@@ -318,7 +314,7 @@ export class BunserBuf {
       this.state = ST_FILL_PDU;
     }
 
-    if (this.state == ST_FILL_PDU) {
+    if (this.state === ST_FILL_PDU) {
       if (this.acc.readAvail() < this.pduLen) {
         // Need more data
         return;
@@ -355,7 +351,7 @@ export class BunserBuf {
 
   expectCode(expected: number): void {
     const code = this.acc.readInt(1);
-    if (code != expected) {
+    if (code !== expected) {
       this.raise(`Expected bser opcode ${expected} but got ${code}`);
     }
   }
@@ -369,21 +365,25 @@ export class BunserBuf {
       case BSER_INT64:
         return this.decodeInt();
 
-      case BSER_REAL:
+      case BSER_REAL: {
         this.acc.readAdvance(1);
         return this.acc.readDouble();
+      }
 
-      case BSER_TRUE:
+      case BSER_TRUE: {
         this.acc.readAdvance(1);
         return true;
+      }
 
-      case BSER_FALSE:
+      case BSER_FALSE: {
         this.acc.readAdvance(1);
         return false;
+      }
 
-      case BSER_NULL:
+      case BSER_NULL: {
         this.acc.readAdvance(1);
         return null;
+      }
 
       case BSER_STRING:
         return this.decodeString();
@@ -432,7 +432,7 @@ export class BunserBuf {
     for (let i = 0; i < nitems; ++i) {
       const obj: Dict<unknown> = {};
       for (let keyidx = 0; keyidx < keys.length; ++keyidx) {
-        if (this.acc.peekInt(1) == BSER_SKIP) {
+        if (this.acc.peekInt(1) === BSER_SKIP) {
           this.acc.readAdvance(1);
           continue;
         }
@@ -471,21 +471,25 @@ export class BunserBuf {
 
     const code = this.acc.peekInt(1);
     switch (code) {
-      case BSER_INT8:
+      case BSER_INT8: {
         size = 1;
         break;
+      }
 
-      case BSER_INT16:
+      case BSER_INT16: {
         size = 2;
         break;
+      }
 
-      case BSER_INT32:
+      case BSER_INT32: {
         size = 4;
         break;
+      }
 
-      case BSER_INT64:
+      case BSER_INT64: {
         size = 8;
         break;
+      }
 
       default:
         throw this.raise(`invalid bser int encoding ${code}`);
@@ -562,16 +566,16 @@ function dumpObject(buf: Accumulator, val: object | null) {
   const keys = Object.keys(val);
 
   // First pass to compute number of defined keys
-  let num_keys = keys.length;
+  let numKeys = keys.length;
   for (let i = 0; i < keys.length; ++i) {
     const key = keys[i];
     const v = val[key];
     if (typeof v === 'undefined') {
-      num_keys--;
+      numKeys--;
     }
   }
 
-  dumpInt(buf, num_keys);
+  dumpInt(buf, numKeys);
 
   for (let i = 0; i < keys.length; ++i) {
     const key = keys[i];
@@ -594,7 +598,7 @@ function dumpObject(buf: Accumulator, val: object | null) {
 
 function dumpUnknown(buf: Accumulator, val: unknown) {
   switch (typeof val) {
-    case 'number':
+    case 'number': {
       // check if it is an integer or a float
       if (isFinite(val) && Math.floor(val) === val) {
         dumpInt(buf, val);
@@ -603,23 +607,27 @@ function dumpUnknown(buf: Accumulator, val: unknown) {
         buf.writeDouble(val);
       }
       return;
+    }
 
     case 'bigint':
       throw new Error("bigint isn't supported yet");
 
-    case 'string':
+    case 'string': {
       buf.writeByte(BSER_STRING);
       dumpInt(buf, Buffer.byteLength(val));
       buf.append(val);
       return;
+    }
 
-    case 'boolean':
+    case 'boolean': {
       buf.writeByte(val ? BSER_TRUE : BSER_FALSE);
       return;
+    }
 
-    case 'object':
+    case 'object': {
       dumpObject(buf, val);
       return;
+    }
 
     default:
       throw new Error(`Cannot serialize type ${typeof val} to BSER`);
@@ -639,7 +647,8 @@ export function dumpToBuffer(val: unknown): Buffer {
 
   // Compute PDU length
   const off = buf.writeOffset;
-  const len = off - 7 /* the header length */;
+  const len = off - 7;
+  /* the header length */
   buf.writeOffset = 3; // The length value to fill in
   buf.writeInt(len, 4); // write the length in the space we reserved
   buf.writeOffset = off;

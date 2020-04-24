@@ -5,13 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WebBridge, Master, MasterRequest} from '@romejs/core';
+import {Master, MasterRequest, WebBridge} from '@romejs/core';
 import {
-  getDiagnosticsFromError,
   deriveDiagnosticFromError,
-  DiagnosticsProcessor,
+  getDiagnosticsFromError,
 } from '@romejs/diagnostics';
-import {removeSuffix, removePrefix} from '@romejs/string-utils';
+import {removePrefix, removeSuffix} from '@romejs/string-utils';
 import Bundler from '../bundler/Bundler';
 import {WebSocketInterface, createKey} from '@romejs/codec-websocket';
 import {Reporter} from '@romejs/cli-reporter';
@@ -20,7 +19,7 @@ import {createUnknownFilePath} from '@romejs/path';
 import {WebServer} from './index';
 import {ProjectDefinition} from '@romejs/project';
 import {HmrClientMessage} from './hmr';
-import {consumeUrl, ConsumableUrl} from '@romejs/codec-url';
+import {ConsumableUrl, consumeUrl} from '@romejs/codec-url';
 import http = require('http');
 
 const waitForever = new Promise(() => {});
@@ -99,7 +98,7 @@ export default class WebRequest {
       //this.request.reporter.clear();
       try {
         const printer = this.masterRequest.createDiagnosticsPrinter(
-          new DiagnosticsProcessor({
+          this.master.createDiagnosticsProcessor({
             origins: [
               {
                 category: 'WebRequest',
@@ -107,7 +106,7 @@ export default class WebRequest {
             ],
           }),
         );
-        printer.addDiagnostics(diagnostics);
+        printer.processor.addDiagnostics(diagnostics);
         await printer.print();
       } catch (err) {
         this.reporter.warn('Failed trying to print diagnostics');
@@ -124,9 +123,10 @@ export default class WebRequest {
     body;
 
     switch (pathname) {
-      case '/favicon.ico':
+      case '/favicon.ico': {
         res.end('');
         break;
+      }
 
       case '/__rome__/websocket':
         return this.handleFrontendWebsocket();
@@ -134,7 +134,7 @@ export default class WebRequest {
       case '/__rome__/script.js':
         return this.handleFrontendScript();
 
-      case '/__rome__':
+      case '/__rome__': {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.end(`
           <!doctype html>
@@ -151,6 +151,7 @@ export default class WebRequest {
           </html>
         `);
         break;
+      }
 
       case '/hot':
         return this.handleDeviceWebsocket();

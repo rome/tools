@@ -8,11 +8,11 @@
 import {Path} from '@romejs/js-compiler';
 import {TransformExitResult} from '@romejs/js-compiler/types';
 import {
-  tsTypeReference,
-  referenceIdentifier,
-  tsTypeParameterInstantiation,
   flowGenericTypeAnnotation,
   flowTypeParameterInstantiation,
+  referenceIdentifier,
+  tsTypeParameterInstantiation,
+  tsTypeReference,
 } from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 
@@ -22,35 +22,27 @@ export default {
     const {node, context} = path;
 
     if (node.type === 'TSArrayType') {
-      const {suppressed} = context.addNodeDiagnostic(
-        node,
-        descriptions.LINT.NO_SHORTHAND_ARRAY_TYPE,
-      );
-
-      if (!suppressed) {
-        return tsTypeReference.create({
+      return context.addFixableDiagnostic({
+        old: node,
+        fixed: tsTypeReference.create({
           typeName: referenceIdentifier.quick('Array'),
           typeParameters: tsTypeParameterInstantiation.create({
             params: [node.elementType],
           }),
-        });
-      }
+        }),
+      }, descriptions.LINT.NO_SHORTHAND_ARRAY_TYPE);
     }
 
     if (node.type === 'FlowArrayTypeAnnotation') {
-      const {suppressed} = context.addNodeDiagnostic(
-        node,
-        descriptions.LINT.NO_SHORTHAND_ARRAY_TYPE,
-      );
-
-      if (!suppressed) {
-        return flowGenericTypeAnnotation.create({
+      return context.addFixableDiagnostic({
+        old: node,
+        fixed: flowGenericTypeAnnotation.create({
           id: referenceIdentifier.quick('Array'),
           typeParameters: flowTypeParameterInstantiation.create({
             params: [node.elementType],
           }),
-        });
-      }
+        }),
+      }, descriptions.LINT.NO_SHORTHAND_ARRAY_TYPE);
     }
 
     return node;

@@ -8,7 +8,7 @@
 import Master from '../Master';
 import {SourceLocation} from '@romejs/parser-core';
 import {BundleBuddyStats} from '../../common/types/bundler';
-import {catchDiagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
+import {DiagnosticsProcessor, catchDiagnostics} from '@romejs/diagnostics';
 import {ResolverOptions} from '../fs/Resolver';
 import WorkerQueue from '../WorkerQueue';
 import DependencyNode from './DependencyNode';
@@ -20,10 +20,11 @@ import {WorkerAnalyzeDependencyResult} from '../../common/bridges/WorkerBridge';
 import {MasterRequest} from '@romejs/core';
 import {
   AbsoluteFilePath,
-  createUnknownFilePath,
   AbsoluteFilePathMap,
+  createUnknownFilePath,
 } from '@romejs/path';
 import {AnalyzeModuleType} from '../../common/types/analyzeDependencies';
+import {markup} from '@romejs/string-markup';
 
 export type DependencyGraphSeedResult = {
   node: DependencyNode;
@@ -258,7 +259,7 @@ export default class DependencyGraph {
       return node;
     }
 
-    const progressText = `<filelink target="${filename}" />`;
+    const progressText = markup`<filelink target="${filename}" />`;
 
     if (analyzeProgress !== undefined) {
       analyzeProgress.pushText(progressText);
@@ -266,6 +267,7 @@ export default class DependencyGraph {
 
     const res: WorkerAnalyzeDependencyResult = await this.request.requestWorkerAnalyzeDependencies(
       path,
+      {},
     );
 
     const node = this.addNode(path, res);
@@ -290,10 +292,7 @@ export default class DependencyGraph {
         return;
       }
 
-      const {diagnostics} = await catchDiagnostics({
-        category: 'DependencyGraph',
-        message: 'Caught by resolve',
-      }, async () => {
+      const {diagnostics} = await catchDiagnostics(async () => {
         const resolved = await master.resolver.resolveAssert({
           ...this.resolverOpts,
           origin,
@@ -308,6 +307,9 @@ export default class DependencyGraph {
         });
 
         node.addDependency(source, resolved.path, dep);
+      }, {
+        category: 'DependencyGraph',
+        message: 'Caught by resolve',
       });
 
       if (diagnostics !== undefined && !optional) {
@@ -319,7 +321,7 @@ export default class DependencyGraph {
     const subAncestry = [...ancestry, filename];
     for (const path of node.getAbsoluteDependencies()) {
       const dep = node.getDependencyInfoFromAbsolute(path).analyze;
-      opts.workerQueue.pushQueue(path, {
+      await opts.workerQueue.pushQueue(path, {
         all: dep.all,
         async: dep.async,
         type: dep.type,

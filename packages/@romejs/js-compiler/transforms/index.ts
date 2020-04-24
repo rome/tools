@@ -8,8 +8,8 @@
 import {ProjectConfig} from '@romejs/project';
 import {
   CompilerOptions,
-  TransformStageName,
   TransformStageFactories,
+  TransformStageName,
   TransformVisitors,
   Transforms,
 } from '../types';
@@ -34,7 +34,10 @@ import metaPropertyTransform from './compileForBundle/metaPropertyTransform';
 import scopedRomeTransform from './compileForBundle/scopedRomeTransform';
 import asyncImportTransform from './compileForBundle/asyncImportTransform';
 import inlineEnv from './compileForBundle/inlineEnv';
-import {variableInjectorVisitor} from './defaultHooks/index';
+import {
+  commentInjectorVisitor,
+  variableInjectorVisitor,
+} from './defaultHooks/index';
 
 export const stageOrder: Array<TransformStageName> = [
   'pre',
@@ -42,7 +45,10 @@ export const stageOrder: Array<TransformStageName> = [
   'compileForBundle',
 ];
 
-export const hookVisitors: TransformVisitors = [variableInjectorVisitor];
+export const hookVisitors: TransformVisitors = [
+  variableInjectorVisitor,
+  commentInjectorVisitor,
+];
 
 export const stageTransforms: TransformStageFactories = {
   // These may effect dependency analysis

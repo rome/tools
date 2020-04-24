@@ -8,8 +8,8 @@
 import {parseJS} from '@romejs/js-parser';
 import {
   AbsoluteFilePath,
-  createAbsoluteFilePath,
   AbsoluteFilePathMap,
+  createAbsoluteFilePath,
 } from '@romejs/path';
 import {SourceMap, SourceMapGenerator} from '@romejs/codec-source-map';
 import * as compiler from '@romejs/js-compiler';
@@ -110,11 +110,11 @@ export const compile = wrapForErrors(async function(opts: {
   throwDiagnostics(res.diagnostics);
 
   // Build source map
-  const sourceMapGenerator = new SourceMapGenerator({});
+  const sourceMapGenerator = new SourceMapGenerator({file: 'unknown'});
   for (const mapping of res.mappings) {
     sourceMapGenerator.addMapping(mapping);
   }
-  const sourceMap = sourceMapGenerator.toJSON();
+  const sourceMap = sourceMapGenerator.serialize();
 
   return {
     cacheKey,

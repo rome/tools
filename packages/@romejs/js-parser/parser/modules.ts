@@ -9,60 +9,60 @@ import {JSParser} from '../parser';
 import {Position} from '@romejs/parser-core';
 import {types as tt} from '../tokenizer/types';
 import {
-  AnyStatement,
-  ExportAllDeclaration,
-  ExportLocalDeclaration,
-  ExportDefaultDeclaration,
-  TSNamespaceExportDeclaration,
-  TSExportAssignment,
-  TSImportEqualsDeclaration,
-  ConstExportModuleKind,
-  ExportLocalSpecifier,
   AnyExportExternalSpecifier,
-  ExportExternalDeclaration,
-  StringLiteral,
-  ImportDeclaration,
   AnyNode,
-  ConstImportModuleKind,
+  AnyStatement,
   BindingIdentifier,
-  ImportSpecifier,
+  ConstExportModuleKind,
+  ConstImportModuleKind,
+  ExportAllDeclaration,
+  ExportDefaultDeclaration,
+  ExportDefaultSpecifier,
+  ExportExternalDeclaration,
+  ExportExternalSpecifier,
+  ExportLocalDeclaration,
+  ExportLocalSpecifier,
+  ExportNamespaceSpecifier,
+  ImportDeclaration,
   ImportDefaultSpecifier,
   ImportNamespaceSpecifier,
+  ImportSpecifier,
   ImportSpecifierLocal,
-  ExportExternalSpecifier,
-  ExportNamespaceSpecifier,
-  ExportDefaultSpecifier,
+  StringLiteral,
+  TSExportAssignment,
+  TSImportEqualsDeclaration,
+  TSNamespaceExportDeclaration,
 } from '@romejs/js-ast';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 import {
-  parseTSExport,
-  parseIdentifier,
-  isAsyncFunctionDeclarationStart,
-  isTSAbstractClass,
-  parseTSInterfaceDeclaration,
-  isLetStart,
-  parseMaybeAssign,
-  parseTypeAlias,
-  parseFlowOpaqueType,
-  parseInterface,
-  parseStatement,
-  isTSDeclarationStart,
-  parseExpressionAtom,
+  checkLVal,
+  checkReservedType,
   checkReservedWord,
   hasTypeImportKind,
-  parseTSImportEqualsDeclaration,
-  parseFlowRestrictedIdentifier,
-  checkLVal,
+  isAsyncFunctionDeclarationStart,
+  isLetStart,
   isMaybeDefaultImport,
-  checkReservedType,
-  parseStringLiteral,
+  isTSAbstractClass,
+  isTSDeclarationStart,
   parseBindingIdentifier,
-  toBindingIdentifier,
-  parseReferenceIdentifier,
-  toIdentifier,
-  parseTSExportDefaultAbstractClass,
-  parseExportDefaultFunctionDeclaration,
   parseExportDefaultClassDeclaration,
+  parseExportDefaultFunctionDeclaration,
+  parseExpressionAtom,
+  parseFlowOpaqueType,
+  parseFlowRestrictedIdentifier,
+  parseIdentifier,
+  parseInterface,
+  parseMaybeAssign,
+  parseReferenceIdentifier,
+  parseStatement,
+  parseStringLiteral,
+  parseTSExport,
+  parseTSExportDefaultAbstractClass,
+  parseTSImportEqualsDeclaration,
+  parseTSInterfaceDeclaration,
+  parseTypeAlias,
+  toBindingIdentifier,
+  toIdentifier,
 } from './index';
 import {descriptions} from '@romejs/diagnostics';
 
@@ -377,7 +377,7 @@ function isExportDefaultSpecifier(parser: JSParser): boolean {
 
   if (parser.match(tt.name) && (parser.state.tokenValue === 'type' ||
         parser.state.tokenValue ===
-        'interface' || parser.state.tokenValue == 'opaque')) {
+        'interface' || parser.state.tokenValue === 'opaque')) {
     return false;
   }
 
@@ -891,13 +891,13 @@ function parseImportSpecifier(
 
   let isBinding = false;
   if (parser.isContextual('as') && !parser.isLookaheadContextual('as')) {
-    const as_ident = parseIdentifier(parser, true);
+    const asIdent = parseIdentifier(parser, true);
     if (importKind !== undefined && !parser.match(tt.name) &&
           parser.state.tokenType.keyword ===
           undefined) {
       // `import {type as ,` or `import {type as }`
-      imported = as_ident;
-      local = toBindingIdentifier(parser, parser.cloneNode(as_ident));
+      imported = asIdent;
+      local = toBindingIdentifier(parser, parser.cloneNode(asIdent));
     } else {
       // `import {type as foo`
       imported = firstIdent;

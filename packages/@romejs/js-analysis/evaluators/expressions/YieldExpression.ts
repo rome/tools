@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {YieldExpression, yieldExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, YieldExpression, yieldExpression} from '@romejs/js-ast';
 
 export default function YieldExpression(node: AnyNode, scope: Scope) {
   node = yieldExpression.assert(node);

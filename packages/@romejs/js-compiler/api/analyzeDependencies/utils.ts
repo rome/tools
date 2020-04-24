@@ -6,28 +6,28 @@
  */
 
 import {
-  ConstExportModuleKind,
-  ConstImportModuleKind,
   AnyNode,
   BindingIdentifier,
+  ConstExportModuleKind,
+  ConstImportModuleKind,
+  ConstProgramSyntax,
   FlowTypeParameter,
   ReferenceIdentifier,
-  ConstProgramSyntax,
 } from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
 import {
-  Path,
-  Scope,
   ClassBinding,
   FunctionBinding,
+  Path,
+  Scope,
   TypeBinding,
 } from '@romejs/js-compiler';
 import {
-  AnalyzeExportValueType,
-  AnalyzeDependencyResult,
-  AnyAnalyzeExport,
   AnalyzeDependency,
   AnalyzeDependencyName,
+  AnalyzeDependencyResult,
+  AnalyzeExportValueType,
+  AnyAnalyzeExport,
 } from '@romejs/core';
 
 export function isOptional(path: Path): boolean {
@@ -178,8 +178,9 @@ function exportsSame(a: AnyAnalyzeExport, b: AnyAnalyzeExport): boolean {
       return b.type === 'local' && a.name === b.name;
 
     case 'external':
-      return b.type === 'external' && a.imported === b.imported && a.exported ==
-        b.exported && a.source === b.source;
+      return b.type === 'external' && a.imported === b.imported &&
+          a.exported ===
+          b.exported && a.source === b.source;
 
     case 'externalAll':
       return b.type === 'externalAll' && a.source === b.source;

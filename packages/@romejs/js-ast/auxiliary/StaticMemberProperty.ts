@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, Identifier, PrivateName} from '../index';
+import {Identifier, JSNodeBase, PrivateName} from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type StaticMemberProperty = JSNodeBase & {

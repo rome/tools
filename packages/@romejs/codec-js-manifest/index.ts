@@ -7,25 +7,26 @@
 
 import {Consumer} from '@romejs/consume';
 import {SemverVersionNode, parseSemverVersion} from '@romejs/codec-semver';
-import {parseSPDXLicense, SPDXExpressionNode} from '@romejs/codec-spdx-license';
+import {SPDXExpressionNode, parseSPDXLicense} from '@romejs/codec-spdx-license';
 import {normalizeDependencies, parseGitDependencyPattern} from './dependencies';
 import {
-  MString,
   MBoolean,
-  ManifestMap,
+  MString,
   Manifest,
+  ManifestExportConditions,
+  ManifestExports,
+  ManifestMap,
+  ManifestName,
   ManifestPerson,
   ManifestRepository,
-  ManifestExports,
-  ManifestExportConditions,
 } from './types';
 import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
 import {normalizeName} from './name';
-import {Diagnostics} from '@romejs/diagnostics';
+import {Diagnostics, descriptions} from '@romejs/diagnostics';
 import {
   AbsoluteFilePath,
-  createRelativeFilePath,
   RelativeFilePathMap,
+  createRelativeFilePath,
 } from '@romejs/path';
 import {toCamelCase} from '@romejs/string-utils';
 import {PathPatterns, parsePathPattern} from '@romejs/path-match';
@@ -33,6 +34,8 @@ import {PathPatterns, parsePathPattern} from '@romejs/path-match';
 export * from './types';
 
 export * from './convert';
+
+export {manifestNameToString} from './name';
 
 const TYPO_KEYS: Map<string, string> = new Map([
   ['autohr', 'author'],
@@ -136,9 +139,7 @@ function normalizeBin(
   const obj = consumer.get('bin');
   if (typeof obj.asUnknown() === 'string') {
     if (name === undefined) {
-      obj.unexpected(
-        'A string bin is only allowed if the manifest has a name property',
-      );
+      obj.unexpected(descriptions.MANIFEST.STRING_BIN_WITHOUT_NAME);
     } else {
       map.set(name, obj.asString());
       return map;
@@ -382,7 +383,7 @@ function normalizeRepo(
       }
 
       if (looseUrl === undefined) {
-        consumer.unexpected('No url found');
+        consumer.unexpected(descriptions.MANIFEST.MISSING_REPO_URL);
         url = '';
       } else {
         url = looseUrl;
@@ -405,7 +406,10 @@ function normalizeRepo(
 }
 
 function normalizeExports(consumer: Consumer): boolean | ManifestExports {
-  if (typeof consumer.asUnknown() === 'boolean') {
+  const unknown = consumer.asUnknown();
+
+  // "exports": false
+  if (typeof unknown === 'boolean') {
     return consumer.asBoolean();
   }
 
@@ -415,15 +419,31 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 
   const exports: ManifestExports = new RelativeFilePathMap();
 
+  // "exports": "./index.js"
+  if (typeof unknown === 'string') {
+    exports.set(createRelativeFilePath('.'), new Map([
+      [
+        'default',
+        {
+          consumer,
+          relative: consumer.asExplicitRelativeFilePath(),
+        },
+      ],
+    ]));
+    return exports;
+  }
+
   const dotConditions: ManifestExportConditions = new Map();
 
   for (const [relative, value] of consumer.asMap()) {
     // If it's not a relative path then it's a platform for the root
     if (relative[0] !== '.') {
       if (exports.size > 0) {
-        value.unexpected(
-          'Cannot mix a root conditional export with relative paths',
-        );
+        value.unexpected(descriptions.MANIFEST.MIXED_EXPORTS_PATHS);
+      }
+
+      if (dotConditions.size === 0) {
+        exports.set(createRelativeFilePath('.'), dotConditions);
       }
 
       dotConditions.set(relative, {
@@ -434,35 +454,44 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
     }
 
     if (dotConditions.size > 0) {
-      value.unexpected(
-        'Cannot mix a root conditional export with relative paths',
-      );
+      value.unexpected(descriptions.MANIFEST.MIXED_EXPORTS_PATHS);
     }
 
-    const conditions: ManifestExportConditions = new Map();
-
-    if (typeof value.asUnknown() === 'string') {
-      conditions.set('default', {
-        consumer: value,
-        relative: value.asExplicitRelativeFilePath(),
-      });
-    } else {
-      for (const [type, relativeAlias] of value.asMap()) {
-        conditions.set(type, {
-          consumer: relativeAlias,
-          relative: relativeAlias.asExplicitRelativeFilePath(),
-        });
-      }
-    }
-
-    if (dotConditions.size > 0) {
-      exports.set(createRelativeFilePath('.'), dotConditions);
-    }
-
+    const conditions = normalizeExportsConditions(value);
     exports.set(value.getKey().asExplicitRelativeFilePath(), conditions);
   }
 
   return exports;
+}
+
+function normalizeExportsConditions(value: Consumer): ManifestExportConditions {
+  const conditions: ManifestExportConditions = new Map();
+  const unknown = value.asUnknown();
+
+  if (typeof unknown === 'string') {
+    conditions.set('default', {
+      consumer: value,
+      relative: value.asExplicitRelativeFilePath(),
+    });
+  } else if (Array.isArray(unknown)) {
+    // Find the first item that passes validation
+    for (const elem of value.asArray()) {
+      const {consumer, diagnostics} = elem.capture();
+      const result = normalizeExportsConditions(consumer);
+      if (diagnostics.length === 0) {
+        return result;
+      }
+    }
+  } else {
+    for (const [type, relativeAlias] of value.asMap()) {
+      conditions.set(type, {
+        consumer: relativeAlias,
+        relative: relativeAlias.asExplicitRelativeFilePath(),
+      });
+    }
+  }
+
+  return conditions;
 }
 
 function normalizeBugs(
@@ -500,9 +529,12 @@ function normalizeBugs(
   }
 }
 
-function normalizeRootName(consumer: Consumer, loose: boolean): MString {
+function normalizeRootName(consumer: Consumer, loose: boolean): ManifestName {
   if (!consumer.has('name')) {
-    return;
+    return {
+      packageName: undefined,
+      org: undefined,
+    };
   }
 
   const prop = consumer.get('name');
@@ -510,9 +542,8 @@ function normalizeRootName(consumer: Consumer, loose: boolean): MString {
   return normalizeName({
     name: prop.asString(),
     loose,
-    unexpected: ({message, at, start, end, advice}) => {
-      prop.unexpected(message, {
-        advice,
+    unexpected: ({description, at, start, end}) => {
+      prop.unexpected(description, {
         at,
         loc: start === undefined
           ? undefined
@@ -543,117 +574,103 @@ function checkDependencyKeyTypo(key: string, prop: Consumer) {
     // Check for casing issues
     const lowerKey = key.toLowerCase();
     if (lowerKey === depKey) {
-      prop.unexpected(`${key} has incorrect casing, should be ${depKey}`);
+      prop.unexpected(descriptions.MANIFEST.INCORRECT_CAMEL_CASING(key, depKey));
     }
 
     // Check for common suffix misspellings
     for (const suffix of INCORRECT_DEPENDENCIES_SUFFIXES) {
       if (lowerKey === `${depPrefixKey}${suffix}`) {
-        prop.unexpected(`${key} has a typo, should be ${depKey}`);
+        prop.unexpected(descriptions.MANIFEST.TYPO(key, depKey));
       }
     }
 
     // Check for kebab casing
     if (toCamelCase(depKey) === lowerKey) {
-      prop.unexpected(
-        `${key} isn't correctly camel cased when it should be ${depKey}`,
-      );
+      prop.unexpected(descriptions.MANIFEST.INCORRECT_CAMEL_CASING(key, depKey));
     }
   }
 }
 
 export async function normalizeManifest(
   path: AbsoluteFilePath,
-  consumer: Consumer,
+  rawConsumer: Consumer,
 ): Promise<{
   manifest: Manifest;
   diagnostics: Diagnostics;
 }> {
   const loose = path.getSegments().includes('node_modules');
 
-  const {result: manifest, diagnostics} = await consumer.capture(
-    (consumer) => {
-      // FIXME: There's this ridiculous node module that includes it's tests... which deliberately includes an invalid package.json
-      if (path.join().includes('resolve/test/resolver/invalid_main')) {
-        consumer.setValue({});
+  const {consumer, diagnostics} = rawConsumer.capture();
+
+  // FIXME: There's this ridiculous node module that includes it's tests... which deliberately includes an invalid package.json
+  if (path.join().includes('resolve/test/resolver/invalid_main')) {
+    consumer.setValue({});
+  }
+
+  //
+  if (!loose) {
+    for (const [key, prop] of consumer.asMap()) {
+      // Check for typos for dependencies
+      checkDependencyKeyTypo(key, prop);
+
+      // Check for other typos
+      const correctKey = TYPO_KEYS.get(key);
+      if (correctKey !== undefined) {
+        prop.unexpected(descriptions.MANIFEST.TYPO(key, correctKey));
       }
+    }
+  }
 
-      //
-      if (!loose) {
-        for (const [key, prop] of consumer.asMap()) {
-          // Check for typos for dependencies
-          checkDependencyKeyTypo(key, prop);
+  const name = normalizeRootName(consumer, loose);
 
-          // Check for other typos
-          const correctKey = TYPO_KEYS.get(key);
-          if (correctKey !== undefined) {
-            prop.unexpected(`${key} is a typo of ${correctKey}`);
-          }
-        }
-      }
+  const manifest: Manifest = {
+    name,
+    version: normalizeVersion(consumer, loose),
+    private: normalizeBoolean(consumer, 'private') === true,
+    description: normalizeString(consumer, 'description'),
+    license: normalizeLicense(consumer, loose),
+    type: consumer.get('type').asStringSetOrVoid(['module', 'commonjs']),
 
-      const name = normalizeRootName(consumer, loose);
+    bin: normalizeBin(consumer, name.packageName, loose),
+    scripts: normalizeStringMap(consumer, 'scripts', loose),
+    homepage: normalizeString(consumer, 'homepage'),
+    repository: normalizeRepo(consumer.get('repository'), loose),
+    bugs: normalizeBugs(consumer.get('bugs'), loose),
+    engines: normalizeStringMap(consumer, 'engines', loose),
 
-      const manifest: Manifest = {
-        name,
-        version: normalizeVersion(consumer, loose),
-        private: normalizeBoolean(consumer, 'private') === true,
-        description: normalizeString(consumer, 'description'),
-        license: normalizeLicense(consumer, loose),
-        type: consumer.get('type').asStringSetOrVoid(['module', 'commonjs']),
+    files: normalizePathPatterns(consumer.get('files'), loose),
+    keywords: normalizeStringArray(consumer.get('keywords'), loose),
+    cpu: normalizeStringArray(consumer.get('cpu'), loose),
+    os: normalizeStringArray(consumer.get('os'), loose),
 
-        bin: normalizeBin(consumer, name, loose),
-        scripts: normalizeStringMap(consumer, 'scripts', loose),
-        homepage: normalizeString(consumer, 'homepage'),
-        repository: normalizeRepo(consumer.get('repository'), loose),
-        bugs: normalizeBugs(consumer.get('bugs'), loose),
-        engines: normalizeStringMap(consumer, 'engines', loose),
+    main: normalizeString(consumer, 'main'),
+    exports: normalizeExports(consumer.get('exports')),
 
-        files: normalizePathPatterns(consumer.get('files'), loose),
-        keywords: normalizeStringArray(consumer.get('keywords'), loose),
-        cpu: normalizeStringArray(consumer.get('cpu'), loose),
-        os: normalizeStringArray(consumer.get('os'), loose),
+    // Dependency fields
+    dependencies: normalizeDependencies(consumer, 'dependencies', loose),
+    devDependencies: normalizeDependencies(consumer, 'devDependencies', loose),
+    optionalDependencies: normalizeDependencies(
+      consumer,
+      'optionalDependencies',
+      loose,
+    ),
+    peerDependencies: normalizeDependencies(consumer, 'peerDependencies', loose),
+    bundledDependencies: [
+      ...normalizeStringArray(consumer.get('bundledDependencies'), loose),
 
-        main: normalizeString(consumer, 'main'),
-        exports: normalizeExports(consumer.get('exports')),
+      // Common misspelling. We error on the existence of this for strict manifests already.
+      ...normalizeStringArray(consumer.get('bundleDependencies'), loose),
+    ],
 
-        // Dependency fields
-        dependencies: normalizeDependencies(consumer, 'dependencies', loose),
-        devDependencies: normalizeDependencies(
-          consumer,
-          'devDependencies',
-          loose,
-        ),
-        optionalDependencies: normalizeDependencies(
-          consumer,
-          'optionalDependencies',
-          loose,
-        ),
-        peerDependencies: normalizeDependencies(
-          consumer,
-          'peerDependencies',
-          loose,
-        ),
-        bundledDependencies: [
-          ...normalizeStringArray(consumer.get('bundledDependencies'), loose),
+    // People fields
+    author: consumer.has('author')
+      ? normalizePerson(consumer.get('author'), loose)
+      : undefined,
+    contributors: normalizePeople(consumer.get('contributors'), loose),
+    maintainers: normalizePeople(consumer.get('maintainers'), loose),
 
-          // Common misspelling. We error on the existence of this for strict manifests already.
-          ...normalizeStringArray(consumer.get('bundleDependencies'), loose),
-        ],
-
-        // People fields
-        author: consumer.has('author')
-          ? normalizePerson(consumer.get('author'), loose)
-          : undefined,
-        contributors: normalizePeople(consumer.get('contributors'), loose),
-        maintainers: normalizePeople(consumer.get('maintainers'), loose),
-
-        raw: consumer.asJSONObject(),
-      };
-
-      return manifest;
-    },
-  );
+    raw: consumer.asJSONObject(),
+  };
 
   return {
     manifest,

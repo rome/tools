@@ -6,16 +6,16 @@
  */
 
 import {
-  DiagnosticAdvice,
   Diagnostic,
-  Diagnostics,
+  DiagnosticAdvice,
   DiagnosticOrigin,
+  Diagnostics,
 } from './types';
 import {Position} from '@romejs/parser-core';
 import {escapeMarkup, markup} from '@romejs/string-markup';
 import {
-  getErrorStructure,
   ErrorFrames,
+  getErrorStructure,
   getSourceLocationFromErrorFrame,
 } from '@romejs/v8';
 import {DiagnosticCategory} from './categories';
@@ -83,7 +83,7 @@ export function deriveRootAdviceFromDiagnostic(diag: Diagnostic, opts: {
   header: string;
 } {
   const advice: DiagnosticAdvice = [];
-  const {description: metadata, location} = diag;
+  const {description, fixable, location} = diag;
 
   let header = getDiagnosticHeader({
     start: location.start,
@@ -93,16 +93,16 @@ export function deriveRootAdviceFromDiagnostic(diag: Diagnostic, opts: {
   if (diag.label !== undefined) {
     header += ` <emphasis>${diag.label}</emphasis>`;
 
-    if (metadata.category !== undefined) {
-      header += ` <dim>${metadata.category}</dim>`;
+    if (description.category !== undefined) {
+      header += ` <dim>${description.category}</dim>`;
     }
   } else {
-    if (metadata.category !== undefined) {
-      header += ` <emphasis>${metadata.category}</emphasis>`;
+    if (description.category !== undefined) {
+      header += ` <emphasis>${description.category}</emphasis>`;
     }
   }
 
-  if (metadata.fixable === true) {
+  if (fixable === true) {
     header += ` <inverse>FIXABLE</inverse>`;
   }
 
@@ -121,7 +121,7 @@ export function deriveRootAdviceFromDiagnostic(diag: Diagnostic, opts: {
   advice.push({
     type: 'log',
     category: 'error',
-    message: metadata.message.value,
+    message: description.message.value,
   });
 
   if (opts.skipFrame === false) {
@@ -129,14 +129,13 @@ export function deriveRootAdviceFromDiagnostic(diag: Diagnostic, opts: {
       advice.push({
         type: 'frame',
         location: diag.location,
-        marker: diag.marker,
       });
-    } else if (diag.marker !== undefined) {
+    } else if (location.marker !== undefined) {
       // If we have no start/end, but we do have a marker then output is a log error
       advice.push({
         type: 'log',
         category: 'error',
-        message: diag.marker,
+        message: location.marker,
       });
     }
   }
@@ -162,7 +161,7 @@ export function deriveDiagnosticFromError(
   let targetLoc = undefined;
 
   const structErr = getErrorStructure(error);
-  let {frames, message, advice} = structErr;
+  let {frames, markupMessage, message, advice} = structErr;
 
   const {cleanFrames} = opts;
   if (cleanFrames !== undefined) {
@@ -185,7 +184,9 @@ export function deriveDiagnosticFromError(
   return {
     description: {
       category: opts.category,
-      message: createBlessedDiagnosticMessage(escapeMarkup(message)),
+      message: createBlessedDiagnosticMessage(markupMessage === undefined
+        ? escapeMarkup(message)
+        : markupMessage),
       advice,
     },
     location: {
@@ -307,10 +308,9 @@ export function addOriginsToDiagnostic(
   origins: Array<DiagnosticOrigin>,
   diag: Diagnostic,
 ): Diagnostic {
-  const newOrigins = diag.origins === undefined ? origins : [
-    ...origins,
-    ...diag.origins,
-  ];
+  const newOrigins = diag.origins === undefined
+    ? origins
+    : [...origins, ...diag.origins];
   return {
     ...diag,
     origins: newOrigins,

@@ -7,45 +7,48 @@
 
 import Master from '../Master';
 import {
-  ProjectDefinition,
-  ProjectConfig,
   DEFAULT_PROJECT_CONFIG,
-  ProjectConfigMeta,
   DEFAULT_PROJECT_CONFIG_META,
+  ProjectConfig,
+  ProjectConfigMeta,
+  ProjectDefinition,
+  ROME_CONFIG_FILENAMES,
+  ROME_CONFIG_FOLDER,
+  ROME_CONFIG_PACKAGE_JSON_FIELD,
+  ROME_CONFIG_WARN_FILENAMES,
+  assertHardMeta,
   loadCompleteProjectConfig,
   serializeJSONProjectConfig,
-  assertHardMeta,
-  ROME_CONFIG_WARN_FILENAMES,
-  ROME_CONFIG_FILENAMES,
-  ROME_CONFIG_PACKAGE_JSON_FIELD,
-  ROME_CONFIG_FOLDER,
 } from '@romejs/project';
 import {
-  WorkerProjects,
   WorkerPartialManifests,
+  WorkerProjects,
 } from '../../common/bridges/WorkerBridge';
 import {WorkerContainer} from '../WorkerManager';
 import {
-  DiagnosticsProcessor,
   DiagnosticLocation,
+  DiagnosticsProcessor,
   createSingleDiagnosticError,
   descriptions,
 } from '@romejs/diagnostics';
 import {matchPathPatterns} from '@romejs/path-match';
-import {ManifestDefinition} from '@romejs/codec-js-manifest';
+import {
+  ManifestDefinition,
+  manifestNameToString,
+} from '@romejs/codec-js-manifest';
 import {
   AbsoluteFilePath,
-  UnknownFilePath,
-  URLFilePath,
   AbsoluteFilePathMap,
+  AbsoluteFilePathSet,
+  URLFilePath,
+  UnknownFilePath,
   UnknownFilePathMap,
   createAbsoluteFilePath,
-  AbsoluteFilePathSet,
 } from '@romejs/path';
-import {JSONFileReference, FileReference} from '../../common/types/files';
+import {FileReference, JSONFileReference} from '../../common/types/files';
 import {
-  IMPLICIT_JS_EXTENSIONS,
   GetFileHandlerResult,
+  IMPLICIT_JS_EXTENSIONS,
   getFileHandler,
 } from '../../common/fileHandlers';
 import {createDirectory, readFileText} from '@romejs/fs';
@@ -68,7 +71,12 @@ function cleanUidParts(parts: Array<string>): string {
       sharedPrefix += part[i];
     }
 
-    uid += part.slice(sharedPrefix.length);
+    const partWithoutExtension = part.split('.')[0];
+    if (sharedPrefix === partWithoutExtension) {
+      uid += part;
+    } else {
+      uid += part.slice(sharedPrefix.length);
+    }
 
     lastPart = part;
   }
@@ -299,7 +307,7 @@ export default class ProjectManager {
       if (pkg === undefined || pkg.folder.equal(project.folder)) {
         break;
       } else {
-        const name = pkg.manifest.name;
+        const name = manifestNameToString(pkg.manifest.name);
         if (name !== undefined) {
           parts.unshift(name);
 
@@ -538,7 +546,7 @@ export default class ProjectManager {
   }
 
   async getVCSClient(project: ProjectDefinition): Promise<VCSClient> {
-    const client = await getVCSClient(project.config.vcs.root);
+    const client = await this.maybeGetVCSClient(project);
 
     if (client === undefined) {
       const {
@@ -562,6 +570,12 @@ export default class ProjectManager {
     } else {
       return client;
     }
+  }
+
+  async maybeGetVCSClient(
+    project: ProjectDefinition,
+  ): Promise<undefined | VCSClient> {
+    return await getVCSClient(project.config.vcs.root);
   }
 
   async addProject(
@@ -643,7 +657,7 @@ export default class ProjectManager {
     def: ManifestDefinition,
     diagnostics: DiagnosticsProcessor,
   ) {
-    const {name} = def.manifest;
+    const name = manifestNameToString(def.manifest.name);
 
     // Declare this package in all projects
     const projects = this.getHierarchyFromProject(project);

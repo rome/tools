@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {FlowDeclareClass, flowDeclareClass, AnyNode} from '@romejs/js-ast';
+import {AnyNode, FlowDeclareClass, flowDeclareClass} from '@romejs/js-ast';
 import ClassT from '../../types/ClassT';
 
 export default function FlowDeclareClass(node: AnyNode, scope: Scope) {

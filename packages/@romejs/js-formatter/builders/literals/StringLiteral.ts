@@ -8,7 +8,7 @@
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
 import {escapeString} from '@romejs/string-escape';
-import {StringLiteral, stringLiteral, AnyNode} from '@romejs/js-ast';
+import {AnyNode, StringLiteral, stringLiteral} from '@romejs/js-ast';
 import {escapeXHTMLEntities} from '@romejs/js-parser';
 import {operator} from '@romejs/js-formatter/tokens';
 
@@ -17,10 +17,8 @@ export default function StringLiteral(
   node: AnyNode,
   parent: AnyNode,
 ): Tokens {
-    node =
-    node.type == 'StringLiteralTypeAnnotation' || node.type === 'Directive'
-      ? node
-      : stringLiteral.assert(node);
+  node = node.type === 'StringLiteralTypeAnnotation' || node.type ===
+    'Directive' ? node : stringLiteral.assert(node);
 
   // JSX Attribute strings have ridiculous alternate semantics, should probably be a distinct AST node
   const quotes = parent.type === 'JSXAttribute' || node.value.includes("'")

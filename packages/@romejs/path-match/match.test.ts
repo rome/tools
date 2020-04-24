@@ -7,12 +7,12 @@
 
 import '@romejs/string-markup';
 import {
+  PathPattern,
   matchPath,
   matchPathPatterns,
-  PathPattern,
   parsePathPattern,
 } from '@romejs/path-match';
-import test from '@romejs/test';
+import {test} from 'rome';
 import {createAbsoluteFilePath} from '@romejs/path';
 
 const DOCUMENTS = '/Users/sebmck/Documents';

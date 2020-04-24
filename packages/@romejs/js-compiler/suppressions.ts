@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Program, AnyComment} from '@romejs/js-ast';
+import {AnyComment, Program} from '@romejs/js-ast';
 import {
+  DiagnosticLocation,
+  DiagnosticSuppression,
+  DiagnosticSuppressionType,
   DiagnosticSuppressions,
   Diagnostics,
   descriptions,
-  DiagnosticSuppressionType,
-  DiagnosticLocation,
-  DiagnosticSuppression,
 } from '@romejs/diagnostics';
 import {Dict} from '@romejs/typescript-helpers';
-import {add} from '@romejs/ob1';
+import {ob1Add} from '@romejs/ob1';
 
-const SUPPRESSION_NEXT_LINE_START = 'rome-suppress-next-line';
+export const SUPPRESSION_NEXT_LINE_START = 'rome-suppress-next-line';
 const SUPPRESSION_CURRENT_LINE_START = 'rome-suppress-current-line';
 
 const SUPPRESSION_PREFIX_MISTAKES: Dict<string> = {
@@ -34,7 +34,7 @@ type ExtractedSuppressions = {
   diagnostics: Diagnostics;
 };
 
-function extractSuppressionsFromComment(
+export function extractSuppressionsFromComment(
   comment: AnyComment,
 ): undefined | ExtractedSuppressions {
   const {loc} = comment;
@@ -162,7 +162,7 @@ export function matchesSuppression(
 ): boolean {
   const targetLine = suppression.type === 'current'
     ? suppression.loc.end.line
-    : add(suppression.loc.end.line, 1);
+    : ob1Add(suppression.loc.end.line, 1);
 
   if (loc.filename !== undefined && loc.start !== undefined && loc.filename ===
       suppression.loc.filename && loc.start.line === targetLine) {

@@ -7,16 +7,16 @@
 import {Path, createHook} from '@romejs/js-compiler';
 import {
   AnyNode,
-  VariableDeclarationStatement,
   FunctionDeclaration,
-  VariableDeclarator,
-  variableDeclarator,
-  variableDeclarationStatement,
-  functionDeclaration,
-  bindingIdentifier,
-  returnStatement,
-  blockStatement,
   ThisExpression,
+  VariableDeclarationStatement,
+  VariableDeclarator,
+  bindingIdentifier,
+  blockStatement,
+  functionDeclaration,
+  returnStatement,
+  variableDeclarationStatement,
+  variableDeclarator,
 } from '@romejs/js-ast';
 import {isFunctionNode} from '@romejs/js-ast-utils';
 import {descriptions} from '@romejs/diagnostics';
@@ -92,6 +92,7 @@ const hook = createHook<State, Arg, ThisExpression>({
       path.context.addNodeDiagnostic(
         init,
         descriptions.LINT.PREFER_FUNCTION_DECLARATIONS,
+        {fixable: true},
       );
 
       // Convert arrow function body if necessary

@@ -5,15 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {escapeMarkup} from '@romejs/string-markup';
 import {parseJS} from '@romejs/js-parser';
-import {createFixtureTests} from '@romejs/test';
-import prettyFormat from '@romejs/pretty-format';
+import {createFixtureTests} from '@romejs/test-helpers';
 import {ConstProgramSyntax} from '@romejs/js-ast';
-import {writeFileSync} from '@romejs/fs';
+import {removeCarriageReturn} from '@romejs/string-utils';
 
 const promise = createFixtureTests(
-  (fixture, t) => {
+  async (fixture, t) => {
     const {options, files} = fixture;
 
     // Get the input JS
@@ -25,17 +23,10 @@ const promise = createFixtureTests(
       );
     }
 
-    // Normalize the AST file
-    const outputFile = files.get('output.txt');
-    let outputContent = undefined;
-    if (outputFile !== undefined) {
-      outputContent = outputFile.content.toString().replace(/\r/g, '');
-    }
-
     const sourceTypeProp = options.get('sourceType');
     const sourceType = sourceTypeProp.asString('script');
     if (sourceType !== 'module' && sourceType !== 'script') {
-      throw sourceTypeProp.unexpected('Expected either script or module');
+      throw sourceTypeProp.unexpected();
     }
 
     const allowReturnOutsideFunction = options.get('allowReturnOutsideFunction').asBoolean(
@@ -67,16 +58,7 @@ const promise = createFixtureTests(
       },
     });
 
-    const inputContent = inputFile.content.toString().replace(/\r/g, '');
-    t.addToAdvice({
-      type: 'log',
-      category: 'info',
-      message: 'Input',
-    });
-    t.addToAdvice({
-      type: 'code',
-      code: inputContent,
-    });
+    const inputContent = removeCarriageReturn(inputFile.content.toString());
 
     const ast = parseJS({
       input: inputContent,
@@ -86,79 +68,10 @@ const promise = createFixtureTests(
       syntax,
     });
 
-    let expectError = options.get('throws').asStringOrVoid();
-    if (expectError !== undefined) {
-      expectError = escapeMarkup(expectError);
-    }
-
-    let {diagnostics} = ast;
-    if (diagnostics.length > 0) {
-      diagnostics = diagnostics.map((diag) => {
-        return {
-          ...diag,
-          code: inputContent,
-        };
-      });
-
-      if (expectError === undefined) {
-        /*throw new DiagnosticsError(
-        "Parser has diagnostics when we didn't expect any",
-        diagnostics,
-      );*/} else {
-        // TODO
-        if (expectError === 'Unexpected token') {
-          return;
-        }
-
-        let matches = false;
-        for (const diag of diagnostics) {
-          if (escapeMarkup(diag.description.message.value).includes(expectError)) {
-            matches = true;
-            break;
-          }
-        }
-
-        if (matches) {
-          return;
-        } else {
-          let msg = `No diagnostic matched expected message of "${escapeMarkup(
-            expectError,
-          )}"`;
-          if (diagnostics.length === 1) {
-            msg += ` but got "${escapeMarkup(
-              diagnostics[0].description.message.value,
-            )}"`;
-          }
-          msg;
-          //throw new DiagnosticsError(msg, diagnostics);
-          return;
-        }
-      }
-    }
-
-    // If we have an output then compare it with the parsed input
-    if (outputContent !== undefined) {
-      t.is(prettyFormat(ast), outputContent.trim());
-    }
-
-    // If we expected an error to thrown it should have already
-    if (expectError !== undefined) {
-      // TODO
-
-      /*throw new Error(
-      `Expected an error to be thrown of "${escapeMarkup(expectError)}" in ${
-        inputFile.absolute
-      } but there was none`,
-    );*/
-      return;
-    }
-
-    if (outputContent === undefined) {
-      // If we didn't expect an error to be thrown and we have no expected output AST
-
-      // then we should write it
-      writeFileSync(fixture.dir.append('output.txt'), prettyFormat(ast));
-    }
+    const outputFile = inputFile.absolute.getParent().append(
+      `${inputFile.absolute.getExtensionlessBasename()}.test.md`,
+    ).join();
+    await t.snapshot(ast, undefined, outputFile);
   },
 );
 

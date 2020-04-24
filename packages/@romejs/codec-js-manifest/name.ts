@@ -5,15 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {number0, Number0, coerce0, inc, add} from '@romejs/ob1';
-import {escapeMarkup} from '@romejs/string-markup';
-import {DiagnosticAdvice} from '@romejs/diagnostics';
+import {Number0, ob1Add, ob1Coerce0, ob1Inc, ob1Number0} from '@romejs/ob1';
+import {
+  DiagnosticDescriptionOptionalCategory,
+  descriptions,
+} from '@romejs/diagnostics';
+import {ManifestName} from './types';
 
 type NormalizeNameUnexpected = (opts: {
-  message: string;
+  description: DiagnosticDescriptionOptionalCategory;
   start?: Number0;
   end?: Number0;
-  advice?: DiagnosticAdvice;
   at?: 'prefix';
 }) => void;
 
@@ -41,8 +43,8 @@ function validateNamePart(
 
     if (isOrg && char === '@' && i === 0) {
       unexpected({
-        message: 'Redundant <emphasis>@</emphasis> in org name',
-        start: add(offset, i),
+        description: descriptions.MANIFEST.REDUNDANT_ORG_NAME_START,
+        start: ob1Add(offset, i),
       });
     } else if (!isOrgPart && char === '/') {
       /*unexpected({
@@ -69,26 +71,37 @@ function validateNamePart(
     } else if (char.match(/[A-Za-z0-9\-_.]/)) {
       normalizedName += char;
     } else {
-      unexpected(
-        {
-          message: `The character <emphasis>${escapeMarkup(char)}</emphasis> isn't allowed`,
-          start: add(offset, i),
-        },
-      );
+      unexpected({
+        description: descriptions.MANIFEST.INVALID_NAME_CHAR(char),
+        start: ob1Add(offset, i),
+      });
     }
   }
 
   return normalizedName;
 }
 
-export function normalizeName(opts: NormalizeNameOptions): string {
+export function manifestNameToString(name: ManifestName): undefined | string {
+  const {packageName, org} = name;
+
+  if (org === undefined) {
+    return packageName;
+  }
+
+  return `@${org}/${packageName}`;
+}
+
+export function normalizeName(opts: NormalizeNameOptions): ManifestName {
   const {unexpected} = opts;
   let {name} = opts;
+
+  let org: undefined | string;
+  let packageName: undefined | string;
 
   if (name.length > 214) {
     unexpected({
       at: 'prefix',
-      message: `cannot exceed 214 characters`,
+      description: descriptions.MANIFEST.NAME_EXCEEDS,
     });
     name = name.slice(0, 214);
   }
@@ -96,68 +109,67 @@ export function normalizeName(opts: NormalizeNameOptions): string {
   if (name[0] === '.' || name[0] === '_') {
     unexpected({
       at: 'prefix',
-      message: `cannot start with a dot or underscore`,
-      start: number0,
+      description: descriptions.MANIFEST.INVALID_NAME_START,
+      start: ob1Number0,
     });
     name = name.slice(1);
   }
 
   if (name[0] === '@') {
     // Validate org and package name separately
-    const [org, packageName, ...other] = name.slice(1).split('/');
+    const [rawOrg, rawPackageName, ...other] = name.slice(1).split('/');
 
     // Leading @
-    let offset: Number0 = coerce0(1);
+    let offset: Number0 = ob1Coerce0(1);
 
     // Org
     const sanitizedOrg = validateNamePart(opts, {
       isOrg: true,
       isOrgPart: true,
-      name: org,
+      name: rawOrg,
       offset,
     });
-    offset = add(offset, org.length);
+    offset = ob1Add(offset, rawOrg.length);
+    org = sanitizedOrg;
 
-    if (packageName === undefined) {
+    if (rawPackageName === undefined) {
       unexpected({
         at: 'prefix',
-        message: `contains an org but no package name`,
+        description: descriptions.MANIFEST.ORG_WITH_NO_PACKAGE_NAME,
         start: offset,
       });
-
-      name = `@${sanitizedOrg}/unknown`;
     } else {
       // Forward slashSeparator
-      offset = inc(offset);
+      offset = ob1Inc(offset);
 
       // Package name
       const sanitizedPackageName = validateNamePart(opts, {
         isOrg: false,
         isOrgPart: true,
-        name: packageName,
+        name: rawPackageName,
         offset,
       });
-      offset = add(offset, packageName.length);
+      offset = ob1Add(offset, rawPackageName.length);
 
       // Complain on excess separators
       if (other.length > 0) {
         unexpected({
           at: 'prefix',
-          message: `contains too many name separators`,
+          description: descriptions.MANIFEST.ORG_TOO_MANY_PARTS,
           start: offset,
         });
       }
 
-      name = `@${sanitizedOrg}/${sanitizedPackageName}`;
+      packageName = sanitizedPackageName;
     }
   } else {
-    name = validateNamePart(opts, {
+    packageName = validateNamePart(opts, {
       name,
-      offset: number0,
+      offset: ob1Number0,
       isOrg: false,
       isOrgPart: false,
     });
   }
 
-  return name;
+  return {org, packageName};
 }

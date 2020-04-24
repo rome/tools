@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {SwitchStatement, switchStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, SwitchStatement, switchStatement} from '@romejs/js-ast';
 
 export default function SwitchStatement(node: AnyNode, scope: Scope) {
   node = switchStatement.assert(node);

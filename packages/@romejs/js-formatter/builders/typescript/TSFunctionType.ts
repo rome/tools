@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSFunctionType, tsFunctionType, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSFunctionType, tsFunctionType} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator, space, linkedGroups} from '../../tokens';
+import {Tokens, linkedGroups, operator, space} from '../../tokens';
 
 export default function TSFunctionType(builder: Builder, node: AnyNode): Tokens {
   node = tsFunctionType.assert(node);

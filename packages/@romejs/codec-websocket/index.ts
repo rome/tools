@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Frame, BuildFrameOpts, OPCODES, GUID} from './types';
-import {parseFrame, buildFrame, unmaskPayload, isCompleteFrame} from './frame';
+import {BuildFrameOpts, Frame, GUID, OPCODES} from './types';
+import {buildFrame, isCompleteFrame, parseFrame, unmaskPayload} from './frame';
 import {Event} from '@romejs/events';
 import crypto = require('crypto');
 

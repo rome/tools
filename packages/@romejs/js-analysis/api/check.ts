@@ -6,7 +6,7 @@
  */
 
 import {CheckProvider} from '../types';
-import {Diagnostics, DiagnosticAdvice, descriptions} from '@romejs/diagnostics';
+import {DiagnosticAdvice, Diagnostics, descriptions} from '@romejs/diagnostics';
 import {Program} from '@romejs/js-ast';
 import Hub from '../Hub';
 import E from '../types/errors/E';
@@ -27,7 +27,7 @@ export default async function check(opts: {
     project: opts.project,
   });
   resolveGraph(hub);
-  return hub.context.diagnostics;
+  return hub.context.diagnostics.getDiagnostics();
 }
 
 function isError(t: undefined | T): boolean {
@@ -86,8 +86,8 @@ function resolveGraph(hub: Hub): Diagnostics {
               filename: originLoc.filename,
               start: originLoc.start,
               end: originLoc.end,
+              marker,
             },
-            marker,
           });
         }
       }
@@ -134,5 +134,5 @@ function resolveGraph(hub: Hub): Diagnostics {
     }
   }
 
-  return context.diagnostics;
+  return context.diagnostics.getDiagnostics();
 }

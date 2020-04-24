@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   VariableDeclaration,
   variableDeclaration,
-  AnyNode,
 } from '@romejs/js-ast';
 import OpenT from '../../types/OpenT';
 import VoidT from '../../types/VoidT';

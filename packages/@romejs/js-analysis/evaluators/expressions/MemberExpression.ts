@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {MemberExpression, memberExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, MemberExpression, memberExpression} from '@romejs/js-ast';
 import StringLiteralT from '../../types/StringLiteralT';
 import GetPropT from '../../types/GetPropT';
 

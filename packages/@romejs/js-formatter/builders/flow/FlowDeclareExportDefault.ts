@@ -8,9 +8,9 @@
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
 import {
+  AnyNode,
   FlowDeclareExportDefault,
   flowDeclareExportDefault,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowDeclareExportDefault(

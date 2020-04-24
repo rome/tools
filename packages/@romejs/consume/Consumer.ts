@@ -6,96 +6,65 @@
  */
 
 import {
-  DiagnosticAdvice,
-  Diagnostics,
   Diagnostic,
-  DiagnosticsError,
+  DiagnosticAdvice,
+  DiagnosticDescriptionOptionalCategory,
   DiagnosticLocation,
-  getDiagnosticsFromError,
-  DiagnosticCategory,
-  buildSuggestionAdvice,
+  Diagnostics,
+  DiagnosticsError,
+  catchDiagnosticsSync,
   createBlessedDiagnosticMessage,
   createSingleDiagnosticError,
+  descriptions,
 } from '@romejs/diagnostics';
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
-  JSONValue,
-  JSONPropertyValue,
-  JSONObject,
   JSONArray,
+  JSONObject,
+  JSONPropertyValue,
+  JSONValue,
 } from '@romejs/codec-json';
 import {
-  ConsumerOptions,
-  ConsumePath,
   ConsumeContext,
   ConsumeKey,
-  ConsumerHandleUnexpected,
-  ConsumeSourceLocationRequestTarget,
-  ConsumerOnDefinition,
+  ConsumePath,
   ConsumePropertyDefinition,
   ConsumePropertyMetadata,
+  ConsumeSourceLocationRequestTarget,
+  ConsumerHandleUnexpected,
+  ConsumerOnDefinition,
+  ConsumerOptions,
 } from './types';
-import {UNKNOWN_POSITION, SourceLocation} from '@romejs/parser-core';
+import {SourceLocation, UNKNOWN_POSITION} from '@romejs/parser-core';
 import {
   Number0,
   Number1,
-  coerce0,
-  coerce1,
   UnknownNumber,
-  add,
+  ob1Add,
+  ob1Coerce0,
+  ob1Coerce1,
 } from '@romejs/ob1';
 import {isValidIdentifierName} from '@romejs/js-ast-utils';
 import {escapeString} from '@romejs/string-escape';
 import {
-  UnknownFilePath,
+  AbsoluteFilePath,
   RelativeFilePath,
   URLFilePath,
-  createUnknownFilePath,
-  AbsoluteFilePath,
-  createURLFilePath,
+  UnknownFilePath,
   createAbsoluteFilePath,
+  createURLFilePath,
+  createUnknownFilePath,
 } from '@romejs/path';
 
 type UnexpectedConsumerOptions = {
-  category?: DiagnosticCategory;
   loc?: SourceLocation;
   target?: ConsumeSourceLocationRequestTarget;
-  advice?: DiagnosticAdvice;
   at?: 'suffix' | 'prefix' | 'none';
   atParent?: boolean;
 };
 
 function isComputedPart(part: ConsumeKey): boolean {
   return typeof part === 'number' || !isValidIdentifierName(part);
-}
-
-function joinPath(path: ConsumePath): string {
-  let str = '';
-
-  for (let i = 0; i < path.length; i++) {
-    const part = path[i];
-    const nextPart = path[i + 1];
-
-    // If we are a computed property then wrap in brackets, the previous part would not have inserted a dot
-    if (isComputedPart(part)) {
-      const inner = typeof part === 'number'
-        ? String(part)
-        : escapeString(part, {
-          quote: "'",
-        });
-
-      str += `[${inner}]`;
-    } else {
-      if (nextPart === undefined || isComputedPart(nextPart)) {
-        // Don't append a dot if there are no parts or the next is computed
-        str += part;
-      } else {
-        str += `${part}.`;
-      }
-    }
-  }
-
-  return str;
 }
 
 export default class Consumer {
@@ -133,11 +102,11 @@ export default class Consumer {
   hasHandledUnexpected: boolean;
   forceDiagnosticTarget: undefined | ConsumeSourceLocationRequestTarget;
 
-  async capture<T>(callback: (consumer: Consumer) => Promise<T> | T): Promise<{
-    result: T;
+  capture<T>(): {
+    consumer: Consumer;
     definitions: Array<ConsumePropertyDefinition>;
     diagnostics: Diagnostics;
-  }> {
+  } {
     let diagnostics: Diagnostics = [];
     const definitions: Array<ConsumePropertyDefinition> = [];
 
@@ -154,15 +123,14 @@ export default class Consumer {
         diagnostics.push(diag);
       },
     });
-
-    const result = await callback(consumer);
-    return {result, definitions, diagnostics};
+    return {consumer, definitions, diagnostics};
   }
 
-  async captureDiagnostics<T>(
+  async bufferDiagnostics<T>(
     callback: (consumer: Consumer) => Promise<T> | T,
   ): Promise<T> {
-    const {result, diagnostics} = await this.capture(callback);
+    const {diagnostics, consumer} = await this.capture();
+    const result = await callback(consumer);
     if (result === undefined || diagnostics.length > 0) {
       throw new DiagnosticsError('Captured diagnostics', diagnostics);
     }
@@ -173,16 +141,11 @@ export default class Consumer {
     if (this.handleUnexpected === undefined) {
       callback();
     } else {
-      try {
-        callback();
-      } catch (err) {
-        const diags = getDiagnosticsFromError(err);
-        if (diags === undefined) {
-          throw err;
-        } else {
-          for (const diag of diags) {
-            this.handleUnexpected(diag);
-          }
+      const {diagnostics} = catchDiagnosticsSync(callback);
+
+      if (diagnostics !== undefined) {
+        for (const diag of diagnostics) {
+          this.handleUnexpected(diag);
         }
       }
     }
@@ -255,13 +218,13 @@ export default class Consumer {
       ...loc,
       start: {
         ...start,
-        column: add(start.column, startIndex),
-        index: add(start.index, startIndex),
+        column: ob1Add(start.column, startIndex),
+        index: ob1Add(start.index, startIndex),
       },
       end: {
         ...start,
-        column: add(start.column, endIndex),
-        index: add(start.index, endIndex),
+        column: ob1Add(start.column, endIndex),
+        index: ob1Add(start.index, endIndex),
       },
     };
   }
@@ -291,6 +254,41 @@ export default class Consumer {
     return this.getDiagnosticLocation() !== undefined;
   }
 
+  getKeyPathString(path: ConsumePath = this.keyPath): string {
+    const {normalizeKey} = this.context;
+    let str = '';
+
+    for (let i = 0; i < path.length; i++) {
+      let part = path[i];
+      const nextPart = path[i + 1];
+
+      if (typeof part === 'string' && normalizeKey !== undefined) {
+        part = normalizeKey(part);
+      }
+
+      // If we are a computed property then wrap in brackets, the previous part would not have inserted a dot
+      // We allow a computed part at the beginning of a path
+      if (isComputedPart(part) && i > 0) {
+        const inner = typeof part === 'number'
+          ? String(part)
+          : escapeString(part, {
+            quote: "'",
+          });
+
+        str += `[${inner}]`;
+      } else {
+        if (nextPart === undefined || isComputedPart(nextPart)) {
+          // Don't append a dot if there are no parts or the next is computed
+          str += part;
+        } else {
+          str += `${part}.`;
+        }
+      }
+    }
+
+    return str;
+  }
+
   generateUnexpectedMessage(
     msg: string,
     opts: UnexpectedConsumerOptions,
@@ -310,16 +308,16 @@ export default class Consumer {
     }
 
     if (at === 'suffix') {
-      msg += ` at <emphasis>${joinPath(target.keyPath)}</emphasis>`;
+      msg += ` at <emphasis>${target.getKeyPathString()}</emphasis>`;
     } else {
-      msg = `<emphasis>${joinPath(target.keyPath)}</emphasis> ${msg}`;
+      msg = `<emphasis>${target.getKeyPathString()}</emphasis> ${msg}`;
     }
 
     return msg;
   }
 
   unexpected(
-    msg: string,
+    description: DiagnosticDescriptionOptionalCategory = descriptions.CONSUME.INVALID,
     opts: UnexpectedConsumerOptions = {},
   ): DiagnosticsError {
     const {target = 'value'} = opts;
@@ -328,9 +326,16 @@ export default class Consumer {
     let location = this.getDiagnosticLocation(target);
     const fromSource = location !== undefined;
 
-    msg = this.generateUnexpectedMessage(msg, opts);
+    const message = this.generateUnexpectedMessage(
+      description.message.value,
+      opts,
+    );
+    description = {
+      ...description,
+      message: createBlessedDiagnosticMessage(message),
+    };
 
-    const advice: DiagnosticAdvice = [...(opts.advice || [])];
+    const advice: DiagnosticAdvice = [...(description.advice || [])];
 
     // Make the errors more descriptive
     if (fromSource) {
@@ -356,21 +361,20 @@ export default class Consumer {
       } while (consumer !== undefined);
 
       // If consumer is undefined and we have no filename then we were not able to find a location,
-
       // in this case, just throw a normal error
       if (consumer === undefined && filename === undefined) {
-        throw new Error(msg);
+        throw new Error(message);
       }
 
       // Warn that we didn't find this value in the source if it's parent wasn't either
       if (this.parent === undefined || !this.parent.wasInSource()) {
-        advice.push({
-          type: 'log',
-          category: 'warn',
-          message: `This value was expected to be found at <emphasis>${joinPath(
-            this.keyPath,
-          )}</emphasis> but was not in the original source`,
-        });
+        advice.push(
+          {
+            type: 'log',
+            category: 'warn',
+            message: `This value was expected to be found at <emphasis>${this.getKeyPathString()}</emphasis> but was not in the original source`,
+          },
+        );
       }
     }
 
@@ -379,15 +383,13 @@ export default class Consumer {
     }
 
     if (location === undefined) {
-      throw new Error(msg);
+      throw new Error(message);
     }
 
     const diagnostic: Diagnostic = {
       description: {
-        category: opts.category === undefined
-          ? this.context.category
-          : opts.category,
-        message: createBlessedDiagnosticMessage(msg),
+        category: this.context.category,
+        ...description,
         advice,
       },
       location: {
@@ -412,9 +414,7 @@ export default class Consumer {
   }
 
   // Only dispatch a single error for the current consumer, and suppress any if we have a parent consumer with errors
-
   // We do this since we could be producing redundant stale errors based on
-
   // results we've normalized to allow us to continue
   shouldDispatchUnexpected(): boolean {
     if (this.hasHandledUnexpected) {
@@ -506,7 +506,7 @@ export default class Consumer {
     if (parentValue === undefined || parentValue === null ||
           typeof parentValue !==
           'object') {
-      throw parent.unexpected('Attempted to set a property on a non-object');
+      throw parent.unexpected(descriptions.CONSUME.SET_PROPERTY_NON_OBJECT);
     }
 
     // Mutate the parent
@@ -545,13 +545,14 @@ export default class Consumer {
 
     for (const [key, value] of this.asMap(false, false)) {
       if (!this.usedNames.has(key)) {
-        value.unexpected(`Unknown <emphasis>${key}</emphasis> ${type}`, {
+        value.unexpected(descriptions.CONSUME.UNUSED_PROPERTY(
+          this.getKeyPathString([key]),
+          type,
+          knownProperties,
+        ), {
           target: 'key',
           at: 'suffix',
           atParent: true,
-          advice: buildSuggestionAdvice(key, knownProperties, {
-            ignoreCase: true,
-          }),
         });
       }
 
@@ -561,16 +562,14 @@ export default class Consumer {
     }
   }
 
-  // ARRAY MUTATION
-  pushArray(item: unknown): this {
-    this.concatArray([item]);
-    return this;
-  }
-
-  concatArray(items: Array<unknown>): this {
-    const arr = this.asPlainArray();
-    this.setValue(arr.concat(items));
-    return this;
+  asPossibleParsedJSON(): Consumer {
+    if (typeof this.asUnknown() === 'string') {
+      return this.clone({
+        value: JSON.parse(this.asString()),
+      });
+    } else {
+      return this;
+    }
   }
 
   // JSON
@@ -596,7 +595,7 @@ export default class Consumer {
       return this.asJSONObject();
     }
 
-    this.unexpected('Expected a JSON value');
+    this.unexpected(descriptions.CONSUME.EXPECTED_JSON_VALUE);
     return '';
   }
 
@@ -653,7 +652,7 @@ export default class Consumer {
 
     const {value} = this;
     if (!this.isObject()) {
-      this.unexpected('Expected object');
+      this.unexpected(descriptions.CONSUME.EXPECTED_OBJECT);
       return {};
     }
 
@@ -707,7 +706,7 @@ export default class Consumer {
     const {value} = this;
 
     if (!Array.isArray(value)) {
-      this.unexpected('Expected array');
+      this.unexpected(descriptions.CONSUME.EXPECTED_ARRAY);
       return [];
     }
 
@@ -758,7 +757,7 @@ export default class Consumer {
   _asDate(def?: Date): Date {
     const value = this.getValue(def);
     if (!(value instanceof Date)) {
-      this.unexpected('Expected a date');
+      this.unexpected(descriptions.CONSUME.EXPECTED_DATE);
       return new Date();
     }
     return value;
@@ -790,7 +789,7 @@ export default class Consumer {
   _asBoolean(def?: boolean): boolean {
     const value = this.getValue(def);
     if (typeof value !== 'boolean') {
-      this.unexpected('Expected a boolean');
+      this.unexpected(descriptions.CONSUME.EXPECTED_BOOLEAN);
       return false;
     }
     return value;
@@ -823,7 +822,7 @@ export default class Consumer {
   _asString(def?: string): string {
     const value = this.getValue(def);
     if (typeof value !== 'string') {
-      this.unexpected('Expected a string');
+      this.unexpected(descriptions.CONSUME.EXPECTED_STRING);
       return '';
     }
     return value;
@@ -840,19 +839,9 @@ export default class Consumer {
       // @ts-ignore
       return value;
     } else {
-      this.unexpected(`Invalid value <emphasis>${value}</emphasis>`, {
+      this.unexpected(descriptions.CONSUME.INVALID_STRING_SET_VALUE(value, ( // rome-suppress-next-line lint/noExplicitAny
+      (validValues as any) as Array<string>)), {
         target: 'value',
-        advice: [
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Possible values are',
-          },
-          {
-            type: 'list',
-            list: validValues.map((str) => String(str)),
-          },
-        ],
       });
       return validValues[0];
     }
@@ -902,7 +891,7 @@ export default class Consumer {
       return value;
     }
 
-    this.unexpected('Expected a bigint');
+    this.unexpected(descriptions.CONSUME.EXPECTED_BIGINT);
     return BigInt('0');
   }
 
@@ -912,7 +901,7 @@ export default class Consumer {
     if (path.isURL()) {
       return path.assertURL();
     } else {
-      this.unexpected('Expected a URL');
+      this.unexpected(descriptions.CONSUME.EXPECTED_URL);
       return createURLFilePath('unknown://').append(path);
     }
   }
@@ -926,7 +915,7 @@ export default class Consumer {
     if (path.isAbsolute()) {
       return path.assertAbsolute();
     } else {
-      this.unexpected('Expected an absolute file path');
+      this.unexpected(descriptions.CONSUME.EXPECTED_ABSOLUTE_PATH);
       return createAbsoluteFilePath('/').append(path);
     }
   }
@@ -936,7 +925,7 @@ export default class Consumer {
     if (path.isRelative()) {
       return path.assertRelative();
     } else {
-      this.unexpected('Expected a relative file path');
+      this.unexpected(descriptions.CONSUME.EXPECTED_RELATIVE_PATH);
       return path.toExplicitRelative();
     }
   }
@@ -947,9 +936,7 @@ export default class Consumer {
     if (path.isExplicitRelative()) {
       return path;
     } else {
-      this.unexpected(
-        'Expected an explicit relative file path. This is one that starts with <emphasis>./</emphasis> or <emphasis>../</emphasis>',
-      );
+      this.unexpected(descriptions.CONSUME.EXPECTED_EXPLICIT_RELATIVE_PATH);
       return path.toExplicitRelative();
     }
   }
@@ -970,11 +957,49 @@ export default class Consumer {
   }
 
   asZeroIndexedNumber(): Number0 {
-    return coerce0(this.asNumber());
+    return ob1Coerce0(this.asNumber());
   }
 
   asOneIndexedNumber(): Number1 {
-    return coerce1(this.asNumber());
+    return ob1Coerce1(this.asNumber());
+  }
+
+  asNumberFromString(def?: number): number {
+    this.declareDefinition({
+      type: 'number',
+      default: def,
+      required: true,
+    });
+    return this._asNumberFromString(def);
+  }
+
+  asNumberFromStringOrVoid(def?: number): undefined | number {
+    this.declareDefinition({
+      type: 'number',
+      default: def,
+      required: false,
+    });
+
+    if (this.exists()) {
+      return this._asNumberFromString(def);
+    } else {
+      return undefined;
+    }
+  }
+
+  _asNumberFromString(def?: number): number {
+    if (def !== undefined && !this.exists()) {
+      return def;
+    }
+
+    const str = this._asString();
+    const num = Number(str);
+    if (isNaN(num)) {
+      this.unexpected(descriptions.CONSUME.EXPECTED_VALID_NUMBER);
+      return NaN;
+    } else {
+      return num;
+    }
   }
 
   asNumber(def?: number): number {
@@ -986,11 +1011,7 @@ export default class Consumer {
     return this._asNumber(def);
   }
 
-  asNumberInRange(opts: {
-    min?: number;
-    max?: number;
-    default?: number;
-  }): number
+  asNumberInRange(opts: {min?: number; max?: number; default?: number}): number
 
   asNumberInRange(opts: {
     min: Number0;
@@ -1005,12 +1026,11 @@ export default class Consumer {
   }): Number1
 
   asNumberInRange(opts: {
-    min?: Number0 | Number1 | number;
-    max?: Number0 | Number1 | number;
-    default?: Number0 | Number1 | number;
+    min?: UnknownNumber;
+    max?: UnknownNumber;
+    default?: UnknownNumber;
   }): UnknownNumber {
     const num = this._asNumber(opts.default);
-
     const {min, max} = opts;
 
     this.declareDefinition({
@@ -1024,16 +1044,16 @@ export default class Consumer {
 
     // Nice error message when both min and max are specified
     if (min !== undefined && max !== undefined && (num < min || num > max)) {
-      this.unexpected(`Expected number between ${min} and ${max}`);
+      this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_BETWEEN(min, max));
       return num;
     }
 
     if (min !== undefined && num < min) {
-      this.unexpected(`Expected number higher than ${min}`);
+      this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_HIGHER(min));
     }
 
     if (max !== undefined && num > max) {
-      this.unexpected(`Expected number lower than ${max}`);
+      this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_LOWER(max));
     }
 
     return num;
@@ -1042,7 +1062,7 @@ export default class Consumer {
   _asNumber(def?: UnknownNumber): number {
     const value = this.getValue(def);
     if (typeof value !== 'number') {
-      this.unexpected('Expected a number');
+      this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER);
       return 0;
     }
     return value;

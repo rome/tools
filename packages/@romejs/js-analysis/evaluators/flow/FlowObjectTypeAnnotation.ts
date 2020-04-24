@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowObjectTypeAnnotation,
   flowObjectTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 import ObjT from '../../types/ObjT';
 import T from '../../types/T';

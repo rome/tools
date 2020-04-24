@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   ExportNamespaceSpecifier,
   exportNamespaceSpecifier,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function ExportNamespaceSpecifier(node: AnyNode, scope: Scope) {

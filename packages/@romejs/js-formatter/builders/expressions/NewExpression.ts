@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, concat} from '../../tokens';
-import {newExpression, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, word} from '../../tokens';
+import {AnyNode, newExpression} from '@romejs/js-ast';
 import CallExpression from './CallExpression';
 
 export default function NewExpression(builder: Builder, node: AnyNode): Tokens {

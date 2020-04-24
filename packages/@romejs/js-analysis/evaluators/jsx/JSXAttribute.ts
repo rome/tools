@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {JSXAttribute, jsxAttribute, AnyNode} from '@romejs/js-ast';
+import {AnyNode, JSXAttribute, jsxAttribute} from '@romejs/js-ast';
 
 export default function JSXAttribute(node: AnyNode, scope: Scope) {
   node = jsxAttribute.assert(node);

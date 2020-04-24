@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, TSImportType, AnyTSEntityName} from '../index';
+import {AnyTSEntityName, JSNodeBase, TSImportType} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSTypeQuery = JSNodeBase & {

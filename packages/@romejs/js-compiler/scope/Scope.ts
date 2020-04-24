@@ -5,13 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, Program, MOCK_PARENT} from '@romejs/js-ast';
-import {Context} from '@romejs/js-compiler';
+import {AnyNode, MOCK_PARENT, Program} from '@romejs/js-ast';
+import {CompilerContext} from '@romejs/js-compiler';
 import {SCOPE_PRIVATE_PREFIX} from '../constants';
 import evaluators from './evaluators/index';
 import * as GLOBALS from './globals';
 import {Binding} from './bindings';
-import {isValidIdentifierName} from '@romejs/js-ast-utils';
+import {
+  isValidIdentifierName,
+  isVariableIdentifier,
+} from '@romejs/js-ast-utils';
+import Path from '../lib/Path';
 
 let scopeCounter = 0;
 
@@ -165,8 +169,18 @@ export default class Scope {
     return this.bindings.get(name);
   }
 
+  getBindingFromPath(path: Path): undefined | Binding {
+    const {node} = path;
+    if (isVariableIdentifier(node)) {
+      // TODO we can do some isInTypeAnnotation magic to get the proper "type" binding
+      return this.getBinding(node.name);
+    } else {
+      return undefined;
+    }
+  }
+
   getBinding(name: string): undefined | Binding {
-    const binding = this.getOwnBinding(name);
+    const binding = this.bindings.get(name);
     if (binding !== undefined) {
       return binding;
     }
@@ -222,7 +236,7 @@ const GLOBAL_COMMENT_START = /^([\s+]|)global /;
 const GLOBAL_COMMENT_COLON = /:(.*?)$/;
 
 export class RootScope extends Scope {
-  constructor(context: Context, ast: Program) {
+  constructor(context: CompilerContext, ast: Program) {
     super({
       kind: 'root',
       parentScope: undefined,
@@ -247,7 +261,7 @@ export class RootScope extends Scope {
     ]);
   }
 
-  context: Context;
+  context: CompilerContext;
   uids: Set<string>;
 
   parseGlobalComments(ast: Program): Array<string> {

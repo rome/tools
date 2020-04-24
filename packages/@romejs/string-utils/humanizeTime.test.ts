@@ -6,7 +6,7 @@
  */
 
 import {humanizeTime} from './humanizeTime';
-import test from '@romejs/test';
+import {test} from 'rome';
 
 test('humanizeTime', (t) => {
   t.is(humanizeTime(1), '0.00s');

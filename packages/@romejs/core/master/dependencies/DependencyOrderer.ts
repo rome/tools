@@ -94,7 +94,6 @@ export default class DependencyOrderer {
   }
 
   // We detect cycles by determining if there were any references to imports at the top level that
-
   // are for a module that will be initialized before
   detectCycles() {
     const flatOrder = Array.from(this.orderedNodes);
@@ -159,9 +158,7 @@ export default class DependencyOrderer {
 
   order(path: AbsoluteFilePath): DependencyOrder {
     this.addFile(path, []);
-    // TODO only enable when bundlerMode === 'modern'
-
-    // this.detectCycles();
+    this.detectCycles();
     return {
       firstTopAwaitLocations: this.firstTopAwaitLocations,
       diagnostics: this.diagnostics,

@@ -5,82 +5,82 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {types as tt, TokenType} from '../tokenizer/types';
+import {TokenType, types as tt} from '../tokenizer/types';
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {State} from '../tokenizer/state';
 import {JSParser} from '../parser';
 import {
-  Identifier,
-  AnyNode,
-  ConstImportModuleKind,
-  AnyFlowPredicate,
-  FlowTypeParameterInstantiation,
-  FlowDeclaredPredicate,
-  FlowInferredPredicate,
-  FlowDeclareClass,
-  FlowDeclareFunction,
   AnyFlowDeclare,
-  StringLiteral,
-  FlowDeclareVariable,
-  FlowDeclareModule,
-  BindingIdentifier,
+  AnyFlowKeywordTypeAnnotation,
+  AnyFlowPredicate,
+  AnyFlowPrimary,
+  AnyNode,
   AnyStatement,
+  ArrowFunctionExpression,
+  BindingIdentifier,
   BlockStatement,
-  FlowDeclareModuleExports,
+  ConstImportModuleKind,
+  FlowClassImplements,
+  FlowDeclareClass,
+  FlowDeclareExportAll,
+  FlowDeclareExportDefault,
+  FlowDeclareExportNamed,
+  FlowDeclareFunction,
   FlowDeclareInterface,
+  FlowDeclareModule,
+  FlowDeclareModuleExports,
   FlowDeclareOpaqueType,
-  FlowObjectTypeAnnotation,
-  FlowInterfaceExtends,
-  FlowTypeParameterDeclaration,
+  FlowDeclareVariable,
+  FlowDeclaredPredicate,
+  FlowFunctionTypeAnnotation,
+  FlowFunctionTypeParam,
+  FlowGenericTypeAnnotation,
+  FlowInferredPredicate,
   FlowInterfaceDeclaration,
+  FlowInterfaceExtends,
   FlowInterfaceTypeAnnotation,
-  TypeAliasTypeAnnotation,
-  FlowOpaqueType,
-  FlowTypeParameter,
-  FlowObjectTypeProperty,
+  FlowObjectTypeAnnotation,
   FlowObjectTypeCallProperty,
   FlowObjectTypeIndexer,
   FlowObjectTypeInternalSlot,
+  FlowObjectTypeProperty,
   FlowObjectTypePropertyKey,
   FlowObjectTypePropertyKind,
-  ReferenceIdentifier,
   FlowObjectTypeSpreadProperty,
-  FlowFunctionTypeAnnotation,
-  FlowFunctionTypeParam,
+  FlowOpaqueType,
   FlowQualifiedTypeIdentifier,
-  AnyFlowPrimary,
-  FlowClassImplements,
-  AnyFlowKeywordTypeAnnotation,
-  FlowGenericTypeAnnotation,
-  FlowVariance,
-  FlowTypeofTypeAnnotation,
   FlowTupleTypeAnnotation,
+  FlowTypeParameter,
+  FlowTypeParameterDeclaration,
+  FlowTypeParameterInstantiation,
+  FlowTypeofTypeAnnotation,
+  FlowVariance,
   FlowVarianceKind,
-  ArrowFunctionExpression,
-  FlowDeclareExportDefault,
-  FlowDeclareExportNamed,
-  FlowDeclareExportAll,
+  Identifier,
+  ReferenceIdentifier,
+  StringLiteral,
+  TypeAliasTypeAnnotation,
 } from '@romejs/js-ast';
 import {
-  isLetStart,
-  parseImport,
-  parseIdentifier,
-  parseExpression,
-  parseExport,
-  parseFunctionParams,
-  parseArrowHead,
-  parseArrowExpression,
-  createIdentifier,
+  addFlowDiagnostic,
   checkGetterSetterParamCount,
+  createIdentifier,
+  isLetStart,
+  parseArrowExpression,
+  parseArrowHead,
+  parseBindingIdentifier,
+  parseExport,
+  parseExpression,
+  parseFunctionParams,
+  parseIdentifier,
+  parseImport,
   parseNumericLiteral,
   parseStringLiteral,
-  addFlowDiagnostic,
-  parseBindingIdentifier,
-  toReferenceIdentifier,
-  toBindingIdentifier,
   parseTypeLiteralAnnotation,
+  toBindingIdentifier,
+  toReferenceIdentifier,
 } from './index';
-import {get0} from '@romejs/ob1';
+import {ob1Get0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 import {parseReferenceIdentifier} from './expression';
 
@@ -198,9 +198,9 @@ function parseFlowPredicate(
   parser.expectContextual('checks');
 
   // Force '%' and 'checks' to be adjacent
-  if (moduloPos.line !== checksPos.line || get0(moduloPos.column) !== get0(
-      checksPos.column,
-    ) - 1) {
+  if (moduloPos.line !== checksPos.line || ob1Get0(moduloPos.column) !==
+        ob1Get0(checksPos.column) -
+        1) {
     parser.addDiagnostic({
       start: moduloPos,
       description: descriptions.JS_PARSER.FLOW_SPACE_BETWEEN_PERCENT_CHECKS,
@@ -1495,12 +1495,13 @@ function flowIdentToTypeAnnotation(
         type: 'BigIntKeywordTypeAnnotation',
       });
 
-    default:
+    default: {
       checkNotUnderscore(parser, id);
       return parseFlowGenericType(parser, start, toReferenceIdentifier(
         parser,
         id,
       ));
+    }
   }
 }
 
@@ -1514,12 +1515,13 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
   const oldNoAnonFunctionType = parser.state.noAnonFunctionType;
 
   switch (parser.state.tokenType) {
-    case tt.name:
+    case tt.name: {
       if (parser.isContextual('interface')) {
         return parseFlowInterfaceType(parser);
       }
 
       return flowIdentToTypeAnnotation(parser, start, parseIdentifier(parser));
+    }
 
     case tt.braceL:
       return parseFlowObjectType(parser, {
@@ -1542,7 +1544,7 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
     case tt.bracketL:
       return parseFlowTupleType(parser);
 
-    case tt.relational:
+    case tt.relational: {
       if (parser.state.tokenValue === '<') {
         const typeParameters = parseFlowTypeParameterDeclaration(parser, false);
         const openContext = parser.expectOpening(
@@ -1566,6 +1568,7 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
         });
       }
       break;
+    }
 
     case tt.parenL: {
       const openContext = parser.expectOpening(
@@ -1632,21 +1635,25 @@ function parseFlowPrimaryType(parser: JSParser): AnyFlowPrimary {
     case tt.plusMin:
       return parseTypeLiteralAnnotation(parser);
 
-    case tt._void:
+    case tt._void: {
       parser.next();
       return parser.finishNode(start, {type: 'VoidKeywordTypeAnnotation'});
+    }
 
-    case tt._null:
+    case tt._null: {
       parser.next();
       return parser.finishNode(start, {type: 'NullKeywordTypeAnnotation'});
+    }
 
-    case tt._this:
+    case tt._this: {
       parser.next();
       return parser.finishNode(start, {type: 'FlowThisTypeAnnotation'});
+    }
 
-    case tt.star:
+    case tt.star: {
       parser.next();
       return parser.finishNode(start, {type: 'FlowExistsTypeAnnotation'});
+    }
 
     default:
       if (parser.state.tokenType.keyword === 'typeof') {

@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, verbatim, concat} from '../../tokens';
+import {Tokens, concat, verbatim} from '../../tokens';
 import {AnyNode, regExpCharSet} from '@romejs/js-ast';
 
 export default function RegExpCharSet(builder: Builder, node: AnyNode): Tokens {

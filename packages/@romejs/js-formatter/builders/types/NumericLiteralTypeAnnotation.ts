@@ -8,9 +8,9 @@
 import Builder from '../../Builder';
 import {Tokens, number} from '../../tokens';
 import {
+  AnyNode,
   NumericLiteralTypeAnnotation,
   numericLiteralTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function NumericLiteralTypeAnnotation(

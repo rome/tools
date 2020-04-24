@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyTSPrimary, AnyTargetAssignmentPattern} from '../index';
+import {AnyTSPrimary, AnyTargetAssignmentPattern, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSAssignmentTypeAssertion = JSNodeBase & {

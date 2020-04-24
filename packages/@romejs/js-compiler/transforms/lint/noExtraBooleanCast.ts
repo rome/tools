@@ -8,11 +8,11 @@
 import {Path} from '@romejs/js-compiler';
 import {
   AnyNode,
-  IfStatement,
-  DoWhileStatement,
-  WhileStatement,
-  ForStatement,
   ConditionalExpression,
+  DoWhileStatement,
+  ForStatement,
+  IfStatement,
+  WhileStatement,
 } from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 

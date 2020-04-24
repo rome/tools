@@ -6,13 +6,12 @@
  */
 
 import {
-  DiagnosticLocation,
   Diagnostic,
   DiagnosticCategory,
+  DiagnosticLocation,
 } from '@romejs/diagnostics';
 import Consumer from './Consumer';
 import {UnknownFilePath} from '@romejs/path';
-import {Number0, Number1} from '@romejs/ob1';
 
 export type ConsumeComments = Array<string>;
 
@@ -28,6 +27,7 @@ export type ConsumeSourceLocationRequestTarget =
 
 export type ConsumeContext = {
   category: DiagnosticCategory;
+  normalizeKey?: (key: string) => string;
   getDiagnosticPointer?: (
     keys: ConsumePath,
     target: ConsumeSourceLocationRequestTarget,
@@ -59,8 +59,8 @@ type ConsumePropertyPrimitiveDefinition =
 
 type ConsumePropertyNumberRangeDefinition = ConsumePropertyDefinitionBase & {
   type: 'number-range';
-  min: undefined | Number0 | Number1 | number;
-  max: undefined | Number0 | Number1 | number;
+  min: undefined | number;
+  max: undefined | number;
 };
 
 export type ConsumePropertyDefinition =

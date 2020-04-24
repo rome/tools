@@ -8,9 +8,9 @@
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
 import {
+  AnyNode,
   AssignmentIdentifier,
   assignmentIdentifier,
-  AnyNode,
 } from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
 

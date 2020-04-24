@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens, concat} from '../../tokens';
-import {bindingIdentifier, AnyNode} from '@romejs/js-ast';
+import {AnyNode, bindingIdentifier} from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
 import {printPatternMeta} from '../utils';
 

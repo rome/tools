@@ -6,12 +6,12 @@
  */
 
 import {
-  JSNodeBase,
-  AnyExpression,
   AnyClassMember,
-  AnyTypeParameter,
+  AnyExpression,
   AnyTypeArguments,
+  AnyTypeParameter,
   FlowClassImplements,
+  JSNodeBase,
   TSExpressionWithTypeArguments,
 } from '../index';
 import {createQuickBuilder} from '../utils';

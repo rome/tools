@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, word, breakGroup, space, concat} from '../../tokens';
+import {Tokens, breakGroup, concat, operator, space, word} from '../../tokens';
 import {
   AnyNode,
   AssignmentExpression,

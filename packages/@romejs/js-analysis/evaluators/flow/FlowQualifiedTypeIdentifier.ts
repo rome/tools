@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowQualifiedTypeIdentifier,
   flowQualifiedTypeIdentifier,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowQualifiedTypeIdentifier(node: AnyNode, scope: Scope) {

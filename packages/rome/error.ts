@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics, getDiagnosticsFromError} from '@romejs/diagnostics';
+import {
+  DiagnosticSuppressions,
+  Diagnostics,
+  getDiagnosticsFromError,
+} from '@romejs/diagnostics';
 import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
 
 export class RomeDiagnosticsError extends Error {
@@ -28,14 +32,24 @@ export function throwDiagnostics(diagnostics: Diagnostics) {
     return;
   }
 
+  const suppressions: DiagnosticSuppressions = [];
+
   // We do not want to expose the `diagnostics`
-  const err = new RomeDiagnosticsError(printDiagnosticsToString(
+  const err = new RomeDiagnosticsError(printDiagnosticsToString({
     diagnostics,
-    {},
-    'none',
-  ));
-  err.getHTML = () => printDiagnosticsToString(diagnostics, {}, 'none');
-  err.getAnsi = () => printDiagnosticsToString(diagnostics, {}, 'ansi');
+    suppressions,
+    format: 'none',
+  }));
+  err.getHTML = () => printDiagnosticsToString({
+    diagnostics,
+    suppressions,
+    format: 'html',
+  });
+  err.getAnsi = () => printDiagnosticsToString({
+    diagnostics,
+    suppressions,
+    format: 'ansi',
+  });
   throw err;
 }
 

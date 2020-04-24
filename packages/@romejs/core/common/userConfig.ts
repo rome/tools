@@ -9,17 +9,23 @@ import {consumeJSON} from '@romejs/codec-json';
 import {VERSION} from './constants';
 import {ROME_CONFIG_FILENAMES} from '@romejs/project';
 import {
-  HOME_PATH,
   AbsoluteFilePath,
-  createAbsoluteFilePath,
+  HOME_PATH,
   TEMP_PATH,
+  createAbsoluteFilePath,
 } from '@romejs/path';
-import {readFileTextSync, existsSync} from '@romejs/fs';
+import {existsSync, readFileTextSync} from '@romejs/fs';
 
-export type UserConfig = {cachePath: AbsoluteFilePath};
+export type UserConfig = {
+  runtimeModulesPath: AbsoluteFilePath;
+  cachePath: AbsoluteFilePath;
+};
+
+const VERSION_PATH = TEMP_PATH.append(`rome-${VERSION}`);
 
 export const DEFAULT_USER_CONFIG: UserConfig = {
-  cachePath: TEMP_PATH.append(`rome-${VERSION}`),
+  runtimeModulesPath: VERSION_PATH.append('runtime'),
+  cachePath: VERSION_PATH.append('cache'),
 };
 
 export function loadUserConfig(): UserConfig {
@@ -44,6 +50,12 @@ export function loadUserConfig(): UserConfig {
       userConfig.cachePath = createAbsoluteFilePath(
         consumer.get('cachePath').asString(),
       );
+    }
+
+    if (consumer.has('runtimeModulesPath')) {
+      userConfig.runtimeModulesPath = createAbsoluteFilePath(consumer.get(
+        'runtimeModulesPath',
+      ).asString());
     }
 
     consumer.enforceUsedProperties('config property');

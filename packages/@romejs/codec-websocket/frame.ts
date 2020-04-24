@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Frame, BuildFrameOpts} from './types';
+import {BuildFrameOpts, Frame} from './types';
 
 import crypto = require('crypto');
 

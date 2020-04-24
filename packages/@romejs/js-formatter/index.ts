@@ -9,10 +9,12 @@ import Builder, {BuilderOptions} from './Builder';
 import {AnyNode, MOCK_PARENT} from '@romejs/js-ast';
 import Printer from './Printer';
 
-export {BuilderOptions, Builder};
+export {Builder, BuilderOptions};
 
 export function formatJS(ast: AnyNode, opts: BuilderOptions): Printer {
-  const builder = new Builder(opts);
+  const builder = new Builder(opts, ast.type === 'Program'
+    ? ast.comments
+    : opts.comments);
   const tokens = builder.tokenize(ast, MOCK_PARENT);
   const printer = new Printer(opts);
   printer.print(tokens);

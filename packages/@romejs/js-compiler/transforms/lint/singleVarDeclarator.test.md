@@ -6,138 +6,62 @@
 
 ### `0`
 
-```javascript
-Object {
-  src: 'let foo;\nlet bar;\n'
-  suppressions: Array []
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'lint'}]
-      description: Object {
-        category: 'lint/singleVarDeclarator'
-        fixable: true
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Declare each variable separately'}
-      }
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-    Object {
-      origins: Array [Object {category: 'lint'}]
-      description: Object {
-        category: 'lint/unusedVariables'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused variable <emphasis>foo</emphasis>'}
-      }
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 7
-          index: 7
-          line: 1
-        }
-        start: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-      }
-    }
-    Object {
-      origins: Array [Object {category: 'lint'}]
-      description: Object {
-        category: 'lint/unusedVariables'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused variable <emphasis>bar</emphasis>'}
-      }
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-      }
-    }
-  ]
-}
+```
+
+ unknown:1 lint/singleVarDeclarator FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Declare each variable separately
+
+    let foo, bar;
+    ^^^^^^^^^^^^^ 
+
+  ℹ Possible fix
+
+      │ - let foo,
+    1 │ + let foo;
+    2 │ + let bar;
+    3 │ + 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+let foo;
+let bar;
+
 ```
 
 ### `1`
 
-```javascript
-Object {
-  src: 'for (let i = 0, x = 1; i < arr.length; i++) {}'
-  suppressions: Array []
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'lint'}]
-      description: Object {
-        category: 'lint/undeclaredVariables'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Undeclared variable <emphasis>arr</emphasis>'}
-      }
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 30
-          index: 30
-          line: 1
-        }
-        start: Object {
-          column: 27
-          index: 27
-          line: 1
-        }
-      }
-    }
-    Object {
-      origins: Array [Object {category: 'lint'}]
-      description: Object {
-        category: 'lint/unusedVariables'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unused variable <emphasis>x</emphasis>'}
-      }
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 17
-          index: 17
-          line: 1
-        }
-        start: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-      }
-    }
-  ]
-}
+```
+✔ No known problems!
+
+```
+
+## `format disabled in project config should not regenerate the file`
+
+```
+✔ No known problems!
+
+```
+
+## `format enabled in project config should result in regenerated file`
+
+### `0`
+
+```
+✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
+
 ```

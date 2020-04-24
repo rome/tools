@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {bindingObjectPatternProperty, AnyNode} from '@romejs/js-ast';
+import {AnyNode, bindingObjectPatternProperty} from '@romejs/js-ast';
 import ObjectProperty from '../objects/ObjectProperty';
 
 export default function BindingObjectPatternProperty(

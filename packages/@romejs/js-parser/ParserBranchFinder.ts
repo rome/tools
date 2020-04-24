@@ -6,7 +6,7 @@
  */
 
 import {State} from './tokenizer/state';
-import {JSParser, DiagnosticsFatalError} from './parser';
+import {DiagnosticsFatalError, JSParser} from './parser';
 
 export type ParserBranch<T> = {
   diagnosticsPriority: undefined | number;

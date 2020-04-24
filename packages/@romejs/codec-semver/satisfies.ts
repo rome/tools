@@ -6,11 +6,11 @@
  */
 
 import {
-  VersionNode,
-  RangeNode,
   AbsoluteVersionNode,
-  WildcardNode,
   ComparatorOperator,
+  RangeNode,
+  VersionNode,
+  WildcardNode,
 } from './types';
 import compare from './compare';
 

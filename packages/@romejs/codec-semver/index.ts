@@ -7,17 +7,17 @@
 
 import {
   AbsoluteVersionNode,
-  UserVersion,
-  UserRange,
-  UserVersions,
   RangeNode,
+  UserRange,
+  UserVersion,
+  UserVersions,
 } from './types';
 import satisfiesFromAst from './satisfies';
 import compareFromAst from './compare';
 import {
+  SemverParserOptions,
   parseSemverRange,
   parseSemverVersion,
-  SemverParserOptions,
 } from './parse';
 import {normalizeUserRange, normalizeUserVersion} from './utils';
 import {DiagnosticsError} from '@romejs/diagnostics';

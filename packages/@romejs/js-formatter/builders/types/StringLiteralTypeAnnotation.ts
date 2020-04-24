@@ -8,9 +8,9 @@
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
 import {
+  AnyNode,
   StringLiteralTypeAnnotation,
   stringLiteralTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 import StringLiteral from '../literals/StringLiteral';
 

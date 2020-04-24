@@ -34,7 +34,7 @@ const provider = createHook<State, undefined, AnyNode>({
       throw new Error('Expected only Identifier to be dispatched');
     }
 
-    const binding = path.scope.getBinding(node.name);
+    const binding = path.scope.getBindingFromPath(path);
 
     // Check if this binding belongs to the scope we're tracking
     if (binding === undefined || binding.scope !== state.scope) {
@@ -81,6 +81,7 @@ export default {
     const {node, scope} = path;
 
     if (scope.node === node) {
+      let hasBindings = false;
       const usedBindings: Dict<boolean> = {};
 
       // Get all the non-exported bindings in this file and mark them as unused
@@ -93,7 +94,12 @@ export default {
           continue;
         }
 
+        hasBindings = true;
         usedBindings[name] = false;
+      }
+
+      if (!hasBindings) {
+        return node;
       }
 
       // For functions, consider all parameters except the last to be used
@@ -105,7 +111,6 @@ export default {
         }
 
         // For functions that have a single throw statement in the body, consider all their arguments
-
         // to be used as this is typically an interface definition
         const {body: block} = node;
         if (block.type === 'BlockStatement' && block.body.length === 1 &&
@@ -136,7 +141,7 @@ export default {
 
     if (node.type === 'JSXReferenceIdentifier' || node.type ===
         'ReferenceIdentifier') {
-      return path.callHook(provider, undefined);
+      return path.callHook(provider, undefined, node);
     }
 
     return node;

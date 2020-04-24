@@ -8,53 +8,54 @@
 import {JSParser} from '../parser';
 import {Position} from '@romejs/parser-core';
 import {
-  FlowClassImplements,
-  AnyPrimaryType,
-  TSExpressionWithTypeArguments,
-  TSInterfaceDeclaration,
-  FlowInterfaceDeclaration,
+  AmbiguousFlowTypeCastExpression,
+  AnyExpression,
   AnyFlowDeclare,
   AnyFlowPredicate,
-  TypeAliasTypeAnnotation,
-  AnyTypeParameter,
-  AnyTypeArguments,
-  FlowOpaqueType,
-  AnyExpression,
-  AmbiguousFlowTypeCastExpression,
   AnyLiteralTypeAnnotation,
+  AnyPrimaryType,
   AnyTargetAssignmentPattern,
+  AnyTypeArguments,
+  AnyTypeParameter,
+  FlowClassImplements,
+  FlowInterfaceDeclaration,
+  FlowOpaqueType,
   PatternMeta,
+  TSExpressionWithTypeArguments,
+  TSInterfaceDeclaration,
+  TypeAliasTypeAnnotation,
 } from '@romejs/js-ast';
 import {types as tt} from '../tokenizer/types';
 import {
   TSDeclareNode,
-  parseFlowTypeAnnotation,
-  parseTSTypeAnnotation,
-  parseFlowTypeParameterDeclaration,
-  parseTSTypeParameters,
-  parseFlowTypeParameterInstantiation,
-  parseTSTypeArguments,
-  parseFlowInterface,
-  parseFlowDeclare,
-  parseTSTypeAliasTypeAnnotation,
-  parseTSInterfaceDeclaration,
-  parseTSDeclare,
   parseFlowClassImplemented,
-  parseTSHeritageClause,
+  parseFlowDeclare,
+  parseFlowInterface,
   parseFlowOpaqueType,
-  parseTSEnumDeclaration,
-  parseTSAmbientExternalModuleDeclaration,
-  parseTSModuleOrNamespaceDeclaration,
-  parseTSModuleBlock,
-  parseFlowTypeAndPredicateInitialiser,
-  parseTSTypeOrTypePredicateAnnotation,
-  parseTSAbstractClass,
-  parseFlowTypeParameterInstantiationCallOrNew,
-  toBindingIdentifier,
   parseFlowTypeAliasTypeAnnotation,
+  parseFlowTypeAndPredicateInitialiser,
+  parseFlowTypeAnnotation,
+  parseFlowTypeParameterDeclaration,
+  parseFlowTypeParameterInstantiation,
+  parseFlowTypeParameterInstantiationCallOrNew,
+  parseTSAbstractClass,
+  parseTSAmbientExternalModuleDeclaration,
+  parseTSDeclare,
+  parseTSEnumDeclaration,
+  parseTSHeritageClause,
+  parseTSInterfaceDeclaration,
+  parseTSModuleBlock,
+  parseTSModuleOrNamespaceDeclaration,
+  parseTSTypeAliasTypeAnnotation,
+  parseTSTypeAnnotation,
+  parseTSTypeArguments,
+  parseTSTypeOrTypePredicateAnnotation,
+  parseTSTypeParameters,
+  toBindingIdentifier,
   toTargetAssignmentPattern,
 } from './index';
 import {descriptions} from '@romejs/diagnostics';
+import {NumberTokenValue} from '../tokenizer';
 
 export function isTypeSystemEnabled(parser: JSParser): boolean {
   return parser.isSyntaxEnabled('flow') || parser.isSyntaxEnabled('ts');
@@ -76,11 +77,17 @@ export function parseTypeLiteralAnnotation(
     }
 
     case tt.num: {
-      const value = Number(parser.state.tokenValue);
+      const {tokenValue} = parser.state;
+      if (!(tokenValue instanceof NumberTokenValue)) {
+        throw new Error('Expected NumberTokenValue');
+      }
+
+      const {value, format} = tokenValue;
       parser.next();
       return parser.finishNode(start, {
         type: 'NumericLiteralTypeAnnotation',
         value,
+        format,
       });
     }
 
@@ -95,7 +102,8 @@ export function parseTypeLiteralAnnotation(
     }
 
     case tt.plusMin: {
-      if (parser.state.tokenValue === '-') {
+      const {tokenValue} = parser.state;
+      if (tokenValue === '-') {
         parser.next();
 
         if (!parser.match(tt.num)) {
@@ -109,11 +117,17 @@ export function parseTypeLiteralAnnotation(
           });
         }
 
-        const value = Number(parser.state.tokenValue);
+        const {tokenValue} = parser.state;
+        if (!(tokenValue instanceof NumberTokenValue)) {
+          throw new Error('Expected NumberTokenValue');
+        }
+
+        const {value, format} = tokenValue;
         parser.next();
         return parser.finishNode(start, {
           type: 'NumericLiteralTypeAnnotation',
           value: -value,
+          format,
         });
       } else {
         parser.addDiagnostic({
@@ -404,10 +418,11 @@ export function parseTypeExpressionStatement(
       // TODO perform some lookahead to make sure we want to do this
       return parseTypeAlias(parser, start);
 
-    case 'opaque':
+    case 'opaque': {
       // TODO perform some lookahead to make sure we want to do this
       addFlowDiagnostic(parser, 'opaque type', start);
       return parseFlowOpaqueType(parser, start, false);
+    }
 
     case 'abstract':
       if (parser.match(tt._class)) {
@@ -437,14 +452,14 @@ export function parseTypeExpressionStatement(
         break;
       }
 
-    case 'namespace':
+    case 'namespace': {
       if (!parser.match(tt.name)) {
         return undefined;
       }
 
       addTSDiagnostic(parser, 'module or namespace declaration', start);
       return parseTSModuleOrNamespaceDeclaration(parser, start);
-
+    }
 
     // TODO abstract this into typescript.js
     case 'global':

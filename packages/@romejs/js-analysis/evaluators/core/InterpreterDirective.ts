@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   InterpreterDirective,
   interpreterDirective,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function InterpreterDirective(node: AnyNode, scope: Scope) {

@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, space, word, concat} from '../../tokens';
-import {importNamespaceSpecifier, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, operator, space, word} from '../../tokens';
+import {AnyNode, importNamespaceSpecifier} from '@romejs/js-ast';
 
 export default function ImportNamespaceSpecifier(
   builder: Builder,

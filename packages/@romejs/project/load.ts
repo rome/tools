@@ -11,30 +11,31 @@
 
 import {Consumer} from '@romejs/consume';
 import {
-  ProjectConfig,
-  PartialProjectConfig,
-  ProjectConfigObjects,
-  ProjectConfigMeta,
-  ProjectConfigTarget,
-  ProjectConfigMetaHard,
   DEFAULT_PROJECT_CONFIG,
+  PartialProjectConfig,
+  ProjectConfig,
+  ProjectConfigMeta,
+  ProjectConfigMetaHard,
+  ProjectConfigObjects,
+  ProjectConfigTarget,
 } from './types';
 import {parsePathPattern} from '@romejs/path-match';
 import {
-  arrayOfStrings,
   arrayOfPatterns,
-  mergeArrays,
-  mergeAbsoluteFilePathSets,
+  arrayOfStrings,
   getParentConfigDependencies,
+  mergeAbsoluteFilePathSets,
+  mergeArrays,
 } from './utils';
-import {consumeJSONExtra, ConsumeJSONResult} from '@romejs/codec-json';
+import {ConsumeJSONResult, consumeJSONExtra} from '@romejs/codec-json';
 import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
-import {coerce1, number0, add, inc} from '@romejs/ob1';
-import {existsSync, readFileTextSync, readdirSync, lstatSync} from '@romejs/fs';
+import {ob1Add, ob1Coerce1, ob1Inc, ob1Number0} from '@romejs/ob1';
+import {existsSync, lstatSync, readFileTextSync, readdirSync} from '@romejs/fs';
 import crypto = require('crypto');
 
 import {ROME_CONFIG_PACKAGE_JSON_FIELD} from './constants';
 import {parseSemverRange} from '@romejs/codec-semver';
+import {descriptions} from '@romejs/diagnostics';
 
 const WATCHMAN_CONFIG_FILENAME = '.watchmanconfig';
 const IGNORE_FILENAMES = ['.gitignore', '.hgignore'];
@@ -46,18 +47,7 @@ function categoryExists(consumer: Consumer): boolean {
 
   const value = consumer.asUnknown();
   if (typeof value === 'boolean') {
-    consumer.unexpected(
-      `Expected an object here but got a boolean`,
-      {
-        advice: [
-          {
-            type: 'log',
-            category: 'info',
-            message: `You likely wanted \`{"enabled": ${String(value)}}\` instead`,
-          },
-        ],
-      },
-    );
+    consumer.unexpected(descriptions.PROJECT_CONFIG.BOOLEAN_CATEGORY(value));
     return false;
   }
 
@@ -106,7 +96,7 @@ export function loadCompleteProjectConfig(
       const file = readFileTextSync(possiblePath);
       const lines: Array<string> = file.split('\n');
 
-      let index = number0;
+      let index = ob1Number0;
 
       consumer.handleThrownDiagnostics(() => {
         const patterns = lines.map((line, i) => {
@@ -115,15 +105,15 @@ export function loadCompleteProjectConfig(
             path: possiblePath,
             offsetPosition: {
               index,
-              line: coerce1(i),
-              column: number0,
+              line: ob1Coerce1(i),
+              column: ob1Number0,
             },
           });
 
-          index = add(index, line.length);
+          index = ob1Add(index, line.length);
 
           // Newline char
-          index = inc(index);
+          index = ob1Inc(index);
 
           return pattern;
         });
@@ -395,11 +385,6 @@ export function normalizeProjectConfig(
     }
   }
 
-  // Complain about common misspellings
-  if (consumer.has('linter')) {
-    consumer.get('linter').unexpected(`Did you mean <emphasis>lint</emphasis>?`);
-  }
-
   // Need to get this before enforceUsedProperties so it will be flagged
   const _extends = consumer.get('extends');
 
@@ -470,7 +455,9 @@ function extendProjectConfig(
   // Check for recursive config
   for (const path of extendsMeta.configDependencies) {
     if (path.equal(extendsPath)) {
-      throw extendsStrConsumer.unexpected('Recursive config value');
+      throw extendsStrConsumer.unexpected(
+        descriptions.PROJECT_CONFIG.RECURSIVE_CONFIG,
+      );
     }
   }
 

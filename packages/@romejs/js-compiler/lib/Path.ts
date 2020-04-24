@@ -7,15 +7,15 @@
 
 import {AnyNode, MOCK_PARENT} from '@romejs/js-ast';
 import {
+  CompilerContext,
   Scope,
-  Context,
   TransformVisitor,
   TransformVisitors,
 } from '@romejs/js-compiler';
 import {
-  HookInstance,
   AnyHookDescriptor,
   HookDescriptor,
+  HookInstance,
 } from '../api/createHook';
 import reduce from '../methods/reduce';
 import {TransformExitResult} from '../types';
@@ -26,7 +26,6 @@ export type PathOptions = {
   listKey?: number;
   parentScope?: Scope;
   scope?: Scope;
-  frozen?: boolean;
   noArrays?: boolean;
   noScopeCreation?: boolean;
   hooks?: Handlers;
@@ -36,7 +35,7 @@ export type PathOptions = {
 type Handlers = Array<HookInstance>;
 
 export default class Path {
-  constructor(node: AnyNode, context: Context, opts: PathOptions) {
+  constructor(node: AnyNode, context: CompilerContext, opts: PathOptions) {
     const ancestryPaths = opts.ancestryPaths || [];
     this.ancestryPaths = ancestryPaths;
 
@@ -77,7 +76,7 @@ export default class Path {
     this.hooks = opts.hooks === undefined ? [] : opts.hooks;
   }
 
-  context: Context;
+  context: CompilerContext;
   node: AnyNode;
   parent: AnyNode;
   scope: Scope;

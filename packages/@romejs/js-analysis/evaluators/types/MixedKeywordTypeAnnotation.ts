@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   MixedKeywordTypeAnnotation,
   mixedKeywordTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 import MixedT from '../../types/MixedT';
 

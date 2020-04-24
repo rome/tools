@@ -7,8 +7,8 @@
 
 import Builder from '../../Builder';
 import {Tokens, concat} from '../../tokens';
-import {catchClause, AnyNode} from '@romejs/js-ast';
-import {word, space, operator} from '@romejs/js-formatter/tokens';
+import {AnyNode, catchClause} from '@romejs/js-ast';
+import {operator, space, word} from '@romejs/js-formatter/tokens';
 
 export default function CatchClause(builder: Builder, node: AnyNode): Tokens {
   node = catchClause.assert(node);

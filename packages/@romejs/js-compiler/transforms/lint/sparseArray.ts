@@ -5,25 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode, referenceIdentifier, arrayExpression} from '@romejs/js-ast';
+import {Path, TransformExitResult} from '@romejs/js-compiler';
+import {arrayExpression, referenceIdentifier} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
   name: 'sparseArray',
-  enter(path: Path): AnyNode {
+  enter(path: Path): TransformExitResult {
     const {node} = path;
 
     if (node.type === 'ArrayExpression' && node.elements.includes(undefined)) {
-      const {suppressed} = path.context.addNodeDiagnostic(
-        node,
-        descriptions.LINT.SPARSE_ARRAY,
-      );
-
-      if (!suppressed) {
-        return arrayExpression.quick(node.elements.map((elem) => elem ===
-          undefined ? referenceIdentifier.create({name: 'undefined'}) : elem));
-      }
+      return path.context.addFixableDiagnostic({
+        old: node,
+        fixed: arrayExpression.quick(node.elements.map((elem) => elem ===
+          undefined ? referenceIdentifier.create({name: 'undefined'}) : elem)),
+      }, descriptions.LINT.SPARSE_ARRAY);
     }
 
     return node;

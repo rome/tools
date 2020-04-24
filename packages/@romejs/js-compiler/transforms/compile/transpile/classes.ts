@@ -5,29 +5,29 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Context, Path, TransformExitResult} from '@romejs/js-compiler';
+import {CompilerContext, Path, TransformExitResult} from '@romejs/js-compiler';
 import {
   AnyNode,
-  functionHead,
-  bindingIdentifier,
-  referenceIdentifier,
-  staticMemberProperty,
-  ReferenceIdentifier,
   AnyStatement,
-  FunctionDeclaration,
   ClassDeclaration,
   ClassExpression,
-  classMethod,
+  FunctionDeclaration,
+  ReferenceIdentifier,
+  arrowFunctionExpression,
+  bindingIdentifier,
+  blockStatement,
   callExpression,
-  thisExpression,
-  memberExpression,
+  classDeclaration,
+  classMethod,
   functionDeclaration,
   functionExpression,
-  arrowFunctionExpression,
-  blockStatement,
-  returnStatement,
-  classDeclaration,
+  functionHead,
   identifier,
+  memberExpression,
+  referenceIdentifier,
+  returnStatement,
+  staticMemberProperty,
+  thisExpression,
 } from '@romejs/js-ast';
 import {template} from '@romejs/js-ast-utils';
 import {descriptions} from '@romejs/diagnostics';
@@ -35,7 +35,7 @@ import {descriptions} from '@romejs/diagnostics';
 function transformClass(
   node: ClassDeclaration | ClassExpression,
   path: Path,
-  context: Context,
+  context: CompilerContext,
 ): {
   _constructor: FunctionDeclaration;
   prependDeclarations: Array<AnyStatement>;

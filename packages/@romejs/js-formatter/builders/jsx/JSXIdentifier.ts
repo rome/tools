@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens, word} from '../../tokens';
-import {jsxIdentifier, AnyNode} from '@romejs/js-ast';
+import {AnyNode, jsxIdentifier} from '@romejs/js-ast';
 
 export default function JSXIdentifier(builder: Builder, node: AnyNode): Tokens {
   node = jsxIdentifier.assert(node);

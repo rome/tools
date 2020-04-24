@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
   AnyExpression,
-  TemplateLiteral,
   AnyTypeArguments,
+  JSNodeBase,
+  TemplateLiteral,
 } from '../index';
 import {createBuilder} from '../utils';
 

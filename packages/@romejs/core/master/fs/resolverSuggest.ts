@@ -7,32 +7,26 @@
 
 import Resolver, {
   ResolverLocalQuery,
-  ResolverQueryResponseMissing,
+  ResolverQueryResponseNotFound,
   ResolverQuerySource,
-  isPathLike,
-  ResolverQueryResponseUnsupported,
-  ResolverQueryResponseFetchError,
   ResolverRemoteQuery,
+  isPathLike,
 } from './Resolver';
 import {
   DiagnosticAdvice,
   buildSuggestionAdvice,
   createSingleDiagnosticError,
-  DiagnosticCategory,
-  createBlessedDiagnosticMessage,
+  descriptions,
 } from '@romejs/diagnostics';
 import {orderBySimilarity} from '@romejs/string-utils';
-import {createUnknownFilePath, AbsoluteFilePath} from '@romejs/path';
+import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
 import {PLATFORMS} from '../../common/types/platform';
+import {markup} from '@romejs/string-markup';
 
 export default function resolverSuggest(
   resolver: Resolver,
   query: ResolverRemoteQuery,
-  resolved:
-    | ResolverQueryResponseFetchError
-    | ResolverQueryResponseMissing
-    | ResolverQueryResponseUnsupported,
-
+  resolved: ResolverQueryResponseNotFound,
   origQuerySource?: ResolverQuerySource,
 ): Error {
   let errMsg = '';
@@ -110,7 +104,7 @@ export default function resolverSuggest(
 
       if (resolved.type === 'FOUND') {
         validPlatforms.push(
-          `<emphasis>${PLATFORM}</emphasis> at <filelink emphasis target="${resolved.ref.uid}" />`,
+          markup`<emphasis>${PLATFORM}</emphasis> at <filelink emphasis target="${resolved.ref.uid}" />`,
         );
       }
     }
@@ -128,7 +122,7 @@ export default function resolverSuggest(
           {
             type: 'log',
             category: 'info',
-            message: `No module found for the platform <emphasis>${query.platform}</emphasis> but we found these others`,
+            message: markup`No module found for the platform <emphasis>${query.platform}</emphasis> but we found these others`,
           },
         );
       }
@@ -193,19 +187,24 @@ export default function resolverSuggest(
           },
         );
 
-        advice = [
-          ...advice,
-          ...buildSuggestionAdvice(query.source.join(), relativeSuggestions, {
-            formatItem: (relative) => {
-              const absolute = relativeToAbsolute.get(relative);
-              if (absolute === undefined) {
-                throw new Error('Should be valid');
-              }
+          advice =
+          [
+            ...advice,
+            ...buildSuggestionAdvice(
+              query.source.join(),
+              relativeSuggestions,
+              {
+                formatItem: (relative) => {
+                  const absolute = relativeToAbsolute.get(relative);
+                  if (absolute === undefined) {
+                    throw new Error('Should be valid');
+                  }
 
-              return `<filelink target="${absolute}">${relative}</filelink>`;
-            },
-          }),
-        ];
+                  return markup`<filelink target="${absolute}">${relative}</filelink>`;
+                },
+              },
+            ),
+          ];
       }
     }
 
@@ -225,31 +224,15 @@ export default function resolverSuggest(
   const source = querySource.source === undefined
     ? query.source.join()
     : querySource.source;
-  let message = '';
-  let category: DiagnosticCategory = 'resolver/notFound';
-
-  if (resolved.type === 'UNSUPPORTED') {
-    message = `Unsupported`;
-    category = 'resolver/unsupported';
-  } else if (resolved.type === 'MISSING') {
-    message = `Cannot find`;
-  } else if (resolved.type === 'FETCH_ERROR') {
-    message = 'Failed to fetch';
-    category = 'resolver/fetchFailed';
-  }
 
   if (resolved.advice !== undefined) {
     advice = advice.concat(resolved.advice);
   }
 
-    message +=
-    ` <emphasis>${source}</emphasis> from <filelink emphasis target="${location.filename}" />`;
-
   throw createSingleDiagnosticError({
     location,
     description: {
-      category,
-      message: createBlessedDiagnosticMessage(message),
+      ...descriptions.RESOLVER.NOT_FOUND(resolved.type, source, location),
       advice,
     },
   });

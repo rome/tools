@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypeQuery, tsTypeQuery, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSTypeQuery, tsTypeQuery} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, word, space} from '../../tokens';
+import {Tokens, space, word} from '../../tokens';
 
 export default function TSTypeQuery(builder: Builder, node: AnyNode): Tokens {
   node = tsTypeQuery.assert(node);

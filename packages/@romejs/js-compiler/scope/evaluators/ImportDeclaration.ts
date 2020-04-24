@@ -6,11 +6,11 @@
  */
 
 import Scope from '../Scope';
-import {ImportBindingMeta, ImportBinding} from '@romejs/js-compiler';
+import {ImportBinding, ImportBindingMeta} from '@romejs/js-compiler';
 import {
-  ImportDeclaration,
   AnyNode,
   ConstImportModuleKind,
+  ImportDeclaration,
 } from '@romejs/js-ast';
 import {getImportSpecifiers} from '@romejs/js-ast-utils';
 

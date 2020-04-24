@@ -7,8 +7,8 @@
 
 import {
   AmbiguousFlowTypeCastExpression,
-  ambiguousFlowTypeCastExpression,
   AnyNode,
+  ambiguousFlowTypeCastExpression,
 } from '@romejs/js-ast';
 
 export default function AmbiguousFlowTypeCastExpression(node: AnyNode) {

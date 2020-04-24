@@ -6,10 +6,12 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 import Bundler from '../bundler/Bundler';
 import {createDirectory, writeFile} from '@romejs/fs';
 import {Consumer} from '@romejs/consume';
+import {markup} from '@romejs/string-markup';
 
 type Flags = {quiet: boolean};
 
@@ -17,6 +19,8 @@ export default createMasterCommand<Flags>(
   {
     category: commandCategories.SOURCE_CODE,
     description: 'build a standalone js bundle for a package',
+    usage: '',
+    examples: [],
 
     defineFlags(consumer: Consumer): Flags {
       return {
@@ -24,10 +28,7 @@ export default createMasterCommand<Flags>(
       };
     },
 
-    async default(req: MasterRequest, commandFlags: Flags): Promise<{
-      content: string;
-      map: string;
-    }> {
+    async callback(req: MasterRequest, commandFlags: Flags): Promise<void> {
       const {flags} = req.client;
       const {args} = req.query;
       const {reporter} = req;
@@ -37,35 +38,31 @@ export default createMasterCommand<Flags>(
       const bundler = Bundler.createFromMasterRequest(req);
 
       const resolution = await bundler.getResolvedEntry(entryFilename);
-      const {files: outFiles, entry} = await bundler.bundleManifest(resolution);
+      const {files: outFiles} = await bundler.bundleManifest(resolution);
 
       const savedList = [];
       const dir = flags.cwd.resolve(outputFolder);
       for (const [filename, {kind, content}] of outFiles) {
+        const buff = content();
         const file = dir.append(filename);
         const loc = file.join();
         savedList.push(
-          `<filelink target="${loc}">${filename}</filelink> <filesize dim>${Buffer.byteLength(
-            content,
+          markup`<filelink target="${loc}">${filename}</filelink> <filesize dim>${Buffer.byteLength(
+            buff,
           )}</filesize> <inverse>${kind}</inverse>`,
         );
         await createDirectory(file.getParent(), {recursive: true});
-        await writeFile(file, content);
+        await writeFile(file, buff);
       }
 
       if (commandFlags.quiet) {
-        reporter.success(`Saved to <filelink target="${dir.join()}" />`);
+        reporter.success(markup`Saved to <filelink target="${dir.join()}" />`);
       } else {
         reporter.success(
-          `Saved the following files to <filelink target="${dir.join()}" />`,
+          markup`Saved the following files to <filelink target="${dir.join()}" />`,
         );
         reporter.list(savedList);
       }
-
-      return {
-        content: entry.js.content,
-        map: entry.sourceMap.content,
-      };
     },
   },
 );

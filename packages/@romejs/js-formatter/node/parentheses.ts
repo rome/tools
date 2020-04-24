@@ -6,33 +6,33 @@
  */
 
 import {
-  MemberExpression,
-  TSInferType,
   AnyNode,
-  FlowNullableTypeAnnotation,
-  UpdateExpression,
-  ObjectExpression,
-  DoExpression,
-  LogicalExpression,
-  BinaryExpression,
-  SequenceExpression,
-  YieldExpression,
-  ClassExpression,
-  UnaryExpression,
-  SpreadElement,
-  SpreadProperty,
   ArrowFunctionExpression,
   AssignmentExpression,
+  BinaryExpression,
+  ClassExpression,
   ConditionalExpression,
-  UnionTypeAnnotation,
+  DoExpression,
   FlowFunctionTypeAnnotation,
+  FlowNullableTypeAnnotation,
+  LogicalExpression,
+  MemberExpression,
+  ObjectExpression,
   OptionalCallExpression,
+  SequenceExpression,
+  SpreadElement,
+  SpreadProperty,
+  TSInferType,
+  UnaryExpression,
+  UnionTypeAnnotation,
+  UpdateExpression,
+  YieldExpression,
 } from '@romejs/js-ast';
 import {
+  isBinary,
+  isConditional,
   isFor,
   isUnaryLike,
-  isConditional,
-  isBinary,
 } from '@romejs/js-ast-utils';
 
 const PRECEDENCE = {
@@ -87,7 +87,7 @@ parens.set('FlowNullableTypeAnnotation', (
   return parent.type === 'FlowArrayTypeAnnotation';
 });
 
-parens.set('MemberExpression', function UpdateExpression(
+parens.set('MemberExpression', function(
   node: MemberExpression,
   parent: AnyNode,
 ): boolean {
@@ -101,7 +101,7 @@ parens.set('MemberExpression', function UpdateExpression(
   }
 });
 
-parens.set('UpdateExpression', function UpdateExpression(
+parens.set('UpdateExpression', function(
   node: UpdateExpression,
   parent: AnyNode,
 ): boolean {
@@ -113,7 +113,7 @@ parens.set('UpdateExpression', function UpdateExpression(
   );
 });
 
-parens.set('ObjectExpression', function ObjectExpression(
+parens.set('ObjectExpression', function(
   node: ObjectExpression,
   parent: AnyNode,
   printStack: Array<AnyNode>,
@@ -121,7 +121,7 @@ parens.set('ObjectExpression', function ObjectExpression(
   return isFirstInStatement(printStack, {considerArrow: true});
 });
 
-parens.set('DoExpression', function DoExpression(
+parens.set('DoExpression', function(
   node: DoExpression,
   parent: AnyNode,
   printStack: Array<AnyNode>,
@@ -129,7 +129,7 @@ parens.set('DoExpression', function DoExpression(
   return isFirstInStatement(printStack);
 });
 
-function LogicalExpression(
+function needsParenLogicalExpression(
   node: BinaryExpression | LogicalExpression,
   parent: AnyNode,
 ): boolean {
@@ -184,9 +184,9 @@ function LogicalExpression(
   }
 }
 
-parens.set('LogicalExpression', LogicalExpression);
+parens.set('LogicalExpression', needsParenLogicalExpression);
 
-parens.set('BinaryExpression', function BinaryExpression(
+parens.set('BinaryExpression', function(
   node: BinaryExpression,
   parent: AnyNode,
 ): boolean {
@@ -194,19 +194,16 @@ parens.set('BinaryExpression', function BinaryExpression(
 
   // for ((1 in []);;);
   return node.operator === 'in' && (parent.type === 'VariableDeclarator' ||
-    isFor(parent)) || LogicalExpression(node, parent);
+    isFor(parent)) || needsParenLogicalExpression(node, parent);
 });
 
-parens.set('SequenceExpression', function SequenceExpression(
+parens.set('SequenceExpression', function(
   node: SequenceExpression,
   parent: AnyNode,
 ): boolean {
   if ( // Although parentheses wouldn"t hurt around sequence
-
     // expressions in the head of for loops, traditional style
-
     // dictates that e.g. i++, j++ should not be wrapped with
-
     // parentheses.
         parent.type === 'ForStatement' || parent.type === 'ThrowStatement' ||
           parent.type ===
@@ -227,7 +224,10 @@ parens.set('SequenceExpression', function SequenceExpression(
   return true;
 });
 
-function YieldExpression(node: YieldExpression, parent: AnyNode): boolean {
+function needsParenYieldExpression(
+  node: YieldExpression,
+  parent: AnyNode,
+): boolean {
   return isBinary(parent) || isUnaryLike(parent) || parent.type ===
         'MemberExpression' || parent.type === 'CallExpression' &&
           parent.callee ===
@@ -239,10 +239,10 @@ function YieldExpression(node: YieldExpression, parent: AnyNode): boolean {
       node === parent.test || isClassExtendsClause(node, parent);
 }
 
-parens.set('YieldExpression', YieldExpression);
-parens.set('AwaitExpression', YieldExpression);
+parens.set('YieldExpression', needsParenYieldExpression);
+parens.set('AwaitExpression', needsParenYieldExpression);
 
-parens.set('OptionalCallExpression', function OptionalCallExpression(
+parens.set('OptionalCallExpression', function(
   node: OptionalCallExpression,
   parent: AnyNode,
 ): boolean {
@@ -252,7 +252,7 @@ parens.set('OptionalCallExpression', function OptionalCallExpression(
       parent.object === node;
 });
 
-parens.set('ClassExpression', function ClassExpression(
+parens.set('ClassExpression', function(
   node: ClassExpression,
   parent: AnyNode,
   printStack: Array<AnyNode>,
@@ -260,7 +260,7 @@ parens.set('ClassExpression', function ClassExpression(
   return isFirstInStatement(printStack, {considerDefaultExports: true});
 });
 
-function UnaryExpression(
+function needsParenUnaryExpression(
   node:
     | UnaryExpression
     | ArrowFunctionExpression
@@ -281,11 +281,11 @@ function UnaryExpression(
       node || isClassExtendsClause(node, parent);
 }
 
-parens.set('UnaryExpression', UnaryExpression);
-parens.set('SpreadElement', UnaryExpression);
-parens.set('SpreadProperty', UnaryExpression);
+parens.set('UnaryExpression', needsParenUnaryExpression);
+parens.set('SpreadElement', needsParenUnaryExpression);
+parens.set('SpreadProperty', needsParenUnaryExpression);
 
-parens.set('FunctionExpression', function FunctionExpression(
+parens.set('FunctionExpression', function(
   node: AnyNode,
   parent: AnyNode,
   printStack: Array<AnyNode>,
@@ -293,17 +293,15 @@ parens.set('FunctionExpression', function FunctionExpression(
   return isFirstInStatement(printStack, {considerDefaultExports: true});
 });
 
-parens.set('ArrowFunctionExpression', function ArrowFunctionExpression(
+parens.set('ArrowFunctionExpression', function(
   node: ArrowFunctionExpression,
   parent: AnyNode,
 ): boolean {
-  return parent.type === 'ExportLocalDeclaration' || ConditionalExpression(
-    node,
-    parent,
-  );
+  return parent.type === 'ExportLocalDeclaration' ||
+    needsParenConditionalExpression(node, parent);
 });
 
-function ConditionalExpression(
+function needsParenConditionalExpression(
   node: ArrowFunctionExpression | AssignmentExpression | ConditionalExpression,
   parent: AnyNode,
 ): boolean {
@@ -319,23 +317,26 @@ function ConditionalExpression(
     return true;
   }
 
-  return UnaryExpression(node, parent);
+  return needsParenUnaryExpression(node, parent);
 }
 
-parens.set('ConditionalExpression', ConditionalExpression);
+parens.set('ConditionalExpression', needsParenConditionalExpression);
 
-parens.set('AssignmentExpression', function AssignmentExpression(
+parens.set('AssignmentExpression', function(
   node: AssignmentExpression,
   parent: AnyNode,
 ): boolean {
   if (node.left.type === 'AssignmentObjectPattern') {
     return true;
   } else {
-    return ConditionalExpression(node, parent);
+    return needsParenConditionalExpression(node, parent);
   }
 });
 
-function UnionTypeAnnotation(node: UnionTypeAnnotation, parent: AnyNode) {
+function needsParenUnionTypeAnnotation(
+  node: UnionTypeAnnotation,
+  parent: AnyNode,
+) {
   return parent.type === 'FlowArrayTypeAnnotation' || parent.type ===
         'FlowNullableTypeAnnotation' || parent.type ===
         'IntersectionTypeAnnotation' ||
@@ -344,17 +345,17 @@ function UnionTypeAnnotation(node: UnionTypeAnnotation, parent: AnyNode) {
       'TSOptionalType';
 }
 
-parens.set('UnionTypeAnnotation', UnionTypeAnnotation);
-parens.set('IntersectionTypeAnnotation', UnionTypeAnnotation);
+parens.set('UnionTypeAnnotation', needsParenUnionTypeAnnotation);
+parens.set('IntersectionTypeAnnotation', needsParenUnionTypeAnnotation);
 
-parens.set('TSInferType', function TSInferType(
-  node: TSInferType,
-  parent: AnyNode,
-): boolean {
-  return parent.type === 'TSArrayType' || parent.type === 'TSOptionalType';
-});
+parens.set(
+  'TSInferType',
+  function(node: TSInferType, parent: AnyNode): boolean {
+    return parent.type === 'TSArrayType' || parent.type === 'TSOptionalType';
+  },
+);
 
-parens.set('FlowFunctionTypeAnnotation', function FlowFunctionTypeAnnotation(
+parens.set('FlowFunctionTypeAnnotation', function(
   node: FlowFunctionTypeAnnotation,
   parent: AnyNode,
   printStack: Array<AnyNode>,

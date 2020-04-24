@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0, Number1, coerce1, number0Neg1} from '@romejs/ob1';
+import {Number0, Number1, ob1Coerce1, ob1Number0Neg1} from '@romejs/ob1';
 
 //# Node types
 export type NodeBase = {
@@ -76,7 +76,7 @@ export type Position = {
 };
 
 export const UNKNOWN_POSITION: Position = {
-  index: number0Neg1,
-  line: coerce1(-1),
-  column: number0Neg1,
+  index: ob1Number0Neg1,
+  line: ob1Coerce1(-1),
+  column: ob1Number0Neg1,
 };

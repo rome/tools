@@ -6,19 +6,19 @@
  */
 
 import {
-  JSNodeBase,
-  VariableDeclarationStatement,
-  FunctionDeclaration,
   ClassDeclaration,
-  ExportLocalSpecifier,
   ConstExportModuleKind,
-  TSModuleDeclaration,
-  TSEnumDeclaration,
+  ExportLocalSpecifier,
   FlowInterfaceDeclaration,
-  TypeAliasTypeAnnotation,
-  TSInterfaceDeclaration,
-  TSDeclareFunction,
   FlowOpaqueType,
+  FunctionDeclaration,
+  JSNodeBase,
+  TSDeclareFunction,
+  TSEnumDeclaration,
+  TSInterfaceDeclaration,
+  TSModuleDeclaration,
+  TypeAliasTypeAnnotation,
+  VariableDeclarationStatement,
 } from '../index';
 import {createBuilder} from '../utils';
 

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {Identifier, identifier, AnyNode} from '@romejs/js-ast';
+import {AnyNode, Identifier, identifier} from '@romejs/js-ast';
 import UndeclaredVarE from '../../types/errors/UndeclaredVarE';
 import OpenT from '../../types/OpenT';
 import AnyT from '../../types/AnyT';

@@ -5,18 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
 test('no debugger', async (t) => {
-  const goodRes = await testLint(`const test = { debugger: 1 };
-    test.debugger;
-    console.log(test); // To not trigger the unused var rule.
-    `);
+  await testLint(t, `const test = { debugger: 1 };
+  test.debugger;
+  console.log(test); // To not trigger the unused var rule.
+  `, {category: 'lint/noDebugger'});
 
-  t.is(goodRes.diagnostics.length, 0);
-
-  const badRes = await testLint('debugger;');
-
-  t.snapshot(badRes.diagnostics);
+  await testLint(t, 'debugger;', {category: 'lint/noDebugger'});
 });

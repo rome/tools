@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {dumpToBuffer, BunserBuf} from './bser';
+import {BunserBuf, dumpToBuffer} from './bser';
 import {Reporter} from '@romejs/cli-reporter';
 import {Event} from '@romejs/events';
-import child_process = require('child_process');
+import childProcess = require('child_process');
 
 import util = require('util');
 
@@ -17,7 +17,7 @@ import net = require('net');
 import {Consumer, consumeUnknown} from '@romejs/consume';
 import {Dict} from '@romejs/typescript-helpers';
 
-const exec = util.promisify(child_process.exec);
+const exec = util.promisify(childProcess.exec);
 
 export type WatchmanSubscriptionValue = {
   'state-enter': undefined | string;
@@ -32,7 +32,7 @@ export type WatchmanSubscriptionValue = {
     name: string;
     mtime: number;
   }>;
-  is_fresh_instance: boolean;
+  isFreshInstance: boolean;
   version: string;
   since: string;
   clock: string;
@@ -49,7 +49,7 @@ function normalizeWatchmanSubscription(res: Consumer): WatchmanSubscriptionValue
     // This can be a massive array... We should still probably efficiently validate it though somehow
     files: res.get('files').asAny(),
 
-    is_fresh_instance: res.get('is_fresh_instance').asBoolean(),
+    isFreshInstance: res.get('is_fresh_instance').asBoolean(),
     version: res.get('version').asString(),
     since: res.get('since').asString(),
     clock: res.get('clock').asString(),
@@ -164,7 +164,7 @@ export class WatchmanClient {
     if (consumer.has('relative_path')) {
       opts = {
         ...opts,
-        relative_root: consumer.get('relative_path').asString(),
+        relativeRoot: consumer.get('relative_path').asString(),
       };
     }
 
@@ -210,7 +210,9 @@ export async function getWatchmanSocketLocation(): Promise<string> {
       }
 
       return data.sockname;
-    } catch (err) {
+    } catch (_err) {
+      let err = _err;
+
       // Better error message for syntatically invalid JSON
       if (err instanceof SyntaxError) {
         err = new Error(`Watchman returned malformed JSON payload`);

@@ -6,11 +6,11 @@
  */
 
 import {
-  JSNodeBase,
   BindingIdentifier,
+  JSNodeBase,
+  TSExpressionWithTypeArguments,
   TSInterfaceBody,
   TSTypeParameterDeclaration,
-  TSExpressionWithTypeArguments,
 } from '../index';
 import {createBuilder} from '../utils';
 

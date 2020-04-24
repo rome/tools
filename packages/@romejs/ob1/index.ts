@@ -21,93 +21,103 @@ type AnyNumber = Number0 | Number1;
 export type UnknownNumber = AnyNumber | number;
 
 // Add two offsets or numbers.
-export function add(a: Number1, b: number): Number1;
-export function add(a: number, b: Number1): Number1;
-export function add(a: Number0, b: number): Number0;
-export function add(a: number, b: Number0): Number0;
-export function add(a: Number1, b: Number0): Number1;
-export function add(a: Number0, b: Number1): Number1;
-export function add(a: Number0, b: Number0): Number0;
-export function add(a: number | AnyNumber, b: number | AnyNumber): AnyNumber {
+export function ob1Add(a: Number1, b: number): Number1;
+export function ob1Add(a: number, b: Number1): Number1;
+export function ob1Add(a: Number0, b: number): Number0;
+export function ob1Add(a: number, b: Number0): Number0;
+export function ob1Add(a: Number1, b: Number0): Number1;
+export function ob1Add(a: Number0, b: Number1): Number1;
+export function ob1Add(a: Number0, b: Number0): Number0;
+export function ob1Add(a: number | AnyNumber, b: number | AnyNumber): AnyNumber {
   // @ts-ignore
   return a + b;
 }
 
 // Subtract a number or 0-based offset from a 1/0-based offset.
-export function sub(a: Number1, b: number): Number1;
-export function sub(a: Number0, b: number): Number0;
-export function sub(a: number, b: Number0): Number0;
-export function sub(a: Number0, b: number): Number0;
-export function sub(a: Number1, b: Number0): Number1;
-export function sub(a: Number0, b: Number0): Number0;
-export function sub(a: Number1, b: Number1): Number1;
-export function sub(a: number | AnyNumber, b: number | AnyNumber): AnyNumber {
+export function ob1Sub(a: Number1, b: number): Number1;
+export function ob1Sub(a: Number0, b: number): Number0;
+export function ob1Sub(a: number, b: Number0): Number0;
+export function ob1Sub(a: Number0, b: number): Number0;
+export function ob1Sub(a: Number1, b: Number0): Number1;
+export function ob1Sub(a: Number0, b: Number0): Number0;
+export function ob1Sub(a: Number1, b: Number1): Number1;
+export function ob1Sub(a: number | AnyNumber, b: number | AnyNumber): AnyNumber {
   // @ts-ignore
   return a - b;
 }
 
 // Get the underlying number of a 0-based offset, casting away the opaque type.
-export function get0(x: Number0): number;
-export function get0(x: undefined): undefined;
-export function get0(x: undefined | Number0): undefined | number {
+export function ob1Get0(x: Number0): number;
+export function ob1Get0(x: undefined): undefined;
+export function ob1Get0(x: undefined | Number0): undefined | number {
   // @ts-ignore
   return x;
 }
 
 // Get the underlying number of a 1-based offset, casting away the opaque type.
-export function get1(x: Number1): number;
-export function get1(x: undefined): undefined;
-export function get1(x: undefined | Number1): undefined | number {
+export function ob1Get1(x: Number1): number;
+export function ob1Get1(x: undefined): undefined;
+export function ob1Get1(x: undefined | Number1): undefined | number {
+  // @ts-ignore
+  return x;
+}
+
+export function ob1Get(x: UnknownNumber): number;
+export function ob1Get(x: undefined): undefined;
+export function ob1Get(x: undefined | UnknownNumber): undefined | number {
   // @ts-ignore
   return x;
 }
 
 // Coerce a number into a 0-offset
-export function coerce0(x: number): Number0;
-export function coerce0(x: undefined): undefined;
-export function coerce0(x: undefined | number): Number0 | undefined;
-export function coerce0(x: undefined | number | AnyNumber): Number0 | undefined {
+export function ob1Coerce0(x: number): Number0;
+export function ob1Coerce0(x: undefined): undefined;
+export function ob1Coerce0(x: undefined | number): Number0 | undefined;
+export function ob1Coerce0(
+  x: undefined | number | AnyNumber,
+): Number0 | undefined {
   return (x as Number0);
 }
 
-export const number0 = coerce0(0);
-export const number0Neg1 = coerce0(-1);
+export const ob1Number0 = ob1Coerce0(0);
+export const ob1Number0Neg1 = ob1Coerce0(-1);
 
 // Coerce a number into a 1-offset
-export function coerce1(x: number): Number1;
-export function coerce1(x: undefined): undefined;
-export function coerce1(x: undefined | number): Number1 | undefined;
-export function coerce1(x: undefined | number | AnyNumber): Number1 | undefined {
+export function ob1Coerce1(x: number): Number1;
+export function ob1Coerce1(x: undefined): undefined;
+export function ob1Coerce1(x: undefined | number): Number1 | undefined;
+export function ob1Coerce1(
+  x: undefined | number | AnyNumber,
+): Number1 | undefined {
   return (x as Number1);
 }
 
-export const number1 = coerce1(1);
-export const number1Neg1 = coerce1(-1);
+export const ob1Number1 = ob1Coerce1(1);
+export const ob1Number1Neg1 = ob1Coerce1(-1);
 
 // Add 1 to a 0-based offset, thus converting it to 1-based.
-export function coerce0to1(x: Number0): Number1 {
+export function ob1Coerce0To1(x: Number0): Number1 {
   // @ts-ignore
   return (x + 1 as Number1);
 }
 
-// Subtract 1 from a 1-based offset, thus converting it to 0-based.
-export function coerce1to0(x: Number1 | number): Number0 {
+export function ob1Coerce1To0(x: Number1 | number): Number0 {
   // @ts-ignore
   return (x - 1 as Number0);
 }
 
 // Increment
-export function inc(a: Number0): Number0;
-export function inc(a: Number1): Number1;
-export function inc(x: AnyNumber): AnyNumber {
+export function ob1Inc(a: Number0): Number0;
+export function ob1Inc(a: Number1): Number1;
+export function ob1Inc(x: AnyNumber): AnyNumber {
   // @ts-ignore
   return x + 1;
 }
 
 // Decrement
-export function dec(a: Number0): Number0;
-export function dec(a: Number1): Number1;
-export function dec(x: AnyNumber): AnyNumber {
+export function ob1Dec(a: Number0): Number0;
+export function ob1Dec(a: Number1): Number1;
+export function ob1Dec(x: AnyNumber): AnyNumber {
   // @ts-ignore
   return x - 1;
 }

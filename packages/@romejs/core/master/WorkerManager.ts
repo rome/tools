@@ -12,12 +12,12 @@ import {
   MAX_MASTER_BYTES_BEFORE_WORKERS,
   MAX_WORKER_BYTES_BEFORE_ADD,
 } from '../common/constants';
-import {Master, WorkerBridge, Worker, MAX_WORKER_COUNT} from '@romejs/core';
+import {MAX_WORKER_COUNT, Master, Worker, WorkerBridge} from '@romejs/core';
 import Locker from '../common/utils/Locker';
 import {
   Event,
-  createBridgeFromLocal,
   createBridgeFromChildProcess,
+  createBridgeFromLocal,
 } from '@romejs/events';
 import child = require('child_process');
 

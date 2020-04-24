@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyDeclaration} from '@romejs/js-ast';
+import {AnyDeclaration, AnyNode} from '@romejs/js-ast';
 import parens from './parentheses';
-import {get1, get0} from '@romejs/ob1';
+import {ob1Get0, ob1Get1} from '@romejs/ob1';
 import {isDeclaration} from '@romejs/js-ast-utils';
 import {SourceLocation} from '@romejs/parser-core';
 
@@ -45,7 +45,7 @@ function orderLoc(
   a: SourceLocation,
   b: SourceLocation,
 ): [SourceLocation, SourceLocation] {
-  if (get0(a.end.index) < get0(b.start.index)) {
+  if (ob1Get0(a.end.index) < ob1Get0(b.start.index)) {
     return [a, b];
   } else {
     return [b, a];
@@ -77,7 +77,7 @@ export function getLinesBetween(
         undefined) {
     const [a, b] = orderLoc(aNode.loc, bNode.loc);
     const lines: Array<number> = [];
-    for (let line = get1(a.end.line); line < get1(b.start.line); line++) {
+    for (let line = ob1Get1(a.end.line); line < ob1Get1(b.start.line); line++) {
       lines.push(line);
     }
     return lines;

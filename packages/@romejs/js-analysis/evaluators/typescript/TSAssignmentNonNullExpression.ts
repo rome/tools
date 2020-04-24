@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   TSAssignmentNonNullExpression,
   tsAssignmentNonNullExpression,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TSAssignmentNonNullExpression(node: AnyNode) {

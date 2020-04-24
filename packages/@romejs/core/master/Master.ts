@@ -7,24 +7,26 @@
 
 import {
   MasterBridge,
-  MasterQueryResponse,
   MasterQueryRequest,
+  MasterQueryResponse,
 } from '@romejs/core';
 import {
-  Diagnostics,
-  INTERNAL_ERROR_LOG_ADVICE,
   DiagnosticOrigin,
-  getDiagnosticsFromError,
-  deriveDiagnosticFromError,
+  Diagnostics,
   DiagnosticsProcessor,
+  INTERNAL_ERROR_LOG_ADVICE,
+  deriveDiagnosticFromError,
+  descriptions,
+  getDiagnosticsFromError,
 } from '@romejs/diagnostics';
-import {MasterCommand} from '../commands';
+import {MasterCommand, masterCommands} from './commands';
 import {
-  DiagnosticsPrinter,
   DiagnosticsFileReader,
+  DiagnosticsPrinter,
+  printDiagnostics,
   readDiagnosticsFileLocal,
 } from '@romejs/cli-diagnostics';
-import {consume, ConsumePath} from '@romejs/consume';
+import {ConsumePath, consume} from '@romejs/consume';
 import {Event, EventSubscription} from '@romejs/events';
 import MasterRequest, {MasterRequestInvalid} from './MasterRequest';
 import ProjectManager from './project/ProjectManager';
@@ -34,17 +36,16 @@ import FileAllocator from './fs/FileAllocator';
 import Logger from '../common/utils/Logger';
 import MemoryFileSystem from './fs/MemoryFileSystem';
 import Cache from './Cache';
-import {masterCommands} from './commands/index';
 import {Reporter, ReporterStream} from '@romejs/cli-reporter';
 import {Profiler} from '@romejs/v8';
 import {
-  ProfilingStartData,
   PartialMasterQueryRequest,
+  ProfilingStartData,
 } from '../common/bridges/MasterBridge';
 import {
   ClientFlags,
-  DEFAULT_CLIENT_REQUEST_FLAGS,
   ClientRequestFlags,
+  DEFAULT_CLIENT_REQUEST_FLAGS,
 } from '../common/types/client';
 import {VERSION} from '../common/constants';
 import {escapeMarkup} from '@romejs/string-markup';
@@ -58,6 +59,11 @@ import {
 import {Dict} from '@romejs/typescript-helpers';
 import LSPServer from './lsp/LSPServer';
 import MasterReporter from './MasterReporter';
+import VirtualModules from './fs/VirtualModules';
+import {
+  DiagnosticsProcessorOptions,
+} from '@romejs/diagnostics/DiagnosticsProcessor';
+import {toKebabCase} from '@romejs/string-utils';
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;
 
@@ -92,6 +98,47 @@ export type MasterMarker = MasterUnfinishedMarker & {
   // End time in milliseconds
   end: number;
 };
+
+const disallowedFlagsWhenReviewing: Array<keyof ClientRequestFlags> = ['watch'];
+
+async function validateRequestFlags(
+  req: MasterRequest,
+  masterCommand: MasterCommand<Dict<unknown>>,
+) {
+  const {requestFlags} = req.query;
+
+  // Commands need to explicitly allow these flags
+  validateAllowedRequestFlag(req, 'watch', masterCommand);
+  validateAllowedRequestFlag(req, 'review', masterCommand);
+  validateAllowedRequestFlag(req, 'allowDirty', masterCommand);
+
+  // Don't allow review in combination with other flags
+  if (requestFlags.review) {
+    for (const key of disallowedFlagsWhenReviewing) {
+      if (requestFlags[key]) {
+        throw req.throwDiagnosticFlagError({
+          description: descriptions.FLAGS.DISALLOWED_REVIEW_FLAG(key),
+          target: {type: 'flag', key},
+        });
+      }
+    }
+  }
+}
+
+function validateAllowedRequestFlag(
+  req: MasterRequest,
+  flagKey: NonNullable<MasterCommand<Dict<unknown>>['allowRequestFlags']>[number],
+
+  masterCommand: MasterCommand<Dict<unknown>>,
+) {
+  const allowRequestFlags = masterCommand.allowRequestFlags || [];
+  if (req.query.requestFlags[flagKey] && !allowRequestFlags.includes(flagKey)) {
+    throw req.throwDiagnosticFlagError({
+      description: descriptions.FLAGS.DISALLOWED_REQUEST_FLAG(flagKey),
+      target: {type: 'flag', key: flagKey},
+    });
+  }
+}
 
 export default class Master {
   constructor(opts: MasterOptions) {
@@ -138,11 +185,35 @@ export default class Master {
           type: 'all',
           format: 'none',
           columns: 0,
+          unicode: true,
           write: (chunk) => {
             this.emitMasterLog(chunk);
           },
         },
       ],
+      markupOptions: {
+        humanizeFilename: (filename) => {
+          const path = createUnknownFilePath(filename);
+          if (path.isAbsolute()) {
+            const remote = this.projectManager.getRemoteFromLocalPath(
+              path.assertAbsolute(),
+            );
+            if (remote !== undefined) {
+              return remote.join();
+            }
+          }
+          return undefined;
+        },
+
+        normalizeFilename: (filename: string): string => {
+          const path = this.projectManager.getFilePathFromUid(filename);
+          if (path === undefined) {
+            return filename;
+          } else {
+            return path.join();
+          }
+        },
+      },
     });
 
     this.connectedReporters = new MasterReporter(this);
@@ -151,6 +222,7 @@ export default class Master {
     this.connectedLSPServers = new Set();
     this.connectedClients = new Set();
 
+    this.virtualModules = new VirtualModules(this);
     this.memoryFs = new MemoryFileSystem(this);
     this.projectManager = new ProjectManager(this);
     this.workerManager = new WorkerManager(this);
@@ -194,6 +266,7 @@ export default class Master {
 
   warnedCacheClients: WeakSet<MasterBridge>;
   memoryFs: MemoryFileSystem;
+  virtualModules: VirtualModules;
   resolver: Resolver;
   projectManager: ProjectManager;
   workerManager: WorkerManager;
@@ -244,12 +317,16 @@ export default class Master {
     this.connectedReporters.error(
       'Generated diagnostics without a current request',
     );
-    const printer = new DiagnosticsPrinter({
-      reporter: this.connectedReporters,
-      readFile: this.readDiagnosticsPrinterFile.bind(this),
+
+    printDiagnostics({
+      diagnostics,
+      suppressions: [],
+      printerOptions: {
+        processor: this.createDiagnosticsProcessor(),
+        reporter: this.connectedReporters,
+        readFile: this.readDiagnosticsPrinterFile.bind(this),
+      },
     });
-    printer.addDiagnostics(diagnostics);
-    printer.print();
   }
 
   readDiagnosticsPrinterFile(
@@ -264,10 +341,19 @@ export default class Master {
     }
   }
 
+  createDiagnosticsProcessor(
+    opts: DiagnosticsProcessorOptions = {},
+  ): DiagnosticsProcessor {
+    return new DiagnosticsProcessor({
+      markupOptions: this.logger.markupOptions,
+      ...opts,
+    });
+  }
+
   createDisconnectedDiagnosticsProcessor(
     origins: Array<DiagnosticOrigin>,
   ): DiagnosticsProcessor {
-    return new DiagnosticsProcessor({
+    return this.createDiagnosticsProcessor({
       onDiagnostics: (diagnostics: Diagnostics) => {
         this.handleDisconnectedDiagnostics(diagnostics);
       },
@@ -302,6 +388,7 @@ export default class Master {
     this.fileAllocator.init();
     this.resolver.init();
     await this.cache.init();
+    await this.virtualModules.init();
     await this.workerManager.init();
   }
 
@@ -388,6 +475,7 @@ export default class Master {
       useRemoteReporter,
       hasClearScreen,
       columns,
+      unicode,
       format,
       version,
     } = await bridge.getClientInfo.call();
@@ -402,6 +490,7 @@ export default class Master {
       type: 'out',
       columns,
       format,
+      unicode,
       write(chunk: string) {
         if (flags.silent === true) {
           return;
@@ -441,26 +530,7 @@ export default class Master {
       verbose: flags.verbose,
       markupOptions: {
         cwd: flags.cwd,
-        humanizeFilename: (filename) => {
-          const path = createUnknownFilePath(filename);
-          if (path.isAbsolute()) {
-            const remote = this.projectManager.getRemoteFromLocalPath(
-              path.assertAbsolute(),
-            );
-            if (remote !== undefined) {
-              return remote.join();
-            }
-          }
-          return undefined;
-        },
-        normalizeFilename: (filename) => {
-          const path = this.projectManager.getFilePathFromUid(filename);
-          if (path === undefined) {
-            return filename;
-          } else {
-            return path.join();
-          }
-        },
+        ...this.logger.markupOptions,
       },
       useRemoteProgressBars: useRemoteReporter,
     });
@@ -699,8 +769,9 @@ export default class Master {
     origins: Array<string>,
   ): Promise<MasterQueryResponse> {
     const {query, reporter, bridge} = req;
+    const {requestFlags} = query;
 
-    if (query.requestFlags.benchmark && !origins.includes('benchmark')) {
+    if (requestFlags.benchmark && !origins.includes('benchmark')) {
       return this.dispatchBenchmarkRequest(req, bridgeEndPromise);
     }
 
@@ -708,23 +779,28 @@ export default class Master {
       const defaultCommandFlags: Dict<unknown> = {};
 
       // A type-safe wrapper for retrieving command flags
-
       // TODO perhaps present this as JSON or something if this isn't a request from the CLI?
-      const commandFlagsConsumer = consume({
+      const flagsConsumer = consume({
         filePath: createUnknownFilePath('argv'),
         parent: undefined,
         value: query.commandFlags,
+
         onDefinition(def) {
           // objectPath should only have a depth of 1
           defaultCommandFlags[def.objectPath[0]] = def.default;
         },
 
         objectPath: [],
+
         context: {
           category: 'flags/invalid',
 
           getOriginalValue: () => {
             return undefined;
+          },
+
+          normalizeKey: (key) => {
+            return toKebabCase(key);
           },
 
           getDiagnosticPointer: (keys: ConsumePath) => {
@@ -741,10 +817,10 @@ export default class Master {
       let promises: Array<Promise<unknown> | undefined> = [bridgeEndPromise];
 
       // Get command
-      const commandOpts: undefined | MasterCommand<Dict<unknown>> = masterCommands.get(
+      const masterCommand: undefined | MasterCommand<Dict<unknown>> = masterCommands.get(
         query.commandName,
       );
-      if (commandOpts) {
+      if (masterCommand) {
         // Warn about disabled disk caching
         if (process.env.ROME_CACHE === '0' && !this.warnedCacheClients.has(
             bridge,
@@ -755,9 +831,11 @@ export default class Master {
           this.warnedCacheClients.add(bridge);
         }
 
+        await validateRequestFlags(req, masterCommand);
+
         let commandFlags;
-        if (commandOpts.defineFlags !== undefined) {
-          commandFlags = commandOpts.defineFlags(commandFlagsConsumer);
+        if (masterCommand.defineFlags !== undefined) {
+          commandFlags = masterCommand.defineFlags(flagsConsumer);
         }
 
         req.setNormalizedCommandFlags({
@@ -766,7 +844,7 @@ export default class Master {
         });
 
         // @ts-ignore
-        const commandPromise = commandOpts.default(req, commandFlags);
+        const commandPromise = masterCommand.callback(req, commandFlags);
         promises.push(commandPromise);
 
         await Promise.race(promises);
@@ -810,6 +888,7 @@ export default class Master {
           return {
             type: 'INVALID_REQUEST',
             diagnostics,
+            showHelp: err.showHelp,
           };
         } else {
           return {
@@ -827,22 +906,31 @@ export default class Master {
     // If we can derive diagnostics from the error then create a diagnostics printer
     const diagnostics = getDiagnosticsFromError(err);
     if (diagnostics !== undefined) {
-      const printer = req.createDiagnosticsPrinter(new DiagnosticsProcessor({
-        origins: [
-          {
-            category: 'internal',
-            message: 'Derived diagnostics from thrown error',
-          },
-        ],
-      }));
-      printer.addDiagnostics(diagnostics);
+      const printer = req.createDiagnosticsPrinter(
+        req.createDiagnosticsProcessor({
+          origins: [
+            {
+              category: 'internal',
+              message: 'Derived diagnostics from thrown error',
+            },
+          ],
+        }),
+      );
+      printer.processor.addDiagnostics(diagnostics);
       err = printer;
     }
 
     // Print it!
     if (err instanceof DiagnosticsPrinter) {
       const printer = err;
-      if (req.bridge.alive) {
+
+      // Only print when the bridge is alive and we aren't in review mode
+      // When we're in review mode we don't expect to show any diagnostics because they'll be intercepted in the client command
+      // We will always print invalid request errors
+      const shouldPrint = req.bridge.alive && (rawErr instanceof
+        MasterRequestInvalid || !req.query.requestFlags.review);
+
+      if (shouldPrint) {
         printer.print();
 
         // Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
@@ -850,6 +938,7 @@ export default class Master {
           printer.footer();
         }
       }
+
       return printer.getDiagnostics();
     }
 
@@ -857,19 +946,21 @@ export default class Master {
       return undefined;
     }
 
-    const printer = req.createDiagnosticsPrinter(new DiagnosticsProcessor({
-      origins: [
-        {
-          category: 'internal',
-          message: 'Error captured and converted into a diagnostic',
-        },
-      ],
-    }));
+    const printer = req.createDiagnosticsPrinter(req.createDiagnosticsProcessor(
+      {
+        origins: [
+          {
+            category: 'internal',
+            message: 'Error captured and converted into a diagnostic',
+          },
+        ],
+      },
+    ));
     const errorDiag = deriveDiagnosticFromError({
       category: 'internalError/request',
       error: err,
     });
-    printer.addDiagnostic({
+    printer.processor.addDiagnostic({
       ...errorDiag,
       description: {
         ...errorDiag.description,

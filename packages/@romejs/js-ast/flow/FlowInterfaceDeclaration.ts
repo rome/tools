@@ -6,11 +6,11 @@
  */
 
 import {
-  JSNodeBase,
   BindingIdentifier,
   FlowInterfaceExtends,
-  FlowTypeParameterDeclaration,
   FlowObjectTypeAnnotation,
+  FlowTypeParameterDeclaration,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 

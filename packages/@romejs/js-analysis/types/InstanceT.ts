@@ -7,7 +7,7 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
-import {HydrateTypeFactory, HydrateData} from '../Evaluator';
+import {HydrateData, HydrateTypeFactory} from '../Evaluator';
 import {Scope} from '../scopes';
 import {HumanBuilder} from '../Utils';
 import StringLiteralT from './StringLiteralT';

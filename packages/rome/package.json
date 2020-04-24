@@ -2,7 +2,6 @@
   "name": "rome",
   "type": "module",
   "main": "index.ts",
-  "version": "0.0.0",
   "license": "MIT",
   "files": [
     "LICENSE"

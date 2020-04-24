@@ -1,0 +1,6 @@
+{
+  "name": "@romejs-runtime/rome",
+  "type": "module",
+  "private": true,
+  "main": "index.ts"
+}

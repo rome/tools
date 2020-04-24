@@ -6,8 +6,8 @@
  */
 
 import '@romejs/string-markup';
-import {stringifySemver, parseSemverRange} from '@romejs/codec-semver';
-import test from '@romejs/test';
+import {parseSemverRange, stringifySemver} from '@romejs/codec-semver';
+import {test} from 'rome';
 
 test(
   'stringify',

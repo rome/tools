@@ -6,7 +6,7 @@
  */
 
 import Builder from '../../Builder';
-import {operator, concat} from '../../tokens';
+import {concat, operator} from '../../tokens';
 import {AnyNode} from '@romejs/js-ast';
 import StringLiteral from '../literals/StringLiteral';
 

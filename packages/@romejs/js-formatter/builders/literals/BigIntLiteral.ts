@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {BigIntLiteral, bigIntLiteral, AnyNode} from '@romejs/js-ast';
+import {AnyNode, BigIntLiteral, bigIntLiteral} from '@romejs/js-ast';
 import {word} from '@romejs/js-formatter/tokens';
 
 export default function BigIntLiteral(builder: Builder, node: AnyNode): Tokens {

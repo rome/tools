@@ -9,11 +9,11 @@ import {humanizeNumber, humanizeTime} from '@romejs/string-utils';
 import {Reporter} from '@romejs/cli-reporter';
 import {
   RemoteReporterClientMessage,
-  ReporterStream,
   ReporterProgressOptions,
+  ReporterStream,
 } from './types';
 import ProgressBase from './ProgressBase';
-import {markupTag, ansiEscapes} from '@romejs/string-markup';
+import {ansiEscapes, formatAnsi} from '@romejs/string-markup';
 
 type BoldRanges = Array<[number, number]>;
 
@@ -250,7 +250,7 @@ export default class Progress extends ProgressBase {
   splitCharacters(str: string, boldRanges: BoldRanges): SplitBar {
     return str.split('').map((char, i) => {
       if (this.isBoldCharacter(i, boldRanges)) {
-        return [i, markupTag('emphasis', char)];
+        return [i, formatAnsi.bold(char)];
       } else {
         return [i, char];
       }
@@ -265,9 +265,9 @@ export default class Progress extends ProgressBase {
 
       if (isBounce) {
         if (this.paused) {
-          fullBar += markupTag('inverse', char);
+          fullBar += formatAnsi.inverse(char);
         } else {
-          fullBar += markupTag('white', markupTag('bgYellow', char));
+          fullBar += formatAnsi.white(formatAnsi.bgYellow(char));
         }
       } else {
         fullBar += char;
@@ -284,9 +284,9 @@ export default class Progress extends ProgressBase {
     for (const [i, char] of bar) {
       if (i < completeLength) {
         if (this.paused) {
-          fullBar += markupTag('inverse', char);
+          fullBar += formatAnsi.inverse(char);
         } else {
-          fullBar += markupTag('white', markupTag('bgGreen', char));
+          fullBar += formatAnsi.white(formatAnsi.bgGreen(char));
         }
       } else {
         fullBar += char;
@@ -296,7 +296,7 @@ export default class Progress extends ProgressBase {
   }
 
   buildBar(stream: ReporterStream) {
-    const {total, current, text, title} = this;
+    const {total, current, title} = this;
 
     // Text ranges that we should make bold
     const boldRanges: BoldRanges = [];
@@ -309,6 +309,8 @@ export default class Progress extends ProgressBase {
       // Only the title should be bold, not the subtext
       boldRanges.push([0, prefix.length - 1]);
     }
+
+    const text = this.getText();
     if (text !== undefined) {
       // Separate a title and it's text with a colon
       if (title !== undefined) {
@@ -402,7 +404,7 @@ export default class Progress extends ProgressBase {
     for (const stream of this.reporter.getStreams(false)) {
       if (stream.format === 'ansi') {
         stream.write(ansiEscapes.cursorTo(0));
-        stream.write(this.reporter.markupify(stream, this.buildBar(stream)));
+        stream.write(this.buildBar(stream));
       }
     }
   }

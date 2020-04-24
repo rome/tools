@@ -9,22 +9,22 @@ import {Path, TransformExitResult} from '@romejs/js-compiler';
 import {
   AnyNode,
   AnyObjectMember,
-  bindingIdentifier,
-  referenceIdentifier,
+  AnyStatement,
   AnyTargetBindingPattern,
-  callExpression,
-  bindingObjectPattern,
-  variableDeclaration,
-  variableDeclarator,
-  objectExpression,
   BindingIdentifier,
+  CallExpression,
+  ObjectExpression,
   VariableDeclaration,
   VariableDeclarationStatement,
-  variableDeclarationStatement,
-  AnyStatement,
   VariableDeclarator,
-  ObjectExpression,
-  CallExpression,
+  bindingIdentifier,
+  bindingObjectPattern,
+  callExpression,
+  objectExpression,
+  referenceIdentifier,
+  variableDeclaration,
+  variableDeclarationStatement,
+  variableDeclarator,
 } from '@romejs/js-ast';
 import {template} from '@romejs/js-ast-utils';
 
@@ -58,7 +58,7 @@ function getRestProperty(
     case 'VariableDeclarationStatement':
       return getRestProperty(node.declaration);
 
-    case 'VariableDeclaration':
+    case 'VariableDeclaration': {
       for (const declarator of node.declarations) {
         const rest = getRestProperty(declarator);
         if (rest !== undefined) {
@@ -66,6 +66,7 @@ function getRestProperty(
         }
       }
       return undefined;
+    }
 
     case 'BindingObjectPattern':
       return node.rest;

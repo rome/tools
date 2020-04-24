@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {ForInStatement, forInStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ForInStatement, forInStatement} from '@romejs/js-ast';
 
 export default function ForInStatement(node: AnyNode, scope: Scope) {
   node = forInStatement.assert(node);

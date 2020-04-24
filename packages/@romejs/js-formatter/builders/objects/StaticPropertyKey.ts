@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {StaticPropertyKey, staticPropertyKey, AnyNode} from '@romejs/js-ast';
+import {AnyNode, StaticPropertyKey, staticPropertyKey} from '@romejs/js-ast';
 
 export default function StaticPropertyKey(
   builder: Builder,
