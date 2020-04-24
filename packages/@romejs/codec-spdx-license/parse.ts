@@ -17,7 +17,7 @@ import {
 } from '@romejs/parser-core';
 import {getSPDXLicense, licenseNames} from './index';
 import {descriptions} from '@romejs/diagnostics';
-import {inc, Number0, get0} from '@romejs/ob1';
+import {ob1Inc, Number0, ob1Get0} from '@romejs/ob1';
 
 //# Tokens
 type Tokens = BaseTokens & {
@@ -66,7 +66,7 @@ const createSPDXLicenseParser = createParser(
 
     // For some reason Flow will throw an error without the type casts...
     tokenize(index: Number0, input: string) {
-      const char = input[get0(index)];
+      const char = input[ob1Get0(index)];
 
       if (char === '+') {
         return this.finishToken('Plus');
@@ -82,7 +82,7 @@ const createSPDXLicenseParser = createParser(
 
       // Skip spaces
       if (char === ' ') {
-        return this.lookaheadToken(inc(index));
+        return this.lookaheadToken(ob1Inc(index));
       }
 
       if (isWordChar(char)) {
@@ -176,15 +176,17 @@ const createSPDXLicenseParser = createParser(
       let value;
 
       switch (startToken.type) {
-        case 'ParenOpen':
+        case 'ParenOpen': {
           this.nextToken();
           value = this.parseExpression();
           this.expectToken('ParenClose');
           break;
+        }
 
-        case 'Word':
+        case 'Word': {
           value = this.parseLicense(startToken);
           break;
+        }
 
         case 'Or':
         case 'And':
@@ -209,7 +211,7 @@ const createSPDXLicenseParser = createParser(
       // Parse and/or
       const nextToken = this.getToken();
       switch (nextToken.type) {
-        case 'Or':
+        case 'Or': {
           this.nextToken();
           return {
             type: 'Or',
@@ -217,8 +219,9 @@ const createSPDXLicenseParser = createParser(
             left: value,
             right: this.parseExpression(),
           };
+        }
 
-        case 'And':
+        case 'And': {
           this.nextToken();
           return {
             type: 'And',
@@ -226,6 +229,7 @@ const createSPDXLicenseParser = createParser(
             left: value,
             right: this.parseExpression(),
           };
+        }
 
         default:
           return value;

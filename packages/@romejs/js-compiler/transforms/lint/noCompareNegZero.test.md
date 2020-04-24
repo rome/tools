@@ -6,45 +6,47 @@
 
 ### `0`
 
-```javascript
-Object {
-  src: '(1 >= -0)'
-  suppressions: Array []
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'lint'}]
-      description: Object {
-        category: 'lint/noCompareNegZero'
-        fixable: false
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Do not use the \'>=\' operator to compare against -0'}
-      }
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-    }
-  ]
-}
+```
+
+ unknown:1:1 lint/noCompareNegZero ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Do not use the '>=' operator to compare against -0
+
+    (1 >= -0)
+     ^^^^^^^ 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
 ```
 
 ### `1`
 
-```javascript
-Object {
-  diagnostics: Array []
-  src: '(1 >= 0)'
-  suppressions: Array []
-}
+```
+✔ No known problems!
+
+```
+
+## `format disabled in project config should not regenerate the file`
+
+```
+✔ No known problems!
+
+```
+
+## `format enabled in project config should result in regenerated file`
+
+### `0`
+
+```
+✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
+
 ```

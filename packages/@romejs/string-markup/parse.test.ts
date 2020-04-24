@@ -5,9 +5,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {parseMarkup} from './parse';
 
-test('should not parse string escapes', (t) => {
-  t.snapshot(parseMarkup('<filelink target="C:\\Users\\sebmck\\file.ts" />'));
-});
+test(
+  'should not parse string escapes',
+  async (t) => {
+    await t.snapshot(parseMarkup(
+      '<filelink target="C:\\Users\\sebmck\\file.ts" />',
+    ));
+    await t.snapshot(
+      parseMarkup(
+        '<info>[MemoryFileSystem] Adding new project folder C:\\Users\\sebmck\\rome</info>',
+      ),
+    );
+
+    await t.snapshot(
+      parseMarkup(
+        '  \\<info>[MemoryFileSystem] Adding new project folder C:\\\\Users\\\\Sebastian\\\\rome\\\\\\</info>\n        <error><emphasis>^</emphasis></error> ',
+      ),
+    );
+  },
+);

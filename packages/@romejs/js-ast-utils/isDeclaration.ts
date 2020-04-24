@@ -43,14 +43,16 @@ export default function isDeclaration(
     case 'TSImportEqualsDeclaration':
     case 'TSInterfaceDeclaration':
     case 'TSModuleDeclaration':
-    case 'TSNamespaceExportDeclaration':
+    case 'TSNamespaceExportDeclaration': {
       const declaration: AnyDeclaration = node;
       declaration;
       return true;
+    }
 
-    default:
+    default: {
       const notDeclaration: Exclude<AnyNode, AnyDeclaration> = node;
       notDeclaration;
       return false;
+    }
   }
 }

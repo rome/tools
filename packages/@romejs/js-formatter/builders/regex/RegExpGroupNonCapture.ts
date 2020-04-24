@@ -15,21 +15,25 @@ export default function RegExpGroupNonCapture(builder: Builder, node: AnyNode) {
   const tokens: Tokens = [verbatim('(?')];
 
   switch (node.kind) {
-    case 'positive-lookahead':
+    case 'positive-lookahead': {
       tokens.push(verbatim('='));
       break;
+    }
 
-    case 'negative-lookahead':
+    case 'negative-lookahead': {
       tokens.push(verbatim('!'));
       break;
+    }
 
-    case 'positive-lookbehind':
+    case 'positive-lookbehind': {
       tokens.push(verbatim('<!'));
       break;
+    }
 
-    case 'negative-lookbehind':
+    case 'negative-lookbehind': {
       tokens.push(verbatim('<='));
       break;
+    }
 
     default:
       tokens.push(verbatim(':'));

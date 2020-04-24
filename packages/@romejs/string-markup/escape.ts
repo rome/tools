@@ -5,10 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {coerce0} from '@romejs/ob1';
 import {Dict} from '@romejs/typescript-helpers';
 import {MarkupTagName} from './types';
-import {isEscaped} from '@romejs/parser-core';
 
 // A tagged template literal helper that will escape all interpolated strings, ensuring only markup works
 export function markup(
@@ -47,27 +45,17 @@ export function safeMarkup(input: string): SafeMarkup {
   return new SafeMarkup(input);
 }
 
+// Escape all \ and >
 export function escapeMarkup(input: string): string {
   let escaped = '';
   for (let i = 0; i < input.length; i++) {
     const char = input[i];
-    const isLast = i == input.length - 1;
 
-    // Escape all <
-    if (input[i] === '<') {
-      // If it's escaped then we need to escape the escape
-      // TODO, but what if the escape needs to be escaped......???
-      if (isEscaped(coerce0(i), input)) {
-        escaped += '\\';
-      }
+    if (char === '<') {
       escaped += '\\<';
+    } else if (char === '\\') {
+      escaped += '\\\\';
     } else {
-      // If this is the final character and we're a slash that is not escaped, ignore it.
-      // We could have a tag after the end of this string that would be broken.
-      if (isLast && char === '\\' && !isEscaped(coerce0(i - 1), input)) {
-        continue;
-      }
-
       escaped += char;
     }
   }
@@ -77,7 +65,7 @@ export function escapeMarkup(input: string): string {
 export function markupTag(
   tagName: MarkupTagName,
   text: string,
-  attrs?: Dict<string | number>,
+  attrs?: Dict<string | number | boolean>,
 ): string {
   let ret = `<${tagName}`;
 
@@ -91,4 +79,27 @@ export function markupTag(
   ret += `>${text}</${tagName}>`;
 
   return ret;
+}
+
+export function unescapeTextValue(str: string): string {
+  let unescaped = '';
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+
+    // Unescape \\< to just <
+    // Unescape \\\\ to just \\
+    if (char === '\\') {
+      const nextChar = str[i + 1];
+      if (nextChar === '<' || nextChar === '\\') {
+        i++;
+        unescaped += nextChar;
+        continue;
+      }
+    }
+
+    unescaped += char;
+  }
+
+  return unescaped;
 }

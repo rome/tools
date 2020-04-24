@@ -9,7 +9,7 @@ import {Master} from '@romejs/core';
 import {Stats} from './MemoryFileSystem';
 import {WorkerContainer} from '../WorkerManager';
 import Locker from '../../common/utils/Locker';
-import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
+import {AbsoluteFilePath} from '@romejs/path';
 import {Event} from '@romejs/events';
 
 export default class FileAllocator {
@@ -86,26 +86,6 @@ export default class FileAllocator {
       await workerManager.locker.waitLock(workerId);
       return workerManager.getWorkerAssert(workerId);
     }
-  }
-
-  async groupPathsByWorker(
-    paths: AbsoluteFilePathSet | Array<AbsoluteFilePath>,
-  ): Promise<Array<Array<AbsoluteFilePath>>> {
-    const pathsByWorker: Map<number, Array<AbsoluteFilePath>> = new Map();
-
-    // Populate our queues
-    await Promise.all(Array.from(paths, async (path) => {
-      const worker = await this.getOrAssignOwner(path);
-
-      let queue = pathsByWorker.get(worker.id);
-      if (queue === undefined) {
-        queue = [];
-        pathsByWorker.set(worker.id, queue);
-      }
-      queue.push(path);
-    }));
-
-    return Array.from(pathsByWorker.values());
   }
 
   async evict(path: AbsoluteFilePath) {

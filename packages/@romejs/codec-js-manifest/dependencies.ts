@@ -14,7 +14,9 @@ import {
 import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
 import {createUnknownFilePath, UnknownFilePath} from '@romejs/path';
 import {normalizeName} from './name';
-import {add} from '@romejs/ob1';
+import {ob1Add} from '@romejs/ob1';
+import {descriptions} from '@romejs/diagnostics';
+import {ManifestName} from './types';
 
 export type DependencyPattern =
   | HostedGitPattern
@@ -26,7 +28,7 @@ export type DependencyPattern =
   | NpmPattern
   | LinkPattern;
 
-export type ManifestDependencies = Map<string, DependencyPattern>;
+export type ManifestDependencies = Map<ManifestName, DependencyPattern>;
 
 type UrlWithHash = {
   url: string;
@@ -77,7 +79,7 @@ function explodeHashUrl(pattern: string, consumer: Consumer): UrlWithHash {
   const parts = pattern.split('#');
 
   if (parts.length > 2) {
-    consumer.unexpected('Too many hashes');
+    consumer.unexpected(descriptions.MANIFEST.TOO_MANY_HASH_PARTS);
   }
 
   return {
@@ -131,18 +133,18 @@ function parseHostedGit(
 
   const parts = pattern.split('/');
   if (parts.length > 2) {
-    consumer.unexpected('Expected only 2 parts');
+    consumer.unexpected(descriptions.MANIFEST.TOO_MANY_HOSTED_GIT_PARTS);
   }
 
   let user = parts[0];
   if (user === undefined) {
-    consumer.unexpected('We are missing a user!');
+    consumer.unexpected(descriptions.MANIFEST.MISSING_HOSTED_GIT_USER);
     user = 'unknown';
   }
 
   let repo = parts[1];
   if (repo === undefined) {
-    consumer.unexpected('We are missing a repo!');
+    consumer.unexpected(descriptions.MANIFEST.MISSING_HOSTED_GIT_REPO);
     repo = 'unknown';
   }
 
@@ -283,7 +285,7 @@ const NPM_PREFIX = 'npm:';
 
 type NpmPattern = {
   type: 'npm';
-  name: string;
+  name: ManifestName;
   range: undefined | SemverRangeNode;
 };
 
@@ -297,10 +299,13 @@ function parseNpm(
   pattern = pattern.slice(NPM_PREFIX.length);
 
   if (pattern === '') {
-    consumer.unexpected('Missing rest of pattern');
+    consumer.unexpected(descriptions.MANIFEST.EMPTY_NPM_PATTERN);
     return {
       type: 'npm',
-      name: 'unknown',
+      name: {
+        org: undefined,
+        packageName: undefined,
+      },
       range: undefined,
     };
   }
@@ -323,27 +328,26 @@ function parseNpm(
   rangeRaw = parts.shift();
 
   if (parts.length > 0) {
-    consumer.unexpected('Too many @ signs');
+    consumer.unexpected(descriptions.MANIFEST.TOO_MANY_NPM_PARTS);
   }
 
   const name = normalizeName({
     name: nameRaw,
     loose,
-    unexpected({message, at, start, end, advice}) {
-      consumer.unexpected(message, {
-        advice,
+    unexpected({description, at, start, end}) {
+      consumer.unexpected(description, {
         at,
         loc: start === undefined
           ? undefined
-          : consumer.getLocationRange(add(start, offset), end === undefined
+          : consumer.getLocationRange(ob1Add(start, offset), end === undefined
             ? undefined
-            : add(end, offset), 'inner-value'),
+            : ob1Add(end, offset), 'inner-value'),
       });
     },
   });
 
   // Increase offset passed name
-  offset += name.length;
+  offset += nameRaw.length;
   offset++;
 
   let range: undefined | SemverRangeNode;
@@ -357,7 +361,7 @@ function parseNpm(
         const pos = consumer.getLocation('inner-value').start;
         return {
           ...pos,
-          column: add(pos.column, offset),
+          column: ob1Add(pos.column, offset),
         };
       },
       parse: (opts) => parseSemverRange(opts),
@@ -450,14 +454,13 @@ export function normalizeDependencies(
     return map;
   }
 
-  for (const [name, value] of consumer.asMap()) {
-    normalizeName({
-      name,
+  for (const [rawName, value] of consumer.asMap()) {
+    const name = normalizeName({
+      name: rawName,
       loose,
-      unexpected: ({message, at, advice}) => {
-        value.unexpected(message, {
+      unexpected: ({description, at}) => {
+        value.unexpected(description, {
           at,
-          advice,
           target: 'key',
         });
       },

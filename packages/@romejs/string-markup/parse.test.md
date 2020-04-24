@@ -4,6 +4,8 @@
 
 ## `should not parse string escapes`
 
+### `0`
+
 ```javascript
 Array [
   Tag {
@@ -16,5 +18,37 @@ Array [
     ]
     children: Array []
   }
+]
+```
+
+### `1`
+
+```javascript
+Array [
+  Tag {
+    name: 'info'
+    attributes: Map []
+    children: Array [Text {value: '[MemoryFileSystem] Adding new project folder C:\\Users\\sebmck\\rome'}]
+  }
+]
+```
+
+### `2`
+
+```javascript
+Array [
+  Text {value: '  <info>[MemoryFileSystem] Adding new project folder C:\\Users\\Sebastian\\rome\\</info>\n        '}
+  Tag {
+    name: 'error'
+    attributes: Map []
+    children: Array [
+      Tag {
+        name: 'emphasis'
+        attributes: Map []
+        children: Array [Text {value: '^'}]
+      }
+    ]
+  }
+  Text {value: ' '}
 ]
 ```

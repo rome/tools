@@ -86,7 +86,7 @@ import {
   toTargetAssignmentPattern,
   parseClassDeclaration,
 } from './index';
-import {number0, get0, add, inc} from '@romejs/ob1';
+import {ob1Number0, ob1Get0, ob1Add, ob1Inc} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 
 const loopLabel: Label = {kind: 'loop'};
@@ -97,7 +97,7 @@ export function parseTopLevel(parser: JSParser): Program {
   const openContext: OpeningContext = {
     name: 'top-level',
     start,
-    indent: number0,
+    indent: ob1Number0,
     open: tt.eof,
     close: tt.eof,
   };
@@ -110,12 +110,9 @@ export function parseTopLevel(parser: JSParser): Program {
   const interpreter = parsePossibleInterpreterDirective(parser);
   const {body, directives} = parseBlockBody(parser, true, true, openContext);
 
-  const loc = parser.finishLoc(start);
-
-  return {
+  return parser.finishNode(start, {
     type: 'Program',
     corrupt: parser.state.corrupt,
-    loc,
     body,
     directives,
     mtime: parser.mtime,
@@ -126,15 +123,16 @@ export function parseTopLevel(parser: JSParser): Program {
     interpreter,
     syntax: Array.from(parser.syntax),
     hasHoistedVars: parser.state.hasHoistedVars,
-  };
+  });
 }
 
 export function parsePossibleInterpreterDirective(
   parser: JSParser,
 ): undefined | InterpreterDirective {
   // Check for #!
-  if (parser.match(tt.hash) && parser.input[get0(parser.state.endPos.index)] ===
-      '!') {
+  if (parser.match(tt.hash) &&
+        parser.input[ob1Get0(parser.state.endPos.index)] ===
+        '!') {
     // Parse as a regular comment, we should abstract this logic
 
     // TODO this gets pushed to all the comments which is bad
@@ -178,14 +176,14 @@ export function isLetStart(parser: JSParser, context?: string): boolean {
     return false;
   }
 
-  skipWhiteSpace.lastIndex = get0(parser.state.index);
+  skipWhiteSpace.lastIndex = ob1Get0(parser.state.index);
   const skip = skipWhiteSpace.exec(parser.input);
   if (skip == null) {
     throw new Error('Should never be true');
   }
 
-  const next = add(parser.state.index, skip[0].length);
-  const nextCh = parser.input.charCodeAt(get0(next));
+  const next = ob1Add(parser.state.index, skip[0].length);
+  const nextCh = parser.input.charCodeAt(ob1Get0(next));
 
   // For ambiguous cases, determine if a LexicalDeclaration (or only a
 
@@ -207,9 +205,9 @@ export function isLetStart(parser: JSParser, context?: string): boolean {
   }
 
   if (isIdentifierStart(nextCh)) {
-    let pos = add(next, 1);
-    while (isIdentifierChar(parser.input.charCodeAt(get0(pos)))) {
-      pos = inc(pos);
+    let pos = ob1Add(next, 1);
+    while (isIdentifierChar(parser.input.charCodeAt(ob1Get0(pos)))) {
+      pos = ob1Inc(pos);
     }
 
     const ident = parser.getRawInput(next, pos);
@@ -281,7 +279,7 @@ export function parseStatement(
     case tt._for:
       return parseForStatement(parser, start);
 
-    case tt._function:
+    case tt._function: {
       if (parser.lookaheadState().tokenType === tt.dot) {
         // MetaProperty: eg. function.sent
         break;
@@ -311,6 +309,7 @@ export function parseStatement(
       }
 
       return result;
+    }
 
     case tt._class: {
       if (context !== undefined) {
@@ -335,7 +334,7 @@ export function parseStatement(
       return parseTryStatement(parser, start);
 
     case tt._const:
-    case tt._var:
+    case tt._var: {
       kind = kind === undefined
         ? assertVarKind(String(parser.state.tokenValue))
         : kind;
@@ -347,6 +346,7 @@ export function parseStatement(
         );
       }
       return parseVarStatement(parser, start, kind);
+    }
 
     case tt._while:
       return parseWhileStatement(parser, start);
@@ -370,7 +370,7 @@ export function parseStatement(
       parser.next();
 
       let result: ParseExportResult | ParseImportResult;
-      if (startType == tt._import) {
+      if (startType === tt._import) {
         result = parseImport(parser, start);
       } else {
         result = parseExport(parser, start);
@@ -433,20 +433,20 @@ export function isAsyncFunctionDeclarationStart(parser: JSParser): boolean {
   const {input} = parser;
   const {index} = parser.state;
 
-  skipWhiteSpace.lastIndex = get0(index);
+  skipWhiteSpace.lastIndex = ob1Get0(index);
   const skip = skipWhiteSpace.exec(input);
 
   if (!skip || skip.length === 0) {
     return false;
   }
 
-  const next = add(index, skip[0].length);
+  const next = ob1Add(index, skip[0].length);
 
   return !lineBreak.test(parser.getRawInput(index, next)) && parser.getRawInput(
     next,
-    add(next, 8),
-  ) === 'function' && (get0(next) + 8 === input.length || !isIdentifierChar(
-    input.charCodeAt(get0(next) + 8),
+    ob1Add(next, 8),
+  ) === 'function' && (ob1Get0(next) + 8 === input.length || !isIdentifierChar(
+    input.charCodeAt(ob1Get0(next) + 8),
   ));
 }
 
@@ -605,7 +605,7 @@ export function parseForStatement(
     return parseFor(parser, start, openContext, init);
   }
 
-  const refShorthandDefaultPos: IndexTracker = {index: number0};
+  const refShorthandDefaultPos: IndexTracker = {index: ob1Number0};
   let init = parseExpression(parser, 'for init', true, refShorthandDefaultPos);
 
   if (parser.match(tt._in) || parser.isContextual('of')) {
@@ -617,7 +617,7 @@ export function parseForStatement(
     return parseForIn(parser, start, openContext, initPattern, awaitAt);
   }
 
-  if (get0(refShorthandDefaultPos.index) > 0) {
+  if (ob1Get0(refShorthandDefaultPos.index) > 0) {
     parser.unexpectedToken(parser.getPositionFromIndex(
       refShorthandDefaultPos.index,
     ));
@@ -975,9 +975,9 @@ export function parseLabeledStatement(
   }
   const body = parseStatement(parser, statementContext);
 
-  if (body.type == 'ClassDeclaration' || body.type ==
+  if (body.type === 'ClassDeclaration' || body.type ===
         'VariableDeclarationStatement' && body.declaration.kind !== 'var' ||
-          body.type ==
+          body.type ===
           'FunctionDeclaration' &&
         (parser.inScope('STRICT') || body.head.generator === true ||
             body.head.async ===
@@ -1431,13 +1431,14 @@ export function parseFunction(parser: JSParser, opts: {
   parser.pushScope('ASYNC', isAsync);
   parser.pushScope('CLASS_PROPERTY', false);
   parser.pushScope('NON_ARROW_FUNCTION');
-  parser.state.yieldPos = number0;
-  parser.state.awaitPos = number0;
+  parser.state.yieldPos = ob1Number0;
+  parser.state.awaitPos = ob1Number0;
 
   if (!isStatement) {
     id = parseFunctionId(parser, false);
   }
 
+  const headStart = parser.getPosition();
   const {params, rest, typeParameters} = parseFunctionParams(parser);
   const {head, body} = parseFunctionBodyAndFinish(parser, {
     allowBodiless: isStatement,
@@ -1448,6 +1449,7 @@ export function parseFunction(parser: JSParser, opts: {
     isMethod: false,
     isAsync,
     isGenerator,
+    headStart,
     start,
   });
 

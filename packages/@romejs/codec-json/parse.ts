@@ -34,7 +34,7 @@ import {
   SourceLocation,
   createParser,
 } from '@romejs/parser-core';
-import {inc, Number0, add, get0, sub} from '@romejs/ob1';
+import {ob1Inc, Number0, ob1Add, ob1Get0, ob1Sub} from '@romejs/ob1';
 
 // Words can't start with a digit
 function isWordStartChar(char: string): boolean {
@@ -92,7 +92,7 @@ function isntBlockCommentEnd(
   index: Number0,
   input: string,
 ): boolean {
-  const nextChar = input[get0(index) + 1];
+  const nextChar = input[ob1Get0(index) + 1];
   return char !== '*' && nextChar !== '/';
 }
 
@@ -115,7 +115,11 @@ export default createParser(
     void
   > {
     constructor(opts: JSONParserOptions) {
-      super(opts, 'parse/json');
+      super({
+        ...opts,
+        retainCarriageReturn: true,
+      }, 'parse/json');
+
       this.options = opts;
       this.ignoreWhitespaceTokens = true;
 
@@ -160,15 +164,15 @@ export default createParser(
     }
 
     tokenize(index: Number0, input: string) {
-      const nextChar = input[get0(index) + 1];
-      const char = input[get0(index)];
+      const nextChar = input[ob1Get0(index) + 1];
+      const char = input[ob1Get0(index)];
 
       // Line comment
       if (char === '/' && nextChar === '/') {
-        const commentValueIndex = add(index, 2);
+        const commentValueIndex = ob1Add(index, 2);
         const [value] = this.readInputFrom(commentValueIndex, isntNewline);
         // (comment content start + comment content length)
-        return this.finishValueToken('LineComment', value, add(
+        return this.finishValueToken('LineComment', value, ob1Add(
           commentValueIndex,
           value.length,
         ));
@@ -176,20 +180,19 @@ export default createParser(
 
       // BlockComment
       if (char === '/' && nextChar === '*') {
-        const commentValueIndex = add(index, 2);
+        const commentValueIndex = ob1Add(index, 2);
         const [value] = this.readInputFrom(
           commentValueIndex,
           isntBlockCommentEnd,
         );
 
         // (comment content start + comment content length + 2 characters for comment end)
-        const endIndex = add(add(commentValueIndex, value.length), 2);
+        const endIndex = ob1Add(ob1Add(commentValueIndex, value.length), 2);
 
         // Ensure the comment is closed
-        if (this.input[get0(endIndex) - 2] !== '*' ||
-              this.input[get0(endIndex) -
-                1] !==
-              '/') {
+        if (this.input[ob1Get0(endIndex) - 2] !== '*' || this.input[ob1Get0(
+            endIndex,
+          ) - 1] !== '/') {
           throw this.unexpected({
             description: descriptions.JSON.UNCLOSED_BLOCK_COMMENT,
             start: this.getPositionFromIndex(endIndex),
@@ -201,12 +204,12 @@ export default createParser(
 
       // Single character token starters
       switch (char) {
-        case '"':
-          const [value] = this.readInputFrom(inc(index), isStringValueChar);
+        case '"': {
+          const [value] = this.readInputFrom(ob1Inc(index), isStringValueChar);
 
           // Check for closed string (index is the current token index + string length + closing quote + 1 for the end char)
-          const end = add(add(index, value.length), 2);
-          if (input[get0(end) - 1] !== '"') {
+          const end = ob1Add(ob1Add(index, value.length), 2);
+          if (input[ob1Get0(end) - 1] !== '"') {
             throw this.unexpected({
               description: descriptions.JSON.UNCLOSED_STRING,
               start: this.getPositionFromIndex(end),
@@ -220,7 +223,7 @@ export default createParser(
             if (char === '\n') {
               throw this.unexpected({
                 description: descriptions.JSON.STRING_NEWLINES_IN_JSON,
-                start: this.getPositionFromIndex(add(index, strIndex)),
+                start: this.getPositionFromIndex(ob1Add(index, strIndex)),
               });
             }
           }
@@ -229,11 +232,12 @@ export default createParser(
           const unescaped = unescapeString(value, (metadata, strIndex) => {
             throw this.unexpected({
               description: metadata,
-              start: this.getPositionFromIndex(add(index, strIndex)),
+              start: this.getPositionFromIndex(ob1Add(index, strIndex)),
             });
           });
 
           return this.finishValueToken('String', unescaped, end);
+        }
 
         case "'":
           throw this.unexpected({
@@ -282,13 +286,13 @@ export default createParser(
           isNumberChar,
         )[0]);
         const num = Number(value);
-        return this.finishValueToken('Number', num, add(index, value.length));
+        return this.finishValueToken('Number', num, ob1Add(index, value.length));
       }
 
       // Word - boolean, undefined etc
       if (isWordStartChar(char)) {
         const [value] = this.readInputFrom(index, isWordChar);
-        return this.finishValueToken('Word', value, add(index, value.length));
+        return this.finishValueToken('Word', value, ob1Add(index, value.length));
       }
 
       // Unknown character
@@ -437,7 +441,7 @@ export default createParser(
           if (!this.hasExtensions) {
             throw this.unexpected({
               description: descriptions.JSON.NUMERIC_SEPARATORS_IN_JSON,
-              start: this.getPositionFromIndex(inc(index)),
+              start: this.getPositionFromIndex(ob1Inc(index)),
             });
           }
         } else {
@@ -681,9 +685,10 @@ export default createParser(
       const token = this.getToken();
 
       switch (token.type) {
-        case 'String':
+        case 'String': {
           this.nextToken();
           return token.value;
+        }
 
         case 'Word':
           if (this.hasExtensions) {
@@ -734,9 +739,10 @@ export default createParser(
         case 'BracketOpen':
           return this.parseArray();
 
-        case 'BraceOpen':
+        case 'BraceOpen': {
           this.nextToken();
           return this.parseObject();
+        }
 
         default:
           throw this.unexpected();
@@ -781,6 +787,11 @@ export default createParser(
           return {
             context: {
               category: this.consumeDiagnosticCategory,
+
+              normalizeKey(path) {
+                return getContext().normalizeKey(path);
+              },
+
               getOriginalValue(path) {
                 return getContext().getOriginalValue(path);
               },
@@ -828,6 +839,8 @@ export default createParser(
       const context: Required<ConsumeContext> = {
         category: this.consumeDiagnosticCategory,
 
+        normalizeKey: (key) => key,
+
         getDiagnosticPointer: (
           keys: ConsumePath,
           target: ConsumeSourceLocationRequestTarget,
@@ -865,11 +878,11 @@ export default createParser(
                 ...loc,
                 start: {
                   ...loc.start,
-                  column: add(loc.start.column, 1),
+                  column: ob1Add(loc.start.column, 1),
                 },
                 end: {
                   ...loc.end,
-                  column: sub(loc.end.column, 1),
+                  column: ob1Sub(loc.end.column, 1),
                 },
               };
             }

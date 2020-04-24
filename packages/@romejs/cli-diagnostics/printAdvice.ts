@@ -20,18 +20,19 @@ import {
   getDiagnosticHeader,
 } from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
-import {toLines} from './utils';
+import {toLines, showInvisibles} from './utils';
 import buildPatchCodeFrame from './buildPatchCodeFrame';
 import buildMessageCodeFrame from './buildMessageCodeFrame';
 import {escapeMarkup, markupTag} from '@romejs/string-markup';
 import {DiagnosticsPrinterFlags} from './types';
-import {number0Neg1} from '@romejs/ob1';
+import {ob1Number0Neg1} from '@romejs/ob1';
 import DiagnosticsPrinter, {
   DiagnosticsPrinterFileSources,
 } from './DiagnosticsPrinter';
 import {AbsoluteFilePathSet} from '@romejs/path';
 import {RAW_CODE_MAX_LENGTH} from './constants';
 import {Diffs, diffConstants} from '@romejs/string-diff';
+import {removeCarriageReturn} from '@romejs/string-utils';
 
 type AdvicePrintOptions = {
   printer: DiagnosticsPrinter;
@@ -107,28 +108,27 @@ function printInspect(
   return DID_PRINT;
 }
 
-function removeCRLF(str: string): string {
-  return str.replace(/\r/g, '');
-}
-
 function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
   let expected = '';
   let received = '';
 
   for (const [type, text] of diffs) {
     switch (type) {
-      case diffConstants.ADD:
+      case diffConstants.ADD: {
         received += text;
         break;
+      }
 
-      case diffConstants.DELETE:
+      case diffConstants.DELETE: {
         expected += text;
         break;
+      }
 
-      case diffConstants.EQUAL:
+      case diffConstants.EQUAL: {
         expected += text;
         received += text;
         break;
+      }
     }
   }
 
@@ -140,7 +140,7 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
     };
   }
 
-  const receivedNoCRLF = removeCRLF(received);
+  const receivedNoCRLF = removeCarriageReturn(received);
   if (expected === receivedNoCRLF) {
     return {
         type: 'log',
@@ -149,7 +149,7 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
       };
   }
 
-  const expectedNoCRLF = removeCRLF(expected);
+  const expectedNoCRLF = removeCarriageReturn(expected);
   if (received === expectedNoCRLF) {
     return {
         type: 'log',
@@ -178,8 +178,8 @@ function printDiff(
   const {legend} = item;
   if (legend !== undefined) {
     opts.reporter.spacer();
-    opts.reporter.logAll(`<green>+ ${legend.add}</green>`);
-    opts.reporter.logAll(`<red>- ${legend.delete}</red>`);
+    opts.reporter.logAll(`<error>- ${escapeMarkup(legend.delete)}</error>`);
+    opts.reporter.logAll(`<success>+ ${escapeMarkup(legend.add)}</success>`);
     opts.reporter.spacer();
   }
 
@@ -218,17 +218,28 @@ function printCode(
 ): PrintAdviceResult {
   const {reporter} = opts;
 
-  let truncated = item.code.length > RAW_CODE_MAX_LENGTH;
-  let code = item.code.slice(0, RAW_CODE_MAX_LENGTH);
+  const truncated = !opts.flags.verboseDiagnostics && item.code.length >
+    RAW_CODE_MAX_LENGTH;
+  const code = truncated ? item.code.slice(0, RAW_CODE_MAX_LENGTH) : item.code;
 
-  if (truncated) {
-      code +=
-      `\n<dim><number>${item.code.length - RAW_CODE_MAX_LENGTH}</number> more characters truncated</dim>`;
-  }
+  reporter.indent(
+    () => {
+      if (code === '') {
+        reporter.logAll('<dim>empty input</dim>');
+      } else if (code.trim() === '') {
+        // If it's a string with only whitespace then make it obvious
+        reporter.logAll(showInvisibles(code));
+      } else {
+        reporter.logAll(escapeMarkup(code));
+      }
 
-  reporter.indent(() => {
-    reporter.logAll(escapeMarkup(code));
-  });
+      if (truncated) {
+        reporter.logAll(
+          `<dim><number>${item.code.length - RAW_CODE_MAX_LENGTH}</number> more characters truncated</dim>`,
+        );
+      }
+    },
+  );
 
   return {
     printed: true,
@@ -241,8 +252,7 @@ function printFrame(
   opts: AdvicePrintOptions,
 ): PrintAdviceResult {
   const {reporter} = opts;
-  const {marker} = item;
-  const {start, end, filename} = item.location;
+  const {marker, start, end, filename} = item.location;
   let {sourceText} = item.location;
   const path = opts.printer.createFilePath(filename);
 
@@ -301,7 +311,9 @@ function printStacktrace(
       diagnostic.description.advice[0] ===
       item;
   if (!isFirstPart) {
-    opts.reporter.info(item.title === undefined ? 'Stack trace' : item.title);
+    opts.reporter.info(item.title === undefined
+      ? 'Stack trace'
+      : escapeMarkup(item.title));
     opts.reporter.forceSpacer();
   }
 
@@ -328,10 +340,10 @@ function printStacktrace(
     // Build path
     const objParts = [];
     if (object !== undefined) {
-      objParts.push(markupTag('magenta', escapeMarkup(object)));
+      objParts.push(markupTag('highlight', escapeMarkup(object), {i: 0}));
     }
     if (property !== undefined) {
-      objParts.push(markupTag('cyan', escapeMarkup(property)));
+      objParts.push(markupTag('highlight', escapeMarkup(property), {i: 1}));
     }
     if (objParts.length > 0) {
       logParts.push(objParts.join('.'));
@@ -339,7 +351,7 @@ function printStacktrace(
 
     // Add suffix
     if (suffix !== undefined) {
-      logParts.push(markupTag('green', escapeMarkup(suffix)));
+      logParts.push(markupTag('success', escapeMarkup(suffix)));
     }
 
     // Add source
@@ -347,7 +359,7 @@ function printStacktrace(
       const header = getDiagnosticHeader({
         filename,
         start: {
-          index: number0Neg1,
+          index: ob1Number0Neg1,
           line,
           column,
         },
@@ -367,19 +379,17 @@ function printStacktrace(
           column !==
           undefined) {
       const pos: Position = {
-        index: number0Neg1,
+        index: ob1Number0Neg1,
         line,
         column,
       };
 
       const skipped = printFrame({
         type: 'frame',
-        marker: undefined,
         location: {
           language,
           filename,
           sourceType: 'module',
-          mtime: undefined,
           start: pos,
           end: pos,
           sourceText: code,
@@ -407,21 +417,25 @@ function printLog(
 
   if (message !== undefined) {
     switch (category) {
-      case 'none':
+      case 'none': {
         reporter.logAll(message);
         break;
+      }
 
-      case 'warn':
+      case 'warn': {
         reporter.warn(message);
         break;
+      }
 
-      case 'info':
+      case 'info': {
         reporter.info(message);
         break;
+      }
 
-      case 'error':
+      case 'error': {
         reporter.error(message);
         break;
+      }
 
       default:
         throw new Error(`Unknown message item log category ${category}`);

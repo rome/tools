@@ -10,6 +10,7 @@ import {
   Manifest,
   ManifestDefinition,
   normalizeManifest,
+  manifestNameToString,
 } from '@romejs/codec-js-manifest';
 import {
   PathPatterns,
@@ -21,10 +22,7 @@ import {
   ROME_CONFIG_FILENAMES,
   ProjectDefinition,
 } from '@romejs/project';
-import {
-  DiagnosticsProcessor,
-  getDiagnosticsFromError,
-} from '@romejs/diagnostics';
+import {DiagnosticsProcessor, catchDiagnostics} from '@romejs/diagnostics';
 import {Reporter} from '@romejs/cli-reporter';
 import {
   createWatchmanClient,
@@ -48,6 +46,7 @@ import {
   getFileHandler,
   getFileHandlerExtensions,
 } from '../../common/fileHandlers';
+import {markup} from '@romejs/string-markup';
 
 const DEFAULT_DENYLIST = ['.hg', '.git'];
 
@@ -302,7 +301,7 @@ async function createWatchmanWatcher(
     });
 
     const initial: WatchmanSubscriptionValue = await event.wait();
-    if (initial.is_fresh_instance !== true) {
+    if (initial.isFreshInstance !== true) {
       throw new Error('Expected this to be a fresh instance');
     }
     clearTimeout(timeout);
@@ -657,6 +656,7 @@ export default class MemoryFileSystem {
   ): Promise<void> {
     const {logger} = this.master;
     const projectFolder = projectFolderPath.join();
+    const folderLink = markup`<filelink target="${projectFolder}" />`;
 
     // Defer if we're already currently initializing this project
     const cached = this.watchPromises.get(projectFolder);
@@ -674,7 +674,7 @@ export default class MemoryFileSystem {
     for (const {path} of this.watchers.values()) {
       if (projectFolderPath.isRelativeTo(path)) {
         logger.info(
-          `[MemoryFileSystem] Skipped crawl for ${projectFolder} because we're already watching the parent directory ${path.join()}`,
+          `[MemoryFileSystem] Skipped crawl for ${folderLink} because we're already watching the parent directory ${path.join()}`,
         );
         return undefined;
       }
@@ -684,7 +684,7 @@ export default class MemoryFileSystem {
     await this.waitIfInitializingWatch(projectFolderPath);
 
     // New watch target
-    logger.info(`[MemoryFileSystem] Adding new project folder ${projectFolder}`);
+    logger.info(`[MemoryFileSystem] Adding new project folder ${folderLink}`);
 
     // Remove watchers that are descedents of this folder as this watcher will handle them
     for (const [loc, {close, path}] of this.watchers) {
@@ -694,7 +694,7 @@ export default class MemoryFileSystem {
       }
     }
 
-    const diagnostics = new DiagnosticsProcessor({
+    const diagnostics = this.master.createDiagnosticsProcessor({
       origins: [
         {
           category: 'memory-fs',
@@ -705,7 +705,7 @@ export default class MemoryFileSystem {
 
     let promise;
     if (projectConfig.files.watchman) {
-      logger.info(`[MemoryFileSystem] Watching ${projectFolder} with watchman`);
+      logger.info(`[MemoryFileSystem] Watching ${folderLink} with watchman`);
       promise = createWatchmanWatcher(
         this,
         diagnostics,
@@ -713,7 +713,7 @@ export default class MemoryFileSystem {
         projectConfig,
       );
     } else {
-      logger.info(`[MemoryFileSystem] Watching ${projectFolder} with fs.watch`);
+      logger.info(`[MemoryFileSystem] Watching ${folderLink} with fs.watch`);
       promise = createRegularWatcher(this, diagnostics, projectFolderPath);
     }
     this.watchPromises.set(projectFolder, {
@@ -807,7 +807,7 @@ export default class MemoryFileSystem {
       }
 
       const manifest = this.getManifest(packagePath);
-      if (manifest !== undefined && manifest.raw.haste_commonjs === true) {
+      if (manifest !== undefined && manifest.raw.hasteCommonjs === true) {
         return false;
       }
     }
@@ -843,16 +843,14 @@ export default class MemoryFileSystem {
 
   // This is a wrapper around _declareManifest as it can produce diagnostics
   async declareManifest(opts: DeclareManifestOpts): Promise<undefined | string> {
-    try {
-      return await this._declareManifest(opts);
-    } catch (err) {
-      const diagnostics = getDiagnosticsFromError(err);
+    const {value, diagnostics} = await catchDiagnostics(() => {
+      return this._declareManifest(opts);
+    });
 
-      if (diagnostics === undefined) {
-        throw err;
-      } else {
-        opts.diagnostics.addDiagnostics(diagnostics);
-      }
+    if (diagnostics === undefined) {
+      return value;
+    } else {
+      opts.diagnostics.addDiagnostics(diagnostics);
       return undefined;
     }
   }
@@ -898,7 +896,7 @@ export default class MemoryFileSystem {
 
     // Set haste name and haste location to the directory itself
     if (manifest.name !== undefined) {
-      hasteName = manifest.name;
+      hasteName = manifestNameToString(manifest.name);
     }
 
     // If we aren't in node_modules then this is a project package

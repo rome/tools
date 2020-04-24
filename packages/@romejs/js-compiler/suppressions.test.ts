@@ -5,21 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
+import {test} from 'rome';
 import {extractSuppressionsFromComments} from './suppressions';
 import {CommentBlock} from '@romejs/js-ast';
-import {number0, coerce1} from '@romejs/ob1';
+import {ob1Number0, ob1Coerce1} from '@romejs/ob1';
 
 function generateComment(value: string, line: number): CommentBlock {
   const pos = {
-    index: number0,
-    column: number0,
-    line: coerce1(line),
+    index: ob1Number0,
+    column: ob1Number0,
+    line: ob1Coerce1(line),
   };
 
   return {
     type: 'CommentBlock',
     value,
+    id: '0',
     loc: {
       filename: 'unknown',
       start: pos,
@@ -28,8 +29,8 @@ function generateComment(value: string, line: number): CommentBlock {
   };
 }
 
-test('single category', (t) => {
-  t.snapshot(extractSuppressionsFromComments([
+test('single category', async (t) => {
+  await t.snapshot(extractSuppressionsFromComments([
     generateComment('rome-suppress foo', 1),
     generateComment('* rome-suppress foo', 2),
     generateComment(' * rome-suppress foo', 3),
@@ -37,8 +38,8 @@ test('single category', (t) => {
   ]));
 });
 
-test('multiple categories', (t) => {
-  t.snapshot(extractSuppressionsFromComments([
+test('multiple categories', async (t) => {
+  await t.snapshot(extractSuppressionsFromComments([
     generateComment('rome-suppress foo bar', 1),
     generateComment('* rome-suppress foo bar', 2),
     generateComment(' * rome-suppress foo bar', 3),
@@ -49,14 +50,14 @@ test('multiple categories', (t) => {
   ]));
 });
 
-test('typos', (t) => {
-  t.snapshot(extractSuppressionsFromComments([
+test('typos', async (t) => {
+  await t.snapshot(extractSuppressionsFromComments([
     generateComment('rome-ignore foo bar', 1),
   ]));
 });
 
-test('duplicates', (t) => {
-  t.snapshot(extractSuppressionsFromComments([
+test('duplicates', async (t) => {
+  await t.snapshot(extractSuppressionsFromComments([
     generateComment('rome-suppress foo foo', 1),
   ]));
 });

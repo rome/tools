@@ -7,7 +7,8 @@
 
 import {MasterRequest} from '@romejs/core';
 import {WorkerStatus} from '../../common/bridges/WorkerBridge';
-import {commandCategories, createMasterCommand} from '../../commands';
+import {commandCategories} from '../../common/commands';
+import {createMasterCommand} from '../commands';
 
 type StatusResult = {
   master: {
@@ -31,8 +32,14 @@ type StatusWorkerResult = {
 export default createMasterCommand({
   category: commandCategories.PROCESS_MANAGEMENT,
   description: 'dump memory and process info of master and workers',
+  usage: '',
+  examples: [],
 
-  async default({master}: MasterRequest): Promise<StatusResult> {
+  defineFlags() {
+    return {};
+  },
+
+  async callback({master}: MasterRequest): Promise<StatusResult> {
     const workers = await Promise.all(master.workerManager.getWorkers().map(
       async (worker): Promise<StatusWorkerResult> => {
         const workerStatus: WorkerStatus = await worker.bridge.status.call();

@@ -16,15 +16,15 @@ import {Event} from '@romejs/events';
 import diff from '@romejs/string-diff';
 import {createErrorFromStructure} from '@romejs/v8';
 import prettyFormat from '@romejs/pretty-format';
-import {Class} from '@romejs/typescript-helpers';
 import {FileReference} from '../common/types/files';
 import {markup} from '@romejs/string-markup';
-
-type AsyncFunc = () => undefined | Promise<void>;
-
-type SyncThrower = () => void;
-
-type ExpectedError = undefined | string | RegExp | Class<Error>;
+import {
+  TestHelper,
+  AsyncFunc,
+  SyncThrower,
+  ExpectedError,
+} from '@romejs-runtime/rome/test';
+import {createAbsoluteFilePath} from '@romejs/path';
 
 function formatExpectedError(expected: ExpectedError): string {
   if (typeof expected === 'string') {
@@ -64,7 +64,14 @@ function matchExpectedError(error: Error, expected: ExpectedError): boolean {
 
 export type OnTimeout = (time: number) => void;
 
-export default class TestAPI {
+type SnapshotOptions = {
+  entryName: string;
+  expected: unknown;
+  message?: string;
+  optionalFilename?: string;
+};
+
+export default class TestAPI implements TestHelper {
   constructor({
     testName,
     onTimeout,
@@ -82,9 +89,19 @@ export default class TestAPI {
     this.options = options;
     this.snapshotManager = snapshotManager;
     this.snapshotCounter = 0;
+    this.loadingSnapshots = 0;
     this.file = file;
 
     this.teardownEvent = new Event({name: 'TestAPI.teardown'});
+    this.onTeardown(
+      async () => {
+        if (this.loadingSnapshots) {
+          throw new Error(
+              `Test finished while we were still loading snapshots. Did you forget an await before t.snapshot?`,
+            );
+        }
+      },
+    );
 
     this.startTime = Date.now();
     this.onTimeout = onTimeout;
@@ -107,6 +124,7 @@ export default class TestAPI {
   advice: DiagnosticAdvice;
   teardownEvent: Event<void, void>;
   testName: string;
+  loadingSnapshots: number;
   snapshotCounter: number;
   snapshotManager: SnapshotManager;
 
@@ -197,6 +215,10 @@ export default class TestAPI {
     this.advice.push(item);
   }
 
+  clearAdvice() {
+    this.advice = [];
+  }
+
   onTeardown(callback: AsyncFunc): void {
     this.teardownEvent.subscribe(callback);
   }
@@ -251,6 +273,7 @@ export default class TestAPI {
   ): never {
     throw createErrorFromStructure({
       message,
+      markupMessage: message,
       advice,
       framesToPop: framesToPop + 1,
     });
@@ -424,25 +447,67 @@ export default class TestAPI {
     throw new Error('unimplemented');
   }
 
-  snapshot(expected: unknown, message?: string): void {
-    const id = this.snapshotCounter++;
-    this._snapshotNamed(String(id), expected, message, 2);
-  }
-
-  snapshotNamed(name: string, expected: unknown, message?: string): void {
-    this._snapshotNamed(name, expected, message, 1);
-  }
-
-  getSnapshot(snapshotName: string): unknown {
-    return this.snapshotManager.get(this.testName, snapshotName);
-  }
-
-  _snapshotNamed(
-    name: string,
+  snapshot(
     expected: unknown,
     message?: string,
-    framesToPop?: number,
-  ): void {
+    optionalFilename?: string,
+  ): Promise<string> {
+    const id = this.snapshotCounter++;
+    return this.catchNamedSnapshot({
+      entryName: String(id),
+      expected,
+      message,
+      optionalFilename,
+    });
+  }
+
+  snapshotNamed(
+    entryName: string,
+    expected: unknown,
+    message?: string,
+    optionalFilename?: string,
+  ): Promise<string> {
+    return this.catchNamedSnapshot({
+      entryName,
+      expected,
+      message,
+      optionalFilename,
+    });
+  }
+
+  async getSnapshot(entryName: string): Promise<unknown> {
+    // TODO add `filename`
+    return this.snapshotManager.get(this.testName, entryName);
+  }
+
+  _normalizeSnapshotFilename(filename: string): string {
+    if (!filename.endsWith('test.md')) {
+      const lastIndex = filename.lastIndexOf('.');
+      let baseName = undefined;
+      if (lastIndex === -1) {
+        // extensionless file
+        baseName = filename;
+      } else {
+        baseName = filename.substring(0, lastIndex);
+      }
+      return `${baseName}.test.md`;
+    }
+    return filename;
+  }
+
+  catchNamedSnapshot(opts: SnapshotOptions): Promise<string> {
+    this.loadingSnapshots++;
+    return this.compareNamedSnapshot(opts).finally(() => {
+      this.loadingSnapshots--;
+    });
+  }
+
+  async compareNamedSnapshot({
+    entryName,
+    message,
+    expected,
+    optionalFilename,
+  }: SnapshotOptions): Promise<string> {
     let language: undefined | string;
 
     let formatted = '';
@@ -453,17 +518,28 @@ export default class TestAPI {
       formatted = prettyFormat(expected);
     }
 
+    let snapshotPath = undefined;
+    if (optionalFilename !== undefined) {
+      optionalFilename = this._normalizeSnapshotFilename(optionalFilename);
+      snapshotPath = createAbsoluteFilePath(optionalFilename);
+    }
+
     // Get the current snapshot
-    const existingSnapshot = this.snapshotManager.get(this.testName, name);
+    const existingSnapshot = await this.snapshotManager.get(
+      this.testName,
+      entryName,
+      snapshotPath,
+    );
     if (existingSnapshot === undefined) {
       // No snapshot exists, let's save this one!
       this.snapshotManager.set({
         testName: this.testName,
-        snapshotName: String(name),
+        entryName,
         value: formatted,
         language,
+        snapshotPath,
       });
-      return;
+      return entryName;
     }
 
     // Compare the snapshots
@@ -479,13 +555,13 @@ export default class TestAPI {
 
       if (message === undefined) {
           message =
-          markup`Snapshot ${name} at <filelink emphasis target="${this.snapshotManager.path.join()}" /> doesn't match`;
+          markup`Snapshot ${entryName} at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" /> doesn't match`;
       } else {
         advice.push(
           {
             type: 'log',
             category: 'info',
-            message: `Snapshot can be found at <filelink emphasis target="${this.snapshotManager.path.join()}" />`,
+            message: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" />`,
           },
         );
       }
@@ -498,7 +574,10 @@ export default class TestAPI {
         },
       );
 
-      this.fail(message, advice, framesToPop);
+      // Ignore the original t.snapshot call and caughtNamedSnapshot
+      this.fail(message, advice, 2);
     }
+
+    return entryName;
   }
 }

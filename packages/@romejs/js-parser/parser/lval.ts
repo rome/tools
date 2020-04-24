@@ -45,7 +45,7 @@ import {
   hasTSModifier,
 } from './index';
 import {descriptions} from '@romejs/diagnostics';
-import {get0} from '@romejs/ob1';
+import {ob1Get0} from '@romejs/ob1';
 import {
   parseBindingIdentifier,
   toAssignmentIdentifier,
@@ -215,7 +215,7 @@ export function toTargetAssignmentPattern(
     case 'TSAssignmentTypeAssertion':
       return binding;
 
-    default:
+    default: {
       parser.addDiagnostic({
         loc: node.loc,
         description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_TARGET,
@@ -225,6 +225,7 @@ export function toTargetAssignmentPattern(
         loc: node.loc,
         name: 'X',
       };
+    }
   }
 }
 
@@ -405,7 +406,7 @@ export function toAssignmentObjectProperty(
         ),
       };
 
-    default:
+    default: {
       parser.addDiagnostic({
         loc: prop.loc,
         description: descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROPERTY,
@@ -428,6 +429,7 @@ export function toAssignmentObjectProperty(
           name: 'X',
         },
       };
+    }
   }
 }
 
@@ -729,7 +731,7 @@ export function parseSpread(
     refNeedsArrowPos,
   );
 
-  if (get0(parser.state.commaAfterSpreadAt) === -1 && parser.match(tt.comma)) {
+  if (ob1Get0(parser.state.commaAfterSpreadAt) === -1 && parser.match(tt.comma)) {
     parser.state.commaAfterSpreadAt = parser.state.index;
   }
 
@@ -1010,7 +1012,7 @@ export function checkLVal(
 
     case 'TSAsExpression':
     case 'TSNonNullExpression':
-    case 'TSTypeAssertion':
+    case 'TSTypeAssertion': {
       checkLVal(
         parser,
         expr.expression,
@@ -1019,10 +1021,11 @@ export function checkLVal(
         contextDescription,
       );
       return undefined;
+    }
 
     case 'BindingIdentifier':
     case 'ReferenceIdentifier':
-    case 'AssignmentIdentifier':
+    case 'AssignmentIdentifier': {
       if (parser.inScope('STRICT') && isStrictBindReservedWord(
           expr.name,
           parser.inModule,
@@ -1049,9 +1052,10 @@ export function checkLVal(
         }
       }
       break;
+    }
 
     case 'AssignmentObjectPattern':
-    case 'BindingObjectPattern':
+    case 'BindingObjectPattern': {
       if (expr.rest !== undefined) {
         checkLVal(parser, expr.rest, isBinding, checkClashes, 'rest property');
       }
@@ -1076,13 +1080,14 @@ export function checkLVal(
         }
       }
       break;
+    }
 
     case 'AssignmentObjectPatternProperty':
     case 'BindingObjectPatternProperty':
       break;
 
     case 'AssignmentArrayPattern':
-    case 'BindingArrayPattern':
+    case 'BindingArrayPattern': {
       if (expr.rest !== undefined) {
         checkLVal(parser, expr.rest, isBinding, checkClashes, 'rest element');
       }
@@ -1099,10 +1104,12 @@ export function checkLVal(
         }
       }
       break;
+    }
 
-    case 'BindingAssignmentPattern':
+    case 'BindingAssignmentPattern': {
       checkLVal(parser, expr.left, isBinding, checkClashes, 'assignment pattern');
       break;
+    }
   }
 }
 
@@ -1140,7 +1147,7 @@ export function raiseRestNotLast(
 }
 
 export function checkCommaAfterRestFromSpread(parser: JSParser): void {
-  if (get0(parser.state.commaAfterSpreadAt) > -1) {
+  if (ob1Get0(parser.state.commaAfterSpreadAt) > -1) {
     raiseRestNotLast(parser, undefined, parser.getPositionFromIndex(
       parser.state.commaAfterSpreadAt,
     ));

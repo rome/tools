@@ -18,9 +18,9 @@ import {markupTag, escapeMarkup} from '@romejs/string-markup';
 function formatDiffLine(diffs: Diffs) {
   return diffs.map(([type, text]) => {
     if (type === diffConstants.DELETE) {
-      return markupTag('red', escapeMarkup(showInvisibles(text)));
+      return markupTag('error', escapeMarkup(showInvisibles(text)));
     } else if (type === diffConstants.ADD) {
-      return markupTag('green', escapeMarkup(showInvisibles(text)));
+      return markupTag('success', escapeMarkup(showInvisibles(text)));
     } else {
       // type === diffConstants.EQUAL
       return escapeMarkup(text);
@@ -28,8 +28,8 @@ function formatDiffLine(diffs: Diffs) {
   }).join('');
 }
 
-const DELETE_MARKER = markupTag('red', '-');
-const ADD_MARKER = markupTag('green', '+');
+const DELETE_MARKER = markupTag('error', '-');
+const ADD_MARKER = markupTag('success', '+');
 
 export default function buildPatchCodeFrame(
   rawDiffs: Diffs,
@@ -94,12 +94,6 @@ export default function buildPatchCodeFrame(
     const diffs = diffsByLine[i];
     const lineNo = i + 1;
 
-    if (noGutter) {
-      frame.push(`  ${formatDiffLine(diffs)}`);
-      lastDisplayedLine = lineNo;
-      continue;
-    }
-
     const deletions: Diffs = [];
     const addition: Diffs = [];
 
@@ -129,18 +123,24 @@ export default function buildPatchCodeFrame(
       frame.push(skippedLine);
     }
 
-    const gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad count="${String(
-      lineLength,
-    )}">${String(lineNo)}</pad>${GUTTER}</emphasis>`;
-    const gutterNoLine = `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(lineLength)}${GUTTER}</emphasis>`;
+    let gutterWithLine = '';
+    let gutterNoLine = '';
 
-    if (hasAddition) {
-      frame.push(`${gutterWithLine}${ADD_MARKER} ${formatDiffLine(addition)}`);
+    if (!noGutter) {
+      gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad count="${String(
+        lineLength,
+      )}">${String(lineNo)}</pad>${GUTTER}</emphasis>`;
+        gutterNoLine =
+        `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(lineLength)}${GUTTER}</emphasis>`;
     }
 
     if (hasDeletions) {
       const gutter = hasAddition ? gutterNoLine : gutterWithLine;
       frame.push(`${gutter}${DELETE_MARKER} ${formatDiffLine(deletions)}`);
+    }
+
+    if (hasAddition) {
+      frame.push(`${gutterWithLine}${ADD_MARKER} ${formatDiffLine(addition)}`);
     }
 
     if (!hasAddition && !hasDeletions) {

@@ -37,15 +37,17 @@ export default function isStatement(
     case 'TryStatement':
     case 'WhileStatement':
     case 'WithStatement':
-    case 'ForOfStatement':
+    case 'ForOfStatement': {
       const statement: AnyStatement = node;
       statement;
       return true;
+    }
 
-    default:
+    default: {
       // Assert that all statements were handled
       const notStatement: Exclude<AnyNode, AnyStatement> = node;
       notStatement;
       return false;
+    }
   }
 }

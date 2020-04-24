@@ -8,14 +8,16 @@
 import {DiagnosticLocation} from '@romejs/diagnostics';
 import {toKebabCase} from '@romejs/string-utils';
 import {ConsumeSourceLocationRequestTarget} from '@romejs/consume';
-import {Number0, coerce0, number1, number0Neg1} from '@romejs/ob1';
+import {Number0, ob1Coerce0, ob1Number1, ob1Number0Neg1} from '@romejs/ob1';
 import {Dict} from '@romejs/typescript-helpers';
 
 type SerializeCLIData = {
-  prefix: undefined | string;
+  programName: undefined | string;
+  commandName: undefined | string;
   args: Array<string>;
   defaultFlags: Dict<unknown>;
   flags: Dict<unknown>;
+  incorrectCaseFlags: Set<string>;
   shorthandFlags: Set<string>;
 };
 
@@ -30,7 +32,7 @@ export type SerializeCLITarget = {
   type: 'arg-range';
   from: number;
   to?: number;
-} | {type: 'none'};
+} | {type: 'none'} | {type: 'command'} | {type: 'program'};
 
 function normalizeFlagValue(val: unknown): unknown {
   if (val === 'true') {
@@ -44,31 +46,65 @@ function normalizeFlagValue(val: unknown): unknown {
 
 export function serializeCLIFlags(
   data: SerializeCLIData,
-  cliTarget: SerializeCLITarget,
+  target: SerializeCLITarget,
 ): DiagnosticLocation {
-  const {args, flags, defaultFlags} = data;
+  const {args, flags, programName, commandName, defaultFlags} = data;
 
+  let startColumn: Number0 = ob1Number0Neg1;
+  let endColumn: Number0 = ob1Number0Neg1;
   let code = `$ `;
-  if (data.prefix !== undefined) {
-    code += `${data.prefix} `;
+
+  function setStartColumn() {
+    startColumn = ob1Coerce0(code.length);
   }
-  let startColumn: Number0 = number0Neg1;
-  let endColumn: Number0 = number0Neg1;
+
+  function setEndColumn() {
+    // Never point to a space
+    if (code[code.length - 1] === ' ') {
+      endColumn = ob1Coerce0(code.length - 1);
+    } else {
+      endColumn = ob1Coerce0(code.length);
+    }
+  }
+
+  if (programName !== undefined) {
+    if (target.type === 'program') {
+      setStartColumn();
+    }
+
+    code += `${programName} `;
+
+    if (target.type === 'program') {
+      setEndColumn();
+    }
+  }
+
+  if (commandName !== undefined) {
+    if (target.type === 'command') {
+      setStartColumn();
+    }
+
+    code += `${commandName} `;
+
+    if (target.type === 'command') {
+      setEndColumn();
+    }
+  }
 
   // Add args
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
 
     let isTarget = false;
-    if (cliTarget.type === 'arg' && i === cliTarget.key) {
+    if (target.type === 'arg' && i === target.key) {
       isTarget = true;
     }
-    if (cliTarget.type === 'arg-range' && cliTarget.from === i) {
+    if (target.type === 'arg-range' && target.from === i) {
       isTarget = true;
     }
 
     if (isTarget) {
-      startColumn = coerce0(code.length);
+      setStartColumn();
     }
 
     code += `${arg} `;
@@ -76,15 +112,13 @@ export function serializeCLIFlags(
     let isEndTarget = isTarget;
 
     // We are the end target if we're within the from-to range or we're greater than from with no to
-    if (cliTarget.type === 'arg-range' && i > cliTarget.from &&
-        (cliTarget.to ===
-            undefined ||
-          cliTarget.to <= i)) {
+    if (target.type === 'arg-range' && i > target.from && (target.to ===
+        undefined || target.to <= i)) {
       isEndTarget = true;
     }
 
     if (isEndTarget) {
-      endColumn = coerce0(code.length - 1);
+      setEndColumn();
     }
   }
 
@@ -97,14 +131,14 @@ export function serializeCLIFlags(
       continue;
     }
 
-    const isTarget = cliTarget.type === 'flag' && key === cliTarget.key;
+    const isTarget = target.type === 'flag' && key === target.key;
 
     if (isTarget) {
-      startColumn = coerce0(code.length);
+      setStartColumn();
     }
 
     const flagPrefix = data.shorthandFlags.has(key) ? '-' : '--';
-    const kebabKey = toKebabCase(key);
+    const kebabKey = data.incorrectCaseFlags.has(key) ? key : toKebabCase(key);
     if (val === false) {
       code += `${flagPrefix}no-${kebabKey} `;
     } else {
@@ -114,10 +148,10 @@ export function serializeCLIFlags(
     // Booleans are always indicated with just their flag
     if (typeof val !== 'boolean') {
       // Only point to the value for flags that specify it
-      if (isTarget && cliTarget.type === 'flag' &&
-          (cliTarget.target === 'value' ||
-            cliTarget.target === 'inner-value')) {
-        startColumn = coerce0(code.length);
+      if (isTarget && target.type === 'flag' && (target.target === 'value' ||
+            target.target ===
+            'inner-value')) {
+        startColumn = ob1Coerce0(code.length);
       }
 
       // Number or string
@@ -125,12 +159,12 @@ export function serializeCLIFlags(
     }
 
     if (isTarget) {
-      endColumn = coerce0(code.length - 1);
+      setEndColumn();
     }
   }
 
-  if (startColumn === number0Neg1 || endColumn === number0Neg1) {
-    startColumn = coerce0(code.length - 1);
+  if (startColumn === ob1Number0Neg1 || endColumn === ob1Number0Neg1) {
+    startColumn = ob1Coerce0(code.length - 1);
     endColumn = startColumn;
   }
 
@@ -140,12 +174,12 @@ export function serializeCLIFlags(
     sourceText: code,
     filename: 'argv',
     start: {
-      line: number1,
+      line: ob1Number1,
       column: startColumn,
       index: startColumn,
     },
     end: {
-      line: number1,
+      line: ob1Number1,
       column: endColumn,
       index: endColumn,
     },

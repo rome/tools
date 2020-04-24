@@ -7,14 +7,14 @@
 
 import {AbsoluteFilePath} from '@romejs/path';
 import {exists} from '@romejs/fs';
-import child_process = require('child_process');
+import childProcess = require('child_process');
 
 const TIMEOUT = 10_000;
 
 async function exec(command: string, args: Array<string>): Promise<string> {
   return new Promise(
       (resolve, reject) => {
-        const proc = child_process.spawn(command, args, {timeout: TIMEOUT});
+        const proc = childProcess.spawn(command, args, {timeout: TIMEOUT});
         let stderr = '';
         let stdout = '';
 
@@ -53,6 +53,21 @@ async function exec(command: string, args: Array<string>): Promise<string> {
     );
 }
 
+function extractFileList(out: string): Array<string> {
+  const lines = out.trim().split('\n');
+
+  const files: Array<string> = [];
+
+  for (const line of lines) {
+    const match = line.match(/^[AM]\s+(.*?)$/);
+    if (match != null) {
+      files.push(match[1]);
+    }
+  }
+
+  return files;
+}
+
 export class VCSClient {
   constructor(root: AbsoluteFilePath) {
     this.root = root;
@@ -65,6 +80,10 @@ export class VCSClient {
   getModifiedFiles(branch: string): Promise<Array<string>> {
     throw new Error('unimplemented');
   }
+
+  getUncommittedFiles(): Promise<Array<string>> {
+    throw new Error('unimplemented');
+  }
 }
 
 class GitVCSClient extends VCSClient {
@@ -73,20 +92,14 @@ class GitVCSClient extends VCSClient {
     this.trunkBranch = 'master';
   }
 
+  async getUncommittedFiles(): Promise<Array<string>> {
+    const out = await exec('git', ['status', '--short']);
+    return extractFileList(out);
+  }
+
   async getModifiedFiles(branch: string): Promise<Array<string>> {
     const out = await exec('git', ['diff', '--name-status', branch]);
-    const lines = out.trim().split('\n');
-
-    const files: Array<string> = [];
-
-    for (const line of lines) {
-      const match = line.match(/^[AM]\s+(.*?)$/);
-      if (match != null) {
-        files.push(match[1]);
-      }
-    }
-
-    return files;
+    return extractFileList(out);
   }
 }
 

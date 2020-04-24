@@ -3,7 +3,6 @@
   "private": true,
   "type": "module",
   "main": "index.ts",
-  "version": "0.0.179",
   "bin": {
     "rome": "bin/rome.ts"
   }

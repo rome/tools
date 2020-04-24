@@ -49,7 +49,7 @@ import {
   maybeParseTypeArguments,
   parseClassImplements,
 } from './index';
-import {inc, dec} from '@romejs/ob1';
+import {ob1Inc, ob1Dec} from '@romejs/ob1';
 import {parseBindingIdentifier, toBindingIdentifier} from './expression';
 import {descriptions} from '@romejs/diagnostics';
 
@@ -121,20 +121,28 @@ export function parseClass(
 
   parser.pushScope('CLASS', superClass === undefined ? 'normal' : 'derived');
 
+  const bodyStart = parser.getPosition();
   const body = parseClassBody(parser);
 
   parser.popScope('CLASS');
   parser.popScope('STRICT');
   parser.popScope('METHOD');
 
-  const meta: ClassHead = parser.finishNode(start, {
-    type: 'ClassHead',
-    body,
-    typeParameters,
-    superClass,
-    superTypeParameters,
-    implements: implemented,
-  });
+  // We have two finishNodes here to consume the innerComments inside of the body
+  // This is since in the Rome AST, we don't have a ClassBody node, so the comment
+  // algorithm thinks that the ClassHead location is too broad, and thinks a different
+  // node should consume them.
+  const meta: ClassHead = parser.finishNode(start, parser.finishNode(
+    bodyStart,
+    {
+      type: 'ClassHead',
+      body,
+      typeParameters,
+      superClass,
+      superTypeParameters,
+      implements: implemented,
+    },
+  ));
 
   return {
     loc: parser.finishLoc(start),
@@ -186,7 +194,7 @@ type ClassBodyState = {hadConstructor: boolean};
 function parseClassBody(parser: JSParser): Array<AnyClassMember> {
   // class bodies are implicitly strict
   parser.pushScope('STRICT', true);
-  parser.state.classLevel = inc(parser.state.classLevel);
+  parser.state.classLevel = ob1Inc(parser.state.classLevel);
 
   const state: ClassBodyState = {hadConstructor: false};
 
@@ -211,7 +219,7 @@ function parseClassBody(parser: JSParser): Array<AnyClassMember> {
 
   parser.expectClosing(openContext);
 
-  parser.state.classLevel = dec(parser.state.classLevel);
+  parser.state.classLevel = ob1Dec(parser.state.classLevel);
   parser.popScope('STRICT');
 
   return body;
@@ -299,15 +307,17 @@ function parseClassMemberWithIsStatic(
 
   const mod = parseTSModifier(parser, ['abstract', 'readonly']);
   switch (mod) {
-    case 'readonly':
+    case 'readonly': {
       readonly = true;
       abstract = hasTSModifier(parser, ['abstract']);
       break;
+    }
 
-    case 'abstract':
+    case 'abstract': {
       abstract = true;
       readonly = hasTSModifier(parser, ['readonly']);
       break;
+    }
   }
 
   const nameOpts = {

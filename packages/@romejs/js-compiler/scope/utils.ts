@@ -6,55 +6,9 @@
  */
 
 import Scope from './Scope';
-import {
-  LetBinding,
-  ArgumentsBinding,
-  REDUCE_SKIP_SUBTREE,
-} from '@romejs/js-compiler';
-import {getBindingIdentifiers, isFunctionNode} from '@romejs/js-ast-utils';
-import {AnyFunction, Program} from '@romejs/js-ast';
-
-export function addFunctionBindings(
-  scope: Scope,
-  node: AnyFunction,
-  hasArguments: boolean = true,
-) {
-  const {head} = node;
-
-  // Add type parameters
-  scope.evaluate(head.typeParameters);
-
-  const params = head.rest === undefined ? head.params : [
-    ...head.params,
-    head.rest,
-  ];
-
-  // Add parameters
-  for (const param of params) {
-    for (const id of getBindingIdentifiers(param)) {
-      // TODO maybe add a `param` binding type?
-      scope.addBinding(new LetBinding({
-        node: id,
-        name: id.name,
-        scope,
-        kind: 'parameter',
-      }));
-    }
-  }
-
-  // Add `arguments` binding
-  if (hasArguments) {
-    scope.addBinding(new ArgumentsBinding({
-      name: 'arguments',
-      node,
-      scope,
-    }));
-  }
-
-  if (head.hasHoistedVars) {
-    addVarBindings(scope, node);
-  }
-}
+import {REDUCE_SKIP_SUBTREE} from '@romejs/js-compiler';
+import {isFunctionNode} from '@romejs/js-ast-utils';
+import {Program, AnyFunction} from '@romejs/js-ast';
 
 export function addVarBindings(scope: Scope, topNode: AnyFunction | Program) {
   const {context} = scope.getRootScope();

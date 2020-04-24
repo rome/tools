@@ -6,7 +6,7 @@
  */
 
 import T from './types/T';
-import {Context, TransformProjectDefinition} from '@romejs/js-compiler';
+import {CompilerContext, TransformProjectDefinition} from '@romejs/js-compiler';
 import {Program} from '@romejs/js-ast';
 import Graph from './Graph';
 import Evaluator from './Evaluator';
@@ -22,7 +22,7 @@ type HubStatus = number;
 
 export default class Hub {
   constructor(ast: Program, project: TransformProjectDefinition) {
-    this.context = new Context({
+    this.context = new CompilerContext({
       ast,
       project,
       origin: {
@@ -38,7 +38,7 @@ export default class Hub {
   status: HubStatus;
   evaluator: Evaluator;
   graph: Graph<T>;
-  context: Context;
+  context: CompilerContext;
   utils: Utils;
 
   close() {

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {assertNodeTypeSet, AnyNode, AnyComment} from '@romejs/js-ast';
+import {AnyNode, AnyComment} from '@romejs/js-ast';
 import builderFunctions from './builders/index';
 import * as n from './node/index';
 import {isTypeNode, isTypeExpressionWrapperNode} from '@romejs/js-ast-utils';
@@ -22,9 +22,7 @@ import {
   positionMarker,
   concat,
 } from './tokens';
-import {Number0} from '@romejs/ob1';
-
-assertNodeTypeSet(builderFunctions, 'builders');
+import CommentsConsumer from '@romejs/js-parser/CommentsConsumer';
 
 export type BuilderMethod = (
   builder: Builder,
@@ -36,6 +34,7 @@ export type BuilderOptions = {
   typeAnnotations: boolean;
   format?: 'pretty' | 'compact';
   indent?: number;
+  comments?: Array<AnyComment>;
   sourceMaps?: boolean;
   inputSourceMap?: SourceMap;
   sourceMapTarget?: string;
@@ -48,46 +47,45 @@ type PrintJoinOptions = Omit<GroupToken, 'type' | 'groups'> & {
   newline: boolean;
 };
 
-function checkTrailingCommentsSameLine(
-  node: AnyNode,
-  nextNode: undefined | AnyNode,
-): {
-  hasNextTrailingCommentOnSameLine: boolean;
-  nextNode: undefined | AnyNode;
-} {
-  // Don't print a newline if the next node has a leadingComment that begins on the same line as this node
-  let hasNextTrailingCommentOnSameLine = false;
-
-  // Lots of refinements...
-  if (nextNode !== undefined && node.loc !== undefined && nextNode.loc !==
-      undefined && nextNode.leadingComments !== undefined) {
-    const firstNextNodeLeadingComments = nextNode.leadingComments[0];
-    if (firstNextNodeLeadingComments !== undefined &&
-          firstNextNodeLeadingComments.loc !==
-          undefined) {
-      nextNode = firstNextNodeLeadingComments;
-      hasNextTrailingCommentOnSameLine = node.loc.end.line ===
-        firstNextNodeLeadingComments.loc.start.line;
-    }
-  }
-
-  return {nextNode, hasNextTrailingCommentOnSameLine};
-}
-
 export default class Builder {
-  constructor(opts: BuilderOptions) {
+  constructor(opts: BuilderOptions, comments: Array<AnyComment> = []) {
     this.options = opts;
     this.inForStatementInitCounter = 0;
     this.printStack = [];
-    this.printedCommentStarts = new Set();
+    this.comments = new CommentsConsumer(comments);
     this.printedComments = new Set();
   }
 
+  comments: CommentsConsumer;
   options: BuilderOptions;
   printStack: Array<AnyNode>;
   inForStatementInitCounter: number;
-  printedCommentStarts: Set<Number0>;
-  printedComments: Set<AnyComment>;
+  printedComments: Set<string>;
+
+  checkTrailingCommentsSameLine(node: AnyNode, nextNode: undefined | AnyNode): {
+    hasNextTrailingCommentOnSameLine: boolean;
+    nextNode: undefined | AnyNode;
+  } {
+    // Don't print a newline if the next node has a leadingComment that begins on the same line as this node
+    let hasNextTrailingCommentOnSameLine = false;
+
+    // Lots of refinements...
+    if (nextNode !== undefined && node.loc !== undefined && nextNode.loc !==
+        undefined && nextNode.leadingComments !== undefined) {
+      const firstNextNodeLeadingComments = this.comments.getCommentFromId(
+        nextNode.leadingComments[0],
+      );
+      if (firstNextNodeLeadingComments !== undefined &&
+            firstNextNodeLeadingComments.loc !==
+            undefined) {
+        nextNode = firstNextNodeLeadingComments;
+        hasNextTrailingCommentOnSameLine = node.loc.end.line ===
+          firstNextNodeLeadingComments.loc.start.line;
+      }
+    }
+
+    return {nextNode, hasNextTrailingCommentOnSameLine};
+  }
 
   tokenize(node: undefined | AnyNode, parent: AnyNode): Tokens {
     if (node === undefined) {
@@ -118,7 +116,7 @@ export default class Builder {
       tokens.push(operator('('));
     }
 
-    const leadingComments = this.getComments(true, node);
+    const leadingComments = this.getComments('leadingComments', node);
 
     // If leading comment had an empty line after then retain it
     if (leadingComments !== undefined) {
@@ -140,7 +138,7 @@ export default class Builder {
     }
 
     // If there's an empty line between the node and it's trailing comments then keep it
-    const trailingComments = this.getComments(false, node);
+    const trailingComments = this.getComments('trailingComments', node);
     if (trailingComments !== undefined) {
       tokens.push(concat(this.maybeCommentNewlines(
         node,
@@ -178,7 +176,7 @@ export default class Builder {
           const {
             nextNode,
             hasNextTrailingCommentOnSameLine,
-          } = checkTrailingCommentsSameLine(node, nodes[i + 1]);
+          } = this.checkTrailingCommentsSameLine(node, nodes[i + 1]);
 
           const afterBroken: Tokens = [];
           if (!isLastNode && opts.newline && !hasNextTrailingCommentOnSameLine) {
@@ -255,7 +253,7 @@ export default class Builder {
       const {
         nextNode,
         hasNextTrailingCommentOnSameLine,
-      } = checkTrailingCommentsSameLine(node, nodes[i + 1]);
+      } = this.checkTrailingCommentsSameLine(node, nodes[i + 1]);
 
       if (!hasNextTrailingCommentOnSameLine) {
         tokens.push(newline);
@@ -280,7 +278,7 @@ export default class Builder {
   }
 
   tokenizeInnerComments(node: AnyNode): Tokens {
-    const {innerComments} = node;
+    const innerComments = this.getComments('innerComments', node);
     if (innerComments === undefined) {
       return [];
     }
@@ -297,7 +295,7 @@ export default class Builder {
   }
 
   tokenizeComments(comments: undefined | Array<AnyComment>): Tokens {
-    if (!comments || !comments.length) {
+    if (comments === undefined) {
       return [];
     }
 
@@ -318,19 +316,22 @@ export default class Builder {
     return tokens;
   }
 
-  getComments(leading: boolean, node: AnyNode): undefined | Array<AnyComment> {
+  getComments(
+    kind: 'leadingComments' | 'trailingComments' | 'innerComments',
+    node: AnyNode,
+  ): undefined | Array<AnyComment> {
     if (!node) {
       return undefined;
     }
 
-    const comments = leading ? node.leadingComments : node.trailingComments;
-    if (!comments) {
+    const ids = node[kind];
+    if (ids === undefined) {
       return undefined;
     }
 
-    return comments.filter((comment: AnyComment) => {
-      return !this.hasTokenizedComment(comment);
-    });
+    return this.comments.getCommentsFromIds(ids).filter(
+      (comment) => !this.hasTokenizedComment(comment),
+    );
   }
 
   hasTokenizedComment(comment: undefined | AnyComment): boolean {
@@ -338,17 +339,7 @@ export default class Builder {
       return true;
     }
 
-    if (this.printedComments.has(comment)) {
-      return true;
-    }
-
-    if (comment.loc !== undefined && this.printedCommentStarts.has(
-        comment.loc.start.index,
-      )) {
-      return true;
-    }
-
-    return false;
+    return this.printedComments.has(comment.id);
   }
 
   tokenizeComment(node: AnyComment): Tokens {
@@ -356,11 +347,7 @@ export default class Builder {
       return [];
     }
 
-    this.printedComments.add(node);
-
-    if (node.loc !== undefined) {
-      this.printedCommentStarts.add(node.loc.start.index);
-    }
+    this.printedComments.add(node.id);
 
     const isBlockComment = node.type === 'CommentBlock';
     const val = isBlockComment ? `/*${node.value}*/` : `//${node.value}\n`;

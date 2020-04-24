@@ -18,6 +18,7 @@ import {toKebabCase, toCamelCase, naturalCompare} from '@romejs/string-utils';
 import {createUnknownFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
 import {markup} from '@romejs/string-markup';
+import {descriptions} from '@romejs/diagnostics';
 
 export type Examples = Array<{
   description: string;
@@ -70,6 +71,8 @@ export default class Parser<T> {
     this.opts = opts;
 
     this.shorthandFlags = new Set();
+    this.incorrectCaseFlags = new Set();
+
     this.declaredFlags = new Map();
     this.defaultFlags = new Map();
     this.flags = new Map();
@@ -121,6 +124,7 @@ export default class Parser<T> {
   reporter: Reporter;
   opts: ParserOptions<T>;
 
+  incorrectCaseFlags: Set<string>;
   shorthandFlags: Set<string>;
   flags: Map<string, string | boolean>;
   defaultFlags: Map<string, unknown>;
@@ -139,6 +143,17 @@ export default class Parser<T> {
     return flag !== undefined && flag[0] === '-';
   }
 
+  toCamelCase(name: string): string {
+    const camelName = toCamelCase(name);
+
+    // Don't allow passing in straight camelcased names
+    if (toKebabCase(name) !== name) {
+      this.incorrectCaseFlags.add(name);
+    }
+
+    return camelName;
+  }
+
   consumeRawArgs(rawArgs: Array<string>) {
     while (rawArgs.length > 0) {
       const arg: string = String(rawArgs.shift());
@@ -153,50 +168,39 @@ export default class Parser<T> {
 
         // Flags beginning with no- are always false
         if (name.startsWith('no-')) {
-          this.flags.set(name.slice(3), false);
+          const camelName = this.toCamelCase(name.slice(3));
+          this.flags.set(camelName, false);
           continue;
         }
 
         // Allow for arguments to be passed as --foo=bar
         const equalsIndex = name.indexOf('=');
         if (equalsIndex !== -1) {
-          const cleanName = name.slice(0, equalsIndex);
+          const cleanName = this.toCamelCase(name.slice(0, equalsIndex));
           const value = name.slice(equalsIndex + 1);
           this.flags.set(cleanName, value);
           continue;
         }
 
+        const camelName = this.toCamelCase(name);
+
         // If the next argument is a flag or we're at the end of the args then just set it to `true`
         if (rawArgs.length === 0 || this.looksLikeFlag(rawArgs[0])) {
-          this.flags.set(name, true);
+          this.flags.set(camelName, true);
         } else {
           // Otherwise, take that value
-          this.flags.set(name, String(rawArgs.shift()));
+          this.flags.set(camelName, String(rawArgs.shift()));
         }
 
-        this.flagToArgIndex.set(name, this.args.length);
+        this.flagToArgIndex.set(camelName, this.args.length);
 
         if (arg[0] === '-' && arg[1] !== '-') {
-          this.shorthandFlags.add(name);
+          this.shorthandFlags.add(camelName);
         }
       } else {
         // Not a flag and hasn't been consumed already by a previous arg so it must be a file
         this.args.push(arg);
       }
-    }
-  }
-
-  setFlagAlias(key: string, alias: string) {
-    const value = this.flags.get(key);
-    if (value !== undefined) {
-      this.flags.delete(key);
-      this.flags.set(alias, value);
-    }
-
-    const argIndex = this.flagToArgIndex.get(key);
-    if (argIndex !== undefined) {
-      this.flagToArgIndex.set(alias, argIndex);
-      this.flagToArgIndex.delete(key);
     }
   }
 
@@ -227,13 +231,18 @@ export default class Parser<T> {
           valueConsumer.setValue('');
         }
 
-        // We've parsed arguments like `--foo bar` as `{foo: 'bar}`
+        this.declareArgument({
+          name: key,
+          command: this.currentCommand,
+          definition: def,
+        });
+        defaultFlags[key] = def.default;
 
+        // We've parsed arguments like `--foo bar` as `{foo: 'bar}`
         // However, --foo may be a boolean flag, so `bar` needs to be correctly added to args
         if (def.type === 'boolean' && value !== true && value !== false &&
               value !==
               undefined) {
-          // This isn't necessarily the correct position... Probably doesn't matter?
           const argIndex = this.flagToArgIndex.get(key);
           if (argIndex === undefined) {
             throw new Error('No arg index. Should always exist.');
@@ -248,35 +257,32 @@ export default class Parser<T> {
           //
           valueConsumer.setValue(true);
         }
-
-        this.declareArgument({
-          name: key,
-          command: this.currentCommand,
-          definition: def,
-        });
-        defaultFlags[key] = def.default;
       },
 
       context: {
         category: 'flags/invalid',
+
+        normalizeKey: (key) => {
+          return this.incorrectCaseFlags.has(key) ? key : toKebabCase(key);
+        },
+
         getOriginalValue: (keys: ConsumePath) => {
           return flags[keys[0]];
         },
+
         getDiagnosticPointer: (
           keys: ConsumePath,
           target: ConsumeSourceLocationRequestTarget,
         ) => {
           const {programName} = this.opts;
-          const prefixParts = [programName];
-          if (this.currentCommand !== undefined) {
-            prefixParts.push(this.currentCommand);
-          }
 
           return serializeCLIFlags({
-            prefix: prefixParts.join(' '),
+            programName,
+            commandName: this.currentCommand,
             args: this.args,
             defaultFlags,
             flags,
+            incorrectCaseFlags: this.incorrectCaseFlags,
             shorthandFlags: this.shorthandFlags,
           }, {
             type: 'flag',
@@ -304,7 +310,6 @@ export default class Parser<T> {
     }
 
     // Declare argument
-    this.setFlagAlias(toKebabCase(key), key);
     this.declaredFlags.set(key, decl);
     this.defaultFlags.set(key, decl.definition.default);
   }
@@ -333,7 +338,7 @@ export default class Parser<T> {
   async init(): Promise<T> {
     // Show help for --version
     if (this.flags.has('version')) {
-      this.reporter.logAll(String(this.opts.version));
+      this.reporter.logAll(`v${String(this.opts.version)}`);
       process.exit(0);
     }
 
@@ -341,10 +346,16 @@ export default class Parser<T> {
 
     let definedCommand: undefined | DefinedCommand;
 
-    const rootFlags = await consumer.captureDiagnostics(async (consumer) => {
+    const rootFlags = await consumer.bufferDiagnostics(async (consumer) => {
       for (const shorthandName of this.shorthandFlags) {
         consumer.get(shorthandName).unexpected(
-          `Shorthand flags are not supported`,
+          descriptions.FLAGS.UNSUPPORTED_SHORTHANDS,
+        );
+      }
+
+      for (const incorrectName of this.incorrectCaseFlags) {
+        consumer.get(incorrectName).unexpected(
+          descriptions.FLAGS.INCORRECT_CASED_FLAG(incorrectName),
         );
       }
 
@@ -359,7 +370,9 @@ export default class Parser<T> {
         }
       }
 
-      consumer.enforceUsedProperties('flag', false);
+      if (!this.helpMode) {
+        consumer.enforceUsedProperties('flag', false);
+      }
       this.currentCommand = undefined;
 
       return rootFlags;
@@ -450,7 +463,7 @@ export default class Parser<T> {
     // Output options
     for (const {arg, description} of optionOutput) {
       lines.push(
-        markup`<brightBlack><pad count="${argColumnLength}" dir="right">${arg}</brightBlack>  ${description}`,
+        markup`<dim><pad count="${argColumnLength}" dir="right">${arg}</pad></dim>  ${description}`,
       );
     }
 
@@ -511,29 +524,14 @@ export default class Parser<T> {
         }
       });
     }
+
+    reporter.section('Global Flags', () => {
+      reporter.info('To view global flags run');
+      reporter.command('rome --help');
+    });
   }
 
-  async showHelp(commandName: undefined | string = this.ranCommand) {
-    if (commandName !== undefined) {
-      this.showFocusedCommandHelp(commandName);
-      return;
-    }
-
-    const {description, usage, examples, programName} = this.opts;
-
-    const consumer = this.getFlagsConsumer();
-
-    // Supress diagnostics
-    await consumer.capture(async (consumer) => {
-      await this.opts.defineFlags(consumer);
-
-      for (const key of this.commands.keys()) {
-        await this.defineCommandFlags(key, consumer);
-      }
-
-      this.showUsageHelp(description, usage);
-    });
-
+  showGlobalFlags() {
     const {reporter} = this;
     reporter.section('Global Flags', () => {
       // Show options not attached to any commands
@@ -548,6 +546,19 @@ export default class Parser<T> {
         reporter.logAll(line);
       }
     });
+  }
+
+  async showHelp(commandName: undefined | string = this.ranCommand) {
+    if (commandName !== undefined) {
+      this.showFocusedCommandHelp(commandName);
+      return;
+    }
+
+    const {reporter} = this;
+    const {description, usage, examples, programName} = this.opts;
+
+    this.showUsageHelp(description, usage);
+    this.showGlobalFlags();
 
     // Sort commands into their appropriate categories for output
     const commandsByCategory: Map<undefined | string, Array<AnyCommandOptions>> = new Map();
@@ -609,7 +620,7 @@ export default class Parser<T> {
     const {programName} = this.opts;
     const {reporter} = this;
 
-    if (examples === undefined) {
+    if (examples === undefined || examples.length === 0) {
       return;
     }
 
@@ -646,7 +657,6 @@ export default class Parser<T> {
       );
     } else {
       // TODO command name is not sanitized for markup
-
       // TODO produce a diagnostic instead
       this.reporter.error(
         `Unknown command <emphasis>${this.args.join(' ')}</emphasis>. Run --help to see available commands.`,

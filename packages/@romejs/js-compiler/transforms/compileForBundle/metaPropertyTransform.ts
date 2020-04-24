@@ -12,7 +12,7 @@ import {
   AnyExpression,
 } from '@romejs/js-ast';
 import {template} from '@romejs/js-ast-utils';
-import {Path, Context} from '@romejs/js-compiler';
+import {Path, CompilerContext} from '@romejs/js-compiler';
 
 function isImportMeta(node: AnyNode): node is MetaProperty {
   return node.type === 'MetaProperty' && node.meta.name === 'import' &&
@@ -20,14 +20,14 @@ function isImportMeta(node: AnyNode): node is MetaProperty {
       'meta';
 }
 
-function createURLString(context: Context): AnyExpression {
+function createURLString(context: CompilerContext): AnyExpression {
   const str = stringLiteral.create({
     value: `file://${getFilename(context)}`,
   });
   return template.expression`typeof __filename === 'string' ? 'file://' + __filename : ${str}`;
 }
 
-function getFilename(context: Context): string {
+function getFilename(context: CompilerContext): string {
   const {path} = context;
   if (path === undefined) {
     return '';

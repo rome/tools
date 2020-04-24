@@ -6,6 +6,7 @@
  */
 
 import * as n from './index';
+import {OptionalProps} from '@romejs/typescript-helpers';
 
 export type AnyTSEntityName = n.ReferenceIdentifier | n.TSQualifiedName;
 
@@ -135,6 +136,10 @@ export type AnyAuxiliary =
   | n.MockParent;
 
 export type AnyComment = n.CommentBlock | n.CommentLine;
+
+export type AnyCommentOptionalId =
+  | OptionalProps<n.CommentBlock, 'id'>
+  | OptionalProps<n.CommentLine, 'id'>;
 
 export type AnyIdentifier =
   | n.Identifier

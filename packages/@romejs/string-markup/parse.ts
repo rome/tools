@@ -21,12 +21,13 @@ import {
   Children,
   MarkupTagName,
 } from './types';
-import {inc, Number0, add, get0} from '@romejs/ob1';
+import {ob1Inc, Number0, ob1Add, ob1Get0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
+import {unescapeTextValue} from './escape';
 
 const globalAttributes: Array<string> = ['emphasis', 'dim'];
 
-const tags: Map<string, Array<string>> = new Map();
+const tags: Map<MarkupTagName, Array<string>> = new Map();
 tags.set('pad', ['dir', 'char', 'count']);
 tags.set('emphasis', []);
 tags.set('number', ['approx', 'pluralSuffix', 'singularSuffix']);
@@ -40,39 +41,13 @@ tags.set('duration', ['approx']);
 tags.set('italic', []);
 tags.set('underline', []);
 tags.set('strike', []);
-tags.set('black', []);
-tags.set('brightBlack', []);
-tags.set('red', []);
-tags.set('brightRed', []);
-tags.set('green', []);
-tags.set('brightGreen', []);
-tags.set('yellow', []);
-tags.set('brightYellow', []);
-tags.set('blue', []);
-tags.set('brightBlue', []);
-tags.set('magenta', []);
-tags.set('brightMagenta', []);
-tags.set('cyan', []);
-tags.set('brightCyan', []);
-tags.set('white', []);
-tags.set('brightWhite', []);
-tags.set('bgBlack', []);
-tags.set('bgBrightBlack', []);
-tags.set('bgRed', []);
-tags.set('bgBrightRed', []);
-tags.set('bgGreen', []);
-tags.set('bgBrightGreen', []);
-tags.set('bgYellow', []);
-tags.set('bgBrightYellow', []);
-tags.set('bgBlue', []);
-tags.set('bgBrightBlue', []);
-tags.set('bgMagenta', []);
-tags.set('bgBrightMagenta', []);
-tags.set('bgCyan', []);
-tags.set('bgBrightCyan', []);
-tags.set('bgWhite', []);
-tags.set('bgBrightWhite', []);
+tags.set('error', []);
+tags.set('success', []);
+tags.set('warn', []);
+tags.set('info', []);
 tags.set('command', []);
+tags.set('color', ['fg', 'bg']);
+tags.set('highlight', ['i']);
 
 //
 function isStringValueChar(char: string, index: Number0, input: string): boolean {
@@ -88,7 +63,7 @@ function isTextChar(char: string, index: Number0, input: string): boolean {
 }
 
 export function isTagStartChar(index: Number0, input: string): boolean {
-  const i = get0(index);
+  const i = ob1Get0(index);
   return input[i] === '<' && !isEscaped(index, input);
 }
 
@@ -111,11 +86,11 @@ const createStringMarkupParser = createParser(
       state: State;
     } {
       const escaped = isEscaped(index, input);
-      const char = input[get0(index)];
+      const char = input[ob1Get0(index)];
 
       if (!escaped && state.inTagHead) {
         if (char === ' ') {
-          return this.lookahead(inc(index));
+          return this.lookahead(ob1Inc(index));
         }
 
         if (char === '=') {
@@ -141,10 +116,9 @@ const createStringMarkupParser = createParser(
         }
 
         if (char === '"') {
-          const [value, stringValueEnd, unclosed] = this.readInputFrom(
-            inc(index),
-            isStringValueChar,
-          );
+          const [value, stringValueEnd, unclosed] = this.readInputFrom(ob1Inc(
+            index,
+          ), isStringValueChar);
 
           if (unclosed) {
             throw this.unexpected({
@@ -153,11 +127,15 @@ const createStringMarkupParser = createParser(
             });
           }
 
-          const end = add(stringValueEnd, 1);
+          const end = ob1Add(stringValueEnd, 1);
           return {
-            state,
-            token: this.finishValueToken('String', value, end),
-          };
+              state,
+              token: this.finishValueToken(
+                'String',
+                unescapeTextValue(value),
+                end,
+              ),
+            };
         }
 
         if (char === '>') {
@@ -198,18 +176,16 @@ const createStringMarkupParser = createParser(
 
     parseTag(headStart: Position): TagNode {
       const nameToken = this.expectToken('Word');
-      const rawName = nameToken.value;
+      const tagName = (nameToken.value as MarkupTagName);
 
-      const allowedAttributes = tags.get(rawName);
+      const allowedAttributes = tags.get(tagName);
       if (allowedAttributes === undefined) {
         throw this.unexpected({
-          description: descriptions.STRING_MARKUP.UNKNOWN_TAG_NAME(rawName),
+          description: descriptions.STRING_MARKUP.UNKNOWN_TAG_NAME(tagName),
           start: this.getPositionFromIndex(nameToken.start),
         });
       }
 
-      // rome-suppress-next-line lint/noExplicitAny
-      const tagName: MarkupTagName = (rawName as any);
       const attributes: TagAttributes = new Map();
       const children: Children = [];
       let selfClosing = false;
@@ -351,25 +327,4 @@ export function parseMarkup(input: string) {
   } catch (err) {
     throw err;
   }
-}
-
-function unescapeTextValue(str: string): string {
-  let unescaped = '';
-
-  for (let i = 0; i < str.length; i++) {
-    const char = str[i];
-
-    if (char === '\\') {
-      const nextChar = str[i + 1];
-      if (nextChar === '<') {
-        i++;
-        unescaped += '<';
-        continue;
-      }
-    }
-
-    unescaped += char;
-  }
-
-  return unescaped;
 }

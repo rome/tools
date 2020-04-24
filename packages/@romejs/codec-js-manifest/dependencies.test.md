@@ -8,7 +8,10 @@
 
 ```javascript
 npm {
-  name: 'foo'
+  name: Object {
+    org: undefined
+    packageName: 'foo'
+  }
   range: undefined
 }
 ```
@@ -17,7 +20,10 @@ npm {
 
 ```javascript
 npm {
-  name: '@foo/bar'
+  name: Object {
+    org: undefined
+    packageName: '@foo/bar'
+  }
   range: undefined
 }
 ```
@@ -26,7 +32,10 @@ npm {
 
 ```javascript
 npm {
-  name: 'foo'
+  name: Object {
+    org: undefined
+    packageName: 'foo'
+  }
   range: AbsoluteVersion {
     build: Array []
     major: 1
@@ -54,7 +63,10 @@ npm {
 
 ```javascript
 npm {
-  name: '@foo/bar'
+  name: Object {
+    org: undefined
+    packageName: '@foo/bar'
+  }
   range: AbsoluteVersion {
     build: Array []
     major: 1

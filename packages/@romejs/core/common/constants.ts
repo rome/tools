@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import packageJson from '../package.json';
+import packageJson from '../../../../package.json';
 import os = require('os');
 
 import {TEMP_PATH, createAbsoluteFilePath} from '@romejs/path';

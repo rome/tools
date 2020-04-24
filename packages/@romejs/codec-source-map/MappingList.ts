@@ -13,7 +13,7 @@
 
 import {Mapping} from './types';
 import {compareByGeneratedPositionsInflated} from './util';
-import {number1Neg1, number0} from '@romejs/ob1';
+import {ob1Number1Neg1, ob1Number0} from '@romejs/ob1';
 
 /**
  * Determine whether mappingB is after mappingA with respect to generated
@@ -25,7 +25,7 @@ function generatedPositionAfter(mappingA: Mapping, mappingB: Mapping): boolean {
   const lineB = mappingB.generated.line;
   const columnA = mappingA.generated.column;
   const columnB = mappingB.generated.column;
-  return lineB > lineA || lineB == lineA && columnB >= columnA ||
+  return lineB > lineA || lineB === lineA && columnB >= columnA ||
       compareByGeneratedPositionsInflated(mappingA, mappingB) <=
       0;
 }
@@ -40,9 +40,9 @@ export default class MappingList {
     this.array = [];
     this.sorted = true;
     this.last = {
-      generated: {line: number1Neg1, column: number0},
+      generated: {index: ob1Number0, line: ob1Number1Neg1, column: ob1Number0},
       // TODO: original: undefined
-      original: {line: number1Neg1, column: number0},
+      original: {line: ob1Number1Neg1, column: ob1Number0},
       source: undefined,
       name: undefined,
     };

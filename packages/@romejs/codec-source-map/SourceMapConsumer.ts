@@ -7,34 +7,38 @@
 
 import {
   SourceMap,
+  ResolvedLocation,
   ParsedMapping,
   ParsedMappings,
-  ResolvedLocation,
 } from './types';
 import {decodeVLQ} from './base64';
 import {
-  number0,
-  number1,
-  add,
+  ob1Number0,
+  ob1Number1,
+  ob1Add,
   Number1,
   Number0,
-  inc,
-  get0,
-  dec,
+  ob1Inc,
+  ob1Get0,
+  ob1Dec,
 } from '@romejs/ob1';
 import {Dict} from '@romejs/typescript-helpers';
 
-function getCacheKey(line: Number1, column: Number0): string {
+export function getParsedMappingKey(line: Number1, column: Number0): string {
   return `${String(line)}:${String(column)}`;
 }
 
+type GetMappings = () => ParsedMappings;
+
 export default class SourceMapConsumer {
-  constructor(map: SourceMap) {
-    this.map = map;
+  constructor(file: string, getMappings: GetMappings) {
+    this.file = file;
+    this._getMappings = getMappings;
     this.mappings = undefined;
   }
 
-  map: SourceMap;
+  file: string;
+  _getMappings: GetMappings;
   mappings: undefined | ParsedMappings;
 
   static charIsMappingSeparator(str: string, index: number): boolean {
@@ -42,14 +46,21 @@ export default class SourceMapConsumer {
     return c === ';' || c === ',';
   }
 
+  static fromJSON(sourceMap: SourceMap): SourceMapConsumer {
+    return new SourceMapConsumer(
+      sourceMap.file,
+      () => SourceMapConsumer.parseMappings(sourceMap),
+    );
+  }
+
   static parseMappings(sourceMap: SourceMap): ParsedMappings {
     const rawStr: string = sourceMap.mappings;
     const map: ParsedMappings = new Map();
 
-    let generatedLine = number1;
-    let previousGeneratedColumn = number0;
-    let previousOriginalLine = number1;
-    let previousOriginalColumn = number0;
+    let generatedLine = ob1Number1;
+    let previousGeneratedColumn = ob1Number0;
+    let previousOriginalLine = ob1Number1;
+    let previousOriginalColumn = ob1Number0;
     let previousSource = 0;
     let previousName = 0;
     let length = rawStr.length;
@@ -60,29 +71,29 @@ export default class SourceMapConsumer {
     while (index < length) {
       const char = rawStr[index];
       if (char === ';') {
-        generatedLine = inc(generatedLine);
+        generatedLine = ob1Inc(generatedLine);
         index++;
-        previousGeneratedColumn = number0;
+        previousGeneratedColumn = ob1Number0;
       } else if (char === ',') {
         index++;
       } else {
         const mapping: ParsedMapping = {
-          generatedLine,
-          generatedColumn: number0,
+          generated: {
+            line: generatedLine,
+            column: ob1Number0,
+          },
+          original: {
+            line: ob1Number1,
+            column: ob1Number0,
+          },
           source: undefined,
-          originalLine: number1,
-          originalColumn: number0,
           name: undefined,
         };
 
         // Because each offset is encoded relative to the previous one,
-
         // many segments often have the same encoding. We can exploit this
-
         // fact by caching the parsed variable length fields of each segment,
-
         // allowing us to avoid a second parse if we encounter the same
-
         // segment again.
         let end = index;
         for (; end < length; end++) {
@@ -114,37 +125,37 @@ export default class SourceMapConsumer {
         }
 
         // Generated column
-        mapping.generatedColumn = add(previousGeneratedColumn, segment[0]);
-        previousGeneratedColumn = mapping.generatedColumn;
+        mapping.generated.column = ob1Add(previousGeneratedColumn, segment[0]);
+        previousGeneratedColumn = mapping.generated.column;
 
         if (segment.length > 1) {
           // Original source
-          mapping.source = previousSource + segment[1];
+          mapping.source = sourceMap.sources[previousSource + segment[1]];
           previousSource += segment[1];
 
           // Original line
-          const newOriginalLine = add(previousOriginalLine, segment[2]);
+          const newOriginalLine = ob1Add(previousOriginalLine, segment[2]);
           previousOriginalLine = newOriginalLine;
 
           // Lines are stored 0-based
-          mapping.originalLine = add(newOriginalLine, 1);
+          mapping.original.line = ob1Add(newOriginalLine, 1);
 
           // Original column
-          const newOriginalColumn = add(previousOriginalColumn, segment[3]);
-          mapping.originalColumn = newOriginalColumn;
+          const newOriginalColumn = ob1Add(previousOriginalColumn, segment[3]);
+          mapping.original.column = newOriginalColumn;
           previousOriginalColumn = newOriginalColumn;
 
           if (segment.length > 4) {
             // Original name
-            mapping.name = previousName + segment[4];
+            mapping.name = sourceMap.names[previousName + segment[4]];
             previousName += segment[4];
           }
         }
 
-        map.set(
-          getCacheKey(mapping.generatedLine, mapping.generatedColumn),
-          mapping,
-        );
+        map.set(getParsedMappingKey(
+          mapping.generated.line,
+          mapping.generated.column,
+        ), mapping);
       }
     }
 
@@ -153,7 +164,7 @@ export default class SourceMapConsumer {
 
   getMappings(): ParsedMappings {
     if (this.mappings === undefined) {
-      const mappings = SourceMapConsumer.parseMappings(this.map);
+      const mappings = this._getMappings();
       this.mappings = mappings;
       return mappings;
     } else {
@@ -165,10 +176,10 @@ export default class SourceMapConsumer {
     line: Number1,
     column: Number0,
   ): undefined | ResolvedLocation {
-    while (get0(column) >= 0) {
+    while (ob1Get0(column) >= 0) {
       const mapping = this.exactOriginalPositionFor(line, column);
       if (mapping === undefined) {
-        column = dec(column);
+        column = ob1Dec(column);
         continue;
       } else {
         return mapping;
@@ -182,26 +193,22 @@ export default class SourceMapConsumer {
     line: Number1,
     column: Number0,
   ): undefined | ResolvedLocation {
-    const key = getCacheKey(line, column);
+    const key = getParsedMappingKey(line, column);
     const mapping = this.getMappings().get(key);
     if (mapping === undefined) {
       return undefined;
     }
 
-    const source = mapping.source == undefined
-      ? this.map.file
-      : this.map.sources[mapping.source];
+    const source = mapping.source === undefined ? this.file : mapping.source;
     if (source === undefined) {
       throw new Error('Mapping provided unknown source');
     }
 
     return {
       source,
-      line: mapping.originalLine,
-      column: mapping.originalColumn,
-      name: mapping.name === undefined
-        ? undefined
-        : this.map.names[mapping.name],
+      line: mapping.original.line,
+      column: mapping.original.column,
+      name: mapping.name,
     };
   }
 }
