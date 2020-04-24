@@ -162,6 +162,7 @@ export default async function cli() {
         category: local.category,
         description: local.description,
         defineFlags: local.defineFlags,
+        ignoreFlags: local.ignoreFlags,
         examples: local.examples,
         usage: local.usage,
         callback(_commandFlags) {
@@ -180,6 +181,7 @@ export default async function cli() {
         category: master.category,
         description: master.description,
         defineFlags: master.defineFlags,
+        ignoreFlags: master.ignoreFlags,
         usage: master.usage,
         examples: master.examples,
 
