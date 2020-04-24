@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createHook, Path} from '@romejs/js-compiler';
+import {Path, createHook} from '@romejs/js-compiler';
 import {
-  ReferenceIdentifier,
-  variableDeclaration,
-  AnyExpression,
-  variableDeclarator,
-  referenceIdentifier,
-  bindingIdentifier,
-  assignmentIdentifier,
-  AssignmentIdentifier,
-  AnyNode,
-  variableDeclarationStatement,
   AnyComment,
   AnyCommentOptionalId,
+  AnyExpression,
+  AnyNode,
+  AssignmentIdentifier,
+  ReferenceIdentifier,
+  assignmentIdentifier,
+  bindingIdentifier,
+  referenceIdentifier,
+  variableDeclaration,
+  variableDeclarationStatement,
+  variableDeclarator,
 } from '@romejs/js-ast';
 
 type VariableInjectorState = {

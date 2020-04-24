@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, operator, concat} from '../../tokens';
-import {arrayExpression, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, operator, space} from '../../tokens';
+import {AnyNode, arrayExpression} from '@romejs/js-ast';
 
 export default function ArrayExpression(
   builder: Builder,

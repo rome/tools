@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {jsxEmptyExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, jsxEmptyExpression} from '@romejs/js-ast';
 
 export default function JSXEmptyExpression(
   builder: Builder,

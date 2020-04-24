@@ -6,7 +6,7 @@
  */
 
 import {AnyFunction} from '@romejs/js-ast';
-import {Scope, FunctionScope} from '../scopes';
+import {FunctionScope, Scope} from '../scopes';
 import T from '../types/T';
 import executeAtom from './executeAtom';
 import FunctionT from '../types/FunctionT';

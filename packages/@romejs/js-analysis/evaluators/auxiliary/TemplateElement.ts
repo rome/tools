@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {TemplateElement, templateElement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TemplateElement, templateElement} from '@romejs/js-ast';
 
 export default function TemplateElement(node: AnyNode, scope: Scope) {
   node = templateElement.assert(node);

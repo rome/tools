@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypeReference, tsTypeReference, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSTypeReference, tsTypeReference} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens} from '../../tokens';
 

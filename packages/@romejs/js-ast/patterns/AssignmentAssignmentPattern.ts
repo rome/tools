@@ -6,9 +6,9 @@
  */
 
 import {
-  JSNodeBase,
-  AnyTargetAssignmentPattern,
   AnyExpression,
+  AnyTargetAssignmentPattern,
+  JSNodeBase,
   PatternMeta,
 } from '../index';
 import {createBuilder} from '../utils';

@@ -7,31 +7,31 @@
 
 import {
   BaseTokens,
-  createParser,
+  ComplexToken,
   ParserOptions,
   ParserUnexpectedOptions,
-  ValueToken,
-  TokenValues,
-  isDigit,
-  isESIdentifierStart,
-  isESIdentifierChar,
-  ComplexToken,
   Position,
+  TokenValues,
+  ValueToken,
+  createParser,
+  isDigit,
+  isESIdentifierChar,
+  isESIdentifierStart,
 } from '@romejs/parser-core';
 import {
   AnyRegExpBodyItem,
-  RegExpGroupCapture,
+  AnyRegExpEscapedCharacter,
+  AnyRegExpExpression,
+  RegExpAlternation,
   RegExpCharSet,
   RegExpCharSetRange,
-  RegExpQuantified,
+  RegExpGroupCapture,
   RegExpGroupNonCapture,
-  AnyRegExpEscapedCharacter,
+  RegExpQuantified,
   RegExpSubExpression,
-  RegExpAlternation,
-  AnyRegExpExpression,
 } from '@romejs/js-ast';
 import {Diagnostics, descriptions} from '@romejs/diagnostics';
-import {Number0, ob1Get0, ob1Add, ob1Coerce0} from '@romejs/ob1';
+import {Number0, ob1Add, ob1Coerce0, ob1Get0} from '@romejs/ob1';
 
 type Operator =
   | '^'

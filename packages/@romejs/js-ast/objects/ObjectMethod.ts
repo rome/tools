@@ -6,11 +6,11 @@
  */
 
 import {
+  BlockStatement,
+  ComputedPropertyKey,
+  FunctionHead,
   JSNodeBase,
   StaticPropertyKey,
-  ComputedPropertyKey,
-  BlockStatement,
-  FunctionHead,
 } from '../index';
 import {createBuilder} from '../utils';
 

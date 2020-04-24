@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
 import {DiagnosticsPrinterOptions} from './types';
 import {Reporter, ReporterStream} from '@romejs/cli-reporter';
 import DiagnosticsPrinter from './DiagnosticsPrinter';

@@ -10,4 +10,4 @@ export {default as SourceMapConsumer} from './SourceMapConsumer';
 export {
   default as SourceMapConsumerCollection,
 } from './SourceMapConsumerCollection';
-export {SourceMap, Mapping, Mappings} from './types';
+export {Mapping, Mappings, SourceMap} from './types';

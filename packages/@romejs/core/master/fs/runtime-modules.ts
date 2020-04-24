@@ -14,7 +14,7 @@ modules.set(
     [
       [
         'index.ts',
-        "/**\n * Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n */\n\nexport {test, testOptions, TestHelper} from './test';\n",
+        "/**\n * Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n */\n\nexport {TestHelper, test, testOptions} from './test';\n",
       ],
       [
         'package.json',

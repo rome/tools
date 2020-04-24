@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, concat} from '../../tokens';
-import {jsxAttribute, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, operator} from '../../tokens';
+import {AnyNode, jsxAttribute} from '@romejs/js-ast';
 
 export default function JSXAttribute(builder: Builder, node: AnyNode): Tokens {
   node = jsxAttribute.assert(node);

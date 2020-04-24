@@ -6,11 +6,11 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, newline, space, operator} from '../../tokens';
+import {Tokens, newline, operator, space} from '../../tokens';
 import {
+  AnyNode,
   UnionTypeAnnotation,
   unionTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function UnionTypeAnnotation(

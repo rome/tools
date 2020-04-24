@@ -8,9 +8,9 @@
 import {stringifySPDXLicense} from '@romejs/codec-spdx-license';
 import {ManifestDependencies, stringifyDependencyPattern} from './dependencies';
 import {
-  Manifest,
   JSONManifest,
   JSONManifestExports,
+  Manifest,
   ManifestExports,
 } from './types';
 import {stringifySemver} from '@romejs/codec-semver';

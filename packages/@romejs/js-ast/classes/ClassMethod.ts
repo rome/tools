@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
-  FunctionHead,
-  ClassPropertyMeta,
   BlockStatement,
+  ClassPropertyMeta,
+  FunctionHead,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 import {AnyObjectPropertyKey} from '../unions';

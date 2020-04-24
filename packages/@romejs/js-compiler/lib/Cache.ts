@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TransformRequest, TransformProjectDefinition} from '../types';
+import {TransformProjectDefinition, TransformRequest} from '../types';
 import {Program} from '@romejs/js-ast';
 import {JSONObject} from '@romejs/codec-json';
 

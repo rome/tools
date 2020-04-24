@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowFunctionTypeParam,
   flowFunctionTypeParam,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowFunctionTypeParam(node: AnyNode, scope: Scope) {

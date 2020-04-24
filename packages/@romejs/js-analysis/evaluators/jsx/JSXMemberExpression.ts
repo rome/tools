@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   JSXMemberExpression,
   jsxMemberExpression,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function JSXMemberExpression(node: AnyNode, scope: Scope) {

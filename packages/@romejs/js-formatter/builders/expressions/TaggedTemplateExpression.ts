@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens, concat} from '../../tokens';
-import {taggedTemplateExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, taggedTemplateExpression} from '@romejs/js-ast';
 
 export default function TaggedTemplateExpression(
   builder: Builder,

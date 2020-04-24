@@ -6,25 +6,25 @@
  */
 
 import {
-  GUTTER,
   CODE_FRAME_CONTEXT_LINES,
-  CODE_FRAME_SELECTED_INDENT,
   CODE_FRAME_INDENT,
-  MAX_CODE_FRAME_LINES,
+  CODE_FRAME_SELECTED_INDENT,
+  GUTTER,
   HALF_MAX_CODE_FRAME_LINES,
+  MAX_CODE_FRAME_LINES,
 } from './constants';
 import {Position} from '@romejs/parser-core';
 import {cleanEquivalentString} from './utils';
 import {
-  ob1Sub,
-  ob1Get0,
-  ob1Number0,
-  ob1Coerce1To0,
-  ob1Coerce0,
-  ob1Inc,
   Number0,
+  ob1Coerce0,
   ob1Coerce0To1,
+  ob1Coerce1To0,
+  ob1Get0,
+  ob1Inc,
+  ob1Number0,
   ob1Number1Neg1,
+  ob1Sub,
 } from '@romejs/ob1';
 import {markupToPlainText} from '@romejs/string-markup';
 

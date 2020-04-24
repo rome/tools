@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, operator, concat} from '../../tokens';
-import {classProperty, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, operator, space} from '../../tokens';
+import {AnyNode, classProperty} from '@romejs/js-ast';
 
 export default function ClassProperty(builder: Builder, node: AnyNode): Tokens {
   node = classProperty.assert(node);

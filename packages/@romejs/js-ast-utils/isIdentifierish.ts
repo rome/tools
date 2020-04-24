@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyIdentifier} from '@romejs/js-ast';
+import {AnyIdentifier, AnyNode} from '@romejs/js-ast';
 
 export default function isIdentifierish(node: AnyNode): node is AnyIdentifier {
   return node.type === 'Identifier' || node.type === 'JSXIdentifier' ||

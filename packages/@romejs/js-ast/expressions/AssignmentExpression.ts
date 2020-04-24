@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyAssignmentPattern, AnyExpression} from '../index';
+import {AnyAssignmentPattern, AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type AssignmentExpression = JSNodeBase & {

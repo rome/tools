@@ -6,26 +6,26 @@
  */
 
 import {
-  Diagnostics,
   Diagnostic,
+  DiagnosticAdvice,
   DiagnosticLanguage,
   DiagnosticSourceType,
-  DiagnosticAdvice,
+  Diagnostics,
   DiagnosticsProcessor,
   deriveRootAdviceFromDiagnostic,
   getDiagnosticHeader,
 } from '@romejs/diagnostics';
 import {Reporter} from '@romejs/cli-reporter';
 import {
-  DiagnosticsPrinterFlags,
-  DiagnosticsPrinterOptions,
   DiagnosticsFileReader,
   DiagnosticsFileReaderStats,
+  DiagnosticsPrinterFlags,
+  DiagnosticsPrinterOptions,
 } from './types';
 
 import {
-  humanizeMarkupFilename,
   formatAnsi,
+  humanizeMarkupFilename,
   markup,
 } from '@romejs/string-markup';
 import {toLines} from './utils';
@@ -35,15 +35,15 @@ import successBanner from './banners/success.json';
 import errorBanner from './banners/error.json';
 import {
   AbsoluteFilePath,
-  createAbsoluteFilePath,
-  createUnknownFilePath,
+  AbsoluteFilePathSet,
   UnknownFilePath,
   UnknownFilePathMap,
   UnknownFilePathSet,
-  AbsoluteFilePathSet,
+  createAbsoluteFilePath,
+  createUnknownFilePath,
 } from '@romejs/path';
-import {Number1, Number0} from '@romejs/ob1';
-import {existsSync, readFileTextSync, lstatSync} from '@romejs/fs';
+import {Number0, Number1} from '@romejs/ob1';
+import {existsSync, lstatSync, readFileTextSync} from '@romejs/fs';
 
 type Banner = {
   // Array<number> should really be [number, number, number], but TypeScript widens the imported types

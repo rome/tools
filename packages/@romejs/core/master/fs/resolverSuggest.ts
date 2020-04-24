@@ -7,10 +7,10 @@
 
 import Resolver, {
   ResolverLocalQuery,
-  ResolverQuerySource,
-  isPathLike,
   ResolverQueryResponseNotFound,
+  ResolverQuerySource,
   ResolverRemoteQuery,
+  isPathLike,
 } from './Resolver';
 import {
   DiagnosticAdvice,
@@ -19,7 +19,7 @@ import {
   descriptions,
 } from '@romejs/diagnostics';
 import {orderBySimilarity} from '@romejs/string-utils';
-import {createUnknownFilePath, AbsoluteFilePath} from '@romejs/path';
+import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
 import {PLATFORMS} from '../../common/types/platform';
 import {markup} from '@romejs/string-markup';
 

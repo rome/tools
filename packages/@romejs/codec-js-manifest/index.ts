@@ -7,26 +7,26 @@
 
 import {Consumer} from '@romejs/consume';
 import {SemverVersionNode, parseSemverVersion} from '@romejs/codec-semver';
-import {parseSPDXLicense, SPDXExpressionNode} from '@romejs/codec-spdx-license';
+import {SPDXExpressionNode, parseSPDXLicense} from '@romejs/codec-spdx-license';
 import {normalizeDependencies, parseGitDependencyPattern} from './dependencies';
 import {
-  MString,
   MBoolean,
-  ManifestMap,
+  MString,
   Manifest,
+  ManifestExportConditions,
+  ManifestExports,
+  ManifestMap,
+  ManifestName,
   ManifestPerson,
   ManifestRepository,
-  ManifestExports,
-  ManifestExportConditions,
-  ManifestName,
 } from './types';
 import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
 import {normalizeName} from './name';
 import {Diagnostics, descriptions} from '@romejs/diagnostics';
 import {
   AbsoluteFilePath,
-  createRelativeFilePath,
   RelativeFilePathMap,
+  createRelativeFilePath,
 } from '@romejs/path';
 import {toCamelCase} from '@romejs/string-utils';
 import {PathPatterns, parsePathPattern} from '@romejs/path-match';

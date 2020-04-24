@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {FlowNumericLiteral, flowNumericLiteral, AnyNode} from '@romejs/js-ast';
+import {AnyNode, FlowNumericLiteral, flowNumericLiteral} from '@romejs/js-ast';
 
 export default function FlowNumericLiteral(node: AnyNode, scope: Scope) {
   node = flowNumericLiteral.assert(node);

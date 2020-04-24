@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, TSThisType, Identifier, AnyPrimaryType} from '../index';
+import {AnyPrimaryType, Identifier, JSNodeBase, TSThisType} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSTypePredicate = JSNodeBase & {

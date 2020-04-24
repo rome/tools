@@ -6,11 +6,11 @@
  */
 
 import {
+  AnyExpression,
+  AnyStatement,
+  AnyTargetAssignmentPattern,
   JSNodeBase,
   VariableDeclaration,
-  AnyExpression,
-  AnyTargetAssignmentPattern,
-  AnyStatement,
 } from '../index';
 import {createBuilder} from '../utils';
 

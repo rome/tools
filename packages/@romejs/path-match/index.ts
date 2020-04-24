@@ -8,7 +8,7 @@
 import {PathPatternNode} from './types';
 import {parsePattern} from './parse';
 import match from './match';
-import {PathSegments, AbsoluteFilePath} from '@romejs/path';
+import {AbsoluteFilePath, PathSegments} from '@romejs/path';
 
 export type PathPatterns = Array<PathPatternNode>;
 

@@ -7,7 +7,7 @@
 
 import {NodeBase} from '@romejs/parser-core';
 import {AnyNode} from './index';
-import {inheritLoc, assertSingleNode} from '@romejs/js-ast-utils';
+import {assertSingleNode, inheritLoc} from '@romejs/js-ast-utils';
 import {JSNodeBase} from './base';
 import {TransformExitResult} from '@romejs/js-compiler';
 

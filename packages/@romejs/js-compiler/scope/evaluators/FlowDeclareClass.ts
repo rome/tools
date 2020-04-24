@@ -7,7 +7,7 @@
 
 import Scope from '../Scope';
 import {TypeBinding} from '@romejs/js-compiler';
-import {FlowDeclareClass, AnyNode} from '@romejs/js-ast';
+import {AnyNode, FlowDeclareClass} from '@romejs/js-ast';
 
 export default {
   creator: false,

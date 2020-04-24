@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {NumericLiteral, numericLiteral, AnyNode} from '@romejs/js-ast';
+import {AnyNode, NumericLiteral, numericLiteral} from '@romejs/js-ast';
 import {humanizeNumber} from '@romejs/string-utils';
 import {number} from '@romejs/js-formatter/tokens';
 

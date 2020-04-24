@@ -6,28 +6,28 @@
  */
 
 import {
-  ConstExportModuleKind,
-  ConstImportModuleKind,
   AnyNode,
   BindingIdentifier,
+  ConstExportModuleKind,
+  ConstImportModuleKind,
+  ConstProgramSyntax,
   FlowTypeParameter,
   ReferenceIdentifier,
-  ConstProgramSyntax,
 } from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
 import {
-  Path,
-  Scope,
   ClassBinding,
   FunctionBinding,
+  Path,
+  Scope,
   TypeBinding,
 } from '@romejs/js-compiler';
 import {
-  AnalyzeExportValueType,
-  AnalyzeDependencyResult,
-  AnyAnalyzeExport,
   AnalyzeDependency,
   AnalyzeDependencyName,
+  AnalyzeDependencyResult,
+  AnalyzeExportValueType,
+  AnyAnalyzeExport,
 } from '@romejs/core';
 
 export function isOptional(path: Path): boolean {

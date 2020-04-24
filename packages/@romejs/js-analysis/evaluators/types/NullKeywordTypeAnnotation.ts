@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   NullKeywordTypeAnnotation,
   nullKeywordTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 import NullT from '../../types/NullT';
 

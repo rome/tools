@@ -12,12 +12,12 @@ import {
   AbsoluteFilePathSet,
 } from '@romejs/path';
 import {
-  loadCompleteProjectConfig,
-  ProjectConfigMeta,
   ProjectConfig,
+  ProjectConfigMeta,
   ROME_CONFIG_FILENAMES,
   ROME_CONFIG_PACKAGE_JSON_FIELD,
   getParentConfigDependencies,
+  loadCompleteProjectConfig,
 } from '@romejs/project';
 import {exists, readFileText} from '@romejs/fs';
 import {consumeJSON} from '@romejs/codec-json';

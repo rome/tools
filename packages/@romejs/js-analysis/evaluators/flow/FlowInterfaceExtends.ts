@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowInterfaceExtends,
   flowInterfaceExtends,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowInterfaceExtends(node: AnyNode, scope: Scope) {

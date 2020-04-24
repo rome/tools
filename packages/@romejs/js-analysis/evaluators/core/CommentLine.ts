@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {CommentLine, commentLine, AnyNode} from '@romejs/js-ast';
+import {AnyNode, CommentLine, commentLine} from '@romejs/js-ast';
 
 export default function CommentLine(node: AnyNode, scope: Scope) {
   node = commentLine.assert(node);

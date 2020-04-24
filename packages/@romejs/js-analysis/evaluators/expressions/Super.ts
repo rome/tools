@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {Super, _super, AnyNode} from '@romejs/js-ast';
+import {AnyNode, Super, _super} from '@romejs/js-ast';
 
 export default function Super(node: AnyNode, scope: Scope) {
   node = _super.assert(node);

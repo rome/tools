@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   TSIndexedAccessType,
   tsIndexedAccessType,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TSIndexedAccessType(node: AnyNode, scope: Scope) {

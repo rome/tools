@@ -8,11 +8,11 @@
 import Builder from '../../Builder';
 import {
   Tokens,
+  concat,
   linkedGroups,
   operator,
   space,
   word,
-  concat,
 } from '../../tokens';
 import {AnyNode, exportExternalDeclaration} from '@romejs/js-ast';
 import {printModuleSpecifiers} from './ImportDeclaration';

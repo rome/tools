@@ -8,9 +8,9 @@
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
 import {
+  AnyNode,
   ImportDefaultSpecifier,
   importDefaultSpecifier,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function ImportDefaultSpecifier(

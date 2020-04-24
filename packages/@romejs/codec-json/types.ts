@@ -7,9 +7,9 @@
 
 import {
   BaseTokens,
+  ParserOptions,
   SimpleToken,
   ValueToken,
-  ParserOptions,
 } from '@romejs/parser-core';
 import {ConsumeContext} from '@romejs/consume';
 import {DiagnosticCategory} from '@romejs/diagnostics';

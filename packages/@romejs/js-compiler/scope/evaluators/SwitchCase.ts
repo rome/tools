@@ -6,7 +6,7 @@
  */
 
 import Scope from '../Scope';
-import {SwitchCase, AnyNode} from '@romejs/js-ast';
+import {AnyNode, SwitchCase} from '@romejs/js-ast';
 
 export default {
   creator: false,

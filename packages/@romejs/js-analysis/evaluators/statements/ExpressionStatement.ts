@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   ExpressionStatement,
   expressionStatement,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function ExpressionStatement(node: AnyNode, scope: Scope) {

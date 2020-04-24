@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, space} from '../../tokens';
-import {FlowDeclareClass, flowDeclareClass, AnyNode} from '@romejs/js-ast';
+import {Tokens, space, word} from '../../tokens';
+import {AnyNode, FlowDeclareClass, flowDeclareClass} from '@romejs/js-ast';
 import {_interfaceish} from './FlowInterfaceDeclaration';
 
 export default function FlowDeclareClass(

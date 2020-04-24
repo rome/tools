@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyFunction} from '@romejs/js-ast';
+import {AnyFunction, AnyNode} from '@romejs/js-ast';
 
 export default function isFunctionNode(node: AnyNode): node is AnyFunction {
   return node.type === 'FunctionDeclaration' || node.type ===

@@ -9,8 +9,8 @@ import Master from '../Master';
 import {
   Manifest,
   ManifestDefinition,
-  normalizeManifest,
   manifestNameToString,
+  normalizeManifest,
 } from '@romejs/codec-js-manifest';
 import {
   PathPatterns,
@@ -19,14 +19,14 @@ import {
 } from '@romejs/path-match';
 import {
   ProjectConfig,
-  ROME_CONFIG_FILENAMES,
   ProjectDefinition,
+  ROME_CONFIG_FILENAMES,
 } from '@romejs/project';
 import {DiagnosticsProcessor, catchDiagnostics} from '@romejs/diagnostics';
 import {Reporter} from '@romejs/cli-reporter';
 import {
-  createWatchmanClient,
   WatchmanSubscriptionValue,
+  createWatchmanClient,
 } from '@romejs/codec-watchman';
 import {Event} from '@romejs/events';
 import {consumeJSON} from '@romejs/codec-json';
@@ -37,7 +37,7 @@ import {
   AbsoluteFilePathMap,
   AbsoluteFilePathSet,
 } from '@romejs/path';
-import {lstat, readFileText, exists, readdir, watch} from '@romejs/fs';
+import {exists, lstat, readFileText, readdir, watch} from '@romejs/fs';
 import crypto = require('crypto');
 
 import fs = require('fs');

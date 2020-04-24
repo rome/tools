@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, VariableDeclarator, AnyStatement} from '@romejs/js-ast';
-import {Path, ConstBinding} from '@romejs/js-compiler';
+import {AnyNode, AnyStatement, VariableDeclarator} from '@romejs/js-ast';
+import {ConstBinding, Path} from '@romejs/js-compiler';
 import {getRequireSource, isInTypeAnnotation} from '@romejs/js-ast-utils';
 
 const NON_INLINED_REQUIRES: Array<string> = [];

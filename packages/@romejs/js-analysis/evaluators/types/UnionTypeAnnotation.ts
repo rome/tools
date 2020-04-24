@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   UnionTypeAnnotation,
   unionTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 import UnionT from '../../types/UnionT';
 

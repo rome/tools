@@ -8,13 +8,13 @@
 import Builder from '../../Builder';
 import {
   Tokens,
-  space,
-  operator,
-  word,
-  linkedGroups,
   concat,
+  linkedGroups,
+  operator,
+  space,
+  word,
 } from '../../tokens';
-import {functionExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, functionExpression} from '@romejs/js-ast';
 
 export default function FunctionExpression(
   builder: Builder,

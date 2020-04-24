@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyExpression} from '../index';
+import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type UnaryExpression = JSNodeBase & {

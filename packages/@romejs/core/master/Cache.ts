@@ -6,8 +6,8 @@
  */
 
 import {
-  WorkerCompileResult,
   WorkerAnalyzeDependencyResult,
+  WorkerCompileResult,
   WorkerLintResult,
 } from '../common/bridges/WorkerBridge';
 import {ModuleSignature} from '@romejs/js-analysis';
@@ -15,7 +15,7 @@ import Master from './Master';
 import {DEFAULT_PROJECT_CONFIG, ProjectDefinition} from '@romejs/project';
 import {VERSION} from '../common/constants';
 import {AbsoluteFilePath, AbsoluteFilePathMap} from '@romejs/path';
-import {createDirectory, writeFile, readFileText, unlink} from '@romejs/fs';
+import {createDirectory, readFileText, unlink, writeFile} from '@romejs/fs';
 
 type CacheEntry = {
   version: string;

@@ -7,19 +7,19 @@
 
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
-  DiagnosticAdvice,
   Diagnostic,
+  DiagnosticAdvice,
   INTERNAL_ERROR_LOG_ADVICE,
-  createSingleDiagnosticError,
-  descriptions,
-  createBlessedDiagnosticMessage,
-  deriveDiagnosticFromError,
   catchDiagnostics,
+  createBlessedDiagnosticMessage,
+  createSingleDiagnosticError,
+  deriveDiagnosticFromError,
+  descriptions,
 } from '@romejs/diagnostics';
 import {
+  GlobalTestOptions,
   TestCallback,
   TestOptions,
-  GlobalTestOptions,
 } from '@romejs-runtime/rome/test';
 import {
   default as TestWorkerBridge,
@@ -33,8 +33,8 @@ import {
   FileReference,
   convertTransportFileReference,
 } from '../common/types/files';
-import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
-import {markup, escapeMarkup} from '@romejs/string-markup';
+import {AbsoluteFilePath, createAbsoluteFilePath} from '@romejs/path';
+import {escapeMarkup, markup} from '@romejs/string-markup';
 
 const MAX_RUNNING_TESTS = 20;
 

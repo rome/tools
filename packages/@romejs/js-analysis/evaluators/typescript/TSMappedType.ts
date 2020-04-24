@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {TSMappedType, tsMappedType, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSMappedType, tsMappedType} from '@romejs/js-ast';
 
 export default function TSMappedType(node: AnyNode, scope: Scope) {
   node = tsMappedType.assert(node);

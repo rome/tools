@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {VariableDeclarator, variableDeclarator, AnyNode} from '@romejs/js-ast';
+import {AnyNode, VariableDeclarator, variableDeclarator} from '@romejs/js-ast';
 
 export default function VariableDeclarator(node: AnyNode, scope: Scope) {
   node = variableDeclarator.assert(node);

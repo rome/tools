@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSAsExpression, tsAsExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSAsExpression, tsAsExpression} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, space, word} from '../../tokens';
 

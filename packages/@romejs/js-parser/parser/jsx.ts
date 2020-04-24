@@ -9,23 +9,23 @@ import {types as tt} from '../tokenizer/types';
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {JSParser} from '../parser';
 import {
+  JSXAttribute,
   JSXElement,
+  JSXEmptyExpression,
+  JSXExpressionContainer,
+  JSXFragment,
   JSXIdentifier,
   JSXNamespacedName,
-  StringLiteral,
-  JSXFragment,
-  JSXExpressionContainer,
-  JSXSpreadChild,
-  JSXEmptyExpression,
   JSXSpreadAttribute,
-  JSXAttribute,
+  JSXSpreadChild,
   JSXText,
+  StringLiteral,
 } from '@romejs/js-ast';
 import {
   parseExpression,
   parseMaybeAssign,
-  parseTSTypeArguments,
   parseStringLiteral,
+  parseTSTypeArguments,
 } from './index';
 import {descriptions} from '@romejs/diagnostics';
 import {isValidIdentifierName} from '@romejs/js-ast-utils';

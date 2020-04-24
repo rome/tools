@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {PatternMeta, patternMeta, AnyNode} from '@romejs/js-ast';
+import {AnyNode, PatternMeta, patternMeta} from '@romejs/js-ast';
 
 export default function PatternMeta(builder: Builder, node: AnyNode): Tokens {
   node = patternMeta.assert(node);

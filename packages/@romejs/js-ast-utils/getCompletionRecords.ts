@@ -7,11 +7,11 @@
 
 import {
   AnyNode,
-  ReturnStatement,
-  ContinueStatement,
-  BreakStatement,
-  ThrowStatement,
   AnyStatement,
+  BreakStatement,
+  ContinueStatement,
+  ReturnStatement,
+  ThrowStatement,
 } from '@romejs/js-ast';
 
 type CompletionRecord = {

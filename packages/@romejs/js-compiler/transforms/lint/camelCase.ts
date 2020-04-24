@@ -10,9 +10,9 @@ import {toCamelCase} from '@romejs/string-utils';
 import {Binding} from '@romejs/js-compiler/scope/bindings';
 import {descriptions} from '@romejs/diagnostics';
 import {
-  renameBindings,
-  isVariableIdentifier,
   isIdentifierish,
+  isVariableIdentifier,
+  renameBindings,
 } from '@romejs/js-ast-utils';
 
 // Allow prefixed underscores

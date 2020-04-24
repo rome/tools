@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowTypeofTypeAnnotation,
   flowTypeofTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowTypeofTypeAnnotation(node: AnyNode, scope: Scope) {

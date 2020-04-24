@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   TSConstructSignatureDeclaration,
   tsConstructSignatureDeclaration,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TSConstructSignatureDeclaration(node: AnyNode) {

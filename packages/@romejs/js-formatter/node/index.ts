@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyDeclaration} from '@romejs/js-ast';
+import {AnyDeclaration, AnyNode} from '@romejs/js-ast';
 import parens from './parentheses';
-import {ob1Get1, ob1Get0} from '@romejs/ob1';
+import {ob1Get0, ob1Get1} from '@romejs/ob1';
 import {isDeclaration} from '@romejs/js-ast-utils';
 import {SourceLocation} from '@romejs/parser-core';
 

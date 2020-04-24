@@ -8,17 +8,17 @@
 import Builder from '../../Builder';
 import {
   Tokens,
-  word,
-  linkedGroups,
-  space,
-  operator,
   concat,
+  linkedGroups,
+  operator,
+  space,
+  word,
 } from '../../tokens';
 import {
+  AnyNode,
+  ExportExternalDeclaration,
   ImportDeclaration,
   importDeclaration,
-  ExportExternalDeclaration,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function ImportDeclaration(

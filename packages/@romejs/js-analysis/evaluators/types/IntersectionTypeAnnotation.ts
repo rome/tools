@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   IntersectionTypeAnnotation,
   intersectionTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 import IntersectionT from '../../types/IntersectionT';
 

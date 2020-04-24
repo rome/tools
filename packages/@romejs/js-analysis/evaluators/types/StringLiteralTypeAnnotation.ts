@@ -8,8 +8,8 @@
 import {Scope} from '../../scopes';
 import {
   AnyNode,
-  stringLiteralTypeAnnotation,
   StringLiteralTypeAnnotation,
+  stringLiteralTypeAnnotation,
 } from '@romejs/js-ast';
 
 export default function StringLiteralTypeAnnotation(node: AnyNode, scope: Scope) {

@@ -6,42 +6,42 @@
  */
 
 import {
-  TransformExitResult,
+  FunctionBinding,
+  ImportBinding,
   Path,
   REDUCE_REMOVE,
-  ImportBinding,
-  FunctionBinding,
+  TransformExitResult,
   TypeBinding,
 } from '@romejs/js-compiler';
 import {
+  getModuleId,
+  getOptions,
   getPrefixedName,
   getPrefixedNamespace,
   getPrivateName,
-  getModuleId,
-  getOptions,
 } from '../_utils';
 import {
   getBindingIdentifiers,
+  getImportSpecifiers,
   renameBindings,
   template,
-  getImportSpecifiers,
 } from '@romejs/js-ast-utils';
 import {
   AnyNode,
-  functionHead,
-  referenceIdentifier,
-  bindingIdentifier,
-  staticPropertyKey,
-  variableDeclarationStatement,
   ObjectProperties,
-  program,
+  bindingIdentifier,
   blockStatement,
-  objectExpression,
-  objectProperty,
+  functionHead,
   identifier,
+  objectExpression,
   objectMethod,
+  objectProperty,
+  program,
+  referenceIdentifier,
   returnStatement,
+  staticPropertyKey,
   variableDeclaration,
+  variableDeclarationStatement,
   variableDeclarator,
 } from '@romejs/js-ast';
 

@@ -7,7 +7,7 @@
 
 import {Scope} from '../../scopes';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
-import {exportLocalDeclaration, AnyNode} from '@romejs/js-ast';
+import {AnyNode, exportLocalDeclaration} from '@romejs/js-ast';
 import ImportT from '../../types/ImportT';
 import Hub from '../../Hub';
 

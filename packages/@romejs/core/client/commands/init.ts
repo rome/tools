@@ -9,7 +9,7 @@ import {commandCategories} from '../../common/commands';
 import {createLocalCommand} from '../commands';
 import ClientRequest from '../ClientRequest';
 import {Dict} from '@romejs/typescript-helpers';
-import {writeFile, exists} from '@romejs/fs';
+import {exists, writeFile} from '@romejs/fs';
 import {VERSION} from '../../common/constants';
 import {Consumer} from '@romejs/consume';
 

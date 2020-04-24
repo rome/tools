@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   NeverKeywordTypeAnnotation,
   neverKeywordTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function NeverKeywordTypeAnnotation(node: AnyNode) {

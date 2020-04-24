@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowTupleTypeAnnotation,
   flowTupleTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowTupleTypeAnnotation(node: AnyNode, scope: Scope) {

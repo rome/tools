@@ -6,13 +6,13 @@
  */
 
 import {
-  AnyNode,
-  stringLiteral,
-  MetaProperty,
   AnyExpression,
+  AnyNode,
+  MetaProperty,
+  stringLiteral,
 } from '@romejs/js-ast';
 import {template} from '@romejs/js-ast-utils';
-import {Path, CompilerContext} from '@romejs/js-compiler';
+import {CompilerContext, Path} from '@romejs/js-compiler';
 
 function isImportMeta(node: AnyNode): node is MetaProperty {
   return node.type === 'MetaProperty' && node.meta.name === 'import' &&

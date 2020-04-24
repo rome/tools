@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {stripAnsi, pattern} from './ansi';
+import {pattern, stripAnsi} from './ansi';
 
 const startRegex = new RegExp(`^${pattern}`);
 

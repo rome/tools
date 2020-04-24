@@ -7,9 +7,9 @@
 
 import {Program} from '@romejs/js-ast';
 import {
+  JSParserOptions,
   JSParserUserOptions,
   normalizeOptions,
-  JSParserOptions,
 } from './options';
 import {Token} from './tokenizer/index';
 import {types as tokTypes} from './tokenizer/types';

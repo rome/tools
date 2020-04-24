@@ -6,14 +6,14 @@
  */
 
 import {
-  createParser,
-  ParserOptions,
   BaseTokens,
   NodeBase,
+  ParserOptions,
   ValueToken,
+  createParser,
   isEscaped,
 } from '@romejs/parser-core';
-import {ob1Add, ob1Get0, Number0} from '@romejs/ob1';
+import {Number0, ob1Add, ob1Get0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 
 type Tokens = BaseTokens & {

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {ArrayExpression, arrayExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ArrayExpression, arrayExpression} from '@romejs/js-ast';
 import InstanceT from '../../types/InstanceT';
 import OpenT from '../../types/OpenT';
 

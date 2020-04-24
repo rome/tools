@@ -7,8 +7,8 @@
 
 import {
   AnyNode,
-  ExportDefaultDeclaration,
   ClassDeclaration,
+  ExportDefaultDeclaration,
   FunctionDeclaration,
 } from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';

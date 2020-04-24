@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   BindingAssignmentPattern,
   bindingAssignmentPattern,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function BindingAssignmentPattern(node: AnyNode, scope: Scope) {

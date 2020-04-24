@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {SpreadProperty, spreadProperty, AnyNode} from '@romejs/js-ast';
+import {AnyNode, SpreadProperty, spreadProperty} from '@romejs/js-ast';
 
 export default function SpreadProperty(node: AnyNode, scope: Scope) {
   node = spreadProperty.assert(node);

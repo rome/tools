@@ -6,7 +6,7 @@
  */
 
 import Scope from '../Scope';
-import {ExportLocalDeclaration, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ExportLocalDeclaration} from '@romejs/js-ast';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 
 export default {

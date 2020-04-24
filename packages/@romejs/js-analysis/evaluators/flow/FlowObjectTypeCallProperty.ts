@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowObjectTypeCallProperty,
   flowObjectTypeCallProperty,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowObjectTypeCallProperty(node: AnyNode, scope: Scope) {

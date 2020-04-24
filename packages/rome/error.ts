@@ -6,9 +6,9 @@
  */
 
 import {
+  DiagnosticSuppressions,
   Diagnostics,
   getDiagnosticsFromError,
-  DiagnosticSuppressions,
 } from '@romejs/diagnostics';
 import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
 

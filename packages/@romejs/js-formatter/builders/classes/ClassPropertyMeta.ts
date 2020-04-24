@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens, word} from '../../tokens';
-import {classPropertyMeta, AnyNode} from '@romejs/js-ast';
+import {AnyNode, classPropertyMeta} from '@romejs/js-ast';
 
 export default function ClassPropertyMeta(
   builder: Builder,

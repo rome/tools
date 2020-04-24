@@ -6,17 +6,17 @@
  */
 
 import {
-  Diagnostics,
-  DiagnosticSuppressions,
   DiagnosticAdvice,
+  DiagnosticSuppressions,
+  Diagnostics,
 } from '@romejs/diagnostics';
-import {TransformRequest, LintCompilerOptionsDecision} from '../types';
+import {LintCompilerOptionsDecision, TransformRequest} from '../types';
 import {lintTransforms} from '../transforms/lint/index';
-import {Program, AnyComment, AnyNode} from '@romejs/js-ast';
+import {AnyComment, AnyNode, Program} from '@romejs/js-ast';
 import {Cache, CompilerContext} from '@romejs/js-compiler';
 import {formatJS} from '@romejs/js-formatter';
-import {Mappings, Mapping} from '@romejs/codec-source-map';
-import {ob1Get0, Number0, Number1, ob1Get1} from '@romejs/ob1';
+import {Mapping, Mappings} from '@romejs/codec-source-map';
+import {Number0, Number1, ob1Get0, ob1Get1} from '@romejs/ob1';
 import stringDiff from '@romejs/string-diff';
 import Path from '../lib/Path';
 import {SUPPRESSION_NEXT_LINE_START} from '../suppressions';

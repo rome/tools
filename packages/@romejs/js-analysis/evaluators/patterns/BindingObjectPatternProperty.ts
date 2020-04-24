@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   BindingObjectPatternProperty,
   bindingObjectPatternProperty,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function BindingObjectPatternProperty(node: AnyNode) {

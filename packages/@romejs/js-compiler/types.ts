@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BundlerMode, AnalyzeDependencyResult} from '@romejs/core';
+import {AnalyzeDependencyResult, BundlerMode} from '@romejs/core';
 import {Path, REDUCE_REMOVE} from '@romejs/js-compiler';
 import {AnyNode, Program} from '@romejs/js-ast';
 import {ProjectConfig} from '@romejs/project';

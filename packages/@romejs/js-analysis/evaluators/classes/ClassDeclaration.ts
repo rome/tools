@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {ClassDeclaration, classDeclaration, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ClassDeclaration, classDeclaration} from '@romejs/js-ast';
 import ClassExpression from './ClassExpression';
 
 export default function ClassDeclaration(node: AnyNode, scope: Scope) {

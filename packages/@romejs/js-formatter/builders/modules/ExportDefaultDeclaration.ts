@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, space, concat} from '../../tokens';
-import {exportDefaultDeclaration, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, space, word} from '../../tokens';
+import {AnyNode, exportDefaultDeclaration} from '@romejs/js-ast';
 import {_ExportDeclaration} from './ExportLocalDeclaration';
 
 export default function ExportDefaultDeclaration(

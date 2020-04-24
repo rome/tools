@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, TSSignatureDeclarationMeta, AnyTSPrimary} from '../index';
+import {AnyTSPrimary, JSNodeBase, TSSignatureDeclarationMeta} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSConstructSignatureDeclaration = JSNodeBase & {

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {WhileStatement, whileStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, WhileStatement, whileStatement} from '@romejs/js-ast';
 
 export default function WhileStatement(node: AnyNode, scope: Scope) {
   node = whileStatement.assert(node);

@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {RangeNode, AbsoluteVersionNode, UserVersion, UserRange} from './types';
+import {AbsoluteVersionNode, RangeNode, UserRange, UserVersion} from './types';
 import {
+  SemverParserOptions,
   parseSemverRange,
   parseSemverVersion,
-  SemverParserOptions,
 } from './parse';
 
 export function normalizeUserVersion(

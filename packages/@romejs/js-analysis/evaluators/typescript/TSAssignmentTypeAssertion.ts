@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   TSAssignmentTypeAssertion,
   tsAssignmentTypeAssertion,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TSAssignmentTypeAssertion(node: AnyNode) {

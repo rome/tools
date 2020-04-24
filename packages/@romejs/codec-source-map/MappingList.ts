@@ -13,7 +13,7 @@
 
 import {Mapping} from './types';
 import {compareByGeneratedPositionsInflated} from './util';
-import {ob1Number1Neg1, ob1Number0} from '@romejs/ob1';
+import {ob1Number0, ob1Number1Neg1} from '@romejs/ob1';
 
 /**
  * Determine whether mappingB is after mappingA with respect to generated

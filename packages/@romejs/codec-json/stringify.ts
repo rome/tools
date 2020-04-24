@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Comments, PathToComments, PathComments} from './types';
+import {Comments, PathComments, PathToComments} from './types';
 import {naturalCompare} from '@romejs/string-utils';
 import {isValidWord} from './parse';
 import {Consumer} from '@romejs/consume';
-import {formatNumber, PRIORITIZE_KEYS} from '@romejs/pretty-format';
+import {PRIORITIZE_KEYS, formatNumber} from '@romejs/pretty-format';
 import {escapeString} from '@romejs/string-escape';
 
 function joinList(

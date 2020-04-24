@@ -7,20 +7,20 @@
 
 import {
   AbsoluteVersionNode,
-  VersionPrereleaseParts,
-  LogicalOrNode,
-  VersionNode,
-  WildcardNode,
-  ComparatorOperator,
   ComparatorNode,
-  RangeNode,
-  VersionRangeNode,
+  ComparatorOperator,
   LogicalAndNode,
+  LogicalOrNode,
+  RangeNode,
   Tokens,
+  VersionNode,
+  VersionPrereleaseParts,
+  VersionRangeNode,
+  WildcardNode,
 } from './types';
 import {
-  TokenValues,
   ParserOptions,
+  TokenValues,
   createParser,
   isAlpha,
   isDigit,

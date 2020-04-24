@@ -6,23 +6,23 @@
  */
 
 import {
-  CoverageFileStats,
-  LocationRangeKind,
   CoverageFile,
+  CoverageFileStats,
   CoverageLocationRange,
   CoverageRangeWithMetadata,
+  LocationRangeKind,
 } from '@romejs/v8';
 import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {Position} from '@romejs/parser-core';
 import {urlToFilename} from './utils';
 import {
-  Number1,
-  ob1Number1,
-  ob1Number0,
   Number0,
+  Number1,
+  ob1Coerce0,
   ob1Get0,
   ob1Inc,
-  ob1Coerce0,
+  ob1Number0,
+  ob1Number1,
 } from '@romejs/ob1';
 import inspector = require('inspector');
 

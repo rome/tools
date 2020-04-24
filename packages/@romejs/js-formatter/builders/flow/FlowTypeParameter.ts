@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word, operator} from '../../tokens';
-import {FlowTypeParameter, flowTypeParameter, AnyNode} from '@romejs/js-ast';
+import {Tokens, operator, space, word} from '../../tokens';
+import {AnyNode, FlowTypeParameter, flowTypeParameter} from '@romejs/js-ast';
 
 export default function FlowTypeParameter(
   builder: Builder,

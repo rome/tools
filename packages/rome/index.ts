@@ -8,8 +8,8 @@
 import {parseJS} from '@romejs/js-parser';
 import {
   AbsoluteFilePath,
-  createAbsoluteFilePath,
   AbsoluteFilePathMap,
+  createAbsoluteFilePath,
 } from '@romejs/path';
 import {SourceMap, SourceMapGenerator} from '@romejs/codec-source-map';
 import * as compiler from '@romejs/js-compiler';

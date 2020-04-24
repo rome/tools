@@ -8,9 +8,9 @@
 import Builder from '../../Builder';
 import {Tokens, space, word} from '../../tokens';
 import {
+  AnyNode,
   FlowObjectTypeCallProperty,
   flowObjectTypeCallProperty,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowObjectTypeCallProperty(

@@ -8,9 +8,9 @@
 import Builder from '../../Builder';
 import {Tokens, operator} from '../../tokens';
 import {
+  AnyNode,
   TSSignatureDeclarationMeta,
   tsSignatureDeclarationMeta,
-  AnyNode,
 } from '@romejs/js-ast';
 import {printBindingPatternParams} from '../utils';
 

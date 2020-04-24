@@ -6,11 +6,11 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, operator, concat} from '../../tokens';
+import {Tokens, concat, operator, space} from '../../tokens';
 import {
+  AnyNode,
   BindingAssignmentPattern,
   bindingAssignmentPattern,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function BindingAssignmentPattern(

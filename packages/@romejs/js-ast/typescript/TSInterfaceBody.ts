@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyTSTypeElement} from '../index';
+import {AnyTSTypeElement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSInterfaceBody = JSNodeBase & {

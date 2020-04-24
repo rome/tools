@@ -8,8 +8,8 @@
 import {Path, TransformExitResult} from '@romejs/js-compiler';
 import {
   VariableDeclarationStatement,
-  variableDeclarationStatement,
   variableDeclaration,
+  variableDeclarationStatement,
 } from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, PrivateName, AnyExpression, AnyPrimaryType} from '../index';
+import {AnyExpression, AnyPrimaryType, JSNodeBase, PrivateName} from '../index';
 import {createBuilder} from '../utils';
 import {ClassPropertyMeta} from './ClassPropertyMeta';
 

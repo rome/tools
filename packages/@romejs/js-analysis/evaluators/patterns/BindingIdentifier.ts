@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {BindingIdentifier, bindingIdentifier, AnyNode} from '@romejs/js-ast';
+import {AnyNode, BindingIdentifier, bindingIdentifier} from '@romejs/js-ast';
 
 export default function BindingIdentifier(node: AnyNode, scope: Scope) {
   node = bindingIdentifier.assert(node);

@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   TSExternalModuleReference,
   tsExternalModuleReference,
-  AnyNode,
 } from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens, operator} from '../../tokens';

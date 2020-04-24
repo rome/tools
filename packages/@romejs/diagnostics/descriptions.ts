@@ -6,14 +6,14 @@
  */
 
 import {
-  DiagnosticDescription,
-  DiagnosticBlessedMessage,
-  DiagnosticLocation,
   DiagnosticAdvice,
+  DiagnosticBlessedMessage,
+  DiagnosticDescription,
+  DiagnosticLocation,
 } from './types';
-import {markup, escapeMarkup} from '@romejs/string-markup';
+import {escapeMarkup, markup} from '@romejs/string-markup';
 import stringDiff from '@romejs/string-diff';
-import {buildSuggestionAdvice, buildDuplicateLocationAdvice} from './helpers';
+import {buildDuplicateLocationAdvice, buildSuggestionAdvice} from './helpers';
 import {SourceLocation} from '@romejs/parser-core';
 import {DiagnosticCategory} from './categories';
 import {ResolverQueryResponseNotFound} from '@romejs/core/master/fs/Resolver';
@@ -591,10 +591,21 @@ export const descriptions = createMessages(
             ],
           };
       },
+
       RESTRICTED_GLOBALS: (globalName) => ({
         category: 'lint/restrictedGlobals',
         message: markup`The use of the existing global variable <emphasis>${globalName}</emphasis> is not allowed. Use local variable instead.`,
       }),
+
+      SORT_EXPORT_SPECIFIERS: {
+        category: 'lint/sortImportExportSpecifiers',
+        message: `Specifiers of the export declaration should be sorted alphabetically.`,
+      },
+
+      SORT_IMPORT_SPECIFIERS: {
+        category: 'lint/sortImportExportSpecifiers',
+        message: `Specifiers of the import declaration should be sorted alphabetically.`,
+      },
     },
 
     PROJECT_MANAGER: {

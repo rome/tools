@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {BooleanLiteral, booleanLiteral, AnyNode} from '@romejs/js-ast';
+import {AnyNode, BooleanLiteral, booleanLiteral} from '@romejs/js-ast';
 import {word} from '@romejs/js-formatter/tokens';
 
 export default function BooleanLiteral(builder: Builder, node: AnyNode): Tokens {

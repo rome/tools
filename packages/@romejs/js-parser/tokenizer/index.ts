@@ -10,36 +10,36 @@ import {Position, SourceLocation} from '@romejs/parser-core';
 import {JSParser} from '../parser';
 import {xhtmlEntityNameToChar} from '../xhtmlEntities';
 import {
-  isIdentifierStart,
-  isIdentifierChar,
   getFullCharCodeAt,
+  isIdentifierChar,
+  isIdentifierStart,
+  isNewLine,
   lineBreak,
   lineBreakG,
-  isNewLine,
   nonASCIIwhitespace,
   validateRegexFlags,
 } from '@romejs/js-parser-utils';
 import {
-  types as tt,
-  keywords as keywordTypes,
   TokenType,
   TokenTypes,
+  keywords as keywordTypes,
+  types as tt,
 } from './types';
 import {TokContext, types as ct} from './context';
 import {addComment} from '../parser/index';
-import {UNICODE_MISTAKES, ASCII_NAMES} from './unicodeMistakes';
+import {ASCII_NAMES, UNICODE_MISTAKES} from './unicodeMistakes';
 import * as charCodes from '@romejs/string-charcodes';
 import {descriptions} from '@romejs/diagnostics';
 import {
-  ob1Coerce0,
-  ob1Add,
-  ob1Dec,
-  ob1Sub,
-  ob1Inc,
-  ob1Get0,
   Number0,
-  ob1Number0Neg1,
+  ob1Add,
+  ob1Coerce0,
+  ob1Dec,
+  ob1Get0,
+  ob1Inc,
   ob1Number0,
+  ob1Number0Neg1,
+  ob1Sub,
 } from '@romejs/ob1';
 import {removeCarriageReturn} from '@romejs/string-utils';
 
@@ -1061,10 +1061,15 @@ export function readRegexp(parser: JSParser): void {
     });
   }
   const mods = validateRegexFlags(rawMods, (metadata, flagPosition) => {
-    parser.addDiagnostic({
-      index: ob1Add(ob1Coerce0(getIndex(parser) - rawMods.length), flagPosition),
-      description: metadata,
-    });
+    parser.addDiagnostic(
+      {
+        index: ob1Add(
+          ob1Coerce0(getIndex(parser) - rawMods.length),
+          flagPosition,
+        ),
+        description: metadata,
+      },
+    );
   });
 
   finishToken(parser, tt.regexp, new RegExpTokenValue(content, mods));

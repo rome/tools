@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {variableDeclarationStatement, AnyNode} from '@romejs/js-ast';
-import {Tokens, operator, word, concat} from '@romejs/js-formatter/tokens';
+import {AnyNode, variableDeclarationStatement} from '@romejs/js-ast';
+import {Tokens, concat, operator, word} from '@romejs/js-formatter/tokens';
 
 export default function VariableDeclarationStatement(
   builder: Builder,

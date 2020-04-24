@@ -6,10 +6,10 @@
  */
 
 import {
+  BindingIdentifier,
+  BindingObjectPatternProperty,
   JSNodeBase,
   PatternMeta,
-  BindingObjectPatternProperty,
-  BindingIdentifier,
 } from '../index';
 import {createBuilder} from '../utils';
 

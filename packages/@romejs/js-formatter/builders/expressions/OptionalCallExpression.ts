@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {optionalCallExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, optionalCallExpression} from '@romejs/js-ast';
 import CallExpression from './CallExpression';
 
 export default function OptionalCallExpression(

@@ -6,9 +6,9 @@
  */
 
 import {
-  JSNodeBase,
-  Identifier,
   ConstExportModuleKind,
+  Identifier,
+  JSNodeBase,
   ReferenceIdentifier,
 } from '../index';
 import {createBuilder} from '../utils';
