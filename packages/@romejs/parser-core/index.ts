@@ -6,38 +6,38 @@
  */
 
 import {
-  Position,
-  SourceLocation,
-  TokensShape,
   BaseTokens,
-  EOFToken,
-  SOFToken,
-  ValueToken,
-  NodeBase,
-  SimpleToken,
-  TokenBase,
   ComplexToken,
+  EOFToken,
+  NodeBase,
+  Position,
+  SOFToken,
+  SimpleToken,
+  SourceLocation,
+  TokenBase,
+  TokensShape,
+  ValueToken,
 } from './types';
 import {
-  createSingleDiagnosticError,
   Diagnostic,
   DiagnosticCategory,
   DiagnosticDescription,
   DiagnosticsError,
-  descriptions,
   catchDiagnosticsSync,
+  createSingleDiagnosticError,
+  descriptions,
 } from '@romejs/diagnostics';
 import {
-  Number1,
   Number0,
-  ob1Number1,
-  ob1Number0,
-  ob1Inc,
-  ob1Coerce0,
-  ob1Get0,
+  Number1,
   ob1Add,
-  ob1Sub,
+  ob1Coerce0,
   ob1Dec,
+  ob1Get0,
+  ob1Inc,
+  ob1Number0,
+  ob1Number1,
+  ob1Sub,
 } from '@romejs/ob1';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 import {Class, OptionalProps} from '@romejs/typescript-helpers';

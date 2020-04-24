@@ -7,11 +7,11 @@
 
 import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {ErrorFrame} from '@romejs/v8';
-import {ob1Coerce1, ob1Coerce1To0, Number1, Number0} from '@romejs/ob1';
+import {Number0, Number1, ob1Coerce1, ob1Coerce1To0} from '@romejs/ob1';
 import {
-  getErrorStructure,
   ERROR_FRAMES_PROP,
   ERROR_POP_FRAMES_PROP,
+  getErrorStructure,
 } from './errors';
 
 type ResolvedLocation = {

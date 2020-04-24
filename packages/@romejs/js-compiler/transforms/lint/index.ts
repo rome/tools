@@ -16,6 +16,7 @@ import getterReturn from './getterReturn';
 import inconsiderateLanguage from './inconsiderateLanguage';
 import noArguments from './noArguments';
 import noAsyncPromiseExecutor from './noAsyncPromiseExecutor';
+import noCatchAssign from './noCatchAssign';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
 import noDebugger from './noDebugger';
@@ -37,12 +38,12 @@ import noShadowRestrictedNames from './noShadowRestrictedNames';
 import noShorthandArrayType from './noShorthandArrayType';
 import noTemplateCurlyInString from './noTemplateCurlyInString';
 import noUnsafeFinally from './noUnsafeFinally';
-import noCatchAssign from './noCatchAssign';
 import noVar from './noVar';
 import preferFunctionDeclarations from './preferFunctionDeclarations';
 import preferTemplate from './preferTemplate';
 import restrictedGlobals from './restrictedGlobals';
 import singleVarDeclarator from './singleVarDeclarator';
+import sortImportExportSpecifiers from './sortImportExportSpecifiers';
 import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
@@ -51,15 +52,16 @@ import unusedVariables from './unusedVariables';
 // Add transforms in alphabetical order.
 export const lintTransforms = [
   camelCase,
-  defaultExportSameBasename,
-  duplicateImportSource,
   caseSingleStatement,
+  defaultExportSameBasename,
   doubleEquals,
+  duplicateImportSource,
   emptyBlocks,
   getterReturn,
   inconsiderateLanguage,
   noArguments,
   noAsyncPromiseExecutor,
+  noCatchAssign,
   noCompareNegZero,
   noCondAssign,
   noDebugger,
@@ -81,12 +83,12 @@ export const lintTransforms = [
   noShorthandArrayType,
   noTemplateCurlyInString,
   noUnsafeFinally,
-  noCatchAssign,
   noVar,
   preferFunctionDeclarations,
   preferTemplate,
   restrictedGlobals,
   singleVarDeclarator,
+  sortImportExportSpecifiers,
   sparseArray,
   undeclaredVariables,
   unsafeNegation,

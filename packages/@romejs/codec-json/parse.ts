@@ -6,35 +6,35 @@
  */
 
 import {
-  DiagnosticLocation,
   DiagnosticCategory,
+  DiagnosticLocation,
   descriptions,
 } from '@romejs/diagnostics';
 import {
-  JSONParserResult,
-  JSONParserOptions,
-  Tokens,
   Comments,
-  PathToComments,
-  PathComments,
-  JSONValue,
   JSONObject,
+  JSONParserOptions,
+  JSONParserResult,
+  JSONValue,
+  PathComments,
+  PathToComments,
+  Tokens,
 } from './types';
 import {
-  ConsumePath,
   ConsumeContext,
+  ConsumePath,
   ConsumeSourceLocationRequestTarget,
 } from '@romejs/consume';
 import {unescapeString} from '@romejs/string-escape';
 import {
-  isAlpha,
-  isDigit,
-  isEscaped,
   Position,
   SourceLocation,
   createParser,
+  isAlpha,
+  isDigit,
+  isEscaped,
 } from '@romejs/parser-core';
-import {ob1Inc, Number0, ob1Add, ob1Get0, ob1Sub} from '@romejs/ob1';
+import {Number0, ob1Add, ob1Get0, ob1Inc, ob1Sub} from '@romejs/ob1';
 
 // Words can't start with a digit
 function isWordStartChar(char: string): boolean {

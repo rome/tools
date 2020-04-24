@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowDeclareOpaqueType,
   flowDeclareOpaqueType,
-  AnyNode,
 } from '@romejs/js-ast';
 import OpaqueT from '../../types/OpaqueT';
 

@@ -9,7 +9,7 @@ import Builder, {BuilderOptions} from './Builder';
 import {AnyNode, MOCK_PARENT} from '@romejs/js-ast';
 import Printer from './Printer';
 
-export {BuilderOptions, Builder};
+export {Builder, BuilderOptions};
 
 export function formatJS(ast: AnyNode, opts: BuilderOptions): Printer {
   const builder = new Builder(opts, ast.type === 'Program'

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {unaryExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, unaryExpression} from '@romejs/js-ast';
 import BooleanT from '../../types/BooleanT';
 import NumericT from '../../types/NumericT';
 import VoidT from '../../types/VoidT';

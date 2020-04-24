@@ -6,13 +6,13 @@
  */
 
 import {
-  isStrictReservedWord,
-  isStrictBindReservedWord,
-  isES2015ReservedWord,
-  isKeyword,
-  isIdentifierStart,
-  isIdentifierChar,
   getFullCharCodeAt,
+  isES2015ReservedWord,
+  isIdentifierChar,
+  isIdentifierStart,
+  isKeyword,
+  isStrictBindReservedWord,
+  isStrictReservedWord,
 } from '@romejs/js-parser-utils';
 
 /**

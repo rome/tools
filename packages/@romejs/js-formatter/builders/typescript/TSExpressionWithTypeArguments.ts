@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   TSExpressionWithTypeArguments,
   tsExpressionWithTypeArguments,
-  AnyNode,
 } from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens} from '../../tokens';

@@ -8,8 +8,8 @@
 import {
   CheckProvider,
   ModuleSignature,
-  ModuleSignatureType,
   ModuleSignatureExport,
+  ModuleSignatureType,
 } from '../types';
 import {Program} from '@romejs/js-ast';
 import buildGraph from './buildGraph';

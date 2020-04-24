@@ -6,12 +6,12 @@
  */
 
 import {
+  AnyNode,
   TSImportEqualsDeclaration,
   tsImportEqualsDeclaration,
-  AnyNode,
 } from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, space, word, operator} from '../../tokens';
+import {Tokens, operator, space, word} from '../../tokens';
 
 export default function TSImportEqualsDeclaration(
   builder: Builder,

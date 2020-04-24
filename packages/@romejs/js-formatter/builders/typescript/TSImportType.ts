@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSImportType, tsImportType, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSImportType, tsImportType} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, word, operator} from '../../tokens';
+import {Tokens, operator, word} from '../../tokens';
 
 export default function TSImportType(builder: Builder, node: AnyNode): Tokens {
   node = tsImportType.assert(node);

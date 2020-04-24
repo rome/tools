@@ -6,9 +6,9 @@
  */
 
 import {
-  JSNodeBase,
-  AnyTSEntityName,
   AnyExpression,
+  AnyTSEntityName,
+  JSNodeBase,
   TSTypeParameterInstantiation,
 } from '../index';
 import {createBuilder} from '../utils';

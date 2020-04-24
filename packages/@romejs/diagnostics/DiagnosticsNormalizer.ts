@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostic, DiagnosticLocation, DiagnosticAdviceItem} from './types';
+import {Diagnostic, DiagnosticAdviceItem, DiagnosticLocation} from './types';
 import DiagnosticsProcessor from './DiagnosticsProcessor';
 import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
-import {normalizeMarkup, MarkupFormatOptions} from '@romejs/string-markup';
+import {MarkupFormatOptions, normalizeMarkup} from '@romejs/string-markup';
 import {createBlessedDiagnosticMessage} from './descriptions';
 
 export default class DiagnosticsNormalizer {

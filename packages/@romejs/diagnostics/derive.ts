@@ -6,16 +6,16 @@
  */
 
 import {
-  DiagnosticAdvice,
   Diagnostic,
-  Diagnostics,
+  DiagnosticAdvice,
   DiagnosticOrigin,
+  Diagnostics,
 } from './types';
 import {Position} from '@romejs/parser-core';
 import {escapeMarkup, markup} from '@romejs/string-markup';
 import {
-  getErrorStructure,
   ErrorFrames,
+  getErrorStructure,
   getSourceLocationFromErrorFrame,
 } from '@romejs/v8';
 import {DiagnosticCategory} from './categories';

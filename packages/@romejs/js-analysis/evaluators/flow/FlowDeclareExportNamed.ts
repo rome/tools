@@ -8,8 +8,8 @@
 import {Scope} from '../../scopes';
 import {
   AnyNode,
-  flowDeclareExportNamed,
   FlowDeclareExportNamed,
+  flowDeclareExportNamed,
 } from '@romejs/js-ast';
 
 export default function FlowDeclareExportNamed(node: AnyNode, scope: Scope) {

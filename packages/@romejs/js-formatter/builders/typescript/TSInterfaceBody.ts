@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSInterfaceBody, tsInterfaceBody, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSInterfaceBody, tsInterfaceBody} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Tokens} from '../../tokens';
 import {printTSBraced} from '../utils';

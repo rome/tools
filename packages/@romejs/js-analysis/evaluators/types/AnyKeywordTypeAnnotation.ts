@@ -8,8 +8,8 @@
 import {Scope} from '../../scopes';
 import {
   AnyKeywordTypeAnnotation,
-  anyKeywordTypeAnnotation,
   AnyNode,
+  anyKeywordTypeAnnotation,
 } from '@romejs/js-ast';
 import AnyT from '../../types/AnyT';
 

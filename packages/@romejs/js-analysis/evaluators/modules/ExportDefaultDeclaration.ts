@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   ExportDefaultDeclaration,
   exportDefaultDeclaration,
-  AnyNode,
 } from '@romejs/js-ast';
 import Hub from '../../Hub';
 

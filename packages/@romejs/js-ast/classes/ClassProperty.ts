@@ -6,11 +6,11 @@
  */
 
 import {
-  JSNodeBase,
-  ClassPropertyMeta,
   AnyExpression,
-  AnyPrimaryType,
   AnyObjectPropertyKey,
+  AnyPrimaryType,
+  ClassPropertyMeta,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 

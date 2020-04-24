@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {dumpToBuffer, BunserBuf} from './bser';
+import {BunserBuf, dumpToBuffer} from './bser';
 import {Reporter} from '@romejs/cli-reporter';
 import {Event} from '@romejs/events';
 import childProcess = require('child_process');

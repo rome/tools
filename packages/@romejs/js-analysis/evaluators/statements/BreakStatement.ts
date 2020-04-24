@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {BreakStatement, breakStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, BreakStatement, breakStatement} from '@romejs/js-ast';
 
 export default function BreakStatement(node: AnyNode, scope: Scope) {
   node = breakStatement.assert(node);

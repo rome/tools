@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   BigIntKeywordTypeAnnotation,
   bigIntKeywordTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function BigIntKeywordTypeAnnotation(node: AnyNode, scope: Scope) {

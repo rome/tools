@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
   BindingIdentifier,
   FlowDeclaredPredicate,
   FlowInferredPredicate,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 import {RequiredProps} from '@romejs/typescript-helpers';

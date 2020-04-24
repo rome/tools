@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {AnyNode, classPrivateProperty} from '@romejs/js-ast';
-import {Tokens, operator, space, concat} from '@romejs/js-formatter/tokens';
+import {Tokens, concat, operator, space} from '@romejs/js-formatter/tokens';
 
 export default function ClassPrivateProperty(builder: Builder, node: AnyNode) {
   node = classPrivateProperty.assert(node);

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {TryStatement, tryStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TryStatement, tryStatement} from '@romejs/js-ast';
 
 export default function TryStatement(node: AnyNode, scope: Scope) {
   node = tryStatement.assert(node);

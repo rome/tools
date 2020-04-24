@@ -10,9 +10,9 @@ import {PathPatterns} from '@romejs/path-match';
 import {BundlerMode} from '@romejs/core';
 import {
   AbsoluteFilePath,
+  AbsoluteFilePathSet,
   TEMP_PATH,
   createAbsoluteFilePath,
-  AbsoluteFilePathSet,
 } from '@romejs/path';
 import {Consumer} from '@romejs/consume';
 import {Dict, RequiredProps} from '@romejs/typescript-helpers';

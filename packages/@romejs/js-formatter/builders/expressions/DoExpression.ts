@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, space, concat} from '../../tokens';
-import {doExpression, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, space, word} from '../../tokens';
+import {AnyNode, doExpression} from '@romejs/js-ast';
 
 export default function DoExpression(builder: Builder, node: AnyNode): Tokens {
   node = doExpression.assert(node);

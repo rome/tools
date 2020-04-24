@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSIndexSignature, tsIndexSignature, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSIndexSignature, tsIndexSignature} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator, word, space} from '../../tokens';
+import {Tokens, operator, space, word} from '../../tokens';
 
 export default function TSIndexSignature(
   builder: Builder,

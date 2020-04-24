@@ -8,9 +8,9 @@
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
 import {
+  AnyNode,
   FlowGenericTypeAnnotation,
   flowGenericTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 import FlowInterfaceExtends from './FlowInterfaceExtends';
 

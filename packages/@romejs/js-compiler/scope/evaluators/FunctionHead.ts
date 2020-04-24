@@ -7,7 +7,7 @@
 
 import Scope from '../Scope';
 import {AnyNode, FunctionHead} from '@romejs/js-ast';
-import {LetBinding, ArgumentsBinding} from '../bindings';
+import {ArgumentsBinding, LetBinding} from '../bindings';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 
 export default {

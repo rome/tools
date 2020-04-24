@@ -5,4 +5,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export {test, testOptions, TestHelper} from './test';
+export {TestHelper, test, testOptions} from './test';

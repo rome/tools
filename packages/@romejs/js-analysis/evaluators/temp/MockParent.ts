@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {MockParent, mockParent, AnyNode} from '@romejs/js-ast';
+import {AnyNode, MockParent, mockParent} from '@romejs/js-ast';
 
 export default function MockParent(node: AnyNode, scope: Scope) {
   node = mockParent.assert(node);

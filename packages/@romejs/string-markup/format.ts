@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Children, TagAttributes, MarkupTagName, TagNode} from './types';
+import {Children, MarkupTagName, TagAttributes, TagNode} from './types';
 import {parseMarkup} from './parse';
 import {
+  humanizeFileSize,
   humanizeNumber,
   humanizeTime,
-  humanizeFileSize,
 } from '@romejs/string-utils';
 import {ansiPad} from './ansi';
 import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';

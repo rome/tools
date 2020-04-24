@@ -12,7 +12,7 @@
  */
 
 import {Mapping} from './types';
-import {ob1Get1, ob1Get0} from '@romejs/ob1';
+import {ob1Get0, ob1Get1} from '@romejs/ob1';
 
 function strcmp(a: undefined | string, b: undefined | string): number {
   if (a === b) {

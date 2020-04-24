@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowDeclareVariable,
   flowDeclareVariable,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowDeclareVariable(node: AnyNode, scope: Scope) {

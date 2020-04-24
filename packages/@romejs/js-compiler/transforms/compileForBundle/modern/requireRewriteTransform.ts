@@ -7,13 +7,13 @@
 
 import {
   AnyNode,
-  assignmentIdentifier,
   assignmentExpression,
+  assignmentIdentifier,
   identifier,
 } from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
-import {doesNodeMatchPattern, template, inheritLoc} from '@romejs/js-ast-utils';
-import {getPrefixedNamespace, getOptions} from '../_utils';
+import {doesNodeMatchPattern, inheritLoc, template} from '@romejs/js-ast-utils';
+import {getOptions, getPrefixedNamespace} from '../_utils';
 
 export default {
   name: 'requireRewriteTransform',

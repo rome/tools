@@ -7,10 +7,10 @@
 
 import {
   BaseTokens,
-  SimpleNode,
-  ValueNode,
   ComplexNode,
+  SimpleNode,
   SimpleToken,
+  ValueNode,
   ValueToken,
 } from '@romejs/parser-core';
 

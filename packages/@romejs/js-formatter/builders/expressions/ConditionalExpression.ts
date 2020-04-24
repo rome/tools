@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, space, group, newline, concat} from '../../tokens';
-import {conditionalExpression, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, group, newline, operator, space} from '../../tokens';
+import {AnyNode, conditionalExpression} from '@romejs/js-ast';
 
 export default function ConditionalExpression(
   builder: Builder,

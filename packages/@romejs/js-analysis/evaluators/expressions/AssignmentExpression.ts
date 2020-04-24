@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {assignmentExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, assignmentExpression} from '@romejs/js-ast';
 import SideEffectT from '../../types/SideEffectT';
 
 export default function AssignmentExpression(node: AnyNode, scope: Scope) {

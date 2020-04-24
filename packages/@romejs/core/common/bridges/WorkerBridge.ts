@@ -7,18 +7,18 @@
 
 import {ModuleSignature} from '@romejs/js-analysis';
 import {Manifest} from '@romejs/codec-js-manifest';
-import {Program, ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
+import {ConstProgramSyntax, ConstSourceType, Program} from '@romejs/js-ast';
 import {
   BundleCompileOptions,
   CompileResult,
-  TransformStageName,
   LintCompilerOptions,
+  TransformStageName,
 } from '@romejs/js-compiler';
 import {Profile} from '@romejs/v8';
 import {ProfilingStartData} from './MasterBridge';
 import {
-  Diagnostics,
   DiagnosticSuppressions,
+  Diagnostics,
   DiagnosticsError,
 } from '@romejs/diagnostics';
 import {ProjectConfigJSON} from '@romejs/project';

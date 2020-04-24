@@ -8,7 +8,7 @@
 import Master from '../Master';
 import {SourceLocation} from '@romejs/parser-core';
 import {BundleBuddyStats} from '../../common/types/bundler';
-import {catchDiagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
+import {DiagnosticsProcessor, catchDiagnostics} from '@romejs/diagnostics';
 import {ResolverOptions} from '../fs/Resolver';
 import WorkerQueue from '../WorkerQueue';
 import DependencyNode from './DependencyNode';
@@ -20,8 +20,8 @@ import {WorkerAnalyzeDependencyResult} from '../../common/bridges/WorkerBridge';
 import {MasterRequest} from '@romejs/core';
 import {
   AbsoluteFilePath,
-  createUnknownFilePath,
   AbsoluteFilePathMap,
+  createUnknownFilePath,
 } from '@romejs/path';
 import {AnalyzeModuleType} from '../../common/types/analyzeDependencies';
 import {markup} from '@romejs/string-markup';

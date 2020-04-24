@@ -8,7 +8,7 @@
 import {MasterRequest} from '@romejs/core';
 import {commandCategories} from '../../common/commands';
 import {createMasterCommand} from '../commands';
-import {modifyProjectConfig, assertHardMeta} from '@romejs/project';
+import {assertHardMeta, modifyProjectConfig} from '@romejs/project';
 import {createUnknownFilePath} from '@romejs/path';
 import {markup} from '@romejs/string-markup';
 import {descriptions} from '@romejs/diagnostics';

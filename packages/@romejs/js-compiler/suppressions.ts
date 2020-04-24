@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Program, AnyComment} from '@romejs/js-ast';
+import {AnyComment, Program} from '@romejs/js-ast';
 import {
+  DiagnosticLocation,
+  DiagnosticSuppression,
+  DiagnosticSuppressionType,
   DiagnosticSuppressions,
   Diagnostics,
   descriptions,
-  DiagnosticSuppressionType,
-  DiagnosticLocation,
-  DiagnosticSuppression,
 } from '@romejs/diagnostics';
 import {Dict} from '@romejs/typescript-helpers';
 import {ob1Add} from '@romejs/ob1';

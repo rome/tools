@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSConditionalType, tsConditionalType, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSConditionalType, tsConditionalType} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, group, space, word, operator, newline} from '../../tokens';
+import {Tokens, group, newline, operator, space, word} from '../../tokens';
 
 export default function TSConditionalType(
   builder: Builder,

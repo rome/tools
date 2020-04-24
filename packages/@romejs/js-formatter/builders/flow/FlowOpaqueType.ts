@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, operator, space} from '../../tokens';
-import {FlowOpaqueType, flowOpaqueType, AnyNode} from '@romejs/js-ast';
+import {Tokens, operator, space, word} from '../../tokens';
+import {AnyNode, FlowOpaqueType, flowOpaqueType} from '@romejs/js-ast';
 
 export default function FlowOpaqueType(builder: Builder, node: AnyNode): Tokens {
   node = node.type === 'FlowDeclareOpaqueType'

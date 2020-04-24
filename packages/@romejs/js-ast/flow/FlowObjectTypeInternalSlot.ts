@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyFlowPrimary, FlowObjectTypePropertyKey} from '../index';
+import {AnyFlowPrimary, FlowObjectTypePropertyKey, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type FlowObjectTypeInternalSlot = JSNodeBase & {

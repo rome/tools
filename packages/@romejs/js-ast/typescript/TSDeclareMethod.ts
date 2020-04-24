@@ -6,11 +6,11 @@
  */
 
 import {
-  JSNodeBase,
-  FunctionHead,
-  ClassPropertyMeta,
-  ClassMethodKind,
   AnyObjectPropertyKey,
+  ClassMethodKind,
+  ClassPropertyMeta,
+  FunctionHead,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 

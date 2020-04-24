@@ -7,7 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
-import {SourceLocation, PositionTracker} from '@romejs/parser-core';
+import {PositionTracker, SourceLocation} from '@romejs/parser-core';
 import {ob1Coerce0} from '@romejs/ob1';
 import {isIdentifierish} from '@romejs/js-ast-utils';
 import {descriptions} from '@romejs/diagnostics';

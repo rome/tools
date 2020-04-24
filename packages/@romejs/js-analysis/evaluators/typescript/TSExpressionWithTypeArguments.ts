@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   TSExpressionWithTypeArguments,
   tsExpressionWithTypeArguments,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TSExpressionWithTypeArguments(node: AnyNode) {

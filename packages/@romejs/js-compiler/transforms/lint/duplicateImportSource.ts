@@ -6,7 +6,7 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {AnyNode, ImportDeclaration, AnyStatement} from '@romejs/js-ast';
+import {AnyNode, AnyStatement, ImportDeclaration} from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
 import {descriptions} from '@romejs/diagnostics';
 

@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowTypeCastExpression,
   flowTypeCastExpression,
-  AnyNode,
 } from '@romejs/js-ast';
 import ExhaustiveT from '../../types/ExhaustiveT';
 

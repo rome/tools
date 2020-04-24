@@ -6,29 +6,29 @@
  */
 
 import {ConstExportModuleKind, ConstImportModuleKind} from '@romejs/js-ast';
-import {Path, ImportBinding} from '@romejs/js-compiler';
+import {ImportBinding, Path} from '@romejs/js-compiler';
 import {AnalyzeDependencyName} from '@romejs/core';
 import {
-  isFunctionNode,
-  isInTypeAnnotation,
   getBindingIdentifiers,
   getImportSpecifiers,
+  isFunctionNode,
+  isInTypeAnnotation,
 } from '@romejs/js-ast-utils';
 import {
-  ImportRecord,
-  ExportRecord,
   ESExportRecord,
-  TopLevelAwaitRecord,
+  ExportRecord,
+  ImportRecord,
   ImportUsageRecord,
+  TopLevelAwaitRecord,
 } from '../records';
 import {
-  isOptional,
   getAnalyzeExportValueType,
-  maybeTypeBinding,
-  getExportKind,
   getDeclarationLoc,
+  getExportKind,
   getImportKind,
   getKindWithSpecifiers,
+  isOptional,
+  maybeTypeBinding,
 } from '../utils';
 
 export default {

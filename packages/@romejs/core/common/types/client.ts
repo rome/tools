@@ -6,8 +6,8 @@
  */
 
 import {
-  DiagnosticsPrinterFlags,
   DEFAULT_PRINTER_FLAGS,
+  DiagnosticsPrinterFlags,
 } from '@romejs/cli-diagnostics';
 import {Platform} from './platform';
 import {AbsoluteFilePath, CWD_PATH} from '@romejs/path';

@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   VoidKeywordTypeAnnotation,
   voidKeywordTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 import VoidT from '../../types/VoidT';
 

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypeParameter, tsTypeParameter, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSTypeParameter, tsTypeParameter} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, space, word, operator} from '../../tokens';
+import {Tokens, operator, space, word} from '../../tokens';
 
 export default function TSTypeParameter(builder: Builder, node: AnyNode): Tokens {
   node = tsTypeParameter.assert(node);

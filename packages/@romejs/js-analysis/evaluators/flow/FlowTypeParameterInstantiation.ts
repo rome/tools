@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowTypeParameterInstantiation,
   flowTypeParameterInstantiation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowTypeParameterInstantiation(

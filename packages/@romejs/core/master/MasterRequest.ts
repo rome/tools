@@ -11,24 +11,24 @@ import {
 } from '../common/types/client';
 import {JSONFileReference} from '../common/types/files';
 import {
-  DiagnosticLocation,
-  getDiagnosticsFromError,
-  DiagnosticAdvice,
-  DiagnosticsError,
-  DiagnosticCategory,
   Diagnostic,
-  DiagnosticsProcessor,
-  Diagnostics,
+  DiagnosticAdvice,
+  DiagnosticCategory,
   DiagnosticDescription,
+  DiagnosticLocation,
+  Diagnostics,
+  DiagnosticsError,
+  DiagnosticsProcessor,
   descriptions,
+  getDiagnosticsFromError,
 } from '@romejs/diagnostics';
 import {
-  DiagnosticsPrinterFlags,
   DiagnosticsPrinter,
+  DiagnosticsPrinterFlags,
 } from '@romejs/cli-diagnostics';
 import {
-  ProjectDefinition,
   ProjectConfigCategoriesWithIgnoreAndEnabled,
+  ProjectDefinition,
 } from '@romejs/project';
 import {ResolverOptions} from './fs/Resolver';
 import {BundlerConfig} from '../common/types/bundler';
@@ -47,30 +47,30 @@ import {
   EventSubscription,
   mergeEventSubscriptions,
 } from '@romejs/events';
-import {serializeCLIFlags, SerializeCLITarget} from '@romejs/cli-flags';
+import {SerializeCLITarget, serializeCLIFlags} from '@romejs/cli-flags';
 import {Program} from '@romejs/js-ast';
 import {TransformStageName} from '@romejs/js-compiler';
 import WorkerBridge, {
   PrefetchedModuleSignatures,
   WorkerAnalyzeDependencyResult,
   WorkerCompileResult,
-  WorkerParseOptions,
   WorkerCompilerOptions,
   WorkerFormatResult,
-  WorkerLintResult,
   WorkerLintOptions,
+  WorkerLintResult,
+  WorkerParseOptions,
 } from '../common/bridges/WorkerBridge';
 import {ModuleSignature} from '@romejs/js-analysis';
 import {
   AbsoluteFilePath,
-  createAbsoluteFilePath,
   AbsoluteFilePathSet,
+  createAbsoluteFilePath,
   createUnknownFilePath,
 } from '@romejs/path';
 import crypto = require('crypto');
 import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
 import {Dict, RequiredProps} from '@romejs/typescript-helpers';
-import {ob1Number1, ob1Number0, ob1Coerce0} from '@romejs/ob1';
+import {ob1Coerce0, ob1Number0, ob1Number1} from '@romejs/ob1';
 import {MemoryFSGlobOptions} from './fs/MemoryFileSystem';
 import {markup} from '@romejs/string-markup';
 import {

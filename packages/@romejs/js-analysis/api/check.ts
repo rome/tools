@@ -6,7 +6,7 @@
  */
 
 import {CheckProvider} from '../types';
-import {Diagnostics, DiagnosticAdvice, descriptions} from '@romejs/diagnostics';
+import {DiagnosticAdvice, Diagnostics, descriptions} from '@romejs/diagnostics';
 import {Program} from '@romejs/js-ast';
 import Hub from '../Hub';
 import E from '../types/errors/E';

@@ -7,13 +7,13 @@
 
 import {ModuleSignature, TypeCheckProvider} from '@romejs/js-analysis';
 import WorkerBridge, {
-  WorkerProjects,
   PrefetchedModuleSignatures,
+  WorkerParseOptions,
   WorkerPartialManifest,
   WorkerPartialManifests,
-  WorkerParseOptions,
+  WorkerProjects,
 } from '../common/bridges/WorkerBridge';
-import {Program, ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
+import {ConstProgramSyntax, ConstSourceType, Program} from '@romejs/js-ast';
 import Logger from '../common/utils/Logger';
 import {parseJS} from '@romejs/js-parser';
 import {Profiler} from '@romejs/v8';
@@ -24,13 +24,13 @@ import {UserConfig, loadUserConfig} from '../common/userConfig';
 import {hydrateJSONProjectConfig} from '@romejs/project';
 import {Diagnostics, DiagnosticsError} from '@romejs/diagnostics';
 import {
-  createUnknownFilePath,
   AbsoluteFilePath,
   AbsoluteFilePathMap,
   UnknownFilePathMap,
   createAbsoluteFilePath,
+  createUnknownFilePath,
 } from '@romejs/path';
-import {lstat, writeFile, readFileText} from '@romejs/fs';
+import {lstat, readFileText, writeFile} from '@romejs/fs';
 import {
   FileReference,
   convertTransportFileReference,

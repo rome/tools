@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, space, concat} from '../../tokens';
-import {labeledStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, operator, space} from '../../tokens';
+import {AnyNode, labeledStatement} from '@romejs/js-ast';
 
 export default function LabeledStatement(
   builder: Builder,

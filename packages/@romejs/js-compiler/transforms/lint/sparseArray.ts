@@ -6,7 +6,7 @@
  */
 
 import {Path, TransformExitResult} from '@romejs/js-compiler';
-import {referenceIdentifier, arrayExpression} from '@romejs/js-ast';
+import {arrayExpression, referenceIdentifier} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {

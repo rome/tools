@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {NewExpression, newExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, NewExpression, newExpression} from '@romejs/js-ast';
 import InstanceT from '../../types/InstanceT';
 
 export default function NewExpression(node: AnyNode, scope: Scope) {

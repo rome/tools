@@ -7,16 +7,16 @@
 
 import {
   MarkupFormatOptions,
-  formatReduceFromInput,
-  formatFileLink,
-  formatPad,
   formatApprox,
-  formatNumber,
+  formatFileLink,
   formatGrammarNumber,
+  formatNumber,
+  formatPad,
+  formatReduceFromInput,
 } from './format';
-import {humanizeTime, humanizeFileSize} from '@romejs/string-utils';
+import {humanizeFileSize, humanizeTime} from '@romejs/string-utils';
 import {formatAnsi} from './ansi';
-import {TagNode, MarkupTagName, TagAttributes} from './types';
+import {MarkupTagName, TagAttributes, TagNode} from './types';
 
 export function markupToAnsi(
   input: string,

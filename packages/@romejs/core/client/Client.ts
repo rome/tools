@@ -13,10 +13,10 @@ import {
 import ClientRequest, {ClientRequestType} from './ClientRequest';
 import Master from '../master/Master';
 import {
+  CLI_SOCKET_PATH,
   MasterBridge,
   MasterQueryResponse,
   SOCKET_PATH,
-  CLI_SOCKET_PATH,
 } from '@romejs/core';
 import fork from '../common/utils/fork';
 import {
@@ -28,9 +28,9 @@ import {Reporter, ReporterDerivedStreams} from '@romejs/cli-reporter';
 import prettyFormat from '@romejs/pretty-format';
 import {VERSION} from '../common/constants';
 import {TarWriter} from '@romejs/codec-tar';
-import {Trace, Profiler, Profile, TraceEvent} from '@romejs/v8';
+import {Profile, Profiler, Trace, TraceEvent} from '@romejs/v8';
 import {PartialMasterQueryRequest} from '../common/bridges/MasterBridge';
-import {loadUserConfig, UserConfig} from '../common/userConfig';
+import {UserConfig, loadUserConfig} from '../common/userConfig';
 import stream = require('stream');
 
 import net = require('net');

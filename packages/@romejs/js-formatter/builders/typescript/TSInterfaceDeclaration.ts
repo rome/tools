@@ -6,12 +6,12 @@
  */
 
 import {
+  AnyNode,
   TSInterfaceDeclaration,
   tsInterfaceDeclaration,
-  AnyNode,
 } from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, word, space} from '../../tokens';
+import {Tokens, space, word} from '../../tokens';
 
 export default function TSInterfaceDeclaration(
   builder: Builder,

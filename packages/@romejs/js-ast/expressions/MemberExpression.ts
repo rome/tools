@@ -6,11 +6,11 @@
  */
 
 import {
-  JSNodeBase,
   AnyExpression,
-  Super,
-  StaticMemberProperty,
   ComputedMemberProperty,
+  JSNodeBase,
+  StaticMemberProperty,
+  Super,
 } from '../index';
 import {createBuilder} from '../utils';
 

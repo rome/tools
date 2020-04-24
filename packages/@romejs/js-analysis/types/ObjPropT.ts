@@ -6,7 +6,7 @@
  */
 
 import {HumanBuilder} from '../Utils';
-import {HydrateTypeFactory, HydrateData} from '../Evaluator';
+import {HydrateData, HydrateTypeFactory} from '../Evaluator';
 import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
 import {Scope} from '../scopes';
 import {AnyNode} from '@romejs/js-ast';

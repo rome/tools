@@ -7,11 +7,11 @@
 
 import {
   ConstImportModuleKind,
-  JSNodeBase,
-  StringLiteral,
-  ImportSpecifier,
   ImportDefaultSpecifier,
   ImportNamespaceSpecifier,
+  ImportSpecifier,
+  JSNodeBase,
+  StringLiteral,
 } from '../index';
 import {createBuilder} from '../utils';
 

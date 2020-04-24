@@ -6,8 +6,8 @@
  */
 
 import Scope from '../Scope';
-import {LetBinding, VarBinding, ConstBinding} from '@romejs/js-compiler';
-import {VariableDeclaration, AnyNode} from '@romejs/js-ast';
+import {ConstBinding, LetBinding, VarBinding} from '@romejs/js-compiler';
+import {AnyNode, VariableDeclaration} from '@romejs/js-ast';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 
 export default {

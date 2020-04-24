@@ -6,12 +6,12 @@
  */
 
 import {
-  JSNodeBase,
-  ExportExternalSpecifier,
-  StringLiteral,
-  ExportNamespaceSpecifier,
-  ExportDefaultSpecifier,
   ConstExportModuleKind,
+  ExportDefaultSpecifier,
+  ExportExternalSpecifier,
+  ExportNamespaceSpecifier,
+  JSNodeBase,
+  StringLiteral,
 } from '../index';
 import {createBuilder} from '../utils';
 

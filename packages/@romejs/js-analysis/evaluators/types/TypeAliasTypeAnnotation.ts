@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   TypeAliasTypeAnnotation,
   typeAliasTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TypeAliasTypeAnnotation(node: AnyNode, scope: Scope) {

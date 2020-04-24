@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, word, space, concat} from '../../tokens';
-import {forStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, operator, space, word} from '../../tokens';
+import {AnyNode, forStatement} from '@romejs/js-ast';
 
 export default function ForStatement(builder: Builder, node: AnyNode): Tokens {
   node = forStatement.assert(node);

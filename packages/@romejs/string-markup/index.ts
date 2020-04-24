@@ -8,12 +8,12 @@
 export * from './parse';
 
 export {
-  MarkupFormatFilenameNormalizer,
   MarkupFormatFilenameHumanizer,
+  MarkupFormatFilenameNormalizer,
   MarkupFormatOptions,
+  humanizeMarkupFilename,
   markupToPlainText,
   normalizeMarkup,
-  humanizeMarkupFilename,
 } from './format';
 
 export * from './formatAnsi';

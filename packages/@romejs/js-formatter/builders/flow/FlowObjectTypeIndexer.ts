@@ -6,11 +6,11 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, operator, space} from '../../tokens';
+import {Tokens, operator, space, word} from '../../tokens';
 import {
+  AnyNode,
   FlowObjectTypeIndexer,
   flowObjectTypeIndexer,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowObjectTypeIndexer(builder: Builder, node: AnyNode) {

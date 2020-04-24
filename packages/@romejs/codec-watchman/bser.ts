@@ -6,7 +6,7 @@
  */
 
 import {Event} from '@romejs/events';
-import {isPlainObject, Dict} from '@romejs/typescript-helpers';
+import {Dict, isPlainObject} from '@romejs/typescript-helpers';
 import os = require('os');
 
 // BSER uses the local endianness to reduce byte swapping overheads

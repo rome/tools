@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyBindingPattern, BlockStatement} from '../index';
+import {AnyBindingPattern, BlockStatement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type CatchClause = JSNodeBase & {

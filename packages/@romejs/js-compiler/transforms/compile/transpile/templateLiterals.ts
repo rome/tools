@@ -7,10 +7,10 @@
 
 import {Path} from '@romejs/js-compiler';
 import {
-  AnyNode,
   AnyExpression,
-  stringLiteral,
+  AnyNode,
   binaryExpression,
+  stringLiteral,
 } from '@romejs/js-ast';
 
 export default {

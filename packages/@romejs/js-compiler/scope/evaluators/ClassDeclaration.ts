@@ -7,7 +7,7 @@
 
 import Scope from '../Scope';
 import {ClassBinding} from '@romejs/js-compiler';
-import {ClassDeclaration, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ClassDeclaration} from '@romejs/js-ast';
 import ClassExpression from './ClassExpression';
 
 export default {

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {AwaitExpression, awaitExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, AwaitExpression, awaitExpression} from '@romejs/js-ast';
 
 export default function AwaitExpression(node: AnyNode, scope: Scope) {
   node = awaitExpression.assert(node);

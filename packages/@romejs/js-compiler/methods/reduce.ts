@@ -7,12 +7,12 @@
 
 import {
   CompilerContext,
-  TransformExitResult,
-  PathOptions,
-  TransformVisitors,
   Path,
-  REDUCE_SKIP_SUBTREE,
+  PathOptions,
   REDUCE_REMOVE,
+  REDUCE_SKIP_SUBTREE,
+  TransformExitResult,
+  TransformVisitors,
 } from '@romejs/js-compiler';
 import {AnyNode, visitorKeys as allVisitorKeys} from '@romejs/js-ast';
 import {isNodeLike} from '@romejs/js-ast-utils';

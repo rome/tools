@@ -6,7 +6,7 @@
  */
 
 import {WebSocketInterface} from '@romejs/codec-websocket';
-import {consumeJSON, JSONValue} from '@romejs/codec-json';
+import {JSONValue, consumeJSON} from '@romejs/codec-json';
 import {Consumer} from '@romejs/consume';
 
 type InspectorSubscription = {

@@ -6,12 +6,12 @@
  */
 
 import {
-  JSNodeBase,
+  FlowObjectTypeCallProperty,
+  FlowObjectTypeIndexer,
+  FlowObjectTypeInternalSlot,
   FlowObjectTypeProperty,
   FlowObjectTypeSpreadProperty,
-  FlowObjectTypeIndexer,
-  FlowObjectTypeCallProperty,
-  FlowObjectTypeInternalSlot,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 

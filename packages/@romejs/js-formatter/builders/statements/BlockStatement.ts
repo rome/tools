@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, newline, indent, operator, concat} from '../../tokens';
-import {blockStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, indent, newline, operator} from '../../tokens';
+import {AnyNode, blockStatement} from '@romejs/js-ast';
 
 export default function BlockStatement(builder: Builder, node: AnyNode): Tokens {
   node = blockStatement.assert(node);

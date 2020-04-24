@@ -6,12 +6,12 @@
  */
 
 import {
-  Diagnostics,
   Diagnostic,
   DiagnosticFilterWithTest,
   DiagnosticOrigin,
-  DiagnosticSuppressions,
   DiagnosticSuppression,
+  DiagnosticSuppressions,
+  Diagnostics,
 } from './types';
 import {addOriginsToDiagnostics} from './derive';
 import {naturalCompare} from '@romejs/string-utils';

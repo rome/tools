@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   OptionalCallExpression,
   optionalCallExpression,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function OptionalCallExpression(node: AnyNode, scope: Scope) {

@@ -6,9 +6,9 @@
  */
 
 import {
-  SimpleNode,
-  ComplexNode,
   BaseTokens,
+  ComplexNode,
+  SimpleNode,
   SimpleToken,
   ValueToken,
 } from '@romejs/parser-core';

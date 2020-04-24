@@ -8,11 +8,11 @@
 import {Path} from '@romejs/js-compiler';
 import {TransformExitResult} from '@romejs/js-compiler/types';
 import {
-  tsTypeReference,
-  referenceIdentifier,
-  tsTypeParameterInstantiation,
   flowGenericTypeAnnotation,
   flowTypeParameterInstantiation,
+  referenceIdentifier,
+  tsTypeParameterInstantiation,
+  tsTypeReference,
 } from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope, RefineScope} from '../../scopes';
-import {IfStatement, ifStatement, AnyNode} from '@romejs/js-ast';
+import {RefineScope, Scope} from '../../scopes';
+import {AnyNode, IfStatement, ifStatement} from '@romejs/js-ast';
 import BooleanT from '../../types/BooleanT';
 import ExhaustiveT from '../../types/ExhaustiveT';
 import UnionT from '../../types/UnionT';

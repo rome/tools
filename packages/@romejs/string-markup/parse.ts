@@ -7,21 +7,21 @@
 
 import {
   ParserOptions,
+  Position,
+  TokenValues,
   createParser,
   isAlpha,
   isEscaped,
-  TokenValues,
-  Position,
 } from '@romejs/parser-core';
 import {
-  Tokens,
-  TagAttributes,
-  TagNode,
   ChildNode,
   Children,
   MarkupTagName,
+  TagAttributes,
+  TagNode,
+  Tokens,
 } from './types';
-import {ob1Inc, Number0, ob1Add, ob1Get0} from '@romejs/ob1';
+import {Number0, ob1Add, ob1Get0, ob1Inc} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 import {unescapeTextValue} from './escape';
 

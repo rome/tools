@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   UnknownKeywordTypeAnnotation,
   unknownKeywordTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function UnknownKeywordTypeAnnotation(

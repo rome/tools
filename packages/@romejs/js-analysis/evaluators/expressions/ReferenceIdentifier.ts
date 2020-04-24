@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   ReferenceIdentifier,
   referenceIdentifier,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function ReferenceIdentifier(node: AnyNode, scope: Scope) {

@@ -6,7 +6,7 @@
  */
 
 import Scope from '../Scope';
-import {BlockStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, BlockStatement} from '@romejs/js-ast';
 import {isFunctionNode} from '@romejs/js-ast-utils';
 import {addVarBindings} from '../utils';
 

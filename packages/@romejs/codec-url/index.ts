@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {consumeUnknown, Consumer, consume} from '@romejs/consume';
+import {Consumer, consume, consumeUnknown} from '@romejs/consume';
 import url = require('url');
 
-import {ob1Number0, ob1Number1, ob1Coerce0} from '@romejs/ob1';
+import {ob1Coerce0, ob1Number0, ob1Number1} from '@romejs/ob1';
 
 export type ConsumableUrl = {
   path: Consumer;

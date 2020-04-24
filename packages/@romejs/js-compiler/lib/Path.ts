@@ -7,15 +7,15 @@
 
 import {AnyNode, MOCK_PARENT} from '@romejs/js-ast';
 import {
-  Scope,
   CompilerContext,
+  Scope,
   TransformVisitor,
   TransformVisitors,
 } from '@romejs/js-compiler';
 import {
-  HookInstance,
   AnyHookDescriptor,
   HookDescriptor,
+  HookInstance,
 } from '../api/createHook';
 import reduce from '../methods/reduce';
 import {TransformExitResult} from '../types';

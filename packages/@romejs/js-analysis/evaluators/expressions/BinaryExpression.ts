@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {BinaryExpression, binaryExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, BinaryExpression, binaryExpression} from '@romejs/js-ast';
 import Evaluator from '../../Evaluator';
 import NumericT from '../../types/NumericT';
 import ExhaustiveT from '../../types/ExhaustiveT';

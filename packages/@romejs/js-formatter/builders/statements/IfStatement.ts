@@ -9,14 +9,14 @@ import Builder from '../../Builder';
 import {
   Tokens,
   breakGroup,
-  indent,
-  operator,
-  word,
-  space,
-  newline,
   concat,
+  indent,
+  newline,
+  operator,
+  space,
+  word,
 } from '../../tokens';
-import {ifStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ifStatement} from '@romejs/js-ast';
 import {isStatement} from '@romejs/js-ast-utils';
 
 export default function IfStatement(builder: Builder, node: AnyNode): Tokens {

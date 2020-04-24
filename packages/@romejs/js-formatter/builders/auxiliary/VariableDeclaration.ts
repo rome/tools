@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {AnyNode, variableDeclaration} from '@romejs/js-ast';
-import {word, space} from '@romejs/js-formatter/tokens';
+import {space, word} from '@romejs/js-formatter/tokens';
 
 export default function VariableDeclaration(builder: Builder, node: AnyNode) {
   node = variableDeclaration.assert(node);

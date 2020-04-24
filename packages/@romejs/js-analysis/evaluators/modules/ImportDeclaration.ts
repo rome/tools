@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ImportDeclaration, importDeclaration, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ImportDeclaration, importDeclaration} from '@romejs/js-ast';
 import {Scope} from '../../scopes';
 import ImportT from '../../types/ImportT';
 import {getImportSpecifiers} from '@romejs/js-ast-utils';

@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {staticMemberProperty, AnyNode} from '@romejs/js-ast';
-import {operator, concat} from '@romejs/js-formatter/tokens';
+import {AnyNode, staticMemberProperty} from '@romejs/js-ast';
+import {concat, operator} from '@romejs/js-formatter/tokens';
 
 export default function StaticMemberProperty(builder: Builder, node: AnyNode) {
   node = staticMemberProperty.assert(node);

@@ -5,29 +5,29 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {consumeUnknown, Consumer} from '@romejs/consume';
+import {Consumer, consumeUnknown} from '@romejs/consume';
 import {
-  LSPResponseMessage,
   LSPDiagnostic,
-  LSPPosition,
-  LSPTextEdit,
   LSPDiagnosticRelatedInformation,
+  LSPPosition,
   LSPRange,
+  LSPResponseMessage,
+  LSPTextEdit,
 } from './types';
 import Master, {MasterClient} from '../Master';
 import {
-  createAbsoluteFilePath,
   AbsoluteFilePath,
   AbsoluteFilePathMap,
   AbsoluteFilePathSet,
+  createAbsoluteFilePath,
 } from '@romejs/path';
-import {Diagnostics, DiagnosticLocation} from '@romejs/diagnostics';
+import {DiagnosticLocation, Diagnostics} from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
-import {ob1Coerce1To0, ob1Number0, Number0, ob1Inc} from '@romejs/ob1';
+import {Number0, ob1Coerce1To0, ob1Inc, ob1Number0} from '@romejs/ob1';
 import {markupToPlainText} from '@romejs/string-markup';
 import {
-  PartialMasterQueryRequest,
   MasterQueryResponse,
+  PartialMasterQueryRequest,
 } from '@romejs/core/common/bridges/MasterBridge';
 import Linter from '../linter/Linter';
 import MasterRequest from '../MasterRequest';
@@ -35,9 +35,9 @@ import {DEFAULT_CLIENT_REQUEST_FLAGS} from '@romejs/core/common/types/client';
 import stringDiff, {Diffs, diffConstants} from '@romejs/string-diff';
 import {JSONObject, JSONPropertyValue} from '@romejs/codec-json';
 import {
+  Reporter,
   ReporterProgress,
   ReporterProgressBase,
-  Reporter,
   ReporterProgressOptions,
 } from '@romejs/cli-reporter';
 

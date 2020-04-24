@@ -6,7 +6,7 @@
  */
 
 import {descriptions} from '@romejs/diagnostics';
-import {REDUCE_REMOVE, Path, TransformExitResult} from '@romejs/js-compiler';
+import {Path, REDUCE_REMOVE, TransformExitResult} from '@romejs/js-compiler';
 
 export default {
   name: 'noDebugger',

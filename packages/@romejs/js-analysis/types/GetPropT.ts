@@ -7,7 +7,7 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import {Scope} from '../scopes';
-import {HydrateTypeFactory, HydrateData} from '../Evaluator';
+import {HydrateData, HydrateTypeFactory} from '../Evaluator';
 import T, {SerialTypeFactory} from './T';
 import ObjPropT from './ObjPropT';
 import UnknownPropE from './errors/UnknownPropE';

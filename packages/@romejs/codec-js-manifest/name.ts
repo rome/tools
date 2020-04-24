@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ob1Number0, Number0, ob1Coerce0, ob1Inc, ob1Add} from '@romejs/ob1';
+import {Number0, ob1Add, ob1Coerce0, ob1Inc, ob1Number0} from '@romejs/ob1';
 import {
   DiagnosticDescriptionOptionalCategory,
   descriptions,

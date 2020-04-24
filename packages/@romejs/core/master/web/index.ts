@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest, Master, WebBridge} from '@romejs/core';
+import {Master, MasterRequest, WebBridge} from '@romejs/core';
 import Bundler from '../bundler/Bundler';
 import {WebSocketInterface} from '@romejs/codec-websocket';
 import prettyFormat from '@romejs/pretty-format';

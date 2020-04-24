@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test, TestHelper} from 'rome';
+import {TestHelper, test} from 'rome';
 import Parser from './Parser';
 import {Reporter} from '@romejs/cli-reporter';
 import {Consumer} from '@romejs/consume';

@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowObjectTypeIndexer,
   flowObjectTypeIndexer,
-  AnyNode,
 } from '@romejs/js-ast';
 import ObjIndexPropT from '../../types/ObjIndexPropT';
 

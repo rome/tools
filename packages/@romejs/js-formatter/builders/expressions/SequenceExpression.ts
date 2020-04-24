@@ -7,7 +7,7 @@
 
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
-import {sequenceExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, sequenceExpression} from '@romejs/js-ast';
 
 export default function SequenceExpression(
   builder: Builder,

@@ -7,15 +7,15 @@
 
 import {Path, createHook} from '@romejs/js-compiler';
 import {
-  variableDeclaration,
-  thisExpression,
-  variableDeclarator,
-  identifier,
+  AnyNode,
   Identifier,
   ThisExpression,
   bindingIdentifier,
-  AnyNode,
+  identifier,
+  thisExpression,
+  variableDeclaration,
   variableDeclarationStatement,
+  variableDeclarator,
 } from '@romejs/js-ast';
 import {inheritLoc} from '@romejs/js-ast-utils';
 

@@ -6,12 +6,12 @@
  */
 
 import {
-  JSNodeBase,
   AnyFlowPrimary,
-  Identifier,
   FlowVariance,
-  StringLiteral,
+  Identifier,
+  JSNodeBase,
   NumericLiteral,
+  StringLiteral,
 } from '../index';
 import {createBuilder} from '../utils';
 

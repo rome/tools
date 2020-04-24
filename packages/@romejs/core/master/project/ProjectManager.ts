@@ -7,27 +7,27 @@
 
 import Master from '../Master';
 import {
-  ProjectDefinition,
-  ProjectConfig,
   DEFAULT_PROJECT_CONFIG,
-  ProjectConfigMeta,
   DEFAULT_PROJECT_CONFIG_META,
+  ProjectConfig,
+  ProjectConfigMeta,
+  ProjectDefinition,
+  ROME_CONFIG_FILENAMES,
+  ROME_CONFIG_FOLDER,
+  ROME_CONFIG_PACKAGE_JSON_FIELD,
+  ROME_CONFIG_WARN_FILENAMES,
+  assertHardMeta,
   loadCompleteProjectConfig,
   serializeJSONProjectConfig,
-  assertHardMeta,
-  ROME_CONFIG_WARN_FILENAMES,
-  ROME_CONFIG_FILENAMES,
-  ROME_CONFIG_PACKAGE_JSON_FIELD,
-  ROME_CONFIG_FOLDER,
 } from '@romejs/project';
 import {
-  WorkerProjects,
   WorkerPartialManifests,
+  WorkerProjects,
 } from '../../common/bridges/WorkerBridge';
 import {WorkerContainer} from '../WorkerManager';
 import {
-  DiagnosticsProcessor,
   DiagnosticLocation,
+  DiagnosticsProcessor,
   createSingleDiagnosticError,
   descriptions,
 } from '@romejs/diagnostics';
@@ -38,17 +38,17 @@ import {
 } from '@romejs/codec-js-manifest';
 import {
   AbsoluteFilePath,
-  UnknownFilePath,
-  URLFilePath,
   AbsoluteFilePathMap,
+  AbsoluteFilePathSet,
+  URLFilePath,
+  UnknownFilePath,
   UnknownFilePathMap,
   createAbsoluteFilePath,
-  AbsoluteFilePathSet,
 } from '@romejs/path';
-import {JSONFileReference, FileReference} from '../../common/types/files';
+import {FileReference, JSONFileReference} from '../../common/types/files';
 import {
-  IMPLICIT_JS_EXTENSIONS,
   GetFileHandlerResult,
+  IMPLICIT_JS_EXTENSIONS,
   getFileHandler,
 } from '../../common/fileHandlers';
 import {createDirectory, readFileText} from '@romejs/fs';

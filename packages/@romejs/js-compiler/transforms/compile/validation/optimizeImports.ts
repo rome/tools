@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, Binding, TransformExitResult} from '@romejs/js-compiler';
+import {Binding, Path, TransformExitResult} from '@romejs/js-compiler';
 import {
   AnyNode,
   ImportDeclaration,
-  jsxIdentifier,
+  ImportSpecifier,
   bindingIdentifier,
-  referenceIdentifier,
   identifier,
   importDeclaration,
   importSpecifier,
   importSpecifierLocal,
-  ImportSpecifier,
+  jsxIdentifier,
+  referenceIdentifier,
 } from '@romejs/js-ast';
 import {isIdentifierish} from '@romejs/js-ast-utils';
 

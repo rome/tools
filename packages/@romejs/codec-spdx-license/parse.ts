@@ -6,18 +6,18 @@
  */
 
 import {
-  ParserOptions,
-  ComplexNode,
   BaseTokens,
-  ValueToken,
+  ComplexNode,
+  ParserOptions,
   SimpleToken,
+  ValueToken,
   createParser,
   isAlpha,
   isDigit,
 } from '@romejs/parser-core';
 import {getSPDXLicense, licenseNames} from './index';
 import {descriptions} from '@romejs/diagnostics';
-import {ob1Inc, Number0, ob1Get0} from '@romejs/ob1';
+import {Number0, ob1Get0, ob1Inc} from '@romejs/ob1';
 
 //# Tokens
 type Tokens = BaseTokens & {

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyTSPrimary, TSOptionalType} from '../index';
+import {AnyTSPrimary, JSNodeBase, TSOptionalType} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSTupleType = JSNodeBase & {

@@ -8,13 +8,13 @@
 import {Reporter} from '@romejs/cli-reporter';
 import {serializeCLIFlags} from './serializeCLIFlags';
 import {
-  consume,
-  Consumer,
   ConsumePath,
   ConsumePropertyDefinition,
   ConsumeSourceLocationRequestTarget,
+  Consumer,
+  consume,
 } from '@romejs/consume';
-import {toKebabCase, toCamelCase, naturalCompare} from '@romejs/string-utils';
+import {naturalCompare, toCamelCase, toKebabCase} from '@romejs/string-utils';
 import {createUnknownFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
 import {markup} from '@romejs/string-markup';

@@ -6,21 +6,21 @@
  */
 
 import {
-  SourceMap,
-  ResolvedLocation,
   ParsedMapping,
   ParsedMappings,
+  ResolvedLocation,
+  SourceMap,
 } from './types';
 import {decodeVLQ} from './base64';
 import {
+  Number0,
+  Number1,
+  ob1Add,
+  ob1Dec,
+  ob1Get0,
+  ob1Inc,
   ob1Number0,
   ob1Number1,
-  ob1Add,
-  Number1,
-  Number0,
-  ob1Inc,
-  ob1Get0,
-  ob1Dec,
 } from '@romejs/ob1';
 import {Dict} from '@romejs/typescript-helpers';
 

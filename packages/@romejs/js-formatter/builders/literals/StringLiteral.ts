@@ -8,7 +8,7 @@
 import Builder from '../../Builder';
 import {Tokens} from '../../tokens';
 import {escapeString} from '@romejs/string-escape';
-import {StringLiteral, stringLiteral, AnyNode} from '@romejs/js-ast';
+import {AnyNode, StringLiteral, stringLiteral} from '@romejs/js-ast';
 import {escapeXHTMLEntities} from '@romejs/js-parser';
 import {operator} from '@romejs/js-formatter/tokens';
 

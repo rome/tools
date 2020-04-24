@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   TaggedTemplateExpression,
   taggedTemplateExpression,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TaggedTemplateExpression(node: AnyNode, scope: Scope) {

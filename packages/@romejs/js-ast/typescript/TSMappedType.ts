@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyTSPrimary, TSTypeParameter} from '../index';
+import {AnyTSPrimary, JSNodeBase, TSTypeParameter} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSMappedTypeBoolean = undefined | boolean | '+' | '-';

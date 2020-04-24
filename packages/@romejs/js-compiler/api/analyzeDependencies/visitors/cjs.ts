@@ -8,21 +8,21 @@
 import {objectExpression} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 import {
-  getNodeReferenceParts,
   doesNodeMatchPattern,
+  getNodeReferenceParts,
   getRequireSource,
 } from '@romejs/js-ast-utils';
 import {
-  ImportRecord,
-  ExportRecord,
-  EscapedCJSRefRecord,
   CJSExportRecord,
   CJSVarRefRecord,
+  EscapedCJSRefRecord,
+  ExportRecord,
+  ImportRecord,
 } from '../records';
 import {
-  isOptional,
   getAnalyzeExportValueType,
   getDeclarationLoc,
+  isOptional,
 } from '../utils';
 
 export default {

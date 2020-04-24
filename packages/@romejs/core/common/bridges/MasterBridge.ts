@@ -7,7 +7,7 @@
 
 import {Profile} from '@romejs/v8';
 import {Diagnostics} from '@romejs/diagnostics';
-import {ClientRequestFlags, ClientFlagsJSON} from '../types/client';
+import {ClientFlagsJSON, ClientRequestFlags} from '../types/client';
 import {Bridge} from '@romejs/events';
 import {JSONPropertyValue} from '@romejs/codec-json';
 import {

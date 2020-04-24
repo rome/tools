@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {RegExpLiteral, regExpLiteral, AnyNode} from '@romejs/js-ast';
+import {AnyNode, RegExpLiteral, regExpLiteral} from '@romejs/js-ast';
 
 export default function RegExpLiteral(node: AnyNode, scope: Scope) {
   node = regExpLiteral.assert(node);

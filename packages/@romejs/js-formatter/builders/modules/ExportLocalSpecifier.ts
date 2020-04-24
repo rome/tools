@@ -6,11 +6,11 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word, concat} from '../../tokens';
+import {Tokens, concat, space, word} from '../../tokens';
 import {
+  AnyNode,
   ExportLocalSpecifier,
   exportLocalSpecifier,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function ExportLocalSpecifier(

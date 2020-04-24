@@ -6,11 +6,11 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, concat} from '../../tokens';
+import {Tokens, concat, operator} from '../../tokens';
 import {
+  AnyNode,
   ExpressionStatement,
   expressionStatement,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function ExpressionStatement(

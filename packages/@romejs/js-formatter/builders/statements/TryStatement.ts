@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word, concat} from '../../tokens';
-import {tryStatement, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, space, word} from '../../tokens';
+import {AnyNode, tryStatement} from '@romejs/js-ast';
 
 export default function TryStatement(builder: Builder, node: AnyNode): Tokens {
   node = tryStatement.assert(node);

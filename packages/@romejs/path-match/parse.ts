@@ -6,15 +6,15 @@
  */
 
 import {
-  Tokens,
+  PathPatternNode,
   PatternPartNode,
-  PatternSegments,
   PatternParts,
   PatternSegmentNode,
-  PathPatternNode,
+  PatternSegments,
+  Tokens,
 } from './types';
 import {ParserOptions, createParser} from '@romejs/parser-core';
-import {Number0, ob1Add, ob1Number0, ob1Get0, ob1Coerce0} from '@romejs/ob1';
+import {Number0, ob1Add, ob1Coerce0, ob1Get0, ob1Number0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 
 type ParseMode = 'path' | 'pattern';

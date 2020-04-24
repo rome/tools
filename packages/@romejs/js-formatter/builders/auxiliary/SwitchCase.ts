@@ -6,15 +6,15 @@
  */
 
 import Builder from '../../Builder';
-import {switchCase, AnyNode} from '@romejs/js-ast';
+import {AnyNode, switchCase} from '@romejs/js-ast';
 import {
-  word,
-  space,
-  newline,
-  operator,
-  indent,
   Tokens,
   concat,
+  indent,
+  newline,
+  operator,
+  space,
+  word,
 } from '@romejs/js-formatter/tokens';
 
 export default function SwitchCase(builder: Builder, node: AnyNode): Tokens {

@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, indent, operator, concat} from '../../tokens';
-import {jsxElement, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, indent, operator, space} from '../../tokens';
+import {AnyNode, jsxElement} from '@romejs/js-ast';
 
 export default function JSXElement(builder: Builder, node: AnyNode): Tokens {
   node = jsxElement.assert(node);

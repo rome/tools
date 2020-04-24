@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope, ClassScope} from '../../scopes';
-import {ClassExpression, classExpression, AnyNode} from '@romejs/js-ast';
+import {ClassScope, Scope} from '../../scopes';
+import {AnyNode, ClassExpression, classExpression} from '@romejs/js-ast';
 import InstanceT from '../../types/InstanceT';
 import ClassT from '../../types/ClassT';
 import T from '../../types/T';

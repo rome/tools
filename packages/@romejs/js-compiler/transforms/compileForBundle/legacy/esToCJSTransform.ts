@@ -8,18 +8,18 @@
 import {
   AnyNode,
   AnyStatement,
+  ClassExpression,
   FunctionExpression,
   program,
   stringLiteral,
-  ClassExpression,
 } from '@romejs/js-ast';
 import {
-  template,
   getBindingIdentifiers,
   getImportSpecifiers,
+  template,
 } from '@romejs/js-ast-utils';
-import {getOptions, getModuleId} from '../_utils';
-import {Path, FunctionBinding} from '@romejs/js-compiler';
+import {getModuleId, getOptions} from '../_utils';
+import {FunctionBinding, Path} from '@romejs/js-compiler';
 
 export default {
   name: 'esToCJSTransform',

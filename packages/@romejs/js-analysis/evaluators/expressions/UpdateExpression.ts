@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {UpdateExpression, updateExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, UpdateExpression, updateExpression} from '@romejs/js-ast';
 import NumericT from '../../types/NumericT';
 import ExhaustiveT from '../../types/ExhaustiveT';
 

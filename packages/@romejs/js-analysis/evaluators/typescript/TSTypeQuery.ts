@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {TSTypeQuery, tsTypeQuery, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSTypeQuery, tsTypeQuery} from '@romejs/js-ast';
 
 export default function TSTypeQuery(node: AnyNode, scope: Scope) {
   node = tsTypeQuery.assert(node);

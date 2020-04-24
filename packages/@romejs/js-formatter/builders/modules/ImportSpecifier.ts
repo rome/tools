@@ -6,8 +6,8 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, space, concat} from '../../tokens';
-import {ImportSpecifier, importSpecifier, AnyNode} from '@romejs/js-ast';
+import {Tokens, concat, space, word} from '../../tokens';
+import {AnyNode, ImportSpecifier, importSpecifier} from '@romejs/js-ast';
 
 export default function ImportSpecifier(builder: Builder, node: AnyNode): Tokens {
   node = importSpecifier.assert(node);

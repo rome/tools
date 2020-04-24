@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, FlowTypeParameter} from '../index';
+import {FlowTypeParameter, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type FlowTypeParameterDeclaration = JSNodeBase & {
