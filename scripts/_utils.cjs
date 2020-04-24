@@ -10,17 +10,16 @@ const child = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-exports.unlink = function(loc) {
+exports.unlink = function(loc, isFile, isDirectory) {
   if (!fs.existsSync(loc)) {
     return;
   }
 
-  const stats = fs.lstatSync(loc);
-  if (stats.isFile()) {
+  if (isFile) {
     fs.unlinkSync(loc);
-  } else if (stats.isDirectory()) {
-    for (const filename of fs.readdirSync(loc)) {
-      exports.unlink(path.join(loc, filename));
+  } else if (isDirectory) {
+    for (const filename of fs.readdirSync(loc, {withFileTypes: true})) {
+      exports.unlink(path.join(loc, filename.name), filename.isFile(), filename.isDirectory());
     }
     fs.rmdirSync(loc);
   }
@@ -70,7 +69,7 @@ exports.execDev = function(argv) {
 };
 
 exports.buildTrunk = function() {
-  exports.unlink(devFolder);
+  exports.unlink(devFolder, false, true);
   fs.mkdirSync(devFolder);
 
   console.log(exports.inverse('Building trunk'));
