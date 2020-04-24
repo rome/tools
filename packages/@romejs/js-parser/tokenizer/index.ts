@@ -1054,17 +1054,15 @@ export function readRegexp(parser: JSParser): void {
   bumpIndex(parser);
 
   const rawMods = readWord1(parser);
-
   if (parser.state.escapePosition !== undefined) {
     parser.addDiagnostic({
       index: parser.state.escapePosition,
       description: descriptions.JS_PARSER.UNICODE_ESCAPE_IN_REGEX_FLAGS,
     });
   }
-
-  const mods = validateRegexFlags(rawMods, (metadata, index) => {
+  const mods = validateRegexFlags(rawMods, (metadata, flagPosition) => {
     parser.addDiagnostic({
-      index: ob1Add(start, index),
+      index: ob1Add(ob1Coerce0(getIndex(parser) - rawMods.length), flagPosition),
       description: metadata,
     });
   });
