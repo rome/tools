@@ -1,5 +1,6 @@
 {
   "name": "rome",
+  "version": "0.0.2",
   "type": "module",
   "main": "index.ts",
   "license": "MIT",
