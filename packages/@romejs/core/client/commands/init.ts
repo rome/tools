@@ -64,31 +64,6 @@ export default createLocalCommand(
 
       config.version = `^${VERSION}`;
 
-      const enabledComponents = await reporter.select('Features enabled', {
-        yes: flags.defaults,
-        options: {
-          lint: {
-            label: 'Lint',
-          },
-          format: {
-            label: 'Format',
-          },
-          tests: {
-            label: 'Testing',
-          },
-        },
-        defaults: ['lint'],
-      });
-      if (enabledComponents.has('lint')) {
-        config.lint = {enabled: true};
-      }
-      if (enabledComponents.has('format')) {
-        config.format = {enabled: true};
-      }
-      if (enabledComponents.has('tests')) {
-        config.tests = {enabled: true};
-      }
-
       await writeFile(configPath, `${JSON.stringify(config, null, '  ')}\n`);
 
       reporter.success(

@@ -27,14 +27,7 @@
     "bundler": {
       "mode": "modern"
     },
-    "tests": {
-      "enabled": true
-    },
-    "format": {
-      "enabled": true
-    },
     "lint": {
-      "enabled": true,
       "ignore": [
         "build",
         "coverage",

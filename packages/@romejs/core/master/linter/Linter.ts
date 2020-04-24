@@ -12,7 +12,6 @@ import {
   DiagnosticSuppressions,
   Diagnostics,
   DiagnosticsProcessor,
-  descriptions,
 } from '@romejs/diagnostics';
 import {FileReference} from '@romejs/core/common/types/files';
 import {EventSubscription} from '@romejs/events';
@@ -427,8 +426,6 @@ export default class Linter {
       this.request.getResolverOptionsFromFlags(),
     );
 
-    const {fixLocation} = this.options;
-
     const runner = new LintRunner({
       events,
       request: this.request,
@@ -439,21 +436,10 @@ export default class Linter {
     let firstRun = true;
 
     return this.request.watchFilesFromArgs(this.getFileArgOptions(), async (
-      {paths: evictedPaths, projects},
+      {paths: evictedPaths},
       initial,
     ) => {
       const processor = this.createDiagnosticsProcessor(evictedPaths, runner);
-
-      if (fixLocation !== undefined) {
-        for (const project of projects) {
-          if (!project.config.format.enabled) {
-            processor.addDiagnostic({
-              location: fixLocation,
-              description: descriptions.FORMAT.DISABLED,
-            });
-          }
-        }
-      }
 
       const result = await runner.run({firstRun, evictedPaths, processor});
       events.onChanges(result, initial, runner);
