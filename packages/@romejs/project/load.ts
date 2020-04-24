@@ -30,7 +30,7 @@ import {
 import {ConsumeJSONResult, consumeJSONExtra} from '@romejs/codec-json';
 import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
 import {ob1Add, ob1Coerce1, ob1Inc, ob1Number0} from '@romejs/ob1';
-import {existsSync, lstatSync, readFileTextSync, readdirSync} from '@romejs/fs';
+import {existsSync, readFileTextSync, readdirSync} from '@romejs/fs';
 import crypto = require('crypto');
 
 import {ROME_CONFIG_PACKAGE_JSON_FIELD} from './constants';
@@ -419,10 +419,9 @@ function normalizeTypeCheckingLibs(
   for (const folder of folders) {
     const files = readdirSync(folder);
     for (const file of files) {
-      const stats = lstatSync(file);
-      if (stats.isFile()) {
+      if (file.isFile) {
         libFiles.add(file);
-      } else if (stats.isDirectory()) {
+      } else if (file.isDirectory) {
         folders.push(file);
       }
     }
