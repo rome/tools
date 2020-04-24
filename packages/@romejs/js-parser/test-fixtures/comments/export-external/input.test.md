@@ -7,12 +7,13 @@
 ```javascript
 Program {
   corrupt: false
+  diagnostics: Array []
   directives: Array []
   filename: 'input.js'
   hasHoistedVars: false
   interpreter: undefined
   mtime: undefined
-  sourceType: 'script'
+  sourceType: 'module'
   syntax: Array []
   loc: Object {
     filename: 'input.js'
@@ -42,40 +43,6 @@ Program {
           column: 0
           index: 0
           line: 1
-        }
-      }
-    }
-  ]
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module'}
-        advice: Array [
-          log {
-            category: 'info'
-            message: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
-          }
-          log {
-            category: 'info'
-            message: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
-          }
-        ]
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 26
-          index: 40
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 14
-          line: 2
         }
       }
     }
