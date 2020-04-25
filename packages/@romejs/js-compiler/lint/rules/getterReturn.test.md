@@ -16,13 +16,25 @@
   > 3 │     get name() {
   > 4 │       console.log('hello')
   > 5 │     };
-      │ ^^^^^ 
+      │ ^^^^^
     6 │   }
     7 │   console.log(new p())
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+class p {
+  get name() {
+    console.log('hello');
+  }
+}
+console.log(new p());
 
 ```
 
@@ -39,7 +51,7 @@
   > 4 │     get name() {
   > 5 │       console.log('hello')
   > 6 │     }
-      │ ^^^^^ 
+      │ ^^^^^
     7 │   };
     8 │   console.log(p)
 
@@ -49,9 +61,35 @@
 
 ```
 
+### `1: formatted`
+
+```
+let p;
+p = {
+  get name() {
+    console.log('hello');
+  },
+};
+console.log(p);
+
+```
+
 ### `2`
 
 ```
 ✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+let p = {};
+Object.defineProperty(p, {
+  get: function() {
+    console.log('hello');
+  },
+});
+console.log(p);
 
 ```

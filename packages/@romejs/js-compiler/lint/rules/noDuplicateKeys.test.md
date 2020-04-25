@@ -4,6 +4,8 @@
 
 ## `no duplicate keys`
 
+### `0`
+
 ```
 
  unknown:3:4 lint/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -12,7 +14,7 @@
 
     2 │   const foo = {
   > 3 │     test: true,
-      │     ^^^^^^^^^^ 
+      │     ^^^^^^^^^^
     4 │     test2: true,
     5 │     test: false,
 
@@ -21,5 +23,19 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+const foo = {
+  test: true,
+  test2: true,
+  test: false,
+};
+
+// mark const as used
+console.log(foo);
 
 ```

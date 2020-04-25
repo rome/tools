@@ -4,6 +4,8 @@
 
 ## `no template curly in string`
 
+### `0`
+
 ```
 
  unknown:3:26 lint/noTemplateCurlyInString ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -12,12 +14,23 @@
 
     2 │         const user = "Faustina";
   > 3 │         const helloUser = "Hello, ${user}!";
-      │                           ^^^^^^^^^^^^^^^^^ 
-    4 │ 
+      │                           ^^^^^^^^^^^^^^^^^
+    4 │
     5 │         // mark consts as used
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+const user = 'Faustina';
+const helloUser = 'Hello, ${user}!';
+
+// mark consts as used
+console.log(user, helloUser);
 
 ```

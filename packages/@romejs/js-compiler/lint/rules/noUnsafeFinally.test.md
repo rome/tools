@@ -15,13 +15,30 @@
      6 │             throw err;
      7 │         } finally {
    > 8 │             return 1;
-       │             ^^^^^^^^^ 
+       │             ^^^^^^^^^
      9 │         }
     10 │       }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+function greet1() {
+  try {
+    throw new Error('Try');
+  } catch (err) {
+    throw err;
+  } finally {
+    return 1;
+  }
+}
+
+greet1();
 
 ```
 
@@ -36,13 +53,30 @@
      6 │             throw err;
      7 │         } finally {
    > 8 │             break;
-       │             ^^^^^^ 
+       │             ^^^^^^
      9 │         }
     10 │       }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
+function greet2() {
+  try {
+    throw new Error('Try');
+  } catch (err) {
+    throw err;
+  } finally {
+    break;
+  }
+}
+
+greet2();
 
 ```
 
@@ -57,13 +91,30 @@
      6 │             throw err;
      7 │         } finally {
    > 8 │             continue;
-       │             ^^^^^^^^^ 
+       │             ^^^^^^^^^
      9 │         }
     10 │       }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `2: formatted`
+
+```
+function greet3() {
+  try {
+    throw new Error('Try');
+  } catch (err) {
+    throw err;
+  } finally {
+    continue;
+  }
+}
+
+greet3();
 
 ```
 
@@ -78,7 +129,7 @@
      6 │             throw err;
      7 │         } finally {
    > 8 │             throw new Error("Finally");
-       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
      9 │         }
     10 │       }
 

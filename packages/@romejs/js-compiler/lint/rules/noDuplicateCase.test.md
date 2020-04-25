@@ -4,6 +4,8 @@
 
 ## `no duplicated switch cases allowed`
 
+### `0`
+
 ```
 
  unknown:12:14 lint/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -14,12 +16,33 @@
     11 │         break;
   > 12 │       case 'c':
   > 13 │         break;
-       │ ^^^^^^^^^^^^^^ 
+       │ ^^^^^^^^^^^^^^
     14 │       default:
     15 │         break;
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+const expr = 'a';
+switch (expr) {
+  case 'a':
+    break;
+  case 'b':
+    break;
+  case 'c':
+    break;
+  case 'd':
+    break;
+  case 'c':
+    break;
+  default:
+    break;
+}
 
 ```

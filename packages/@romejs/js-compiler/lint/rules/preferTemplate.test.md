@@ -13,7 +13,7 @@
   ✖ Template literals are preferred over string concatenation
 
     const foo = 'bar'; console.log(foo + 'baz')
-                                   ^^^^^^^^^^^ 
+                                   ^^^^^^^^^^^
 
   ℹ Recommended fix
 
@@ -26,6 +26,14 @@
 
 ```
 
+### `0: formatted`
+
+```
+const foo = 'bar';
+console.log(`${foo}baz`);
+
+```
+
 ### `1`
 
 ```
@@ -35,7 +43,7 @@
   ✖ Template literals are preferred over string concatenation
 
     console.log((1 * 2) + 'baz')
-                ^^^^^^^^^^^^^^^ 
+                ^^^^^^^^^^^^^^^
 
   ℹ Recommended fix
 
@@ -45,5 +53,12 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
+console.log(`${1 * 2}baz`);
 
 ```

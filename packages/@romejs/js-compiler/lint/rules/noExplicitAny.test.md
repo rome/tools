@@ -11,6 +11,14 @@
 
 ```
 
+### `0: formatted`
+
+```
+const age: number = 17;
+age;
+
+```
+
 ### `1`
 
 ```
@@ -27,11 +35,20 @@
   ✖ Unexpected any. Specify a different type.
 
     function greet(): any {};greet();
-                      ^^^ 
+                      ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `10: formatted`
+
+```
+function greet(): any {}
+;
+greet();
 
 ```
 
@@ -44,11 +61,20 @@
   ✖ Unexpected any. Specify a different type.
 
     function greet(): any[] {};greet();
-                      ^^^ 
+                      ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `11: formatted`
+
+```
+function greet(): Array<any> {}
+;
+greet();
 
 ```
 
@@ -61,11 +87,20 @@
   ✖ Unexpected any. Specify a different type.
 
     function greet(): Array<any> {};greet();
-                            ^^^ 
+                            ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `12: formatted`
+
+```
+function greet(): Array<any> {}
+;
+greet();
 
 ```
 
@@ -78,11 +113,20 @@
   ✖ Unexpected any. Specify a different type.
 
     function greet(): Array<Array<any>> {};greet();
-                                  ^^^ 
+                                  ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `13: formatted`
+
+```
+function greet(): Array<Array<any>> {}
+;
+greet();
 
 ```
 
@@ -95,11 +139,22 @@
   ✖ Unexpected any. Specify a different type.
 
     function greet(param: Array<any>): string { return param; };greet();
-                                ^^^ 
+                                ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `14: formatted`
+
+```
+function greet(param: Array<any>): string {
+  return param;
+}
+;
+greet();
 
 ```
 
@@ -112,18 +167,37 @@
   ✖ Unexpected any. Specify a different type.
 
     function greet(param: Array<any>): Array<any> { return param; };greet();
-                                ^^^ 
+                                ^^^
 
  unknown:1:41 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected any. Specify a different type.
 
     function greet(param: Array<any>): Array<any> { return param; };greet();
-                                             ^^^ 
+                                             ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 2 problems
+
+```
+
+### `15: formatted`
+
+```
+function greet(param: Array<any>): Array<any> {
+  return param;
+}
+;
+greet();
+
+```
+
+### `1: formatted`
+
+```
+const ages: Array<number> = [17];
+ages;
 
 ```
 
@@ -134,10 +208,28 @@
 
 ```
 
+### `2: formatted`
+
+```
+function greet(): string {}
+;
+greet();
+
+```
+
 ### `3`
 
 ```
 ✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+function greet(): Array<string> {}
+;
+greet();
 
 ```
 
@@ -148,6 +240,15 @@
 
 ```
 
+### `4: formatted`
+
+```
+function greet(): Array<Array<string>> {}
+;
+greet();
+
+```
+
 ### `5`
 
 ```
@@ -155,10 +256,32 @@
 
 ```
 
+### `5: formatted`
+
+```
+function greet(param: Array<string>): string {
+  return param;
+}
+;
+greet();
+
+```
+
 ### `6`
 
 ```
 ✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+function greet(param: Array<string>): Array<string> {
+  return param;
+}
+;
+greet();
 
 ```
 
@@ -171,11 +294,19 @@
   ✖ Unexpected any. Specify a different type.
 
     const age: any = 'seventeen';age;
-               ^^^ 
+               ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+const age: any = 'seventeen';
+age;
 
 ```
 
@@ -188,11 +319,19 @@
   ✖ Unexpected any. Specify a different type.
 
     const ages: any[] = ['seventeen'];ages;
-                ^^^ 
+                ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```
+const ages: Array<any> = ['seventeen'];
+ages;
 
 ```
 
@@ -205,10 +344,18 @@
   ✖ Unexpected any. Specify a different type.
 
     const ages: Array<any> = ['seventeen'];ages;
-                      ^^^ 
+                      ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `9: formatted`
+
+```
+const ages: Array<any> = ['seventeen'];
+ages;
 
 ```

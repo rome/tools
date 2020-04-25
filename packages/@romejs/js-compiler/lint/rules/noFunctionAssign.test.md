@@ -11,6 +11,15 @@
 
 ```
 
+### `0: formatted`
+
+```
+function foo() {
+  var foo = bar;
+}
+
+```
+
 ### `1`
 
 ```
@@ -27,7 +36,7 @@
   ✖ Reassignment of function declaration
 
     [foo] = bar; function foo() { };
-     ^^^ 
+     ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -44,11 +53,21 @@
   ✖ Reassignment of function declaration
 
     function foo() { var foo; foo = bar; }
-                              ^^^ 
+                              ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `2: formatted`
+
+```
+function foo() {
+  var foo;
+  foo = bar;
+}
 
 ```
 
@@ -59,10 +78,26 @@
 
 ```
 
+### `3: formatted`
+
+```
+var foo = () => {};
+foo = bar;
+
+```
+
 ### `4`
 
 ```
 ✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+var foo = function() {};
+foo = bar;
 
 ```
 
@@ -73,10 +108,29 @@
 
 ```
 
+### `5: formatted`
+
+```
+var foo = function() {
+  foo = bar;
+};
+
+```
+
 ### `6`
 
 ```
 ✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+import bar from 'bar';
+function foo() {
+  var foo = bar;
+}
 
 ```
 
@@ -89,11 +143,20 @@
   ✖ Reassignment of function declaration
 
     function foo() {}; foo = bar;
-                       ^^^ 
+                       ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+function foo() {}
+;
+foo = bar;
 
 ```
 
@@ -106,11 +169,20 @@
   ✖ Reassignment of function declaration
 
     function foo() { foo = bar; }
-                     ^^^ 
+                     ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```
+function foo() {
+  foo = bar;
+}
 
 ```
 
@@ -123,10 +195,19 @@
   ✖ Reassignment of function declaration
 
     foo = bar; function foo() { };
-    ^^^ 
+    ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `9: formatted`
+
+```
+foo = bar;
+function foo() {}
+;
 
 ```

@@ -17,7 +17,9 @@ export default function BindingAssignmentPattern(
   builder: Builder,
   node: AnyNode,
 ): Tokens {
-  node = bindingAssignmentPattern.assert(node);
+  node = node.type === 'AssignmentAssignmentPattern'
+    ? node
+    : bindingAssignmentPattern.assert(node);
 
   return [
     concat(builder.tokenize(node.left, node)),

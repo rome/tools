@@ -12,7 +12,6 @@ test('enforce single var declarator', async (t) => {
   // Autofix
   await testLint(t, `let foo, bar;`, {
     category: 'lint/singleVarDeclarator',
-    format: true,
   });
 
   // Ignores loop heads

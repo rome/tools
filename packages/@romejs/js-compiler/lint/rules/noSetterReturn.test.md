@@ -15,13 +15,27 @@
     3 │       set name(value) {
     4 │         if (!value) {
   > 5 │           return 'wrong';
-      │           ^^^^^^^^^^^^^^^ 
+      │           ^^^^^^^^^^^^^^^
     6 │         }
     7 │       }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+class p {
+  set name(value) {
+    if (!value) {
+      return 'wrong';
+    }
+  }
+}
+console.log(new p());
 
 ```
 
@@ -36,13 +50,27 @@
     3 │       static set name(value) {
     4 │         if (!value) {
   > 5 │           return 'wrong';
-      │           ^^^^^^^^^^^^^^^ 
+      │           ^^^^^^^^^^^^^^^
     6 │         }
     7 │       }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
+class p {
+  static set name(value) {
+    if (!value) {
+      return 'wrong';
+    }
+  }
+}
+console.log(p);
 
 ```
 
@@ -57,7 +85,7 @@
     3 │       set name(value) {
     4 │         if (!value) {
   > 5 │           return 'wrong';
-      │           ^^^^^^^^^^^^^^^ 
+      │           ^^^^^^^^^^^^^^^
     6 │         }
     7 │       }
 
@@ -67,9 +95,38 @@
 
 ```
 
+### `2: formatted`
+
+```
+let p = {
+  set name(value) {
+    if (!value) {
+      return 'wrong';
+    }
+  },
+};
+console.log(p);
+
+```
+
 ### `3`
 
 ```
 ✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+class p {
+  set name(value) {
+    if (!value) {
+      return;
+    }
+  }
+}
+;
+console.log(p);
 
 ```

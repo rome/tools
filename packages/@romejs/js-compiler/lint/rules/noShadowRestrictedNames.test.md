@@ -13,13 +13,20 @@
   ✖ Shadowing of global property NaN
 
     function NaN() {}
-             ^^^ 
+             ^^^
 
   ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+function NaN() {}
 
 ```
 
@@ -32,13 +39,20 @@
   ✖ Shadowing of global property Set
 
     let Set;
-        ^^^ 
+        ^^^
 
   ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
+let Set;
 
 ```
 
@@ -49,10 +63,24 @@
 
 ```
 
+### `2: formatted`
+
+```
+!function Array() {};
+
+```
+
 ### `3`
 
 ```
 ✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+function test(JSON) {}
 
 ```
 
@@ -65,12 +93,19 @@
   ✖ Shadowing of global property Object
 
     try {  } catch(Object) {}
-                   ^^^^^^ 
+                   ^^^^^^
 
   ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `4: formatted`
+
+```
+try {} catch (Object) {}
 
 ```

@@ -78,7 +78,6 @@ export function getFileHandlerAssert(
 
 export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
   options: WorkerLintOptions;
-  format: boolean;
 };
 
 export type ExtensionLintResult = {
@@ -174,7 +173,7 @@ const jsonHandler: ExtensionHandler = {
   hasteMode: 'noext',
 
   async format(info: ExtensionHandlerMethodInfo): Promise<ExtensionLintResult> {
-    const {file, project, worker} = info;
+    const {file, worker} = info;
     const {uid} = file;
 
     const real = createAbsoluteFilePath(file.real);
@@ -183,28 +182,23 @@ const jsonHandler: ExtensionHandler = {
 
     let formatted: string = sourceText;
 
-    if (project.config.format.enabled) {
-      if (sourceText.length > 50_000) {
-        // Fast path for big JSON files
-        parseJSON({
-          path,
-          input: sourceText,
-        });
-      } else {
-        const {consumer, comments, hasExtensions} = consumeJSONExtra({
-          input: sourceText,
-          path,
-        });
+    if (sourceText.length > 50_000) {
+      // Fast path for big JSON files
+      parseJSON({
+        path,
+        input: sourceText,
+      });
+    } else {
+      const {consumer, comments, hasExtensions} = consumeJSONExtra({
+        input: sourceText,
+        path,
+      });
 
-        if (hasExtensions) {
-          formatted = stringifyJSON({consumer, comments});
-        } else {
-          formatted = String(JSON.stringify(
-            consumer.asUnknown(),
-            undefined,
-            '  ',
-          ));
-        }
+      if (hasExtensions) {
+        formatted = stringifyJSON({consumer, comments});
+      } else {
+          formatted =
+          String(JSON.stringify(consumer.asUnknown(), undefined, '  '));
       }
     }
 
@@ -327,7 +321,7 @@ function buildJSHandler(
       },
 
       async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {
-        const {file: ref, project, format, parseOptions, options, worker} = info;
+        const {file: ref, project, parseOptions, options, worker} = info;
 
         const {ast, sourceText, generated}: ParseResult = await worker.parseJS(
           ref,
@@ -345,7 +339,6 @@ function buildJSHandler(
           ast,
           project,
           sourceText,
-          format,
         });
 
         // Extract lint diagnostics

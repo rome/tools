@@ -4,6 +4,8 @@
 
 ## `no duplicated args allowed`
 
+### `0`
+
 ```
 
  unknown:2:20 lint/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -11,12 +13,21 @@
   ✖ Duplicate argument a in function definition
 
   > 2 │   function hello(a, a) {
-      │                     ^ 
+      │                     ^
     3 │     console.log("Hello);
     4 │   }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+function hello(a, a) {
+  console.log('Hello);\n  }\n  hello();\n  ');
+}
 
 ```

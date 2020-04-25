@@ -11,6 +11,15 @@
 
 ```
 
+### `0: formatted`
+
+```
+const test = {debugger: 1};
+test.debugger;
+console.log(test); // To not trigger the unused var rule.
+
+```
+
 ### `1`
 
 ```
@@ -20,7 +29,7 @@
   ✖ Unexpected 'debugger' statement
 
     debugger;
-    ^^^^^^^^^ 
+    ^^^^^^^^^
 
   ℹ Recommended fix
 
@@ -29,5 +38,11 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
 
 ```

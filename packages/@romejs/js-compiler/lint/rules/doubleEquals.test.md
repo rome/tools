@@ -11,10 +11,24 @@
 
 ```
 
+### `0: formatted`
+
+```
+foo == null;
+
+```
+
 ### `1`
 
 ```
 ✔ No known problems!
+
+```
+
+### `1: formatted`
+
+```
+foo != null;
 
 ```
 
@@ -25,10 +39,24 @@
 
 ```
 
+### `2: formatted`
+
+```
+null == foo;
+
+```
+
 ### `3`
 
 ```
 ✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+null != foo;
 
 ```
 
@@ -41,7 +69,7 @@
   ✖ Use === instead of ==
 
     foo == bar
-    ^^^^^^^^^^ 
+    ^^^^^^^^^^
 
   ℹ == is only allowed when comparing against null
 

@@ -11,6 +11,14 @@
 
 ```
 
+### `0: formatted`
+
+```
+let foo = /^abc[a-zA-Z]/;
+foo;
+
+```
+
 ### `1`
 
 ```
@@ -25,10 +33,26 @@
 
 ```
 
+### `10: formatted`
+
+```
+let foo = /[]]/s;
+foo;
+
+```
+
 ### `11`
 
 ```
 ✔ No known problems!
+
+```
+
+### `11: formatted`
+
+```
+let foo = /\[\]/;
+foo;
 
 ```
 
@@ -41,11 +65,19 @@
   ✖ Empty character classes in regular expressions are not allowed
 
     let foo = /^abc[]/;foo;
-                   ^ 
+                   ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `12: formatted`
+
+```
+let foo = /^abc/;
+foo;
 
 ```
 
@@ -58,11 +90,19 @@
   ✖ Empty character classes in regular expressions are not allowed
 
     let foo = /foo[]bar/;foo;
-                  ^^ 
+                  ^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `13: formatted`
+
+```
+let foo = /foobar/;
+foo;
 
 ```
 
@@ -75,11 +115,21 @@
   ✖ Empty character classes in regular expressions are not allowed
 
     let foo = "";if (foo.match(/^abc[]/)) { foo; }
-                                    ^ 
+                                    ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `14: formatted`
+
+```
+let foo = '';
+if (foo.match(/^abc/)) {
+  foo;
+}
 
 ```
 
@@ -92,11 +142,19 @@
   ✖ Empty character classes in regular expressions are not allowed
 
     let foo = /[]]/;foo;
-               ^^ 
+               ^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `15: formatted`
+
+```
+let foo = /\]/;
+foo;
 
 ```
 
@@ -109,11 +167,19 @@
   ✖ Empty character classes in regular expressions are not allowed
 
     let foo = /\[[]/;foo;
-                 ^ 
+                 ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `16: formatted`
+
+```
+let foo = /\[/;
+foo;
 
 ```
 
@@ -126,11 +192,27 @@
   ✖ Empty character classes in regular expressions are not allowed
 
     let foo = /\[\[\]a-z[]/;foo;
-                        ^ 
+                        ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `17: formatted`
+
+```
+let foo = /\[\[\]a-z/;
+foo;
+
+```
+
+### `1: formatted`
+
+```
+let regExp = new RegExp('^abc[]');
+regExp;
 
 ```
 
@@ -141,10 +223,26 @@
 
 ```
 
+### `2: formatted`
+
+```
+let foo = /^abc/;
+foo;
+
+```
+
 ### `3`
 
 ```
 ✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+let foo = /[[]/;
+foo;
 
 ```
 
@@ -155,10 +253,26 @@
 
 ```
 
+### `4: formatted`
+
+```
+let foo = /[]]/;
+foo;
+
+```
+
 ### `5`
 
 ```
 ✔ No known problems!
+
+```
+
+### `5: formatted`
+
+```
+let foo = /[a-zA-Z[]/;
+foo;
 
 ```
 
@@ -169,10 +283,26 @@
 
 ```
 
+### `6: formatted`
+
+```
+let foo = /[[]/;
+foo;
+
+```
+
 ### `7`
 
 ```
 ✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+let foo = /[[a-z[]\]/;
+foo;
 
 ```
 
@@ -183,9 +313,25 @@
 
 ```
 
+### `8: formatted`
+
+```
+let foo = /[\-[]\/{}()*+?.\\^$|]/g;
+foo;
+
+```
+
 ### `9`
 
 ```
 ✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+let foo = /[]]/yu;
+foo;
 
 ```

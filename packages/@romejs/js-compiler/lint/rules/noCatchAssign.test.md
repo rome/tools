@@ -11,6 +11,15 @@
 
 ```
 
+### `0: formatted`
+
+```
+try {} catch (e) {
+  three = 2 + 1;
+}
+
+```
+
 ### `1`
 
 ```
@@ -18,10 +27,30 @@
 
 ```
 
+### `1: formatted`
+
+```
+try {} catch ({e}) {
+  this.something = 2;
+}
+
+```
+
 ### `2`
 
 ```
 ✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+function foo() {
+  try {} catch (e) {
+    return false;
+  }
+}
 
 ```
 
@@ -34,11 +63,21 @@
   ✖ Don't reassign catch parameters
 
     try { } catch (e) { e; e = 10; }
-                           ^ 
+                           ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `3: formatted`
+
+```
+try {} catch (e) {
+  e;
+  e = 10;
+}
 
 ```
 
@@ -51,11 +90,21 @@
   ✖ Don't reassign catch parameters
 
     try { } catch (ex) { console.log('test'); ex = 10; }
-                                              ^^ 
+                                              ^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `4: formatted`
+
+```
+try {} catch (ex) {
+  console.log('test');
+  ex = 10;
+}
 
 ```
 
@@ -68,11 +117,20 @@
   ✖ Don't reassign catch parameters
 
     try { } catch (ex) { [ex, test] = []; }
-                          ^^ 
+                          ^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+try {} catch (ex) {
+  [ex, test] = [];
+}
 
 ```
 
@@ -85,14 +143,14 @@
   ✖ Don't reassign catch parameters
 
     try { } catch ({message, name}) { message = 'test'; name = 10; }
-                                      ^^^^^^^ 
+                                      ^^^^^^^
 
  unknown:1:52 lint/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Don't reassign catch parameters
 
     try { } catch ({message, name}) { message = 'test'; name = 10; }
-                                                        ^^^^ 
+                                                        ^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

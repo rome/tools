@@ -16,7 +16,6 @@ import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
 
 type TestLintOptions = {
   category: undefined | DiagnosticCategory;
-  format?: boolean;
   sourceType?: ConstSourceType;
   syntax?: Array<ConstProgramSyntax>;
 };
@@ -31,12 +30,11 @@ export async function testLintMultiple(
   }
 }
 
-export async function testLint(t: TestHelper, input: string, {
-  syntax = [],
-  category,
-  format = false,
-  sourceType = 'module',
-}: TestLintOptions) {
+export async function testLint(
+  t: TestHelper,
+  input: string,
+  {syntax = [], category, sourceType = 'module'}: TestLintOptions,
+) {
   t.addToAdvice({
     type: 'log',
     category: 'info',
@@ -48,7 +46,6 @@ export async function testLint(t: TestHelper, input: string, {
     data: {
       category,
       syntax,
-      format,
       sourceType,
     },
   });
@@ -73,7 +70,6 @@ export async function testLint(t: TestHelper, input: string, {
 
   const res = await lint({
     options: {},
-    format,
     ast,
     sourceText: input,
     project: {
@@ -82,26 +78,28 @@ export async function testLint(t: TestHelper, input: string, {
     },
   });
 
-  const diagnostics = res.diagnostics.filter((diag) => {
-    return diag.description.category === category;
-  }).map((diag) => {
-    return {
-      ...diag,
-      location: {
-        ...diag.location,
-        sourceText: input,
-      },
-    };
-  });
+  const diagnostics = res.diagnostics
+    .filter((diag) => {
+      return diag.description.category === category;
+    })
+    .map((diag) => {
+      return {
+        ...diag,
+        location: {
+          ...diag.location,
+          sourceText: input,
+        },
+      };
+    });
 
-  const snapshotName = await t.snapshot(printDiagnosticsToString({
-    diagnostics,
-    suppressions: res.suppressions,
-  }));
+  const snapshotName = await t.snapshot(
+    printDiagnosticsToString({
+      diagnostics,
+      suppressions: res.suppressions,
+    }),
+  );
 
-  if (format) {
-    await t.snapshotNamed(`${snapshotName}: formatted`, res.src);
-  }
+  await t.snapshotNamed(`${snapshotName}: formatted`, res.src);
 
   t.clearAdvice();
 }

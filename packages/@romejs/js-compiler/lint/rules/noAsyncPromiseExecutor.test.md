@@ -11,6 +11,13 @@
 
 ```
 
+### `0: formatted`
+
+```
+new Promise(() => {});
+
+```
+
 ### `1`
 
 ```
@@ -18,10 +25,25 @@
 
 ```
 
+### `1: formatted`
+
+```
+new Promise(() => {}, async function unrelated() {});
+
+```
+
 ### `2`
 
 ```
 ✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+class Foo {}
+new Foo(async () => {});
 
 ```
 
@@ -34,11 +56,18 @@
   ✖ Promise executor functions should not be async.
 
     new Promise(async function foo() {})
-                ^^^^^^^^^^^^^^^^^^^^^^^ 
+                ^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `3: formatted`
+
+```
+new Promise(async function foo() {});
 
 ```
 
@@ -51,11 +80,18 @@
   ✖ Promise executor functions should not be async.
 
     new Promise(async () => {})
-                ^^^^^^^^^^^^^^ 
+                ^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `4: formatted`
+
+```
+new Promise(async () => {});
 
 ```
 
@@ -68,10 +104,17 @@
   ✖ Promise executor functions should not be async.
 
     new Promise(((((async () => {})))))
-                    ^^^^^^^^^^^^^^ 
+                    ^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+new Promise(async () => {});
 
 ```

@@ -193,7 +193,6 @@ export function normalizeProjectConfig(
     resolver: {},
     develop: {},
     typeCheck: {},
-    format: {},
     tests: {},
     files: {},
     vcs: {},
@@ -293,10 +292,6 @@ export function normalizeProjectConfig(
 
   const lint = consumer.get('lint');
   if (categoryExists(lint)) {
-    if (lint.has('enabled')) {
-      config.lint.enabled = lint.get('enabled').asBoolean();
-    }
-
     if (lint.has('ignore')) {
       config.lint.ignore = arrayOfPatterns(lint.get('ignore'));
     }
@@ -306,23 +301,8 @@ export function normalizeProjectConfig(
     }
   }
 
-  const format = consumer.get('format');
-  if (categoryExists(format)) {
-    if (format.has('enabled')) {
-      config.format.enabled = format.get('enabled').asBoolean();
-    }
-
-    if (format.has('ignore')) {
-      config.format.ignore = arrayOfPatterns(format.get('ignore'));
-    }
-  }
-
   const tests = consumer.get('tests');
   if (categoryExists(tests)) {
-    if (tests.has('enabled')) {
-      config.tests.enabled = tests.get('enabled').asBoolean();
-    }
-
     if (tests.has('ignore')) {
       config.tests.ignore = arrayOfPatterns(tests.get('ignore'));
     }
@@ -555,10 +535,6 @@ function mergePartialConfig<
     tests: {
       ...a.tests,
       ...b.tests,
-    },
-    format: {
-      ...a.format,
-      ...b.format,
     },
     files: {
       ...a.files,

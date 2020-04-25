@@ -4,6 +4,8 @@
 
 ## `duplicate import source`
 
+### `0`
+
 ```
 
  unknown:3:4 lint/duplicateImportSource FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -12,7 +14,7 @@
 
     2 │     import foo from './testdummy.ts';
   > 3 │     import {bar} from './testdummy.ts';
-      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     4 │     import type {fooType} from './testdummy.ts';
 
   ℹ Previously imported here

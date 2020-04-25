@@ -11,6 +11,14 @@
 
 ```
 
+### `0: formatted`
+
+```
+let foo = /([abc]+)=\u0001/;
+foo;
+
+```
+
 ### `1`
 
 ```
@@ -27,11 +35,19 @@
   ✖ Reference to non-existent group "78"
 
     let foo = /([abc]+)=\78/;foo;
-                        ^^^ 
+                        ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `10: formatted`
+
+```
+let foo = /([abc]+)=\78/;
+foo;
 
 ```
 
@@ -44,11 +60,19 @@
   ✖ Reference to non-existent group "99"
 
     let foo = /([abc]+)=\99/;foo;
-                        ^^^ 
+                        ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `11: formatted`
+
+```
+let foo = /([abc]+)=\99/;
+foo;
 
 ```
 
@@ -61,18 +85,26 @@
   ✖ Reference to non-existent group "19"
 
     let foo = /(([abc])\19)+=\28/;foo;
-                       ^^^ 
+                       ^^^
 
  unknown:1:25 lint/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Reference to non-existent group "28"
 
     let foo = /(([abc])\19)+=\28/;foo;
-                             ^^^ 
+                             ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 2 problems
+
+```
+
+### `12: formatted`
+
+```
+let foo = /(([abc])\19)+=\28/;
+foo;
 
 ```
 
@@ -85,11 +117,27 @@
   ✖ Reference to non-existent group "19"
 
     let foo = /([abc]+)=\199/;foo;
-                        ^^^ 
+                        ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `13: formatted`
+
+```
+let foo = /([abc]+)=\199/;
+foo;
+
+```
+
+### `1: formatted`
+
+```
+let foo = /([abc]+)=\u0002/;
+foo;
 
 ```
 
@@ -100,10 +148,26 @@
 
 ```
 
+### `2: formatted`
+
+```
+let foo = /([abc]+)=8/;
+foo;
+
+```
+
 ### `3`
 
 ```
 ✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+let foo = /([abc]+)=9/;
+foo;
 
 ```
 
@@ -114,10 +178,26 @@
 
 ```
 
+### `4: formatted`
+
+```
+let foo = /([abc]+)=\t9/;
+foo;
+
+```
+
 ### `5`
 
 ```
 ✔ No known problems!
+
+```
+
+### `5: formatted`
+
+```
+let foo = /([abc]+)=\u001b8/;
+foo;
 
 ```
 
@@ -128,10 +208,26 @@
 
 ```
 
+### `6: formatted`
+
+```
+let foo = /([abc]+)=\u00ff/;
+foo;
+
+```
+
 ### `7`
 
 ```
 ✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+let foo = /([abc]+)=\?7/;
+foo;
 
 ```
 
@@ -144,11 +240,19 @@
   ✖ Reference to non-existent group "18"
 
     let foo = /([abc]+)=\18/;foo;
-                        ^^^ 
+                        ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```
+let foo = /([abc]+)=\18/;
+foo;
 
 ```
 
@@ -161,7 +265,7 @@
   ✖ Reference to non-existent group "49"
 
     let foo = /([abc]+)=\49/;foo;
-                        ^^^ 
+                        ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
