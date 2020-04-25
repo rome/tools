@@ -11,7 +11,6 @@ import {
   TokenValues,
   createParser,
   isAlpha,
-  isEscaped,
 } from '@romejs/parser-core';
 import {
   ChildNode,
@@ -21,6 +20,7 @@ import {
   TagNode,
   Tokens,
 } from './types';
+import {isEscaped} from '@romejs/string-utils';
 import {Number0, ob1Add, ob1Get0, ob1Inc} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 import {unescapeTextValue} from './escape';

@@ -3,10 +3,9 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- */
-
-import {
+ */import {
   DiagnosticAdvice,
+  DiagnosticAdviceAction,
   DiagnosticBlessedMessage,
   DiagnosticDescription,
   DiagnosticLocation,
@@ -148,29 +147,6 @@ export const descriptions = createMessages(
         ],
       }),
 
-      DIRTY_VSC: (files: Array<string>) => ({
-        message: 'You have uncommitted files. This operation can modify files. For your safety we recommend committing before running this command.',
-        category: 'vsc/dirty',
-        advice: [
-          {
-            type: 'log',
-            category: 'info',
-            message: 'If you really want to do this then you can bypass this restriction with the <command>--allow-dirty</command> flag',
-          },
-          {
-            type: 'log',
-            category: 'warn',
-            message: 'These files are uncommitted',
-          },
-          {
-            type: 'list',
-            list: files.map(
-              (filename) => markup`<filelink target="${filename}" />`,
-            ),
-          },
-        ],
-      }),
-
       INCORRECT_ARG_COUNT: (excessive: boolean, message: string) => ({
         message: excessive ? 'Too many arguments' : 'Missing arguments',
         advice: [
@@ -283,9 +259,24 @@ export const descriptions = createMessages(
       SYNTAX_ERROR: (message: string) => ({message, category: 'v8/syntaxError'}),
     },
 
+    // @romejs/core/master/commands/lint.ts
+    LINT_COMMAND: {
+      INVALID_DECISION_ACTION: (action: string) => ({
+        message: markup`<emphasis>${action}</emphasis> is not a valid decision action`,
+      }),
+
+      INVALID_DECISION_PART_COUNT: (i: number) => ({
+        message: `Segment ${i} contains an invalid number of decision parts`,
+      }),
+    },
+
     // @romejs/js-compiler
     LINT: {
-      PENDING_FIXES: (original: string, formatted: string) => ({
+      PENDING_FIXES: (
+        relativeFilename: string,
+        original: string,
+        formatted: string,
+      ) => ({
         category: 'lint/pendingFixes',
         message: 'Pending autofixes and formatting',
         advice: [
@@ -293,11 +284,27 @@ export const descriptions = createMessages(
             type: 'diff',
             diff: stringDiff(original, formatted),
           },
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Run <command>rome lint --fix</command> to apply',
-          },
+          ({
+            type: 'action',
+            hidden: true,
+            command: 'lint',
+            instruction: 'To format this file without any fixes run',
+            noun: 'Format file',
+            args: [relativeFilename],
+            commandFlags: {
+              formatOnly: true,
+            },
+          } as DiagnosticAdviceAction),
+          ({
+            type: 'action',
+            command: 'lint',
+            instruction: 'To format and apply recommended fixes run',
+            noun: 'Fix file',
+            args: [relativeFilename],
+            commandFlags: {
+              save: true,
+            },
+          } as DiagnosticAdviceAction),
         ],
       }),
 

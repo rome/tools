@@ -32,7 +32,6 @@ import {
   Number1,
   ob1Add,
   ob1Coerce0,
-  ob1Dec,
   ob1Get0,
   ob1Inc,
   ob1Number0,
@@ -741,16 +740,6 @@ export function isESIdentifierChar(char: undefined | string): boolean {
 
 export function isESIdentifierStart(char: undefined | string): boolean {
   return char !== undefined && /[A-Fa-z_$]/.test(char);
-}
-
-export function isEscaped(index: Number0, input: string): boolean {
-  const prevChar = input[ob1Get0(index) - 1];
-
-  if (prevChar === '\\') {
-    return !isEscaped(ob1Dec(index), input);
-  } else {
-    return false;
-  }
 }
 
 export function readUntilLineBreak(char: string): boolean {

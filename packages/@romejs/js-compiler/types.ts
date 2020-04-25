@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnalyzeDependencyResult, BundlerMode} from '@romejs/core';
+import {
+  AnalyzeDependencyResult,
+  BundlerMode,
+  FileReference,
+} from '@romejs/core';
 import {Path, REDUCE_REMOVE} from '@romejs/js-compiler';
 import {AnyNode, Program} from '@romejs/js-ast';
 import {ProjectConfig} from '@romejs/project';
@@ -50,8 +54,11 @@ export type TransformVisitor = {
 
 export type TransformVisitors = Array<TransformVisitor>;
 
-//
 export type CompileRequest = TransformRequest & {inputSourceMap?: SourceMap};
+
+export type LintRequest = TransformRequest & {
+  applyFixes: boolean;
+};
 
 export type TransformProjectDefinition = {
   config: ProjectConfig;
@@ -59,8 +66,9 @@ export type TransformProjectDefinition = {
 };
 
 export type TransformRequest = {
-  ast: Program;
+  ref?: FileReference;
   sourceText: string;
+  ast: Program;
   project: TransformProjectDefinition;
   options: CompilerOptions;
   stage?: TransformStageName;
@@ -84,12 +92,15 @@ export type BundleCompileOptions = {
 };
 
 export type LintCompilerOptions = {
-  decisionsByLine?: Dict<Array<LintCompilerOptionsDecision>>;
+  decisionsByPosition?: Dict<LintCompilerOptionsDecisions>;
 };
+
+export type LintCompilerOptionsDecisions = Array<LintCompilerOptionsDecision>;
 
 export type LintCompilerOptionsDecision = {
   action: 'suppress' | 'fix' | 'ignore';
   category: DiagnosticCategory;
+  id?: number;
 };
 
 export type CompilerOptions = {

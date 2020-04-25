@@ -3,11 +3,10 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- */
-
-import {
+ */import {
   Diagnostic,
   DiagnosticAdvice,
+  DiagnosticLocation,
   DiagnosticOrigin,
   Diagnostics,
 } from './types';
@@ -68,6 +67,51 @@ export function getDiagnosticHeader(opts: {
   }
 
   return markup`<filelink target="${filename}" line="${start.line}" column="${start.column}" />`;
+}
+
+function removePositionFromLocation(loc: DiagnosticLocation): DiagnosticLocation {
+  return {
+    ...loc,
+    start: undefined,
+    end: undefined,
+  };
+}
+
+export function derivePositionlessKeyFromDiagnostic(diag: Diagnostic): string {
+  // Remove all line/column positions from the diagnostic and then JSON stringify it
+
+  let advice = diag.description.advice || [];
+
+  advice = advice.map((item) => {
+    switch (item.type) {
+      case 'frame':
+        return {
+          ...item,
+          location: removePositionFromLocation(item.location),
+        };
+
+      case 'action':
+        return {
+          ...item,
+          // Command flags could have position information
+          commandFlags: {},
+        };
+
+      default:
+        return item;
+    }
+  });
+
+  diag = {
+    ...diag,
+    description: {
+      ...diag.description,
+      advice,
+    },
+    location: removePositionFromLocation(diag.location),
+  };
+
+  return JSON.stringify(diag);
 }
 
 export function deriveRootAdviceFromDiagnostic(diag: Diagnostic, opts: {

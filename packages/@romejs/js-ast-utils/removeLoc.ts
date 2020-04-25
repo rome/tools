@@ -44,6 +44,7 @@ const removeLocTransform: TransformVisitors = [
 
 export default function removeLoc(ast: AnyNode) {
   const context = new CompilerContext({
+    sourceText: '',
     ast: MOCK_PROGRAM,
     project: {
       folder: undefined,

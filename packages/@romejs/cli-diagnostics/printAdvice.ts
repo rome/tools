@@ -8,6 +8,7 @@
 import {Reporter} from '@romejs/cli-reporter';
 import {
   Diagnostic,
+  DiagnosticAdviceAction,
   DiagnosticAdviceCode,
   DiagnosticAdviceCommand,
   DiagnosticAdviceDiff,
@@ -33,6 +34,7 @@ import {AbsoluteFilePathSet} from '@romejs/path';
 import {RAW_CODE_MAX_LENGTH} from './constants';
 import {Diffs, diffConstants} from '@romejs/string-diff';
 import {removeCarriageReturn} from '@romejs/string-utils';
+import {serializeCLIFlags} from '@romejs/cli-flags';
 
 type AdvicePrintOptions = {
   printer: DiagnosticsPrinter;
@@ -66,6 +68,9 @@ export default function printAdvice(
     case 'log':
       return printLog(item, opts);
 
+    case 'action':
+      return printAction(item, opts);
+
     case 'list':
       return printList(item, opts);
 
@@ -87,6 +92,30 @@ export default function printAdvice(
     case 'inspect':
       return printInspect(item, opts);
   }
+}
+
+function printAction(
+  item: DiagnosticAdviceAction,
+  opts: AdvicePrintOptions,
+): PrintAdviceResult {
+  if (item.hidden && !opts.printer.flags.verboseDiagnostics) {
+    return DID_NOT_PRINT;
+  }
+
+  opts.reporter.info(item.instruction);
+
+  const command = serializeCLIFlags({
+    prefix: '',
+    programName: 'rome',
+    commandName: item.command,
+    args: item.args,
+    flags: {
+      ...item.commandFlags,
+      ...item.requestFlags,
+    },
+  }, {type: 'none'}).sourceText;
+  opts.reporter.command(command);
+  return DID_PRINT;
 }
 
 function printCommand(

@@ -28,7 +28,10 @@ import {
 } from '@romejs/cli-diagnostics';
 import {ConsumePath, consume} from '@romejs/consume';
 import {Event, EventSubscription} from '@romejs/events';
-import MasterRequest, {MasterRequestInvalid} from './MasterRequest';
+import MasterRequest, {
+  EMPTY_SUCCESS_RESPONSE,
+  MasterRequestInvalid,
+} from './MasterRequest';
 import ProjectManager from './project/ProjectManager';
 import WorkerManager from './WorkerManager';
 import Resolver from './fs/Resolver';
@@ -110,7 +113,6 @@ async function validateRequestFlags(
   // Commands need to explicitly allow these flags
   validateAllowedRequestFlag(req, 'watch', masterCommand);
   validateAllowedRequestFlag(req, 'review', masterCommand);
-  validateAllowedRequestFlag(req, 'allowDirty', masterCommand);
 
   // Don't allow review in combination with other flags
   if (requestFlags.review) {
@@ -852,10 +854,9 @@ export default class Master {
         // Only the command promise should have won the race with a resolve
         const data = await commandPromise;
         return {
-          type: 'SUCCESS',
+          ...EMPTY_SUCCESS_RESPONSE,
           hasData: data !== undefined,
           data,
-          markers: [],
         };
       } else {
         throw new Error(`Unknown command ${String(query.commandName)}`);
@@ -875,27 +876,17 @@ export default class Master {
           message: err.message,
           stack: err.stack,
         };
-      } else if (diagnostics.length === 0) {
-        // Maybe DIAGNOSTICS and an empty array still makes sense instead of SUCCESS?
+      } else if (err instanceof MasterRequestInvalid) {
         return {
-          type: 'SUCCESS',
-          hasData: false,
-          data: undefined,
-          markers: [],
+          type: 'INVALID_REQUEST',
+          diagnostics,
+          showHelp: err.showHelp,
         };
       } else {
-        if (err instanceof MasterRequestInvalid) {
-          return {
-            type: 'INVALID_REQUEST',
-            diagnostics,
-            showHelp: err.showHelp,
-          };
-        } else {
-          return {
-            type: 'DIAGNOSTICS',
-            diagnostics,
-          };
-        }
+        return {
+          type: 'DIAGNOSTICS',
+          diagnostics,
+        };
       }
     }
   }
@@ -927,8 +918,16 @@ export default class Master {
       // Only print when the bridge is alive and we aren't in review mode
       // When we're in review mode we don't expect to show any diagnostics because they'll be intercepted in the client command
       // We will always print invalid request errors
-      const shouldPrint = req.bridge.alive && (rawErr instanceof
-        MasterRequestInvalid || !req.query.requestFlags.review);
+      let shouldPrint = true;
+      if (req.query.requestFlags.review) {
+        shouldPrint = false;
+      }
+      if (rawErr instanceof MasterRequestInvalid) {
+        shouldPrint = true;
+      }
+      if (!req.bridge.alive) {
+        shouldPrint = false;
+      }
 
       if (shouldPrint) {
         printer.print();

@@ -13,7 +13,6 @@ import {
   program,
 } from '@romejs/js-ast';
 import {CompilerContext, Path} from '@romejs/js-compiler';
-import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
 import removeLoc from './removeLoc';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
@@ -89,10 +88,6 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 
   const context = new CompilerContext({
     ast,
-    project: {
-      folder: undefined,
-      config: DEFAULT_PROJECT_CONFIG,
-    },
   });
   context.reduce(ast, [
     {name: 'collectPlaceholderPaths', enter: collectPlaceholderPaths},

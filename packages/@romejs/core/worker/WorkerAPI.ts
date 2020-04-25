@@ -162,6 +162,7 @@ export default class WorkerAPI {
       parseOptions,
     );
     return this.interceptAndAddGeneratedToDiagnostics(await compile({
+      ref,
       ast,
       sourceText,
       options: compilerOptions,
@@ -233,7 +234,7 @@ export default class WorkerAPI {
     const {lint} = handler;
     if (lint === undefined && handler.format === undefined) {
       return {
-        fixed: false,
+        saved: false,
         diagnostics: [],
         suppressions: [],
       };
@@ -260,7 +261,7 @@ export default class WorkerAPI {
     // These are fatal diagnostics
     if (res.diagnostics !== undefined) {
       return {
-        fixed: false,
+        saved: false,
         suppressions: [],
         diagnostics: res.diagnostics,
       };
@@ -269,7 +270,7 @@ export default class WorkerAPI {
     // `format` could have return undefined
     if (res.value === undefined) {
       return {
-        fixed: false,
+        saved: false,
         diagnostics: [],
         suppressions: [],
       };
@@ -288,24 +289,24 @@ export default class WorkerAPI {
     );
 
     // If the file has pending fixes
-    const needsFix = formatted !== sourceText;
+    const needsSave = formatted !== sourceText;
 
     // Autofix if necessary
-    if (options.fix && needsFix) {
+    if (options.save && needsSave) {
       // Save the file and evict it from the cache
       await this.worker.writeFile(ref.real, formatted);
 
       // Relint this file without fixing it, we do this to prevent false positive error messages
       return {
-        ...(await this.lint(ref, {...options, fix: false}, parseOptions)),
-        fixed: true,
+        ...(await this.lint(ref, {...options, save: false}, parseOptions)),
+        saved: true,
       };
     }
 
     // If there's no pending fix then no need for diagnostics
-    if (!needsFix) {
+    if (!needsSave) {
       return {
-        fixed: false,
+        saved: false,
         diagnostics,
         suppressions,
       };
@@ -313,15 +314,20 @@ export default class WorkerAPI {
 
     // Add pending autofix diagnostic
     return {
-      fixed: false,
+      saved: false,
       suppressions,
       diagnostics: [
         ...diagnostics,
         {
+          fixable: true,
           location: {
             filename: ref.uid,
           },
-          description: descriptions.LINT.PENDING_FIXES(sourceText, formatted),
+          description: descriptions.LINT.PENDING_FIXES(
+            ref.relative.join(),
+            sourceText,
+            formatted,
+          ),
         },
       ],
     };

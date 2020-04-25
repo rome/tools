@@ -8,7 +8,6 @@
 import {Master, MasterRequest} from '@romejs/core';
 import {LINTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
 import {
-  DiagnosticLocation,
   DiagnosticSuppressions,
   Diagnostics,
   DiagnosticsProcessor,
@@ -36,9 +35,11 @@ type LintWatchChanges = Array<{
 }>;
 
 export type LinterOptions = {
-  fixLocation?: DiagnosticLocation;
+  save: boolean;
   args?: Array<string>;
-  compilerOptionsPerFile?: Dict<LintCompilerOptions>;
+  hasDecisions: boolean;
+  formatOnly: boolean;
+  compilerOptionsPerFile?: Dict<Required<LintCompilerOptions>>;
 };
 
 type ProgressFactory = (opts: ReporterProgressOptions) => ReporterProgress;
@@ -57,7 +58,7 @@ type WatchResults = {
   runner: LintRunner;
   evictedPaths: AbsoluteFilePathSet;
   changes: LintWatchChanges;
-  fixedCount: number;
+  savedCount: number;
   totalCount: number;
 };
 
@@ -71,40 +72,34 @@ function createDiagnosticsPrinter(
   request: MasterRequest,
   processor: DiagnosticsProcessor,
   totalCount: number,
-  fixedCount: number,
+  savedCount: number,
 ): DiagnosticsPrinter {
   const printer = request.createDiagnosticsPrinter(processor);
 
   printer.onBeforeFooterPrint(
     (reporter, isError) => {
-      if (fixedCount > 0) {
+      if (savedCount > 0) {
         reporter.success(
-          `<number emphasis>${fixedCount}</number> <grammarNumber plural="files" singular="file">${fixedCount}</grammarNumber> fixed`,
+          `<number emphasis>${savedCount}</number> <grammarNumber plural="files" singular="file">${savedCount}</grammarNumber> updated`,
         );
       }
 
       if (isError) {
-        let couldFix = false;
         let hasPendingFixes = false;
 
-        for (const {fixable, description} of processor.getDiagnostics()) {
-          if (description.category === 'lint/pendingFixes') {
-            hasPendingFixes = true;
-          }
-
+        for (const {fixable} of processor.getDiagnostics()) {
           if (fixable) {
-            couldFix = true;
+            hasPendingFixes = true;
           }
         }
 
         if (hasPendingFixes) {
           reporter.info(
-            'Fixes available. Run <command>rome lint --fix</command> to apply.',
+            'Fixes available. To apply recommended fixes and formatting run',
           );
-        } else if (couldFix) {
-          reporter.warn(
-            'Autofixes are available for some of these errors when formatting is enabled. Run <command>rome config enable-category format</command> to enable.',
-          );
+          reporter.command('rome lint --save');
+          reporter.info('To choose fix suggestions run');
+          reporter.command('rome lint --review');
         }
       } else {
         if (totalCount === 0) {
@@ -122,33 +117,29 @@ function createDiagnosticsPrinter(
 }
 
 class LintRunner {
-  constructor({
-    request,
+  constructor(linter: Linter, {
     graph,
-    options,
     events,
   }: {
     events: WatchEvents;
-    request: MasterRequest;
     graph: DependencyGraph;
-    options: LinterOptions;
   }) {
-    this.master = request.master;
+    this.linter = linter;
+    this.master = linter.request.master;
     this.graph = graph;
-    this.request = request;
-    this.options = options;
+    this.request = linter.request;
+    this.options = linter.options;
     this.events = events;
     this.compilerDiagnosticsCache = new AbsoluteFilePathMap();
     this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
   }
 
   hadDependencyValidationErrors: AbsoluteFilePathMap<boolean>;
-
   compilerDiagnosticsCache: AbsoluteFilePathMap<{
     diagnostics: Diagnostics;
     suppressions: DiagnosticSuppressions;
   }>;
-
+  linter: Linter;
   events: WatchEvents;
   master: Master;
   request: MasterRequest;
@@ -158,12 +149,12 @@ class LintRunner {
   async runLint({
     evictedPaths: changedPaths,
     processor,
-  }: LintRunOptions): Promise<{fixedCount: number}> {
-    let fixedCount = 0;
+  }: LintRunOptions): Promise<{savedCount: number}> {
+    let savedCount = 0;
     const {master} = this.request;
 
-    const {fixLocation, compilerOptionsPerFile} = this.options;
-    const shouldFix = fixLocation !== undefined;
+    const {compilerOptionsPerFile, hasDecisions, formatOnly} = this.options;
+    const shouldSave = this.linter.shouldSave();
 
     const queue: WorkerQueue<void> = new WorkerQueue(master);
 
@@ -175,23 +166,32 @@ class LintRunner {
       const text = markup`<filelink target="${filename}" />`;
       progress.pushText(text);
 
-      const compilerOptions = compilerOptionsPerFile === undefined
+      let compilerOptions = compilerOptionsPerFile === undefined
         ? undefined
         : compilerOptionsPerFile[filename];
+
+      // If we have decisions then make sure it's declared on all files
+      if (hasDecisions) {
+        compilerOptions = {
+          decisionsByPosition: {},
+          ...compilerOptions,
+        };
+      }
 
       const {
         diagnostics,
         suppressions,
-        fixed,
+        saved,
       } = await this.request.requestWorkerLint(path, {
-        fix: shouldFix,
+        save: shouldSave,
+        applyFixes: !formatOnly,
         compilerOptions,
       });
       processor.addSuppressions(suppressions);
       processor.addDiagnostics(diagnostics);
       this.compilerDiagnosticsCache.set(path, {suppressions, diagnostics});
-      if (fixed) {
-        fixedCount++;
+      if (saved) {
+        savedCount++;
       }
 
       progress.popText(text);
@@ -205,7 +205,7 @@ class LintRunner {
     await queue.spin();
     progress.end();
 
-    return {fixedCount};
+    return {savedCount};
   }
 
   async runGraph({
@@ -354,13 +354,13 @@ class LintRunner {
 
   async run(opts: LintRunOptions): Promise<WatchResults> {
     this.events.onRunStart();
-    const {fixedCount} = await this.runLint(opts);
+    const {savedCount} = await this.runLint(opts);
     const validatedDependencyPaths = await this.runGraph(opts);
     const changes = await this.computeChanges(opts, validatedDependencyPaths);
     return {
       evictedPaths: opts.evictedPaths,
       changes,
-      fixedCount,
+      savedCount,
       totalCount: validatedDependencyPaths.size,
       runner: this,
     };
@@ -375,6 +375,12 @@ export default class Linter {
 
   request: MasterRequest;
   options: LinterOptions;
+
+  shouldSave(): boolean {
+    const {save, hasDecisions, formatOnly} = this.options;
+    return save || hasDecisions || formatOnly ||
+      this.request.query.requestFlags.review;
+  }
 
   getFileArgOptions(): MasterRequestGetFilesOptions {
     return {
@@ -426,10 +432,8 @@ export default class Linter {
       this.request.getResolverOptionsFromFlags(),
     );
 
-    const runner = new LintRunner({
+    const runner = new LintRunner(this, {
       events,
-      request: this.request,
-      options: this.options,
       graph,
     });
 
@@ -466,12 +470,12 @@ export default class Linter {
         return reporter.progress(opts);
       },
 
-      onChanges: ({evictedPaths, changes, totalCount, fixedCount, runner}) => {
+      onChanges: ({evictedPaths, changes, totalCount, savedCount, runner}) => {
         printer = createDiagnosticsPrinter(
           request,
           this.createDiagnosticsProcessor(evictedPaths, runner),
           totalCount,
-          fixedCount,
+          savedCount,
         );
 
         // Update our diagnostics with the changes

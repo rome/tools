@@ -11,8 +11,8 @@ import {
   ParserOptions,
   ValueToken,
   createParser,
-  isEscaped,
 } from '@romejs/parser-core';
+import {isEscaped} from '@romejs/string-utils';
 import {Number0, ob1Add, ob1Get0} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
 

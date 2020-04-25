@@ -9,9 +9,13 @@ export * from './orderBySimilarity';
 
 export * from './naturalCompare';
 
+export * from './escapeSplit';
+
 export * from './humanizeFileSize';
 
 export * from './humanizeNumber';
+
+export * from './isEscaped';
 
 export * from './humanizeTime';
 

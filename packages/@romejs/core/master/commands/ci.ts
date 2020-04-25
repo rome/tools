@@ -43,7 +43,6 @@ export default createMasterCommand({
   description: 'run lint and tests',
   usage: '',
   examples: [],
-  allowRequestFlags: ['allowDirty'],
 
   defineFlags(consumer: Consumer): Flags {
     return {
@@ -54,15 +53,12 @@ export default createMasterCommand({
   async callback(req: MasterRequest, flags: Flags): Promise<void> {
     const {reporter} = req;
 
-    if (flags.fix) {
-      await req.assertCleanVSC();
-    }
-
     reporter.heading('Running lint');
     await runChildCommand(req, async () => {
       await lint.callback(req, {
-        compilerOptionsPerFile: {},
-        fix: flags.fix,
+        formatOnly: false,
+        decisions: [],
+        save: flags.fix,
         changed: undefined,
       });
     });

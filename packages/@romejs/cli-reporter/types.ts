@@ -7,6 +7,24 @@
 
 import {Event} from '@romejs/events';
 
+export type SelectOption = {
+  label: string;
+  shortcut?: string;
+  disabled?: boolean;
+  disabledReason?: string;
+};
+
+export type SelectOptions = {
+  [key: string]: SelectOption;
+};
+
+export type SelectArguments<Options> = {
+  options: Options;
+  defaults?: Array<keyof Options>;
+  radio?: boolean;
+  yes?: boolean;
+};
+
 export type Package = {
   name: string;
   version?: string;

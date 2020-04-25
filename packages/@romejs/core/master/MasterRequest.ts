@@ -35,6 +35,7 @@ import {BundlerConfig} from '../common/types/bundler';
 import MasterBridge, {
   MasterQueryRequest,
   MasterQueryResponse,
+  MasterQueryResponseSuccess,
 } from '../common/bridges/MasterBridge';
 import Master, {
   MasterClient,
@@ -47,7 +48,11 @@ import {
   EventSubscription,
   mergeEventSubscriptions,
 } from '@romejs/events';
-import {SerializeCLITarget, serializeCLIFlags} from '@romejs/cli-flags';
+import {
+  FlagValue,
+  SerializeCLITarget,
+  serializeCLIFlags,
+} from '@romejs/cli-flags';
 import {Program} from '@romejs/js-ast';
 import {TransformStageName} from '@romejs/js-compiler';
 import WorkerBridge, {
@@ -99,6 +104,13 @@ type ResolvedArg = {
 };
 
 type ResolvedArgs = Array<ResolvedArg>;
+
+export const EMPTY_SUCCESS_RESPONSE: MasterQueryResponseSuccess = {
+  type: 'SUCCESS',
+  hasData: false,
+  data: undefined,
+  markers: [],
+};
 
 export type MasterRequestGetFilesOptions = Omit<
   MemoryFSGlobOptions,
@@ -197,10 +209,8 @@ export default class MasterRequest {
       if (this.query.noData) {
         if (res.type === 'SUCCESS') {
           res = {
-            type: 'SUCCESS',
+            ...EMPTY_SUCCESS_RESPONSE,
             hasData: res.data !== undefined,
-            data: undefined,
-            markers: [],
           };
         } else if (res.type === 'DIAGNOSTICS') {
           res = {
@@ -253,26 +263,6 @@ export default class MasterRequest {
     return this.master.projectManager.maybeGetVCSClient(
       await this.assertClientCwdProject(),
     );
-  }
-
-  async assertCleanVSC() {
-    if (this.query.requestFlags.allowDirty) {
-      return;
-    }
-
-    const vsc = await this.maybeGetVCSClient();
-    if (vsc === undefined) {
-      return;
-    }
-
-    const files = await vsc.getUncommittedFiles();
-    if (files.length > 0) {
-      this.throwDiagnosticFlagError({
-        description: descriptions.FLAGS.DIRTY_VSC(files),
-        target: {type: 'command'},
-        showHelp: false,
-      });
-    }
   }
 
   createDiagnosticsProcessor(
@@ -400,31 +390,36 @@ export default class MasterRequest {
     };
   }
 
-  getDefaultFlags(): Dict<unknown> {
-    return {
+  getDiagnosticPointerFromFlags(target: SerializeCLITarget): DiagnosticLocation {
+    const {query} = this;
+
+    const rawFlags = {
+      ...this.client.flags,
+      ...this.query.requestFlags,
+      ...this.normalizedCommandFlags.flags,
+    };
+    const flags: Dict<FlagValue> = {
+      ...rawFlags,
+      cwd: rawFlags.cwd.join(),
+    };
+
+    const rawDefaultFlags = {
       ...DEFAULT_CLIENT_FLAGS,
       ...DEFAULT_CLIENT_REQUEST_FLAGS,
       ...this.normalizedCommandFlags.defaultFlags,
       clientName: this.client.flags.clientName,
     };
-  }
+    const defaultFlags: Dict<FlagValue> = {
+      ...rawDefaultFlags,
+      cwd: rawDefaultFlags.cwd.join(),
+    };
 
-  getFlags(): Dict<unknown> {
-    return ({
-      ...this.client.flags,
-      ...this.query.requestFlags,
-      ...this.normalizedCommandFlags.flags,
-    } as Dict<unknown>);
-  }
-
-  getDiagnosticPointerFromFlags(target: SerializeCLITarget): DiagnosticLocation {
-    const {query} = this;
     return serializeCLIFlags({
       programName: 'rome',
       commandName: query.commandName,
-      flags: this.getFlags(),
+      flags,
       args: query.args,
-      defaultFlags: this.getDefaultFlags(),
+      defaultFlags,
       incorrectCaseFlags: new Set(),
       shorthandFlags: new Set(),
     }, target);

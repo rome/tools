@@ -63,6 +63,10 @@ function splitCommandName(cmd: string): Array<string> {
   return cmd.split(' ');
 }
 
+type _FlagValue = undefined | number | string | boolean;
+
+export type FlagValue = _FlagValue | Array<_FlagValue>;
+
 export default class Parser<T> {
   constructor(
     reporter: Reporter,
@@ -127,7 +131,7 @@ export default class Parser<T> {
 
   incorrectCaseFlags: Set<string>;
   shorthandFlags: Set<string>;
-  flags: Map<string, string | boolean>;
+  flags: Map<string, FlagValue>;
   defaultFlags: Map<string, unknown>;
   declaredFlags: Map<string, ArgDeclaration>;
   flagToArgIndex: Map<string, number>;
@@ -155,6 +159,19 @@ export default class Parser<T> {
     return camelName;
   }
 
+  setFlag(key: string, value: string | boolean) {
+    let newValue: FlagValue = value;
+    const existing = this.flags.get(key);
+    if (existing !== undefined) {
+      if (Array.isArray(existing)) {
+        newValue = [...existing, value];
+      } else {
+        newValue = [existing, value];
+      }
+    }
+    this.flags.set(key, newValue);
+  }
+
   consumeRawArgs(rawArgs: Array<string>) {
     while (rawArgs.length > 0) {
       const arg: string = String(rawArgs.shift());
@@ -170,7 +187,7 @@ export default class Parser<T> {
         // Flags beginning with no- are always false
         if (name.startsWith('no-')) {
           const camelName = this.toCamelCase(name.slice(3));
-          this.flags.set(camelName, false);
+          this.setFlag(camelName, false);
           continue;
         }
 
@@ -179,7 +196,7 @@ export default class Parser<T> {
         if (equalsIndex !== -1) {
           const cleanName = this.toCamelCase(name.slice(0, equalsIndex));
           const value = name.slice(equalsIndex + 1);
-          this.flags.set(cleanName, value);
+          this.setFlag(cleanName, value);
           continue;
         }
 
@@ -187,10 +204,10 @@ export default class Parser<T> {
 
         // If the next argument is a flag or we're at the end of the args then just set it to `true`
         if (rawArgs.length === 0 || this.looksLikeFlag(rawArgs[0])) {
-          this.flags.set(camelName, true);
+          this.setFlag(camelName, true);
         } else {
           // Otherwise, take that value
-          this.flags.set(camelName, String(rawArgs.shift()));
+          this.setFlag(camelName, String(rawArgs.shift()));
         }
 
         this.flagToArgIndex.set(camelName, this.args.length);
@@ -206,9 +223,9 @@ export default class Parser<T> {
   }
 
   getFlagsConsumer(): Consumer {
-    const defaultFlags: Dict<unknown> = {};
+    const defaultFlags: Dict<FlagValue> = {};
 
-    const flags: Dict<unknown> = {};
+    const flags: Dict<FlagValue> = {};
     for (const [key, value] of this.flags) {
       flags[toCamelCase(key)] = value;
     }
@@ -237,7 +254,7 @@ export default class Parser<T> {
           command: this.currentCommand,
           definition: def,
         });
-        defaultFlags[key] = def.default;
+        defaultFlags[key] = (def.default as FlagValue);
 
         // We've parsed arguments like `--foo bar` as `{foo: 'bar}`
         // However, --foo may be a boolean flag, so `bar` needs to be correctly added to args
