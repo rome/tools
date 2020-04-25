@@ -3,10 +3,9 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- */
-
-import {
+ */import {
   DiagnosticAdvice,
+  DiagnosticAdviceAction,
   DiagnosticBlessedMessage,
   DiagnosticDescription,
   DiagnosticLocation,
@@ -296,7 +295,11 @@ export const descriptions = createMessages(
 
     // @romejs/js-compiler
     LINT: {
-      PENDING_FIXES: (original: string, formatted: string) => ({
+      PENDING_FIXES: (
+        relativeFilename: string,
+        original: string,
+        formatted: string,
+      ) => ({
         category: 'lint/pendingFixes',
         message: 'Pending autofixes and formatting',
         advice: [
@@ -309,6 +312,28 @@ export const descriptions = createMessages(
             category: 'info',
             message: 'Run <command>rome lint --fix</command> to apply',
           },
+          ({
+            type: 'action',
+            hidden: true,
+            command: 'lint',
+            instruction: 'To format this file without fixes run',
+            noun: 'Format file',
+            args: [relativeFilename],
+            commandFlags: {
+              formatOnly: true,
+            },
+          } as DiagnosticAdviceAction),
+          ({
+            type: 'action',
+            hidden: true,
+            command: 'lint',
+            instruction: 'To format and fix this file run',
+            noun: 'Fix file',
+            args: [relativeFilename],
+            commandFlags: {
+              fix: true,
+            },
+          } as DiagnosticAdviceAction),
         ],
       }),
 

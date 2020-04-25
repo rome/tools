@@ -17,6 +17,7 @@ type Flags = {
   decisions: Array<string>;
   fix: boolean;
   changed: undefined | string;
+  formatOnly: boolean;
 };
 
 export default createMasterCommand<Flags>({
@@ -32,6 +33,7 @@ export default createMasterCommand<Flags>({
         (item) => item.asString(),
       ),
       fix: consumer.get('fix').asBoolean(false),
+      formatOnly: consumer.get('formatOnly').asBoolean(false),
       changed: consumer.get('changed').asStringOrVoid(),
     };
   },
@@ -88,6 +90,7 @@ export default createMasterCommand<Flags>({
       hasDecisions: flags.decisions.length > 0,
       compilerOptionsPerFile,
       fixLocation,
+      formatOnly: flags.formatOnly,
       args,
     };
 

@@ -69,6 +69,7 @@ export async function testLint(
   });
 
   const res = await lint({
+    formatOnly: false,
     options: {},
     ast,
     sourceText: input,

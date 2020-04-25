@@ -6,7 +6,7 @@
  */
 
 import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
-import {TransformRequest} from '../types';
+import {LintRequest} from '../types';
 import {lintTransforms} from './rules/index';
 import {Cache, CompilerContext} from '@romejs/js-compiler';
 import {formatJS} from '@romejs/js-formatter';
@@ -20,8 +20,8 @@ export type LintResult = {
 
 const lintCache: Cache<LintResult> = new Cache();
 
-export default async function lint(req: TransformRequest): Promise<LintResult> {
-  const {ast, sourceText, project, options} = req;
+export default async function lint(req: LintRequest): Promise<LintResult> {
+  const {ast, sourceText, project, formatOnly, options} = req;
 
   const query = Cache.buildQuery(req);
   const cached = lintCache.get(query);
@@ -42,8 +42,11 @@ export default async function lint(req: TransformRequest): Promise<LintResult> {
     },
   });
 
-  let formatAst = formatContext.reduceRoot(ast, lintTransforms);
-  formatAst = addSuppressions(formatContext, formatAst);
+  let formatAst = ast;
+  if (!formatOnly) {
+    formatAst = formatContext.reduceRoot(ast, lintTransforms);
+    formatAst = addSuppressions(formatContext, formatAst);
+  }
   const generator = formatJS(formatAst, {
     typeAnnotations: true,
     sourceMaps: true,

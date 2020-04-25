@@ -61,6 +61,7 @@ export default createMasterCommand({
     reporter.heading('Running lint');
     await runChildCommand(req, async () => {
       await lint.callback(req, {
+        formatOnly: false,
         decisions: [],
         fix: flags.fix,
         changed: undefined,

@@ -369,7 +369,11 @@ export default class LSPServer {
     const req = this.createFakeMasterRequest('lsp_project', [path.join()]);
     await req.init();
 
-    const linter = new Linter(req, {});
+    const linter = new Linter(req, {
+      fixLocation: undefined,
+      hasDecisions: false,
+      formatOnly: false,
+    });
 
     const subscription = await linter.watch({
       onRunStart: () => {},
