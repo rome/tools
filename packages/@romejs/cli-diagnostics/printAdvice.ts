@@ -98,7 +98,7 @@ function printAction(
   item: DiagnosticAdviceAction,
   opts: AdvicePrintOptions,
 ): PrintAdviceResult {
-  if (item.hidden) {
+  if (item.hidden && !opts.printer.flags.verboseDiagnostics) {
     return DID_NOT_PRINT;
   }
 
