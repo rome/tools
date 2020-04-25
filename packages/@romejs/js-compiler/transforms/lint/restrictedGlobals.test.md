@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -44,6 +53,13 @@ foobar('yes');
 
 ```
 
+### `0: formatted`
+
+```
+console.log(event);
+
+```
+
 ### `1`
 
 ```
@@ -60,5 +76,18 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
+// valid use of event into the function scope.
+function foo(event) {
+  console.info(event);
+}
+
+// invalid, event is used as a global.
+foo(event);
 
 ```

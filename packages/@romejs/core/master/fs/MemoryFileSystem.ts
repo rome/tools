@@ -139,7 +139,6 @@ export type MemoryFSGlobOptions = {
   extensions?: Array<string>;
   overrideIgnore?: PathPatterns;
   getProjectIgnore?: (project: ProjectDefinition) => PathPatterns;
-  getProjectEnabled?: (project: ProjectDefinition) => boolean;
   test?: (path: AbsoluteFilePath) => boolean;
 };
 
@@ -921,13 +920,7 @@ export default class MemoryFileSystem {
     cwd: AbsoluteFilePath,
     opts: MemoryFSGlobOptions = {},
   ): AbsoluteFilePathSet {
-    const {
-      extensions,
-      getProjectIgnore,
-      getProjectEnabled,
-      test,
-      overrideIgnore = [],
-    } = opts;
+    const {extensions, getProjectIgnore, test, overrideIgnore = []} = opts;
 
     const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
@@ -965,10 +958,6 @@ export default class MemoryFileSystem {
 
       // Add if a matching file
       if (this.files.has(path) && ignoreMatched === 'NO_MATCH') {
-        if (getProjectEnabled !== undefined && !getProjectEnabled(project)) {
-          continue;
-        }
-
         if (test !== undefined && !test(path)) {
           continue;
         }

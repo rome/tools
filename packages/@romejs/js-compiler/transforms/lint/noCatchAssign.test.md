@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -34,6 +43,15 @@ foobar('yes');
 
 ```
 
+### `0: formatted`
+
+```
+try {} catch (e) {
+  three = 2 + 1;
+}
+
+```
+
 ### `1`
 
 ```
@@ -41,10 +59,30 @@ foobar('yes');
 
 ```
 
+### `1: formatted`
+
+```
+try {} catch ({e}) {
+  this.something = 2;
+}
+
+```
+
 ### `2`
 
 ```
 ✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+function foo() {
+  try {} catch (e) {
+    return false;
+  }
+}
 
 ```
 
@@ -65,6 +103,16 @@ foobar('yes');
 
 ```
 
+### `3: formatted`
+
+```
+try {} catch (e) {
+  e;
+  e = 10;
+}
+
+```
+
 ### `4`
 
 ```
@@ -82,6 +130,16 @@ foobar('yes');
 
 ```
 
+### `4: formatted`
+
+```
+try {} catch (ex) {
+  console.log('test');
+  ex = 10;
+}
+
+```
+
 ### `5`
 
 ```
@@ -96,6 +154,15 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+try {} catch (ex) {
+  [ex, test] = [];
+}
 
 ```
 
@@ -123,6 +190,16 @@ foobar('yes');
 
 ```
 
+### `6: formatted`
+
+```
+try {} catch ({message, name}) {
+  message = 'test';
+  name = 10;
+}
+
+```
+
 ### `7`
 
 ```
@@ -140,6 +217,15 @@ foobar('yes');
 
 ```
 
+### `7: formatted`
+
+```
+try {} catch (ex) {
+  ({x: ex = 0} = {});
+}
+
+```
+
 ### `8`
 
 ```
@@ -154,5 +240,15 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```
+try {} catch (ex) {
+  let a;
+  ({x: a = ex = 0} = {});
+}
 
 ```

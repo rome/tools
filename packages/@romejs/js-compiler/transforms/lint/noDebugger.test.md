@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -34,6 +43,15 @@ foobar('yes');
 
 ```
 
+### `0: formatted`
+
+```
+const test = {debugger: 1};
+test.debugger;
+console.log(test); // To not trigger the unused var rule.
+
+```
+
 ### `1`
 
 ```
@@ -48,5 +66,11 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
 
 ```

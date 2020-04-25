@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -46,6 +55,13 @@ foobar('yes');
 
 ```
 
+### `0: formatted`
+
+```
+function NaN() {}
+
+```
+
 ### `1`
 
 ```
@@ -65,6 +81,13 @@ foobar('yes');
 
 ```
 
+### `1: formatted`
+
+```
+let Set;
+
+```
+
 ### `2`
 
 ```
@@ -72,10 +95,24 @@ foobar('yes');
 
 ```
 
+### `2: formatted`
+
+```
+!function Array() {};
+
+```
+
 ### `3`
 
 ```
 ✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+function test(JSON) {}
 
 ```
 
@@ -95,5 +132,12 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `4: formatted`
+
+```
+try {} catch (Object) {}
 
 ```

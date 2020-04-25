@@ -12,12 +12,12 @@ import {
   AssignmentAssignmentPattern,
   assignmentAssignmentPattern,
 } from '@romejs/js-ast';
+import BindingAssignmentPattern from './BindingAssignmentPattern';
 
 export default function AssignmentAssignmentPattern(
   builder: Builder,
   node: AnyNode,
 ): Tokens {
   node = assignmentAssignmentPattern.assert(node);
-
-  throw new Error('unimplemented');
+  return BindingAssignmentPattern(builder, node);
 }

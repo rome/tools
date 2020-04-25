@@ -16,5 +16,5 @@ test('inconsiderate language', async (t) => {
     'BLACKLIST;',
     'someBlacklist;',
     'SOME_BLACKLIST;',
-  ], {category: 'lint/inconsiderateLanguage', format: true});
+  ], {category: 'lint/inconsiderateLanguage'});
 });

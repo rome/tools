@@ -8,19 +8,16 @@
 import {test} from 'rome';
 import {testLint} from '../../api/lint.test';
 
-test(
-  'no shorthand array type',
-  async (t) => {
-    // TypeScript
-    await testLint(t, `
+test('no shorthand array type', async (t) => {
+  // TypeScript
+  await testLint(t, `
         let valid: Array<foo>;
         let invalid = bar[];
-      `, {category: 'lint/noShorthandArrayType', format: true, syntax: ['ts']});
+      `, {category: 'lint/noShorthandArrayType', syntax: ['ts']});
 
-    // Flow
-    await testLint(t, `
+  // Flow
+  await testLint(t, `
         let valid: Array<foo>;
         let invalid = bar[];
-      `, {category: 'lint/noShorthandArrayType', format: true, syntax: ['flow']});
-  },
-);
+      `, {category: 'lint/noShorthandArrayType', syntax: ['flow']});
+});

@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -27,6 +36,8 @@ foobar('yes');
 
 ## `sparse array`
 
+### `0`
+
 ```
 
  unknown:1 lint/sparseArray FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -36,8 +47,19 @@ foobar('yes');
     [1,,2]
     ^^^^^^ 
 
+  ℹ Possible fix
+
+  + [1,·undefined,·2]
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+[1, undefined, 2];
 
 ```

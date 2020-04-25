@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -34,6 +43,14 @@ foobar('yes');
 
 ```
 
+### `0: formatted`
+
+```
+const age: number = 17;
+age;
+
+```
+
 ### `1`
 
 ```
@@ -58,6 +75,15 @@ foobar('yes');
 
 ```
 
+### `10: formatted`
+
+```
+function greet(): any {}
+;
+greet();
+
+```
+
 ### `11`
 
 ```
@@ -72,6 +98,15 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `11: formatted`
+
+```
+function greet(): Array<any> {}
+;
+greet();
 
 ```
 
@@ -92,6 +127,15 @@ foobar('yes');
 
 ```
 
+### `12: formatted`
+
+```
+function greet(): Array<any> {}
+;
+greet();
+
+```
+
 ### `13`
 
 ```
@@ -109,6 +153,15 @@ foobar('yes');
 
 ```
 
+### `13: formatted`
+
+```
+function greet(): Array<Array<any>> {}
+;
+greet();
+
+```
+
 ### `14`
 
 ```
@@ -123,6 +176,17 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `14: formatted`
+
+```
+function greet(param: Array<any>): string {
+  return param;
+}
+;
+greet();
 
 ```
 
@@ -150,10 +214,38 @@ foobar('yes');
 
 ```
 
+### `15: formatted`
+
+```
+function greet(param: Array<any>): Array<any> {
+  return param;
+}
+;
+greet();
+
+```
+
+### `1: formatted`
+
+```
+const ages: Array<number> = [17];
+ages;
+
+```
+
 ### `2`
 
 ```
 ✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+function greet(): string {}
+;
+greet();
 
 ```
 
@@ -164,10 +256,28 @@ foobar('yes');
 
 ```
 
+### `3: formatted`
+
+```
+function greet(): Array<string> {}
+;
+greet();
+
+```
+
 ### `4`
 
 ```
 ✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+function greet(): Array<Array<string>> {}
+;
+greet();
 
 ```
 
@@ -178,10 +288,32 @@ foobar('yes');
 
 ```
 
+### `5: formatted`
+
+```
+function greet(param: Array<string>): string {
+  return param;
+}
+;
+greet();
+
+```
+
 ### `6`
 
 ```
 ✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+function greet(param: Array<string>): Array<string> {
+  return param;
+}
+;
+greet();
 
 ```
 
@@ -202,6 +334,14 @@ foobar('yes');
 
 ```
 
+### `7: formatted`
+
+```
+const age: any = 'seventeen';
+age;
+
+```
+
 ### `8`
 
 ```
@@ -219,6 +359,14 @@ foobar('yes');
 
 ```
 
+### `8: formatted`
+
+```
+const ages: Array<any> = ['seventeen'];
+ages;
+
+```
+
 ### `9`
 
 ```
@@ -233,5 +381,13 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `9: formatted`
+
+```
+const ages: Array<any> = ['seventeen'];
+ages;
 
 ```

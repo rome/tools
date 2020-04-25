@@ -25,6 +25,23 @@
 
 ```
 
+### `0: formatted`
+
+```
+function greet1() {
+  try {
+    throw new Error('Try');
+  } catch (err) {
+    throw err;
+  } finally {
+    return 1;
+  }
+}
+
+greet1();
+
+```
+
 ### `1`
 
 ```
@@ -43,6 +60,23 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
+function greet2() {
+  try {
+    throw new Error('Try');
+  } catch (err) {
+    throw err;
+  } finally {
+    break;
+  }
+}
+
+greet2();
 
 ```
 
@@ -67,6 +101,23 @@
 
 ```
 
+### `2: formatted`
+
+```
+function greet3() {
+  try {
+    throw new Error('Try');
+  } catch (err) {
+    throw err;
+  } finally {
+    continue;
+  }
+}
+
+greet3();
+
+```
+
 ### `3`
 
 ```
@@ -88,10 +139,36 @@
 
 ```
 
+### `3: formatted`
+
+```
+function greet4() {
+  try {
+    throw new Error('Try');
+  } catch (err) {
+    throw err;
+  } finally {
+    throw new Error('Finally');
+  }
+}
+
+greet4();
+
+```
+
 ## `format disabled in project config should not regenerate the file`
+
+### `0`
 
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 

@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -46,6 +55,15 @@ foobar('yes');
 
 ```
 
+### `0: formatted`
+
+```
+for (let i = 1; i = 10; i++) {
+  console.log('foo');
+}
+
+```
+
 ### `1`
 
 ```
@@ -62,6 +80,15 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
+if (foo = 'bar') {
+  console.log('foo');
+}
 
 ```
 
@@ -84,9 +111,29 @@ foobar('yes');
 
 ```
 
+### `2: formatted`
+
+```
+while (foo = 'bar') {
+  console.log('foo');
+}
+
+```
+
 ### `3`
 
 ```
 ✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+do {
+  console.log('foo)\n  } while (foo = ');
+  bar;
+  ')';
+} while (INVALID_PLACEHOLDER);
 
 ```

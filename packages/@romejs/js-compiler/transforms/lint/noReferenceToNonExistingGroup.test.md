@@ -11,6 +11,14 @@
 
 ```
 
+### `0: formatted`
+
+```
+let foo = /([abc]+)=\u0001/;
+foo;
+
+```
+
 ### `1`
 
 ```
@@ -35,6 +43,14 @@
 
 ```
 
+### `10: formatted`
+
+```
+let foo = /([abc]+)=\78/;
+foo;
+
+```
+
 ### `11`
 
 ```
@@ -49,6 +65,14 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `11: formatted`
+
+```
+let foo = /([abc]+)=\99/;
+foo;
 
 ```
 
@@ -76,6 +100,14 @@
 
 ```
 
+### `12: formatted`
+
+```
+let foo = /(([abc])\19)+=\28/;
+foo;
+
+```
+
 ### `13`
 
 ```
@@ -93,10 +125,34 @@
 
 ```
 
+### `13: formatted`
+
+```
+let foo = /([abc]+)=\199/;
+foo;
+
+```
+
+### `1: formatted`
+
+```
+let foo = /([abc]+)=\u0002/;
+foo;
+
+```
+
 ### `2`
 
 ```
 ✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+let foo = /([abc]+)=8/;
+foo;
 
 ```
 
@@ -107,10 +163,26 @@
 
 ```
 
+### `3: formatted`
+
+```
+let foo = /([abc]+)=9/;
+foo;
+
+```
+
 ### `4`
 
 ```
 ✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+let foo = /([abc]+)=\t9/;
+foo;
 
 ```
 
@@ -121,6 +193,14 @@
 
 ```
 
+### `5: formatted`
+
+```
+let foo = /([abc]+)=\u001b8/;
+foo;
+
+```
+
 ### `6`
 
 ```
@@ -128,10 +208,26 @@
 
 ```
 
+### `6: formatted`
+
+```
+let foo = /([abc]+)=\u00ff/;
+foo;
+
+```
+
 ### `7`
 
 ```
 ✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+let foo = /([abc]+)=\?7/;
+foo;
 
 ```
 
@@ -152,6 +248,14 @@
 
 ```
 
+### `8: formatted`
+
+```
+let foo = /([abc]+)=\18/;
+foo;
+
+```
+
 ### `9`
 
 ```
@@ -169,10 +273,27 @@
 
 ```
 
+### `9: formatted`
+
+```
+let foo = /([abc]+)=\49/;
+foo;
+
+```
+
 ## `format disabled in project config should not regenerate the file`
+
+### `0`
 
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 

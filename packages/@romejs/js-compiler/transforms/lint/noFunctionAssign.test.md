@@ -4,8 +4,17 @@
 
 ## `format disabled in project config should not regenerate the file`
 
+### `0`
+
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
@@ -34,6 +43,15 @@ foobar('yes');
 
 ```
 
+### `0: formatted`
+
+```
+function foo() {
+  var foo = bar;
+}
+
+```
+
 ### `1`
 
 ```
@@ -58,6 +76,15 @@ foobar('yes');
 
 ```
 
+### `10: formatted`
+
+```
+[foo] = bar;
+function foo() {}
+;
+
+```
+
 ### `11`
 
 ```
@@ -72,6 +99,15 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `11: formatted`
+
+```
+({x: foo = 0} = bar);
+function foo() {}
+;
 
 ```
 
@@ -92,6 +128,15 @@ foobar('yes');
 
 ```
 
+### `12: formatted`
+
+```
+function foo() {
+  [foo] = bar;
+}
+
+```
+
 ### `13`
 
 ```
@@ -106,6 +151,26 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `13: formatted`
+
+```
+(function() {
+  ({x: foo = 0} = bar);
+  function foo() {}
+  ;
+})();
+
+```
+
+### `1: formatted`
+
+```
+function foo(foo) {
+  foo = bar;
+}
 
 ```
 
@@ -126,10 +191,28 @@ foobar('yes');
 
 ```
 
+### `2: formatted`
+
+```
+function foo() {
+  var foo;
+  foo = bar;
+}
+
+```
+
 ### `3`
 
 ```
 ✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+var foo = () => {};
+foo = bar;
 
 ```
 
@@ -140,6 +223,14 @@ foobar('yes');
 
 ```
 
+### `4: formatted`
+
+```
+var foo = function() {};
+foo = bar;
+
+```
+
 ### `5`
 
 ```
@@ -147,10 +238,29 @@ foobar('yes');
 
 ```
 
+### `5: formatted`
+
+```
+var foo = function() {
+  foo = bar;
+};
+
+```
+
 ### `6`
 
 ```
 ✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+import bar from 'bar';
+function foo() {
+  var foo = bar;
+}
 
 ```
 
@@ -171,6 +281,15 @@ foobar('yes');
 
 ```
 
+### `7: formatted`
+
+```
+function foo() {}
+;
+foo = bar;
+
+```
+
 ### `8`
 
 ```
@@ -188,6 +307,15 @@ foobar('yes');
 
 ```
 
+### `8: formatted`
+
+```
+function foo() {
+  foo = bar;
+}
+
+```
+
 ### `9`
 
 ```
@@ -202,5 +330,14 @@ foobar('yes');
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `9: formatted`
+
+```
+foo = bar;
+function foo() {}
+;
 
 ```

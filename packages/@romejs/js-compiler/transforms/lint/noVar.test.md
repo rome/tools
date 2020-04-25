@@ -4,6 +4,8 @@
 
 ## `disallow var`
 
+### `0`
+
 ```
 
  unknown:1 lint/noVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -20,10 +22,27 @@
 
 ```
 
+### `0: formatted`
+
+```
+var foobar;
+foobar;
+
+```
+
 ## `format disabled in project config should not regenerate the file`
+
+### `0`
 
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 

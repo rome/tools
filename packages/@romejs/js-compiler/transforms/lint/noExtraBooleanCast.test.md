@@ -23,6 +23,15 @@
 
 ```
 
+### `0: formatted`
+
+```
+if (Boolean(foo)) {
+  return foo;
+}
+
+```
+
 ### `1`
 
 ```
@@ -39,6 +48,15 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
+while (!!foo) {
+  return foo;
+}
 
 ```
 
@@ -62,6 +80,17 @@
 
 ```
 
+### `2: formatted`
+
+```
+let x = 1;
+
+do {
+  1 + 1;
+} while (Boolean(x));
+
+```
+
 ### `3`
 
 ```
@@ -81,10 +110,28 @@
 
 ```
 
+### `3: formatted`
+
+```
+for (; !!foo;) {
+  return 1 + 1;
+}
+
+```
+
 ## `format disabled in project config should not regenerate the file`
+
+### `0`
 
 ```
 ✔ No known problems!
+
+```
+
+### `0: formatted`
+
+```
+foobar('yes');
 
 ```
 
