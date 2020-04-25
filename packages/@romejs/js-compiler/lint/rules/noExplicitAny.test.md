@@ -35,7 +35,7 @@ age;
   ✖ Unexpected any. Specify a different type.
 
     function greet(): any {};greet();
-                      ^^^
+                      ^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -61,7 +61,7 @@ greet();
   ✖ Unexpected any. Specify a different type.
 
     function greet(): any[] {};greet();
-                      ^^^
+                      ^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -87,7 +87,7 @@ greet();
   ✖ Unexpected any. Specify a different type.
 
     function greet(): Array<any> {};greet();
-                            ^^^
+                            ^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -113,7 +113,7 @@ greet();
   ✖ Unexpected any. Specify a different type.
 
     function greet(): Array<Array<any>> {};greet();
-                                  ^^^
+                                  ^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -139,7 +139,7 @@ greet();
   ✖ Unexpected any. Specify a different type.
 
     function greet(param: Array<any>): string { return param; };greet();
-                                ^^^
+                                ^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -167,14 +167,14 @@ greet();
   ✖ Unexpected any. Specify a different type.
 
     function greet(param: Array<any>): Array<any> { return param; };greet();
-                                ^^^
+                                ^^^ 
 
  unknown:1:41 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected any. Specify a different type.
 
     function greet(param: Array<any>): Array<any> { return param; };greet();
-                                             ^^^
+                                             ^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -294,7 +294,7 @@ greet();
   ✖ Unexpected any. Specify a different type.
 
     const age: any = 'seventeen';age;
-               ^^^
+               ^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -319,7 +319,7 @@ age;
   ✖ Unexpected any. Specify a different type.
 
     const ages: any[] = ['seventeen'];ages;
-                ^^^
+                ^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -344,7 +344,7 @@ ages;
   ✖ Unexpected any. Specify a different type.
 
     const ages: Array<any> = ['seventeen'];ages;
-                      ^^^
+                      ^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

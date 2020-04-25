@@ -15,7 +15,7 @@
     3 │       set name(value) {
     4 │         if (!value) {
   > 5 │           return 'wrong';
-      │           ^^^^^^^^^^^^^^^
+      │           ^^^^^^^^^^^^^^^ 
     6 │         }
     7 │       }
 
@@ -50,7 +50,7 @@ console.log(new p());
     3 │       static set name(value) {
     4 │         if (!value) {
   > 5 │           return 'wrong';
-      │           ^^^^^^^^^^^^^^^
+      │           ^^^^^^^^^^^^^^^ 
     6 │         }
     7 │       }
 
@@ -85,7 +85,7 @@ console.log(p);
     3 │       set name(value) {
     4 │         if (!value) {
   > 5 │           return 'wrong';
-      │           ^^^^^^^^^^^^^^^
+      │           ^^^^^^^^^^^^^^^ 
     6 │         }
     7 │       }
 

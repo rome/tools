@@ -78,26 +78,22 @@ export async function testLint(
     },
   });
 
-  const diagnostics = res.diagnostics
-    .filter((diag) => {
-      return diag.description.category === category;
-    })
-    .map((diag) => {
-      return {
-        ...diag,
-        location: {
-          ...diag.location,
-          sourceText: input,
-        },
-      };
-    });
+  const diagnostics = res.diagnostics.filter((diag) => {
+    return diag.description.category === category;
+  }).map((diag) => {
+    return {
+      ...diag,
+      location: {
+        ...diag.location,
+        sourceText: input,
+      },
+    };
+  });
 
-  const snapshotName = await t.snapshot(
-    printDiagnosticsToString({
-      diagnostics,
-      suppressions: res.suppressions,
-    }),
-  );
+  const snapshotName = await t.snapshot(printDiagnosticsToString({
+    diagnostics,
+    suppressions: res.suppressions,
+  }));
 
   await t.snapshotNamed(`${snapshotName}: formatted`, res.src);
 

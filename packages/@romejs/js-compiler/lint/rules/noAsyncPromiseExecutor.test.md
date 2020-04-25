@@ -56,7 +56,7 @@ new Foo(async () => {});
   ✖ Promise executor functions should not be async.
 
     new Promise(async function foo() {})
-                ^^^^^^^^^^^^^^^^^^^^^^^
+                ^^^^^^^^^^^^^^^^^^^^^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -80,7 +80,7 @@ new Promise(async function foo() {});
   ✖ Promise executor functions should not be async.
 
     new Promise(async () => {})
-                ^^^^^^^^^^^^^^
+                ^^^^^^^^^^^^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -104,7 +104,7 @@ new Promise(async () => {});
   ✖ Promise executor functions should not be async.
 
     new Promise(((((async () => {})))))
-                    ^^^^^^^^^^^^^^
+                    ^^^^^^^^^^^^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

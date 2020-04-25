@@ -13,7 +13,7 @@
   ✖ Declare each variable separately
 
     let foo, bar;
-    ^^^^^^^^^^^^^
+    ^^^^^^^^^^^^^ 
 
   ℹ Recommended fix
 
@@ -37,5 +37,12 @@ let bar;
 
 ```
 ✔ No known problems!
+
+```
+
+### `1: formatted`
+
+```
+for (let i = 0, x = 1; i < arr.length; i++) {}
 
 ```

@@ -63,7 +63,7 @@ function foo() {
   ✖ Don't reassign catch parameters
 
     try { } catch (e) { e; e = 10; }
-                           ^
+                           ^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -90,7 +90,7 @@ try {} catch (e) {
   ✖ Don't reassign catch parameters
 
     try { } catch (ex) { console.log('test'); ex = 10; }
-                                              ^^
+                                              ^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -117,7 +117,7 @@ try {} catch (ex) {
   ✖ Don't reassign catch parameters
 
     try { } catch (ex) { [ex, test] = []; }
-                          ^^
+                          ^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -143,17 +143,80 @@ try {} catch (ex) {
   ✖ Don't reassign catch parameters
 
     try { } catch ({message, name}) { message = 'test'; name = 10; }
-                                      ^^^^^^^
+                                      ^^^^^^^ 
 
  unknown:1:52 lint/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Don't reassign catch parameters
 
     try { } catch ({message, name}) { message = 'test'; name = 10; }
-                                                        ^^^^
+                                                        ^^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 2 problems
+
+```
+
+### `6: formatted`
+
+```
+try {} catch ({message, name}) {
+  message = 'test';
+  name = 10;
+}
+
+```
+
+### `7`
+
+```
+
+ unknown:1:26 lint/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Don't reassign catch parameters
+
+    try { } catch (ex) { ({x: ex = 0} = {}); }
+                              ^^ 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+try {} catch (ex) {
+  ({x: ex = 0} = {});
+}
+
+```
+
+### `8`
+
+```
+
+ unknown:1:37 lint/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Don't reassign catch parameters
+
+    try { } catch (ex) { let a; ({x: a = ex = 0} = {}); }
+                                         ^^ 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```
+try {} catch (ex) {
+  let a;
+  ({x: a = ex = 0} = {});
+}
 
 ```

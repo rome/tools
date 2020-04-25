@@ -14,7 +14,7 @@
 
     2 │     import foo from './testdummy.ts';
   > 3 │     import {bar} from './testdummy.ts';
-      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
     4 │     import type {fooType} from './testdummy.ts';
 
   ℹ Previously imported here
@@ -22,5 +22,19 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+import foo, {bar} from './testdummy.ts';
+
+import type {fooType} from './testdummy.ts';
+
+const typedFoo: fooType = {
+  type: 'foo',
+};
+console.log(typedFoo, foo, bar);
 
 ```

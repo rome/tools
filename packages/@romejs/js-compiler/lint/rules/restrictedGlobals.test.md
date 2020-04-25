@@ -13,7 +13,7 @@
   ✖ The use of the existing global variable event is not allowed. Use local variable instead.
 
     console.log(event);
-                ^^^^^
+                ^^^^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -38,8 +38,8 @@ console.log(event);
 
     7 │     // invalid, event is used as a global.
   > 8 │     foo(event)
-      │         ^^^^^
-    9 │
+      │         ^^^^^ 
+    9 │     
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

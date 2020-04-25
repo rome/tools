@@ -47,7 +47,11 @@ import {
   EventSubscription,
   mergeEventSubscriptions,
 } from '@romejs/events';
-import {SerializeCLITarget, serializeCLIFlags} from '@romejs/cli-flags';
+import {
+  FlagValue,
+  SerializeCLITarget,
+  serializeCLIFlags,
+} from '@romejs/cli-flags';
 import {Program} from '@romejs/js-ast';
 import {TransformStageName} from '@romejs/js-compiler';
 import WorkerBridge, {
@@ -400,31 +404,36 @@ export default class MasterRequest {
     };
   }
 
-  getDefaultFlags(): Dict<unknown> {
-    return {
+  getDiagnosticPointerFromFlags(target: SerializeCLITarget): DiagnosticLocation {
+    const {query} = this;
+
+    const rawFlags = {
+      ...this.client.flags,
+      ...this.query.requestFlags,
+      ...this.normalizedCommandFlags.flags,
+    };
+    const flags: Dict<FlagValue> = {
+      ...rawFlags,
+      cwd: rawFlags.cwd.join(),
+    };
+
+    const rawDefaultFlags = {
       ...DEFAULT_CLIENT_FLAGS,
       ...DEFAULT_CLIENT_REQUEST_FLAGS,
       ...this.normalizedCommandFlags.defaultFlags,
       clientName: this.client.flags.clientName,
     };
-  }
+    const defaultFlags: Dict<FlagValue> = {
+      ...rawDefaultFlags,
+      cwd: rawDefaultFlags.cwd.join(),
+    };
 
-  getFlags(): Dict<unknown> {
-    return ({
-      ...this.client.flags,
-      ...this.query.requestFlags,
-      ...this.normalizedCommandFlags.flags,
-    } as Dict<unknown>);
-  }
-
-  getDiagnosticPointerFromFlags(target: SerializeCLITarget): DiagnosticLocation {
-    const {query} = this;
     return serializeCLIFlags({
       programName: 'rome',
       commandName: query.commandName,
-      flags: this.getFlags(),
+      flags,
       args: query.args,
-      defaultFlags: this.getDefaultFlags(),
+      defaultFlags,
       incorrectCaseFlags: new Set(),
       shorthandFlags: new Set(),
     }, target);

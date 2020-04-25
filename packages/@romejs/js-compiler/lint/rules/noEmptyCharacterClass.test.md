@@ -65,7 +65,7 @@ foo;
   ✖ Empty character classes in regular expressions are not allowed
 
     let foo = /^abc[]/;foo;
-                   ^
+                   ^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -90,7 +90,7 @@ foo;
   ✖ Empty character classes in regular expressions are not allowed
 
     let foo = /foo[]bar/;foo;
-                  ^^
+                  ^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -115,7 +115,7 @@ foo;
   ✖ Empty character classes in regular expressions are not allowed
 
     let foo = "";if (foo.match(/^abc[]/)) { foo; }
-                                    ^
+                                    ^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -142,7 +142,7 @@ if (foo.match(/^abc/)) {
   ✖ Empty character classes in regular expressions are not allowed
 
     let foo = /[]]/;foo;
-               ^^
+               ^^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -167,7 +167,7 @@ foo;
   ✖ Empty character classes in regular expressions are not allowed
 
     let foo = /\[[]/;foo;
-                 ^
+                 ^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -192,7 +192,7 @@ foo;
   ✖ Empty character classes in regular expressions are not allowed
 
     let foo = /\[\[\]a-z[]/;foo;
-                        ^
+                        ^ 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

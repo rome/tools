@@ -13,7 +13,7 @@
   ✖ Your array contains an empty slot
 
     [1,,2]
-    ^^^^^^
+    ^^^^^^ 
 
   ℹ Recommended fix
 
@@ -32,6 +32,10 @@
 ### `0: formatted`
 
 ```
-[1, undefined, 2];
+[
+  1,
+  undefined,
+  2,
+];
 
 ```

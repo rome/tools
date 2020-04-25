@@ -13,7 +13,7 @@
   ✖ Unclear multiple spaces in regular expression
 
     /foo  bar/
-        ^
+        ^ 
 
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {3}/
 
@@ -38,5 +38,12 @@
 
 ```
 ✔ No known problems!
+
+```
+
+### `1: formatted`
+
+```
+/foo {2}bar/;
 
 ```

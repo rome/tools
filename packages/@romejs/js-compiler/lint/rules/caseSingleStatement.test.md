@@ -63,7 +63,7 @@ switch (foo) {
   ✖ A switch case should only have a single statement. If you want more then wrap it in a block.
 
     switch (foo) {case true: case false: let foo = ''; foo;}
-                                       ^^^^^^^^^^^^^^^^^^^^
+                                       ^^^^^^^^^^^^^^^^^^^^ 
 
   ℹ Recommended fix
 
@@ -75,5 +75,18 @@ switch (foo) {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `3: formatted`
+
+```
+switch (foo) {
+  case true:
+  case false: {
+    let foo = '';
+    foo;
+  }
+}
 
 ```

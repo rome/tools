@@ -13,7 +13,7 @@
   ✖ Shadowing of global property NaN
 
     function NaN() {}
-             ^^^
+             ^^^ 
 
   ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
 
@@ -39,7 +39,7 @@ function NaN() {}
   ✖ Shadowing of global property Set
 
     let Set;
-        ^^^
+        ^^^ 
 
   ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
 
@@ -93,7 +93,7 @@ function test(JSON) {}
   ✖ Shadowing of global property Object
 
     try {  } catch(Object) {}
-                   ^^^^^^
+                   ^^^^^^ 
 
   ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
 

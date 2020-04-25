@@ -15,7 +15,7 @@
      6 │             throw err;
      7 │         } finally {
    > 8 │             return 1;
-       │             ^^^^^^^^^
+       │             ^^^^^^^^^ 
      9 │         }
     10 │       }
 
@@ -53,7 +53,7 @@ greet1();
      6 │             throw err;
      7 │         } finally {
    > 8 │             break;
-       │             ^^^^^^
+       │             ^^^^^^ 
      9 │         }
     10 │       }
 
@@ -91,7 +91,7 @@ greet2();
      6 │             throw err;
      7 │         } finally {
    > 8 │             continue;
-       │             ^^^^^^^^^
+       │             ^^^^^^^^^ 
      9 │         }
     10 │       }
 
@@ -129,12 +129,29 @@ greet3();
      6 │             throw err;
      7 │         } finally {
    > 8 │             throw new Error("Finally");
-       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
      9 │         }
     10 │       }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `3: formatted`
+
+```
+function greet4() {
+  try {
+    throw new Error('Try');
+  } catch (err) {
+    throw err;
+  } finally {
+    throw new Error('Finally');
+  }
+}
+
+greet4();
 
 ```

@@ -69,12 +69,19 @@ null != foo;
   ✖ Use === instead of ==
 
     foo == bar
-    ^^^^^^^^^^
+    ^^^^^^^^^^ 
 
   ℹ == is only allowed when comparing against null
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✖ Found 1 problem
+
+```
+
+### `4: formatted`
+
+```
+foo == bar;
 
 ```

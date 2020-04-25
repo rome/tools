@@ -68,7 +68,7 @@ export default {
             return context.addFixableDiagnostic({
               target: id,
               old: node,
-              fixed: () => renameBindings(path, new Map([[id.name, basename]])),
+              fixed: renameBindings(path, new Map([[id.name, basename]])),
             }, descriptions.LINT.DEFAULT_EXPORT_SAME_BASENAME({
               defaultName: id.name,
               defaultType: type,

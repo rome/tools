@@ -14,7 +14,7 @@
 
     2 │   const foo = {
   > 3 │     test: true,
-      │     ^^^^^^^^^^
+      │     ^^^^^^^^^^ 
     4 │     test2: true,
     5 │     test: false,
 

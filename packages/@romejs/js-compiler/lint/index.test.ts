@@ -15,7 +15,7 @@ test('format disabled in project config should not regenerate the file', async (
   t,
 ) => {
   // Intentionally weird formatting
-  await testLint(t, 'foobar ( "yes" );', {category: undefined, format: false});
+  await testLint(t, 'foobar ( "yes" );', {category: undefined});
 });
 
 test(
@@ -23,7 +23,6 @@ test(
   async (t) => {
     await testLint(t, 'foobar ( "yes" );', {
       category: undefined,
-      format: true,
     });
   },
 );

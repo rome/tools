@@ -63,7 +63,9 @@ function splitCommandName(cmd: string): Array<string> {
   return cmd.split(' ');
 }
 
-export type FlagValue = string | boolean | Array<string | boolean>;
+type _FlagValue = undefined | number | string | boolean;
+
+export type FlagValue = _FlagValue | Array<_FlagValue>;
 
 export default class Parser<T> {
   constructor(
@@ -221,9 +223,9 @@ export default class Parser<T> {
   }
 
   getFlagsConsumer(): Consumer {
-    const defaultFlags: Dict<unknown> = {};
+    const defaultFlags: Dict<FlagValue> = {};
 
-    const flags: Dict<unknown> = {};
+    const flags: Dict<FlagValue> = {};
     for (const [key, value] of this.flags) {
       flags[toCamelCase(key)] = value;
     }
@@ -252,7 +254,7 @@ export default class Parser<T> {
           command: this.currentCommand,
           definition: def,
         });
-        defaultFlags[key] = def.default;
+        defaultFlags[key] = (def.default as FlagValue);
 
         // We've parsed arguments like `--foo bar` as `{foo: 'bar}`
         // However, --foo may be a boolean flag, so `bar` needs to be correctly added to args

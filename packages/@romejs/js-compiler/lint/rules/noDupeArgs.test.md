@@ -13,7 +13,7 @@
   ✖ Duplicate argument a in function definition
 
   > 2 │   function hello(a, a) {
-      │                     ^
+      │                     ^ 
     3 │     console.log("Hello);
     4 │   }
 
