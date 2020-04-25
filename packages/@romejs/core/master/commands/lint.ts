@@ -41,11 +41,6 @@ export default createMasterCommand<Flags>({
   async callback(req: MasterRequest, flags: Flags): Promise<void> {
     const {reporter} = req;
 
-    // This wont trigger the shouldSave check at the bottom
-    if (req.query.requestFlags.review) {
-      await req.assertCleanVSC();
-    }
-
     let compilerOptionsPerFile: LinterOptions['compilerOptionsPerFile'] = {};
     const {decisions} = flags;
     if (decisions !== undefined) {

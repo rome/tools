@@ -87,19 +87,19 @@ function createDiagnosticsPrinter(
       if (isError) {
         let hasPendingFixes = false;
 
-        for (const {description} of processor.getDiagnostics()) {
-          if (description.category === 'lint/pendingFixes') {
+        for (const {fixable} of processor.getDiagnostics()) {
+          if (fixable) {
             hasPendingFixes = true;
           }
         }
 
         if (hasPendingFixes) {
           reporter.info(
-            'Fixes available. Run <command>rome lint --review</command> to review.',
+            'Fixes available. To apply recommended fixes and formatting run',
           );
-          reporter.info(
-            'Alternatively run <command>rome lint --save</command> to apply recommend fixes and formatting.',
-          );
+          reporter.command('rome lint --save');
+          reporter.info('To choose fix suggestions run');
+          reporter.command('rome lint --review');
         }
       } else {
         if (totalCount === 0) {
@@ -378,7 +378,8 @@ export default class Linter {
 
   shouldSave(): boolean {
     const {save, hasDecisions, formatOnly} = this.options;
-    return save || hasDecisions || formatOnly;
+    return save || hasDecisions || formatOnly ||
+      this.request.query.requestFlags.review;
   }
 
   getFileArgOptions(): MasterRequestGetFilesOptions {

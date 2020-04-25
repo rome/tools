@@ -59,7 +59,7 @@ function extractFileList(out: string): Array<string> {
   const files: Array<string> = [];
 
   for (const line of lines) {
-    const match = line.match(/^[AM]\s+(.*?)$/);
+    const match = line.trim().match(/^(?:[AM]|\?\?)\s+(.*?)$/);
     if (match != null) {
       files.push(match[1]);
     }

@@ -100,7 +100,7 @@ export default class Path {
     const hook = this.findHook(descriptor, requiredDepth);
     if (hook === undefined) {
       if (optionalRet === undefined) {
-        throw new Error('No hook found');
+        throw new Error(`No ${descriptor.name} hook found`);
       } else {
         return optionalRet;
       }

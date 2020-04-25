@@ -270,7 +270,7 @@ export default class CompilerContext {
       fixed?: New;
       suggestions?: Array<{
         description: string;
-        short: string;
+        title: string;
         fixed: New;
       }>;
     },
@@ -339,11 +339,13 @@ export default class CompilerContext {
       // Add advice suggestions
       let index = 0;
       for (const suggestion of suggestions) {
+        const num = index + 1;
+
         advice.push(
           {
             type: 'log',
-            category: 'info',
-            message: `Suggested fix #${index + 1}: <emphasis>${suggestion.description}</emphasis>`,
+            category: 'none',
+            message: `<emphasis>Suggested fix #${num}:</emphasis> ${suggestion.title}`,
           },
         );
 
@@ -354,6 +356,12 @@ export default class CompilerContext {
           )),
         });
 
+        advice.push({
+          type: 'log',
+          category: 'info',
+          message: suggestion.description,
+        });
+
         if (loc === undefined) {
           advice.push({
             type: 'log',
@@ -362,7 +370,8 @@ export default class CompilerContext {
           });
         } else {
           advice.push(buildLintDecisionAdviceAction({
-            noun: `Apply "${suggestion.short}" fix`,
+            noun: `Apply suggestion "${suggestion.title}"`,
+            shortcut: String(num),
             instruction: 'To apply this fix run',
             filename: this.displayFilename,
             action: 'fix',
@@ -414,6 +423,7 @@ export default class CompilerContext {
     if (loc !== undefined && loc.start !== undefined) {
       advice.push(buildLintDecisionAdviceAction({
         noun: 'Add suppression comment',
+        shortcut: 's',
         instruction: 'To suppress this error run',
         filename: this.displayFilename,
         action: 'suppress',

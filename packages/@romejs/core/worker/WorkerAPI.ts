@@ -319,6 +319,7 @@ export default class WorkerAPI {
       diagnostics: [
         ...diagnostics,
         {
+          fixable: true,
           location: {
             filename: ref.uid,
           },

@@ -76,8 +76,10 @@ export function buildLintDecisionAdviceAction({
   action,
   category,
   start,
+  shortcut,
   id,
 }: {
+  shortcut?: string;
   noun: string;
   instruction: string;
   filename: string;
@@ -104,11 +106,12 @@ export function buildLintDecisionAdviceAction({
     type: 'action',
     hidden: true,
     command: 'lint',
+    shortcut,
     args: [filename],
     noun,
     instruction,
     commandFlags: {
-      decision,
+      decisions: [decision],
     },
   };
 }

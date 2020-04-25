@@ -116,7 +116,7 @@ export const commentInjector = createHook<
   CommentInjectorArg,
   string
 >({
-  name: 'bindingInjectorHook',
+  name: 'commentInjectorHook',
 
   initialState: {
     comments: [],

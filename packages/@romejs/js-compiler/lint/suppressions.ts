@@ -99,8 +99,10 @@ export function addSuppressions(context: CompilerContext, ast: Program): Program
     enter(path: Path) {
       const {node} = path;
 
-      // Don't allow attaching suppression comments to a comment...
-      if (node.type === 'CommentBlock' || node.type === 'CommentLine') {
+      // Don't allow attaching suppression comments to a comment or program...
+      if (node.type === 'CommentBlock' || node.type === 'CommentLine' ||
+            node.type ===
+            'Program') {
         return node;
       }
 

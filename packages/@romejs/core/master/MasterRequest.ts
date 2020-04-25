@@ -35,6 +35,7 @@ import {BundlerConfig} from '../common/types/bundler';
 import MasterBridge, {
   MasterQueryRequest,
   MasterQueryResponse,
+  MasterQueryResponseSuccess,
 } from '../common/bridges/MasterBridge';
 import Master, {
   MasterClient,
@@ -103,6 +104,13 @@ type ResolvedArg = {
 };
 
 type ResolvedArgs = Array<ResolvedArg>;
+
+export const EMPTY_SUCCESS_RESPONSE: MasterQueryResponseSuccess = {
+  type: 'SUCCESS',
+  hasData: false,
+  data: undefined,
+  markers: [],
+};
 
 export type MasterRequestGetFilesOptions = Omit<
   MemoryFSGlobOptions,
@@ -201,10 +209,8 @@ export default class MasterRequest {
       if (this.query.noData) {
         if (res.type === 'SUCCESS') {
           res = {
-            type: 'SUCCESS',
+            ...EMPTY_SUCCESS_RESPONSE,
             hasData: res.data !== undefined,
-            data: undefined,
-            markers: [],
           };
         } else if (res.type === 'DIAGNOSTICS') {
           res = {

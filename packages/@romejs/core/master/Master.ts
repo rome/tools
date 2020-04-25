@@ -28,7 +28,10 @@ import {
 } from '@romejs/cli-diagnostics';
 import {ConsumePath, consume} from '@romejs/consume';
 import {Event, EventSubscription} from '@romejs/events';
-import MasterRequest, {MasterRequestInvalid} from './MasterRequest';
+import MasterRequest, {
+  EMPTY_SUCCESS_RESPONSE,
+  MasterRequestInvalid,
+} from './MasterRequest';
 import ProjectManager from './project/ProjectManager';
 import WorkerManager from './WorkerManager';
 import Resolver from './fs/Resolver';
@@ -852,10 +855,9 @@ export default class Master {
         // Only the command promise should have won the race with a resolve
         const data = await commandPromise;
         return {
-          type: 'SUCCESS',
+          ...EMPTY_SUCCESS_RESPONSE,
           hasData: data !== undefined,
           data,
-          markers: [],
         };
       } else {
         throw new Error(`Unknown command ${String(query.commandName)}`);
@@ -875,27 +877,17 @@ export default class Master {
           message: err.message,
           stack: err.stack,
         };
-      } else if (diagnostics.length === 0) {
-        // Maybe DIAGNOSTICS and an empty array still makes sense instead of SUCCESS?
+      } else if (err instanceof MasterRequestInvalid) {
         return {
-          type: 'SUCCESS',
-          hasData: false,
-          data: undefined,
-          markers: [],
+          type: 'INVALID_REQUEST',
+          diagnostics,
+          showHelp: err.showHelp,
         };
       } else {
-        if (err instanceof MasterRequestInvalid) {
-          return {
-            type: 'INVALID_REQUEST',
-            diagnostics,
-            showHelp: err.showHelp,
-          };
-        } else {
-          return {
-            type: 'DIAGNOSTICS',
-            diagnostics,
-          };
-        }
+        return {
+          type: 'DIAGNOSTICS',
+          diagnostics,
+        };
       }
     }
   }
