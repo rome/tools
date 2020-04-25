@@ -343,7 +343,7 @@ export default class CompilerContext {
           {
             type: 'log',
             category: 'info',
-            message: `Possible fix <emphasis>${suggestion.description}</emphasis>`,
+            message: `Suggested fix #${index + 1}: <emphasis>${suggestion.description}</emphasis>`,
           },
         );
 
