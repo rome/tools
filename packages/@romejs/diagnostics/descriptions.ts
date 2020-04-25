@@ -307,16 +307,11 @@ export const descriptions = createMessages(
             type: 'diff',
             diff: stringDiff(original, formatted),
           },
-          {
-            type: 'log',
-            category: 'info',
-            message: 'Run <command>rome lint --fix</command> to apply',
-          },
           ({
             type: 'action',
             hidden: true,
             command: 'lint',
-            instruction: 'To format this file without fixes run',
+            instruction: 'To format this file without any fixes run',
             noun: 'Format file',
             args: [relativeFilename],
             commandFlags: {
@@ -325,13 +320,12 @@ export const descriptions = createMessages(
           } as DiagnosticAdviceAction),
           ({
             type: 'action',
-            hidden: true,
             command: 'lint',
-            instruction: 'To format and fix this file run',
+            instruction: 'To format and apply recommended fixes run',
             noun: 'Fix file',
             args: [relativeFilename],
             commandFlags: {
-              fix: true,
+              save: true,
             },
           } as DiagnosticAdviceAction),
         ],

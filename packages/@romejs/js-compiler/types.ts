@@ -57,7 +57,7 @@ export type TransformVisitors = Array<TransformVisitor>;
 export type CompileRequest = TransformRequest & {inputSourceMap?: SourceMap};
 
 export type LintRequest = TransformRequest & {
-  formatOnly: boolean;
+  applyFixes: boolean;
 };
 
 export type TransformProjectDefinition = {

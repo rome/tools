@@ -15,7 +15,7 @@ import {commandCategories} from '@romejs/core/common/commands';
 
 type Flags = {
   decisions: Array<string>;
-  fix: boolean;
+  save: boolean;
   changed: undefined | string;
   formatOnly: boolean;
 };
@@ -32,7 +32,7 @@ export default createMasterCommand<Flags>({
       decisions: consumer.get('decisions').asImplicitArray().map(
         (item) => item.asString(),
       ),
-      fix: consumer.get('fix').asBoolean(false),
+      save: consumer.get('save').asBoolean(false),
       formatOnly: consumer.get('formatOnly').asBoolean(false),
       changed: consumer.get('changed').asStringOrVoid(),
     };
@@ -41,7 +41,8 @@ export default createMasterCommand<Flags>({
   async callback(req: MasterRequest, flags: Flags): Promise<void> {
     const {reporter} = req;
 
-    if (req.query.requestFlags.review || flags.fix) {
+    // This wont trigger the shouldSave check at the bottom
+    if (req.query.requestFlags.review) {
       await req.assertCleanVSC();
     }
 
@@ -59,13 +60,6 @@ export default createMasterCommand<Flags>({
         },
       );
     }
-
-    const fixLocation = flags.fix === false
-      ? undefined
-      : req.getDiagnosticPointerFromFlags({
-        type: 'flag',
-        key: 'fix',
-      });
 
     // Look up arguments manually in vsc if we were passed a changes branch
     let args;
@@ -89,12 +83,17 @@ export default createMasterCommand<Flags>({
     const opts: LinterOptions = {
       hasDecisions: flags.decisions.length > 0,
       compilerOptionsPerFile,
-      fixLocation,
+      save: flags.save,
       formatOnly: flags.formatOnly,
       args,
     };
 
     const linter = new Linter(req, opts);
+
+    if (linter.shouldSave()) {
+      await req.assertCleanVSC();
+    }
+
     await linter.run(req.query.requestFlags.watch);
   },
 });

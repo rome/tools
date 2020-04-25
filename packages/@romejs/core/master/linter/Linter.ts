@@ -8,7 +8,6 @@
 import {Master, MasterRequest} from '@romejs/core';
 import {LINTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
 import {
-  DiagnosticLocation,
   DiagnosticSuppressions,
   Diagnostics,
   DiagnosticsProcessor,
@@ -36,7 +35,7 @@ type LintWatchChanges = Array<{
 }>;
 
 export type LinterOptions = {
-  fixLocation: undefined | DiagnosticLocation;
+  save: boolean;
   args?: Array<string>;
   hasDecisions: boolean;
   formatOnly: boolean;
@@ -96,7 +95,10 @@ function createDiagnosticsPrinter(
 
         if (hasPendingFixes) {
           reporter.info(
-            'Fixes available. Run <command>rome lint --review</command> to apply.',
+            'Fixes available. Run <command>rome lint --review</command> to review.',
+          );
+          reporter.info(
+            'Alternatively run <command>rome lint --save</command> to apply recommend fixes and formatting.',
           );
         }
       } else {
@@ -115,33 +117,29 @@ function createDiagnosticsPrinter(
 }
 
 class LintRunner {
-  constructor({
-    request,
+  constructor(linter: Linter, {
     graph,
-    options,
     events,
   }: {
     events: WatchEvents;
-    request: MasterRequest;
     graph: DependencyGraph;
-    options: LinterOptions;
   }) {
-    this.master = request.master;
+    this.linter = linter;
+    this.master = linter.request.master;
     this.graph = graph;
-    this.request = request;
-    this.options = options;
+    this.request = linter.request;
+    this.options = linter.options;
     this.events = events;
     this.compilerDiagnosticsCache = new AbsoluteFilePathMap();
     this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
   }
 
   hadDependencyValidationErrors: AbsoluteFilePathMap<boolean>;
-
   compilerDiagnosticsCache: AbsoluteFilePathMap<{
     diagnostics: Diagnostics;
     suppressions: DiagnosticSuppressions;
   }>;
-
+  linter: Linter;
   events: WatchEvents;
   master: Master;
   request: MasterRequest;
@@ -155,14 +153,8 @@ class LintRunner {
     let savedCount = 0;
     const {master} = this.request;
 
-    const {
-      fixLocation,
-      compilerOptionsPerFile,
-      hasDecisions,
-      formatOnly,
-    } = this.options;
-    const shouldFix = fixLocation !== undefined;
-    const shouldSave = shouldFix || hasDecisions || formatOnly;
+    const {compilerOptionsPerFile, hasDecisions, formatOnly} = this.options;
+    const shouldSave = this.linter.shouldSave();
 
     const queue: WorkerQueue<void> = new WorkerQueue(master);
 
@@ -192,8 +184,7 @@ class LintRunner {
         saved,
       } = await this.request.requestWorkerLint(path, {
         save: shouldSave,
-        formatOnly,
-        fix: shouldFix,
+        applyFixes: !formatOnly,
         compilerOptions,
       });
       processor.addSuppressions(suppressions);
@@ -385,6 +376,11 @@ export default class Linter {
   request: MasterRequest;
   options: LinterOptions;
 
+  shouldSave(): boolean {
+    const {save, hasDecisions, formatOnly} = this.options;
+    return save || hasDecisions || formatOnly;
+  }
+
   getFileArgOptions(): MasterRequestGetFilesOptions {
     return {
       args: this.options.args,
@@ -435,10 +431,8 @@ export default class Linter {
       this.request.getResolverOptionsFromFlags(),
     );
 
-    const runner = new LintRunner({
+    const runner = new LintRunner(this, {
       events,
-      request: this.request,
-      options: this.options,
       graph,
     });
 

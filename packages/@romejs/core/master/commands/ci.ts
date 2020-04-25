@@ -63,7 +63,7 @@ export default createMasterCommand({
       await lint.callback(req, {
         formatOnly: false,
         decisions: [],
-        fix: flags.fix,
+        save: flags.fix,
         changed: undefined,
       });
     });

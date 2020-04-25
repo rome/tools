@@ -298,11 +298,7 @@ export default class WorkerAPI {
 
       // Relint this file without fixing it, we do this to prevent false positive error messages
       return {
-        ...(await this.lint(
-          ref,
-          {...options, formatOnly: false, fix: false},
-          parseOptions,
-        )),
+        ...(await this.lint(ref, {...options, save: false}, parseOptions)),
         saved: true,
       };
     }

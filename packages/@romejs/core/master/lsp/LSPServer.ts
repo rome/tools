@@ -370,7 +370,7 @@ export default class LSPServer {
     await req.init();
 
     const linter = new Linter(req, {
-      fixLocation: undefined,
+      save: false,
       hasDecisions: false,
       formatOnly: false,
     });

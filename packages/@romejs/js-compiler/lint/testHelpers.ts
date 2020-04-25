@@ -69,7 +69,7 @@ export async function testLint(
   });
 
   const res = await lint({
-    formatOnly: false,
+    applyFixes: true,
     options: {},
     ast,
     sourceText: input,
