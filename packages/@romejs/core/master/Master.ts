@@ -927,8 +927,16 @@ export default class Master {
       // Only print when the bridge is alive and we aren't in review mode
       // When we're in review mode we don't expect to show any diagnostics because they'll be intercepted in the client command
       // We will always print invalid request errors
-      const shouldPrint = req.bridge.alive && (rawErr instanceof
-        MasterRequestInvalid || !req.query.requestFlags.review);
+      let shouldPrint = true;
+      if (req.query.requestFlags.review) {
+        shouldPrint = false;
+      }
+      if (rawErr instanceof MasterRequestInvalid) {
+        shouldPrint = true;
+      }
+      if (!req.bridge.alive) {
+        shouldPrint = false;
+      }
 
       if (shouldPrint) {
         printer.print();

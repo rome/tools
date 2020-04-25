@@ -340,6 +340,7 @@ export default class ProjectManager {
       project: project.id,
       real: path,
       manifest: pkg === undefined ? undefined : pkg.id,
+      relative: project.folder.relative(path).assertRelative(),
       remote: this.localPathToRemote.has(path),
     };
   }
@@ -354,9 +355,11 @@ export default class ProjectManager {
   }
 
   getTransportFileReference(path: AbsoluteFilePath): JSONFileReference {
+    const ref = this.getFileReference(path);
     return {
-      ...this.getFileReference(path),
-      real: path.join(),
+      ...ref,
+      relative: ref.relative.join(),
+      real: ref.real.join(),
     };
   }
 

@@ -54,6 +54,8 @@ export default async function transform(
   }
 
   const context = new CompilerContext({
+    ref: req.ref,
+    sourceText: req.sourceText,
     ast,
     project,
     options,

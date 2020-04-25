@@ -286,6 +286,7 @@ function buildJSHandler(
 
         return worker.api.interceptAndAddGeneratedToDiagnostics(
           await compiler.analyzeDependencies({
+            ref: file,
             ast,
             sourceText,
             project,
@@ -337,6 +338,7 @@ function buildJSHandler(
 
         // Run the compiler in lint-mode which is where all the rules are actually ran
         const res = await compiler.lint({
+          ref,
           options: {
             lint: options.compilerOptions,
           },

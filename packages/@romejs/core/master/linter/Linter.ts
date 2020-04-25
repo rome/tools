@@ -39,7 +39,8 @@ type LintWatchChanges = Array<{
 export type LinterOptions = {
   fixLocation?: DiagnosticLocation;
   args?: Array<string>;
-  compilerOptionsPerFile?: Dict<LintCompilerOptions>;
+  hasDecisions?: boolean;
+  compilerOptionsPerFile?: Dict<Required<LintCompilerOptions>>;
 };
 
 type ProgressFactory = (opts: ReporterProgressOptions) => ReporterProgress;
@@ -85,26 +86,17 @@ function createDiagnosticsPrinter(
       }
 
       if (isError) {
-        let couldFix = false;
         let hasPendingFixes = false;
 
-        for (const {fixable, description} of processor.getDiagnostics()) {
+        for (const {description} of processor.getDiagnostics()) {
           if (description.category === 'lint/pendingFixes') {
             hasPendingFixes = true;
-          }
-
-          if (fixable) {
-            couldFix = true;
           }
         }
 
         if (hasPendingFixes) {
           reporter.info(
-            'Fixes available. Run <command>rome lint --fix</command> to apply.',
-          );
-        } else if (couldFix) {
-          reporter.warn(
-            'Autofixes are available for some of these errors when formatting is enabled. Run <command>rome config enable-category format</command> to enable.',
+            'Fixes available. Run <command>rome lint --review</command> to apply.',
           );
         }
       } else {
@@ -163,7 +155,7 @@ class LintRunner {
     let fixedCount = 0;
     const {master} = this.request;
 
-    const {fixLocation, compilerOptionsPerFile} = this.options;
+    const {fixLocation, compilerOptionsPerFile, hasDecisions} = this.options;
     const shouldFix = fixLocation !== undefined;
 
     const queue: WorkerQueue<void> = new WorkerQueue(master);
@@ -176,9 +168,17 @@ class LintRunner {
       const text = markup`<filelink target="${filename}" />`;
       progress.pushText(text);
 
-      const compilerOptions = compilerOptionsPerFile === undefined
+      let compilerOptions = compilerOptionsPerFile === undefined
         ? undefined
         : compilerOptionsPerFile[filename];
+
+      // If we have decisions then make sure it's declared on all files
+      if (hasDecisions) {
+        compilerOptions = {
+          decisionsByPosition: {},
+          ...compilerOptions,
+        };
+      }
 
       const {
         diagnostics,

@@ -32,9 +32,9 @@ import {
   createParser,
   isAlpha,
   isDigit,
-  isEscaped,
 } from '@romejs/parser-core';
 import {Number0, ob1Add, ob1Get0, ob1Inc, ob1Sub} from '@romejs/ob1';
+import {isEscaped} from '@romejs/string-utils';
 
 // Words can't start with a digit
 function isWordStartChar(char: string): boolean {

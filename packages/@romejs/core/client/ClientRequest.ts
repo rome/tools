@@ -13,6 +13,7 @@ import {LocalCommand, localCommands} from './commands';
 import Client from './Client';
 import {consumeUnknown} from '@romejs/consume';
 import {BridgeError} from '@romejs/events';
+import review from './review';
 
 export type ClientRequestType = 'local' | 'master';
 
@@ -31,9 +32,18 @@ export default class ClientRequest {
   type: ClientRequestType;
   client: Client;
 
+  fork(query: PartialMasterQueryRequest): ClientRequest {
+    return new ClientRequest(this.client, this.type, query);
+  }
+
   async init(): Promise<MasterQueryResponse> {
     try {
-      return await this.initCommand();
+      const {requestFlags} = this.query;
+      if (requestFlags !== undefined && requestFlags.review) {
+        return await this.initReview();
+      } else {
+        return await this.initCommand();
+      }
     } catch (err) {
       return {
         type: 'ERROR',
@@ -44,6 +54,10 @@ export default class ClientRequest {
         stack: err.stack,
       };
     }
+  }
+
+  async initReview(): Promise<MasterQueryResponse> {
+    return review(this);
   }
 
   async initCommand(): Promise<MasterQueryResponse> {

@@ -11,7 +11,10 @@ import Printer from './Printer';
 
 export {Builder, BuilderOptions};
 
-export function formatJS(ast: AnyNode, opts: BuilderOptions): Printer {
+export function formatJS(ast: AnyNode, opts: BuilderOptions = {
+  typeAnnotations: true,
+  format: 'pretty',
+}): Printer {
   const builder = new Builder(opts, ast.type === 'Program'
     ? ast.comments
     : opts.comments);

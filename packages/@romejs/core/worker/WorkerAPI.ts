@@ -163,6 +163,7 @@ export default class WorkerAPI {
       parseOptions,
     );
     return this.interceptAndAddGeneratedToDiagnostics(await compile({
+      ref,
       ast,
       sourceText,
       options: compilerOptions,

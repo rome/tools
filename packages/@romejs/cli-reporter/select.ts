@@ -7,25 +7,8 @@
 
 import {ansiEscapes} from '@romejs/string-markup';
 import Reporter from './Reporter';
+import {SelectArguments, SelectOption, SelectOptions} from './types';
 import readline = require('readline');
-
-type SelectOption = {
-  label: string;
-  shortcut?: string;
-  disabled?: boolean;
-  disabledReason?: string;
-};
-
-export type SelectOptions = {
-  [key: string]: SelectOption;
-};
-
-export type SelectArguments<Options> = {
-  options: Options;
-  defaults?: Array<keyof Options>;
-  radio?: boolean;
-  yes?: boolean;
-};
 
 function formatShortcut({shortcut}: SelectOption): string {
   if (shortcut === undefined) {

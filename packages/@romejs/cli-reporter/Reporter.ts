@@ -22,6 +22,8 @@ import {
   ReporterProgressOptions,
   ReporterStream,
   ReporterStreamMeta,
+  SelectArguments,
+  SelectOptions,
 } from './types';
 import {humanizeNumber, removeSuffix} from '@romejs/string-utils';
 import Progress from './Progress';
@@ -32,7 +34,7 @@ import {CWD_PATH} from '@romejs/path';
 import {Event} from '@romejs/events';
 import readline = require('readline');
 import {MarkupTagName} from '@romejs/string-markup/types';
-import select, {SelectArguments, SelectOptions} from './select';
+import select from './select';
 
 type ListOptions = {
   reverse?: boolean;

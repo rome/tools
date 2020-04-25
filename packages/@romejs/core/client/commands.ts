@@ -12,7 +12,6 @@ import stop from './commands/stop';
 import run from './commands/run';
 import restart from './commands/restart';
 import status from './commands/status';
-import lint from './commands/lint';
 import lsp from './commands/lsp';
 
 //
@@ -43,5 +42,4 @@ localCommands.set('stop', stop);
 localCommands.set('run', run);
 localCommands.set('restart', restart);
 localCommands.set('status', status);
-localCommands.set('lint', lint);
 localCommands.set('lsp', lsp);

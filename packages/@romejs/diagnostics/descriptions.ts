@@ -283,6 +283,17 @@ export const descriptions = createMessages(
       SYNTAX_ERROR: (message: string) => ({message, category: 'v8/syntaxError'}),
     },
 
+    // @romejs/core/master/commands/lint.ts
+    LINT_COMMAND: {
+      INVALID_DECISION_ACTION: (action: string) => ({
+        message: markup`<emphasis>${action}</emphasis> is not a valid decision action`,
+      }),
+
+      INVALID_DECISION_PART_COUNT: (i: number) => ({
+        message: `Segment ${i} contains an invalid number of decision parts`,
+      }),
+    },
+
     // @romejs/js-compiler
     LINT: {
       PENDING_FIXES: (original: string, formatted: string) => ({

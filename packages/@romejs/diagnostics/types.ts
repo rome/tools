@@ -11,6 +11,7 @@ import {ConstSourceType} from '@romejs/js-ast';
 import {Number0, Number1} from '@romejs/ob1';
 import {JSONPropertyValue} from '@romejs/codec-json';
 import {DiagnosticCategory} from './categories';
+import {Dict} from '@romejs/typescript-helpers';
 
 export type DiagnosticFilter = {
   category?: DiagnosticCategory;
@@ -98,7 +99,8 @@ export type DiagnosticAdviceItem =
   | DiagnosticAdviceFrame
   | DiagnosticAdviceDiff
   | DiagnosticAdviceStacktrace
-  | DiagnosticAdviceCommand;
+  | DiagnosticAdviceCommand
+  | DiagnosticAdviceAction;
 
 export type DiagnosticAdviceCommand = {
   type: 'command';
@@ -123,6 +125,16 @@ export type DiagnosticAdviceList = {
 export type DiagnosticAdviceInspect = {
   type: 'inspect';
   data: JSONPropertyValue;
+};
+
+export type DiagnosticAdviceAction = {
+  type: 'action';
+  hidden?: boolean;
+  instruction: string;
+  noun: string;
+  command: string;
+  flags: Dict<boolean | string | Array<string>>;
+  args: Array<string>;
 };
 
 export type DiagnosticAdviceCode = {

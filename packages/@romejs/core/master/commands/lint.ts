@@ -9,16 +9,53 @@ import {MasterRequest} from '@romejs/core';
 import Linter, {LinterOptions} from '../linter/Linter';
 import {markup} from '@romejs/string-markup';
 import {createMasterCommand} from '../commands';
-import lintCommand, {LintCommandFlags} from '../../client/commands/lint';
+import {parseDecisionStrings} from '@romejs/js-compiler';
+import {Consumer} from '@romejs/consume';
+import {commandCategories} from '@romejs/core/common/commands';
 
-export default createMasterCommand<LintCommandFlags>({
-  ...lintCommand,
+type Flags = {
+  decisions: Array<string>;
+  fix: boolean;
+  changed: undefined | string;
+};
 
-  async callback(req: MasterRequest, flags: LintCommandFlags): Promise<void> {
+export default createMasterCommand<Flags>({
+  category: commandCategories.CODE_QUALITY,
+  description: 'run lint against a set of files',
+  allowRequestFlags: ['watch', 'review', 'allowDirty'],
+  usage: '',
+  examples: [],
+
+  defineFlags(consumer: Consumer): Flags {
+    return {
+      decisions: consumer.get('decisions').asImplicitArray().map(
+        (item) => item.asString(),
+      ),
+      fix: consumer.get('fix').asBoolean(false),
+      changed: consumer.get('changed').asStringOrVoid(),
+    };
+  },
+
+  async callback(req: MasterRequest, flags: Flags): Promise<void> {
     const {reporter} = req;
 
     if (req.query.requestFlags.review || flags.fix) {
       await req.assertCleanVSC();
+    }
+
+    let compilerOptionsPerFile: LinterOptions['compilerOptionsPerFile'] = {};
+    const {decisions} = flags;
+    if (decisions !== undefined) {
+      compilerOptionsPerFile = parseDecisionStrings(
+        decisions,
+        req.client.flags.cwd,
+        (description) => {
+          throw req.throwDiagnosticFlagError({
+            description,
+            target: {type: 'flag', key: 'decisions'},
+          });
+        },
+      );
     }
 
     const fixLocation = flags.fix === false
@@ -48,7 +85,8 @@ export default createMasterCommand<LintCommandFlags>({
     }
 
     const opts: LinterOptions = {
-      compilerOptionsPerFile: flags.compilerOptionsPerFile,
+      hasDecisions: flags.decisions.length > 0,
+      compilerOptionsPerFile,
       fixLocation,
       args,
     };

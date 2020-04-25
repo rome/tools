@@ -46,6 +46,8 @@ export default async function analyzeDependencies(
   }
 
   const context = new CompilerContext({
+    ref: req.ref,
+    sourceText: req.sourceText,
     ast,
     project,
     origin: {

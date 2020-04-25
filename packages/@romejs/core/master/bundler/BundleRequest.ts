@@ -158,7 +158,6 @@ export default class BundleRequest {
     }
 
     // Diagnostics would have already been added during the initial DependencyGraph.seed
-
     // We're doing the work of resolving everything again, maybe we should cache it?
     const resolvedImports: BundleCompileResolvedImports = mod.resolveImports().resolved;
 
