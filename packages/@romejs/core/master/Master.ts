@@ -113,7 +113,6 @@ async function validateRequestFlags(
   // Commands need to explicitly allow these flags
   validateAllowedRequestFlag(req, 'watch', masterCommand);
   validateAllowedRequestFlag(req, 'review', masterCommand);
-  validateAllowedRequestFlag(req, 'allowDirty', masterCommand);
 
   // Don't allow review in combination with other flags
   if (requestFlags.review) {

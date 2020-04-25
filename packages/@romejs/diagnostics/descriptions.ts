@@ -147,29 +147,6 @@ export const descriptions = createMessages(
         ],
       }),
 
-      DIRTY_VSC: (files: Array<string>) => ({
-        message: 'You have uncommitted files. This operation can modify files. For your safety we recommend committing before running this command.',
-        category: 'vsc/dirty',
-        advice: [
-          {
-            type: 'log',
-            category: 'info',
-            message: 'If you really want to do this then you can bypass this restriction with the <command>--allow-dirty</command> flag',
-          },
-          {
-            type: 'log',
-            category: 'warn',
-            message: 'These files are uncommitted',
-          },
-          {
-            type: 'list',
-            list: files.map(
-              (filename) => markup`<filelink target="${filename}" />`,
-            ),
-          },
-        ],
-      }),
-
       INCORRECT_ARG_COUNT: (excessive: boolean, message: string) => ({
         message: excessive ? 'Too many arguments' : 'Missing arguments',
         advice: [

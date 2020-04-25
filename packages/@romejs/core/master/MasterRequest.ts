@@ -265,26 +265,6 @@ export default class MasterRequest {
     );
   }
 
-  async assertCleanVSC() {
-    if (this.query.requestFlags.allowDirty) {
-      return;
-    }
-
-    const vsc = await this.maybeGetVCSClient();
-    if (vsc === undefined) {
-      return;
-    }
-
-    const files = await vsc.getUncommittedFiles();
-    if (files.length > 0) {
-      this.throwDiagnosticFlagError({
-        description: descriptions.FLAGS.DIRTY_VSC(files),
-        target: {type: 'command'},
-        showHelp: false,
-      });
-    }
-  }
-
   createDiagnosticsProcessor(
     opts: DiagnosticsProcessorOptions = {},
   ): DiagnosticsProcessor {

@@ -15,8 +15,6 @@ import {
 } from '@romejs/diagnostics';
 import {MasterQueryResponse} from '../common/bridges/MasterBridge';
 import {ClientRequestFlags} from '../common/types/client';
-import {localCommands} from './commands';
-import {masterCommands} from '../master/commands';
 import {Dict} from '@romejs/typescript-helpers';
 import {EMPTY_SUCCESS_RESPONSE} from '../master/MasterRequest';
 
@@ -143,17 +141,6 @@ async function check(
   const requestFlags: Partial<ClientRequestFlags> = {
     ...action.requestFlags,
   };
-
-  // If this command allows the allowDirty flag then set it
-  // The validation of the flag would have happened with the initial query
-  // Also pretty sure the presence of `commandDef === undefined` is an error
-  const commandDef = localCommands.get(action.command) || masterCommands.get(
-    action.command,
-  );
-  if (commandDef !== undefined && commandDef.allowRequestFlags !== undefined &&
-      commandDef.allowRequestFlags.includes('allowDirty')) {
-    requestFlags.allowDirty = true;
-  }
 
   // Execute action
   const actionRes = await client.query({

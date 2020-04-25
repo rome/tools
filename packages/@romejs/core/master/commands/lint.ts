@@ -23,7 +23,7 @@ type Flags = {
 export default createMasterCommand<Flags>({
   category: commandCategories.CODE_QUALITY,
   description: 'run lint against a set of files',
-  allowRequestFlags: ['watch', 'review', 'allowDirty'],
+  allowRequestFlags: ['watch', 'review'],
   usage: '',
   examples: [],
 
@@ -84,11 +84,6 @@ export default createMasterCommand<Flags>({
     };
 
     const linter = new Linter(req, opts);
-
-    if (linter.shouldSave()) {
-      await req.assertCleanVSC();
-    }
-
     await linter.run(req.query.requestFlags.watch);
   },
 });
