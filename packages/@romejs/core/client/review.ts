@@ -123,7 +123,9 @@ export default async function review(
       throw new Error();
     }
 
-    const requestFlags: Partial<ClientRequestFlags> = {};
+    const requestFlags: Partial<ClientRequestFlags> = {
+      ...action.requestFlags,
+    };
 
     // If this command allows the allowDirty flag then set it
     // The validation of the flag would have happened with the initial query
@@ -139,7 +141,7 @@ export default async function review(
     const res = await client.query({
       command: action.command,
       args: action.args,
-      commandFlags: action.flags,
+      commandFlags: action.commandFlags,
       requestFlags,
     }, 'master');
     if (res.type === 'ERROR' || res.type === 'INVALID_REQUEST') {

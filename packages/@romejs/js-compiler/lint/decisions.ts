@@ -107,7 +107,7 @@ export function buildLintDecisionAdviceAction({
     args: [filename],
     noun,
     instruction,
-    flags: {
+    commandFlags: {
       decision,
     },
   };

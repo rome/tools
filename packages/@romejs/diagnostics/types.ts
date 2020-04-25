@@ -12,6 +12,7 @@ import {Number0, Number1} from '@romejs/ob1';
 import {JSONPropertyValue} from '@romejs/codec-json';
 import {DiagnosticCategory} from './categories';
 import {Dict} from '@romejs/typescript-helpers';
+import {ClientRequestFlags} from '@romejs/core';
 
 export type DiagnosticFilter = {
   category?: DiagnosticCategory;
@@ -133,8 +134,9 @@ export type DiagnosticAdviceAction = {
   instruction: string;
   noun: string;
   command: string;
-  flags: Dict<boolean | string | Array<string>>;
-  args: Array<string>;
+  commandFlags?: Dict<boolean | string | Array<string>>;
+  requestFlags?: ClientRequestFlags;
+  args?: Array<string>;
 };
 
 export type DiagnosticAdviceCode = {

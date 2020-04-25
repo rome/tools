@@ -109,7 +109,10 @@ function printAction(
     programName: 'rome',
     commandName: item.command,
     args: item.args,
-    flags: item.flags,
+    flags: {
+      ...item.commandFlags,
+      ...item.requestFlags,
+    },
   }, {type: 'none'}).sourceText;
   opts.reporter.command(command);
   return DID_PRINT;
