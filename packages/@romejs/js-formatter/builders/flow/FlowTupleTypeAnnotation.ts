@@ -6,22 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {
-  AnyNode,
-  FlowTupleTypeAnnotation,
-  flowTupleTypeAnnotation,
-} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {FlowTupleTypeAnnotation} from '@romejs/js-ast';
+import {printCommaList} from '../utils';
 
 export default function FlowTupleTypeAnnotation(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowTupleTypeAnnotation.assert(node);
-
-  return [
-    operator('['),
-    builder.tokenizeCommaList(node.types, node),
-    operator(']'),
-  ];
+  node: FlowTupleTypeAnnotation,
+): Token {
+  return concat(['[', printCommaList(builder, node.types, node), ']']);
 }

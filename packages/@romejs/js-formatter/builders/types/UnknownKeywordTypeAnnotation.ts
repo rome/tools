@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UnknownKeywordTypeAnnotation} from '@romejs/js-ast';
-import {Tokens, word} from '../../tokens';
+import {Token} from '../../tokens';
 
-export default function UnknownKeywordTypeAnnotation(): Tokens {
-  return [word('unknown')];
+export default function UnknownKeywordTypeAnnotation(): Token {
+  return 'unknown';
 }

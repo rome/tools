@@ -6,17 +6,29 @@
  */
 
 import Builder from '../../Builder';
-import {AnyNode, variableDeclaration} from '@romejs/js-ast';
-import {space, word} from '@romejs/js-formatter/tokens';
+import {VariableDeclaration} from '@romejs/js-ast';
+import {Token, concat, group, indent, lineOrSpace, space} from '../../tokens';
 
-export default function VariableDeclaration(builder: Builder, node: AnyNode) {
-  node = variableDeclaration.assert(node);
+export default function VariableDeclaration(
+  builder: Builder,
+  node: VariableDeclaration,
+): Token {
+  const declarations = node.declarations.map((declaration) =>
+    builder.tokenize(declaration, node)
+  );
 
-  return [
-    word(node.kind),
-    space,
-    builder.tokenizeCommaList(node.declarations, node, {
-      indent: false,
-    }),
-  ];
+  return group(
+    concat([
+      node.kind,
+      space,
+      declarations.shift()!,
+      indent(
+        concat(
+          declarations.map((declaration) =>
+            concat([',', lineOrSpace, declaration])
+          ),
+        ),
+      ),
+    ]),
+  );
 }

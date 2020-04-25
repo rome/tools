@@ -6,21 +6,18 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat, operator} from '../../tokens';
-import {AnyNode, jsxAttribute} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {JSXAttribute} from '@romejs/js-ast';
 
-export default function JSXAttribute(builder: Builder, node: AnyNode): Tokens {
-  node = jsxAttribute.assert(node);
-
-  const tokens: Tokens = builder.tokenize(node.name, node);
+export default function JSXAttribute(
+  builder: Builder,
+  node: JSXAttribute,
+): Token {
+  const tokens: Array<Token> = [builder.tokenize(node.name, node)];
 
   if (node.value) {
-    return [
-      concat(tokens),
-      operator('='),
-      concat(builder.tokenize(node.value, node)),
-    ];
+    return concat([concat(tokens), '=', builder.tokenize(node.value, node)]);
   } else {
-    return tokens;
+    return concat(tokens);
   }
 }

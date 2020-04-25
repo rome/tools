@@ -6,28 +6,59 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat, indent, newline, operator} from '../../tokens';
-import {AnyNode, blockStatement} from '@romejs/js-ast';
+import {Token, concat, hardline, indent} from '../../tokens';
+import {AnyNode, BlockStatement} from '@romejs/js-ast';
 
-export default function BlockStatement(builder: Builder, node: AnyNode): Tokens {
-  node = blockStatement.assert(node);
+export default function BlockStatement(
+  builder: Builder,
+  node: BlockStatement,
+  parent: AnyNode,
+): Token {
+  const hasComments =
+    node.innerComments !== undefined && node.innerComments.length > 0;
+  const hasContents = node.body !== undefined && node.body.length > 0;
+  const hasDirectives =
+    node.directives !== undefined && node.directives.length > 0;
 
-  const tokens: Tokens = [
-    operator('{'),
-    indent(builder.tokenizeInnerComments(node)),
-  ];
-
-  const hasDirectives: boolean = Boolean(node.directives &&
-      node.directives.length >
-      0);
-
-  if (node.body.length > 0 || hasDirectives) {
-    tokens.push(newline, indent([
-      concat(builder.tokenizeStatementList(node.directives, node)),
-      // TODO newline here if hasDirectives
-      concat(builder.tokenizeStatementList(node.body, node)),
-    ]));
+  if (
+    !hasComments &&
+    !hasContents &&
+    !hasDirectives &&
+    (parent.type === 'ArrowFunctionExpression' ||
+    parent.type === 'ClassMethod' ||
+    parent.type === 'ClassPrivateMethod' ||
+    parent.type === 'DoWhileStatement' ||
+    parent.type === 'ForInStatement' ||
+    parent.type === 'ForOfStatement' ||
+    parent.type === 'ForStatement' ||
+    parent.type === 'FunctionDeclaration' ||
+    parent.type === 'FunctionExpression' ||
+    parent.type === 'ObjectMethod' ||
+    parent.type === 'SwitchStatement' ||
+    parent.type === 'WhileStatement')
+  ) {
+    return '{}';
   }
 
-  return [concat(tokens), operator('}')];
+  const tokens: Array<Token> = ['{'];
+
+  if (hasDirectives) {
+    for (const directive of node.directives!) {
+      tokens.push(indent(concat([hardline, builder.tokenize(directive, node)])));
+    }
+  }
+
+  if (hasContents) {
+    tokens.push(
+      indent(concat([hardline, builder.tokenizeStatementList(node.body, node)])),
+    );
+  }
+
+  if (hasComments) {
+    tokens.push(builder.tokenizeInnerComments(node, true));
+  }
+
+  tokens.push(hardline, '}');
+
+  return concat(tokens);
 }

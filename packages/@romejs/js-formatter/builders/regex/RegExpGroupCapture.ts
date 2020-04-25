@@ -6,26 +6,20 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat, verbatim} from '../../tokens';
-import {AnyNode, regExpGroupCapture} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {RegExpGroupCapture} from '@romejs/js-ast';
 
 export default function RegExpGroupCapture(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = regExpGroupCapture.assert(node);
-
-  const tokens: Tokens = [verbatim('(')];
+  node: RegExpGroupCapture,
+): Token {
+  const tokens: Array<Token> = ['('];
 
   if (node.name !== undefined) {
-    tokens.push(verbatim('?<'));
-    tokens.push(verbatim(node.name));
-    tokens.push(verbatim('>'));
+    tokens.push('?<');
+    tokens.push(node.name);
+    tokens.push('>');
   }
 
-  return [
-    concat(tokens),
-    concat(builder.tokenize(node.expression, node)),
-    verbatim(')'),
-  ];
+  return concat([concat(tokens), builder.tokenize(node.expression, node), ')']);
 }

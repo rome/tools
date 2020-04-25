@@ -6,42 +6,44 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat, verbatim} from '../../tokens';
-import {AnyNode, regExpGroupNonCapture} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {RegExpGroupNonCapture} from '@romejs/js-ast';
 
-export default function RegExpGroupNonCapture(builder: Builder, node: AnyNode) {
-  node = regExpGroupNonCapture.assert(node);
-
-  const tokens: Tokens = [verbatim('(?')];
+export default function RegExpGroupNonCapture(
+  builder: Builder,
+  node: RegExpGroupNonCapture,
+): Token {
+  const tokens: Array<Token> = ['(?'];
 
   switch (node.kind) {
     case 'positive-lookahead': {
-      tokens.push(verbatim('='));
+      tokens.push('=');
       break;
     }
 
     case 'negative-lookahead': {
-      tokens.push(verbatim('!'));
+      tokens.push('!');
       break;
     }
 
     case 'positive-lookbehind': {
-      tokens.push(verbatim('<!'));
+      tokens.push('<!');
       break;
     }
 
     case 'negative-lookbehind': {
-      tokens.push(verbatim('<='));
+      tokens.push('<=');
       break;
     }
 
-    default:
-      tokens.push(verbatim(':'));
+    default: {
+      tokens.push(':');
+      break;
+    }
   }
 
-  return [
-    concat(tokens),
-    concat(builder.tokenize(node.expression, node)),
-    verbatim(')'),
-  ];
+  tokens.push(builder.tokenize(node.expression, node));
+  tokens.push(')');
+
+  return concat(tokens);
 }

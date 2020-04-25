@@ -6,24 +6,18 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word} from '../../tokens';
-import {
-  AnyNode,
-  FlowDeclareOpaqueType,
-  flowDeclareOpaqueType,
-} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {AnyNode, FlowDeclareOpaqueType} from '@romejs/js-ast';
 import FlowOpaqueType from './FlowOpaqueType';
 
 export default function FlowDeclareOpaqueType(
   builder: Builder,
-  node: AnyNode,
+  node: FlowDeclareOpaqueType,
   parent: AnyNode,
-): Tokens {
-  node = flowDeclareOpaqueType.assert(node);
-
+): Token {
   if (parent.type === 'ExportLocalDeclaration') {
     return FlowOpaqueType(builder, node);
   } else {
-    return [word('declare'), space, ...FlowOpaqueType(builder, node)];
+    return concat(['declare', space, FlowOpaqueType(builder, node)]);
   }
 }

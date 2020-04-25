@@ -6,31 +6,35 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat, operator, space} from '../../tokens';
-import {AnyNode, classProperty} from '@romejs/js-ast';
+import {Token, concat, group, space} from '../../tokens';
+import {ClassProperty} from '@romejs/js-ast';
 
-export default function ClassProperty(builder: Builder, node: AnyNode): Tokens {
-  node = classProperty.assert(node);
-
+export default function ClassProperty(
+  builder: Builder,
+  node: ClassProperty,
+): Token {
   if (node.value === undefined && !builder.options.typeAnnotations) {
     // A ClassProperty with no value is a type annotation
-    return [];
+    return '';
   }
 
-  const tokens: Tokens = [
-    concat(builder.tokenize(node.meta, node)),
-    concat(builder.tokenize(node.key, node)),
-    concat(builder.tokenizeTypeColon(node.typeAnnotation, node)),
+  const tokens: Array<Token> = [
+    builder.tokenize(node.meta, node),
+    builder.tokenize(node.key, node),
   ];
+
+  if (builder.options.typeAnnotations && node.typeAnnotation) {
+    tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
+  }
 
   if (node.value) {
     tokens.push(space);
-    tokens.push(operator('='));
+    tokens.push('=');
     tokens.push(space);
-    tokens.push(concat(builder.tokenize(node.value, node)));
+    tokens.push(builder.tokenize(node.value, node));
   }
 
-  tokens.push(operator(';'));
+  tokens.push(';');
 
-  return tokens;
+  return group(concat(tokens));
 }

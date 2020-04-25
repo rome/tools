@@ -5,14 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {AnyNode, jsxReferenceIdentifier} from '@romejs/js-ast';
+import {Token} from '../../tokens';
 
-export default function JSXReferenceIdentifier(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = jsxReferenceIdentifier.assert(node);
+export default function JSXReferenceIdentifier(): Token {
   throw new Error('unimplemented');
 }

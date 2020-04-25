@@ -5,6 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {buildYieldAwaitBuilder} from '../utils';
+import Builder from '../../Builder';
+import {Token, concat, space} from '../../tokens';
+import {AwaitExpression} from '@romejs/js-ast';
 
-export default buildYieldAwaitBuilder('await');
+export default function AwaitExpression(
+  builder: Builder,
+  node: AwaitExpression,
+): Token {
+  return concat(['await', space, builder.tokenize(node.argument, node)]);
+}

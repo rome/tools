@@ -5,24 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, TSEnumMember, tsEnumMember} from '@romejs/js-ast';
+import {TSEnumMember} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator, space} from '../../tokens';
+import {Token, concat, space} from '../../tokens';
 
-export default function TSEnumMember(builder: Builder, node: AnyNode): Tokens {
-  node = tsEnumMember.assert(node);
-
-  let tokens: Tokens = builder.tokenize(node.id, node);
+export default function TSEnumMember(
+  builder: Builder,
+  node: TSEnumMember,
+): Token {
+  const tokens: Array<Token> = [builder.tokenize(node.id, node)];
 
   if (node.initializer) {
-    tokens = [
-      ...tokens,
-      space,
-      operator('='),
-      space,
-      ...builder.tokenize(node.initializer, node),
-    ];
+    tokens.push(space, '=', space, builder.tokenize(node.initializer, node));
   }
 
-  return [...tokens, operator(',')];
+  tokens.push(',');
+
+  return concat(tokens);
 }

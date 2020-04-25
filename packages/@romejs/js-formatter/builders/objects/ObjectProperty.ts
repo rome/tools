@@ -6,40 +6,55 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat, operator, space} from '../../tokens';
-import {AnyNode, AnyObjectPropertyKey, objectProperty} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {
+  AnyNode,
+  AnyObjectPropertyKey,
+  AssignmentObjectPatternProperty,
+  BindingObjectPatternProperty,
+  ObjectProperty,
+} from '@romejs/js-ast';
 
 function isShorthand(key: AnyObjectPropertyKey, value: AnyNode): boolean {
-  return key.type === 'StaticPropertyKey' && key.value.type === 'Identifier' &&
-      (value.type === 'ReferenceIdentifier' || value.type ===
-          'BindingIdentifier' ||
-        value.type === 'AssignmentIdentifier') &&
-    value.name === key.value.name;
+  return (
+    key.type === 'StaticPropertyKey' &&
+    key.value.type === 'Identifier' &&
+    (value.type === 'ReferenceIdentifier' ||
+    value.type === 'BindingIdentifier' ||
+    value.type === 'AssignmentIdentifier') &&
+    value.name === key.value.name
+  );
 }
 
-export default function ObjectProperty(builder: Builder, node: AnyNode): Tokens {
-  node = node.type === 'BindingObjectPatternProperty' || node.type ===
-    'AssignmentObjectPatternProperty' ? node : objectProperty.assert(node);
+export default function ObjectProperty(
+  builder: Builder,
+  node:
+    | ObjectProperty
+    | AssignmentObjectPatternProperty
+    | BindingObjectPatternProperty,
+): Token {
+  const tokens = [builder.tokenize(node.key, node)];
 
-  const tokens = builder.tokenize(node.key, node);
-
-  if ((node.value.type === 'BindingAssignmentPattern' || node.value.type ===
-      'AssignmentAssignmentPattern') && isShorthand(node.key, node.value.left)) {
-    return [
+  if (
+    (node.value.type === 'BindingAssignmentPattern' ||
+    node.value.type === 'AssignmentAssignmentPattern') &&
+    isShorthand(node.key, node.value.left)
+  ) {
+    return concat([
       concat(tokens),
       space,
-      operator('='),
+      '=',
       space,
-      concat(builder.tokenize(node.value.right, node.value)),
-    ];
+      builder.tokenize(node.value.right, node.value),
+    ]);
   } else if (!isShorthand(node.key, node.value)) {
-    return [
+    return concat([
       concat(tokens),
-      operator(':'),
+      ':',
       space,
-      concat(builder.tokenize(node.value, node)),
-    ];
+      builder.tokenize(node.value, node),
+    ]);
   } else {
-    return tokens;
+    return concat(tokens);
   }
 }

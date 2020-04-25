@@ -6,13 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat} from '../../tokens';
-import {AnyNode, regExpLiteral} from '@romejs/js-ast';
-import {operator} from '@romejs/js-formatter/tokens';
+import {Token, concat} from '../../tokens';
+import {RegExpLiteral} from '@romejs/js-ast';
 
-export default function RegExpLiteral(builder: Builder, node: AnyNode): Tokens {
-  node = regExpLiteral.assert(node);
-
+export default function RegExpLiteral(
+  builder: Builder,
+  node: RegExpLiteral,
+): Token {
   const flags: Array<string> = [];
 
   if (node.global === true) {
@@ -39,9 +39,10 @@ export default function RegExpLiteral(builder: Builder, node: AnyNode): Tokens {
     flags.push('u');
   }
 
-  return [
-    operator('/'),
-    concat(builder.tokenize(node.expression, node)),
-    operator(`/${flags.join('')}`),
-  ];
+  return concat([
+    '/',
+    builder.tokenize(node.expression, node),
+    '/',
+    flags.join(''),
+  ]);
 }

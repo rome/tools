@@ -6,18 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {
-  AnyNode,
-  FlowObjectTypeSpreadProperty,
-  flowObjectTypeSpreadProperty,
-} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {FlowObjectTypeSpreadProperty} from '@romejs/js-ast';
 
 export default function FlowObjectTypeSpreadProperty(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowObjectTypeSpreadProperty.assert(node);
-
-  return [operator('...'), ...builder.tokenize(node.argument, node)];
+  node: FlowObjectTypeSpreadProperty,
+): Token {
+  return concat(['...', builder.tokenize(node.argument, node)]);
 }

@@ -6,18 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  AnyNode,
-  AssignmentArrayPattern,
-  assignmentArrayPattern,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {AssignmentArrayPattern} from '@romejs/js-ast';
 import ArrayExpression from '../expressions/ArrayExpression';
 
 export default function AssignmentArrayPattern(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = assignmentArrayPattern.assert(node);
+  node: AssignmentArrayPattern,
+): Token {
   return ArrayExpression(builder, node);
 }

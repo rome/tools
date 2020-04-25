@@ -5,16 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, TSTypeOperator, tsTypeOperator} from '@romejs/js-ast';
+import {TSTypeOperator} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator, space} from '../../tokens';
+import {Token, concat, space} from '../../tokens';
 
-export default function TSTypeOperator(builder: Builder, node: AnyNode): Tokens {
-  node = tsTypeOperator.assert(node);
-
-  return [
-    operator(node.operator),
+export default function TSTypeOperator(
+  builder: Builder,
+  node: TSTypeOperator,
+): Token {
+  return concat([
+    node.operator,
     space,
-    ...builder.tokenize(node.typeAnnotation, node),
-  ];
+    builder.tokenize(node.typeAnnotation, node),
+  ]);
 }

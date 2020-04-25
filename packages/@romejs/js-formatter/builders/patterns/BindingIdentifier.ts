@@ -6,24 +6,22 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat} from '../../tokens';
-import {AnyNode, bindingIdentifier} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {BindingIdentifier} from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
 import {printPatternMeta} from '../utils';
 
 export default function BindingIdentifier(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = bindingIdentifier.assert(node);
-
+  node: BindingIdentifier,
+): Token {
   if (node.name[0] === '*') {
     // Internal name
-    return [];
+    return '';
   }
 
-  return [
-    concat(Identifier(builder, node)),
-    concat(printPatternMeta(builder, node, node.meta)),
-  ];
+  return concat([
+    Identifier(builder, node),
+    printPatternMeta(builder, node, node.meta),
+  ]);
 }

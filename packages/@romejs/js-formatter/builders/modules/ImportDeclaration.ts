@@ -5,91 +5,87 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {ExportExternalDeclaration, ImportDeclaration} from '@romejs/js-ast';
 import Builder from '../../Builder';
 import {
-  Tokens,
+  Token,
   concat,
-  linkedGroups,
-  operator,
+  group,
+  ifBreak,
+  indent,
+  join,
+  lineOrSpace,
+  softline,
   space,
-  word,
 } from '../../tokens';
-import {
-  AnyNode,
-  ExportExternalDeclaration,
-  ImportDeclaration,
-  importDeclaration,
-} from '@romejs/js-ast';
 
 export default function ImportDeclaration(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = importDeclaration.assert(node);
-
-  const tokens: Tokens = [word('import'), space];
+  node: ImportDeclaration,
+): Token {
+  const tokens: Array<Token> = ['import', space];
 
   if (node.importKind === 'type' || node.importKind === 'typeof') {
-    tokens.push(word(node.importKind));
+    tokens.push(node.importKind);
     tokens.push(space);
   }
 
   const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
 
-  if (namedSpecifiers.length > 0 || namespaceSpecifier !== undefined ||
-        defaultSpecifier !==
-        undefined) {
-    tokens.push(
-      concat(printModuleSpecifiers(builder, node)),
-      space,
-      word('from'),
-      space,
-    );
+  if (
+    namedSpecifiers.length > 0 ||
+    namespaceSpecifier !== undefined ||
+    defaultSpecifier !== undefined
+  ) {
+    tokens.push(printModuleSpecifiers(builder, node), space, 'from', space);
   }
 
-  return [
-    linkedGroups([
-      concat(tokens),
-      concat(builder.tokenize(node.source, node)),
-      operator(';'),
-    ]),
-  ];
+  tokens.push(builder.tokenize(node.source, node), ';');
+
+  return group(concat(tokens));
 }
 
 export function printModuleSpecifiers(
   builder: Builder,
   node: ImportDeclaration | ExportExternalDeclaration,
-): Tokens {
+): Token {
   const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
 
-  let tokens: Tokens = [];
+  const groups: Array<Token> = [];
 
   if (defaultSpecifier !== undefined) {
-    tokens = builder.tokenize(node.defaultSpecifier, node);
-
-    if (namedSpecifiers.length > 0 || namespaceSpecifier !== undefined) {
-      tokens.push(operator(','), space);
-    }
+    groups.push(builder.tokenize(node.defaultSpecifier, node));
   }
 
   if (namespaceSpecifier !== undefined) {
-    tokens.push(concat(builder.tokenize(namespaceSpecifier, node)));
+    groups.push(builder.tokenize(node.namespaceSpecifier, node));
+  }
 
-    if (namedSpecifiers.length > 0) {
-      tokens.push(operator(','), space);
+  if (namedSpecifiers.length > 0) {
+    const specifiers: Array<Token> = [];
+
+    for (const specifier of namedSpecifiers) {
+      specifiers.push(builder.tokenize(specifier, node));
+    }
+
+    if (specifiers.length === 1) {
+      // Do not create insert softline tokens when there is a single specifier
+      // in order to keep the braces on the same line.
+      groups.push(concat(['{', specifiers[0], '}']));
+    } else {
+      groups.push(
+        concat([
+          '{',
+          indent(
+            concat([softline, join(concat([',', lineOrSpace]), specifiers)]),
+          ),
+          ifBreak(','),
+          softline,
+          '}',
+        ]),
+      );
     }
   }
 
-  if (namedSpecifiers.length === 0) {
-    return tokens;
-  } else {
-    return [
-      concat(tokens),
-      operator('{'),
-      builder.tokenizeCommaList(namedSpecifiers, node, {
-        trailing: true,
-      }),
-      operator('}'),
-    ];
-  }
+  return join(concat([',', space]), groups);
 }

@@ -6,22 +6,19 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
+import {Token, concat} from '../../tokens';
 import {
-  AnyNode,
+  FlowClassImplements,
+  FlowGenericTypeAnnotation,
   FlowInterfaceExtends,
-  flowInterfaceExtends,
 } from '@romejs/js-ast';
 
 export default function FlowInterfaceExtends(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = node.type === 'FlowGenericTypeAnnotation' || node.type ===
-    'FlowClassImplements' ? node : flowInterfaceExtends.assert(node);
-
-  return [
-    ...builder.tokenize(node.id, node),
-    ...builder.tokenize(node.typeParameters, node),
-  ];
+  node: FlowInterfaceExtends | FlowGenericTypeAnnotation | FlowClassImplements,
+): Token {
+  return concat([
+    builder.tokenize(node.id, node),
+    builder.tokenize(node.typeParameters, node),
+  ]);
 }

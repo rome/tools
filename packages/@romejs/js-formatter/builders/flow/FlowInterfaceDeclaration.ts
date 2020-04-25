@@ -6,52 +6,47 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word} from '../../tokens';
+import {Token, concat, space} from '../../tokens';
 import {
-  AnyNode,
+  FlowDeclareClass,
+  FlowDeclareInterface,
   FlowInterfaceDeclaration,
-  flowInterfaceDeclaration,
 } from '@romejs/js-ast';
+import {printCommaList} from '../utils';
 
 export default function FlowInterfaceDeclaration(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = node.type === 'FlowDeclareInterface'
-    ? node
-    : flowInterfaceDeclaration.assert(node);
-
-  return [word('interface'), space, ..._interfaceish(builder, node)];
+  node: FlowDeclareInterface | FlowInterfaceDeclaration,
+): Token {
+  return concat(['interface', space, _interfaceish(builder, node)]);
 }
 
-export function _interfaceish(builder: Builder, node: AnyNode): Tokens {
-  node = node.type === 'FlowDeclareInterface' || node.type ===
-    'FlowDeclareClass' ? node : flowInterfaceDeclaration.assert(node);
-
-  let tokens: Tokens = [
-    ...builder.tokenize(node.id, node),
-    ...builder.tokenize(node.typeParameters, node),
+export function _interfaceish(
+  builder: Builder,
+  node: FlowDeclareInterface | FlowDeclareClass | FlowInterfaceDeclaration,
+): Token {
+  let tokens: Array<Token> = [
+    builder.tokenize(node.id, node),
+    builder.tokenize(node.typeParameters, node),
   ];
 
   if (node.extends.length > 0) {
-    tokens = [
-      ...tokens,
+    tokens.push(
       space,
-      word('extends'),
+      'extends',
       space,
-      builder.tokenizeCommaList(node.extends, node),
-    ];
+      printCommaList(builder, node.extends, node),
+    );
   }
 
   if (node.mixins.length > 0) {
-    tokens = [
-      ...tokens,
+    tokens.push(
       space,
-      word('mixins'),
+      'mixins',
       space,
-      builder.tokenizeCommaList(node.mixins, node),
-    ];
+      printCommaList(builder, node.mixins, node),
+    );
   }
 
-  return [...tokens, space, ...builder.tokenize(node.body, node)];
+  return concat([concat(tokens), space, builder.tokenize(node.body, node)]);
 }

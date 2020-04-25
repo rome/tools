@@ -5,37 +5,53 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {ForStatement} from '@romejs/js-ast';
 import Builder from '../../Builder';
-import {Tokens, concat, operator, space, word} from '../../tokens';
-import {AnyNode, forStatement} from '@romejs/js-ast';
+import {
+  Token,
+  concat,
+  group,
+  indent,
+  lineOrSpace,
+  softline,
+  space,
+} from '../../tokens';
+import {printClause} from '../utils';
 
-export default function ForStatement(builder: Builder, node: AnyNode): Tokens {
-  node = forStatement.assert(node);
+export default function ForStatement(
+  builder: Builder,
+  node: ForStatement,
+): Token {
+  const body = printClause(builder, node.body, node);
 
-  builder.inForStatementInitCounter++;
-  const tokens: Tokens = [
-    word('for'),
-    space,
-    operator('('),
-    concat(builder.tokenize(node.init, node)),
-    operator(';'),
-  ];
-  builder.inForStatementInitCounter--;
-
-  if (node.test) {
-    tokens.push(space, concat(builder.tokenize(node.test, node)));
+  if (!node.init && !node.test && !node.update) {
+    return group(concat(['for', space, '(;;)', body]));
   }
 
-  tokens.push(operator(';'));
-
-  if (node.update) {
-    tokens.push(space, concat(builder.tokenize(node.update, node)));
-  }
-
-  return [
-    concat(tokens),
-    operator(')'),
-    space,
-    concat(builder.tokenize(node.body, node)),
-  ];
+  return group(
+    concat([
+      'for',
+      space,
+      '(',
+      group(
+        concat([
+          indent(
+            concat([
+              softline,
+              builder.tokenize(node.init, node),
+              ';',
+              lineOrSpace,
+              builder.tokenize(node.test, node),
+              ';',
+              lineOrSpace,
+              builder.tokenize(node.update, node),
+            ]),
+          ),
+          softline,
+        ]),
+      ),
+      ')',
+      body,
+    ]),
+  );
 }

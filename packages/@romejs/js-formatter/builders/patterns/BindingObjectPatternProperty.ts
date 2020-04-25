@@ -6,14 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {AnyNode, bindingObjectPatternProperty} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {BindingObjectPatternProperty} from '@romejs/js-ast';
 import ObjectProperty from '../objects/ObjectProperty';
 
 export default function BindingObjectPatternProperty(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = bindingObjectPatternProperty.assert(node);
+  node: BindingObjectPatternProperty,
+): Token {
   return ObjectProperty(builder, node);
 }

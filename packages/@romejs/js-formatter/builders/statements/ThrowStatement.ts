@@ -5,6 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {buildLabelStatementBuilder} from '../utils';
+import {buildThrowAndReturnStatementBuilder} from '../utils';
 
-export default buildLabelStatementBuilder('throw');
+export default buildThrowAndReturnStatementBuilder('throw');

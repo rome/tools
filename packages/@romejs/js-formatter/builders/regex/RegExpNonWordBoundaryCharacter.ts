@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Tokens, verbatim} from '../../tokens';
+import {Token} from '../../tokens';
 
-export default function RegExpNonWordBoundaryCharacter(): Tokens {
-  return [verbatim('\\B')];
+export default function RegExpNonWordBoundaryCharacter(): Token {
+  return '\\B';
 }

@@ -6,21 +6,24 @@
  */
 
 import Builder from '../../Builder';
-import {AnyNode, program} from '@romejs/js-ast';
-import {Tokens, concat, newline} from '@romejs/js-formatter/tokens';
+import {Program} from '@romejs/js-ast';
+import {Token, concat, hardline} from '../../tokens';
 
-export default function Program(builder: Builder, node: AnyNode): Tokens {
-  node = program.assert(node);
-
-  const tokens: Tokens = builder.tokenizeStatementList(node.directives, node);
+export default function Program(builder: Builder, node: Program): Token {
+  const tokens: Array<Token> = [
+    builder.tokenizeStatementList(node.directives, node),
+  ];
 
   if (node.directives && node.directives.length) {
-    tokens.push(newline);
+    tokens.push(hardline);
   }
 
-  return [
-    concat(tokens),
-    concat(builder.tokenizeInnerComments(node)),
-    concat(builder.tokenizeStatementList(node.body, node)),
-  ];
+  tokens.push(
+    builder.tokenizeInnerComments(node, false),
+    builder.tokenizeStatementList(node.body, node),
+  );
+
+  tokens.push(hardline);
+
+  return concat(tokens);
 }

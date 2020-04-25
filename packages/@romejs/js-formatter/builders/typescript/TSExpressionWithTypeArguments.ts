@@ -5,22 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  AnyNode,
-  TSExpressionWithTypeArguments,
-  tsExpressionWithTypeArguments,
-} from '@romejs/js-ast';
+import {TSExpressionWithTypeArguments} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens} from '../../tokens';
+import {Token, concat} from '../../tokens';
 
 export default function TSExpressionWithTypeArguments(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsExpressionWithTypeArguments.assert(node);
-
-  return [
-    ...builder.tokenize(node.expression, node),
-    ...builder.tokenize(node.typeParameters, node),
-  ];
+  node: TSExpressionWithTypeArguments,
+): Token {
+  return concat([
+    builder.tokenize(node.expression, node),
+    builder.tokenize(node.typeParameters, node),
+  ]);
 }

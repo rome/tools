@@ -6,17 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, number} from '../../tokens';
-import {
-  AnyNode,
-  NumericLiteralTypeAnnotation,
-  numericLiteralTypeAnnotation,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {NumericLiteralTypeAnnotation} from '@romejs/js-ast';
 
 export default function NumericLiteralTypeAnnotation(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = numericLiteralTypeAnnotation.assert(node);
-  return [number(String(node.value))];
+  node: NumericLiteralTypeAnnotation,
+): Token {
+  return String(node.value);
 }

@@ -6,14 +6,14 @@
  */
 
 import Builder from '../../Builder';
-import {concat, operator} from '../../tokens';
-import {AnyNode} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {AnyNode, Directive} from '@romejs/js-ast';
 import StringLiteral from '../literals/StringLiteral';
 
 export default function Directive(
   builder: Builder,
-  node: AnyNode,
+  node: Directive,
   parent: AnyNode,
-) {
-  return [concat(StringLiteral(builder, node, parent)), operator(';')];
+): Token {
+  return concat([StringLiteral(builder, node, parent), ';']);
 }
