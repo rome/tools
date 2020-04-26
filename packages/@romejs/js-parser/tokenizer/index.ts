@@ -1038,7 +1038,7 @@ export function readRegexp(parser: JSParser): void {
   const start = parser.state.index;
   let escaped;
   let inClass;
-  for (;;) {
+  while (true) {
     if (parser.state.index >= parser.length) {
       parser.addDiagnostic({
         end: parser.getPositionFromIndex(parser.state.index),

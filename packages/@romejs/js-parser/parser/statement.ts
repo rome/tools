@@ -1300,7 +1300,7 @@ export function parseVar(
 ): Array<VariableDeclarator> {
   const declarations: Array<VariableDeclarator> = [];
 
-  for (;;) {
+  while (true) {
     const start = parser.getPosition();
     const id = parseVarHead(parser, start);
 

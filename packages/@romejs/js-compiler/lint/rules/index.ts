@@ -41,6 +41,7 @@ import noUnsafeFinally from './noUnsafeFinally';
 import noVar from './noVar';
 import preferFunctionDeclarations from './preferFunctionDeclarations';
 import preferTemplate from './preferTemplate';
+import preferWhile from './preferWhile';
 import restrictedGlobals from './restrictedGlobals';
 import singleVarDeclarator from './singleVarDeclarator';
 import sortImportExportSpecifiers from './sortImportExportSpecifiers';
@@ -86,6 +87,7 @@ export const lintTransforms = [
   noVar,
   preferFunctionDeclarations,
   preferTemplate,
+  preferWhile,
   restrictedGlobals,
   singleVarDeclarator,
   sortImportExportSpecifiers,

@@ -316,6 +316,10 @@ export const descriptions = createMessages({
       category: 'lint/preferTemplate',
       message: 'Template literals are preferred over string concatenation',
     },
+    PREFER_WHILE: {
+      category: 'lint/preferWhile',
+      message: 'A while loop should be used over a for loop',
+    },
     UNSAFE_NEGATION: {
       category: 'lint/unsafeNegation',
       message: 'Unsafe usage of negation operator in left side of binary expression',
