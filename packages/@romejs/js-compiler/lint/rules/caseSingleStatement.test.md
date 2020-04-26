@@ -33,7 +33,8 @@ switch (foo) {
 
 ```
 switch (foo) {
-  case true: {}
+  case true: {
+  }
 }
 
 ```

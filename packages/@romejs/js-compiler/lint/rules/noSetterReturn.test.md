@@ -126,7 +126,6 @@ class p {
     }
   }
 }
-;
 console.log(p);
 
 ```
