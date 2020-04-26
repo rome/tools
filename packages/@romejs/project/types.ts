@@ -87,7 +87,9 @@ export type ProjectConfigTarget = {
 // This is a project config that contains only things that can be JSON serializable
 // This is used to transport and reserialize projects in workers
 export type ProjectConfigJSON = ProjectConfigJSONObjectReducer<ProjectConfigBase> & {
-  [ObjectKey in keyof ProjectConfigObjects]: ProjectConfigJSONPropertyReducer<ProjectConfigObjects[ObjectKey]>
+  [ObjectKey in keyof ProjectConfigObjects]: ProjectConfigJSONPropertyReducer<
+    ProjectConfigObjects[ObjectKey]
+  >
 };
 
 // Weird way to get the value type from a map
@@ -100,17 +102,19 @@ type MapValue<T extends Map<string, any>> = NonNullable<ReturnType<T['get']>>;
 type ProjectConfigJSONPropertyReducer<Type> = Type extends AbsoluteFilePath
   ? string
   : Type extends Array<AbsoluteFilePath>
-      ? Array<string>
-      : Type extends AbsoluteFilePathSet
-          ? Array<string> // rome-suppress-next-line lint/noExplicitAny
-          : Type extends Map<string, any>
-              ? Dict<MapValue<Type>> // rome-suppress-next-line lint/noExplicitAny
-              : Type extends Dict<any>
-                  ? ProjectConfigJSONObjectReducer<Type>
-                  : Type;
+    ? Array<string>
+    : Type extends AbsoluteFilePathSet
+      ? Array<string> // rome-suppress-next-line lint/noExplicitAny
+      : Type extends Map<string, any>
+        ? Dict<MapValue<Type>> // rome-suppress-next-line lint/noExplicitAny
+        : Type extends Dict<any>
+          ? ProjectConfigJSONObjectReducer<Type>
+          : Type;
 
 type ProjectConfigJSONObjectReducer<Object> = {
-  [PropertyKey in keyof Object]: ProjectConfigJSONPropertyReducer<Object[PropertyKey]>
+  [PropertyKey in keyof Object]: ProjectConfigJSONPropertyReducer<
+    Object[PropertyKey]
+  >
 };
 
 // Base of a project config without any objects
@@ -122,7 +126,9 @@ type ProjectConfigBase = {
 
 // Data structure we pass around when normalizing and merging project configs
 export type PartialProjectConfig = Partial<ProjectConfigBase> & {
-  [Key in keyof ProjectConfigObjects]: PartialProjectValue<ProjectConfigObjects[Key]>
+  [Key in keyof ProjectConfigObjects]: PartialProjectValue<
+    ProjectConfigObjects[Key]
+  >
 };
 
 // rome-suppress-next-line lint/noExplicitAny

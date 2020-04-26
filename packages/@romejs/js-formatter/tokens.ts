@@ -29,6 +29,7 @@ export type IndentToken = {
 export type GroupToken = {
   type: 'Group';
   contents: Token;
+  shouldBreak: boolean;
 };
 
 export type CommentToken = {
@@ -84,10 +85,11 @@ export const space: SpaceToken = {
   type: 'Space',
 };
 
-export function group(contents: Token): GroupToken {
+export function group(contents: Token, shouldBreak: boolean = false): GroupToken {
   return {
     type: 'Group',
     contents,
+    shouldBreak,
   };
 }
 
