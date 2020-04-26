@@ -559,6 +559,10 @@ export default class TestAPI implements TestHelper {
       formatted = prettyFormat(expected);
     }
 
+    if (entryName.toLocaleLowerCase().includes('javascript')) {
+      language = 'javascript';
+    }
+
     let snapshotPath = undefined;
     if (optionalFilename !== undefined) {
       optionalFilename = this._normalizeSnapshotFilename(optionalFilename);
