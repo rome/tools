@@ -7,13 +7,13 @@
 
 import {TSMappedType} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Token, concat, space} from '../../tokens';
+import {Token, concat, group, indent, softline, space} from '../../tokens';
 
 export default function TSMappedType(
   builder: Builder,
   node: TSMappedType,
 ): Token {
-  const tokens: Array<Token> = ['{', space];
+  const tokens: Array<Token> = [];
 
   if (node.readonly) {
     tokens.push(tokenIfPlusMinus(builder, node.readonly), 'readonly', space);
@@ -38,15 +38,18 @@ export default function TSMappedType(
     tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
   }
 
-  tokens.push(space, '}');
-
-  return concat(tokens);
+  return group(
+    concat(['{', indent(concat([softline, concat(tokens)])), softline, '}']),
+  );
 }
 
 function tokenIfPlusMinus(builder: Builder, token: string | true): Token {
-  if (token !== true) {
-    return token;
-  } else {
-    return '';
+  switch (token) {
+    case '+':
+    case '-':
+      return token;
+
+    default:
+      return '';
   }
 }

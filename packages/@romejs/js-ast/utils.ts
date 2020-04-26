@@ -22,16 +22,15 @@ type JustNodeKeysProp<K, V> = V extends
   ? K
   : never;
 
-type JustNodeKeys<T> = ExcludeCoreNodeKeys<{ [K in keyof T]: JustNodeKeysProp<
-  K,
-  NonNullable<T[K]>
-> }[keyof T]>;
+type JustNodeKeys<T> = ExcludeCoreNodeKeys<
+  {[K in keyof T]: JustNodeKeysProp<K, NonNullable<T[K]>>}[keyof T]
+>;
 
 type ExcludeCoreNodeKeys<T> = Exclude<T, keyof JSNodeBase>;
 
-type VisitorKeys<T> = { [K in JustNodeKeys<T>]: true };
+type VisitorKeys<T> = {[K in JustNodeKeys<T>]: true};
 
-type BindingKeys<T> = { [K in JustNodeKeys<T>]?: true };
+type BindingKeys<T> = {[K in JustNodeKeys<T>]?: true};
 
 type CreateBuilderOptions<Node> = {
   bindingKeys: BindingKeys<Node>;
