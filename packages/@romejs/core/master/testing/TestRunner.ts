@@ -454,7 +454,7 @@ export default class TestRunner {
             {
               type: 'log',
               category: 'info',
-              message: `You can find the specific test that caused this by running <command>rome test --sync-tests</command>`,
+              text: `You can find the specific test that caused this by running <command>rome test --sync-tests</command>`,
             },
           ],
         },

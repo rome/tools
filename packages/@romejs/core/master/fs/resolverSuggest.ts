@@ -70,13 +70,13 @@ export default function resolverSuggest(
           advice.push({
             type: 'log',
             category: 'info',
-            message: `This successfully resolves as an implicit index file. Trying adding <emphasis>/index${nonStrictResolved.path.getExtensions()}</emphasis> to the end of the import source`,
+            text: `This successfully resolves as an implicit index file. Trying adding <emphasis>/index${nonStrictResolved.path.getExtensions()}</emphasis> to the end of the import source`,
           });
         } else if (nonStrictResolved.types.includes('implicitExtension')) {
           advice.push({
             type: 'log',
             category: 'info',
-            message: `This successfully resolves as an implicit extension. Try adding the extension <emphasis>${nonStrictResolved.path.getExtensions()}</emphasis>`,
+            text: `This successfully resolves as an implicit extension. Try adding the extension <emphasis>${nonStrictResolved.path.getExtensions()}</emphasis>`,
           });
         }
       }
@@ -108,13 +108,13 @@ export default function resolverSuggest(
         advice.push({
           type: 'log',
           category: 'info',
-          message: 'No platform was specified but we found modules for the following platforms',
+          text: 'No platform was specified but we found modules for the following platforms',
         });
       } else {
         advice.push({
           type: 'log',
           category: 'info',
-          message: markup`No module found for the platform <emphasis>${query.platform}</emphasis> but we found these others`,
+          text: markup`No module found for the platform <emphasis>${query.platform}</emphasis> but we found these others`,
         });
       }
 
@@ -135,7 +135,7 @@ export default function resolverSuggest(
       advice.push({
         type: 'log',
         category: 'info',
-        message: `Found while resolving <emphasis>${query.source}</emphasis> from <filelink emphasis target="${query.origin}" />`,
+        text: `Found while resolving <emphasis>${query.source}</emphasis> from <filelink emphasis target="${query.origin}" />`,
       });
 
       const origPointer = origQuerySource.location;
@@ -208,7 +208,7 @@ export default function resolverSuggest(
       advice.push({
         type: 'log',
         category: 'warn',
-        message: "You aren't in a Rome project",
+        text: "You aren't in a Rome project",
       });
     }
   }

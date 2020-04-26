@@ -158,7 +158,7 @@ export default class TestAPI implements TestHelper {
       advice.push({
         type: 'log',
         category: 'info',
-        message: `Both the received and expected values are visually identical`,
+        text: `Both the received and expected values are visually identical`,
       });
 
       advice.push({
@@ -170,14 +170,14 @@ export default class TestAPI implements TestHelper {
         advice.push({
           type: 'log',
           category: 'info',
-          message: `Try using t.${visualMethod} if you wanted a visual match`,
+          text: `Try using t.${visualMethod} if you wanted a visual match`,
         });
       }
     } else {
       advice.push({
         type: 'log',
         category: 'info',
-        message: `Expected to receive`,
+        text: `Expected to receive`,
       });
 
       advice.push({
@@ -188,7 +188,7 @@ export default class TestAPI implements TestHelper {
       advice.push({
         type: 'log',
         category: 'info',
-        message: `But got`,
+        text: `But got`,
       });
 
       advice.push({
@@ -199,7 +199,7 @@ export default class TestAPI implements TestHelper {
       advice.push({
         type: 'log',
         category: 'info',
-        message: 'Diff',
+        text: 'Diff',
       });
 
       advice.push({
@@ -294,7 +294,7 @@ export default class TestAPI implements TestHelper {
           {
             type: 'log',
             category: 'info',
-            message: `Received`,
+            text: `Received`,
           },
           {
             type: 'code',
@@ -314,7 +314,7 @@ export default class TestAPI implements TestHelper {
           {
             type: 'log',
             category: 'info',
-            message: `Received`,
+            text: `Received`,
           },
           {
             type: 'code',
@@ -334,7 +334,7 @@ export default class TestAPI implements TestHelper {
           {
             type: 'log',
             category: 'info',
-            message: `Received`,
+            text: `Received`,
           },
           {
             type: 'code',
@@ -354,7 +354,7 @@ export default class TestAPI implements TestHelper {
           {
             type: 'log',
             category: 'info',
-            message: `Received`,
+            text: `Received`,
           },
           {
             type: 'code',
@@ -604,14 +604,14 @@ export default class TestAPI implements TestHelper {
         advice.push({
           type: 'log',
           category: 'info',
-          message: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" />`,
+          text: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" />`,
         });
       }
 
       advice.push({
         type: 'log',
         category: 'info',
-        message: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
+        text: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
       });
 
       // Ignore the original t.snapshot call and caughtNamedSnapshot

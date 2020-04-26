@@ -351,7 +351,7 @@ export default class Consumer {
         advice.push({
           type: 'log',
           category: 'warn',
-          message: 'Our internal value has been modified since we read the original source',
+          text: 'Our internal value has been modified since we read the original source',
         });
       }
     } else {
@@ -377,7 +377,7 @@ export default class Consumer {
         advice.push({
           type: 'log',
           category: 'warn',
-          message: `This value was expected to be found at <emphasis>${this.getKeyPathString()}</emphasis> but was not in the original source`,
+          text: `This value was expected to be found at <emphasis>${this.getKeyPathString()}</emphasis> but was not in the original source`,
         });
       }
     }

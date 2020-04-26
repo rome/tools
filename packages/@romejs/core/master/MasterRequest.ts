@@ -691,7 +691,7 @@ export default class MasterRequest {
             advice.push({
               type: 'log',
               category: 'info',
-              message: 'The following files were ignored',
+              text: 'The following files were ignored',
             });
 
             advice.push({
@@ -719,7 +719,7 @@ export default class MasterRequest {
               advice.push({
                 type: 'log',
                 category: 'info',
-                message: 'Ignore patterns were defined here',
+                text: 'Ignore patterns were defined here',
               });
 
               advice.push({
@@ -816,7 +816,7 @@ export default class MasterRequest {
             {
               type: 'log',
               category: 'info',
-              message: markup`Error occurred while requesting ${method} for <filelink emphasis target="${ref.uid}" />`,
+              text: markup`Error occurred while requesting ${method} for <filelink emphasis target="${ref.uid}" />`,
             },
           ],
         });

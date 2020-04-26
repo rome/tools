@@ -454,13 +454,13 @@ export default class DiagnosticsPrinter extends Error {
         outdatedAdvice.push({
           type: 'log',
           category: 'warn',
-          message: 'This file has been changed since the diagnostic was produced and may be out of date',
+          text: 'This file has been changed since the diagnostic was produced and may be out of date',
         });
       } else {
         outdatedAdvice.push({
           type: 'log',
           category: 'warn',
-          message: 'This diagnostic may be out of date as it relies on the following files that have been changed since the diagnostic was generated',
+          text: 'This diagnostic may be out of date as it relies on the following files that have been changed since the diagnostic was generated',
         });
 
         outdatedAdvice.push({
@@ -516,7 +516,7 @@ export default class DiagnosticsPrinter extends Error {
       if (this.flags.verboseDiagnostics) {
         const {origins} = diag;
 
-        if (origins?.length > 0) {
+        if (origins !== undefined && origins.length > 0) {
           reporter.spacer();
           reporter.info('Why are you seeing this diagnostic?');
           reporter.forceSpacer();

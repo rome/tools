@@ -123,7 +123,7 @@ function convertDiagnosticsToLSP(
           );
           if (abs !== undefined) {
             relatedInformation.push({
-              message: markupToPlainText(item.message),
+              message: markupToPlainText(item.text),
               location: {
                 uri: `file://${abs.join()}`,
                 range: convertDiagnosticLocationToLSPRange(nextItem.location),

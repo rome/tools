@@ -49,7 +49,7 @@ function request(
               {
                 type: 'log',
                 category: 'info',
-                message: `<hyperlink target="${url}" /> returned a ${res.statusCode} status code`,
+                text: `<hyperlink target="${url}" /> returned a ${res.statusCode} status code`,
               },
             ],
           });
@@ -84,7 +84,7 @@ function request(
             {
               type: 'log',
               category: 'info',
-              message: `<hyperlink target="${url}" /> resulted in the error "${err.message}"`,
+              text: `<hyperlink target="${url}" /> resulted in the error "${err.message}"`,
             },
           ],
         });
@@ -411,7 +411,7 @@ export default class Resolver {
               {
                 type: 'log',
                 category: 'info',
-                message: `<emphasis>${protocol}</emphasis> is not a supported remote protocol`,
+                text: `<emphasis>${protocol}</emphasis> is not a supported remote protocol`,
               },
             ],
           };
@@ -862,7 +862,7 @@ export default class Resolver {
     }
 
     // Check the haste map
-    if ((project?.hasteMap).size > 0) {
+    if (project !== undefined && project.hasteMap.size > 0) {
       const hasteResolved = this.resolveHaste(
         query,
         project,

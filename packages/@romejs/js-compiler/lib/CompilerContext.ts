@@ -308,7 +308,7 @@ export default class CompilerContext {
       advice.push({
         type: 'log',
         category: 'info',
-        message: 'Recommended fix',
+        text: 'Recommended fix',
       });
 
       advice.push({
@@ -319,7 +319,7 @@ export default class CompilerContext {
         advice.push({
           type: 'log',
           category: 'error',
-          message: 'Unable to find target location',
+          text: 'Unable to find target location',
         });
       } else {
         advice.push(
@@ -363,7 +363,7 @@ export default class CompilerContext {
         advice.push({
           type: 'log',
           category: 'none',
-          message: `<emphasis>${titlePrefix}:</emphasis> ${suggestion.title}`,
+          text: `<emphasis>${titlePrefix}:</emphasis> ${suggestion.title}`,
         });
 
         advice.push({
@@ -377,14 +377,14 @@ export default class CompilerContext {
         advice.push({
           type: 'log',
           category: 'info',
-          message: suggestion.description,
+          text: suggestion.description,
         });
 
         if (loc === undefined) {
           advice.push({
             type: 'log',
             category: 'error',
-            message: 'Unable to find target location',
+            text: 'Unable to find target location',
           });
         } else {
           advice.push(

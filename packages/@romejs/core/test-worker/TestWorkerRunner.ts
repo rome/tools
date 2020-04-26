@@ -265,7 +265,7 @@ export default class TestWorkerRunner {
             {
               type: 'log',
               category: 'info',
-              message: `Error occured while running <emphasis>teardown</emphasis> for test <emphasis>${testName}</emphasis>`,
+              text: `Error occured while running <emphasis>teardown</emphasis> for test <emphasis>${testName}</emphasis>`,
             },
           ],
         },
@@ -417,7 +417,7 @@ export default class TestWorkerRunner {
             {
               type: 'log',
               category: 'info',
-              message: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
+              text: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
             },
             INTERNAL_ERROR_LOG_ADVICE,
           ],

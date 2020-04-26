@@ -165,14 +165,14 @@ export function deriveRootAdviceFromDiagnostic(
     advice.push({
       type: 'log',
       category: 'none',
-      message: header,
+      text: header,
     });
   }
 
   advice.push({
     type: 'log',
     category: 'error',
-    message: description.message.value,
+    text: description.message.value,
   });
 
   if (opts.skipFrame === false) {
@@ -186,7 +186,7 @@ export function deriveRootAdviceFromDiagnostic(
       advice.push({
         type: 'log',
         category: 'error',
-        message: location.marker,
+        text: location.marker,
       });
     }
   }
@@ -267,7 +267,7 @@ export function getErrorStackAdvice(
       advice.push({
         type: 'log',
         category: 'info',
-        message: title,
+        text: title,
       });
     }
 
@@ -281,7 +281,7 @@ export function getErrorStackAdvice(
     advice.push({
       type: 'log',
       category: 'error',
-      message: escapeMarkup(cleanStack),
+      text: escapeMarkup(cleanStack),
     });
   } else {
     const adviceFrames = frames.map((frame) => {

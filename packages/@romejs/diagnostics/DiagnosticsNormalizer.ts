@@ -111,7 +111,7 @@ export default class DiagnosticsNormalizer {
       case 'log':
         return {
           ...item,
-          message: this.normalizeMarkup(item.message),
+          text: this.normalizeMarkup(item.text),
         };
 
       case 'stacktrace':

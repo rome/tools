@@ -166,7 +166,7 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
     return {
       type: 'log',
       category: 'info',
-      message: 'Only difference is leading and trailing whitespace',
+      text: 'Only difference is leading and trailing whitespace',
     };
   }
 
@@ -175,7 +175,7 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
     return {
       type: 'log',
       category: 'info',
-      message: 'Identical except the received uses CRLF newlines, while the expected does not',
+      text: 'Identical except the received uses CRLF newlines, while the expected does not',
     };
   }
 
@@ -184,7 +184,7 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
     return {
       type: 'log',
       category: 'info',
-      message: 'Identical except the expected uses CRLF newlines, while the received does not',
+      text: 'Identical except the expected uses CRLF newlines, while the received does not',
     };
   }
 
@@ -459,7 +459,7 @@ function printLog(
   opts: AdvicePrintOptions,
 ): PrintAdviceResult {
   const {reporter} = opts;
-  const {message, category} = item;
+  const {text: message, category} = item;
 
   if (message !== undefined) {
     switch (category) {

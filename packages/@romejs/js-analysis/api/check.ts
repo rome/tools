@@ -81,7 +81,7 @@ function resolveGraph(hub: Hub): Diagnostics {
           advice.push({
             type: 'log',
             category: 'info',
-            message: marker,
+            text: marker,
           });
         } else if (originLoc !== undefined) {
           advice.push({
