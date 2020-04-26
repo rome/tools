@@ -1564,11 +1564,7 @@ function readEscapedChar(
         const codePos = ob1Dec(parser.state.index);
         const octalMatches = parser.input.substr(getIndex(parser) - 1, 3).match(
           /^[0-7]+/,
-        );
-
-        if (octalMatches == null) {
-          throw new Error('No octals found, impossible since we checked it');
-        }
+        )!;
 
         let octalStr = octalMatches[0];
         let octal = parseInt(octalStr, 8);

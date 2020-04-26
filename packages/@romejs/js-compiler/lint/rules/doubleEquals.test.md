@@ -73,13 +73,7 @@ null != foo;
 
   ℹ == is only allowed when comparing against null
 
-  Suggested fix #1: Use ===
-
-  + foo === bar
-
-  ℹ This may be unsafe if you are relying on type coercion
-
-  Suggested fix #1: Use ===
+  Suggested fix: Use ===
 
   + foo === bar
 

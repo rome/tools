@@ -170,10 +170,7 @@ export default class Bundler {
 
     // Could maybe do some of this in parallel?
     while (entries.length > 0) {
-      const entry = entries.shift();
-      if (entry === undefined) {
-        throw new Error('Impossible. We just checked.');
-      }
+      const entry = entries.shift()!;
 
       const promise = (async () => {
         const text = markup`<filelink target="${entry.join()}" />`;

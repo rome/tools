@@ -4,7 +4,7 @@
 
 ## `arrays > nested`
 
-### `Javascript Input`
+### `Input`
 
 ```javascript
 let a = [[]];
@@ -51,7 +51,7 @@ let o1 = [{ a, b }, { a, b, c }];
 
 ```
 
-### `Javascript Output`
+### `Output`
 
 ```javascript
 let a = [[]];

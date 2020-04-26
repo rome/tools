@@ -846,7 +846,9 @@ export default class MemoryFileSystem {
       }
 
       const manifest = this.getManifest(packagePath);
-      if (manifest !== undefined && manifest.raw.hasteCommonjs === true) {
+
+      // rome-suppress-next-line lint/camelCase
+      if ((manifest?.raw)?.haste_commonjs === true) {
         return false;
       }
     }
@@ -976,10 +978,7 @@ export default class MemoryFileSystem {
     const ignoresByProject: Map<ProjectDefinition, PathPatterns> = new Map();
 
     while (crawl.length > 0) {
-      const path = crawl.pop();
-      if (path === undefined) {
-        throw new Error('crawl.length already validated');
-      }
+      const path = crawl.pop()!;
 
       const project = this.master.projectManager.assertProjectExisting(path);
 

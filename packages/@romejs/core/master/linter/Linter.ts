@@ -77,12 +77,6 @@ function createDiagnosticsPrinter(
   const printer = request.createDiagnosticsPrinter(processor);
 
   printer.onBeforeFooterPrint((reporter, isError) => {
-    if (savedCount > 0) {
-      reporter.success(
-        `<number emphasis>${savedCount}</number> <grammarNumber plural="files" singular="file">${savedCount}</grammarNumber> updated`,
-      );
-    }
-
     if (isError) {
       let hasPendingFixes = false;
 
@@ -100,7 +94,15 @@ function createDiagnosticsPrinter(
         reporter.info('To choose fix suggestions run');
         reporter.command('rome lint --review');
       }
-    } else {
+    }
+
+    if (savedCount > 0) {
+      reporter.success(
+        `<number emphasis>${savedCount}</number> <grammarNumber plural="files" singular="file">${savedCount}</grammarNumber> updated`,
+      );
+    }
+
+    if (!isError) {
       if (totalCount === 0) {
         reporter.warn('No files linted');
       } else {
@@ -246,6 +248,7 @@ class LintRunner {
       validate: false,
       analyzeProgress: progress,
     });
+    progress.end();
 
     // Maintain a list of all the dependencies we revalidated
     const validatedDependencyPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
@@ -291,6 +294,8 @@ class LintRunner {
         validate: false,
         analyzeProgress: progress,
       });
+
+      progress.end();
     }
 
     // Validate connections

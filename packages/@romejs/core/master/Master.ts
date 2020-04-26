@@ -456,6 +456,32 @@ export default class Master {
       return await worker.bridge.profilingStop.call();
     });
 
+    // When enableWorkerLogs is called we setup subscriptions to the worker logs
+    // Logs are never transported from workers to the master unless there is a subscription
+    let subscribedWorkers = false;
+    bridge.enableWorkerLogs.subscribe(() => {
+      // enableWorkerLogs could be called twice in the case of `--logs --rage`. We'll only want to setup the subscriptions once
+      if (subscribedWorkers) {
+        return;
+      } else {
+        subscribedWorkers = true;
+      }
+
+      function onLog(chunk: string) {
+        bridge.log.call({origin: 'worker', chunk});
+      }
+
+      // Add on existing workers if there are any
+      for (const worker of this.workerManager.getWorkers()) {
+        bridge.attachEndSubscriptionRemoval(worker.bridge.log.subscribe(onLog));
+      }
+
+      // Listen for logs for any workers that start later
+      this.workerManager.workerStartEvent.subscribe((worker) => {
+        bridge.attachEndSubscriptionRemoval(worker.log.subscribe(onLog));
+      });
+    });
+
     await bridge.handshake();
 
     const client = await this.createClient(bridge);
@@ -573,32 +599,6 @@ export default class Master {
     };
 
     this.connectedClients.add(client);
-
-    // When enableWorkerLogs is called we setup subscriptions to the worker logs
-    // Logs are never transported from workers to the master unless there is a subscription
-    let subscribedWorkers = false;
-    bridge.enableWorkerLogs.subscribe(() => {
-      // enableWorkerLogs could be called twice in the case of `--logs --rage`. We'll only want to setup the subscriptions once
-      if (subscribedWorkers) {
-        return;
-      } else {
-        subscribedWorkers = true;
-      }
-
-      function onLog(chunk: string) {
-        bridge.log.call({origin: 'worker', chunk});
-      }
-
-      // Add on existing workers if there are any
-      for (const worker of this.workerManager.getWorkers()) {
-        bridge.attachEndSubscriptionRemoval(worker.bridge.log.subscribe(onLog));
-      }
-
-      // Listen for logs for any workers that start later
-      this.workerManager.workerStartEvent.subscribe((worker) => {
-        bridge.attachEndSubscriptionRemoval(worker.log.subscribe(onLog));
-      });
-    });
 
     bridge.updatedListenersEvent.subscribe((listeners) => {
       if (listeners.has('log')) {

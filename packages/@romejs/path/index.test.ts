@@ -58,7 +58,7 @@ for (let i = 0; i < relativeTests.length; i++) {
       t.addToAdvice({
         type: 'log',
         category: 'info',
-        message: 'Metadata',
+        text: 'Metadata',
       });
 
       const relative = createAbsoluteFilePath(absolute).relative(arg);

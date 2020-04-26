@@ -5,15 +5,53 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {JSONPropertyValue} from './types';
+
 export type AsyncFunc = () => undefined | Promise<void>;
 
 export type SyncThrower = () => void;
 
 export type ExpectedError = undefined | string | RegExp | Function;
 
+export type TestSnapshotOptions = {
+  filename?: string;
+  language?: string;
+};
+
+// These diagnostics are subsets of the official diagnostics
+// We can potentially normalize these and ensure backwards compatibility with the official diagnostics
+
+export type TestDiagnosticLogCategory = 'none' | 'info' | 'warn' | 'error';
+
+export type TestDiagnosticAdviceInspect = {
+  type: 'inspect';
+  data: JSONPropertyValue;
+};
+
+export type TestDiagnosticAdviceList = {
+  type: 'list';
+  list: Array<string>;
+};
+
+export type TestDiagnosticAdviceCode = {
+  type: 'code';
+  code: string;
+};
+
+export type TestDiagnosticAdviceLog = {
+  type: 'log';
+  category: TestDiagnosticLogCategory;
+  text: string;
+};
+
+export type TestDiagnosticAdviceItem =
+  | TestDiagnosticAdviceInspect
+  | TestDiagnosticAdviceCode
+  | TestDiagnosticAdviceLog
+  | TestDiagnosticAdviceList;
+
 export interface TestHelper {
-  // TODO this should be DiagnosticAdviceItem
-  addToAdvice(item: unknown): void;
+  addToAdvice(item: TestDiagnosticAdviceItem): void;
   clearAdvice(): void;
   onTeardown(callback: AsyncFunc): void;
   clearTimeout(): void;
@@ -45,15 +83,14 @@ export interface TestHelper {
   snapshot(
     expected: unknown,
     message?: string,
-    fileName?: string,
+    opts?: TestSnapshotOptions,
   ): Promise<string>;
   snapshotNamed(
     name: string,
     expected: unknown,
     message?: string,
-    filename?: string,
+    opts?: TestSnapshotOptions,
   ): Promise<string>;
-  getSnapshot(snapshotName: string): Promise<unknown>;
 }
 
 export type TestName = string | Array<string>;

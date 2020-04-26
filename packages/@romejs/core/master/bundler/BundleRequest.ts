@@ -161,7 +161,7 @@ export default class BundleRequest {
     const resolvedImports: BundleCompileResolvedImports = mod.resolveImports().resolved;
 
     let assetPath: undefined | string;
-    if (mod.handler !== undefined && mod.handler.isAsset) {
+    if (mod.handler?.isAsset) {
       const buffer = await readFile(mod.path);
 
       // Asset path in the form of: BASENAME-SHA1HASH.EXTENSIONS

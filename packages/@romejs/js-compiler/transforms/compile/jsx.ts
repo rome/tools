@@ -158,10 +158,7 @@ function buildOpeningElementAttributes(attribs: JSXElement['attributes']) {
   const objs: Array<AnyExpression> = [];
 
   while (attribs.length > 0) {
-    const prop = attribs.shift();
-    if (prop === undefined) {
-      throw new Error('Already validated length');
-    }
+    const prop = attribs.shift()!;
 
     if (prop.type === 'JSXSpreadAttribute') {
       _props = pushProps(_props, objs);

@@ -13,7 +13,6 @@ export type DiagnosticsPrinterFlags = {
   grep: string;
   fieri: boolean;
   inverseGrep: boolean;
-  focus: string;
   verboseDiagnostics: boolean;
   maxDiagnostics: number;
   showAllDiagnostics: boolean;

@@ -111,7 +111,7 @@ export type DiagnosticAdviceCommand = {
 export type DiagnosticAdviceLog = {
   type: 'log';
   category: DiagnosticLogCategory;
-  message: string;
+  text: string;
   compact?: boolean;
 };
 

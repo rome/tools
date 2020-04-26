@@ -205,11 +205,8 @@ export default class Bridge {
     }
 
     // Notify the other side of what we're currently subscribed to
-
     // We send over a list of all of our subscriptions every time
-
     // This is fine since we don't change subscriptions often and they aren't very large
-
     // If we have a lot of subscriptions, or are changing them a lot in the future then this could be optimized
     this.sendMessage({
       type: 'subscriptions',

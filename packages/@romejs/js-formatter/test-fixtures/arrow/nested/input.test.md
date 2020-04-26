@@ -4,7 +4,7 @@
 
 ## `arrow > nested`
 
-### `Javascript Input`
+### `Input`
 
 ```javascript
 Seq(typeDef.interface.groups).forEach(group =>
@@ -36,7 +36,7 @@ runtimeAgent.getProperties(
 );
 ```
 
-### `Javascript Output`
+### `Output`
 
 ```javascript
 Seq(typeDef.interface.groups).forEach((group) => Seq(group.members).forEach((member, memberName) => markdownDoc(member.doc, {typePath: typePath.concat(memberName.slice(1)), signatures: member.signatures})));

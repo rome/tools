@@ -62,13 +62,13 @@ export function buildSuggestionAdvice(
     advice.push({
       type: 'log',
       category: 'info',
-      message: markup`Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
+      text: markup`Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
     });
   } else {
     advice.push({
       type: 'log',
       category: 'info',
-      message: markup`Did you mean <emphasis>${topRatingFormatted}</emphasis>?`,
+      text: markup`Did you mean <emphasis>${topRatingFormatted}</emphasis>?`,
     });
 
     advice.push({
@@ -80,7 +80,7 @@ export function buildSuggestionAdvice(
       advice.push({
         type: 'log',
         category: 'info',
-        message: 'Or one of these?',
+        text: 'Or one of these?',
       });
 
       advice.push({
@@ -99,7 +99,7 @@ export function buildSuggestionAdvice(
     advice.push({
       type: 'log',
       category: 'warn',
-      message: 'This operation is case sensitive',
+      text: 'This operation is case sensitive',
     });
   }
 
@@ -130,7 +130,7 @@ export function buildDuplicateLocationAdvice(
       return {
         type: 'log',
         category: 'warn',
-        message: 'Unable to find location',
+        text: 'Unable to find location',
       };
     } else {
       return {
@@ -144,7 +144,7 @@ export function buildDuplicateLocationAdvice(
     {
       type: 'log',
       category: 'info',
-      message: 'Defined already here',
+      text: 'Defined already here',
     },
     ...locationAdvice,
   ];

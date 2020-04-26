@@ -103,9 +103,12 @@ export default class TestRunner {
     this.coverageCollector = new CoverageCollector();
 
     this.progress = {
-      total: 0,
-      started: 0,
-      finished: 0,
+      totalTests: 0,
+      startedTests: 0,
+      finishedTests: 0,
+      updatedSnapshots: 0,
+      deletedSnapshots: 0,
+      createdSnapshots: 0,
     };
 
     this.runningTests = new Map();
@@ -153,9 +156,12 @@ export default class TestRunner {
   >;
 
   progress: {
-    total: number;
-    started: number;
-    finished: number;
+    totalTests: number;
+    startedTests: number;
+    finishedTests: number;
+    updatedSnapshots: number;
+    deletedSnapshots: number;
+    createdSnapshots: number;
   };
 
   async runWorker({bridge, process, inspector}: TestWorkerContainer) {
@@ -363,7 +369,7 @@ export default class TestRunner {
 
     teardown();
 
-    this.printTestResults();
+    this.throwPrinter();
   }
 
   async handleWorkerTimeout(
@@ -454,7 +460,7 @@ export default class TestRunner {
             {
               type: 'log',
               category: 'info',
-              message: `You can find the specific test that caused this by running <command>rome test --sync-tests</command>`,
+              text: `You can find the specific test that caused this by running <command>rome test --sync-tests</command>`,
             },
           ],
         },
@@ -480,7 +486,7 @@ export default class TestRunner {
     ref: TestRef,
     timeoutMs: undefined | number,
   ) {
-    this.progress.started++;
+    this.progress.startedTests++;
 
     let timeout = undefined;
     if (timeoutMs !== undefined) {
@@ -508,7 +514,7 @@ export default class TestRunner {
     }
 
     data;
-    this.progress.total++;
+    this.progress.totalTests++;
   }
 
   onTestFinished(ref: TestRef) {
@@ -523,7 +529,7 @@ export default class TestRunner {
     }
     this.runningTests.delete(key);
 
-    this.progress.finished++;
+    this.progress.finishedTests++;
   }
 
   setupProgress(): () => void {
@@ -585,11 +591,30 @@ export default class TestRunner {
         }
       });
 
+      bridge.snapshotUpdated.subscribe(({event}) => {
+        switch (event) {
+          case 'create': {
+            this.progress.createdSnapshots++;
+            break;
+          }
+
+          case 'update': {
+            this.progress.updatedSnapshots++;
+            break;
+          }
+
+          case 'delete': {
+            this.progress.deletedSnapshots++;
+            break;
+          }
+        }
+      });
+
       bridge.testsFound.subscribe((tests) => {
         for (const {ref, isSkipped} of tests) {
           this.onTestFound(ref, isSkipped);
         }
-        progress.setTotal(this.progress.total);
+        progress.setTotal(this.progress.totalTests);
       });
 
       bridge.testStart.subscribe((data) => {
@@ -630,8 +655,14 @@ export default class TestRunner {
     };
   }
 
-  printCoverageReport() {
+  printCoverageReport(isError: boolean) {
     const {reporter, master, coverageCollector} = this;
+
+    if (isError && this.options.showAllCoverage) {
+      // Only show coverage for errors when --show-all-coverage has been specified
+      return;
+    }
+
     if (!this.options.coverage) {
       return;
     }
@@ -772,28 +803,13 @@ export default class TestRunner {
     reporter.table(['File', '% Functions', '% Branches', '% Lines'], rows);
 
     if (!showAllCoverage) {
-      reporter.spacer();
+      reporter.br();
       reporter.info(
         'Additional coverage information available. Refine the executed tests or add the <emphasis>--show-all-coverage</emphasis> flag',
       );
     }
 
     reporter.hr();
-  }
-
-  printTestResults() {
-    if (this.printer.hasDiagnostics()) {
-      this.throwErrorDiagnosticsPrinter();
-    } else {
-      this.printTestSuccess();
-    }
-  }
-
-  printTestSuccess() {
-    this.printCoverageReport();
-    this.reporter.success(
-      `All <emphasis>${humanizeNumber(this.progress.total)}</emphasis> tests passed!`,
-    );
   }
 
   getSourceCode(filename: string): undefined | string {
@@ -805,15 +821,43 @@ export default class TestRunner {
     }
   }
 
-  throwErrorDiagnosticsPrinter() {
+  throwPrinter() {
     const {printer} = this;
 
-    // Only show code coverage for errors when `--show-all-coverage` has been passed
-    if (this.options.showAllCoverage) {
-      printer.onBeforeFooterPrint(() => {
-        this.printCoverageReport();
-      });
-    }
+    printer.onBeforeFooterPrint((reporter, isError) => {
+      this.printCoverageReport(isError);
+
+      const {
+        createdSnapshots,
+        deletedSnapshots,
+        updatedSnapshots,
+      } = this.progress;
+      const snapshotLogParts: Array<string> = [];
+      if (createdSnapshots > 0) {
+        snapshotLogParts.push(
+          `<success><number emphasis>${createdSnapshots}</number> created</success>`,
+        );
+      }
+      if (updatedSnapshots > 0) {
+        snapshotLogParts.push(
+          `<success><number emphasis>${updatedSnapshots}</number> updated</success>`,
+        );
+      }
+      if (deletedSnapshots > 0) {
+        snapshotLogParts.push(
+          `<error><number emphasis>${deletedSnapshots}</number> deleted</error>`,
+        );
+      }
+      if (snapshotLogParts.length > 0) {
+        reporter.logAll(`Snapshots: ${snapshotLogParts.join(' ')}`);
+      }
+
+      if (!isError) {
+        reporter.success(
+          `All <emphasis>${humanizeNumber(this.progress.totalTests)}</emphasis> tests passed!`,
+        );
+      }
+    });
 
     throw printer;
   }

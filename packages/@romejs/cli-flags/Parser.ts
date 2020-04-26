@@ -145,7 +145,7 @@ export default class Parser<T> {
   helpMode: boolean;
 
   looksLikeFlag(flag: undefined | string): boolean {
-    return flag !== undefined && flag[0] === '-';
+    return flag?.[0] === '-';
   }
 
   toCamelCase(name: string): string {
@@ -473,7 +473,18 @@ export default class Parser<T> {
           }
         }
 
-        argCol += ` <${inputName}>`;
+        argCol += ` <${inputName}`;
+
+        const defaultValue = def.default;
+        if (
+          !def.required &&
+          defaultValue !== undefined &&
+          (typeof defaultValue === 'number' || typeof defaultValue === 'string')
+        ) {
+          argCol += `=${defaultValue}`;
+        }
+
+        argCol += '>';
       }
 
       // Set arg col length if we'll be longer
@@ -519,7 +530,7 @@ export default class Parser<T> {
       () => {
         if (description !== undefined) {
           reporter.logAll(description);
-          reporter.forceSpacer();
+          reporter.br(true);
         }
 
         const commandParts = [programName];
@@ -543,7 +554,7 @@ export default class Parser<T> {
     const {reporter} = this;
     const {name, usage, description, examples} = command;
 
-    reporter.forceSpacer();
+    reporter.br(true);
     this.showUsageHelp(description, usage, name);
     this.showHelpExamples(examples, name);
 
@@ -640,10 +651,7 @@ export default class Parser<T> {
         }
 
         for (const category of sortedCategoryNames) {
-          const commands = commandsByCategory.get(category);
-          if (commands === undefined) {
-            throw new Error('Impossible. Should always be populated.');
-          }
+          const commands = commandsByCategory.get(category)!;
 
           if (category !== undefined) {
             reporter.logAll(`<emphasis>${category} Commands</emphasis>`);
@@ -660,7 +668,7 @@ export default class Parser<T> {
                 : cmd.description}`;
             }),
           );
-          reporter.spacer();
+          reporter.br();
         }
 
         reporter.info('To view help for a specific command run');
@@ -694,7 +702,7 @@ export default class Parser<T> {
 
           const builtCommand = commandParts.join(' ');
 
-          reporter.spacer();
+          reporter.br();
           if (description !== undefined) {
             reporter.logAll(description);
           }

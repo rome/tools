@@ -28,6 +28,10 @@ export function markupToAnsi(
       ancestry: [],
       formatTag: ansiFormatTag,
       formatText: (value, tags) => {
+        if (tags.length === 0) {
+          return value;
+        }
+
         // Format tags in reverse
         for (let i = tags.length - 1; i >= 0; i--) {
           const tag = tags[i];
