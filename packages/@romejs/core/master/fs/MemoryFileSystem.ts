@@ -171,8 +171,11 @@ async function createRegularWatcher(
         return;
       }
 
+      let recursive = true;
+
       if (process.platform === 'linux') {
         // Node on Linux doesn't support recursive directory watching so we need an fs.watch for every directory...
+        recursive = false;
       } else if (!folderPath.equal(projectFolderPath)) {
         // If we're on any other platform then only watch the root project folder
         return;
@@ -180,7 +183,7 @@ async function createRegularWatcher(
 
       const watcher = watch(
         folderPath,
-        {recursive: true, persistent: false},
+        {recursive, persistent: false},
         (eventType, filename) => {
           if (filename === null) {
             // TODO not sure how we want to handle this?
