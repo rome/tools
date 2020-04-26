@@ -57,6 +57,7 @@ export type DiagnosticCategory =
   | 'lint/pendingFixes'
   | 'lint/preferFunctionDeclarations'
   | 'lint/preferTemplate'
+  | 'lint/preferWhile'
   | 'lint/restrictedGlobals'
   | 'lint/singleVarDeclarator'
   | 'lint/sortImportExportSpecifiers'
