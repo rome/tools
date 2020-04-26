@@ -248,6 +248,7 @@ class LintRunner {
       validate: false,
       analyzeProgress: progress,
     });
+    progress.end();
 
     // Maintain a list of all the dependencies we revalidated
     const validatedDependencyPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
@@ -293,6 +294,8 @@ class LintRunner {
         validate: false,
         analyzeProgress: progress,
       });
+
+      progress.end();
     }
 
     // Validate connections
