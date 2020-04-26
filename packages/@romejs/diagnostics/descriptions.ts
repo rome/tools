@@ -62,10 +62,10 @@ type OutputMessagesValue<Value> = Value extends string
       message: DiagnosticBlessedMessage;
     }
   : Value extends DiagnosticMetadataString
-      ? OuputMessagesFactoryReturn<Value>
-      : Value extends InputMessagesFactory
-          ? OutputMessagesFactory<Value>
-          : never;
+    ? OuputMessagesFactoryReturn<Value>
+    : Value extends InputMessagesFactory
+      ? OutputMessagesFactory<Value>
+      : never;
 
 type OutputMessagesCategory<Input extends InputMessagesCategory> = {
   [Key in keyof Input]: OutputMessagesValue<Input[Key]>
@@ -1188,14 +1188,14 @@ export const descriptions = createMessages({
             },
           ]
         : patternType === 'array'
-            ? [
-                {
-                  type: 'log',
-                  category: 'info',
-                  text: 'Did you use `([a]) = 0` instead of `([a] = 0)`?',
-                },
-              ]
-            : [],
+          ? [
+              {
+                type: 'log',
+                category: 'info',
+                text: 'Did you use `([a]) = 0` instead of `([a] = 0)`?',
+              },
+            ]
+          : [],
     }),
     EXPECTED_COMMA_SEPARATOR: (context: string) => ({
       message: `Expected a comma to separate items in ${context}`,

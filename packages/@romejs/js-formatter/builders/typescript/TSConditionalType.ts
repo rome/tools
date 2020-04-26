@@ -3,9 +3,7 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- */
-
-import {TSConditionalType} from '@romejs/js-ast';
+ */ import {AnyNode, TSConditionalType} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {Token, concat, space} from '../../tokens';
 import {printConditionalExpression} from '../expressions/ConditionalExpression';
@@ -13,6 +11,7 @@ import {printConditionalExpression} from '../expressions/ConditionalExpression';
 export default function TSConditionalType(
   builder: Builder,
   node: TSConditionalType,
+  parent: AnyNode,
 ): Token {
   return printConditionalExpression(
     concat([
@@ -24,5 +23,8 @@ export default function TSConditionalType(
     ]),
     builder.tokenize(node.trueType, node),
     builder.tokenize(node.falseType, node),
+    parent,
+    node.trueType,
+    node.falseType,
   );
 }
