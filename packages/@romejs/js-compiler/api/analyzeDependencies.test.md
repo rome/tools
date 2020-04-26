@@ -44,8 +44,9 @@ Object {
             hidden: true
             instruction: 'To suppress this error run'
             noun: 'Add suppression comment'
+            shortcut: 's'
             args: Array ['unknown']
-            flags: Object {decision: 'suppress-analyzeDependencies/cjsExportInES-unknown-2'}
+            commandFlags: Object {decisions: Array ['suppress-analyzeDependencies/cjsExportInES-unknown-2']}
           }
         ]
       }

@@ -14,7 +14,8 @@
 ### `0: formatted`
 
 ```
-try {} catch (e) {
+try {
+} catch (e) {
   three = 2 + 1;
 }
 
@@ -30,7 +31,8 @@ try {} catch (e) {
 ### `1: formatted`
 
 ```
-try {} catch ({e}) {
+try {
+} catch ({e}) {
   this.something = 2;
 }
 
@@ -47,7 +49,8 @@ try {} catch ({e}) {
 
 ```
 function foo() {
-  try {} catch (e) {
+  try {
+  } catch (e) {
     return false;
   }
 }
@@ -74,7 +77,8 @@ function foo() {
 ### `3: formatted`
 
 ```
-try {} catch (e) {
+try {
+} catch (e) {
   e;
   e = 10;
 }
@@ -101,7 +105,8 @@ try {} catch (e) {
 ### `4: formatted`
 
 ```
-try {} catch (ex) {
+try {
+} catch (ex) {
   console.log('test');
   ex = 10;
 }
@@ -128,7 +133,8 @@ try {} catch (ex) {
 ### `5: formatted`
 
 ```
-try {} catch (ex) {
+try {
+} catch (ex) {
   [ex, test] = [];
 }
 
@@ -161,7 +167,8 @@ try {} catch (ex) {
 ### `6: formatted`
 
 ```
-try {} catch ({message, name}) {
+try {
+} catch ({message, name}) {
   message = 'test';
   name = 10;
 }
@@ -188,7 +195,8 @@ try {} catch ({message, name}) {
 ### `7: formatted`
 
 ```
-try {} catch (ex) {
+try {
+} catch (ex) {
   ({x: ex = 0} = {});
 }
 
@@ -214,7 +222,8 @@ try {} catch (ex) {
 ### `8: formatted`
 
 ```
-try {} catch (ex) {
+try {
+} catch (ex) {
   let a;
   ({x: a = ex = 0} = {});
 }

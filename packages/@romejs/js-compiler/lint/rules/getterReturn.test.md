@@ -85,11 +85,14 @@ console.log(p);
 
 ```
 let p = {};
-Object.defineProperty(p, {
-  get: function() {
-    console.log('hello');
+Object.defineProperty(
+  p,
+  {
+    get: function() {
+      console.log('hello');
+    },
   },
-});
+);
 console.log(p);
 
 ```

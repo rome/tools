@@ -24,13 +24,6 @@ let a = [
 ### `Javascript Output`
 
 ```javascript
-let a = [
-  1,
-  2,
-
-  3,
-
-  4,
-];
+let a = [1, 2, 3, 4];
 
 ```

@@ -49,7 +49,6 @@ function foo() {
 ```
 [foo] = bar;
 function foo() {}
-;
 
 ```
 
@@ -75,7 +74,6 @@ function foo() {}
 ```
 ({x: foo = 0} = bar);
 function foo() {}
-;
 
 ```
 
@@ -128,7 +126,6 @@ function foo() {
 (function() {
   ({x: foo = 0} = bar);
   function foo() {}
-  ;
 })();
 
 ```
@@ -253,7 +250,6 @@ function foo() {
 
 ```
 function foo() {}
-;
 foo = bar;
 
 ```
@@ -306,6 +302,5 @@ function foo() {
 ```
 foo = bar;
 function foo() {}
-;
 
 ```

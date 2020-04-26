@@ -106,6 +106,8 @@ function test(JSON) {}
 ### `4: formatted`
 
 ```
-try {} catch (Object) {}
+try {
+} catch (Object) {
+}
 
 ```

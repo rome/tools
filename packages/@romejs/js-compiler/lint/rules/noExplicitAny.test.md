@@ -47,7 +47,6 @@ age;
 
 ```
 function greet(): any {}
-;
 greet();
 
 ```
@@ -73,7 +72,6 @@ greet();
 
 ```
 function greet(): Array<any> {}
-;
 greet();
 
 ```
@@ -99,7 +97,6 @@ greet();
 
 ```
 function greet(): Array<any> {}
-;
 greet();
 
 ```
@@ -125,7 +122,6 @@ greet();
 
 ```
 function greet(): Array<Array<any>> {}
-;
 greet();
 
 ```
@@ -153,7 +149,6 @@ greet();
 function greet(param: Array<any>): string {
   return param;
 }
-;
 greet();
 
 ```
@@ -188,7 +183,6 @@ greet();
 function greet(param: Array<any>): Array<any> {
   return param;
 }
-;
 greet();
 
 ```
@@ -212,7 +206,6 @@ ages;
 
 ```
 function greet(): string {}
-;
 greet();
 
 ```
@@ -228,7 +221,6 @@ greet();
 
 ```
 function greet(): Array<string> {}
-;
 greet();
 
 ```
@@ -244,7 +236,6 @@ greet();
 
 ```
 function greet(): Array<Array<string>> {}
-;
 greet();
 
 ```
@@ -262,7 +253,6 @@ greet();
 function greet(param: Array<string>): string {
   return param;
 }
-;
 greet();
 
 ```
@@ -280,7 +270,6 @@ greet();
 function greet(param: Array<string>): Array<string> {
   return param;
 }
-;
 greet();
 
 ```

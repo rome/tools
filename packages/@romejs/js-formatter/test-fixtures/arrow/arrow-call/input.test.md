@@ -58,9 +58,12 @@ const testResults = results.testResults.map(testResult =>
 ```javascript
 const testResults = results.testResults.map((testResult) => formatResult(testResult, formatter, reporter));
 
-it('mocks regexp instances', () => {
-  expect(() => moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/))).not.toThrow();
-});
+it(
+  'mocks regexp instances',
+  () => {
+    expect(() => moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/))).not.toThrow();
+  },
+);
 
 expect(() => asyncRequest({url: '/test-endpoint'})).toThrowError(/Required parameter/);
 
@@ -78,9 +81,11 @@ const b = Observable.fromPromise(axiosInstance.get(url)).map((response) => respo
 
 func(veryLoooooooooooooooooooooooongName, (veryLooooooooooooooooooooooooongName) => veryLoooooooooooooooongName.something());
 
-const composition = (ViewComponent, ContainerComponent) => class extends React.Component {
-  static propTypes = {};
-};
+const composition = (ViewComponent, ContainerComponent) =>
+  class extends React.Component {
+    static propTypes = {};
+  }
+;
 
 promise.then((result) => result.veryLongVariable.veryLongPropertyName > someOtherVariable ? 'ok' : 'fail');
 
