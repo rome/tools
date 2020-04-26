@@ -3141,8 +3141,36 @@ Program {
                         }
                       }
                       elements: Array [
-                        undefined
-                        undefined
+                        ArrayHole {
+                          loc: Object {
+                            filename: 'input.js'
+                            end: Object {
+                              column: 21
+                              index: 503
+                              line: 12
+                            }
+                            start: Object {
+                              column: 22
+                              index: 504
+                              line: 12
+                            }
+                          }
+                        }
+                        ArrayHole {
+                          loc: Object {
+                            filename: 'input.js'
+                            end: Object {
+                              column: 23
+                              index: 505
+                              line: 12
+                            }
+                            start: Object {
+                              column: 23
+                              index: 505
+                              line: 12
+                            }
+                          }
+                        }
                         BindingIdentifier {
                           name: 'qux7'
                           loc: Object {

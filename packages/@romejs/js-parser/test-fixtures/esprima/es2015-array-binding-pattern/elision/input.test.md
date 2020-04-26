@@ -97,7 +97,6 @@ Program {
           }
           params: Array [
             BindingArrayPattern {
-              elements: Array []
               rest: undefined
               loc: Object {
                 filename: 'input.js'
@@ -112,6 +111,38 @@ Program {
                   line: 1
                 }
               }
+              elements: Array [
+                ArrayHole {
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 2
+                      index: 2
+                      line: 1
+                    }
+                    start: Object {
+                      column: 2
+                      index: 2
+                      line: 1
+                    }
+                  }
+                }
+                ArrayHole {
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 3
+                      index: 3
+                      line: 1
+                    }
+                    start: Object {
+                      column: 3
+                      index: 3
+                      line: 1
+                    }
+                  }
+                }
+              ]
             }
           ]
         }

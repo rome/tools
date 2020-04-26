@@ -128,6 +128,21 @@ Program {
                     }
                   }
                 }
+                ArrayHole {
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 4
+                      index: 4
+                      line: 1
+                    }
+                    start: Object {
+                      column: 5
+                      index: 5
+                      line: 1
+                    }
+                  }
+                }
                 BindingIdentifier {
                   name: 'b'
                   loc: Object {

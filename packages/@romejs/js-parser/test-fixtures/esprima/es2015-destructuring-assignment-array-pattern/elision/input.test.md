@@ -59,23 +59,6 @@ Program {
             line: 1
           }
         }
-        left: AssignmentArrayPattern {
-          elements: Array []
-          rest: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
         right: NumericLiteral {
           value: 0
           format: undefined
@@ -92,6 +75,54 @@ Program {
               line: 1
             }
           }
+        }
+        left: AssignmentArrayPattern {
+          rest: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 4
+              index: 4
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
+              line: 1
+            }
+          }
+          elements: Array [
+            ArrayHole {
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 1
+                  index: 1
+                  line: 1
+                }
+                start: Object {
+                  column: 1
+                  index: 1
+                  line: 1
+                }
+              }
+            }
+            ArrayHole {
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 2
+                  index: 2
+                  line: 1
+                }
+                start: Object {
+                  column: 2
+                  index: 2
+                  line: 1
+                }
+              }
+            }
+          ]
         }
       }
     }
