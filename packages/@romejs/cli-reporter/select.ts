@@ -28,18 +28,9 @@ export default async function select<Options extends SelectOptions>(
     yes = false,
   }: SelectArguments<Options>,
 ): Promise<Set<keyof Options>> {
-  const optionNames: Array<keyof Options> = [];
-  let optionCount = 0;
-  for (const key in options) {
-    optionCount++;
-    const {disabled} = options[key];
-    if (!disabled) {
-      optionNames.push(key);
-    }
-  }
-
-  const enabledOptionCount = optionNames.length;
-  if (enabledOptionCount === 0) {
+  const optionNames: Array<keyof Options> = Object.keys(options);
+  let optionCount = optionNames.length;
+  if (optionCount === 0) {
     return new Set();
   }
 
@@ -69,7 +60,7 @@ export default async function select<Options extends SelectOptions>(
   }
 
   function boundActive() {
-    activeOption = Math.min(activeOption, enabledOptionCount - 1);
+    activeOption = Math.min(activeOption, optionCount - 1);
     activeOption = Math.max(activeOption, 0);
 
     if (radio) {
@@ -90,7 +81,7 @@ export default async function select<Options extends SelectOptions>(
     for (let i = 0; i < optionNames.length; i++) {
       const key = optionNames[i];
       const option = options[key];
-      const {label, disabled, disabledReason} = option;
+      const {label} = option;
       const shortcut = formatShortcut(option);
 
       let formattedLabel =
@@ -105,18 +96,8 @@ export default async function select<Options extends SelectOptions>(
         symbol = selectedOptions.has(key) ? '\u2611' : '\u2610';
       }
 
-      let line = `${formattedLabel}${shortcut}`;
-
-      if (disabled) {
-        line = `<strike>${line}</strike>`;
-
-        if (disabledReason) {
-          line = `${line} ${disabledReason}`;
-        }
-      }
-
       reporter.logAll(
-        `  ${symbol} ${line}`,
+        `  ${symbol} ${formattedLabel}${shortcut}`,
         {
           // Don't put a newline on the last option
           newline: i !== optionNames.length - 1,
@@ -191,8 +172,8 @@ export default async function select<Options extends SelectOptions>(
       // Check if this is an option shortcut
       if (!key.ctrl) {
         for (const optionName in options) {
-          const {shortcut, disabled} = options[optionName];
-          if (!disabled && shortcut === key.name) {
+          const {shortcut} = options[optionName];
+          if (shortcut === key.name) {
             if (radio) {
               selectedOptions.clear();
               selectedOptions.add(optionName);

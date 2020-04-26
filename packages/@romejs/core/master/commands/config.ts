@@ -16,12 +16,8 @@ import {descriptions} from '@romejs/diagnostics';
 export default createMasterCommand({
   category: commandCategories.PROJECT_MANAGEMENT,
   description: 'Modify a project config',
-  usage: '(enable|disable|enable-category|disable-category|set) key [value]',
+  usage: '(enable|disable|set) key [value]',
   examples: [
-    {
-      command: 'enable-category lint',
-      description: 'Enable linting',
-    },
     {
       command: 'set name my_awesome_project',
       description: 'Set the project name',
@@ -51,22 +47,6 @@ export default createMasterCommand({
       case 'disable': {
         req.expectArgumentLength(2);
         keyParts = req.query.args[1];
-        value = false;
-        break;
-      }
-
-      case 'enable-category': {
-        req.expectArgumentLength(2);
-        const category = req.query.args[1];
-        keyParts = `${category}.enabled`;
-        value = true;
-        break;
-      }
-
-      case 'disable-category': {
-        req.expectArgumentLength(2);
-        const category = req.query.args[1];
-        keyParts = `${category}.enabled`;
         value = false;
         break;
       }
